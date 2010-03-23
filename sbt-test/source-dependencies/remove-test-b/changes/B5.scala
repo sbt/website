@@ -1,5 +1,0 @@
-/*package test
-
-object B
-{
-}*/
