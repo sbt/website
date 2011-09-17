@@ -53,7 +53,7 @@
 
          #more-hand, #top { color:#eee; margin:.75em .5em 0 .5em; }
 
-         a#start:link, a#start:visited { border-left:0; }
+         a#get-launcher:link, a#get-launcher:visited { border-left:0; }
 
          #intro, .feature h3, .feature .line, #foot .content {
            width:940px; margin:0 auto;
@@ -251,7 +251,7 @@
          <div id="more-hand">↬ more</div>
          <div id="top">^ top</div>
          <div id="install">
-           <button class="btn" id="start"><span>↬</span> get the launcher</button>
+           <button class="btn" data-jar="http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.10.1/sbt-launch.jar" id="get-launcher"><span>↬</span> get the launcher</button>
          </div>
        </div>
 
@@ -526,11 +526,17 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
            });
          });
          $("#top").click(function(){ $("#intro").ScrollTo(); })
+
          var applyH = function() {
            $("#intro, .feature").height($(window).height());
          };
          $(window).bind('resize', function() { applyH(); });
          applyH();
+
+         $("#get-launcher").bind('click', function(e) {
+             window.location.href= $(this).data()['jar'];
+         })
+
          $('#features a, .st').click(function(e){
              e.preventDefault();
              var h = $(this).attr('href');
