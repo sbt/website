@@ -1,1 +1,465 @@
-My GitHub Page
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
+    <title>simple build tool</title>
+     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+       <style type="text/css">
+         html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}
+        .cf:before,.cf:after{content:"";display:table}.cf:after{clear:both}.cf{zoom:1}
+
+         body, html {
+           font-family: 'Copse', serif;
+           font-size:24px;
+           height:100%;
+         }
+
+         a:link, a:visited {
+           padding-left:4px;
+           color:#12E3FF;
+           text-decoration:none;
+         }
+
+         p { margin-bottom:.5em; }
+
+         h1 { font-size:170px; line-height:1em; }
+
+         h2 { color:#eee; font-size:190%; }
+
+         h3 { font-size:4em; line-height:1.5em; }
+
+         li { margin:1em 0; }
+
+         #more a:link, #more a:visited, #subscribe {
+           border-left:4px solid #eee;
+         }
+
+         #more a:hover { border-left: 4px solid #aaa; }
+
+         #more {
+           background:#333; position:fixed;
+           left:0; right:0; top:0; z-index:9999;
+         }
+
+         #more-hand, #top { color:#eee; margin:.25em .5em 0 .5em; }
+
+         a#start:link, a#start:visited { border-left:0;}
+
+         #intro, .feature h3, .feature .line, #foot .content {
+           width:940px; margin:0 auto;
+         }
+
+         #features {  text-shadow: 0 0 #ccc; font-size: 80%; color:#12E3FF; margin:1em 0; }
+
+         #intro { padding:1em 1em 1em 0; text-align:left; height:100%; }
+
+         #head { border-bottom:1px solid #eee; }
+
+         #name { width:50%; }
+
+         #vc { height:100%; position:relative; }
+         #version { font-size:130px; margin-top:40px; }
+         #version sub { position:relative; bottom:0; height:100%; color:#ccc; font-size:.5em; }
+
+         #what { font-size:120%; line-height:1.4em; margin:0 0 1em 0; }
+
+         #features ul { list-style:none; width:50%; }
+
+         #subscribe, #wiki, #src, #list { margin:0 0 .5em 0;}
+
+         #install { float:right; margin-right:.5em; } #more-hand { float:left; clear:both; } #top { float:left; margin-left:30%; text-align:center; }
+
+         #info { display:none; }
+         #info a { padding-left: .25em; }
+
+         #extra { height: 100%; }
+         #examples { margin:.5em 0 0 0; line-height:1.5em; }
+
+         #foot {
+           background: #576369;
+           color:#eee;
+           font-size:smaller;
+           padding:1em 0;
+         }
+
+         .line {
+           margin:.5em 0 0 0;
+         }
+
+         .feature {
+           padding:.25em;
+         }
+
+         .feature .more {
+             padding:1em .25em;
+         }
+
+         #examples .feature:nth-child(5n+1) .more { text-shadow: 0 1px #333; color:#FFF5FD; background: #D82591; }
+         #examples .feature:nth-child(5n+2) .more { text-shadow: 0 1px #333;color:#686F7A; background: #3BF8FF; }
+         #examples .feature:nth-child(5n+3) .more { text-shadow: 0 1px #fff; color:#686F7A; background: #B5EB83; }
+         #examples .feature:nth-child(5n+4) .more { text-shadow: 0 1px #333; color:#FFF5FD; background: #EB83D3; }
+         #examples .feature:nth-child(5n+5) .more { text-shadow: 0 1px #333; color:#FFF5FD; background: #FF4696; }
+
+         #info-left { margin-right:1em; }
+
+         #info-left, #info-right { float: left; }
+
+         input[type="text"] {
+             font-family: 'Copse', serif;
+             font-size:22px; padding:.25em;
+             color:#ccc;
+             margin-left:5px;
+         }
+
+         .left {
+            float:left;
+         }
+
+         .btn {
+           border:1px solid #ccc;
+           background:#eee;
+           padding:.25em .5em;
+           font-size:18px;
+           -webkit-border-radius: 10px;
+           -moz-border-radius: 10px;
+           border-radius: 10px;
+           background: #eee;
+           filter: progid:DXImageTransform.Microsoft.gradient(
+               startColorstr='#eeeeee', endColorstr='#D1D1D1');
+           background: -webkit-gradient(linear, left top,
+                                          left bottom, from(#eeeeee),
+                                          to(#D1D1D1));
+           background: -moz-linear-gradient(top, #eeeeee, #D1D1D1);
+           margin:5px 0;
+         }
+
+         pre {
+           white-space:pre-wrap;
+           text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+           /*font-family:"Monaco", Courier New, monospace;*/
+           font-family:'Copse', serif;
+           font-size:22px;
+           font-weight:bold;
+           margin:0;
+           padding:.25em;
+           border:1px solid #ccc;
+           -webkit-border-radius: 10px;
+           -moz-border-radius: 10px;
+           border-radius: 10px;
+           background-image:linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+           color:#fff;
+           background-color:rgba(0, 0, 0, 0.5);
+           background-image:-webkit-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+           background-image:-o-linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+           filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(0, 0, 0, 0.15)', endColorstr='rgba(0, 0, 0, 0)', GradientType=0);
+           -ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(0, 0, 0, 0.15)', endColorstr='rgba(0, 0, 0, 0)', GradientType=0");
+           -webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25);
+           box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.25);
+         }
+
+       </style>
+       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+       </script>
+     </head>
+     <body class="cf">
+
+       <div id="more" class="cf">
+         <div id="info">
+           <div id="info-left">
+           <div id="src">
+             <a target="_blank" href="http://harrah.github.com/xsbt/latest/sxr/index.html">Annotated Source</a>
+           </div>
+           <div id="list">
+             <a target="_blank" href="http://groups.google.com/group/simple-build-tool/topics">Mailing List</a>
+           </div>
+           <div id="subscribe">
+             <form action="http://groups.google.com/group/simple-build-tool/boxsubscribe">
+               <input name="email" type="text" placeholder="you@gmail.com"/>
+               <input name="sub" type="submit" class="btn" value="Join the Mailing List"/>
+             </form>
+           </div>
+           </div>
+           <div id="info-right">
+             <div id="wiki">
+               <a target="_blank" href="http://github.com/harrah/xsbt/wiki">Community Documentation</a>
+             </div>
+             <div id="contribute">
+                <a target="_blank" href="https://github.com/harrah/xsbt#readme">Contribute</a>
+             </div>
+           </div>
+         </div>
+         <div id="more-hand">↬ more</div>
+         <div id="top">^ top</div>
+         <div id="install">
+           <a href="#" id="start">↬ get started</a>
+         </div>
+       </div>
+
+       <div id="container" class="cf">
+
+         <div id="intro">
+           <div id="head" class="cf">
+             <div id="name" class="left">
+               <h1>sbt</h1>
+               <h2>simple build tool</h2>
+               <p id="what">
+                 is a minimally intrusive<br/> build tool for <a href="http://www.scala-lang.org/" target="_blank">Scala</a> projects
+               </p>
+             </div>
+             <div class="left" id="vc">
+               <div id="version"><sub>v</sub>0.10.1</div>
+             </div>
+           </div>
+
+           <div id="features" class="cf">
+             <ul class="left">
+               <li>
+                 <a href="#repl">Fast, transparent REPL workflow</a>
+               </li>
+               <li>
+                 <a href="#scripted">Scala-scripted configuration</a>
+               </li>
+               <li>
+                 <a href="#plugins">Flexible plugin architecture</a>
+               </li>
+               <li>
+                 <a href="#compilation">Continuous incremental compilation</a>
+               </li>
+               <li>
+                 <a href="#trigger">Triggered task execution</a>
+               </li>
+             </ul>
+             <ul class="left">
+               <li>
+                 <a href="#cross-compile">Cross-Scala version compilation</a>
+               </li>
+               <li>
+                 <a href="#testing">Out of the box testing with ScalaCheck, Specs, and ScalaTest</a>
+               </li>
+               <li>
+                 <a href="#multi-project">Multi-module and external project support</a>
+               </li>
+               <li>
+                 <a href="#parallel">Parallel task and test execution</a>
+               </li>
+               <li>
+                 <a href="#dependency-man">Concise dependency management DSL</a>
+               </li>
+             </ul>
+           </div>
+         </div>
+
+         <div id="extra">
+
+           <ul id="examples">
+
+             <li id="repl" class="feature">
+               <h3>Say hi to the REPL.</h3>
+               <div class="more">
+                 <div class="line">
+                   <pre><code>$ sbt
+> hello_</code></pre>
+                 </div>
+                 <div class="line">
+                   From the REPL you can execute project tasks and inspect settings
+                 </div>
+                 <div class="line">
+                   <pre><code>> compile
+[info] Compiling 1 Scala source to ...
+[success] Total time: 1 s, completed Aug 21, 2011 7:34:52 PM</code></pre>
+                 </div>
+                 <div class="line">
+                   All settings and commands are tab-completable for fast, easy access
+                 </div>
+                 <div class="line">
+                   <pre><code>> show &lt;tab&gt;
+Display all 153 possibilities? (y or n) </code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="scripted" class="feature">
+               <h3>Typesafety is a given.</h3>
+               <div class="more">
+                 <div class="line">
+                   All project configuration is scripted in Scala providing out of the box modularity and all of the flexibility of the Scala programming language.
+                 </div>
+                 <div class="line">
+                   <pre><code>object MyBuild extends Build {
+  override lazy val settings = super.settings :+
+    (shellPrompt := { s => Project.extract(s).cid + "> " })
+}</code></pre>
+                 </div>
+                 <div class="line">
+                   Simple projects will only require a simple configuration in <code>.sbt</code> format.
+                 </div>
+                 <div class="line">
+                   <pre><code>organization := "com.your.domain"
+name := "your-module"
+version := "0.1.3"
+libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
+</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="plugins" class="feature">
+               <h3>Simple Extesibility.</h3>
+               <div class="more">
+                 <div class="line">
+                   <p>Plugins provide a means of injecting and augmenting settings and commands.</p><p> Since plugins are just Scala code, you can package and share plugins between projects.</p>
+                 </div>
+                 <div class="line">
+                   <pre><code>object MyPlugin extends Plugin {
+  val MyConf = config("my")
+  override def settings: Seq[Setting[_]] = inConfig(MyConf)(Seq(
+    // ...
+  ))
+}</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="compilation" class="feature">
+               <h3>Only what you need.</h3>
+               <div class="more">
+                 <div class="line">
+                   <p>Sbt will only compile source code that has changed and when nessessary.</p><p>Why wait around for something to be recompiled when you can be doing more productive work?</p>
+                 </div>
+                 <div class="line">
+                   <pre><code>> compile
+[info] Compiling 1 Scala source to ...
+[success] Total time: 1 s, completed Aug 21, 2011 7:34:52 PM
+> compile
+[success] Total time: 1 s, completed Aug 21, 2011 7:34:54 PM
+</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="trigger" class="feature">
+               <h3>Do repeat yourself.</h3>
+               <div class="more">
+                 <div class="line">
+                   All build tasks and commands can be re-triggered when dependant source code changes by prepending the <code>~</code> modifier, leaving you free to focus on your craft and not on life-wasting repetition.
+                 </div>
+                 <div class="line">
+                   <pre><code>> ~ test</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="cross-compile" class="feature">
+               <h3>Fluency in many dialects.</h3>
+               <div class="more">
+                 <div class="line">
+                   Scala is a fast evolving and forward thinking language which, in the past, has led to binary incompatibility between versions. Sbt makes it simple to switch between and execute commands against your Scala source code over many versions of Scala with ease.
+                 </div>
+                 <div class="line">
+                   <pre><code>> + compile</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="testing" class="feature">
+               <h3>Many frameworks. One test interface.</h3>
+               <div class="more">
+                 <div class="line">
+                   For some, testing is an afterthought. Sbt makes testing part of your normal workflow by providing a generic interface to validate your code against any supporting testing library.
+                 </div>
+                 <div class="line">
+                   <pre><code>> test-only your.EasySpec</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="multi-project" class="feature">
+               <h3>There's room for more in here.</h3>
+               <div class="more">
+                 <div class="line">
+                   When it's time to make the split, Sbt makes it easy to coordinate multiple projects in one simple build file.
+                 </div>
+                 <div class="line">
+                   <pre><code>object YourBuild extends Build {
+   lazy val root = Project(".", file("."), settings = Seq(..)) aggregate(a, b)
+   lazy val b = Project("b", file("b"))
+   lazy val c = Project("c", file("c")) dependsOn(b)
+}</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="parallel" class="feature">
+               <h3>Why wait?</h3>
+               <div class="more">
+                 <div class="line">
+                   By default, build tasks that do not depend on one another in parallel. This also applies to your tests. Instead of sequentially executing your tests, Sbt will run them in parallel.
+                   ...something about parallel task execution...
+                 </div>
+                 <div class="line">
+                   <pre><code>/* fill me in */</code></pre>
+                 </div>
+               </div>
+             </li>
+
+             <li id="dependency-man" class="feature">
+               <h3>Simply dependable.</h3>
+               <div class="more">
+                 <div class="line">
+                   <p>Close your eyes. Now open them. You no longer have to mangage your dependencies in xml. Sbt provides a simple declarative dsl for weaving together what your project depends on and takes care of the rest.</p>
+                 </div>
+                 <div class="line">
+                   <pre><code>libraryDependencies ++= Seq(
+  "com.scalaproject" %% "module-a" % "1.4.7",
+  "com.javaproject" % "module-b" % "2.1.0"
+)</code></pre>
+                 </div>
+               </div>
+             </li>
+
+           </ul>
+           <div id="foot">
+             <div class="content">
+               footer stuff here
+             </div>
+           </div>
+         </div>
+       </div>
+     <script type="text/javascript" src="jquery.scrollto.min.js"></script>
+     <script type="text/javascript">
+       (function($){ $(function(){
+         $('#more-hand').click(function() {
+             var self = $(this);
+           $('#info').slideToggle('fast', function() {
+               self.text('↬ ' + (/more/.test(self.text()) ? "less":"more"));
+           });
+         });
+         $("#top").click(function(){ $("#intro").ScrollTo(); })
+         var applyH = function() { var h = $(window).height();$("#intro, .feature").height(h); };
+         $(window).bind('resize', function() { applyH(); });
+         applyH();
+         $('#features a').click(function(e){
+             e.preventDefault();
+             var h = $(this).attr('href');
+             $(h).ScrollTo({
+                 callback:function(){ window.location.hash = h;}
+             });
+         });
+         /*$(document).scroll(function(e) {
+             var st = $(this).scrollTop(), os = [];
+             $.map($("#intro, #examples .feature"), function(e){
+                 os.push([e.id, $(e).offset().top]);
+             })
+             , closest = os[0];
+
+             $(os).each(function(i, pair){
+               if(Math.abs(closest[1] - st) > Math.abs(pair[1] - st)) {
+                 closest = pair;
+               }
+             });
+            window.location.href = "#/"+closest[0]
+         });*/
+       });})(jQuery);
+    </script>
+  </body>
+</html>
