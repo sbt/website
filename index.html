@@ -285,7 +285,13 @@ Display all 153 possibilities? (y or n) </code></pre>
                    All project configuration is scripted in Scala providing out of the box modularity and all of the flexibility of the Scala programming language.
                  </div>
                  <div class="line">
-                   <p>Simple projects will only require a simple configuration in <code>.sbt</code> format.</p>
+                   <pre><code>object MyBuild extends Build {
+  override lazy val settings = super.settings :+
+    (shellPrompt := { s => Project.extract(s).cid + "> " })
+}</code></pre>
+                 </div>
+                 <div class="line">
+                   Simple projects will only require a simple configuration in <code>.sbt</code> format.
                  </div>
                  <div class="line">
                    <pre><code>organization := "com.your.domain"
@@ -301,7 +307,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                <h3>Simple Extesibility.</h3>
                <div class="more">
                  <div class="line">
-                   Plugins provide a means of injecting and augmenting settings and commands.
+                   <p>Plugins provide a means of injecting and augmenting settings and commands.</p><p> Since plugins are just Scala code, you can package and share plugins between projects.</p>
                  </div>
                  <div class="line">
                    <pre><code>object MyPlugin extends Plugin {
@@ -318,7 +324,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                <h3>Only what you need.</h3>
                <div class="more">
                  <div class="line">
-                   <p>Sbt will only compile source code that has changed and when nessessary</p>
+                   <p>Sbt will only compile source code that has changed and when nessessary.</p><p>Why wait around for something to be recompiled when you can be doing more productive work?</p>
                  </div>
                  <div class="line">
                    <pre><code>> compile
@@ -335,7 +341,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                <h3>Do repeat yourself.</h3>
                <div class="more">
                  <div class="line">
-                   All tasks and commands can be re-triggered when dependant source code changes by prepending the <code>~</code> modifier, leaving you free to focus on your craft and not on life-wasting repetition.
+                   All build tasks and commands can be re-triggered when dependant source code changes by prepending the <code>~</code> modifier, leaving you free to focus on your craft and not on life-wasting repetition.
                  </div>
                  <div class="line">
                    <pre><code>> ~ test</code></pre>
@@ -371,8 +377,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                <h3>There's room for more in here.</h3>
                <div class="more">
                  <div class="line">
-                   When it's time to make the split, Sbt makes it easy to coordinate multiple projects in one
-                 simple build file
+                   When it's time to make the split, Sbt makes it easy to coordinate multiple projects in one simple build file.
                  </div>
                  <div class="line">
                    <pre><code>object YourBuild extends Build {
@@ -388,6 +393,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                <h3>Why wait?</h3>
                <div class="more">
                  <div class="line">
+                   By default, build tasks that do not depend on one another in parallel. This also applies to your tests. Instead of sequentially executing your tests, Sbt will run them in parallel.
                    ...something about parallel task execution...
                  </div>
                  <div class="line">
