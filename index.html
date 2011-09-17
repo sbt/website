@@ -70,6 +70,10 @@
          #vc { height:100%; position:relative; }
          #version { font-size:130px; margin-top:40px; }
          #version sub { position:relative; bottom:0; height:100%; color:#ccc; font-size:.5em; }
+         #changelog, #rc {
+           margin-top:.75em;
+           text-align:right;
+         }
 
          #what { font-size:120%; line-height:1.4em; margin:0 0 1em 0; }
 
@@ -257,6 +261,9 @@
              </div>
              <div class="left" id="vc">
                <div id="version"><sub>v</sub>0.10.1</div>
+               <div id="changelog"><a target="_blank" href="https://github.com/harrah/xsbt/wiki/Changes">changelog</a></div>
+               <div id="rc">next rc <a target="_blank" href="http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-tools.sbt/sbt-launch/0.11.0-RC1/sbt-launch.jar">0.11.0 rc1</a>
+               </div>
              </div>
            </div>
 
@@ -325,6 +332,7 @@
 Display all 153 possibilities? (y or n) </code></pre>
                  </div>
                </div>
+               <a href="#scripted" class="st">is that all?</a>
              </li>
 
              <li id="scripted" class="feature">
@@ -350,6 +358,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
 </code></pre>
                  </div>
                </div>
+               <a href="#plugins" class="st">is that all?</a>
              </li>
 
              <li id="plugins" class="feature">
@@ -367,6 +376,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
 }</code></pre>
                  </div>
                </div>
+                <a href="#compilation" class="st">is that all?</a>
              </li>
 
              <li id="compilation" class="feature">
@@ -384,6 +394,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
 </code></pre>
                  </div>
                </div>
+               <a href="#trigger" class="st">is that all?</a>
              </li>
 
              <li id="trigger" class="feature">
@@ -396,6 +407,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                    <pre><code>> ~ test</code></pre>
                  </div>
                </div>
+               <a href="#cross-compile" class="st">is that all?</a>
              </li>
 
              <li id="cross-compile" class="feature">
@@ -408,6 +420,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                    <pre><code>> + compile</code></pre>
                  </div>
                </div>
+               <a href="#testing" class="st">is that all?</a>
              </li>
 
              <li id="testing" class="feature">
@@ -420,6 +433,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                    <pre><code>> test-only your.EasySpec</code></pre>
                  </div>
                </div>
+               <a href="#multi-project" class="st">is that all?</a>
              </li>
 
              <li id="multi-project" class="feature">
@@ -436,6 +450,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
 }</code></pre>
                  </div>
                </div>
+               <a href="#parallel" class="st">is that all?</a>
              </li>
 
              <li id="parallel" class="feature">
@@ -449,6 +464,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
                    <pre><code>/* fill me in */</code></pre>
                  </div>
                </div>
+               <a href="#dependency-man" class="st">is that all?</a>
              </li>
 
              <li id="dependency-man" class="feature">
@@ -464,6 +480,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
 )</code></pre>
                  </div>
                </div>
+                <a href="#intro" class="st">is that all?</a>
              </li>
 
            </ul>
@@ -484,10 +501,12 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
            });
          });
          $("#top").click(function(){ $("#intro").ScrollTo(); })
-         var applyH = function() { var h = $(window).height();$("#intro, .feature").height(h); };
+         var applyH = function() {
+           $("#intro, .feature").height($(window).height());
+         };
          $(window).bind('resize', function() { applyH(); });
          applyH();
-         $('#features a').click(function(e){
+         $('#features a, .st').click(function(e){
              e.preventDefault();
              var h = $(this).attr('href');
              $(h).ScrollTo({
