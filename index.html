@@ -19,6 +19,9 @@
            color:#12E3FF;
            text-decoration:none;
          }
+         a.scala:link, a.scala:visited {
+           color:#FF0000;
+         }
 
          p { margin-bottom:.5em; }
 
@@ -256,7 +259,7 @@
                <h1>sbt</h1>
                <h2>simple build tool</h2>
                <p id="what">
-                 is a minimally intrusive<br/> build tool for <a href="http://www.scala-lang.org/" target="_blank">Scala</a> projects
+                 is a minimally intrusive<br/> build tool for <a href="http://www.scala-lang.org/" class="scala" target="_blank">Scala</a> projects
                </p>
              </div>
              <div class="left" id="vc">
@@ -342,10 +345,8 @@ Display all 153 possibilities? (y or n) </code></pre>
                    All project configuration is scripted in Scala providing out of the box modularity and all of the flexibility of the Scala programming language.
                  </div>
                  <div class="line">
-                   <pre><code>object MyBuild extends Build {
-  override lazy val settings = super.settings :+
-    (shellPrompt := { s => Project.extract(s).cid + "> " })
-}</code></pre>
+                   <pre><code>override lazy val settings = super.settings :+
+    (shellPrompt := { s => Project.extract(s).cid + "> " })</code></pre>
                  </div>
                  <div class="line">
                    Simple projects will only require a simple configuration in <code>.sbt</code> format.
