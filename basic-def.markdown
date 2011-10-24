@@ -1,3 +1,8 @@
+---
+title: .sbt ビルド定義
+layout: default
+---
+
 [Keys]: http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html
 
 # `.sbt` ビルド定義

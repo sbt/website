@@ -1,3 +1,8 @@
+---
+title: 実行
+layout: default
+---
+
 # 実行
 
 [[前|Directories]] _始める sbt 5/14 ページ_ [[次|Basic Def]]

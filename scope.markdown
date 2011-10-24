@@ -1,3 +1,8 @@
+---
+title: スコープ
+layout: default
+---
+
 [MavenScopes]:
 http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
 "Maven scopes"

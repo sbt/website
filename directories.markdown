@@ -1,3 +1,8 @@
+---
+title: ディレクトリ構造
+layout: default
+---
+
 [Maven]: http://maven.apache.org/
 
 # ディレクトリ構造
