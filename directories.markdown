@@ -7,14 +7,14 @@ layout: default
 
 # ディレクトリ構造
 
-[[前|Hello]] _始める sbt 4/14 ページ_ [[次|Running]]
+[前](../hello) _始める sbt 4/14 ページ_ [次](../running)
 
-このページは、君が[[sbt をインストール|Setup]]して、[[Hello, World|Hello]]を見たことを前提にする。
+このページは、君が[sbt をインストール](../setup)して、[Hello, World](../hello)を見たことを前提にする。
 
 ## ベースディレクトリ
 
 sbt 用語では「ベースディレクトリ」(base directory) はプロジェクトが入ったディレクトリを指す。
-[[Hello, World|Hello]] での例のように、`hello/build.sbt` と `hello/hw.scala` が入った
+[Hello, World](../hello) での例のように、`hello/build.sbt` と `hello/hw.scala` が入った
 `hello` プロジェクトを作ったとすると、ベースディレクトリは `hello` だ。
 
 ## ソースコード
@@ -50,7 +50,7 @@ sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（�
 他の sbt 関連のファイルは　`project` サブディレクトリに置かれる。
 
 `project` には `.scala` ファイルを含むことができ、それは `.sbt` ファイルと
-組み合わさって一つのビルド定義を構成する。詳しくは、[[.scala ビルド定義|Full Def]]を参照。
+組み合わさって一つのビルド定義を構成する。詳しくは、[.scala ビルド定義](../full-def)を参照。
 
 ```text
   build.sbt
@@ -60,7 +60,7 @@ sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（�
 
 `project` 内に `.sbt` があるのを見ることがあるかもしれないけど、それはプロジェクトの
 ベースディレクトリ下の `.sbt` とは別物だ。これに関しても、他に前提となる知識が必要なので、
-[[後で説明する|Full Def]]。
+[後で説明する](../full-def)。
 
 ## ビルド成果物
 
@@ -80,4 +80,4 @@ sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（�
 
 # 続いては
 
-[[sbt の実行|Running]]について。
+[sbt の実行](../running)について。
