@@ -28,16 +28,17 @@
 
 <p>一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、作って実行してみよう:</p>
 
-<p><code>text
+<p>```text
   $ mkdir hello
   $ cd hello
-  $ echo 'object Hi { def main(args: Array[String]) = println(&quot;Hi!&quot;) }' &gt; hw.scala
+  $ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
   $ sbt
-  ...
-  &gt; run
+  ...</p>
+
+<blockquote><p>run
   ...
   Hi!
-</code></p>
+```</p></blockquote>
 
 <p>この例では、sbt は純粋に convention（デフォルトの慣例）だけを使って動作している。
 sbt は以下を自動的に検知する:</p>
@@ -49,6 +50,7 @@ sbt は以下を自動的に検知する:</p>
 <li><code>src/main/resources</code> か <code>src/test/resources</code> 内のデータファイル</li>
 <li><code>lib</code> 内の jar ファイル</li>
 </ul>
+
 
 <p>デフォルトでは、sbt は sbt 自身が使っている Scala のバージョンを使ってプロジェクトをビルドする。</p>
 
@@ -63,11 +65,11 @@ sbt は以下を自動的に検知する:</p>
 <p>例えば、君のプロジェクトが <code>hello</code> ディレクトリにあるなら、<code>hello/build.sbt</code> をこんな感じで書く:</p>
 
 <p>```scala
-name := &quot;hello&quot;</p>
+name := "hello"</p>
 
-<p>version := &quot;1.0&quot;</p>
+<p>version := "1.0"</p>
 
-<p>scalaVersion := &quot;2.9.1&quot;
+<p>scalaVersion := "2.9.1"
 ```</p>
 
 <p><a href="../basic-def">.sbt ビルド定義</a>で、<code>build.sbt</code> の書き方をもっと詳しく説明する。</p>

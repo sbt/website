@@ -24,23 +24,21 @@ sbt 用語では「ベースディレクトリ」(base directory) はプロジ�
 
 sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（全てのパスはベースディレクトリからの相対パスとする）:
 
-```text
-  src/
-    main/
-      resources/
-         <メインの jar に含むファイル>
-      scala/
-         <メインの Scala ソース>
-      java/
-         <メインの Java ソース>
-    test/
-      resources/
-         <テストの jar に含むファイル>
-      scala/
-         <テストの Scala ソース>
-      java/
-         <テストの Java ソース>
-```
+     src/
+       main/
+         resources/
+            <メインの jar に含むファイル>
+         scala/
+            <メインの Scala ソース>
+         java/
+            <メインの Java ソース>
+       test/
+         resources/
+            <テストの jar に含むファイル>
+         scala/
+            <テストの Scala ソース>
+         java/
+            <テストの Java ソース>
 
 `src/` 内の他のディレクトリは無視される。あとは、隠れディレクトリも無視される。
 
@@ -52,11 +50,9 @@ sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（�
 `project` には `.scala` ファイルを含むことができ、それは `.sbt` ファイルと
 組み合わさって一つのビルド定義を構成する。詳しくは、[.scala ビルド定義](../full-def)を参照。
 
-```text
-  build.sbt
-  project/
-    Build.scala
-```
+    build.sbt
+    project/
+      Build.scala
 
 `project` 内に `.sbt` があるのを見ることがあるかもしれないけど、それはプロジェクトの
 ベースディレクトリ下の `.sbt` とは別物だ。これに関しても、他に前提となる知識が必要なので、
@@ -70,9 +66,7 @@ sbt はデフォルトで [Maven] と同じディレクトリ構造を使う（�
 
 君の `.gitignore` （もしくは、他のバージョン管理システムの同様のファイル）は以下を含むべきだ:
 
-```text
-  target/
-```
+    target/
 
 これは（ディレクトリだけにマッチさせるために）語尾の `/` はつけているけど、
 （普通の `target/` に加えて `project/target/` にもマッチさせるために）先頭の `/` は意図して
