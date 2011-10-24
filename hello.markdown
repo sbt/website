@@ -13,7 +13,7 @@ layout: default
 
 一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、作って実行してみよう:
 
-```text
+<pre>
   $ mkdir hello
   $ cd hello
   $ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
@@ -22,7 +22,7 @@ layout: default
   > run
   ...
   Hi!
-```
+</pre>
 
 この例では、sbt は純粋に convention（デフォルトの慣例）だけを使って動作している。
 sbt は以下を自動的に検知する:
@@ -45,13 +45,13 @@ sbt は以下を自動的に検知する:
 
 例えば、君のプロジェクトが `hello` ディレクトリにあるなら、`hello/build.sbt` をこんな感じで書く:
 
-```scala
+<pre>
 name := "hello"
-
+    
 version := "1.0"
-
+    
 scalaVersion := "2.9.1"
-```
+</pre>
 
 [.sbt ビルド定義](../basic-def)で、`build.sbt` の書き方をもっと詳しく説明する。
 
@@ -62,9 +62,7 @@ scalaVersion := "2.9.1"
 `hello/project/build.properties` というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:
 
-```text
-sbt.version=0.11.0
-```
+    sbt.version=0.11.0
 
 0.10 以降は、sbt はリリース間で 99% ソースの互換性を持たせてある。
 だけど、sbt バージョンを `project/build.properties` に設定することで混乱を予防することできる。

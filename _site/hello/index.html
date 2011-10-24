@@ -28,17 +28,17 @@
 
 <p>一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、作って実行してみよう:</p>
 
-<p>```text
+<pre>
   $ mkdir hello
   $ cd hello
   $ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
   $ sbt
-  ...</p>
-
-<blockquote><p>run
+  ...
+  > run
   ...
   Hi!
-```</p></blockquote>
+</pre>
+
 
 <p>この例では、sbt は純粋に convention（デフォルトの慣例）だけを使って動作している。
 sbt は以下を自動的に検知する:</p>
@@ -64,13 +64,14 @@ sbt は以下を自動的に検知する:</p>
 
 <p>例えば、君のプロジェクトが <code>hello</code> ディレクトリにあるなら、<code>hello/build.sbt</code> をこんな感じで書く:</p>
 
-<p>```scala
-name := "hello"</p>
+<pre>
+name := "hello"
+    
+version := "1.0"
+    
+scalaVersion := "2.9.1"
+</pre>
 
-<p>version := "1.0"</p>
-
-<p>scalaVersion := "2.9.1"
-```</p>
 
 <p><a href="../basic-def">.sbt ビルド定義</a>で、<code>build.sbt</code> の書き方をもっと詳しく説明する。</p>
 
@@ -81,9 +82,8 @@ name := "hello"</p>
 <p><code>hello/project/build.properties</code> というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:</p>
 
-<p><code>text
-sbt.version=0.11.0
-</code></p>
+<pre><code>sbt.version=0.11.0
+</code></pre>
 
 <p>0.10 以降は、sbt はリリース間で 99% ソースの互換性を持たせてある。
 だけど、sbt バージョンを <code>project/build.properties</code> に設定することで混乱を予防することできる。</p>

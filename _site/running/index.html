@@ -29,19 +29,16 @@
 
 <p>プロジェクトのディレクトリで、sbt を引数なしで実行する:</p>
 
-<p><code>text
-$ sbt
-</code></p>
+<pre><code>$ sbt
+</code></pre>
 
 <p>sbt をコマンドライン引数なしで実行するとインタラクティブモードが開始する。
 インタラクティブモードにはコマンドプロンプト（とタブ補完と履歴も！）がある。</p>
 
 <p>例えば、<code>compile</code> と sbt プロンプトに打ち込む:</p>
 
-<p>```text</p>
-
-<blockquote><p>compile
-```</p></blockquote>
+<pre><code>&gt; compile
+</code></pre>
 
 <p>もう一度 <code>compile</code> するには、上矢印を押して、エンターを押す。</p>
 
@@ -55,9 +52,8 @@ $ sbt
 引数を取る sbt コマンドに関しては、コマンドと引数の両方を引用符で囲むことで一つの引数として <code>sbt</code> に渡す。
 例えば、</p>
 
-<p><code>text
-$ sbt clean compile "test-only TestA TestB"
-</code></p>
+<pre><code>$ sbt clean compile "test-only TestA TestB"
+</code></pre>
 
 <p>この例では、<code>test-only</code> は <code>TestA</code> と <code>TestB</code> の二つの引数を取る。
 アクションは順に実行される（<code>clean</code>、<code>compile</code>、そして <code>test-only</code>）。</p>
@@ -70,10 +66,8 @@ sbt を使って自動的に再コンパイルすることができる。</p>
 <p>ソースファイルが変更されたことを検知してアクションを実行するには、
 アクションの先頭に <code>~</code> を書く。例えば、インタラクティブモードで、これを試してみよう:</p>
 
-<p>```text</p>
-
-<blockquote><p>~ compile
-```</p></blockquote>
+<pre><code>&gt; ~ compile
+</code></pre>
 
 <p>エンターを押すと、変更の監視を中止できる。</p>
 
