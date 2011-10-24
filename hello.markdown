@@ -3,11 +3,11 @@ title: Hello, World
 layout: default
 ---
 
-[[前|Setup]] _始める sbt 3/14 ページ_ [[次|Directories]]
-
 # Hello, World
 
-このページは、君が[[sbt をインストール|Setup]]したことを前提にする。
+[前](../setup) _始める sbt 3/14 ページ_ [次](../directories)
+
+このページは、君が[sbt をインストール](../setup)したことを前提にする。
 
 ## ソースコードの入ったプロジェクトディレクトリを作る
 
@@ -53,7 +53,7 @@ version := "1.0"
 scalaVersion := "2.9.1"
 ```
 
-[[.sbt ビルド定義|Basic Def]]で、`build.sbt` の書き方をもっと詳しく説明する。
+[.sbt ビルド定義](../basic-def)で、`build.sbt` の書き方をもっと詳しく説明する。
 
 君のプロジェクトを jar ファイルにパッケージ化する予定なら、最低でも `build.sbt` に name と version は書いておこう。
 
@@ -71,4 +71,4 @@ sbt.version=0.11.0
 
 # 続いては
 
-sbt プロジェクトの[[ファイルとディレクトリのレイアウト|Directories]]についてみてみよう。
+sbt プロジェクトの[ファイルとディレクトリのレイアウト](../directories)についてみてみよう。
