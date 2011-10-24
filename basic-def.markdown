@@ -1,5 +1,5 @@
 ---
-title: .sbt ビルド定義
+title: basic def
 layout: default
 ---
 

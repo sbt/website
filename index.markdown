@@ -1,7 +1,8 @@
 ---
-title: ようこそ!
+title: welcome
 layout: default
 ---
+
 # ようこそ!
 
 _初めての sbt 1/14 ページ_ [[次|Setup]]
