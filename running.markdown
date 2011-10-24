@@ -5,10 +5,10 @@ layout: default
 
 # 実行
 
-[[前|Directories]] _始める sbt 5/14 ページ_ [[次|Basic Def]]
+[前](../directories) _始める sbt 5/14 ページ_ [次](../basic-def)
 
 このページではプロジェクトをセットアップした後の `sbt` の使い方を説明する。
-君が[[sbt をインストール|Setup]]して、[[Hello, World|Hello]]か他のプロジェクトを作ったことを前提にする。
+君が[sbt をインストール](../setup)して、[Hello, World](../hello)か他のプロジェクトを作ったことを前提にする。
 
 ## インタラクティブモード
 
@@ -118,4 +118,4 @@ sbt の特殊な慣例として、タブを一度押すとよく使われる候�
 
 ## 続いては
 
-[[build.sbt を理解する|Basic Def]]。
+[build.sbt を理解する](../basic-def)。
