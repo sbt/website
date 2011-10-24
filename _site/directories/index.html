@@ -37,26 +37,23 @@
 
 <p>sbt はデフォルトで <a href="http://maven.apache.org/">Maven</a> と同じディレクトリ構造を使う（全てのパスはベースディレクトリからの相対パスとする）:</p>
 
-<p>```text
-  src/</p>
-
-<pre><code>main/
-  resources/
-     &lt;メインの jar に含むファイル&gt;
-  scala/
-     &lt;メインの Scala ソース&gt;
-  java/
-     &lt;メインの Java ソース&gt;
-test/
-  resources/
-     &lt;テストの jar に含むファイル&gt;
-  scala/
-     &lt;テストの Scala ソース&gt;
-  java/
-     &lt;テストの Java ソース&gt;
-</code></pre>
-
-<p>```</p>
+<p><code>text
+  src/
+    main/
+      resources/
+         &lt;メインの jar に含むファイル&gt;
+      scala/
+         &lt;メインの Scala ソース&gt;
+      java/
+         &lt;メインの Java ソース&gt;
+    test/
+      resources/
+         &lt;テストの jar に含むファイル&gt;
+      scala/
+         &lt;テストの Scala ソース&gt;
+      java/
+         &lt;テストの Java ソース&gt;
+</code></p>
 
 <p><code>src/</code> 内の他のディレクトリは無視される。あとは、隠れディレクトリも無視される。</p>
 
@@ -68,14 +65,11 @@ test/
 <p><code>project</code> には <code>.scala</code> ファイルを含むことができ、それは <code>.sbt</code> ファイルと
 組み合わさって一つのビルド定義を構成する。詳しくは、<a href="../full-def">.scala ビルド定義</a>を参照。</p>
 
-<p>```text
+<p><code>text
   build.sbt
-  project/</p>
-
-<pre><code>Build.scala
-</code></pre>
-
-<p>```</p>
+  project/
+    Build.scala
+</code></p>
 
 <p><code>project</code> 内に <code>.sbt</code> があるのを見ることがあるかもしれないけど、それはプロジェクトの
 ベースディレクトリ下の <code>.sbt</code> とは別物だ。これに関しても、他に前提となる知識が必要なので、

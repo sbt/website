@@ -38,13 +38,12 @@
 <li>サブプロジェクトを定義する</li>
 </ul>
 
-
 <p>このページでは <code>.sbt</code> ファイルの説明をする。<code>.scala</code> ファイルの詳細と、それがどう <code>.sbt</code> に絡んでくるかに関しては、
 （このガイドの後ほどの）[[.scala ビルド定義|Full Def]] を参照。</p>
 
 <h2>ビルド定義って何？</h2>
 
-<p><strong> ここは読んで下さい </strong></p>
+<p>** ここは読んで下さい **</p>
 
 <p>プロジェクトを調べ、全てのビルド定義ファイルを処理した後、sbt は、ビルドを記述した不可変マップ（キーと値のペア）を最終的に作る。</p>
 
@@ -60,10 +59,10 @@
 <p><code>build.sbt</code> では、プロジェクト名の <code>Setting[String]</code> を以下のように作る:</p>
 
 <p><code>scala
-name := "hello"
+name := &quot;hello&quot;
 </code></p>
 
-<p>この <code>Setting[String]</code> は <code>name</code> キーを追加（もしくは置換）して <code>"hello"</code> という値に設定することでマップを変換する。
+<p>この <code>Setting[String]</code> は <code>name</code> キーを追加（もしくは置換）して <code>&quot;hello&quot;</code> という値に設定することでマップを変換する。
 変換されたマップは新しい sbt のマップとなる。</p>
 
 <p>マップを作るために、sbt はまず、同じキーへの変更が一緒に起き、かつ他のキーに依存する値の処理が依存するキーの後にくるように <code>Setting</code> のリストをソートする。
@@ -76,11 +75,11 @@ name := "hello"
 <p>以下に具体例で説明しよう:</p>
 
 <p>```scala
-name := "hello"</p>
+name := &quot;hello&quot;</p>
 
-<p>version := "1.0"</p>
+<p>version := &quot;1.0&quot;</p>
 
-<p>scalaVersion := "2.9.1"
+<p>scalaVersion := &quot;2.9.1&quot;
 ```</p>
 
 <p><code>build.sbt</code> は、空行で分けられた <code>Setting</code> のリストだ。それぞれの <code>Setting</code> は Scala の式で表される。</p>
@@ -96,14 +95,14 @@ name := "hello"</p>
 Java 的な構文でこのメソッドを呼び出すこともできる:</p>
 
 <p><code>scala
-name.:=("hello")
+name.:=(&quot;hello&quot;)
 </code></p>
 
-<p>だけど、Scala では <code>name := "hello"</code> と書ける（Scala では全てのメソッドがどちらの構文でも書ける）。</p>
+<p>だけど、Scala では <code>name := &quot;hello&quot;</code> と書ける（Scala では全てのメソッドがどちらの構文でも書ける）。</p>
 
 <p><code>name</code> キーの <code>:=</code> メソッドは <code>Setting</code> を返すが、特に <code>Setting[String]</code> を返す。
 <code>String</code> は、<code>name</code> の型にもあらわれ、これは、<code>SettingKey[String]</code> となっている。
-この場合、返された <code>Setting[String]</code> は、キーを追加（もしくは置換）して <code>"hello"</code> という値に設定するマップの変換だ。</p>
+この場合、返された <code>Setting[String]</code> は、キーを追加（もしくは置換）して <code>&quot;hello&quot;</code> という値に設定するマップの変換だ。</p>
 
 <p>間違った型の値を使うと、ビルド定義はコンパイルしない:</p>
 
@@ -140,7 +139,6 @@ name := 42  // コンパイルしない
 [[Input Tasks]] を読んでみよう。</li>
 </ul>
 
-
 <p><code>TaskKey[T]</code> は、<em>タスク</em>を定義しているといわれる。タスクは、<code>compile</code> や <code>packae</code> のような作業だ。
 タスクは <code>Unit</code> を返すかもしれないし（<code>Unit</code> は、Scala での <code>void</code> だ）、
 タスクに関連した値を返すかもしれない。例えば、<code>package</code> は作成した jar ファイルを値として返す <code>TaskKey[File]</code> だ。</p>
@@ -158,7 +156,7 @@ name := 42  // コンパイルしない
 <p><code>:=</code> を使うことで、タスクに任意の演算を代入することができ、その演算は毎回再実行される:</p>
 
 <p><code>scala
-hello := { println("Hello!") }
+hello := { println(&quot;Hello!&quot;) }
 </code></p>
 
 <p>型システムの視点から考えると、タスクキー (task key) から作られた <code>Setting</code> は、セッティングキー (setting key) から作られたそれとは少し異なるものだ。
@@ -179,12 +177,12 @@ hello := { println("Hello!") }
 タスクの戻り値を表示するには素の <code>&lt;タスク名&gt;</code> ではなく、<code>show &lt;タスク名&gt;</code> と入力する。</p>
 
 <p>Scala の慣例にのっとり、ビルド定義ファイル内ではキーはキャメルケース（<code>camelCase</code>）で命名されているけども、
-sbt コマンドラインではハイフン分けされて（<code>hyphen-separated-words</code>）命名されている。<br/>
+sbt コマンドラインではハイフン分けされて（<code>hyphen-separated-words</code>）命名されている。<br>
 sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（<a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html">Keys</a> 参照）。
 例えば、<code>Keys.scala</code> に以下のキーがある:</p>
 
 <p><code>scala
-val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
+val scalacOptions = TaskKey[Seq[String]](&quot;scalac-options&quot;, &quot;Options for the Scala compiler.&quot;)
 </code></p>
 
 <p>sbt では <code>scalac-options</code> と打ち込むけど、ビルド定義ファイルでは <code>scalacOptions</code> を使う。</p>
@@ -214,7 +212,7 @@ import Keys._
 第二はマネージ依存性（managed dependency）を加えることで、<code>build.sbt</code> ではこのようになる:</p>
 
 <p><code>scala
-libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
 </code></p>
 
 <p>これで Apache Derby ライブラリのバージョン 10.4.1.3 へのマネージ依存性を加えることができた。</p>

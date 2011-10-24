@@ -33,12 +33,10 @@
 <ul>
 <li>ソースファイルの入ったプロジェクトディレクトリを作る。</li>
 <li>ビルド定義を作る。</li>
-</ul>
-</li>
+</ul></li>
 <li><a href="../running">実行する</a>を読んで、sbt の走らせ方を覚える。</li>
 <li><a href="../basic-def">.sbt ビルド定義</a>を読んで、ビルド定義についてもっと詳しく習う。</li>
 </ul>
-
 
 <h1>sbt のインストール</h1>
 
@@ -51,7 +49,7 @@
 <p>以下の内容を、<code>sbt</code> という名前のファイルに書いて <code>~/bin</code> に置けば、jar を実行するスクリプトのできあがり:</p>
 
 <p><code>text
-java -Xmx512M -jar `dirname $0`/sbt-launch.jar "$@"
+java -Xmx512M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
 </code></p>
 
 <p>スクリプトを実行ファイルにする:</p>
@@ -66,7 +64,7 @@ $ chmod u+x ~/bin/sbt
 
 <p><code>text
 set SCRIPT_DIR=%~dp0
-java -Xmx512M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
 </code></p>
 
 <p>次に、<a href="http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.11.0/sbt-launch.jar">sbt-launch.jar</a> をバッチファイルと同じディレクトリにダウンロードしてくる。コマンドプロンプト上でどのディレクトリからでも <code>sbt</code> と打てば <code>sbt</code> が実行できるように <code>sbt.bat</code> にパスを通す。</p>
