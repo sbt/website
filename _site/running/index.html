@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>始める sbt - 実行</title>
+    <link href="/shared/css/documentation.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/shared/css/pygments.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="/shared/js/jquery.js" type="text/javascript"></script>
+    <script src="/shared/js/documentation.js" type="text/javascript"></script>
+  </head>
+  
+  <body>
+    <div id="main">
+      <div id="header-wrapper">
+        <div id="header" class="basic" >
+        </div>
+      </div>
+      <div id="wrapper">
+        <div id="content" class="site">
+
+          <h1>実行</h1>
+
+<p>[[前|Directories]] <em>始める sbt 5/14 ページ</em> [[次|Basic Def]]</p>
+
+<p>このページではプロジェクトをセットアップした後の <code>sbt</code> の使い方を説明する。
+君が[[sbt をインストール|Setup]]して、[[Hello, World|Hello]]か他のプロジェクトを作ったことを前提にする。</p>
+
+<h2>インタラクティブモード</h2>
+
+<p>プロジェクトのディレクトリで、sbt を引数なしで実行する:</p>
+
+<p><code>text
+$ sbt
+</code></p>
+
+<p>sbt をコマンドライン引数なしで実行するとインタラクティブモードが開始する。
+インタラクティブモードにはコマンドプロンプト（とタブ補完と履歴も！）がある。</p>
+
+<p>例えば、<code>compile</code> と sbt プロンプトに打ち込む:</p>
+
+<p>```text</p>
+
+<blockquote><p>compile
+```</p></blockquote>
+
+<p>もう一度 <code>compile</code> するには、上矢印を押して、エンターを押す。</p>
+
+<p>君のプログラムを実行するには、<code>run</code> と打ち込む。</p>
+
+<p>インタラクティブモードを終了するには、<code>exit</code> と打ち込むか、Ctrl+D (Unix) か Ctrl+Z (Windows) を用いる。</p>
+
+<h2>バッチモード</h2>
+
+<p>sbt アクションを空白で区切られたリストとして引数に渡すことで、sbt をバッチモードで実行することができる。
+引数を取る sbt コマンドに関しては、コマンドと引数の両方を引用符で囲むことで一つの引数として <code>sbt</code> に渡す。
+例えば、</p>
+
+<p><code>text
+$ sbt clean compile "test-only TestA TestB"
+</code></p>
+
+<p>この例では、<code>test-only</code> は <code>TestA</code> と <code>TestB</code> の二つの引数を取る。
+アクションは順に実行される（<code>clean</code>、<code>compile</code>、そして <code>test-only</code>）。</p>
+
+<h2>継続的ビルドとテスト</h2>
+
+<p>編集-コンパイル-テストのサイクルを速めるために、ソースファイルを保存するたびに
+sbt を使って自動的に再コンパイルすることができる。</p>
+
+<p>ソースファイルが変更されたことを検知してアクションを実行するには、
+アクションの先頭に <code>~</code> を書く。例えば、インタラクティブモードで、これを試してみよう:</p>
+
+<p>```text</p>
+
+<blockquote><p>~ compile
+```</p></blockquote>
+
+<p>エンターを押すと、変更の監視を中止できる。</p>
+
+<p>先頭の <code>~</code> はインタラクティブモードでもバッチモードでも使うことができる。</p>
+
+<p>詳しくは、[[Triggered Execution]]参照。</p>
+
+<h2>よく使われるアクション</h2>
+
+<p>以下に、最もよく使われる sbt コマンドを紹介する。より完全な一覧は [[Command Line Reference]] にある。</p>
+
+<ul>
+<li><code>clean</code>
+全ての生成されたファイル（<code>target</code> ディレクトリ）を削除する。</li>
+<li><code>compile</code>
+（<code>src/main/scala</code> ディレクトリにある）メインのソースをコンパイルする。</li>
+<li><code>test</code>
+全てのテストをコンパイルし実行する。</li>
+<li><code>console</code>
+コンパイル済みソースと依存ライブラリにクラスパスを通して、Scala インタプリタを開始する。
+sbt に戻るには、<code>:quit</code> と打ち込むか、Ctrl+D (Unix) か Ctrl+Z (Windows) を使う。</li>
+<li><code>run &lt;argument&gt;*</code>
+<code>sbt</code> と同じ仮想マシン上で、プロジェクトのメインクラスを実行する。</li>
+<li><code>package</code>
+<code>src/main/resources</code> 内のファイルと <code>src/main/scala</code> からコンパイルされたクラスを含む jar を作る。</li>
+<li><code>help &lt;command&gt;</code>
+指定されたコマンドの詳しい説明を表示する。コマンドが指定されていない場合は、
+全てのコマンドの簡単な説明を表示する。</li>
+<li><code>reload</code>
+ビルド定義（<code>build.sbt</code>、<code>project/*.scala</code>、<code>project/*.sbt</code> ファイル）を再読み込みする。
+ビルド定義を変更した場合に必要。</li>
+</ul>
+
+
+<h2>タブ補完</h2>
+
+<p>インタラクティブモードには、空のプロンプトの状態を含め、タブ補完がある。
+sbt の特殊な慣例として、タブを一度押すとよく使われる候補だけが表示され、
+複数回押すと、より回りくどい候補が表示される。</p>
+
+<h2>履歴コマンド</h2>
+
+<p>インタラクティブモードは、たとえ sbt を終了して再起動した後でも履歴を覚えている。
+履歴にアクセスする最も簡単な方法は矢印キーを使うことだ。以下のコマンドも使うことができる:</p>
+
+<ul>
+<li><code>!</code>
+履歴コマンドのヘルプを表示する。</li>
+<li><code>!!</code>
+直前のコマンドを再実行する。</li>
+<li><code>!:</code>
+全てのコマンド履歴を表示する。</li>
+<li><code>!:n</code>
+最後の n コマンドを表示する。</li>
+<li><code>!n</code>
+<code>!:</code> で表示されたインデックス <code>n</code> のコマンドを実行する。</li>
+<li><code>!-n</code>
+n個前のコマンドを実行する。</li>
+<li><code>!string</code>
+　'string' から始まる最近のコマンドを実行する。</li>
+<li><code>!?string</code>
+'string' を含む最近のコマンドを実行する。</li>
+</ul>
+
+
+<h2>続いては</h2>
+
+<p>[[build.sbt を理解する|Basic Def]]。</p>
+
+
+        </div>
+      </div>
+    </div>
+
+     <div id="footer" >
+    </div><!-- /#footer -->
+  </body>
+</html>

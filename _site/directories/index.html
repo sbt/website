@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>始める sbt - ディレクトリ構造</title>
+    <link href="/shared/css/documentation.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="/shared/css/pygments.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="/shared/js/jquery.js" type="text/javascript"></script>
+    <script src="/shared/js/documentation.js" type="text/javascript"></script>
+  </head>
+  
+  <body>
+    <div id="main">
+      <div id="header-wrapper">
+        <div id="header" class="basic" >
+        </div>
+      </div>
+      <div id="wrapper">
+        <div id="content" class="site">
+
+          <h1>ディレクトリ構造</h1>
+
+<p>[[前|Hello]] <em>始める sbt 4/14 ページ</em> [[次|Running]]</p>
+
+<p>このページは、君が[[sbt をインストール|Setup]]して、[[Hello, World|Hello]]を見たことを前提にする。</p>
+
+<h2>ベースディレクトリ</h2>
+
+<p>sbt 用語では「ベースディレクトリ」(base directory) はプロジェクトが入ったディレクトリを指す。
+[[Hello, World|Hello]] での例のように、<code>hello/build.sbt</code> と <code>hello/hw.scala</code> が入った
+<code>hello</code> プロジェクトを作ったとすると、ベースディレクトリは <code>hello</code> だ。</p>
+
+<h2>ソースコード</h2>
+
+<p>ソースコードは <code>hello/hw.scala</code> のようにプロジェクトのベースディレクトリに置くこともできる。
+だけど、ほとんどの人は、本物のプロジェクトではそうしない。ゴチャゴチャしすぎるからね。</p>
+
+<p>sbt はデフォルトで <a href="http://maven.apache.org/">Maven</a> と同じディレクトリ構造を使う（全てのパスはベースディレクトリからの相対パスとする）:</p>
+
+<p>```text
+  src/</p>
+
+<pre><code>main/
+  resources/
+     &lt;メインの jar に含むファイル&gt;
+  scala/
+     &lt;メインの Scala ソース&gt;
+  java/
+     &lt;メインの Java ソース&gt;
+test/
+  resources/
+     &lt;テストの jar に含むファイル&gt;
+  scala/
+     &lt;テストの Scala ソース&gt;
+  java/
+     &lt;テストの Java ソース&gt;
+</code></pre>
+
+<p>```</p>
+
+<p><code>src/</code> 内の他のディレクトリは無視される。あとは、隠れディレクトリも無視される。</p>
+
+<h2>sbt ビルド定義ファイル</h2>
+
+<p>プロジェクトのベースディレクトリに <code>build.sbt</code> があるのはもう分かった。
+他の sbt 関連のファイルは　<code>project</code> サブディレクトリに置かれる。</p>
+
+<p><code>project</code> には <code>.scala</code> ファイルを含むことができ、それは <code>.sbt</code> ファイルと
+組み合わさって一つのビルド定義を構成する。詳しくは、[[.scala ビルド定義|Full Def]]を参照。</p>
+
+<p>```text
+  build.sbt
+  project/</p>
+
+<pre><code>Build.scala
+</code></pre>
+
+<p>```</p>
+
+<p><code>project</code> 内に <code>.sbt</code> があるのを見ることがあるかもしれないけど、それはプロジェクトの
+ベースディレクトリ下の <code>.sbt</code> とは別物だ。これに関しても、他に前提となる知識が必要なので、
+[[後で説明する|Full Def]]。</p>
+
+<h2>ビルド成果物</h2>
+
+<p>生成されたファイル（コンパイルされたクラス、パッケージ化された jar ファイル、マネージファイル、キャッシュ、とドキュメンテーション）は、デフォルトで <code>target</code> ディレクトリに置かれる。</p>
+
+<h2>バージョン管理の設定</h2>
+
+<p>君の <code>.gitignore</code> （もしくは、他のバージョン管理システムの同様のファイル）は以下を含むべきだ:</p>
+
+<p><code>text
+  target/
+</code></p>
+
+<p>これは（ディレクトリだけにマッチさせるために）語尾の <code>/</code> はつけているけど、
+（普通の <code>target/</code> に加えて <code>project/target/</code> にもマッチさせるために）先頭の <code>/</code> は意図して
+つけていないことに注意。</p>
+
+<h1>続いては</h1>
+
+<p>[[sbt の実行|Running]]について。</p>
+
+
+        </div>
+      </div>
+    </div>
+
+     <div id="footer" >
+    </div><!-- /#footer -->
+  </body>
+</html>
