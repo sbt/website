@@ -18,18 +18,15 @@
       <div id="wrapper">
         <div id="content" class="site">
 
-          <p>http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
-"Maven scopes"</p>
+          <h1>スコープ</h1>
 
-<h1>スコープ</h1>
+<p><a href="../basic-def">前</a> <em>始める sbt 7/14 ページ</em> <a href="../more-about-settings">次</a></p>
 
-<p>[[前|Basic Def]] <em>始める sbt 7/14 ページ</em> [[次|About Settings]]</p>
-
-<p>このページではスコープの説明をする。君が、前のページの [[.sbt ビルド定義|Basic Def]]を読んで理解したことを前提とする。</p>
+<p>このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義(../basic-def)を読んで理解したことを前提とする。</p>
 
 <h2>キーに関する本当の話</h2>
 
-<p>[[このまでは|Basic Def]]、あたかも <code>name</code> のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
+<p><a href="../basic-def">これまでは</a>、あたかも <code>name</code> のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
 それは単純化した話だ。</p>
 
 <p>実のところは、全てのキーは、「スコープ」と呼ばれる文脈に関連付けられた値を複数もつことができる。</p>
@@ -47,7 +44,7 @@
 
 <p>しかし、<em>スコープ付き</em>キーには単一の値が存在する。</p>
 
-<p>[[これまで見てきた|Basic Def]]ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、<em>スコープ付き</em>キーであることが分かる。
+<p><a href="../basic-def">これまで見てきた</a>ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、<em>スコープ付き</em>キーであることが分かる。
 また、（<code>build.sbt</code> などの）ビルド定義内の、セッティングもスコープ付きキーに適用されるものだ。</p>
 
 <p>スコープは、デフォルトがあったり、暗示されていたりするが、デフォルトが間違っていれば <code>build.sbt</code> にてスコープを指定しなければいけない。</p>
@@ -68,7 +65,7 @@
 
 <h3>プロジェクト軸によるスコープ付け</h3>
 
-<p>[[一つのビルドに複数のプロジェクトを入れる|Multi-Project]]場合、それぞれのプロジェクトにセッティングが必要だ。
+<p><a href="../multi-project">一つのビルドに複数のプロジェクトを入れる</a>場合、それぞれのプロジェクトにセッティングが必要だ。
 つまり、キーはプロジェクトによりスコープ付けされる。</p>
 
 <p>プロジェクト軸は「ビルド全体」に設定することもでき、その場合はセッティングは単一のプロジェクトではなくビルド全体に適用される。
@@ -77,7 +74,7 @@
 <h3>コンフィグレーション軸によるスコープ付け</h3>
 
 <p><em>コンフィグレーション</em>（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
-コンフィグレーションの概念は、sbt が [[マネージ依存性|Library Dependencies]] に使っている Ivy と、<a href="">MavenScopes</a> に由来する。</p>
+コンフィグレーションの概念は、sbt が <a href="../library-dependencies">マネージ依存性</a> に使っている Ivy と、<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a> に由来する。</p>
 
 <p>sbt で使われるコンフィグレーションには以下のものがある:</p>
 
@@ -125,9 +122,8 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 
 <p>コマンドラインとインタラクティブモードにおいて、sbt はスコープ付きキーを以下のように表示し（パースする）:</p>
 
-<p><code>text
-{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;/コンフィグレーション:キー(for タスクキー)
-</code></p>
+<pre><code>{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;/コンフィグレーション:キー(for タスクキー)
+</code></pre>
 
 <ul>
 <li><code>{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;</code> は、プロジェクト軸を特定する。&lt;プロジェクト-id> がなければ、プロジェクト軸は「ビルド全体」スコープとなる。</li>
@@ -155,10 +151,9 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 <p>sbt のインタラクティブモード内で <code>inspect</code> コマンドを使ってキーとそのスコープを理解することができる。
 例えば、<code>inspect test:full-classpath</code> と試してみよう:</p>
 
-<p>```text
-$ sbt</p>
-
-<blockquote><p>inspect test:full-classpath
+<pre>
+$ sbt
+> inspect test:full-classpath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
@@ -176,21 +171,22 @@ $ sbt</p>
 [info]  test:full-classpath
 [info]  runtime:full-classpath
 [info]  compile:full-classpath
-[info]  <em>:full-classpath
+[info]  *:full-classpath
 [info]  {.}/test:full-classpath
 [info]  {.}/runtime:full-classpath
 [info]  {.}/compile:full-classpath
-[info]  {.}/</em>:full-classpath
-[info]  <em>/test:full-classpath
-[info]  </em>/runtime:full-classpath
-[info]  <em>/compile:full-classpath
-[info]  </em>/*:full-classpath
+[info]  {.}/*:full-classpath
+[info]  */test:full-classpath
+[info]  */runtime:full-classpath
+[info]  */compile:full-classpath
+[info]  */*:full-classpath
 [info] Related:
 [info]  compile:full-classpath
 [info]  compile:full-classpath(for doc)
 [info]  test:full-classpath(for doc)
 [info]  runtime:full-classpath
-```</p></blockquote>
+</pre>
+
 
 <p>一行目からこれが（[[.sbt ビルド定義|Basic Def]] で説明されているとおり、セッティングではなく）タスクであることが分かる。
 このタスクの戻り値は <code>scala.collection.Seq[sbt.Attributed[java.io.File]]</code> の型をとる。</p>
@@ -226,9 +222,8 @@ $ sbt</p>
 
 <p><code>build.sbt</code> で裸のキーを使ってセッティングを作った場合は、現プロジェクト、<code>Global</code> コンフィグレーション、<code>Global</code> タスクにスコープ付けされる:</p>
 
-<p><code>scala
-name := "hello"
-</code></p>
+<pre><code>name := "hello"
+</code></pre>
 
 <p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィグレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。</p>
 
@@ -239,27 +234,23 @@ name := "hello"
 <code>in</code> への引数として、どのスコープ軸のインスタンスでも渡すことができる。
 これをやる意味は全くないけど、例として <code>Compile</code> コンフィグレーションでスコープ付けされた <code>name</code> の設定を以下に示す:</p>
 
-<p><code>scala
-name in Compile := "hello"
-</code></p>
+<pre><code>name in Compile := "hello"
+</code></pre>
 
 <p>また、<code>package-bin</code> タスクでスコープ付けされた <code>name</code> の設定（これも意味なし！ただの例だよ）:</p>
 
-<p><code>scala
-name in packageBin := "hello"
-</code></p>
+<pre><code>name in packageBin := "hello"
+</code></pre>
 
 <p>もしくは、例えば <code>Compile</code> コンフィグレーションの <code>packageBin</code> の <code>name</code> など、複数のスコープ軸でスコープ付けする:</p>
 
-<p><code>scala
-name in (Compile, packageBin) := "hello"
-</code></p>
+<pre><code>name in (Compile, packageBin) := "hello"
+</code></pre>
 
 <p>もしくは、全ての軸に対して <code>Global</code> を使う:</p>
 
-<p><code>scala
-name in Global := "hello"
-</code></p>
+<pre><code>name in Global := "hello"
+</code></pre>
 
 <p>（<code>name in Global</code>  は、スコープ軸である <code>Global</code> を全ての軸を <code>Global</code> に設定したスコープに暗黙の変換が行われる。
 タスクとコンフィギュレーションは既にデフォルトで <code>Global</code> であるため、事実上行なっているのはプロジェクトを <code>Global</code> に指定することだ。つまり、<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> ではなく、<code>*/*:name</code> が定義される。）</p>
@@ -267,9 +258,8 @@ name in Global := "hello"
 <p>Scala に慣れていない場合に注意して欲しいのは、<code>in</code> や <code>:=</code> はただのメソッドであって、魔法ではないということだ。
 Scala ではキレイに書くことができるけど、Java 風に以下のようにも書き下すこともできる:</p>
 
-<p><code>scala
-name.in(Compile).:=("hello")
-</code></p>
+<pre><code>name.in(Compile).:=("hello")
+</code></pre>
 
 <p>こんな醜い構文で書く必要は一切無いけど、これらが実際にメソッドであることを示している。</p>
 
@@ -294,7 +284,7 @@ name.in(Compile).:=("hello")
 
 <h2>続いて</h2>
 
-<p>スコープを理解したから、[[セッティングについてさらに深く|More About Settings]]理解することができる。</p>
+<p>スコープを理解したから、<a href="../more-about-settings">セッティングについてさらに深く</a>理解することができる。</p>
 
 
         </div>

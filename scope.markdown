@@ -3,19 +3,17 @@ title: スコープ
 layout: default
 ---
 
-[MavenScopes]:
-http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
-"Maven scopes"
+[MavenScopes]: http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
 
 # スコープ
 
-[[前|Basic Def]] _始める sbt 7/14 ページ_ [[次|About Settings]]
+[前](../basic-def) _始める sbt 7/14 ページ_ [次](../more-about-settings)
 
-このページではスコープの説明をする。君が、前のページの [[.sbt ビルド定義|Basic Def]]を読んで理解したことを前提とする。
+このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義(../basic-def)を読んで理解したことを前提とする。
 
 ## キーに関する本当の話
 
-[[このまでは|Basic Def]]、あたかも `name` のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
+[これまでは](../basic-def)、あたかも `name` のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
 それは単純化した話だ。
 
 実のところは、全てのキーは、「スコープ」と呼ばれる文脈に関連付けられた値を複数もつことができる。
@@ -30,7 +28,7 @@ http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism
 
 しかし、_スコープ付き_キーには単一の値が存在する。
 
-[[これまで見てきた|Basic Def]]ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、_スコープ付き_キーであることが分かる。
+[これまで見てきた](../basic-def)ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、_スコープ付き_キーであることが分かる。
 また、（`build.sbt` などの）ビルド定義内の、セッティングもスコープ付きキーに適用されるものだ。
 
 スコープは、デフォルトがあったり、暗示されていたりするが、デフォルトが間違っていれば `build.sbt` にてスコープを指定しなければいけない。
@@ -48,7 +46,7 @@ _スコープ軸_（scope axis）は、型であり、そのインスタンス�
 
 ### プロジェクト軸によるスコープ付け
 
-[[一つのビルドに複数のプロジェクトを入れる|Multi-Project]]場合、それぞれのプロジェクトにセッティングが必要だ。
+[一つのビルドに複数のプロジェクトを入れる](../multi-project)場合、それぞれのプロジェクトにセッティングが必要だ。
 つまり、キーはプロジェクトによりスコープ付けされる。
 
 プロジェクト軸は「ビルド全体」に設定することもでき、その場合はセッティングは単一のプロジェクトではなくビルド全体に適用される。
@@ -57,7 +55,7 @@ _スコープ軸_（scope axis）は、型であり、そのインスタンス�
 ### コンフィグレーション軸によるスコープ付け
 
 _コンフィグレーション_（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
-コンフィグレーションの概念は、sbt が [[マネージ依存性|Library Dependencies]] に使っている Ivy と、[MavenScopes] に由来する。
+コンフィグレーションの概念は、sbt が [マネージ依存性](../library-dependencies) に使っている Ivy と、[MavenScopes] に由来する。
 
 sbt で使われるコンフィグレーションには以下のものがある:
 
@@ -102,9 +100,7 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
 
 コマンドラインとインタラクティブモードにおいて、sbt はスコープ付きキーを以下のように表示し（パースする）:
 
-```text
-{<ビルド-uri>}<プロジェクト-id>/コンフィグレーション:キー(for タスクキー)
-```
+    {<ビルド-uri>}<プロジェクト-id>/コンフィグレーション:キー(for タスクキー)
 
  - `{<ビルド-uri>}<プロジェクト-id>` は、プロジェクト軸を特定する。<プロジェクト-id> がなければ、プロジェクト軸は「ビルド全体」スコープとなる。
  - `コンフィグレーション` は、コンフィグレーション軸を特定する。
@@ -126,7 +122,7 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
 sbt のインタラクティブモード内で `inspect` コマンドを使ってキーとそのスコープを理解することができる。
 例えば、`inspect test:full-classpath` と試してみよう:
 
-```text
+<pre>
 $ sbt
 > inspect test:full-classpath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
@@ -160,7 +156,7 @@ $ sbt
 [info] 	compile:full-classpath(for doc)
 [info] 	test:full-classpath(for doc)
 [info] 	runtime:full-classpath
-```
+</pre>
 
 一行目からこれが（[[.sbt ビルド定義|Basic Def]] で説明されているとおり、セッティングではなく）タスクであることが分かる。
 このタスクの戻り値は `scala.collection.Seq[sbt.Attributed[java.io.File]]` の型をとる。
@@ -193,9 +189,7 @@ $ sbt
 
 `build.sbt` で裸のキーを使ってセッティングを作った場合は、現プロジェクト、`Global` コンフィグレーション、`Global` タスクにスコープ付けされる:
 
-```scala
-name := "hello"
-```
+    name := "hello"
 
 sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/hp/checkout/hello/}default-aea33a/*:name` により提供されていることを確認しよう。つまり、プロジェクトは、`{file:/home/hp/checkout/hello/}default-aea33a` で、コンフィグレーションは `*` で、タスクは表示されていない（グローバルを指す）ということだ。
 
@@ -206,27 +200,19 @@ sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/
 `in` への引数として、どのスコープ軸のインスタンスでも渡すことができる。
 これをやる意味は全くないけど、例として `Compile` コンフィグレーションでスコープ付けされた `name` の設定を以下に示す:
 
-```scala
-name in Compile := "hello"
-```
+    name in Compile := "hello"
 
 また、`package-bin` タスクでスコープ付けされた `name` の設定（これも意味なし！ただの例だよ）:
 
-```scala
-name in packageBin := "hello"
-```
+    name in packageBin := "hello"
 
 もしくは、例えば `Compile` コンフィグレーションの `packageBin` の `name` など、複数のスコープ軸でスコープ付けする:
 
-```scala
-name in (Compile, packageBin) := "hello"
-```
+    name in (Compile, packageBin) := "hello"
 
 もしくは、全ての軸に対して `Global` を使う:
 
-```scala
-name in Global := "hello"
-```
+    name in Global := "hello"
 
 （`name in Global`  は、スコープ軸である `Global` を全ての軸を `Global` に設定したスコープに暗黙の変換が行われる。
 タスクとコンフィギュレーションは既にデフォルトで `Global` であるため、事実上行なっているのはプロジェクトを `Global` に指定することだ。つまり、`{file:/home/hp/checkout/hello/}default-aea33a/*:name` ではなく、`*/*:name` が定義される。）
@@ -234,9 +220,7 @@ name in Global := "hello"
 Scala に慣れていない場合に注意して欲しいのは、`in` や `:=` はただのメソッドであって、魔法ではないということだ。
 Scala ではキレイに書くことができるけど、Java 風に以下のようにも書き下すこともできる:
 
-```scala
-name.in(Compile).:=("hello")
-```
+    name.in(Compile).:=("hello")
 
 こんな醜い構文で書く必要は一切無いけど、これらが実際にメソッドであることを示している。
 
@@ -261,4 +245,4 @@ _"Reference to undefined setting"_ のようなエラーに遭遇した場合は
 
 ## 続いて
 
-スコープを理解したから、[[セッティングについてさらに深く|More About Settings]]理解することができる。
+スコープを理解したから、[セッティングについてさらに深く](../more-about-settings)理解することができる。

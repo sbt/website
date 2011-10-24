@@ -1,5 +1,5 @@
 ---
-title: basic def
+title: `.sbt` ビルド定義
 layout: default
 ---
 
@@ -7,10 +7,10 @@ layout: default
 
 # `.sbt` ビルド定義
 
-[[前|Running]] _始める sbt 6/14 ページ_ [[次|Scopes]]
+[前](../running) _始める sbt 6/14 ページ_ [次](../scope)
 
 このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と `build.sbt` の構文を説明する。
-君が、[[sbt の使い方|Running]]を分かっていて、「初めての sbt」の前のページも読んだことを前提とする。
+君が、[sbt の使い方](../running)を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
 
 ## `.sbt` vs. `.scala` 定義
 
@@ -24,7 +24,7 @@ sbt のビルド定義はベースディレクトリ内の `.sbt` で終わる�
  - サブプロジェクトを定義する
 
 このページでは `.sbt` ファイルの説明をする。`.scala` ファイルの詳細と、それがどう `.sbt` に絡んでくるかに関しては、
-（このガイドの後ほどの）[[.scala ビルド定義|Full Def]] を参照。
+（このガイドの後ほどの）[.scala ビルド定義](../full-def)を参照。
 
 ## ビルド定義って何？
 
@@ -44,9 +44,7 @@ _ビルド定義ファイルは直接には sbt のマップに影響を与え�
 
 `build.sbt` では、プロジェクト名の `Setting[String]` を以下のように作る:
 
-```scala
-name := "hello"
-```
+    name := "hello"
 
 この `Setting[String]` は `name` キーを追加（もしくは置換）して `"hello"` という値に設定することでマップを変換する。
 変換されたマップは新しい sbt のマップとなる。
@@ -60,13 +58,13 @@ name := "hello"
 
 以下に具体例で説明しよう:
 
-```scala
+<pre>
 name := "hello"
 
 version := "1.0"
 
 scalaVersion := "2.9.1"
-```
+</pre>
 
 `build.sbt` は、空行で分けられた `Setting` のリストだ。それぞれの `Setting` は Scala の式で表される。
 
@@ -80,9 +78,7 @@ scalaVersion := "2.9.1"
 キーには `:=` メソッドがあり、`Setting[T]` を返す。
 Java 的な構文でこのメソッドを呼び出すこともできる:
 
-```scala
-name.:=("hello")
-```
+    name.:=("hello")
 
 だけど、Scala では `name := "hello"` と書ける（Scala では全てのメソッドがどちらの構文でも書ける）。
 
@@ -92,9 +88,7 @@ name.:=("hello")
 
 間違った型の値を使うと、ビルド定義はコンパイルしない:
 
-```scala
-name := 42  // コンパイルしない
-```
+    name := 42  // コンパイルしない
 
 ## キーは Keys オブジェクトで定義される
 
@@ -102,16 +96,16 @@ name := 42  // コンパイルしない
 `build.sbt` は、自動的に `import sbt.Keys._` するため、
 `sbt.Keys.name` は `name` として呼ぶことができる。
 
-カスタムのキーは [[.scala ファイル|Full Def]]か[[plugin|Using Plugins]]で定義することができる。
+カスタムのキーは [.scala ファイル](../full-def)か[plugin](../using-plugins) で定義することができる。
 
 ## 設定を変換する他の方法
 
 `:=` による置換は、最も単純な変換だけど、他にもいくつかある。
 例えば、`+=` を用いて、リスト値に追加することができう。
 
-他の変換は[[スコープ|Scopes]]の理解が必要なため、
-[[次のページ|Scopes]]がスコープで、
-[[次の次のページ|More About Settings]]で設定の詳細に関して説明する。
+他の変換は[スコープ](../scope)の理解が必要なため、
+[次のページ](../scope)がスコープで、
+[次の次のページ](../more-about-settings)で設定の詳細に関して説明する。
 
 ## タスクキー
 
@@ -139,9 +133,7 @@ _あるキーがあるとき、それは常にタスクか素のセッティン�
 
 `:=` を使うことで、タスクに任意の演算を代入することができ、その演算は毎回再実行される:
 
-```scala
-hello := { println("Hello!") }
-```
+    hello := { println("Hello!") }
 
 型システムの視点から考えると、タスクキー (task key) から作られた `Setting` は、セッティングキー (setting key) から作られたそれとは少し異なるものだ。
 `taskKey := 42` は `Setting[Task[T]]` の戻り値を返すが、`settingKey := 42` は `Setting[Task[T]]` の戻り値を返す。
@@ -165,9 +157,7 @@ sbt コマンドラインではハイフン分けされて（`hyphen-separated-w
 sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（[Keys] 参照）。
 例えば、`Keys.scala` に以下のキーがある:
 
-```scala
-val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
-```
+    val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
 
 sbt では `scalac-options` と打ち込むけど、ビルド定義ファイルでは `scalacOptions` を使う。
 
@@ -180,11 +170,11 @@ sbt では `scalac-options` と打ち込むけど、ビルド定義ファイル�
 
 自動的に以下のものがデフォルトでインポートされる:
 
-```scala
+<pre>
 import sbt._
 import Process._
 import Keys._
-```
+</pre>
 
 （さらに、[[.scala ファイル|Full Def]]がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
 これに関しては、[[.scala ビルド定義|Full Def]]でさらに詳しく。）
@@ -195,20 +185,18 @@ import Keys._
 第一は `lib/` に jar ファイルを入れてしまう方法で（アンマネージ依存性、unmanged dependency）、
 第二はマネージ依存性（managed dependency）を加えることで、`build.sbt` ではこのようになる:
 
-```scala
-libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
-```
+    libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 
 これで Apache Derby ライブラリのバージョン 10.4.1.3 へのマネージ依存性を加えることができた。
 
 `libraryDependencies` キーは二つの複雑な点がある:
 `:=` ではなく `+=` を使うことと、`%` メソッドだ。
-後で[[セッティング再考|More About Settings]]で説明するけど、`+=` はキーの古い値を上書きするかわりに新しい値を追加する。
-`%` メソッドは文字列から Ivy module ID を構築するのに使われ、これは[[ライブラリ依存性|Library Dependencies]]で説明する。
+後で[セッティング再考](../more-about-settings)で説明するけど、`+=` はキーの古い値を上書きするかわりに新しい値を追加する。
+`%` メソッドは文字列から Ivy module ID を構築するのに使われ、これは[ライブラリ依存性](../library-dependencies)で説明する。
 
 ライブラリ依存性に関しては、このガイドの後ほどまで少しおいておくことにする。
-後で、[[一ページ分|Library Dependencies]]をさいてちゃんと説明する。
+後で、[一ページ分](../library-dependencies)をさいてちゃんと説明する。
 
 ## 続いては
 
-[[スコープ|Scopes]]について。
+[スコープ](../scope)について。

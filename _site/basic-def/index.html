@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>始める sbt - basic def</title>
+    <title>始める sbt - `.sbt` ビルド定義</title>
     <link href="/shared/css/documentation.css" media="screen" rel="stylesheet" type="text/css">
     <link href="/shared/css/pygments.css" media="screen" rel="stylesheet" type="text/css">
     <script src="/shared/js/jquery.js" type="text/javascript"></script>
@@ -20,10 +20,10 @@
 
           <h1><code>.sbt</code> ビルド定義</h1>
 
-<p>[[前|Running]] <em>始める sbt 6/14 ページ</em> [[次|Scopes]]</p>
+<p><a href="../running">前</a> <em>始める sbt 6/14 ページ</em> <a href="../scope">次</a></p>
 
 <p>このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と <code>build.sbt</code> の構文を説明する。
-君が、[[sbt の使い方|Running]]を分かっていて、「初めての sbt」の前のページも読んだことを前提とする。</p>
+君が、<a href="../running">sbt の使い方</a>を分かっていて、「始める sbt」の前のページも読んだことを前提とする。</p>
 
 <h2><code>.sbt</code> vs. <code>.scala</code> 定義</h2>
 
@@ -40,7 +40,7 @@
 
 
 <p>このページでは <code>.sbt</code> ファイルの説明をする。<code>.scala</code> ファイルの詳細と、それがどう <code>.sbt</code> に絡んでくるかに関しては、
-（このガイドの後ほどの）[[.scala ビルド定義|Full Def]] を参照。</p>
+（このガイドの後ほどの）<a href="../full-def">.scala ビルド定義</a>を参照。</p>
 
 <h2>ビルド定義って何？</h2>
 
@@ -59,9 +59,8 @@
 
 <p><code>build.sbt</code> では、プロジェクト名の <code>Setting[String]</code> を以下のように作る:</p>
 
-<p><code>scala
-name := "hello"
-</code></p>
+<pre><code>name := "hello"
+</code></pre>
 
 <p>この <code>Setting[String]</code> は <code>name</code> キーを追加（もしくは置換）して <code>"hello"</code> という値に設定することでマップを変換する。
 変換されたマップは新しい sbt のマップとなる。</p>
@@ -75,13 +74,14 @@ name := "hello"
 
 <p>以下に具体例で説明しよう:</p>
 
-<p>```scala
-name := "hello"</p>
+<pre>
+name := "hello"
 
-<p>version := "1.0"</p>
+version := "1.0"
 
-<p>scalaVersion := "2.9.1"
-```</p>
+scalaVersion := "2.9.1"
+</pre>
+
 
 <p><code>build.sbt</code> は、空行で分けられた <code>Setting</code> のリストだ。それぞれの <code>Setting</code> は Scala の式で表される。</p>
 
@@ -95,9 +95,8 @@ name := "hello"</p>
 <p>キーには <code>:=</code> メソッドがあり、<code>Setting[T]</code> を返す。
 Java 的な構文でこのメソッドを呼び出すこともできる:</p>
 
-<p><code>scala
-name.:=("hello")
-</code></p>
+<pre><code>name.:=("hello")
+</code></pre>
 
 <p>だけど、Scala では <code>name := "hello"</code> と書ける（Scala では全てのメソッドがどちらの構文でも書ける）。</p>
 
@@ -107,9 +106,8 @@ name.:=("hello")
 
 <p>間違った型の値を使うと、ビルド定義はコンパイルしない:</p>
 
-<p><code>scala
-name := 42  // コンパイルしない
-</code></p>
+<pre><code>name := 42  // コンパイルしない
+</code></pre>
 
 <h2>キーは Keys オブジェクトで定義される</h2>
 
@@ -117,16 +115,16 @@ name := 42  // コンパイルしない
 <code>build.sbt</code> は、自動的に <code>import sbt.Keys._</code> するため、
 <code>sbt.Keys.name</code> は <code>name</code> として呼ぶことができる。</p>
 
-<p>カスタムのキーは [[.scala ファイル|Full Def]]か[[plugin|Using Plugins]]で定義することができる。</p>
+<p>カスタムのキーは <a href="../full-def">.scala ファイル</a>か<a href="../using-plugins">plugin</a> で定義することができる。</p>
 
 <h2>設定を変換する他の方法</h2>
 
 <p><code>:=</code> による置換は、最も単純な変換だけど、他にもいくつかある。
 例えば、<code>+=</code> を用いて、リスト値に追加することができう。</p>
 
-<p>他の変換は[[スコープ|Scopes]]の理解が必要なため、
-[[次のページ|Scopes]]がスコープで、
-[[次の次のページ|More About Settings]]で設定の詳細に関して説明する。</p>
+<p>他の変換は<a href="../scope">スコープ</a>の理解が必要なため、
+<a href="../scope">次のページ</a>がスコープで、
+<a href="../more-about-settings">次の次のページ</a>で設定の詳細に関して説明する。</p>
 
 <h2>タスクキー</h2>
 
@@ -157,9 +155,8 @@ name := 42  // コンパイルしない
 
 <p><code>:=</code> を使うことで、タスクに任意の演算を代入することができ、その演算は毎回再実行される:</p>
 
-<p><code>scala
-hello := { println("Hello!") }
-</code></p>
+<pre><code>hello := { println("Hello!") }
+</code></pre>
 
 <p>型システムの視点から考えると、タスクキー (task key) から作られた <code>Setting</code> は、セッティングキー (setting key) から作られたそれとは少し異なるものだ。
 <code>taskKey := 42</code> は <code>Setting[Task[T]]</code> の戻り値を返すが、<code>settingKey := 42</code> は <code>Setting[Task[T]]</code> の戻り値を返す。
@@ -183,9 +180,8 @@ sbt コマンドラインではハイフン分けされて（<code>hyphen-separa
 sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（<a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html">Keys</a> 参照）。
 例えば、<code>Keys.scala</code> に以下のキーがある:</p>
 
-<p><code>scala
-val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
-</code></p>
+<pre><code>val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
+</code></pre>
 
 <p>sbt では <code>scalac-options</code> と打ち込むけど、ビルド定義ファイルでは <code>scalacOptions</code> を使う。</p>
 
@@ -198,11 +194,12 @@ val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scal
 
 <p>自動的に以下のものがデフォルトでインポートされる:</p>
 
-<p><code>scala
+<pre>
 import sbt._
 import Process._
 import Keys._
-</code></p>
+</pre>
+
 
 <p>（さらに、[[.scala ファイル|Full Def]]がある場合は、それらの全ての <code>Build</code> と <code>Plugin</code> の内容もインポートされる。
 これに関しては、[[.scala ビルド定義|Full Def]]でさらに詳しく。）</p>
@@ -213,23 +210,22 @@ import Keys._
 第一は <code>lib/</code> に jar ファイルを入れてしまう方法で（アンマネージ依存性、unmanged dependency）、
 第二はマネージ依存性（managed dependency）を加えることで、<code>build.sbt</code> ではこのようになる:</p>
 
-<p><code>scala
-libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
-</code></p>
+<pre><code>libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+</code></pre>
 
 <p>これで Apache Derby ライブラリのバージョン 10.4.1.3 へのマネージ依存性を加えることができた。</p>
 
 <p><code>libraryDependencies</code> キーは二つの複雑な点がある:
 <code>:=</code> ではなく <code>+=</code> を使うことと、<code>%</code> メソッドだ。
-後で[[セッティング再考|More About Settings]]で説明するけど、<code>+=</code> はキーの古い値を上書きするかわりに新しい値を追加する。
-<code>%</code> メソッドは文字列から Ivy module ID を構築するのに使われ、これは[[ライブラリ依存性|Library Dependencies]]で説明する。</p>
+後で<a href="../more-about-settings">セッティング再考</a>で説明するけど、<code>+=</code> はキーの古い値を上書きするかわりに新しい値を追加する。
+<code>%</code> メソッドは文字列から Ivy module ID を構築するのに使われ、これは<a href="../library-dependencies">ライブラリ依存性</a>で説明する。</p>
 
 <p>ライブラリ依存性に関しては、このガイドの後ほどまで少しおいておくことにする。
-後で、[[一ページ分|Library Dependencies]]をさいてちゃんと説明する。</p>
+後で、<a href="../library-dependencies">一ページ分</a>をさいてちゃんと説明する。</p>
 
 <h2>続いては</h2>
 
-<p>[[スコープ|Scopes]]について。</p>
+<p><a href="../scope">スコープ</a>について。</p>
 
 
         </div>
