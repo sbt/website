@@ -176,8 +176,8 @@ import Process._
 import Keys._
 </pre>
 
-（さらに、[[.scala ファイル|Full Def]]がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
-これに関しては、[[.scala ビルド定義|Full Def]]でさらに詳しく。）
+（さらに、[.scala ファイル](../full-def)がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
+これに関しては、[.scala ビルド定義](../full-def)でさらに詳しく。）
 
 ## ライブラリへの依存性を加える
 
