@@ -7,6 +7,8 @@ layout: default
 
 _始める sbt 1/14 ページ_ [次](setup)
 
+> 原文: [Getting Started Guide](https://github.com/harrah/xsbt/wiki/Getting-Started-Welcome)
+
 「始める sbt」で君も sbt を始めよう。
 
 sbt は柔軟で強力なビルド定義 (build definition) を作るすることができるけど、そこで使われている概念の数は多くはない。
