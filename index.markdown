@@ -5,7 +5,7 @@ layout: default
 
 # ようこそ!
 
-_初めての sbt 1/14 ページ_ [次](setup)
+_始める sbt 1/14 ページ_ [次](setup)
 
 「始める sbt」で君も sbt を始めよう。
 
