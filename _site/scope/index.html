@@ -21,7 +21,7 @@
 		  <li><a href="/sbt-getting-started-guide-ja/running">実行</a></li>
 		  <li><a href="/sbt-getting-started-guide-ja/basic-def">.sbt ビルド定義</a></li>
 		  <li><a href="/sbt-getting-started-guide-ja/scope">スコープ</a></li>
-		  <li><a href="/sbt-getting-started-guide-ja/more-about-settings">セッティング再考</a></li>
+		  <li><a href="/sbt-getting-started-guide-ja/more-about-settings">他の種類のセッティング</a></li>
 		  <li><a href="/sbt-getting-started-guide-ja/library-dependencies">ライブラリ依存性</a></li>
 		  <li><a href="/sbt-getting-started-guide-ja/full-def">.scala ビルド定義</a></li>
 		  <li><a href="/sbt-getting-started-guide-ja/using-plugins">プラグインの使用</a></li>
@@ -84,12 +84,12 @@
 <p>プロジェクト軸は「ビルド全体」に設定することもでき、その場合はセッティングは単一のプロジェクトではなくビルド全体に適用される。
 ビルドレベルでのセッティングは、プロジェクトが特定のセッティングを定義しない場合のフォールバックとして使われることがよくある。</p>
 
-<h3>コンフィグレーション軸によるスコープ付け</h3>
+<h3>コンフィギュレーション軸によるスコープ付け</h3>
 
-<p><em>コンフィグレーション</em>（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
-コンフィグレーションの概念は、sbt が <a href="../library-dependencies">マネージ依存性</a> に使っている Ivy と、<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a> に由来する。</p>
+<p><em>コンフィギュレーション</em>（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
+コンフィギュレーションの概念は、sbt が <a href="../library-dependencies">マネージ依存性</a> に使っている Ivy と、<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a> に由来する。</p>
 
-<p>sbt で使われるコンフィグレーションには以下のものがある:</p>
+<p>sbt で使われるコンフィギュレーションには以下のものがある:</p>
 
 <ul>
 <li><code>Compile</code> は、メインのビルド（<code>src/main/scala</code>）を定義する。</li>
@@ -99,7 +99,7 @@
 
 
 <p>デフォルトでは、コンパイル、パッケージ化、と実行に関するキーの全てはコンフィグレーションにスコープ付けされているため、
-コンフィグレーションごとに異なる動作をする可能性がある。
+コンフィギュレーションごとに異なる動作をする可能性がある。
 その最たる例が <code>compile</code>、<code>package</code> と <code>run</code> のタスクキーだが、
 （<code>source-directories</code> や <code>scalac-options</code> や <code>full-classpath</code> など）それらのキーに<em>影響を及ぼす</em>全てのキーもコンフィグレーションにスコープ付けされている。</p>
 
@@ -135,12 +135,12 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 
 <p>コマンドラインとインタラクティブモードにおいて、sbt はスコープ付きキーを以下のように表示し（パースする）:</p>
 
-<pre><code>{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;/コンフィグレーション:キー(for タスクキー)
+<pre><code>{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;/コンフィギュレーション:キー(for タスクキー)
 </code></pre>
 
 <ul>
 <li><code>{&lt;ビルド-uri&gt;}&lt;プロジェクト-id&gt;</code> は、プロジェクト軸を特定する。&lt;プロジェクト-id> がなければ、プロジェクト軸は「ビルド全体」スコープとなる。</li>
-<li><code>コンフィグレーション</code> は、コンフィグレーション軸を特定する。</li>
+<li><code>コンフィギュレーション</code> は、コンフィギュレーション軸を特定する。</li>
 <li><code>(for タスクキー)</code> は、タスク軸を特定する。</li>
 <li><code>キー</code> は、スコープ付けされるキーを特定する。</li>
 </ul>
@@ -152,7 +152,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 
 <ul>
 <li>プロジェクトを省略した場合は、現在のプロジェクトが使われる。</li>
-<li>コンフィグレーションを省略した場合は、キーに依存したコンフィグレーションが自動検知される。</li>
+<li>コンフィグレーションを省略した場合は、キーに依存したコンフィギュレーションが自動検知される。</li>
 <li>タスクを省略した場合は、<code>Global</code> タスクが使われる。</li>
 </ul>
 
@@ -206,7 +206,7 @@ $ sbt
 
 <p>"Provided by" は、この値を定義するスコープ付きキーを指し、この場合は、
 <code>{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath</code>
-（<code>test</code> コンフィグレーションと <code>{file:/home/hp/checkout/hello/}default-aea33a</code> プロジェクトにスコープ付けされた <code>full-classpath</code> キー）。</p>
+（<code>test</code> コンフィギュレーションと <code>{file:/home/hp/checkout/hello/}default-aea33a</code> プロジェクトにスコープ付けされた <code>full-classpath</code> キー）。</p>
 
 <p>"Dependencies" は、まだ意味不明だろうけど、[[次のページ|More About Settings]]まで待ってて。</p>
 
@@ -215,10 +215,10 @@ $ sbt
 <ul>
 <li>他の二つのコンフィグレーション（<code>runtime:full-classpath</code> と <code>compile:full-classpath</code>）。
 これらのスコープ付きキーは、プロジェクトは特定されていないため「現プロジェクト」で、タスクも特定されていない <code>Global</code> だ。</li>
-<li><code>Global</code> に設定されたコンフィグレーション (<code>*:full-classpath</code>)。プロジェクトはまだ特定されていないため「現プロジェクト」で、タスクもまだ特定されていないため <code>Global</code> だ。</li>
+<li><code>Global</code> に設定されたコンフィギュレーション (<code>*:full-classpath</code>)。プロジェクトはまだ特定されていないため「現プロジェクト」で、タスクもまだ特定されていないため <code>Global</code> だ。</li>
 <li><code>{.}</code> 別名 <code>ThisBuild</code> に設定されたプロジェクト（つまり、特定のプロジェクトではなく、ビルド全体）。</li>
 <li><code>Global</code> に設定されたプロジェクト軸（<code>*/test:full-classpath</code>）（プロジェクトが特定されていない場合は、現プロジェクトを意味するため、<code>Global</code> を検索することは新しく、<code>*</code> と「プロジェクトが未表示」はプロジェクト軸に対して異なる値を持ち、<code>*/test:full-classpath</code> と <code>test:full-classpath</code> は等価ではない。）</li>
-<li>プロジェクトとコンフィグレーションの両方とも <code>Global</code> を設定する（<code>*/*:full-classpath</code>）（特定されていないタスクは <code>Global</code> であるため、<code>*/*:full-classpath</code> は三つの軸全てが <code>Global</code> を取る。）</li>
+<li>プロジェクトとコンフィギュレーションの両方とも <code>Global</code> を設定する（<code>*/*:full-classpath</code>）（特定されていないタスクは <code>Global</code> であるため、<code>*/*:full-classpath</code> は三つの軸全てが <code>Global</code> を取る。）</li>
 </ul>
 
 
@@ -227,7 +227,7 @@ $ sbt
 そのため、<code>inspect compile:full-classpath</code> は <code>inspect full-classpath</code> と同じになるはずだ。</p>
 
 <p>次に、<code>inspect *:full-classpath</code> も実行して違いを比べてみよう。
-<code>full-classpath</code> はデフォルトでは、<code>Global</code> コンフィグレーションには定義されていない。</p>
+<code>full-classpath</code> はデフォルトでは、<code>Global</code> コンフィギュレーションには定義されていない。</p>
 
 <p>より詳しくは、[[Inspecting Settings]] 参照。</p>
 
@@ -238,14 +238,14 @@ $ sbt
 <pre><code>name := "hello"
 </code></pre>
 
-<p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィグレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。</p>
+<p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィギュレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。</p>
 
 <p><code>build.sbt</code> は常に単一のプロジェクトのセッティングを定義するため、「現プロジェクト」は今 <code>build.sbt</code> で定義しているプロジェクトを指す。
 （[[マルチプロジェクトビルド|Multi-Project]]の場合は、プロジェクトごとに <code>build.sbt</code> がある。）</p>
 
 <p>キーにはオーバーロードされた <code>in</code> メソッドがあり、それによりスコープを設定できる。
 <code>in</code> への引数として、どのスコープ軸のインスタンスでも渡すことができる。
-これをやる意味は全くないけど、例として <code>Compile</code> コンフィグレーションでスコープ付けされた <code>name</code> の設定を以下に示す:</p>
+これをやる意味は全くないけど、例として <code>Compile</code> コンフィギュレーションでスコープ付けされた <code>name</code> の設定を以下に示す:</p>
 
 <pre><code>name in Compile := "hello"
 </code></pre>
@@ -255,7 +255,7 @@ $ sbt
 <pre><code>name in packageBin := "hello"
 </code></pre>
 
-<p>もしくは、例えば <code>Compile</code> コンフィグレーションの <code>packageBin</code> の <code>name</code> など、複数のスコープ軸でスコープ付けする:</p>
+<p>もしくは、例えば <code>Compile</code> コンフィギュレーションの <code>packageBin</code> の <code>name</code> など、複数のスコープ軸でスコープ付けする:</p>
 
 <pre><code>name in (Compile, packageBin) := "hello"
 </code></pre>
@@ -279,7 +279,7 @@ Scala ではキレイに書くことができるけど、Java 風に以下のよ
 <h2>いつスコープを指定するべきか</h2>
 
 <p>あるキーが、通常スコープ付けされている場合は、スコープを指定してそのキーを使う必要がある。
-例えば、<code>compile</code> タスクは、デフォルトで <code>Compile</code> と <code>Test</code> コンフィグレーションにスコープ付けされているけど、
+例えば、<code>compile</code> タスクは、デフォルトで <code>Compile</code> と <code>Test</code> コンフィギュレーションにスコープ付けされているけど、
 これらのスコープ外には存在しない。</p>
 
 <p>そのため、<code>compile</code> キーに関連付けられた値を変更するには、<code>compile in Compile</code> か <code>compile in Test</code> のどちらかを書く必要がある。
