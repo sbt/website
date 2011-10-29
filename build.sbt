@@ -1,6 +1,6 @@
-organization := "me.lessis"
+organization := "com.github.sbt"
 
-name := "sbt-root"
+name := "sbt-site"
 
 version := "0.1.0-SNAPSHOT"
 
