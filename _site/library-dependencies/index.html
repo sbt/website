@@ -33,6 +33,195 @@
         <div id="content" class="site">
           <h1>ライブラリ依存性</h1>
 
+<p><a href="../more-about-settings">前</a> <em>始める sbt 9/14 ページ</em> <a href="../full-def">次</a></p>
+
+<p>このページは、このガイドのこれまでのページ、特に <a href="../basic-def">.sbt ビルド定義</a>、<a href="../scope">スコープ</a>、と
+<a href="../more-about-settings">他の種類のセッティング</a>を読んでいることを前提とする。</p>
+
+<p>ライブラリ依存性は二つの方法で加えることができる:</p>
+
+<ul>
+<li><code>lib</code> ディレクトリに jar ファイルを入れることでできる<em>アンマネージ依存性</em>（unmanaged dependencies）</li>
+<li>ビルド定義に設定され、リポジトリから自動でダウンロードされる<em>マネージ依存性</em>（managed dependencies）</li>
+</ul>
+
+
+<h2>アンマネージ依存性</h2>
+
+<p>ほとんどの人は、アンマネージ依存性ではなく、マネージ依存性を使っている。だけど、始めはアンマネージの方が簡単なので分かりやすい。</p>
+
+<p>アンマネージ依存性を説明すると、こんな感じになる。jar ファイルを <code>lib</code> に入れると、それはプロジェクトのクラスパスに追加される。
+以上！</p>
+
+<p>例えば、<a href="http://code.google.com/p/scalacheck/">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://www.artima.com/scalatest/">ScalaTest</a> などのテスト用の jar を <code>lib</code> に加えることもできる。</p>
+
+<p><code>lib</code> の依存性は（<code>compile</code>、<code>test</code>、<code>run</code>、そして <code>console</code> の）全てのクラスパスに追加される。
+もし、どれか一つのクラスパスを変えたい場合は、例えば <code>dependencyClasspath in Compile</code> や
+<code>dependencyClasspath in Runtime</code> などを適宜調整する必要がある。
+<code>~=</code> を使って既存のクラスパスの値を受け取り、いらないものを filter で外して、新しいクラスパスの値を返せばいい。
+<code>~=</code> の詳細に関しては、<a href="../more-about-settings">他の種類のセッティング</a>参照。</p>
+
+<p>アンマネージ依存性を利用するのに、<code>build.sbt</code> には何も書かなくてもいいけど、
+デフォルトの <code>lib</code> 以外のディレクトリを使いたい場合は、
+<code>unmanaged-base</code> キーを変更することができる。</p>
+
+<p><code>lib</code> のかわりに、<code>custom_lib</code> を使うには:</p>
+
+<pre><code>unmanagedBase &lt;&lt;= baseDirectory { base =&gt; base / "custom_lib" }
+</code></pre>
+
+<p><code>baseDirectory</code> はプロジェクトのルートディレクトリで、
+<a href="../more-about-settings">他の種類のセッティング</a>で説明したとおり、ここでは <code>unmanagedBase</code>
+を <code>&lt;&lt;=</code> を使って <code>baseDirectory</code> の値に基づいて変更している。</p>
+
+<p>他には、<code>unmanged-jars</code> という <code>unmanaged-base</code> ディレクトリに入っている jar ファイルのリストを返すタスクがある。
+複数のディレクトリを使うとか、何か別の複雑なことを行う場合は、この <code>unmanaged-jar</code> タスクを何か別のものに変える必要があるかもしれない。</p>
+
+<h2>マネージ依存性</h2>
+
+<p>sbt は、<a href="http://ant.apache.org/ivy/">Apache Ivy</a> を使ってマネージ依存性を実装するため、既に Maven か Ivy に慣れていれば、違和感無く入り込めるだろう。</p>
+
+<h3><code>libraryDependencies</code> キー</h3>
+
+<p>依存性を <code>libraryDependencies</code> セッティングに列挙するだけで、普通はうまくいく。
+Maven POM ファイルや、Ivy コンフィギュレーションファイルを書くなどして、依存性を外部で設定してしまって、
+sbt にその外部コンフィギュレーションファイルを使わせるということも可能だ。
+これに関しては、[Library Management] を参照。</p>
+
+<p>依存性の宣言は、以下のようになる。ここで、<code>groupId</code>、<code>artifactId</code>、と <code>revision</code> は文字列だ:</p>
+
+<pre><code>libraryDependencies += groupID % artifactID % revision
+</code></pre>
+
+<p>もしくは、以下のようになる。このときの <code>configuration</code> も文字列だ。</p>
+
+<pre><code>libraryDependencies += groupID % artifactID % revision % configuration
+</code></pre>
+
+<p><code>libraryDependencies</code> は <a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で以下のように定義されている:</p>
+
+<pre><code> val libraryDependencies = SettingKey[Seq[ModuleID]]("library-dependencies", "Declares managed dependencies.")
+</code></pre>
+
+<p><code>%</code> メソッドは、文字列から <code>ModuleID</code> オブジェクトを作り、その <code>ModuleID</code> を <code>libraryDependencies</code> に追加するだけでいい。</p>
+
+<p>当然、sbt は（Ivy を通じて）モジュールをどこからダウンロードしてくるかを知らなければいけない。
+もしモジュールが sbt に最初から入っているデフォルトのリポジトリの一つにあれば、ちゃんと動く。
+例えば、Apache Derby はデフォルトのリポジトリにある:</p>
+
+<pre><code>libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+</code></pre>
+
+<p>これを <code>build.sbt</code> に打ち込んで、<code>update</code> を実行すると、sbt は Derby を
+<code>~/.ivy2/cache/org.apache.derby/</code> にダウンロードするはずだ。
+（ちなみに、<code>update</code> は <code>compile</code> の依存性であるため、手動で <code>update</code> と打ち込む必要がある状況は普通は無い。）</p>
+
+<p>当然、<code>++=</code> を使って一度に依存ライブラリのリストを追加することもできる:</p>
+
+<pre>
+libraryDependencies ++= Seq(
+    groupID % artifactID % revision,
+    groupID % otherID % otherRevision
+)
+</pre>
+
+
+<p><code>libraryDependencies</code> に対して <code>:=</code>、<code>&lt;&lt;=</code>、<code>&lt;+=</code>、その他を使う機会があるかもしれないが、稀だろう。</p>
+
+<h3><code>%%</code> を使って正しい Scala バージョンを入手する</h3>
+
+<p><code>groupID % artifactID % revision</code> のかわりに、
+<code>groupID %% artifactID % revision</code> を使うと（違いは groupID の後ろの <code>%%</code>）、
+sbt はプロジェクトの Scala バージョンをアーティファクト名に追加する。
+これはただの略記法なので、<code>%%</code> 無しで書くこともできる:</p>
+
+<pre><code>libraryDependencies += "org.scala-tools" % "scala-stm_2.9.1" % "0.3"
+</code></pre>
+
+<p>ビルドのバージョンが <code>scalaVersion</code> が <code>2.9.1</code> だとすると、以下は等価だ:</p>
+
+<pre><code>libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
+</code></pre>
+
+<p>多くの依存ライブラリが複数の Scala バージョンに対してコンパイルされていて、
+プロジェクトに合ったものを選択したいときに使うというのが考えだ。</p>
+
+<p>実践上での問題として、多くの場合依存ライブラリは少しズレた Scala バージョンが使われることがあるけど、
+<code>%%</code> はそこまは賢くない。そのため、依存ライブラリが <code>2.9.0</code> までしか出てなくて、
+プロジェクトが <code>scalaVersion := "2.9.1"</code> の場合、<code>2.9.0</code> の依存ライブラリが多分動作するにも関わらず <code>%%</code> を使うことができない。
+もし、<code>%%</code> が動かなくなったら、依存ライブラリが使っている実際のバージョンを確認して、
+動くだろうバージョン（それががあればの話だけど）に決め打ちすればいい。</p>
+
+<p>詳しくは、[Cross Build] を参照。</p>
+
+<h3>Ivy revision</h3>
+
+<p><code>groupID % artifactID % revision</code> の <code>revision</code> は、単一の固定されたバージョン番号じゃなくてもいい。
+Ivy は与えられた制限の中でモジュールの最新の revision を選ぶことができる。
+<code>"1.6.1"</code> のような固定 revision ではなく、<code>"latest.integration"</code>、<code>"2.9.+"</code>、や <code>"[1.0,)"</code> など指定できる。
+詳しくは、<a href="http://ant.apache.org/ivy/history/2.2.0/ivyfile/dependency.html#revision">Ivy revisions</a> を参照。</p>
+
+<h3>Resolvers</h3>
+
+<p>全てのパッケージが一つのサーバに置いてあるとは限らない。
+sbt は、デフォルトで standard Maven2 repository と Scala Tools Releases (<a href="http://scala-tools.org/repo-releases">http://scala-tools.org/repo-releases</a>) の二つのリポジトリを使う。
+もし依存ライブラリがこのデフォルトのリポジトリに無ければ、Ivy がそれを見つけられるように <em>resolver</em> を追加する必要がある。</p>
+
+<p>リポジトリを追加するには、以下のようにする:</p>
+
+<pre><code>resolvers += name at location
+</code></pre>
+
+<p>例えば:</p>
+
+<pre><code>resolvers += "Scala-Tools Maven2 Snapshots Repository" at "http://scala-tools.org/repo-snapshots"
+</code></pre>
+
+<p><a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:</p>
+
+<pre><code>val resolvers = SettingKey[Seq[Resolver]]("resolvers", "The user-defined additional resolvers for automatically managed dependencies.")
+</code></pre>
+
+<p><code>at</code> メソットは、二つの文字列から <code>Resolver</code> オブジェクトを作る。</p>
+
+<p>sbt は、リポジトリとして追加すれば、ローカル Maven リポジトリも検索することができる:</p>
+
+<pre><code>resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+</code></pre>
+
+<p>他の種類のリポジトリの定義の詳細に関しては、[Resolvers] 参照。</p>
+
+<h3>デフォルトの resolver のオーバーライド</h3>
+
+<p><code>resolvers</code> は、デフォルトの resolver を含まず、ビルド定義によって加えられる追加のものだけを含む。</p>
+
+<p><code>sbt</code> は、<code>resolvers</code> をデフォルトのリポジトリと組み合わせて <code>external-resolvers</code> を形成する。　</p>
+
+<p>そのため、デフォルトの resolver を変更したり、削除したい場合は、<code>resolvers</code> ではなく、<code>external-resolvers</code> をオーバーライドする必要がある。</p>
+
+<h3>コンフィギュレーションごとの依存性</h3>
+
+<p>依存ライブラリをテストコード（<code>Test</code> コンフィギュレーションでコンパイルされる <code>src/test/scala</code> 内のコード）から使いたいが、
+メインのコードでは使わないということがよくある。</p>
+
+<p>ある依存ライブラリが <code>Test</code> コンフィギュレーションのクラスパスには出てきて欲しいけど、
+<code>Compile</code> コンフィギュレーションではいらない場合は、以下のように <code>% "test"</code> と追加する:</p>
+
+<pre><code>libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
+</code></pre>
+
+<p>sbt のインタラクティブモードで <code>show compile:dependency-classpath</code> と打ち込んでも、Derby は出てこないはずだ。
+だけど、<code>show test:dependency-classpath</code> と打ち込むと、Derby の jar がリストにあるのが確認できる。</p>
+
+<p>普通は、<a href="http://code.google.com/p/scalacheck/">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://www.artima.com/scalatest/">ScalaTest</a> などのテスト関連の依存ライブラリは <code>% "test"</code> と共に定義される。</p>
+
+<h1>続いては</h1>
+
+<p>ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、<a href="../library-management">このページ</a>に
+もう少し詳細やコツが書いてある。</p>
+
+<p>「始める sbt」を順に読んでいるならば、次は、<a href="../full-def">.scala ビルド定義</a>に進む。</p>
+
         </div>
       </div>
     </div>
