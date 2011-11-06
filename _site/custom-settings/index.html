@@ -35,6 +35,103 @@
         <div id="content" class="site">
           <h1>カスタムセッティングとタスク</h1>
 
+<p><a href="../multi-project">前</a> <em>始める sbt 13/14 ページ</em> <a href="../summary">次</a></p>
+
+<p>このページでは、独自のセッティングやタスクの作成を紹介する。</p>
+
+<p>このページを理解するには、このガイドの前のページ、
+特に <a href="../basic-def">build.sbt</a> と
+<a href="../more-about-settings">他の種類のセッティング</a>を読んである必要がある。</p>
+
+<h2>キーの定義</h2>
+
+<p><a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> は、キーの定義の方法で満載だ。
+多くのキーは、<a href="http://harrah.github.com/xsbt/latest/sxr/Defaults.scala.html" title="Defaults.scala">Defaults</a> で実装されている。</p>
+
+<p>キーは三つの型のうちどれかを持つ。<code>SettingKey</code> と <code>TaskKey</code> は、
+<a href="../basic-def">.sbt ビルド定義</a>で説明した。<code>InputKey</code> に関しては、
+<a href="https://github.com/harrah/xsbt/wiki/Input-Tasks">Input Tasks</a> を見てほしい。</p>
+
+<p>以下に <a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> からの具体例を示す:</p>
+
+<pre>
+val scalaVersion = SettingKey[String]("scala-version", "The version of Scala used for building.")
+val clean = TaskKey[Unit]("clean", "Deletes files produced by the build, such as generated sources, compiled classes, and task caches.")
+</pre>
+
+
+<p>キーのコンストラクタは、二つの文字列のパラメータを取る。
+キー名（<code>"scala-version"</code>）と解説文（<code>"The version of scala used for building."</code>）だ。</p>
+
+<p><a href="../basic-def">.sbt ビルド定義</a>でみたとおり、<code>SettingKey[T]</code> 内の型パラメータ <code>T</code> は、セッティングの値の型を表す。
+<code>TaskKey[T]</code> 内の <code>T</code> は、タスクの結果の型を表す。
+また、<a href="../basic-def">.sbt ビルド定義</a>でみたとおり、
+セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
+タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。</p>
+
+<p>（<a href="../full-def">.scala ビルド定義</a>でみたように、）<code>.scala</code> ファイル内、
+もしくは（<a href="../using-plugins">プラグインの使用</a>でみたように、）プラグイン内でキーを定義することができる。
+<code>.scala</code> ビルド定義ファイル内の <code>Build</code> オブジェクト内の <code>val</code>、
+もしくはプラグイン内の <code>Plugin</code> オブジェクト内の <code>val</code> は全て <code>.sbt</code> ファイルに自動的にインポートされる。</p>
+
+<h2>タスクの実装</h2>
+
+<p>キーを定義したら、次はなんらかのタスクからそのキーを使ってみよう。
+独自のタスクを定義してもいいし、既存のタスクを再定義する予定なのかもしれない。
+いずれにせよ、やることは同じだ。
+もしタスクに他のセッティングやタスクへの依存性が無ければ、<code>:=</code> を使ってタスクのキーになんらかのコードを関連付ける:</p>
+
+<pre>
+sampleStringTask := System.getProperty("user.home")
+
+sampleIntTask := {
+  val sum = 1 + 2
+  println("sum: " + sum)
+  sum
+}
+</pre>
+
+
+<p>もしタスクに依存性があれば、<a href="../more-about-settings">他の種類のセッティング</a>で説明したとおり、代わりに <code>&lt;&lt;=</code> を使う。</p>
+
+<p>タスクは、ただの Scala のコードであるため、実装の一番難しい部分は、多くの場合 sbt 特定の問題ではない。
+難しいのは、実行したい何らかの「中身」の部分を書くことで、
+例えば HTML を整形したいとすると、
+今度は HTML のライブラリを利用する必要があるかもしれない
+（その場合は、<a href="../using-plugins">ビルド定義にライブラリ依存性を追加して</a>、その HTML ライブラリに基づいたコードを書く）。</p>
+
+<p>sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
+特にファイルやディレクトリの取り扱いには <a href="http://harrah.github.com/xsbt/latest/api/index.html#sbt.IO$" title="IO object">IO</a> にある API を重宝する。</p>
+
+<h2>置換しない場合のタスクの拡張</h2>
+
+<p>既存のタスクを実行して、他の別のアクションも実行したい場合は、
+<code>~=</code> か <code>&lt;&lt;=</code> を用いて、既存のタスクをインプットとして取り（これはそのタスクを実行することを意味する）、
+既存の実装が完了した後で、別に好きな事をできる。</p>
+
+<pre>
+// 以下の二つのセッティングは等価だ。
+intTask <<= intTask map { (value: Int) => value + 1 }
+intTask ~= { (value: Int) => value + 1 }
+</pre>
+
+
+<h2>プラグインを使おう！</h2>
+
+<p><code>.scala</code> ファイルに大量のカスタムコードがあることに気づいたら、
+プラグインを作って複数のプロジェクト間で再利用できないか考えてみよう。</p>
+
+<p><a href="../using-plugins">以前にちょっと触れた</a>し、
+<a href="https://github.com/harrah/xsbt/wiki/Plugins">詳しい解説はここにあるけど</a>、
+プラグインを作るのはすごく簡単だ。</p>
+
+<h2>続いては</h2>
+
+<p>このページは簡単な味見だけで、
+カスタムタスクに関しては <a href="https://github.com/harrah/xsbt/wiki/Tasks">Tasks</a> ページで詳細に解説されている。</p>
+
+<p>そろそろ「始める sbt」も終わりだ！<a href="../summary">簡単なまとめ</a>に進む。</p>
+
         </div>
       </div>
     </div>
