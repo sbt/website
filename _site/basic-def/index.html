@@ -174,12 +174,12 @@ Java 的な構文でこのメソッドを呼び出すこともできる:</p>
 </code></pre>
 
 <p>型システムの視点から考えると、タスクキー (task key) から作られた <code>Setting</code> は、セッティングキー (setting key) から作られたそれとは少し異なるものだ。
-<code>taskKey := 42</code> は <code>Setting[Task[T]]</code> の戻り値を返すが、<code>settingKey := 42</code> は <code>Setting[Task[T]]</code> の戻り値を返す。
+<code>taskKey := 42</code> は <code>Setting[Task[T]]</code> の戻り値を返すが、<code>settingKey := 42</code> は <code>Setting[T]</code> の戻り値を返す。
 タスクが実行されるとタスクキーは型<code>T</code> の値を返すため、ほとんどの用途において、これによる影響は特にない。</p>
 
 <p><code>T</code> と <code>Task[T]</code> の型の違いによる影響が一つある。
 それは、セッティングキーはキャッシュされていて、再実行されないため、タスキキーに依存できないということだ。
-このことについては、後ほどの[[セッティング再考|More About Settings]]にて詳しくみていく。</p>
+このことについては、後ほどの<a href="../more-about-settings">他の種類のセッティング</a>にて詳しくみていく。</p>
 
 <h2>sbt インタラクティブモードにおけるキー</h2>
 
@@ -232,8 +232,8 @@ import Keys._
 
 <p><code>libraryDependencies</code> キーは二つの複雑な点がある:
 <code>:=</code> ではなく <code>+=</code> を使うことと、<code>%</code> メソッドだ。
-後で<a href="../more-about-settings">セッティング再考</a>で説明するけど、<code>+=</code> はキーの古い値を上書きするかわりに新しい値を追加する。
-<code>%</code> メソッドは文字列から Ivy module ID を構築するのに使われ、これは<a href="../library-dependencies">ライブラリ依存性</a>で説明する。</p>
+後で<a href="../more-about-settings">他の種類のセッティング</a>で説明するけど、<code>+=</code> はキーの古い値を上書きするかわりに新しい値を追加する。
+<code>%</code> メソッドは文字列から Ivy モジュール ID を構築するのに使われ、これは<a href="../library-dependencies">ライブラリ依存性</a>で説明する。</p>
 
 <p>ライブラリ依存性に関しては、このガイドの後ほどまで少しおいておくことにする。
 後で、<a href="../library-dependencies">一ページ分</a>をさいてちゃんと説明する。</p>
