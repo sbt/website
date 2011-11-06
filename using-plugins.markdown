@@ -238,4 +238,4 @@ seq(myPluginSettings: _*)
 
 ## 続いては
 
-[マルチプロジェクトビルド](../multi-project)に続く。
+[マルチプロジェクト・ビルド](../multi-project)に続く。
