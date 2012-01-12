@@ -44,8 +44,16 @@
       </div>
     </div>
     <div id="pagecontent" class="cf">
-      <h4 id='community_ivy_repository'>Community Ivy Repository</h4>
+      <ul>
+<li><a href='#communityrepo'>Community Ivy Repository</a></li>
 
+<li><a href='#sbtorg'>SBT Organization</a></li>
+
+<li><a href='#pluginbuild'>Community Plugin Build</a></li>
+</ul>
+
+<h4 id='community_ivy_repository'>Community Ivy Repository</h4>
+<a label='communityrepo' id='communityrepo' />
 <p><a href='http://www.typesafe.com'>Typesafe, Inc.</a> has provided a freely available <a href='http://scalasbt.artifactoryonline.com/scalasbt'>Ivy Repository</a> for SBT projects to make use of.</p>
 
 <p>If you would like to publish your project to this Ivy repository, first contact Joshua.Suereth@typesafe.com and request privileges (we have to verify code ownership, rights to publish, etc.). After which, you can deploy your plugins using the following configuration:</p>
@@ -53,13 +61,21 @@
 <pre><code>publishTo := Some(Resolver.url(&quot;sbt-plugin-releases&quot;, new URL(&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/&quot;))(Resolver.ivyStylePatterns))
 
 publishMavenStyle := false</code></pre>
+
+<p>You&#8217;ll also need to add your credentials somewhere. I use a <code>~/.sbt/sbtpluginpublish.sbt</code> file:</p>
+
+<pre><code>credentials += Credentials(&quot;Artifactory Realm&quot;, &quot;scalasbt.artifactoryonline.com&quot;, &quot;jsuereth&quot;, &quot;@my encrypted password@&quot;)</code></pre>
+
+<p>Where <code>@my encrypted password@</code> is actually obtained using the following <a href='http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords'>instructions</a>.</p>
+
+<p><em>Note: You also need to swap <code>jsuereth</code> for your own username :)</em></p>
 <hr />
 <h4 id='sbt_organization'>SBT Organization</h4>
-
+<a label='sbtorg' id='sbtorg' />
 <p>The <a href='http://github.com/sbt'>SBT Organization</a> is available for use by any SBT plugin. Developers who contribute their plugins into the community organization will still retain control over their repository and its access. The Goal of the SBT organization is to organize SBT software into one central location.</p>
 <hr />
 <h4 id='sbt_community_plugin_build'>SBT Community Plugin Build</h4>
-
+<a label='pluginbuild' id='pluginbuild' />
 <p>The <a href='http://github.com/sbt/sbt-community-plugins'>SBT Community Plugins</a> project aims to build <em>all</em> SBT plugins in a single build. This should enable thorough testing of plugins and ensure that plugins work together.</p>   
     </div>
   </div>
