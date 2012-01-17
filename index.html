@@ -42,7 +42,7 @@
              <div class="left" id="vc">
                <div id="start">Start <em>Building</em></div>
                <div id="install-primary">
-                 <button class="btn download" data-jar="http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.10.1/sbt-launch.jar" id="get-launcher-primary"><span>↬</span> Download</button> the latest version
+                 <button class="btn download" data-jar="download.html" id="get-launcher-primary"><span>↬</span> Download</button> the latest version
                </div>
                <div id="install-extra">Click <a id="install-info-toggle" href="#">here</a> for install instructions</div>
              </div>
@@ -52,13 +52,13 @@
                Are you a <a href="#" id="show-nix">unix/osx</a> or a <a href="#" id="show-win">Windows</a> user?
                <div id="nix">
                  <p>
-                   If you are running an unix-based operating system, open your terminal shell and enable execute permisions on the sbt script
+                   If you are running an unix-based operating system, open your terminal shell and enable execute permisions on the <a href="https://raw.github.com/sbt/sbt-launcher-package/full-packaging/sbt">sbt script</a>
                  </p>
                  <pre><code>$ chmod u+x sbt</code></pre>
                  <p>
                    Then run the install command to get the latest
                  </P>
-                 <pre><code>$ sbt install</code></pre>
+                 <pre><code>$ sbt</code></pre>
                  <p>
                    Afterwards you can run the sbt command in any directory to create a new project.
                  </p>
@@ -354,7 +354,7 @@ libraryDependencies += "com.other.domain" %% "other-module" % "1.0"
          $(window).bind('resize', function() { applyH(); });
          applyH();
 
-         $("#get-launcher").bind('click', function(e) {
+         $("#get-launcher-primary").bind('click', function(e) {
              window.location.href= $(this).data()['jar'];
          })
 
