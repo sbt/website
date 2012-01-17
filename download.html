@@ -33,7 +33,7 @@
 
 <div class="cf" id="container">
   <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
-  <div class="span10 columns content">
+  <div id="intro" class="span10 columns content">
     <div id="head" class="cf">
       <div id="name" class="left">
         <h1>sbt</h1>
@@ -44,6 +44,55 @@
           <p>The <a href='http://github.com/sbt/sbt-launcher'>SBT Launcher</a> project contains a set of native packages for use in your operating system. <br />&#160;<br /> <a href='#windows'>msi</a> | <a href='#rpm'>yum</a> | <a href='#deb'>apt-get</a> | <a href='#mac'>homebrew</a> | <a href='#manual'>by hand</a></p>
       </div>
     </div>
+    <div id="features" class="cf">
+      <div id="feature-list">
+        <ul class="left">           
+          
+            
+            <li><a href="#windows">Windows MSI downloads</a></li>
+          
+            
+            
+          
+            
+            <li><a href="#deb">Apt Repository</a></li>
+          
+            
+            
+          
+            
+            <li><a href="#mac">Macports</a></li>
+          
+            
+            
+          
+        </ul>
+        <ul class="left">
+          
+            
+            
+          
+            
+            <li><a href="#rpm">Yum Repository</a></li>
+          
+            
+            
+          
+            
+            <li><a href="#mac">Homebrew</a></li>
+          
+            
+            
+          
+            
+            <li><a href="#manual">Manual Installation</a></li>
+          
+         </ul>
+       </div>
+     </div>
+   </div>
+
+
     <div id="pagecontent" class="cf">
       <h4 id='windows_releases'>Windows Releases</h4>
 <a label='windows' id='windows' />
@@ -98,6 +147,28 @@ java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</code></pre>
   <div class="span6 columns"><p>&nbsp;</p></div>
 </div>
 
+
+
+<script type="text/javascript" src="jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").height($(window).height());
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         e.preventDefault();
+         var h = $(this).attr('href');
+         $(h).ScrollTo({
+             callback:function(){ window.location.hash = h;}
+         });
+     });
+   });})(jQuery);
+</script>
 
 </body>
 </html>
