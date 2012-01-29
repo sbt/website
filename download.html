@@ -20,12 +20,9 @@
         <div class="container">
           <a class="brand" href="/">SBT</a>
           <ul class="nav">
-           <li><a href="/community-plugins.html">Community Plugins</a></li>
-           <li><a href="/talks.html">Talks</a></li>
-           <li><a target="_blank" href="http://github.com/harrah/xsbt">Source</a></li>
-           <li><a target="_blank" href="http://groups.google.com/group/simple-build-tool/topics">Community</a></li>
-           <li><a target="_blank" href="http://github.com/harrah/xsbt/wiki">Documentation</a></li>
-           <li><a target="_blank" href="https://github.com/harrah/xsbt#readme">Contribute</a></li>
+           <li><a href="learn.html">Learn</a>
+           <li><a href="download.html">Download</a>
+           <li><a href="community.html">Community</a></li>
            <li><a href="#top">Top</a></li>
           </ul>
         </div>
@@ -53,19 +50,31 @@
         <ul class="left">           
           
             
-            <li><a href="#windows">Windows MSI downloads</a></li>
+            
+              
+                <li><a href="#windows">Windows MSI downloads</a></li>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <li><a href="#deb">Apt Repository</a></li>
+              
+            
           
             
             
           
             
-            <li><a href="#deb">Apt Repository</a></li>
-          
             
+              
+                <li><a href="#manual">Manual Installation</a></li>
+              
             
-          
-            
-            <li><a href="#manual">Manual Installation</a></li>
           
         </ul>
         <ul class="left">
@@ -74,13 +83,21 @@
             
           
             
-            <li><a href="#rpm">Yum Repository</a></li>
+            
+              
+                <li><a href="#rpm">Yum Repository</a></li>
+              
+            
           
             
             
           
             
-            <li><a href="#mac">Homebrew</a></li>
+            
+              
+                <li><a href="#mac">Homebrew</a></li>
+              
+            
           
             
             
@@ -96,27 +113,36 @@
    <div id="extra">
      <ul id="examples">
        
-       <li id="windows" class="feature contained"><h4 id='windows_releases'>Windows Releases</h4>
+         
+           <li id="windows" class="feature contained"><h4 id='windows_releases'>Windows Releases</h4>
 
 <p><a href='http://typesafe.artifactoryonline.com/typesafe/windows-releases/org/scalasbt/sbt/0.11.2/sbt.msi'>Click here</a> for the latest windows MSI.</p>
 
 <p><em>Note: This MSI is still in BETA. While it has been tested it may fail in obscure situations, please make sure to report any issues you may find <a href='https://github.com/sbt/sbt-launcher-package/issues'>here</a>.</em>&#8221;</p></li>
+         
        
-       <li id="rpm" class="feature contained"><h4 id='yum_repositories'>Yum Repositories</h4>
+         
+           <li id="rpm" class="feature contained"><h4 id='yum_repositories'>Yum Repositories</h4>
 
 <p>coming soon&#8230;</p></li>
+         
        
-       <li id="deb" class="feature contained"><h4 id='apt_repositories'>APT Repositories</h4>
+         
+           <li id="deb" class="feature contained"><h4 id='apt_repositories'>APT Repositories</h4>
 
 <p>Coming Soon&#8230;</p></li>
+         
        
-       <li id="mac" class="feature contained"><h4 id='hombrew'>Hombrew</h4>
+         
+           <li id="mac" class="feature contained"><h4 id='hombrew'>Hombrew</h4>
 
 <p>Use HomeBrew:</p>
 
 <pre><code>$ brew install sbt</code></pre></li>
+         
        
-       <li id="manual" class="feature contained"><h4 id='by_hand_installation'>By Hand installation</h4>
+         
+           <li id="manual" class="feature contained"><h4 id='by_hand_installation'>By Hand installation</h4>
 
 <p>First, download the <a href='http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.11.2/sbt-launch.jar'>launcher jar</a> and place it somewhere useful. THEN, create a script in that same directory.</p>
 
@@ -138,6 +164,7 @@ java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</code></pre>
 <p>then make the script executable:</p>
 
 <pre><code>$ chmod u+x ~/bin/sbt</code></pre></li>
+         
        
      </ul>
    </div>
@@ -159,11 +186,14 @@ java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</code></pre>
      applyH();
      
      $('#features a, .st').click(function(e){
-         e.preventDefault();
          var h = $(this).attr('href');
-         $(h).ScrollTo({
-             callback:function(){ window.location.hash = h;}
-         });
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
      });
    });})(jQuery);
 </script>
