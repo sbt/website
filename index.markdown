@@ -8,7 +8,7 @@ layout: default
 _始める sbt 1/14 ページ_ [次](setup)
 
 > 原文: [Getting Started Guide](https://github.com/harrah/xsbt/wiki/Getting-Started-Welcome)<br>
-> [誤訳の報告をする](https://github.com/eed3si9n/sbt-getting-started-guide-ja/issues)。
+> [誤訳の報告をする](https://github.com/scalajp/sbt-getting-started-guide-ja/issues)。
 
 「始める sbt」で君も sbt を始めよう。
 
