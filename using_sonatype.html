@@ -169,7 +169,9 @@ Please enter your PGP passphrase&gt; ***********
 
 <p>This file specifies the plugins for your project. If you intend to sign the artefacts, you&#8217;ll need to include @jsuereth&#8217;s <code>xsbt-gpg-plugin</code>:</p>
 
-<pre><code>resolvers += &quot;sbt-plugin-releases&quot; at &quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/&quot;
+<pre><code>resolvers += Resolver.url(&quot;sbt-plugin-releases&quot;, /* no new line */
+  new URL(&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases&quot;)) /* no new line */
+  (Resolver.ivyStylePatterns)
 
 addSbtPlugin(&quot;com.jsuereth&quot; % &quot;xsbt-gpg-plugin&quot; % &quot;0.5&quot;)</code></pre>
 
