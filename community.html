@@ -105,7 +105,11 @@
      $("#top").click(function(){ $("#intro").ScrollTo(); })
 
      var applyH = function() {
-       $("#intro, .feature").height($(window).height());
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
      };
      $(window).bind('resize', function() { applyH(); });
      applyH();

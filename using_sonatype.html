@@ -117,7 +117,7 @@ homepage := Some(url(&quot;http://jsuereth.com/scala-arm&quot;))</code></pre>
                            &quot;&lt;your username&gt;&quot;,
                            &quot;&lt;your password&gt;&quot;)</code></pre>
 
-<p><em>Note: The first two strings</em><em>must</em>* be <code>&quot;Sonatype Nexus Repository Manager&quot;</code> and <code>&quot;oss.sonatype.org&quot;</code> for Ivy to use the credentials.*</p>
+<p><em>Note: The first two strings must be <code>&quot;Sonatype Nexus Repository Manager&quot;</code> and <code>&quot;oss.sonatype.org&quot;</code> for Ivy to use the credentials.</em></p>
 
 <h2 id='finally__publish'>Finally - Publish</h2>
 
@@ -234,7 +234,11 @@ pomExtra := (
      $("#top").click(function(){ $("#intro").ScrollTo(); })
 
      var applyH = function() {
-       $("#intro, .feature").height($(window).height());
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
      };
      $(window).bind('resize', function() { applyH(); });
      applyH();

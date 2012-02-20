@@ -118,7 +118,20 @@ publishMavenStyle := false</code></pre>
 
 <p>Where <code>@my encrypted password@</code> is actually obtained using the following <a href='http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords'>instructions</a>.</p>
 
-<p><em>Note: Your code must abide by the <a href='repository-rules.html'>repository polices</a>.</em></p></li>
+<p><em>Note: Your code must abide by the <a href='repository-rules.html'>repository polices</a>.</em></p>
+
+<p>To automatically deploy snapshot/release versions of your plugin use the following configuration:</p>
+
+<pre><code>publishTo &lt;&lt;= (version) { version: String =&gt;
+   val scalasbt = &quot;http://scalasbt.artifactoryonline.com/scalasbt/&quot;
+   val (name, url) = if (version.contains(&quot;-SNAPSHOT&quot;))
+                       (&quot;sbt-plugin-snapshots&quot;, scalasbt+&quot;sbt-plugin-snapshots&quot;)
+                     else
+                       (&quot;sbt-plugin-releases&quot;, scalasbt+&quot;sbt-plugin-releases&quot;)
+   Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
+}</code></pre>
+
+<p><em>Note: ivy repositories currently don&#8217;t support Maven-style snapshots.</em></p></li>
          
        
          
@@ -149,7 +162,11 @@ publishMavenStyle := false</code></pre>
      $("#top").click(function(){ $("#intro").ScrollTo(); })
 
      var applyH = function() {
-       $("#intro, .feature").height($(window).height());
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
      };
      $(window).bind('resize', function() { applyH(); });
      applyH();
