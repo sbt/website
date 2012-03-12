@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Interactive mode - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+    <!-- Topbar
+    ================================================== -->
+    <div class="cf" id="more" >
+      <div id="top">
+        <div class="container">
+          <a class="brand" href="/">SBT</a>
+          <ul class="nav">
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
+           <li><a href="#top">Top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <div id="name" class="left">
+        <h1>sbt</h1>
+        <h2>Interactive mode</h2>
+      </div>
+    </div>
+    <div id="features" class="cf"><div id="feature-list">
+      <ul class="left">
+          
+             <li id="feature"><h4><a href="#basic_completion">How to use tab completion</a></h4></li>
+          
+             <li id="feature"><h4><a href="#verbose_completion">How to show more tab completion suggestions</a></h4></li>
+          
+             <li id="feature"><h4><a href="#show_keybindings">How to view basic JLine keybindings</a></h4></li>
+          
+             <li id="feature"><h4><a href="#change_keybindings">How to modify the default JLine keybindings</a></h4></li>
+          
+             <li id="feature"><h4><a href="#prompt">How to configure the prompt string</a></h4></li>
+          
+             <li id="feature"><h4><a href="#history">How to use history</a></h4></li>
+          
+             <li id="feature"><h4><a href="#history_file">How to change the location of the interactive history file</a></h4></li>
+          
+             <li id="feature"><h4><a href="#share_history">How to share interactive history across projects</a></h4></li>
+          
+             <li id="feature"><h4><a href="#disable_history">How to disable interactive history</a></h4></li>
+          
+             <li id="feature"><h4><a href="#pre_commands">How to start interactive mode after executing some commands first</a></h4></li>
+          
+       </ul>
+     </div></div>
+    <div id="pagecontent" class="cf">
+      <p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <code>shell</code> command is invoked.</p>
+
+<h4 id="basic_completion">Using tab completion</h4>
+
+
+<p>As the name suggests, tab completion is invoked by hitting the tab key.
+Suggestions are provided that can complete the text entered to the left of the current cursor position.
+Any part of the suggestion that is unambiguous is automatically appended to the current text.
+Commands typically support tab completion for most of their syntax.</p>
+
+<p>As an example, entering <code>tes</code> and hitting tab:</p>
+
+<pre><code>&gt; tes&lt;TAB&gt;
+</code></pre>
+
+<p>results in sbt appending a <code>t</code>:</p>
+
+<pre><code>&gt; test
+</code></pre>
+
+<p>To get further completions, hit tab again:</p>
+
+<pre><code>&gt; test&lt;TAB&gt;
+test-frameworks   test-listeners    test-loader       test-only         test-options      test:
+</code></pre>
+
+<p>Now, there is more than one possibility for the next character, so sbt prints the available options.
+We will select <code>test-only</code> and get more suggestions by entering the rest of the command and hitting tab twice:</p>
+
+<pre><code>&gt; test-only&lt;TAB&gt;&lt;TAB&gt;
+--                      sbt.DagSpecification    sbt.EmptyRelationTest   sbt.KeyTest             sbt.RelationTest        sbt.SettingsTest
+</code></pre>
+
+<p>The first tab inserts an unambiguous space and the second suggests names of tests to run.
+The suggestion of <code>--</code> is for the separator between test names and options provided to the test framework.
+The other suggestions are names of test classes for one of sbt's modules.
+Test name suggestions require tests to be compiled first.
+If tests have been added, renamed, or removed since the last test compilation, the completions will be out of date until another successful compile.</p>
+
+<h4 id="verbose_completion">Showing more completions</h4>
+
+
+<p>Some commands have different levels of completion.  Hitting tab multiple times increases the verbosity of completions.  (Presently, this feature is rarely used.)</p>
+
+<h4 id="show_keybindings">Showing JLine keybindings</h4>
+
+
+<p>Both the Scala and sbt command prompts use JLine for interaction.  The Scala REPL contains a <code>:keybindings</code> command to show many of the keybindings used for JLine.  For sbt, this can be used by running one of the <code>console</code> commands (<code>console</code>, <code>console-quick</code>, or <code>console-project</code>) and then running <code>:keybindings</code>.  For example:</p>
+
+<pre><code>&gt; console-project
+[info] Starting scala interpreter...
+...
+scala&gt; :keybindings
+Reading jline properties for default key bindings.
+Accuracy not guaranteed: treat this as a guideline only.
+
+1 CTRL-A: move to the beginning of the line
+2 CTRL-B: move to the previous character
+...
+</code></pre>
+
+<h4 id="change_keybindings">Changing JLine keybindings</h4>
+
+
+<p>JLine, used by both Scala and sbt, uses a configuration file for many of its keybindings.
+The location of this file can be changed with the system property <code>jline.keybindings</code>.
+The default keybindings file is included in the sbt launcher and may be used as a starting point for customization.</p>
+
+<h4 id="prompt">Configure the prompt string</h4>
+
+
+<p>By default, sbt only displays <code>&gt;</code> to prompt for a command.
+This can be changed through the <code>shellPrompt</code> setting, which has type <code>State =&gt; String</code>.
+<a href="https://github.com/harrah/xsbt/wiki/Build-State">State</a> contains all state for sbt and thus provides access to all build information for use in the prompt string.</p>
+
+<p>Examples:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="c1">// set the prompt (for this build) to include the project id.</span>
+<span class="n">shellPrompt</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">state</span><span class="o">).</span><span class="n">currentRef</span><span class="o">.</span><span class="n">project</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+
+<span class="c1">// set the prompt (for the current project) to include the username</span>
+<span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="history">Using history</h4>
+
+
+<p>Interactive mode remembers history, even if you exit sbt and restart it.
+The simplest way to access history is with the up arrow key. The following
+commands are also supported:</p>
+
+<ul>
+<li><code>!</code> Show history command help.</li>
+<li><code>!!</code> Execute the previous command again.</li>
+<li><code>!:</code> Show all previous commands.</li>
+<li><code>!:n</code> Show the last n commands.</li>
+<li><code>!n</code> Execute the command with index <code>n</code>, as shown by the <code>!:</code> command.</li>
+<li><code>!-n</code> Execute the nth command before this one.</li>
+<li><code>!string</code> Execute the most recent command starting with 'string'</li>
+<li><code>!?string</code> Execute the most recent command containing 'string'</li>
+</ul>
+
+
+<h4 id="history_file">Changing the history file location</h4>
+
+
+<p>By default, interactive history is stored in the <code>target/</code> directory for the current project (but is not removed by a <code>clean</code>).
+History is thus separate for each subproject.
+The location can be changed with the <code>historyPath</code> setting, which has type <code>Option[File]</code>.
+For example, history can be stored in the root directory for the project instead of the output directory:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span>
+</code></pre>
+</div>
+
+
+<p>The history path needs to be set for each project, since sbt will use the value of <code>historyPath</code> for the current project (as selected by the <code>project</code> command).</p>
+
+<h4 id="share_history">Use the same history for all projects</h4>
+
+
+<p>The previous section describes how to configure the location of the history file.
+This setting can be used to share the interactive history among all projects in a build instead of using a different history for each project.
+The way this is done is to set <code>historyPath</code> to be the same file, such as a file in the root project's <code>target/</code> directory:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span>
+  <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+</code></pre>
+</div>
+
+
+<p>The <code>in LocalRootProject</code> part means to get the output directory for the root project for the build.</p>
+
+<h4 id="disable_history">Disable interactive history</h4>
+
+
+<p>If, for whatever reason, you want to disable history, set <code>historyPath</code> to <code>None</code> in each project it should be disabled in:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="pre_commands">Run commands before entering interactive mode</h4>
+
+
+<p>Interactive mode is implemented by the <code>shell</code> command.
+By default, the <code>shell</code> command is run if no commands are provided to sbt on the command line.
+To run commands before entering interactive mode, specify them on the command line followed by <code>shell</code>.
+For example,</p>
+
+<pre><code>$ sbt clean compile shell
+</code></pre>
+
+<p>This runs <code>clean</code> and then <code>compile</code> before entering the interactive prompt.
+If either <code>clean</code> or <code>compile</code> fails, sbt will exit without going to the prompt.
+To enter the prompt whether or not these initial commands succeed, prepend <code>-shell</code>, which means to run <code>shell</code> if any command fails.
+For example,</p>
+
+<pre><code>$ sbt -shell clean compile shell
+</code></pre>
+   
+    </div>
+   </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+

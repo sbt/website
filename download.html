@@ -5,8 +5,8 @@
 <head>
    <title>download - </title>
    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-   <link href='resources/site.css' rel='stylesheet' type='text/css'>
-   <link href='resources/syntax.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
    </script>
 </head>
@@ -20,9 +20,9 @@
         <div class="container">
           <a class="brand" href="/">SBT</a>
           <ul class="nav">
-           <li><a href="learn.html">Learn</a>
-           <li><a href="download.html">Download</a>
-           <li><a href="community.html">Community</a></li>
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
            <li><a href="#top">Top</a></li>
           </ul>
         </div>
@@ -40,9 +40,10 @@
         <p id="what">up and running in moments.</p>
       </div>
       <div class="left page-description" id="vc">
-          <p>The <a href='http://github.com/sbt/sbt-launcher'>SBT Launcher</a> project contains a set of native packages for use in your operating system.</p>
+          <p>The <a href="http://github.com/sbt/sbt-launcher">SBT Launcher</a> project contains a set of native packages for use in your operating system.</p>
 
-<p><a href='#windows'>msi</a> | <a href='#rpm'>yum</a> | <a href='#deb'>apt-get</a> | <a href='#mac'>homebrew</a> | <a href='#manual'>by hand</a></p>
+<p><a href="#windows">msi</a> | <a href="#rpm">yum</a> | <a href="#deb">apt-get</a> | <a href="#mac">homebrew</a> | <a href="#manual">by hand</a></p>
+
       </div>
     </div>
     <div id="features" class="cf">
@@ -106,7 +107,11 @@
        </div>
      </div>
     <div id="pagecontent" class="cf">
-      <!-- This page has no content. -->   
+      <!-- This page has no content. -->
+
+
+
+   
     </div>
    </div>
 
@@ -114,56 +119,67 @@
      <ul id="examples">
        
          
-           <li id="windows" class="feature contained"><h4 id='windows_releases'>Windows Releases</h4>
+           <li id="windows" class="feature contained"><h4>Windows Releases</h4>
 
-<p><a href='http://typesafe.artifactoryonline.com/typesafe/windows-releases/org/scalasbt/sbt/0.11.2/sbt.msi'>Click here</a> for the latest windows MSI.</p>
+<p><a href="http://typesafe.artifactoryonline.com/typesafe/windows-releases/org/scalasbt/sbt/0.11.2/sbt.msi">Click here</a> for the latest windows MSI.</p>
 
-<p><em>Note: This MSI is still in BETA. While it has been tested it may fail in obscure situations, please make sure to report any issues you may find <a href='https://github.com/sbt/sbt-launcher-package/issues'>here</a>.</em>&#8221;</p></li>
+<p><em>Note: This MSI is still in BETA.  While it has been tested it may fail in obscure situations, please make sure to report any issues you may find <a href="https://github.com/sbt/sbt-launcher-package/issues">here</a>.</em>"</p>
+</li>
          
        
          
-           <li id="rpm" class="feature contained"><h4 id='yum_repositories'>Yum Repositories</h4>
+           <li id="rpm" class="feature contained"><h4>Yum Repositories</h4>
 
-<p>coming soon&#8230;</p></li>
+<p>coming soon...</p>
+</li>
          
        
          
-           <li id="deb" class="feature contained"><h4 id='apt_repositories'>APT Repositories</h4>
+           <li id="deb" class="feature contained"><h4>APT Repositories</h4>
 
-<p>Coming Soon&#8230;</p></li>
+<p>Coming Soon...</p>
+</li>
          
        
          
-           <li id="mac" class="feature contained"><h4 id='hombrew'>Hombrew</h4>
+           <li id="mac" class="feature contained"><h4>Hombrew</h4>
 
 <p>Use HomeBrew:</p>
 
-<pre><code>$ brew install sbt</code></pre></li>
+<pre><code>$ brew install sbt
+</code></pre>
+</li>
          
        
          
-           <li id="manual" class="feature contained"><h4 id='by_hand_installation'>By Hand installation</h4>
+           <li id="manual" class="feature contained"><h4>By Hand installation</h4>
 
-<p>First, download the <a href='http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.11.2/sbt-launch.jar'>launcher jar</a> and place it somewhere useful. THEN, create a script in that same directory.</p>
+<p>First, download the <a href="http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.11.2/sbt-launch.jar">launcher jar</a>
+and place it somewhere useful.
+THEN, create a script in that same directory.</p>
 
-<h5 id='windows'>Windows</h5>
+<h5>Windows</h5>
 
 <p>Create a <code>sbt.bat</code> file next to the launch jar.</p>
 
 <pre><code>set SCRIPT_DIR=%~dp0
-java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</code></pre>
+java -Xmx512M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+</code></pre>
 
 <p>Add the directory containing <code>sbt.bat</code> to the windows path.</p>
 
-<h5 id='unixlike'>Unix-Like</h5>
+<h5>Unix-Like</h5>
 
 <p>Create a <code>sbt</code> script (a good place is <code>~/bin/sbt</code></p>
 
-<pre><code>java -Xmx512M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</code></pre>
+<pre><code>java -Xmx512M -jar `dirname $0`/sbt-launch.jar "$@"
+</code></pre>
 
 <p>then make the script executable:</p>
 
-<pre><code>$ chmod u+x ~/bin/sbt</code></pre></li>
+<pre><code>$ chmod u+x ~/bin/sbt
+</code></pre>
+</li>
          
        
      </ul>
@@ -174,7 +190,7 @@ java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</code></pre>
 
 
 
-<script type="text/javascript" src="jquery.scrollto.min.js"></script>
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
 <script type="text/javascript">
    (function($){ $(function(){
      $("#top").click(function(){ $("#intro").ScrollTo(); })

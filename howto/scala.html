@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Configure and use Scala - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+    <!-- Topbar
+    ================================================== -->
+    <div class="cf" id="more" >
+      <div id="top">
+        <div class="container">
+          <a class="brand" href="/">SBT</a>
+          <ul class="nav">
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
+           <li><a href="#top">Top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <div id="name" class="left">
+        <h1>sbt</h1>
+        <h2>Configure and use Scala</h2>
+      </div>
+    </div>
+    <div id="features" class="cf"><div id="feature-list">
+      <ul class="left">
+          
+             <li id="feature"><h4><a href="#version">How to set the Scala version used for building the project</a></h4></li>
+          
+             <li id="feature"><h4><a href="#noauto">How to disable the automatic dependency on the Scala library</a></h4></li>
+          
+             <li id="feature"><h4><a href="#temporary">How to temporarily switch to a different Scala version</a></h4></li>
+          
+             <li id="feature"><h4><a href="#local">How to use a local Scala installation for building a project</a></h4></li>
+          
+             <li id="feature"><h4><a href="#cross">How to build a project against multiple Scala versions</a></h4></li>
+          
+             <li id="feature"><h4><a href="#console-quick">How to enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</a></h4></li>
+          
+             <li id="feature"><h4><a href="#console">How to enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></h4></li>
+          
+             <li id="feature"><h4><a href="#console-project">How to enter the Scala REPL with plugins and the build definition on the classpath</a></h4></li>
+          
+             <li id="feature"><h4><a href="#initial">How to define the initial commands evaluated when entering the Scala REPL</a></h4></li>
+          
+             <li id="feature"><h4><a href="#embed">How to use the Scala REPL from project code</a></h4></li>
+          
+       </ul>
+     </div></div>
+    <div id="pagecontent" class="cf">
+      <p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <code>shell</code> command is invoked.</p>
+
+<h4 id="version">Set the Scala version used for building the project</h4>
+
+
+<p>The <code>scalaVersion</code> configures the version of Scala used for compilation.  By default, sbt also adds a dependency on the Scala library with this version.  See the next section for how to disable this automatic dependency.  If the Scala version is not specified, the version sbt was built against is used.  It is recommended to explicitly specify the version of Scala.</p>
+
+<p>For example, to set the Scala version to "2.9.1",</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.1&quot;</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="noauto">Disable the automatic dependency on the Scala library</h4>
+
+
+<p>sbt adds a dependency on the Scala standard library by default.  To disable this behavior, set the <code>autoScalaLibrary</code> setting to false.</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="temporary">Temporarily switch to a different Scala version</h4>
+
+
+<p>To set the Scala version in all scopes to a specific value, use the <code>++</code> command.  For example, to temporarily use Scala 2.8.2, run:</p>
+
+<pre><code>&gt; ++ 2.8.2
+</code></pre>
+
+<h4 id="local">Use a local Scala version</h4>
+
+
+<p>Defining the <code>scalaHome</code> setting with the path to the Scala home directory will use that Scala installation.  sbt still requires <code>scalaVersion</code> to be set when a local Scala version is used.  For example,</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.0-local&quot;</span>
+
+<span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="cross">Build a project against multiple Scala versions</h4>
+
+
+<p>See <a href="https://github.com/harrah/xsbt/wiki/Cross-Build">cross building</a>.</p>
+
+<h4 id="console-quick">Enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</h4>
+
+
+<p>The <code>console-quick</code> action retrieves dependencies and puts them on the classpath of the Scala REPL.  The project's sources are not compiled, but sources of any source dependencies are compiled.  To enter the REPL with test dependencies on the classpath but without compiling test sources, run <code>test:console-quick</code>.  This will force compilation of main sources.</p>
+
+<h4 id="console">Enter the Scala REPL with a project's dependencies and compiled classes on the classpath</h4>
+
+
+<p>The <code>console</code> action retrieves dependencies and compiles sources and puts them on the classpath of the Scala REPL.  To enter the REPL with test dependencies and compiled test sources on the classpath, run <code>test:console</code>.</p>
+
+<h4 id="console-project">Enter the Scala REPL with plugins and the build definition on the classpath</h4>
+
+
+<pre><code>&gt; console-project
+</code></pre>
+
+<p>For details, see the <a href="https://github.com/harrah/xsbt/wiki/Console-Project">console-project</a> page.</p>
+
+<h4 id="initial">Define the initial commands evaluated when entering the Scala REPL</h4>
+
+
+<p>Set <code>initialCommands in console</code> to set the initial statements to evaluate when <code>console</code> and <code>console-quick</code> are run.  To configure <code>console-quick</code> separately, use <code>initialCommands in consoleQuick</code>.
+For example,</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console&quot;)&quot;&quot;&quot;</span>
+
+<span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleQuick</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console-quick&quot;)&quot;&quot;&quot;</span>
+</code></pre>
+</div>
+
+
+<p>The <code>console-project</code> command is configured separately by <code>initialCommands in consoleProject</code>.  It does not use the value from <code>initialCommands in console</code> by default.  For example,</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleProject</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console-project&quot;)&quot;&quot;&quot;</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="embed">Use the Scala REPL from project code</h4>
+
+
+<p>sbt runs tests in the same JVM as sbt itself and Scala classes are not in the same class loader as the application classes.  This is also the case in <code>console</code> and when <code>run</code> is not forked. Therefore, when using the Scala interpreter, it is important to set it up properly to avoid an error message like:</p>
+
+<pre><code>Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
+** Note that as of 2.8 scala does not assume use of the java classpath.
+** For the old behavior pass -usejavacp to scala, or if using a Settings
+** object programmatically, settings.usejavacp.value = true.
+</code></pre>
+
+<p>The key is to initialize the Settings for the interpreter using <em>embeddedDefaults</em>.  For example:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Settings</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">embeddedDefaults</span><span class="o">[</span><span class="kt">MyType</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">interpreter</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Interpreter</span><span class="o">(</span><span class="n">settings</span><span class="o">,</span> <span class="o">...)</span>
+</code></pre>
+</div>
+
+
+<p>Here, MyType is a representative class that should be included on the interpreter's classpath and in its application class loader.  For more background, see the <a href="https://gist.github.com/404272">original proposal</a> that resulted in <em>embeddedDefaults</em> being added.</p>
+
+<p>Similarly, use a representative class as the type argument when using the <em>break</em> and <em>breakIf</em> methods of <em>ILoop</em>, as in the following example:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="k">def</span> <span class="n">x</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">import</span> <span class="nn">scala.tools.nsc.interpreter.ILoop</span>
+  <span class="nc">ILoop</span><span class="o">.</span><span class="n">breakIf</span><span class="o">[</span><span class="kt">MyType</span><span class="o">](</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="o">,</span> <span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">)</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+   
+    </div>
+   </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+

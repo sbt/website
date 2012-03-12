@@ -5,8 +5,8 @@
 <head>
    <title>Community Repository Policy - </title>
    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-   <link href='resources/site.css' rel='stylesheet' type='text/css'>
-   <link href='resources/syntax.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
    </script>
 </head>
@@ -20,9 +20,9 @@
         <div class="container">
           <a class="brand" href="/">SBT</a>
           <ul class="nav">
-           <li><a href="learn.html">Learn</a>
-           <li><a href="download.html">Download</a>
-           <li><a href="community.html">Community</a></li>
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
            <li><a href="#top">Top</a></li>
           </ul>
         </div>
@@ -39,13 +39,14 @@
     <div id="pagecontent" class="cf">
       <p>The community repository has the following guideline for artifacts published to it:</p>
 
-<p>1. All pubished artifacts are the authors own work or have an appropriate License which grants distribution rights</p>
+<ol>
+<li><p>All pubished artifacts are the authors own work or have an appropriate License which grants distribution rights</p></li>
+<li><p>All published artifacts come from open source projects, that have an open patch acceptance policy</p></li>
+<li><p>All published artifacts are placed under an organization in a DNS domain for which you permission to use or are an owner.  (scala-sbt.org is available for SBT plugins).</p></li>
+<li><p>All published artifacts are signed by a committer of the project (Coming Soon).</p></li>
+</ol>
 
-<p>2. All published artifacts come from open source projects, that have an open patch acceptance policy</p>
-
-<p>3. All published artifacts are placed under an organization in a DNS domain for which you permission to use or are an owner. (scala-sbt.org is available for SBT plugins).</p>
-
-<p>4. All published artifacts are signed by a committer of the project (Coming Soon).</p>   
+   
     </div>
    </div>
   </div>
@@ -53,35 +54,7 @@
 </div>
 
 
-
-<script type="text/javascript" src="jquery.scrollto.min.js"></script>
-<script type="text/javascript">
-   (function($){ $(function(){
-     $("#top").click(function(){ $("#intro").ScrollTo(); })
-
-     var applyH = function() {
-       $("#intro, .feature").each(function (i, elt) {
-          if ($(elt).height() < $(window).height()) {
-            $(elt).height($(window).height());
-          }
-       });
-     };
-     $(window).bind('resize', function() { applyH(); });
-     applyH();
-     
-     $('#features a, .st').click(function(e){
-         var h = $(this).attr('href');
-         if(h && h[0] && h[0] == '#') {
-           e.preventDefault();
-         
-           $(h).ScrollTo({
-               callback:function(){ window.location.hash = h;}
-           });
-         }
-     });
-   });})(jQuery);
-</script>
-
 </body>
 </html>
+
 

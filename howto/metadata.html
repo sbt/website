@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Project metadata - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+    <!-- Topbar
+    ================================================== -->
+    <div class="cf" id="more" >
+      <div id="top">
+        <div class="container">
+          <a class="brand" href="/">SBT</a>
+          <ul class="nav">
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
+           <li><a href="#top">Top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <div id="name" class="left">
+        <h1>sbt</h1>
+        <h2>Project metadata</h2>
+      </div>
+    </div>
+    <div id="features" class="cf"><div id="feature-list">
+      <ul class="left">
+          
+             <li id="feature"><h4><a href="#name">How to set the project name</a></h4></li>
+          
+             <li id="feature"><h4><a href="#version">How to set the project version</a></h4></li>
+          
+             <li id="feature"><h4><a href="#organization">How to set the project organization</a></h4></li>
+          
+             <li id="feature"><h4><a href="#other">How to set the project homepage and other metadata used in a published pom.xml</a></h4></li>
+          
+       </ul>
+     </div></div>
+    <div id="pagecontent" class="cf">
+      <p>A project should define <code>name</code> and <code>version</code>.  These will be used in various parts of the build, such as the names of generated artifacts.  Projects that are published to a repository should also override <code>organization</code>.</p>
+
+<h4 id="name">Set the project name</h4>
+
+
+
+
+<div class="highlight"><pre><code class="scala"><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;Your project name&quot;</span>
+</code></pre>
+</div>
+
+
+<p>For published projects, this name is normalized to be suitable for use as an artifact name and dependency ID.  This normalized name is stored in <code>normalizedName</code>.</p>
+
+<h4 id="version">Set the project version</h4>
+
+
+
+
+<div class="highlight"><pre><code class="scala"><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="organization">Set the project organization</h4>
+
+
+
+
+<div class="highlight"><pre><code class="scala"><span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
+</code></pre>
+</div>
+
+
+<p>By convention, this is a reverse domain name that you own, typically one specific to your project.  It is used as a namespace for projects.</p>
+
+<p>A full/formal name can be defined in the <code>organizationName</code> setting.  This is used in the generated pom.xml.  If the organization has a web site, it may be set in the <code>organizationHomepage</code> setting.  For example:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;Example, Inc.&quot;</span>
+
+<span class="n">organizationHomepage</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="other">Set the project's homepage and other metadata</h4>
+
+
+
+
+<div class="highlight"><pre><code class="scala"><span class="n">homepage</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://scala-sbt.org&quot;</span><span class="o">))</span>
+
+<span class="n">startYear</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">2008</span><span class="o">)</span>
+
+<span class="n">description</span> <span class="o">:=</span> <span class="s">&quot;A build tool for Scala.&quot;</span>
+
+<span class="n">licenses</span> <span class="o">+=</span> <span class="s">&quot;GPLv2&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;http://www.gnu.org/licenses/gpl-2.0.html&quot;</span>
+</code></pre>
+</div>
+
+
+
+   
+    </div>
+   </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+

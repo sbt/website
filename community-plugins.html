@@ -5,8 +5,8 @@
 <head>
    <title>Community Plugins - </title>
    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-   <link href='resources/site.css' rel='stylesheet' type='text/css'>
-   <link href='resources/syntax.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
    </script>
 </head>
@@ -20,9 +20,9 @@
         <div class="container">
           <a class="brand" href="/">SBT</a>
           <ul class="nav">
-           <li><a href="learn.html">Learn</a>
-           <li><a href="download.html">Download</a>
-           <li><a href="community.html">Community</a></li>
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
            <li><a href="#top">Top</a></li>
           </ul>
         </div>
@@ -40,7 +40,8 @@
         <p id="what">ensuring everything is possible.</p>
       </div>
       <div class="left page-description" id="vc">
-          <p>The <a href='http://github.com/sbt'>SBT Organization</a> contains a <a href='http://github.com/sbt/sbt-community-plugins'>SBT Community Plugins</a> project. This project aims to unify all the SBT plugins in the community and ensure their compatibility and timely releases with new versions of SBT. There is also a <a href='https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list'>list of plugins</a> that is up-to-date.</p>
+          <p>The <a href="http://github.com/sbt">SBT Organization</a> contains a <a href="http://github.com/sbt/sbt-community-plugins">SBT Community Plugins</a> project.   This project aims to unify all the SBT plugins in the community and ensure their compatibility and timely releases with new versions of SBT.  There is also a <a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list">list of plugins</a> that is up-to-date.</p>
+
       </div>
     </div>
     <div id="features" class="cf">
@@ -94,7 +95,8 @@
        </div>
      </div>
     <div id="pagecontent" class="cf">
-         
+      
+   
     </div>
    </div>
 
@@ -102,50 +104,62 @@
      <ul id="examples">
        
          
-           <li id="communityrepo" class="feature contained"><h4 id='community_ivy_repository'>Community Ivy Repository</h4>
+           <li id="communityrepo" class="feature contained"><h4>Community Ivy Repository ####</h4>
 
-<p><a href='http://www.typesafe.com'>Typesafe, Inc.</a> has provided a freely available <a href='http://scalasbt.artifactoryonline.com/scalasbt'>Ivy Repository</a> for SBT projects to make use of.</p>
+<p><a href="http://www.typesafe.com">Typesafe, Inc.</a> has provided a freely available <a href="http://scalasbt.artifactoryonline.com/scalasbt">Ivy Repository</a> for SBT projects to make use of.</p>
 
-<p>If you would like to publish your project to this Ivy repository, first contact Joshua.Suereth@typesafe.com and request privileges (we have to verify code ownership, rights to publish, etc.). After which, you can deploy your plugins using the following configuration:</p>
+<p>If you would like to publish your project to this Ivy repository, first contact Joshua.Suereth@typesafe.com and request privileges
+(we have to verify code ownership, rights to publish, etc.).  After which, you can deploy your plugins using the following configuration:</p>
 
-<pre><code>publishTo := Some(Resolver.url(&quot;sbt-plugin-releases&quot;, new URL(&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/&quot;))(Resolver.ivyStylePatterns))
+<pre><code>publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
 
-publishMavenStyle := false</code></pre>
+publishMavenStyle := false
+</code></pre>
 
-<p>You&#8217;ll also need to add your credentials somewhere. I use a <code>~/.sbt/sbtpluginpublish.sbt</code> file:</p>
+<p>You'll also need to add your credentials somewhere.  I use a <code>~/.sbt/sbtpluginpublish.sbt</code> file:</p>
 
-<pre><code>credentials += Credentials(&quot;Artifactory Realm&quot;, &quot;scalasbt.artifactoryonline.com&quot;, &quot;jsuereth&quot;, &quot;@my encrypted password@&quot;)</code></pre>
+<pre><code>credentials += Credentials("Artifactory Realm", "scalasbt.artifactoryonline.com", "jsuereth", "@my encrypted password@")
+</code></pre>
 
-<p>Where <code>@my encrypted password@</code> is actually obtained using the following <a href='http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords'>instructions</a>.</p>
+<p>Where <code>@my encrypted password@</code> is actually obtained using the following <a href="http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords">instructions</a>.</p>
 
-<p><em>Note: Your code must abide by the <a href='repository-rules.html'>repository polices</a>.</em></p>
+<p><em>Note: Your code must abide by the <a href="repository-rules.html">repository polices</a>.</em></p>
 
-<p>To automatically deploy snapshot/release versions of your plugin use the following configuration:</p>
+<p>To automatically deploy snapshot/release versions of your plugin use
+the following configuration:</p>
 
 <pre><code>publishTo &lt;&lt;= (version) { version: String =&gt;
-   val scalasbt = &quot;http://scalasbt.artifactoryonline.com/scalasbt/&quot;
-   val (name, url) = if (version.contains(&quot;-SNAPSHOT&quot;))
-                       (&quot;sbt-plugin-snapshots&quot;, scalasbt+&quot;sbt-plugin-snapshots&quot;)
+   val scalasbt = "http://scalasbt.artifactoryonline.com/scalasbt/"
+   val (name, url) = if (version.contains("-SNAPSHOT"))
+                       ("sbt-plugin-snapshots", scalasbt+"sbt-plugin-snapshots")
                      else
-                       (&quot;sbt-plugin-releases&quot;, scalasbt+&quot;sbt-plugin-releases&quot;)
+                       ("sbt-plugin-releases", scalasbt+"sbt-plugin-releases")
    Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
-}</code></pre>
+}
+</code></pre>
 
-<p><em>Note: ivy repositories currently don&#8217;t support Maven-style snapshots.</em></p></li>
+<p><em>Note: ivy repositories currently don't support Maven-style snapshots.</em></p>
+</li>
          
        
          
-           <li id="sbtorg" class="feature contained"><h4 id='sbt_organization'>SBT Organization</h4>
+           <li id="sbtorg" class="feature contained"><h4>SBT Organization</h4>
 
-<p>The <a href='http://github.com/sbt'>SBT Organization</a> is available for use by any SBT plugin.<br />Developers who contribute their plugins into the community organization will still retain control over their repository and its access. The Goal of the SBT organization is to organize SBT software into one central location.</p>
+<p>The <a href="http://github.com/sbt">SBT Organization</a> is available for use by any SBT plugin.<br/>
+Developers who contribute their plugins into the community organization will still retain
+control over their repository and its access.   The Goal of the SBT organization is to
+organize SBT software into one central location.</p>
 
-<p>A side benefit to using the SBT organization for projects is that you can use gh-pages to host websites in the http://scala-sbt.org domain.</p></li>
+<p>A side benefit to using the SBT organization for projects is that you can use gh-pages to host websites in the http://scala-sbt.org domain.</p>
+</li>
          
        
          
-           <li id="pluginbuild" class="feature contained"><h4 id='sbt_community_plugin_build'>SBT Community Plugin Build</h4>
+           <li id="pluginbuild" class="feature contained"><h4>SBT Community Plugin Build</h4>
 
-<p>The <a href='http://github.com/sbt/sbt-community-plugins'>SBT Community Plugins</a> project aims to build <em>all</em> SBT plugins in a single build.<br />This should enable thorough testing of plugins and ensure that plugins work together.</p></li>
+<p>The <a href="http://github.com/sbt/sbt-community-plugins">SBT Community Plugins</a> project aims to build <em>all</em> SBT plugins in a single build.<br/>
+This should enable thorough testing of plugins and ensure that plugins work together.</p>
+</li>
          
        
      </ul>
@@ -156,7 +170,7 @@ publishMavenStyle := false</code></pre>
 
 
 
-<script type="text/javascript" src="jquery.scrollto.min.js"></script>
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
 <script type="text/javascript">
    (function($){ $(function(){
      $("#top").click(function(){ $("#intro").ScrollTo(); })

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Configure and use logging - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+    <!-- Topbar
+    ================================================== -->
+    <div class="cf" id="more" >
+      <div id="top">
+        <div class="container">
+          <a class="brand" href="/">SBT</a>
+          <ul class="nav">
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
+           <li><a href="#top">Top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <div id="name" class="left">
+        <h1>sbt</h1>
+        <h2>Configure and use logging</h2>
+      </div>
+    </div>
+    <div id="features" class="cf"><div id="feature-list">
+      <ul class="left">
+          
+             <li id="feature"><h4><a href="#last">How to view the logging output of the previously executed command</a></h4></li>
+          
+             <li id="feature"><h4><a href="#tasklast">How to view the previous logging output of a specific task</a></h4></li>
+          
+             <li id="feature"><h4><a href="#lastgrep">How to search the logging output of the previously executed command</a></h4></li>
+          
+             <li id="feature"><h4><a href="#tasklastgrep">How to search the previous logging output of a specific task</a></h4></li>
+          
+             <li id="feature"><h4><a href="#level">How to change the logging level globally</a></h4></li>
+          
+             <li id="feature"><h4><a href="#tasklevel">How to change the logging level for a specific task, configuration, or project</a></h4></li>
+          
+             <li id="feature"><h4><a href="#trace">How to configure printing of stack traces globally</a></h4></li>
+          
+             <li id="feature"><h4><a href="#tasktrace">How to configure printing of stack traces for a specific task, configuration, or project</a></h4></li>
+          
+             <li id="feature"><h4><a href="#nobuffer">How to print the output of tests immediately instead of buffering</a></h4></li>
+          
+             <li id="feature"><h4><a href="#custom">How to add a custom logger</a></h4></li>
+          
+             <li id="feature"><h4><a href="#log">How to log messages from a task</a></h4></li>
+          
+       </ul>
+     </div></div>
+    <div id="pagecontent" class="cf">
+      <h4 id="last">View logging output of the previously executed command</h4>
+
+
+<p>When a command is run, more detailed logging output is sent to a file than to the screen (by default).
+This output can be recalled for the command just executed by running <code>last</code>.</p>
+
+<p>For example, the output of <code>run</code> when the sources are uptodate is:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> run
+<span class="go">[info] Running A </span>
+<span class="go">Hi!</span>
+<span class="go">[success] Total time: 0 s, completed Feb 25, 2012 1:00:00 PM</span>
+</code></pre>
+</div>
+
+
+<p>The details of this execution can be recalled by running <code>last</code>:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> last
+<span class="go">[debug] Running task... Cancelable: false, max worker threads: 4, check cycles: false</span>
+<span class="go">[debug] </span>
+<span class="go">[debug] Initial source changes: </span>
+<span class="go">[debug]    removed:Set()</span>
+<span class="go">[debug]    added: Set()</span>
+<span class="go">[debug]    modified: Set()</span>
+<span class="go">[debug] Removed products: Set()</span>
+<span class="go">[debug] Modified external sources: Set()</span>
+<span class="go">[debug] Modified binary dependencies: Set()</span>
+<span class="go">[debug] Initial directly invalidated sources: Set()</span>
+<span class="go">[debug] </span>
+<span class="go">[debug] Sources indirectly invalidated by:</span>
+<span class="go">[debug]    product: Set()</span>
+<span class="go">[debug]    binary dep: Set()</span>
+<span class="go">[debug]    external source: Set()</span>
+<span class="go">[debug] Initially invalidated: Set()</span>
+<span class="go">[debug] Copy resource mappings: </span>
+<span class="go">[debug]    </span>
+<span class="go">[info] Running A </span>
+<span class="go">[debug] Starting sandboxed run...</span>
+<span class="go">[debug] Waiting for threads to exit or System.exit to be called.</span>
+<span class="go">[debug]   Classpath:</span>
+<span class="go">[debug]    /tmp/e/target/scala-2.9.1/classes</span>
+<span class="go">[debug]    /tmp/e/.sbt/0.12.0/boot/scala-2.9.1/lib/scala-library.jar</span>
+<span class="go">[debug] Waiting for thread run-main to exit</span>
+<span class="go">[debug]    Thread run-main exited.</span>
+<span class="go">[debug] Interrupting remaining threads (should be all daemons).</span>
+<span class="go">[debug] Sandboxed run complete..</span>
+<span class="go">[debug] Exited with code 0</span>
+<span class="go">[success] Total time: 0 s, completed Jan 1, 2012 1:00:00 PM</span>
+</code></pre>
+</div>
+
+
+<p>Configuration of the logging level for the console and for the backing file are described in following sections.</p>
+
+<h4 id="tasklast">View the logging output of a specific task</h4>
+
+
+
+
+<h4 id="lastgrep">Search the logging output of the previously executed command</h4>
+
+
+
+
+<h4 id="tasklastgrep">Search the logging output of a specific task</h4>
+
+
+
+
+<h4 id="level">Change the logging level globally</h4>
+
+
+
+
+<h4 id="tasklevel">Change the logging level for a specific task, configuration, or project</h4>
+
+
+
+
+<h4 id="trace">Configure printing of stack traces globally</h4>
+
+
+
+
+<h4 id="tasktrace">Configure printing of stack traces for a specific task, configuration, or project</h4>
+
+
+
+
+<h4 id="nobuffer">Print the output of tests immediately instead of buffering</h4>
+
+
+
+
+<h4 id="custom">Add a custom logger</h4>
+
+
+
+
+<h4 id="log">Log messages in a task</h4>
+
+
+
+   
+    </div>
+   </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+
