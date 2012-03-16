@@ -74,24 +74,14 @@
 
 <p>For example, to set the Scala version to "2.9.1",</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.1&quot;</span>
-</code></pre>
-</div>
-
-
-
+<p>Liquid error: undefined method `join' for "\nscalaVersion := \"2.9.1\"\n":String</p>
 
 <h4 id="noauto">Disable the automatic dependency on the Scala library</h4>
 
 
 <p>sbt adds a dependency on the Scala standard library by default.  To disable this behavior, set the <code>autoScalaLibrary</code> setting to false.</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
-</code></pre>
-</div>
-
-
-
+<p>Liquid error: undefined method `join' for "\nautoScalaLibrary := false\n":String</p>
 
 <h4 id="temporary">Temporarily switch to a different Scala version</h4>
 
@@ -106,14 +96,7 @@
 
 <p>Defining the <code>scalaHome</code> setting with the path to the Scala home directory will use that Scala installation.  sbt still requires <code>scalaVersion</code> to be set when a local Scala version is used.  For example,</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.0-local&quot;</span>
-
-<span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span>
-</code></pre>
-</div>
-
-
-
+<p>Liquid error: undefined method `join' for #&lt;String:0x7f62ab74daf0></p>
 
 <h4 id="cross">Build a project against multiple Scala versions</h4>
 
@@ -144,21 +127,11 @@
 <p>Set <code>initialCommands in console</code> to set the initial statements to evaluate when <code>console</code> and <code>console-quick</code> are run.  To configure <code>console-quick</code> separately, use <code>initialCommands in consoleQuick</code>.
 For example,</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console&quot;)&quot;&quot;&quot;</span>
-
-<span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleQuick</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console-quick&quot;)&quot;&quot;&quot;</span>
-</code></pre>
-</div>
-
+<p>Liquid error: undefined method `join' for #&lt;String:0x7f62ab74d2a8></p>
 
 <p>The <code>console-project</code> command is configured separately by <code>initialCommands in consoleProject</code>.  It does not use the value from <code>initialCommands in console</code> by default.  For example,</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleProject</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console-project&quot;)&quot;&quot;&quot;</span>
-</code></pre>
-</div>
-
-
-
+<p>Liquid error: undefined method `join' for #&lt;String:0x7f62ab74bea8></p>
 
 <h4 id="embed">Use the Scala REPL from project code</h4>
 
@@ -173,26 +146,13 @@ For example,</p>
 
 <p>The key is to initialize the Settings for the interpreter using <em>embeddedDefaults</em>.  For example:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Settings</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">embeddedDefaults</span><span class="o">[</span><span class="kt">MyType</span><span class="o">]</span>
-<span class="k">val</span> <span class="n">interpreter</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Interpreter</span><span class="o">(</span><span class="n">settings</span><span class="o">,</span> <span class="o">...)</span>
-</code></pre>
-</div>
-
+<p>Liquid error: undefined method `join' for #&lt;String:0x7f62ab74b1d8></p>
 
 <p>Here, MyType is a representative class that should be included on the interpreter's classpath and in its application class loader.  For more background, see the <a href="https://gist.github.com/404272">original proposal</a> that resulted in <em>embeddedDefaults</em> being added.</p>
 
 <p>Similarly, use a representative class as the type argument when using the <em>break</em> and <em>breakIf</em> methods of <em>ILoop</em>, as in the following example:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="k">def</span> <span class="n">x</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-  <span class="k">import</span> <span class="nn">scala.tools.nsc.interpreter.ILoop</span>
-  <span class="nc">ILoop</span><span class="o">.</span><span class="n">breakIf</span><span class="o">[</span><span class="kt">MyType</span><span class="o">](</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="o">,</span> <span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="n">a</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="n">b</span> <span class="o">)</span>
-<span class="o">}</span>
-</code></pre>
-</div>
-
-
-
+<p>Liquid error: undefined method `join' for #&lt;String:0x7f62ab74a968></p>
    
     </div>
    </div>
