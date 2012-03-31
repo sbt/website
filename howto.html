@@ -39,225 +39,19 @@
     <div id="pagecontent" class="cf">
       
 
-<h2><a href="/howto/metadata.html">Project metadata</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/metadata.html#name">How to set the project name</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;demo&quot;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/metadata.html#version">How to set the project version</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/metadata.html#organization">How to set the project organization</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/metadata.html#other">How to set the project homepage and other metadata used in a published pom.xml</a></li>
-</ul>
-
-
-
-
-<h2><a href="/howto/triggered.html">Triggered execution</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#basic">How to run a command when sources change</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ test </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#multi">How to run multiple commands when sources change</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ ;a ;b </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#sources">How to configure the sources that are checked for changes</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#interval">How to set the time interval between checks for changes to sources</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms </span>
-</code></pre>
-</div>
-
-
-
-
-<h2><a href="/howto/runningcommands.html">Running commands</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/runningcommands.html#batch">How to pass arguments to a command or task in batch mode</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> $ sbt clean &quot;test-only org.example.Test&quot; &quot;run-main demo.Main a b c&quot; </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/runningcommands.html#multi">How to provide multiple commands to run consecutively</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ;clean ;compile </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/runningcommands.html#read">How to read commands from a file</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; &lt; /path/to/file </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/runningcommands.html#alias">How to define an alias for a command or task</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; alias h=help </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/runningcommands.html#eval">How to quickly evaluate a Scala expression</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; eval 2+2 </span>
-</code></pre>
-</div>
-
-
-
-
 <h2><a href="/howto/generatefiles.html">Generating files</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/generatefiles.html#sources">How to generate sources</a></li>
+<li><p><a href="/howto/generatefiles.html#sources">How to generate sources</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/generatefiles.html#resources">How to generate resources</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 </ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/generatefiles.html#resources">How to generate resources</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
-</code></pre>
-</div>
 
 
 
@@ -268,242 +62,94 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#basic_completion">How to use tab completion</a></li>
-</ul>
+<li><p><a href="/howto/interactive.html#basic_completion">How to use tab completion</a></p>
 
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; test-only &lt;TAB&gt; </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 <li><p><a href="/howto/interactive.html#verbose_completion">How to show more tab completion suggestions</a>
  <p>Press tab multiple times.</p></p></li>
-<li><p><a href="/howto/interactive.html#show_keybindings">How to view basic JLine keybindings</a></p></li>
-</ul>
+<li><p><a href="/howto/interactive.html#show_keybindings">How to view basic JLine keybindings</a></p>
 
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick</span>
-<span class="go">scala&gt; :keybindings</span>
-<span class="go"> </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 <li><p><a href="/howto/interactive.html#change_keybindings">How to modify the default JLine keybindings</a></p></li>
-<li><p><a href="/howto/interactive.html#prompt">How to configure the prompt string</a></p></li>
+<li><p><a href="/howto/interactive.html#prompt">How to configure the prompt string</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/interactive.html#history">How to use history</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/interactive.html#history_file">How to change the location of the interactive history file</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/interactive.html#share_history">How to share interactive history across projects</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/interactive.html#disable_history">How to disable interactive history</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/interactive.html#pre_commands">How to start interactive mode after executing some commands first</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span> 
-</code></pre>
-</div>
+<h2><a href="/howto/logging.html">Configure and use logging</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/interactive.html#history">How to use history</a></li>
+<li><p><a href="/howto/logging.html#last">How to view the logging output of the previously executed command</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#tasklast">How to view the previous logging output of a specific task</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#lastgrep">How to search the logging output of the previously executed command</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#tasklastgrep">How to search the previous logging output of a specific task</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#level">How to change the logging level globally</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#tasklevel">How to change the logging level for a specific task, configuration, or project</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#trace">How to configure printing of stack traces globally</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#tasktrace">How to configure printing of stack traces for a specific task, configuration, or project</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#nobuffer">How to print the output of tests immediately instead of buffering</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/logging.html#custom">How to add a custom logger</a></p></li>
+<li><p><a href="/howto/logging.html#log">How to log messages from a task</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ! </span>
-</code></pre>
-</div>
+<h2><a href="/howto/metadata.html">Project metadata</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/interactive.html#history_file">How to change the location of the interactive history file</a></li>
-</ul>
+<li><p><a href="/howto/metadata.html#name">How to set the project name</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/metadata.html#version">How to set the project version</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/metadata.html#organization">How to set the project organization</a></p>
 
-
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/interactive.html#share_history">How to share interactive history across projects</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span> <span class="o">}</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/interactive.html#disable_history">How to disable interactive history</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/interactive.html#pre_commands">How to start interactive mode after executing some commands first</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> $ sbt clean compile shell </span>
-</code></pre>
-</div>
-
-
-
-
-<h2><a href="/howto/scala.html">Configure and use Scala</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#version">How to set the Scala version used for building the project</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#noauto">How to disable the automatic dependency on the Scala library</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#temporary">How to temporarily switch to a different Scala version</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ++ 2.8.2 </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#local">How to use a local Scala installation for building a project</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><p><a href="/howto/scala.html#cross">How to build a project against multiple Scala versions</a></p></li>
-<li><p><a href="/howto/scala.html#console-quick">How to enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</a></p></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#console">How to enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#console-project">How to enter the Scala REPL with plugins and the build definition on the classpath</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-project </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#initial">How to define the initial commands evaluated when entering the Scala REPL</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hi!&quot;)&quot;&quot;&quot;</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/scala.html#embed">How to use the Scala REPL from project code</a></li>
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/metadata.html#other">How to set the project homepage and other metadata used in a published pom.xml</a></p></li>
 </ul>
 
 
@@ -515,182 +161,102 @@
 
 
 <ul>
-<li><a href="/howto/package.html#export">How to use the packaged jar on classpaths instead of class directory</a></li>
-</ul>
+<li><p><a href="/howto/package.html#export">How to use the packaged jar on classpaths instead of class directory</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/package.html#manifest">How to add manifest attributes</a></p>
 
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/package.html#manifest">How to add manifest attributes</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="nc">Package</span><span class="o">.</span><span class="nc">ManifestAttributes</span><span class="o">(</span> <span class="nc">Attributes</span><span class="o">.</span><span class="nc">Name</span><span class="o">.</span><span class="nc">SEALED</span> <span class="o">-&gt;</span> <span class="s">&quot;true&quot;</span> <span class="o">)</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 <li><p><a href="/howto/package.html#name">How to change the file name of a package</a></p></li>
-<li><p><a href="/howto/package.html#contents">How to modify the contents of the package</a></p></li>
+<li><p><a href="/howto/package.html#contents">How to modify the contents of the package</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">dir</span> <span class="k">=&gt;</span> <span class="o">(</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span> <span class="o">}</span> 
-</code></pre>
-</div>
-
-
-
-
-<h2><a href="/howto/logging.html">Configure and use logging</a></h2>
+<h2><a href="/howto/runningcommands.html">Running commands</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/logging.html#last">How to view the logging output of the previously executed command</a></li>
+<li><p><a href="/howto/runningcommands.html#batch">How to pass arguments to a command or task in batch mode</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/runningcommands.html#multi">How to provide multiple commands to run consecutively</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/runningcommands.html#read">How to read commands from a file</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/runningcommands.html#alias">How to define an alias for a command or task</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/runningcommands.html#eval">How to quickly evaluate a Scala expression</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; last </span>
-</code></pre>
-</div>
+<h2><a href="/howto/scala.html">Configure and use Scala</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/logging.html#tasklast">How to view the previous logging output of a specific task</a></li>
+<li><p><a href="/howto/scala.html#version">How to set the Scala version used for building the project</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#noauto">How to disable the automatic dependency on the Scala library</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#temporary">How to temporarily switch to a different Scala version</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#local">How to use a local Scala installation for building a project</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#cross">How to build a project against multiple Scala versions</a></p></li>
+<li><p><a href="/howto/scala.html#console-quick">How to enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#console">How to enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#console-project">How to enter the Scala REPL with plugins and the build definition on the classpath</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#initial">How to define the initial commands evaluated when entering the Scala REPL</a></p>
+
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/scala.html#embed">How to use the Scala REPL from project code</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; last compile </span>
-</code></pre>
-</div>
+<h2><a href="/howto/triggered.html">Triggered execution</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/logging.html#lastgrep">How to search the logging output of the previously executed command</a></li>
-</ul>
+<li><p><a href="/howto/triggered.html#basic">How to run a command when sources change</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/triggered.html#multi">How to run multiple commands when sources change</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/triggered.html#sources">How to configure the sources that are checked for changes</a></p>
 
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
+<li><p><a href="/howto/triggered.html#interval">How to set the time interval between checks for changes to sources</a></p>
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; last-grep *Test.jar </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#tasklastgrep">How to search the previous logging output of a specific task</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; last-grep *Test.jar run </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#level">How to change the logging level globally</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; set every logLevel := Level.Debug </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#tasklevel">How to change the logging level for a specific task, configuration, or project</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">logLevel</span> <span class="n">in</span> <span class="n">compile</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Debug</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#trace">How to configure printing of stack traces globally</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; set every traceLevel := 5` </span>
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#tasktrace">How to configure printing of stack traces for a specific task, configuration, or project</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">traceLevel</span> <span class="o">:=</span> <span class="mi">5</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/logging.html#nobuffer">How to print the output of tests immediately instead of buffering</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">logBuffered</span> <span class="o">:=</span> <span class="kc">false</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><p><a href="/howto/logging.html#custom">How to add a custom logger</a></p></li>
-<li><p><a href="/howto/logging.html#log">How to log messages from a task</a></p></li>
+<p> Liquid error: No such file or directory - posix_spawnp</p></li>
 </ul>
 
 

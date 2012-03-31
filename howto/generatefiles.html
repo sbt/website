@@ -56,30 +56,15 @@
 
 <p>A source generation task should generate sources in a subdirectory of <code>sourceManaged</code> and return a sequence of files generated.  The key to add the task to is called <code>sourceGenerators</code>.  It should be scoped according to whether the generated files are main (<code>Compile</code>) or test (<code>Test</code>) sources.  This basic structure looks like:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>For example, assuming a method <code>def makeSomeSources(base: File): Seq[File]</code>,</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="n">outDir</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=&gt;</span>
-  <span class="n">makeSomeSources</span><span class="o">(</span><span class="n">outDir</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span><span class="o">)</span>
-<span class="o">}</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>As a specific example, the following generates a hello world source file:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="n">dir</span> <span class="k">=&gt;</span>
-  <span class="k">val</span> <span class="n">file</span> <span class="k">=</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;Test.scala&quot;</span>
-  <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="s">&quot;&quot;&quot;object Test extends App { println(&quot;Hi&quot;) }&quot;&quot;&quot;</span><span class="o">)</span>
-  <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">)</span>
-<span class="o">}</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>Executing 'run' will print "Hi".  Change <code>Compile</code> to <code>Test</code> to make it a test source.  For efficiency, you would only want to generate sources when necessary and not every run.</p>
 
@@ -90,33 +75,15 @@
 
 <p>A resource generation task should generate resources in a subdirectory of <code>resourceManaged</code> and return a sequence of files generated.  The key to add the task to is called <code>resourceGenerators</code>.  It should be scoped according to whether the generated files are main (<code>Compile</code>) or test (<code>Test</code>) resources.  This basic structure looks like:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>For example, assuming a method <code>def makeSomeResources(base: File): Seq[File]</code>,</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="n">resourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="n">outDir</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=&gt;</span>
-  <span class="n">makeSomeResources</span><span class="o">(</span><span class="n">outDir</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span><span class="o">)</span>
-<span class="o">}</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>As a specific example, the following generates a properties file containing the application name and version:</p>
 
-<div class="highlight"><pre><code class="scala"><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> 
-  <span class="o">(</span><span class="n">resourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">name</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">dir</span><span class="o">,</span> <span class="n">n</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="k">val</span> <span class="n">file</span> <span class="k">=</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;myapp.properties&quot;</span>
-    <span class="k">val</span> <span class="n">contents</span> <span class="k">=</span> <span class="s">&quot;name=%s\nversion=%s&quot;</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="n">n</span><span class="o">,</span><span class="n">v</span><span class="o">)</span>
-    <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="n">contents</span><span class="o">)</span>
-    <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">)</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre>
-</div>
-
+<p>Liquid error: No such file or directory - posix_spawnp</p>
 
 <p>Change <code>Compile</code> to <code>Test</code> to make it a test resource.  Normally, you would only want to generate resources when necessary and not every run.</p>
 
