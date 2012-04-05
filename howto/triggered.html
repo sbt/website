@@ -62,12 +62,31 @@
 
 <p>The original use-case for triggered execution was continuous compilation:</p>
 
+<div class="highlight"><pre><code class="scala"><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="k">:</span><span class="kt">compile</span>
+
+<span class="o">&gt;</span> <span class="o">~</span> <span class="n">compile</span>
+</code></pre>
+</div>
+
+
 <p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <code>test-only</code> for the specified test.</p>
+
+<div class="highlight"><pre><code class="scala"><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="o">-</span><span class="n">only</span> <span class="n">example</span><span class="o">.</span><span class="nc">TestA</span>
+</code></pre>
+</div>
+
+
+
 
 <h4 id="multi">Run multiple commands when sources change</h4>
 
 
 <p>The command passed to <code>~</code> may be any command string, so multiple commands may be run by separating them with a semicolon.  For example,</p>
+
+<div class="highlight"><pre><code class="scala"><span class="o">&gt;</span> <span class="o">~</span> <span class="o">;</span><span class="n">a</span> <span class="o">;</span><span class="n">b</span>
+</code></pre>
+</div>
+
 
 <p>This runs <code>a</code> and then <code>b</code> when sources change.</p>
 
@@ -82,12 +101,26 @@
 
 <p>To add the file <code>demo/example.txt</code> to the files to watch,</p>
 
+<div class="highlight"><pre><code class="scala"><span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+
 <h4 id="interval">Configure the polling time</h4>
 
 
 <ul>
 <li><code>pollInterval</code> selects the interval between polling for changes in milliseconds.  The default value is <code>500 ms</code>.  To change it to <code>1 s</code>,</li>
 </ul>
+
+
+<div class="highlight"><pre><code class="scala"><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
+</code></pre>
+</div>
+
+
 
    
     </div>
