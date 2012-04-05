@@ -140,8 +140,18 @@ The default keybindings file is included in the sbt launcher and may be used as 
 This can be changed through the <code>shellPrompt</code> setting, which has type <code>State =&gt; String</code>.
 <a href="https://github.com/harrah/xsbt/wiki/Build-State">State</a> contains all state for sbt and thus provides access to all build information for use in the prompt string.</p>
 
-<p>Examples:
-Liquid error: No such file or directory - posix_spawnp</p>
+<p>Examples:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="c1">// set the prompt (for this build) to include the project id.</span>
+<span class="n">shellPrompt</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">state</span><span class="o">).</span><span class="n">currentRef</span><span class="o">.</span><span class="n">project</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+
+<span class="c1">// set the prompt (for the current project) to include the username</span>
+<span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+</code></pre>
+</div>
+
+
+
 
 <h4 id="history">Using history</h4>
 
@@ -170,7 +180,10 @@ History is thus separate for each subproject.
 The location can be changed with the <code>historyPath</code> setting, which has type <code>Option[File]</code>.
 For example, history can be stored in the root directory for the project instead of the output directory:</p>
 
-<p>Liquid error: No such file or directory - posix_spawnp</p>
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span>
+</code></pre>
+</div>
+
 
 <p>The history path needs to be set for each project, since sbt will use the value of <code>historyPath</code> for the current project (as selected by the <code>project</code> command).</p>
 
@@ -181,7 +194,13 @@ For example, history can be stored in the root directory for the project instead
 This setting can be used to share the interactive history among all projects in a build instead of using a different history for each project.
 The way this is done is to set <code>historyPath</code> to be the same file, such as a file in the root project's <code>target/</code> directory:</p>
 
-<p>Liquid error: No such file or directory - posix_spawnp</p>
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span>
+  <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+</code></pre>
+</div>
+
 
 <p>The <code>in LocalRootProject</code> part means to get the output directory for the root project for the build.</p>
 
@@ -190,7 +209,12 @@ The way this is done is to set <code>historyPath</code> to be the same file, suc
 
 <p>If, for whatever reason, you want to disable history, set <code>historyPath</code> to <code>None</code> in each project it should be disabled in:</p>
 
-<p>Liquid error: No such file or directory - posix_spawnp</p>
+<div class="highlight"><pre><code class="scala"><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span>
+</code></pre>
+</div>
+
+
+
 
 <h4 id="pre_commands">Run commands before entering interactive mode</h4>
 
