@@ -39,19 +39,19 @@
     <div id="pagecontent" class="cf">
       
 
-<h2><a href="/howto/generatefiles.html">Generating files</a></h2>
+<h2><a href="/howto/triggered.html">Triggered execution</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/generatefiles.html#sources">How to generate sources</a></li>
+<li><a href="/howto/triggered.html#basic">How to run a command when sources change</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ test </span>
 </code></pre>
 </div>
 
@@ -59,32 +59,13 @@
 
 
 <ul>
-<li><a href="/howto/generatefiles.html#resources">How to generate resources</a></li>
+<li><a href="/howto/triggered.html#multi">How to run multiple commands when sources change</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
-</code></pre>
-</div>
-
-
-
-
-<h2><a href="/howto/interactive.html">Interactive mode</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/interactive.html#basic_completion">How to use tab completion</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; test-only &lt;TAB&gt; </span>
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ ;a ;b </span>
 </code></pre>
 </div>
 
@@ -92,17 +73,13 @@
 
 
 <ul>
-<li><p><a href="/howto/interactive.html#verbose_completion">How to show more tab completion suggestions</a>
- <p>Press tab multiple times.</p></p></li>
-<li><p><a href="/howto/interactive.html#show_keybindings">How to view basic JLine keybindings</a></p></li>
+<li><a href="/howto/triggered.html#sources">How to configure the sources that are checked for changes</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick</span>
-<span class="go">scala&gt; :keybindings</span>
-<span class="go"> </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span> 
 </code></pre>
 </div>
 
@@ -110,14 +87,32 @@
 
 
 <ul>
-<li><p><a href="/howto/interactive.html#change_keybindings">How to modify the default JLine keybindings</a></p></li>
-<li><p><a href="/howto/interactive.html#prompt">How to configure the prompt string</a></p></li>
+<li><a href="/howto/triggered.html#interval">How to set the time interval between checks for changes to sources</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms </span>
+</code></pre>
+</div>
+
+
+
+
+<h2><a href="/howto/scala.html">Configure and use Scala</a></h2>
+
+
+
+
+<ul>
+<li><a href="/howto/scala.html#version">How to set the Scala version used for building the project</a></li>
+</ul>
+
+
+
+
+<div class="highlight"><pre><code class="scala"> <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span> 
 </code></pre>
 </div>
 
@@ -125,13 +120,13 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#history">How to use history</a></li>
+<li><a href="/howto/scala.html#noauto">How to disable the automatic dependency on the Scala library</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ! </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span> 
 </code></pre>
 </div>
 
@@ -139,13 +134,13 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#history_file">How to change the location of the interactive history file</a></li>
+<li><a href="/howto/scala.html#temporary">How to temporarily switch to a different Scala version</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span> 
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; ++ 2.8.2 </span>
 </code></pre>
 </div>
 
@@ -153,13 +148,13 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#share_history">How to share interactive history across projects</a></li>
+<li><a href="/howto/scala.html#local">How to use a local Scala installation for building a project</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span> <span class="o">}</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span> 
 </code></pre>
 </div>
 
@@ -167,13 +162,14 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#disable_history">How to disable interactive history</a></li>
+<li><p><a href="/howto/scala.html#cross">How to build a project against multiple Scala versions</a></p></li>
+<li><p><a href="/howto/scala.html#console-quick">How to enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span> 
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick </span>
 </code></pre>
 </div>
 
@@ -181,15 +177,50 @@
 
 
 <ul>
-<li><a href="/howto/interactive.html#pre_commands">How to start interactive mode after executing some commands first</a></li>
+<li><a href="/howto/scala.html#console">How to enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> $ sbt clean compile shell </span>
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; console </span>
 </code></pre>
 </div>
+
+
+
+
+<ul>
+<li><a href="/howto/scala.html#console-project">How to enter the Scala REPL with plugins and the build definition on the classpath</a></li>
+</ul>
+
+
+
+
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-project </span>
+</code></pre>
+</div>
+
+
+
+
+<ul>
+<li><a href="/howto/scala.html#initial">How to define the initial commands evaluated when entering the Scala REPL</a></li>
+</ul>
+
+
+
+
+<div class="highlight"><pre><code class="scala"> <span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hi!&quot;)&quot;&quot;&quot;</span> 
+</code></pre>
+</div>
+
+
+
+
+<ul>
+<li><a href="/howto/scala.html#embed">How to use the Scala REPL from project code</a></li>
+</ul>
 
 
 
@@ -387,54 +418,6 @@
 
 
 
-<h2><a href="/howto/package.html">Configure packaging</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/package.html#export">How to use the packaged jar on classpaths instead of class directory</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/package.html#manifest">How to add manifest attributes</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="nc">Package</span><span class="o">.</span><span class="nc">ManifestAttributes</span><span class="o">(</span> <span class="nc">Attributes</span><span class="o">.</span><span class="nc">Name</span><span class="o">.</span><span class="nc">SEALED</span> <span class="o">-&gt;</span> <span class="s">&quot;true&quot;</span> <span class="o">)</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><p><a href="/howto/package.html#name">How to change the file name of a package</a></p></li>
-<li><p><a href="/howto/package.html#contents">How to modify the contents of the package</a></p></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">dir</span> <span class="k">=&gt;</span> <span class="o">(</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span> <span class="o">}</span> 
-</code></pre>
-</div>
-
-
-
-
 <h2><a href="/howto/runningcommands.html">Running commands</a></h2>
 
 
@@ -510,19 +493,19 @@
 
 
 
-<h2><a href="/howto/scala.html">Configure and use Scala</a></h2>
+<h2><a href="/howto/package.html">Configure packaging</a></h2>
 
 
 
 
 <ul>
-<li><a href="/howto/scala.html#version">How to set the Scala version used for building the project</a></li>
+<li><a href="/howto/package.html#export">How to use the packaged jar on classpaths instead of class directory</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span> 
 </code></pre>
 </div>
 
@@ -530,13 +513,13 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#noauto">How to disable the automatic dependency on the Scala library</a></li>
+<li><a href="/howto/package.html#manifest">How to add manifest attributes</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="nc">Package</span><span class="o">.</span><span class="nc">ManifestAttributes</span><span class="o">(</span> <span class="nc">Attributes</span><span class="o">.</span><span class="nc">Name</span><span class="o">.</span><span class="nc">SEALED</span> <span class="o">-&gt;</span> <span class="s">&quot;true&quot;</span> <span class="o">)</span> 
 </code></pre>
 </div>
 
@@ -544,13 +527,33 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#temporary">How to temporarily switch to a different Scala version</a></li>
+<li><p><a href="/howto/package.html#name">How to change the file name of a package</a></p></li>
+<li><p><a href="/howto/package.html#contents">How to modify the contents of the package</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ++ 2.8.2 </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">dir</span> <span class="k">=&gt;</span> <span class="o">(</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span> <span class="o">}</span> 
+</code></pre>
+</div>
+
+
+
+
+<h2><a href="/howto/generatefiles.html">Generating files</a></h2>
+
+
+
+
+<ul>
+<li><a href="/howto/generatefiles.html#sources">How to generate sources</a></li>
+</ul>
+
+
+
+
+<div class="highlight"><pre><code class="scala"> <span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
 </code></pre>
 </div>
 
@@ -558,13 +561,32 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#local">How to use a local Scala installation for building a project</a></li>
+<li><a href="/howto/generatefiles.html#resources">How to generate resources</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span> 
+</code></pre>
+</div>
+
+
+
+
+<h2><a href="/howto/interactive.html">Interactive mode</a></h2>
+
+
+
+
+<ul>
+<li><a href="/howto/interactive.html#basic_completion">How to use tab completion</a></li>
+</ul>
+
+
+
+
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; test-only &lt;TAB&gt; </span>
 </code></pre>
 </div>
 
@@ -572,14 +594,17 @@
 
 
 <ul>
-<li><p><a href="/howto/scala.html#cross">How to build a project against multiple Scala versions</a></p></li>
-<li><p><a href="/howto/scala.html#console-quick">How to enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes</a></p></li>
+<li><p><a href="/howto/interactive.html#verbose_completion">How to show more tab completion suggestions</a>
+ <p>Press tab multiple times.</p></p></li>
+<li><p><a href="/howto/interactive.html#show_keybindings">How to view basic JLine keybindings</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick </span>
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-quick</span>
+<span class="go">scala&gt; :keybindings</span>
+<span class="go"> </span>
 </code></pre>
 </div>
 
@@ -587,13 +612,14 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#console">How to enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></li>
+<li><p><a href="/howto/interactive.html#change_keybindings">How to modify the default JLine keybindings</a></p></li>
+<li><p><a href="/howto/interactive.html#prompt">How to configure the prompt string</a></p></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span> 
 </code></pre>
 </div>
 
@@ -601,13 +627,13 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#console-project">How to enter the Scala REPL with plugins and the build definition on the classpath</a></li>
+<li><a href="/howto/interactive.html#history">How to use history</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; console-project </span>
+<div class="highlight"><pre><code class="console"><span class="go"> &gt; ! </span>
 </code></pre>
 </div>
 
@@ -615,13 +641,13 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#initial">How to define the initial commands evaluated when entering the Scala REPL</a></li>
+<li><a href="/howto/interactive.html#history_file">How to change the location of the interactive history file</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hi!&quot;)&quot;&quot;&quot;</span> 
+<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span> 
 </code></pre>
 </div>
 
@@ -629,25 +655,13 @@
 
 
 <ul>
-<li><a href="/howto/scala.html#embed">How to use the Scala REPL from project code</a></li>
+<li><a href="/howto/interactive.html#share_history">How to share interactive history across projects</a></li>
 </ul>
 
 
 
 
-<h2><a href="/howto/triggered.html">Triggered execution</a></h2>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#basic">How to run a command when sources change</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ test </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span> <span class="o">}</span> 
 </code></pre>
 </div>
 
@@ -655,13 +669,13 @@
 
 
 <ul>
-<li><a href="/howto/triggered.html#multi">How to run multiple commands when sources change</a></li>
+<li><a href="/howto/interactive.html#disable_history">How to disable interactive history</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="console"><span class="go"> &gt; ~ ;a ;b </span>
+<div class="highlight"><pre><code class="scala"> <span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span> 
 </code></pre>
 </div>
 
@@ -669,27 +683,13 @@
 
 
 <ul>
-<li><a href="/howto/triggered.html#sources">How to configure the sources that are checked for changes</a></li>
+<li><a href="/howto/interactive.html#pre_commands">How to start interactive mode after executing some commands first</a></li>
 </ul>
 
 
 
 
-<div class="highlight"><pre><code class="scala"> <span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span> 
-</code></pre>
-</div>
-
-
-
-
-<ul>
-<li><a href="/howto/triggered.html#interval">How to set the time interval between checks for changes to sources</a></li>
-</ul>
-
-
-
-
-<div class="highlight"><pre><code class="scala"> <span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms </span>
+<div class="highlight"><pre><code class="console"><span class="go"> $ sbt clean compile shell </span>
 </code></pre>
 </div>
 
