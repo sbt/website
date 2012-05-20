@@ -5,7 +5,7 @@
 <head>
    <title>Triggered execution - </title>
    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/howto-site.css' rel='stylesheet' type='text/css'>
    <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
    </script>
@@ -13,49 +13,28 @@
 <body>
 
 
-    <!-- Topbar
-    ================================================== -->
-    <div class="cf" id="more" >
-      <div id="top">
-        <div class="container">
-          <a class="brand" href="/">SBT</a>
-          <ul class="nav">
-           <li><a href="/learn.html">Learn</a>
-           <li><a href="/download.html">Download</a>
-           <li><a href="/community.html">Community</a></li>
-           <li><a href="#top">Top</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-
 <div class="cf" id="container">
   <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
   <div id="intro" class="span10 columns content">
     <div id="head" class="cf">
-      <div id="name" class="left">
-        <h1>sbt</h1>
-        <h2>Triggered execution</h2>
-      </div>
+      <h2>Triggered execution</h2>
     </div>
-    <div id="features" class="cf"><div id="feature-list">
-      <ul class="left">
+    <div class="cf"><div id="feature-list">
+      <h3> How to ...</h3>
+      <ul class="left" id="section-toc">
           
-             <li id="feature"><h4><a href="#basic">How to run a command when sources change</a></h4></li>
+             <li id="feature"><h5>... <a href="#basic">run a command when sources change</a></h5></li>
           
-             <li id="feature"><h4><a href="#multi">How to run multiple commands when sources change</a></h4></li>
+             <li id="feature"><h5>... <a href="#multi">run multiple commands when sources change</a></h5></li>
           
-             <li id="feature"><h4><a href="#sources">How to configure the sources that are checked for changes</a></h4></li>
+             <li id="feature"><h5>... <a href="#sources">configure the sources that are checked for changes</a></h5></li>
           
-             <li id="feature"><h4><a href="#interval">How to set the time interval between checks for changes to sources</a></h4></li>
+             <li id="feature"><h5>... <a href="#interval">set the time interval between checks for changes to sources</a></h5></li>
           
        </ul>
      </div></div>
     <div id="pagecontent" class="cf">
-      <p><a href="https://github.com/harrah/xsbt/wiki/Full-Configuration">Full Configuration</a></p>
-
-<h4 id="basic">Run a command when sources change</h4>
+      <h4 id="basic">Run a command when sources change</h4>
 
 
 <p>You can make a command run when certain files change by prefixing the command with <code>~</code>.  Monitoring is terminated when <code>enter</code> is pressed.  This triggered execution is configured by the <code>watch</code> setting, but typically the basic settings <code>watch-sources</code> and <code>poll-interval</code> are modified as described in later sections.</p>
@@ -111,10 +90,7 @@
 <h4 id="interval">Configure the polling time</h4>
 
 
-<ul>
-<li><code>pollInterval</code> selects the interval between polling for changes in milliseconds.  The default value is <code>500 ms</code>.  To change it to <code>1 s</code>,</li>
-</ul>
-
+<p><code>pollInterval</code> selects the interval between polling for changes in milliseconds.  The default value is <code>500 ms</code>.  To change it to <code>1 s</code>,</p>
 
 <div class="highlight"><pre><code class="scala"><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
 </code></pre>
