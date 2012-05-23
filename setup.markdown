@@ -12,7 +12,7 @@ layout: default
 # 概要
 
 sbt プロジェクトを作るには、以下の手順をたどる:
- 
+
  - sbt をインストールして起動スクリプトを作る。
  - 簡単な [hello world](../hello) プロジェクトをセットアップする。
    - ソースファイルの入ったプロジェクトディレクトリを作る。
@@ -41,7 +41,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 バッチファイル `sbt.bat` を作成する:
 
     set SCRIPT_DIR=%~dp0
-    java -Xmx512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+    java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 
 次に、[sbt-launch.jar] をバッチファイルと同じディレクトリにダウンロードしてくる。コマンドプロンプト上でどのディレクトリからでも `sbt` と打てば `sbt` が実行できるように `sbt.bat` にパスを通す。
 
