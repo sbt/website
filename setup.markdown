@@ -30,7 +30,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 
 以下の内容を、`sbt` という名前のファイルに書いて `~/bin` に置けば、jar を実行するスクリプトのできあがり:
 
-    java -Xmx512M -jar `dirname $0`/sbt-launch.jar "$@"
+    java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar `dirname $0`/sbt-launch.jar "$@"
 
 スクリプトを実行ファイルにする:
 
@@ -41,7 +41,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 バッチファイル `sbt.bat` を作成する:
 
     set SCRIPT_DIR=%~dp0
-    java -Xmx512M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+    java -Xmx512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 
 次に、[sbt-launch.jar] をバッチファイルと同じディレクトリにダウンロードしてくる。コマンドプロンプト上でどのディレクトリからでも `sbt` と打てば `sbt` が実行できるように `sbt.bat` にパスを通す。
 
