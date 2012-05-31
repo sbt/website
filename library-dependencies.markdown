@@ -93,8 +93,8 @@ sbt にその外部コンフィギュレーションファイルを使わせる�
 
 <pre>
 libraryDependencies ++= Seq(
-	groupID % artifactID % revision,
-	groupID % otherID % otherRevision
+    groupID % artifactID % revision,
+    groupID % otherID % otherRevision
 )
 </pre>
 
@@ -134,7 +134,7 @@ Ivy は与えられた制限の中でモジュールの最新の revision を選
 ### Resolvers
 
 全てのパッケージが一つのサーバに置いてあるとは限らない。
-sbt は、デフォルトで standard Maven2 repository と Scala Tools Releases (<http://scala-tools.org/repo-releases>) の二つのリポジトリを使う。
+sbt は、デフォルトで standard Maven2 repository のリポジトリを使う。
 もし依存ライブラリがこのデフォルトのリポジトリに無ければ、Ivy がそれを見つけられるように _resolver_ を追加する必要がある。
 
 リポジトリを追加するには、以下のようにする:
@@ -143,7 +143,7 @@ sbt は、デフォルトで standard Maven2 repository と Scala Tools Releases
 
 例えば:
 
-    resolvers += "Scala-Tools Maven2 Snapshots Repository" at "http://scala-tools.org/repo-snapshots"
+    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 [Keys] で定義されいる `resolvers` キーは以下のようになっている:
 

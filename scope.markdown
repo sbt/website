@@ -62,7 +62,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
  - `Compile` は、メインのビルド（`src/main/scala`）を定義する。
  - `Test` は、テスト（`src/test/scala`）のビルド方法を定義する。
  - `Runtime` は、`run` タスクのクラスパスを定義する。
- 
+
 デフォルトでは、コンパイル、パッケージ化、と実行に関するキーの全てはコンフィグレーションにスコープ付けされているため、
 コンフィギュレーションごとに異なる動作をする可能性がある。
 その最たる例が `compile`、`package` と `run` のタスクキーだが、
@@ -106,7 +106,7 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
  - `コンフィギュレーション` は、コンフィギュレーション軸を特定する。
  - `(for タスクキー)` は、タスク軸を特定する。
  - `キー` は、スコープ付けされるキーを特定する。
- 
+
 全ての軸において、`*` を使って `Global` スコープを表すことができる。
 
 スコープ付きキーの一部を省略すると、以下の手順で推論される:
@@ -127,35 +127,35 @@ $ sbt
 > inspect test:full-classpath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:
-[info] 	The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info]     The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info] 	{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath
+[info]     {file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath
 [info] Dependencies:
-[info] 	test:exported-products
-[info] 	test:dependency-classpath
+[info]     test:exported-products
+[info]     test:dependency-classpath
 [info] Reverse dependencies:
-[info] 	test:run-main
-[info] 	test:run
-[info] 	test:test-loader
-[info] 	test:console
+[info]     test:run-main
+[info]     test:run
+[info]     test:test-loader
+[info]     test:console
 [info] Delegates:
-[info] 	test:full-classpath
-[info] 	runtime:full-classpath
-[info] 	compile:full-classpath
-[info] 	*:full-classpath
-[info] 	{.}/test:full-classpath
-[info] 	{.}/runtime:full-classpath
-[info] 	{.}/compile:full-classpath
-[info] 	{.}/*:full-classpath
-[info] 	*/test:full-classpath
-[info] 	*/runtime:full-classpath
-[info] 	*/compile:full-classpath
-[info] 	*/*:full-classpath
+[info]     test:full-classpath
+[info]     runtime:full-classpath
+[info]     compile:full-classpath
+[info]     *:full-classpath
+[info]     {.}/test:full-classpath
+[info]     {.}/runtime:full-classpath
+[info]     {.}/compile:full-classpath
+[info]     {.}/*:full-classpath
+[info]     */test:full-classpath
+[info]     */runtime:full-classpath
+[info]     */compile:full-classpath
+[info]     */*:full-classpath
 [info] Related:
-[info] 	compile:full-classpath
-[info] 	compile:full-classpath(for doc)
-[info] 	test:full-classpath(for doc)
-[info] 	runtime:full-classpath
+[info]     compile:full-classpath
+[info]     compile:full-classpath(for doc)
+[info]     test:full-classpath(for doc)
+[info]     runtime:full-classpath
 </pre>
 
 一行目からこれが（[[.sbt ビルド定義|Basic Def]] で説明されているとおり、セッティングではなく）タスクであることが分かる。
@@ -165,17 +165,17 @@ $ sbt
 `{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath`
 （`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `full-classpath` キー）。
 
-"Dependencies" は、まだ意味不明だろうけど、[[次のページ|More About Settings]]まで待ってて。
+"Dependencies" は、まだ意味不明だろうけど、[次のページ](../more-about-settings)まで待ってて。
 
 ここで委譲も見ることができ、もし値が定義されていなければ、sbt は以下を検索する:
- 
+
  - 他の二つのコンフィギュレーション（`runtime:full-classpath` と `compile:full-classpath`）。
    これらのスコープ付きキーは、プロジェクトは特定されていないため「現プロジェクト」で、タスクも特定されていない `Global` だ。
  - `Global` に設定されたコンフィギュレーション (`*:full-classpath`)。プロジェクトはまだ特定されていないため「現プロジェクト」で、タスクもまだ特定されていないため `Global` だ。
  - `{.}` 別名 `ThisBuild` に設定されたプロジェクト（つまり、特定のプロジェクトではなく、ビルド全体）。
  - `Global` に設定されたプロジェクト軸（`*/test:full-classpath`）（プロジェクトが特定されていない場合は、現プロジェクトを意味するため、`Global` を検索することは新しく、`*` と「プロジェクトが未表示」はプロジェクト軸に対して異なる値を持ち、`*/test:full-classpath` と `test:full-classpath` は等価ではない。）
  - プロジェクトとコンフィギュレーションの両方とも `Global` を設定する（`*/*:full-classpath`）（特定されていないタスクは `Global` であるため、`*/*:full-classpath` は三つの軸全てが `Global` を取る。）
- 
+
 今度は、（`inspect test:full-class` のかわりに）`inspect full-classpath` を試してみて、違いをみてみよう。
 コンフィグレーションが省略されたため、`compile` だと自動検知される。
 そのため、`inspect compile:full-classpath` は `inspect full-classpath` と同じになるはずだ。

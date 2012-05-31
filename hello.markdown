@@ -47,9 +47,9 @@ sbt は以下を自動的に検知する:
 
 <pre>
 name := "hello"
-    
+
 version := "1.0"
-    
+
 scalaVersion := "2.9.1"
 </pre>
 
@@ -62,7 +62,7 @@ scalaVersion := "2.9.1"
 `hello/project/build.properties` というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:
 
-    sbt.version=0.11.2
+    sbt.version=0.11.3
 
 0.10 以降は、sbt はリリース間で 99% ソースの互換性を持たせてある。
 だけど、sbt バージョンを `project/build.properties` に設定することで混乱を予防することできる。
