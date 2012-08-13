@@ -50,9 +50,9 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 `sbt` の実行に上手くいかない場合は、[[Setup Notes]] のターミナルの文字エンコーディング、HTTP プロキシ、JVM のオプションにかんする説明を参照する。
 
 訳注: 
- * 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
- * [原文のwikiのページ](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
- * windows の場合は、msi を使用してインストールすると、sbtのコンソールでカラー表示が可能になるので、カラーにしたい方はそちらがオススメです。(windowsの場合は上記に書いてある手動でバッチファイルを置く方法では、カラー表示にならない)
+ - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
+ - [原文のwikiのページ](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
+ - windows の場合は、msi を使用してインストールすると、sbtのコンソールでカラー表示が可能になるので、カラーにしたい方はそちらがオススメです。(windowsの場合は上記に書いてある手動でバッチファイルを置く方法では、カラー表示にならない)
 
 ## 続いては
 
