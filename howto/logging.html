@@ -1,1 +1,339 @@
-release/docs/Howto/logging.html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Configure and use logging - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/howto-site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <h2>Configure and use logging</h2>
+    </div>
+    <div class="cf"><div id="feature-list">
+      <h3> How to ...</h3>
+      <ul class="left" id="section-toc">
+          
+             <li id="feature"><h5>... <a href="#last">view the logging output of the previously executed command</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#tasklast">view the previous logging output of a specific task</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#printwarnings">show warnings from the previous compilation</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#level">change the logging level globally</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#tasklevel">change the logging level for a specific task, configuration, or project</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#trace">configure printing of stack traces</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#nobuffer">print the output of tests immediately instead of buffering</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#custom">add a custom logger</a></h5></li>
+          
+             <li id="feature"><h5>... <a href="#log">log messages from a task</a></h5></li>
+          
+       </ul>
+     </div></div>
+    <div id="pagecontent" class="cf">
+      <h4 id="last">View logging output of the previously executed command</h4>
+
+
+<p>When a command is run, more detailed logging output is sent to a file than to the screen (by default).
+This output can be recalled for the command just executed by running <code>last</code>.</p>
+
+<p>For example, the output of <code>run</code> when the sources are uptodate is:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> run
+<span class="go">[info] Running A </span>
+<span class="go">Hi!</span>
+<span class="go">[success] Total time: 0 s, completed Feb 25, 2012 1:00:00 PM</span>
+</code></pre>
+</div>
+
+
+<p>The details of this execution can be recalled by running <code>last</code>:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> last
+<span class="go">[debug] Running task... Cancelable: false, max worker threads: 4, check cycles: false</span>
+<span class="go">[debug] </span>
+<span class="go">[debug] Initial source changes: </span>
+<span class="go">[debug]    removed:Set()</span>
+<span class="go">[debug]    added: Set()</span>
+<span class="go">[debug]    modified: Set()</span>
+<span class="go">[debug] Removed products: Set()</span>
+<span class="go">[debug] Modified external sources: Set()</span>
+<span class="go">[debug] Modified binary dependencies: Set()</span>
+<span class="go">[debug] Initial directly invalidated sources: Set()</span>
+<span class="go">[debug] </span>
+<span class="go">[debug] Sources indirectly invalidated by:</span>
+<span class="go">[debug]    product: Set()</span>
+<span class="go">[debug]    binary dep: Set()</span>
+<span class="go">[debug]    external source: Set()</span>
+<span class="go">[debug] Initially invalidated: Set()</span>
+<span class="go">[debug] Copy resource mappings: </span>
+<span class="go">[debug]    </span>
+<span class="go">[info] Running A </span>
+<span class="go">[debug] Starting sandboxed run...</span>
+<span class="go">[debug] Waiting for threads to exit or System.exit to be called.</span>
+<span class="go">[debug]   Classpath:</span>
+<span class="go">[debug]    /tmp/e/target/scala-2.9.2/classes</span>
+<span class="go">[debug]    /tmp/e/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar</span>
+<span class="go">[debug] Waiting for thread run-main to exit</span>
+<span class="go">[debug]    Thread run-main exited.</span>
+<span class="go">[debug] Interrupting remaining threads (should be all daemons).</span>
+<span class="go">[debug] Sandboxed run complete..</span>
+<span class="go">[debug] Exited with code 0</span>
+<span class="go">[success] Total time: 0 s, completed Jan 1, 2012 1:00:00 PM</span>
+</code></pre>
+</div>
+
+
+<p>Configuration of the logging level for the console and for the backing file are described in following sections.</p>
+
+<h4 id="tasklast">View the logging output of a specific task</h4>
+
+
+<p>When a task is run, more detailed logging output is sent to a file than to the screen (by default).
+This output can be recalled for a specific task by running <code>last &lt;task&gt;</code>.
+For example, the first time <code>compile</code> is run, output might look like:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> compile
+<span class="go">[info] Updating {file:/.../demo/}example...</span>
+<span class="go">[info] Resolving org.scala-lang#scala-library;2.9.2 ...</span>
+<span class="go">[info] Done updating.</span>
+<span class="go">[info] Compiling 1 Scala source to .../demo/target/scala-2.9.2/classes...</span>
+<span class="go">[success] Total time: 0 s, completed Jun 1, 2012 1:11:11 PM</span>
+</code></pre>
+</div>
+
+
+<p>The output indicates that both dependency resolution and compilation were performed.
+The detailed output of each of these may be recalled individually.
+For example,</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> last compile
+<span class="go">[debug] </span>
+<span class="go">[debug] Initial source changes: </span>
+<span class="go">[debug]    removed:Set()</span>
+<span class="go">[debug]    added: Set(/home/mark/tmp/a/b/A.scala)</span>
+<span class="go">[debug]    modified: Set()</span>
+<span class="go">...</span>
+</code></pre>
+</div>
+
+
+<p>and:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> last update
+<span class="go">[info] Updating {file:/.../demo/}example...</span>
+<span class="go">[debug] post 1.3 ivy file: using exact as default matcher</span>
+<span class="go">[debug] :: resolving dependencies :: example#example_2.9.2;0.1-SNAPSHOT</span>
+<span class="go">[debug]    confs: [compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom]</span>
+<span class="go">[debug]    validate = true</span>
+<span class="go">[debug]    refresh = false</span>
+<span class="go">[debug] resolving dependencies for configuration &#39;compile&#39;</span>
+<span class="go">...</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="printwarnings">Display warnings from the previous compilation</h4>
+
+
+<p>The Scala compiler does not print the full details of warnings by default.
+Compiling code that uses the deprecated <code>error</code> method from Predef might generate the following output:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> compile
+<span class="go">[info] Compiling 1 Scala source to &lt;...&gt;/classes...</span>
+<span class="go">[warn] there were 1 deprecation warnings; re-run with -deprecation for details</span>
+<span class="go">[warn] one warning found</span>
+</code></pre>
+</div>
+
+
+<p>The details aren't provided, so it is necessary to add <code>-deprecation</code> to the options passed to the compiler (<code>scalacOptions</code>) and recompile.
+An alternative when using Scala 2.10 and later is to run <code>print-warnings</code>.
+This task will display all warnings from the previous compilation.
+For example,</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> print-warnings
+<span class="go">[warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead</span>
+<span class="go">[warn]     def x = error(&quot;Failed.&quot;)</span>
+<span class="go">[warn]             ^</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="level">Change the logging level globally</h4>
+
+
+<p>The amount of logging is controlled by the <code>logLevel</code> setting, which takes values from the <code>Level</code> enumeration.
+Valid values are <code>Error</code>, <code>Warn</code>, <code>Info</code>, and <code>Debug</code> in order of increasing verbosity.
+To change the global logging level, set <code>logLevel in Global</code>.
+For example, to set it temporarily from the sbt prompt,</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> <span class="nb">set </span>logLevel in Global :<span class="o">=</span> Level.Warn
+</code></pre>
+</div>
+
+
+
+
+<h4 id="tasklevel">Change the logging level for a specific task, configuration, or project</h4>
+
+
+<p>The amount of logging is controlled by the <code>logLevel</code> setting, which takes values from the <code>Level</code> enumeration.
+Valid values are <code>Error</code>, <code>Warn</code>, <code>Info</code>, and <code>Debug</code> in order of increasing verbosity.
+The logging level may be configured globally, as described in the previous section, or it may be applied to a specific project, configuration, or task.
+For example, to change the logging level for compilation to only show warnings and errors:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> <span class="nb">set </span>logLevel in compile :<span class="o">=</span> Level.Warn
+</code></pre>
+</div>
+
+
+<p>To enable debug logging for all tasks in the current project,</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> <span class="nb">set </span>logLevel :<span class="o">=</span> Level.Warn
+</code></pre>
+</div>
+
+
+<p>A common scenario is that after running a task, you notice that you need more information than was shown by default.
+A <code>logLevel</code> based solution typically requires changing the logging level and running a task again.
+However, there are two cases where this is unnecessary.
+First, warnings from a previous compilation may be displayed using <code>print-warnings</code> for the main sources or <code>test:print-warnings</code> for test sources.
+Second, output from the previous execution is available either for a single task or for in its entirety.
+See the section on <a href="#printwarnings">print-warnings</a> and the sections on <a href="#last">previous output</a>.</p>
+
+<h4 id="trace">Configure printing of stack traces</h4>
+
+
+<p>By default, sbt hides the stack trace of most exceptions thrown during execution.
+It prints a message that indicates how to display the exception.
+However, you may want to show more of stack traces by default.</p>
+
+<p>The setting to configure is <code>traceLevel</code>, which is a setting with an Int value.
+When <code>traceLevel</code> is set to a negative value, no stack traces are shown.
+When it is zero, the stack trace is displayed up to the first sbt stack frame.
+When positive, the stack trace is shown up to that many stack frames.</p>
+
+<p>For example, the following configures sbt to show stack traces up to the first sbt frame:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> <span class="nb">set </span>every traceLevel :<span class="o">=</span> 0
+</code></pre>
+</div>
+
+
+<p>The <code>every</code> part means to override the setting in all scopes.
+To change the trace printing behavior for a single project, configuration, or task, scope <code>traceLevel</code> appropriately:</p>
+
+<div class="highlight"><pre><code class="console"><span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in Test :<span class="o">=</span> 5
+<span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in update :<span class="o">=</span> 0
+<span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in ThisProject :<span class="o">=</span> -1
+</code></pre>
+</div>
+
+
+
+
+<h4 id="nobuffer">Print the output of tests immediately instead of buffering</h4>
+
+
+<p>By default, sbt buffers the logging output of a test until the whole class finishes.
+This is so that output does not get mixed up when executing in parallel.
+To disable buffering, set the <code>logBuffered</code> setting to false:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">logBuffered</span> <span class="o">:=</span> <span class="kc">false</span>
+</code></pre>
+</div>
+
+
+
+
+<h4 id="custom">Add a custom logger</h4>
+
+
+<p>The setting <code>extraLoggers</code> can be used to add custom loggers.
+A custom logger should implement [AbstractLogger].
+<code>extraLoggers</code> is a function <code>ScopedKey[_] =&gt; Seq[AbstractLogger]</code>.
+This means that it can provide different logging based on the task that requests the logger.</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">extraLoggers</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">currentFunction</span> <span class="k">=&gt;</span>
+    <span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="k">_</span><span class="o">])</span> <span class="k">=&gt;</span> <span class="o">{</span>
+        <span class="n">myCustomLogger</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">+:</span> <span class="n">currentFunction</span><span class="o">(</span><span class="n">key</span><span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+<p>Here, we take the current function for the setting <code>currentFunction</code> and provide a new function.
+The new function prepends our custom logger to the ones provided by the old function.</p>
+
+<h4 id="log">Log messages in a task</h4>
+
+
+<p>The special task <code>streams</code> provides per-task logging and I/O via a <a href="http://harrah.github.com/xsbt/latest/api/#sbt.std.Streams">Streams</a> instance.
+To log, a task maps the <code>streams</code> task and uses its <code>log</code> member:</p>
+
+<div class="highlight"><pre><code class="scala"><span class="n">myTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(...,</span> <span class="n">streams</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(...,</span> <span class="n">s</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="o">(</span><span class="s">&quot;A warning.&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+
+   
+    </div>
+   </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+
