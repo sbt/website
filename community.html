@@ -1,1 +1,134 @@
-release/docs/Community/index.html
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+   <title>Community - </title>
+   <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
+   <link href='/resources/site.css' rel='stylesheet' type='text/css'>
+   <link href='/resources/syntax.css' rel='stylesheet' type='text/css'>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+   </script>
+</head>
+<body>
+
+
+    <!-- Topbar
+    ================================================== -->
+    <div class="cf" id="more" >
+      <div id="top">
+        <div class="container">
+          <a class="brand" href="/">SBT</a>
+          <ul class="nav">
+           <li><a href="/learn.html">Learn</a>
+           <li><a href="/download.html">Download</a>
+           <li><a href="/community.html">Community</a></li>
+           <li><a href="#top">Top</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+<div class="cf" id="container">
+  <div class="span2 columns container-spacer"><p>&nbsp;</p></div>
+  <div id="intro" class="span10 columns content">
+    <div id="head" class="cf">
+      <div id="name" class="left">
+        <h1>sbt</h1>
+        <h2>Community</h2>
+        <p id="what">Amazing People, including you</p>
+      </div>
+      <div class="left page-description" id="vc">
+          <p>A wonderful, highly engaged community that you can talk to and be a part of.</p>
+
+      </div>
+    </div>
+    <div id="features" class="cf">
+      <div id="feature-list">
+        <ul class="left">           
+          
+            
+            
+              
+                <li><a href="http://groups.google.com/group/simple-build-tool/topics">Mailing List</a></li>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <li><a href="http://github.com/harrah/xsbt">Source Code</a></li>
+              
+            
+          
+        </ul>
+        <ul class="left">
+          
+            
+            
+          
+            
+            
+              
+                <li><a href="community-plugins.html">Community Plugins</a></li>
+              
+            
+          
+            
+            
+          
+         </ul>
+       </div>
+     </div>
+    <div id="pagecontent" class="cf">
+      
+   
+    </div>
+   </div>
+
+   <div id="extra">
+     <ul id="examples">
+       
+     </ul>
+   </div>
+  </div>
+  <div class="span6 columns"><p>&nbsp;</p></div>
+</div>
+
+
+
+<script type="text/javascript" src="/jquery.scrollto.min.js"></script>
+<script type="text/javascript">
+   (function($){ $(function(){
+     $("#top").click(function(){ $("#intro").ScrollTo(); })
+
+     var applyH = function() {
+       $("#intro, .feature").each(function (i, elt) {
+          if ($(elt).height() < $(window).height()) {
+            $(elt).height($(window).height());
+          }
+       });
+     };
+     $(window).bind('resize', function() { applyH(); });
+     applyH();
+     
+     $('#features a, .st').click(function(e){
+         var h = $(this).attr('href');
+         if(h && h[0] && h[0] == '#') {
+           e.preventDefault();
+         
+           $(h).ScrollTo({
+               callback:function(){ window.location.hash = h;}
+           });
+         }
+     });
+   });})(jQuery);
+</script>
+
+</body>
+</html>
+
