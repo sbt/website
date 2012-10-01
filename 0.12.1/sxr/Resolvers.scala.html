@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Resolvers.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2011 Sanjin Sehic
+ */</span>
+
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> java.io.File
+<span class="keyword">import</span> java.net.URI
+
+<span class="keyword">import</span> <a href="BuildLoader.scala.html#11360" title="object sbt.BuildLoader">BuildLoader</a>.ResolveInfo
+<span class="keyword">import</span> <a href="RichURI.scala.html#12968" title="object sbt.RichURI">RichURI</a>.fromURI
+
+<span class="keyword">object</span> <a title="object sbt.Resolvers" id="11694">Resolvers</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">type</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339984">Resolver</a> = BuildLoader.<span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span>
+
+	<span class="keyword">val</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339985">local</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <span class="delimiter">(</span>info: <a href="BuildLoader.scala.html#338860" title="sbt.BuildLoader.ResolveInfo">ResolveInfo</a><span class="delimiter">)</span> =&gt; <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.net.URI" id="1218410">uri</a> = <a href="#1218409" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339963" title="=&gt; java.net.URI">uri</a>
+		<span class="keyword">val</span> <a title="java.io.File" id="1218411">from</a> = <span title="(x$1: java.net.URI)java.io.File" class="keyword">new</span> <span title="java.io.File">File</span><span class="delimiter">(</span><a href="#1218410" title="java.net.URI">uri</a><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="java.io.File" id="1218412">to</a> = <a href="#340001" title="(uri: java.net.URI, in: java.io.File)java.io.File">uniqueSubdirectoryFor</a><span class="delimiter">(</span><a href="#1218410" title="java.net.URI">uri</a>, in = <a href="#1218409" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339965" title="=&gt; java.io.File">staging</a><span class="delimiter">)</span>
+
+		<span title="Option[() =&gt; java.io.File]" class="keyword">if</span> <span class="delimiter">(</span><a href="#1218411" title="java.io.File">from</a>.<span title="()Boolean">isDirectory</span><span class="delimiter">)</span> <span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span><span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <span title="java.io.File" class="keyword">if</span><span class="delimiter">(</span><a href="#1218411" title="java.io.File">from</a>.<span title="()Boolean">canWrite</span><span class="delimiter">)</span> <a href="#1218411" title="java.io.File">from</a> <span class="keyword">else</span> <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218412" title="java.io.File">to</a><span class="delimiter">)</span> <span class="delimiter">{</span><a href="IO.scala.html#12870" title="object sbt.IO">IO</a>.<a href="IO.scala.html#31757" title="(source: java.io.File, target: java.io.File, overwrite: Boolean, preserveLastModified: Boolean)Unit">copyDirectory</a><span class="delimiter">(</span><a href="#1218411" title="java.io.File">from</a>, <a href="#1218412" title="java.io.File">to</a><span class="delimiter">)</span><span class="delimiter">}</span><span class="delimiter">}</span>
+		<span class="keyword">else</span> <span title="object None">None</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">val</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339987">remote</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <span class="delimiter">(</span>info: <a href="BuildLoader.scala.html#338860" title="sbt.BuildLoader.ResolveInfo">ResolveInfo</a><span class="delimiter">)</span> =&gt; <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.net.URL" id="1218453">url</a> = <a href="#1218452" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339963" title="=&gt; java.net.URI">uri</a>.<span title="()java.net.URL">toURL</span>
+		<span class="keyword">val</span> <a title="java.io.File" id="1218454">to</a> = <a href="#340001" title="(uri: java.net.URI, in: java.io.File)java.io.File">uniqueSubdirectoryFor</a><span class="delimiter">(</span><a href="#1218452" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339963" title="=&gt; java.net.URI">uri</a>, in = <a href="#1218452" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339965" title="=&gt; java.io.File">staging</a><span class="delimiter">)</span>
+
+		<span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span><span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218454" title="java.io.File">to</a><span class="delimiter">)</span> <span class="delimiter">{</span><a href="IO.scala.html#12870" title="object sbt.IO">IO</a>.<a href="IO.scala.html#31715" title="(from: java.net.URL, toDirectory: java.io.File, filter: sbt.NameFilter, preserveLastModified: Boolean)Set[java.io.File]">unzipURL</a><span title="Unit" class="delimiter">(</span><a href="#1218453" title="java.net.URL">url</a>, <a href="#1218454" title="java.io.File">to</a><span class="delimiter">)</span><span class="delimiter">}</span><span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">val</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339989">subversion</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <span class="delimiter">(</span>info: <a href="BuildLoader.scala.html#338860" title="sbt.BuildLoader.ResolveInfo">ResolveInfo</a><span class="delimiter">)</span> =&gt; <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="(uri: java.net.URI)java.net.URI" id="1218472">normalized</a><span class="delimiter">(</span><a title="java.net.URI" id="1218477">uri</a>: <span title="java.net.URI">URI</span><span class="delimiter">)</span> = <a href="RichURI.scala.html#340018" title="sbt.RichURI" id="1218502">uri</a>.<a href="RichURI.scala.html#1218492" title="String" id="1218521">copy</a><span class="delimiter">(</span>scheme = <a title="java.lang.String(&quot;svn&quot;)" id="1218515" class="string">&quot;svn&quot;</a><span class="delimiter">)</span>
+
+		<span class="keyword">val</span> <a title="java.net.URI" id="1218473">uri</a> = <a href="#1218471" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340030" title="=&gt; java.net.URI">withoutMarkerScheme</a>
+		<span class="keyword">val</span> <a title="java.io.File" id="1218474">localCopy</a> = <a href="#340001" title="(uri: java.net.URI, in: java.io.File)java.io.File">uniqueSubdirectoryFor</a><span class="delimiter">(</span><a href="#1218472" title="(uri: java.net.URI)java.net.URI">normalized</a><span class="delimiter">(</span><a href="#1218473" title="java.net.URI">uri</a><span class="delimiter">)</span>, in = <a href="#1218471" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339965" title="=&gt; java.io.File">staging</a><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="java.lang.String" id="1218475">from</a> = <a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340028" title="=&gt; java.net.URI">withoutFragment</a>.<span title="()java.lang.String">toASCIIString</span>
+		<span class="keyword">val</span> <a title="java.lang.String" id="1218476">to</a> = <a href="#1218474" title="java.io.File">localCopy</a>.<span title="()java.lang.String">getAbsolutePath</span>
+
+		<span title="Option[() =&gt; java.io.File]" class="keyword">if</span> <span class="delimiter">(</span><a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340027" title="=&gt; Boolean">hasFragment</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="java.lang.String" id="1218537">revision</a> = <a href="#1218473" title="java.net.URI">uri</a>.<span title="()java.lang.String">getFragment</span>
+			<span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span>
+				<span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218474" title="java.io.File">localCopy</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+					<a href="#339998" title="(command: String*)Unit">run</a><span class="delimiter">(</span><span title="java.lang.String(&quot;svn&quot;)" class="string">&quot;svn&quot;</span>, <span title="java.lang.String(&quot;checkout&quot;)" class="string">&quot;checkout&quot;</span>, <span title="java.lang.String(&quot;-q&quot;)" class="string">&quot;-q&quot;</span>, <span title="java.lang.String(&quot;-r&quot;)" class="string">&quot;-r&quot;</span>, <a href="#1218537" title="java.lang.String">revision</a>, <a href="#1218475" title="java.lang.String">from</a>, <a href="#1218476" title="java.lang.String">to</a><span class="delimiter">)</span>
+				<span class="delimiter">}</span>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span> <span class="keyword">else</span>
+			<span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span>
+				<span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218474" title="java.io.File">localCopy</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+					<a href="#339998" title="(command: String*)Unit">run</a><span class="delimiter">(</span><span title="java.lang.String(&quot;svn&quot;)" class="string">&quot;svn&quot;</span>, <span title="java.lang.String(&quot;checkout&quot;)" class="string">&quot;checkout&quot;</span>, <span title="java.lang.String(&quot;-q&quot;)" class="string">&quot;-q&quot;</span>, <a href="#1218475" title="java.lang.String">from</a>, <a href="#1218476" title="java.lang.String">to</a><span class="delimiter">)</span>
+				<span class="delimiter">}</span>
+			<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">val</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339991">mercurial</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <a href="#1218563" title="sbt.Resolvers.DistributedVCS{}" class="keyword">new</a> <a href="#339995" title="anonymous class $anon extends sbt.Resolvers.DistributedVCS" id="1218563">DistributedVCS</a>
+	<span class="delimiter">{</span>
+		<span class="keyword">override</span> <span class="keyword">val</span> <a title="java.lang.String" id="1218571">scheme</a> = <span title="java.lang.String(&quot;hg&quot;)" class="string">&quot;hg&quot;</span>
+
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(from: String, to: java.io.File)Unit" id="1218573">clone</a><span class="delimiter">(</span><a title="String" id="1218575">from</a>: <span title="String">String</span>, <a title="java.io.File" id="1218576">to</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#339998" title="(command: String*)Unit">run</a><span class="delimiter">(</span><span title="java.lang.String(&quot;hg&quot;)" class="string">&quot;hg&quot;</span>, <span title="java.lang.String(&quot;clone&quot;)" class="string">&quot;clone&quot;</span>, <span title="java.lang.String(&quot;-q&quot;)" class="string">&quot;-q&quot;</span>, <a href="#1218575" title="String">from</a>, <a href="#1218576" title="java.io.File">to</a>.<span title="()java.lang.String">getAbsolutePath</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(branch: String, in: java.io.File)Unit" id="1218574">checkout</a><span class="delimiter">(</span><a title="String" id="1218582">branch</a>: <span title="String">String</span>, <a title="java.io.File" id="1218583">in</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#339999" title="(cwd: Option[java.io.File], command: String*)Unit">run</a><span class="delimiter">(</span><span title="(x: java.io.File)Some[java.io.File]">Some</span><span class="delimiter">(</span><a href="#1218583" title="java.io.File">in</a><span class="delimiter">)</span>, <span title="java.lang.String(&quot;hg&quot;)" class="string">&quot;hg&quot;</span>, <span title="java.lang.String(&quot;checkout&quot;)" class="string">&quot;checkout&quot;</span>, <span title="java.lang.String(&quot;-q&quot;)" class="string">&quot;-q&quot;</span>, <a href="#1218582" title="String">branch</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>.<a href="#1218568" title="=&gt; sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">toResolver</a>
+
+	<span class="keyword">val</span> <a title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="339993">git</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <a href="#1218605" title="sbt.Resolvers.DistributedVCS{}" class="keyword">new</a> <a href="#339995" title="anonymous class $anon extends sbt.Resolvers.DistributedVCS" id="1218605">DistributedVCS</a>
+	<span class="delimiter">{</span>
+		<span class="keyword">override</span> <span class="keyword">val</span> <a title="java.lang.String" id="1218607">scheme</a> = <span title="java.lang.String(&quot;git&quot;)" class="string">&quot;git&quot;</span>
+
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(from: String, to: java.io.File)Unit" id="1218609">clone</a><span class="delimiter">(</span><a title="String" id="1218611">from</a>: <span title="String">String</span>, <a title="java.io.File" id="1218612">to</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#339998" title="(command: String*)Unit">run</a><span class="delimiter">(</span><span title="java.lang.String(&quot;git&quot;)" class="string">&quot;git&quot;</span>, <span title="java.lang.String(&quot;clone&quot;)" class="string">&quot;clone&quot;</span>, <a href="#1218611" title="String">from</a>, <a href="#1218612" title="java.io.File">to</a>.<span title="()java.lang.String">getAbsolutePath</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(branch: String, in: java.io.File)Unit" id="1218610">checkout</a><span class="delimiter">(</span><a title="String" id="1218615">branch</a>: <span title="String">String</span>, <a title="java.io.File" id="1218616">in</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#339999" title="(cwd: Option[java.io.File], command: String*)Unit">run</a><span class="delimiter">(</span><span title="(x: java.io.File)Some[java.io.File]">Some</span><span class="delimiter">(</span><a href="#1218616" title="java.io.File">in</a><span class="delimiter">)</span>, <span title="java.lang.String(&quot;git&quot;)" class="string">&quot;git&quot;</span>, <span title="java.lang.String(&quot;checkout&quot;)" class="string">&quot;checkout&quot;</span>, <span title="java.lang.String(&quot;-q&quot;)" class="string">&quot;-q&quot;</span>, <a href="#1218615" title="String">branch</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>.<a href="#1218568" title="=&gt; sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">toResolver</a>
+
+	<span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class DistributedVCS extends java.lang.Object with ScalaObject" id="339995">DistributedVCS</a>
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="=&gt; String" id="1218565">scheme</a>: <span title="String">String</span>
+
+		<span class="keyword">def</span> <a title="(from: String, to: java.io.File)Unit" id="1218566">clone</a><span class="delimiter">(</span><a title="String" id="1218578">from</a>: <span title="String">String</span>, <a title="java.io.File" id="1218579">to</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+
+		<span class="keyword">def</span> <a title="(branch: String, in: java.io.File)Unit" id="1218567">checkout</a><span class="delimiter">(</span><a title="String" id="1218584">branch</a>: <span title="String">String</span>, <a title="java.io.File" id="1218585">in</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+
+		<span class="keyword">def</span> <a title="=&gt; sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]" id="1218568">toResolver</a>: <span title="sbt.BuildLoader.ResolveInfo =&gt; Option[() =&gt; java.io.File]">Resolver</span> = <span class="delimiter">(</span>info: <a href="BuildLoader.scala.html#338860" title="sbt.BuildLoader.ResolveInfo">ResolveInfo</a><span class="delimiter">)</span> =&gt; <span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="java.net.URI" id="1218636">uri</a> = <a href="#1218635" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340030" title="=&gt; java.net.URI">withoutMarkerScheme</a>
+			<span class="keyword">val</span> <a title="java.io.File" id="1218637">localCopy</a> = <a href="#340001" title="(uri: java.net.URI, in: java.io.File)java.io.File">uniqueSubdirectoryFor</a><span class="delimiter">(</span><a href="#1218569" title="(uri: java.net.URI)java.net.URI">normalized</a><span class="delimiter">(</span><a href="#1218636" title="java.net.URI">uri</a><span class="delimiter">)</span>, in = <a href="#1218635" title="sbt.BuildLoader.ResolveInfo">info</a>.<a href="BuildLoader.scala.html#339965" title="=&gt; java.io.File">staging</a><span class="delimiter">)</span>
+			<span class="keyword">val</span> <a title="java.lang.String" id="1218638">from</a> = <a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340028" title="=&gt; java.net.URI">withoutFragment</a>.<span title="()java.lang.String">toASCIIString</span>
+
+			<span title="Option[() =&gt; java.io.File]" class="keyword">if</span> <span class="delimiter">(</span><a href="RichURI.scala.html#340018" title="implicit sbt.RichURI.fromURI : (uri: java.net.URI)sbt.RichURI">uri</a>.<a href="RichURI.scala.html#340027" title="=&gt; Boolean">hasFragment</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+				<span class="keyword">val</span> <a title="java.lang.String" id="1218658">branch</a> = <a href="#1218636" title="java.net.URI">uri</a>.<span title="()java.lang.String">getFragment</span>
+				<span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span>
+					<span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218637" title="java.io.File">localCopy</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+						<a href="#1218566" title="(from: String, to: java.io.File)Unit">clone</a><span class="delimiter">(</span><a href="#1218638" title="java.lang.String">from</a>, to = <a href="#1218637" title="java.io.File">localCopy</a><span class="delimiter">)</span>
+						<a href="#1218567" title="(branch: String, in: java.io.File)Unit">checkout</a><span class="delimiter">(</span><a href="#1218658" title="java.lang.String">branch</a>, in = <a href="#1218637" title="java.io.File">localCopy</a><span class="delimiter">)</span>
+					<span class="delimiter">}</span>
+				<span class="delimiter">}</span>
+			<span class="delimiter">}</span> <span class="keyword">else</span> <span title="(x: () =&gt; java.io.File)Some[() =&gt; java.io.File]">Some</span> <span class="delimiter">{</span><span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#340000" title="(file: java.io.File)(f: =&gt; Unit)java.io.File">creates</a><span class="delimiter">(</span><a href="#1218637" title="java.io.File">localCopy</a><span class="delimiter">)</span> <span class="delimiter">{</span><a href="#1218566" title="(from: String, to: java.io.File)Unit">clone</a><span class="delimiter">(</span><a href="#1218638" title="java.lang.String">from</a>, to = <a href="#1218637" title="java.io.File">localCopy</a><span class="delimiter">)</span><span class="delimiter">}</span><span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+
+		<span class="keyword">private</span> <span class="keyword">def</span> <a title="(uri: java.net.URI)java.net.URI" id="1218569">normalized</a><span class="delimiter">(</span><a title="java.net.URI" id="1218641">uri</a>: <span title="java.net.URI">URI</span><span class="delimiter">)</span> = <a href="RichURI.scala.html#340018" title="sbt.RichURI" id="1218646">uri</a>.<a href="RichURI.scala.html#1218492" title="String" id="1218653">copy</a><span class="delimiter">(</span>scheme = <a href="#1218565" title="String" id="1218647">scheme</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="Boolean" id="339997">onWindows</a> = <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.lang.String" id="1218392">os</a> = <span title="object java.lang.System">System</span>.<span title="(x$1: java.lang.String)java.lang.String">getenv</span><span class="delimiter">(</span><span title="java.lang.String(&quot;OSTYPE&quot;)" class="string">&quot;OSTYPE&quot;</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="Boolean" id="1218393">isCygwin</a> = <span class="delimiter">(</span><a href="#1218392" title="java.lang.String">os</a> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#1218392" title="java.lang.String">os</a>.<span title="()java.lang.String">toLowerCase</span>.<span title="(x$1: java.lang.CharSequence)Boolean">contains</span><span class="delimiter">(</span><span title="java.lang.String(&quot;cygwin&quot;)" class="string">&quot;cygwin&quot;</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="Boolean" id="1218394">isWindows</a> = <span title="object java.lang.System">System</span>.<span title="(x$1: java.lang.String, x$2: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;os.name&quot;)" class="string">&quot;os.name&quot;</span>, <span title="java.lang.String(&quot;&quot;)" class="string">&quot;&quot;</span><span class="delimiter">)</span>.<span title="()java.lang.String">toLowerCase</span>.<span title="(x$1: java.lang.CharSequence)Boolean">contains</span><span class="delimiter">(</span><span title="java.lang.String(&quot;windows&quot;)" class="string">&quot;windows&quot;</span><span class="delimiter">)</span>
+		<a href="#1218394" title="Boolean">isWindows</a> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <span title="=&gt; Boolean">!</span><a href="#1218393" title="Boolean">isCygwin</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(command: String*)Unit" id="339998">run</a><span class="delimiter">(</span><a title="String*" id="1218548">command</a>: <span title="String*">String</span>*<span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<a href="#339999" title="(cwd: Option[java.io.File], command: String*)Unit">run</a><span class="delimiter">(</span><span title="object None">None</span>, <a href="#1218548" title="String*">command</a>: _*<span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(cwd: Option[java.io.File], command: String*)Unit" id="339999">run</a><span class="delimiter">(</span><a title="Option[java.io.File]" id="1218545">cwd</a>: <span title="Option[java.io.File]">Option</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="String*" id="1218546">command</a>: <span title="String*">String</span>*<span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Int" id="1218681">result</a> = <a href="Process.scala.html#152717" title="(command: Seq[String], cwd: Option[java.io.File], extraEnv: (String, String)*)sbt.ProcessBuilder">Process</a><span class="delimiter">(</span>
+			<span title="Seq[String]" class="keyword">if</span> <span class="delimiter">(</span><a href="#339996" title="=&gt; Boolean">onWindows</a><span class="delimiter">)</span> <span title="java.lang.String(&quot;cmd&quot;)" class="string">&quot;cmd&quot;</span> <a href="#1218690" title="(elem: String)(implicit bf: scala.collection.generic.CanBuildFrom[Seq[String],String,Seq[String]])Seq[String]">+:</a> <span title="java.lang.String(&quot;/c&quot;)" class="string">&quot;/c&quot;</span> <a href="#1218691" title="(elem: String)(implicit bf: scala.collection.generic.CanBuildFrom[Seq[String],String,Seq[String]])Seq[String]">+:</a> <a href="#1218546" title="String*">command</a>
+			<span class="keyword">else</span> <a href="#1218546" title="String*">command</a>,
+			<a href="#1218545" title="Option[java.io.File]">cwd</a>
+		<span class="delimiter">)</span> <a href="Process.scala.html#152920" title="=&gt; Int">!</a>;
+		<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><a href="#1218681" title="Int">result</a> <span title="(x: Int)Boolean">!=</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+			<span title="(message: String)Nothing">error</span><span class="delimiter">(</span><span title="java.lang.String(&quot;Nonzero exit code (&quot;)" class="string">&quot;Nonzero exit code (&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#1218681" title="Int">result</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;): &quot;)" class="string">&quot;): &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#1218546" title="String*">command</a>.<span title="(sep: String)String">mkString</span><span class="delimiter">(</span><span title="java.lang.String(&quot; &quot;)" class="string">&quot; &quot;</span><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(file: java.io.File)(f: =&gt; Unit)java.io.File" id="340000">creates</a><span class="delimiter">(</span><a title="java.io.File" id="1218430">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span><span class="delimiter">(</span><a title="=&gt; Unit" id="1218431">f</a>: =&gt; Unit<span class="delimiter">)</span> =
+	<span class="delimiter">{</span>
+		<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#1218430" title="java.io.File">file</a>.<span title="()Boolean">exists</span><span class="delimiter">)</span>
+			<span class="keyword">try</span> <span class="delimiter">{</span>
+				<a href="#1218431" title="=&gt; Unit">f</a>
+			<span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span>
+				<span class="keyword">case</span> <a title="Nothing" id="1218434">e</a> =&gt;
+					<a href="IO.scala.html#12870" title="object sbt.IO">IO</a>.<a href="IO.scala.html#31737" title="(file: java.io.File)Unit">delete</a><span class="delimiter">(</span><a href="#1218430" title="java.io.File">file</a><span class="delimiter">)</span>
+					<span title="Nothing" class="keyword">throw</span> <a href="#1218434" title="java.lang.Throwable">e</a>
+			<span class="delimiter">}</span>
+		<a href="#1218430" title="java.io.File">file</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(uri: java.net.URI, in: java.io.File)java.io.File" id="340001">uniqueSubdirectoryFor</a><span class="delimiter">(</span><a title="java.net.URI" id="1218417">uri</a>: <span title="java.net.URI">URI</span>, <a title="java.io.File" id="1218418">in</a>: <span title="java.io.File">File</span><span class="delimiter">)</span> = <span class="delimiter">{</span>
+		<a href="#1218418" title="java.io.File">in</a>.<span title="()Boolean">mkdirs</span><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span title="(x$1: java.io.File, x$2: java.lang.String)java.io.File" class="keyword">new</span> <span title="java.io.File">File</span><span class="delimiter">(</span><a href="#1218418" title="java.io.File">in</a>, <a href="Hash.scala.html#12852" title="object sbt.Hash">Hash</a>.<a href="Hash.scala.html#43337" title="(s: String)String">halfHashString</a><span class="delimiter">(</span><a href="#1218417" title="java.net.URI">uri</a>.<span title="()java.net.URI">normalize</span>.<span title="()java.lang.String">toASCIIString</span><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

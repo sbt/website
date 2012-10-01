@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/Predefined.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti;
+
+public enum <a title="object xsbti.Predefined" id="11283">Predefined</a> 
+<span class="delimiter">{</span>
+	<a href="#11283" title="xsbti.Predefined" id="322622">Local</a><span class="delimiter">(</span><span class="string">&quot;local&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322623">MavenLocal</a><span class="delimiter">(</span><span class="string">&quot;maven-local&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322624">MavenCentral</a><span class="delimiter">(</span><span class="string">&quot;maven-central&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322625">ScalaToolsReleases</a><span class="delimiter">(</span><span class="string">&quot;scala-tools-releases&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322626">ScalaToolsSnapshots</a><span class="delimiter">(</span><span class="string">&quot;scala-tools-snapshots&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322627">SonatypeOSSReleases</a><span class="delimiter">(</span><span class="string">&quot;sonatype-oss-releases&quot;</span><span class="delimiter">)</span>,
+	<a href="#11283" title="xsbti.Predefined" id="322628">SonatypeOSSSnapshots</a><span class="delimiter">(</span><span class="string">&quot;sonatype-oss-snapshots&quot;</span><span class="delimiter">)</span>;
+
+	<span class="keyword">private</span> <span class="keyword">final</span> String <a title="java.lang.String" id="313920">label</a>;
+	<span class="keyword">private</span> Predefined<span class="delimiter">(</span>String label<span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">this</span>.label = label; <span class="delimiter">}</span>
+	public String <a title="()java.lang.String" id="313922">toString</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> label; <span class="delimiter">}</span>
+
+	public static <a href="#11283" title="xsbti.Predefined">Predefined</a> <a title="(s: java.lang.String)xsbti.Predefined" id="322629">toValue</a><span class="delimiter">(</span>String <a title="java.lang.String" id="322632">s</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">for</span><span class="delimiter">(</span>Predefined p : values<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>
+			<span class="keyword">if</span><span class="delimiter">(</span>s.equals<span class="delimiter">(</span>p.toString<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">)</span>
+				<span class="keyword">return</span> p;
+		
+		StringBuilder msg = <span class="keyword">new</span> StringBuilder<span class="delimiter">(</span><span class="string">&quot;Expected one of &quot;</span><span class="delimiter">)</span>;
+		<span class="keyword">for</span><span class="delimiter">(</span>Predefined p : values<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>
+			msg.append<span class="delimiter">(</span>p.toString<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>.append<span class="delimiter">(</span><span class="string">&quot;, &quot;</span><span class="delimiter">)</span>;
+		msg.append<span class="delimiter">(</span><span class="string">&quot;got '&quot;</span><span class="delimiter">)</span>.append<span class="delimiter">(</span>s<span class="delimiter">)</span>.append<span class="delimiter">(</span><span class="string">&quot;'.&quot;</span><span class="delimiter">)</span>;
+		<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException<span class="delimiter">(</span>msg.toString<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

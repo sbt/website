@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Positions.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait SourcePosition extends java.lang.Object" id="12545">SourcePosition</a>
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait FilePosition extends java.lang.Object with sbt.SourcePosition" id="12546">FilePosition</a> <span class="keyword">extends</span> <a href="#12545" title="sbt.SourcePosition">SourcePosition</a> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="340639">path</a>: <span title="String">String</span>
+	<span class="keyword">def</span> <a title="=&gt; Int" id="340640">startLine</a>: <span title="Int">Int</span>
+<span class="delimiter">}</span>
+
+case <span class="keyword">object</span> <a href="#2149445" title="object sbt.NoPosition" id="2149450">NoPosition</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#12545" title="sbt.SourcePosition">SourcePosition</a>
+
+<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class LinePosition extends java.lang.Object with sbt.FilePosition with ScalaObject with Product with Serializable" id="2149615">LinePosition</a><a href="#2149615" title="ScalaObject" class="delimiter">(</a><a title="String" id="2149610">path</a>: <span title="String">String</span>, <a title="Int" id="2149611">startLine</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12546" title="sbt.FilePosition">FilePosition</a>
+
+<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class LineRange extends java.lang.Object with ScalaObject with Product with Serializable" id="2149606">LineRange</a><a href="#2149606" title="ScalaObject" class="delimiter">(</a><a title="Int" id="341233">start</a>: <span title="Int">Int</span>, <a title="Int" id="341234">end</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(n: Int)sbt.LineRange" id="340424">shift</a><span class="delimiter">(</span><a title="Int" id="340582">n</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <span title="sbt.LineRange" class="keyword">new</span> <a href="#2149606" title="sbt.LineRange">LineRange</a><span class="delimiter">(</span><a href="#341233" title="=&gt; Int">start</a> <span title="(x: Int)Int">+</span> <a href="#340582" title="Int">n</a>, <a href="#341234" title="=&gt; Int">end</a> <span title="(x: Int)Int">+</span> <a href="#340582" title="Int">n</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class RangePosition extends java.lang.Object with sbt.FilePosition with ScalaObject with Product with Serializable" id="2149602">RangePosition</a><a href="#2149602" title="ScalaObject" class="delimiter">(</a><a title="String" id="340651">path</a>: <span title="String">String</span>, <a title="sbt.LineRange" id="340652">range</a>: <a href="#2149606" title="sbt.LineRange">LineRange</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12546" title="sbt.FilePosition">FilePosition</a> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="=&gt; Int" id="340648">startLine</a> = <a href="#340652" title="=&gt; sbt.LineRange">range</a>.<a href="#341233" title="=&gt; Int">start</a>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

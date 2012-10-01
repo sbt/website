@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>StackTrace.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010 Tony Sloane
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">object</span> <a title="object sbt.StackTrace" id="13092">StackTrace</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(name: String)Boolean" id="2190764">isSbtClass</a><span class="delimiter">(</span><a title="String" id="2192864">name</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#2192864" title="String">name</a>.<span title="(x$1: java.lang.String)Boolean">startsWith</span><span class="delimiter">(</span><span title="java.lang.String(&quot;sbt&quot;)" class="string">&quot;sbt&quot;</span><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">||</span> <a href="#2192864" title="String">name</a>.<span title="(x$1: java.lang.String)Boolean">startsWith</span><span class="delimiter">(</span><span title="java.lang.String(&quot;xsbt&quot;)" class="string">&quot;xsbt&quot;</span><span class="delimiter">)</span>
+	<span class="comment">/**
+		* Return a printable representation of the stack trace associated
+		* with t.  Information about t and its Throwable causes is included.
+		* The number of lines to be included for each Throwable is configured
+		* via d which should be greater than or equal to zero.  If d is zero,
+		* then all elements are included up to (but not including) the first
+		* element that comes from sbt. If d is greater than zero, then up to
+		* that many lines are included, where the line for the Throwable is
+		* counted plus one line for each stack element.  Less lines will be
+		* included if there are not enough stack elements.
+		*/</span>
+	<span class="keyword">def</span> <a title="(t: Throwable, d: Int)String" id="2190765">trimmed</a><span class="delimiter">(</span><a title="Throwable" id="2190766">t</a> : <span title="Throwable">Throwable</span>, <a title="Int" id="2190767">d</a> : <span title="Int">Int</span><span class="delimiter">)</span> : <span title="String">String</span> = <span class="delimiter">{</span>
+		<span title="(requirement: Boolean)Unit">require</span><span class="delimiter">(</span><a href="#2190767" title="Int">d</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="StringBuilder" id="2192871">b</a> = <span title="()StringBuilder" class="keyword">new</span> <span title="StringBuilder">StringBuilder</span> <span class="delimiter">(</span><span class="delimiter">)</span>
+
+		<span class="keyword">def</span> <a title="(t: Throwable, first: Boolean)Unit" id="2192872">appendStackTrace</a> <span class="delimiter">(</span><a title="Throwable" id="2192884">t</a> : <span title="Throwable">Throwable</span>, <a title="Boolean" id="2192885">first</a> : <span title="Boolean">Boolean</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+
+			<span class="keyword">val</span> <a title="java.lang.StackTraceElement =&gt; Boolean" id="2192886">include</a> : StackTraceElement =&gt; Boolean =
+				<span title="java.lang.StackTraceElement =&gt; Boolean" class="keyword">if</span> <span class="delimiter">(</span><a href="#2190767" title="Int">d</a> <span title="(x: Int)Boolean">==</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+					<a title="java.lang.StackTraceElement" id="2192895">element</a> =&gt; <span title="=&gt; Boolean">!</span><a href="#2190764" title="(name: String)Boolean">isSbtClass</a><span class="delimiter">(</span><a href="#2192895" title="java.lang.StackTraceElement">element</a>.<span title="()java.lang.String">getClassName</span><span class="delimiter">)</span>
+				<span class="keyword">else</span> <span class="delimiter">{</span>
+					<span class="keyword">var</span> <a title="Int" id="2192896">count</a> = <a href="#2190767" title="Int">d</a> <span title="(x: Int)Int">-</span> <span title="Int(1)" class="int">1</span>
+					<span class="delimiter">(</span><a title="java.lang.StackTraceElement" id="2192902">_</a> =&gt; <span class="delimiter">{</span> <a href="#2192896" title="Int">count</a> <span title="(x: Int)Int">-=</span> <span title="Int(1)" class="int">1</span>; <a href="#2192896" title="Int">count</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span> <span class="delimiter">}</span><span class="delimiter">)</span>
+				<span class="delimiter">}</span>
+
+			<span class="keyword">def</span> <a title="(e: java.lang.StackTraceElement)Unit" id="2192887">appendElement</a> <span class="delimiter">(</span><a title="java.lang.StackTraceElement" id="2192911">e</a> : <span title="java.lang.StackTraceElement">StackTraceElement</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+				<a href="#2192871" title="StringBuilder">b</a>.<span title="(s: String)StringBuilder">append</span> <span class="delimiter">(</span><span title="java.lang.String(&quot;\011at &quot;)" class="string">&quot;\tat &quot;</span><span class="delimiter">)</span>
+				<a href="#2192871" title="StringBuilder">b</a>.<span title="(x: Any)StringBuilder">append</span> <span class="delimiter">(</span><a href="#2192911" title="java.lang.StackTraceElement">e</a><span class="delimiter">)</span>
+				<a href="#2192871" title="StringBuilder">b</a>.<span title="(x: Char)StringBuilder">append</span> <span title="Unit" class="delimiter">(</span><span title="Char(\'\\n\')" class="char">'\n'</span><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+
+			<span title="Any" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#2192885" title="Boolean">first</a><span class="delimiter">)</span>
+				<a href="#2192871" title="StringBuilder">b</a>.<span title="(s: String)StringBuilder">append</span> <span class="delimiter">(</span><span title="java.lang.String(&quot;Caused by: &quot;)" class="string">&quot;Caused by: &quot;</span><span class="delimiter">)</span>
+			<a href="#2192871" title="StringBuilder">b</a>.<span title="(x: Any)StringBuilder">append</span> <span class="delimiter">(</span><a href="#2192884" title="Throwable">t</a><span class="delimiter">)</span>
+			<a href="#2192871" title="StringBuilder">b</a>.<span title="(x: Char)StringBuilder">append</span> <span class="delimiter">(</span><span title="Char(\'\\n\')" class="char">'\n'</span><span class="delimiter">)</span>
+
+			<span class="keyword">val</span> <a title="Array[java.lang.StackTraceElement]" id="2192888">els</a> = <a href="#2192884" title="Throwable">t</a>.<span title="()Array[java.lang.StackTraceElement]">getStackTrace</span> <span class="delimiter">(</span><span class="delimiter">)</span>
+			<span class="keyword">var</span> <a title="Int" id="2192889">i</a> = <span title="Int(0)" class="int">0</span>
+			<span title="Unit" class="keyword">while</span> <span class="delimiter">(</span><span class="delimiter">(</span><a href="#2192889" title="Int">i</a> <span title="(x: Int)Boolean">&lt;</span> <a href="#2192888" title="(xs: Array[java.lang.StackTraceElement])scala.collection.mutable.ArrayOps[java.lang.StackTraceElement]">els</a>.<span title="=&gt; Int">size</span><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#2192886" title="(v1: java.lang.StackTraceElement)Boolean">include</a> <span class="delimiter">(</span><a href="#2192888" title="(i: Int)java.lang.StackTraceElement">els</a> <span class="delimiter">(</span><a href="#2192889" title="Int">i</a><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">)</span> <a href="#2192944" title="()Unit" class="delimiter">{</a>
+				<a href="#2192887" title="(e: java.lang.StackTraceElement)Unit">appendElement</a> <span class="delimiter">(</span><a href="#2192888" title="(i: Int)java.lang.StackTraceElement">els</a> <span class="delimiter">(</span><a href="#2192889" title="Int">i</a><span class="delimiter">)</span><span class="delimiter">)</span>
+				<a href="#2192889" title="Int">i</a> <span title="(x: Int)Int">+=</span> <span title="Int(1)" class="int">1</span>
+			<span class="delimiter">}</span>
+
+		<span class="delimiter">}</span>
+
+		<a href="#2192872" title="(t: Throwable, first: Boolean)Unit">appendStackTrace</a> <span class="delimiter">(</span><a href="#2190766" title="Throwable">t</a>, <span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>
+		<span class="keyword">var</span> <a title="Throwable" id="2192873">c</a> = <a href="#2190766" title="Throwable">t</a>
+		<span title="Unit" class="keyword">while</span> <span class="delimiter">(</span><a href="#2192873" title="Throwable">c</a>.<span title="()java.lang.Throwable">getCause</span> <span class="delimiter">(</span><span class="delimiter">)</span> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span> <a href="#2192874" title="()Unit" class="delimiter">{</a>
+			<a href="#2192873" title="Throwable">c</a> = <a href="#2192873" title="Throwable">c</a>.<span title="()java.lang.Throwable">getCause</span> <span class="delimiter">(</span><span class="delimiter">)</span>
+			<a href="#2192872" title="(t: Throwable, first: Boolean)Unit">appendStackTrace</a> <span class="delimiter">(</span><a href="#2192873" title="Throwable">c</a>, <span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<a href="#2192871" title="StringBuilder">b</a>.<span title="()java.lang.String">toString</span> <span class="delimiter">(</span><span class="delimiter">)</span>
+
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

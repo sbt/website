@@ -1,0 +1,392 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Interacting with the Configuration System &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Java Sources" href="Java-Sources.html" />
+    <link rel="prev" title="Global Settings" href="Global-Settings.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="../home.html">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Interacting with the Configuration System</div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Java-Sources.html">Java Sources</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Global-Settings.html">Global Settings</a> <span class="divider">|</span>
+              </li>
+              <li>
+                Version 0.12.1
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="interacting-with-the-configuration-system">
+<h1>Interacting with the Configuration System<a class="headerlink" href="#interacting-with-the-configuration-system" title="Permalink to this headline">¶</a></h1>
+<p>Central to sbt is the new configuration system, which is designed to
+enable extensive customization. The goal of this page is to explain the
+general model behind the configuration system and how to work with it.
+The Getting Started Guide (see <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt files</em></a>)
+describes how to define settings; this page describes interacting
+with them and exploring them at the command line.</p>
+<div class="section" id="selecting-commands-tasks-and-settings">
+<h2>Selecting commands, tasks, and settings<a class="headerlink" href="#selecting-commands-tasks-and-settings" title="Permalink to this headline">¶</a></h2>
+<p>A fully-qualified reference to a setting or task looks like:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">{&lt;build-uri&gt;}&lt;project-id&gt;/config:inkey::key</span>
+</pre></div>
+</div>
+<p>This &quot;scoped key&quot; reference is used by commands like <tt class="docutils literal"><span class="pre">last</span></tt> and
+<tt class="docutils literal"><span class="pre">inspect</span></tt> and when selecting a task to run. Only <tt class="docutils literal"><span class="pre">key</span></tt> is usually
+required by the parser; the remaining optional pieces select the scope.
+These optional pieces are individually referred to as scope axes. In the
+above description, <tt class="docutils literal"><span class="pre">{&lt;build-uri&gt;}</span></tt> and <tt class="docutils literal"><span class="pre">&lt;project-id&gt;/</span></tt> specify the
+project axis, <tt class="docutils literal"><span class="pre">config:</span></tt> is the configuration axis, and <tt class="docutils literal"><span class="pre">inkey</span></tt> is
+the task-specific axis. Unspecified components are taken to be the
+current project (project axis) or auto-detected (configuration and task
+axes). An asterisk (<tt class="docutils literal"><span class="pre">*</span></tt>) is used to explicitly refer to the <tt class="docutils literal"><span class="pre">Global</span></tt>
+context, as in <tt class="docutils literal"><span class="pre">*/*:key</span></tt>.</p>
+<div class="section" id="selecting-the-configuration">
+<h3>Selecting the configuration<a class="headerlink" href="#selecting-the-configuration" title="Permalink to this headline">¶</a></h3>
+<p>In the case of an unspecified configuration (that is, when the
+<tt class="docutils literal"><span class="pre">config:</span></tt> part is omitted), if the key is defined in <tt class="docutils literal"><span class="pre">Global</span></tt>, that
+is selected. Otherwise, the first configuration defining the key is
+selected, where order is determined by the project definition's
+<tt class="docutils literal"><span class="pre">configurations</span></tt> member. By default, this ordering is
+<tt class="docutils literal"><span class="pre">compile,</span> <span class="pre">test,</span> <span class="pre">...</span></tt></p>
+<p>For example, the following are equivalent when run in a project <tt class="docutils literal"><span class="pre">root</span></tt>
+in the build in <tt class="docutils literal"><span class="pre">/home/user/sample/</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> compile
+<span class="gp">&gt;</span> compile:compile
+<span class="gp">&gt;</span> root/compile
+<span class="gp">&gt;</span> root/compile:compile
+<span class="gp">&gt;</span> <span class="o">{</span>file:/home/user/sample/<span class="o">}</span>root/compile:compile
+</pre></div>
+</div>
+<p>As another example, <tt class="docutils literal"><span class="pre">run</span></tt> by itself refers to <tt class="docutils literal"><span class="pre">compile:run</span></tt> because
+there is no global <tt class="docutils literal"><span class="pre">run</span></tt> task and the first configuration searched,
+<tt class="docutils literal"><span class="pre">compile</span></tt>, defines a <tt class="docutils literal"><span class="pre">run</span></tt>. Therefore, to reference the <tt class="docutils literal"><span class="pre">run</span></tt> task
+for the <tt class="docutils literal"><span class="pre">test</span></tt> configuration, the configuration axis must be specified
+like <tt class="docutils literal"><span class="pre">test:run</span></tt>. Some other examples that require the explicit
+<tt class="docutils literal"><span class="pre">test:</span></tt> axis:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>:console-quick
+<span class="gp">&gt;</span> <span class="nb">test</span>:console
+<span class="gp">&gt;</span> <span class="nb">test</span>:doc
+<span class="gp">&gt;</span> <span class="nb">test</span>:package
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-specific-settings">
+<h3>Task-specific Settings<a class="headerlink" href="#task-specific-settings" title="Permalink to this headline">¶</a></h3>
+<p>Some settings are defined per-task. This is used when there are several
+related tasks, such as <tt class="docutils literal"><span class="pre">package</span></tt>, <tt class="docutils literal"><span class="pre">package-src</span></tt>, and
+<tt class="docutils literal"><span class="pre">package-doc</span></tt>, in the same configuration (such as <tt class="docutils literal"><span class="pre">compile</span></tt> or
+<tt class="docutils literal"><span class="pre">test</span></tt>). For package tasks, their settings are the files to package,
+the options to use, and the output file to produce. Each package task
+should be able to have different values for these settings.</p>
+<p>This is done with the task axis, which selects the task to apply a
+setting to. For example, the following prints the output jar for the
+different package tasks.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> package::artifact-path
+<span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1.jar</span>
+
+<span class="gp">&gt;</span> package-src::artifact-path
+<span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-src.jar</span>
+
+<span class="gp">&gt;</span> package-doc::artifact-path
+<span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-doc.jar</span>
+
+<span class="gp">&gt;</span> <span class="nb">test</span>:package::artifact-path
+<span class="go">[info] /home/user/sample/target/scala-2.8.1.final/root_2.8.1-0.1-test.jar</span>
+</pre></div>
+</div>
+<p>Note that a single colon <tt class="docutils literal"><span class="pre">:</span></tt> follows a configuration axis and a double
+colon <tt class="docutils literal"><span class="pre">::</span></tt> follows a task axis.</p>
+</div>
+</div>
+<div class="section" id="discovering-settings-and-tasks">
+<h2>Discovering Settings and Tasks<a class="headerlink" href="#discovering-settings-and-tasks" title="Permalink to this headline">¶</a></h2>
+<p>This section discusses the <tt class="docutils literal"><span class="pre">inspect</span></tt> command, which is useful for
+exploring relationships between settings. It can be used to determine
+which setting should be modified in order to affect another setting, for
+example.</p>
+<div class="section" id="value-and-provided-by">
+<h3>Value and Provided By<a class="headerlink" href="#value-and-provided-by" title="Permalink to this headline">¶</a></h3>
+<p>The first piece of information provided by <tt class="docutils literal"><span class="pre">inspect</span></tt> is the type of a
+task or the value and type of a setting. The following section of output
+is labeled &quot;Provided by&quot;. This shows the actual scope where the setting
+is defined. For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect library-dependencies
+<span class="go">[info] Setting: scala.collection.Seq[sbt.ModuleID] = List(org.scalaz:scalaz-core:6.0-SNAPSHOT, org.scala-tools.testing:scalacheck:1.8:test)</span>
+<span class="go">[info] Provided by:</span>
+<span class="go">[info]  {file:/home/user/sample/}root/*:library-dependencies</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>This shows that <tt class="docutils literal"><span class="pre">library-dependencies</span></tt> has been defined on the current
+project (<tt class="docutils literal"><span class="pre">{file:/home/user/sample/}root</span></tt>) in the global configuration
+(<tt class="docutils literal"><span class="pre">*:</span></tt>). For a task like <tt class="docutils literal"><span class="pre">update</span></tt>, the output looks like:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
+<span class="go">[info] Task: sbt.UpdateReport</span>
+<span class="go">[info] Provided by:</span>
+<span class="go">[info]  {file:/home/user/sample/}root/*:update</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="related-settings">
+<h3>Related Settings<a class="headerlink" href="#related-settings" title="Permalink to this headline">¶</a></h3>
+<p>The &quot;Related&quot; section of <tt class="docutils literal"><span class="pre">inspect</span></tt> output lists all of the definitions
+of a key. For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect compile
+<span class="go">...</span>
+<span class="go">[info] Related:</span>
+<span class="go">[info]  test:compile</span>
+</pre></div>
+</div>
+<p>This shows that in addition to the requested <tt class="docutils literal"><span class="pre">compile:compile</span></tt> task,
+there is also a <tt class="docutils literal"><span class="pre">test:compile</span></tt> task.</p>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Forward dependencies show the other settings (or tasks) used to define a
+setting (or task). Reverse dependencies go the other direction, showing
+what uses a given setting. <tt class="docutils literal"><span class="pre">inspect</span></tt> provides this information based
+on either the requested dependencies or the actual dependencies.
+Requested dependencies are those that a setting directly specifies.
+Actual settings are what those dependencies get resolved to. This
+distinction is explained in more detail in the following sections.</p>
+<div class="section" id="requested-dependencies">
+<h4>Requested Dependencies<a class="headerlink" href="#requested-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>As an example, we'll look at <tt class="docutils literal"><span class="pre">console</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console
+<span class="go">...</span>
+<span class="go">[info] Dependencies:</span>
+<span class="go">[info]  compile:console::full-classpath</span>
+<span class="go">[info]  compile:console::scalac-options</span>
+<span class="go">[info]  compile:console::initial-commands</span>
+<span class="go">[info]  compile:console::cleanup-commands</span>
+<span class="go">[info]  compile:console::compilers</span>
+<span class="go">[info]  compile:console::task-temporary-directory</span>
+<span class="go">[info]  compile:console::scala-instance</span>
+<span class="go">[info]  compile:console::streams</span>
+
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>This shows the inputs to the <tt class="docutils literal"><span class="pre">console</span></tt> task. We can see that it gets
+its classpath and options from <tt class="docutils literal"><span class="pre">full-classpath</span></tt> and
+<tt class="docutils literal"><span class="pre">scalac-options(for</span> <span class="pre">console)</span></tt>. The information provided by the
+<tt class="docutils literal"><span class="pre">inspect</span></tt> command can thus assist in finding the right setting to
+change. The convention for keys, like <tt class="docutils literal"><span class="pre">console</span></tt> and
+<tt class="docutils literal"><span class="pre">full-classpath</span></tt>, is that the Scala identifier is camel case, while
+the String representation is lowercase and separated by dashes. The
+Scala identifier for a configuration is uppercase to distinguish it from
+tasks like <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt>. For example, we can infer from the
+previous example how to add code to be run when the Scala interpreter
+starts up:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands in Compile in console :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
+<span class="gp">&gt;</span> console
+<span class="go">...</span>
+<span class="go">import mypackage._</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">inspect</span></tt> showed that <tt class="docutils literal"><span class="pre">console</span></tt> used the setting
+<tt class="docutils literal"><span class="pre">compile:console::initial-commands</span></tt>. Translating the
+<tt class="docutils literal"><span class="pre">initial-commands</span></tt> string to the Scala identifier gives us
+<tt class="docutils literal"><span class="pre">initialCommands</span></tt>. <tt class="docutils literal"><span class="pre">compile</span></tt> indicates that this is for the main
+sources. <tt class="docutils literal"><span class="pre">console::</span></tt> indicates that the setting is specific to
+<tt class="docutils literal"><span class="pre">console</span></tt>. Because of this, we can set the initial commands on the
+<tt class="docutils literal"><span class="pre">console</span></tt> task without affecting the <tt class="docutils literal"><span class="pre">console-quick</span></tt> task, for
+example.</p>
+</div>
+<div class="section" id="actual-dependencies">
+<h4>Actual Dependencies<a class="headerlink" href="#actual-dependencies" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">actual</span> <span class="pre">&lt;scoped-key&gt;</span></tt> shows the actual dependency used. This
+is useful because delegation means that the dependency can come from a
+scope other than the requested one. Using <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">actual</span></tt>, we see
+exactly which scope is providing a value for a setting. Combining
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">actual</span></tt> with plain <tt class="docutils literal"><span class="pre">inspect</span></tt>, we can see the range of
+scopes that will affect a setting. Returning to the example in Requested
+Dependencies,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect actual console
+<span class="go">...</span>
+<span class="go">[info] Dependencies:</span>
+<span class="go">[info]  compile:scalac-options</span>
+<span class="go">[info]  compile:full-classpath</span>
+<span class="go">[info]  *:scala-instance</span>
+<span class="go">[info]  */*:initial-commands</span>
+<span class="go">[info]  */*:cleanup-commands</span>
+<span class="go">[info]  */*:task-temporary-directory</span>
+<span class="go">[info]  *:console::compilers</span>
+<span class="go">[info]  compile:console::streams</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>For <tt class="docutils literal"><span class="pre">initial-commands</span></tt>, we see that it comes from the global scope
+(<tt class="docutils literal"><span class="pre">*/*:</span></tt>). Combining this with the relevant output from
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">console</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">compile:console::initial-commands</span>
+</pre></div>
+</div>
+<p>we know that we can set <tt class="docutils literal"><span class="pre">initial-commands</span></tt> as generally as the global
+scope, as specific as the current project's <tt class="docutils literal"><span class="pre">console</span></tt> task scope, or
+anything in between. This means that we can, for example, set
+<tt class="docutils literal"><span class="pre">initial-commands</span></tt> for the whole project and will affect <tt class="docutils literal"><span class="pre">console</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>The reason we might want to set it here this is that other console tasks
+will use this value now. We can see which ones use our new setting by
+looking at the reverse dependencies output of <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">actual</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect actual initial-commands
+<span class="go">...</span>
+<span class="go">[info] Reverse dependencies:</span>
+<span class="go">[info]  test:console</span>
+<span class="go">[info]  compile:console-quick</span>
+<span class="go">[info]  compile:console</span>
+<span class="go">[info]  test:console-quick</span>
+<span class="go">[info]  *:console-project</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>We now know that by setting <tt class="docutils literal"><span class="pre">initial-commands</span></tt> on the whole project,
+we affect all console tasks in all configurations in that project. If we
+didn't want the initial commands to apply for <tt class="docutils literal"><span class="pre">console-project</span></tt>, which
+doesn't have our project's classpath available, we could use the more
+specific task axis:</p>
+<p><tt class="docutils literal"><span class="pre">console</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">console</span> <span class="pre">:=</span> <span class="pre">&quot;import</span> <span class="pre">mypackage._&quot;</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">consoleQuick</span> <span class="pre">:=</span> <span class="pre">&quot;import</span> <span class="pre">mypackage._&quot;</span></tt>
+or configuration axis:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands in Compile :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
+<span class="gp">&gt;</span> <span class="nb">set </span>initialCommands in Test :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
+</pre></div>
+</div>
+<p>The next part describes the Delegates section, which shows the chain of
+delegation for scopes.</p>
+</div>
+</div>
+<div class="section" id="delegates">
+<h3>Delegates<a class="headerlink" href="#delegates" title="Permalink to this headline">¶</a></h3>
+<p>A setting has a key and a scope. A request for a key in a scope A may be
+delegated to another scope if A doesn't define a value for the key. The
+delegation chain is well-defined and is displayed in the Delegates
+section of the <tt class="docutils literal"><span class="pre">inspect</span></tt> command. The Delegates section shows the
+order in which scopes are searched when a value is not defined for the
+requested key.</p>
+<p>As an example, consider the initial commands for <tt class="docutils literal"><span class="pre">console</span></tt> again:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console::initial-commands
+<span class="go">...</span>
+<span class="go">[info] Delegates:</span>
+<span class="go">[info]  *:console::initial-commands</span>
+<span class="go">[info]  *:initial-commands</span>
+<span class="go">[info]  {.}/*:console::initial-commands</span>
+<span class="go">[info]  {.}/*:initial-commands</span>
+<span class="go">[info]  */*:console::initial-commands</span>
+<span class="go">[info]  */*:initial-commands</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>This means that if there is no value specifically for
+<tt class="docutils literal"><span class="pre">*:console::initial-commands</span></tt>, the scopes listed under Delegates will
+be searched in order until a defined value is found.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Interacting with the Configuration System</a><ul>
+<li><a class="reference internal" href="#selecting-commands-tasks-and-settings">Selecting commands, tasks, and settings</a><ul>
+<li><a class="reference internal" href="#selecting-the-configuration">Selecting the configuration</a></li>
+<li><a class="reference internal" href="#task-specific-settings">Task-specific Settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#discovering-settings-and-tasks">Discovering Settings and Tasks</a><ul>
+<li><a class="reference internal" href="#value-and-provided-by">Value and Provided By</a></li>
+<li><a class="reference internal" href="#related-settings">Related Settings</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#requested-dependencies">Requested Dependencies</a></li>
+<li><a class="reference internal" href="#actual-dependencies">Actual Dependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#delegates">Delegates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>
