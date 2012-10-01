@@ -1,0 +1,200 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Custom Settings and Tasks &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Getting Started Summary" href="Summary.html" />
+    <link rel="prev" title="Multi-Project Builds" href="Multi-Project.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="../home.html">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Custom Settings and Tasks</div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Summary.html">Getting Started Summary</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Multi-Project.html">Multi-Project Builds</a> <span class="divider">|</span>
+              </li>
+              <li>
+                Version 0.12.1
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="custom-settings-and-tasks">
+<h1>Custom Settings and Tasks<a class="headerlink" href="#custom-settings-and-tasks" title="Permalink to this headline">¶</a></h1>
+<p>This page gets you started creating your own settings and tasks.</p>
+<p>To understand this page, be sure you've read earlier pages in the
+Getting Started Guide, especially <a class="reference internal" href="Basic-Def.html"><em>build.sbt</em></a> and <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<div class="section" id="defining-a-key">
+<h2>Defining a key<a class="headerlink" href="#defining-a-key" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="../../sxr/Keys.scala.html">Keys</a> is
+packed with examples illustrating how to define keys. Most of the keys
+are implemented in
+<a class="reference external" href="../../sxr/Defaults.scala.html">Defaults</a>.</p>
+<p>Keys have one of three types. <tt class="docutils literal"><span class="pre">SettingKey</span></tt> and <tt class="docutils literal"><span class="pre">TaskKey</span></tt> are
+described in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>. Read
+about <tt class="docutils literal"><span class="pre">InputKey</span></tt> on the <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> page.</p>
+<p>Some examples from <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalaVersion</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;scala-version&quot;</span><span class="o">,</span> <span class="s">&quot;The version of Scala used for building.&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">clean</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;clean&quot;</span><span class="o">,</span> <span class="s">&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The key constructors have two string parameters: the name of the key
+(<tt class="docutils literal"><span class="pre">&quot;scala-version&quot;</span></tt>) and a documentation string
+(<tt class="docutils literal"><span class="pre">&quot;The</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">scala</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">building.&quot;</span></tt>).</p>
+<p>Remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> that
+the type parameter <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> indicates the type of
+value a setting has. <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt> indicates the type of the
+task's result. Also remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>
+that a setting has a fixed value until project
+reload, while a task is re-computed for every &quot;task execution&quot; (every
+time someone types a command at the sbt interactive prompt or in batch
+mode).</p>
+<p>Keys may be defined in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file (as described in <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a>),
+or in a plugin (as described in
+<a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a>). Any <tt class="docutils literal"><span class="pre">val</span></tt> found in
+a <tt class="docutils literal"><span class="pre">Build</span></tt> object in your <tt class="docutils literal"><span class="pre">.scala</span></tt> build definition files, or any
+<tt class="docutils literal"><span class="pre">val</span></tt> found in a <tt class="docutils literal"><span class="pre">Plugin</span></tt> object from a plugin, will be imported
+automatically into your <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.</p>
+</div>
+<div class="section" id="implementing-a-task">
+<h2>Implementing a task<a class="headerlink" href="#implementing-a-task" title="Permalink to this headline">¶</a></h2>
+<p>Once you've defined a key, you'll need to use it in some task. You could
+be defining your own task, or you could be planning to redefine an
+existing task. Either way looks the same; if the task has no
+dependencies on other settings or tasks, use <tt class="docutils literal"><span class="pre">:=</span></tt> to associate some
+code with the task key:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleStringTask</span> <span class="o">:=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.home&quot;</span><span class="o">)</span>
+
+<span class="n">sampleIntTask</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;sum: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">)</span>
+  <span class="n">sum</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If the task has dependencies, you'd use <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> instead of course, as
+discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<p>The hardest part about implementing tasks is often not sbt-specific;
+tasks are just Scala code. The hard part could be writing the &quot;meat&quot; of
+your task that does whatever you're trying to do. For example, maybe
+you're trying to format HTML in which case you might want to use an HTML
+library (you would <a class="reference internal" href="Using-Plugins.html"><em>add a library dependency to your build definition</em></a>
+and write code based on the HTML library, perhaps).</p>
+<p>sbt has some utility libraries and convenience functions, in particular
+you can often use the convenient APIs in
+<a class="reference external" href="../../api/index.html#sbt.IO$">IO</a> to
+manipulate files and directories.</p>
+</div>
+<div class="section" id="extending-but-not-replacing-a-task">
+<h2>Extending but not replacing a task<a class="headerlink" href="#extending-but-not-replacing-a-task" title="Permalink to this headline">¶</a></h2>
+<p>If you want to run an existing task while also taking another action,
+use <tt class="docutils literal"><span class="pre">~=</span></tt> or <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> to take the existing task as input (which will
+imply running that task), and then do whatever else you like after the
+previous implementation completes.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// These two settings are equivalent</span>
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+<span class="n">intTask</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-plugins">
+<h2>Use plugins!<a class="headerlink" href="#use-plugins" title="Permalink to this headline">¶</a></h2>
+<p>If you find you have a lot of custom code in <tt class="docutils literal"><span class="pre">.scala</span></tt> files, consider
+moving it to a plugin for re-use across multiple projects.</p>
+<p>It's very easy to create a plugin, as <a class="reference internal" href="Using-Plugins.html"><em>teased earlier</em></a> and <a class="reference internal" href="../Extending/Plugins.html"><em>discussed at more length here</em></a>.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>This page has been a quick taste; there's much much more about custom
+tasks on the <a class="reference internal" href="../Detailed-Topics/Tasks.html"><em>Tasks</em></a> page.</p>
+<p>You're at the end of Getting Started! There's a <a class="reference internal" href="Summary.html"><em>brief recap</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Custom Settings and Tasks</a><ul>
+<li><a class="reference internal" href="#defining-a-key">Defining a key</a></li>
+<li><a class="reference internal" href="#implementing-a-task">Implementing a task</a></li>
+<li><a class="reference internal" href="#extending-but-not-replacing-a-task">Extending but not replacing a task</a></li>
+<li><a class="reference internal" href="#use-plugins">Use plugins!</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

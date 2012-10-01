@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>CommandStrings.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">object</span> <a title="object sbt.CommandStrings" id="11412">CommandStrings</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Use the `log` member of a State instance directly.&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(s: sbt.State)sbt.Logger" id="331202">logger</a><span class="delimiter">(</span><a title="sbt.State" id="352003">s</a>: <a href="State.scala.html#12083" title="sbt.State">State</a><span class="delimiter">)</span> = <a href="State.scala.html#339802" title="implicit sbt.State.stateOps : (s: sbt.State)sbt.StateOps">s</a>.<a href="State.scala.html#339834" title="=&gt; sbt.Logger">log</a>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Use the `globalLogging` member of a State instance directly.&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(s: sbt.State)sbt.GlobalLogging" id="331203">globalLogging</a><span class="delimiter">(</span><a title="sbt.State" id="352009">s</a>: <a href="State.scala.html#12083" title="sbt.State">State</a><span class="delimiter">)</span> = <a href="#352009" title="sbt.State">s</a>.<a href="State.scala.html#338960" title="=&gt; sbt.GlobalLogging">globalLogging</a>
+
+	<span class="comment">/** The prefix used to identify a request to execute the remaining input on source changes.*/</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331204">AboutCommand</a> = <span title="java.lang.String(&quot;about&quot;)" class="string">&quot;about&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331206">TasksCommand</a> = <span title="java.lang.String(&quot;tasks&quot;)" class="string">&quot;tasks&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331208">SettingsCommand</a> = <span title="java.lang.String(&quot;settings&quot;)" class="string">&quot;settings&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331210">ProjectCommand</a> = <span title="java.lang.String(&quot;project&quot;)" class="string">&quot;project&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331212">ProjectsCommand</a> = <span title="java.lang.String(&quot;projects&quot;)" class="string">&quot;projects&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331214">ShowCommand</a> = <span title="java.lang.String(&quot;show&quot;)" class="string">&quot;show&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331216">BootCommand</a> = <span title="java.lang.String(&quot;boot&quot;)" class="string">&quot;boot&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331218">ContinuousExecutePrefix</a> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351969" title="=&gt; java.lang.String">ContinuousExecutePrefix</a>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331220">Exit</a> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351935" title="=&gt; java.lang.String">Exit</a>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331222">Quit</a> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351937" title="=&gt; java.lang.String">Quit</a>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="331224">EvalCommand</a> = <span title="java.lang.String(&quot;eval&quot;)" class="string">&quot;eval&quot;</span>
+	<span class="keyword">val</span> <a title="(java.lang.String, java.lang.String)" id="331226">evalBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331224" title="=&gt; java.lang.String">EvalCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;expression&gt;&quot;)" class="string">&quot; &lt;expression&gt;&quot;</span>, <span title="java.lang.String(&quot;Evaluates a Scala expression and prints the result and type.&quot;)" class="string">&quot;Evaluates a Scala expression and prints the result and type.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331228">evalDetailed</a> =
+<a href="#331224" title="=&gt; java.lang.String">EvalCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;expression&gt;\012\012\011Evaluates the given Scala expression and prints the result and type.&quot;)" class="string">&quot;&quot;&quot; &lt;expression&gt;
+
+	Evaluates the given Scala expression and prints the result and type.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; sbt.Help" id="331230">showHelp</a> = <a href="Command.scala.html#352029" title="(name: String, briefHelp: (String, String), detail: String)sbt.Help">Help</a><span class="delimiter">(</span><a href="#331214" title="=&gt; java.lang.String">ShowCommand</a>, <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331214" title="=&gt; java.lang.String">ShowCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;key&gt;&quot;)" class="string">&quot; &lt;key&gt;&quot;</span>, <a href="#331231" title="=&gt; java.lang.String">actBrief</a><span class="delimiter">)</span>, <a href="#331232" title="=&gt; java.lang.String">actDetailed</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331231">actBrief</a> = <span title="java.lang.String(&quot;Displays the result of evaluating the setting or task associated with \'key\'.&quot;)" class="string">&quot;Displays the result of evaluating the setting or task associated with 'key'.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331232">actDetailed</a> =
+<a href="#331214" title="=&gt; java.lang.String">ShowCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;setting&gt;\012\012\011Displays the value of the specified setting.\012\012&quot;)" class="string">&quot;&quot;&quot; &lt;setting&gt;
+
+	Displays the value of the specified setting.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331214" title="=&gt; java.lang.String">ShowCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;task&gt;\012\012\011Evaluates the specified task and display the value returned by the task.&quot;)" class="string">&quot;&quot;&quot; &lt;task&gt;
+
+	Evaluates the specified task and display the value returned by the task.&quot;&quot;&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="331233">LastCommand</a> = <span title="java.lang.String(&quot;last&quot;)" class="string">&quot;last&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331235">LastGrepCommand</a> = <span title="java.lang.String(&quot;last-grep&quot;)" class="string">&quot;last-grep&quot;</span>
+
+	<span class="keyword">val</span> <a title="(java.lang.String, java.lang.String)" id="331237">lastGrepBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331235" title="=&gt; java.lang.String">LastGrepCommand</a>, <span title="java.lang.String(&quot;Shows lines from the last output for \'key\' that match \'pattern\'.&quot;)" class="string">&quot;Shows lines from the last output for 'key' that match 'pattern'.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331239">lastGrepDetailed</a> =
+<a href="#331235" title="=&gt; java.lang.String">LastGrepCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;pattern&gt;\012\011Displays lines from the logging of previous commands that match `pattern`.\012\012&quot;)" class="string">&quot;&quot;&quot; &lt;pattern&gt;
+	Displays lines from the logging of previous commands that match `pattern`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331235" title="=&gt; java.lang.String">LastGrepCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;pattern&gt; [key]\012\011Displays lines from logging associated with `key` that match `pattern`.  The key typically refers to a task (for example, test:compile).  The logging that is displayed is restricted to the logging for that particular task.\012\012\011&lt;pattern&gt; is a regular expression interpreted by java.util.Pattern.  Matching text is highlighted (when highlighting is supported and enabled).\012\011See also \'&quot;)" class="string">&quot;&quot;&quot; &lt;pattern&gt; [key]
+	Displays lines from logging associated with `key` that match `pattern`.  The key typically refers to a task (for example, test:compile).  The logging that is displayed is restricted to the logging for that particular task.
+
+	&lt;pattern&gt; is a regular expression interpreted by java.util.Pattern.  Matching text is highlighted (when highlighting is supported and enabled).
+	See also '&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331233" title="=&gt; java.lang.String">LastCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\'.&quot;)" class="string">&quot;'.&quot;</span>
+
+	<span class="keyword">val</span> <a title="(java.lang.String, java.lang.String)" id="331241">lastBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331233" title="=&gt; java.lang.String">LastCommand</a>, <span title="java.lang.String(&quot;Displays output from a previous command or the output from a specific task.&quot;)" class="string">&quot;Displays output from a previous command or the output from a specific task.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331243">lastDetailed</a> =
+<a href="#331233" title="=&gt; java.lang.String">LastCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\011Prints the logging for the previous command, typically at a more verbose level.\012\012&quot;)" class="string">&quot;&quot;&quot;
+	Prints the logging for the previous command, typically at a more verbose level.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331233" title="=&gt; java.lang.String">LastCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;key&gt;\012\011Prints the logging associated with the provided key.  The key typically refers to a task (for example, test:compile).  The logging that is displayed is restricted to the logging for that particular task.\012\012\011See also \'&quot;)" class="string">&quot;&quot;&quot; &lt;key&gt;
+	Prints the logging associated with the provided key.  The key typically refers to a task (for example, test:compile).  The logging that is displayed is restricted to the logging for that particular task.
+
+	See also '&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331235" title="=&gt; java.lang.String">LastGrepCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\'.&quot;)" class="string">&quot;'.&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="331245">InspectCommand</a> = <span title="java.lang.String(&quot;inspect&quot;)" class="string">&quot;inspect&quot;</span>
+	<span class="keyword">val</span> <a title="(java.lang.String, java.lang.String)" id="331247">inspectBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331245" title="=&gt; java.lang.String">InspectCommand</a>, <span title="java.lang.String(&quot;Prints the value for \'key\', the defining scope, delegates, related definitions, and dependencies.&quot;)" class="string">&quot;Prints the value for 'key', the defining scope, delegates, related definitions, and dependencies.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331249">inspectDetailed</a> =
+<a href="#331245" title="=&gt; java.lang.String">InspectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;key&gt;\012\012\011For a plain setting, the value bound to the key argument is displayed using its toString method.\012\011Otherwise, the type of task (\&quot;Task\&quot; or \&quot;Input task\&quot;) is displayed.\012\012\011\&quot;Dependencies\&quot; shows the settings that this setting depends on.\012\011\012\011\&quot;Reverse dependencies\&quot; shows the settings that depend on this setting.\012\012\011When a key is resolved to a value, it may not actually be defined in the requested scope.\012\011In this case, there is a defined search sequence.\012\011\&quot;Delegates\&quot; shows the scopes that are searched for the key.\012\011\&quot;Provided by\&quot; shows the scope that contained the value returned for the key.\012\012\011\&quot;Related\&quot; shows all of the scopes in which the key is defined.\012\012&quot;)" class="string">&quot;&quot;&quot; &lt;key&gt;
+
+	For a plain setting, the value bound to the key argument is displayed using its toString method.
+	Otherwise, the type of task (&quot;Task&quot; or &quot;Input task&quot;) is displayed.
+
+	&quot;Dependencies&quot; shows the settings that this setting depends on.
+	
+	&quot;Reverse dependencies&quot; shows the settings that depend on this setting.
+
+	When a key is resolved to a value, it may not actually be defined in the requested scope.
+	In this case, there is a defined search sequence.
+	&quot;Delegates&quot; shows the scopes that are searched for the key.
+	&quot;Provided by&quot; shows the scope that contained the value returned for the key.
+
+	&quot;Related&quot; shows all of the scopes in which the key is defined.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> 
+<a href="#331245" title="=&gt; java.lang.String">InspectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; tree &lt;key&gt;\012\012\011Displays `key` and its dependencies in a tree structure.\012\011For settings, the value bound to the setting is displayed and for tasks, the type of the task is shown.\012\012&quot;)" class="string">&quot;&quot;&quot; tree &lt;key&gt;
+
+	Displays `key` and its dependencies in a tree structure.
+	For settings, the value bound to the setting is displayed and for tasks, the type of the task is shown.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+<a href="#331245" title="=&gt; java.lang.String">InspectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; uses &lt;key&gt;\012\012\011Displays the settings and tasks that directly depend on `key`.\012\012&quot;)" class="string">&quot;&quot;&quot; uses &lt;key&gt;
+
+	Displays the settings and tasks that directly depend on `key`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+<a href="#331245" title="=&gt; java.lang.String">InspectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; definitions &lt;key&gt;\012\012\011Displays the scopes in which `key` is defined.\012&quot;)" class="string">&quot;&quot;&quot; definitions &lt;key&gt;
+
+	Displays the scopes in which `key` is defined.
+&quot;&quot;&quot;</span>
+
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="331251">SetCommand</a> = <span title="java.lang.String(&quot;set&quot;)" class="string">&quot;set&quot;</span>
+	<span class="keyword">val</span> <a title="(java.lang.String, java.lang.String)" id="331253">setBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331251" title="=&gt; java.lang.String">SetCommand</a>, <span title="java.lang.String(&quot;Evaluates a Setting and applies it to the current project.&quot;)" class="string">&quot;Evaluates a Setting and applies it to the current project.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331255">setDetailed</a> =
+<a href="#331251" title="=&gt; java.lang.String">SetCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; [every] &lt;setting-expression&gt;\012\012\011Applies the given setting to the current project:\012\011  1) Constructs the expression provided as an argument by compiling and loading it.\012\011  2) Appends the new setting to the current project\'s settings.\012\011  3) Re-evaluates the build\'s settings.\012\012\011This command does not rebuild the build definitions, plugins, or configurations.\012\011It does not automatically persist the setting(s) either.\012\011To persist the setting(s), run \'session save\' or \'session save-all\'.\012\012\011If \'every\' is specified, the setting is evaluated in the current context\012\011and the resulting value is used in every scope.  This overrides the value\012\011bound to the key everywhere.\012&quot;)" class="string">&quot;&quot;&quot; [every] &lt;setting-expression&gt;
+
+	Applies the given setting to the current project:
+	  1) Constructs the expression provided as an argument by compiling and loading it.
+	  2) Appends the new setting to the current project's settings.
+	  3) Re-evaluates the build's settings.
+
+	This command does not rebuild the build definitions, plugins, or configurations.
+	It does not automatically persist the setting(s) either.
+	To persist the setting(s), run 'session save' or 'session save-all'.
+
+	If 'every' is specified, the setting is evaluated in the current context
+	and the resulting value is used in every scope.  This overrides the value
+	bound to the key everywhere.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331257">SessionCommand</a> = <span title="java.lang.String(&quot;session&quot;)" class="string">&quot;session&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="331258">sessionBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331257" title="=&gt; java.lang.String">SessionCommand</a>, <span title="java.lang.String(&quot;Manipulates session settings.  For details, run \'help &quot;)" class="string">&quot;Manipulates session settings.  For details, run 'help &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331257" title="=&gt; java.lang.String">SessionCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\'.&quot;)" class="string">&quot;'.&quot;</span><span class="delimiter">)</span>
+
+	<span class="comment">/** The command name to terminate the program.*/</span>
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="String" id="331259">TerminateAction</a>: <span title="String">String</span> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351939" title="=&gt; String">TerminateAction</a>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="331261">settingsPreamble</a> = <a href="#331263" title="(label: String)String">commonPreamble</a><span class="delimiter">(</span><span title="java.lang.String(&quot;settings&quot;)" class="string">&quot;settings&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331262">tasksPreamble</a> = <a href="#331263" title="(label: String)String">commonPreamble</a><span class="delimiter">(</span><span title="java.lang.String(&quot;tasks&quot;)" class="string">&quot;tasks&quot;</span><span class="delimiter">)</span> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012Tasks produce values.  Use the \'show\' command to run the task and print the resulting value.&quot;)" class="string">&quot;&quot;&quot;
+Tasks produce values.  Use the 'show' command to run the task and print the resulting value.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="(label: String)String" id="331263">commonPreamble</a><span class="delimiter">(</span><a title="String" id="352091">label</a>: <span title="String">String</span><span class="delimiter">)</span> = <span title="implicit scala.Predef.augmentString : (x: String)scala.collection.immutable.StringOps" class="string">&quot;&quot;&quot;
+This is a list of %s defined for the current project.
+It does not list the scopes the %&lt;s are defined in; use the 'inspect' command for that.&quot;&quot;&quot;</span>.<span title="(args: Any*)String">format</span><span class="delimiter">(</span><a href="#352091" title="String">label</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="(label: String)(String, java.lang.String)" id="331264">settingsBrief</a><span class="delimiter">(</span><a title="String" id="352100">label</a>: <span title="String">String</span><span class="delimiter">)</span> = <span title="(_1: String, _2: java.lang.String)(String, java.lang.String)" class="delimiter">(</span><a href="#352100" title="String">label</a>, <span title="java.lang.String(&quot;Lists the &quot;)" class="string">&quot;Lists the &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#352100" title="String">label</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; defined for the current project.&quot;)" class="string">&quot; defined for the current project.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(label: String)String" id="331265">settingsDetailed</a><span class="delimiter">(</span><a title="String" id="352109">label</a>: <span title="String">String</span><span class="delimiter">)</span> = 
+<span title="implicit scala.Predef.augmentString : (x: String)scala.collection.immutable.StringOps" class="string">&quot;&quot;&quot;
+Syntax summary
+	%s [-(v|-vv|...|-V)] [&lt;filter&gt;]
+
+%&lt;s
+	Displays the main %&lt;s defined directly or indirectly for the current project. 
+
+-v
+	Displays additional tasks.  More 'v's increase the number of tasks displayed.
+
+-V
+	displays all %&lt;s
+
+&lt;filter&gt;
+	Restricts the %&lt;s that are displayed.  The names of %&lt;s are searched for an exact match against the filter, in which case only the description of the exact match is displayed.  Otherwise, the filter is interpreted as a regular expression and all %&lt;s whose name or description match the regular expression are displayed.  Note that this is an additional filter on top of the %&lt;s selected by the -v style switches, so you must specify -V to search all %&lt;s.  Use the %s command to search all commands, tasks, and settings at once.
+&quot;&quot;&quot;</span>.<span title="(args: Any*)String">format</span><span class="delimiter">(</span><a href="#352109" title="String">label</a>, <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351933" title="=&gt; java.lang.String">HelpCommand</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="(label: String, search: Boolean)String" id="331266">moreAvailableMessage</a><span class="delimiter">(</span><a title="String" id="352115">label</a>: <span title="String">String</span>, <a title="Boolean" id="352116">search</a>: <span title="Boolean">Boolean</span><span class="delimiter">)</span> =
+		<span title="implicit scala.Predef.augmentString : (x: String)scala.collection.immutable.StringOps" class="string">&quot;More %s may be %s by increasing verbosity.  See '%s %s'.\n&quot;</span>.<span title="(args: Any*)String">format</span><span class="delimiter">(</span><a href="#352115" title="String">label</a>, <span title="Any" class="keyword">if</span><span class="delimiter">(</span><a href="#352116" title="Boolean">search</a><span class="delimiter">)</span> <span title="java.lang.String(&quot;searched&quot;)" class="string">&quot;searched&quot;</span> <span class="keyword">else</span> <span title="java.lang.String(&quot;viewed&quot;)" class="string">&quot;viewed&quot;</span>, <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351933" title="=&gt; java.lang.String">HelpCommand</a>, <a href="#352115" title="String">label</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331267">aboutBrief</a> = <span title="java.lang.String(&quot;Displays basic information about sbt and the build.&quot;)" class="string">&quot;Displays basic information about sbt and the build.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331268">aboutDetailed</a> = <a href="#331267" title="=&gt; java.lang.String">aboutBrief</a>
+
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="331269">projectBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a>, <span title="java.lang.String(&quot;Displays the current project or changes to the provided `project`.&quot;)" class="string">&quot;Displays the current project or changes to the provided `project`.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331270">projectDetailed</a> =
+<a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span>
+<span title="java.lang.String(&quot;\012\012\011Displays the name of the current project.\012\012&quot;)" class="string">&quot;&quot;&quot;
+
+	Displays the name of the current project.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; name\012\012\011Changes to the project with the provided name.\012\011This command fails if there is no project with the given name.\012\012&quot;)" class="string">&quot;&quot;&quot; name
+
+	Changes to the project with the provided name.
+	This command fails if there is no project with the given name.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; {uri}\012\012\011Changes to the root project in the build defined by `uri`.\012\011`uri` must have already been declared as part of the build, such as with Project.dependsOn.\012\012&quot;)" class="string">&quot;&quot;&quot; {uri}
+
+	Changes to the root project in the build defined by `uri`.
+	`uri` must have already been declared as part of the build, such as with Project.dependsOn.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; {uri}name\012\012\011Changes to the project `name` in the build defined by `uri`.\012\011`uri` must have already been declared as part of the build, such as with Project.dependsOn.\012\012&quot;)" class="string">&quot;&quot;&quot; {uri}name
+
+	Changes to the project `name` in the build defined by `uri`.
+	`uri` must have already been declared as part of the build, such as with Project.dependsOn.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; /\012\012\011Changes to the initial project.\012\012&quot;)" class="string">&quot;&quot;&quot; /
+
+	Changes to the initial project.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; ..\012\012\011Changes to the parent project of the current project.\012\011If there is no parent project, the current project is unchanged.\012\012\011Use n+1 dots to change to the nth parent.\012\011For example, \'project ....\' is equivalent to three consecutive \'project ..\' commands.&quot;)" class="string">&quot;&quot;&quot; ..
+
+	Changes to the parent project of the current project.
+	If there is no parent project, the current project is unchanged.
+
+	Use n+1 dots to change to the nth parent.
+	For example, 'project ....' is equivalent to three consecutive 'project ..' commands.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331271">projectsBrief</a> = <span title="java.lang.String(&quot;Lists the names of available projects or temporarily adds/removes extra builds to the session.&quot;)" class="string">&quot;Lists the names of available projects or temporarily adds/removes extra builds to the session.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331272">projectsDetailed</a> = 
+<a href="#331212" title="=&gt; java.lang.String">ProjectsCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\011List the names of available builds and the projects defined in those builds.\012\012&quot;)" class="string">&quot;&quot;&quot;
+	List the names of available builds and the projects defined in those builds.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331212" title="=&gt; java.lang.String">ProjectsCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; add &lt;URI&gt;+\012\011Adds the builds at the provided URIs to this session.\012\011These builds may be selected using the &quot;)" class="string">&quot;&quot;&quot; add &lt;URI&gt;+
+	Adds the builds at the provided URIs to this session.
+	These builds may be selected using the &quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331210" title="=&gt; java.lang.String">ProjectCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; command.\012\011Alternatively, tasks from these builds may be run using the explicit syntax {URI}project/task\012\012&quot;)" class="string">&quot;&quot;&quot; command.
+	Alternatively, tasks from these builds may be run using the explicit syntax {URI}project/task
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#331212" title="=&gt; java.lang.String">ProjectsCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; remove &lt;URI&gt;+\012\011Removes extra builds from this session.\012\011Builds explicitly listed in the build definition are not affected by this command.\012&quot;)" class="string">&quot;&quot;&quot; remove &lt;URI&gt;+
+	Removes extra builds from this session.
+	Builds explicitly listed in the build definition are not affected by this command.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331273">sbtrc</a> = <span title="java.lang.String(&quot;.sbtrc&quot;)" class="string">&quot;.sbtrc&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331274">ReadCommand</a> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351946" title="=&gt; java.lang.String">ReadCommand</a>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331275">DefaultsCommand</a> = <span title="java.lang.String(&quot;add-default-commands&quot;)" class="string">&quot;add-default-commands&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="331276">DefaultsBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331275" title="=&gt; java.lang.String">DefaultsCommand</a>, <a href="#331277" title="=&gt; java.lang.String">DefaultsDetailed</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331277">DefaultsDetailed</a> = <span title="java.lang.String(&quot;Registers default built-in commands&quot;)" class="string">&quot;Registers default built-in commands&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331278">RebootCommand</a> = <span title="java.lang.String(&quot;reboot&quot;)" class="string">&quot;reboot&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331279">Multi</a> = <span title="java.lang.String(&quot;;&quot;)" class="string">&quot;;&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331280">AppendCommand</a> = <span title="java.lang.String(&quot;append&quot;)" class="string">&quot;append&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331281">Load</a> = <span title="java.lang.String(&quot;load&quot;)" class="string">&quot;load&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331282">LoadLabel</a> = <span title="java.lang.String(&quot;a project&quot;)" class="string">&quot;a project&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331283">LoadCommand</a> = <span title="java.lang.String(&quot;load-commands&quot;)" class="string">&quot;load-commands&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331284">LoadCommandLabel</a> = <span title="java.lang.String(&quot;commands&quot;)" class="string">&quot;commands&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331285">LoadFailed</a> = <span title="java.lang.String(&quot;load-failed&quot;)" class="string">&quot;load-failed&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331286">LoadProjectImpl</a> = <span title="java.lang.String(&quot;loadp&quot;)" class="string">&quot;loadp&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331287">LoadProject</a> = <span title="java.lang.String(&quot;reload&quot;)" class="string">&quot;reload&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="331288">LoadProjectBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331287" title="=&gt; java.lang.String">LoadProject</a>, <a href="#331289" title="=&gt; java.lang.String">LoadProjectDetailed</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331289">LoadProjectDetailed</a> = <span title="java.lang.String(&quot;(Re)loads the project in the current directory&quot;)" class="string">&quot;(Re)loads the project in the current directory&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to State&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="331290">FailureWall</a> = State.<span title="java.lang.String(&quot;---&quot;)">FailureWall</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331292">Shell</a> = <a href="BasicCommandStrings.scala.html#11991" title="object sbt.BasicCommandStrings">BasicCommandStrings</a>.<a href="BasicCommandStrings.scala.html#351961" title="=&gt; java.lang.String">Shell</a>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331293">ClearOnFailure</a> = <span title="java.lang.String(&quot;--&quot;)" class="string">&quot;--&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331294">OnFailure</a> = <span title="java.lang.String(&quot;-&quot;)" class="string">&quot;-&quot;</span>
+
+	@deprecated<span class="delimiter">(</span><span class="string">&quot;Moved to BasicCommandStrings&quot;</span>, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331295">IfLast</a> = <span title="java.lang.String(&quot;iflast&quot;)" class="string">&quot;iflast&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331296">InitCommand</a> = <span title="java.lang.String(&quot;initialize&quot;)" class="string">&quot;initialize&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="331297">InitBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#331296" title="=&gt; java.lang.String">InitCommand</a>, <span title="java.lang.String(&quot;Initializes command processing.&quot;)" class="string">&quot;Initializes command processing.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="331298">InitDetailed</a> =
+<a href="#331296" title="=&gt; java.lang.String">InitCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\011Initializes command processing.\012\012Runs the following commands.\012\012defaults\012\011Registers default commands.\012\012load-commands -base ~/.sbt/commands\012\011Builds and loads command definitions from ~/.sbt/commands\012\012&lt; ~/.sbtrc\012&lt; .sbtrc\012\011Runs commands from ~/.sbtrc and ./.sbtrc if they exist\012&quot;)" class="string">&quot;&quot;&quot;
+	Initializes command processing.
+
+Runs the following commands.
+
+defaults
+	Registers default commands.
+
+load-commands -base ~/.sbt/commands
+	Builds and loads command definitions from ~/.sbt/commands
+
+&lt; ~/.sbtrc
+&lt; .sbtrc
+	Runs commands from ~/.sbtrc and ./.sbtrc if they exist
+&quot;&quot;&quot;</span>
+
+		<span class="keyword">import</span> java.io.File
+		<span class="keyword">import</span> <a href="Path.scala.html#12973" title="object sbt.Path">Path</a>._
+
+	<span class="keyword">def</span> <a title="(s: sbt.State)Seq[java.io.File]" id="331301">sbtRCs</a><span class="delimiter">(</span><a title="sbt.State" id="352242">s</a>: <a href="State.scala.html#12083" title="sbt.State">State</a><span class="delimiter">)</span>: <span title="Seq[java.io.File]">Seq</span><span class="delimiter">[</span>File<span class="delimiter">]</span> =
+		<span class="delimiter">(</span><a href="Path.scala.html#12973" title="object sbt.Path">Path</a>.<a href="Path.scala.html#53495" title="implicit sbt.PathExtra.richFile : (file: java.io.File)sbt.RichFile">userHome</a> <a href="Path.scala.html#53561" title="(component: String)java.io.File">/</a> <a href="#331273" title="=&gt; java.lang.String">sbtrc</a><span class="delimiter">)</span> <a href="#352244" title="(x: java.io.File)List[java.io.File]">::</a>
+		<span class="delimiter">(</span><a href="State.scala.html#339802" title="implicit sbt.State.stateOps : (s: sbt.State)sbt.StateOps">s</a>.<a href="Path.scala.html#53495" title="implicit sbt.PathExtra.richFile : (file: java.io.File)sbt.RichFile">baseDir</a> <a href="Path.scala.html#53495" title="implicit sbt.PathExtra.richFile : (file: java.io.File)sbt.RichFile">/</a> <a href="#331273" title="=&gt; java.lang.String">sbtrc</a> <a href="Path.scala.html#53558" title="=&gt; java.io.File">asFile</a><span class="delimiter">)</span> <a href="#352250" title="(x: java.io.File)List[java.io.File]">::</a>
+		<span title="object Nil">Nil</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

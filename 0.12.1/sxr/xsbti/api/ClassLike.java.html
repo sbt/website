@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/ClassLike.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti.api;
+
+<span class="keyword">import</span> java.util.Arrays;
+<span class="keyword">import</span> java.util.List;
+public <span class="keyword">class</span> <a title="object xsbti.api.ClassLike" id="10246">ClassLike</a> <span class="keyword">extends</span> <a href="ParameterizedDefinition.java.html#10344" title="xsbti.api.ParameterizedDefinition">ParameterizedDefinition</a> 
+<span class="delimiter">{</span>
+	public ClassLike<a href="#10246" title="xsbti.api.ClassLike" class="delimiter">(</a><a href="DefinitionType.java.html#10274" title="xsbti.api.DefinitionType">DefinitionType</a> <a title="xsbti.api.DefinitionType" id="91406">definitionType</a>, <a href="Lazy.java.html#10129" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Type.java.html#10452" title="xsbti.api.Type">Type</a>&gt; <a title="xsbti.api.Lazy[xsbti.api.Type]" id="91407">selfType</a>, <a href="Lazy.java.html#10129" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Structure.java.html#10428" title="xsbti.api.Structure">Structure</a>&gt; <a title="xsbti.api.Lazy[xsbti.api.Structure]" id="91408">structure</a>, String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[java.lang.String]" id="91409">savedAnnotations</a>, <a href="TypeParameter.java.html#10476" title="xsbti.api.TypeParameter">TypeParameter</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[xsbti.api.TypeParameter]" id="91410">typeParameters</a>, String <a title="java.lang.String" id="91411">name</a>, <a href="Access.java.html#10222" title="xsbti.api.Access">Access</a> <a title="xsbti.api.Access" id="91412">access</a>, <a href="Modifiers.java.html#10134" title="xsbti.api.Modifiers">Modifiers</a> <a title="xsbti.api.Modifiers" id="91413">modifiers</a>, <a href="Annotation.java.html#10234" title="xsbti.api.Annotation">Annotation</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[xsbti.api.Annotation]" id="91414">annotations</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">super</span><span class="delimiter">(</span>typeParameters, name, access, modifiers, annotations<span class="delimiter">)</span>;
+		<span class="keyword">this</span>.definitionType = definitionType;
+		<span class="keyword">this</span>.selfType = selfType;
+		<span class="keyword">this</span>.structure = structure;
+		<span class="keyword">this</span>.savedAnnotations = savedAnnotations;
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="DefinitionType.java.html#10274" title="xsbti.api.DefinitionType">DefinitionType</a> <a title="xsbti.api.DefinitionType" id="91253">definitionType</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="Lazy.java.html#10129" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Type.java.html#10452" title="xsbti.api.Type">Type</a>&gt; <a title="xsbti.api.Lazy[xsbti.api.Type]" id="91254">selfType</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="Lazy.java.html#10129" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Structure.java.html#10428" title="xsbti.api.Structure">Structure</a>&gt; <a title="xsbti.api.Lazy[xsbti.api.Structure]" id="91255">structure</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[java.lang.String]" id="91256">savedAnnotations</a>;
+	public <span class="keyword">final</span> <a href="DefinitionType.java.html#10274" title="xsbti.api.DefinitionType">DefinitionType</a> <a title="()xsbti.api.DefinitionType" id="91257">definitionType</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> definitionType;
+	<span class="delimiter">}</span>
+	public <span class="keyword">final</span> <a href="Type.java.html#10452" title="xsbti.api.Type">Type</a> <a title="()xsbti.api.Type" id="91258">selfType</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> selfType.get<span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+	public <span class="keyword">final</span> <a href="Structure.java.html#10428" title="xsbti.api.Structure">Structure</a> <a title="()xsbti.api.Structure" id="91259">structure</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> structure.get<span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+	public <span class="keyword">final</span> String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[java.lang.String]" id="91260">savedAnnotations</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> savedAnnotations;
+	<span class="delimiter">}</span>
+	public String <a title="()java.lang.String" id="91261">toString</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> <span class="string">&quot;ClassLike(&quot;</span> + <span class="string">&quot;definitionType: &quot;</span> + definitionType<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;selfType: &quot;</span> + selfType<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;structure: &quot;</span> + structure<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;savedAnnotations: &quot;</span> + Arrays.toString<span class="delimiter">(</span>savedAnnotations<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;typeParameters: &quot;</span> + Arrays.toString<span class="delimiter">(</span>typeParameters<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;name: &quot;</span> + name<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;access: &quot;</span> + access<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;modifiers: &quot;</span> + modifiers<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;annotations: &quot;</span> + Arrays.toString<span class="delimiter">(</span>annotations<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>+ <span class="string">&quot;)&quot;</span>;
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

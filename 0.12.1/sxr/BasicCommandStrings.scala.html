@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>BasicCommandStrings.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> complete.HistoryCommands
+<span class="keyword">import</span> scala.annotation.tailrec
+
+<span class="keyword">import</span> java.io.File
+<span class="keyword">import</span> <a href="Path.scala.html#12931" title="object sbt.Path">Path</a>._
+
+<span class="keyword">object</span> <a title="object sbt.BasicCommandStrings" id="11938">BasicCommandStrings</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="345529">HelpCommand</a> = <span title="java.lang.String(&quot;help&quot;)" class="string">&quot;help&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="345531">Exit</a> = <span title="java.lang.String(&quot;exit&quot;)" class="string">&quot;exit&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="345533">Quit</a> = <span title="java.lang.String(&quot;quit&quot;)" class="string">&quot;quit&quot;</span>
+
+	<span class="comment">/** The command name to terminate the program.*/</span>
+	<span class="keyword">val</span> <a title="String" id="345535">TerminateAction</a>: <span title="String">String</span> = <a href="#345531" title="=&gt; java.lang.String">Exit</a>
+
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="345537">helpBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#345529" title="=&gt; java.lang.String">HelpCommand</a>, <span title="java.lang.String(&quot;Displays this help message or prints detailed help on requested commands (run \'help &lt;command&gt;\').&quot;)" class="string">&quot;Displays this help message or prints detailed help on requested commands (run 'help &lt;command&gt;').&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345538">helpDetailed</a> = <a href="#345529" title="=&gt; java.lang.String">HelpCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\012\011Prints a help summary.\012\012&quot;)" class="string">&quot;&quot;&quot;
+
+	Prints a help summary.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345529" title="=&gt; java.lang.String">HelpCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt;\012\012\011Prints detailed help for command &lt;command&gt;.\012\012&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+
+	Prints detailed help for command &lt;command&gt;.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345529" title="=&gt; java.lang.String">HelpCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;regular expression&gt;\012\012\011Searches the help according to the provided regular expression.\012&quot;)" class="string">&quot;&quot;&quot; &lt;regular expression&gt;
+
+	Searches the help according to the provided regular expression.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="345539">HistoryHelpBrief</a> = <span class="delimiter">(</span><a href="HistoryCommands.scala.html#12655" title="object sbt.complete.HistoryCommands">HistoryCommands</a>.<a href="HistoryCommands.scala.html#414885" title="(x: java.lang.String)ArrowAssoc[java.lang.String]">Start</a> <span title="(y: java.lang.String)(java.lang.String, java.lang.String)">-&gt;</span> <span title="java.lang.String(&quot;History command help.  Lists and describes all history commands.&quot;)" class="string">&quot;History command help.  Lists and describes all history commands.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.Help" id="345540">historyHelp</a> = <a href="Command.scala.html#345628" title="(briefHelp: Seq[(String, String)], detailedHelp: Map[String,String], more: Set[String])sbt.Help">Help</a><span class="delimiter">(</span><span title="object Nil">Nil</span>, <span class="delimiter">(</span><a href="#345539" title="=&gt; (java.lang.String, java.lang.String)">HistoryHelpBrief</a> <a href="#416735" title="(elem: (java.lang.String, java.lang.String))(implicit bf: scala.collection.generic.CanBuildFrom[Seq[(java.lang.String, java.lang.String)],(java.lang.String, java.lang.String),Seq[(java.lang.String, java.lang.String)]])Seq[(java.lang.String, java.lang.String)]">+:</a> <a href="HistoryCommands.scala.html#12655" title="object sbt.complete.HistoryCommands">HistoryCommands</a>.<a href="HistoryCommands.scala.html#414903" title="=&gt; Seq[(java.lang.String, java.lang.String)]">descriptions</a><span class="delimiter">)</span>.<span title="(implicit ev: &lt;:&lt;[(java.lang.String, java.lang.String),(java.lang.String, java.lang.String)])scala.collection.immutable.Map[java.lang.String,java.lang.String]">toMap</span>, <span title="(elems: java.lang.String*)scala.collection.immutable.Set[java.lang.String]">Set</span><span class="delimiter">(</span><a href="HistoryCommands.scala.html#12655" title="object sbt.complete.HistoryCommands">HistoryCommands</a>.<a href="HistoryCommands.scala.html#414885" title="=&gt; java.lang.String">Start</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345541">exitBrief</a> = <span title="java.lang.String(&quot;Terminates the build.&quot;)" class="string">&quot;Terminates the build.&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345542">ReadCommand</a> = <span title="java.lang.String(&quot;&lt;&quot;)" class="string">&quot;&lt;&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345543">ReadFiles</a> = <span title="java.lang.String(&quot; file1 file2 ...&quot;)" class="string">&quot; file1 file2 ...&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345544">ReadDetailed</a> =
+<a href="#345542" title="=&gt; java.lang.String">ReadCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345543" title="=&gt; java.lang.String">ReadFiles</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\012\011Reads the lines from the given files and inserts them as commands.\012\011All empty lines and lines that start with \'#\' are ignored.\012\011If a file does not exist or is not readable, this command fails.\012\012\011All the lines from all the files are read before any of the commands\012\011  are executed. Thus, if any file is not readable, none of commands\012\011  from any of the files (even the existing ones) will be run.\012\012\011You probably need to escape this command if entering it at your shell.&quot;)" class="string">&quot;&quot;&quot;
+
+	Reads the lines from the given files and inserts them as commands.
+	All empty lines and lines that start with '#' are ignored.
+	If a file does not exist or is not readable, this command fails.
+
+	All the lines from all the files are read before any of the commands
+	  are executed. Thus, if any file is not readable, none of commands
+	  from any of the files (even the existing ones) will be run.
+
+	You probably need to escape this command if entering it at your shell.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345545">ApplyCommand</a> = <span title="java.lang.String(&quot;apply&quot;)" class="string">&quot;apply&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345546">ApplyDetailed</a> = 
+<a href="#345545" title="=&gt; java.lang.String">ApplyCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;module-name&gt;*\012\011Transforms the current State by calling &lt;module-name&gt;.apply(currentState) for each listed module name.\012\011Here, currentState is of type sbt.State.\012&quot;)" class="string">&quot;&quot;&quot; &lt;module-name&gt;*
+	Transforms the current State by calling &lt;module-name&gt;.apply(currentState) for each listed module name.
+	Here, currentState is of type sbt.State.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345547">RebootCommand</a> = <span title="java.lang.String(&quot;reboot&quot;)" class="string">&quot;reboot&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345548">RebootDetailed</a> =
+<a href="#345547" title="=&gt; java.lang.String">RebootCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; [full]\012\012\011This command is equivalent to exiting sbt, restarting, and running the\012\011  remaining commands with the exception that the JVM is not shut down.\012\012\011If \'full\' is specified, the boot directory (`~/.sbt/boot` by default)\012\011  is deleted before restarting.  This forces an update of sbt and Scala\012\011  and is useful when working with development versions of sbt or Scala.&quot;)" class="string">&quot;&quot;&quot; [full]
+
+	This command is equivalent to exiting sbt, restarting, and running the
+	  remaining commands with the exception that the JVM is not shut down.
+
+	If 'full' is specified, the boot directory (`~/.sbt/boot` by default)
+	  is deleted before restarting.  This forces an update of sbt and Scala
+	  and is useful when working with development versions of sbt or Scala.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345549">Multi</a> = <span title="java.lang.String(&quot;;&quot;)" class="string">&quot;;&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="345550">MultiBrief</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#345549" title="=&gt; java.lang.String">Multi</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt; (&quot;)" class="string">&quot; &lt;command&gt; (&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345549" title="=&gt; java.lang.String">Multi</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt;)*&quot;)" class="string">&quot; &lt;command&gt;)*&quot;</span>, <span title="java.lang.String(&quot;Runs the provided semicolon-separated commands.&quot;)" class="string">&quot;Runs the provided semicolon-separated commands.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345551">MultiDetailed</a> =
+<a href="#345549" title="=&gt; java.lang.String">Multi</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; command1 &quot;)" class="string">&quot; command1 &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345549" title="=&gt; java.lang.String">Multi</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; command2 ...\012\012\011Runs the specified commands.&quot;)" class="string">&quot;&quot;&quot; command2 ...
+
+	Runs the specified commands.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345552">AppendCommand</a> = <span title="java.lang.String(&quot;append&quot;)" class="string">&quot;append&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345553">AppendLastDetailed</a> =
+<a href="#345552" title="=&gt; java.lang.String">AppendCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt;\012\011Appends \'command\' to list of commands to run.\012&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+	Appends 'command' to list of commands to run.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="345554">AliasCommand</a> = <span title="java.lang.String(&quot;alias&quot;)" class="string">&quot;alias&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345556">AliasDetailed</a> =
+<a href="#345554" title="=&gt; java.lang.String">AliasCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012\012\011Prints a list of defined aliases.\012\012&quot;)" class="string">&quot;&quot;&quot;
+
+	Prints a list of defined aliases.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+<a href="#345554" title="=&gt; java.lang.String">AliasCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; name\012\012\011Prints the alias defined for `name`.\012\012&quot;)" class="string">&quot;&quot;&quot; name
+
+	Prints the alias defined for `name`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+<a href="#345554" title="=&gt; java.lang.String">AliasCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; name=value\012\012\011Sets the alias `name` to `value`, replacing any existing alias with that name.\012\011Whenever `name` is entered, the corresponding `value` is run.\012\011If any argument is provided to `name`, it is appended as argument to `value`.\012\012&quot;)" class="string">&quot;&quot;&quot; name=value
+
+	Sets the alias `name` to `value`, replacing any existing alias with that name.
+	Whenever `name` is entered, the corresponding `value` is run.
+	If any argument is provided to `name`, it is appended as argument to `value`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+<a href="#345554" title="=&gt; java.lang.String">AliasCommand</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; name=\012\012\011Removes the alias for `name`.&quot;)" class="string">&quot;&quot;&quot; name=
+
+	Removes the alias for `name`.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345557">Shell</a> = <span title="java.lang.String(&quot;shell&quot;)" class="string">&quot;shell&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345558">ShellDetailed</a> = <span title="java.lang.String(&quot;Provides an interactive prompt from which commands can be run.&quot;)" class="string">&quot;Provides an interactive prompt from which commands can be run.&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345559">ClearOnFailure</a> = <span title="java.lang.String(&quot;--&quot;)" class="string">&quot;--&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345560">OnFailure</a> = <span title="java.lang.String(&quot;-&quot;)" class="string">&quot;-&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345561">OnFailureDetailed</a> =
+<a href="#345560" title="=&gt; java.lang.String">OnFailure</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; command\012\012\011Registers \'command\' to run when a command fails to complete normally.\012\012\011Only one failure command may be registered at a time, so this command\012\011  replaces the previous command if there is one.\012\012\011The failure command resets when it runs once, so it must be added\012\011  again if desired.&quot;)" class="string">&quot;&quot;&quot; command
+
+	Registers 'command' to run when a command fails to complete normally.
+
+	Only one failure command may be registered at a time, so this command
+	  replaces the previous command if there is one.
+
+	The failure command resets when it runs once, so it must be added
+	  again if desired.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345562">IfLast</a> = <span title="java.lang.String(&quot;iflast&quot;)" class="string">&quot;iflast&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345563">IfLastCommon</a> = <span title="java.lang.String(&quot;If there are no more commands after this one, \'command\' is run.&quot;)" class="string">&quot;If there are no more commands after this one, 'command' is run.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345564">IfLastDetailed</a> =
+<a href="#345562" title="=&gt; java.lang.String">IfLast</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt;\012\012\011&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+
+	&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#345563" title="=&gt; java.lang.String">IfLastCommon</a>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="345565">ContinuousExecutePrefix</a> = <span title="java.lang.String(&quot;~&quot;)" class="string">&quot;~&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="345567">continuousDetail</a> = <span title="java.lang.String(&quot;Executes the specified command whenever source files change.&quot;)" class="string">&quot;Executes the specified command whenever source files change.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (java.lang.String, java.lang.String)" id="345568">continuousBriefHelp</a> = <span title="(_1: java.lang.String, _2: java.lang.String)(java.lang.String, java.lang.String)" class="delimiter">(</span><a href="#345565" title="=&gt; java.lang.String">ContinuousExecutePrefix</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot; &lt;command&gt;&quot;)" class="string">&quot; &lt;command&gt;&quot;</span>, <a href="#345567" title="=&gt; java.lang.String">continuousDetail</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

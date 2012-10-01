@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/AppProvider.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti;
+
+<span class="keyword">import</span> java.io.File;
+
+public interface <a title="object xsbti.AppProvider" id="318014">AppProvider</a>
+<span class="delimiter">{</span>
+	<span class="comment">/** Returns the ScalaProvider that this AppProvider will use. */</span>
+	public <a href="ScalaProvider.java.html#11305" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="()xsbti.ScalaProvider" id="318015">scalaProvider</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** The ID of the application that will be created by 'newMain' or 'mainClass'.*/</span>
+	public <a href="ApplicationID.java.html#11233" title="xsbti.ApplicationID">ApplicationID</a> <a title="()xsbti.ApplicationID" id="318016">id</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+
+	 public ClassLoader <a title="()java.lang.ClassLoader" id="318017">loader</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** Loads the class for the entry point for the application given by 'id'.  This method will return the same class
+	* every invocation.  That is, the ClassLoader is not recreated each call.*/</span>
+	public Class&lt;? <span class="keyword">extends</span> <a href="AppMain.java.html#11223" title="xsbti.AppMain">AppMain</a>&gt; <a title="()java.lang.Class[_ &lt;: xsbti.AppMain]" id="318018">mainClass</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** Creates a new instance of the entry point of the application given by 'id'.
+	* It is guaranteed that newMain().getClass() == mainClass()*/</span>
+	public <a href="AppMain.java.html#11223" title="xsbti.AppMain">AppMain</a> <a title="()xsbti.AppMain" id="318019">newMain</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	
+	<span class="comment">/** The classpath from which the main class is loaded, excluding Scala jars.*/</span>
+	public File<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[java.io.File]" id="318020">mainClasspath</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+
+	public <a href="ComponentProvider.java.html#11238" title="xsbti.ComponentProvider">ComponentProvider</a> <a title="()xsbti.ComponentProvider" id="318021">components</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

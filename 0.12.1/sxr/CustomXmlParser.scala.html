@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>CustomXmlParser.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009, 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> java.io.ByteArrayInputStream
+<span class="keyword">import</span> java.net.URL
+
+<span class="keyword">import</span> org.apache.ivy.<span class="delimiter">{</span>core, plugins<span class="delimiter">}</span>
+<span class="keyword">import</span> core.module.descriptor.<span class="delimiter">{</span>DefaultDependencyDescriptor, DefaultModuleDescriptor<span class="delimiter">}</span>
+<span class="keyword">import</span> core.settings.IvySettings
+<span class="keyword">import</span> plugins.parser.xml.XmlModuleDescriptorParser
+<span class="keyword">import</span> plugins.repository.Resource
+<span class="keyword">import</span> plugins.repository.url.URLResource
+
+<span class="comment">/** Subclasses the default Ivy file parser in order to provide access to protected methods.*/</span>
+<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">object</span> <a title="object sbt.CustomXmlParser" id="10579">CustomXmlParser</a> <span title="ScalaObject" class="keyword">extends</span> <span title="org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser">XmlModuleDescriptorParser</span>
+<span class="delimiter">{</span>
+	<span class="keyword">import</span> <span title="object org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser">XmlModuleDescriptorParser</span>.Parser
+	<span class="keyword">class</span> <a title="class CustomParser extends org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser.Parser with ScalaObject" id="257042">CustomParser</a><a href="#257042" title="ScalaObject" class="delimiter">(</a><a title="org.apache.ivy.core.settings.IvySettings" id="257495">settings</a>: <span title="org.apache.ivy.core.settings.IvySettings">IvySettings</span>, <a title="Option[String]" id="257496">defaultConfig</a>: <span title="Option[String]">Option</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span> <span class="keyword">extends</span> <span title="org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser.Parser">Parser</span><span class="delimiter">(</span><a href="#10579" title="object sbt.CustomXmlParser">CustomXmlParser</a>, <a href="#257495" title="org.apache.ivy.core.settings.IvySettings">settings</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="(url: java.net.URL)Unit" id="257294">setSource</a><span class="delimiter">(</span><a title="java.net.URL" id="257497">url</a>: <span title="java.net.URL">URL</span><span class="delimiter">)</span> =
+		<span class="delimiter">{</span>
+			<a href="#257042" title="sbt.CustomXmlParser.CustomParser" class="keyword">super</a>.<span title="(x$1: org.apache.ivy.plugins.repository.Resource)Unit">setResource</span><span class="delimiter">(</span><span title="org.apache.ivy.plugins.repository.url.URLResource" class="keyword">new</span> <span title="org.apache.ivy.plugins.repository.url.URLResource">URLResource</span><span class="delimiter">(</span><a href="#257497" title="java.net.URL">url</a><span class="delimiter">)</span><span class="delimiter">)</span>
+			<a href="#257042" title="sbt.CustomXmlParser.CustomParser" class="keyword">super</a>.<span title="(x$1: java.net.URL)Unit">setInput</span><span class="delimiter">(</span><a href="#257497" title="java.net.URL">url</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<span class="keyword">def</span> <a title="(bytes: Array[Byte])Unit" id="257295">setInput</a><span class="delimiter">(</span><a title="Array[Byte]" id="257518">bytes</a>: <span title="Array[Byte]">Array</span><span class="delimiter">[</span>Byte<span class="delimiter">]</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a href="#257042" title="(x$1: java.io.InputStream)Unit">setInput</a><span class="delimiter">(</span><span title="java.io.ByteArrayInputStream" class="keyword">new</span> <span title="java.io.ByteArrayInputStream">ByteArrayInputStream</span><span class="delimiter">(</span><a href="#257518" title="Array[Byte]">bytes</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="comment">/** Overridden because the super implementation overwrites the module descriptor.*/</span>
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(res: org.apache.ivy.plugins.repository.Resource)Unit" id="257296">setResource</a><span class="delimiter">(</span><a title="org.apache.ivy.plugins.repository.Resource" id="257529">res</a>: <span title="org.apache.ivy.plugins.repository.Resource">Resource</span><span class="delimiter">)</span> <span title="Unit" class="delimiter">{</span><span class="delimiter">}</span>
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(md: org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor)Unit" id="257297">setMd</a><span class="delimiter">(</span><a title="org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor" id="257531">md</a>: <span title="org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor">DefaultModuleDescriptor</span><span class="delimiter">)</span> =
+		<span class="delimiter">{</span>
+			<a href="#257042" title="sbt.CustomXmlParser.CustomParser" class="keyword">super</a>.<span title="(x$1: org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor)Unit">setMd</span><span class="delimiter">(</span><a href="#257531" title="org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor">md</a><span class="delimiter">)</span>
+			<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#257496" title="Option[String]">defaultConfig</a>.<span title="=&gt; Boolean">isDefined</span><span class="delimiter">)</span> <a href="#257042" title="(x$1: java.lang.String)Unit">setDefaultConfMapping</a><span class="delimiter">(</span><span title="java.lang.String(&quot;*-&gt;default(compile)&quot;)" class="string">&quot;*-&gt;default(compile)&quot;</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="(confs: String, dd: org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor)Unit" id="257298">parseDepsConfs</a><span class="delimiter">(</span><a title="String" id="257535">confs</a>: <span title="String">String</span>, <a title="org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor" id="257536">dd</a>: <span title="org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor">DefaultDependencyDescriptor</span><span class="delimiter">)</span> = <a href="#257042" title="sbt.CustomXmlParser.CustomParser" class="keyword">super</a>.<span title="(x$1: java.lang.String, x$2: org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor)Unit">parseDepsConfs</span><span class="delimiter">(</span><a href="#257535" title="String">confs</a>, <a href="#257536" title="org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor">dd</a><span class="delimiter">)</span>
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="()String" id="257299">getDefaultConf</a> = <a href="#257496" title="Option[String]">defaultConfig</a>.<span title="(default: =&gt; String)String">getOrElse</span><span class="delimiter">(</span><a href="#257042" title="sbt.CustomXmlParser.CustomParser" class="keyword">super</a>.<span title="()java.lang.String">getDefaultConf</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>
