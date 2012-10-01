@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.12.1',
+        VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -72,7 +72,7 @@
                 <span class="divider">«</span> <a href="Mapping-Files.html">Mapping Files</a> <span class="divider">|</span>
               </li>
               <li>
-                Version 0.12.1
+                Version 0.13.0-SNAPSHOT
               </li>
             </ul>         
           </div>
@@ -82,11 +82,11 @@
             
   <div class="section" id="migrating-from-0-7-to-0-10">
 <h1>Migrating from 0.7 to 0.10+<a class="headerlink" href="#migrating-from-0-7-to-0-10" title="Permalink to this headline">¶</a></h1>
-<p>The assumption here is that you are familiar with sbt 0.7 but new to sbt 0.12.</p>
-<p>sbt 0.12's many new capabilities can be a bit overwhelming, but this
-page should help you migrate to 0.12 with a minimum of fuss.</p>
+<p>The assumption here is that you are familiar with sbt 0.7 but new to sbt 0.13.</p>
+<p>sbt 0.13's many new capabilities can be a bit overwhelming, but this
+page should help you migrate to 0.13 with a minimum of fuss.</p>
 <div class="section" id="why-move-to-version">
-<h2>Why move to 0.12?<a class="headerlink" href="#why-move-to-version" title="Permalink to this headline">¶</a></h2>
+<h2>Why move to 0.13?<a class="headerlink" href="#why-move-to-version" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Faster builds (because it is smarter at re-compiling only what it
 must)</li>
@@ -100,14 +100,14 @@ backup and version control hassles.</li>
 wrong.)</li>
 </ol>
 <div class="section" id="step-1-read-the-getting-started-guide-for-sbt-version">
-<h3>Step 1: Read the Getting Started Guide for sbt 0.12<a class="headerlink" href="#step-1-read-the-getting-started-guide-for-sbt-version" title="Permalink to this headline">¶</a></h3>
+<h3>Step 1: Read the Getting Started Guide for sbt 0.13<a class="headerlink" href="#step-1-read-the-getting-started-guide-for-sbt-version" title="Permalink to this headline">¶</a></h3>
 <p>Reading the <a class="reference internal" href="../Getting-Started/Welcome.html"><em>Getting Started Guide</em></a> will
 probably save you a lot of confusion.</p>
 </div>
 <div class="section" id="step-2-install-sbt-release">
-<h3>Step 2: Install sbt 0.12.1<a class="headerlink" href="#step-2-install-sbt-release" title="Permalink to this headline">¶</a></h3>
-<p>Download sbt 0.12 as described on <a class="reference internal" href="../Getting-Started/Setup.html"><em>the setup page</em></a>.</p>
-<p>You can run 0.12 the same way that you run 0.7.x, either simply:</p>
+<h3>Step 2: Install sbt 0.13.0-SNAPSHOT<a class="headerlink" href="#step-2-install-sbt-release" title="Permalink to this headline">¶</a></h3>
+<p>Download sbt 0.13 as described on <a class="reference internal" href="../Getting-Started/Setup.html"><em>the setup page</em></a>.</p>
+<p>You can run 0.13 the same way that you run 0.7.x, either simply:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -jar sbt-launch.jar</span>
 </pre></div>
 </div>
@@ -117,7 +117,7 @@ probably save you a lot of confusion.</p>
 </div>
 <div class="section" id="step-3-a-technique-for-switching-an-existing-project">
 <h3>Step 3: A technique for switching an existing project<a class="headerlink" href="#step-3-a-technique-for-switching-an-existing-project" title="Permalink to this headline">¶</a></h3>
-<p>Here is a technique for switching an existing project to 0.12 while
+<p>Here is a technique for switching an existing project to 0.13 while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
@@ -127,11 +127,11 @@ complex one next.</p>
 <div class="section" id="preserve-project-for-0-7-x-project">
 <h2>Preserve <tt class="docutils literal"><span class="pre">project/</span></tt> for 0.7.x project<a class="headerlink" href="#preserve-project-for-0-7-x-project" title="Permalink to this headline">¶</a></h2>
 <p>Rename your <tt class="docutils literal"><span class="pre">project/</span></tt> directory to something like <tt class="docutils literal"><span class="pre">project-old</span></tt>.
-This will hide it from sbt 0.12 but keep it in case you want to switch
+This will hide it from sbt 0.13 but keep it in case you want to switch
 back to 0.7.x.</p>
 </div>
 <div class="section" id="create-build-sbt-for-version">
-<h2>Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.12<a class="headerlink" href="#create-build-sbt-for-version" title="Permalink to this headline">¶</a></h2>
+<h2>Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.13<a class="headerlink" href="#create-build-sbt-for-version" title="Permalink to this headline">¶</a></h2>
 <p>Create a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file in the root directory of your project. See
 <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> in the Getting
 Started Guide, and for simple examples <a class="reference internal" href="../Examples/Quick-Configuration-Examples.html"><em>Basic Definition Examples</em></a>.
@@ -170,7 +170,7 @@ select the sbt version. For example:</p>
 </div>
 </div>
 <div class="section" id="run-sbt-version">
-<h2>Run sbt 0.12<a class="headerlink" href="#run-sbt-version" title="Permalink to this headline">¶</a></h2>
+<h2>Run sbt 0.13<a class="headerlink" href="#run-sbt-version" title="Permalink to this headline">¶</a></h2>
 <p>Now launch sbt. If you're lucky it works and you're done. For help
 debugging, see below.</p>
 </div>
@@ -178,7 +178,7 @@ debugging, see below.</p>
 <h2>Switching back to sbt 0.7.x<a class="headerlink" href="#switching-back-to-sbt-0-7-x" title="Permalink to this headline">¶</a></h2>
 <p>If you get stuck and want to switch back, you can leave your
 <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file alone. sbt 0.7.x will not understand or notice it.
-Just rename your 0.12 <tt class="docutils literal"><span class="pre">project</span></tt> directory to something like
+Just rename your 0.13 <tt class="docutils literal"><span class="pre">project</span></tt> directory to something like
 <tt class="docutils literal"><span class="pre">project10</span></tt> and rename the backup of your old project from
 <tt class="docutils literal"><span class="pre">project-old</span></tt> to <tt class="docutils literal"><span class="pre">project</span></tt> again.</p>
 <div class="section" id="faqs">
@@ -196,15 +196,15 @@ several other important points.</p>
                 <div id="scroller">
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Migrating from 0.7 to 0.10+</a><ul>
-<li><a class="reference internal" href="#why-move-to-version">Why move to 0.12?</a><ul>
-<li><a class="reference internal" href="#step-1-read-the-getting-started-guide-for-sbt-version">Step 1: Read the Getting Started Guide for sbt 0.12</a></li>
-<li><a class="reference internal" href="#step-2-install-sbt-release">Step 2: Install sbt 0.12.1</a></li>
+<li><a class="reference internal" href="#why-move-to-version">Why move to 0.13?</a><ul>
+<li><a class="reference internal" href="#step-1-read-the-getting-started-guide-for-sbt-version">Step 1: Read the Getting Started Guide for sbt 0.13</a></li>
+<li><a class="reference internal" href="#step-2-install-sbt-release">Step 2: Install sbt 0.13.0-SNAPSHOT</a></li>
 <li><a class="reference internal" href="#step-3-a-technique-for-switching-an-existing-project">Step 3: A technique for switching an existing project</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#preserve-project-for-0-7-x-project">Preserve <tt class="docutils literal"><span class="pre">project/</span></tt> for 0.7.x project</a></li>
-<li><a class="reference internal" href="#create-build-sbt-for-version">Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.12</a></li>
-<li><a class="reference internal" href="#run-sbt-version">Run sbt 0.12</a></li>
+<li><a class="reference internal" href="#create-build-sbt-for-version">Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.13</a></li>
+<li><a class="reference internal" href="#run-sbt-version">Run sbt 0.13</a></li>
 <li><a class="reference internal" href="#switching-back-to-sbt-0-7-x">Switching back to sbt 0.7.x</a><ul>
 <li><a class="reference internal" href="#faqs">FAQs</a></li>
 </ul>

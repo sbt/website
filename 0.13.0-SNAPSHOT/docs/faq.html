@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.12.1',
+        VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -71,7 +71,7 @@
                 <span class="divider">«</span> <a href="Howto/triggered.html">Triggered execution</a> <span class="divider">|</span>
               </li>
               <li>
-                Version 0.12.1
+                Version 0.13.0-SNAPSHOT
               </li>
             </ul>         
           </div>
@@ -128,7 +128,7 @@ then the following questions.</p>
 </div>
 <div class="section" id="where-has-0-7-s-lib-managed-gone">
 <h3>Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?<a class="headerlink" href="#where-has-0-7-s-lib-managed-gone" title="Permalink to this headline">¶</a></h3>
-<p>By default, sbt 0.12 loads managed libraries from your ivy cache without
+<p>By default, sbt 0.13 loads managed libraries from your ivy cache without
 copying them to a <tt class="docutils literal"><span class="pre">lib_managed</span></tt> directory. This fixes some bugs with
 the previous solution and keeps your project directory small. If you
 want to insulate your builds from the ivy cache being cleared, set
@@ -136,7 +136,7 @@ want to insulate your builds from the ivy cache being cleared, set
 <tt class="docutils literal"><span class="pre">lib_managed</span></tt> as a build-local cache (while avoiding the issues of
 <tt class="docutils literal"><span class="pre">lib_managed</span></tt> in 0.7.x).</p>
 <p>This does mean that existing solutions for sharing libraries with your
-favoured IDE may not work. There are 0.12 plugins for IDEs being
+favoured IDE may not work. There are 0.13 plugins for IDEs being
 developed:</p>
 <ul class="simple">
 <li>IntelliJ IDEA: [[<a class="reference external" href="https://github.com/mpeltonen/sbt-idea">https://github.com/mpeltonen/sbt-idea</a>]]</li>
@@ -145,7 +145,7 @@ developed:</p>
 </ul>
 </div>
 <div class="section" id="what-are-the-commands-i-can-use-in-version-vs-0-7">
-<h3>What are the commands I can use in 0.12 vs. 0.7?<a class="headerlink" href="#what-are-the-commands-i-can-use-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<h3>What are the commands I can use in 0.13 vs. 0.7?<a class="headerlink" href="#what-are-the-commands-i-can-use-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
 <p>For a list of commands, run <tt class="docutils literal"><span class="pre">help</span></tt>. For details on a specific command,
 run <tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt>. To view a list of tasks defined on the current
 project, run <tt class="docutils literal"><span class="pre">tasks</span></tt>. Alternatively, see the <a class="reference internal" href="Getting-Started/Running.html"><em>Running</em></a>
@@ -176,7 +176,7 @@ classpaths.</p>
 <div class="section" id="my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">
 <h3>My tests all run really fast but some are broken that weren't in 0.7!<a class="headerlink" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7" title="Permalink to this headline">¶</a></h3>
 <p>Be aware that compilation and tests run in parallel by default in sbt
-0.12. If your test code isn't thread-safe then you may want to change
+0.13. If your test code isn't thread-safe then you may want to change
 this behaviour by adding one of the following to your <tt class="docutils literal"><span class="pre">build.sbt</span></tt>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Execute tests in the current project serially.</span>
 <span class="c1">// Tests from other projects may still run concurrently.</span>
@@ -188,9 +188,9 @@ this behaviour by adding one of the following to your <tt class="docutils litera
 </div>
 </div>
 <div class="section" id="how-do-i-set-log-levels-in-version-vs-0-7">
-<h3>How do I set log levels in 0.12 vs. 0.7?<a class="headerlink" href="#how-do-i-set-log-levels-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<h3>How do I set log levels in 0.13 vs. 0.7?<a class="headerlink" href="#how-do-i-set-log-levels-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">warn</span></tt>, <tt class="docutils literal"><span class="pre">info</span></tt>, <tt class="docutils literal"><span class="pre">debug</span></tt> and <tt class="docutils literal"><span class="pre">error</span></tt> don't work any more.</p>
-<p>The new syntax in the sbt 0.12 shell is:
+<p>The new syntax in the sbt 0.13 shell is:
 <tt class="docutils literal"><span class="pre">text</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">logLevel</span> <span class="pre">:=</span> <span class="pre">Level.Warn</span></tt></p>
 <p>Or in your <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file write:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">logLevel</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Warn</span>
@@ -205,8 +205,8 @@ this behaviour by adding one of the following to your <tt class="docutils litera
 <a class="reference external" href="https://github.com/ritschwumm/xsbt-webstart">xsbt-webstart</a> project.</p>
 </div>
 <div class="section" id="how-are-inter-project-dependencies-different-in-version-vs-0-7">
-<h3>How are inter-project dependencies different in 0.12 vs. 0.7?<a class="headerlink" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
-<p>In 0.12, there are three types of project dependencies (classpath,
+<h3>How are inter-project dependencies different in 0.13 vs. 0.7?<a class="headerlink" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<p>In 0.13, there are three types of project dependencies (classpath,
 execution, and configuration) and they are independently defined. These
 were combined in a single dependency type in 0.7.x. A declaration like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;A&quot;</span><span class="o">)</span>
@@ -223,7 +223,7 @@ classpath for <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
 <li>Configuration: For some settings, if they were not overridden in
 <tt class="docutils literal"><span class="pre">A</span></tt>, they would default to the value provided in <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
 </ol>
-<p>In 0.12, declare the specific type of dependency you want. Read about
+<p>In 0.13, declare the specific type of dependency you want. Read about
 <a class="reference internal" href="Getting-Started/Multi-Project.html"><em>multi-project builds</em></a> in the Getting
 Started Guide for details.</p>
 </div>
@@ -236,7 +236,7 @@ Started Guide for details.</p>
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">0.7</th>
-<th class="head">0.12</th>
+<th class="head">0.13</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -256,7 +256,7 @@ Started Guide for details.</p>
 </table>
 </div>
 <div class="section" id="where-can-i-find-plugins-for-version">
-<h3>Where can I find plugins for 0.12?<a class="headerlink" href="#where-can-i-find-plugins-for-version" title="Permalink to this headline">¶</a></h3>
+<h3>Where can I find plugins for 0.13?<a class="headerlink" href="#where-can-i-find-plugins-for-version" title="Permalink to this headline">¶</a></h3>
 <p>See <a class="reference internal" href="Community/Community-Plugins.html"><em>Community Plugins</em></a> for a list of currently available plugins.</p>
 </div>
 </div>
@@ -264,7 +264,7 @@ Started Guide for details.</p>
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="my-last-command-didn-t-work-but-i-can-t-see-an-explanation-why">
 <h3>My last command didn't work but I can't see an explanation. Why?<a class="headerlink" href="#my-last-command-didn-t-work-but-i-can-t-see-an-explanation-why" title="Permalink to this headline">¶</a></h3>
-<p>sbt 0.12 by default suppresses most stack traces and debugging
+<p>sbt 0.13 by default suppresses most stack traces and debugging
 information. It has the nice side effect of giving you less noise on
 screen, but as a newcomer it can leave you lost for explanation. To see
 the previous output of a command at a higher verbosity, type
@@ -920,14 +920,14 @@ example:</p>
 <li><a class="reference internal" href="#to-0-10-migration">0.7 to 0.10+ Migration</a><ul>
 <li><a class="reference internal" href="#how-do-i-migrate-from-0-7-to-0-10">How do I migrate from 0.7 to 0.10+?</a></li>
 <li><a class="reference internal" href="#where-has-0-7-s-lib-managed-gone">Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?</a></li>
-<li><a class="reference internal" href="#what-are-the-commands-i-can-use-in-version-vs-0-7">What are the commands I can use in 0.12 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#what-are-the-commands-i-can-use-in-version-vs-0-7">What are the commands I can use in 0.13 vs. 0.7?</a></li>
 <li><a class="reference internal" href="#why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7">Why have the resolved dependencies in a multi-module project changed since 0.7?</a></li>
 <li><a class="reference internal" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">My tests all run really fast but some are broken that weren't in 0.7!</a></li>
-<li><a class="reference internal" href="#how-do-i-set-log-levels-in-version-vs-0-7">How do I set log levels in 0.12 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#how-do-i-set-log-levels-in-version-vs-0-7">How do I set log levels in 0.13 vs. 0.7?</a></li>
 <li><a class="reference internal" href="#what-happened-to-the-web-development-and-web-start-support-since-0-7">What happened to the web development and Web Start support since 0.7?</a></li>
-<li><a class="reference internal" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7">How are inter-project dependencies different in 0.12 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7">How are inter-project dependencies different in 0.13 vs. 0.7?</a></li>
 <li><a class="reference internal" href="#where-did-class-object-x-go-since-0-7">Where did class/object X go since 0.7?</a></li>
-<li><a class="reference internal" href="#where-can-i-find-plugins-for-version">Where can I find plugins for 0.12?</a></li>
+<li><a class="reference internal" href="#where-can-i-find-plugins-for-version">Where can I find plugins for 0.13?</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#usage">Usage</a><ul>

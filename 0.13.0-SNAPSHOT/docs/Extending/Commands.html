@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.12.1',
+        VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -72,7 +72,7 @@
                 <span class="divider">«</span> <a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a> <span class="divider">|</span>
               </li>
               <li>
-                Version 0.12.1
+                Version 0.13.0-SNAPSHOT
               </li>
             </ul>         
           </div>
@@ -82,6 +82,11 @@
             
   <div class="section" id="commands">
 <h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-a-command">
+<h2>What is a &quot;command&quot;?<a class="headerlink" href="#what-is-a-command" title="Permalink to this headline">¶</a></h2>
+<p>A &quot;command&quot; looks similar to a task: it's a named operation that can be executed from the sbt console.</p>
+<p>However, a command's implementation takes as its parameter the entire state of the build (represented by <a class="reference internal" href="Build-State.html"><em>State and actions</em></a>) and computes a new <a class="reference internal" href="Build-State.html"><em>State and actions</em></a>. This means that a command can look at or modify other sbt settings, for example. Typically, you would resort to a command when you need to do something that's impossible in a regular task.</p>
+</div>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>There are three main aspects to commands:</p>
@@ -263,6 +268,7 @@ and <tt class="docutils literal"><span class="pre">print-state</span></tt> comma
                 <div id="scroller">
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Commands</a><ul>
+<li><a class="reference internal" href="#what-is-a-command">What is a &quot;command&quot;?</a></li>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#defining-a-command">Defining a Command</a><ul>
 <li><a class="reference internal" href="#general-commands">General commands</a></li>
