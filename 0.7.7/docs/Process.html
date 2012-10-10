@@ -1,0 +1,82 @@
+<html>
+ <head> 
+  <title>Process</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Process</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="External_Processes"></a>External Processes<a href="#External_Processes" class="section_anchor"></a></h1>
+         <h2><a name="Usage"></a>Usage<a href="#Usage" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> includes a process library to simplify working with external processes. To use it in your project definition, import the implicits defined in <tt>sbt.Process</tt>: </p>
+         <pre class="prettyprint">import Process._</pre>
+         <p>Note: the interpreter started by the <a href="ProjectConsole">console-project</a> command imports the members of <tt>Process</tt> on startup. </p>
+         <p>To run a command, follow it with an exclamation mark <tt>!</tt>: </p>
+         <pre class="prettyprint">&quot;find project -name *.jar&quot; !</pre>
+         <p>An implicit converts the <tt>String</tt> to <tt>sbt.ProcessBuilder</tt>, which defines the <tt>!</tt> method. This method runs the constructed command, waits until the command completes, and returns the exit code. Alternatively, the <tt>run</tt> method defined on <tt>ProcessBuilder</tt> runs the command and returns an instance of <tt>sbt.Process</tt>, which can be used to <tt>destroy</tt> the process before it completes. With no arguments, the <tt>!</tt> method sends output to standard output and and standard error. You can pass a <tt>Logger</tt> to the <tt>!</tt> method to send output to the <tt>Logger</tt>: </p>
+         <pre class="prettyprint">&quot;find project -name *.jar&quot; ! log</pre>
+         <p>Two alternative implicit conversions are from <tt>scala.xml.Elem</tt> or <tt>List[String]</tt> to <tt>sbt.ProcessBuilder</tt>. These are useful for constructing commands. An example of the first variant from the android plugin: </p>
+         <pre class="prettyprint">  &lt;x&gt; {dxPath.absolutePath} --dex --output={classesDexPath.absolutePath} {classesMinJarPath.absolutePath}&lt;/x&gt; !</pre>
+         <p>If you need to set the working directory or modify the environment, use a <tt>java.lang.ProcessBuilder</tt> instead of a <tt>String</tt>: </p>
+         <pre class="prettyprint"> ( (new java.lang.ProcessBuilder(&quot;ls&quot;, &quot;-l&quot;)) directory new File(System.getProperty(&quot;user.home&quot;)) ) ! log</pre>
+         <p>Operators are defined to combine commands. These operators start with <tt>#</tt> in order to keep the precedence the same and to separate them from the operators defined elsewhere in <tt>sbt</tt> for filters. In the following operator definitions, <tt>a</tt> and <tt>b</tt> are subcommands. </p>
+         <ul>
+          <li><tt>a #&amp;&amp; b</tt> Execute <tt>a</tt>. If the exit code is nonzero, return that exit code and do not execute <tt>b</tt>. If the exit code is zero, execute <tt>b</tt> and return its exit code. </li>
+          <li><tt>a #|| b</tt> Execute <tt>a</tt>. If the exit code is zero, return zero for the exit code and do not execute <tt>b</tt>. If the exit code is nonzero, execute <tt>b</tt> and return its exit code. </li>
+          <li><tt>a #| b</tt> Execute <tt>a</tt> and <tt>b</tt>, piping the output of <tt>a</tt> to the input of <tt>b</tt>. </li>
+         </ul>
+         <p>There are also operators defined for redirecting output to <tt>File</tt>s and input from <tt>File</tt>s and <tt>URL</tt>s. In the following definitions, <tt>url</tt> is an instance of <tt>URL</tt> and <tt>file</tt> is an instance of <tt>File</tt>. </p>
+         <ul>
+          <li><tt>a #&lt; url</tt> or <tt>url #&gt; a</tt> Use <tt>url</tt> as the input to <tt>a</tt>. <tt>a</tt> may be a <tt>File</tt> or a command. </li>
+          <li><tt>a #&lt; file</tt> or <tt>file #&gt; a</tt> Use <tt>file</tt> as the input to <tt>a</tt>. <tt>a</tt> may be a <tt>File</tt> or a command. </li>
+          <li><tt>a #&gt; file</tt> or <tt>file #&lt; a</tt> Write the output of <tt>a</tt> to <tt>file</tt>. <tt>a</tt> may be a <tt>File</tt>, <tt>URL</tt>, or a command. </li>
+          <li><tt>a #&gt;&gt; file</tt> or <tt>file #&lt;&lt; a</tt> Append the output of <tt>a</tt> to <tt>file</tt>. <tt>a</tt> may be a <tt>File</tt>, <tt>URL</tt>, or a command. </li>
+         </ul>
+         <p>There are some additional methods to get the output from a forked process into a <tt>String</tt> or the output lines as a <tt>Stream[String]</tt>. Here are some examples, but see the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/ProcessBuilder.html" rel="nofollow">ProcessBuilder API documentation</a> for details. </p>
+         <pre class="prettyprint">val listed: String = &quot;ls&quot; !!
+val lines2: Stream[String] = &quot;ls&quot; lines_!</pre>
+         <p>Finally, there is a <tt>cat</tt> method to send the contents of <tt>File</tt>s and <tt>URL</tt>s to standard output. </p>
+         <h2><a name="Examples"></a>Examples<a href="#Examples" class="section_anchor"></a></h2>
+         <p>These examples assume the following imports: </p>
+         <pre class="prettyprint">import java.io.File
+import java.io.URL
+import Process._</pre>
+         <p>Download a <tt>URL</tt> to a <tt>File</tt>: </p>
+         <pre class="prettyprint">new URL(&quot;http://databinder.net/dispatch/About&quot;) #&gt; new File(&quot;About.html&quot;) !
+or
+new File(&quot;About.html&quot;) #&lt; new URL(&quot;http://databinder.net/dispatch/About&quot;) !</pre>
+         <p>Copy a <tt>File</tt>: </p>
+         <pre class="prettyprint">new File(&quot;About.html&quot;) #&gt; new File(&quot;About_copy.html&quot;) !
+or
+new File(&quot;About_copy.html&quot;) #&lt; new File(&quot;About.html&quot;) !</pre>
+         <p>Append the contents of a <tt>URL</tt> to a <tt>File</tt> after filtering through <tt>grep</tt>: </p>
+         <pre class="prettyprint">new URL(&quot;http://databinder.net/dispatch/About&quot;) #&gt; &quot;grep JSON&quot; #&gt;&gt; new File(&quot;About_JSON&quot;) !
+or
+new File(&quot;About_JSON&quot;) #&lt;&lt; ( &quot;grep JSON&quot; #&lt; new URL(&quot;http://databinder.net/dispatch/About&quot;) )  !</pre>
+         <p>Search for uses of <tt>null</tt> in the source directory: </p>
+         <pre class="prettyprint">&quot;find src -name *.scala -exec grep null {} ;&quot;  #|  &quot;xargs test -z&quot;  #&amp;&amp;  &quot;echo null-free&quot;  #||  &quot;echo null detected&quot;  !</pre>
+         <p>Use <tt>cat</tt>: </p>
+         <pre class="prettyprint">    val spde = new URL(&quot;http://technically.us/spde/About&quot;)
+    val dispatch = new URL(&quot;http://databinder.net/dispatch/About&quot;)
+    val build = new File(&quot;project/build.properties&quot;)
+    cat(spde, dispatch, build) #| &quot;grep -i scala&quot; !</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

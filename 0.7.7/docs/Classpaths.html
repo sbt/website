@@ -1,0 +1,82 @@
+<html>
+ <head> 
+  <title>Classpaths</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Classpaths</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Classpaths"></a>Classpaths<a href="#Classpaths" class="section_anchor"></a></h1>
+         <p>This page discusses how <tt>sbt</tt> builds up classpaths for different actions, like <tt>compile</tt>, <tt>run</tt>, and <tt>test</tt> and how to override or augment these classpaths. Classpaths do not include the Scala library, since Scala classes are handled by <tt>sbt</tt> (see <a href="ScalaJars">ScalaJars</a>). All <tt>*Classpath</tt> methods return <tt>PathFinder</tt>s, which are evaluated on demand. </p>
+         <h2><a name="Top_Level_Methods"></a>Top Level Methods<a href="#Top_Level_Methods" class="section_anchor"></a></h2>
+         <p>At the highest level, each of the major actions has a corresponding method defining the classpaths used by that method. </p>
+         <p>These are: </p>
+         <ul>
+          <li>docClasspath </li>
+          <li>compileClasspath </li>
+          <li>testClasspath </li>
+          <li>runClasspath </li>
+          <li>consoleClasspath </li>
+         </ul>
+         <p></p>
+         <p>For web applications, there are a few additional classpaths: </p>
+         <ul>
+          <li><tt>webappClasspath</tt> determines the classes and jars to include in the war created by <tt>package</tt> </li>
+          <li><tt>jettyClasspath</tt> provides Jetty and its dependencies to the <tt>jetty-run</tt> and <tt>jetty</tt> tasks </li>
+          <li><tt>jettyRunClasspath</tt> determines the classpath for the web application run by <tt>jetty-run</tt> and <tt>jetty</tt> </li>
+         </ul>
+         <p></p>
+         <p>These methods provide a classpath that includes the appropriate classpath from all dependent projects and both managed and unmanaged dependencies. They use lower level methods to construct these classpaths. These are described in the next section. </p>
+         <h2><a name="Lower-Level_Methods"></a>Lower-Level Methods<a href="#Lower-Level_Methods" class="section_anchor"></a></h2>
+         <p>The top level methods use several lower-level methods to construct classpaths. The method directly used by the top level methods is: </p>
+         <pre class="prettyprint"> fullClasspath(config: Configuration): PathFinder</pre>
+         <p>This provides the classpath for the given <a href="ManagedConfigurations">configuration</a>. By default, this method is itself implemented by combining the <tt>projectClasspath</tt>s from the project and all dependent projects. </p>
+         <p><tt>projectClasspath</tt> has the same signature as <tt>fullClasspath</tt>, but represents only the classpath for a single project. <tt>projectClasspath</tt> by default combines the dependencies provided by <tt>managedClasspath</tt> and <tt>unmanagedClasspath</tt>: </p>
+         <pre class="prettyprint">    def projectClasspath(config: Configuration): PathFinder =
+      unmanagedClasspath +++ managedClasspath(config)</pre>
+         <p><tt>unmanagedClasspath</tt>, <tt>managedClasspath</tt> and releated methods are shown below: </p>
+         <pre class="prettyprint">   def unmanagedClasspath: PathFinder =
+      descendents(dependencyPath, classpathFilter)
+
+   def managedClasspath(config: Configuration): PathFinder =
+      descendents(configurationPath(config), classpathFilter)
+
+   def classpathFilter: FileFilter = &quot;*.jar&quot;
+
+   def configurationPath(config: Configuration): Path =
+      managedDependencyPath / config.toString</pre>
+         <p>where dependencyPath is by default <tt>lib</tt> and <tt>managedDependencyPath</tt> is <tt>lib_managed/scala_&lt;version&gt;</tt>. </p>
+         <h2><a name="Examples"></a>Examples<a href="#Examples" class="section_anchor"></a></h2>
+         <p>To add a dependency to all classpaths, add it to <tt>unmanagedClasspath</tt>. For example: </p>
+         <pre class="prettyprint">   override def unmanagedClasspath = super.unmanagedClasspath +++ (&quot;lib2&quot; / &quot;a.jar&quot;)</pre>
+         <p>To add a dependency to a specific classpath, select the appropriate top-level method. For example, to put something on the test classpath: </p>
+         <pre class="prettyprint">   override def testClasspath = super.testClasspath +++ (&quot;lib_test&quot; / &quot;aTest.jar&quot;)</pre>
+         <p>To build a custom managed classpath, say for using something like <tt>fmpp</tt> for your build: </p>
+         <pre class="prettyprint">	val fmppConf = config(&quot;fmpp&quot;)
+	val fmppDep = &quot;net.sourceforge.fmpp&quot; % &quot;fmpp&quot; % &quot;0.9.13&quot; % &quot;fmpp&quot;
+	def fmppClasspath = managedClasspath(fmppConf)
+
+	def fmppTask(args: List[String]) =
+		runTask(Some(&quot;fmpp.tools.CommandLine&quot;), fmppClasspath, args)
+
+	lazy val fmpp = fmppTask(...)</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

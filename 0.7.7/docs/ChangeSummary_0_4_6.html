@@ -1,0 +1,90 @@
+<html>
+ <head> 
+  <title>ChangeSummary_0_4_6</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary_0_4_6</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Changes_from_0.4.5_to_0.4.6"></a>Changes from 0.4.5 to 0.4.6<a href="#Changes_from_0.4.5_to_0.4.6" class="section_anchor"></a></h1>
+         <h2><a name="Compatibility"></a>Compatibility<a href="#Compatibility" class="section_anchor"></a></h2>
+         <p>The default jar name has changed. Previously, it was based on the name of the project. For example, </p>
+         <pre class="prettyprint">My Project-1.0.jar</pre>
+         <p>The default is now to use the normalized name of your project. For example, </p>
+         <pre class="prettyprint">my-project-1.0.jar</pre>
+         <p>If you modified this by overriding <tt>defaultJarBaseName</tt>, this will still be used. The preferred way to change the name of artifacts is now to override <tt>artifactID</tt> (for just changing the name part) or <tt>artifactBaseName</tt> (for both the name and version parts). The definitions of relevant methods are shown below for reference. </p>
+         <pre class="prettyprint"> def moduleID = normalizedName
+ def artifactID = moduleID
+ def artifactBaseName = artifactID + &quot;-&quot; + version.toString
+ def defaultJarBaseName = artifactBaseName
+ def defaultJarName = defaultJarBaseName + &quot;.jar&quot;</pre>
+         <h2><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h2>
+         <ul>
+          <li>Fixed issue with packaging a jar on windows. </li>
+          <li>Support for <tt>specs</tt> 1.5.0 (when building with Scala 2.7.4) </li>
+          <li>Fixed creating a <tt>Path</tt> from a <tt>File</tt> via <tt>Path.fromFile</tt>. </li>
+          <li>Fixed <tt>package-project</tt> to exclude <tt>project/boot</tt> and <tt>project/build/target</tt>. </li>
+          <li>Preserve command line history across <tt>clean</tt>. </li>
+          <li>Fixed issue with external process output being lost when sent to a <tt>BufferedLogger</tt> with <tt>parallelExecution</tt> enabled. </li>
+          <li>Fixed warning message about no <tt>Class-Path</tt> attribute from showing up for <tt>run</tt>. </li>
+          <li>Fixed <tt>OutOfMemoryException: PermGen</tt> errors that occurred during testing or rebooting. </li>
+         </ul>
+         <h2><a name="Improvements"></a>Improvements<a href="#Improvements" class="section_anchor"></a></h2>
+         <ul>
+          <li>Added <tt>jettyPort</tt> method to <tt>DefaultWebProject</tt> for overriding the port used by the <tt>jetty-run</tt> action. </li>
+          <li>Exception traces are printed by default </li>
+          <li>Improved access to and handling of <tt>scala-library.jar</tt> and <tt>scala-compiler.jar</tt> used to build the project. </li>
+          <ul>
+           <li>Added two new methods providing the location of these jars </li>
+           <ul>
+            <li><tt>FileUtilities.scalaLibraryJar</tt> </li>
+            <li><tt>FileUtilities.scalaCompilerJar</tt> </li>
+           </ul>
+           <li>Better/easier access to the external dependencies of a project </li>
+           <ul>
+            <li><tt>mainDependencies</tt> and <tt>testDependencies</tt> provide an analysis of the dependencies of your code as determined during compilation </li>
+            <li><tt>scalaJars</tt> is deprecated, use <tt>mainDependencies.scalaJars</tt> instead (provides a <tt>PathFinder</tt>, which is generally more useful) </li>
+           </ul>
+           <li>Fixed classpath issues for projects that use the compiler or interpreter </li>
+           <ul>
+            <li>If your main sources depend on <tt>scala-compiler.jar</tt>, <tt>scala-compiler.jar</tt> is added to <tt>runClasspath</tt> so that compiler classes are available for the <tt>run</tt> command. </li>
+            <li>If your test sources depend on <tt>scala-compiler.jar</tt>, <tt>scala-compiler.jar</tt> is added to testClasspath so that the compiler classes are available for tests. </li>
+           </ul>
+          </ul>
+         </ul>
+         <h2><a name="New_Features"></a>New Features<a href="#New_Features" class="section_anchor"></a></h2>
+         <ul>
+          <li>Parallel test execution at the suite/specification level. </li>
+         </ul>
+         <p>The following new features are also present in 0.4.6, but are not fully documented and stabilized. </p>
+         <ul>
+          <li>Parallelization at the subtask level. </li>
+          <li>Publishing poms or Ivy files to a ssh/sftp/filesystem repository is supported. </li>
+          <li>Added ability to easily build across multiple versions of Scala. </li>
+          <ul>
+           <li>Override <tt>crossScalaVersions</tt> with the <tt>Set</tt> of Scala versions to build against. </li>
+           <li>Prefix actions to run with <tt>+</tt> </li>
+           <li>The version of Scala used to build is appended to <tt>outputPath</tt> (<tt>target</tt>) and <tt>managedDependencyPath</tt> (<tt>lib_managed</tt>). </li>
+          </ul>
+         </ul>
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

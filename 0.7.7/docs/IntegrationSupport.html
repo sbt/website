@@ -1,0 +1,88 @@
+<html>
+ <head> 
+  <title>IntegrationSupport</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">IntegrationSupport</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page describes approaches to using <tt>sbt</tt> with third-party tools. It is a work in progress. </p>
+         <h1><a name="Emacs"></a>Emacs<a href="#Emacs" class="section_anchor"></a></h1>
+         <p>There is a <a href="http://github.com/RayRacine/scallap/tree/master/tools/emacs" rel="nofollow">script</a> to run <tt>sbt</tt> as an inferior-mode process from within emacs. It uses <tt>compile.el</tt>, allowing one to migrate through the compiler errors. </p>
+         <p>On Windows, disable the native JLine interface using by adding the system property </p>
+         <pre class="prettyprint">-Djline.WindowsTerminal.directConsole=false</pre>
+         <p>to your <tt>sbt</tt> startup script or disable JLine support completely with the system property: </p>
+         <pre class="prettyprint">-Djline.terminal=jline.UnsupportedTerminal</pre>
+         <p>You may want to make your sbt startup script look something like the following: </p>
+         <pre class="prettyprint">if &quot;%TERM%&quot;==&quot;emacs&quot; set jlineopt=-Djline.WindowsTerminal.directConsole=false
+java -Xmx512M %jlineopt% -jar ...</pre>
+         <p>(From the comments in <a href="http://code.google.com/p/simple-build-tool/issues/detail?id=63" rel="nofollow">#63</a>) </p>
+         <h1><a name="Vim"></a>Vim<a href="#Vim" class="section_anchor"></a></h1>
+         <p>See <a href="http://github.com/MarcWeber/vim-addon-sbt" rel="nofollow">http://github.com/MarcWeber/vim-addon-sbt</a> </p>
+         <p>Alternatively: In Vim, you can add the following to your <tt>.vimrc</tt> file to support building via <tt>:make</tt> and navigating to errors and warnings: </p>
+         <pre class="prettyprint">set makeprg=sbt\ compile
+set efm=%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ %p^,%-C%.%#,%Z,
+       \%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,
+       \%-G%.%#</pre>
+         <p>You'll need to <tt>cd</tt> into your project root to issue the <tt>:make</tt> command. </p>
+         <h1><a name="TextMate"></a>TextMate<a href="#TextMate" class="section_anchor"></a></h1>
+         <p>See <a href="http://www.sidewayscoding.com/2010/08/using-textmate-for-scala-development.html" rel="nofollow">http://www.sidewayscoding.com/2010/08/using-textmate-for-scala-development.html</a>. </p>
+         <h1><a name="IDEA"></a>IDEA<a href="#IDEA" class="section_anchor"></a></h1>
+         <p>sbt plugin/processor: <a href="https://github.com/mpeltonen/sbt-idea" rel="nofollow">https://github.com/mpeltonen/sbt-idea</a> </p>
+         <p>IDEA plugin: <a href="http://plugins.intellij.net/plugin/?idea&amp;id=5007" rel="nofollow">http://plugins.intellij.net/plugin/?idea&amp;id=5007</a> </p>
+         <h1><a name="Netbeans"></a>Netbeans<a href="#Netbeans" class="section_anchor"></a></h1>
+         <p><a href="https://github.com/remeniuk/sbt-netbeans-plugin" rel="nofollow">https://github.com/remeniuk/sbt-netbeans-plugin</a> </p>
+         <h1><a name="Eclipse"></a>Eclipse<a href="#Eclipse" class="section_anchor"></a></h1>
+         <p>There are currently three options for Eclipse integration. </p>
+         <ol>
+          <li>There is an <a href="http://github.com/frank06/sbt-eclipse-plugin/" rel="nofollow">Eclipse plugin</a> to pick up dependencies from your <tt>lib_managed</tt> directory. </li>
+          <li>There is another <a href="http://github.com/musk/SbtEclipsify" rel="nofollow">Eclipse plugin</a> to create an Eclipse project from an <tt>sbt</tt> project. See the <a href="http://groups.google.com/group/simple-build-tool/msg/89b5b0c422cc1d58" rel="nofollow">mailing list post</a> for details. </li>
+          <li>Use IvyDE as described below. </li>
+         </ol>
+         <p></p>
+         <h2><a name="IvyDE_approach"></a>IvyDE approach<a href="#IvyDE_approach" class="section_anchor"></a></h2>
+         <h3><a name="Initial_Setup"></a>Initial Setup<a href="#Initial_Setup" class="section_anchor"></a></h3>
+         <ol>
+          <li>Install <a href="http://ant.apache.org/ivy/ivyde/" rel="nofollow">IvyDE</a> </li>
+          <li>Set up your <tt>sbt</tt> project (dependencies, repos, settings, ...) </li>
+          <li>Issue <tt>reload</tt> and <tt>deliver-local</tt> at the <tt>sbt</tt> prompt. </li>
+          <li>Set up the Eclipse classpath container using IvyDE as follows: </li>
+          <ol>
+           <li>Go to <tt>project properties -&gt; Java Build Path</tt>. Make sure you use the same version of Scala in both Eclipse and <tt>sbt</tt>. </li>
+           <li>Then, <tt>Add Library... -&gt; IvyDE managed dependencies -&gt; Ivy file: target/ivy-1.0.xml</tt>. Select appropriate configurations. </li>
+          </ol>
+         </ol>
+         <p> </p>
+         <h3><a name="Updating"></a>Updating<a href="#Updating" class="section_anchor"></a></h3>
+         <ol>
+          <li>Add/remove dependencies in your project definition. </li>
+          <li>Issue <tt>reload</tt> and <tt>deliver-local</tt> in the <tt>sbt</tt> console </li>
+          <li>Update Eclipse classpath container as follows: right-click on the Ivy container in your project (should look like: <tt>target/ivy-1.0.xml [compile]</tt>) and click on the bottommost <tt>Refresh</tt> (not the one with <tt>F5</tt>, but just below <tt>Resolve</tt>) </li>
+         </ol>
+         <h1><a name="Jenkins"></a>Jenkins<a href="#Jenkins" class="section_anchor"></a></h1>
+         <p>Jenkins plugin: <a href="http://wiki.jenkins-ci.org/display/JENKINS/sbt+plugin" rel="nofollow">http://wiki.jenkins-ci.org/display/JENKINS/sbt+plugin</a>. </p>
+         <h1><a name="JEdit"></a>JEdit<a href="#JEdit" class="section_anchor"></a></h1>
+         <p>JEdit plugin: <a href="https://github.com/StefanE/SBT4jEdit" rel="nofollow">https://github.com/StefanE/SBT4jEdit</a> </p>
+         <h1><a name="ScalaEdit"></a>ScalaEdit<a href="#ScalaEdit" class="section_anchor"></a></h1>
+         <p>A text editor for Scala programmers with support for sbt: <a href="http://code.google.com/p/scala-edit/" rel="nofollow">http://code.google.com/p/scala-edit/</a> </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

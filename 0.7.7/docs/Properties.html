@@ -1,0 +1,133 @@
+<html>
+ <head> 
+  <title>Properties</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Properties</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Properties"></a>Properties<a href="#Properties" class="section_anchor"></a></h1>
+         <h2><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> provides a means of working with system properties (<tt>System.getProperty/setProperty</tt>) and persistent user-defined variables. <tt>sbt</tt> handles serializing and deserializing user-defined properties for you, but system properties are not persisted. User-defined variables are useful for task options or within custom tasks. </p>
+         <h3><a name="User-Defined_Property_Examples"></a>User-Defined Property Examples<a href="#User-Defined_Property_Examples" class="section_anchor"></a></h3>
+         <pre class="prettyprint">  lazy val documentBottomText = property[String]
+  lazy val timestamp = propertyOptional[Long](-1L) // This variant provides a default value.
+
+  // Using a property
+  override def documentOptions = super.documentOptions ++ documentBottomText.get.map(documentBottom).toList
+
+  // Custom format for java.net.URL
+  implicit lazy val urlFormat =
+    new Format[URL]
+    {
+      def fromString(s: String) = new URL(s)
+      def toString(u: URL) = u.toExternalForm
+    }
+
+  lazy val location = property[URL]  // urlFormat is implicitly passed to the property method</pre>
+         <p>The properties are backed by a standard properties file <tt>project/build.properties</tt> that looks like: </p>
+         <pre class="prettyprint">#Project properties
+#Tue Dec 02 19:58:06 EST 2008
+location=http\://code.google.com/p/simple-build-tool/
+document.bottom.text=Some Bottom Text
+...</pre>
+         <h3><a name="System_Property_Examples"></a>System Property Examples<a href="#System_Property_Examples" class="section_anchor"></a></h3>
+         <pre class="prettyprint">  lazy val operatingSystem = system[String](&quot;os.name&quot;)
+  lazy val userHome = system[File](&quot;user.home&quot;)
+  lazy val custom = systemOptional[Int](&quot;custom.property&quot;, 0)</pre>
+         <h2><a name="Usage_Details"></a>Usage Details<a href="#Usage_Details" class="section_anchor"></a></h2>
+         <p>A property has a value that you can read or write. Some properties may not require an explicitly defined value and can instead fall back to a default value or, for user-defined properties, a value inherited from a parent project. Specifically, when reading a property's value, the result is: </p>
+         <ol>
+          <li>The explicitly specified value for the property, if there is one </li>
+          <li>Otherwise, the default value for the property, if one has been specified </li>
+          <li>Otherwise, the value inherited from the respective variable in the parent project, if there is one </li>
+          <li>Otherwise, the property's value is undefined </li>
+         </ol>
+         <p></p>
+         <p>There are three methods for reading a property's value that differ by how they handle undefined values: </p>
+         <ul>
+          <li><tt>value</tt> returns the property value if it is defined or throws an exception if the property's value is undefined. </li>
+          <li><tt>get</tt> returns the property value wrapped in <tt>Some</tt> if it is defined or <tt>None</tt> if the value is undefined. </li>
+          <li><tt>resolve</tt> returns an instance of <tt>sbt.PropertyResolution</tt> that provides full information about the resolution of the value as described above: </li>
+          <ul>
+           <li>If an error occurred while processing, an instance of <tt>sbt.ResolutionException</tt> is returned. </li>
+           <li>If the property's value is undefined, <tt>sbt.UndefinedValue</tt> is returned. </li>
+           <li>If the property's value is defined, an instance of <tt>sbt.DefinedValue</tt> is returned. It provides the resolved value and flags that indicate whether the value was inherited or was the default value. </li>
+          </ul>
+         </ul>
+         <p></p>
+         <p>A property's value may be explicitly set using the <tt>update</tt> method. </p>
+         <p>A property's value is converted to and from a <tt>String</tt> representation as needed according to the <tt>sbt.Format</tt> instance provided when defining the property (described later). For a system property, every read and write converts to or from the <tt>String</tt> representation for <tt>getProperty/setProperty</tt> in <tt>java.lang.System</tt>. User-defined properties are read from a standard <tt>java.util.Properties</tt>-formatted file (<tt>project/build.properties</tt>) at startup and are synchronized to that properties file after each explicitly invoked action executes. </p>
+         <h2><a name="User-Defined_Property_Definition"></a>User-Defined Property Definition<a href="#User-Defined_Property_Definition" class="section_anchor"></a></h2>
+         <p>To define a property, use one of the following methods defined by the <tt>sbt.Environment</tt> trait, from which all projects inherit. </p>
+         <pre class="prettyprint">  def property[T](implicit manifest: Manifest[T], format: Format[T]): Property[T]
+  def propertyLocal[T](implicit manifest: Manifest[T], format: Format[T]): Property[T]
+  def propertyOptional[T](defaultValue: =&gt; T)(implicit manifest: Manifest[T], format: Format[T]): Property[T]</pre>
+         <p>The first variant creates a user-defined property that tries to inherit its value from a parent project, if there is one, if its value is not explicitly specified. The second variant creates a user-defined property that does not try to inherit its value from a parent project. The third variant creates a user-defined property that uses the given default value if it does not have an explicitly specified value. </p>
+         <p>The implicit parameters do not usually need to be specified explicitly, however you may want to use different formats for the same type (such as a format for positive integers and one for negative integers). In this case, there are variants of the above with an 'F' appended to the method name and with the <tt>format</tt> parameter in the normal parameter list (so that <tt>manifest</tt> may still be implied). </p>
+         <p>For example, </p>
+         <pre class="prettyprint">  def propertyF[T](format: Format[T])(implicit manifest: Manifest[T]): Property[T]</pre>
+         <p>In order for the value of a user-defined property to persist between builds, it must be assigned to a <tt>val</tt> in a <tt>Project</tt> subclass (see the examples). The name of the val will be used as the property's name after being transformed from camel-case identifier style to period-separated property style (<tt>propertyName</tt> to <tt>property.name</tt>). </p>
+         <p>User-defined properties are stored in <tt>project/build.properties</tt> in standard <tt>java.util.Properties</tt> format. You can edit this file and <tt>sbt</tt> will use the new values the next time it starts up. </p>
+         <h2><a name="System_Property_Definition"></a>System Property Definition<a href="#System_Property_Definition" class="section_anchor"></a></h2>
+         <p>To define a system property, use one of the following methods defined by the <tt>sbt.Environment</tt> trait, which all projects inherit. </p>
+         <pre class="prettyprint">  def system[T](propName: String)(implicit format: Format[T]): Property[T]
+  def systemOptional[T](propName: String, defaultValue: =&gt; T)(implicit format: Format[T]): Property[T]</pre>
+         <p>The first variant accepts the name of the system property and a formatter to convert between the <tt>String</tt> representation used by <tt>System.getProperty</tt> and <tt>System.setProperty</tt> and the type defined by the user. Several formatters are predefined, including <tt>Int</tt>, <tt>String</tt>, <tt>Long</tt>, <tt>Boolean</tt>, <tt>Double</tt>, and <tt>java.io.File</tt>. The second variant has the additional by-name argument for specifying a default value to return when the property is not defined. </p>
+         <h2><a name="Default_Properties"></a>Default Properties<a href="#Default_Properties" class="section_anchor"></a></h2>
+         <p>Every project has the following properties defined. </p>
+         <pre class="prettyprint">  lazy val projectName = propertyLocalF[String](NonEmptyStringFormat)
+  lazy val projectVersion = property[Version]
+  lazy val projectOrganization = propertyOptional[String](name, true)
+  lazy val defScalaVersion = property[String]
+  lazy val buildScalaVersions = propertyOptional[String](defScalaVersion.value, true)
+  lazy val sbtVersion = property[String]</pre>
+         <p>The definition of <tt>projectName</tt> explictly specifies the format so that a project name cannot be empty. Additionally, the <tt>Local</tt> in <tt>propertyLocalF</tt> specifies that the value for <tt>propertyName</tt> is not inherited from a parent project if is not explicitly set. <tt>projectVersion</tt> can be inherited, however. </p>
+         <p>The project organization was introduced after a default behavior of using the name for the organization already existed. Therefore, it is optional and the name is used by default. The <tt>true</tt> argument specifies that the value in a parent environment should be used before the default. This is so that the organization is inherited from a parent project before the project's name is used as the organization. This means that the organization only needs to be specified on the root project. </p>
+         <p>The <tt>sbtVersion</tt> property is used to determine the version of <tt>sbt</tt> that is used to build the project. </p>
+         <p>The <tt>defScalaVersion</tt> property determines the Scala version used to run <tt>sbt</tt>. This currently cannot have a value other than <tt>'2.7.7'</tt>. The <tt>buildScalaVersions</tt> property defines the space-delimited versions of Scala used to build the project. The first version listed is used initially. All versions listed are used for <a href="CrossBuild">cross-building</a>. Inside a project definition, use <tt>buildScalaVersion</tt> to get the version of Scala currently building the project. </p>
+         <h2><a name="Additional_Property_Files"></a>Additional Property Files<a href="#Additional_Property_Files" class="section_anchor"></a></h2>
+         <p>Properties are defined in an <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Environment.html" rel="nofollow">Environment</a>. The built-in implementation in <tt>sbt</tt> that is used by <tt>Project</tt> is <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/BasicEnvironment.html" rel="nofollow">BasicEnvironment</a>. </p>
+         <p>To create a new environment, specify a <tt>Logger</tt>, the location of the backing file, and optionally a parent <tt>Environment</tt> from which values can be inherited. Then, define properties for that environment. A basic example: </p>
+         <pre class="prettyprint">import sbt._
+
+class Test(info: ProjectInfo) extends DefaultProject(info)
+{
+  lazy val extra = new BasicEnvironment
+  {
+    // use the project's Logger for any properties-related logging
+    def log = Test.this.log
+    
+    // the properties file will be read from/stored to project/extra.properties
+    def envBackingPath = info.builderPath / &quot;extra.properties&quot;
+
+    // define some properties that will go in project/extra.properties
+    lazy val firstProperty = property[String]
+    lazy val secondProperty = property[String]
+  }
+}</pre>
+         <p>To inherit values from another Environment, override <tt>parentEnvironment</tt> in the new <tt>BasicEnvironment</tt>: </p>
+         <pre class="prettyprint">  ...
+  override def parentEnvironment = Some(Test.this)
+  ...</pre>
+         <p>If a property defined in the new environment is not specified in the new properties file, its value is taken from a property with the same name in the parent environment. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

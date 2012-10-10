@@ -1,0 +1,146 @@
+<html>
+ <head> 
+  <title>Processors</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Processors</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="sbt_Processors"></a>sbt Processors<a href="#sbt_Processors" class="section_anchor"></a></h1>
+         <h2><a name="Existing_Processors"></a>Existing Processors<a href="#Existing_Processors" class="section_anchor"></a></h2>
+         <ul>
+          <li><a href="http://lifty.github.com/" rel="nofollow">Lifty</a> </li>
+          <li><a href="http://github.com/sroebuck/sbt-coverage" rel="nofollow">Code coverage with Undercover </a> </li>
+         </ul>
+         <p>See <a href="http://code.google.com/p/simple-build-tool/wiki/IntegrationSupport" rel="nofollow">Integration Support</a> for IDE-related processors. </p>
+         <h2><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h2>
+         <p>A processor is complementary to a plugin. The table below compares the two. </p>
+         <p></p>
+         <table class="wikitable">
+          <tbody>
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Processors </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Plugins </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> contribute </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> new commands </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> new Project types and actions </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> operate at level of </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> command handling </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> task execution </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> associated with </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> user </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> project </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> declared at/in </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> command line </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> plugin/project definitions </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> distribution </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> binary </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> source </td>
+           </tr> 
+          </tbody>
+         </table>
+         <p></p>
+         <h2><a name="Processor_Setup/Management_Commands"></a>Processor Setup/Management Commands<a href="#Processor_Setup/Management_Commands" class="section_anchor"></a></h2>
+         <p>To use a processor, you first tell sbt about it. There are two pieces of required information: the processor's ID and the repository it is published to. By default, sbt knows about the local Ivy repository, Scala Tools Releases, and Maven Central. These do not need to be declared. </p>
+         <p>Commands that manage processors are prefixed with <tt>'*'</tt>. </p>
+         <p>To add a repository: </p>
+         <pre class="prettyprint"> *&lt;id&gt; at &lt;url&gt;</pre>
+         <p>For example, at the interactive prompt, this would look like: </p>
+         <pre class="prettyprint">&gt; *db at http://databinder.net/repo/</pre>
+         <p>To define a processor, select an alphanumeric name for it and declare it like: </p>
+         <pre class="prettyprint"> *&lt;name&gt; is &lt;group&gt; &lt;module&gt; &lt;version&gt;</pre>
+         <p>For example: </p>
+         <pre class="prettyprint">&gt; *generate is org.scala-tools.sbt generate 1.0
+or
+&gt; *gen is org.scala-tools.sbt generate 1.0</pre>
+         <p>sbt will try to retrieve the defined processor at this point. If it is unsuccessful, check that the ID is correct and you have added any necessary repositories for the processor and its dependencies. sbt uses Ivy for this, so a downloaded processor is cached in Ivy's cache. </p>
+         <p>You can see currently defined processors and repositories with the <tt>show</tt> command: </p>
+         <pre class="prettyprint"> *show</pre>
+         <p>To undefine a processor or repository, use: </p>
+         <pre class="prettyprint"> *remove &lt;label&gt;</pre>
+         <p>For example: </p>
+         <pre class="prettyprint">&gt; *remove generate</pre>
+         <p>The <tt>*help</tt> command lists the above commands with a short description. </p>
+         <p>The processor definitions managed with these commands are associated with a user and not a project, unlike plugins. Although you manage processors while running sbt on a project, the actual configuration is stored globally for the current user. If you add a processor while working on one project on a machine, you do not need to define it again to use it in another project. If you use the same project on a different machine, you need to define the processor again. </p>
+         <h2><a name="Processor_Usage"></a>Processor Usage<a href="#Processor_Usage" class="section_anchor"></a></h2>
+         <p>Run a processor like a normal sbt command or action. You call a processor using whatever name you gave it and pass the arguments it expects. In the example above, we bound a processor to <tt>generate</tt>. It would be run like: </p>
+         <pre class="prettyprint"> generate arg1 arg2</pre>
+         <h2><a name="Creating_a_Processor"></a>Creating a Processor<a href="#Creating_a_Processor" class="section_anchor"></a></h2>
+         <p>A processor is a public, concrete implementation of the <tt>sbt.processor.Processor</tt> trait with a no-argument constructor. Processors that do not need to modify command processing can implement the simpler <tt>sbt.processor.BasicProcessor</tt> class. These classes are: </p>
+         <pre class="prettyprint">trait Processor {
+   def apply(label: String, project: Project, onFailure: Option[String], args: String): ProcessorResult
+}
+abstract class BasicProcessor extends Processor {
+   def apply(project: Project, args: String): Unit
+}
+
+sealed trait ProcessorResult extends NotNull
+final class Success(project: Project, onFailure: Option[String], insertArgs: String*) extends ProcessorResult
+final class Exit(val code: Int) extends ProcessorResult
+final class Reload(insertArgs: String*) extends ProcessorResult</pre>
+         <p>A <tt>BasicProcessor</tt> accepts a <tt>Project</tt> and the arguments passed to it on the command line and performs some action. A full <tt>Processor</tt> gets access to the label that the user invoked it by and the action that will run if a command fails (usually <tt>shell</tt> or <tt>exit</tt>). It can also return new commands to insert into the execution, change the current Project, or request that sbt exit or reload the project definition. </p>
+         <p>As an example, consider a processor that accepts an integer argument and calls <tt>test</tt> that many times. It might look like: </p>
+         <pre class="prettyprint">class TestN extends Processor {
+   def apply(label: String, project: Project, onFailure: Option[String], args: String): ProcessorResult =
+      new Success(project, onFailure, List.make(args.toInt, &quot;test&quot;) : _* )
+}</pre>
+         <p>In addition, a Processor includes a descriptor file called <tt>sbt.processor</tt> that contains the name of the class implementing Processor. For example, if TestN is in the <tt>example</tt> package, <tt>sbt.processor</tt> would contain the single line: </p>
+         <pre class="prettyprint">example.TestN</pre>
+         <p>For the project definition, extend <tt>ProcessorProject</tt>. This will put <tt>sbt</tt> classes on the classpath and fix the Scala version to the version currently running <tt>sbt</tt>. Then, publish the project using <tt>publish-local</tt> or <tt>publish</tt>. You can then use the processor from another project as described in the sections above. </p>
+         <h3><a name="Notes"></a>Notes<a href="#Notes" class="section_anchor"></a></h3>
+         <ul>
+          <li>A processor project can define dependencies like a normal project. </li>
+          <li>A processor is built against the version of <tt>sbt</tt> building the processor project`. </li>
+          <li>The project passed to the processor is the user's current project, not necessarily the root project. Use <tt>project.rootProject</tt> to get the root. </li>
+          <li>The example processor is very naive. It assumes a 'test' action exists. A real processor would want to check whether the provided Project has such an action. </li>
+          <li>One intended use of processors is for project or file generation. If the project definition is modified, be sure to insert a 'reload' command. </li>
+          <li>The arguments are passed unparsed for more flexibility. If handling multiple arguments, you will need to parse the arguments string. The <tt>sbt.impl.Arguments</tt> class exists for this purpose. </li>
+         </ul>
+         <h2><a name="Minimal_Example"></a>Minimal Example<a href="#Minimal_Example" class="section_anchor"></a></h2>
+         <p>Project definition: </p>
+         <pre class="prettyprint"> import sbt._
+ class MyProcessorProject(info: ProjectInfo) extends ProcessorProject(info)</pre>
+         <p>Processor source: </p>
+         <pre class="prettyprint"> package example
+
+ import sbt._
+ import processor.BasicProcessor
+
+ class TestProcessor extends BasicProcessor {
+   def apply(project: Project, args: String) {
+      project.log.info(&quot;Processor test.  args: '&quot; + args + &quot;'&quot;)
+   }
+ }</pre>
+         <p>Processor descriptor resource <tt>sbt.processor</tt> (goes in <tt>src/main/resources/</tt>): </p>
+         <pre class="prettyprint"> example.TestProcessor</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

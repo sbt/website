@@ -1,0 +1,241 @@
+<html>
+ <head> 
+  <title>090p3tour</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">090p3tour</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Command_line_input">Command line input</a></li>
+          <li><a href="#Streams">Streams</a></li>
+          <ul>
+           <li><a href="#Logging">Logging</a></li>
+           <li><a href="#Text_and_Binary_I/O">Text and Binary I/O</a></li>
+           <ul>
+            <li><a href="#Basics">Basics</a></li>
+            <li><a href="#Streams_and_Process_API">Streams and Process API</a></li>
+            <li><a href="#Streams_and_SBinary">Streams and SBinary</a></li>
+           </ul>
+          </ul>
+          <li><a href="#Notes">Notes</a></li>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>The second preview introduced the new task engine for 0.9.x. This preview expands on some features built on top of this new task model. These are: </p>
+         <ul>
+          <li>Access to command line input </li>
+          <li>Streams: a task I/O and logging system </li>
+          <li>Integration with processes: piping and redirection between tasks and processes </li>
+         </ul>
+         <p></p>
+         <p>These provided sufficient material for one post, so multi-project improvements will be covered in a follow-up. As before, type annotations are optional unless otherwise indicated. The context for all of the example code is: </p>
+         <pre class="prettyprint">   import sbt._
+   import std._
+   import java.io._
+   import Process._
+
+class Test(val info: ProjectInfo) extends TestProject
+{
+   ...
+}</pre>
+         <p>To follow along: </p>
+         <ol>
+          <li>Setup sbt 0.9 as indicated in the <a href="http://code.google.com/p/simple-build-tool/wiki/090p1tour" rel="nofollow">first preview</a> </li>
+          <li>Create a new project (type <tt>'xsbt'</tt> and enter <tt>'s'</tt> for scratch) </li>
+          <li>Save the project definition template above in <tt>.sbt/Test.scala</tt> (<tt>.sbt</tt> is an experiment) or <tt>project/build/Test.scala</tt> </li>
+          <li>Run interactive mode (<tt>'xsbt shell'</tt>) </li>
+          <li>To initially load and to reload the project definition, run the <tt>'loadp'</tt> command. </li>
+         </ol> For example: 
+         <p></p>
+         <pre class="prettyprint">$ xsbt                                                                                                         
+Project does not exist, create new project? (y/N/s) s                                                                                                                              
+Getting Scala 2.8.0 ...                                                                                                                                                            
+:: retrieving :: org.scala-tools.sbt#boot-scala                                                                                                                                    
+        confs: [default]                                                                                                                                                           
+        2 artifacts copied, 0 already retrieved (14484kB/83ms)                                                                                                                     
+Getting org.scala-tools.sbt sbt_2.8.0 0.9.0-SNAPSHOT ...                                                                                                                           
+:: retrieving :: org.scala-tools.sbt#boot-app                                                                                                                                      
+        confs: [default]                                                                                                                                                           
+        29 artifacts copied, 0 already retrieved (3726kB/36ms)
+$ xsbt shell
+&gt; loadp</pre>
+         <h1><a name="Command_line_input"></a>Command line input<a href="#Command_line_input" class="section_anchor"></a></h1>
+         <p>The command line is available as the result of a task <tt>input</tt> of type <tt>Task[Input]</tt>. The <tt>Input</tt> interface looks like: </p>
+         <pre class="prettyprint">trait Input {
+   // the full, unparsed command line
+   val line: String
+   // the command name
+   val name: String
+   // everything after the command name
+   val arguments: String
+   // 'arguments' split around whitespace, no escaping supported
+   val splitArgs: Seq[String]
+}</pre>
+         <p><tt>line</tt> is the full input String and the rest of the methods are convenience methods for processing this<a href="http://code.google.com/p/simple-build-tool/wiki/090p3tour#Notes" rel="nofollow">[1</a>]. </p>
+         <p>Grab the <tt>Input</tt> instance from the <tt>input</tt> task using functions shown in the <a href="http://code.google.com/p/simple-build-tool/wiki/090p2tour" rel="nofollow">previous article</a>, such as by using <tt>map</tt>: </p>
+         <pre class="prettyprint">   lazy val hi =
+      input map { (in: Input) =&gt;
+         println(&quot;Hi &quot; + in.arguments)
+      }
+
+   lazy val hiAll =
+      input map { (in: Input) =&gt;
+         in.splitArgs foreach( (arg: String) =&gt; println(&quot;Hi &quot; + arg) )
+      }</pre>
+         <p>Sample usage of these tasks is: </p>
+         <pre class="prettyprint"> &gt; hi A B
+ Hi A B
+
+ &gt; hiAll A B
+ Hi A
+ Hi B</pre>
+         <p>Because the input task is just a task, any task has access to the command line. It remains to be seen whether this will be useful or confusing in practice. However, it does loosen some restrictions imposed on method tasks, the predecessor to this approach. A method task could not be a dependency of other tasks and only the method task on the current project would be executed. Both of these will be demonstrated later. </p>
+         <h1><a name="Streams"></a>Streams<a href="#Streams" class="section_anchor"></a></h1>
+         <p>There is a new system for logging that I call <tt>Streams</tt> (like <tt>Input/OutputStreams</tt>, not Scala's lazy list <tt>Stream</tt> type). It has several advantages, which will be demonstrated here. Similar to the command line <tt>input</tt> task, there is a task called <tt>streams</tt> that provides a <tt>TaskStreams</tt> instance. Unlike the <tt>input</tt> task, the provided <tt>TaskStreams</tt> is specific to the retrieving task<a href="http://code.google.com/p/simple-build-tool/wiki/090p3tour#Notes" rel="nofollow">[2</a>]. This <tt>TaskStreams</tt> provides access to managed logging and persisted text and binary input and output streams. Any I/O streams used by the task are automatically closed when the task finishes executing<a href="http://code.google.com/p/simple-build-tool/wiki/090p3tour#Notes" rel="nofollow">[3</a>]. </p>
+         <p>The <tt>TaskStreams</tt> interface looks like: </p>
+         <pre class="prettyprint">sealed trait TaskStreams
+{
+   val log: Logger = log(default)
+   def log(sid: String): Logger
+
+   def text(sid: String = default): PrintWriter
+   def binary(sid: String = default): BufferedOutputStream
+
+   def readText(a: Task[_], sid: String = default): Task[BufferedReader]
+   def readBinary(a: Task[_], sid: String = default): Task[BufferedInputStream]
+
+   val default = &quot;out&quot;
+}</pre>
+         <h2><a name="Logging"></a>Logging<a href="#Logging" class="section_anchor"></a></h2>
+         <p>We'll start by looking at logging. We grab a <tt>TaskStreams</tt> instance and log something to the default <tt>Logger</tt>. </p>
+         <pre class="prettyprint">   lazy val logDemo = streams map { (s: TaskStreams) =&gt;
+      s.log.info(&quot;Testing...&quot;)
+   }</pre>
+         <p>The first benefit is that the default <tt>Logger</tt> not only logs to the screen, but also to a file. The pre-defined <tt>last</tt> task lets us view the previous output. </p>
+         <pre class="prettyprint">  &gt; logDemo
+    [info] Testing...
+  &gt; last logDemo
+    [info] Testing...</pre>
+         <p>One use for this is when there is a lot of output from multiple tasks. Additionally, different logging levels can be set for printing to the screen and for persisting the messages. You could set the logging level for the screen to be quiet and verbose for the persisted file. Then, if you need to see detail, you could pull up the previous logging. Note that <tt>last</tt> is not special, merely predefined. You could write it yourself, but how to do that isn't shown here. </p>
+         <p>The Streams model allows multiple streams, each labeled with a String identifier. You can send logging to other streams by using the <tt>log</tt> method that accepts a stream id (sid). </p>
+         <pre class="prettyprint">   lazy val logExtra = streams map { (s: TaskStreams) =&gt;
+      val log: Logger = s.log(&quot;extra&quot;)
+      log.info(&quot;Testing extra...&quot;)
+   }</pre>
+         <p>If you run 'last logExtra', nothing is printed to the screen because 'logExtra' didn't send anything to the default stream. So, the 'last' command is currently simple, but it could be modified to show a particular stream instead of the default output stream. </p>
+         <h2><a name="Text_and_Binary_I/O"></a>Text and Binary I/O<a href="#Text_and_Binary_I/O" class="section_anchor"></a></h2>
+         <h3><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h3>
+         <p>In addition to logging, a task can send arbitrary text and binary data to a stream. </p>
+         <pre class="prettyprint">   lazy val echo =
+      (streams, input) map { (s: TaskStreams, in: Input) =&gt;
+         val out: PrintWriter = s.text()
+         out.println(in.arguments)
+      }
+
+   lazy val hello =
+      (streams, input) map { (s: TaskStreams, in: Input) =&gt;
+         val out: PrintWriter = s.text()
+         in.splitArgs foreach { arg =&gt; out.println(&quot;Hi &quot; + arg) }
+      }</pre>
+         <p><tt>text()</tt> uses the default stream. <tt>text(&quot;id&quot;)</tt> would use the stream labeled <tt>id</tt>. </p>
+         <p>Example usage: </p>
+         <pre class="prettyprint"> &gt; echo some input
+ &gt; hello some input
+ &gt; last echo
+ some input
+ &gt; last hello
+ Hi input
+ Hi some</pre>
+         <p>The data sent to a stream can then be read from other tasks. The following reads the output stream of the <tt>echo</tt> task just defined and sends it to standard output. </p>
+         <pre class="prettyprint">   lazy val goodbye = echo text { (in: BufferedReader) =&gt;
+      println(&quot;Goodbye &quot; + in.readLine())
+   }</pre>
+         <p>Example output: </p>
+         <pre class="prettyprint">&gt; goodbye for now
+Goodbye for now</pre>
+         <p>One thing to note here is that <tt>goodbye</tt> is not processing the command line. <tt>goodbye</tt> depends on <tt>echo</tt>, which is the one processing the arguments. To see this, use 'last': </p>
+         <pre class="prettyprint">&gt; last goodbye
+&gt; last echo
+for now</pre>
+         <p>As mentioned in the command line input section, I'm not sure if this is useful or confusing in practice. Finally, if <tt>echo</tt> sent output to a different stream, you would use need to specify that stream id to <tt>text</tt>. </p>
+         <h3><a name="Streams_and_Process_API"></a>Streams and Process API<a href="#Streams_and_Process_API" class="section_anchor"></a></h3>
+         <p>There is some integration between the Process API and Streams. You can pipe between <tt>Task</tt>s and <tt>Process</tt>es and the output of a <tt>Process</tt> can be persisted like a <tt>Task</tt>. Note that there is an overhead to this compared to piping between two real <tt>Process</tt>es due to reading/writing from an intermediate backing <tt>File</tt>. </p>
+         <pre class="prettyprint">   // the exit code of the 'grep' process is the result of the 'grep' task.
+   lazy val grep: Task[Int] =
+      hello #| &quot;grep me&quot;
+
+   // 'lines' is a method of type Task[Seq[String]]
+   //  that gets the lines of output from a task, here from 'grep'
+   lazy val grepLines =
+      grep.lines map( (ls: List[String]) =&gt; println(ls) )
+
+   lazy val grepToFile = grep #&gt; new File(&quot;test&quot;)</pre>
+         <p>Example output: </p>
+         <pre class="prettyprint"> &gt; grep you me someone
+ &gt; last grep
+ Hi someone
+ Hi me
+ &gt; grepLines you me someone
+List(Hi me, Hi someone)
+ &gt; grepToFile you me someone
+ $ cat test
+ Hi me
+ Hi someone</pre>
+         <h3><a name="Streams_and_SBinary"></a>Streams and SBinary<a href="#Streams_and_SBinary" class="section_anchor"></a></h3>
+         <p>As a final example, let's store some binary data using <a href="http://github.com/harrah/sbinary" rel="nofollow">SBinary</a>. This library is now distributed with sbt and is available for use in project definitions (it is used by sbt itself for caching data). </p>
+         <pre class="prettyprint">      import sbinary._
+      import JavaIO._
+      import DefaultProtocol._
+
+   lazy val write = streams map { (s: TaskStreams) =&gt;
+      // define some data
+      val myData = (3, &quot;asdf&quot;)
+      // get the stream to write to
+      val out: BufferedOutputStream = s.binary(&quot;data&quot;)
+      // write the data to the stream using SBinary
+      Operations.write(out , myData)
+   }
+
+   // get the 'data' stream for the 'write' task
+   lazy val read = write.binary(&quot;data&quot;) { (stream: BufferedInputStream) =&gt;
+      // read in the data using SBinary
+      val (i, st) = Operations.read[(Int,String)]( stream )
+      // show it
+      println(&quot;i: &quot; + i)
+      println(&quot;st: &quot; + st)
+   }</pre>
+         <p>Example output: </p>
+         <pre class="prettyprint">&gt; read                     
+i: 3
+st: asdf</pre>
+         <p>Like with the result of a <tt>Task</tt>, multiple tasks can read a task's streams (they are not consumed by the first task to read from them), so you could have multiple <tt>read</tt>-like tasks in the same execution. </p>
+         <p>For the last example with <tt>SBinary</tt>, <tt>write</tt> could have just returned <tt>(3, &quot;asdf&quot;)</tt> as its result. Also, in the examples shown so far, reading a task's streams forces that task to run first. Because the stream is persisted, this is not a strict requirement. The task could be a 'soft' dependency, where it would only run if some other task needs it to. This is how 'last' is implemented. However, because 'flatMap' was included in the task model, it is difficult to properly integrate soft dependencies and so they are not really ready for general use. Another pending addition is access to the underlying <tt>File</tt>. This would allow <tt>Streams</tt> to be used as the backing for caches. </p>
+         <h1><a name="Notes"></a>Notes<a href="#Notes" class="section_anchor"></a></h1>
+         <ol>
+          <li><tt>command</tt> is the initial, continuous run of symbolic characters or of alphanumeric characters (but not mixed). </li>
+          <li>This is accomplished by a transformation on tasks that depend on <tt>streams</tt>. Several features of the task engine are implemented this way. </li>
+          <li>This means you can't pass around a reference to the <tt>InputStream/Logger/OutputStream</tt>, although that would be considered poor practice anyway. </li>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

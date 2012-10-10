@@ -1,0 +1,213 @@
+<html>
+ <head> 
+  <title>GeneralizedLauncher</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">GeneralizedLauncher</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Launcher_Specification"></a>Launcher Specification<a href="#Launcher_Specification" class="section_anchor"></a></h1>
+         <p>The sbt launcher component is a self-contained jar that boots a Scala application without Scala or the application already existing on the system. The only prerequisites are the launcher jar itself, an optional configuration file, and a java runtime version 1.5 or greater. </p>
+         <h1><a name="Overview"></a>Overview<a href="#Overview" class="section_anchor"></a></h1>
+         <p>A user downloads the launcher jar and creates a script to run it. In this documentation, the script will be assumed to be called 'launch'. For unix, the script would look like: </p>
+         <pre class="prettyprint">  java -jar sbt-launcher.jar &quot;$@&quot;</pre>
+         <p>The user then downloads the configuration file for the application (call it <tt>my.app.configuration</tt>) and creates a script to launch it (call it <tt>myapp</tt>): </p>
+         <pre class="prettyprint">  launch @my.app.configuration &quot;$@&quot;</pre>
+         <p>The user can then launch the application using </p>
+         <pre class="prettyprint">  myapp arg1 arg2 ...</pre>
+         <p>Like the launcher used to distribute <tt>sbt</tt>, the downloaded launcher jar will retrieve Scala and the application. The difference is that this behavior is now configurable. The versions may be fixed or read from a configuration file (the location of which is also configurable). The location to which the Scala and application jars are downloaded is configurable as well. The repositories searched are configurable. Optional initialization of a properties file is configurable. </p>
+         <p>Once the launcher has downloaded the necessary jars, it loads the application and calls its entry point. The application is passed information about how it was called: command line arguments, current working directory, Scala version, and application ID (organization, name, version). In addition, the launcher can ask the launcher to perform operations such as obtaining the Scala jars and a <tt>ClassLoader</tt> for any version of Scala retrievable from the repositories specified in the configuration file. It can request that other applications be downloaded and run. When the application completes, it can tell the launcher to exit with a specific exit code or to reload the application with a different version of Scala, a different version of the application, or different arguments. </p>
+         <p>There are some other options for setup, such as putting the configuration file inside the launcher jar and distributing that as a single download. The rest of this documentation describes the details of configuring, writing, distributing, and running the application. </p>
+         <h2><a name="Configuration"></a>Configuration<a href="#Configuration" class="section_anchor"></a></h2>
+         <p>The launcher may be configured in one of the following ways in increasing order of precedence: </p>
+         <ul>
+          <li>Replace the <tt>/sbt/sbt.boot.properties</tt> file in the jar </li>
+          <li>Put a configuration file named <tt>sbt.boot.properties</tt> on the classpath. Put it in the classpath root without the <tt>/sbt</tt> prefix. </li>
+          <li>Specify the location of an alternate configuration on the command line. This can be done by either specifying the location as the system property <tt>sbt.boot.properties</tt> or as the first argument to the launcher prefixed by <tt>'@'</tt>. The system property has lower precedence. Resolution of a relative path is first attempted against the current working directory, then against the user's home directory, and then against the directory containing the launcher jar. An error is generated if none of these attempts succeed. </li>
+         </ul>
+         <p></p>
+         <p>The configuration file is line-based, read as UTF-8 encoded, and defined by the following grammer. <tt>'nl'</tt> is a newline or end of file and <tt>'text'</tt> is plain text without newlines or the surrounding delimiters (such as parentheses or square brackets): </p>
+         <pre class="prettyprint">configuration ::= scala app repositories boot log app-properties
+  scala ::= '[' 'scala' ']' nl version nl classifiers nl
+  app ::= '[' 'app' ']' nl org nl name nl version nl components nl class nl cross-versioned nl resources nl classifiers nl
+  repositories ::= '[' 'repositories' ']' nl (repository nl)*
+  boot ::= '[' 'boot' ']' nl directory nl bootProperties nl search nl promptCreate nl promptFill nl quickOption nl
+  log ::= '[' 'log' ']' nl logLevel nl
+  app-properties ::= '[' 'app-properties' ']' nl property*
+  ivy ::= '[' 'ivy' ']' nl cacheDirectory
+
+    directory ::= 'directory' ':' path
+    bootProperties ::= 'properties' ':' path
+    search ::= 'search' ':' ('none'|'nearest'|'root-first'|'only') (',' path)*
+    logLevel ::= 'log-level' ':' ('debug' | 'info' | 'warn' | 'error')
+    promptCreate ::= 'prompt-create'  ':'  label
+    promptFill ::= 'prompt-fill'  ':'  boolean
+    quickOption ::= 'quick-option'  ':'  boolean
+ 
+    version ::= 'version' ':' versionSpecification
+      versionSpecification ::= readProperty | fixedVersion
+        readProperty ::= 'read'  '(' propertyName ')'  '[' default ']'
+        fixedVersion ::= text
+
+    classifiers ::= 'classifiers' ':' text (',' text)*
+    cacheDirectory ::= 'cache-directory' ':' path
+
+    org ::= 'org' ':' text
+    name ::= 'name' ':' text
+    class ::= 'class' ':' text
+    components ::= 'components' ':' component (',' component)*
+    cross-versioned ::= 'cross-versioned' ':'  boolean
+    resources ::= 'resources' ':' path (',' path)*
+
+    repository ::= ( predefinedRepository | customRepository ) nl
+      predefinedRepository ::= 'local' | 'maven-local' | 'maven-central' | 'scala-tools-releases' | 'scala-tools-snapshots'
+      customRepository ::= label ':' url [',' pattern]
+
+    property ::= label ':' propertyDefinition (',' propertyDefinition)* nl
+      propertyDefinition ::= mode '=' (set | prompt)
+        mode ::= 'quick' | 'new' | 'fill'
+        set ::= 'set' '(' value ')'
+        prompt ::= 'prompt'  '(' label ')' ('[' default ']')?
+
+    boolean ::= 'true' | 'false'
+    path, propertyName, label, default ::= text</pre>
+         <p>The default configuration file for sbt looks like: </p>
+         <pre class="prettyprint">[scala]
+  version: 2.7.7
+# classifiers: sources, javadocs
+
+[app]
+  org: org.scala-tools.sbt
+  name: sbt
+  version: read(sbt.version)
+  class: sbt.xMain
+  components: xsbti
+  cross-versioned: true
+# classifiers: sources, javadocs
+
+[repositories]
+  local
+  maven-local
+  sbt-db: http://databinder.net/repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+  maven-central
+  scala-tools-releases
+  scala-tools-snapshots
+
+[boot]
+ directory: project/boot
+ properties: project/build.properties
+ prompt-create: Project does not exist, create new project?
+ prompt-fill: true
+ quick-option: true
+
+[log]
+ level: info
+
+[app-properties]
+ project.name: quick=set(test), new=prompt(Name), fill=prompt(Name)
+ project.organization: new=prompt(Organization)
+ project.version: quick=set(1.0), new=prompt(Version)[1.0], fill=prompt(Version)[1.0]
+ def.scala.version: quick=set(2.7.7), new=set(2.7.7), fill=set(2.7.7)
+ build.scala.versions: quick=set(2.9.0), new=prompt(Scala version)[2.9.0], fill=prompt(Scala version)[2.9.0]
+ sbt.version: quick=set(0.7.7), new=prompt(sbt version)[0.7.7], fill=prompt(sbt version)[0.7.7]
+ project.scratch: quick=set(true)
+ project.initialize: quick=set(true), new=set(true)
+
+#[ivy]
+#  cache-directory: /home/user/.ivy2/cache</pre>
+         <p>The <tt>scala.version</tt> property specifies the version of Scala used to run the application. If specified, the <tt>scala.classifiers</tt>property defines classifers, such as 'sources', of extra Scala artifacts to retrieve. The <tt>app.org</tt>, <tt>app.name</tt>, and <tt>app.version</tt> properties specify the organization, module ID, and version of the application, respectively. These are used to resolve and retrieve the application from the repositories listed in <tt>[repositories]</tt>. If <tt>app.cross-versioned</tt> is true, the resolved module ID is <tt>{app.name+'_'+scala.version}</tt>. The paths given in <tt>app.resources</tt> are added to the application's classpath. If the path is relative, it is resolved against the application's working directory. If specified, the app.classifiers`property defines classifers, like 'sources', of extra artifacts to retrieve for the application. </p>
+         <p>Jars are retrieved to the directory given by <tt>boot.directory</tt>. You can make this an absolute path to be shared by all sbt instances on the machine. You might see messages like: </p>
+         <pre class="prettyprint">  Waiting for lock on &lt;lock-file&gt; to be available...</pre>
+         <p>if multiple versions access it simultaneously. </p>
+         <p>The <tt>boot.properties</tt> property specifies the location of the properties file to use if <tt>app.version</tt> or <tt>scala.version</tt> is specified as <tt>read</tt>. The <tt>prompt-create</tt>, <tt>prompt-fill</tt>, and <tt>quick-option</tt> properties together with the property definitions in <tt>[app.properties]</tt> can be used to initialize the <tt>boot.properties</tt> file. </p>
+         <p>The app.class property specifies the name of the entry point to the application. An application entry point must be a public class with a no-argument constructor that implements <tt>xsbti.AppMain</tt>. The <tt>AppMain</tt> interface specifies the entry method signature 'run'. The run method is passed an instance of AppConfiguration, which provides access to the startup environment. <tt>AppConfiguration</tt> also provides an interface to retrieve other versions of Scala or other applications. Finally, the return type of the run method is <tt>xsbti.MainResult</tt>, which has two subtypes: <tt>xsbti.Reboot</tt> and <tt>xsbti.Exit</tt>. To exit with a specific code, return an instance of <tt>xsbti.Exit</tt> with the requested code. To restart the application, return an instance of Reboot. You can change some aspects of the configuration with a reboot, such as the version of Scala, the application ID, and the arguments. </p>
+         <p>The <tt>ivy.cache-directory</tt> property provides an alternative location for the Ivy cache used by the launcher. This does not set the Ivy cache for the application. </p>
+         <h2><a name="Execution"></a>Execution<a href="#Execution" class="section_anchor"></a></h2>
+         <p>On startup, the launcher searches for its configuration in the order described in the Configuration section and then parses it. If either the Scala version or the application version are specified as 'read', the launcher determines them in the following manner. The file given by the 'boot.properties' property is read as a Java properties file to obtain the version. The expected property names are <tt>${app.name}.version</tt> for the application version (where <tt>${app.name}</tt> is replaced with the value of the <tt>app.name</tt> property from the boot configuration file) and <tt>scala.version</tt> for the Scala version. If the properties file does not exist, the default value provided is used. If no default was provided, an error is generated. </p>
+         <p>Once the final configuration is resolved, the launcher proceeds to obtain the necessary jars to launch the application. The <tt>boot.directory</tt> property is used as a base directory to retrieve jars to. No locking is done on the directory, so it should not be shared system-wide. The launcher retrieves the requested version of Scala to </p>
+         <pre class="prettyprint">${boot.directory}/${scala.version}/lib/</pre>
+         <p>If this directory already exists, the launcher takes a shortcut for startup performance and assumes that the jars have already been downloaded. If the directory does not exist, the launcher uses Apache Ivy to resolve and retrieve the jars. A similar process occurs for the application itself. It and its dependencies are retreived to </p>
+         <pre class="prettyprint">${boot.directory}/${scala.version}/${app.org}/${app.name}/.</pre>
+         <p>Once all required code is downloaded, the class loaders are set up. The launcher creates a class loader for the requested version of Scala. It then creates a child class loader containing the jars for the requested 'app.components' and with the paths specified in <tt>app.resources</tt>. An application that does not use components will have all of its jars in this class loader. </p>
+         <p>The main class for the application is then instantiated. It must be a public class with a public no-argument constructor and must conform to xsbti.AppMain. The <tt>run</tt> method is invoked and execution passes to the application. The argument to the 'run' method provides configuration information and a callback to obtain a class loader for any version of Scala that can be obtained from a repository in repositories. The return value of the run method determines what is done after the application executes. It can specify that the launcher should restart the application or that it should exit with the provided exit code. </p>
+         <h2><a name="Creating_a_Launched_Application"></a>Creating a Launched Application<a href="#Creating_a_Launched_Application" class="section_anchor"></a></h2>
+         <p>This section shows how to make an application that is launched by this launcher. First, declare a dependency on the launcher-interface. Do not declare a dependency on the launcher itself. The launcher interface consists strictly of Java interfaces in order to avoid binary incompatibility between the version of Scala used to compile the launcher and the version used to compile your application. The launcher interface class will be provided by the launcher, so it is only a compile-time dependency. If you are building with sbt, your dependency definition would be: </p>
+         <pre class="prettyprint">  val launchInterface = &quot;org.scala-tools.sbt&quot; % &quot;launcher-interface&quot; % &quot;0.7.7&quot; % &quot;provided&quot;</pre>
+         <p>Make the entry point to your class implement 'xsbti.AppMain'. An example that uses some of the information: </p>
+         <pre class="prettyprint">package xsbt.test
+class Main extends xsbti.AppMain
+{
+	def run(configuration: xsbti.AppConfiguration) =
+	{
+		// get the version of Scala used to launch the application
+		val scalaVersion = configuration.provider.scalaProvider.version
+		// Print a message and the arguments to the application
+		println(&quot;Hello world!  Running Scala &quot; + scalaVersion)
+		configuration.arguments.foreach(println)
+		// demonstrate the ability to reboot the application into different versions of Scala
+		// and how to return the code to exit with
+		scalaVersion match
+		{
+			case &quot;2.7.7&quot; =&gt;
+				new xsbti.Reboot {
+					def arguments = configuration.arguments
+					def baseDirectory = configuration.baseDirectory
+					def scalaVersion = &quot;2.7.4&quot;
+					def app = configuration.provider.id
+				}
+			case &quot;2.7.4&quot; =&gt; new Exit(1)
+			case _ =&gt; new Exit(0)
+		}
+	}
+	class Exit(val code) extends xsbti.Exit
+}</pre>
+         <p>Next, define a configuration file for the launcher. For the above class, it might look like: </p>
+         <pre class="prettyprint">[scala]
+  version: 2.7.7
+[app]
+  org: org.scala-tools.sbt
+  name: xsbt-test
+  version: 0.7.7
+  class: xsbt.test.Main
+  cross-versioned: true
+[repositories]
+  local
+  maven-local
+  maven-central
+  scala-tools-releases
+#  scala-tools-snapshots
+[boot]
+ directory: boot</pre>
+         <p>Then, <tt>publish-local</tt> or <tt>+publish-local</tt> the application to make it available. </p>
+         <h2><a name="Running_an_Application"></a>Running an Application<a href="#Running_an_Application" class="section_anchor"></a></h2>
+         <p>As mentioned above, there are a few options to actually run the application. The first involves providing a modified jar for download. The second two require providing a configuration file for download. </p>
+         <ol>
+          <li>Replace the /sbt/sbt.boot.properties file in the launcher jar and distribute the modified jar. The user would need a script to run 'java -jar your-launcher.jar arg1 arg2 ...'. </li>
+          <li>The user downloads the launcher jar and you provide the configuration file. </li>
+          <ol>
+           <li>The user needs to run 'java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar'. </li>
+           <li>The user already has a script to run the launcher (call it 'launch'). The user needs to run </li>
+           <p></p>
+           <pre class="prettyprint">  launch @your.boot.properties your-arg-1 your-arg-2</pre>
+          </ol>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

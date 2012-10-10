@@ -1,0 +1,73 @@
+<html>
+ <head> 
+  <title>Artifacts</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Artifacts</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Artifacts"></a>Artifacts<a href="#Artifacts" class="section_anchor"></a></h1>
+         <h2><a name="Defining_Artifacts"></a>Defining Artifacts<a href="#Defining_Artifacts" class="section_anchor"></a></h2>
+         <p>By default, the published artifact is a war for <tt>DefaultWebProject</tt> and a jar for <tt>DefaultProject</tt>. You can declare other types of artifacts to publish by defining <tt>Artifact</tt> instances in your project definition. Multiple artifacts are allowed. </p>
+         <p>The basic constructions look like: </p>
+         <pre class="prettyprint">  val art  = Artifact(&quot;name&quot;, &quot;type&quot;, &quot;extension&quot;)
+  val art2 = Artifact(&quot;name&quot;, &quot;classifier&quot;)
+  val art3 = Artifact(&quot;name&quot;, url: URL)
+  val art4 = Artifact(&quot;name&quot;, Map(&quot;extra1&quot; -&gt; &quot;value1&quot;, &quot;extra2&quot; -&gt; &quot;value2&quot;))</pre>
+         <p>For example: </p>
+         <pre class="prettyprint">  val myZip = Artifact(&quot;myproject&quot;, &quot;zip&quot;, &quot;zip&quot;)
+  val myImg = Artifact(&quot;myproject&quot;, &quot;image&quot;, &quot;jpg&quot;)
+  val for15 = Artifact(&quot;myproject&quot;, &quot;jdk15&quot;)</pre>
+         <p>See the <a href="http://ant.apache.org/ivy/history/2.1.0/ivyfile/dependency-artifact.html" rel="nofollow">Ivy documentation</a> for more details on artifacts. See the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Artifact$object.html" rel="nofollow">Artifact API documentation</a> for combining the parameters above and specifying <a href="ManagedConfigurations">configurations</a> and extra attributes. </p>
+         <h3><a name="Details"></a>Details<a href="#Details" class="section_anchor"></a></h3>
+         <p>These declarations are collected and are made available under the <tt>artifacts</tt> method of your project definition. You could alternatively define your artifacts directly by overriding <tt>artifacts</tt>: </p>
+         <pre class="prettyprint"> override def artifacts =
+   Artifact(&quot;myproject&quot;, &quot;zip&quot;, &quot;zip&quot;) ::
+   Artifact(&quot;myproject&quot;, &quot;jdk15&quot;) ::
+   Nil</pre>
+         <p>To specify artifacts directly in addition to reflective definitions as above, add the artifacts to <tt>super.artifacts</tt>: </p>
+         <pre class="prettyprint"> override def artifacts =
+   super.artifacts ++ Seq( Artifact(&quot;myproject&quot;, &quot;zip&quot;, &quot;zip&quot;) )</pre>
+         <p>The <tt>artifacts</tt> method is then used to attach the artifacts to the project ID: </p>
+         <pre class="prettyprint">  def projectID =
+    ModuleID(organization, moduleID, version.toString) artifacts(artifacts : _*)</pre>
+         <p>Another alternative is to directly override <tt>projectID</tt> to specify your artifacts. </p>
+         <h2><a name="Sources/Docs"></a>Sources/Docs<a href="#Sources/Docs" class="section_anchor"></a></h2>
+         <p>A common need is to publish source and doc artifacts. The declarations would look like: </p>
+         <pre class="prettyprint">  // make the jar names have the expected format
+  override def packageDocsJar = defaultJarPath(&quot;-javadoc.jar&quot;)
+  override def packageSrcJar= defaultJarPath(&quot;-sources.jar&quot;)
+
+  // define the artifacts
+  val sourceArtifact = Artifact.sources(artifactID)
+  val docsArtifact = Artifact.javadoc(artifactID)</pre>
+         <p>See <a href="Publishing">Publishing</a> for the full details on publishing sources and docs. </p>
+         <h2><a name="Using_Dependencies_with_Artifacts"></a>Using Dependencies with Artifacts<a href="#Using_Dependencies_with_Artifacts" class="section_anchor"></a></h2>
+         <p>To specify the artifacts to use from a dependency that has custom or multiple artifacts, use the <tt>artifacts</tt> method on your dependencies. For example: </p>
+         <pre class="prettyprint">  val dep = &quot;org&quot; % &quot;name&quot; % &quot;rev&quot; artifacts(Artifact(&quot;name&quot;, &quot;type&quot;, &quot;ext&quot;))</pre>
+         <p>The <tt>from</tt> and <tt>classifer</tt> methods (described on the <a href="http://code.google.com/p/simple-build-tool/wiki/LibraryManagement" rel="nofollow">Basics page</a>) are actually convenience methods that translate to <tt>artifacts</tt>: </p>
+         <pre class="prettyprint">  def from(url: String) = artifacts( Artifact(name, new URL(url)) )
+  def classifier(c: String) = artifacts( Artifact(name, c) )</pre>
+         <p>That is, the following two dependency declarations are equivalent: </p>
+         <pre class="prettyprint"> val testng = &quot;org.testng&quot; % &quot;testng&quot; % &quot;5.7&quot; classifier &quot;jdk15&quot;
+ val testng = &quot;org.testng&quot; % &quot;testng&quot; % &quot;5.7&quot; artifacts( Artifact(&quot;testng&quot;, &quot;jdk15&quot;) )</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

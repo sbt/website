@@ -1,0 +1,202 @@
+<html>
+ <head> 
+  <title>090p4tour</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">090p4tour</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Single_project_incremental_compilation">Single project incremental compilation</a></li>
+          <li><a href="#Multi-project_incremental_compilation">Multi-project incremental compilation</a></li>
+          <li><a href="#Incremental_Recompilation_Details">Incremental Recompilation Details</a></li>
+          <li><a href="#Discovery">Discovery</a></li>
+          <li><a href="#External_Projects">External Projects</a></li>
+          <li><a href="#Dependency_Management">Dependency Management</a></li>
+          <li><a href="#Aggregation">Aggregation</a></li>
+          <li><a href="#Outlook">Outlook</a></li>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This is the last preview of major new aspects in 0.9.x. Aspects presented in earlier previews were a redone <a href="090p1tour">command system</a>, a new <a href="090p2tour">task model</a>, and a new <a href="090p3tour">logging and I/O system called streams</a>. This preview introduces the new multi-project incremental compilation, redesigned multi-project dependency management, and redesigned overall multi-project support, including better control over execution vs. classpath dependencies, support for external projects. If you only ever work on single projects, the new incremental compilation should still benefit you as well as the potential future support for remote projects. </p>
+         <h1><a name="Single_project_incremental_compilation"></a>Single project incremental compilation<a href="#Single_project_incremental_compilation" class="section_anchor"></a></h1>
+         <p>Create a new project. Add <tt>project/Single.scala</tt> with these contents: </p>
+         <pre class="prettyprint">import sbt._
+class Single(info: ProjectInfo) extends DefaultProject(info)
+{
+	// haven't gotten to reading from build.properties yet
+	override def name = &quot;single&quot;
+}</pre>
+         <p>Create a couple of source files in the root directory (or <tt>src/main/scala</tt> if you prefer): </p>
+         <p><tt>A.scala</tt> </p>
+         <pre class="prettyprint">object A
+{
+	val x = 3
+}</pre>
+         <p><tt>B.scala</tt> </p>
+         <pre class="prettyprint">object B
+{
+	val x = A.x
+}</pre>
+         <p>You can see the <tt>B</tt> uses <tt>A</tt> and that the inferred type of <tt>B.x</tt> will be the type of <tt>A.x</tt>. Go ahead and startup sbt, load the project definition, and run an initial compilation: </p>
+         <pre class="prettyprint">$ xsbt shell
+&gt; loadp
+&gt; compile</pre>
+         <p>Now change the value for <tt>A.x</tt> to be <tt>5</tt> instead of <tt>3</tt>. sbt prior to 0.9 would recompile both <tt>A.scala</tt> and <tt>B.scala</tt> because it only knew that the file had changed, not what changed inside. Now, sbt recompiles the modified files and only recompiles dependencies if the public API changes. So, if you run another <tt>compile</tt>, sbt will only recompile <tt>A.scala</tt>. However, if you change <tt>A.x</tt> to be <tt>true</tt> instead of <tt>5</tt>, you will notice that sbt recompiles <tt>A.scala</tt>, realizes it affects <tt>B.scala</tt> and recompiles that as well. Perhaps most usefully, this works across multiple projects as well. </p>
+         <h1><a name="Multi-project_incremental_compilation"></a>Multi-project incremental compilation<a href="#Multi-project_incremental_compilation" class="section_anchor"></a></h1>
+         <p>Now, let's create a new project to demonstrate multi-project recompilation. Add <tt>project/Multi.scala</tt>: </p>
+         <pre class="prettyprint">import sbt._
+class Multi(info: ProjectInfo) extends DefaultProject(info)
+{
+	override def name = &quot;root&quot;
+
+	// unlike in 0.7.4, this only declares subA as an execution dependency
+	//  That is, it is not placed on the classpath of the root project, but aggregate commands are executed on it.
+	//  Also unlike 0.7.4, commands are not aggregate by default.  This will be shown later.
+	val subA = project(&quot;a&quot;, &quot;A&quot;, (i: ProjectInfo) =&gt; new DefaultProject { val info = i })
+
+	// so, to declare it as a classpath dependency, we say we want it as a 'compile' dependency
+	//  with that, 'A' is compiled first and the result used on 'root's classpath.
+	val subADep = subA % &quot;compile&quot;
+}</pre>
+         <p>Let's create the same source files, but in separate projects. We'll put <tt>A.scala</tt> in the subproject and <tt>B.scala</tt> in the root project. </p>
+         <p><tt>a/A.scala</tt> </p>
+         <pre class="prettyprint">object A
+{
+	val x = 3
+}</pre>
+         <p><tt>B.scala</tt> </p>
+         <pre class="prettyprint">object B
+{
+	val x = A.x
+}</pre>
+         <p>Now, we execute <tt>compile</tt> for the initial compile (after starting up sbt and loading the project definition with <tt>loadp</tt>). Then, make the changes as before. Modify <tt>A.x</tt> to be <tt>5</tt> and note that <tt>B.scala</tt> is not recompiled. Modify <tt>A.x</tt> to be <tt>true</tt> and note that <tt>B.scala</tt> is recompiled. </p>
+         <p>You can list project with <tt>projects</tt> and move between them with <tt>project &lt;name&gt;</tt> (tab completion is not there yet). </p>
+         <h1><a name="Incremental_Recompilation_Details"></a>Incremental Recompilation Details<a href="#Incremental_Recompilation_Details" class="section_anchor"></a></h1>
+         <p>The full details would comprise a long article, but here is a short summary. </p>
+         <p>sbt now inserts an additional compiler phase after <tt>typer</tt> that extracts the API of compiled classes as an immutable data structure that tries to correspond as closely as possible to the Scala specification, especially Ch. 3 on types. This data structure is persisted so that it can be used between jvm invocations. Additionally it is available as the output of the <tt>compile</tt> task. A later section shows one way this can be used from your project definition. </p>
+         <p>As before, sbt checks which sources are modified or are out of date because of changes to binary dependencies (jars). What is new is that dependencies on other projects are tracked by their source API instead of the last modified time of the binary (either a class file or a jar). So, sbt will check whether the API for a dependency has changed and if it has, invalidate the dependent source (schedule it for recompilation). The first compilation run is then performed on these modified or invalidated sources. Note that within the project, transitive dependencies are not recompiled at this time. </p>
+         <p>During this compilation the new API for the sources is determined and checked against the previous API. If the public API has changed, then transitive dependencies of the changed source are recompiled. Note that the steps of determining the changes and propagating the changes are separate. That is, sbt does not determine what additional files to recompile based on what changed, only that there were changes. </p>
+         <h1><a name="Discovery"></a>Discovery<a href="#Discovery" class="section_anchor"></a></h1>
+         <p>As sbt users probably know, sbt 0.7.4 auto-detects test classes during compilation. Because the API of sources is now extracted and available after compilation, this discovery is now done after compilation. In fact, you can fairly easily do your own discovery. The following example shows how to detect subclasses of the marker interface <tt>DiscoveryTest</tt>. </p>
+         <p>Add the following task definition to one of the project definitions above (and reload the project definition with <tt>loadp</tt>): </p>
+         <pre class="prettyprint">	lazy val find = compile map { analysis =&gt;
+		build.Build.discover(analysis, None, build.Auto.Subclass, &quot;DiscoverTest&quot;)
+	}</pre>
+         <p>You can restrict the results to modules by using <tt>Some(true)</tt> instead of <tt>None</tt> or to only classes with <tt>Some(false)</tt>. You could detect annotations instead by using <tt>build.Auto.Annotation</tt> instead of <tt>build.Auto.Subclass</tt>. You can do more advanced processing, but you'd have to implement that yourself. The <tt>discover</tt> method is only for the relatively simple needs of test discovery. </p>
+         <p>Try it out by defining the marker interface, having one of the objects implement it (the object should be in the project defining <tt>find</tt>), and then running <tt>show find</tt>. (<tt>show</tt> will print the result of <tt>find</tt>. We could have also used a <tt>println</tt> in the definition of <tt>find</tt> if we wanted.) </p>
+         <pre class="prettyprint">object B extends DiscoverTest
+trait DiscoverTest</pre>
+         <h1><a name="External_Projects"></a>External Projects<a href="#External_Projects" class="section_anchor"></a></h1>
+         <p>External projects are fully supported in 0.9. There are no longer any restrictions with respect to location on the local filesystem. There is no longer the requirement that there be a single point of definition. That is, you can call <tt>project(&quot;sub&quot;)</tt> in multiple projects and <tt>sub</tt> will only be loaded once. The tradeoff is that <tt>project(&quot;sub&quot;)</tt> no longer loads and returns the <tt>Project</tt> instance immediately, but instead returns a descriptor that can later be used to obtain the <tt>Project</tt> instance. A bonus of this approach is that I believe it would be straightforward to add simple support for remote projects, like <tt>project(&quot;git://github.com/harrah/sbinary&quot;)</tt>. It would be more work to properly generalize it to allow arbitrary handlers, control updating the local copy, and so forth, but if you are interested in this, let me know and I'll try to point you in the right direction. </p>
+         <p>With that said, let's look at an example. We will add an additional sub project to our multi-project example. Because it is an external project, we need to make a full new project. Create this new project some other directory than the current project (this is not mandatory, it is just to demonstrate that it works outside of the project hierarchy). Add a project definition in this new project in <tt>project/External.scala</tt>: </p>
+         <pre class="prettyprint">import sbt._
+class External(info: ProjectInfo) extends DefaultProject(info)
+{
+	override def name = &quot;external&quot;
+}</pre>
+         <p>and a new source in <tt>E.scala</tt> (in the new project's root directory or in <tt>src/main/scala</tt>): </p>
+         <pre class="prettyprint">object E
+{
+	val x = false
+}</pre>
+         <p>Change <tt>B.x</tt> from before to refer to <tt>E.x</tt>: </p>
+         <pre class="prettyprint">object B
+{
+	val x = E.x
+}</pre>
+         <p>Add the dependency to <tt>MultiProject.scala</tt>: </p>
+         <pre class="prettyprint">	val ext = project(new File(&quot;/path/to/external&quot;))
+	val extDep = ext % &quot;compile&quot;</pre>
+         <p>You can start sbt in the external project directory (<tt>xsbt shell</tt>), load the project definition (<tt>loadp</tt>), and run <tt>compile</tt>. Here you are working directly on this project. You can then exit out of sbt and head back to the original project directory, startup sbt, load the project definition, and run <tt>compile</tt> there. Now, you are working with the project as an external project. </p>
+         <p>Modify <tt>E</tt> to be </p>
+         <pre class="prettyprint">object E
+{
+	val x = &quot;a string&quot;
+}</pre>
+         <p>Run <tt>compile</tt>. <tt>B.scala</tt> is recompiled again. Change <tt>E.x</tt> to return a different string. Note that <tt>E.scala</tt> is recompiled, but <tt>B.scala</tt> is not. </p>
+         <p>Note that the <tt>sbt.version</tt> setting for an external project is ignored. sbt should really check that it is the same or do something else more intelligent, but it doesn't. Also, I don't remember if cycles between projects are detected. </p>
+         <h1><a name="Dependency_Management"></a>Dependency Management<a href="#Dependency_Management" class="section_anchor"></a></h1>
+         <p><a title="multi-project dependency management" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=44">&nbsp;Issue #44&nbsp;</a> describes a design flaw in sbt's inter-project dependency management. Consider a project A that depends on a project B. B declares a dependency on library L version 1.0. A declares a dependency on L 1.0.1. What goes on the compile classpath for B? How about A? Assume conflicts are resolved by the newest version available, as is the default in Ivy. Then, B should compile against L 1.0 and A should compile against L 1.0.1 and B, but L 1.0 should not be on A's classpath. Both L 1.0 and L 1.0.1 are on A's classpath in sbt 0.7.4. This is fixed in 0.9, but required an overhaul of how sbt does dependency management. </p>
+         <p>Previously, each project's dependencies were resolved independently and for each configuration separately. That is, A's 'compile' dependencies would be resolved without B entering the picture. The dependencies were retrieved to <tt>lib_managed/compile</tt> for each project. When the 'compile' classpath was required for A, the jars in A's <tt>lib_managed/compile</tt> were combined with those in B's <tt>lib_managed/compile</tt>. Clearly, this gives rise to the issue mentioned previously. </p>
+         <p>The fix is to resolve A's dependencies with the information that B is a dependency of A. For various reasons, the current way of laying out <tt>lib_managed</tt> is no longer reasonable. The current implementation of <tt>update</tt> returns a map from a configuration to the list of dependency locations in the Ivy cache. There are many good reasons not to use dependencies out of the cache, but ease of implementation is no longer one of them. I expect to implement the option of retrieving to <tt>lib_managed</tt>, but it will not be in the same layout (because it is incorrect). It is, however, straightforward to get the locations of dependencies from the <tt>update</tt> task. Consider the following multi-project definition: </p>
+         <pre class="prettyprint">import sbt._
+class DepDemo(info: ProjectInfo) extends DefaultProject(info)
+{
+        override def name = &quot;root&quot;
+
+        val sub = project(&quot;sub&quot;, &quot;Sub&quot;, new Sub(_))
+        val subDep = sub % &quot;compile&quot;
+
+        val ju = &quot;junit&quot; % &quot;junit&quot; % &quot;4.4&quot; % &quot;compile&quot;
+
+        class Sub(info: ProjectInfo) extends DefaultProject(info)
+        {
+                override def name = &quot;sub&quot;
+
+                val ju = &quot;junit&quot; % &quot;junit&quot; % &quot;4.5&quot; % &quot;compile&quot;
+        }
+}</pre>
+         <p>Start sbt, <tt>loadp</tt>, and run <tt>show update</tt>. You can see that the result of the <tt>update</tt> task is a mapping from configuration to dependency locations. Note that this does not include project dependencies; these are handled separately. You may have noticed from running <tt>compile</tt> that the <tt>compile</tt> task runs <tt>update</tt> first. It does this to get the mapping that <tt>update</tt> provides. Currently, <tt>update</tt> does a full run each time. However, the intention is for <tt>update</tt> to only run if the inputs have changed. sbt 0.9 provides much better mechanisms for implementing this behavior, which has been discussed before. If you are interested in implementing this feature, send an email to the mailing list. </p>
+         <h1><a name="Aggregation"></a>Aggregation<a href="#Aggregation" class="section_anchor"></a></h1>
+         <p>This final section will highlight the refined semantics of project dependencies. Project dependencies are now separated into execution and classpath dependencies. If a project A has an execution dependency on project B, an aggregate task <tt>act</tt> in <tt>A</tt> has an implicit dependency on the <tt>act</tt> task in B (if it exists). An aggregate task is a task that can be executed across projects. In 0.9, tasks are not aggregate by default. This can be enabled by calling the <tt>implies</tt> method. For example: </p>
+         <pre class="prettyprint">import sbt._
+class AggDemo(info: ProjectInfo) extends DefaultProject(info)
+{
+	override def name = &quot;root&quot;
+
+	// declare an execution dependency on 'sub'
+	val sub = project(&quot;sub&quot;, &quot;Sub&quot;, new Sub(_))
+
+	// make it an aggregate task
+	lazy val hiAgg = task { println(&quot;Hello 1&quot;) } implies;
+	// not an aggregate task
+	lazy val hiPlain = task { println(&quot;Hello 2&quot;) }
+
+	class Sub(info: ProjectInfo) extends DefaultProject(info)
+	{
+		lazy val hiAgg = task { println(&quot;Hello Sub 1&quot;) } implies;
+		lazy val hiPlain = task { println(&quot;Hello Sub 2&quot;) }
+	}
+}</pre>
+         <p>Start sbt, <tt>loadp</tt>, and run: </p>
+         <pre class="prettyprint">&gt; hiAgg
+Hello Sub 1
+Hello 1
+&gt; hiPlain
+Hello 2
+&gt; project Sub
+&gt; hiPlain
+Hello Sub 2</pre>
+         <p>The reason that aggregation is no longer the default is that now that tasks return values, you will usually explicitly <tt>map</tt> the output of dependent tasks that might have previously been implicit. For example, <tt>compile</tt> depends on the classpath tasks of the enclosing project's classpath dependencies. These will in turn depend on the <tt>compile</tt> task in their respective projects. So, there is no need for an implicit dependency between <tt>compile</tt> tasks. </p>
+         <p>As shown in the <a href="#Dependency_Management">Dependency Management</a> section, classpath project dependencies are project that are used in a project's classpath and are enabled by declaring the configuration mapping, which is usually &quot;compile&quot; for a compile dependency (it will also be available in tests and at runtime) or &quot;test&quot; to only use the dependency in test code. This latter use case was a bit more verbose and fragile in previous versions of sbt. </p>
+         <p>If you want only a classpath dependency and not an execution dependency, make the initial val private: </p>
+         <pre class="prettyprint">	private val sub = project(&quot;sub&quot;, &quot;Sub&quot;, new Sub(_))
+	
+	val subDep = sub % &quot;compile&quot;</pre>
+         <p>Tasks in <tt>sub</tt> will still get run when there are explicit dependencies on them, as for <tt>compile</tt>. If you run <tt>update</tt>, however, it will only update the current project. </p>
+         <h1><a name="Outlook"></a>Outlook<a href="#Outlook" class="section_anchor"></a></h1>
+         <p>This preview concludes the presentation of the major, open-ended, long-term architectural designs/redesigns that have come to fruition in 0.9. (The new task engine has been in progress for over a year and so has multi-project aggressive incremental recompilation with API extraction. <a title="multi-project dependency management" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=44">&nbsp;Issue #44&nbsp;</a> has been pending for about a year as well.) With this, I believe 0.9.0 is almost ready. Rather than work until 0.9.0 is nearly a drop-in replacement for 0.7.4, I'd like to release it now (well, very soon) essentially with the features presented so far. The features for 0.9.1 will probably be 'test', 'console', and 'run'. </p>
+         <p>Beyond that, I have some ideas. However, I think now is a great time to get involved. Some people have inquired about this and I'd very much like to help people get involved and working on interesting projects. Certainly I can drive the 0.9.x experimental series to become the stable 0.10.0 release myself, but I think the result will be more interesting and useful with others building on the systems I have described so far. The next article you can expect to see is a discussion of some opportunities for working on sbt, including what needs to be done or could be done. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

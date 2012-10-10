@@ -1,0 +1,77 @@
+<html>
+ <head> 
+  <title>WebstartExample</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">WebstartExample</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <pre class="prettyprint">import sbt._
+
+// A project that defines a webstart application in the 'app' directory
+// and a web project to serve it in the 'web' directory.
+class WebstartTest(info: ProjectInfo) extends ParentProject(info)
+{
+  val app = project(&quot;app&quot;, &quot;Webstart Test Application&quot;, new ApplicationProject(_))
+  val web = project(&quot;web&quot;, &quot;Webstart Test Server&quot;, new ServerProject(_), app)
+
+  // The web project.  Running 'jetty-run' on this project will serve the
+  // webstart application from http://localhost:8080 using jetty.
+  class ServerProject(info: ProjectInfo) extends DefaultWebProject(info)
+  {
+    // Jetty is only need for the 'test' classpath
+    val jetty6 = &quot;org.mortbay.jetty&quot; % &quot;jetty&quot; % &quot;6.1.14&quot; % &quot;test&quot;
+    // We need the packaged jar from the application project
+    override def prepareWebappAction = super.prepareWebappAction dependsOn app.`package`
+    // Include the webstart files directly in the web app root directory.
+    override def extraWebappFiles = (app.webstartOutputDirectory ##) ** AllPassFilter
+  }
+  class ApplicationProject(info: ProjectInfo) extends DefaultWebstartProject(info)
+  {
+    import SignJar._
+    override def webstartSignConfiguration = Some(new SignConfiguration(&quot;mark&quot;, storePassword(&quot;fakepassword&quot;) :: Nil))
+    //override def webstartPack200 = false // uncomment to disable pack200 compression, which is enabled by default
+    //override def webstartGzip = false// uncomment to disable gzip compression, which is enabled by default
+
+    def jnlpXML(libraries: Seq[WebstartJarResource]) =
+      &lt;jnlp spec=&quot;1.0+&quot; codebase=&quot;http://localhost:8080/&quot; href={artifactBaseName + &quot;.jnlp&quot;}&gt;
+        &lt;information&gt;
+          &lt;title&gt;Webstart Test&lt;/title&gt;
+          &lt;vendor&gt;Vendor&lt;/vendor&gt;
+          &lt;description&gt;Webstart test&lt;/description&gt;
+          &lt;offline-allowed /&gt;
+        &lt;/information&gt;
+        &lt;resources&gt;
+          &lt;j2se version=&quot;1.5+&quot; /&gt;
+          { defaultElements(libraries) }
+        &lt;/resources&gt;
+        &lt;application-desc main-class=&quot;test.Main&quot; /&gt;
+      &lt;/jnlp&gt;
+  }
+}</pre>
+         <p>To request full access to the client machine, use: </p>
+         <pre class="prettyprint">  &lt;security&gt;
+    &lt;all-permissions/&gt;
+  &lt;/security&gt; </pre>
+         <p>after the <tt>information</tt> tag. </p>
+         <p>For full details, see the <a href="http://java.sun.com/javase/6/docs/technotes/guides/javaws/developersguide/contents.html" rel="nofollow">webstart guide</a> and the <a href="http://java.sun.com/j2se/1.4.2/docs/guide/jws/developersguide/syntax.html" rel="nofollow">JNLP File Syntax</a> page. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,53 @@
+<html>
+ <head> 
+  <title>RunningProjectCode</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">RunningProjectCode</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>The <tt>run</tt> and <tt>console</tt> actions provide a means for running user code in the same virtual machine as <tt>sbt</tt>. This page describes the problems with doing so, how <tt>sbt</tt> handles these problems, what types of code can use this feature, and what types of code must use a <a href="Forking">forked JVM</a>. Skip to User Code if you just want to see when you should use a <a href="Forking">forked JVM</a>. </p>
+         <h1><a name="Problems"></a>Problems<a href="#Problems" class="section_anchor"></a></h1>
+         <h3><a name="System.exit"></a>System.exit<a href="#System.exit" class="section_anchor"></a></h3>
+         <p>User code can call <tt>System.exit</tt>, which normally shuts down the JVM. Because the <tt>run</tt> and <tt>console</tt> actions run inside the same JVM as <tt>sbt</tt>, this also ends the build and requires restarting <tt>sbt</tt>. </p>
+         <h3><a name="Threads"></a>Threads<a href="#Threads" class="section_anchor"></a></h3>
+         <p>User code can also start other threads. Threads can be left running after the main method returns. In particular, creating a GUI creates several threads, some of which may not terminate until the JVM terminates. The program is not completed until either <tt>System.exit</tt> is called or all non-daemon threads terminate. </p>
+         <h1><a name="sbt_'s_Solutions"></a><tt>sbt</tt>'s Solutions<a href="#sbt_'s_Solutions" class="section_anchor"></a></h1>
+         <h3><a name="System.exit"></a><tt>System.exit</tt><a href="#System.exit" class="section_anchor"></a></h3>
+         <p>User code is run with a custom <tt>SecurityManager</tt> that throws a custom <tt>SecurityException</tt> when <tt>System.exit</tt> is called. This exception is caught by <tt>sbt</tt>. <tt>sbt</tt> then disposes of all top-level windows, interrupts (not stops) all user-created threads, and handles the exit code. If the exit code is nonzero, <tt>run</tt> and <tt>console</tt> complete unsuccessfully. If the exit code is zero, they complete normally. </p>
+         <h3><a name="Threads"></a>Threads<a href="#Threads" class="section_anchor"></a></h3>
+         <p><tt>sbt</tt> makes a list of all threads running before executing user code. After the user code returns, <tt>sbt</tt> can then determine the threads created by the user code. For each user-created thread, <tt>sbt</tt> replaces the uncaught exception handler with a custom one that handles the custom <tt>SecurityException</tt> thrown by calls to <tt>System.exit</tt> and delegates to the original handler for everything else. <tt>sbt</tt> then waits for each created thread to exit or for <tt>System.exit</tt> to be called. <tt>sbt</tt> handles a call to <tt>System.exit</tt> as described above. </p>
+         <p>A user-created thread is one that is not in the <tt>system</tt> thread group and is not an <tt>AWT</tt> implementation thread (e.g. <tt>AWT-XAWT</tt>, <tt>AWT-Windows</tt>). User-created threads include the <tt>AWT-EventQueue-*</tt> thread(s). </p>
+         <h1><a name="User_Code"></a>User Code<a href="#User_Code" class="section_anchor"></a></h1>
+         <p>Given the above, when can user code be run with the <tt>run</tt> and <tt>console</tt> actions? </p>
+         <p>The user code cannot rely on shutdown hooks and at least one of the following situations must apply for user code to run in the same JVM: </p>
+         <ol>
+          <li>User code creates no threads. </li>
+          <li>User code creates a GUI and no other threads. </li>
+          <li>The program ends when user-created threads terminate on their own. </li>
+          <li><tt>System.exit</tt> is used to end the program and user-created threads terminate when interrupted. </li>
+         </ol>
+         <p></p>
+         <p>The requirements on threading and shutdown hooks are required because the JVM does not actually shut down. So, shutdown hooks cannot be run and threads are not terminated unless they stop when interrupted. If these requirements are not met, code must run in a <a href="Forking">forked JVM</a>. </p>
+         <p>The feature of allowing <tt>System.exit</tt> and multiple threads to be used cannot completely emulate the situation of running in a separate JVM and is intended for development. Program execution should be checked in a <a href="Forking">forked JVM</a> when using multiple threads or <tt>System.exit</tt>. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

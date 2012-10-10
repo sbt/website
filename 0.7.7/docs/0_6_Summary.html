@@ -1,0 +1,130 @@
+<html>
+ <head> 
+  <title>0_6_Summary</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">0_6_Summary</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>The sbt 0.6.x series attempts to merge ideas from <tt>xsbt</tt> (experimental <tt>sbt</tt> components) into the main <tt>sbt</tt>. It should be considered less stable currently than 0.5.x because of extensive internal changes to <tt>sbt</tt>. </p>
+         <p>Please point out gaps in the documentation, areas that need clarification, or anything you'd like more details about. Your time experimenting is appreciated! </p>
+         <p>There are currently three major improvements in 0.6.x over previous versions: </p>
+         <ol>
+          <li>Generalize the launcher to be able to launch applications other than <tt>sbt</tt>. Additionally, the launcher configuration for <tt>sbt</tt> can be customized. </li>
+          <li>Separate the version of Scala used to build a project from the version used to run <tt>sbt</tt> and the project definition. The benefit of this is that <tt>sbt</tt> no longer has to be built against the version of Scala you are using for your project. </li>
+          <li>Support test frameworks through the uniform test interface. The benefit of this is that you should not have to wait for <tt>sbt</tt> to be updated to support new versions of test frameworks. Also, the version of Scala used by a test framework should not matter to <tt>sbt</tt>. In particular, this should let you use test frameworks compiled against 2.8. </li>
+         </ol>
+         <p></p>
+         <p>The ongoing aim for the rest of the series is to further modularize <tt>sbt</tt> and address issues that will come up due to these changes. </p>
+         <h1><a name="0.6"></a>0.6<a href="#0.6" class="section_anchor"></a></h1>
+         <h2><a name="New_Launcher"></a>New Launcher<a href="#New_Launcher" class="section_anchor"></a></h2>
+         <p>The launcher has been substantially rewritten so that it is not specific to <tt>sbt</tt>. For complete details on it, see 0_6_Launcher. That page describes the new launcher, including how to make an application launchable. Basically, you provide a configuration file to the launcher and have your application entry point implement an interface. </p>
+         <p>The following can now be done by modifying the default <tt>sbt</tt> configuration file for the launcher: </p>
+         <ul>
+          <li>Specify the default values for properties for new projects, such as the project name and version, the <tt>sbt</tt> version, and the Scala version </li>
+          <li>Control which repositories are used for downloading Scala versions and <tt>sbt</tt> </li>
+          <li>Fix the Scala version for project definitions and the <tt>sbt</tt> version for all projects on your machine, regardless of the settings for project/build.properties. </li>
+          <li>Configure project searching (previously configurable by system property) </li>
+          <li>Configure the location of the boot directory, including making it shared across a machine. </li>
+         </ul>
+         <p></p>
+         <p>You can also set up separate scripts to use different configuration files. For example, you might have a 'sbt-quick' script. The configuration file used could specify that new projects are set up without prompting, but instead use your specified defaults for properties. </p>
+         <h3><a name="Compatibility"></a>Compatibility<a href="#Compatibility" class="section_anchor"></a></h3>
+         <p>The new launcher can only launch the new 0.6.x series of <tt>sbt</tt> and the new series of <tt>sbt</tt> requires the new launcher. </p>
+         <h3><a name="Size/Speed"></a>Size/Speed<a href="#Size/Speed" class="section_anchor"></a></h3>
+         <p>I've managed to keep the launcher jar the same size and start up in the same time. However, the corresponding version of <tt>sbt</tt> is about 30% slower on startup and is bigger in size. This is partly due to a temporary duplication of some functionality between <tt>sbt</tt> and the new <tt>xsbt</tt> components during the transition. </p>
+         <h3><a name="Usability"></a>Usability<a href="#Usability" class="section_anchor"></a></h3>
+         <p>Now is a good time for users to point out usability issues and possible improvements related to launching- startup, reload, and retrieving sbt and Scala. The Ivy &quot;errors&quot; about unknown resolvers that are especially apparent in the launcher (including the previous version of the launcher) is a known issue to the Ivy developers. See issue IVY-758 as reported by the Gradle developers. </p>
+         <h2><a name="Scala_Version_Handling"></a>Scala Version Handling<a href="#Scala_Version_Handling" class="section_anchor"></a></h2>
+         <p>The new launcher provides essential support for implementing the separation of Scala versions. It also provided an opportunity to clean up cross-building and project reloading. Please note the changes in the following section on compatibility. </p>
+         <h3><a name="Compatibility"></a>Compatibility<a href="#Compatibility" class="section_anchor"></a></h3>
+         <ul>
+          <li>The compiler can no longer be forked. It should not be necessary anymore. </li>
+          <li>Forking the <tt>run</tt> action requires a new approach. See the section below (after Configuring Versions) </li>
+          <li>The <tt>reboot</tt> action is gone. <tt>reload</tt> now implies a <tt>reboot</tt>. </li>
+          <li>The <tt>scala.version</tt> property has been split into <tt>build.scala.versions</tt> and <tt>def.scala.version</tt>. This is explained in more detail in the next section. </li>
+          <li>The <tt>ScalaVersion</tt> object is gone. Use the <tt>buildScalaVersion</tt> method to obtain the version of Scala currently being used to build the project. </li>
+          <li><tt>build.scala.versions</tt> has to be read in <tt>sbt.Project</tt>, which means that all properties are read in <tt>sbt.Project</tt>. Therefore, properties need to be declared with <tt>lazy val</tt> and not just <tt>val</tt> (or else they will not be initialized and an error will be generated). If you do not declare custom properties, this does not affect you. </li>
+         </ul>
+         <h3><a name="Configuring_Versions"></a>Configuring Versions<a href="#Configuring_Versions" class="section_anchor"></a></h3>
+         <p>The version used to run <tt>sbt</tt> and used for compiling the project definition is set by the build property <tt>def.scala.version</tt>. The only valid value for this property is 2.7.7. This means that <tt>sbt</tt> runs in 2.7.7 and your project definition is compiled against 2.7.7. As described below, the version of Scala used to build your project is independent of this version. </p>
+         <p>The 'build.scala.versions' property is a whitespace separated list of versions to use when cross building (that is, when doing '+compile' or similar). The first version in the list is used for single-version actions (actions not prefixed with '+'). Allowed versions should (in theory) be any Scala version 2.7.2 or later, including <tt>2.8.0.Beta1-RC6</tt>, <tt>2.8.0-SNAPSHOT</tt>, and <tt>2.8.0-20091230.025722-+</tt>. </p>
+         <p>To change the version of Scala used for building at the interactive prompt or as part of a sequence of commands from the command line, use '++version'. 'version' does not need to be listed in 'build.scala.versions'. To set the version and run an action, use '++version action' (space between version and action). In both cases, the new version is used until the next '++' or on 'reload' or a restart. '+action' is now expanded to '++v1 action', '++v2 action', ... for versions <tt>v1,v2,...</tt> in 'build.scala.versions'. </p>
+         <p>It should be easy to use locally built Scala versions now. Declare local versions by overriding the 'localScala' method in your project definition. This method should return a <tt>Seq[ScalaInstance]</tt>, where the 'defineScala' method is used to create <tt>ScalaInstance</tt>s. The two variants are: </p>
+         <ul>
+          <li><tt>defineScala(label: String, scalaHome: File)</tt> </li>
+          <li><tt>defineScala(scalaHome: File)</tt> </li>
+         </ul>
+         <tt>label</tt> is the string to use to refer to the Scala instance in 
+         <tt>build.scala.versions</tt> or with the 
+         <tt>++version</tt>command. The label cannot contain spaces. For example, you might use 
+         <tt>2.8.0-quick</tt> or 
+         <tt>2.8.0-local</tt> as labels for a locally built Scala. The single argument variant uses the version in the Scala jars for the label. To see the version to use in this case, you can do: 
+         <p></p>
+         <pre class="prettyprint"> &gt; console-project
+...
+ &gt; localScala</pre>
+         <p>As an example, assume <tt>scalaHome</tt> is appropriately set. The following registers the result of 'ant quick' with <tt>sbt</tt>: </p>
+         <pre class="prettyprint">  override def localScala =
+    defineScala(&quot;2.8.0-quick&quot;, (scalaHome / &quot;build&quot; / &quot;pack&quot; ).asFile) :: Nil</pre>
+         <p>You could then include '2.8.0-quick' in <tt>build.scala.versions</tt> or as a valid version to switch to as in: </p>
+         <pre class="prettyprint">++2.8.0-quick console</pre>
+         <h3><a name="Forking_run"></a>Forking <tt>run</tt><a href="#Forking_run" class="section_anchor"></a></h3>
+         <p>Because the build and definition Scala versions are now separated, the way to declare the options for forking the <tt>run</tt> action has changed. The following examples demonstrate the new way: </p>
+         <pre class="prettyprint">  override def fork = forkRun
+  override def fork =
+    forkRun(new File(&quot;different-working-directory&quot;))
+  override def fork =
+    forkRun(&quot;-Xmx8G&quot; :: Nil)
+  override def fork =
+    forkRun(
+      Some(new File(&quot;different-working-directory&quot;)),
+      forkRun(&quot;-Xmx8G&quot; :: Nil)
+    )</pre>
+         <h2><a name="Uniform_Test_Interface"></a>Uniform Test Interface<a href="#Uniform_Test_Interface" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> now supports test frameworks through the <a href="http://github.com/harrah/test-interface" rel="nofollow">uniform test interface</a>, which itself is a work in progress. This should make <tt>sbt</tt> more independent of test frameworks that can implement the test interface. <tt>sbt</tt> only needs to know the name of the class implementing the interface. <tt>sbt</tt> no longer needs to be recompiled in order to support new frameworks, new versions of frameworks, or frameworks compiled against different Scala versions. </p>
+         <p>Josh Cough has implemented this interface for ScalaTest and Sweet, Rickard Nilsson has done it for ScalaCheck, and Eric Torreborre has done it for specs. You will need the latest snapshots of these libraries. </p>
+         <p>Other test frameworks that implement the interface will be added to <tt>sbt</tt>'s list of known frameworks. It is easy enough to use a framework not yet known to <tt>sbt</tt>, however. For example, if a new test framework implements the interface and <tt>sbt</tt> has not been updated to know about it yet, use that snapshot as a normal library in your project and add the following to your project definition: </p>
+         <pre class="prettyprint">override def testFrameworks = super.testFrameworks ++
+ new TestFramework(&quot;org.example.ExampleFramework&quot;)</pre>
+         <p>where <tt>org.example.ExampleFramework</tt> is replaced with the name of the class that implements the test interface. </p>
+         <h1><a name="Using_0.6.x"></a>Using 0.6.x<a href="#Using_0.6.x" class="section_anchor"></a></h1>
+         <p>To use the 0.6.x series, you need to get the new launcher and set up a script to run it as before. I call my script <tt>xsbt</tt> to avoid confusion with the stable 0.5.x series. Something like: </p>
+         <pre class="prettyprint">  java -jar xsbt-launch-0.6.9.jar &quot;$@&quot;</pre>
+         <p>On an existing project, you need to set <tt>sbt.version</tt> to 0.6.9. You will be prompted for the version(s) of Scala to use for your project, since this is a new property (<tt>build.scala.versions</tt>, as mentioned in the Scala Version Handling section). Check the Compatibility section above when using 0.6.x on an existing project. Again, there are some unavoidable, but hopefully minor, incompatibilies so try it out on a test project or a branch. </p>
+         <h1><a name="Building_Locally"></a>Building Locally<a href="#Building_Locally" class="section_anchor"></a></h1>
+         <p>The procedure for building <tt>sbt</tt> locally has changed, but it still uses the last stable <tt>sbt</tt> release (0.5.6) to build. <tt>sbt</tt> is currently split across two projects for this experiment, so there are two <tt>'publish-local'</tt>s that need to be run. From scratch, setting up <tt>sbt</tt> 0.6.x locally would look like: </p>
+         <pre class="prettyprint">$ git clone git://github.com/harrah/xsbt.git
+$ cd xsbt
+$ sbt update proguard &quot;project Compile&quot; publish-local &quot;project Test&quot; publish-local
+
+$ cd ..
+$ git clone git://github.com/harrah/sbt.git
+$ cd sbt
+$ git checkout --track -b using-xsbt origin/using-xsbt
+$ cd scripted
+$ sbt update publish-local
+$ cd ..
+$ sbt update publish-local</pre>
+         <p>The launcher jar created by the <tt>proguard</tt> action is located at <tt>xsbt/target/xsbt-launch-0.6.x.jar</tt>. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

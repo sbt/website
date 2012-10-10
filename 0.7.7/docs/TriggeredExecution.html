@@ -1,0 +1,67 @@
+<html>
+ <head> 
+  <title>TriggeredExecution</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">TriggeredExecution</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Triggered_Execution"></a>Triggered Execution<a href="#Triggered_Execution" class="section_anchor"></a></h1>
+         <p>You can make an action run when certain files change by prefixing the action with <tt>~</tt>. The files that are monitored for changes are defined by the <tt>watchPaths</tt> method of the current project and the projects it depends on. By default, a project watches resources and Scala and Java sources. Monitoring is terminated by default when <tt>enter</tt> is pressed. This can be changed by overriding the <tt>terminateWatch</tt> method for the current project. </p>
+         <p>Some example usages are described below. </p>
+         <h2><a name="Compile"></a>Compile<a href="#Compile" class="section_anchor"></a></h2>
+         <p>The original use-case was continuous compilation, and you can still use <tt>cc</tt> to use it. <tt>cc</tt> is now equivalent to </p>
+         <pre class="prettyprint">&gt; ~ test-compile</pre>
+         <p>If you only want to recompile main sources, you can do </p>
+         <pre class="prettyprint">&gt; ~ compile</pre>
+         <h2><a name="Testing"></a>Testing<a href="#Testing" class="section_anchor"></a></h2>
+         <p>You can use the triggered execution feature to run any action or method. One use is for test driven development, as suggested by Erick on the mailing list. </p>
+         <p>The following will poll for changes to your source code (main or test) and run <tt>test-quick</tt> on affected tests. </p>
+         <pre class="prettyprint">&gt; ~ test-quick</pre>
+         <blockquote>
+          The 
+          <tt>test-quick</tt> method only runs tests that either have not succeeded yet (that is, tests that failed or haven't been run yet) or were recompiled. A test is recompiled if any of its transitive dependencies changed, so this is one way to automatically run tests potentially affected by changes to the code. 
+         </blockquote>
+         <p>If you find that the <tt>test-quick</tt> method runs too many tests, you might use the <tt>test-failed</tt> method instead. </p>
+         <pre class="prettyprint">&gt; ~ test-failed</pre>
+         <blockquote>
+          The 
+          <tt>test-failed</tt> method only runs tests that have not succeeded (that is, tests that failed or haven't been run yet). It does not rerun tests just because they were recompiled, unlike the 
+          <tt>test-quick</tt> method. 
+         </blockquote>
+         <p>There is another level of control, which is to explicitly filter the tests to run. All of the <tt>test-*</tt> commands for running tests use the explicit filter methods available in the project defintion for use with the standard <tt>test</tt> action (the ExcludeTests and TestFilter test options and the includeTest method). However, you can additionally restrict the tests to run by specifying the tests to include as arguments to the <tt>test-quick</tt> or <tt>test-failed</tt> methods. Also, if you don't want the additional functionality of <tt>test-quick</tt> or <tt>test-failed</tt>, there is the <tt>test-only</tt> method, which always runs the tests passed as arguments even if the test previously succeeded and was not recompiled. </p>
+         <pre class="prettyprint">&gt; ~ test-quick example.MySpecification</pre>
+         <blockquote>
+          On source changes, this will rerun 
+          <tt>example.MySpecification</tt> if it had to be recompiled (because it or a dependency changed) or if it had not successfully run. It will not rerun other tests, even if they had to be recompiled or have not successfully run. 
+         </blockquote>
+         <pre class="prettyprint">&gt; ~ test-only example.MySpecification</pre>
+         <blockquote>
+          On source changes, this will always rerun 
+          <tt>example.MySpecification</tt>. 
+         </blockquote>
+         <h2><a name="Web_Applications"></a>Web Applications<a href="#Web_Applications" class="section_anchor"></a></h2>
+         <p>If you use <tt>jetty-run</tt>, you can automatically build and reload your web application on changes to your source: </p>
+         <pre class="prettyprint">&gt; jetty-run
+&gt; ~ prepare-webapp</pre>
+         <p>This will first start Jetty and then trigger execution of the action that builds the web application provided to Jetty. The <tt>jetty-run</tt> action will pick up changes and redeploy. See the <a href="WebApplications">WebApplications</a> page for details on configuring <tt>jetty-run</tt>, including configuring redeployment. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

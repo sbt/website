@@ -1,0 +1,40 @@
+<html>
+ <head> 
+  <title>Build</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Build</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Building_sbt"></a>Building <tt>sbt</tt><a href="#Building_sbt" class="section_anchor"></a></h1>
+         <h2><a name="Background"></a>Background<a href="#Background" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> now uses git for version control. You can find the source on github. As of 0.7.2, <tt>sbt</tt> is at <a href="http://github.com/harrah/xsbt" rel="nofollow">http://github.com/harrah/xsbt</a>. The 'master' branch is for 0.7.x stable releases, while the 0.9 branch is for the 0.9.x development series. </p>
+         <p>Test support was separated out to work across a <a href="http://github.com/harrah/test-interface" rel="nofollow">uniform test interface</a>. Because of this, <tt>sbt</tt> no longer needs to be compiled against test frameworks. New test frameworks that implement the uniform test interface can be used by <tt>sbt</tt> without needing to recompile <tt>sbt</tt>, as was the case previously. In order to provide compatibility with <tt>sbt</tt> 0.5.6, there is <a href="http://github.com/harrah/test-compat" rel="nofollow">an implementation</a> of the test interface for Scala test frameworks released before the interface existed. </p>
+         <h2><a name="Instructions"></a>Instructions<a href="#Instructions" class="section_anchor"></a></h2>
+         <p>The latest <tt>sbt</tt> release (0.7.7) is used to build. From scratch, building <tt>sbt</tt> locally looks like: </p>
+         <pre class="prettyprint">$ git clone git://github.com/harrah/xsbt.git
+$ cd xsbt
+$ sbt update proguard &quot;project Simple Build Tool&quot; publish-local</pre>
+         <p>The launcher jar created by the <tt>proguard</tt> action is located at <tt>xsbt/target/sbt-launch-0.7.x.jar</tt>. </p>
+         <h2><a name="Usage"></a>Usage<a href="#Usage" class="section_anchor"></a></h2>
+         <p>Set the <tt>sbt.version</tt> in the project you want to use this in to be <tt>0.7.8-SNAPSHOT</tt>. If you rebuild sbt, you'll need to remove <tt>project/boot</tt> for that project because <tt>sbt</tt> does not recheck a version once it is retrieved to a project. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

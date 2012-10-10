@@ -1,0 +1,139 @@
+<html>
+ <head> 
+  <title>Setup</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Setup</span> &nbsp; 
+        <div> 
+         <br />   
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page describes how to set up your project for use with sbt. </p>
+         <p>The basic steps are: </p>
+         <ol>
+          <li>Create a script to launch sbt. </li>
+          <li>Create your project with sbt. </li>
+          <li>Put libraries in <tt>lib</tt> and sources in <tt>src</tt>. </li>
+          <li>Read <a href="RunningSbt">RunningSbt</a> for basic usage instructions. </li>
+          <li>Read <a href="BuildConfiguration">BuildConfiguration</a> for further configuration. </li>
+         </ol>
+         <p></p>
+         <h1><a name="Launching_Sbt"></a>Launching Sbt<a href="#Launching_Sbt" class="section_anchor"></a></h1>
+         <p>The easiest way to launch sbt is to create a one-line script. Download <a href="http://simple-build-tool.googlecode.com/files/sbt-launch-0.7.7.jar" rel="nofollow">sbt-launch.jar</a> if you have not already. </p>
+         <p><strong>Note</strong>: do <i>not</i> put <tt>sbt-launch.jar</tt> in your <tt>$SCALA_HOME/lib</tt> directory, your project's <tt>lib</tt> directory, or anywhere it will be put on a classpath. </p>
+         <p><strong>Note</strong>: The encoding used by your terminal may differ from Java's default encoding for your platform. In this case, you will need to add the option <tt>-Dfile.encoding=&lt;encoding&gt;</tt> in the following scripts to set the encoding. </p>
+         <h3><a name="Unix"></a>Unix<a href="#Unix" class="section_anchor"></a></h3>
+         <p>Put the jar in your <tt>~/bin</tt> directory, put the line </p>
+         <pre class="prettyprint">java -Xmx512M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</pre>
+         <p>in a file called <tt>sbt</tt> in your <tt>~/bin</tt> directory and do </p>
+         <pre class="prettyprint">$ chmod u+x ~/bin/sbt</pre>
+         <p>This allows you to launch sbt in any directory by typing <tt>sbt</tt> at the command prompt. </p>
+         <p><tt>sbt</tt> will pick up any HTTP proxy settings from the <tt>http.proxy</tt> environment variable. If you are behind a proxy requiring authentication, you must in addition pass flags to set the <tt>http.proxyUser</tt> and <tt>http.proxyPassword</tt> properties: </p>
+         <pre class="prettyprint">java -Dhttp.proxyUser=username -Dhttp.proxyPassword=mypassword -Xmx512M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</pre>
+         <h3><a name="Windows"></a>Windows<a href="#Windows" class="section_anchor"></a></h3>
+         <p>Create a batch file <tt>sbt.bat</tt>: </p>
+         <pre class="prettyprint">set SCRIPT_DIR=%~dp0
+java -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</pre>
+         <p>and put the jar in the same directory as the batch file. Put <tt>sbt.bat</tt> on your path so that you can launch <tt>sbt</tt> in any directory by typing <tt>sbt</tt> at the command prompt. </p>
+         <p>If you are behind a proxy on Windows, add flags to this second line for proxy host, port, and if applicable, username and password: </p>
+         <pre class="prettyprint">java -Dhttp.proxyHost=myproxy -Dhttp.proxyPort=8080 -Dhttp.proxyUser=username -Dhttp.proxyPassword=mypassword -Xmx512M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</pre>
+         <h1><a name="Create_Project"></a>Create Project<a href="#Create_Project" class="section_anchor"></a></h1>
+         <h2><a name="Full_Setup"></a>Full Setup<a href="#Full_Setup" class="section_anchor"></a></h2>
+         <p>When you run <tt>sbt</tt> and it does not find a project in the current directory, it asks if you want to create a new project. If you say yes, <tt>sbt</tt> will prompt for some basic information: </p>
+         <ul>
+          <li>Project name: This name will be used in scaladocs and as part of the default name for generated packages. </li>
+          <li>Project organization: This is used for dependency management and is optional. </li>
+          <li>Project version: This is used in scaladocs, as part of the default name for generated packages, and for dependency management. </li>
+          <li>Scala version: This is version(s) of scala to build the project with. Multiple versions may be separated by spaces (see <a href="CrossBuild">CrossBuild</a>). Allowed values are (in theory) any version of Scala 2.7.2 or later available in the Scala Tools repository. </li>
+          <li>Sbt version: This is the version of sbt to build the project with. Currently, this should be 0.7.0, 0.7.1, 0.7.2, 0.7.3, 0.7.4, 0.7.5, or 0.7.7. </li>
+         </ul>
+         <p></p>
+         <p>See <a href="Loader">Loader</a> for more information on setting the versions of Scala and <tt>sbt</tt> to use to build your project. With the above information, <tt>sbt</tt> creates the project properties file and directory structure. These are described in the following section. </p>
+         <h2><a name="Quick_Setup"></a>Quick Setup<a href="#Quick_Setup" class="section_anchor"></a></h2>
+         <p>In addition to 'yes' or 'no', you can type <tt>s</tt> (for <tt>scratch</tt>) when prompted to create a new project. This can be used to quickly get <tt>sbt</tt> compiling and running code without needing to do a full project setup. This option skips all of the prompts in a full setup and configures <tt>sbt</tt> to look in the current directory for sources and jars in addition to the usual places in a full project. Using <tt>sbt</tt> for a hello world might look like: </p>
+         <pre class="prettyprint">  $ echo 'object Hi { def main(args: Array[String]) { println(&quot;Hi!&quot;) } }' &gt; hw.scala
+  $ sbt
+  Project does not exist, create new project? (y/N/s) : s
+  ...
+  &gt; run
+  ...
+  Hi!</pre>
+         <h1><a name="Directory_Layout"></a>Directory Layout<a href="#Directory_Layout" class="section_anchor"></a></h1>
+         <h2><a name="Sources"></a>Sources<a href="#Sources" class="section_anchor"></a></h2>
+         <p>Sbt uses the same directory structure as <a href="http://maven.apache.org/" rel="nofollow">Maven</a> for source files by default (all paths are relative to the project directory): </p>
+         <pre class="prettyprint">  src/
+    main/
+      resources/
+         &lt;files to include in main jar here&gt;
+      scala/
+         &lt;main Scala sources&gt;
+      java/
+         &lt;main Java sources&gt;
+    test/
+      resources
+         &lt;files to include in test jar here&gt;
+      scala/
+         &lt;test Scala sources&gt;
+      java/
+         &lt;test Java sources&gt;</pre>
+         <p>Other directories in <tt>src/</tt> will be ignored. Additionally, all hidden directories will be ignored. </p>
+         <h2><a name="Dependencies"></a>Dependencies<a href="#Dependencies" class="section_anchor"></a></h2>
+         <p>All dependencies (jars) go in the </p>
+         <pre class="prettyprint">  lib/</pre>
+         <p>directory or any subdirectory of <tt>lib</tt>. Again, hidden directories will be ignored. If you want to use <a href="http://code.google.com/p/scalacheck/" rel="nofollow">ScalaCheck</a>, <a href="http://code.google.com/p/specs/" rel="nofollow">specs</a>, or <a href="http://www.artima.com/scalatest/" rel="nofollow">ScalaTest</a> for testing, those jars should go in here as well. Alternatively, you can configure <tt>sbt</tt> to automatically manage your dependencies (see <a href="LibraryManagement">LibraryManagement</a>). </p>
+         <h2><a name="Build_Configuration"></a>Build Configuration<a href="#Build_Configuration" class="section_anchor"></a></h2>
+         <p>Build configuration is done in the <tt>project</tt> directory: </p>
+         <pre class="prettyprint">  project/
+    build.properties
+    build/
+    boot/</pre>
+         <p>The <tt>build.properties</tt> file contains the project name, version, and organization, the versions of Scala and <tt>sbt</tt> used to build the project, and any other user-defined properties (see <a href="Properties">Properties</a>). You can directly edit this file to change these properties or you can use the <tt>set</tt> command at the interactive prompt (see <a href="RunningSbt">Basic Usage</a>). The <tt>build</tt> directory is where further configuration is done and is described in <a href="BuildConfiguration">BuildConfiguration</a>. The <tt>boot</tt> directory is where the versions of Scala and <tt>sbt</tt> used to build the project are downloaded to. </p>
+         <h2><a name="Products"></a>Products<a href="#Products" class="section_anchor"></a></h2>
+         <p>Generated files (classes, jars, analysis, and documentation) will be written to the </p>
+         <pre class="prettyprint">  target/</pre>
+         <p>directory. Automatically managed dependencies are downloaded to: </p>
+         <pre class="prettyprint">  lib_managed/</pre>
+         <h2><a name="Version_Control"></a>Version Control<a href="#Version_Control" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> creates and uses several directories that you will normally want to exclude from version control: </p>
+         <pre class="prettyprint">  target/
+  lib_managed/
+  project/boot/
+  project/build/target/
+  project/plugins/target/
+  project/plugins/lib_managed/
+  project/plugins/src_managed/</pre>
+         <p>A <tt>.gitignore</tt> for an <tt>sbt</tt> project should contain these entries: </p>
+         <pre class="prettyprint">target/
+lib_managed/
+src_managed/
+project/boot/</pre>
+         <h1><a name="Next_Step"></a>Next Step<a href="#Next_Step" class="section_anchor"></a></h1>
+         <p>Read <a href="RunningSbt">Basic Usage</a> for basic <tt>sbt</tt> usage information. </p>
+         <h1><a name="Summary"></a>Summary<a href="#Summary" class="section_anchor"></a></h1>
+         <ol>
+          <li>Create a launcher script. </li>
+          <li>Setup your project information and directory structure by running <tt>sbt</tt> in your project directory. </li>
+          <li>Put libraries in <tt>lib</tt> or configure automatic dependency management. </li>
+          <li>Read <a href="RunningSbt">RunningSbt</a> for basic usage instructions. </li>
+          <li>Start with <a href="BuildConfiguration">BuildConfiguration</a> for further project configuration. </li>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,68 @@
+<html>
+ <head> 
+  <title>WebApplications</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">WebApplications</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Web_Applications"></a>Web Applications<a href="#Web_Applications" class="section_anchor"></a></h1>
+         <p>This page describes some features of <tt>sbt</tt> that are useful for developing web applications. </p>
+         <h2><a name="Basic_Usage"></a>Basic Usage<a href="#Basic_Usage" class="section_anchor"></a></h2>
+         <p>Instead of extending <tt>sbt.DefaultProject</tt> in your project definition, extend <tt>sbt.DefaultWebProject</tt>. This currently does two things. First, the <tt>package</tt> action creates a war file instead of a jar file. Second, if you add <a href="http://jetty.mortbay.com/" rel="nofollow">Jetty</a> as a <a href="LibraryManagement">dependency</a> (manually or automatically), you can use <tt>jetty-run</tt> to start your web application from <tt>sbt</tt>. Use <tt>jetty-stop</tt> to stop it. If you are running in batch mode, use the <tt>jetty</tt> action, which will wait for a key press before completing. As of <tt>sbt</tt> 0.7.0, Jetty 7 is supported in addition to Jetty 6. </p>
+         <h2><a name="Configuration"></a>Configuration<a href="#Configuration" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> uses the directory structure of Maven by default, so your web application files should go in <tt>src/main/webapp</tt> by default. You can override <tt>webappPath</tt> to change this. If you need to include extra files in your web application, override <tt>extraWebappFiles</tt> with a <tt>PathFinder</tt> that selects the extra files that you want (see <a href="Paths">Paths</a> for information on <tt>PathFinder</tt>). To change the port Jetty starts up on, override <tt>jettyPort</tt>. </p>
+         <h2><a name="Continuous_Redeployment"></a>Continuous Redeployment<a href="#Continuous_Redeployment" class="section_anchor"></a></h2>
+         <p>You can also continuously recompile and reload the web application when using Jetty: </p>
+         <pre class="prettyprint">&gt; jetty-run
+&gt; ~ prepare-webapp</pre>
+         <p><tt>jetty-run</tt> starts Jetty and the <tt>~ prepare-webapp</tt> recompiles and recreates the web application whenever sources files change (see <a href="TriggeredExecution">TriggeredExecution</a> for details on <tt>~</tt>). The <tt>jetty-run</tt> action monitors the directories given by <tt>scanDirectories</tt> and redeploys on changes. By default, the entire temporary web application directory is monitored. You might want to change <tt>scanDirectories</tt> in some cases. For example, set <tt>scanDirectories</tt> to <tt>Nil</tt> if you do not want to redeploy on any changes. Or, set <tt>scanDirectories</tt> to only monitor the library and classes directories: </p>
+         <pre class="prettyprint">  override def scanDirectories = ( temporaryWarPath / &quot;WEB-INF&quot; * (&quot;classes&quot; | &quot;lib&quot;) ).get.toSeq</pre>
+         <p>You might use one of these options if your web application picks up changes to resource files and therefore does not need to be redeployed or if you are using <a href="http://www.zeroturnaround.com/jrebel/" rel="nofollow">JRebel</a>. </p>
+         <p>Another possibility is to directly run the web application out of the the source web application path: </p>
+         <pre class="prettyprint">  override def jettyWebappPath  = webappPath
+  override def scanDirectories = mainCompilePath :: testCompilePath :: Nil</pre>
+         <h2><a name="Jetty_6_Example"></a>Jetty 6 Example<a href="#Jetty_6_Example" class="section_anchor"></a></h2>
+         <p>A minimal project definition for Jetty 6: </p>
+         <pre class="prettyprint">class WebappBuild(info: ProjectInfo) extends DefaultWebProject(info)
+{
+  val jetty6 = &quot;org.mortbay.jetty&quot; % &quot;jetty&quot; % &quot;6.1.14&quot; % &quot;test&quot;  // jetty is only need for testing
+}</pre>
+         <p>For a runnable example, see the <a href="WebApplicationExample">WebApplicationExample</a> page, which describes running the Hello Lift example with <tt>sbt</tt>. </p>
+         <h2><a name="Jetty_7_Example"></a>Jetty 7 Example<a href="#Jetty_7_Example" class="section_anchor"></a></h2>
+         <p>A minimal project definition for Jetty 7: </p>
+         <pre class="prettyprint">class WebappBuild(info: ProjectInfo) extends DefaultWebProject(info)
+{
+  val jetty7 = &quot;org.eclipse.jetty&quot; % &quot;jetty-webapp&quot; % &quot;7.0.2.RC0&quot; % &quot;test&quot;
+}</pre>
+         <h2><a name="Manually_Managed_Example"></a>Manually Managed Example<a href="#Manually_Managed_Example" class="section_anchor"></a></h2>
+         <p>Download Jetty and its dependencies and put them in a directory, say <tt>'jetty-libs/'</tt>. Add them to <tt>jettyClasspath</tt>. For example: </p>
+         <pre class="prettyprint">class WebappBuild(info: ProjectInfo) extends DefaultWebProject(info)
+{
+  override def jettyClasspath = path(&quot;jetty-libs&quot;) * &quot;*.jar&quot;
+}</pre>
+         <h2><a name="JRebel"></a>JRebel<a href="#JRebel" class="section_anchor"></a></h2>
+         <p>To use JRebel, override <tt>scanDirectories</tt> as described above so that <tt>sbt</tt> does not reload Jetty on changes to your classes: </p>
+         <pre class="prettyprint">  override def scanDirectories = Nil</pre>
+         <p>Pass the following options to <tt>java</tt> in your <tt>sbt</tt> startup script: </p>
+         <pre class="prettyprint">-noverify -javaagent:/path/to/jrebel/jrebel.jar</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

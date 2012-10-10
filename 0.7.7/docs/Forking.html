@@ -1,0 +1,59 @@
+<html>
+ <head> 
+  <title>Forking</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Forking</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Forking"></a>Forking<a href="#Forking" class="section_anchor"></a></h1>
+         <h2><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h2>
+         <p>By default, the <tt>run</tt> action runs in the same JVM as <tt>sbt</tt>. Forking is required under <a href="RunningProjectCode">certain circumstances</a>, however. Or, you might want to fork Java processes when implementing new tasks. </p>
+         <h2><a name="Forking_run"></a>Forking run<a href="#Forking_run" class="section_anchor"></a></h2>
+         <h3><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h3>
+         <p>The following examples demonstrate forking the <tt>run</tt> action and changing the working directory or arguments. </p>
+         <pre class="prettyprint">  override def fork = forkRun
+  
+  override def fork =
+    forkRun(new File(&quot;different-working-directory&quot;))
+
+  override def fork =
+    forkRun(&quot;-Xmx8G&quot; :: Nil)
+
+  override def fork =
+    forkRun(
+      Some(new File(&quot;different-working-directory&quot;)),
+      &quot;-Xmx8G&quot; :: Nil
+    )</pre>
+         <h3><a name="Advanced"></a>Advanced<a href="#Advanced" class="section_anchor"></a></h3>
+         <p>The method to override in your project definition is <tt>fork</tt>, which is of type <tt>Option[ForkScala]</tt>. By default, it is <tt>None</tt>, which indicates forking is disabled. To enable forking, override <tt>fork</tt> to return an instance of <tt>ForkScalaRun</tt> (wrapped in <tt>Some</tt>). <tt>ForkScalaRun</tt> defines these methods: </p>
+         <pre class="prettyprint">def runJVMOptions: Seq[String] = Nil
+def workingDirectory: Option[File] = None
+def javaHome: Option[File] = None
+def scalaJars: Iterable[File] = None</pre>
+         <p>By default, the forked process uses the same Java and Scala being used for the build and the working directory and JVM options of the current process. Override the above methods to use a different version. For example, to override the working directory used when running, do: </p>
+         <pre class="prettyprint">def forkConfiguration = new ForkScalaRun { override def workingDirectory = Some(info.projectPath.asFile) } 
+override def fork = Some(forkConfiguration)</pre>
+         <h2><a name="Direct_Usage"></a>Direct Usage<a href="#Direct_Usage" class="section_anchor"></a></h2>
+         <p>To fork a new Java process, use the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Fork$object.html" rel="nofollow">Fork API</a>. The methods of interest are <tt>Fork.java</tt>, <tt>Fork.javac</tt>, <tt>Fork.scala</tt>, and <tt>Fork.scalac</tt>. See the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Fork$object.ForkJava.html" rel="nofollow">ForkJava</a> and <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Fork$object.ForkScala.html" rel="nofollow">ForkScala</a> classes for the arguments and types. </p>
+         <p>The last argument in all cases is either the <tt>Logger</tt> to which output should go or the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/OutputStrategy.html" rel="nofollow">OutputStrategy</a> to use (such as standard output or another <tt>OutputStream</tt>). </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

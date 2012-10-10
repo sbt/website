@@ -1,0 +1,97 @@
+<html>
+ <head> 
+  <title>SettingsProposal</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">SettingsProposal</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Settings/Configuration"></a>Settings/Configuration<a href="#Settings/Configuration" class="section_anchor"></a></h1>
+         <p>There are a few goals to the proposed configuration system, which I'll generally refer to as &quot;settings&quot;. All of the following is a rough sketch. None of it has been implemented or compiled. </p>
+         <h2><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h2>
+         <ol>
+          <li>Allow more parameters to be configured from the command line. For example, a common parameter I want to configure is compilation options: </li>
+          <pre class="prettyprint">  &gt; set options -Xprint:typer</pre>
+          <li>Allow per-task configuration. For example: </li>
+          <pre class="prettyprint">  &gt; set[update] log-level debug
+  &gt; set[test-compile] options -Xlog-implicits -explaintypes</pre>
+          <li>These are transient settings. That is, they are only for the current session. This is similar to setting a variable in bash. If you want it to be set every time, you stick it in your <tt>.bashrc</tt> (<tt>.sbtrc</tt> for sbt). A side-effect of being able to set parameters from the command line is being able to set them from initialization scripts, as shown in the <a href="http://code.google.com/p/simple-build-tool/wiki/090p1tour#sbtrc" rel="nofollow">first preview</a>. Alternatively, you use the existing mechanism of properties, mentioned next. </li>
+          <li>Integrate settings with properties. Properties would be options backed by a file that uses properties syntax and applied to a project as if by calling <tt>set &lt;key&gt; &lt;value&gt;</tt>. Modifying those values would write back to the file. </li>
+         </ol>
+         <h2><a name="Static/full_configuration"></a>Static/full configuration<a href="#Static/full_configuration" class="section_anchor"></a></h2>
+         <p>The previous section was mostly dynamic in the sense that settings are converted to and from string representations outside of our project definitions. We still want to be able to configure these settings within our project definition with all of the benefits of type checking. In addition, we'd like to make setting the basic parameters a bit more uniform to make it easier to discover settings. Lastly, it would be nice if configuration were more composable. Here is a sketch of how this might look in a project definition: </p>
+         <pre class="prettyprint">  override def settings = super.settings ++
+    projectSettings(
+      MainClass := Some(&quot;Test&quot;),
+      CompileOptions += (&quot;-no-specialize&quot; :: &quot;blah&quot; :: _),
+      Organization :=
+        for(name &lt;- Name; o &lt;- Organization) yield
+          o orElse name
+    ) ++
+    taskSettings(testCompile)(
+      CompileOptions := Nil
+    ) ++
+    taskSettings(`package`)(
+      MainClass = Some(&quot;UseThisForPackaging&quot;)
+    )</pre>
+         <p>We'll look at the part that sets the main class first. </p>
+         <pre class="prettyprint">  MainClass := Some(&quot;Test&quot;),</pre>
+         <p><tt>MainClass</tt> is a key parameterized by the type of the value it can be associated with. Its definition might look like: </p>
+         <pre class="prettyprint">  val MainClass = SettingKey[Option[String]](&quot;main-class&quot;, &quot;Defines the main class, such as used for running or packaging.&quot;)</pre>
+         <p>The <tt>:=</tt> method sets the setting on the left to the value on the right hand side. It constrains the type to be <tt>Option[String]</tt>, as specified by the definition of <tt>MainClass</tt>. Moving along to <tt>CompileOptions</tt>: </p>
+         <pre class="prettyprint">  CompileOptions += (&quot;-no-specialize&quot; :: &quot;blah&quot; :: _),</pre>
+         <p>The <tt>+=</tt> method modifies the existing value by applying the right hand side to the current value. The above would prepend the given options to the compile options. The next use of <tt>:=</tt> is the generalization of the previous two. It allows defining a setting based on other settings. For the initial implementation of settings, these would be evaluated in the order provided, but the idea is to reorder the dependency graph for correct execution and detect incorrect initialization, more like restricted <tt>lazy vals</tt> than <tt>vals</tt>. </p>
+         <p>The final pieces are <tt>projectSettings</tt> and <tt>taskSettings</tt>. These separate settings for the project and settings for tasks. If a setting has not been explicitly defined for a task, it is inherited from the project. Here, we set different options for <tt>test-compile</tt> than the defaults that we set for the project. Also, we set the main class specifically for the <tt>package</tt> task. We don't have to lookup what the name of the setting is since we already know that <tt>MainClass</tt> defines the main class and we want to set it for the <tt>package</tt> task. </p>
+         <p>The proposed way that tasks would pull settings is: </p>
+         <pre class="prettyprint">  lazy val packageInputs = (setting(`package`, MainClass), ...) map { (mainClass: Option[String], ...) =&gt; new PackageInputs(mainClass, ...) }
+  lazy val `package` = packageInputs map packageImpl
+  def packageImpl(inputs: PackageInputs): PackageOutputs = ...</pre>
+         <blockquote>
+          where 
+          <tt>setting</tt> pulls the value of 
+          <tt>MainClass</tt> for the 
+          <tt>package</tt> task. 
+         </blockquote>
+         <p>This proposal avoids the need to use the current pattern that combines <tt>lazy val/def</tt> for overriding and referencing the <tt>super</tt> value: </p>
+         <pre class="prettyprint">  lazy val mySetting = mySetting0
+  def mySetting0 = &lt;default value&gt;
+
+  // in subclass
+  override def mySetting0 = super.mySetting0 ++ ...</pre>
+         <h3><a name="Old_Style"></a>Old Style<a href="#Old_Style" class="section_anchor"></a></h3>
+         <p>For comparison, here is how the example from the beginning might look in a 0.7.4 project definition: </p>
+         <pre class="prettyprint">  override def mainClass = Some(&quot;Test&quot;)
+  override def compileOptions = &quot;-no-specialize&quot; :: &quot;blah&quot; :: super.compileOptions
+  override def testCompileOptions = Nil
+  override def organization = super.organization orElse name
+  override def packageMainClass = Some(&quot;UseThisForPackaging&quot;)</pre>
+         <h2><a name="Open_Issues"></a>Open Issues<a href="#Open_Issues" class="section_anchor"></a></h2>
+         <ol>
+          <li>A disadvantage of this approach is that there is limited static checking that a parameter is valid for a given task. You are limited to the predefined keys, you reference the keys as identifiers checked by the compiler, and the types of values must match up, but you could set <tt>MainClass</tt> on the <tt>clean</tt> task, for example. (It would be ignored.) Or, a setting might only be valid at the project level and is inappropriate to set on a task, such as <tt>Organization</tt>. Perhaps we could mitigate this by writing some code that prints the variables accessed by a task when it runs. This would not be sufficient evidence that a setting is not used by the task, but it would show ones that are definitely used. A comment: I know of at least one type-system trick that is technically a solution, but I don't think these techniques are appropriate here. </li>
+          <li>A potential advantage related to better composition is easier sharing of settings between multiple projects. A subproject could inherit the properties of its defining module. There are some problems to solve related to this, such as handling multiple defining parents, which can happen when using external projects with <tt>project(&quot;path&quot;)</tt>. </li>
+          <li>How should properties modification and persistence be modeled? </li>
+          <ol>
+           <li>Should there be property change hooks so that when certain properties are modified, the updated value is written back? Should there be hooks that run after each command, inspect the current settings, and persist changes to disk? </li>
+           <li>Related, settings are intended to be immutable during task execution. However, properties in 0.7.x are modifiable during task execution. You might end up in a situation where tasks see different versions of a property during an execution, which I think is bad without these dependencies being explicitly represented in the task/setting system (and hence being self-documenting code and enforced by this system). When/why do people mutate properties during task execution? The main reason I can think of is to change a version during a release. It would be good to know other use cases before designing this part. </li>
+          </ol>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

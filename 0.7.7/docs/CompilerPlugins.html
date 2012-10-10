@@ -1,0 +1,53 @@
+<html>
+ <head> 
+  <title>CompilerPlugins</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">CompilerPlugins</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Compiler_Plugin_Support"></a>Compiler Plugin Support<a href="#Compiler_Plugin_Support" class="section_anchor"></a></h1>
+         <p>There is some special support for using compiler plugins. You can mixin the <tt>AutoCompilerPlugins</tt> trait to your project definition to enable this functionality. </p>
+         <p>To use a compiler plugin, you either put it in your unmanaged library directory (<tt>lib</tt>) or add it as managed dependency in the <tt>plugin</tt> configuration. <tt>compilerPlugin</tt> is a convenience method for specifying <tt>plugin</tt> as the configuration for a dependency: </p>
+         <pre class="prettyprint">   val sxr = compilerPlugin(&quot;org.scala-tools.sxr&quot; %% &quot;sxr&quot; % &quot;0.2.6&quot;)</pre>
+         <p>Alternatively, you can use inline Ivy XML: </p>
+         <pre class="prettyprint">   override def ivyXML =
+      &lt;dependencies&gt;
+         &lt;dependency org=&quot;org.scala-tools.sxr&quot; name=&quot;sxr&quot; rev=&quot;0.2.6&quot; conf=&quot;plugin-&gt;default(compile)&quot;/&gt;
+      &lt;/dependencies&gt;</pre>
+         <p>A managed dependency is resolved and retrieved like usual by running <tt>update</tt>. </p>
+         <p>The <tt>compile</tt> and <tt>test-compile</tt> actions will use any compiler plugins found in the <tt>lib</tt> directory or in the <tt>plugin</tt> configuration. You are responsible for configuring the plugins as necessary. For example, Scala X-Ray requires the extra option: </p>
+         <pre class="prettyprint">  override def compileOptions =
+    CompileOption(&quot;-Psxr:base-directory:&quot; + mainScalaSourcePath.absolutePath) ::
+    super.compileOptions.toList</pre>
+         <p>You can still specify compiler plugins manually. For example: </p>
+         <pre class="prettyprint">  override def compileOptions = CompileOption(&quot;-Xplugin:&lt;path-to-sxr&gt;/sxr-0.2.6.jar&quot;) :: super.compileOptions.toList</pre>
+         <h2><a name="Continuations_Plugin_Example"></a>Continuations Plugin Example<a href="#Continuations_Plugin_Example" class="section_anchor"></a></h2>
+         <p>Support for continuations in Scala 2.8 is implemented as a compiler plugin. You can use <tt>AutoCompilerPlugins</tt> for this, as shown here. </p>
+         <pre class="prettyprint">import sbt._
+
+class ContinuationsExample(info: ProjectInfo) extends DefaultProject(info) with AutoCompilerPlugins
+{
+  val cont = compilerPlugin(&quot;org.scala-lang.plugins&quot; % &quot;continuations&quot; % &quot;2.8.0&quot;)
+  override def compileOptions = super.compileOptions ++ compileOptions(&quot;-P:continuations:enable&quot;)
+}</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

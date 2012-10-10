@@ -1,0 +1,66 @@
+<html>
+ <head> 
+  <title>CrossBuild</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">CrossBuild</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Cross-building"></a>Cross-building<a href="#Cross-building" class="section_anchor"></a></h1>
+         <h2><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h2>
+         <p>Different versions of Scala are often binary incompatible between versions, despite maintaining source compatibility. This is true even for versions with the same minor number, such as 2.7.2 and 2.7.4. This page describes how to use <tt>sbt</tt> to build and publish your project against multiple versions of Scala and how to use libraries that have done the same. </p>
+         <h2><a name="Publishing_Conventions"></a>Publishing Conventions<a href="#Publishing_Conventions" class="section_anchor"></a></h2>
+         <p>The underlying mechanism used to indicate which version of Scala a library was compiled against is to append <tt>_&lt;scala-version&gt;</tt> to the library's name. For example, <tt>dispatch</tt> becomes <tt>dispatch_2.7.7</tt> for the variant compiled against Scala 2.7.7. This allows interoperability with users of Maven, Ant and other build tools. </p>
+         <p>The rest of this page describes how <tt>sbt</tt> handles this for you as part of cross-building. </p>
+         <h2><a name="Using_Cross-Built_Libraries"></a>Using Cross-Built Libraries<a href="#Using_Cross-Built_Libraries" class="section_anchor"></a></h2>
+         <p>To use a library built against multiple versions of Scala, double the first <tt>%</tt> in an inline dependency to be <tt>%%</tt>. This tells <tt>sbt</tt> that it should append the current version of Scala being used to build the library to the dependency's name. For example: </p>
+         <pre class="prettyprint">  val dispatch = &quot;net.databinder&quot; %% &quot;dispatch&quot; % &quot;0.7.2&quot;</pre>
+         <p>A nearly equivalent, manual alternative is: </p>
+         <pre class="prettyprint">  val dispatch = &quot;net.databinder&quot; % (&quot;dispatch_&quot; + crossScalaVersionString) % &quot;0.7.2&quot;</pre>
+         <p>Or, for a fixed version of Scala: </p>
+         <pre class="prettyprint">  val dispatch = &quot;net.databinder&quot; % &quot;dispatch_2.7.7&quot; % &quot;0.7.2&quot;</pre>
+         <h2><a name="Cross-Building_a_Project"></a>Cross-Building a Project<a href="#Cross-Building_a_Project" class="section_anchor"></a></h2>
+         <p>Define the versions of Scala to build against in the <tt>build.scala.versions</tt> property as a space-delimited list. Versions of Scala 2.7.2 or later are allowed. Scala 2.8 versions will usually work, including <a href="LocalScala">locally built versions</a>. For example: </p>
+         <pre class="prettyprint">&gt; set build.scala.versions 2.9.0 2.7.7 2.8.0 2.8.1
+&gt; reload</pre>
+         <p>The first version listed is used when the project is first loaded and when you run an action normally. To build against all versions listed in <tt>build.scala.versions</tt>, prefix the action to run with <tt>+</tt>. For example: </p>
+         <pre class="prettyprint">&gt; +package</pre>
+         <p>A typical way to use this feature is to do development on a single Scala version (no <tt>+</tt> prefix) and then cross-build (using <tt>+</tt>) occasionally and when releasing. The ultimate purpose of <tt>+</tt> is to cross-publish your project. That is, by doing: </p>
+         <pre class="prettyprint">&gt; +publish</pre>
+         <p>you make your project available to users with different versions of Scala. See <a href="Publishing">Publishing</a> for more details on publishing your project. </p>
+         <p>In order to make this process as quick as possible, different output and managed dependency directories are used for different versions of Scala. For example, when building against Scala 2.7.7, </p>
+         <ul>
+          <li><tt>./lib_managed/</tt> becomes `./lib_managed/scala_2.7.7/ </li>
+          <li><tt>./target/</tt> becomes <tt>./target/scala_2.7.7/</tt> </li>
+         </ul>Packaged jars, wars, and other artifacts have 
+         <tt>_&lt;scala-version&gt;</tt> appended to the normal artifact ID as mentioned in the Publishing Conventions section above. 
+         <p></p>
+         <p>This means that the outputs of each build against each version of Scala are independent of the others. Note that you need to run <tt>+update</tt> if you are using managed dependencies so that <tt>sbt</tt> can resolve your dependencies for each version separately. This way you would get the version of Dispatch compiled against 2.7.5 for your 2.7.5 build, the version compiled against 2.7.4 for your 2.7.4 build, and so on. In fact, you can control your dependencies for different Scala versions. For example: </p>
+         <pre class="prettyprint">  val scalatest =
+    buildScalaVersion match {
+      case &quot;2.7.5&quot; =&gt; &quot;org.scala-tools.testing&quot; % &quot;scalatest&quot; % &quot;0.9.5&quot;
+      case &quot;2.7.2&quot; =&gt; &quot;org.scalatest&quot; % &quot;scalatest&quot; % &quot;0.9.3&quot;
+      case x =&gt; error(&quot;Unsupported Scala version &quot; + x)
+    }</pre>
+         <p>This works because your project definition is reloaded for each version of Scala you are building against. <tt>buildScalaVersion</tt> contains the current version of Scala being used to build the project. </p>
+         <p>As a final note, you can use <tt>++&lt;version&gt;</tt> to temporarily switch the Scala version currently being used to build (see <a href="RunningSbt">Basic Usage</a> for details). </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

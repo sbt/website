@@ -1,0 +1,61 @@
+<html>
+ <head> 
+  <title>ScalaJars</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ScalaJars</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Scala_Jars_and_Dependency_Management"></a>Scala Jars and Dependency Management<a href="#Scala_Jars_and_Dependency_Management" class="section_anchor"></a></h1>
+         <p><tt>sbt</tt> checks and filters managed dependencies on Scala libraries, such as <tt>scala-library.jar</tt> and <tt>scala-compiler.jar</tt>. This page explains the details of this behavior. </p>
+         <h2><a name="Explicit_Scala_Dependencies"></a>Explicit Scala Dependencies<a href="#Explicit_Scala_Dependencies" class="section_anchor"></a></h2>
+         <blockquote>
+          <tt>sbt</tt> checks that the revisions of any explicit dependencies on Scala libraries match that of the 
+          <tt>scala.version</tt> declared for the project. For example, 
+          <tt>sbt</tt> would generate an error if you defined 
+          <tt>scala.version</tt> to be 2.7.2 but had the following in your project definition: 
+          <pre class="prettyprint"> val scalaSwing = &quot;org.scala-lang&quot; % &quot;scala-swing&quot; % &quot;2.7.3&quot;</pre>
+         </blockquote>
+         <p>To disable this check, set: </p>
+         <pre class="prettyprint">  override def checkExplicitScalaDependencies = true</pre>
+         <h2><a name="Filtering_Scala_Dependencies"></a>Filtering Scala Dependencies<a href="#Filtering_Scala_Dependencies" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> excludes all dependencies on <tt>scala-library.jar</tt> and <tt>scala-compiler.jar</tt> so that these will not be downloaded. <tt>sbt</tt> does this because it already provides the right versions of <tt>scala-library.jar</tt> and <tt>scala-compiler.jar</tt> required for normal use. In particular, </p>
+         <ul>
+          <li>If your main sources depend on <tt>scala-compiler.jar</tt>, <tt>scala-compiler.jar</tt> is added to <tt>runClasspath</tt> so that compiler classes are available for the <tt>run</tt> command. </li>
+          <li>If your test sources depend on <tt>scala-compiler.jar</tt>, <tt>scala-compiler.jar</tt> is added to testClasspath so that the compiler classes are available for tests. </li>
+          <li>You have access to these jars as described in the next section </li>
+         </ul>
+         <p></p>
+         <p>If you need to explicitly reference the Scala jars used by <tt>sbt</tt>, see the Access to Scala Jars and Dependencies section below. </p>
+         <p><tt>sbt</tt> can be configured to skip these checks in certain cases, but this should be considered atypical. If you want to do this anyway, you should define a non-standard <a href="ManagedConfigurations">configuration</a> and exclude it from the configurations on which <tt>sbt</tt> performs checks and filtering: </p>
+         <pre class="prettyprint">  val other = config(&quot;scalac-2.7.3&quot;)
+  override def checkScalaInConfigurations = super.checkScalaInConfigurations - other
+  val scalac2_7_3 = &quot;org.scala-lang&quot; % &quot;scala-compiler&quot; % &quot;2.7.3&quot; % &quot;scalac-2.7.3&quot;</pre>
+         <p>You might use this to call <tt>java</tt> using the classpath given by <tt>managedClasspath(&quot;scalac-2.7.3&quot;)</tt>, for example. </p>
+         <p>To completely disable all filtering of dependencies, set </p>
+         <pre class="prettyprint">  override def filterScalaJars = false</pre>
+         <h2><a name="Access_to_Scala_Jars_and_Dependencies"></a>Access to Scala Jars and Dependencies<a href="#Access_to_Scala_Jars_and_Dependencies" class="section_anchor"></a></h2>
+         <ul>
+          <li>The <tt>ScalaInstance</tt> corresponding to the version of Scala currently building your project is obtained by the <tt>buildScalaInstance</tt> method. The <tt>libraryJar</tt> and <tt>compilerJar</tt> methods of a <tt>ScalaInstance</tt> provide the locations of the jars for the Scala version it represents. There are also the convenience methods <tt>buildCompilerJar</tt> and <tt>buildLibraryJar</tt> defined on <tt>Project</tt>. </li>
+          <li>Two methods on a project definition, <tt>mainDependencies</tt> and <tt>testDependencies</tt>, provide an analysis of the external dependencies (jars) of your code as determined during compilation. Because it relies on information determined during compilation, the information is only valid when compilation is up to date. These methods return an instance of <tt>LibraryDependencies</tt>. Read the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/LibraryDependencies.html" rel="nofollow">API Documentation</a> for more information. </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

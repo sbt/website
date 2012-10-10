@@ -1,0 +1,69 @@
+<html>
+ <head> 
+  <title>ChangeSummary_0_5</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary_0_5</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Changes_from_0.4.6_to_0.5/0.5.1"></a>Changes from 0.4.6 to 0.5/0.5.1<a href="#Changes_from_0.4.6_to_0.5/0.5.1" class="section_anchor"></a></h1>
+         <h2><a name="Compatibility"></a>Compatibility<a href="#Compatibility" class="section_anchor"></a></h2>
+         <ul>
+          <li>Two new features, cross-building from the command line and scratch projects, require an updated loader (version 0.5 or higher). This updated loader can still run previous versions of <tt>sbt</tt>. </li>
+          <li><tt>useDefaultConfigurations</tt> supersedes <tt>useMavenConfigurations</tt> and is now enabled by default. Please report any issues you have because of this change. </li>
+         </ul>
+         <h2><a name="Improvements"></a>Improvements<a href="#Improvements" class="section_anchor"></a></h2>
+         <ul>
+          <li>Project definitions can go directly in <tt>project/build</tt> in addition to <tt>project/build/src</tt> </li>
+          <li>Batch-style (command line) execution now supports the cross-building '+' prefix (see <a href="CrossBuild">cross-building</a> for details) </li>
+          <li>New action <tt>jetty</tt> for web application projects that waits for a key press before exiting so that it can be run batch-style as suggested <a href="http://robertlally.com/post/adventures-with-scala-and-vaadin-part-2" rel="nofollow">here</a>. </li>
+          <li>The files monitored for triggered execution are now taken from the current <tt>Project</tt>'s <tt>watchPaths</tt> method. The default is now to watch resources in addition to sources. (see <a href="TriggeredExecution">TriggeredExecution</a> for details) </li>
+          <li>Can specify the maximum number of errors to print with the <tt>MaxCompileErrors</tt> <tt>CompileOption</tt>/<tt>ScaladocOption</tt> </li>
+          <li>Added JavaNet1Repository for using java.net Maven 1 repository </li>
+          <li>Can publish to HTTP repositories (see <a href="Publishing">Publishing</a> for details) </li>
+          <li>Can directly specify location of dependencies using the from(urlString) method (see <a href="LibraryManagement">LibraryManagement</a> for details) </li>
+          <li>Can specify artifacts of a dependency using the <tt>artifacts</tt> method. This is equivalent to the <tt>&lt;artifact&gt;</tt> element in a <tt>&lt;dependency&gt;</tt> element in an Ivy file. It is used for alternative artifact extensions and types or multiple artifacts per dependency. </li>
+         </ul>
+         <h2><a name="New_Features"></a>New Features<a href="#New_Features" class="section_anchor"></a></h2>
+         <ul>
+          <li><tt>sbt</tt> plugins, including a sample plugin that makes a self-extracting jar for a project (see <a href="SbtPlugins">SbtPlugins</a>) </li>
+          <li>New project setup option 's' that fills in defaults for all properties (such as name and version) and allows sources and jars to be placed directly in the project directory in addition to the normal locations (see <a href="Setup">Setup</a> for details) </li>
+          <li>Cross-publishing against multiple versions of Scala (see <a href="CrossBuild">cross-building</a> for details]) </li>
+         </ul>
+         <p> </p>
+         <h2><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h2>
+         <ul>
+          <li>Improved handling of default configuration mapping of dependencies </li>
+          <li><tt>FileUtilities.unzip</tt> should actually return the set of extracted files now </li>
+          <li><a title="provided classpath included in war file and webstart" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=30">&nbsp;Issue #30&nbsp;</a> : dependencies in provided configuration were included in packaged webstart and web applications </li>
+          <li>Fixed class loader issue with web applications (JSP did not work for web applications) </li>
+          <li>Fixed manual <tt>reboot</tt> not changing the version of Scala when it is manually <tt>set</tt> </li>
+         </ul>
+         <p> </p>
+         <blockquote>
+          <p></p>
+          <h2><a name="Other"></a>Other<a href="#Other" class="section_anchor"></a></h2> 
+         </blockquote>
+         <ul>
+          <li><a href="http://github.com/harrah/browse/" rel="nofollow">Scala X-Ray</a> is now published on scala-tools.org as version 0.2. See <a href="CompilerPlugins">CompilerPlugins</a> or the <tt>sxr</tt> README for how to enable this in your project. </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

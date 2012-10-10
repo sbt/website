@@ -1,0 +1,68 @@
+<html>
+ <head> 
+  <title>Loader</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Loader</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Scala_and_Sbt_Versions"></a>Scala and Sbt Versions<a href="#Scala_and_Sbt_Versions" class="section_anchor"></a></h1>
+         <p>This page describes how the <tt>sbt</tt> loader helps you use different versions of Scala and <tt>sbt</tt> to build your projects. For details on how it can be used to launch other applications besides <tt>sbt</tt> in a similar manner, see <a href="GeneralizedLauncher">GeneralizedLauncher</a>. </p>
+         <h2><a name="Previously"></a>Previously<a href="#Previously" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> versions before 0.3.8 were compiled against a specific version of Scala and test libraries (ScalaCheck, ScalaTest, and specs). You could only use this version of Scala to build your project unless you built <tt>sbt</tt> from source. You could also only use the version of a test library that was binary compatible with the version of Scala that <tt>sbt</tt> was compiled with. </p>
+         <h2><a name="Now"></a>Now<a href="#Now" class="section_anchor"></a></h2>
+         <p>This has changed with <tt>sbt</tt> 0.3.8. The distributed jar is no longer the main <tt>sbt</tt> jar. It is instead a loader that has the classes it needs from Ivy and Scala included in the same jar (after shrinking with <a href="http://proguard.sourceforge.net/" rel="nofollow">Proguard</a>). This loader reads the versions of Scala and <tt>sbt</tt> to use to build the project from the <tt>project/build.properties</tt> file. If this is the first time the project has been built with those versions, the loader downloads the appropriate versions to your <tt>project/boot</tt> directory. The <tt>sbt</tt> loader will then load the right version of the main <tt>sbt</tt> builder using the right version of Scala. </p>
+         <h2><a name="Motivation"></a>Motivation<a href="#Motivation" class="section_anchor"></a></h2>
+         <p>When a new version of <tt>sbt</tt> is released, you only have to do: </p>
+         <pre class="prettyprint">&gt; set sbt.version 0.7.7
+&gt; reload</pre>
+         <p>and the <tt>sbt</tt> loader will download the new version of <tt>sbt</tt> to build your project. Note that new features occasionally require updating the loader. </p>
+         <p>The loader enables building against multiple versions of Scala. To use this feature, list multiple Scala versions in your <tt>build.scala.versions</tt> property. Then, prefix the action to run with <tt>+</tt>. </p>
+         <pre class="prettyprint">$ sbt
+&gt; set build.scala.versions 2.7.7 2.8.1 2.7.2
+&gt; reload
+&gt; +compile</pre>
+         <p>or </p>
+         <pre class="prettyprint">$ sbt &quot;+compile&quot;</pre>
+         <p><tt>outputPath</tt> and <tt>managedDependencyPath</tt> have the version of Scala being used for the build appended to their path. By default, this means: </p>
+         <pre class="prettyprint"> target -&gt; target/scala_2.7.2
+ lib_managed -&gt; lib_managed/scala_2.7.2</pre>
+         <p>If you use custom output directories or you redefine paths, you will want to wrap them in <tt>crossPath</tt>, which will append this component. For example, <tt>outputPath</tt> is defined as: </p>
+         <pre class="prettyprint">  def outputPath = crossPath(outputRootPath)
+  def outputRootPath = path(&quot;target&quot;)</pre>
+         <h2><a name="Setup"></a>Setup<a href="#Setup" class="section_anchor"></a></h2>
+         <ol>
+          <li>Because Proguard embeds the Scala+Ivy classes the loader needs, the <tt>sbt</tt> script now looks like: </li>
+          <pre class="prettyprint">  java -Xmx512M -jar sbt-launcher.jar &quot;$@&quot;</pre>
+         </ol>
+         <blockquote>
+          This means Scala doesn't have to be installed already. 
+         </blockquote>
+         <ol>
+          <li>Run <tt>sbt</tt> in an existing project and you will be prompted for the versions of Scala and <tt>sbt</tt> to use. Currently, Scala versions 2.7.2 and later and sbt 0.7.0, 0.7.1, 0.7.2, 0.7.3, 0.7.4, 0.7.5, and 0.7.7 are available options. The <tt>sbt</tt> launcher will download the proper version of Scala and the requested version of the <tt>sbt</tt> builder and put them in project/boot. </li>
+          <li>The launcher will use these downloaded jars to build your project. </li>
+          <li>Proceed using <tt>sbt</tt>. </li>
+         </ol>
+         <h2><a name="Offline_Usage"></a>Offline Usage<a href="#Offline_Usage" class="section_anchor"></a></h2>
+         <p>The <tt>sbt</tt> loader requires an internet connection to download the selected versions of the Scala and main <tt>sbt</tt> builder jars. Once the jars are downloaded, the loader does not need a connection to build projects on that machine unless you use a different version of Scala or <tt>sbt</tt>. Cleaning the Ivy cache, such as with the <tt>clean-cache</tt> action, will require downloading the jars again, however. </p>
+         <p>The loader downloads the jars to the <tt>project/boot</tt> directory in a project. This directory can be copied between projects. Therefore, once you have a <tt>project/boot</tt> directory for the desired versions of <tt>sbt</tt> and Scala, you can copy this directory to other projects, including ones on other machines. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

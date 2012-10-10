@@ -1,0 +1,48 @@
+<html>
+ <head> 
+  <title>JavaSources</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">JavaSources</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Java_Sources"></a>Java Sources<a href="#Java_Sources" class="section_anchor"></a></h1>
+         <h2><a name="Description"></a>Description<a href="#Description" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> has support for compiling Java sources in <tt>sbt</tt> with the following limitations: </p>
+         <ul>
+          <li>The compiler used is the <tt>javac</tt> used to run sbt or the javac on your path. </li>
+          <li>Dependency tracking is limited to the dependencies present in compiled class files. </li>
+         </ul>
+         <p></p>
+         <h2><a name="Usage"></a>Usage<a href="#Usage" class="section_anchor"></a></h2>
+         <ul>
+          <li><tt>compile</tt> will compile the sources under <tt>src/main/java</tt> </li>
+          <li><tt>test-compile</tt> will compile the sources under <tt>src/test/java</tt>. </li>
+         </ul>
+         <p> Pass options to the Java compiler by adding instances of <tt>JavaCompileOption</tt> to your <tt>compileOptions</tt>. For example: </p>
+         <pre class="prettyprint">  override def compileOptions = javaCompileOptions(&quot;-g:none&quot;) ++ super.compileOptions.toList</pre>
+         <p>As with options for the Scala compiler, the arguments are not parsed by sbt. Multi-element options, such as <tt>-source 1.5</tt>, are specified like: </p>
+         <pre class="prettyprint">  override def javaCompileOptions = super.javaCompileOptions ++
+    javaCompileOptions(&quot;-source&quot;, &quot;1.5&quot;)</pre>
+         <p>You can specify the order in which Scala and Java sources are built with the <tt>compileOrder</tt> method. Possible values are from the <tt>CompileOrder</tt> enumeration: <tt>Mixed</tt>, <tt>JavaThenScala</tt>, and <tt>ScalaThenJava</tt>. If you have circular dependencies between Scala and Java sources, you need the default, <tt>Mixed</tt>, which passes both Java and Scala sources to <tt>scalac</tt> and then compiles the Java sources with <tt>javac</tt>. If you do not have circular dependencies, you can use one of the other two options to speed up your build by not passing the Java sources to <tt>scalac</tt>. For example, if your Scala sources depend on your Java sources, but your Java sources do not depend on your Scala sources, you can do: </p>
+         <pre class="prettyprint">  override def compileOrder = CompileOrder.JavaThenScala</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

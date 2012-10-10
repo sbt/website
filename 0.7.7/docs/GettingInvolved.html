@@ -1,0 +1,52 @@
+<html>
+ <head> 
+  <title>GettingInvolved</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">GettingInvolved</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Getting_Involved"></a>Getting Involved<a href="#Getting_Involved" class="section_anchor"></a></h1>
+         <p>There are many opportunities for getting involved in sbt 0.9.x development. Some are listed here. They are only suggestions, though. If there is something else you'd like to work on, send an email to the list if you want to discuss it or submit a pull request on github if you've already implemented it. The source code is on github, in the 0.9 branch of the <a href="http://github.com/harrah/xsbt/tree/0.9" rel="nofollow">xsbt repository</a>. </p>
+         <h1><a name="Opportunities"></a>Opportunities<a href="#Opportunities" class="section_anchor"></a></h1>
+         <ol>
+          <li>The main design task remaining is determining how sbt 0.9.x will be configured by users. This is the highest priority work right now. In 0.7.4, almost every possible setting can be changed by overriding a single method. The advantage is that most things can be changed by adding a line to the project definition. The disadvantage is a proliferation of methods and difficulty determining what that line should be. Perhaps the current way is the best way. Perhaps there is a better way. This task is open to discussion and prototyping. See <a href="http://github.com/harrah/xsbt/blob/0.9/main/DefaultProject.scala" rel="nofollow">main/DefaultProject.scala</a> for how the basic tasks are currently wired up for 0.9. Some related aspects to this are: </li>
+          <ol>
+           <li>Reintegrate properties, replace with settings, some combination, or something new. Basically, I'd like to see a general mechanism that includes per-task configuration. For example, it would be integrated with logging to configure logging levels per-project, per-task, and screen vs. persisted. </li>
+           <li>Reintegrate 'doc', 'console', 'run', 'test'. The backends for these all exist. What is open is integrating them according to whatever configuration scheme is determined. </li>
+          </ol>
+          <li>Build/release management. There are opportunities to automate more of sbt's build, especially for releases. For example, the launcher is currently uploaded manually. There are some related open bugs such as publishing source and javadoc artifacts for sbt. Another project management issue is that the wiki pages for Google Code are dumped into a single folder. It is not easy to organize the documentation better and publishing multiple versions (show 0.7.4 documentation by default, have 0.9.x in progress) is not practical. </li>
+          <li>Add support for remote projects. The new external project support should make it easy to add support not only for external projects on the filesystem, but also for projects obtained remotely. This might include projects checked out using git or svn or a zip downloaded and extracted from the internet. A simple, initial version should be a relatively self-contained and small project. Loading is done in <a href="http://github.com/harrah/xsbt/blob/0.9/main/MultiProject.scala#L68" rel="nofollow">main/MultiProject.scala</a>. Instead of a File representing an external project, a URL or custom datatype could be used. </li>
+          <li>Compilation now produces an <tt>Analysis</tt>, a data structure representing the relationships between sources and binaries and the API of sources. As a start, the previous <tt>graph-src</tt> and <tt>graph-pkg</tt> could be reimplemented to operate on this <tt>Analysis</tt> instance. </li>
+          <li>Dependency management. There is always lots to learn and do here. As a start, publishing needs reintegration. 'update' and 'publish' should only perform actions if the inputs have changed. Selecting external <tt>pom.xml</tt> or <tt>ivy.xml</tt> should be explicit (no more auto-detection, just default to inline). The API for dependency construction should allow specifying exclusions. Ivy related code is in the <a href="http://github.com/harrah/xsbt/tree/0.9/ivy" rel="nofollow">ivy subproject</a>. </li>
+          <li>Clean up <tt>Path</tt>, <tt>PathFinder</tt>, and other I/O code. There is an awkward balance between <tt>Path</tt> and <tt>File</tt>. More APIs in 0.9 just accept <tt>File</tt>. There are bidirectional implicit conversions between <tt>Path</tt> and <tt>File</tt>. Should <tt>Path</tt> just be a type-class operating on <tt>File</tt>? Should <tt>Path</tt> be similar to the way it currently is, but replace <tt>File</tt> everywhere? Should we not modify the current code too much and wait for the Scala I/O library? </li>
+          <li>Testing compilation. The accuracy of sbt's incremental compilation is tested using a custom test framework. With the new incremental compilation being more aggressive, more tests are needed. Basically, you define a project, changes to the project, and whether compilation should fail or succeed. This could be an opportunity to learn Scala in more depth. See <a href="http://github.com/harrah/xsbt/tree/0.9/sbt/src/sbt-test" rel="nofollow">sbt/src/sbt-test/</a> for example tests. </li>
+          <li>Web support. If you use jetty-run and want to improve it, have at it. See the <a href="http://github.com/harrah/xsbt/tree/0.9/web/" rel="nofollow">web</a> subproject for the backend. </li>
+          <li>Document how sbt components can used outside of sbt. Specifically, the <a href="http://github.com/harrah/xsbt/tree/0.9/compile" rel="nofollow">incremental compilation</a> and the <a href="http://github.com/harrah/xsbt/tree/0.9/tasks/" rel="nofollow">task engine</a> should be usable outside of sbt with some effort. Some requirements, such as recompilation working for any Scala version, make this involve wiring together some components. It would be very useful to show how this can be done and possibly make it simpler for the common cases. </li>
+         </ol>
+         <h1><a name="Notes"></a>Notes<a href="#Notes" class="section_anchor"></a></h1>
+         <ul>
+          <li>If none of these opportunities look interesting, send an email to the mailing list and we'll try to find something. Again, these are suggestions. If only one part of a task seems interesting, that is probably not a problem. </li>
+          <li>Like with 0.6.x, once the first release (experimental snapshot, really) gets out, there will probably be biweekly releases with whatever work is ready. </li>
+          <li>See sbt's <a href="http://github.com/harrah/xsbt/blob/0.9/project/build/XSbt.scala" rel="nofollow">project definition</a> for short descriptions of each subproject. </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,71 @@
+<html>
+ <head> 
+  <title>ActionContent</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ActionContent</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Error_Handling">Error Handling</a></li>
+          <li><a href="#File_Utilities">File Utilities</a></li>
+          <ul>
+           <li><a href="#Jar/Zip/GZip_Files">Jar/Zip/GZip Files</a></li>
+           <li><a href="#Pack200">Pack200</a></li>
+           <li><a href="#Signing_Jars">Signing Jars</a></li>
+           <li><a href="#Copying/Downloading">Copying/Downloading</a></li>
+           <li><a href="#Creating_Directories_and_Files">Creating Directories and Files</a></li>
+           <li><a href="#Removing_Directories_and_Files">Removing Directories and Files</a></li>
+           <li><a href="#Temporary_Directories">Temporary Directories</a></li>
+           <li><a href="#General_I/O">General I/O</a></li>
+           <li><a href="#Access_to_Jars">Access to Jars</a></li>
+          </ul>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page provides assistance writing the code that defines the work of an action. To use external libraries or reuse code between projects, see <a href="SbtPlugins">SbtPlugins</a>. You can also directly put libraries in <tt>project/build/lib</tt> and they can be used from your project definition. </p>
+         <h1><a name="Error_Handling"></a>Error Handling<a href="#Error_Handling" class="section_anchor"></a></h1>
+         <p>This section describes error handling in <tt>sbt</tt>. When you create a task, you pass code that returns <tt>None</tt> if the action executes normally or <tt>Some(errorMessage)</tt> if an error occurs. This is the way <tt>sbt</tt> works with errors internally and how it indicates recoverable errors when you use utility methods. Note that if you throw an exception in your code, <tt>sbt</tt> will handle it. </p>
+         <p>There are methods in <tt>sbt.Control</tt> for working with code that can throw exceptions. </p>
+         <h1><a name="File_Utilities"></a>File Utilities<a href="#File_Utilities" class="section_anchor"></a></h1>
+         <p><tt>sbt</tt> includes several methods for dealing with the filesystem in <tt>sbt.FileUtilities</tt>. Their capabilities are described below. The <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileUtilities$object.html" rel="nofollow">API documentation</a> describes the details of using the methods. </p>
+         <h2><a name="Jar/Zip/GZip_Files"></a>Jar/Zip/GZip Files<a href="#Jar/Zip/GZip_Files" class="section_anchor"></a></h2>
+         <p><tt>FileUtilities</tt> contains methods to create jar, zip or gzip files and for unzipping files. You can unzip from a <tt>Path</tt>, <tt>URL</tt>, <tt>File</tt>, or <tt>InputStream</tt> and you can optionally filter the files that are extracted using a <tt>NameFilter</tt>. You can jar, zip, or gzip the files selected by a <tt>PathFinder</tt> and optionally descend into directories recursively, which is useful if you just want to specify the directories to archive. (See Path for details on <tt>Path</tt>, <tt>PathFinder</tt> and <tt>NameFilter</tt>). </p>
+         <h2><a name="Pack200"></a>Pack200<a href="#Pack200" class="section_anchor"></a></h2>
+         <p>This is not in <tt>FileUtilities</tt>, but is in <tt>sbt.Pack</tt>. You can pack and unpack a jar file with either default options or explicitly specified options as given in the <tt>java.util.jar.Pack200.Packer</tt> class. </p>
+         <h2><a name="Signing_Jars"></a>Signing Jars<a href="#Signing_Jars" class="section_anchor"></a></h2>
+         <p>This is not in <tt>FileUtilities</tt>, but is in <tt>sbt.SignJar</tt>. It signs or verifies a jar file using the <tt>jarsigner</tt> executable, which must be on the system path. </p>
+         <h2><a name="Copying/Downloading"></a>Copying/Downloading<a href="#Copying/Downloading" class="section_anchor"></a></h2>
+         <p>There are several methods for copying files and data. You can transfer data from an <tt>InputStream</tt> to an <tt>OutputStream</tt> and optionally close the <tt>InputStream</tt> on completion. You can download data from a <tt>URL</tt> to a <tt>File</tt>. You can copy a single file or a single directory (recursively). There are also methods to copy a list of files to a directory, optionally flattening the file hierarchy in the process. Additionally, there is a method to mirror/synchronize the contents of two directories. </p>
+         <h2><a name="Creating_Directories_and_Files"></a>Creating Directories and Files<a href="#Creating_Directories_and_Files" class="section_anchor"></a></h2>
+         <p>There are methods to create a directory and all parent directories and to &quot;touch&quot; a file (create it if it doesn't exist or update its last modified time if it does). </p>
+         <h2><a name="Removing_Directories_and_Files"></a>Removing Directories and Files<a href="#Removing_Directories_and_Files" class="section_anchor"></a></h2>
+         <p>There is a method to recursively delete directories and files. </p>
+         <h2><a name="Temporary_Directories"></a>Temporary Directories<a href="#Temporary_Directories" class="section_anchor"></a></h2>
+         <p>There is a method to create a temporary directory and a method to execute code using a temporary directory that is automatically deleted after the code completes. </p>
+         <h2><a name="General_I/O"></a>General I/O<a href="#General_I/O" class="section_anchor"></a></h2>
+         <p>There are methods to read from, write to, and append to files, streams, and readers/writers and let <tt>FileUtilities</tt> open and close the streams, readers, or writers. There are convenience methods to read or write text or an array of bytes to or from a <tt>File</tt>. </p>
+         <h2><a name="Access_to_Jars"></a>Access to Jars<a href="#Access_to_Jars" class="section_anchor"></a></h2>
+         <p>There are methods to get the jar file or directory containing a given class. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

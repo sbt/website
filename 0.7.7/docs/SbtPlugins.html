@@ -1,0 +1,121 @@
+<html>
+ <head> 
+  <title>SbtPlugins</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">SbtPlugins</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <blockquote>
+          <h1><a name="sbt_Plugins"></a>sbt Plugins<a href="#sbt_Plugins" class="section_anchor"></a></h1> 
+         </blockquote>
+         <h2><a name="Existing_Plugins"></a>Existing Plugins<a href="#Existing_Plugins" class="section_anchor"></a></h2>
+         <ul>
+          <li><a href="http://technically.us/spde/About" rel="nofollow">spde</a> </li>
+          <li><a href="http://github.com/weiglewilczek/bnd4sbt" rel="nofollow">bnd4sbt</a> </li>
+          <li><a href="http://github.com/hoffrocket/sbt-yui" rel="nofollow">yuicompressor</a> </li>
+          <li><a href="http://github.com/rubbish/cuke4duke-sbt-plugin/" rel="nofollow">cuke4duke</a> </li>
+          <li><a href="http://github.com/jberkel/android-plugin" rel="nofollow">Android</a> </li>
+          <li><a href="SbtPlugins#Installer_Plugin">Installer</a> </li>
+          <li><a href="http://code.google.com/p/simple-build-tool/wiki/ExampleSbtTest" rel="nofollow">sbt test framework</a> </li>
+          <li><a href="http://bmc.github.com/sbt-plugins/" rel="nofollow">EditSource, IzPack, and Markdown</a> </li>
+          <li><a href="http://github.com/Gekkio/sbt-jrebel-plugin" rel="nofollow">JRebel</a> </li>
+          <li><a href="http://github.com/markchadwick/jython-sbt-plugin" rel="nofollow">Jython</a> </li>
+          <li><a href="http://bitbucket.org/jmhofer/findbugs4sbt" rel="nofollow">FindBugs</a> </li>
+          <li><a href="http://bitbucket.org/jmhofer/cpd4sbt" rel="nofollow">Copy/Paste Detector (CPD) of PMD</a> </li>
+          <li><a href="https://bitbucket.org/wyuenho/sbt-filter-plugin" rel="nofollow">Resource Filtering</a> </li>
+         </ul>
+         <p>See <a href="http://code.google.com/p/simple-build-tool/wiki/IntegrationSupport" rel="nofollow">Integration Support</a> for IDE-related plugins. </p>
+         <p>See also the complementary extension mechanism <a href="http://code.google.com/p/simple-build-tool/wiki/Processors" rel="nofollow">Processors</a>, which includes a list of existing processors. </p>
+         <h2><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h2>
+         <p>Plugins are libraries for your project definition. Declare them like dependencies for your project, except in a plugin definition in the <tt>project/plugins/</tt> directory. For example, to use <a href="http://code.google.com/p/markdownj/" rel="nofollow">MarkdownJ</a> in your project definition, create: </p>
+         <p><tt>project/plugins/Plugins.scala</tt> </p>
+         <pre class="prettyprint">import sbt._
+class Plugins(info: ProjectInfo) extends PluginDefinition(info)
+{
+  val a = &quot;org.markdownj&quot; % &quot;markdownj&quot; % &quot;0.3.0-1.0.2b4&quot;
+}</pre>
+         <p>Verify it is correct by doing <tt>reload</tt> and then <a href="ProjectConsole">console-project</a>. Call some MarkdownJ code: </p>
+         <pre class="prettyprint">scala&gt; new com.petebevin.markdown.MarkdownProcessor
+res1: com.petebevin.markdown.MarkdownProcessor = Markdown Processor for Java 0.3.0 (compatible with Markdown 1.0.2b2)</pre>
+         <p>This dependency was independent of <tt>sbt</tt>. You can also create and use plugins that extend or use <tt>sbt</tt>. The rest of this page describes <tt>sbt</tt> plugins. The first part shows the results of a plugin that creates a self-extracting jar out of a project. The second part shows how to create a simple plugin that provides a new action to a project. </p>
+         <h2><a name="Hello_Lift_Installer_Example"></a>Hello Lift Installer Example<a href="#Hello_Lift_Installer_Example" class="section_anchor"></a></h2>
+         <ul>
+          <li>Download the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/examples/hello-lift-1.0-setup.jar" rel="nofollow">jar</a> </li>
+          <li>Run <tt>java -jar hello-lift-1.0-setup.jar</tt> . The Hello Lift project and an embedded <tt>sbt</tt> launcher will be extracted. The project will be loaded and predefined actions run. In this case, the project will be set up, dependencies will be downloaded, and the project will be compiled and Jetty started. Browse to <a href="http://localhost:8080" rel="nofollow">http://localhost:8080</a>. </li>
+          <li>You have a ready example Lift project. For example, you can enter the extracted project directory and start sbt with <tt>java -jar sbt-launcher-0.7.1.jar</tt>. </li>
+          <li>The project uses <a href="http://github.com/harrah/browse/" rel="nofollow">Scala X-Ray</a> to generate browsable sources. You can view these in the <tt>project/target/classes.sxr</tt> directory. </li>
+          <li>You can run <tt>installer</tt> to regenerate the self-extracting jar from the project. Note: there is currently the issue of including the sbt-launcher in the project zip, making the jar substantially larger than necessary. </li>
+          <li>See the <tt>project/plugins/Plugins.scala</tt> directory for how the plugin is defined or see the <a href="SbtPlugins#Installer_Plugin">Installer Plugin</a> section below. </li>
+         </ul>
+         <p> </p>
+         <h2><a name="Hello_World_Plugin"></a>Hello World Plugin<a href="#Hello_World_Plugin" class="section_anchor"></a></h2>
+         <p>To try out plugins, we'll make a simple hello world plugin and use it. </p>
+         <h3><a name="Make_the_Plugin"></a>Make the Plugin<a href="#Make_the_Plugin" class="section_anchor"></a></h3>
+         <p>To make a plugin, create a new project with a project definition that extends <tt>PluginProject</tt>. This can now go in <tt>project/build</tt>. The basic example: </p>
+         <pre class="prettyprint">  import sbt._
+  class TestPluginProject(info: ProjectInfo) extends PluginProject(info)</pre>
+         <p>Make a simple plugin by putting the following in <tt>src/main/scala</tt> : </p>
+         <pre class="prettyprint">package hw
+import sbt._
+trait HelloWorldPlugin extends Project {
+  lazy val hello = task { log.info(&quot;Hello World!&quot;); None }
+}</pre>
+         <p>Publish it by running the <tt>publish-local</tt> action. </p>
+         <h3><a name="Use_the_Plugin"></a>Use the Plugin<a href="#Use_the_Plugin" class="section_anchor"></a></h3>
+         <p>To use the plugin, create a new project. Declare plugins by putting a plugin definition (basically a project definition that extends <tt>PluginDefinition</tt>) in <tt>project/plugins/</tt>. The following example assumes that the plugin above had was setup with the name &quot;test&quot; and with version &quot;1.0&quot;. </p>
+         <pre class="prettyprint">import sbt._
+class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
+  val a = &quot;test&quot; % &quot;test&quot; % &quot;1.0&quot;
+}</pre>
+         <p>Define the project definition in <tt>project/build/</tt> to use the <tt>HelloWorldPlugin</tt> : </p>
+         <pre class="prettyprint">import sbt._
+class TestProject(info: ProjectInfo) extends DefaultProject(info) with hw.HelloWorldPlugin</pre>
+         <p>Try it out by running the <tt>hello</tt> action at the prompt. </p>
+         <h2><a name="Details"></a>Details<a href="#Details" class="section_anchor"></a></h2>
+         <p>sbt plugins are a way to reuse code between project definitions. They can consist of any Scala code you want. Specifically, they are not restricted to providing a single trait extending <tt>Project</tt>, as in the example. </p>
+         <p>You can provide a trait that extends <tt>Project</tt>, <tt>DefaultProject</tt>, or <tt>DefaultWebProject</tt> that the user then mixes in to use. You can provide multiple project types or you can just provide code that can be used to implement tasks. </p>
+         <p>See the Existing Plugins section at the top of the page for examples of plugins. </p>
+         <h1><a name="Installer_Plugin"></a>Installer Plugin<a href="#Installer_Plugin" class="section_anchor"></a></h1>
+         <p>The installer plugin provides a task <tt>'installer'</tt> that creates a self-executable jar that bundles the current project. When executed, the jar will extract the sbt launcher and the project, run sbt on the project, and execute predefined commands. </p>
+         <p>To use it, first declare the plugin: </p>
+         <blockquote>
+          <tt>project/plugins/Plugins.scala</tt> 
+          <pre class="prettyprint">import sbt._
+class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
+  val extract = &quot;org.scala-tools.sbt&quot; % &quot;installer-plugin&quot; % &quot;0.3.0&quot;
+}</pre>
+         </blockquote>
+         <p>Then, mix the <tt>BasicSelfExtractingProject</tt> trait into your build definition: </p>
+         <blockquote>
+          <tt>project/build/YourProject.scala</tt> 
+          <pre class="prettyprint">import sbt._
+class YourProject(info: ProjectInfo) extends DefaultProject(info) 
+  with extract.BasicSelfExtractingProject
+{
+  override def installActions = &quot;update&quot; :: &quot;run&quot; :: Nil
+}</pre>
+         </blockquote>
+         <p>Overriding <tt>installActions</tt> is optional. It defines the actions that sbt runs after the project is extracted. By default, 'update' and 'compile' are run. </p>
+         <p>Finally, create the self-extracting jar by running the <tt>installer</tt> action on the project. The resulting jar can be run with <tt>java -jar ...</tt>. </p>
+         <p>The installer project is a subproject of sbt in the <a href="http://github.com/harrah/xsbt/tree/master/sbt/install/" rel="nofollow">sbt/install/ directory</a>. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

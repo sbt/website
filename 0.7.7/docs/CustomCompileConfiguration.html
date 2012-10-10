@@ -1,0 +1,79 @@
+<html>
+ <head> 
+  <title>CustomCompileConfiguration</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">CustomCompileConfiguration</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Adding_a_custom_compile_configuration"></a>Adding a custom compile configuration<a href="#Adding_a_custom_compile_configuration" class="section_anchor"></a></h1>
+         <p>Scala projects in SBT automatically have support for compiling &quot;main&quot; sources and &quot;test&quot; sources. Occasionally, your project may need to compile additional source files that are used during your development cycle or your build process, but which belong in neither the &quot;main&quot; source section nor the &quot;test&quot; source section, because the classes are not used at runtime and are not tests. </p>
+         <p>As an example, let's say we use scala classes to define a data schema (using an internal DSL), and we want an action in our project that compiles the schema definition classes and then uses those classes to generate artifacts (e.g. resource files, or additional source files). To do this, first we need to set up a custom compile configuration, and second we need to collect the compiled classes, instantiate objects, and hand off of the objects to the artifact generator (the artifact generator is an exercise left for the reader). SBT already has a mechanism for doing something similar when compiling, collecting, and running tests, and we are going to repurpose that mechanism to accomplish our our. </p>
+         <p>The following example code needs to be added to your Project definition class. This example expects to find the special source files under &quot;src/schema&quot; (no &quot;scala&quot; or &quot;java&quot; subdirectories expected), and collects all classes that extend &quot;com.example.MyMarkerClass&quot;. One wrinkle here is the classpath. When compiling the schema classes, the classpath must include &quot;com.example.MyMarkerClass&quot;. But, our Project definition class also needs &quot;com.example.MyMarkerClass&quot; in its classpath, otherwise our action definition would not compile. There is probably a better way to do this, but for this example, we will assume that the jar that contains &quot;com.example.MyMarkerClass&quot; is duplicated in both the main classpath (either in lib or as a managed jar), and in &quot;project/build/lib&quot;. </p>
+         <pre class="prettyprint">/* use default compile options */
+def schemaCompileOptions: Seq[CompileOption] = compileOptions
+/* label it &quot;schema&quot; */
+def schemaLabel = &quot;schema&quot;    
+/* look for source under &quot;src/schema&quot; */
+def schemaSourcePath = sourcePath / &quot;schema&quot;
+def schemaSourceRoots = (schemaSourcePath ##)
+def schemaSources = sources(schemaSourceRoots)
+/* compiled classes go under &quot;target/schema-classes&quot; */
+def schemaCompilePath = outputPath / &quot;schema-classes&quot;
+/* analysis output goes under &quot;target/schema-analysis&quot; */
+def schemaAnalysisPath = outputPath / &quot;schema-analysis&quot;
+/* we are using the main compile classpath, but it would be better to define a separate
+ location to store the jars we need to compile our schema classes */
+def schemaClasspath = compileClasspath
+def schemaCompileConfiguration = new SchemaCompileConfig
+def schemaCompileConditional = new CompileConditional(schemaCompileConfiguration)
+def schemaCompileDescription = &quot;Compiles schema definitions.&quot;
+
+class SchemaCompileConfig extends BaseCompileConfig	{
+	def baseCompileOptions = schemaCompileOptions
+	def label = schemaLabel
+	def sourceRoots = schemaSourceRoots
+	def sources = schemaSources
+	def outputDirectory = schemaCompilePath
+	def classpath = schemaClasspath
+	def analysisPath = schemaAnalysisPath
+	def fingerprints = Fingerprints(List(&quot;com.example.MyMarkerClass&quot;), List(&quot;com.example.MarkerAnnotation&quot;))
+	def javaOptions = javaOptionsAsString(javaCompileOptions)
+}
+
+protected def schemaAction = task { 
+    schemaCompileConditional.run
+    val classLoader = ClasspathUtilities.toLoader(schemaCompileConditional.config.outputDirectory, getClass.getClassLoader)
+    schemaCompileConditional.analysis.allTests foreach { 
+        case TestDefinition(isModule, className, superClassName) =&gt;
+            val schemaDef = 
+                if (isModule) 
+                    ModuleUtilities.getObject(className, classLoader).asInstanceOf[MyMarkerClass]
+                else
+                    classLoader.getClass.newInstance.asInstanceOf[MyMarkerClass]
+            // your code to process the compiled classes goes here
+    }
+    None 
+} describedAs schemaCompileDescription
+
+lazy val schema = schemaAction</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

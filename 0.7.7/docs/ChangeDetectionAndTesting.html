@@ -1,0 +1,217 @@
+<html>
+ <head> 
+  <title>ChangeDetectionAndTesting</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeDetectionAndTesting</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Partial_Recompilation">Partial Recompilation</a></li>
+          <ul>
+           <li><a href="#Example">Example</a></li>
+          </ul>
+          <li><a href="#Testing">Testing</a></li>
+          <li><a href="#Scripts">Scripts</a></li>
+          <ul>
+           <li><a href="#Syntax">Syntax</a></li>
+           <li><a href="#Example">Example</a></li>
+           <li><a href="#Commands">Commands</a></li>
+           <li><a href="#Further_Examples">Further Examples</a></li>
+          </ul>
+          <li><a href="#Running_Tests">Running Tests</a></li>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>A general guideline for a build tool is that you should be able to trust its outputs. This is especially relevant to compiling Scala sources because the Scala compiler is slow and so there is a sizable amount of code in <tt>sbt</tt> to speed up compilation times. </p>
+         <p>One simple way <tt>sbt</tt> speeds up compilation is to run the compiler in the same virtual machine each time. (Note that this is not quite the same as <tt>fsc</tt>, which reuses the same compiler instance.) This approach results in a speedup by a factor of 2 after the first compile. </p>
+         <p>A second way to speed up compilation times is to only recompile sources that are out of date. This approach requires some work to do properly. A sign of failing to do it properly is users running <tt>clean</tt> as part of their normal development cycle. The motivation behind <tt>sbt</tt>'s scripted test framework is to try to find bugs in <tt>sbt</tt>'s partial recompilation so that compilation works as expected and <tt>clean</tt> is something you don't need to do to get correct outputs. </p>
+         <p>The basic steps to create a scripted test are: </p>
+         <ol>
+          <li>Create a project that will form the base </li>
+          <li>Determine the changes to make to that project and any actions to invoke on the project </li>
+          <li>Create the files comprising the changes </li>
+          <li>Create a script that consists of statements that apply the changes and invoke actions on the project, declaring whether the actions should succeed or fail. </li>
+         </ol>
+         <p></p>
+         <p>The first part discusses partial recompilation in <tt>sbt</tt> and the second part describes scripted tests. </p>
+         <h1><a name="Partial_Recompilation"></a>Partial Recompilation<a href="#Partial_Recompilation" class="section_anchor"></a></h1>
+         <p>You have a set of Scala source files that you would like to compile. After the initial compilation, you typically only modify some of those files before recompiling. This section describes how <tt>sbt</tt> determines which files have been changed and which files need to be recompiled. </p>
+         <p>The steps to partial recompilation are generally: </p>
+         <ol>
+          <li>Determine which sources have been modified. </li>
+          <li>Determine which sources need to be recompiled. </li>
+          <li>Remove outdated classes. </li>
+          <li>Recompile. </li>
+         </ol>
+         <p></p>
+         <p>There are a few indications that a source has changed: </p>
+         <ol>
+          <li>It no longer exists. </li>
+          <li>Its last modified time is more recent than the timestamp for the last compile. </li>
+          <li>Its last modified time is more recent than the last modified time of one of the classes produced from it. </li>
+          <li>Its SHA or MD5 hash is different from the hash computed when the last compile was done. </li>
+          <li>One of the classes generated from it does not exist anymore. </li>
+          <li>Its last modified time is older than that of one of the libraries it depends on </li>
+         </ol>
+         <p></p>
+         <p>Once a source is detected as out of date, there are three recompilation strategies: </p>
+         <ol>
+          <li>Recompile only the sources directly out of date. </li>
+          <li>Recompile the sources directly out of date and all sources that (transitively) depend on them. </li>
+          <li>Recompile all sources. </li>
+         </ol>
+         <p></p>
+         <p>Finally, when a source is out of date (directly or indirectly), its classes should be deleted. </p>
+         <p>Through version 0.3.6, <tt>sbt</tt> used methods 1, 3, 5, and 6 combined to detect changes and recompilation strategy 2. Version 0.3.7 and higher of <tt>sbt</tt> substitutes change detection method 4 (comparing hashes) for method 3 (comparing last modified times) because of the following problems with method 3: </p>
+         <ol>
+          <li>Changes to a source that produces no classes are not detected (works properly with change detection method 2 or 4). </li>
+          <li>Changes to a source between starting a compilation and finishing it are not detected (works properly with 2 or 4). </li>
+          <li>The resolution of the last modified time of a file can be as coarse as 1 second for many filesystems (addressed by 4). </li>
+         </ol>
+         <p>The last issue was especially a problem when implementing the scripted tests. An automated test script could setup, compile, update, and compile again within a second. The second compile wouldn't detect any changes because the last modified times were the same. </p>
+         <p>One problem with hashing, though, is that it reads in every source file to calculate its hash. As a rough idea, this might take about 1 second per 10 MB of sources on a local filesystem. This mainly affects how long it takes to run <tt>compile</tt> on a project without any changes. Of course, change detection is configurable, so you can use the last modified method if desired. </p>
+         <h2><a name="Example"></a>Example<a href="#Example" class="section_anchor"></a></h2>
+         <p>As an example, consider the following two definitions: </p>
+         <p><tt>A.scala</tt> </p>
+         <pre class="prettyprint">object A {
+    val x = B.y
+}</pre>
+         <p><tt>B.scala</tt> </p>
+         <pre class="prettyprint">object B {
+    val y = 5
+}</pre>
+         <p>Now, consider what happens if you were to delete <tt>B.scala</tt> but do not update <tt>A.scala</tt>. When you recompile, you should get an error because <tt>B</tt> no longer exists for <tt>A</tt> to reference. </p>
+         <p>The first problem occurs if you do not recompile <tt>A.scala</tt>. This would happen if you do not take source dependencies into account and you only recompile directly modified sources (here, <tt>A.scala</tt> is out of date because it depends on <tt>B.scala</tt>, but <tt>A.scala</tt> is not directly modified). A solution for a build system without source dependency tracking would be to recompile all sources. Alternatively, it could omit <tt>A.scala</tt> from recompilation and consequently require the user to do a full clean and then compile in order to get a proper build. </p>
+         <p>The second problem is that if you do not delete the classes for <tt>B</tt>, the compiler will still find the classes for <tt>B</tt> in the output directory. So, there will not be a compiler error even though you have recompiled <tt>A.scala</tt>. This shows that it is necessary to track the classes generated from a source file. You want to delete the classes for the sources being recompiled but not delete the classes for the sources not being recompiled. </p>
+         <h1><a name="Testing"></a>Testing<a href="#Testing" class="section_anchor"></a></h1>
+         <p>The scripted test framework is used to verify that <tt>sbt</tt> handles cases such as that described above. The steps to create a test are: </p>
+         <ol>
+          <li>Create an initial project in <tt>src/sbt-test/&lt;test-group&gt;/&lt;test-name&gt;/</tt> </li>
+          <li>Determine a set of changes to apply to the project (put any new or modified files in a sub-directory called <tt>changes/</tt>) </li>
+          <li>Create a script called <tt>test</tt> in the project directory that modifies the project and runs actions on the project </li>
+          <li>Run the tests with the <tt>scripted</tt> action </li>
+         </ol>
+         <p>The directory structure for a test that verifies correctness in the case mentioned in the previous section might look like: </p>
+         <pre class="prettyprint">  src/sbt-test/change-detection/remove-test/
+     project/
+        build.properties
+     src/main/scala/
+        A.scala
+        B.scala
+     test</pre>
+         <p>The <tt>scripted</tt> action runs the test by copying the directory to the temporary directory for your system, loads the project, and runs the <tt>test</tt> script. For example, on a unix system, the above test might be run from <tt>/tmp/sbt_f723ecf/remove-test/</tt>, where the <tt>f723ecf</tt> part is randomly generated. </p>
+         <p>The next section describes scripts and provides an example of the <tt>test</tt> script. </p>
+         <h1><a name="Scripts"></a>Scripts<a href="#Scripts" class="section_anchor"></a></h1>
+         <h2><a name="Syntax"></a>Syntax<a href="#Syntax" class="section_anchor"></a></h2>
+         <pre class="prettyprint">script ::= (comment | statement)+
+comment ::= '#' comment-text EOL
+statement ::= expected-result (action | command)
+
+action ::= '&gt;' name
+command ::= '$' name argument*
+
+expected-result ::= '' | '-'</pre>
+         <h2><a name="Example"></a>Example<a href="#Example" class="section_anchor"></a></h2>
+         <pre class="prettyprint">&gt; compile
+
+$ delete src/main/scala/B.scala
+
+-&gt; compile</pre>
+         <h2><a name="Commands"></a>Commands<a href="#Commands" class="section_anchor"></a></h2>
+         <p>All paths are relative to the project directory. </p>
+         <p><tt>copy-file fromPath toPath</tt> </p>
+         <blockquote>
+          Copies the file given by 
+          <tt>fromPath</tt> to 
+          <tt>toPath</tt>. 
+         </blockquote>
+         <tt>copy fromPath+ toDirectoryPath</tt> 
+         <blockquote>
+          Copies the files given by 
+          <tt>fromPaths</tt> to the 
+          <tt>toDirectoryPath</tt> directory. The directory structure relative to the project directory is preserved. 
+         </blockquote>
+         <tt>sync fromDirectory toDirectory</tt> 
+         <blockquote>
+          Synchronizes 
+          <tt>fromDirectory</tt> and 
+          <tt>toDirectory</tt> so that the contents of 
+          <tt>toDirectory</tt> are identical to that of 
+          <tt>fromDirectory</tt>. 
+         </blockquote>
+         <tt>delete path+</tt> 
+         <blockquote>
+          Deletes the files given by 
+          <tt>path</tt>s. 
+         </blockquote>
+         <tt>touch path+</tt> 
+         <blockquote>
+          Creates or updates the last modified time of the given 
+          <tt>path</tt>s. 
+         </blockquote>
+         <tt>exists path+</tt> 
+         <blockquote>
+          Succeeds if the given 
+          <tt>path</tt>s exist, fails otherwise. 
+         </blockquote>
+         <tt>absent path+</tt> 
+         <blockquote>
+          Succeeds if the given 
+          <tt>path</tt>s do not exist, fails otherwise. 
+         </blockquote>
+         <tt>exec command args*</tt> 
+         <blockquote>
+          Executes the given command in a separate process. 
+         </blockquote>
+         <tt>pause</tt> 
+         <blockquote>
+          Pauses until enter is pressed. It is useful for inspecting the current test state. As noted above, the project directory for tests is copied to the temporary directory and run from there. 
+         </blockquote>
+         <tt>sleep time</tt> 
+         <blockquote>
+          Calls 
+          <tt>Thread.sleep(time)</tt>. 
+         </blockquote>
+         <tt>newer source target</tt> 
+         <blockquote>
+          Succeeds if the last modification time of 
+          <tt>source</tt> is more recent than that of 
+          <tt>target</tt> or if 
+          <tt>target</tt> does not exist. Fails otherwise. 
+         </blockquote>
+         <tt>mkdir path+</tt> 
+         <blockquote>
+          Creates directories at the given 
+          <tt>path</tt>s. 
+         </blockquote>
+         <p></p>
+         <h2><a name="Further_Examples"></a>Further Examples<a href="#Further_Examples" class="section_anchor"></a></h2>
+         <p>See the existing tests for more examples. They are in the <a href="http://github.com/harrah/xsbt/tree/master/sbt/src/sbt-test" rel="nofollow">src/sbt-test/</a> directory. </p>
+         <h1><a name="Running_Tests"></a>Running Tests<a href="#Running_Tests" class="section_anchor"></a></h1>
+         <ol>
+          <li>Run the <tt>scripted</tt> action on the sbt project. You can run selected tasks by using the <tt>scripted-only</tt> task like the <tt>test-only</tt> task. </li>
+          <li><a href="http://groups.google.com/group/simple-build-tool" rel="nofollow">Contribute</a> your tests! </li>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,198 @@
+<html>
+ <head> 
+  <title>BuildConfiguration</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">BuildConfiguration</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page describes build configuration for when the default actions or paths are not sufficient or appropriate for your project. </p>
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Example">Example</a></li>
+          <li><a href="#Configuration_Details">Configuration Details</a></li>
+          <li><a href="#Specifying_Options">Specifying Options</a></li>
+          <ul>
+           <li><a href="#Compile_Options">Compile Options</a></li>
+           <li><a href="#Run_Options">Run Options</a></li>
+           <li><a href="#Package_Options">Package Options</a></li>
+           <li><a href="#Document_Options">Document Options</a></li>
+           <li><a href="#Test_Options">Test Options</a></li>
+          </ul>
+          <li><a href="#Changing_Paths">Changing Paths</a></li>
+         </ul> 
+         <p></p>
+         <h1><a name="Example"></a>Example<a href="#Example" class="section_anchor"></a></h1>
+         <p><tt>sbt</tt> is configured by creating a project definition in the <tt>project/build</tt> directory. A project definition is a class (written in Scala) that implements <tt>sbt.Project</tt>. This is usually done by extending <tt>sbt.DefaultProject</tt>. The following is an example of adding a Hello World task to your build. It assumes you have already initialized your project as described on the <a href="Setup">Setup</a> page. </p>
+         <p><tt>project/build/HelloWorld.scala</tt> </p>
+         <pre class="prettyprint">import sbt._
+
+class HelloWorldProject(info: ProjectInfo) extends DefaultProject(info)
+{
+  lazy val hi = task { println(&quot;Hello World&quot;); None }
+}</pre>
+         <p>If you have <tt>sbt</tt> running, you need to reload the project with the new project definition: </p>
+         <pre class="prettyprint">&gt; reload</pre>
+         <p>Otherwise, start up sbt. Execute <tt>hi</tt>: </p>
+         <pre class="prettyprint">&gt; hi
+...
+Hello World
+...</pre>
+         <p>The details of writing tasks are described on the <a href="CustomActions">Creating/Modifying Actions</a> page. </p>
+         <h1><a name="Configuration_Details"></a>Configuration Details<a href="#Configuration_Details" class="section_anchor"></a></h1>
+         <p><tt>sbt</tt> only recompiles a project definition on startup or when invoking the interactive command <tt>reload</tt>. Therefore, if you are running in interactive mode, invoke <tt>reload</tt> after making changes to your project definition for the changes to take effect. </p>
+         <p>The <tt>project/build</tt> directory is a project itself. Therefore, you can add jars to the <tt>project/build/lib</tt> directory to use from your project definition. You can also use multiple sources for your project definition. The only requirement is there must be exactly one public, concrete subclass of <tt>Project</tt> with a constructor that accepts a <tt>ProjectInfo</tt> instance. <tt>sbt</tt> finds this subclass when it compiles the project definition, so the names of source files and classes are not important. </p>
+         <h1><a name="Specifying_Options"></a>Specifying Options<a href="#Specifying_Options" class="section_anchor"></a></h1>
+         <p>The general way to configure your build is to override one or more methods in your project definition. For example, the default options for the <tt>compile</tt> task are defined in the <tt>compileOptions</tt> method: </p>
+         <pre class="prettyprint">    def compileOptions: Seq[CompileOption] = Deprecation :: Nil</pre>
+         <p><tt>Deprecation</tt> is a val in <tt>ScalaProject</tt> that is an instance of <tt>CompileOption</tt> and represents the command line <tt>scalac</tt> option <tt>-deprecation</tt>. To additionally specify the <tt>-unchecked</tt> command line option, override <tt>compileOptions</tt> in your project definition (class <tt>TestProject</tt> above): </p>
+         <pre class="prettyprint">    override def compileOptions = super.compileOptions ++ Seq(Unchecked)</pre>
+         <p>The currently available options for tasks are listed below. </p>
+         <h2><a name="Compile_Options"></a>Compile Options<a href="#Compile_Options" class="section_anchor"></a></h2>
+         <p>Method <tt>compileOptions</tt> specifies additional options for task <tt>compile</tt> to pass to the Scala compiler. It has type <tt>Seq[CompileOption]</tt>. There is a similar method <tt>testCompileOptions</tt> for <tt>test-compile</tt>. Provided options are: </p>
+         <ul>
+          <li><tt>Deprecation</tt> </li>
+          <li><tt>Unchecked</tt> </li>
+          <li><tt>ExplainTypes</tt> </li>
+          <li><tt>Optimize</tt> </li>
+          <li><tt>Verbose</tt> </li>
+          <li><tt>DisableWarnings</tt> </li>
+          <li><tt>target(t: Target.Value)</tt> (accepts values of the <tt>Target</tt> enumeration: <tt>Java1_5</tt>, <tt>Java1_4</tt>, <tt>Msil</tt>) </li>
+          <li><tt>MaxCompileErrors(max: Int)</tt> Specifies the maximum number of compiler errors to show. The default value is 100. </li>
+          <li><tt>compileOptions(options: String*)</tt> (for arbitrary options). Example: </li>
+          <p></p>
+          <pre class="prettyprint">  override def compileOptions = super.compileOptions ++
+     compileOptions(&quot;-encoding&quot;, &quot;utf8&quot;)</pre>
+         </ul>
+         <p>Method <tt>javaCompileOptions</tt> specifies the options passed to the Java compiler by the <tt>compile</tt> task. There is a similar method <tt>testJavaCompileOptions</tt> for <tt>test-compile</tt>. Currently, all options are specified by: </p>
+         <ul>
+          <li><tt>javaCompileOptions(option: String*)</tt> </li>
+         </ul>
+         <p></p>
+         <h2><a name="Run_Options"></a>Run Options<a href="#Run_Options" class="section_anchor"></a></h2>
+         <p>Method <tt>mainClass</tt> is of type <tt>Option[String]</tt> and specifies an optional main class to run when the <tt>run</tt> task is invoked. The default implementation specifies no main class (<tt>None</tt>). When <tt>mainClass</tt> is not specified, the <tt>run</tt> task will determine which class to run automatically. If exactly one main class is detected, it is run. If multiple main classes are detected, the user is prompted for which one to run. </p>
+         <h2><a name="Package_Options"></a>Package Options<a href="#Package_Options" class="section_anchor"></a></h2>
+         <p>If defined, the <tt>mainClass</tt> method specifies the value of the <tt>Main-Class</tt> attribute in the manifest. The <tt>manifestClassPath</tt>method, if defined, specifies the value of <tt>Class-Path</tt> attribute. Method <tt>packageOptions</tt> specifies general options for task <tt>package</tt> and is of type <tt>Seq[PackageOption]</tt>. Provided options are: </p>
+         <ul>
+          <li><tt>MainClass(mainClassName: String)</tt> Specifies the <tt>Main-Class</tt> attribute in the manifest. By default, this option is included with the value of the <tt>mainClass</tt> method if it is defined. When <tt>mainClass</tt> is not specified explicitly, the <tt>package</tt> task will try to determine which class to use automatically. If exactly one main class is detected, it is used. If multiple main classes are detected, a warning is printed and no <tt>Main-Class</tt> attribute is added to the manifest. </li>
+          <li><tt>ManifestAttributes(attributes: (java.util.jar.Attributes.Name, String)*)</tt> or <tt>ManifestAttributes(attributes: (String, String)*)</tt> Defines main attributes to add to the manifest. </li>
+          <li><tt>JarManifest(m: Manifest)</tt> Specifies the manifest to use for the jar. The default manifest includes the <tt>Main-Class</tt> attribute if <tt>mainClass</tt> (as described above) is not empty and the <tt>Class-Path</tt> attribute if <tt>manifestClassPath</tt> is not empty. </li>
+         </ul>
+         <p></p>
+         <h2><a name="Document_Options"></a>Document Options<a href="#Document_Options" class="section_anchor"></a></h2>
+         <p>Method <tt>documentOptions</tt> specifies the options for the API documentation tasks <tt>doc</tt> and <tt>docTests</tt>. Provided options are: </p>
+         <ul>
+          <li><tt>LinkSource</tt> </li>
+          <li><tt>NoComment</tt> </li>
+          <li><tt>access(access: Access.Value)</tt> </li>
+          <li><tt>documentBottom(bottomText: String)</tt> </li>
+          <li><tt>documentCharset(charset: String)</tt> </li>
+          <li><tt>documentTitle(title: String)</tt> </li>
+          <li><tt>documentFooter(footerText: String)</tt> </li>
+          <li><tt>documentHeader(headerText: String)</tt> </li>
+          <li><tt>stylesheetFile(path: Path)</tt> </li>
+          <li><tt>documentTop(topText: String)</tt> </li>
+          <li><tt>windowTitle(title: String)</tt> </li>
+         </ul>
+         <p></p>
+         <p>By default, a window and document title are specified in 2.7 and a document title is specified in 2.8 (window title does not exist at this time). </p>
+         <h2><a name="Test_Options"></a>Test Options<a href="#Test_Options" class="section_anchor"></a></h2>
+         <p>Method <tt>testOptions</tt> specifies the options for the <tt>test</tt> action. </p>
+         <ul>
+          <li><tt>ExcludeTests(tests: Iterable[String])</tt> Specifies the class names of tests that should not be run. </li>
+          <li><tt>TestFilter(filter: String =&gt; Boolean)</tt> Specifies a function that returns <tt>true</tt> if the test should be run. </li>
+          <li><tt>TestListeners(listeners: Iterable[TestReportListener])</tt> Specifies the reporters used when running tests. <tt>testOptions</tt> by default includes a reporter that sends output to the project logger. </li>
+          <li><tt>TestArgument(args: String*)</tt> Specifies arguments to pass to the test framework when running tests. </li>
+          <li><tt>TestArgument(tf: TestFramework, args: String*)</tt> Specifies arguments to pass to a specific test framework when running tests. </li>
+         </ul>
+         <p></p>
+         <h1><a name="Changing_Paths"></a>Changing Paths<a href="#Changing_Paths" class="section_anchor"></a></h1>
+         <p>The only paths in <tt>sbt</tt> that are completely fixed are the locations of the files in the <tt>project</tt> directory. The other paths, such as the path to sources, jars, and outputs, are configurable. Overriding the default paths is described in this section. See <a href="Paths">Paths</a> for details on constructing paths. </p>
+         <p>Paths in <tt>sbt</tt> are incrementally built up out of path components so that you can easily rename any directory in the path or modify the path structure. You should always refer to a path by its <tt>sbt</tt> method instead of constructing a <tt>Path</tt> literal. For example, always refer to the output directory as <tt>outputPath</tt> instead of <tt>path(&quot;target&quot;)</tt> and refer to the directory that classes are compiled to as <tt>mainCompilePath</tt> instead of <tt>&quot;target&quot; / &quot;classes&quot;</tt>. </p>
+         <p>The paths and the names used to construct them are defined in <tt>BasicProjectPaths</tt>, which is mixed into the default project definition, as members that you can override. If you only want to rename a directory, override the member that specifies the name. For example, to rename the output directory from <tt>target</tt> to <tt>build</tt>, </p>
+         <pre class="prettyprint">  override def outputDirectoryName = &quot;build&quot;</pre>
+         <p>The outputs for compilation and API documentation are defined as: </p>
+         <pre class="prettyprint">  def outputPath = crossPath(outputDirectoryName)
+
+  def mainCompilePath = outputPath / compileDirectoryName
+  def docPath = outputPath / docDirectoryName
+  def analysisPath = outputPath / analysisDirectoryName</pre>
+         <p>and so the directory name will be used by subpaths as well. </p>
+         <p>Similarly, you could rearrange the source directory from </p>
+         <pre class="prettyprint">src/
+  main/
+    scala/
+    resources/
+  test/
+    scala/
+    resources/</pre>
+         <p>to </p>
+         <pre class="prettyprint">src/
+resources/
+test-src/
+test-resources/</pre>
+         <p>by specifying the following in your project definition: </p>
+         <pre class="prettyprint">  override def mainScalaSourcePath = &quot;src&quot;
+  override def mainResourcesPath = &quot;resources&quot;
+	
+  override def testScalaSourcePath = &quot;test-src&quot;
+  override def testResourcesPath = &quot;test-resources&quot;</pre>
+         <p>The paths directly used by the default actions are listed below. Other paths are only used to build up these paths. If redefined, care should be taken to keep these paths distinct from each other. </p>
+         <ul>
+          <li><tt>dependencyPath</tt>- This is the location of manually managed jars. </li>
+          <li><tt>managedDependencyPath</tt> - This is the location that automatic dependency management puts downloaded artifacts. When executed, the <tt>clean-lib</tt> action removes this directory. </li>
+          <li><tt>mainScalaSourcePath</tt> - The path to Scala sources comprising the project. </li>
+          <li><tt>mainJavaSourcePath</tt>: The path to the main Java sources for the project. </li>
+          <li><tt>mainResourcesPath</tt> - The path to resources to include in the project jar. </li>
+          <li><tt>testScalaSourcePath</tt> - The path to Scala sources defining tests. </li>
+          <li><tt>testJavaSourcePath</tt>: The path to the test Java sources for the project. </li>
+          <li><tt>testResourcesPath</tt> - The path to resources to include in the test jar. </li>
+          <li><tt>outputPath</tt> - The path containing all <tt>sbt</tt>-generated files (besides the managed artifacts that go in <tt>managedDependencyPath</tt>). All files generated by tasks should go in this directory. When executed, the <tt>clean</tt> action removes this directory. The following are subpaths of <tt>outputPath</tt>: </li>
+          <ul>
+           <li><tt>mainDocPath</tt> - The directory where API documentation for main sources is generated. </li>
+           <li><tt>testDocPath</tt> - The directory where API documentation for test sources is generated. </li>
+           <li><tt>mainCompilePath</tt> - The directory containing compiled main classes. </li>
+           <li><tt>testCompilePath</tt> - The directory containing compiled test classes. </li>
+           <li><tt>mainAnalysisPath</tt> - The directory used to store the analysis done at compile time. This includes files that record dependencies between source files. </li>
+           <li><tt>testAnalysisPath</tt> - The directory used to store the analysis done at test compile time. This includes files that record dependencies between source files and the class names of tests. </li>
+          </ul>
+         </ul>
+         <p></p>
+         <p>Additionally, web applications use these paths defined in <tt>sbt.WebProjectPaths</tt>: </p>
+         <ul>
+          <li><tt>webappPath</tt> - The location of web application resources. </li>
+          <li><tt>temporaryWarPath</tt> - The intermediate location used to create a war file or to run Jetty. It should be a subpath of <tt>outputPath</tt>. </li>
+         </ul> Webstart applications use the paths defined in 
+         <tt>sbt.WebstartPaths</tt>: 
+         <ul>
+          <li><tt>webstartOutputDirectory</tt> - The directory that the webstart products are created in. </li>
+          <li><tt>webstartMainJar</tt> - The jar that contains the entry point to the application. </li>
+          <li><tt>webstartLibDirectory</tt> - The directory that libraries will go in. </li>
+          <li><tt>jnlpFile</tt> - The location in the webstart output directory to write the JNLP XML file to. </li>
+          <li><tt>webstartZip</tt> - <tt>Some</tt> containing the location to write the zipped output directory to or <tt>None</tt> if no zip of the output directory should be created </li>
+          <li><tt>jnlpPath</tt> - The directory containing resources to copy to the webstart output directory. </li>
+          <li><tt>jnlpResourcesPath</tt> - The resources to include in the webstart output directory. By default this is everything in <tt>jnlpPath</tt> </li>
+         </ul>
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

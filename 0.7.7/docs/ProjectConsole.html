@@ -1,0 +1,63 @@
+<html>
+ <head> 
+  <title>ProjectConsole</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ProjectConsole</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Project_Console"></a>Project Console<a href="#Project_Console" class="section_anchor"></a></h1>
+         <h2><a name="Description"></a>Description<a href="#Description" class="section_anchor"></a></h2>
+         <p>The <tt>console-project</tt> action starts the Scala interpreter with access to your project and to <tt>sbt</tt>. Specifically, the interpreter is started up with these commands already executed: </p>
+         <pre class="prettyprint">&gt; val current: &lt;YourProjectType&gt; = &lt;your project definition&gt;
+&gt; import sbt._
+&gt; import Process._
+&gt; import current._
+&gt; </pre>
+         <p>This can be useful for creating and modifying your build in the same way that the Scala interpreter is normally used to explore writing code. Note that this gives you raw access to your build. Think about what you pass to <tt>FileUtilities.clean</tt>, for example. </p>
+         <h2><a name="Examples"></a>Examples<a href="#Examples" class="section_anchor"></a></h2>
+         <p>Clean classes directory: </p>
+         <pre class="prettyprint">&gt; FileUtilities.clean(mainCompilePath.asFile :: Nil, log)</pre>
+         <p>Show current compile options: </p>
+         <pre class="prettyprint">&gt; compileOptions.foreach(println)</pre>
+         <p>Show additionally configured repositories. Then, show all repositories, including defaults. </p>
+         <pre class="prettyprint">&gt; repositories.foreach(println)
+&gt; ivyRepositories.foreach(println)</pre>
+         <p>Show the compile, test, and optional classpaths: </p>
+         <pre class="prettyprint">&gt; compileClasspath
+&gt; testClasspath
+&gt; optionalClasspath</pre>
+         <p>Run the <tt>console</tt> task to drop to another interactive prompt with your project (not the build) on the classpath: </p>
+         <pre class="prettyprint">&gt; console.run</pre>
+         <p>Run external processes: </p>
+         <pre class="prettyprint">&gt; &quot;tar -zcvf project-src.tar.gz src&quot; !
+&gt; &quot;find project -name *.jar&quot; !
+&gt; &quot;cat project/build.properties&quot; #| &quot;grep sbt.version&quot; #&gt; new File(&quot;sbt-version&quot;) !
+&gt; &quot;grep -r null src&quot; #|| &quot;echo null-free&quot; !
+&gt; new URL(&quot;http://databinder.net/dispatch/About&quot;) #&gt; new File(&quot;About.html&quot;) !</pre>
+         <p>Show the dependencies on external jars computed during compilation: </p>
+         <pre class="prettyprint">&gt; compile.run
+&gt; mainDependencies.external
+&gt; mainDependencies.libraries
+&gt; mainDependencies.scalaJars</pre>
+         <p><tt>external</tt> consists of dependencies outside of the project, like the Java standard library. <tt>libraries</tt> are managed or unmanaged dependencies other than Scala libraries. <tt>scalaJars</tt> includes <tt>scala-library.jar</tt> and <tt>scala-compiler.jar</tt> if your project uses them. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

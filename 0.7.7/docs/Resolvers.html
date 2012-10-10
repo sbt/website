@@ -1,0 +1,147 @@
+<html>
+ <head> 
+  <title>Resolvers</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Resolvers</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Resolvers"></a>Resolvers<a href="#Resolvers" class="section_anchor"></a></h1>
+         <p>Maven-style repositories are defined like: </p>
+         <pre class="prettyprint">  val scalaToolsSnapshots = &quot;Scala-Tools Maven2 Snapshots Repository&quot; at &quot;http://scala-tools.org/repo-snapshots&quot;</pre>
+         <p>and use the Maven2 layout. This page describes how to define other types of repositories. </p>
+         <h2><a name="Predefined"></a>Predefined<a href="#Predefined" class="section_anchor"></a></h2>
+         <p>A few predefined repositories are available and are listed below </p>
+         <ul>
+          <li><tt>DefaultMavenRepository</tt> </li>
+         </ul>
+         <blockquote>
+          This is the main Maven repository at 
+          <a href="http://repo1.maven.org/maven2/" rel="nofollow">http://repo1.maven.org/maven2/</a> and is included by default 
+         </blockquote>
+         <ul>
+          <li><tt>ScalaToolsReleases</tt> </li>
+         </ul>
+         <blockquote>
+          This is the releases repository at 
+          <a href="http://scala-tools.org/repo-releases/" rel="nofollow">http://scala-tools.org/repo-releases/</a> and is included by default 
+         </blockquote>
+         <ul>
+          <li><tt>ScalaToolsSnapshots</tt> </li>
+         </ul>
+         <blockquote>
+          This is the snapshots repository at 
+          <a href="http://scala-tools.org/repo-snapshots/" rel="nofollow">http://scala-tools.org/repo-snapshots/</a> 
+         </blockquote>
+         <ul>
+          <li><tt>JavaNet1Repository</tt> </li>
+         </ul>
+         <blockquote>
+          This is the Maven 1 repository at 
+          <a href="http://download.java.net/maven/1/" rel="nofollow">http://download.java.net/maven/1/</a> 
+         </blockquote>
+         <p>For example, to use the <tt>java.net</tt> repository, add the following line to your project definition: </p>
+         <pre class="prettyprint">  val javaNet = JavaNet1Repository</pre>
+         <h2><a name="Custom"></a>Custom<a href="#Custom" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> provides an interface to the repository types available in Ivy: file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using <a href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns" rel="nofollow">patterns</a> to configure repositories. </p>
+         <p>Construct a repository definition using the factory in <tt>sbt.Resolver</tt> for the desired type. This factory creates a <tt>Repository</tt> object that can be further configured. The following table contains links to the Ivy documentation for the repository type and the API documentation for the factory and repository class. The SSH and SFTP repositories are configured identically except for the name of the factory. Use <tt>Resolver.ssh</tt> for SSH and <tt>Resolver.sftp</tt> for SFTP. </p>
+         <p></p>
+         <table class="wikitable">
+          <tbody>
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Type </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Factory </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Ivy Docs </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Factory API </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Repository Class API </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> Filesystem </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <tt>Resolver.file</tt> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html" rel="nofollow">Ivy</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Resolver$object.file$object.html" rel="nofollow">Factory</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileRepository.html" rel="nofollow">FileRepository API</a> </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> SFTP </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <tt>Resolver.sftp</tt> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html" rel="nofollow">Ivy</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Resolver$object.Define.html" rel="nofollow">Factory</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/SftpRepository.html" rel="nofollow">SftpRepository API</a> </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> SSH </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <tt>Resolver.ssh</tt> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html" rel="nofollow">Ivy</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Resolver$object.Define.html" rel="nofollow">Factory</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/SshRepository.html" rel="nofollow">SshRepository API</a> </td>
+           </tr> 
+           <tr>
+            <td style="border: 1px solid #ccc; padding: 5px;"> URL </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <tt>Resolver.url</tt> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html" rel="nofollow">Ivy</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Resolver$object.url$object.html" rel="nofollow">Factory</a> </td>
+            <td style="border: 1px solid #ccc; padding: 5px;"> <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/URLRepository.html" rel="nofollow">URLRepository API</a> </td>
+           </tr> 
+          </tbody>
+         </table>
+         <p></p>
+         <h2><a name="Basic_Examples"></a>Basic Examples<a href="#Basic_Examples" class="section_anchor"></a></h2>
+         <p>These are basic examples that use the default Maven-style repository layout. </p>
+         <h3><a name="Filesystem"></a>Filesystem<a href="#Filesystem" class="section_anchor"></a></h3>
+         <p>Define a filesystem repository in the <tt>test</tt> directory of the current working directory and declare that publishing to this repository must be atomic. </p>
+         <pre class="prettyprint">  val testRepo = Resolver.file(&quot;my-test-repo&quot;, new java.io.File(&quot;test&quot;)) transactional()</pre>
+         <h3><a name="URL"></a>URL<a href="#URL" class="section_anchor"></a></h3>
+         <p>Define a URL repository at .<tt>&quot;http://example.org/repo-releases/&quot;</tt>. </p>
+         <pre class="prettyprint">  def url = new java.net.URL(&quot;http://example.org/repo-releases/&quot;)
+  val testRepo = Resolver.url(&quot;my-test-repo&quot;, url)</pre>
+         <p>To specify an Ivy repository, use: </p>
+         <pre class="prettyprint">  val testRepo = Resolver.url(&quot;my-test-repo&quot;, url)(Resolver.ivyStylePatterns)</pre>
+         <p>or customize the layout pattern describe in the <a href="Resolvers#Custom_Layout">Custom Layout</a> section below. </p>
+         <h3><a name="SFTP_and_SSH_Repositories"></a>SFTP and SSH Repositories<a href="#SFTP_and_SSH_Repositories" class="section_anchor"></a></h3>
+         <p>The following defines a repository that is served by SFTP from host <tt>&quot;example.org&quot;</tt>: </p>
+         <pre class="prettyprint">  val sftpRepo = Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;)</pre>
+         <p>To explicitly specify the port: </p>
+         <pre class="prettyprint">  val sftpRepo = Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;, 22)</pre>
+         <p>To specify a base path: </p>
+         <pre class="prettyprint">  val sftpRepo = Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;, &quot;maven2/repo-releases/&quot;)</pre>
+         <p>Authentication for the repositories returned by <tt>sftp</tt> and <tt>ssh</tt> can be configured by the <tt>as</tt> methods. </p>
+         <p>To use password authentication: </p>
+         <pre class="prettyprint">  val sshRepo = Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, &quot;password&quot;)</pre>
+         <p>or to be prompted for the password: </p>
+         <pre class="prettyprint">  val sshRepo = Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;)</pre>
+         <p>To use key authentication: </p>
+         <pre class="prettyprint">  val keyFile: File = ...
+  val sshRepo = Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, keyFile, &quot;keyFilePassword&quot;)</pre>
+         <p>or if no keyfile password is required or if you want to be prompted for it: </p>
+         <pre class="prettyprint">  val sshRepo = Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, keyFile)</pre>
+         <p>To specify the permissions used when publishing to the server: </p>
+         <pre class="prettyprint">  val sshRepo = Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) withPermissions(&quot;0644&quot;)</pre>
+         <p>This is a chmod-like mode specification. </p>
+         <h2><a name="Custom_Layout"></a>Custom Layout<a href="#Custom_Layout" class="section_anchor"></a></h2>
+         <p>These examples specify custom repository layouts using patterns. The factory methods accept an implicit <tt>Patterns</tt> instance that defines the patterns to use. The patterns are first resolved against the base file or URL. The implicit normally supplied gives the default Maven-style layout. Provide a different Patterns object to use a different layout. For example: </p>
+         <pre class="prettyprint">  val testRepo = Resolver.url(&quot;my-test-repo&quot;, url)( Patterns(&quot;[organisation]/[module]/[revision]/[artifact].[ext]&quot;) )</pre>
+         <p>You can specify multiple patterns or patterns for the metadata and artifacts separately. You can also specify whether the repository should be Maven compatible (as defined by Ivy). See the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Patterns$object.html" rel="nofollow">patterns API documentation</a> for the methods to use. </p>
+         <p>For filesystem and URL repositories, you can specify absolute patterns by omitting the base URL, passing an empty <tt>Patterns</tt> instance, and using <tt>ivys</tt> and <tt>artifacts</tt>: </p>
+         <pre class="prettyprint">  val testRepo = Resolver.url(&quot;my-test-repo&quot;) artifacts
+        &quot;http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]&quot;</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

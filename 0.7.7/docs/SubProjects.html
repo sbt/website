@@ -1,0 +1,135 @@
+<html>
+ <head> 
+  <title>SubProjects</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">SubProjects</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Overview"></a>Overview<a href="#Overview" class="section_anchor"></a></h1>
+         <p>This page describes how to manage multiple projects within a project. The first section details the features of subproject support and the second section describes how to use this support. </p>
+         <h1><a name="Features"></a>Features<a href="#Features" class="section_anchor"></a></h1>
+         <h3><a name="Summary"></a>Summary<a href="#Summary" class="section_anchor"></a></h3>
+         <ul>
+          <li>Declare dependencies between projects and between tasks in different projects </li>
+          <li>Execute tasks across multiple projects </li>
+          <li>Classpath of all dependencies is included when compiling a project </li>
+          <li>Proper inter-project source dependency handling </li>
+          <li>Can change to a project in an interactive session to work only on that project (and its dependencies) </li>
+          <li>Can run tasks in parallel </li>
+         </ul>
+         <h3><a name="Details"></a>Details<a href="#Details" class="section_anchor"></a></h3>
+         <p>With subproject support in <tt>sbt</tt>, you can specify project-level dependencies and execute tasks across multiple projects. For example, assume you have three projects A, B, and C and you specify that C depends on B and B depends on A. When you execute the <tt>compile</tt> action on project C, it will first execute <tt>compile</tt> on A, then B, and finally on C. </p>
+         <p>Additionally, the classpath of a project's dependency is available to that project. So, in the situation above, the classpath of C includes the A and B classpaths. This includes the compiled classes of A and B and all libraries of A and B in addition to those explicitly specified for C. </p>
+         <p>Source dependencies are tracked between projects, so that the right sources are recompiled when a dependency is updated. For example, assume each project has two classes. A has A1 and A2, B has B1 and B2, and C has C1 and C2. Let C1 depend on B1 and B1 depend on A1. Now, assume class A1 is modified. Executing compile on project C will recompile class A1 in project A, then class B1 in project B, and finally, class C1 in project C. A2 will only be recompiled if it depends on A1. B2 will only be recompiled if it depends on A1 or B1 (or A2 if A2 depends on A1). C2 will only be recompiled if it depends on A1 or B1 or C1 (or A2 or B2 if they required recompilation). </p>
+         <p>Finally, when working in an interactive session, you can switch to a specific project to only execute commands on that project and its dependencies. More details on this are given in the next section. </p>
+         <h1><a name="Usage"></a>Usage<a href="#Usage" class="section_anchor"></a></h1>
+         <p>To demonstrate subprojects, consider a project for a simulator (flight simulator, circuit simulator, ...). It might have the backend as one project and the user interface as a separate project. Then, there might be some examples demonstrating using the backend as a library or some examples showing how to use the user interface. The following project definition (which goes in <tt>project/build</tt> as described in <a href="BuildConfiguration">BuildConfiguration</a>) would be one way of describing this project: </p>
+         <pre class="prettyprint">import sbt._
+
+class SimulatorProject(info: ProjectInfo) extends ParentProject(info)
+{
+   lazy val core = project(&quot;core&quot;, &quot;Simulator Core&quot;)
+   lazy val ui = project(&quot;ui&quot;, &quot;Simulator User Interface&quot;, core)
+   
+   lazy val examples = project(&quot;examples&quot;, &quot;Simulator Examples&quot;, new Examples(_))
+   
+   class Examples(info: ProjectInfo) extends ParentProject(info)
+   {
+      lazy val embedded = project(&quot;embedded&quot;, &quot;Embedded Simulator Example&quot;, core)
+      lazy val standalone = project(&quot;standalone&quot;, &quot;Standalone Simulator Example&quot;, ui)
+   }
+}</pre>
+         <p>The first line </p>
+         <pre class="prettyprint">import sbt._</pre>
+         <p>imports everything in the <tt>sbt</tt> package. All <tt>sbt</tt> classes for general use are currently in the <tt>sbt</tt> package. The next line </p>
+         <pre class="prettyprint">class SimulatorProject(info: ProjectInfo) extends ParentProject(info)</pre>
+         <p>defines a class with the usual constructor signature and is a subclass of <tt>sbt.ParentProject</tt>, which is in turn a subclass of <tt>sbt.Project</tt>. <tt>ParentProject</tt> is the starting point for configuring a project that defines other projects. <tt>SimulatorProject</tt> will be the initial project on <tt>sbt</tt> startup and all actions will be performed on it. </p>
+         <p>The remaining lines define subprojects of the main project. The <tt>project</tt> method is defined in <tt>sbt.Project</tt> and has several variants. The main variant used here has the signature </p>
+         <pre class="prettyprint">def project(path: Path, name: String, deps: Project*): Project</pre>
+         <p>A <tt>Path</tt> is described in <a href="Paths">Paths</a>. The path provided to <tt>project</tt> specifies the directory containing the subproject and is relative to the project directory of the enclosing project (<tt>SimulatorProject</tt> in this case). <tt>name</tt> is the name of the project and is specified here to avoid the need to set the name property in every subproject directory like in a single project. The version of the new project is inherited from the enclosing project. The last argument is a list of dependencies of the project. </p>
+         <p>Implicit in using this method is that the project is of the default project type, <tt>sbt.DefaultProject</tt>. This can be changed by using the variant of <tt>project</tt> with another argument before the dependencies of type: </p>
+         <pre class="prettyprint">ProjectInfo =&gt; Project</pre>
+         <p>As is shown for the definition of <tt>examples</tt>, this is usually just the constructor of a <tt>Project</tt> subclass. </p>
+         <p>The first note about <tt>Examples</tt> is that it is embedded in <tt>SimulatorProject</tt>. This is important so that <tt>sbt</tt> only finds one public, concrete, top-level subclass of <tt>Project</tt> and automatically loads it on startup. Alternatively, the class could be top-level but prefixed with <tt>protected</tt>. Next, <tt>Examples</tt> subclasses <tt>ParentProject</tt> and so it defines subprojects itself. These subprojects can depend on projects in the outer class, as is done in <tt>Examples</tt>. </p>
+         <p>Using a <tt>Project</tt> definition other than <tt>sbt.DefaultProject</tt> is also useful for projects containing code (usually subclasses of <tt>ScalaProject</tt>), although this is not shown here. This way, all project configuration can be done in the parent project if desired. </p>
+         <h3><a name="Build_Definitions_in_Subprojects"></a>Build Definitions in Subprojects<a href="#Build_Definitions_in_Subprojects" class="section_anchor"></a></h3>
+         <p>Alternatively, each subproject can configured with its <tt>project</tt> directory as is done with a single project. In this case, the form of <tt>project</tt> used would be: </p>
+         <pre class="prettyprint">def project(path: Path, deps: Project*): Project</pre>
+         <p>There are performance and type-checking disadvantages to this, however. </p>
+         <p>Project definitions in subprojects are built after the parent project. When you call the <tt>project</tt> method to define a subproject, the subproject is built and loaded. The consequence is that building and loading of subprojects is done separately and serially. There is a substantial performance overhead to running multiple, small compilations and this translates to a performance disadvantage when recompiling multiple subprojects. The disadvantage is likely less noticeable when reloading a single subproject build definition. </p>
+         <p>Second, when all project definitions at top-level, there is more static type information. If builds are defined in multiple locations, you can only refer to other projects by the Project type. </p>
+         <pre class="prettyprint">class Top(info: ProjectInfo) extends ParentProject(info)
+{
+    // create a subproject, with some custom information
+    lazy val subA = project(&quot;a&quot;, &quot;A&quot;, info =&gt; new SubProject(&quot;something&quot;, info))
+
+    // define a subproject type that provides custom information
+    class SubProject(val customInfo: String, info: ProjectInfo)
+      extends DefaultProject(info)
+
+    // couldn't do this if SubProject was separate
+    lazy val printCustom =
+        task { println(subA.customInfo); None }
+}</pre>
+         <p>Finally, any code shared between builds must be defined as <a href="SbtPlugins">plugins</a> because the classpaths of subprojects are not visible to each other. </p>
+         <h3><a name="Parallel_Builds"></a>Parallel Builds<a href="#Parallel_Builds" class="section_anchor"></a></h3>
+         <p><tt>sbt</tt> can execute tasks in parallel. Add </p>
+         <pre class="prettyprint">  override def parallelExecution = true</pre>
+         <p>to your root project definition to enable this. </p>
+         <h3><a name="sbt_and_Scala_Versions"></a>sbt and Scala Versions<a href="#sbt_and_Scala_Versions" class="section_anchor"></a></h3>
+         <p>All projects in a multi-project build must use the same version of <tt>sbt</tt> and Scala for building. If a different version of <tt>sbt</tt> or Scala is set on a subproject, it is ignored. In a future release, this may generate a warning or an error. </p>
+         <h3><a name="Dependency_Management"></a>Dependency Management<a href="#Dependency_Management" class="section_anchor"></a></h3>
+         <p>A <tt>ParentProject</tt> by default does not publish an artifact other than an Ivy file or a pom. </p>
+         <p>Project dependencies declared using the <tt>project</tt> method are automatically added to a generated <tt>ivy.xml</tt> or <tt>pom</tt> for each project. That is, for: </p>
+         <pre class="prettyprint">import sbt._
+class SimulatorProject(info: ProjectInfo) extends ParentProject(info)
+{
+   lazy val core = project(&quot;core&quot;, &quot;Simulator Core&quot;)
+   lazy val ui = project(&quot;ui&quot;, &quot;Simulator User Interface&quot;, core)
+}</pre>
+         <p>the generated <tt>ivy.xml</tt> for <tt>Simulator User Interface</tt> will declare a dependency on <tt>Simulator Core</tt> in the <tt>compile</tt> configuration. To change the default behavior, override <tt>deliverProjectDependencies</tt> in the depending project (here, <tt>Simulator User Interface</tt>). <tt>deliverProjectDependencies</tt> returns the module IDs (the type of object created by &quot;org.example&quot; % &quot;name&quot; % &quot;1.0&quot;) for each immediate project dependency. You can add or remove projects from this list or modify the configuration mappings. </p>
+         <p>To remove <tt>core</tt> from <tt>ui</tt>: </p>
+         <pre class="prettyprint">  class UIProject(info: ProjectInfo) extends DefaultProject(info) {
+    override def deliverProjectDependencies =
+     super.deliverProjectDependencies.toList - core.projectID
+  }</pre>
+         <p>To declare <tt>core</tt> as being a dependency of <tt>ui</tt> in the <tt>test</tt> configuration: </p>
+         <pre class="prettyprint">  class UIProject(info: ProjectInfo) extends DefaultProject(info) {
+    override def deliverProjectDependencies =
+      super.deliverProjectDependencies - core.projectID ++ Seq(core.projectID % &quot;test-&gt;default&quot;)
+  }</pre>
+         <p>To declare no dependencies on other subprojects: </p>
+         <pre class="prettyprint">  override def deliverProjectDependencies = Nil</pre>
+         <p>If you don't want to publish a subproject, you can do the following steps: </p>
+         <ul>
+          <li>Override the relevant actions to do nothing: </li>
+          <pre class="prettyprint">  def doNothing = task { None }
+  override def publishLocalAction = doNothing
+  override def deliverLocalAction = doNothing
+  override def publishAction = doNothing
+  override def deliverAction = doNothing</pre>
+          <li>For each project that depends on that subproject, remove it from <tt>deliverProjectDependencies</tt>.: </li>
+          <pre class="prettyprint">    override def deliverProjectDependencies =
+     super.deliverProjectDependencies.toList - subproject.projectID</pre>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

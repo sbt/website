@@ -1,0 +1,60 @@
+<html>
+ <head> 
+  <title>MethodTasks</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">MethodTasks</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Method_Tasks"></a>Method Tasks<a href="#Method_Tasks" class="section_anchor"></a></h1>
+         <p>As shown in several examples on the <a href="TriggeredExecution">Triggered Execution</a> page, a method task accepts an array of arguments and creates the task to be run from those arguments. Usage of a method task from the interactive prompt looks like: </p>
+         <pre class="prettyprint">&gt; run 10000 5 0.3</pre>
+         <p>or </p>
+         <pre class="prettyprint">&gt; test-only example.TestSpecification</pre>
+         <p>Defining your own method task is similar to defining a normal action, as shown in the following example. </p>
+         <pre class="prettyprint">lazy val example =
+   task { args =&gt;
+     if(args.length == 2)
+       actionConstructor(args(0).toInt, args(1))
+     else
+       task { Some(&quot;Usage: example &lt;integer&gt; &lt;string&gt;&quot;) }
+   }
+def actionConstructor(a: Int, b: String) =
+    task {
+      println(&quot;Arguments were: &quot; + a + &quot; and &quot; + b)
+      None
+    }</pre>
+         <p>The type of <tt>args</tt> is <tt>Array[String]</tt>. </p>
+         <p>You can then call <tt>example</tt> like: </p>
+         <pre class="prettyprint">&gt; example 5 text
+Arguments were: 5 and text</pre>
+         <p>Additionally, you can use quotes to include whitespace in arguments. Quotes must be escaped (<tt>\&quot;</tt>) and so must backslashes (<tt>\\</tt>): </p>
+         <pre class="prettyprint">&gt; example &quot;5&quot; &quot;Text with \&quot;spaces\&quot; and a backslash \\ included.&quot;
+Arguments were: 5 and Text with &quot;spaces&quot; and a backslash \ included.</pre>
+         <p>You can provide strings for basic tab completion for method tasks using the <tt>completeWith</tt> method. </p>
+         <pre class="prettyprint">  def testNames: Seq[String] = ...
+
+  lazy val myTestOnly =
+    task { args =&gt; ... } completeWith( testNames )</pre>
+         <p>The argument to <tt>completeWith</tt> is call-by-name and is re-evaluated after a command is run. </p>
+         <p>In a multi-project setting, method tasks can only be run from the project they are defined on. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

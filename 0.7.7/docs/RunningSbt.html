@@ -1,0 +1,411 @@
+<html>
+ <head> 
+  <title>RunningSbt</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">RunningSbt</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page describes how to use <tt>sbt</tt> once you have set up your project (see <a href="Setup">Setup</a>). </p>
+         <h1><a name="Running"></a>Running<a href="#Running" class="section_anchor"></a></h1>
+         <p>Run sbt in your project directory. If you have created a script to start sbt, this should be as simple as: </p>
+         <pre class="prettyprint">$ sbt</pre>
+         <p>This starts sbt in interactive mode. You are given a prompt at which you type actions (or tasks, targets, phases, or whatever you'd like to call them). There is tab completion and history available at this prompt. </p>
+         <p>Alternatively, you can run sbt in batch mode. You specify a space-separated list of actions as arguments. For commands that take arguments, pass the command and arguments as one argument to <tt>sbt</tt> by enclosing them in quotes. For example, </p>
+         <pre class="prettyprint">$ sbt clean compile &quot;get sbt.version&quot;</pre>
+         <p>You can make an action run when one or more source files change by prefixing the action with <tt>~</tt>. For example: </p>
+         <pre class="prettyprint">&gt; ~ compile</pre>
+         <p>See <a href="TriggeredExecution">TriggeredExecution</a> for details. </p>
+         <p>Change the logging level and configure how stack traces are displayed using the <tt>debug</tt>, <tt>info</tt>, <tt>warn</tt>, <tt>error</tt>, and <tt>trace</tt> commands described in the Build Commands section below. </p>
+         <p>You can run an action for multiple versions of Scala by prefixing the action with <tt>+</tt>. See <a href="CrossBuild">CrossBuild</a> for details. You can temporarily switch to another version of Scala using <tt>++&lt;version&gt;</tt>. This version does not have to be listed in your <tt>build.scala.versions</tt> property, but it does have to be in a repository or be a <a href="LocalScala">local Scala version</a> you have defined. You can also include the initial command to run. For example: </p>
+         <pre class="prettyprint">&gt; ++2.7.7 console-quick
+[info] Building project test 1.0 against Scala 2.7.7
+[info]    using TestProject with sbt 0.7.7 and Scala 2.7.7
+...
+Welcome to Scala version 2.7.7.final (Java HotSpot(TM) Server VM, Java 1.6.0).
+...
+scala&gt;
+...
+&gt; ++2.8.1 console-quick
+[info] Building project test 1.0 against Scala 2.8.1
+[info]    using TestProject with sbt 0.7.7 and Scala 2.7.7
+...
+Welcome to Scala version 2.8.1 (Java HotSpot(TM) Server VM, Java 1.6.0).
+...
+scala&gt;</pre>
+         <h1><a name="Actions"></a>Actions<a href="#Actions" class="section_anchor"></a></h1>
+         <h2><a name="Build_Actions"></a>Build Actions<a href="#Build_Actions" class="section_anchor"></a></h2>
+         <ul>
+          <li><tt>clean</tt> </li>
+          <blockquote>
+           Deletes all generated files (the 
+           <tt>target</tt> directory). 
+          </blockquote>
+          <li><tt>clean-cache</tt> </li>
+          <blockquote>
+           Deletes the cache of downloaded artifacts and metadata for automatically managed dependencies for this user. 
+          </blockquote>
+          <li><tt>clean-lib</tt> </li>
+          <blockquote>
+           Deletes the managed library directory for this project (
+           <tt>lib_managed</tt>). 
+          </blockquote>
+          <li><tt>clean-plugins</tt> </li>
+          <blockquote>
+           Deletes retrieved plugins for this project. It should generally be followed by 
+           <tt>reload</tt>. This is useful for developing plugins. 
+          </blockquote>
+          <li><tt>compile</tt> </li>
+          <blockquote>
+           Compiles the main sources (in the 
+           <tt>src/main/scala</tt> directory). 
+          </blockquote>
+          <li><tt>console</tt> </li>
+          <blockquote>
+           Starts the Scala interpreter with a classpath including the compiled sources, all jars in the 
+           <tt>lib</tt> directory, and managed libraries. To return to sbt, type 
+           <tt>:quit</tt>, Ctrl+D (Unix), or Ctrl+Z (Windows). Runs 
+           <tt>test-compile</tt> first. 
+          </blockquote>
+          <li><tt>console-quick</tt> </li>
+          <blockquote>
+           Starts the Scala interpreter with the project classes, the 
+           <tt>lib</tt> directory, and managed libraries on the classpath without running any other action first. 
+          </blockquote>
+          <li><tt>doc</tt> </li>
+          <blockquote>
+           Generates API documentation for Scala source files in 
+           <tt>src/main/scala</tt> using scaladoc. Runs 
+           <tt>compile</tt> first. 
+          </blockquote>
+          <li><tt>doc-test</tt> </li>
+          <blockquote>
+           Generates API documentation for Scala source files in 
+           <tt>src/test/scala</tt> using scaladoc. Runs 
+           <tt>test-compile</tt> first. 
+          </blockquote>
+          <li><tt>doc-all</tt> </li>
+          <blockquote>
+           Runs 
+           <tt>doc</tt> and 
+           <tt>doc-test</tt>. 
+          </blockquote>
+          <li><tt>exec</tt> (mixin Exec to your project definition to use this action) </li>
+          <blockquote>
+           Forks the provided arguments as a new process. Examples: 
+           <pre class="prettyprint">  &gt; exec echo Hi
+  &gt; exec find src/main/scala -iname *.scala -exec wc -l {} ;</pre>
+          </blockquote>
+          <li><tt>graph-src</tt> </li>
+          <blockquote>
+           Produces a graphviz dot file for the dependency graph between main sources in 
+           <tt>target/graph/sources</tt> 
+          </blockquote>
+          <li><tt>graph-pkg</tt> </li>
+          <blockquote>
+           Produces a graphviz dot file for the dependency graph between main source directories in 
+           <tt>target/graph/packages</tt> 
+          </blockquote>
+          <li><tt>javap &lt;option&gt;* &lt;class-name&gt;</tt> </li>
+          <blockquote>
+           Runs 
+           <tt>javap</tt> with the given arguments using the 
+           <tt>runClasspath</tt> for the project. Tab completion is provided for main classes generated from the last successful compilation. Examples: 
+           <pre class="prettyprint">   &gt; javap your.Clazz
+   &gt; javap -c scala.List</pre>
+          </blockquote>
+          <li><tt>test-javap &lt;option&gt;* &lt;class-name&gt;</tt> </li>
+          <blockquote>
+           Runs 
+           <tt>javap</tt> with the given arguments using the 
+           <tt>testClasspath</tt> for the project. Tab completion is provided for test classes generated from the last successful compilation. 
+          </blockquote>
+          <li><tt>jetty-run</tt> (Web Projects only) </li>
+          <blockquote>
+           Starts the Jetty server and serves this project as a web application on 
+           <tt>http://localhost:8080</tt> by default. This variant of starting Jetty is intended to be run from the interactive prompt. 
+          </blockquote>
+          <li><tt>jetty</tt> (Web Projects only) </li>
+          <blockquote>
+           Starts the Jetty server and serves this project as a web application on 
+           <tt>http://localhost:8080</tt> by default. This variant of 
+           <tt>jetty-run</tt> is intended to be run batch-style (such as 
+           <tt>sbt jetty</tt>), so it waits for a keypress before completing. 
+          </blockquote>
+          <li><tt>jetty-stop</tt> (Web Projects only) </li>
+          <blockquote>
+           Stops the Jetty server that was started with the 
+           <tt>jetty-run</tt> action. 
+          </blockquote>
+          <li><tt>package</tt> </li>
+          <blockquote>
+           For a normal project, creates a jar file containing classes compiled from 
+           <tt>src/main/scala</tt> and the files in 
+           <tt>src/main/resources</tt> after running 
+           <tt>compile</tt> first. For a web application project, creates a war file after running 
+           <tt>compile</tt> and 
+           <tt>prepare-webapp</tt> first. 
+          </blockquote>
+          <li><tt>package-test</tt> </li>
+          <blockquote>
+           Creates a jar file containing classes compiled from 
+           <tt>src/test/scala</tt> and the files in 
+           <tt>src/test/resources</tt>. Runs 
+           <tt>test-compile</tt> first. 
+          </blockquote>
+          <li><tt>package-docs</tt> </li>
+          <blockquote>
+           Creates a jar file containing API documentation generated from Scala source files in 
+           <tt>src/main/scala</tt>. Runs 
+           <tt>doc</tt> first. 
+          </blockquote>
+          <li><tt>package-all</tt> </li>
+          <blockquote>
+           Runs all package tasks except package-project. 
+          </blockquote>
+          <li><tt>package-project</tt>: </li>
+          <blockquote>
+           Creates a zip file containing the entire project, excluding generated files. 
+          </blockquote>
+          <li><tt>package-src</tt>: </li>
+          <blockquote>
+           Creates a jar file containing all main source files and resources. The packaged paths are relative to 
+           <tt>src/main/scala</tt> and 
+           <tt>src/main/resources</tt>. 
+          </blockquote>
+          <li><tt>package-test-src</tt>: </li>
+          <blockquote>
+           Creates a jar file containing all test source files and resources. The packaged paths are relative to 
+           <tt>src/test/scala</tt> and 
+           <tt>src/test/resources</tt>. 
+          </blockquote>
+          <li><tt>run &lt;argument&gt;*</tt> </li>
+          <blockquote>
+           Runs the main class for the project in the same virtual machine as 
+           <tt>sbt</tt>. The main class is passed the 
+           <tt>argument</tt>s provided. Please see 
+           <a href="RunningProjectCode">RunningProjectCode</a> for details on the use of 
+           <tt>System.exit</tt> and multithreading (including GUIs) in code run by this action. Runs 
+           <tt>compile</tt> first. 
+          </blockquote>
+          <li><tt>sh &lt;argument&gt;*</tt> (mixin Exec for this action) </li>
+          <blockquote>
+           Invokes the shell (for unix users) with the command: 
+           <tt>/bin/sh -c &lt;arguments&gt;</tt>. For example: 
+           <pre class="prettyprint">    &gt; sh find src/main/scala -iname *.scala | xargs cat | wc -l</pre>
+          </blockquote>
+          <li><tt>test</tt> </li>
+          <blockquote>
+           Runs all tests detected during compilation. Runs 
+           <tt>test-compile</tt> first. 
+          </blockquote>
+          <li><tt>test-failed &lt;test&gt;*</tt> </li>
+          <blockquote>
+           Runs the tests provided as arguments if they have not succeeded (either failed on the previous test run or have not been run yet). 
+           <tt>*</tt> is interpreted as a wildcard in the test name. 
+          </blockquote>
+          <li><tt>test-quick &lt;test&gt;*</tt> </li>
+          <blockquote>
+           Runs the tests provided as arguments if they have not succeeded (either failed on the previous test run or have not been run yet) or their dependencies changed. 
+           <tt>*</tt> is interpreted as a wildcard in the test name. 
+          </blockquote>
+          <li><tt>test-only &lt;test&gt;*</tt> </li>
+          <blockquote>
+           Runs the tests provided as arguments. 
+           <tt>*</tt> is interpreted as a wildcard in the test name. 
+          </blockquote>
+          <li><tt>test-compile</tt> </li>
+          <blockquote>
+           Compiles the test sources (in the 
+           <tt>src/test/scala</tt> directory). Runs 
+           <tt>compile</tt> first. 
+          </blockquote>
+          <li><tt>test-javap</tt> </li>
+          <blockquote>
+           Like 
+           <tt>javap</tt>, but for test classes. 
+          </blockquote>
+          <li><tt>test-run &lt;argument&gt;*</tt> </li>
+          <blockquote>
+           Like 
+           <tt>run</tt>, but for test classes. Runs 
+           <tt>test-compile</tt> first. 
+          </blockquote>
+          <li><tt>update</tt> </li>
+          <blockquote>
+           Resolves and retrieves external dependencies as described in 
+           <a href="LibraryManagement">LibraryManagement</a>. 
+          </blockquote>
+         </ul>
+         <p> </p>
+         <h2><a name="Build_Commands"></a>Build Commands<a href="#Build_Commands" class="section_anchor"></a></h2>
+         <ul>
+          <li><tt>exit</tt> or <tt>quit</tt> </li>
+          <blockquote>
+           End the current interactive session or build. 
+          </blockquote>
+          <li><tt>reload</tt> </li>
+          <blockquote>
+           Reloads the current interactive session. If the Scala or 
+           <tt>sbt</tt> version has changed, the requested versions are retrieved and used. The project definition is recompiled and reloaded if it needed. 
+          </blockquote>
+          <li><tt>help</tt> </li>
+          <blockquote>
+           Displays a help message and lists these interactive actions and their descriptions. 
+          </blockquote>
+          <li><tt>actions</tt> </li>
+          <blockquote>
+           List all available actions. 
+          </blockquote>
+          <li><tt>current</tt> </li>
+          <blockquote>
+           Print the current project and logging level. 
+          </blockquote>
+          <li><tt>info</tt> </li>
+          <blockquote>
+           Set the logging level to 
+           <tt>info</tt>. This is the default logging level. 
+          </blockquote>
+          <li><tt>debug</tt> </li>
+          <blockquote>
+           Set the logging level to 
+           <tt>debug</tt>. This logging level is more verbose than 
+           <tt>info</tt>, but does not log stack traces for errors. 
+          </blockquote>
+          <li><tt>trace on | nosbt | off | &lt;integer&gt;</tt> </li>
+          <blockquote>
+           Configures stack trace logging, which is 
+           <tt>'on'</tt> by default. 
+           <tt>'nosbt'</tt> prints stack traces up to the first sbt frame. An integer gives the number of frames to show per exception. 
+          </blockquote>
+          <li><tt>warn</tt> </li>
+          <blockquote>
+           Set the logging level to 
+           <tt>warn</tt>. This logging level only logs warnings and errors. 
+          </blockquote>
+          <li><tt>error</tt> </li>
+          <blockquote>
+           Set the logging level to 
+           <tt>error</tt>. This logging level only logs errors. 
+          </blockquote>
+          <li><tt>set property.name property value</tt> </li>
+          <blockquote>
+           If a user property with name 
+           <tt>property.name</tt> exists for the current project, that property is set to value 
+           <tt>property value</tt> (no quotes are required for values with spaces). Otherwise, the system property with name 
+           <tt>property.name</tt> is set to value 
+           <tt>property value</tt>. (See 
+           <a href="Properties">Properties</a> for more on properties) 
+          </blockquote>
+          <li><tt>get property.name</tt> </li>
+          <blockquote>
+           Shows the value of the property (user or system) with name 
+           <tt>property.name</tt>. (See 
+           <a href="Properties">Properties</a> for more on properties) 
+          </blockquote>
+          <li><tt>projects</tt> </li>
+          <blockquote>
+           List all available projects (See 
+           <a href="SubProjects">SubProjects</a> for more on multiple projects). 
+          </blockquote>
+          <li><tt>project &lt;project name&gt;</tt> </li>
+          <blockquote>
+           Change the current project to the project named &lt;project name&gt;. Further operations will be done on the given project. (See 
+           <a href="SubProjects">SubProjects</a> for more on multiple projects) 
+          </blockquote>
+          <li><tt>console-project</tt> </li>
+          <blockquote>
+           Enters an interactive session with the project instance bound to the 'current' variable. See 
+           <a href="ProjectConsole">ProjectConsole</a> for more information. 
+          </blockquote>
+          <li><tt>~ &lt;command&gt;</tt> </li>
+          <blockquote>
+           Executes the project specified action or method whenever source files change. See 
+           <a href="TriggeredExecution">TriggeredExecution</a> for details. 
+          </blockquote>
+          <li><tt>&lt; filename</tt> </li>
+          <blockquote>
+           Executes the commands in the given file. Each command should be on its own line. Empty lines and lines beginning with '#' are ignored 
+          </blockquote>
+          <li><tt>+ &lt;command&gt;</tt> </li>
+          <blockquote>
+           Executes the project specified action or method for all versions of Scala defined in the 
+           <tt>build.scala.versions</tt> property. 
+          </blockquote>
+          <li><tt>++&lt;version&gt; &lt;command&gt;</tt> </li>
+          <blockquote>
+           Temporarily changes the version of Scala building the project and executes the provided command. 
+           <tt>&lt;command&gt;</tt> is optional. The specified version of Scala is used until sbt exits or 
+           <tt>++</tt> is run again. 
+           <tt>&lt;version&gt;</tt> does not need to be listed in the 
+           <tt>build.scala.versions</tt> property, but it must be defined in 
+           <tt>localScala</tt> or be available in a repository. 
+          </blockquote>
+          <li><tt>; A ; B</tt> </li>
+          <blockquote>
+           Execute A and if it succeeds, run B. Note that the leading semicolon is required. 
+          </blockquote>
+          <li><tt>*</tt> </li>
+          <blockquote>
+           Processor management commands. See 
+           <a href="Processors">Processors</a> for details. 
+          </blockquote>
+         </ul>
+         <h2><a name="History_Commands"></a>History Commands<a href="#History_Commands" class="section_anchor"></a></h2>
+         <ul>
+          <li><tt>!</tt> </li>
+          <blockquote>
+           Show history command help. 
+          </blockquote>
+          <li><tt>!!</tt> </li>
+          <blockquote>
+           Execute the previous command again. 
+          </blockquote>
+          <li><tt>!:</tt> </li>
+          <blockquote>
+           Show all previous commands. 
+          </blockquote>
+          <li><tt>!:n</tt> </li>
+          <blockquote>
+           Show the last n commands. 
+          </blockquote>
+          <li><tt>!n</tt> </li>
+          <blockquote>
+           Execute the command with index 
+           <tt>n</tt>, as shown by the 
+           <tt>!:</tt> command. 
+          </blockquote>
+          <li><tt>!-n</tt> </li>
+          <blockquote>
+           Execute the nth command before this one. 
+          </blockquote>
+          <li><tt>!string</tt> </li>
+          <blockquote>
+           Execute the most recent command starting with 'string' 
+          </blockquote>
+          <li><tt>!?string</tt> </li>
+          <blockquote>
+           Execute the most recent command containing 'string' 
+          </blockquote>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,139 @@
+<html>
+ <head> 
+  <title>Paths</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Paths</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Examples"></a>Examples<a href="#Examples" class="section_anchor"></a></h1>
+         <p>The examples are written in the context of a <tt>Project</tt> definition and assume the following directory structure: </p>
+         <pre class="prettyprint">project/
+    .svn/
+    src/
+        .svn/
+        main/
+            .svn/
+            resources/
+                .svn/
+                LICENSE
+                logo.png
+                left.png
+                right.png
+            scala/
+                .svn/
+                sbt/
+                    .svn/
+                    Project.scala
+                    Analyzer.scala
+    lib/
+        ivy.jar
+    target/
+        sbt.jar
+        classes/
+            sbt/
+                Project.class
+                Analyzer.class</pre>
+         <h3><a name="Simple_Paths"></a>Simple Paths<a href="#Simple_Paths" class="section_anchor"></a></h3>
+         <pre class="prettyprint">val p = &quot;src&quot; / &quot;main&quot; / &quot;scala&quot; / &quot;sbt&quot; / &quot;Analyzer.scala&quot;</pre>
+         <p>Here, &quot;src&quot; is converted to a <tt>Path</tt> relative to the project directory by an implicit conversion defined in <tt>Project</tt>. Alternatively, the implicit conversion may be called directly: </p>
+         <pre class="prettyprint">val p = path(&quot;src&quot;) / &quot;main&quot; / &quot;scala&quot; / &quot;sbt&quot; / &quot;Analyzer.scala&quot;</pre>
+         <p>Either back or forward slashes may be used (they are equivalent): </p>
+         <pre class="prettyprint">val p = &quot;src&quot; \ &quot;main&quot; \ &quot;scala&quot; \ &quot;sbt&quot; \ &quot;Analyzer.scala&quot;</pre>
+         <p>Typical usage in <tt>sbt</tt> is to build up paths: </p>
+         <pre class="prettyprint">    def sourcePath = path(sourceDirectoryName)
+    def mainSourcePath = sourcePath / mainDirectoryName
+    def mainScalaSourcePath = mainSourcePath / scalaDirectoryName</pre>
+         <p>The argument to <tt>\</tt> may not contain slashes. If you want to make a relative path that includes slashes, use <tt>Path.fromString</tt>: </p>
+         <pre class="prettyprint">    def aPath: Path = &quot;some&quot; / &quot;path&quot;
+    def relPath: Path = Path.fromString(aPath, &quot;a/sub/path&quot;)</pre>
+         <p>To convert a <tt>java.io.File</tt> to a <tt>Path</tt>, use <tt>Path.fromFile</tt>. To convert a Path to a File, use <tt>asFile</tt>. For example: </p>
+         <pre class="prettyprint">    def aPath: Path = &quot;some&quot; / &quot;path&quot;
+    def aFile: File = aPath.asFile
+
+    def tmpFile: File = new File(System.getProperty(java.io.tmpdir))
+    def pathFromFile: Path = Path.fromFile(tmpFile)</pre>
+         <h3><a name="Path_Finders"></a>Path Finders<a href="#Path_Finders" class="section_anchor"></a></h3>
+         <pre class="prettyprint">val scalaSources: PathFinder = &quot;src&quot; ** &quot;*.scala&quot;</pre>
+         <p>This selects all files that end in <tt>.scala</tt> that are in <tt>src</tt> or a descendent directory. The list of paths is not actually evaluated until <tt>get</tt> is called: </p>
+         <pre class="prettyprint">val sourceSet: Set[Path] = scalaSources.get</pre>
+         <p>If the filesystem changes, a second call to <tt>get</tt> on the same <tt>PathFinder</tt> object will reflect the changes. That is, the <tt>get</tt> method reevaluates the list of paths each time. <tt>get</tt> only returns <tt>Path</tt>s that existed at the time it was called. </p>
+         <p>Selecting files that are immediate children of a subdirectory is done with a single <tt>*</tt>: </p>
+         <pre class="prettyprint">val scalaSources = mainScalaSourcePath / &quot;sbt&quot; * &quot;*.scala&quot;</pre>
+         <p>If a selector is used on a path that does not represent a directory, the path list will be empty: </p>
+         <pre class="prettyprint">val emptyFinder = &quot;lib&quot; / &quot;ivy.jar&quot; * &quot;not_possible&quot;</pre>
+         <p>The argument to the child and descendent selectors <tt>*</tt> and <tt>**</tt> is actually a <tt>NameFilter</tt>. An implicit is used to convert a <tt>String</tt> to a <tt>NameFilter</tt> that interprets <tt>*</tt> to represent zero or more characters of any value. See the Name Filters section for more information. </p>
+         <p>Another operation is concatenation of <tt>PathFinder</tt>s: </p>
+         <pre class="prettyprint">val multiPath = (&quot;src&quot; / &quot;main&quot;) +++ &quot;lib&quot; +++ (&quot;target&quot; / &quot;classes&quot;)</pre>
+         <p>The concatenated finder supports all standard operators. For example, </p>
+         <pre class="prettyprint">val jars = (&quot;lib&quot; +++ &quot;target&quot;) * &quot;*.jar&quot;</pre>
+         <p>selects <tt>ivy.jar</tt> and <tt>sbt.jar</tt>. </p>
+         <p>There is a <tt>filter</tt> method that is non-strict: </p>
+         <pre class="prettyprint">val srcDirs = (&quot;src&quot; ** &quot;*&quot;) filter { _.isDirectory }
+val archivesOnly = somePathFinder filter ClasspathUtilities.isArchive</pre>
+         <p><tt>Path.emptyPathFinder</tt> is a <tt>PathFinder</tt> that returns the empty set when <tt>get</tt> is called. To construct a <tt>PathFinder</tt> from <tt>Iterable[Path]</tt>, use <tt>Path.lazyPathFinder</tt>. This method is call-by-name, so its argument will be re-evaluated on each call to <tt>get</tt>. </p>
+         <p>Convert a <tt>PathFinder</tt> to a String using one of the following methods: </p>
+         <ul>
+          <li><tt>toString</tt> is for debugging. It puts the absolute path of each component on its own line. </li>
+          <li><tt>relativeString</tt> gets the relative paths of each component and separates them by the platform's path separator. </li>
+          <li><tt>absString</tt> gets the absolute paths of each component and separates them by the platform's path separator. </li>
+         </ul>
+         <p></p>
+         <h3><a name="Base_Paths"></a>Base Paths<a href="#Base_Paths" class="section_anchor"></a></h3>
+         <p>In some situations, it is useful to define the directory a path is relative to. For example, the <tt>package</tt> action in <tt>sbt</tt> packages compiled classes and all files under <tt>resources</tt>. The full path name should not be used in the jar, however. This is where the <tt>##</tt> operator comes in. The paths for this situation would look like: </p>
+         <pre class="prettyprint">val allClasses = (&quot;target&quot; / &quot;classes&quot; ##) ** &quot;*.class&quot;
+val allResources = (&quot;src&quot; / &quot;main&quot; / &quot;resources&quot; ##) ** &quot;*&quot;
+val toPackage = allClasses +++ allResources</pre>
+         <p>Ignoring the <tt>.svn</tt> directories, the paths in the jar would then look like: </p>
+         <pre class="prettyprint">LICENSE
+logo.png
+sbt/
+    Project.class
+    Analyzer.class</pre>
+         <p>Note that the <tt>##</tt> operator is also defined for <tt>PathFinder</tt>s. </p>
+         <h3><a name="Excluding_Paths"></a>Excluding Paths<a href="#Excluding_Paths" class="section_anchor"></a></h3>
+         <p>A common problem is excluding version control directories. This can be accomplished as follows: </p>
+         <pre class="prettyprint">def sources = (&quot;src&quot; ** &quot;*.scala&quot;) --- (&quot;src&quot; ** &quot;.svn&quot; ** &quot;*.scala&quot;)</pre>
+         <p>The first selector selects all Scala sources and the second removes all sources that are a descendent of a <tt>.svn</tt> directory. This pattern is common enough that there is a method <tt>descendentsExcept</tt> that does the same thing as the above: </p>
+         <pre class="prettyprint">def sources = &quot;src&quot;.descendentsExcept(&quot;*.scala&quot;, &quot;.svn&quot;)</pre>
+         <p>Two methods are available for use in a project definition to consistently exclude paths. They are <tt>descendents</tt> and <tt>defaultExcludes</tt>. <tt>defaultExcludes</tt> provides a filter that <tt>descendents</tt> uses to exclude paths from its results. The definitions of <tt>descendents</tt> and <tt>defaultExcludes</tt> are: </p>
+         <pre class="prettyprint">def descendents(parent: PathFinder, include: FileFilter) = parent.descendentsExcept(include, defaultExcludes)
+def defaultExcludes: FileFilter = (&quot;.*&quot;  - &quot;.&quot;) || HiddenFileFilter</pre>
+         <p>You could use this for the above examples like: </p>
+         <pre class="prettyprint">def sources = descendents(&quot;src&quot;, &quot;*.scala&quot;)</pre>
+         <p>If you want to change the default exclusions, you can do so by overriding <tt>defaultExcludes</tt>. For example, </p>
+         <pre class="prettyprint">override def defaultExcludes = super.defaultExcludes || &quot;*~&quot;</pre>
+         <h3><a name="Name_and_File_Filters"></a>Name and File Filters<a href="#Name_and_File_Filters" class="section_anchor"></a></h3>
+         <p>There are some useful operations on <tt>NameFilter</tt>s. The <tt>|</tt> operator declares alternative <tt>NameFilter</tt>s: </p>
+         <pre class="prettyprint">def sources = &quot;src&quot; ** (&quot;*.scala&quot; | &quot;*.java&quot;)</pre>
+         <p>The <tt>-</tt> operator excludes a set of names: </p>
+         <pre class="prettyprint">def imageResources = &quot;src&quot;/&quot;main&quot;/&quot;resources&quot; * (&quot;*.png&quot; - &quot;logo.png&quot;)</pre>
+         <p>This will get <tt>right.png</tt> and <tt>left.png</tt>. <tt>-</tt> is also available as a prefix operator. </p>
+         <p><tt>NameFilter</tt> can be used for filtering Strings in general using its <tt>accept</tt> method directly. Additionally <tt>NameFilter</tt> is a subclass of <tt>java.io.FileFilter</tt> by way of <tt>sbt.FileFilter</tt>, which is a thin wrapper around <tt>java.io.FileFilter</tt> that provides operators for combining filters. Infix operators for <tt>sbt.FileFilter</tt> are doubled to distinguish them from the operators for <tt>NameFilter</tt>. </p>
+         <p>For example: </p>
+         <pre class="prettyprint">def filterA: sbt.FileFilter = ...
+def filterB: sbt.FileFilter = ...
+
+def filterC = filterA -- filterB
+def filterD = filterA || filterB
+def filterE = filterA &amp;&amp; filterB</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

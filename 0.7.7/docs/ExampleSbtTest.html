@@ -1,0 +1,106 @@
+<html>
+ <head> 
+  <title>ExampleSbtTest</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ExampleSbtTest</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p> NOTE!! This page has yet to be updated for the 0.7 release. </p>
+         <h1><a name="Example_Test"></a>Example Test<a href="#Example_Test" class="section_anchor"></a></h1>
+         <p>This page describes writing an example test for <tt>sbt</tt>. The example is the <tt>webapp/jsp</tt> test from <tt>sbt</tt> trunk. </p>
+         <h2><a name="Define_the_Build"></a>Define the Build<a href="#Define_the_Build" class="section_anchor"></a></h2>
+         <p>Create a project that will contain your tests. The project should use the latest version of <tt>sbt</tt> for testing. Declare <tt>sbt</tt>'s test framework as a plugin: </p>
+         <p>project/plugins/Plugins.scala: </p>
+         <pre class="prettyprint">import sbt._
+class Plugins(info: ProjectInfo) extends PluginDefinition(info)
+{
+	val sbtTest = &quot;org.scala-tools.sbt&quot; % &quot;test&quot; % &quot;0.5.6&quot;
+}</pre>
+         <p>and use it in the project definition: </p>
+         <pre class="prettyprint">import sbt._
+class Tests(info: ProjectInfo) extends DefaultProject(info) with test.ScalaScripted
+{
+	val ivy = &quot;org.apache.ivy&quot; % &quot;ivy&quot; % &quot;2.0.0&quot;
+}</pre>
+         <p>Ivy is required as a dependency because of an implementation detail in the test framework. </p>
+         <h2><a name="Define_the_Test"></a>Define the Test<a href="#Define_the_Test" class="section_anchor"></a></h2>
+         <p>Each test is an <tt>sbt</tt> project that goes in <tt>src/sbt-test/&lt;group-name&gt;/&lt;test-name&gt;</tt>. For example, <tt>src/sbt-test/web/jsp</tt>. Create <tt>project/build.properties</tt> containing a <tt>project.name</tt> and <tt>project.version</tt>: </p>
+         <p><tt>project/build.properties</tt>: </p>
+         <pre class="prettyprint">project.name=JSP Test
+project.version=1.0</pre>
+         <p>A test is defined by creating a script called <tt>'test'</tt> that defines a series of commands to run and whether they should fail or succeed. For example: </p>
+         <pre class="prettyprint">&gt; update
+[success]
+
+&gt; jetty-run
+[success]
+
+&gt; check-page
+[success]
+
+&gt; jetty-stop
+[success]</pre>
+         <p>The '&gt;' signifies that what follows is an action to run on the project. A '$' would signify a command to run. Examples of commands are 'delete', 'copy-file', and 'reload'. The <tt>[success]</tt> means that the action or command should succeed. <tt>[failure]</tt> would mean the command should fail. A full description of test scripts is at <a href="http://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting#Testing" rel="nofollow">http://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting#Testing</a>. </p>
+         <p>The <tt>check-page</tt> action is defined in the build for the test project: </p>
+         <p><tt>project/build/JSP.scala</tt> </p>
+         <pre class="prettyprint">import sbt._
+class JSP(info: ProjectInfo) extends DefaultWebProject(info)
+{
+	val j6 = &quot;org.mortbay.jetty&quot; % &quot;jetty&quot; % &quot;6.1.17&quot; % &quot;test&quot;
+	val j = &quot;org.mortbay.jetty&quot; % &quot;jsp-2.0&quot; % &quot;6.1.17&quot; % &quot;test&quot;
+
+	def indexURL = new java.net.URL(&quot;http://localhost:8080&quot;)
+	def indexFile = new java.io.File(&quot;index.html&quot;)
+	import Process._
+	lazy val getPage = execTask { indexURL #&gt; indexFile }
+	lazy val checkPage = task { checkHelloWorld() } dependsOn getPage
+
+	private def checkHelloWorld() =
+	{
+		try
+		{
+			FileUtilities.readString(indexFile, log) match
+			{
+				case Right(value) =&gt;
+					if(value.contains(&quot;Hello World!&quot;)) None
+					else Some(&quot;index.html did not contain 'Hello World!' :\n&quot; +value)
+				case Left(msg) =&gt; Some(msg)
+			}
+		}
+		finally { jettyInstance.stop() }
+	}
+}</pre>
+         <p>The final file in the test is <tt>src/main/webapp/index.jsp</tt>: </p>
+         <pre class="prettyprint">&lt;html&gt;
+	&lt;body&gt;
+		&lt;% out.println(&quot; Hello World!&quot;); %&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</pre>
+         <h2><a name="Run_the_Test"></a>Run the Test<a href="#Run_the_Test" class="section_anchor"></a></h2>
+         <p>Run <tt>update</tt> first to get Ivy as a dependency. </p>
+         <p>The <tt>scripted</tt> action runs all scripted tests in <tt>src/sbt-test</tt>. The <tt>scripted-only</tt> action accepts the tests to run in the form <tt>&lt;group&gt;/&lt;name&gt;</tt>. For example: </p>
+         <pre class="prettyprint">&gt; update
+&gt; scripted
+&gt; scripted-only web/jsp</pre>
+         <p>You can <a href="http://simple-build-tool.googlecode.com/svn/wiki/jsp-test.zip" rel="nofollow">download the example test project</a> and use it as a starting point for your tests. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

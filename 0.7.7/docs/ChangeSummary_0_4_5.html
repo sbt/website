@@ -1,0 +1,68 @@
+<html>
+ <head> 
+  <title>ChangeSummary_0_4_5</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary_0_4_5</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Changes_from_0.4.3_to_0.4.5"></a>Changes from 0.4.3 to 0.4.5<a href="#Changes_from_0.4.3_to_0.4.5" class="section_anchor"></a></h1>
+         <h2><a name="New_Features"></a>New Features<a href="#New_Features" class="section_anchor"></a></h2>
+         <ul>
+          <li>Added special support for using compiler plugins: see <a href="CompilerPlugins">CompilerPlugins</a> page. </li>
+          <li>Added 'console-project' command that enters the Scala interpreter with the current <tt>Project</tt> bound to the variable <tt>project</tt>. See <a href="ProjectConsole">ProjectConsole</a> for details. </li>
+          <li>Added automatic detection of classes with main methods for use when <tt>mainClass</tt> is not explicitly specified in the project definition. If exactly one main class is detected, it is used for <tt>run</tt> and <tt>package</tt>. If multiple main classes are detected, the user is prompted for which one to use for <tt>run</tt>. For <tt>package</tt>, no <tt>Main-Class</tt> attribute is automatically added and a warning is printed. In summary, if you only have one main class, you don't need to explicitly specify it in your project definition. </li>
+          <li>Added very basic support for compiling Java sources under <tt>src/main/java</tt> and <tt>src/test/java</tt>. Please see <a href="JavaSources">JavaSources</a> for details. </li>
+          <li>Added <tt>API</tt> for running external processes. See <a href="Process">External Processes</a> for details. </li>
+         </ul>
+         <h2><a name="Improvements"></a>Improvements<a href="#Improvements" class="section_anchor"></a></h2>
+         <ul>
+          <li>Added Nathan's <tt>download</tt> method to <tt>FileUtilities</tt> for retrieving the contents of a <tt>URL</tt>. </li>
+          <li>Added <tt>manifestClassPath</tt> method that accepts the value for the <tt>Class-Path</tt> attribute in the packaged jar. </li>
+          <li>Added <tt>PackageOption</tt> called <tt>ManifestAttributes</tt> that accepts <tt>(java.util.jar.Attributes.Name, String)</tt> or <tt>(String, String)</tt> pairs and adds them to the main manifest attributes in the packaged jar. </li>
+          <li>For multi-projects, <tt>parallelExecution</tt> defaults to the value in the parent project (if there is one). </li>
+          <li>Merged <tt>methods</tt> command into <tt>actions</tt> command. </li>
+          <li>Subprojects inherit repository definitions in their parent. </li>
+         </ul>
+         <h2><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h2>
+         <ul>
+          <li>Fixed <a title="Does not use system proxy?" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=20">&nbsp;issue #20&nbsp;</a> (use <tt>http_proxy</tt> environment variable) </li>
+          <li>Fixed <a title="Dependency issue on updating Scala version to 2.7.4 via build.properties" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=22">&nbsp;issue #22&nbsp;</a> (rebuilding and republishing released versions of <tt>sbt</tt> against new Scala versions, specifically Scala 2.7.4) </li>
+          <li>Fixed some issues with prompts other than the main prompt not echoing characters. </li>
+         </ul>
+         <h2><a name="sbt's_Build"></a>sbt's Build<a href="#sbt's_Build" class="section_anchor"></a></h2>
+         <ul>
+          <li>If a project specifies a version of <tt>sbt</tt> that ends in <tt>-SNAPSHOT</tt>, the loader will update <tt>sbt</tt> every time it starts up. </li>
+          <li>The version string for the trunk version of <tt>sbt</tt> will now always end in <tt>-SNAPSHOT</tt>. </li>
+          <li>Fixed <tt>proguard</tt> task in <tt>sbt</tt>'s project definition. Thanks to Walter, Nathan, and Rob for reporting this and pointing out the fix. </li>
+         </ul>
+         <p> </p>
+         <h2><a name="New_Documentation_Summary"></a>New Documentation Summary<a href="#New_Documentation_Summary" class="section_anchor"></a></h2>
+         <ul>
+          <li><a href="ProjectConsole">console-project action</a> </li>
+          <li><a href="JavaSources">Java sources</a> </li>
+          <li><a href="CompilerPlugins">compiler plugins</a> </li>
+          <li><a href="Process">External processes</a> </li>
+          <li><a href="ScalaJars">Scala library handling</a> </li>
+          <li><a href="TestFrameworkExtensions">Extending sbt's test framework</a> </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

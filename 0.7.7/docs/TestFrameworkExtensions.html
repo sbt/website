@@ -1,0 +1,70 @@
+<html>
+ <head> 
+  <title>TestFrameworkExtensions</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">TestFrameworkExtensions</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Test_Framework_Extensions"></a>Test Framework Extensions<a href="#Test_Framework_Extensions" class="section_anchor"></a></h1>
+         <h2><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h2>
+         <p>This page describes adding support for additional testing libraries and defining additional test reporters. You do this by implementing <tt>sbt</tt> interfaces (described below) in a separate project and packaging the project as an <a href="SbtPlugins">sbt plugin</a>. </p>
+         <h2><a name="Custom_Test_Framework"></a>Custom Test Framework<a href="#Custom_Test_Framework" class="section_anchor"></a></h2>
+         <p><tt>sbt</tt> contains built-in support for the three main Scala testing libraries (specs, <tt>ScalaTest</tt>, and <tt>ScalaCheck</tt>). To add support for a differrent framework, implement the <a href="http://github.com/harrah/test-interface" rel="nofollow">uniform test interface</a>. </p>
+         <h2><a name="Custom_Test_Reporters"></a>Custom Test Reporters<a href="#Custom_Test_Reporters" class="section_anchor"></a></h2>
+         <p>Test frameworks report status and results to test reporters. You can create a new test reporter by implementing either <tt>TestReportListener</tt> or <tt>TestsListener</tt>. Their definitions are shown below. </p>
+         <pre class="prettyprint">trait TestReportListener
+{
+  /** called for each class or equivalent grouping */
+  def startGroup(name: String)
+  /** called for each test method or equivalent */
+  def testEvent(event: TestEvent)
+  /** called if there was an error during test */
+  def endGroup(name: String, t: Throwable)
+  /** called if test completed */
+  def endGroup(name: String, result: Result.Value)
+  /** Used by the test framework for logging test results*/
+  def contentLogger: Option[org.scalatools.testing.Logger] = None
+}
+
+trait TestsListener extends TestReportListener
+{
+  /** called once, at beginning. */
+  def doInit
+  /** called once, at end. */
+  def doComplete(finalResult: Result.Value)
+}
+
+abstract class TestEvent
+{
+  def result: Option[Result.Value]
+  def detail: Seq[org.scalatools.testing.Event] = Nil
+}</pre>
+         <h2><a name="Using_Extensions"></a>Using Extensions<a href="#Using_Extensions" class="section_anchor"></a></h2>
+         <p>To use your extensions in a project definition: </p>
+         <p>Overriding the <tt>testFrameworks</tt> method in your project definition to reference your test framework. </p>
+         <pre class="prettyprint">  def extraFramework = new TestFramework(&quot;custom.framework.ClassName&quot;)
+  override def testFrameworks: Seq[TestFramework] = super.testFrameworks ++ Seq(extraFramework)</pre>
+         <p>Specify the test reporters you want to use by overriding the <tt>testListeners</tt> method in your project definition. </p>
+         <pre class="prettyprint">  def customTestListener: TestReportListener = ...
+  override def testListeners: Seq[TestReportListener] = super.testListeners ++ Seq(customTestListener)</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

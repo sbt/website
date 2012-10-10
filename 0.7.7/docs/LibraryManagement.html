@@ -1,0 +1,170 @@
+<html>
+ <head> 
+  <title>LibraryManagement</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">LibraryManagement</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>There are two ways for you to manage libraries with <tt>sbt</tt>, manually or automatically. These two ways can be mixed as well. </p>
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Manual_Dependency_Management">Manual Dependency Management</a></li>
+          <li><a href="#Automatic_Dependency_Management">Automatic Dependency Management</a></li>
+          <ul>
+           <li><a href="#Inline_Declarations">Inline Declarations</a></li>
+           <ul>
+            <li><a href="#Basic_Dependencies">Basic Dependencies</a></li>
+            <li><a href="#Additional_Repositories">Additional Repositories</a></li>
+            <li><a href="#Explicit_URL">Explicit URL</a></li>
+            <li><a href="#Disable_Transitivity">Disable Transitivity</a></li>
+            <li><a href="#Classifiers">Classifiers</a></li>
+            <li><a href="#Extra_Attributes">Extra Attributes</a></li>
+            <li><a href="#Inline_Ivy_XML">Inline Ivy XML</a></li>
+            <li><a href="#Direct_Override">Direct Override</a></li>
+            <li><a href="#Publishing">Publishing</a></li>
+           </ul>
+           <li><a href="#Maven/Ivy">Maven/Ivy</a></li>
+          </ul>
+         </ul> 
+         <p></p>
+         <h1><a name="Manual_Dependency_Management"></a>Manual Dependency Management<a href="#Manual_Dependency_Management" class="section_anchor"></a></h1>
+         <p>Manually managing dependencies involves copying any jars that you want to use to the <tt>lib</tt> directory. <tt>sbt</tt> will put these jars on the classpath during compilation, testing, running, and when using the interpreter. You are responsible for adding, removing, updating, and otherwise managing the jars in this directory. No modifications to your <a href="BuildConfiguration">project definition</a> are required to use this method unless you would like to change the location of the directory you store the jars in. </p>
+         <p>To change the directory jars are stored in, override <tt>dependencyPath</tt> in your <a href="BuildConfiguration">project definition</a>. For example, to use <tt>src/main/webapp/WEB-INF/lib</tt>: </p>
+         <pre class="prettyprint">override def dependencyPath = webappPath / &quot;WEB-INF&quot; / &quot;lib&quot;</pre>
+         <p>If you want more control and flexibility, override the <tt>unmanagedClasspath</tt> method, which ultimately provides the manual dependencies to <tt>sbt</tt>. The default implementation is roughly: </p>
+         <pre class="prettyprint">def unmanagedClasspath = descendents(dependencyPath, &quot;*.jar&quot;)</pre>
+         <p>If you have multiple directories containing jars, you can add them like: </p>
+         <pre class="prettyprint">override def unmanagedClasspath = super.unmanagedClasspath +++ extraJars</pre>
+         <p>where you might build up the extra jars as follows: </p>
+         <pre class="prettyprint">def baseDirectories = &quot;libA&quot; +++ (&quot;b&quot; / &quot;lib&quot;) +++ &quot;libC&quot;
+def extraJars = descendents(baseDirectories, &quot;*.jar&quot;) +++ (&quot;d&quot; / &quot;my.jar&quot;)</pre>
+         <p>See <a href="Paths">Paths</a> for more information on building up paths. </p>
+         <h1><a name="Automatic_Dependency_Management"></a>Automatic Dependency Management<a href="#Automatic_Dependency_Management" class="section_anchor"></a></h1>
+         <p>This method of dependency management involves specifying the direct dependencies of your project and letting <tt>sbt</tt> handle retrieving and updating your dependencies. </p>
+         <p><tt>sbt</tt> performs this dependency handling when the <tt>update</tt> action is executed. By default, <tt>sbt</tt> does <strong>not</strong> update your dependencies before every compilation, but only does so when you execute <tt>update</tt>. <tt>sbt</tt> supports three ways of specifying these dependencies: </p>
+         <ul>
+          <li>Declarations in your project definition </li>
+          <li>Maven POM files </li>
+          <li>Ivy configuration and settings files </li>
+         </ul>
+         <p></p>
+         <p><tt>sbt</tt> uses <a href="http://ant.apache.org/ivy/" rel="nofollow">Apache Ivy</a> to implement dependency management in all three cases. If multiple configurations are present, the following precedence is used by default: </p>
+         <ul>
+          <li>Inline repositories take precedence over configuration done in <tt>ivysettings.xml</tt>. </li>
+          <li>Maven and Ivy configurations (<tt>pom.xml</tt> and <tt>ivy.xml</tt>) are ignored when inline dependency declarations are present. Note that <tt>ivysettings.xml</tt> can be used with inline dependencies if no inline repositories are used. </li>
+          <li>A Maven configuration <tt>pom.xml</tt> is ignored when an Ivy <tt>ivy.xml</tt> configuration is present. Note that <tt>ivysettings.xml</tt> can be used with a Maven <tt>pom.xml</tt>. </li>
+         </ul>
+         <p></p>
+         <p>The default repositories when <tt>ivysettings.xml</tt> is not present are the standard Maven2 repository and the Scala Tools Releases (<a href="http://scala-tools.org/repo-releases" rel="nofollow">http://scala-tools.org/repo-releases</a>) repository. </p>
+         <p>The following sections describe how to use each method of automatic dependency management. </p>
+         <h2><a name="Inline_Declarations"></a>Inline Declarations<a href="#Inline_Declarations" class="section_anchor"></a></h2>
+         <p>Inline declarations are a very basic way of specifying the dependencies to be automatically retrieved. They are intended as a lightweight alternative to a full configuration using Ivy. To use inline declarations, do the following: </p>
+         <h3><a name="Basic_Dependencies"></a>Basic Dependencies<a href="#Basic_Dependencies" class="section_anchor"></a></h3>
+         <p>Declare each dependency in your <a href="BuildConfiguration">project definition</a> as a <tt>val</tt> with the form: </p>
+         <pre class="prettyprint">  val dep = groupID % artifactID % revision</pre>
+         <p>or </p>
+         <pre class="prettyprint">  val dep = groupID % artifactID % revision % configuration</pre>
+         <p>The actual identifier for the <tt>val</tt> is currently unimportant. See Configurations for details on configuration mappings. If you are using a dependency that was built with <tt>sbt</tt>, double the first <tt>%</tt> to be <tt>%%</tt>: </p>
+         <pre class="prettyprint">  val dep = groupID %% artifactID % revision</pre>
+         <p>This will download the right jar for the dependency built with the version of Scala that you are currently using. If you get an error while resolving this kind of dependency, that dependency probably wasn't published for the version of Scala you are using. See <a href="CrossBuild">cross-building</a> for details. </p>
+         <p>Ivy can select the latest revision of a module according to constraints you specify. Instead of a fixed revision like <tt>&quot;1.6.1&quot;</tt>, you specify <tt>&quot;latest.integration&quot;</tt>, <tt>&quot;2.9.+&quot;</tt>, or <tt>&quot;[1.0,)&quot;</tt>. See the <a href="http://ant.apache.org/ivy/history/2.1.0/ivyfile/dependency.html#revision" rel="nofollow">Ivy documentation</a> for details. </p>
+         <h3><a name="Additional_Repositories"></a>Additional Repositories<a href="#Additional_Repositories" class="section_anchor"></a></h3>
+         <p> Declare additional repositories besides the default Maven2 and Scala Tools Releases repositories that you want to use with the form: </p>
+         <pre class="prettyprint">  val rep = name at location</pre>
+         <blockquote>
+          (The actual identifier for the 
+          <tt>val</tt> is unimportant except for publishing.) 
+         </blockquote>
+         <p>For example: </p>
+         <pre class="prettyprint">  val derby = &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+  val specs = &quot;org.specs&quot; % &quot;specs&quot; % &quot;1.6.1&quot;
+
+  val scalaToolsSnapshots = &quot;Scala-Tools Maven2 Snapshots Repository&quot; at &quot;http://scala-tools.org/repo-snapshots&quot;</pre>
+         <p><tt>sbt</tt> can search your local Maven repository if you add it as a repository: </p>
+         <pre class="prettyprint">  val mavenLocal = &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome+&quot;/.m2/repository&quot;</pre>
+         <p>See <a href="Resolvers">Resolvers</a> for details on defining other types of repositories. </p>
+         <h3><a name="Explicit_URL"></a>Explicit URL<a href="#Explicit_URL" class="section_anchor"></a></h3>
+         <p>If your project requires a dependency that is not present in a repository, a direct URL to its jar can be specified as follows: </p>
+         <pre class="prettyprint">  val slinky = &quot;slinky&quot; % &quot;slinky&quot; % &quot;2.1&quot; from &quot;http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar&quot;</pre>
+         <h3><a name="Disable_Transitivity"></a>Disable Transitivity<a href="#Disable_Transitivity" class="section_anchor"></a></h3>
+         <p>By default, these declarations fetch all project dependencies, transitively. In some instances, you may find that the dependencies listed for a project aren't necessary for it to build. Projects using the Felix OSGI framework, for instance, only explicitly require its main jar to compile and run. Avoid fetching artifact dependencies with either <tt>intransitive()</tt> or <tt>notTransitive()</tt>, as in this example: </p>
+         <pre class="prettyprint">  val felix = &quot;org.apache.felix&quot; % &quot;org.apache.felix.framework&quot; % &quot;1.8.0&quot; intransitive()</pre>
+         <h3><a name="Classifiers"></a>Classifiers<a href="#Classifiers" class="section_anchor"></a></h3>
+         <p>You can specify the classifer for a dependency using the <tt>classifier</tt> method. There are some methods for the typical cases of getting sources or API documentation as well. These are <tt>withSources</tt>, <tt>withJavadoc</tt>, <tt>sources</tt>, and <tt>javadoc</tt>. The <tt>withXXX</tt> style includes the usual binary jar. Examples: </p>
+         <p>Get the ScalaCheck binary jar and sources. </p>
+         <pre class="prettyprint">  val sc = &quot;org.scalacheck&quot; % &quot;scalacheck&quot; % &quot;1.5&quot; withSources()</pre>
+         <p>Get the jdk15 version of TestNG: </p>
+         <pre class="prettyprint">  val testng = &quot;org.testng&quot; % &quot;testng&quot; % &quot;5.7&quot; classifier &quot;jdk15&quot;</pre>
+         <h3><a name="Extra_Attributes"></a>Extra Attributes<a href="#Extra_Attributes" class="section_anchor"></a></h3>
+         <p><a href="http://ant.apache.org/ivy/history/2.1.0/concept.html#extra" rel="nofollow">Extra attributes</a> can be specified by passing key/value pairs to the <tt>extra</tt> method. </p>
+         <p>To select dependencies by extra attributes: </p>
+         <pre class="prettyprint">  val dep = &quot;org&quot; % &quot;name&quot; % &quot;rev&quot; extra(&quot;color&quot; -&gt; &quot;blue&quot;)</pre>
+         <p>To define extra attributes on the current project: </p>
+         <pre class="prettyprint">  override def projectID =
+    super.projectID extra(&quot;color&quot; -&gt; &quot;blue&quot;, &quot;component&quot; -&gt; &quot;compiler-interface&quot;)</pre>
+         <h3><a name="Inline_Ivy_XML"></a>Inline Ivy XML<a href="#Inline_Ivy_XML" class="section_anchor"></a></h3>
+         <p><tt>sbt</tt> additionally supports directly specifying the configurations or dependencies sections of an Ivy configuration file inline. You can mix this with inline Scala dependency and repository declarations. </p>
+         <p>For example: </p>
+         <pre class="prettyprint">  override def ivyXML =
+    &lt;dependencies&gt;
+      &lt;dependency org=&quot;javax.mail&quot; name=&quot;mail&quot; rev=&quot;1.4.2&quot;&gt;
+        &lt;exclude module=&quot;activation&quot;/&gt;
+      &lt;/dependency&gt;
+    &lt;/dependencies&gt;</pre>
+         <h3><a name="Direct_Override"></a>Direct Override<a href="#Direct_Override" class="section_anchor"></a></h3>
+         <p>Yet another alternative is to declare the <tt>Set</tt> of all dependencies with the <tt>libraryDependencies</tt> method: </p>
+         <pre class="prettyprint">  override def libraryDependencies =
+    Set(&quot;org.specs&quot; % &quot;specs&quot; % &quot;1.4.1&quot;,
+    &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;)</pre>
+         <p>If you want to use the <tt>val</tt>-style definitions as well, use: </p>
+         <pre class="prettyprint">  override def libraryDependencies =
+    Set(&quot;org.specs&quot; % &quot;specs&quot; % &quot;1.4.1&quot;,
+    &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;) ++
+    super.libraryDependencies</pre>
+         <p><tt>sbt</tt> calls <tt>ivyRepositories</tt> to get the inline repositories to use. By default, <tt>ivyRepositories</tt> adds the default repositories (Maven Central and Scala Tools) to the repositories returned by <tt>repositories</tt>. So, to have complete control over repositories, override <tt>ivyRepositories</tt>. To specify repositories in addition to the usual defaults, override <tt>repositories</tt>. </p>
+         <p>For example, to use the Scala Tools snapshots repository in addition to the default repositories, </p>
+         <pre class="prettyprint">  override def repositories = ScalaToolsSnapshots</pre>
+         <p>There are methods defined on <tt>sbt.Resolver</tt> to assist with default repositories: </p>
+         <pre class="prettyprint">	/** Add the local, Maven Central, and Scala Tools releases repositories to the user repositories.  */
+	def withDefaultResolvers(userResolvers: Seq[Resolver]): Seq[Resolver]
+	/** Add the local Ivy and Maven Central repositories to the user repositories.  If `scalaTools` is true, add the Scala Tools releases repository as well.  */
+	def withDefaultResolvers(userResolvers: Seq[Resolver], scalaTools: Boolean): Seq[Resolver]
+	/** Add the local Ivy repository to the user repositories.
+	* If `scalaTools` is true, add the Scala Tools releases repository.
+	* If `mavenCentral` is true, add the Maven Central repository.  */
+	def withDefaultResolvers(userResolvers: Seq[Resolver], mavenCentral: Boolean, scalaTools: Boolean): Seq[Resolver]</pre>
+         <p>To exclude the default Scala Tools releases repository, but use the local and Maven Central repositories and the ones defined in <tt>repositories</tt>: </p>
+         <pre class="prettyprint">  override def ivyRepositories = Resolver.withDefaultResolvers(repositories, false)</pre>
+         <h3><a name="Publishing"></a>Publishing<a href="#Publishing" class="section_anchor"></a></h3>
+         <p>Finally, see <a href="Publishing">Publishing</a> for how to publish your project. </p>
+         <h2><a name="Maven/Ivy"></a>Maven/Ivy<a href="#Maven/Ivy" class="section_anchor"></a></h2>
+         <p>For this method, create the configuration files as you would for Maven (<tt>pom.xml</tt>) or Ivy (<tt>ivy.xml</tt> and optionally <tt>ivysettings.xml</tt>). <tt>sbt</tt> will use these configurations to resolve and retrieve dependencies when you execute <tt>update</tt>. No modifications to your project definition are necessary. </p>
+         <p>Maven support is dependent on Ivy's support for Maven POMs. Known issues with this support: </p>
+         <ul>
+          <li>Specifying <tt>relativePath</tt> in the <tt>parent</tt> section of a POM will produce an error. </li>
+          <li>Ivy ignores repositories specified in the POM. A workaround is to specify repositories inline or in an Ivy <tt>ivysettings.xml</tt> file. </li>
+         </ul>
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

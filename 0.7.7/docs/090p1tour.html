@@ -1,0 +1,194 @@
+<html>
+ <head> 
+  <title>090p1tour</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">090p1tour</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Basics">Basics</a></li>
+          <li><a href="#sbtrc">sbtrc</a></li>
+          <li><a href="#Compile/Discover">Compile/Discover</a></li>
+          <ul>
+           <li><a href="#Compile">Compile</a></li>
+           <li><a href="#Discover">Discover</a></li>
+          </ul>
+          <li><a href="#Defining_Commands">Defining Commands</a></li>
+          <ul>
+           <li><a href="#Command_Example">Command Example</a></li>
+           <li><a href="#Build_and_Load_Commands">Build and Load Commands</a></li>
+           <li><a href="#Load_Projects">Load Projects</a></li>
+           <li><a href="#Conclusion">Conclusion</a></li>
+          </ul>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This is intended as a guided tour through some of the ideas being explored in 0.9. </p>
+         <h1><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h1>
+         <p>The interface is different from what you are used to in 0.7.4 due to this being an early preview for the curious. </p>
+         <p>Try some commands: </p>
+         <pre class="prettyprint">$ xsbt help
+...
+$ xsbt 'help alias'
+...
+$ xsbt 'alias h=help' h
+...
+$ xsbt shell
+&gt; alias
+&gt; alias $%=reload
+&gt; alias h=help
+&gt; alias
+        h = help
+        $% = reload
+&gt; alias $%
+        $% = reload
+&gt; alias h=
+&gt; alias
+        $% = reload
+&gt; $%
+&gt; alias</pre>
+         <p>This is all done so far without a project object. The usual Project hierarchy does not exist at this point. More on this later... </p>
+         <h1><a name="sbtrc"></a>sbtrc<a href="#sbtrc" class="section_anchor"></a></h1>
+         <p>sbt 0.7.4 already has <tt>'&lt; file'</tt> for reading commands from a file. What 0.9.x adds is reading from <tt>~/.sbtrc</tt> and <tt>./.sbtrc</tt> on startup. So, create <tt>~/.sbtrc</tt> and add some commands to it: </p>
+         <pre class="prettyprint">alias h=help
+h &lt;
+iflast shell</pre>
+         <p>The last command sets up interactive mode if the user has not provided any commands on the command line. Otherwise, the commands provided on the command line are run and then sbt exits. If you want to always enter interactive mode, you can either manually append <tt>shell</tt> to the arguments you provide on the command line or replace <tt>iflast</tt> with <tt>append</tt>. <tt>append shell</tt> adds the <tt>shell</tt> command after all pending commands. </p>
+         <p>With the above <tt>~/.sbtrc</tt>, startup looks like: </p>
+         <pre class="prettyprint">$ xsbt
+
+&lt; file1 file2 ...
+        Reads the lines ...
+
+&gt;</pre>
+         <h1><a name="Compile/Discover"></a>Compile/Discover<a href="#Compile/Discover" class="section_anchor"></a></h1>
+         <p>The next two commands we'll look at are <tt>compile</tt> and <tt>discover</tt>. First, a warning: command parsing is rough. Invalid options are usually ignored and path parsing might not do what you expect. </p>
+         <h2><a name="Compile"></a>Compile<a href="#Compile" class="section_anchor"></a></h2>
+         <p>Create two source files <tt>B.scala</tt> and <tt>C.scala</tt>: </p>
+         <pre class="prettyprint">case class B(i: Int) {
+  def y = C.x - 1
+}
+
+@deprecated object C {
+   def x = 3
+}</pre>
+         <p>Compile them using: </p>
+         <pre class="prettyprint">$ xsbt
+&gt; compile -src *.scala</pre>
+         <p>(see 'help compile' for details) </p>
+         <p>Then, modify C.x to be </p>
+         <pre class="prettyprint">  def x = 6</pre>
+         <p>and recompile. </p>
+         <p>In sbt 0.7.4, this would cause both <tt>B.scala</tt> and <tt>C.scala</tt> to be recompiled. With the new incremental compilation in 0.9.x, <tt>C.scala</tt> is recompiled, the result is analyzed, and it is seen that only the implementation of <tt>C.x</tt> changed, not its signature. Therefore, the transitive dependencies of <tt>C.scala</tt> do not need to be recompiled. This will mainly help larger projects and multi-project builds. It does nothing to speed up initial compilation and can even be slower when signatures do change because it does multiple compilation runs in this case. </p>
+         <p>You can change <tt>C.x</tt> to be: </p>
+         <pre class="prettyprint">  def x = &quot;6&quot;</pre>
+         <p>and see that <tt>B.scala</tt> is properly recompiled with the expected error message. (Lots of incremental compilation debugging information can be turned on by adding <tt>-Dxsbt.inc.debug=true</tt> to the startup script.) </p>
+         <h2><a name="Discover"></a>Discover<a href="#Discover" class="section_anchor"></a></h2>
+         <p>Additionally, <tt>compile</tt> sets the <tt>Analysis</tt> of the compiled code to be the current &quot;project&quot; object. You can then run <tt>discover</tt>, a command available after a successful <tt>compile</tt> that finds subclasses and annotated classes. See <tt>help discover</tt> for details, but here are some examples: </p>
+         <pre class="prettyprint">&gt; discover -annot scala.deprecated
+...
+&gt; discover -sub scala.Product
+...</pre>
+         <p>The Analysis object represents the full API of the compiled classes and is persisted to disk. This means, for example, that the process of discovering tests will be done separately from compilation just like <tt>discover</tt> runs separate from <tt>compile</tt>. You can inspect the API of compiled classes by writing a <tt>Command</tt> that operates on <tt>sbt.inc.Analysis</tt>. Later, when tasks are ready, you will be able to do this by writing a normal task. </p>
+         <h1><a name="Defining_Commands"></a>Defining Commands<a href="#Defining_Commands" class="section_anchor"></a></h1>
+         <p>Next, we'll look at defining a <tt>Command</tt>. In sbt 0.7.4 you can define plugins and processors. These require a full project for each <tt>Processor</tt> or plugin and have to be published somewhere. sbt 0.9.x has a more lightweight, low-level concept that is not attached to the Project hierarchy called a <tt>Command</tt>: </p>
+         <blockquote>
+          <tt>Command</tt> is basically a function: 
+          <tt>State =&gt; Option[Apply]</tt> 
+          <blockquote>
+           where 
+           <tt>Apply</tt> provides 
+           <tt>Help</tt> and a function 
+           <tt>Input =&gt; Option[State]</tt> 
+          </blockquote>
+         </blockquote>
+         <p></p>
+         <p><tt>State</tt> contains the currently declared <tt>Command</tt>s, commands queued for execution, the current &quot;project definition&quot;, and some other state. <tt>Input</tt> contains both the full input line and the line broken into a command name and arguments. </p>
+         <p>The idea is that a command might apply only to some project types. If it doesn't apply, None is returned by the <tt>State =&gt; Option[Apply]</tt> function. Otherwise, an <tt>Apply</tt> instance is returned, which then processes the <tt>Input</tt> command. If the command doesn't select that particular <tt>Command</tt>, <tt>None</tt> is returned. <tt>Apply.simple</tt> handles this for the simple, common case of fixed command names. </p>
+         <h2><a name="Command_Example"></a>Command Example<a href="#Command_Example" class="section_anchor"></a></h2>
+         <p>As an example, make a file <tt>~/.sbt/commands/HelloWorld.scala</tt>: </p>
+         <pre class="prettyprint">
+import sbt._
+
+class HelloWorld extends ReflectedCommands
+{
+         val hw = Command.single(
+                 &quot;hello&quot;, /* command name */
+                 (&quot;hello x&quot;, briefHelp), /* (usage, description) */
+                 briefHelp /* Detailed help.  Here, just use the brief help.  */
+                 ) { (s: State, in: String) =&gt;
+
+                         println(&quot;Hello &quot; + in)
+
+                         // no changes to the state.  We could have added new commands to run, loaded new Commands, changed the current project definition, ...
+                         s
+                 }
+
+         private def briefHelp = &quot;Says hello to the name provided on the command line.&quot;
+}</pre>
+         <h2><a name="Build_and_Load_Commands"></a>Build and Load Commands<a href="#Build_and_Load_Commands" class="section_anchor"></a></h2>
+         <p>There is a command <tt>load-commands</tt> that builds and loads commands (replace <tt>~</tt> with your home directory): </p>
+         <pre class="prettyprint">&gt; load-commands -src ~/.sbt/commands/*.scala
+...
+&gt; hello World
+...</pre>
+         <p>Add this command to your <tt>~/.sbtrc</tt> and the commands will be built and loaded on startup and on calls to <tt>reload</tt>. </p>
+         <p>All internal sbt commands in 0.9.x are implemented as <tt>Command</tt>s. There are two distinguished commands that run at startup, however. These are <tt>add-default-commands</tt> and <tt>initialize</tt>. sbt initially does not know about any commands, so <tt>add-default-commands</tt> registers built-in commands. <tt>initialize</tt> reads commands from <tt>~/.sbtrc</tt> and <tt>./.sbtrc</tt> if they exist. </p>
+         <h2><a name="Load_Projects"></a>Load Projects<a href="#Load_Projects" class="section_anchor"></a></h2>
+         <p><tt>load-commands</tt> has a relative, <tt>load</tt>, which does something similar for &quot;project definitions&quot;. I have been quoting &quot;project definitions&quot; because at the basic level, a &quot;project definition&quot; is any object. Commands select the state they apply to by pattern matching on the current project definition. We can define a command that operates on history by requiring a project definition to implement a simple interface to provide the history path: </p>
+         <p>trait HistoryEnabled { </p>
+         <blockquote>
+          def historyPath: OptionPath 
+         </blockquote>} 
+         <p></p>
+         <p>To demonstrate this, make ./project/a/Test.scala: </p>
+         <pre class="prettyprint">import sbt._
+import Path._
+class Test extends HistoryEnabled {
+        def historyPath = Some(cwd / &quot;target&quot; / &quot;.history&quot;)
+        def cwd = new java.io.File(&quot;.&quot;)
+}</pre>
+         <p>and run: </p>
+         <pre class="prettyprint">&gt; load -src project/a/*.scala -name Test
+...
+&gt; !
+...
+&gt; !:
+...</pre>
+         <p>Note that we can load any type as the &quot;project definition&quot;, as we have done here and with the 'compile' command. A standard sbt interface would make this type <tt>Project</tt>. </p>
+         <h2><a name="Conclusion"></a>Conclusion<a href="#Conclusion" class="section_anchor"></a></h2>
+         <p>You can see that commands are really intended to build an interface to configuring sbt. Many people configure a build, quite a few people write plugins, fewer people write processors, and even fewer write commands. Perhaps I will be the only one to ever use them; however, hopefully you can see that they enable interesting things. I believe commands fill an open slot on the spectrum of using and extending sbt. From convention to customization: </p>
+         <ol>
+          <li>use sbt defaults/conventions/built-in tasks, no project definition </li>
+          <li>configure by creating Project definition in project/build </li>
+          <li>distribute/reuse project definition code using plugins </li>
+          <li>add commands using Processors, which use the standard Project hierarchy </li>
+          <li>build an interface to the sbt core using Commands, possibly different than the Project hierarchy </li>
+          <li>use sbt libraries outside of sbt </li>
+          <li>use/customize the launcher to run an arbitrary application </li>
+         </ol>
+         <p></p>
+         <p>The usual sbt interface is 1-4. The idea is to put these on top of 5, which itself is built on 6 and 7. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

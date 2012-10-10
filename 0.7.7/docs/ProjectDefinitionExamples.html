@@ -1,0 +1,215 @@
+<html>
+ <head> 
+  <title>ProjectDefinitionExamples</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ProjectDefinitionExamples</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p> This page lists some examples of project definitions, mostly drawn from the project definitions of <tt>sbt</tt> and <a href="http://technically.us/code/x/sling-shot/" rel="nofollow">Sling</a>. </p>
+         <p></p>
+         <ul>
+          <ul>
+           <ul>
+            <li><a href="#Overriding_Package_Name">Overriding Package Name</a></li>
+            <li><a href="#Changing_Compile_Options">Changing Compile Options</a></li>
+            <li><a href="#Include_Extra_Files_in_Jar">Include Extra Files in Jar</a></li>
+            <li><a href="#Exclude_Tests">Exclude Tests</a></li>
+            <li><a href="#Add_Managed_Dependencies_not_in_a_Repository">Add Managed Dependencies not in a Repository</a></li>
+            <li><a href="#Exclude_Dependencies">Exclude Dependencies</a></li>
+            <li><a href="#Specify_Dependencies_Inline">Specify Dependencies Inline</a></li>
+            <li><a href="#Add_Repositories_Inline">Add Repositories Inline</a></li>
+            <li><a href="#Dependency_Configurations">Dependency Configurations</a></li>
+            <li><a href="#Insert_Task_Dependency">Insert Task Dependency</a></li>
+            <li><a href="#Conditional_Task">Conditional Task</a></li>
+            <li><a href="#Extending_Classpath">Extending Classpath</a></li>
+            <li><a href="#Modifying_Specific_Classpaths">Modifying Specific Classpaths</a></li>
+            <li><a href="#Additional_Run_Tasks">Additional Run Tasks</a></li>
+            <li><a href="#Add_Task_to_Multiple_Projects">Add Task to Multiple Projects</a></li>
+           </ul>
+          </ul>
+         </ul> 
+         <p></p>
+         <h3><a name="Overriding_Package_Name"></a>Overriding Package Name<a href="#Overriding_Package_Name" class="section_anchor"></a></h3>
+         <p>This example overrides the name of the produced jar. </p>
+         <pre class="prettyprint">import sbt._
+
+class SamplesProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    override def artifactID = &quot;samplez&quot;
+}</pre>
+         <h3><a name="Changing_Compile_Options"></a>Changing Compile Options<a href="#Changing_Compile_Options" class="section_anchor"></a></h3>
+         <p>This example shows how to specify additional options to pass to the compiler. Common options are provided as case classes or objects. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    override def compileOptions = ExplainTypes :: CompileOption(&quot;-Xexperimental&quot;) :: super.compileOptions.toList
+}</pre>
+         <h3><a name="Include_Extra_Files_in_Jar"></a>Include Extra Files in Jar<a href="#Include_Extra_Files_in_Jar" class="section_anchor"></a></h3>
+         <p>The default location for resources to be included in the produced jar is <tt>src/main/resources</tt>. This example shows how to add additional resources to the jar file. In this case, the extra files are license and notice files in the project root directory. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    def extraResources = &quot;LICENSE&quot; +++ &quot;NOTICE&quot;
+    override def mainResources = super.mainResources +++ extraResources
+}</pre>
+         <h3><a name="Exclude_Tests"></a>Exclude Tests<a href="#Exclude_Tests" class="section_anchor"></a></h3>
+         <p>Running <tt>test</tt> will skip the <tt>sample.TestSpecification</tt> test in this example. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    override def testOptions = ExcludeTests(&quot;sample.TestSpecification&quot; :: Nil) :: super.testOptions.toList
+}</pre>
+         <h3><a name="Add_Managed_Dependencies_not_in_a_Repository"></a>Add Managed Dependencies not in a Repository<a href="#Add_Managed_Dependencies_not_in_a_Repository" class="section_anchor"></a></h3>
+         <p>This example shows how to specify managed dependencies that are not in a repository. They will be downloaded when <tt>update</tt> is run, like normal managed dependencies. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+	val slinky = &quot;slinky&quot; % &quot;slinky&quot; % &quot;2.1&quot; from &quot;http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar&quot;
+}</pre>
+         <h3><a name="Exclude_Dependencies"></a>Exclude Dependencies<a href="#Exclude_Dependencies" class="section_anchor"></a></h3>
+         <p>This example shows an inline Ivy XML file to exclude some transitive dependencies. See the <a href="http://ant.apache.org/ivy/history/trunk/ivyfile/artifact-exclude.html" rel="nofollow">Ivy documentation</a> for details. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+  override def ivyXML =
+    &lt;dependencies&gt;
+      &lt;dependency org=&quot;javax.mail&quot; name=&quot;mail&quot; rev=&quot;1.4.2&quot;&gt;
+        &lt;exclude module=&quot;activation&quot;/&gt;
+      &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+}</pre>
+         <p>Or, exclude dependencies globally by putting the <tt>exclude</tt> element directly under <tt>dependencies</tt>. Again, see the <a href="http://ant.apache.org/ivy/history/trunk/ivyfile/exclude.html" rel="nofollow">Ivy documentation</a> for details. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+  val jm = &quot;javax.mail&quot; % &quot;mail&quot; % &quot;1.4.2&quot;
+
+  override def ivyXML =
+    &lt;dependencies&gt;
+      &lt;exclude module=&quot;activation&quot;/&gt;
+    &lt;/dependencies&gt;
+}</pre>
+         <h3><a name="Specify_Dependencies_Inline"></a>Specify Dependencies Inline<a href="#Specify_Dependencies_Inline" class="section_anchor"></a></h3>
+         <p>Declares a dependency on Jetty. Running <tt>update</tt> will download jetty and its dependencies transitively. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    val jetty6 = &quot;org.mortbay.jetty&quot; % &quot;jetty-ajp&quot; % &quot;6.1.14&quot;
+}</pre>
+         <h3><a name="Add_Repositories_Inline"></a>Add Repositories Inline<a href="#Add_Repositories_Inline" class="section_anchor"></a></h3>
+         <p>You can add repositories in your project definition instead of in an <tt>ivy-settings.xml</tt> file. Note that specifying repositories in your project definition means any <tt>ivy-settings.xml</tt> file will be ignored. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    val snapshots = &quot;Databinder Snapshots&quot; at &quot;http://databinder.net/repo/&quot;
+    val dispatch = &quot;net.databinder&quot; %% &quot;dispatch&quot; % &quot;0.7.2&quot;
+}</pre>
+         <h3><a name="Dependency_Configurations"></a>Dependency Configurations<a href="#Dependency_Configurations" class="section_anchor"></a></h3>
+         <p>See the <a href="WebApplicationExample">Hello Lift Example</a> for an example of using configurations to restrict the scope of dependencies (for example: <tt>runtime</tt>, <tt>provided</tt>, <tt>compile</tt>, <tt>test</tt>). </p>
+         <h3><a name="Insert_Task_Dependency"></a>Insert Task Dependency<a href="#Insert_Task_Dependency" class="section_anchor"></a></h3>
+         <p>Built-in actions are defined in the following pattern: </p>
+         <pre class="prettyprint">    lazy val compile = compileAction
+    def compileAction = task { ... } dependsOn(...)</pre>
+         <p>You can override the <tt>compileAction</tt> method to change the behavior of the built-in action, including adding dependencies. This example shows how to specify a new task to run before a built-in action by adding a dependency. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    lazy val printAction = task { print(&quot;Testing...&quot;) }
+    override def compileAction = super.compileAction dependsOn(printAction)
+}</pre>
+         <h3><a name="Conditional_Task"></a>Conditional Task<a href="#Conditional_Task" class="section_anchor"></a></h3>
+         <p>If you have some work that takes some sources and generates some outputs, you can use <tt>fileTask</tt> to only run the task when the outputs are out of date with respect to the inputs. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    def output: Path = &quot;output&quot;
+    def input: Path = &quot;input&quot;
+
+    lazy val showdown = fileTask(output from input) {
+        generate(input, output)
+    }
+    def generate(in: Path, out: Path): Option[String] = ...
+}</pre>
+         <h3><a name="Extending_Classpath"></a>Extending Classpath<a href="#Extending_Classpath" class="section_anchor"></a></h3>
+         <p>You can add directories and libraries to the unmanaged classpath. The context here is compiling Javascript to Java classes using Rhino and then putting those classes on the classpath. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    def js_classpath = outputPath / &quot;js_classes&quot;
+    override def unmanagedClasspath = super.unmanagedClasspath +++ js_classpath
+}</pre>
+         <p>Note that if this were a web project, <tt>package</tt> would automatically include the classes and libraries added in this manner in the war file. </p>
+         <h3><a name="Modifying_Specific_Classpaths"></a>Modifying Specific Classpaths<a href="#Modifying_Specific_Classpaths" class="section_anchor"></a></h3>
+         <p><tt>sbt</tt> uses different classpaths for different actions. The <tt>run</tt> action uses the classpath provided by the <tt>runClasspath</tt> method, the <tt>compile</tt> action uses <tt>compileClasspath</tt>, etc.... You can modify these classpaths as shown in this example. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    override def runClasspath = super.runClasspath +++ extraRunClasspath
+    def extraRunClasspath = ...
+}</pre>
+         <h3><a name="Additional_Run_Tasks"></a>Additional Run Tasks<a href="#Additional_Run_Tasks" class="section_anchor"></a></h3>
+         <p>This example shows how to create an additional <tt>run</tt>-like task. It runs <tt>sample.Main</tt> using <tt>testClasspath</tt> after ensuring that main and test sources have been compiled. </p>
+         <pre class="prettyprint">import sbt._
+
+class SampleProject(info: ProjectInfo) extends DefaultProject(info)
+{
+    lazy val demo = runTask(Some(&quot;sample.Main&quot;), testClasspath).dependsOn(testCompile) describedAs &quot;Runs the demo.&quot;
+}</pre>
+         <h3><a name="Add_Task_to_Multiple_Projects"></a>Add Task to Multiple Projects<a href="#Add_Task_to_Multiple_Projects" class="section_anchor"></a></h3>
+         <p>This examples shows a parent project with two subprojects that have a new task <tt>tool</tt> that is configured with two paths. One path is from the parent project's directory and the other is in the sub project's directory. </p>
+         <pre class="prettyprint">import sbt._
+
+class ExampleProject(info: ProjectInfo) extends ParentProject(info)
+{
+   def toolConfigurationFile = path(&quot;config&quot;)
+
+   def subProject(path: Path, name: String) =
+      project(path, name, new ExampleSubProject(_))
+
+   lazy val subA = subProject(&quot;subA&quot;, &quot;Sub Project A&quot;)
+   lazy val subB = subProject(&quot;subB&quot;, &quot;Sub Project B&quot;)
+
+   class ExampleSubProject(info: ProjectInfo) extends DefaultProject(info)
+   {
+      def toolOutput = outputPath / &quot;tool&quot;
+      def absolute(path: Path) = path.asFile.getAbsolutePath
+      lazy val tool = task
+      {
+          log.info(&quot;Tool configuration &quot; + absolute(toolConfigurationFile) + &quot; and output &quot; + absolute(toolOutput))
+          None
+      }
+   }
+}</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+ <head> 
+  <title>ChangeSummary_0_4</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary_0_4</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Changes_from_0.3.7_to_0.4"></a>Changes from 0.3.7 to 0.4<a href="#Changes_from_0.3.7_to_0.4" class="section_anchor"></a></h1>
+         <p>This release includes a number of new features and improvements. They are summarized below. Comments, questions, and suggestions are welcome! </p>
+         <h2><a name="Major_Features"></a>Major Features<a href="#Major_Features" class="section_anchor"></a></h2>
+         <ul>
+          <li>New loader architecture that enables Scala and <tt>sbt</tt> versions to be specified per project. See <a href="Loader">Sbt Loader</a> for details. </li>
+          <li>Webstart project support. See <a href="Webstart">Webstart</a> for details. </li>
+          <li>Automatic reloading of web application run with <tt>jetty-run</tt>. See <a href="WebApplications">WebApplications</a>. </li>
+          <li>Triggered execution of any action by prefixing the line with <tt>~</tt>. The action will run when any Scala source files are modified. Thanks to Mikko for the work on continuous compilation that made this feature possible! See <a href="TriggeredExecution">Triggered Execution</a>. </li>
+          <li>Method tasks, which take arguments and produce the task to run. See <a href="MethodTasks">Method Tasks</a>. </li>
+          <li>Added <tt>test-quick</tt>, <tt>test-failed</tt>, and <tt>test-only</tt> methods. See <a href="TriggeredExecution">Triggered Execution</a> for details. </li>
+          <li>Reworked task execution model across multiple projects. See the Multi-Project Tasks Details section below. </li>
+         </ul>
+         <h2><a name="Improvements"></a>Improvements<a href="#Improvements" class="section_anchor"></a></h2>
+         <ul>
+          <li>Added <tt>jetty-restart</tt> action, which first executes <tt>jetty-stop</tt> and then executes <tt>jetty-run</tt> </li>
+          <li>Added project organization as a property that defaults to inheriting from the parent project. Project creation organization now prompts for organization, which can be left blank </li>
+          <li><tt>help</tt>, <tt>actions</tt>, and <tt>methods</tt> commands are now available when executing <tt>sbt</tt> batch style </li>
+          <li>Modified logging subsystem for improved labeling of logging by action and project and for better support for buffered logging from actors. </li>
+          <li><tt>run</tt> now accepts arguments to pass to the <tt>main</tt> method of the class being run. </li>
+          <li>Added <tt>publish-local</tt> action for publishing to the local Ivy repository. </li>
+         </ul>
+         <h2><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h2>
+         <ul>
+          <li>Fixed <a title="Resources not added to classpath" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=17">&nbsp;bug #17&nbsp;</a> - resources not added to classpath. </li>
+          <li>Fixed issue with <tt>build.properties</tt> being unnecessarily updated in sub-projects during startup. </li>
+          <li>Fixed problem with nested modules being detected as tests (as occurred when testing specs itself). </li>
+         </ul>
+         <h2><a name="Multi-Project_Task_Execution_Details"></a>Multi-Project Task Execution Details<a href="#Multi-Project_Task_Execution_Details" class="section_anchor"></a></h2>
+         <p>There have been some changes in how tasks are executed, mainly with respect to multiple projects. </p>
+         <ul>
+          <li>Tasks can now explicitly depend on tasks in other projects. </li>
+          <li>A task (call it T) implicitly depends on tasks in projects that T's project depends on that have the same name as T. </li>
+          <li>Methods and interactive tasks (such as <tt>run</tt> and <tt>console</tt>) must be executed directly on the desired project. </li>
+         </ul>
+         <p></p>
+         <p>Some consequences of these changes are: </p>
+         <ul>
+          <li>Tasks will run in parallel within a given project if <tt>parallelExecution</tt> is set to <tt>true</tt>. Previously, only one task per project could run at a time. </li>
+          <li>Tasks are run breadth-first. For example, the default project type defines a <tt>package</tt> task that depends on a <tt>compile</tt> task. If you execute <tt>package</tt> on multiple projects, <tt>compile</tt> will be run across all projects first and then <tt>package</tt> will be run across all projects. Previously, the specified action (<tt>package</tt> in this case) would be executed on each project in the order required by project-level dependencies. This resulted in depth-first execution. </li>
+          <li>Tasks no longer have to be explicitly called to have implicit dependencies across multiple projects. For example, the web application project type defines the <tt>jetty-run</tt> action. One of its dependencies is <tt>compile</tt>. Previously, <tt>compile</tt> would not be invoked in other projects that did not have a <tt>jetty-run</tt> task. This would be the case if you had one web application subproject that depended on another subproject that was not a web application. </li>
+         </ul>
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

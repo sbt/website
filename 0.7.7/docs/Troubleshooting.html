@@ -1,0 +1,83 @@
+<html>
+ <head> 
+  <title>Troubleshooting</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">Troubleshooting</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <dl> 
+          <dt>
+           Problem
+          </dt> 
+          <dd>
+           <strong>The compiler cannot find classes</strong>
+          </dd> 
+          <dt>
+           Solution
+          </dt> 
+          <dd>
+           Ensure the classes are on the classpath. You need to run 
+           <tt>update</tt> if you have declared managed dependencies. Unmanaged jars should go in 
+           <tt>lib/</tt> by default.
+          </dd> 
+          <dt>
+           Discussion
+          </dt> 
+          <dd>
+           You can use 
+           <a href="ProjectConsole">console-project</a> to list the contents of classpaths. Check that the expected jars exist and contain the classes you want. You can also use 
+           <a href="RunningSbt#Build_Actions">javap</a> for this purpose. 
+           <p></p>
+           <p>A common cause is forgetting to run <tt>update</tt>. See the documentation on <a href="Classpaths">classpaths</a> and managing dependencies for more information.</p>
+          </dd> 
+         </dl> 
+         <p></p>
+         <p></p>
+         <dl> 
+          <dt>
+           Problem
+          </dt> 
+          <dd>
+           <strong>Corrupted download of sbt or Scala</strong>
+          </dd> 
+          <dt>
+           Solution
+          </dt> 
+          <dd>
+           Restart sbt after deleting: 
+           <ul>
+            <li><tt>~/.m2/repository</tt> </li>
+            <li><tt>~/.ivy2/cache</tt> </li>
+            <li><tt>project/boot</tt> </li>
+           </ul>
+          </dd> 
+          <dt>
+           Discussion
+          </dt> 
+          <dd>
+           While this should not normally be necessary assuming Ivy is doing its job properly, removing these directories will reset things to a clean state so you can be sure whatever problem isn't being caused by corrupt or stale cached files. If you find yourself doing this repeatedly, please report the issue.
+          </dd> 
+         </dl> 
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

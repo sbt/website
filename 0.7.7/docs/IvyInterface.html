@@ -1,0 +1,201 @@
+<html>
+ <head> 
+  <title>IvyInterface</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">IvyInterface</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p>This page describes how to use sbt's Ivy interface directly. This interface is new in 0.7. The source code can be found in the <a href="http://github.com/harrah/xsbt/tree/master/ivy/" rel="nofollow">Ivy project of xsbt</a>. The Ivy interface is published to the <tt>databinder.net</tt> repository (Ivy metadata only). You can use it in an <tt>sbt</tt> project like: </p>
+         <pre class="prettyprint">val sbtIvy = &quot;org.scala-tools.sbt&quot; %% &quot;ivy&quot; % &quot;0.7.7&quot;
+val dbRepo = Resolver.url(&quot;technically.us&quot;, new URL(&quot;http://databinder.net/repo/&quot;))(Resolver.ivyStylePatterns)</pre>
+         <p>Note that sbt, including the Ivy interface, is only built and published against Scala 2.7.7. </p>
+         <p></p>
+         <ul>
+          <li><a href="#Ivy_Background">Ivy Background</a></li>
+          <li><a href="#sbt_Interface_to_Ivy">sbt Interface to Ivy</a></li>
+          <ul>
+           <li><a href="#General_Ivy_Configuration">General Ivy Configuration</a></li>
+           <ul>
+            <li><a href="#Inline">Inline</a></li>
+            <li><a href="#External">External</a></li>
+            <li><a href="#General_Configuration_Examples">General Configuration Examples</a></li>
+           </ul>
+           <li><a href="#Module_Configuration">Module Configuration</a></li>
+           <ul>
+            <li><a href="#Ivy_File">Ivy File</a></li>
+            <li><a href="#POM">POM</a></li>
+            <li><a href="#Inline">Inline</a></li>
+            <li><a href="#Module_Configuration_Examples">Module Configuration Examples</a></li>
+           </ul>
+           <li><a href="#Task_Configuration">Task Configuration</a></li>
+           <ul>
+            <li><a href="#Update_Configuration_Example">Update Configuration Example</a></li>
+           </ul>
+           <li><a href="#Execution">Execution</a></li>
+          </ul>
+         </ul> 
+         <p></p>
+         <h1><a name="Ivy_Background"></a>Ivy Background<a href="#Ivy_Background" class="section_anchor"></a></h1>
+         <p>Ivy is normally configured with two separate XML configuration files: a settings file and a module descriptor file, which is usually just called an &quot;Ivy file&quot;. The settings file configures resolvers, such as repositories, and paths used by Ivy. Other aspects of Ivy are configurable in the settings file as well. See <a href="http://ant.apache.org/ivy/history/2.1.0/settings.html" rel="nofollow">Settings Files</a> for details. The Ivy file describes a module and its dependencies. See <a href="http://ant.apache.org/ivy/history/2.1.0/ivyfile.html" rel="nofollow">Ivy File</a> for details. </p>
+         <p>A user interacts with Ivy either through Ant tasks or by using Ivy as a library. To do work with Ivy, you need to run tasks, such as <tt>resolve</tt>, <tt>retrieve</tt>, or <tt>publish</tt>. Each of these tasks generally requires additional configuration. </p>
+         <h1><a name="sbt_Interface_to_Ivy"></a>sbt Interface to Ivy<a href="#sbt_Interface_to_Ivy" class="section_anchor"></a></h1>
+         <p>sbt's interface to Ivy follows this separation. Configuration involves: </p>
+         <ol>
+          <li>General Ivy configuration, which corresponds to an Ivy settings file or the repositories part of a POM </li>
+          <li>Ivy module configuration, which corresponds to an Ivy file or the module descriptor part of a POM </li>
+          <li>Task specific configuration and execution, which corresponds to Ant task or internal Ivy configuration </li>
+         </ol>
+         <p></p>
+         <p>Each of the first two configurations may be done either by specifying an external XML file to use for configuration or by using a direct (inline) Scala data structure. </p>
+         <h2><a name="General_Ivy_Configuration"></a>General Ivy Configuration<a href="#General_Ivy_Configuration" class="section_anchor"></a></h2>
+         <p>For general Ivy configuration, create an instance of <tt>sbt.IvyConfiguration</tt>, either <tt>sbt.InlineIvyConfiguration</tt> or <tt>sbt.ExternalIvyConfiguration</tt>. Each requires an <tt>IvyLogger</tt>, which is a basic interface to provide logging. In <tt>sbt</tt>, the <tt>log</tt> member of a project definition implements this interface. Additionally, each requires a <tt>GlobalLock</tt>, which is a means of synchronizing across processes. It is used to ensure the Ivy cache is only be accessed by one running instance of the Ivy interface on a machine. Specifics to each configuration are described in the next sections. </p>
+         <h3><a name="Inline"></a>Inline<a href="#Inline" class="section_anchor"></a></h3>
+         <p>The constructor signature for inline configuration is: </p>
+         <pre class="prettyprint">  InlineIvyConfiguration(
+    paths: IvyPaths,
+    resolvers: Seq[Resolver],
+    otherResolvers: Seq[Resolver],
+    moduleConfigurations: Seq[ModuleConfiguration],
+    localOnly: Boolean,
+    lock: Option[xsbti.GlobalLock],
+    log: IvyLogger )</pre>
+         <p>Resolvers are described on the <a href="Resolvers">Resolvers</a> page. <tt>otherResolvers</tt> are resolvers that don't go in the default resolver chain. ModuleConfigurations are not currently documented, but are used to configure resolvers on a per-module basis. <tt>Nil</tt> is an acceptable argument for this parameter. <tt>localOnly</tt> should be true to achieve an offline mode. It won't check for newer versions of dynamic revisions. <tt>lock</tt> and <tt>log</tt> are as described at the beginning of the section. </p>
+         <p>An instance of <tt>IvyPaths</tt> configures two common, important paths for Ivy: the base directory and the cache directory. The base directory is the directory against which all relative paths are resolved. The cache directory is where all cached information, such as downloaded module descriptors and artifacts for dependencies, is placed. </p>
+         <p>The constructor signature for <tt>IvyPaths</tt> is: </p>
+         <pre class="prettyprint">  IvyPaths(
+    baseDirectory: File,
+    cacheDirectory: Option[File] )</pre>
+         <p>The base directory used for <tt>sbt</tt> projects is the project's path, <tt>info.projectPath</tt>. To use the default cache directory, which is usually <tt>&lt;user.home&gt;/.ivy2/cache</tt>, specify <tt>None</tt>. <tt>InlineIvyConfiguration</tt> is intended to provide easy configuration of the most common parameters. To access all of Ivy's configuration parameters, use <tt>ExternalIvyConfiguration</tt>, described next. </p>
+         <h3><a name="External"></a>External<a href="#External" class="section_anchor"></a></h3>
+         <p>For configuration with an external XML settings file, use ExternalIvyConfiguration. The constructor signature is: </p>
+         <pre class="prettyprint">  ExternalIvyConfiguration(
+    baseDirectory: File,
+    file: File,
+    lock: Option[xsbti.GlobalLock],
+    log: IvyLogger)</pre>
+         <p>The base directory is the directory against which all relative paths are resolved. The <tt>file</tt> parameter specifies the location of the settings file. <tt>lock</tt> and <tt>log</tt> are as described at the beginning of the section. </p>
+         <h3><a name="General_Configuration_Examples"></a>General Configuration Examples<a href="#General_Configuration_Examples" class="section_anchor"></a></h3>
+         <p>These examples assume they are written in the context of an sbt project definition. </p>
+         <p>A very basic inline configuration that reuses information from the project: </p>
+         <pre class="prettyprint">  val paths = new IvyPaths(info.projectPath.asFile, None)
+
+   // use the repositories defined in the project
+  val resolvers = repositories
+
+  val inline = new InlineIvyConfiguration(paths, resolvers, Nil, Nil, false, Some(info.launcher.globalLock), log)</pre>
+         <p>A more advanced inline configuration: </p>
+         <pre class="prettyprint">  // make all paths relative to the `ivy/` subdirectory and put the cache there as well.
+  val paths = new IvyPaths(&quot;ivy&quot;.asFile, Some(&quot;ivy&quot; / &quot;cache&quot; asFile))
+
+  // define a repository and use the usual repositories (the local Ivy, central Maven, and Scala Tools repositories)
+  val resolvers = Resolver.withDefaultResolvers( Seq(&quot;technically.us&quot; at &quot;http://technically.us/repo/&quot;) )
+
+  val inline = new InlineIvyConfiguration(paths, resolvers, Nil, Nil, None, log)</pre>
+         <p>An external configuration: </p>
+         <pre class="prettyprint">  val external = new ExternalIvyConfiguration(info.projectPath.asFile, &quot;ivysettings.xml&quot;.asFile, Some(info.launcher.globalLock), log)</pre>
+         <h2><a name="Module_Configuration"></a>Module Configuration<a href="#Module_Configuration" class="section_anchor"></a></h2>
+         <p>To define a module, create an instance of <tt>sbt.ModuleSettings</tt>: either <tt>sbt.IvyFileConfiguration</tt>, <tt>sbt.PomConfiguration</tt>, or <tt>sbt.InlineConfiguration</tt>. The first corresponds to configuration by an external Ivy file. The second is for configuration by an external POM. The last type is for direct configuration in Scala. Each shares two common parameters: <tt>ivyScala</tt> and <tt>validate</tt>. An instance of <tt>IvyScala</tt> controls whether Scala dependencies are checked for the correct version. If <tt>None</tt>, no checking is performed. If <tt>validate</tt> is true, Ivy validates resolved module descriptors. </p>
+         <h3><a name="Ivy_File"></a>Ivy File<a href="#Ivy_File" class="section_anchor"></a></h3>
+         <p>The constructor signature is: </p>
+         <pre class="prettyprint">  IvyFileConfiguration(
+    file: File,
+    ivyScala: Option[IvyScala],
+    validate: Boolean)</pre>
+         <h3><a name="POM"></a>POM<a href="#POM" class="section_anchor"></a></h3>
+         <p>The constructor signature is: </p>
+         <pre class="prettyprint">  PomConfiguration(file: File,
+    ivyScala: Option[IvyScala],
+    validate: Boolean)</pre>
+         <h3><a name="Inline"></a>Inline<a href="#Inline" class="section_anchor"></a></h3>
+         <p>The constructor signature is: </p>
+         <pre class="prettyprint">  InlineConfiguration(
+    module: ModuleID,
+    dependencies: Iterable[ModuleID],
+    ivyXML: NodeSeq,
+    configurations: Iterable[Configuration],
+    defaultConfiguration: Option[Configuration],
+    ivyScala: Option[IvyScala],
+    validate: Boolean)</pre>
+         <p>A ModuleID is what is constructed by the <tt>%</tt> operators in <tt>sbt</tt>. For example: </p>
+         <pre class="prettyprint">  val scalacheck = &quot;org.scalacheck&quot; %% &quot;scalacheck&quot; % &quot;1.6&quot; % &quot;test&quot;
+  val testng = &quot;org.testng&quot; % &quot;testng&quot; % &quot;5.7&quot; classifier &quot;jdk15&quot;</pre>
+         <p>More details on <tt>ModuleID</tt>s are on the <a href="http://code.google.com/p/simple-build-tool/wiki/LibraryManagement" rel="nofollow">Dependency Management Basics page</a>. The page on <a href="http://code.google.com/p/simple-build-tool/wiki/ManagedConfigurations" rel="nofollow">configurations</a> has more details on <tt>Configuration</tt>s. </p>
+         <ul>
+          <li><tt>module</tt> is the ID of the module being defined. </li>
+          <li><tt>dependencies</tt> are the module's dependencies. </li>
+          <li><tt>ivyXML</tt> is inline Ivy XML to merge with the reset of the explicit configuration. </li>
+          <li><tt>configurations</tt> are the defined configurations for the module. </li>
+          <li><tt>defaultConfiguration</tt> is the default configuration when none is defined for a dependency. </li>
+         </ul>
+         <h3><a name="Module_Configuration_Examples"></a>Module Configuration Examples<a href="#Module_Configuration_Examples" class="section_anchor"></a></h3>
+         <p>An inline example similar to the default <tt>sbt</tt> configuration, but with Scala version checking disabled: </p>
+         <pre class="prettyprint">  val projectID: ModuleID = organization % moduleID % version.toString artifacts(artifacts.toSeq : _*)
+
+  // dependencies are those defined in the project definition as:
+  //   val x = &quot;org&quot; % &quot;name&quot; % &quot;rev&quot;
+  val libraryDependencies = reflectiveLibraryDependencies
+
+  // Use the default Maven scopes
+  val configurations = Configuration.defaultMavenConfigurations
+
+  // Make 'compile' the default configuration
+  val defaultConf = Configurations.Compile
+
+  val inline = new InlineConfiguration(projectID, libraryDependencies, NodeSeq.Empty, configurations, defaultConf, None, true)</pre>
+         <h2><a name="Task_Configuration"></a>Task Configuration<a href="#Task_Configuration" class="section_anchor"></a></h2>
+         <p>This section currently only describes <tt>update</tt>, which is a combination of the Ivy tasks <tt>resolve</tt> and <tt>retrieve</tt>. <tt>update</tt> is configured by an instance of <tt>sbt.UpdateConfiguration</tt>. Its constructor signature is: </p>
+         <pre class="prettyprint">  UpdateConfiguration(
+    retrieveDirectory: File,
+    outputPattern: String,
+    synchronize: Boolean,
+    quiet: Boolean)</pre>
+         <p>The <tt>retrieveDirectory</tt> path is prepended to <tt>outputPattern</tt> to form the pattern that determines where Ivy retrieves artifacts to. Some examples are shown in the Ivy <a href="http://ant.apache.org/ivy/history/2.1.0/use/retrieve.html" rel="nofollow">retrieve task documentation</a>. The default <tt>sbt</tt> retrieve pattern is: </p>
+         <pre class="prettyprint">  &quot;[conf]/[artifact](-[revision])(-[classifier]).[ext]&quot;</pre>
+         <p>See the Ivy documentation on <a href="http://ant.apache.org/ivy/history/2.1.0/concept.html#patterns" rel="nofollow">patterns</a> for more information. </p>
+         <p>When <tt>synchronize</tt> is true, Ivy will remove old artifacts from the destination directory and not just copy the new ones there. If true, <tt>quiet</tt> surpresses Ivy logging during update. If it is false, Ivy usually displays progress by a series of dots (<tt>.</tt>) as artifacts are downloaded. </p>
+         <h3><a name="Update_Configuration_Example"></a>Update Configuration Example<a href="#Update_Configuration_Example" class="section_anchor"></a></h3>
+         <pre class="prettyprint">  val upConf = new UpdateConfiguration(&quot;lib_managed&quot;.asFile, &quot;[conf]/[artifact](-[revision])(-[classifier]).[ext]&quot;, true, true)</pre>
+         <h2><a name="Execution"></a>Execution<a href="#Execution" class="section_anchor"></a></h2>
+         <p>With all of the configuration above, we can now run Ivy. This is a two step process. First, create instances of <tt>IvySbt</tt> and <tt>IvySbt.Module</tt>. Think of these loosely as a connection to Ivy and a configured module, respectively. There is some overhead saved by reusing these instances when the configuration is unchanged, especially when using external XML configuration files. </p>
+         <p>Finally, call the appropriate method(s) in <tt>IvyActions</tt>. </p>
+         <pre class="prettyprint">  val ivyConf: IvyConfiguration = ... // as above
+  val ivySbt = new IvySbt(ivyConf)
+
+  val moduleSettings: ModuleSettings = ...  // as above
+  val ivyModule = new ivySbt.Module(moduleSettings)
+
+  val upConf: UpdateConfiguration = ... // as above
+
+  // resolve dependencies defined in `moduleSettings`
+  //   and retrieve them according to the configuration in `updateConf`
+  IvyActions.update(ivyModule, updateConf)
+
+  // Deletes cached metadata and artifacts from the Ivy cache
+  IvyActions.cleanCache(ivySbt)
+
+  // not currently in this documentation- see the source for IvyActions
+  IvyActions.install(ivyModule, &quot;Scala Tools Releases&quot;, &quot;local&quot;)
+  IvyActions.makePom(ivyModule, ...)
+  IvyActions.deliver(ivyModule, ...)
+  IvyActions.publish(ivyModule, ...)</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

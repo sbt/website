@@ -1,0 +1,98 @@
+<html>
+ <head> 
+  <title>CustomActions</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">CustomActions</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <p></p>
+         <ul>
+          <li><a href="#Introduction">Introduction</a></li>
+          <li><a href="#Creating_Actions">Creating Actions</a></li>
+          <li><a href="#Modifying_Actions">Modifying Actions</a></li>
+          <li><a href="#Conditional_Task_Execution">Conditional Task Execution</a></li>
+          <ul>
+           <li><a href="#Products_Only">Products Only</a></li>
+           <li><a href="#Known_Products_from_Sources">Known Products from Sources</a></li>
+           <li><a href="#Special_Tasks">Special Tasks</a></li>
+          </ul>
+         </ul> 
+         <p></p>
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This page describes how to define your own actions and how to modify the builtin actions. For information on writing the code that implements the action, see <a href="ActionContent">ActionContent</a>. </p>
+         <h1><a name="Creating_Actions"></a>Creating Actions<a href="#Creating_Actions" class="section_anchor"></a></h1>
+         <p>Create a new action by constructing a <tt>Task</tt> instance and assigning it to a <tt>lazy val</tt>. The name of the <tt>val</tt> is used as the name of the action after transforming camel-case style to be dash separated (for example, <tt>testCompile</tt> becomes <tt>test-compile</tt>). A <tt>Task</tt> is constructed with the <tt>task</tt> method and represents a unit of work. The argument to <tt>task</tt> is the code to execute when the task is invoked. Return <tt>None</tt> if the task executes successfully or return an error message wrapped in <tt>Some</tt> if it does not. The <tt>log</tt> method (of type <tt>sbt.Logger</tt>) can be used for logging information. </p>
+         <p>Example: </p>
+         <pre class="prettyprint">  lazy val print = task { log.info(&quot;This is a test.&quot;); None }</pre>
+         <p>The <tt>val</tt> is required so that <tt>sbt</tt> can discover the task using reflection and so that the task can be used as a dependency of other tasks. Using <tt>lazy</tt> avoids initialization issues. </p>
+         <p>You specify the dependencies of a task with the <tt>dependsOn</tt> method. You provide a description using the <tt>describedAs</tt> method. </p>
+         <p>Example: </p>
+         <pre class="prettyprint">  lazy val jars = task { ... } dependsOn(compile, doc) describedAs(&quot;Package classes and API docs.&quot;)
+  lazy val compile = ...
+  lazy val doc = ...</pre>
+         <p><strong>Note:</strong> The dependencies that you refer to must be assigned to a <tt>val</tt>. The following would be incorrect: </p>
+         <pre class="prettyprint">  //Incorrect example:
+  lazy val jar = task { ... } dependsOn(compile, test)
+  lazy val test = task { ... } dependsOn(compile)
+  def compile = task { ... }</pre>
+         <p>In this case, <tt>jar</tt> depends on a different <tt>compile</tt> task than <tt>test</tt> does because the <tt>compile</tt> method returns a different object each time it is called. So, the <tt>compile</tt> task would run twice when <tt>jar</tt> is executed. </p>
+         <p>For information on writing the code that implements the action, see <a href="ActionContent">ActionContent</a>. </p>
+         <h1><a name="Modifying_Actions"></a>Modifying Actions<a href="#Modifying_Actions" class="section_anchor"></a></h1>
+         <p>Most of the builtin actions (such as <tt>clean</tt>, <tt>test</tt>, <tt>run</tt>, <tt>doc</tt>, and <tt>package</tt>) are defined using the following pattern, shown here for the <tt>package</tt> action: </p>
+         <pre class="prettyprint">  lazy val `package` = packageAction
+  def packageAction = packageTask(packagePaths, jarPath, packageOptions).dependsOn(compile) describedAs PackageDescription
+  def packageTask(sources: PathFinder, outputDirectory: Path, jarName: =&gt; String, options: =&gt; Seq[PackageOption]): Task = task { ... }</pre>
+         <p>This approach is intended to provide flexibility for when you need to change the default behavior. The first statement binds a new action called <tt>package</tt> to the task returned by <tt>packageAction</tt>. It is not possible to use <tt>super</tt> when overriding a <tt>lazy val</tt>, so a separate method is used (in this case, <tt>packageAction</tt>). This second method is the method to override in order to change an action's behavior. A third method provides the actual behavior for the task that can be used to create new tasks. </p>
+         <p>There are two main scenarios that require modifying the default actions. The first is changing the behavior of a default action. For example, you might want to create a different file than a jar file. The second is changing the dependencies of the default tasks. For example, you might want to write a task that preprocesses your sources before compilation. You'd want to make the <tt>compile</tt> task depend on the preprocessor task. In the first case, you would completely redefine <tt>packageAction</tt> to be: </p>
+         <pre class="prettyprint">  override def packageAction = task { createCustomFile() } dependsOn(compile) describedAs(&quot;Creates a war file.&quot;)</pre>
+         <p>Again, note that the compile dependency is referenced by the <tt>lazy val</tt> it is assigned to. That is, do <tt>dependsOn(compile)</tt> and not <tt>dependsOn(compileAction)</tt>. </p>
+         <p>In the second case, you just want to change the dependencies, so you do something like: </p>
+         <pre class="prettyprint">  lazy val preprocess = task { ... }
+  override def compileAction = super.compileAction dependsOn(preprocess)</pre>
+         <h1><a name="Conditional_Task_Execution"></a>Conditional Task Execution<a href="#Conditional_Task_Execution" class="section_anchor"></a></h1>
+         <p>Many tasks generate output files (products) from input files (sources). This section describes how to specify that a task should only do its work if its products are out of date. </p>
+         <h2><a name="Products_Only"></a>Products Only<a href="#Products_Only" class="section_anchor"></a></h2>
+         <p>The simplest case is a task that generates a group of files and has no inputs. Declare a task of this kind using the <tt>fileTask</tt> method with the following signature: </p>
+         <pre class="prettyprint">  def fileTask(products: =&gt; Iterable[Path])(action: =&gt; Option[String]): Task</pre>
+         <p>The first argument is a list of output files and the second argument is the action to perform when the task is invoked if any of the products provided in the first argument do not exist. </p>
+         <h2><a name="Known_Products_from_Sources"></a>Known Products from Sources<a href="#Known_Products_from_Sources" class="section_anchor"></a></h2>
+         <p>The next case is a task that takes sources and generates a known group of products (that is, the files that will be produced are known before the task does its work). The task's work should be done if any of the products do not exist or if any of the products are older than any of the sources. Create a task of this kind in the following manner: </p>
+         <pre class="prettyprint">  fileTask(products from sources) { doWork }</pre>
+         <p>where: </p>
+         <ul>
+          <li><tt>products</tt> is of type <tt>Path</tt> or <tt>Iterable[Path]</tt> </li>
+          <li><tt>sources</tt> is of type <tt>Iterable[Path]</tt> or <tt>PathFinder</tt> (note that <tt>Path</tt> is a subtype of <tt>PathFinder</tt>) </li>
+          <li><tt>doWork</tt> has type <tt>Option[String]</tt> </li>
+         </ul>
+         <p></p>
+         <h2><a name="Special_Tasks"></a>Special Tasks<a href="#Special_Tasks" class="section_anchor"></a></h2>
+         <p>There are some methods for constructing certain types of tasks: </p>
+         <ul>
+          <li>You can use <a href="MethodTasks">Method Tasks</a> to create the task to be run from arguments given by the user. </li>
+         </ul>
+         <ul>
+          <li><tt>execTask(ProcessBuilder)</tt> Creates a task that, when invoked, runs the provided process and checks its exit value. See <a href="Process">Process</a> for details on using the process API. </li>
+          <li><tt>dynamic(=&gt; Task)</tt> This creates a special task that, when invoked, evaluates its argument (which is call-by-name) and returns it as the root of a new subgraph of tasks to run. The subgraph must be entirely self-contained. That is, nodes in the subgraph cannot depend on statically defined tasks. </li>
+         </ul>
+         <p></p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

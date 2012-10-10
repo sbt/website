@@ -1,0 +1,57 @@
+<html>
+ <head> 
+  <title>LocalScala</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">LocalScala</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <blockquote>
+          sbt 0.7 makes using a locally built version of Scala easier than previous versions. 
+          <tt>sbt</tt> just needs to know where the library and compiler jars are for this version. 
+         </blockquote>
+         <p>A <tt>ScalaInstance</tt> object represents a version of Scala, backed by compiler and library jar locations. To get a <tt>ScalaInstance</tt> for a local Scala, call one of the variants of <tt>defineScala</tt>: </p>
+         <pre class="prettyprint">/** Get a `ScalaInstance` for the Scala version with base directory `home`.  The library and compiler jars are
+* assumed to be at `new File(home, &quot;lib/scala-library.jar&quot;)` and `new File(home, &quot;lib/scala-compiler.jar&quot;)`.
+* The label for this instance is determined by the version String in the `compiler.properties` file in `scala-compiler.jar`.*/
+def defineScala(home: File): ScalaInstance
+
+/** Get a `ScalaInstance` for the Scala version with base directory `home`.  The library and compiler jars are
+* assumed to be at `new File(home, &quot;lib/scala-library.jar&quot;)` and `new File(home, &quot;lib/scala-compiler.jar&quot;)`.
+* `version` is used as the label for this instance.*/
+def defineScala(version: String, home: File): ScalaInstance</pre>
+         <p>The label referred to in the comments is how you refer to this version in your <tt>build.scala.versions</tt> property and in the <tt>++&lt;version&gt;</tt> version switching command. </p>
+         <p>Override the <tt>localScala</tt> method to declare these local instances to <tt>sbt</tt>: </p>
+         <pre class="prettyprint">override def localScala =
+  defineScala(&quot;2.8.0-local&quot;, new File(scalaRoot + &quot;/build/pack/&quot;)) ::
+  Nil</pre>
+         <p>Include it in <tt>build.scala.versions</tt>: </p>
+         <pre class="prettyprint">$ cat project/build.properties
+...
+build.scala.versions=2.8.0.RC2 2.8.0-local 2.7.7
+...</pre>
+         <p>or use it temporarily with <tt>++&lt;version&gt;</tt>: </p>
+         <pre class="prettyprint">$ sbt &quot;++2.8.0-local compile&quot; &quot;++2.7.7 compile&quot;</pre>
+         <p>sbt reuses the class loader for the local Scala version. If you recompile your local Scala version and you are using sbt interactively, run </p>
+         <pre class="prettyprint">&gt; reload</pre>
+         <p>to use the new compilation results. </p> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

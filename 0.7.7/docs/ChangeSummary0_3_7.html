@@ -1,0 +1,50 @@
+<html>
+ <head> 
+  <title>ChangeSummary0_3_7</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary0_3_7</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Improvements/Features"></a>Improvements/Features<a href="#Improvements/Features" class="section_anchor"></a></h1>
+         <h3><a name="Change_Detection"></a>Change Detection<a href="#Change_Detection" class="section_anchor"></a></h3>
+         <ul>
+          <li>The previous method for detecting changes to sources was to compare last modified times. This method is still available, but is no longer the default. Now, SHA hashes of the sources are compared. This addresses several issues but could be slower for large projects. Please provide feedback if you notice that running <tt>compile</tt> with no modified sources is slower. See <a href="ChangeDetectionAndTesting">Change Detection and Testing</a> for details. </li>
+         </ul>
+         <h3><a name="General"></a>General<a href="#General" class="section_anchor"></a></h3>
+         <ul>
+          <li><tt>sbt</tt> now exits with a nonzero exit code if an action fails in batch mode. </li>
+          <li><tt>trace</tt> is no longer a logging level but is instead a flag to determine whether stack traces are printed. </li>
+          <li>Hidden files and files that start with '.' are excluded by default (previously, <tt>.svn</tt> and <tt>.cvs</tt> directories were excluded by default). <tt>'.*'</tt> is necessary in addition to the hidden file requirement because subversion does not mark <tt>.svn</tt> directories hidden on Windows. </li>
+          <li>Added continuous compilation command <tt>cc</tt> that polls for changes to your source files and runs <tt>test-compile</tt> when they change. </li>
+         </ul>
+         <p> </p>
+         <h3><a name="Testing_sbt"></a>Testing sbt<a href="#Testing_sbt" class="section_anchor"></a></h3>
+         <ul>
+          <li>There is now a scripted test framework for functional testing of <tt>sbt</tt>. Writing tests for <tt>sbt</tt> is as straightforward as creating a project, determining changes to make to the project (e.g. add/remove/modify a file), and a simple script to run the project and make the changes. Please see <a href="ChangeDetectionAndTesting">Change Detection and Testing</a> for details. </li>
+         </ul>
+         <h1><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h1>
+         <ul>
+          <li>Fixed <a title="path parsing broken" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=12">&nbsp;bug #12&nbsp;</a> (manifests for jars not generated). </li>
+          <li>Fixed scala-tools releases not being used by default. </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

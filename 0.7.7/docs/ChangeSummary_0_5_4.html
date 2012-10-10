@@ -1,0 +1,75 @@
+<html>
+ <head> 
+  <title>ChangeSummary_0_5_4</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary_0_5_4</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Changes_from_0.5.2_to_0.5.4"></a>Changes from 0.5.2 to 0.5.4<a href="#Changes_from_0.5.2_to_0.5.4" class="section_anchor"></a></h1>
+         <h2><a name="Features"></a>Features<a href="#Features" class="section_anchor"></a></h2>
+         <ul>
+          <li>Added <tt>javap</tt> task to <tt>DefaultProject</tt>. It has tab completion on compiled project classes and the run classpath is passed to <tt>javap</tt> so that library classes are available. Examples: </li>
+          <pre class="prettyprint">   &gt; javap your.Clazz
+   &gt; javap -c scala.List</pre>
+          <li>Added <tt>exec</tt> task. Mixin <tt>Exec</tt> to project definition to use. This forks the command following <tt>exec</tt>. Examples: </li>
+          <pre class="prettyprint">   &gt; exec echo Hi
+   &gt; exec find src/main/scala -iname *.scala -exec wc -l {} ;</pre>
+          <li>Added <tt>sh</tt> task for users with a unix-style shell available (runs <tt>/bin/sh -c &lt;arguments&gt;</tt>). Mixin <tt>Exec</tt> to project definition to use. Example: </li>
+          <pre class="prettyprint">   &gt; sh find src/main/scala -iname *.scala | xargs cat | wc -l</pre>
+          <li>Proper dependency graph actions (previously was an unsupported prototype): <tt>graph-src</tt> and <tt>graph-pkg</tt> for source dependency graph and quasi-package dependency graph (based on source directories and source dependencies) </li>
+          <li>Implemented <a title="Ivy install task" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=38">&nbsp;issue #38&nbsp;</a> (<tt>InstallProject</tt> with 'install' task) </li>
+         </ul>
+         <h2><a name="Improvements"></a>Improvements<a href="#Improvements" class="section_anchor"></a></h2>
+         <ul>
+          <li>Applied Vesa's patch for configuring the output of forked Scala/Java and processes (see <a href="Forking">Forking</a>) </li>
+          <li>Added <tt>defaultLoggingLevel</tt> method for setting the initial level of a project's <tt>Logger</tt> </li>
+          <li>Added <tt>syncPathsTask</tt> for synchronizing paths to a target directory </li>
+          <li>Allow multiple instances of Jetty (new <tt>jettyRunTasks</tt> can be defined with different ports) </li>
+          <li><tt>jettyRunTask</tt> accepts configuration in a single configuration wrapper object instead of many parameters </li>
+          <li>Compiles against September 10, 2009 nightly build of Scala 2.8 </li>
+          <li>Changed order of repositories (local, shared, Maven Central, user, Scala Tools) </li>
+          <li>Added Maven Central to resolvers used to find Scala library/compiler in launcher </li>
+          <li>Check <tt>Project.terminateWatch</tt> to determine if triggered execution should stop for a given keypress. </li>
+          <li>Terminate triggered execution only on 'enter' by default (previously, any keypress stopped it) </li>
+          <li>Added support for extra attributes with Ivy. Use <tt>extra(key -&gt; value)</tt> on <tt>ModuleIDs</tt> and <tt>Artifacts</tt>. To define for a project's ID: </li>
+          <pre class="prettyprint">  override def projectID = super.projectID extra(key -&gt; value)</pre>
+         </ul>
+         <blockquote>
+          To specify in a dependency: 
+          <pre class="prettyprint">  val dep = normalID extra(key -&gt; value)</pre>
+         </blockquote>
+         <p> </p>
+         <h2><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h2>
+         <ul>
+          <li>Fix web application class loading (<a title="web application class loader problem" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=35">&nbsp;issue #35&nbsp;</a>). </li>
+          <li>Fix <tt>compileOptions</tt> being fixed after the first compile </li>
+          <li>Many logging related changes and fixes. Added <tt>FilterLogger</tt> and cleaned up interaction between <tt>Logger</tt>, scripted testing, and the builder projects. This included removing the <tt>recordingDepth</tt> hack from Logger. Logger buffering is now enabled/disabled per thread. </li>
+          <li>Copy resources to <tt>target/resources</tt> and <tt>target/test-resources</tt> using <tt>copyResources</tt> and <tt>copyTestResources</tt> tasks. Properly include all resources in web applications and classpaths (<a title="Overriding resources issue" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=36">&nbsp;issue #36&nbsp;</a>). <tt>mainResources</tt> and <tt>testResources</tt> are now the definitive methods for getting resources. </li>
+          <li>Fixed issue with position of <tt>^</tt> in compile errors </li>
+          <li>Fixed exit code returned when exception thrown in main thread for <tt>TrapExit</tt> </li>
+          <li>Fixed <a title="source package paths" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=39">&nbsp;issue #39&nbsp;</a> (sources were not relative in src package) </li>
+          <li>Don't buffer logging of forked <tt>run</tt> by default </li>
+          <li>Fixed <a title="fix project dependencies" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=41">&nbsp;issue #41&nbsp;</a> (parent project should not declare jar artifact) </li>
+          <li>Fixed <a title="Projects should search parents for ivysettings.xml" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=42">&nbsp;issue #42&nbsp;</a> (search parent directories for <tt>ivysettings.xml</tt>) </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

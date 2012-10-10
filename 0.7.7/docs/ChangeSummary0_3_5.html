@@ -1,0 +1,71 @@
+<html>
+ <head> 
+  <title>ChangeSummary0_3_5</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ChangeSummary0_3_5</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Improvements/Features"></a>Improvements/Features<a href="#Improvements/Features" class="section_anchor"></a></h1>
+         <h3><a name="General"></a>General<a href="#General" class="section_anchor"></a></h3>
+         <ul>
+          <li>Added prompt to retry project loading if compilation of project definition fails. </li>
+          <li><tt>package</tt> action now only executes when inputs have changed. </li>
+          <li>Added <tt>help</tt> command that displays an informative message and describes the commands available at the interactive prompt. </li>
+          <li>Added <tt>reload</tt> command to reread the project definition without having to restart sbt. </li>
+          <li>Added <tt>console-quick</tt> action for when you want fast access to the Scala interpreter but don't need your project compiled. </li>
+          <li>Added <tt>clean-cache</tt> action to delete Ivy's artifact and metadata cache. </li>
+         </ul>
+         <h3><a name="Integration_Testing"></a>Integration Testing<a href="#Integration_Testing" class="section_anchor"></a></h3>
+         <ul>
+          <li>Added integration test support with <tt>integration-test</tt> action. </li>
+          <li>Behaves like <tt>test</tt> but takes its test sources from <tt>src/it</tt> (by default). </li>
+          <li>Use it by mixing in <tt>BasicScalaIntegrationTesting</tt> to your project definition. </li>
+         </ul>
+         <h3><a name="Dependency_Management"></a>Dependency Management<a href="#Dependency_Management" class="section_anchor"></a></h3>
+         <ul>
+          <li>Added ability to specify inline Ivy XML configuration in project definition (see towards the bottom of the <a href="LibraryManagement">Library Management</a> page). </li>
+          <li>Can specify Ivy configurations as fourth piece of inline dependencies <tt>(... % &quot;runtime-&gt;compile&quot;)</tt>. </li>
+         </ul>
+         <h3><a name="Custom_Actions"></a>Custom Actions<a href="#Custom_Actions" class="section_anchor"></a></h3>
+         <ul>
+          <li>Added <tt>fileTask</tt> methods for tasks that execute when the inputs/outputs are out of date (see <a href="CustomActions">Creating/Modifying Actions</a> page). </li>
+          <li><tt>sbt.FileUtilities</tt> is cleaned up and ready for general use: </li>
+          <ul>
+           <li>Provides zip, unzip, temporary directories, copying, ... </li>
+           <li>see the <a href="ActionContent">Implementing actions</a> page for an overview of capabilities or the <a href="http://simple-build-tool.googlecode.com/svn/artifacts/0.3.5/api/sbt/FileUtilities$object.html" rel="nofollow">API Documentation</a> for details. </li>
+          </ul>
+         </ul>
+         <h3><a name="Web_Applications"></a>Web Applications<a href="#Web_Applications" class="section_anchor"></a></h3>
+         <ul>
+          <li><tt>package</tt> action creates war file. </li>
+          <li>Added <tt>jetty-run</tt> and <tt>jetty-stop</tt> actions. </li>
+          <li>See <a href="WebApplications">web applications</a> page for more information. </li>
+         </ul>
+         <p> </p>
+         <h1><a name="Fixes"></a>Fixes<a href="#Fixes" class="section_anchor"></a></h1>
+         <ul>
+          <li>Fixed <a title="build.properties keeps getting modified" class="closed_ref" href="/p/simple-build-tool/issues/detail?id=11">&nbsp;bug #11&nbsp;</a> (project/build.properties unnecessarily updated). </li>
+          <li>Fixed problem with dependencies where source jars would be used instead of binary jars. </li>
+          <li>Fixed scala-tools not being used by default for inline configurations. </li>
+         </ul> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

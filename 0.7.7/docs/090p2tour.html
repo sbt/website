@@ -1,0 +1,159 @@
+<html>
+ <head> 
+  <title>090p2tour</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">090p2tour</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h1>
+         <p>This is the second preview of new features in 0.9.x. The feature this time is the new task engine. The main change is that tasks now produce a value. Another change is that cross-building is at the task level and can be done for more variables than just the Scala version. </p>
+         <p>I believe the model behind tasks to be simple, but powerful. Once you understand the model, using tasks should be straightforward and without surprises. I am interested in making this documentation clear and thorough to minimize the time to understanding the model. Your feedback is appreciated. </p>
+         <h1><a name="Setup"></a>Setup<a href="#Setup" class="section_anchor"></a></h1>
+         <p>You can follow along by setting up a project as in <a href="090p1tour">090p1tour</a>, having your project definition extend <tt>SingleProject</tt> (a trait for testing out tasks) and import from <tt>sbt</tt> and <tt>sbt.std</tt>: </p>
+         <pre class="prettyprint">import sbt._
+import std._
+
+class TaskTest extends SingleProject
+{
+  ...
+}</pre>
+         <p>Remember to run the appropriate 'load' after each change for it to take effect. If you have put your project definition in <tt>project/build</tt>: </p>
+         <pre class="prettyprint">&gt; load -src project/build/*.scala -name TaskTest</pre>
+         <p>All of the task examples are available at <a href="http://gist.github.com/556888" rel="nofollow">http://gist.github.com/556888</a>. </p>
+         <h1><a name="Basics"></a>Basics<a href="#Basics" class="section_anchor"></a></h1>
+         <p><tt>Task[T]</tt> represents a computation that produces a value of type <tt>T</tt>. To create a new task that has no inputs, use the <tt>task</tt> method. The argument to the <tt>task</tt> method is the code to run when the task is executed. </p>
+         <pre class="prettyprint">  lazy val hello: Task[Unit] =
+    task { println(&quot;Hi!&quot;) }
+
+  lazy val three: Task[Int] =
+    task { 3 }</pre>
+         <p>Note: the explicit type annotations in the examples are not necessary unless otherwise indicated. You can see the result of a task by running it with the <tt>show</tt> task. For example: </p>
+         <pre class="prettyprint">&gt; show hello three
+Hi!
+hello: ()
+three: 3</pre>
+         <p>To declare a dependency on another task, use <tt>dependsOn</tt>. For example: </p>
+         <pre class="prettyprint">  lazy val goodbye: Task[Unit] = task { println(&quot;Goodbye&quot;) } dependsOn(hello)</pre>
+         <p>To use the value from another task, use <tt>map</tt>: </p>
+         <pre class="prettyprint">  lazy val four: Task[Int] = three map { (t: Int) =&gt; t + 1 }</pre>
+         <p>Or, a bit more concisely: </p>
+         <pre class="prettyprint">  lazy val four = three map { _ + 1 }</pre>
+         <p>The next fundamental method is <tt>flatMap</tt>. This takes the result of one Task and provides another Task that will provide the result. For example, the following uses the output of the <tt>rand</tt> task to determine if either <tt>four</tt> or <tt>three</tt> should execute. </p>
+         <pre class="prettyprint">  lazy val rand: Task[Boolean] = task { math.random &gt; 0.5 }
+  lazy val num: Task[Int] = rand flatMap { (b: Boolean) =&gt; if(b) four else three }</pre>
+         <p>If <tt>rand</tt> produces <tt>true</tt>, the <tt>four</tt> task is run and its result is the result of <tt>num</tt>. Otherwise, the <tt>three</tt> task runs and its result is used for the result of <tt>num</tt>. Note that in both cases the <tt>three</tt> tasks runs- once directly and once indirectly because <tt>four</tt> uses its result. </p>
+         <h1><a name="Parallel"></a>Parallel<a href="#Parallel" class="section_anchor"></a></h1>
+         <p>Those were the basic serial methods<a href="#Notes">[1</a>]. There are also versions of <tt>map</tt> and <tt>flatMap</tt> that operate on multiple input tasks<a href="#Notes">[2</a>]. They do not impose an ordering on the input tasks, so you might refer to them as parallel map and flatMap. For example: </p>
+         <pre class="prettyprint">  lazy val par: Task[Int] = (three, four) map { (t: Int, f: Int) =&gt; t * f }</pre>
+         <p>This means &quot;create a new Task that takes the results of <tt>three</tt> and <tt>four</tt> and multiplies them together&quot;. Note that for the parallel map/flatMap, explicit parameter types are required for the function literal<a href="#Notes">[3</a>]. In order to abstract over arity, the native data structures involed are heterogeneous lists. Implicit conversions translate the above syntax to: </p>
+         <pre class="prettyprint">  lazy val par: Task[Int] = three :^: four :^: KNil map { case t :+: f :+: HNil =&gt; t * f }</pre>
+         <p>Because of this, the compiler cannot infer the type parameters for the standard function literal. These implicit conversions are available for arity 2 and 3. For arbitrary arity or if you want type inference for the mapping function, you need to use the heterogenous list approach. </p>
+         <p>There are also methods to apply a function across a sequence in parallel, to combine the results of a sequence of tasks, or to reduce the results of a sequence of tasks. </p>
+         <pre class="prettyprint">  lazy val forkReduce: Task[Int] = (0 to 1000).fork( _ * 3).reduce { _ + _ }
+  lazy val forkJoin: Task[Seq[Int]] = (0 to 1000).fork(_ * 3).join</pre>
+         <p>(This is just an example. The overhead is too high for this to be faster than a direct computation.) </p>
+         <h1><a name="Error_Handling"></a>Error Handling<a href="#Error_Handling" class="section_anchor"></a></h1>
+         <p>If a Task fails by throwing an Exception, tasks that need the failing task's result also fail. There are methods that are similar to Scala's <tt>catch/finally</tt> that modify this behavior. </p>
+         <p><tt>task mapFailure f</tt> only succeeds if <tt>task</tt> fails, in which case the error handling function <tt>f</tt> is evaluated for the failure. Failure is represented by the <tt>Incomplete</tt> class. The main purpose of <tt>Incomplete</tt> is to track multiple sources of failure, since tasks form a graph. A simple example that prints the failing stack trace: </p>
+         <pre class="prettyprint">  lazy val fail: Task[Int] = task { error(&quot;A failure.&quot;) }
+  lazy val catchLike: Task[Unit] = fail mapFailure { (t: Incomplete) =&gt; t.printStackTrace }</pre>
+         <p>This just prints the stack trace of the top-level failure, but more useful error reporting would need to report the full graph of failures. </p>
+         <p>Like an exception in normal code, the failure propagates through the dependency graph. If all dependent tasks &quot;catch&quot; the failure, propagation of the failure ceases. As with <tt>catch</tt>, you must rethrow the exception if you want the catching function to fail as well. There is also <tt>flatMapFailure</tt> that allows returning a new <tt>Task</tt> like <tt>flatMap</tt> does when the input succeeds. Both methods are also available in parallel. The parallel <tt>map/flatMapFailure</tt> succeeds if any input fails and provides a <tt>Seq[Incomplete]</tt> to the error handling function. </p>
+         <p>To always run some code regardless of the success of a task, use <tt>andFinally</tt>. This works like <tt>finally</tt>. The provided code is run and the result of the initial task, either a successful value or an exception, is propagated. </p>
+         <pre class="prettyprint">  lazy val alwaysRunA: Task[Int] = fail andFinally { println(&quot;Finally 1&quot;) }
+  lazy val alwaysRunB: Task[Int] = four andFinally { println(&quot;Finally 2&quot;) }</pre>
+         <p><tt>alwaysRunA</tt> will print &quot;Finally 1&quot; and then propagate the exception thrown by <tt>fail</tt>. <tt>alwaysRunB</tt> will print &quot;Finally 2&quot; and then return the result of <tt>four</tt>, which is 4. </p>
+         <p>To chain tasks and ignore their outputs, use <tt>&amp;&amp;</tt> or <tt>||</tt>. For <tt>&amp;&amp;</tt>, if <tt>a</tt> fails, <tt>a &amp;&amp; b</tt> fails and <tt>b</tt> is not run (unless, of course, another task requires <tt>b</tt> to run). Otherwise, the result of <tt>a</tt> is ignored and the final result is that of <tt>b</tt>. </p>
+         <pre class="prettyprint">  // succeeds because 'hello' succeeds.  The result is that of the final task, which is `three` here.
+  lazy val allA: Task[Int] = hello &amp;&amp; three
+
+  // fails because 'fail' fails
+  lazy val allB: Task[Unit] = fail &amp;&amp; hello</pre>
+         <p>For <tt>a || b</tt>, if <tt>a</tt> fails, the result of <tt>a || b</tt> is that of <tt>b</tt>. If <tt>a</tt> succeeds, the result is that of <tt>a</tt> and <tt>b</tt> is not run. Each of following returns <tt>4</tt>. </p>
+         <pre class="prettyprint">  lazy val orA: Task[Int] = fail || four
+  lazy val orB: Task[Int] = four || fail
+  lazy val orC: Task[Int] = four || three</pre>
+         <p>Actually, <tt>||</tt>, <tt>&amp;&amp;</tt>, <tt>map*</tt>, <tt>flatMap*</tt>, <tt>andFinally</tt>, <tt>reduce</tt>, and <tt>fork</tt> (that is, everything mentioned so far except <tt>task</tt>, <tt>dependsOn</tt> and <tt>join</tt>), are implemented in terms of two primitive functions (four, counting the parallel versions separately). Instead of requiring success and mapping on the resulting value or requiring failure and mapping on the cause, these always run and map on <tt>Result[T]</tt>. <tt>Result[T]</tt> is isomorphic to <tt>Either[Incomplete, T]</tt> and is used instead of <tt>Either</tt> for type inference<a href="#Notes">[4</a>]. </p>
+         <p>The primitive functions are <tt>mapR</tt> and <tt>flatMapR</tt>, where the <tt>R</tt> is for <tt>Result</tt> <a href="#Notes">[5</a>]. </p>
+         <pre class="prettyprint">  lazy val fullA: Task[Int] = four mapR {
+    case Inc(i) =&gt; 0
+    case Value(v) =&gt; v
+  }</pre>
+         <p><tt>Inc[T]</tt> is like <tt>Left[Incomplete, T]</tt> and <tt>Value[T]</tt> is like <tt>Right[Incomplete, T]</tt>. </p>
+         <h1><a name="Cross-building"></a>Cross-building<a href="#Cross-building" class="section_anchor"></a></h1>
+         <p>Cross-building (running tasks against multiple configurations) is built into the task model. A task produces a result for a specific configuration. You define a configuration variable by declaring the type of value and a label for that value. </p>
+         <p>For example, the following declares two configuration variables. <tt>ScalaVersion</tt> ranges over <tt>String</tt>s, while <tt>Number</tt> ranges over <tt>Int</tt>s. In the default sbt model, <tt>ScalaVersion</tt> will likely be predefined and most users won't have to worry about this part. </p>
+         <pre class="prettyprint">  val ScalaVersion = AttributeKey[String](&quot;scala-version&quot;)
+  val Number = AttributeKey[Int](&quot;num&quot;)</pre>
+         <p>You define the values to cross-build against with the <tt>cross</tt> task, which accepts the configuration and the values. For example: </p>
+         <pre class="prettyprint">  lazy val scalaVersion: Task[String] = cross(ScalaVersion)(&quot;2.7.7&quot;, &quot;2.8.0&quot;)
+  lazy val number: Task[Int] = cross(Number)(1,2,3)</pre>
+         <p>Note that the result types are not <tt>Seq[String]</tt> and <tt>Seq[Int]</tt>. This means that cross-building is not present in the type of a task. Cross-building is handled mostly transparently after this point with some of restrictions. </p>
+         <p>The idea is that we use the methods presented above and the task system takes care of applying them across each configuration. </p>
+         <pre class="prettyprint">  lazy val printVersion: Task[Unit] = scalaVersion map println
+  lazy val printNumber: Task[Unit] = number map println
+
+  lazy val printBoth: Task[Unit] = (scalaVersion, number) map { (v: String, n: Int) =&gt; println(n + &quot;: &quot; + v) }</pre>
+         <p>The task <tt>printBoth</tt> does a parallel map on <tt>scalaVersion</tt> and <tt>number</tt>. These have different configurations, though. <tt>scalaVersion</tt> produces a value for <tt>ScalaVersion</tt> values &quot;2.7.7&quot; and &quot;2.8.0&quot; and <tt>number</tt> produces a value for <tt>Number</tt> values 1,2, and 3. The parallel map does a cross product of its inputs. So, we now have a task <tt>printBoth</tt> that ranges over these configurations: </p>
+         <pre class="prettyprint">  AttributeMap(Number -&gt; 1, ScalaVersion -&gt; &quot;2.7.7&quot;)
+  AttributeMap(Number -&gt; 2, ScalaVersion -&gt; &quot;2.7.7&quot;)
+  AttributeMap(Number -&gt; 3, ScalaVersion -&gt; &quot;2.7.7&quot;)
+  AttributeMap(Number -&gt; 1, ScalaVersion -&gt; &quot;2.8.0&quot;)
+  AttributeMap(Number -&gt; 2, ScalaVersion -&gt; &quot;2.8.0&quot;)
+  AttributeMap(Number -&gt; 3, ScalaVersion -&gt; &quot;2.8.0&quot;)</pre>
+         <p>Each configuration is represented by an <tt>AttributeMap</tt>, which is a map that ensures that a key of type <tt>AttributeKey[T]</tt> is mapped to a value of type <tt>T</tt>. If we then map on <tt>printBoth</tt>, we will cross build against each of these six configurations. </p>
+         <p>If you do something like: </p>
+         <pre class="prettyprint">  lazy val numA: Task[Int] = cross(Number)(1,2,3)
+  lazy val numB: Task[Int] = cross(Number)(4,5,6)
+  (numA, numB) map { ...}</pre>
+         <p>sbt will complain that there are no compatible configurations. There is no result for <tt>numA</tt> for <tt>Number</tt> values 4,5,6. Similarly, <tt>numB</tt> has no result for 1,2,3. Therefore, this constraint cannot be satisfied. I don't expect this to come up much, since I don't know when you would declare different values to cross-build like this, except in error. Most people will probably just use the cross-building built into sbt by default. If anyone starts doing more interesting cross-builds, more details on this can be documented. </p>
+         <p>To pull the result of all cross-builds of a <tt>Task</tt> into an explicit value, use <tt>merge</tt>. This takes the tasks for all configurations and puts their results into <tt>Seq[(AttributeMap, T)]</tt>. For example: </p>
+         <pre class="prettyprint">  lazy val stringBoth: Task[String] = (scalaVersion, number) map { (v: String, n: Int) =&gt; n + &quot;: &quot; + v }
+  lazy val merged: Task[Seq[(AttributeMap, String)]] = stringBoth.merge</pre>
+         <p>The result of <tt>merged</tt> is a <tt>Seq</tt> that contains a mapping from each configuration (<tt>AttributeMap</tt>) to the result (here, <tt>String</tt>). </p>
+         <p>As a final note on cross-building, it is done at construction time. This places a limitation on returning cross-built tasks in a <tt>flatMap</tt>. You cannot introduce new configurations in a <tt>flatMap</tt>. Consider the following examples: </p>
+         <pre class="prettyprint">  lazy val onBoth = stringBoth flatMap { #1 }
+  lazy val onNum = number flatMap { #2 }
+  lazy val onHello = hello flatMap { #3 }</pre>
+         <ul>
+          <li>For #1, you can return a task that is not cross-built or a task that is cross-built against <tt>Number</tt>, <tt>ScalaVersion</tt>, or both. This is because <tt>stringBoth</tt> is built against configurations with both variables <tt>Number</tt> and <tt>ScalaVersion</tt>. </li>
+          <li>For #2, you can return a task cross-built against <tt>Number</tt> or a non-cross-built task because <tt>number</tt> is cross-built for <tt>Number</tt>. </li>
+          <li>For #3, you can only return a task that is not cross-built against anything because <tt>hello</tt> is not cross-built. </li>
+         </ul>
+         <h1><a name="Next_part"></a>Next part<a href="#Next_part" class="section_anchor"></a></h1>
+         <ul>
+          <li>Streams: a task I/O and logging system </li>
+          <li>Integration with processes: piping and redirection between tasks and processes </li>
+          <li>Controlling multi-project aggregation </li>
+          <li>Access to command line input </li>
+         </ul>
+         <h1><a name="Notes"></a>Notes<a href="#Notes" class="section_anchor"></a></h1>
+         <ol>
+          <li>You might notice that they give rise to a monad. See also <a href="http://code.google.com/p/scalaz/" rel="nofollow">scalaz</a>'s <a href="http://scalaz.googlecode.com/svn/continuous/latest/browse.sxr/scalaz/example/concurrent/Fibs.scala.html" rel="nofollow">Promise</a>. </li>
+          <li>These are related to <tt>liftA2</tt>, <tt>liftA3</tt>, ... This usage is preferred to nested flatMaps (as in for comprehensions) because no ordering is imposed on the inputs and so they can be executed in parallel. </li>
+          <li>This is a rough edge. Sorry. </li>
+          <li><a href="http://lampsvn.epfl.ch/trac/scala/ticket/2712" rel="nofollow">http://lampsvn.epfl.ch/trac/scala/ticket/2712</a> </li>
+          <li>Suggestions for better names welcome. </li>
+          <li>Conceptually, a task is the combination of three monads: one for <tt>Task[_]</tt>, one for <tt>Either[Incomplete, _]</tt>, and one for <tt>Map[AttributeMap, _]</tt>. If it were fully represented in the type system, the type of a task might look like: <tt>Task[Map[AttributeMap, Either[Incomplete, T]]]</tt>. </li>
+         </ol> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>

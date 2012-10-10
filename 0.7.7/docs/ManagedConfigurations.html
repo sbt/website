@@ -1,0 +1,44 @@
+<html>
+ <head> 
+  <title>ManagedConfigurations</title> 
+ </head> 
+ <body> 
+  <div id="wikipage"> 
+   <table> 
+    <tbody>
+     <tr> 
+      <td style="vertical-align:top; padding-left:5px"> 
+       <div id="wikiheader"> 
+        <span style="font-size:120%;font-weight:bold">ManagedConfigurations</span> &nbsp; 
+        <div>  
+        </div> 
+       </div> 
+       <div id="wikicontent"> 
+        <div class="vt" id="wikimaincol"> 
+         <h1><a name="Configurations"></a>Configurations<a href="#Configurations" class="section_anchor"></a></h1>
+         <h2><a name="Introduction"></a>Introduction<a href="#Introduction" class="section_anchor"></a></h2>
+         <p>Ivy configurations are a useful feature for your build when you use managed dependencies. They are essentially named sets of dependencies. You can read the <a href="http://ant.apache.org/ivy/history/2.1.0/tutorial/conf.html" rel="nofollow">full Ivy documentation</a> for details. Their use in <tt>sbt</tt> is described on this page. </p>
+         <h2><a name="Usage"></a>Usage<a href="#Usage" class="section_anchor"></a></h2>
+         <p>The built-in use of configurations in <tt>sbt</tt> is similar to scopes in Maven. <tt>sbt</tt> adds dependencies to different classpaths by the configuration that they are defined in. See the description of <a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope" rel="nofollow">Maven Scopes</a> for details. </p>
+         <p>You put a dependency in a configuration by selecting one or more of its configurations to map to one or more of your project's configurations. The most common case is to have one of your configurations <tt>A</tt> use a dependency's configuration <tt>B</tt>. The mapping for this looks like <tt>&quot;A-&gt;B&quot;</tt>. To apply this mapping to a dependency, add it to the end of your dependency definition: </p>
+         <pre class="prettyprint">  val st = &quot;org.scala-tools.testing&quot; % &quot;scalatest&quot; % &quot;0.9.5&quot; % &quot;test-&gt;default&quot;</pre>
+         <p>This says that your project's <tt>test</tt> configuration uses <tt>ScalaTest</tt>'s <tt>default</tt> configuration. Again, see the <a href="http://ant.apache.org/ivy/history/2.0.0/tutorial/conf.html" rel="nofollow">Ivy documentation</a> for more advanced mappings. Most projects published to Maven repositories will use the <tt>default</tt> or <tt>compile</tt> configuration. <tt>sbt</tt> itself, however, publishes different jars to different configurations for each version of Scala that it supports. The jar compiled against Scala 2.7.5 is published to the <tt>&quot;2.7.5&quot;</tt> configuration. This is probably atypical, however, and the better solution for this particular case is to use <a href="CrossBuild">cross-building</a>. </p>
+         <p>A more useful application of configurations is to group dependencies that are not used on normal classpaths. For example, your might use a <tt>&quot;js&quot;</tt> configuration to automatically download jQuery and then include it in your jar by overriding <tt>mainResources</tt>. This is what Scala X-Ray does, for example: </p>
+         <pre class="prettyprint">  def jquery_version = &quot;1.3.2&quot;
+  val js = config(&quot;js&quot;) hide
+  val jquery = &quot;jquery&quot; % &quot;jquery&quot; % jquery_version % &quot;js-&gt;default&quot; from (&quot;http://jqueryjs.googlecode.com/files/jquery-&quot; + jquery_version + &quot;.min.js&quot;)
+  override def mainResources = super.mainResources +++ descendents(configurationPath(js) ##, &quot;*.js&quot;)</pre>
+         <p>The <tt>config</tt> method defines a new configuration with name <tt>&quot;js&quot;</tt> and makes it private to the project so that it is not used for publishing. </p>
+         <p>As of <tt>sbt</tt> 0.5.5, a configuration without a mapping (no <tt>&quot;-&gt;&quot;</tt>) is mapped to <tt>default</tt> or <tt>compile</tt>. The <tt>-&gt;</tt> is only needed when mapping to a different configuration than those. The ScalaTest dependency above can then be shortened to: </p>
+         <pre class="prettyprint">  val st = &quot;org.scala-tools.testing&quot; % &quot;scalatest&quot; % &quot;1.0&quot; % &quot;test&quot;</pre> 
+        </div> 
+       </div> </td>
+     </tr>
+     <tr> 
+     </tr>
+    </tbody>
+   </table> 
+  </div> 
+  <script type="text/javascript" src="http://www.gstatic.com/codesite/ph/5509366563142316864/js/dit_scripts.js"></script>   
+ </body>
+</html>
