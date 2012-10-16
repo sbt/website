@@ -31,6 +31,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="Detailed Topics" href="index.html" />
     <link rel="next" title="Update Report" href="Update-Report.html" />
@@ -41,7 +43,7 @@
     <div class="navbar-inner">
       <div class="container">
         <ul class="nav">
-          <li><a href="../home.html">Home</a></li>
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
@@ -53,6 +55,13 @@
   <div class="main">
     <div class="container">
       <div class="page-title">Understanding Incremental Recompilation</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
     </div>
     <div class="main-container">
       <div class="container">
@@ -72,7 +81,7 @@
                 <span class="divider">«</span> <a href="Triggered-Execution.html">Triggered Execution</a> <span class="divider">|</span>
               </li>
               <li>
-                Version 0.12.1
+                <select id="versions"><option selected value="0.12.1">Version 0.12.1</option></select>
               </li>
             </ul>         
           </div>
@@ -169,7 +178,7 @@ trait.</li>
 abstract method called <tt class="docutils literal"><span class="pre">fullyQualifiedTraitName$$super$methodName</span></tt>;
 such methods only exist if they are used. Hence, adding the first
 call to <tt class="docutils literal"><span class="pre">super.methodName</span></tt> for a specific <tt class="docutils literal"><span class="pre">methodName</span></tt> changes
-the interface. At present, this is not yet handled—see <a class="reference external" href="https://github.com/harrah/xsbt/issues/466" title="Adding a call to super in a trait should trigger recompilation of implementing classes"><span class="xref issue">#466</span></a>.</li>
+the interface. At present, this is not yet handled—see <span class="xref issue">#{issue.id}</span>.</li>
 <li><tt class="docutils literal"><span class="pre">sealed</span></tt> hierarchies of case classes allow to check exhaustiveness
 of pattern matching. Hence pattern matches using case classes must
 depend on the complete hierarchy - this is one reason why
@@ -298,7 +307,7 @@ other software component.</p>
 source code. The same should seemingly hold also in Scala, but this is
 not the case: implicit conversions might enrich class <tt class="docutils literal"><span class="pre">Foo</span></tt> with
 method <tt class="docutils literal"><span class="pre">bar</span></tt> without modifying class <tt class="docutils literal"><span class="pre">Foo</span></tt> itself (see discussion in
-issue <a class="reference external" href="https://github.com/harrah/xsbt/issues/288" title="unexpected transitive recompilation"><span class="xref issue closed">#288</span></a> - XXX integrate more). However, if another method <tt class="docutils literal"><span class="pre">bar</span></tt>
+issue <span class="xref issue">#{issue.id}</span> - XXX integrate more). However, if another method <tt class="docutils literal"><span class="pre">bar</span></tt>
 is introduced in class <tt class="docutils literal"><span class="pre">Foo</span></tt>, this method should be used in preference
 to the one added through implicit conversions. Therefore any class
 depending on <tt class="docutils literal"><span class="pre">Foo</span></tt> should be recompiled. One can imagine more
@@ -313,7 +322,7 @@ implemented.</p>
 Some related documentation for SBT 0.7 is available at:
 <a class="reference external" href="https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting">https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting</a>.
 Some discussion on the incremental recompilation policies is available
-in issue <a class="reference external" href="https://github.com/harrah/xsbt/issues/322" title="Compile in multiple stages when the number of source files in the transitive closure is much larger than the number of immediate dependencies"><span class="xref issue closed">#322</span></a> and <a class="reference external" href="https://github.com/harrah/xsbt/issues/288" title="unexpected transitive recompilation"><span class="xref issue closed">#288</span></a>.</p>
+in issue <span class="xref issue">#{issue.id}</span> and <span class="xref issue">#{issue.id}</span>.</p>
 </div>
 </div>
 

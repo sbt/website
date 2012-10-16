@@ -1,25 +1,16 @@
-
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>sbt &mdash; sbt Documentation</title>
-    
-    <link rel="stylesheet" href="release/docs/_static/style.css" type="text/css" />
-    <link rel="stylesheet" href="release/docs/_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="release/docs/_static/issuetracker.css" type="text/css" />
-    <link rel="stylesheet" href="release/docs/_static/base.css" type="text/css" />
-    <link rel="stylesheet" href="release/docs/_static/docs.css" type="text/css" />
-    <link rel="stylesheet" href="release/docs/_static/syntax.css" type="text/css" />
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
-    
-    <script type="text/javascript">
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+  <title>sbt — sbt Documentation</title> 
+  <link rel="stylesheet" href="release/docs/_static/style.css" type="text/css" /> 
+  <link rel="stylesheet" href="release/docs/_static/pygments.css" type="text/css" /> 
+  <link rel="stylesheet" href="release/docs/_static/issuetracker.css" type="text/css" /> 
+  <link rel="stylesheet" href="release/docs/_static/base.css" type="text/css" /> 
+  <link rel="stylesheet" href="release/docs/_static/docs.css" type="text/css" /> 
+  <link rel="stylesheet" href="release/docs/_static/syntax.css" type="text/css" /> 
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" /> 
+  <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
         VERSION:     '0.12.1',
@@ -27,126 +18,114 @@
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
-    </script>
-    <script type="text/javascript" src="release/docs/_static/jquery.js"></script>
-    <script type="text/javascript" src="release/docs/_static/underscore.js"></script>
-    <script type="text/javascript" src="release/docs/_static/doctools.js"></script>
-    <link rel="top" title="sbt Documentation" href="release/docs/index.html" />
-    <link rel="next" title="Contents" href="release/docs/index.html" /> 
-  </head>
-  <body>
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="container">
-        <ul class="nav">
-          <li><a href="#">Home</a></li>
-          <li><a href="release/docs/index.html">Documentation</a></li>
-          <li><a href="release/docs/Getting-Started/Setup.html">Download</a></li>
-          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="main">
-    <div class="container">
-      <div class="page-title">sbt</div>
-    </div>
-    <div class="main-container">
-      <div class="container">
-        <div class="row">
-          <div class="span12">
-            <ul class="breadcrumb">        
-              <li>
-                 <span class="divider">|</span> <a href="release/docs/index.html">Contents</a> <span class="divider">»</span>
-              </li>
-              <li>
-              </li>
-              <li>
-                <a href="release/docs/index.html">Contents</a>
-              </li>
-              <li>
-              </li>
-              <li>
-                Version 0.12.1
-              </li>
-            </ul>         
-          </div>
-        </div>
-        <div class="row">
-          <div class="span9">
-            
-  <div class="section" id="sbt">
-<h1>sbt<a class="headerlink" href="#sbt" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-</div>
-<p>sbt is a build tool for Scala and Java projects that aims to do the
-basics well. It requires Java 1.6 or later.</p>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p>See the <a class="reference internal" href="release/docs/Getting-Started/Setup.html"><em>setup instructions</em></a>.</p>
-</div>
-<div class="section" id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Easy to set up for simple projects</li>
-<li><a class="reference internal" href="release/docs/Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> uses a
-Scala-based &quot;domain-specific language&quot; (DSL)</li>
-<li>More advanced <a class="reference internal" href="release/docs/Getting-Started/Full-Def.html"><em>.scala build definitions</em></a>
-and <a class="reference internal" href="release/docs/Getting-Started/Custom-Settings.html"><em>extensions</em></a> use the full
-flexibility of unrestricted Scala code</li>
-<li>Accurate incremental recompilation using information extracted from the compiler</li>
-<li>Continuous compilation and testing with <a class="reference internal" href="release/docs/Detailed-Topics/Triggered-Execution.html"><em>triggered execution</em></a></li>
-<li>Packages and publishes jars</li>
-<li>Generates documentation with scaladoc</li>
-<li>Supports mixed Scala/<a class="reference internal" href="release/docs/Detailed-Topics/Java-Sources.html"><em>Java</em></a> projects</li>
-<li>Supports <a class="reference internal" href="release/docs/Detailed-Topics/Testing.html"><em>testing</em></a> with ScalaCheck, specs, and ScalaTest
-(JUnit is supported by a plugin)</li>
-<li>Starts the Scala REPL with project classes and dependencies on the classpath</li>
-<li><a class="reference internal" href="release/docs/Getting-Started/Multi-Project.html"><em>Sub-project</em></a> support (put multiple packages in one project)</li>
-<li>External project support (list a git repository as a dependency!)</li>
-<li><a class="reference internal" href="release/docs/Detailed-Topics/Parallel-Execution.html"><em>Parallel task execution</em></a>, including parallel test execution</li>
-<li><a class="reference internal" href="release/docs/Getting-Started/Library-Dependencies.html"><em>Library management support</em></a>:
-inline declarations, external Ivy or Maven configuration files, or manual management</li>
-</ul>
-</div>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<p>To get started, <em>please read</em> the <a class="reference internal" href="release/docs/Getting-Started/Welcome.html"><em>Getting Started Guide</em></a>.
-You will save yourself a <em>lot</em> of time if you have the right understanding of the big picture up-front.
-All documentation may be found via the <a class="reference internal" href="release/docs/index.html"><em>table of contents</em></a>.</p>
-<p>The mailing list is at <a class="reference external" href="http://groups.google.com/group/simple-build-tool/topics">http://groups.google.com/group/simple-build-tool/topics</a> and should be used for discussions and questions.
-Questions may also be asked at <a class="reference external" href="http://stackoverflow.com/tags/sbt">Stack Overflow</a>.</p>
-<p>This documentation can be forked <a class="reference external" href="https://github.com/harrah/xsbt/">on GitHub</a>.
-Feel free to make corrections and add documentation.</p>
-<p>If you are familiar with 0.7.x, please see the <a class="reference internal" href="release/docs/Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x.html"><em>migration page</em></a>.
-Documentation for 0.7.x is still available on the <a class="reference external" href="http://code.google.com/p/simple-build-tool/wiki/DocumentationHome">Google Code
-Site</a>.
-This documentation applies to sbt 0.12.</p>
-</div>
-</div>
-
-
-          </div>
-          <div class="span3"><p class="contents-title">Contents</p>
-              <div id="scroller-anchor">
-                <div id="scroller">
-                  <div id="toc"><ul>
-<li><a class="reference internal" href="#">sbt</a><ul>
-<li><a class="reference internal" href="#install">Install</a></li>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-</ul>
-</li>
-</ul>
-</div>
-                </div>
-              </div></div>
-        </div>
-      </div>
-    </div>
+    </script> 
+  <script type="text/javascript" src="release/docs/_static/jquery.js"></script> 
+  <script type="text/javascript" src="release/docs/_static/underscore.js"></script> 
+  <script type="text/javascript" src="release/docs/_static/doctools.js"></script> 
+  <script type="text/javascript" src="release/docs/../../versions.js"></script> 
+  <script type="text/javascript" src="release/docs/_static/set-versions.js"></script> 
+  <link rel="top" title="sbt Documentation" href="release/docs/index.html" /> 
+  <link rel="next" title="Contents" href="release/docs/index.html" /> 
+ </head> 
+ <body> 
+  <div class="navbar"> 
+   <div class="navbar-inner"> 
+    <div class="container"> 
+     <ul class="nav"> 
+      <li><a href="http://www.scala-sbt.org/">Home</a></li> 
+      <li><a href="release/docs/index.html">Documentation</a></li> 
+      <li><a href="release/docs/Getting-Started/Setup.html">Download</a></li> 
+      <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li> 
+      <li><a href="http://github.com/harrah/xsbt">Project</a></li> 
+     </ul> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="main"> 
+   <div class="container"> 
+    <div class="page-title">
+     sbt
+    </div> 
+    <div class="search-box"> 
+     <form method="get" action="http://www.google.com/search" id="search"> 
+      <input type="search" placeholder="Search 0.12.1 on Google" name="q" results="10" size="29" id="search-input" /> 
+      <input type="hidden" name="sitesearch" value="http://www.scala-sbt.org/release/docs/" /> 
+      <input type="submit" id="submit-search" /> 
+     </form> 
+    </div> 
+   </div> 
+   <div class="main-container"> 
+    <div class="container"> 
+     <div class="row"> 
+      <div class="span12"> 
+       <ul class="breadcrumb"> 
+        <li> <span class="divider">|</span> <a href="release/docs/index.html">Contents</a> <span class="divider">&raquo;</span> </li> 
+        <li> </li> 
+        <li> <a href="release/docs/index.html">Contents</a> </li> 
+        <li> </li> 
+        <li> <select id="versions"><option selected="" value="0.12.1">Version 0.12.1</option></select> </li> 
+       </ul> 
+      </div> 
+     </div> 
+     <div class="row"> 
+      <div class="span9"> 
+       <div class="section" id="sbt"> 
+        <h1>sbt<a class="headerlink" href="#sbt" title="Permalink to this headline">&para;</a></h1> 
+        <div class="toctree-wrapper compound"> 
+        </div> 
+        <p>sbt is a build tool for Scala and Java projects that aims to do the basics well. It requires Java 1.6 or later.</p> 
+        <div class="section" id="install"> 
+         <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">&para;</a></h2> 
+         <p>See the <a class="reference internal" href="release/docs/Getting-Started/Setup.html"><em>setup instructions</em></a>.</p> 
+        </div> 
+        <div class="section" id="features"> 
+         <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">&para;</a></h2> 
+         <ul class="simple"> 
+          <li>Easy to set up for simple projects</li> 
+          <li><a class="reference internal" href="release/docs/Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> uses a Scala-based &quot;domain-specific language&quot; (DSL)</li> 
+          <li>More advanced <a class="reference internal" href="release/docs/Getting-Started/Full-Def.html"><em>.scala build definitions</em></a> and <a class="reference internal" href="release/docs/Getting-Started/Custom-Settings.html"><em>extensions</em></a> use the full flexibility of unrestricted Scala code</li> 
+          <li>Accurate incremental recompilation using information extracted from the compiler</li> 
+          <li>Continuous compilation and testing with <a class="reference internal" href="release/docs/Detailed-Topics/Triggered-Execution.html"><em>triggered execution</em></a></li> 
+          <li>Packages and publishes jars</li> 
+          <li>Generates documentation with scaladoc</li> 
+          <li>Supports mixed Scala/<a class="reference internal" href="release/docs/Detailed-Topics/Java-Sources.html"><em>Java</em></a> projects</li> 
+          <li>Supports <a class="reference internal" href="release/docs/Detailed-Topics/Testing.html"><em>testing</em></a> with ScalaCheck, specs, and ScalaTest (JUnit is supported by a plugin)</li> 
+          <li>Starts the Scala REPL with project classes and dependencies on the classpath</li> 
+          <li><a class="reference internal" href="release/docs/Getting-Started/Multi-Project.html"><em>Sub-project</em></a> support (put multiple packages in one project)</li> 
+          <li>External project support (list a git repository as a dependency!)</li> 
+          <li><a class="reference internal" href="release/docs/Detailed-Topics/Parallel-Execution.html"><em>Parallel task execution</em></a>, including parallel test execution</li> 
+          <li><a class="reference internal" href="release/docs/Getting-Started/Library-Dependencies.html"><em>Library management support</em></a>: inline declarations, external Ivy or Maven configuration files, or manual management</li> 
+         </ul> 
+        </div> 
+        <div class="section" id="getting-started"> 
+         <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">&para;</a></h2> 
+         <p>To get started, <em>please read</em> the <a class="reference internal" href="release/docs/Getting-Started/Welcome.html"><em>Getting Started Guide</em></a>. You will save yourself a <em>lot</em> of time if you have the right understanding of the big picture up-front. All documentation may be found via the <a class="reference internal" href="release/docs/index.html"><em>table of contents</em></a>.</p> 
+         <p>The mailing list is at <a class="reference external" href="http://groups.google.com/group/simple-build-tool/topics">http://groups.google.com/group/simple-build-tool/topics</a> and should be used for discussions and questions. Questions may also be asked at <a class="reference external" href="http://stackoverflow.com/tags/sbt">Stack Overflow</a>.</p> 
+         <p>This documentation can be forked <a class="reference external" href="https://github.com/harrah/xsbt/">on GitHub</a>. Feel free to make corrections and add documentation.</p> 
+         <p>If you are familiar with 0.7.x, please see the <a class="reference internal" href="release/docs/Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x.html"><em>migration page</em></a>. Documentation for 0.7.x is still available on the <a class="reference external" href="http://code.google.com/p/simple-build-tool/wiki/DocumentationHome">Google Code Site</a>. This documentation applies to sbt 0.12.</p> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="span3">
+       <p class="contents-title">Contents</p> 
+       <div id="scroller-anchor"> 
+        <div id="scroller"> 
+         <div id="toc">
+          <ul> 
+           <li><a class="reference internal" href="#">sbt</a>
+            <ul> 
+             <li><a class="reference internal" href="#install">Install</a></li> 
+             <li><a class="reference internal" href="#features">Features</a></li> 
+             <li><a class="reference internal" href="#getting-started">Getting Started</a></li> 
+            </ul> </li> 
+          </ul> 
+         </div> 
+        </div> 
+       </div>
+      </div> 
+     </div> 
+    </div> 
+   </div> 
   </div>  
-  
-
-  </body>
+ </body>
 </html>
