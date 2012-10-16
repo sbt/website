@@ -42,13 +42,13 @@
 *    ii. Arrays are treated as immutable.
 *    iii. No value is ever null.
 */</span>
-public interface <a title="object xsbti.compile.IncrementalCompiler" id="157338">IncrementalCompiler</a>&lt;<a title="Nothing" id="10204">Analysis</a>, <a title="Nothing" id="10205">ScalaCompiler</a>&gt;
+public interface <a title="object xsbti.compile.IncrementalCompiler" id="157342">IncrementalCompiler</a>&lt;<a title="Nothing" id="10204">Analysis</a>, <a title="Nothing" id="10205">ScalaCompiler</a>&gt;
 <span class="delimiter">{</span>
 	<span class="comment">/**
 	* Performs an incremental compilation as configured by `in`.
 	* The returned Analysis should be provided to compilations depending on the classes from this compilation.
 	*/</span>
-	<a href="#10204" title="Analysis">Analysis</a> <a title="(in: xsbti.compile.Inputs[Analysis,ScalaCompiler], log: xsbti.Logger)Analysis" id="157339">compile</a><span class="delimiter">(</span><a href="Inputs.java.html#10209" title="xsbti.compile.Inputs">Inputs</a>&lt;<a href="#10204" title="Analysis">Analysis</a>, <a href="#10205" title="ScalaCompiler">ScalaCompiler</a>&gt; <a title="xsbti.compile.Inputs[Analysis,ScalaCompiler]" id="157356">in</a>, Logger <a title="xsbti.Logger" id="157357">log</a><span class="delimiter">)</span>;
+	<a href="#10204" title="Analysis">Analysis</a> <a title="(in: xsbti.compile.Inputs[Analysis,ScalaCompiler], log: xsbti.Logger)Analysis" id="157343">compile</a><span class="delimiter">(</span><a href="Inputs.java.html#10209" title="xsbti.compile.Inputs">Inputs</a>&lt;<a href="#10204" title="Analysis">Analysis</a>, <a href="#10205" title="ScalaCompiler">ScalaCompiler</a>&gt; <a title="xsbti.compile.Inputs[Analysis,ScalaCompiler]" id="157360">in</a>, Logger <a title="xsbti.Logger" id="157361">log</a><span class="delimiter">)</span>;
 
 	<span class="comment">/**
 	* Creates a compiler instance that can be used by the `compile` method.
@@ -57,7 +57,7 @@ public interface <a title="object xsbti.compile.IncrementalCompiler" id="157338"
 	* @param interfaceJar The compiler interface jar compiled for the Scala version being used
 	* @param options Configures how arguments to the underlying Scala compiler will be built.
 	*/</span>
-	<a href="#10205" title="ScalaCompiler">ScalaCompiler</a> <a title="(instance: xsbti.compile.ScalaInstance, interfaceJar: java.io.File, options: xsbti.compile.ClasspathOptions, log: xsbti.Logger)ScalaCompiler" id="157340">newScalaCompiler</a><span class="delimiter">(</span><a href="ScalaInstance.java.html#10237" title="xsbti.compile.ScalaInstance">ScalaInstance</a> <a title="xsbti.compile.ScalaInstance" id="157468">instance</a>, File <a title="java.io.File" id="157469">interfaceJar</a>, <a href="ClasspathOptions.java.html#10168" title="xsbti.compile.ClasspathOptions">ClasspathOptions</a> <a title="xsbti.compile.ClasspathOptions" id="157470">options</a>, Logger <a title="xsbti.Logger" id="157471">log</a><span class="delimiter">)</span>;
+	<a href="#10205" title="ScalaCompiler">ScalaCompiler</a> <a title="(instance: xsbti.compile.ScalaInstance, interfaceJar: java.io.File, options: xsbti.compile.ClasspathOptions, log: xsbti.Logger)ScalaCompiler" id="157344">newScalaCompiler</a><span class="delimiter">(</span><a href="ScalaInstance.java.html#10237" title="xsbti.compile.ScalaInstance">ScalaInstance</a> <a title="xsbti.compile.ScalaInstance" id="157472">instance</a>, File <a title="java.io.File" id="157473">interfaceJar</a>, <a href="ClasspathOptions.java.html#10168" title="xsbti.compile.ClasspathOptions">ClasspathOptions</a> <a title="xsbti.compile.ClasspathOptions" id="157474">options</a>, Logger <a title="xsbti.Logger" id="157475">log</a><span class="delimiter">)</span>;
 
 	<span class="comment">/** 
 	* Compiles the source interface for a Scala version.  The resulting jar can then be used by the `newScalaCompiler` method
@@ -69,7 +69,7 @@ public interface <a title="object xsbti.compile.IncrementalCompiler" id="157338"
 	* @param targetJar Where to create the output jar file containing the compiled classes.
 	* @param instance The ScalaInstance to compile the compiler interface for.
 	* @param log The logger to use during compilation. */</span>
-	void <a title="(label: java.lang.String, sourceJar: java.io.File, targetJar: java.io.File, interfaceJar: java.io.File, instance: xsbti.compile.ScalaInstance, log: xsbti.Logger)Unit" id="157341">compileInterfaceJar</a><span class="delimiter">(</span>String <a title="java.lang.String" id="157481">label</a>, File <a title="java.io.File" id="157482">sourceJar</a>, File <a title="java.io.File" id="157483">targetJar</a>, File <a title="java.io.File" id="157484">interfaceJar</a>, <a href="ScalaInstance.java.html#10237" title="xsbti.compile.ScalaInstance">ScalaInstance</a> <a title="xsbti.compile.ScalaInstance" id="157485">instance</a>, Logger <a title="xsbti.Logger" id="157486">log</a><span class="delimiter">)</span>;
+	void <a title="(label: java.lang.String, sourceJar: java.io.File, targetJar: java.io.File, interfaceJar: java.io.File, instance: xsbti.compile.ScalaInstance, log: xsbti.Logger)Unit" id="157345">compileInterfaceJar</a><span class="delimiter">(</span>String <a title="java.lang.String" id="157485">label</a>, File <a title="java.io.File" id="157486">sourceJar</a>, File <a title="java.io.File" id="157487">targetJar</a>, File <a title="java.io.File" id="157488">interfaceJar</a>, <a href="ScalaInstance.java.html#10237" title="xsbti.compile.ScalaInstance">ScalaInstance</a> <a title="xsbti.compile.ScalaInstance" id="157489">instance</a>, Logger <a title="xsbti.Logger" id="157490">log</a><span class="delimiter">)</span>;
 <span class="delimiter">}</span>
 
         </pre>

@@ -15,47 +15,47 @@
  */</span>
 <span class="keyword">package</span> sbt.complete
 
-<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait UpperBound extends java.lang.Object" id="12810">UpperBound</a>
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait UpperBound extends java.lang.Object" id="12813">UpperBound</a>
 <span title="java.lang.Object" class="delimiter">{</span>
 	<span class="comment">/** True if and only if the given value meets this bound.*/</span>
-	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2166610">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2166705">min</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span>
+	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2166661">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2166756">min</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span>
 	<span class="comment">/** True if and only if this bound is one.*/</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166611">isOne</a>: <span title="Boolean">Boolean</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166662">isOne</a>: <span title="Boolean">Boolean</span>
 	<span class="comment">/** True if and only if this bound is zero.*/</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166612">isZero</a>: <span title="Boolean">Boolean</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166663">isZero</a>: <span title="Boolean">Boolean</span>
 	<span class="comment">/** If this bound is zero or Infinite, `decrement` returns this bound.
 	* Otherwise, this bound is finite and greater than zero and `decrement` returns the bound that is one less than this bound.*/</span>
-	<span class="keyword">def</span> <a title="=&gt; sbt.complete.UpperBound" id="2166613">decrement</a>: <a href="#12810" title="sbt.complete.UpperBound">UpperBound</a>
+	<span class="keyword">def</span> <a title="=&gt; sbt.complete.UpperBound" id="2166664">decrement</a>: <a href="#12813" title="sbt.complete.UpperBound">UpperBound</a>
 	<span class="comment">/** True if and only if this is unbounded.*/</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166614">isInfinite</a>: <span title="Boolean">Boolean</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166665">isInfinite</a>: <span title="Boolean">Boolean</span>
 <span class="delimiter">}</span>
 <span class="comment">/** Represents unbounded. */</span>
-case <span class="keyword">object</span> <a href="#2175489" title="object sbt.complete.Infinite" id="2175494">Infinite</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#12810" title="sbt.complete.UpperBound">UpperBound</a>
+case <span class="keyword">object</span> <a href="#2175599" title="object sbt.complete.Infinite" id="2175604">Infinite</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#12813" title="sbt.complete.UpperBound">UpperBound</a>
 <span class="delimiter">{</span>
 	<span class="comment">/** All finite numbers meet this bound. */</span>
-	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2166620">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2175467">min</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <span title="Boolean(true)" class="keyword">true</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166621">isOne</a> = <span title="Boolean(false)" class="keyword">false</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166622">isZero</a> = <span title="Boolean(false)" class="keyword">false</span>
-	<span class="keyword">def</span> <a title="=&gt; sbt.complete.Infinite.type" id="2166623">decrement</a> = <span class="keyword">this</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166624">isInfinite</a> = <span title="Boolean(true)" class="keyword">true</span>
-	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="2166625">toString</a> = <span title="java.lang.String(&quot;Infinity&quot;)" class="string">&quot;Infinity&quot;</span>
+	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2166671">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2175577">min</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <span title="Boolean(true)" class="keyword">true</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166672">isOne</a> = <span title="Boolean(false)" class="keyword">false</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166673">isZero</a> = <span title="Boolean(false)" class="keyword">false</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.complete.Infinite.type" id="2166674">decrement</a> = <span class="keyword">this</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2166675">isInfinite</a> = <span title="Boolean(true)" class="keyword">true</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="2166676">toString</a> = <span title="java.lang.String(&quot;Infinity&quot;)" class="string">&quot;Infinity&quot;</span>
 <span class="delimiter">}</span>
 <span class="comment">/** Represents a finite upper bound. The maximum allowed value is 'value', inclusive.
 *  It must positive. */</span>
-<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class Finite extends java.lang.Object with sbt.complete.UpperBound with ScalaObject with Product with Serializable" id="2175657">Finite</a><a href="#2175657" title="ScalaObject" class="delimiter">(</a><a title="Int" id="2175533">value</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12810" title="sbt.complete.UpperBound">UpperBound</a>
+<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class Finite extends java.lang.Object with sbt.complete.UpperBound with ScalaObject with Product with Serializable" id="2175767">Finite</a><a href="#2175767" title="ScalaObject" class="delimiter">(</a><a title="Int" id="2175643">value</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12813" title="sbt.complete.UpperBound">UpperBound</a>
 <span class="delimiter">{</span>
-	<span title="(assumption: Boolean, message: =&gt; Any)Unit">assume</span><span class="delimiter">(</span><a href="#2175533" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span>, <span title="java.lang.String(&quot;Maximum occurences must be nonnegative.&quot;)" class="string">&quot;Maximum occurences must be nonnegative.&quot;</span><span class="delimiter">)</span>
+	<span title="(assumption: Boolean, message: =&gt; Any)Unit">assume</span><span class="delimiter">(</span><a href="#2175643" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span>, <span title="java.lang.String(&quot;Maximum occurences must be nonnegative.&quot;)" class="string">&quot;Maximum occurences must be nonnegative.&quot;</span><span class="delimiter">)</span>
 
-	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2173336">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2175505">min</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <a href="#2175533" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">&gt;=</span> <a href="#2175505" title="Int">min</a>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173337">isOne</a> = <a href="#2175533" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">==</span> <span title="Int(1)" class="int">1</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173338">isZero</a> = <a href="#2175533" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">==</span> <span title="Int(0)" class="int">0</span>
-	<span class="keyword">def</span> <a title="=&gt; sbt.complete.Finite" id="2173339">decrement</a> = <a href="#2175657" title="(value: Int)sbt.complete.Finite">Finite</a><span class="delimiter">(</span> <span class="delimiter">(</span><a href="#2175533" title="=&gt; Int">value</a> <span title="implicit scala.LowPriorityImplicits.intWrapper : (x: Int)scala.runtime.RichInt">-</span> <span title="Int(1)" class="int">1</span><span class="delimiter">)</span> <span title="(that: Int)Int">max</span> <span title="Int(0)" class="int">0</span> <span class="delimiter">)</span>
-	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173340">isInfinite</a> = <span title="Boolean(false)" class="keyword">false</span>
-	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="2173341">toString</a> = <a href="#2175533" title="=&gt; Int">value</a>.<span title="()java.lang.String">toString</span>
+	<span class="keyword">def</span> <a title="(min: Int)Boolean" id="2173446">&gt;=</a><span class="delimiter">(</span><a title="Int" id="2175615">min</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <a href="#2175643" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">&gt;=</span> <a href="#2175615" title="Int">min</a>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173447">isOne</a> = <a href="#2175643" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">==</span> <span title="Int(1)" class="int">1</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173448">isZero</a> = <a href="#2175643" title="=&gt; Int">value</a> <span title="(x: Int)Boolean">==</span> <span title="Int(0)" class="int">0</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.complete.Finite" id="2173449">decrement</a> = <a href="#2175767" title="(value: Int)sbt.complete.Finite">Finite</a><span class="delimiter">(</span> <span class="delimiter">(</span><a href="#2175643" title="=&gt; Int">value</a> <span title="implicit scala.LowPriorityImplicits.intWrapper : (x: Int)scala.runtime.RichInt">-</span> <span title="Int(1)" class="int">1</span><span class="delimiter">)</span> <span title="(that: Int)Int">max</span> <span title="Int(0)" class="int">0</span> <span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; Boolean" id="2173450">isInfinite</a> = <span title="Boolean(false)" class="keyword">false</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="2173451">toString</a> = <a href="#2175643" title="=&gt; Int">value</a>.<span title="()java.lang.String">toString</span>
 <span class="delimiter">}</span>
-<span class="keyword">object</span> <a title="object sbt.complete.UpperBound" id="12816">UpperBound</a>
+<span class="keyword">object</span> <a title="object sbt.complete.UpperBound" id="12819">UpperBound</a>
 <span title="ScalaObject" class="delimiter">{</span>
-	<span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit sbt.complete.UpperBound.intToFinite : (i: Int)sbt.complete.Finite" id="2173329">intToFinite</a><span class="delimiter">(</span><a title="Int" id="2173330">i</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <a href="#2175657" title="sbt.complete.Finite">Finite</a> = <a href="#2175657" title="(value: Int)sbt.complete.Finite">Finite</a><span class="delimiter">(</span><a href="#2173330" title="Int">i</a><span class="delimiter">)</span>
+	<span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit sbt.complete.UpperBound.intToFinite : (i: Int)sbt.complete.Finite" id="2173439">intToFinite</a><span class="delimiter">(</span><a title="Int" id="2173440">i</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <a href="#2175767" title="sbt.complete.Finite">Finite</a> = <a href="#2175767" title="(value: Int)sbt.complete.Finite">Finite</a><span class="delimiter">(</span><a href="#2173440" title="Int">i</a><span class="delimiter">)</span>
 <span class="delimiter">}</span>
         </pre>
     </body>

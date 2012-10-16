@@ -15,23 +15,23 @@
  */</span>
 <span class="keyword">package</span> sbt
 
-<span class="keyword">import</span> <a href="Types.scala.html#12651" title="object sbt.Types">Types</a>._
+<span class="keyword">import</span> <a href="Types.scala.html#12652" title="object sbt.Types">Types</a>._
 
 <span class="comment">/** Represents a task node in a format understood by the task evaluation engine Execute.
 * Heterogenous inputs (Mixed, tuple) and homogeneous (Uniform, sequence) are defined and consumed separately.
 *
 * @tparam A the task type
 * @tparam T the type computed by this node */</span>
-<span class="keyword">trait</span> <a title="trait Node[A[_], T] extends java.lang.Object" id="12201">Node</a><span class="delimiter">[</span><a title="[_]&gt;: Nothing &lt;: Any" id="12202">A</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2130369">_</a><span class="delimiter">]</span>, <a title="&gt;: Nothing &lt;: Any" id="12203">T</a><span class="delimiter">]</span>
+<span class="keyword">trait</span> <a title="trait Node[A[_], T] extends java.lang.Object" id="12201">Node</a><span class="delimiter">[</span><a title="[_]&gt;: Nothing &lt;: Any" id="12202">A</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2130392">_</a><span class="delimiter">]</span>, <a title="&gt;: Nothing &lt;: Any" id="12203">T</a><span class="delimiter">]</span>
 <span title="java.lang.Object" class="delimiter">{</span>
-	<span class="keyword">type</span> <a title="&gt;: Nothing &lt;: sbt.HList" id="2129155">Mixed</a> &lt;: HList
-	<span class="keyword">type</span> <a title="&gt;: Nothing &lt;: Any" id="2129156">Uniform</a>
+	<span class="keyword">type</span> <a title="&gt;: Nothing &lt;: sbt.HList" id="2129178">Mixed</a> &lt;: HList
+	<span class="keyword">type</span> <a title="&gt;: Nothing &lt;: Any" id="2129179">Uniform</a>
 
-	<span class="keyword">val</span> <a title="=&gt; sbt.KList[A,Node.this.Mixed]" id="2129157">mixedIn</a>: <a href="KList.scala.html#12545" title="sbt.KList[A,Node.this.Mixed]">KList</a><span class="delimiter">[</span>A, Mixed<span class="delimiter">]</span>
-	<span class="keyword">val</span> <a title="=&gt; Seq[A[Node.this.Uniform]]" id="2129158">uniformIn</a>: <span title="Seq[A[Node.this.Uniform]]">Seq</span><span class="delimiter">[</span>A<span class="delimiter">[</span>Uniform<span class="delimiter">]</span><span class="delimiter">]</span>
+	<span class="keyword">val</span> <a title="=&gt; sbt.KList[A,Node.this.Mixed]" id="2129180">mixedIn</a>: <a href="KList.scala.html#12546" title="sbt.KList[A,Node.this.Mixed]">KList</a><span class="delimiter">[</span>A, Mixed<span class="delimiter">]</span>
+	<span class="keyword">val</span> <a title="=&gt; Seq[A[Node.this.Uniform]]" id="2129181">uniformIn</a>: <span title="Seq[A[Node.this.Uniform]]">Seq</span><span class="delimiter">[</span>A<span class="delimiter">[</span>Uniform<span class="delimiter">]</span><span class="delimiter">]</span>
 
 	<span class="comment">/** Computes the result of this task given the results from the inputs. */</span>
-	<span class="keyword">def</span> <a title="(mixed: sbt.KList[sbt.Result,Node.this.Mixed], uniform: Seq[sbt.Result[Node.this.Uniform]])Either[A[T],T]" id="2129159">work</a><span class="delimiter">(</span><a title="sbt.KList[sbt.Result,Node.this.Mixed]" id="2130367">mixed</a>: <a href="KList.scala.html#12545" title="sbt.KList[sbt.Result,Node.this.Mixed]">KList</a><span class="delimiter">[</span>Result, Mixed<span class="delimiter">]</span>, <a title="Seq[sbt.Result[Node.this.Uniform]]" id="2130368">uniform</a>: <span title="Seq[sbt.Result[Node.this.Uniform]]">Seq</span><span class="delimiter">[</span>Result<span class="delimiter">[</span>Uniform<span class="delimiter">]</span><span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Either[A[T],T]">Either</span><span class="delimiter">[</span>A<span class="delimiter">[</span>T<span class="delimiter">]</span>, T<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="(mixed: sbt.KList[sbt.Result,Node.this.Mixed], uniform: Seq[sbt.Result[Node.this.Uniform]])Either[A[T],T]" id="2129182">work</a><span class="delimiter">(</span><a title="sbt.KList[sbt.Result,Node.this.Mixed]" id="2130390">mixed</a>: <a href="KList.scala.html#12546" title="sbt.KList[sbt.Result,Node.this.Mixed]">KList</a><span class="delimiter">[</span>Result, Mixed<span class="delimiter">]</span>, <a title="Seq[sbt.Result[Node.this.Uniform]]" id="2130391">uniform</a>: <span title="Seq[sbt.Result[Node.this.Uniform]]">Seq</span><span class="delimiter">[</span>Result<span class="delimiter">[</span>Uniform<span class="delimiter">]</span><span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Either[A[T],T]">Either</span><span class="delimiter">[</span>A<span class="delimiter">[</span>T<span class="delimiter">]</span>, T<span class="delimiter">]</span>
 <span class="delimiter">}</span>
 
         </pre>
