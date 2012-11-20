@@ -101,22 +101,22 @@ organize sbt software into one central location.</p>
 </div>
 <div class="section" id="community-ivy-repository">
 <h2>Community Ivy Repository<a class="headerlink" href="#community-ivy-repository" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://www.typesafe.com">Typesafe, Inc.</a> has provided a freely available <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt">Ivy Repository</a> for sbt projects to use.
+<p><a class="reference external" href="http://www.typesafe.com">Typesafe, Inc.</a> has provided a freely available <a class="reference external" href="http://repo.scala-sbt.org/scalasbt">Ivy Repository</a> for sbt projects to use.
 If you would like to publish your project to this Ivy repository, first contact <a class="reference external" href="http://groups.google.com/group/sbt-repo-admins?hl=en">sbt-repo-admins</a> and request privileges (we have to verify code ownership, rights to publish, etc.).  After which, you can deploy your plugins using the following configuration:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/&quot;</span><span class="o">))(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">))</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span><span class="o">))(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">))</span>
 
 <span class="n">publishMavenStyle</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
 <p>You'll also need to add your credentials somewhere.  For example, you might use a <tt class="docutils literal"><span class="pre">~/.sbt/sbtpluginpublish.sbt</span></tt> file:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Artifactory Realm&quot;</span><span class="o">,</span> <span class="s">&quot;scalasbt.artifactoryonline.com&quot;</span><span class="o">,</span> <span class="s">&quot;jsuereth&quot;</span><span class="o">,</span> <span class="s">&quot;@my encrypted password@&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Artifactory Realm&quot;</span><span class="o">,</span> <span class="s">&quot;repo.scala-sbt.org&quot;</span><span class="o">,</span> <span class="s">&quot;jsuereth&quot;</span><span class="o">,</span> <span class="s">&quot;@my encrypted password@&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Where <tt class="docutils literal"><span class="pre">&#64;my</span> <span class="pre">encrypted</span> <span class="pre">password&#64;</span></tt> is actually obtained using the following <a class="reference external" href="http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords">instructions</a>.</p>
 <p><em>Note: Your code must abide by the</em> <a class="reference external" href="Repository-Rules">repository polices</a>.</p>
 <p>To automatically deploy snapshot/release versions of your plugin use the following configuration:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="n">version</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span>
-   <span class="k">val</span> <span class="n">scalasbt</span> <span class="k">=</span> <span class="s">&quot;http://scalasbt.artifactoryonline.com/scalasbt/&quot;</span>
+   <span class="k">val</span> <span class="n">scalasbt</span> <span class="k">=</span> <span class="s">&quot;http://repo.scala-sbt.org/scalasbt/&quot;</span>
    <span class="k">val</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">url</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;-SNAPSHOT&quot;</span><span class="o">))</span>
      <span class="o">(</span><span class="s">&quot;sbt-plugin-snapshots&quot;</span><span class="o">,</span> <span class="n">scalasbt</span><span class="o">+</span><span class="s">&quot;sbt-plugin-snapshots&quot;</span><span class="o">)</span>
    <span class="k">else</span>
@@ -213,12 +213,14 @@ only supports Java projects atm)</li>
 <a class="reference external" href="http://software.clapper.org/sbt-izpack/">http://software.clapper.org/sbt-izpack/</a></li>
 <li>sbt-ghpages-plugin (publishes generated site and api):
 <a class="reference external" href="https://github.com/jsuereth/xsbt-ghpages-plugin">https://github.com/jsuereth/xsbt-ghpages-plugin</a></li>
-<li>sbt-gpg-plugin (PGP signing plugin, can generate keys too):
-<a class="reference external" href="https://github.com/sbt/xsbt-gpg-plugin">https://github.com/sbt/xsbt-gpg-plugin</a></li>
+<li>sbt-pgp (PGP signing plugin, can generate keys too):
+<a class="reference external" href="https://github.com/sbt/sbt-pgp">https://github.com/sbt/sbt-pgp</a></li>
 <li>sbt-release (customizable release process):
 <a class="reference external" href="https://github.com/gseitz/sbt-release">https://github.com/gseitz/sbt-release</a></li>
 <li>sbt-unique-version (emulates unique snapshots):
 <a class="reference external" href="https://github.com/sbt/sbt-unique-version">https://github.com/sbt/sbt-unique-version</a></li>
+<li>sbt-pack (generates packages with dependent jars and launch scripts):
+<a class="reference external" href="https://github.com/xerial/sbt-pack">https://github.com/xerial/sbt-pack</a></li>
 </ul>
 </div>
 <div class="section" id="system-plugins">
