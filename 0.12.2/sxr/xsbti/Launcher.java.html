@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/Launcher.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti;
+
+	<span class="keyword">import</span> java.io.File;
+
+public interface <a title="object xsbti.Launcher" id="312891">Launcher</a>
+<span class="delimiter">{</span>
+	public static <span class="keyword">final</span> int <a title="Int" id="313199">InterfaceVersion</a> = <span class="int">1</span>;
+	public <a href="ScalaProvider.java.html#11269" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String)xsbti.ScalaProvider" id="312892">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="314028">version</a><span class="delimiter">)</span>;
+	public <a href="ScalaProvider.java.html#11269" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String)xsbti.ScalaProvider" id="312893">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="314026">version</a>, String <a title="java.lang.String" id="314027">reason</a><span class="delimiter">)</span>;
+	public <a href="ScalaProvider.java.html#11269" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String, scalaOrg: java.lang.String)xsbti.ScalaProvider" id="312894">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="314023">version</a>, String <a title="java.lang.String" id="314024">reason</a>, String <a title="java.lang.String" id="314025">scalaOrg</a><span class="delimiter">)</span>;
+	<span class="comment">/**
+	 * returns an `AppProvider` which is able to resolve an application
+	 * and instantiate its `xsbti.Main` in a new classloader.
+	 * See [AppProvider] for more details.
+	 * @param id  The artifact coordinates of the application.
+	 * @param version The version to resolve
+	 */</span>
+	public <a href="AppProvider.java.html#11192" title="xsbti.AppProvider">AppProvider</a> <a title="(id: xsbti.ApplicationID, version: java.lang.String)xsbti.AppProvider" id="312895">app</a><span class="delimiter">(</span><a href="ApplicationID.java.html#11197" title="xsbti.ApplicationID">ApplicationID</a> <a title="xsbti.ApplicationID" id="313196">id</a>, String <a title="java.lang.String" id="313197">version</a><span class="delimiter">)</span>;
+	<span class="comment">/**
+	 * This returns the &quot;top&quot; classloader for a launched application.   This classlaoder
+	 * lives somewhere *above* that used for the application.   This classloader
+	 * is used for doing any sort of JNA/native library loads so that downstream
+	 * loaders can share native libraries rather than run into &quot;load-once&quot; restrictions.
+	 */</span>
+	public ClassLoader <a title="()java.lang.ClassLoader" id="312896">topLoader</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/**
+	 * Return the global lock for interacting with the file system.
+	 *
+	 * A mechanism to do file-based locking correctly on the JVM.  See
+	 * the [[GlobalLock]] class for more details.
+	 */</span>
+	public <a href="GlobalLock.java.html#11220" title="xsbti.GlobalLock">GlobalLock</a> <a title="()xsbti.GlobalLock" id="312897">globalLock</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** Value of the `sbt.boot.dir` property, or the default
+	 *  boot configuration defined in `boot.directory`.
+	 */</span>
+	public File <a title="()java.io.File" id="312898">bootDirectory</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** Configured launcher repositories.  These repositories
+	 *  are the same ones used to load the launcher.
+	 */</span>
+	public xsbti.<a href="Repository.java.html#11260" title="xsbti.Repository">Repository</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.Repository]" id="312899">ivyRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** The user has configured the launcher with the only repositories
+	 * it wants to use for this applciation.
+	 */</span>
+	public boolean <a title="()Boolean" id="312900">isOverrideRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/**
+	 * The value of `ivy.ivy-home` of the boot properties file.
+	 * This defaults to the `sbt.ivy.home` property, or `~/.ivy2`.
+	 * Use this setting in an application when using Ivy to resolve
+	 * more artifacts.
+	 *
+	 * @returns a file, or null if not set.
+	 */</span>
+	public File <a title="()java.io.File" id="312901">ivyHome</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="comment">/** An array of the checksums that should be checked when retreiving artifacts.
+	 *  Configured via the the `ivy.checksums` section of the boot configuration.
+	 *  Defaults to sha1, md5 or the value of the `sbt.checksums` property.
+	 */</span>
+	public String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[java.lang.String]" id="312902">checksums</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

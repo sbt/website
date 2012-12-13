@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>LineReader.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+	<span class="keyword">import</span> jline.<span class="delimiter">{</span>ConsoleReader, History<span class="delimiter">}</span>
+	<span class="keyword">import</span> java.io.<span class="delimiter">{</span>File, InputStream, PrintWriter<span class="delimiter">}</span>
+	<span class="keyword">import</span> complete.Parser
+	<span class="keyword">import</span> java.util.concurrent.atomic.AtomicBoolean
+
+<span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class JLine extends java.lang.Object with sbt.LineReader with ScalaObject" id="12679">JLine</a> <a href="#12679" title="ScalaObject" class="keyword">extends</a> <a href="#12682" title="sbt.LineReader">LineReader</a>
+<span class="delimiter">{</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="=&gt; Boolean" id="369651">handleCONT</a>: <span title="Boolean">Boolean</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="=&gt; jline.ConsoleReader" id="369652">reader</a>: <span title="jline.ConsoleReader">ConsoleReader</span>
+	<span class="comment">/** Is the input stream at EOF? Compensates for absent EOF detection in JLine's UnsupportedTerminal. */</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="java.util.concurrent.atomic.AtomicBoolean" id="369653">inputEof</a> = <span title="java.util.concurrent.atomic.AtomicBoolean" class="keyword">new</span> <span title="java.util.concurrent.atomic.AtomicBoolean">AtomicBoolean</span><span class="delimiter">(</span><span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="=&gt; Option[java.io.File]" id="369655">historyPath</a>: <span title="Option[java.io.File]">Option</span><span class="delimiter">[</span>File<span class="delimiter">]</span>
+
+	<span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])Option[java.lang.String]" id="369656">readLine</a><span class="delimiter">(</span><a title="String" id="369672">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="369679">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span> = <span title="object None">None</span><span class="delimiter">)</span> = <a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369689" title="(action: =&gt; Option[java.lang.String])Option[java.lang.String]">withJLine</a> <span class="delimiter">{</span> <a href="#369657" title="(prompt: String, mask: Option[Char])Option[java.lang.String]">unsynchronizedReadLine</a><span class="delimiter">(</span><a href="#369672" title="String">prompt</a>, <a href="#369679" title="Option[Char]">mask</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])Option[java.lang.String]" id="369657">unsynchronizedReadLine</a><span class="delimiter">(</span><a title="String" id="369704">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="369705">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span><span class="delimiter">)</span> =
+		<a href="#369658" title="(prompt: String, mask: Option[Char])String">readLineWithHistory</a><span class="delimiter">(</span><a href="#369704" title="String">prompt</a>, <a href="#369705" title="Option[Char]">mask</a><span class="delimiter">)</span> <span title="Option[java.lang.String]" class="keyword">match</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">case</span> <span title="None.type" class="keyword">null</span> =&gt; <span title="object None">None</span>
+			<span class="keyword">case</span> <a title="Some[java.lang.String]" id="369711">x</a> =&gt; <span title="(x: java.lang.String)Some[java.lang.String]">Some</span><span class="delimiter">(</span><a href="#369711" title="String">x</a>.<span title="()java.lang.String">trim</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])String" id="369658">readLineWithHistory</a><span class="delimiter">(</span><a title="String" id="369708">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="369709">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="String">String</span> =
+		<a href="#369655" title="=&gt; Option[java.io.File]">historyPath</a> <span title="String" class="keyword">match</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">case</span> <span title="String">None</span> =&gt; <a href="#369659" title="(prompt: String, mask: Option[Char])String">readLineDirect</a><span class="delimiter">(</span><a href="#369708" title="String">prompt</a>, <a href="#369709" title="Option[Char]">mask</a><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="String">Some</span><span class="delimiter">(</span><a title="java.io.File" id="2162952">file</a><span class="delimiter">)</span> =&gt;
+				<span class="keyword">val</span> <a title="jline.History" id="2162953">h</a> = <a href="#369652" title="=&gt; jline.ConsoleReader">reader</a>.<span title="()jline.History">getHistory</span>
+				<a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369692" title="(h: jline.History, file: java.io.File)Unit">loadHistory</a><span class="delimiter">(</span><a href="#2162953" title="jline.History">h</a>, <a href="#2162952" title="java.io.File">file</a><span class="delimiter">)</span>
+				<span class="keyword">try</span> <span class="delimiter">{</span> <a href="#369659" title="(prompt: String, mask: Option[Char])String">readLineDirect</a><span class="delimiter">(</span><a href="#369708" title="String">prompt</a>, <a href="#369709" title="Option[Char]">mask</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+				<span class="keyword">finally</span> <span class="delimiter">{</span> <a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369693" title="(h: jline.History, file: java.io.File)Unit">saveHistory</a><span class="delimiter">(</span><a href="#2162953" title="jline.History">h</a>, <a href="#2162952" title="java.io.File">file</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])String" id="369659">readLineDirect</a><span class="delimiter">(</span><a title="String" id="2162948">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="2162949">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="String">String</span> =
+		<span title="String" class="keyword">if</span><span class="delimiter">(</span><a href="#369651" title="=&gt; Boolean">handleCONT</a><span class="delimiter">)</span>
+			<a href="Signal.scala.html#12597" title="object sbt.Signals">Signals</a>.<a href="Signal.scala.html#401383" title="(handler: () =&gt; Unit, signal: String)(action: () =&gt; String)String">withHandler</a><span class="delimiter">(</span><span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#369661" title="()Unit">resume</a><span class="delimiter">(</span><span class="delimiter">)</span>, signal = <a href="Signal.scala.html#12597" title="object sbt.Signals">Signals</a>.<a href="Signal.scala.html#401379" title="=&gt; java.lang.String">CONT</a><span class="delimiter">)</span><span class="delimiter">(</span> <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; <a href="#369660" title="(prompt: String, mask: Option[Char])String">readLineDirectRaw</a><span class="delimiter">(</span><a href="#2162948" title="String">prompt</a>, <a href="#2162949" title="Option[Char]">mask</a><span class="delimiter">)</span> <span class="delimiter">)</span>
+		<span class="keyword">else</span>
+			<a href="#369660" title="(prompt: String, mask: Option[Char])String">readLineDirectRaw</a><span class="delimiter">(</span><a href="#2162948" title="String">prompt</a>, <a href="#2162949" title="Option[Char]">mask</a><span class="delimiter">)</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])String" id="369660">readLineDirectRaw</a><span class="delimiter">(</span><a title="String" id="2163006">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="2163007">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="String">String</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.lang.String" id="2163011">line</a> = <a href="#2163007" title="Option[Char]">mask</a> <span title="java.lang.String" class="keyword">match</span> <span class="delimiter">{</span>
+			<span class="keyword">case</span> <span title="java.lang.String">Some</span><span class="delimiter">(</span><a title="Char" id="2163013">m</a><span class="delimiter">)</span> =&gt; <a href="#369652" title="=&gt; jline.ConsoleReader">reader</a>.<span title="(x$1: java.lang.String, x$2: java.lang.Character)java.lang.String">readLine</span><span class="delimiter">(</span><a href="#2163006" title="String">prompt</a>, <a href="#2163013" title="implicit scala.Predef.char2Character : (x: Char)java.lang.Character">m</a><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="java.lang.String">None</span> =&gt; <a href="#369652" title="=&gt; jline.ConsoleReader">reader</a>.<span title="(x$1: java.lang.String)java.lang.String">readLine</span><span class="delimiter">(</span><a href="#2163006" title="String">prompt</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<span title="String" class="keyword">if</span> <span class="delimiter">(</span><a href="#369653" title="=&gt; java.util.concurrent.atomic.AtomicBoolean">inputEof</a>.<span title="()Boolean">get</span><span class="delimiter">)</span> <span title="Null(null)" class="keyword">null</span> <span class="keyword">else</span> <a href="#2163011" title="java.lang.String">line</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="()Unit" id="369661">resume</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		jline.<span title="object jline.Terminal">Terminal</span>.<span title="()Unit">resetTerminal</span>
+		<a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369681" title="=&gt; jline.Terminal">terminal</a>.<span title="()Unit">disableEcho</span><span class="delimiter">(</span><span class="delimiter">)</span>
+		<a href="#369652" title="=&gt; jline.ConsoleReader">reader</a>.<span title="()Unit">drawLine</span><span class="delimiter">(</span><span class="delimiter">)</span>
+		<a href="#369652" title="=&gt; jline.ConsoleReader">reader</a>.<span title="()Unit">flushConsole</span><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="keyword">private</span> <span class="keyword">object</span> <a title="object sbt.JLine" id="12680">JLine</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="comment">// When calling this, ensure that enableEcho has been or will be called.</span>
+	<span class="comment">//  getTerminal will initialize the terminal to disable echo.</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="=&gt; jline.Terminal" id="369681">terminal</a> = jline.<span title="object jline.Terminal">Terminal</span>.<span title="()jline.Terminal">getTerminal</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="[T](f: jline.Terminal =&gt; T)T" id="369682">withTerminal</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="369684">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="jline.Terminal =&gt; T" id="2163055">f</a>: jline.Terminal =&gt; T<span class="delimiter">)</span>: <a href="#369684" title="T">T</a> =
+		<span title="(x$1: T)T">synchronized</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="jline.Terminal" id="2163060">t</a> = <a href="#369681" title="=&gt; jline.Terminal">terminal</a>
+			<a href="#2163060" title="jline.Terminal">t</a>.<span title="(x$1: T)T">synchronized</span> <span class="delimiter">{</span> <a href="#2163055" title="(v1: jline.Terminal)T">f</a><span class="delimiter">(</span><a href="#2163060" title="jline.Terminal">t</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+	<span class="comment">/** For accessing the JLine Terminal object.
+	* This ensures synchronized access as well as re-enabling echo after getting the Terminal. */</span>
+	<span class="keyword">def</span> <a title="[T](f: jline.Terminal =&gt; T)T" id="369685">usingTerminal</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="369687">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="jline.Terminal =&gt; T" id="2022136">f</a>: jline.Terminal =&gt; T<span class="delimiter">)</span>: <a href="#369687" title="T">T</a> =
+		<a href="#369682" title="(f: jline.Terminal =&gt; T)T">withTerminal</a> <span class="delimiter">{</span> <a title="jline.Terminal" id="2163069">t</a> =&gt;
+			<a href="#2163069" title="jline.Terminal">t</a>.<span title="()Unit">enableEcho</span><span class="delimiter">(</span><span class="delimiter">)</span>
+			<a href="#2022136" title="(v1: jline.Terminal)T">f</a><span class="delimiter">(</span><a href="#2163069" title="jline.Terminal">t</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="()jline.ConsoleReader" id="369688">createReader</a><span class="delimiter">(</span><span class="delimiter">)</span> =
+		<a href="#369685" title="(f: jline.Terminal =&gt; jline.ConsoleReader)jline.ConsoleReader">usingTerminal</a> <span class="delimiter">{</span> <a title="jline.Terminal" id="2163036">t</a> =&gt;
+			<span class="keyword">val</span> <a title="jline.ConsoleReader" id="2163037">cr</a> = <span title="jline.ConsoleReader" class="keyword">new</span> <span title="jline.ConsoleReader">ConsoleReader</span>
+			<a href="#2163037" title="jline.ConsoleReader">cr</a>.<span title="(x$1: Boolean)Unit">setBellEnabled</span><span class="delimiter">(</span><span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+			<a href="#2163037" title="jline.ConsoleReader">cr</a>
+		<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="[T](action: =&gt; T)T" id="369689">withJLine</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="369691">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="=&gt; T" id="369699">action</a>: =&gt; T<span class="delimiter">)</span>: <a href="#369691" title="T">T</a> =
+		<a href="#369682" title="(f: jline.Terminal =&gt; T)T">withTerminal</a> <span class="delimiter">{</span> <a title="jline.Terminal" id="2163075">t</a> =&gt;
+			<a href="#2163075" title="jline.Terminal">t</a>.<span title="()Unit">disableEcho</span><span class="delimiter">(</span><span class="delimiter">)</span>
+			<span class="keyword">try</span> <span class="delimiter">{</span> <a href="#369699" title="=&gt; T">action</a> <span class="delimiter">}</span>
+			<span class="keyword">finally</span> <span class="delimiter">{</span> <a href="#2163075" title="jline.Terminal">t</a>.<span title="()Unit">enableEcho</span><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+	<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">def</span> <a title="(h: jline.History, file: java.io.File)Unit" id="369692">loadHistory</a><span class="delimiter">(</span><a title="jline.History" id="2162993">h</a>: <span title="jline.History">History</span>, <a title="java.io.File" id="2162994">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<a href="#2162993" title="jline.History">h</a>.<span title="(x$1: Int)Unit">setMaxSize</span><span class="delimiter">(</span><a href="#369695" title="=&gt; Int">MaxHistorySize</a><span class="delimiter">)</span>
+		<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#2162994" title="java.io.File">file</a>.<span title="()Boolean">isFile</span><span class="delimiter">)</span> <a href="IO.scala.html#12880" title="object sbt.IO">IO</a>.<a href="IO.scala.html#31777" title="(file: java.io.File, charset: java.nio.charset.Charset)(f: java.io.BufferedReader =&gt; Unit)Unit">reader</a><span class="delimiter">(</span><a href="#2162994" title="java.io.File">file</a><span class="delimiter">)</span><span class="delimiter">(</span> <a href="#2162993" title="jline.History">h</a>.<a href="#2163095" title="(x$1: java.io.Reader)Unit">load</a> <span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">def</span> <a title="(h: jline.History, file: java.io.File)Unit" id="369693">saveHistory</a><span class="delimiter">(</span><a title="jline.History" id="2162996">h</a>: <span title="jline.History">History</span>, <a title="java.io.File" id="2162997">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+		<a href="Using.scala.html#13012" title="object sbt.Using">Using</a>.<a href="Using.scala.html#31860" title="(charset: java.nio.charset.Charset, append: Boolean)sbt.OpenFile[java.io.BufferedWriter]">fileWriter</a><a href="Using.scala.html#50682" title="(src: java.io.File)(f: java.io.BufferedWriter =&gt; Unit)Unit" class="delimiter">(</a><span class="delimiter">)</span><span class="delimiter">(</span><a href="#2162997" title="java.io.File">file</a><span class="delimiter">)</span> <span class="delimiter">{</span> <a title="java.io.BufferedWriter" id="2163111">writer</a> =&gt;
+			<span class="keyword">val</span> <a title="java.io.PrintWriter" id="2163112">out</a> = <span title="(x$1: java.io.Writer, x$2: Boolean)java.io.PrintWriter" class="keyword">new</span> <span title="java.io.PrintWriter">PrintWriter</span><span class="delimiter">(</span><a href="#2163111" title="java.io.BufferedWriter">writer</a>, <span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+			<a href="#2162996" title="jline.History">h</a>.<span title="(x$1: java.io.PrintWriter)Unit">setOutput</span><span class="delimiter">(</span><a href="#2163112" title="java.io.PrintWriter">out</a><span class="delimiter">)</span>
+			<a href="#2162996" title="jline.History">h</a>.<span title="()Unit">flushBuffer</span><span class="delimiter">(</span><span class="delimiter">)</span>
+			<a href="#2163112" title="java.io.PrintWriter">out</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span>
+			<a href="#2162996" title="jline.History">h</a>.<span title="(x$1: java.io.PrintWriter)Unit">setOutput</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(historyPath: Option[java.io.File], handleCONT: Boolean)sbt.SimpleReader" id="369694">simple</a><span class="delimiter">(</span><a title="Option[java.io.File]" id="2163046">historyPath</a>: <span title="Option[java.io.File]">Option</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="Boolean" id="2163049">handleCONT</a>: <span title="Boolean">Boolean</span> = <a href="#369697" title="=&gt; Boolean">HandleCONT</a><span class="delimiter">)</span>: <a href="#12686" title="sbt.SimpleReader">SimpleReader</a> = <span title="sbt.SimpleReader" class="keyword">new</span> <a href="#12686" title="sbt.SimpleReader">SimpleReader</a><span class="delimiter">(</span><a href="#2163046" title="Option[java.io.File]">historyPath</a>, <a href="#2163049" title="Boolean">handleCONT</a><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="Int" id="369695">MaxHistorySize</a> = <span title="Int(500)" class="int">500</span>
+	<span class="keyword">val</span> <a title="Boolean" id="369697">HandleCONT</a> = <span title="=&gt; Boolean">!</span>java.lang.<span title="object java.lang.Boolean">Boolean</span>.<span title="(x$1: java.lang.String)Boolean">getBoolean</span><span class="delimiter">(</span><span title="java.lang.String(&quot;sbt.disable.cont&quot;)" class="string">&quot;sbt.disable.cont&quot;</span><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="Signal.scala.html#12597" title="object sbt.Signals">Signals</a>.<a href="Signal.scala.html#401386" title="(signal: String)Boolean">supported</a><span class="delimiter">(</span><a href="Signal.scala.html#12597" title="object sbt.Signals">Signals</a>.<a href="Signal.scala.html#401379" title="=&gt; java.lang.String">CONT</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">trait</span> <a title="trait LineReader extends java.lang.Object" id="12682">LineReader</a>
+<span title="java.lang.Object" class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(prompt: String, mask: Option[Char])Option[String]" id="369649">readLine</a><span class="delimiter">(</span><a title="String" id="369675">prompt</a>: <span title="String">String</span>, <a title="Option[Char]" id="369677">mask</a>: <span title="Option[Char]">Option</span><span class="delimiter">[</span>Char<span class="delimiter">]</span> = <span title="object None">None</span><span class="delimiter">)</span>: <span title="Option[String]">Option</span><span class="delimiter">[</span>String<span class="delimiter">]</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class FullReader extends sbt.JLine with ScalaObject" id="12684">FullReader</a><a href="#12684" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Option[java.io.File]" id="420423">historyPath</a>: <span title="Option[java.io.File]">Option</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="sbt.complete.Parser[_]" id="420424">complete</a>: <a href="Parser.scala.html#12695" title="sbt.complete.Parser[_]">Parser</a><span class="delimiter">[</span>_<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Boolean" id="420427">handleCONT</a>: <span title="Boolean">Boolean</span> = <a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369697" title="=&gt; Boolean">HandleCONT</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12679" title="sbt.JLine">JLine</a>
+<span class="delimiter">{</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="jline.ConsoleReader" id="420421">reader</a> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="jline.ConsoleReader" id="2163128">cr</a> = <span title="jline.ConsoleReader" class="keyword">new</span> <span title="jline.ConsoleReader">ConsoleReader</span>
+		<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#2163128" title="jline.ConsoleReader">cr</a>.<span title="()jline.Terminal">getTerminal</span>.<span title="()Boolean">isSupported</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="java.io.InputStream" id="2163131">input</a> = <a href="#2163128" title="jline.ConsoleReader">cr</a>.<span title="()java.io.InputStream">getInput</span>
+			<a href="#2163128" title="jline.ConsoleReader">cr</a>.<span title="(x$1: java.io.InputStream)Unit">setInput</span><span class="delimiter">(</span><a href="#2163132" title="java.io.InputStream" class="keyword">new</a> <a title="anonymous class $anon extends java.io.InputStream" id="2163132">InputStream</a> <span class="delimiter">{</span>
+				<span class="keyword">def</span> <a title="()Int" id="2163136">read</a><span class="delimiter">(</span><span class="delimiter">)</span>: <span title="Int">Int</span> = <span class="delimiter">{</span>
+					<span class="keyword">val</span> <a title="Int" id="2163141">c</a> = <a href="#2163131" title="java.io.InputStream">input</a>.<span title="()Int">read</span><span class="delimiter">(</span><span class="delimiter">)</span>
+					<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><a href="#2163141" title="Int">c</a> <span title="(x: Int)Boolean">==</span> -<span title="Int(-1)" class="int">1</span><span class="delimiter">)</span> <a href="#369653" title="=&gt; java.util.concurrent.atomic.AtomicBoolean">inputEof</a>.<span title="(x$1: Boolean)Unit">set</span><span class="delimiter">(</span><span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>
+					<a href="#2163141" title="Int">c</a>
+				<span class="delimiter">}</span>
+			<span class="delimiter">}</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<a href="#2163128" title="jline.ConsoleReader">cr</a>.<span title="(x$1: Boolean)Unit">setBellEnabled</span><span class="delimiter">(</span><span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+		sbt.complete.<a href="JLineCompletion.scala.html#12670" title="object sbt.complete.JLineCompletion">JLineCompletion</a>.<a href="JLineCompletion.scala.html#2162213" title="(reader: jline.ConsoleReader, parser: sbt.complete.Parser[_])Unit">installCustomCompletor</a><span class="delimiter">(</span><a href="#2163128" title="jline.ConsoleReader">cr</a>, <a href="#420424" title="sbt.complete.Parser[_]">complete</a><span class="delimiter">)</span>
+		<a href="#2163128" title="jline.ConsoleReader">cr</a>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">class</span> <a title="class SimpleReader extends sbt.JLine with ScalaObject" id="12686">SimpleReader</a> <a href="#12686" title="ScalaObject" class="keyword">private</a><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="delimiter">(</span><span class="keyword">val</span> <a title="Option[java.io.File]" id="2163119">historyPath</a>: <span title="Option[java.io.File]">Option</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Boolean" id="2163120">handleCONT</a>: <span title="Boolean">Boolean</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#12679" title="sbt.JLine">JLine</a>
+<span class="delimiter">{</span>
+	<span class="keyword">protected</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="jline.ConsoleReader" id="369669">reader</a> = <a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369688" title="()jline.ConsoleReader">createReader</a><span class="delimiter">(</span><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+<span class="keyword">object</span> <a title="object sbt.SimpleReader" id="12687">SimpleReader</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#12686" title="sbt.SimpleReader">SimpleReader</a><span class="delimiter">(</span><span title="object None">None</span>, <a href="#12680" title="object sbt.JLine">JLine</a>.<a href="#369697" title="=&gt; Boolean">HandleCONT</a><span class="delimiter">)</span>
+
+
+        </pre>
+    </body>
+</html>

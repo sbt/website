@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>BuildUtil.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> java.net.URI
+
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class BuildUtil[Proj] extends java.lang.Object with ScalaObject" id="11371">BuildUtil</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="11372">Proj</a><span class="delimiter">]</span><a href="#11371" title="ScalaObject" class="delimiter">(</a>
+	<span class="keyword">val</span> <a title="sbt.KeyIndex" id="347008">keyIndex</a>: <a href="KeyIndex.scala.html#11486" title="sbt.KeyIndex">KeyIndex</a>,
+	<span class="keyword">val</span> <a title="sbt.Settings[sbt.Scope]" id="347009">data</a>: <a href="Settings.scala.html#12581" title="sbt.Settings[sbt.Scope]">Settings</a><span class="delimiter">[</span>Scope<span class="delimiter">]</span>,
+	<span class="keyword">val</span> <a title="java.net.URI" id="347010">root</a>: <span title="java.net.URI">URI</span>,
+	<span class="keyword">val</span> <a title="java.net.URI =&gt; String" id="347011">rootProjectID</a>: URI =&gt; String,
+	<span class="keyword">val</span> <a title="(java.net.URI, String) =&gt; Proj" id="347012">project</a>: <span class="delimiter">(</span>URI, String<span class="delimiter">)</span> =&gt; Proj,
+	<span class="keyword">val</span> <a title="Proj =&gt; Seq[sbt.ConfigKey]" id="347013">configurations</a>: Proj =&gt; Seq<span class="delimiter">[</span>ConfigKey<span class="delimiter">]</span>,
+	<span class="keyword">val</span> <a title="sbt.Relation[sbt.ProjectRef,sbt.ProjectRef]" id="347014">aggregates</a>: <a href="Relation.scala.html#12571" title="sbt.Relation[sbt.ProjectRef,sbt.ProjectRef]">Relation</a><span class="delimiter">[</span>ProjectRef, ProjectRef<span class="delimiter">]</span>
+<span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(uri: java.net.URI)Proj" id="327470">rootProject</a><span class="delimiter">(</span><a title="java.net.URI" id="347015">uri</a>: <span title="java.net.URI">URI</span><span class="delimiter">)</span>: <a href="#11372" title="Proj">Proj</a> =
+		<a href="#347012" title="(v1: java.net.URI, v2: String)Proj">project</a><span class="delimiter">(</span><a href="#347015" title="java.net.URI">uri</a>, <a href="#347011" title="(v1: java.net.URI)String">rootProjectID</a><span class="delimiter">(</span><a href="#347015" title="java.net.URI">uri</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="(ref: sbt.Reference)sbt.ResolvedReference" id="327471">resolveRef</a><span class="delimiter">(</span><a title="sbt.Reference" id="339087">ref</a>: <a href="Reference.scala.html#11661" title="sbt.Reference">Reference</a><span class="delimiter">)</span>: <a href="Reference.scala.html#11662" title="sbt.ResolvedReference">ResolvedReference</a> =
+		<a href="Scope.scala.html#11707" title="object sbt.Scope">Scope</a>.<a href="Scope.scala.html#328648" title="(current: java.net.URI, rootProject: java.net.URI =&gt; String, ref: sbt.Reference)sbt.ResolvedReference">resolveReference</a><span class="delimiter">(</span><a href="#347010" title="=&gt; java.net.URI">root</a>, <a href="#347011" title="=&gt; java.net.URI =&gt; String">rootProjectID</a>, <a href="#339087" title="sbt.Reference">ref</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="(ref: sbt.ResolvedReference)Proj" id="327472">projectFor</a><span class="delimiter">(</span><a title="sbt.ResolvedReference" id="347024">ref</a>: <a href="Reference.scala.html#11662" title="sbt.ResolvedReference">ResolvedReference</a><span class="delimiter">)</span>: <a href="#11372" title="Proj">Proj</a> = <a href="#347024" title="sbt.ResolvedReference">ref</a> <span title="Proj" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <span title="Proj">ProjectRef</span><span class="delimiter">(</span><a title="java.net.URI" id="347026">uri</a>, <a title="String" id="347027">id</a><span class="delimiter">)</span> =&gt; <a href="#347012" title="(v1: java.net.URI, v2: String)Proj">project</a><span class="delimiter">(</span><a href="#347026" title="java.net.URI">uri</a>, <a href="#347027" title="String">id</a><span class="delimiter">)</span>
+		<span class="keyword">case</span> <span title="Proj">BuildRef</span><span class="delimiter">(</span><a title="java.net.URI" id="347028">uri</a><span class="delimiter">)</span> =&gt; <a href="#327470" title="(uri: java.net.URI)Proj">rootProject</a><span class="delimiter">(</span><a href="#347028" title="java.net.URI">uri</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(ref: sbt.ResolvedReference)sbt.ProjectRef" id="327473">projectRefFor</a><span class="delimiter">(</span><a title="sbt.ResolvedReference" id="339085">ref</a>: <a href="Reference.scala.html#11662" title="sbt.ResolvedReference">ResolvedReference</a><span class="delimiter">)</span>: <a href="Reference.scala.html#11670" title="sbt.ProjectRef">ProjectRef</a> = <a href="#339085" title="sbt.ResolvedReference">ref</a> <span title="sbt.ProjectRef" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <a title="sbt.ProjectRef" id="347029">p</a>: <a href="Reference.scala.html#11670" title="sbt.ProjectRef">ProjectRef</a> =&gt; <a href="#347029" title="sbt.ProjectRef">p</a>
+		<span class="keyword">case</span> <span title="sbt.ProjectRef">BuildRef</span><span class="delimiter">(</span><a title="java.net.URI" id="347030">uri</a><span class="delimiter">)</span> =&gt; <a href="Reference.scala.html#333536" title="(build: java.net.URI, project: String)sbt.ProjectRef">ProjectRef</a><span class="delimiter">(</span><a href="#347030" title="java.net.URI">uri</a>, <a href="#347011" title="(v1: java.net.URI)String">rootProjectID</a><span class="delimiter">(</span><a href="#347030" title="java.net.URI">uri</a><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(ref: Option[sbt.ResolvedReference])Proj" id="327474">projectForAxis</a><span class="delimiter">(</span><a title="Option[sbt.ResolvedReference]" id="347039">ref</a>: <span title="Option[sbt.ResolvedReference]">Option</span><span class="delimiter">[</span>ResolvedReference<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="#11372" title="Proj">Proj</a> = <a href="#347039" title="Option[sbt.ResolvedReference]">ref</a> <span title="Proj" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <span title="Proj">Some</span><span class="delimiter">(</span><a title="sbt.ResolvedReference" id="347042">ref</a><span class="delimiter">)</span> =&gt; <a href="#327472" title="(ref: sbt.ResolvedReference)Proj">projectFor</a><span class="delimiter">(</span><a href="#347042" title="sbt.ResolvedReference">ref</a><span class="delimiter">)</span>
+		<span class="keyword">case</span> <span title="Proj">None</span> =&gt; <a href="#327470" title="(uri: java.net.URI)Proj">rootProject</a><span class="delimiter">(</span><a href="#347010" title="=&gt; java.net.URI">root</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(refOpt: Option[sbt.Reference])Option[Proj]" id="327475">exactProject</a><span class="delimiter">(</span><a title="Option[sbt.Reference]" id="347043">refOpt</a>: <span title="Option[sbt.Reference]">Option</span><span class="delimiter">[</span>Reference<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Option[Proj]">Option</span><span class="delimiter">[</span>Proj<span class="delimiter">]</span> = <a href="#347043" title="Option[sbt.Reference]">refOpt</a> <span title="(f: sbt.Reference =&gt; sbt.ResolvedReference)Option[sbt.ResolvedReference]">map</span> <a href="#327471" title="(ref: sbt.Reference)sbt.ResolvedReference">resolveRef</a> <span title="(f: sbt.ResolvedReference =&gt; Option[Proj])Option[Proj]">flatMap</span> <a href="#347055" title="Option[Proj]" class="delimiter">{</a>
+		<span class="keyword">case</span> <span title="Some[Proj]">ProjectRef</span><span class="delimiter">(</span><a title="java.net.URI" id="347056">uri</a>, <a title="String" id="347057">id</a><span class="delimiter">)</span> =&gt; <span title="(x: Proj)Some[Proj]">Some</span><span class="delimiter">(</span><a href="#347012" title="(v1: java.net.URI, v2: String)Proj">project</a><span class="delimiter">(</span><a href="#347056" title="java.net.URI">uri</a>, <a href="#347057" title="String">id</a><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="keyword">case</span> <span title="None.type">_</span> =&gt; <span title="object None">None</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">val</span> <a title="Option[sbt.ResolvedReference] =&gt; Seq[String]" id="327476">configurationsForAxis</a>: Option<span class="delimiter">[</span>ResolvedReference<span class="delimiter">]</span> =&gt; Seq<span class="delimiter">[</span>String<span class="delimiter">]</span> = 
+		<a title="Option[sbt.ResolvedReference]" id="347063">refOpt</a> =&gt; <a href="#347013" title="(v1: Proj)Seq[sbt.ConfigKey]">configurations</a><span class="delimiter">(</span><a href="#327474" title="(ref: Option[sbt.ResolvedReference])Proj">projectForAxis</a><span class="delimiter">(</span><a href="#347063" title="Option[sbt.ResolvedReference]">refOpt</a><span class="delimiter">)</span><span class="delimiter">)</span>.<span title="(f: sbt.ConfigKey =&gt; String)(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.ConfigKey],String,Seq[String]])Seq[String]">map</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.Seq.Coll,String,Seq[String]]" class="delimiter">(</span><a href="#347088" title="sbt.ConfigKey">_</a>.<a href="Scope.scala.html#328732" title="=&gt; String">name</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

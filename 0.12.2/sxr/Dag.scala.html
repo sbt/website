@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Dag.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009, 2010 David MacIver, Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt;
+
+<span class="keyword">trait</span> <a title="trait Dag[Node &lt;: sbt.Dag[Node]] extends java.lang.Object with ScalaObject" id="12458">Dag</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: sbt.Dag[Node]" id="12459">Node</a> &lt;: Dag<span class="delimiter">[</span>Node<span class="delimiter">]</span><span class="delimiter">]</span><span title="ScalaObject" class="delimiter">{</span>
+	self : Node =&gt;
+
+	<span class="keyword">def</span> <a title="=&gt; Iterable[Node]" id="428002">dependencies</a> : <span title="Iterable[Node]">Iterable</span><span class="delimiter">[</span>Node<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="=&gt; List[Node]" id="428003">topologicalSort</a> = <a href="#12460" title="object sbt.Dag">Dag</a>.<a href="#339175" title="(root: Node)(dependencies: Node =&gt; Iterable[Node])List[Node]">topologicalSort</a><span class="delimiter">(</span><a href="#12458" title="Node">self</a><span class="delimiter">)</span><span class="delimiter">(</span><a href="#2147410" title="Node">_</a>.<a href="#428002" title="=&gt; Iterable[Node]">dependencies</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+<span class="keyword">object</span> <a title="object sbt.Dag" id="12460">Dag</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">import</span> scala.collection.<span class="delimiter">{</span>mutable, JavaConverters<span class="delimiter">}</span>
+	<span class="keyword">import</span> <span title="object scala.collection.JavaConverters">JavaConverters</span>.asScalaSetConverter
+
+	<span class="keyword">def</span> <a title="[T](root: T)(dependencies: T =&gt; Iterable[T])List[T]" id="339175">topologicalSort</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="339177">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="T" id="339203">root</a>: <a href="#339177" title="T">T</a><span class="delimiter">)</span><span class="delimiter">(</span><a title="T =&gt; Iterable[T]" id="339204">dependencies</a>: T =&gt; Iterable<span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="List[T]">List</span><span class="delimiter">[</span>T<span class="delimiter">]</span> = <a href="#339178" title="(nodes: Iterable[T])(dependencies: T =&gt; Iterable[T])List[T]">topologicalSort</a><span class="delimiter">(</span><a href="#339203" title="T">root</a> <a href="#2147434" title="(x: T)List[T]">::</a> <span title="object Nil">Nil</span><span class="delimiter">)</span><span class="delimiter">(</span><a href="#339204" title="T =&gt; Iterable[T]">dependencies</a><span class="delimiter">)</span>
+	
+	<span class="keyword">def</span> <a title="[T](nodes: Iterable[T])(dependencies: T =&gt; Iterable[T])List[T]" id="339178">topologicalSort</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="339180">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="Iterable[T]" id="339187">nodes</a>: <span title="Iterable[T]">Iterable</span><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span><span class="delimiter">(</span><a title="T =&gt; Iterable[T]" id="339188">dependencies</a>: T =&gt; Iterable<span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="List[T]">List</span><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="scala.collection.mutable.HashSet[T]" id="2147487">discovered</a> = <span title="()scala.collection.mutable.HashSet[T]" class="keyword">new</span> mutable.<span title="scala.collection.mutable.HashSet[T]">HashSet</span><span class="delimiter">[</span>T<span class="delimiter">]</span>
+		<span class="keyword">val</span> <a title="scala.collection.mutable.Set[T]" id="2147488">finished</a> = <span class="delimiter">(</span><span title="(s: java.util.Set[T])scala.collection.JavaConverters.AsScala[scala.collection.mutable.Set[T]]" class="keyword">new</span> java.util.<span title="java.util.LinkedHashSet[T]">LinkedHashSet</span><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>.<span title="=&gt; scala.collection.mutable.Set[T]">asScala</span>
+
+		<span class="keyword">def</span> <a title="(nodes: Iterable[T])Unit" id="2147489">visitAll</a><span class="delimiter">(</span><a title="Iterable[T]" id="2147593">nodes</a>: <span title="Iterable[T]">Iterable</span><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span> = <a href="#2147593" title="Iterable[T]">nodes</a> <span title="(f: T =&gt; Unit)Unit">foreach</span> <a href="#2147490" title="(node: T)Unit">visit</a>
+		<span class="keyword">def</span> <a title="(node: T)Unit" id="2147490">visit</a><span class="delimiter">(</span><a title="T" id="2147609">node</a> : <a href="#339180" title="T">T</a><span class="delimiter">)</span><span class="delimiter">{</span>
+			<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#2147487" title="(elem: T)Boolean">discovered</a><span class="delimiter">(</span><a href="#2147609" title="T">node</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+				<a href="#2147487" title="(elem: T, included: Boolean)Unit">discovered</a><span class="delimiter">(</span><a href="#2147609" title="T">node</a><span class="delimiter">)</span> = <span title="Boolean(true)" class="keyword">true</span>; 
+				<span class="keyword">try</span> <span class="delimiter">{</span> <a href="#2147489" title="(nodes: Iterable[T])Unit">visitAll</a><span class="delimiter">(</span><a href="#339188" title="(v1: T)Iterable[T]">dependencies</a><span class="delimiter">(</span><a href="#2147609" title="T">node</a><span class="delimiter">)</span><span class="delimiter">)</span>; <span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Nothing" id="2147635">c</a>: <a href="#339184" title="sbt.Dag.Cyclic">Cyclic</a> =&gt; <span title="Nothing" class="keyword">throw</span> <a href="#2147609" title="T">node</a> <a href="#2147648" title="(a: Any)sbt.Dag.Cyclic">::</a> <a href="#2147635" title="sbt.Dag.Cyclic">c</a> <span class="delimiter">}</span>
+				<a href="#2147488" title="scala.collection.mutable.Set[T]">finished</a> <span title="(elem: T)finished.type">+=</span> <a href="#2147609" title="T">node</a>;
+			<span class="delimiter">}</span>
+			<span class="keyword">else</span> <span title="Unit" class="keyword">if</span><span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#2147488" title="(elem: T)Boolean">finished</a><span class="delimiter">(</span><a href="#2147609" title="T">node</a><span class="delimiter">)</span><span class="delimiter">)</span>
+				<span title="Nothing" class="keyword">throw</span> <a href="#2147646" title="(value: Any)sbt.Dag.Cyclic" class="keyword">new</a> <a href="#339184" title="sbt.Dag.Cyclic">Cyclic</a><span class="delimiter">(</span><a href="#2147609" title="T">node</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+		<a href="#2147489" title="(nodes: Iterable[T])Unit">visitAll</a><span class="delimiter">(</span><a href="#339187" title="Iterable[T]">nodes</a><span class="delimiter">)</span>;
+	
+		<a href="#2147488" title="scala.collection.mutable.Set[T]">finished</a>.<span title="=&gt; List[T]">toList</span>;
+	<span class="delimiter">}</span>
+	<span class="comment">// doesn't check for cycles</span>
+	<span class="keyword">def</span> <a title="[T](node: T)(dependencies: T =&gt; Iterable[T])List[T]" id="339181">topologicalSortUnchecked</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="339183">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="T" id="1223419">node</a>: <a href="#339183" title="T">T</a><span class="delimiter">)</span><span class="delimiter">(</span><a title="T =&gt; Iterable[T]" id="1223420">dependencies</a>: T =&gt; Iterable<span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="List[T]">List</span><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="scala.collection.mutable.HashSet[T]" id="2147693">discovered</a> = <span title="()scala.collection.mutable.HashSet[T]" class="keyword">new</span> mutable.<span title="scala.collection.mutable.HashSet[T]">HashSet</span><span class="delimiter">[</span>T<span class="delimiter">]</span>
+		<span class="keyword">var</span> <a title="List[T]" id="2147694">finished</a>: <span title="List[T]">List</span><span class="delimiter">[</span>T<span class="delimiter">]</span> = <span title="object Nil">Nil</span>
+
+		<span class="keyword">def</span> <a title="(nodes: Iterable[T])Unit" id="2147695">visitAll</a><span class="delimiter">(</span><a title="Iterable[T]" id="2147698">nodes</a>: <span title="Iterable[T]">Iterable</span><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span> = <a href="#2147698" title="Iterable[T]">nodes</a> <span title="(f: T =&gt; Unit)Unit">foreach</span> <a href="#2147696" title="(node: T)Unit">visit</a>
+		<span class="keyword">def</span> <a title="(node: T)Unit" id="2147696">visit</a><span class="delimiter">(</span><a title="T" id="2147714">node</a> : <a href="#339183" title="T">T</a><span class="delimiter">)</span><span class="delimiter">{</span>
+			<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#2147693" title="(elem: T)Boolean">discovered</a><span class="delimiter">(</span><a href="#2147714" title="T">node</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+				<a href="#2147693" title="(elem: T, included: Boolean)Unit">discovered</a><span class="delimiter">(</span><a href="#2147714" title="T">node</a><span class="delimiter">)</span> = <span title="Boolean(true)" class="keyword">true</span>; 
+				<a href="#2147695" title="(nodes: Iterable[T])Unit">visitAll</a><span class="delimiter">(</span><a href="#1223420" title="(v1: T)Iterable[T]">dependencies</a><span class="delimiter">(</span><a href="#2147714" title="T">node</a><span class="delimiter">)</span><span class="delimiter">)</span>
+				<a href="#2147694" title="List[T]">finished</a> <span title="(x: T)List[T]">::=</span> <a href="#2147714" title="T">node</a>;
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+
+		<a href="#2147696" title="(node: T)Unit">visit</a><span class="delimiter">(</span><a href="#1223419" title="T">node</a><span class="delimiter">)</span>;
+		<a href="#2147694" title="List[T]">finished</a>;
+	<span class="delimiter">}</span>
+	<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Cyclic extends java.lang.Exception with ScalaObject" id="339184">Cyclic</a><a href="#339184" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Any" id="2147690">value</a>: <span title="Any">Any</span>, <span class="keyword">val</span> <a title="List[Any]" id="2147691">all</a>: <span title="List[Any]">List</span><span class="delimiter">[</span>Any<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Boolean" id="2147692">complete</a>: <span title="Boolean">Boolean</span><span class="delimiter">)</span>
+		<span class="keyword">extends</span> <span title="java.lang.Exception">Exception</span><span class="delimiter">(</span> <span title="java.lang.String(&quot;Cyclic reference involving &quot;)" class="string">&quot;Cyclic reference involving &quot;</span> <span title="(x$1: Any)java.lang.String">+</span>
+			<span class="delimiter">(</span><span title="Any" class="keyword">if</span><span class="delimiter">(</span><a href="#2147692" title="Boolean">complete</a><span class="delimiter">)</span> <a href="#2147691" title="List[Any]">all</a>.<span title="(start: String, sep: String, end: String)String">mkString</span><span class="delimiter">(</span><span title="java.lang.String(&quot;\012   &quot;)" class="string">&quot;\n   &quot;</span>, <span title="java.lang.String(&quot;\012   &quot;)" class="string">&quot;\n   &quot;</span>, <span title="java.lang.String(&quot;&quot;)" class="string">&quot;&quot;</span><span class="delimiter">)</span> <span class="keyword">else</span> <a href="#2147690" title="Any">value</a><span class="delimiter">)</span> 
+		<span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="(value: Any)sbt.Dag.Cyclic" id="2147646" class="keyword">this</a><span class="delimiter">(</span><a title="Any" id="2147689">value</a>: <span title="Any">Any</span><span class="delimiter">)</span> = <a href="#339184" title="Cyclic.this.type" class="keyword">this</a><span class="delimiter">(</span><a href="#2147689" title="Any">value</a>, <a href="#2147689" title="Any">value</a> <a href="#2147768" title="(x: Any)List[Any]">::</a> <span title="object Nil">Nil</span>, <span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+		<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="2147647">toString</a> = <a href="#339184" title="()java.lang.String">getMessage</a>
+		<span class="keyword">def</span> <a title="(a: Any)sbt.Dag.Cyclic" id="2147648">::</a><span class="delimiter">(</span><a title="Any" id="2147650">a</a>: <span title="Any">Any</span><span class="delimiter">)</span>: <a href="#339184" title="sbt.Dag.Cyclic">Cyclic</a> = 
+			<span title="sbt.Dag.Cyclic" class="keyword">if</span><span class="delimiter">(</span><a href="#2147692" title="=&gt; Boolean">complete</a><span class="delimiter">)</span>
+				<a href="#339184" title="sbt.Dag.Cyclic" class="keyword">this</a>
+			<span class="keyword">else</span> <span title="sbt.Dag.Cyclic" class="keyword">if</span><span class="delimiter">(</span><a href="#2147650" title="Any">a</a> <span title="(x$1: Any)Boolean">==</span> <a href="#2147690" title="=&gt; Any">value</a><span class="delimiter">)</span>
+				<span title="sbt.Dag.Cyclic" class="keyword">new</span> <a href="#339184" title="sbt.Dag.Cyclic">Cyclic</a><span class="delimiter">(</span><a href="#2147690" title="=&gt; Any">value</a>, <a href="#2147691" title="=&gt; List[Any]">all</a>, <span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>
+			<span class="keyword">else</span>
+				<span title="sbt.Dag.Cyclic" class="keyword">new</span> <a href="#339184" title="sbt.Dag.Cyclic">Cyclic</a><span class="delimiter">(</span><a href="#2147690" title="=&gt; Any">value</a>, <a href="#2147650" title="Any">a</a> <a href="#2147784" title="(x: Any)List[Any]">::</a> <a href="#2147691" title="=&gt; List[Any]">all</a>, <span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+
+        </pre>
+    </body>
+</html>

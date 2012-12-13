@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>LogEvent.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009 Mark Harrah
+ */</span>
+ <span class="keyword">package</span> sbt
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait LogEvent extends java.lang.Object with NotNull" id="13060">LogEvent</a> <span class="keyword">extends</span> <span title="NotNull">NotNull</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Success extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13061">Success</a><a href="#13061" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="2193166">msg</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Log extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13062">Log</a><a href="#13062" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="sbt.Level.Value" id="2193183">level</a>: Level.<span title="sbt.Level.Value">Value</span>, <span class="keyword">val</span> <a title="String" id="2193184">msg</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Trace extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13063">Trace</a><a href="#13063" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Throwable" id="2193149">exception</a>: <span title="Throwable">Throwable</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class SetLevel extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13064">SetLevel</a><a href="#13064" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="sbt.Level.Value" id="2193039">newLevel</a>: Level.<span title="sbt.Level.Value">Value</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class SetTrace extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13065">SetTrace</a><a href="#13065" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Int" id="2193121">level</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class SetSuccess extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13066">SetSuccess</a><a href="#13066" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Boolean" id="2193096">enabled</a>: <span title="Boolean">Boolean</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class ControlEvent extends java.lang.Object with sbt.LogEvent with ScalaObject" id="13067">ControlEvent</a><a href="#13067" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="sbt.ControlEvent.Value" id="2193236">event</a>: ControlEvent.<span title="sbt.ControlEvent.Value">Value</span>, <span class="keyword">val</span> <a title="String" id="2193237">msg</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#13060" title="sbt.LogEvent">LogEvent</a>
+
+<span class="keyword">object</span> <a title="object sbt.ControlEvent" id="13068">ControlEvent</a> <span title="ScalaObject" class="keyword">extends</span> <span title="Enumeration">Enumeration</span>
+<span class="delimiter">{</span>
+	<span class="keyword">val</span> <a title="sbt.ControlEvent.Value" id="2193223">Start</a>, <a title="sbt.ControlEvent.Value" id="2193225">Header</a>, <a title="sbt.ControlEvent.Value" id="2193227">Finish</a> = <span title="=&gt; sbt.ControlEvent.Value">Value</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

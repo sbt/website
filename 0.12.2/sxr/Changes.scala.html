@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Changes.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> inc
+
+<span class="keyword">import</span> xsbt.api.NameChanges
+<span class="keyword">import</span> java.io.File
+
+<span class="keyword">final</span> case <span class="keyword">class</span> <a title="class InitialChanges extends java.lang.Object with ScalaObject with Product with Serializable" id="122547">InitialChanges</a><a href="#122547" title="ScalaObject" class="delimiter">(</a><a title="sbt.inc.Changes[java.io.File]" id="122538">internalSrc</a>: <a href="#9800" title="sbt.inc.Changes[java.io.File]">Changes</a><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="Set[java.io.File]" id="122539">removedProducts</a>: <span title="Set[java.io.File]">Set</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="Set[java.io.File]" id="122540">binaryDeps</a>: <span title="Set[java.io.File]">Set</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="sbt.inc.APIChanges[String]" id="122541">external</a>: <a href="#9798" title="sbt.inc.APIChanges[String]">APIChanges</a><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class APIChanges[T] extends java.lang.Object with ScalaObject" id="9798">APIChanges</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="9799">T</a><span class="delimiter">]</span><a href="#9798" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="Set[T]" id="122492">modified</a>: <span title="Set[T]">Set</span><span class="delimiter">[</span>T<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="xsbt.api.NameChanges" id="122493">names</a>: <a href="SameAPI.scala.html#9728" title="xsbt.api.NameChanges">NameChanges</a><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.lang.String" id="122398">toString</a> = <span title="java.lang.String(&quot;API Changes: &quot;)" class="string">&quot;API Changes: &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#122492" title="=&gt; Set[T]">modified</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;\012&quot;)" class="string">&quot;\n&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#122493" title="=&gt; xsbt.api.NameChanges">names</a>
+<span class="delimiter">}</span>
+
+<span class="keyword">trait</span> <a title="trait Changes[A] extends java.lang.Object" id="9800">Changes</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="9801">A</a><span class="delimiter">]</span>
+<span title="java.lang.Object" class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="=&gt; Set[A]" id="122387">added</a>: <span title="Set[A]">Set</span><span class="delimiter">[</span>A<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="=&gt; Set[A]" id="122388">removed</a>: <span title="Set[A]">Set</span><span class="delimiter">[</span>A<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="=&gt; Set[A]" id="122389">changed</a>: <span title="Set[A]">Set</span><span class="delimiter">[</span>A<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="=&gt; Set[A]" id="122390">unmodified</a>: <span title="Set[A]">Set</span><span class="delimiter">[</span>A<span class="delimiter">]</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">sealed</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class Change extends java.lang.Object with ScalaObject" id="9802">Change</a><a href="#9802" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="java.io.File" id="122504">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Removed extends sbt.inc.Change with ScalaObject" id="9803">Removed</a><a href="#9803" title="ScalaObject" class="delimiter">(</a><a title="java.io.File" id="122510">f</a>: <span title="java.io.File">File</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#9802" title="sbt.inc.Change">Change</a><span class="delimiter">(</span><a href="#122510" title="java.io.File">f</a><span class="delimiter">)</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Added extends sbt.inc.Change with ScalaObject" id="9804">Added</a><a href="#9804" title="ScalaObject" class="delimiter">(</a><a title="java.io.File" id="122519">f</a>: <span title="java.io.File">File</span>, <a title="sbt.inc.Stamp" id="122520">newStamp</a>: <a href="Stamp.scala.html#9882" title="sbt.inc.Stamp">Stamp</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#9802" title="sbt.inc.Change">Change</a><span class="delimiter">(</span><a href="#122519" title="java.io.File">f</a><span class="delimiter">)</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class Modified extends sbt.inc.Change with ScalaObject" id="9805">Modified</a><a href="#9805" title="ScalaObject" class="delimiter">(</a><a title="java.io.File" id="122532">f</a>: <span title="java.io.File">File</span>, <a title="sbt.inc.Stamp" id="122533">oldStamp</a>: <a href="Stamp.scala.html#9882" title="sbt.inc.Stamp">Stamp</a>, <a title="sbt.inc.Stamp" id="122534">newStamp</a>: <a href="Stamp.scala.html#9882" title="sbt.inc.Stamp">Stamp</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#9802" title="sbt.inc.Change">Change</a><span class="delimiter">(</span><a href="#122532" title="java.io.File">f</a><span class="delimiter">)</span>
+        </pre>
+    </body>
+</html>

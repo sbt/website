@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/Structure.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti.api;
+
+<span class="keyword">import</span> java.util.Arrays;
+<span class="keyword">import</span> java.util.List;
+public <span class="keyword">class</span> <a title="object xsbti.api.Structure" id="10432">Structure</a> <span class="keyword">extends</span> <a href="Type.java.html#10456" title="xsbti.api.Type">Type</a> 
+<span class="delimiter">{</span>
+	public Structure<a href="#10432" title="xsbti.api.Structure" class="delimiter">(</a><a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Type.java.html#10456" title="xsbti.api.Type">Type</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Type]]" id="91450">parents</a>, <a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Definition]]" id="91451">declared</a>, <a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Definition]]" id="91452">inherited</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">this</span>.parents = parents;
+		<span class="keyword">this</span>.declared = declared;
+		<span class="keyword">this</span>.inherited = inherited;
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Type.java.html#10456" title="xsbti.api.Type">Type</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Type]]" id="91360">parents</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Definition]]" id="91361">declared</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> <a href="Lazy.java.html#10133" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span>&gt; <a title="xsbti.api.Lazy[Array[xsbti.api.Definition]]" id="91362">inherited</a>;
+	public <span class="keyword">final</span> <a href="Type.java.html#10456" title="xsbti.api.Type">Type</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.api.Type]" id="91363">parents</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> parents.get<span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+	public <span class="keyword">final</span> <a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.api.Definition]" id="91364">declared</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> declared.get<span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+	public <span class="keyword">final</span> <a href="Definition.java.html#10274" title="xsbti.api.Definition">Definition</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.api.Definition]" id="91365">inherited</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> inherited.get<span class="delimiter">(</span><span class="delimiter">)</span>;
+	<span class="delimiter">}</span>
+	public String <a title="()java.lang.String" id="91366">toString</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">return</span> <span class="string">&quot;Structure(&quot;</span> + <span class="string">&quot;parents: &quot;</span> + Arrays.toString<span class="delimiter">(</span>parents<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;declared: &quot;</span> + Arrays.toString<span class="delimiter">(</span>declared<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;inherited: &quot;</span> + Arrays.toString<span class="delimiter">(</span>inherited<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>+ <span class="string">&quot;)&quot;</span>;
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

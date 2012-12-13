@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dependency Management Flow &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.2-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Forking" href="Forking.html" />
+    <link rel="prev" title="Cross-building" href="Cross-Build.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Dependency Management Flow</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.2-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Forking.html">Forking</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Cross-Build.html">Cross-building</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.2-RC1">Version 0.12.2-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="dependency-management-flow">
+<h1>Dependency Management Flow<a class="headerlink" href="#dependency-management-flow" title="Permalink to this headline">¶</a></h1>
+<p>0.12.1 addresses several issues with dependency management. These fixes
+were made possible by specific, reproducible examples, such as a
+situation where the resolution cache got out of date (<a class="reference external" href="https://github.com/harrah/xsbt/issues/532" title="Cached UpdateReport may become stale if cachedDescriptor was externally changed"><span class="xref issue closed">#532</span></a>). A brief summary of
+the current work flow with dependency management in sbt follows.</p>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">update</span></tt> resolves dependencies according to the settings in a build
+file, such as <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> and <tt class="docutils literal"><span class="pre">resolvers</span></tt>. Other tasks use
+the output of <tt class="docutils literal"><span class="pre">update</span></tt> (an <tt class="docutils literal"><span class="pre">UpdateReport</span></tt>) to form various
+classpaths. Tasks that in turn use these classpaths, such as <tt class="docutils literal"><span class="pre">compile</span></tt>
+or <tt class="docutils literal"><span class="pre">run</span></tt>, thus indirectly depend on <tt class="docutils literal"><span class="pre">update</span></tt>. This means that before
+<tt class="docutils literal"><span class="pre">compile</span></tt> can run, the <tt class="docutils literal"><span class="pre">update</span></tt> task needs to run. However,
+resolving dependencies on every <tt class="docutils literal"><span class="pre">compile</span></tt> would be unnecessarily slow
+and so <tt class="docutils literal"><span class="pre">update</span></tt> must be particular about when it actually performs a
+resolution.</p>
+</div>
+<div class="section" id="caching-and-configuration">
+<h2>Caching and Configuration<a class="headerlink" href="#caching-and-configuration" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Normally, if no dependency management configuration has changed since
+the last successful resolution and the retrieved files are still
+present, sbt does not ask Ivy to perform resolution.</li>
+<li>Changing the configuration, such as adding or removing dependencies
+or changing the version or other attributes of a dependency, will
+automatically cause resolution to be performed. Updates to locally
+published dependencies should be detected in sbt 0.12.1 and later and
+will force an <tt class="docutils literal"><span class="pre">update</span></tt>. Dependent tasks like <tt class="docutils literal"><span class="pre">compile</span></tt> and
+<tt class="docutils literal"><span class="pre">run</span></tt> will get updated classpaths.</li>
+<li>Directly running the <tt class="docutils literal"><span class="pre">update</span></tt> task (as opposed to a task that
+depends on it) will force resolution to run, whether or not
+configuration changed. This should be done in order to refresh remote
+SNAPSHOT dependencies.</li>
+<li>When <tt class="docutils literal"><span class="pre">offline</span> <span class="pre">:=</span> <span class="pre">true</span></tt>, remote SNAPSHOTs will not be updated by a
+resolution, even an explicitly requested <tt class="docutils literal"><span class="pre">update</span></tt>. This should
+effectively support working without a connection to remote
+repositories. Reproducible examples demonstrating otherwise are
+appreciated. Obviously, <tt class="docutils literal"><span class="pre">update</span></tt> must have successfully run before
+going offline.</li>
+<li>Overriding all of the above, <tt class="docutils literal"><span class="pre">skip</span> <span class="pre">in</span> <span class="pre">update</span> <span class="pre">:=</span> <span class="pre">true</span></tt> will tell sbt
+to never perform resolution. Note that this can cause dependent tasks
+to fail. For example, compilation may fail if jars have been deleted
+from the cache (and so needed classes are missing) or a dependency
+has been added (but will not be resolved because skip is true). Also,
+<tt class="docutils literal"><span class="pre">update</span></tt> itself will immediately fail if resolution has not been
+allowed to run since the last <tt class="docutils literal"><span class="pre">clean</span></tt>.</li>
+</ol>
+</div>
+<div class="section" id="general-troubleshooting-steps">
+<h2>General troubleshooting steps<a class="headerlink" href="#general-troubleshooting-steps" title="Permalink to this headline">¶</a></h2>
+<ol class="upperalpha simple">
+<li>Run <tt class="docutils literal"><span class="pre">update</span></tt> explicitly. This will typically fix problems with out
+of date SNAPSHOTs or locally published artifacts.</li>
+<li>If a file cannot be
+found, look at the output of <tt class="docutils literal"><span class="pre">update</span></tt> to see where Ivy is looking for
+the file. This may help diagnose an incorrectly defined dependency or a
+dependency that is actually not present in a repository.</li>
+<li><tt class="docutils literal"><span class="pre">last</span> <span class="pre">update</span></tt> contains more information about the most recent
+resolution and download. The amount of debugging output from Ivy is
+high, so you may want to use <tt class="docutils literal"><span class="pre">last-grep</span></tt> (run <tt class="docutils literal"><span class="pre">help</span> <span class="pre">last-grep</span></tt> for
+usage).</li>
+<li>Run <tt class="docutils literal"><span class="pre">clean</span></tt> and then <tt class="docutils literal"><span class="pre">update</span></tt>. If this works, it could
+indicate a bug in sbt, but the problem would need to be reproduced in
+order to diagnose and fix it.</li>
+<li>Before deleting all of the Ivy cache,
+first try deleting files in <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt> related to problematic
+dependencies. For example, if there are problems with dependency
+<tt class="docutils literal"><span class="pre">&quot;org.example&quot;</span> <span class="pre">%</span> <span class="pre">&quot;demo&quot;</span> <span class="pre">%</span> <span class="pre">&quot;1.0&quot;</span></tt>, delete
+<tt class="docutils literal"><span class="pre">~/.ivy2/cache/org.example/demo/1.0/</span></tt> and retry <tt class="docutils literal"><span class="pre">update</span></tt>. This
+avoids needing to redownload all dependencies.</li>
+<li>Normal sbt usage
+should not require deleting files from <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt>, especially if
+the first four steps have been followed. If deleting the cache fixes a
+dependency management issue, please try to reproduce the issue and
+submit a test case.</li>
+</ol>
+</div>
+<div class="section" id="plugins">
+<h2>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h2>
+<p>These troubleshooting steps can be run for plugins by changing to the
+build definition project, running the commands, and then returning to
+the main project. For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> reload plugins
+<span class="gp">&gt;</span> update
+<span class="gp">&gt;</span> reload <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<ol class="upperalpha simple">
+<li>Configure offline behavior for all projects on a machine by putting
+<tt class="docutils literal"><span class="pre">offline</span> <span class="pre">:=</span> <span class="pre">true</span></tt> in <tt class="docutils literal"><span class="pre">~/.sbt/global.sbt</span></tt>. A command that does this
+for the user would make a nice pull request. Perhaps the setting of
+offline should go into the output of <tt class="docutils literal"><span class="pre">about</span></tt> or should it be a warning
+in the output of <tt class="docutils literal"><span class="pre">update</span></tt> or both?</li>
+<li>The cache improvements in 0.12.1 address issues in the change detection
+for <tt class="docutils literal"><span class="pre">update</span></tt> so that it will correctly re-resolve automatically in more
+situations. A problem with an out of date cache can usually be attributed
+to a bug in that change detection if explicitly running <tt class="docutils literal"><span class="pre">update</span></tt> fixes
+the problem.</li>
+<li>A common solution to dependency management problems in sbt has been to
+remove <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt>. Before doing this with 0.12.1, be sure to
+follow the steps in the troubleshooting section first. In particular,
+verify that a <tt class="docutils literal"><span class="pre">clean</span></tt> and an explicit <tt class="docutils literal"><span class="pre">update</span></tt> do not solve the
+issue.</li>
+<li>There is no need to mark SNAPSHOT dependencies as <tt class="docutils literal"><span class="pre">changing()</span></tt>
+because sbt configures Ivy to know this already.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Dependency Management Flow</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#caching-and-configuration">Caching and Configuration</a></li>
+<li><a class="reference internal" href="#general-troubleshooting-steps">General troubleshooting steps</a></li>
+<li><a class="reference internal" href="#plugins">Plugins</a></li>
+<li><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Level.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009 Mark Harrah
+ */</span>
+ <span class="keyword">package</span> sbt
+
+<span class="comment">/** An enumeration defining the levels available for logging.  A level includes all of the levels
+* with id larger than its own id.  For example, Warn (id=3) includes Error (id=4).*/</span>
+<span class="keyword">object</span> <a title="object sbt.Level" id="13055">Level</a> <span title="ScalaObject" class="keyword">extends</span> <span title="Enumeration">Enumeration</span>
+<span class="delimiter">{</span>
+	<span class="keyword">val</span> <a title="sbt.Level.Value" id="89055">Debug</a> = <span title="(i: Int, name: String)sbt.Level.Value">Value</span><span class="delimiter">(</span><span title="Int(1)" class="int">1</span>, <span title="java.lang.String(&quot;debug&quot;)" class="string">&quot;debug&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="sbt.Level.Value" id="89057">Info</a> = <span title="(i: Int, name: String)sbt.Level.Value">Value</span><span class="delimiter">(</span><span title="Int(2)" class="int">2</span>, <span title="java.lang.String(&quot;info&quot;)" class="string">&quot;info&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="sbt.Level.Value" id="89059">Warn</a> = <span title="(i: Int, name: String)sbt.Level.Value">Value</span><span class="delimiter">(</span><span title="Int(3)" class="int">3</span>, <span title="java.lang.String(&quot;warn&quot;)" class="string">&quot;warn&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="sbt.Level.Value" id="89061">Error</a> = <span title="(i: Int, name: String)sbt.Level.Value">Value</span><span class="delimiter">(</span><span title="Int(4)" class="int">4</span>, <span title="java.lang.String(&quot;error&quot;)" class="string">&quot;error&quot;</span><span class="delimiter">)</span>
+	<span class="comment">/** Defines the label to use for success messages.  
+	* Because the label for levels is defined in this module, the success label is also defined here. */</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="89063">SuccessLabel</a> = <span title="java.lang.String(&quot;success&quot;)" class="string">&quot;success&quot;</span>
+
+	<span class="keyword">def</span> <a title="(a: sbt.Level.Value, b: sbt.Level.Value)sbt.Level.Value" id="89065">union</a><span class="delimiter">(</span><a title="sbt.Level.Value" id="2194628">a</a>: <span title="sbt.Level.Value">Value</span>, <a title="sbt.Level.Value" id="2194629">b</a>: <span title="sbt.Level.Value">Value</span><span class="delimiter">)</span> = <span title="sbt.Level.Value" class="keyword">if</span><span class="delimiter">(</span><a href="#2194628" title="sbt.Level.Value">a</a>.<span title="=&gt; Int">id</span> <span title="(x: Int)Boolean">&lt;</span> <a href="#2194629" title="sbt.Level.Value">b</a>.<span title="=&gt; Int">id</span><span class="delimiter">)</span> <a href="#2194628" title="sbt.Level.Value">a</a> <span class="keyword">else</span> <a href="#2194629" title="sbt.Level.Value">b</a>
+	<span class="keyword">def</span> <a title="(vs: Seq[sbt.Level.Value])sbt.Level.Value" id="89066">unionAll</a><span class="delimiter">(</span><a title="Seq[sbt.Level.Value]" id="2194636">vs</a>: <span title="Seq[sbt.Level.Value]">Seq</span><span class="delimiter">[</span>Value<span class="delimiter">]</span><span class="delimiter">)</span> = <a href="#2194636" title="Seq[sbt.Level.Value]">vs</a> <span title="(op: (sbt.Level.Value, sbt.Level.Value) =&gt; sbt.Level.Value)sbt.Level.Value">reduceLeft</span> <a href="#89065" title="(a: sbt.Level.Value, b: sbt.Level.Value)sbt.Level.Value">union</a>
+
+	<span class="comment">/** Returns the level with the given name wrapped in Some, or None if no level exists for that name. */</span>
+	<span class="keyword">def</span> <a title="(s: String)Option[sbt.Level.Value]" id="89067">apply</a><span class="delimiter">(</span><a title="String" id="2194648">s</a>: <span title="String">String</span><span class="delimiter">)</span> = <span title="=&gt; sbt.Level.ValueSet">values</span>.<span title="(p: sbt.Level.Value =&gt; Boolean)Option[sbt.Level.Value]">find</span><span class="delimiter">(</span><a href="#2194648" title="String">s</a> <span title="(x$1: AnyRef)Boolean">==</span> <a href="#2194680" title="sbt.Level.Value">_</a>.<span title="()java.lang.String">toString</span><span class="delimiter">)</span>
+	<span class="comment">/** Same as apply, defined for use in pattern matching. */</span>
+	<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">def</span> <a title="(s: String)Option[sbt.Level.Value]" id="89068">unapply</a><span class="delimiter">(</span><a title="String" id="2194685">s</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#89067" title="(s: String)Option[sbt.Level.Value]">apply</a><span class="delimiter">(</span><a href="#2194685" title="String">s</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>
