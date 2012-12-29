@@ -3,7 +3,7 @@ title: `.sbt` ビルド定義
 layout: default
 ---
 
-[Keys]: http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html
+[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html
 
 # `.sbt` ビルド定義
 
@@ -153,7 +153,7 @@ sbt のインタラクティブモードからタスクの名前を打ち込む�
 タスクの戻り値を表示するには素の `<タスク名>` ではなく、`show <タスク名>` と入力する。
 
 Scala の慣例にのっとり、ビルド定義ファイル内ではキーはキャメルケース（`camelCase`）で命名されているけども、
-sbt コマンドラインではハイフン分けされて（`hyphen-separated-words`）命名されている。  
+sbt コマンドラインではハイフン分けされて（`hyphen-separated-words`）命名されている。
 sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（[Keys] 参照）。
 例えば、`Keys.scala` に以下のキーがある:
 

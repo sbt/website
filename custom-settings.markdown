@@ -3,9 +3,9 @@ title: カスタムセッティングとタスク
 layout: default
 ---
 
-[Keys]: http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html "Keys.scala"
-[Defaults]: http://harrah.github.com/xsbt/latest/sxr/Defaults.scala.html "Defaults.scala"
-[IO]: http://harrah.github.com/xsbt/latest/api/index.html#sbt.IO$ "IO object"
+[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
+[Defaults]: http://www.scala-sbt.org/release/sxr/Defaults.scala.html "Defaults.scala"
+[IO]: http://www.scala-sbt.org/release/api/index.html#sbt.IO$ "IO object"
 
 # カスタムセッティングとタスク
 
@@ -24,7 +24,7 @@ layout: default
 
 キーは三つの型のうちどれかを持つ。`SettingKey` と `TaskKey` は、
 [.sbt ビルド定義](../basic-def)で説明した。`InputKey` に関しては、
-[Input Tasks](https://github.com/harrah/xsbt/wiki/Input-Tasks) を見てほしい。
+[Input Tasks](http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html) を見てほしい。
 
 以下に [Keys] からの具体例を示す:
 
@@ -93,12 +93,12 @@ intTask ~= { (value: Int) => value + 1 }
 プラグインを作って複数のプロジェクト間で再利用できないか考えてみよう。
 
 [以前にちょっと触れた](../using-plugins)し、
-[詳しい解説はここにあるけど](https://github.com/harrah/xsbt/wiki/Plugins)、
+[詳しい解説はここにあるけど](http://www.scala-sbt.org/release/docs/Extending/Plugins.html)、
 プラグインを作るのはすごく簡単だ。
 
 ## 続いては
 
 このページは簡単な味見だけで、
-カスタムタスクに関しては [Tasks](https://github.com/harrah/xsbt/wiki/Tasks) ページで詳細に解説されている。
+カスタムタスクに関しては [Tasks](http://www.scala-sbt.org/release/docs/Detailed-Topics/Tasks.html) ページで詳細に解説されている。
 
 そろそろ「始める sbt」も終わりだ！[簡単なまとめ](../summary)に進む。

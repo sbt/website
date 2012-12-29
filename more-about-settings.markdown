@@ -3,8 +3,7 @@ title: 他の種類のセッティング
 layout: default
 ---
 
-[Keys]: http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html "Keys.scala"
-[ScopedSetting]: http://harrah.github.com/xsbt/latest/api/sbt/ScopedSetting.html
+[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
 
 # 他の種類のセッティング
 

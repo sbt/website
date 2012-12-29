@@ -3,14 +3,14 @@ title: ライブラリ依存性
 layout: default
 ---
 
-[Keys]: http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html "Keys.scala"
+[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
 [Apache Ivy]: http://ant.apache.org/ivy/
-[Ivy revisions]: http://ant.apache.org/ivy/history/2.2.0/ivyfile/dependency.html#revision
-[Extra attributes]: http://ant.apache.org/ivy/history/2.2.0/concept.html#extra
+[Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
+[Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
 [through Ivy]: http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
-[ScalaCheck]: http://code.google.com/p/scalacheck/
+[ScalaCheck]: http://scalacheck.org
 [specs]: http://code.google.com/p/specs/
-[ScalaTest]: http://www.artima.com/scalatest/
+[ScalaTest]: http://scalatest.org
 
 # ライブラリ依存性
 

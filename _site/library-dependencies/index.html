@@ -55,7 +55,7 @@
 <p>アンマネージ依存性を説明すると、こんな感じになる。jar ファイルを <code>lib</code> に入れると、それはプロジェクトのクラスパスに追加される。
 以上！</p>
 
-<p>例えば、<a href="http://code.google.com/p/scalacheck/">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://www.artima.com/scalatest/">ScalaTest</a> などのテスト用の jar を <code>lib</code> に加えることもできる。</p>
+<p>例えば、<a href="http://scalacheck.org">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://scalatest.org">ScalaTest</a> などのテスト用の jar を <code>lib</code> に加えることもできる。</p>
 
 <p><code>lib</code> の依存性は（<code>compile</code>、<code>test</code>、<code>run</code>、そして <code>console</code> の）全てのクラスパスに追加される。
 もし、どれか一つのクラスパスを変えたい場合は、例えば <code>dependencyClasspath in Compile</code> や
@@ -100,7 +100,7 @@ sbt にその外部コンフィギュレーションファイルを使わせる�
 <pre><code>libraryDependencies += groupID % artifactID % revision % configuration
 </code></pre>
 
-<p><code>libraryDependencies</code> は <a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で以下のように定義されている:</p>
+<p><code>libraryDependencies</code> は <a href="http://www.scala-sbt.org/release/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で以下のように定義されている:</p>
 
 <pre><code> val libraryDependencies = SettingKey[Seq[ModuleID]]("library-dependencies", "Declares managed dependencies.")
 </code></pre>
@@ -161,7 +161,7 @@ sbt はプロジェクトの Scala バージョンをアーティファクト名
 <p><code>groupID % artifactID % revision</code> の <code>revision</code> は、単一の固定されたバージョン番号じゃなくてもいい。
 Ivy は与えられた制限の中でモジュールの最新の revision を選ぶことができる。
 <code>"1.6.1"</code> のような固定 revision ではなく、<code>"latest.integration"</code>、<code>"2.9.+"</code>、や <code>"[1.0,)"</code> など指定できる。
-詳しくは、<a href="http://ant.apache.org/ivy/history/2.2.0/ivyfile/dependency.html#revision">Ivy revisions</a> を参照。</p>
+詳しくは、<a href="http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision">Ivy revisions</a> を参照。</p>
 
 <h3>Resolvers</h3>
 
@@ -179,7 +179,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 <pre><code>resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 </code></pre>
 
-<p><a href="http://harrah.github.com/xsbt/latest/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:</p>
+<p><a href="http://www.scala-sbt.org/release/sxr/Keys.scala.html" title="Keys.scala">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:</p>
 
 <pre><code>val resolvers = SettingKey[Seq[Resolver]]("resolvers", "The user-defined additional resolvers for automatically managed dependencies.")
 </code></pre>
@@ -215,7 +215,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 <p>sbt のインタラクティブモードで <code>show compile:dependency-classpath</code> と打ち込んでも、Derby は出てこないはずだ。
 だけど、<code>show test:dependency-classpath</code> と打ち込むと、Derby の jar がリストにあるのが確認できる。</p>
 
-<p>普通は、<a href="http://code.google.com/p/scalacheck/">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://www.artima.com/scalatest/">ScalaTest</a> などのテスト関連の依存ライブラリは <code>% "test"</code> と共に定義される。</p>
+<p>普通は、<a href="http://scalacheck.org">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://scalatest.org">ScalaTest</a> などのテスト関連の依存ライブラリは <code>% "test"</code> と共に定義される。</p>
 
 <h1>続いては</h1>
 
