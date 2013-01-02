@@ -3,7 +3,7 @@ title: セットアップ
 layout: default
 ---
 
-[sbt-launch.jar]: http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.12.0/sbt-launch.jar
+[sbt-launch.jar]: http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.12.1/sbt-launch.jar
 
 # セットアップ
 
@@ -52,7 +52,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 訳注:
 
  - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
- - [原文のwikiのページ](https://github.com/harrah/xsbt/wiki/Getting-Started-Setup)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
+ - [原文のページ](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
  - windows の場合は、msi を使用してインストールすると、sbtのコンソールでカラー表示が可能になるので、カラーにしたい方はそちらがオススメです。(windowsの場合は上記に書いてある手動でバッチファイルを置く方法では、カラー表示にならない)
 
 ## 続いては

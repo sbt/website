@@ -58,7 +58,7 @@ addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse" % "1.4.0")
                            # 一部となる
 
        project/            # ビルド定義プロジェクトのベースディレクトリ
-	   
+
            Build.scala     # project/ プロジェクトのソースファイル、
                            # つまり、ビルド定義のソースファイル
 </pre>
@@ -223,18 +223,18 @@ seq(myPluginSettings: _*)
 `project/project/` ディレクトリに入っているかのように振る舞う。
 
 `~/.sbt/plugins/build.sbt` を作って、そこに `addSbtPlugin()` 式を書くことで
-全プロジェクトにプラグインを追加することができる。 
+全プロジェクトにプラグインを追加することができる。
 
 ## 利用可能なプラグイン
 
-[プラグインのリスト](https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list)がある。
+[プラグインのリスト](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)がある。
 
 特に人気のプラグインは:
 
  - IDE 専用プラグイン（sbt プロジェクトを IDE にインポートする）
- - [xsbt-web-plugin](https://github.com/siasia/xsbt-web-plugin) などの、web フレームワークプラグイン
+ - [xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin) などの、web フレームワークプラグイン
 
-[リストを見てほしい](https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list)。
+[リストを見てほしい](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)。
 
 ## 続いては
 
