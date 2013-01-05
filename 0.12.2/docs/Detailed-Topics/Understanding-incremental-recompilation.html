@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -178,7 +178,7 @@ trait.</li>
 abstract method called <tt class="docutils literal"><span class="pre">fullyQualifiedTraitName$$super$methodName</span></tt>;
 such methods only exist if they are used. Hence, adding the first
 call to <tt class="docutils literal"><span class="pre">super.methodName</span></tt> for a specific <tt class="docutils literal"><span class="pre">methodName</span></tt> changes
-the interface. At present, this is not yet handled—see <span class="xref issue">#{issue.id}</span>.</li>
+the interface. At present, this is not yet handled—see <a class="reference external" href="https://github.com/sbt/sbt/issues/466" title="Adding a call to super in a trait should trigger recompilation of implementing classes"><span class="xref issue">#466</span></a>.</li>
 <li><tt class="docutils literal"><span class="pre">sealed</span></tt> hierarchies of case classes allow to check exhaustiveness
 of pattern matching. Hence pattern matches using case classes must
 depend on the complete hierarchy - this is one reason why
@@ -307,7 +307,7 @@ other software component.</p>
 source code. The same should seemingly hold also in Scala, but this is
 not the case: implicit conversions might enrich class <tt class="docutils literal"><span class="pre">Foo</span></tt> with
 method <tt class="docutils literal"><span class="pre">bar</span></tt> without modifying class <tt class="docutils literal"><span class="pre">Foo</span></tt> itself (see discussion in
-issue <span class="xref issue">#{issue.id}</span> - XXX integrate more). However, if another method <tt class="docutils literal"><span class="pre">bar</span></tt>
+issue <a class="reference external" href="https://github.com/sbt/sbt/issues/288" title="unexpected transitive recompilation"><span class="xref issue closed">#288</span></a> - XXX integrate more). However, if another method <tt class="docutils literal"><span class="pre">bar</span></tt>
 is introduced in class <tt class="docutils literal"><span class="pre">Foo</span></tt>, this method should be used in preference
 to the one added through implicit conversions. Therefore any class
 depending on <tt class="docutils literal"><span class="pre">Foo</span></tt> should be recompiled. One can imagine more
@@ -318,11 +318,11 @@ implemented.</p>
 <div class="section" id="further-references">
 <h2>Further references<a class="headerlink" href="#further-references" title="Permalink to this headline">¶</a></h2>
 <p>The incremental compilation logic is implemented in
-<a class="reference external" href="https://github.com/harrah/xsbt/blob/0.13/compile/inc/Incremental.scala">https://github.com/harrah/xsbt/blob/0.13/compile/inc/Incremental.scala</a>.
+<a class="reference external" href="https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala">https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala</a>.
 Some related documentation for SBT 0.7 is available at:
 <a class="reference external" href="https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting">https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting</a>.
 Some discussion on the incremental recompilation policies is available
-in issue <span class="xref issue">#{issue.id}</span> and <span class="xref issue">#{issue.id}</span>.</p>
+in issue <a class="reference external" href="https://github.com/sbt/sbt/issues/322" title="Compile in multiple stages when the number of source files in the transitive closure is much larger than the number of immediate dependencies"><span class="xref issue closed">#322</span></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/288" title="unexpected transitive recompilation"><span class="xref issue closed">#288</span></a>.</p>
 </div>
 </div>
 
