@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -136,7 +136,7 @@ there is no global <tt class="docutils literal"><span class="pre">run</span></tt
 for the <tt class="docutils literal"><span class="pre">test</span></tt> configuration, the configuration axis must be specified
 like <tt class="docutils literal"><span class="pre">test:run</span></tt>. Some other examples that require the explicit
 <tt class="docutils literal"><span class="pre">test:</span></tt> axis:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>:console-quick
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>:consoleQuick
 <span class="gp">&gt;</span> <span class="nb">test</span>:console
 <span class="gp">&gt;</span> <span class="nb">test</span>:doc
 <span class="gp">&gt;</span> <span class="nb">test</span>:package
@@ -146,24 +146,24 @@ like <tt class="docutils literal"><span class="pre">test:run</span></tt>. Some o
 <div class="section" id="task-specific-settings">
 <h3>Task-specific Settings<a class="headerlink" href="#task-specific-settings" title="Permalink to this headline">¶</a></h3>
 <p>Some settings are defined per-task. This is used when there are several
-related tasks, such as <tt class="docutils literal"><span class="pre">package</span></tt>, <tt class="docutils literal"><span class="pre">package-src</span></tt>, and
-<tt class="docutils literal"><span class="pre">package-doc</span></tt>, in the same configuration (such as <tt class="docutils literal"><span class="pre">compile</span></tt> or
+related tasks, such as <tt class="docutils literal"><span class="pre">package</span></tt>, <tt class="docutils literal"><span class="pre">packageSrc</span></tt>, and
+<tt class="docutils literal"><span class="pre">packageDoc</span></tt>, in the same configuration (such as <tt class="docutils literal"><span class="pre">compile</span></tt> or
 <tt class="docutils literal"><span class="pre">test</span></tt>). For package tasks, their settings are the files to package,
 the options to use, and the output file to produce. Each package task
 should be able to have different values for these settings.</p>
 <p>This is done with the task axis, which selects the task to apply a
 setting to. For example, the following prints the output jar for the
 different package tasks.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> package::artifact-path
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> package::artifactPath
 <span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1.jar</span>
 
-<span class="gp">&gt;</span> package-src::artifact-path
+<span class="gp">&gt;</span> packageSrc::artifactPath
 <span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-src.jar</span>
 
-<span class="gp">&gt;</span> package-doc::artifact-path
+<span class="gp">&gt;</span> packageDoc::artifactPath
 <span class="go">[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-doc.jar</span>
 
-<span class="gp">&gt;</span> <span class="nb">test</span>:package::artifact-path
+<span class="gp">&gt;</span> <span class="nb">test</span>:package::artifactPath
 <span class="go">[info] /home/user/sample/target/scala-2.8.1.final/root_2.8.1-0.1-test.jar</span>
 </pre></div>
 </div>
@@ -183,14 +183,14 @@ example.</p>
 task or the value and type of a setting. The following section of output
 is labeled &quot;Provided by&quot;. This shows the actual scope where the setting
 is defined. For example,</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect library-dependencies
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect libraryDependencies
 <span class="go">[info] Setting: scala.collection.Seq[sbt.ModuleID] = List(org.scalaz:scalaz-core:6.0-SNAPSHOT, org.scala-tools.testing:scalacheck:1.8:test)</span>
 <span class="go">[info] Provided by:</span>
-<span class="go">[info]  {file:/home/user/sample/}root/*:library-dependencies</span>
+<span class="go">[info]  {file:/home/user/sample/}root/*:libraryDependencies</span>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>This shows that <tt class="docutils literal"><span class="pre">library-dependencies</span></tt> has been defined on the current
+<p>This shows that <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> has been defined on the current
 project (<tt class="docutils literal"><span class="pre">{file:/home/user/sample/}root</span></tt>) in the global configuration
 (<tt class="docutils literal"><span class="pre">*:</span></tt>). For a task like <tt class="docutils literal"><span class="pre">update</span></tt>, the output looks like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
@@ -229,24 +229,24 @@ distinction is explained in more detail in the following sections.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console
 <span class="go">...</span>
 <span class="go">[info] Dependencies:</span>
-<span class="go">[info]  compile:console::full-classpath</span>
-<span class="go">[info]  compile:console::scalac-options</span>
-<span class="go">[info]  compile:console::initial-commands</span>
-<span class="go">[info]  compile:console::cleanup-commands</span>
+<span class="go">[info]  compile:console::fullClasspath</span>
+<span class="go">[info]  compile:console::scalacOptions</span>
+<span class="go">[info]  compile:console::initialCommands</span>
+<span class="go">[info]  compile:console::cleanupCommands</span>
 <span class="go">[info]  compile:console::compilers</span>
-<span class="go">[info]  compile:console::task-temporary-directory</span>
-<span class="go">[info]  compile:console::scala-instance</span>
+<span class="go">[info]  compile:console::taskTemporary-directory</span>
+<span class="go">[info]  compile:console::scalaInstance</span>
 <span class="go">[info]  compile:console::streams</span>
 
 <span class="go">...</span>
 </pre></div>
 </div>
 <p>This shows the inputs to the <tt class="docutils literal"><span class="pre">console</span></tt> task. We can see that it gets
-its classpath and options from <tt class="docutils literal"><span class="pre">full-classpath</span></tt> and
-<tt class="docutils literal"><span class="pre">scalac-options(for</span> <span class="pre">console)</span></tt>. The information provided by the
+its classpath and options from <tt class="docutils literal"><span class="pre">fullClasspath</span></tt> and
+<tt class="docutils literal"><span class="pre">scalacOptions(for</span> <span class="pre">console)</span></tt>. The information provided by the
 <tt class="docutils literal"><span class="pre">inspect</span></tt> command can thus assist in finding the right setting to
 change. The convention for keys, like <tt class="docutils literal"><span class="pre">console</span></tt> and
-<tt class="docutils literal"><span class="pre">full-classpath</span></tt>, is that the Scala identifier is camel case, while
+<tt class="docutils literal"><span class="pre">fullClasspath</span></tt>, is that the Scala identifier is camel case, while
 the String representation is lowercase and separated by dashes. The
 Scala identifier for a configuration is uppercase to distinguish it from
 tasks like <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt>. For example, we can infer from the
@@ -260,12 +260,12 @@ starts up:</p>
 </pre></div>
 </div>
 <p><tt class="docutils literal"><span class="pre">inspect</span></tt> showed that <tt class="docutils literal"><span class="pre">console</span></tt> used the setting
-<tt class="docutils literal"><span class="pre">compile:console::initial-commands</span></tt>. Translating the
-<tt class="docutils literal"><span class="pre">initial-commands</span></tt> string to the Scala identifier gives us
+<tt class="docutils literal"><span class="pre">compile:console::initialCommands</span></tt>. Translating the
+<tt class="docutils literal"><span class="pre">initialCommands</span></tt> string to the Scala identifier gives us
 <tt class="docutils literal"><span class="pre">initialCommands</span></tt>. <tt class="docutils literal"><span class="pre">compile</span></tt> indicates that this is for the main
 sources. <tt class="docutils literal"><span class="pre">console::</span></tt> indicates that the setting is specific to
 <tt class="docutils literal"><span class="pre">console</span></tt>. Because of this, we can set the initial commands on the
-<tt class="docutils literal"><span class="pre">console</span></tt> task without affecting the <tt class="docutils literal"><span class="pre">console-quick</span></tt> task, for
+<tt class="docutils literal"><span class="pre">console</span></tt> task without affecting the <tt class="docutils literal"><span class="pre">consoleQuick</span></tt> task, for
 example.</p>
 </div>
 <div class="section" id="actual-dependencies">
@@ -280,27 +280,27 @@ Dependencies,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect actual console
 <span class="go">...</span>
 <span class="go">[info] Dependencies:</span>
-<span class="go">[info]  compile:scalac-options</span>
-<span class="go">[info]  compile:full-classpath</span>
-<span class="go">[info]  *:scala-instance</span>
-<span class="go">[info]  */*:initial-commands</span>
-<span class="go">[info]  */*:cleanup-commands</span>
-<span class="go">[info]  */*:task-temporary-directory</span>
+<span class="go">[info]  compile:scalacOptions</span>
+<span class="go">[info]  compile:fullClasspath</span>
+<span class="go">[info]  *:scalaInstance</span>
+<span class="go">[info]  */*:initialCommands</span>
+<span class="go">[info]  */*:cleanupCommands</span>
+<span class="go">[info]  */*:taskTemporaryDirectory</span>
 <span class="go">[info]  *:console::compilers</span>
 <span class="go">[info]  compile:console::streams</span>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>For <tt class="docutils literal"><span class="pre">initial-commands</span></tt>, we see that it comes from the global scope
+<p>For <tt class="docutils literal"><span class="pre">initialCommands</span></tt>, we see that it comes from the global scope
 (<tt class="docutils literal"><span class="pre">*/*:</span></tt>). Combining this with the relevant output from
 <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">console</span></tt>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">compile:console::initial-commands</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">compile:console::initialCommands</span>
 </pre></div>
 </div>
-<p>we know that we can set <tt class="docutils literal"><span class="pre">initial-commands</span></tt> as generally as the global
+<p>we know that we can set <tt class="docutils literal"><span class="pre">initialCommands</span></tt> as generally as the global
 scope, as specific as the current project's <tt class="docutils literal"><span class="pre">console</span></tt> task scope, or
 anything in between. This means that we can, for example, set
-<tt class="docutils literal"><span class="pre">initial-commands</span></tt> for the whole project and will affect <tt class="docutils literal"><span class="pre">console</span></tt>:</p>
+<tt class="docutils literal"><span class="pre">initialCommands</span></tt> for the whole project and will affect <tt class="docutils literal"><span class="pre">console</span></tt>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
 <span class="go">...</span>
 </pre></div>
@@ -308,20 +308,20 @@ anything in between. This means that we can, for example, set
 <p>The reason we might want to set it here this is that other console tasks
 will use this value now. We can see which ones use our new setting by
 looking at the reverse dependencies output of <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">actual</span></tt>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect actual initial-commands
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect actual initialCommands
 <span class="go">...</span>
 <span class="go">[info] Reverse dependencies:</span>
 <span class="go">[info]  test:console</span>
-<span class="go">[info]  compile:console-quick</span>
+<span class="go">[info]  compile:consoleQuick</span>
 <span class="go">[info]  compile:console</span>
-<span class="go">[info]  test:console-quick</span>
-<span class="go">[info]  *:console-project</span>
+<span class="go">[info]  test:consoleQuick</span>
+<span class="go">[info]  *:consoleProject</span>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>We now know that by setting <tt class="docutils literal"><span class="pre">initial-commands</span></tt> on the whole project,
+<p>We now know that by setting <tt class="docutils literal"><span class="pre">initialCommands</span></tt> on the whole project,
 we affect all console tasks in all configurations in that project. If we
-didn't want the initial commands to apply for <tt class="docutils literal"><span class="pre">console-project</span></tt>, which
+didn't want the initial commands to apply for <tt class="docutils literal"><span class="pre">consoleProject</span></tt>, which
 doesn't have our project's classpath available, we could use the more
 specific task axis:</p>
 <p><tt class="docutils literal"><span class="pre">console</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">console</span> <span class="pre">:=</span> <span class="pre">&quot;import</span> <span class="pre">mypackage._&quot;</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">consoleQuick</span> <span class="pre">:=</span> <span class="pre">&quot;import</span> <span class="pre">mypackage._&quot;</span></tt>
@@ -343,20 +343,20 @@ section of the <tt class="docutils literal"><span class="pre">inspect</span></tt
 order in which scopes are searched when a value is not defined for the
 requested key.</p>
 <p>As an example, consider the initial commands for <tt class="docutils literal"><span class="pre">console</span></tt> again:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console::initial-commands
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console::initialCommands
 <span class="go">...</span>
 <span class="go">[info] Delegates:</span>
-<span class="go">[info]  *:console::initial-commands</span>
-<span class="go">[info]  *:initial-commands</span>
-<span class="go">[info]  {.}/*:console::initial-commands</span>
-<span class="go">[info]  {.}/*:initial-commands</span>
-<span class="go">[info]  */*:console::initial-commands</span>
-<span class="go">[info]  */*:initial-commands</span>
+<span class="go">[info]  *:console::initialCommands</span>
+<span class="go">[info]  *:initialCommands</span>
+<span class="go">[info]  {.}/*:console::initialCommands</span>
+<span class="go">[info]  {.}/*:initialCommands</span>
+<span class="go">[info]  */*:console::initialCommands</span>
+<span class="go">[info]  */*:initialCommands</span>
 <span class="go">...</span>
 </pre></div>
 </div>
 <p>This means that if there is no value specifically for
-<tt class="docutils literal"><span class="pre">*:console::initial-commands</span></tt>, the scopes listed under Delegates will
+<tt class="docutils literal"><span class="pre">*:console::initialCommands</span></tt>, the scopes listed under Delegates will
 be searched in order until a defined value is found.</p>
 </div>
 </div>

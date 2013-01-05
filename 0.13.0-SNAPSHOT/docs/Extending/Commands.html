@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -181,8 +181,8 @@ commands to a project. To try it out:</p>
 <li>Copy the following build definition into <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> for
 a new project.</li>
 <li>Run sbt on the project.</li>
-<li>Try out the <tt class="docutils literal"><span class="pre">hello</span></tt>, <tt class="docutils literal"><span class="pre">hello-all</span></tt>, <tt class="docutils literal"><span class="pre">fail-if-true</span></tt>, <tt class="docutils literal"><span class="pre">color</span></tt>,
-and <tt class="docutils literal"><span class="pre">print-state</span></tt> commands.</li>
+<li>Try out the <tt class="docutils literal"><span class="pre">hello</span></tt>, <tt class="docutils literal"><span class="pre">helloAll</span></tt>, <tt class="docutils literal"><span class="pre">failIfTrue</span></tt>, <tt class="docutils literal"><span class="pre">color</span></tt>,
+and <tt class="docutils literal"><span class="pre">printState</span></tt> commands.</li>
 <li>Use tab-completion and the code below as guidance.</li>
 </ol>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
@@ -209,14 +209,14 @@ and <tt class="docutils literal"><span class="pre">print-state</span></tt> comma
 
     <span class="c1">// A simple, multiple-argument command that prints &quot;Hi&quot; followed by the arguments.</span>
     <span class="c1">//   Again, it leaves the current state unchanged.</span>
-    <span class="k">def</span> <span class="n">helloAll</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">args</span><span class="o">(</span><span class="s">&quot;hello-all&quot;</span><span class="o">,</span> <span class="s">&quot;&lt;name&gt;&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">state</span><span class="o">,</span> <span class="n">args</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="k">def</span> <span class="n">helloAll</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">args</span><span class="o">(</span><span class="s">&quot;helloAll&quot;</span><span class="o">,</span> <span class="s">&quot;&lt;name&gt;&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">state</span><span class="o">,</span> <span class="n">args</span><span class="o">)</span> <span class="k">=&gt;</span>
         <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hi &quot;</span> <span class="o">+</span> <span class="n">args</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">))</span>
         <span class="n">state</span>
     <span class="o">}</span>
 
 
     <span class="c1">// A command that demonstrates failing or succeeding based on the input</span>
-    <span class="k">def</span> <span class="n">failIfTrue</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">single</span><span class="o">(</span><span class="s">&quot;fail-if-true&quot;</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">def</span> <span class="n">failIfTrue</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">single</span><span class="o">(</span><span class="s">&quot;failIfTrue&quot;</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">case</span> <span class="o">(</span><span class="n">state</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">state</span><span class="o">.</span><span class="n">fail</span>
         <span class="k">case</span> <span class="o">(</span><span class="n">state</span><span class="o">,</span> <span class="k">_</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">state</span>
     <span class="o">}</span>
@@ -238,7 +238,7 @@ and <tt class="docutils literal"><span class="pre">print-state</span></tt> comma
 
 
     <span class="c1">// A command that demonstrates getting information out of State.</span>
-    <span class="k">def</span> <span class="n">printState</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">command</span><span class="o">(</span><span class="s">&quot;print-state&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span>
+    <span class="k">def</span> <span class="n">printState</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">command</span><span class="o">(</span><span class="s">&quot;printState&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span>
         <span class="k">import</span> <span class="nn">state._</span>
         <span class="n">println</span><span class="o">(</span><span class="n">definedCommands</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="s">&quot; registered commands&quot;</span><span class="o">)</span>
         <span class="n">println</span><span class="o">(</span><span class="s">&quot;commands to run: &quot;</span> <span class="o">+</span> <span class="n">show</span><span class="o">(</span><span class="n">remainingCommands</span><span class="o">))</span>

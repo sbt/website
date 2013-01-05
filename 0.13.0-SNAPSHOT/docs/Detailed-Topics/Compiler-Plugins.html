@@ -35,7 +35,7 @@
     <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="Detailed Topics" href="index.html" />
-    <link rel="next" title="Console Project" href="Console-Project.html" />
+    <link rel="next" title="Configuring Scala" href="Configuring-Scala.html" />
     <link rel="prev" title="Command Line Reference" href="Command-Line-Reference.html" /> 
   </head>
   <body>
@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -69,7 +69,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="Console-Project.html">Console Project</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="Configuring-Scala.html">Configuring Scala</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
@@ -92,7 +92,7 @@
   <div class="section" id="compiler-plugin-support">
 <h1>Compiler Plugin Support<a class="headerlink" href="#compiler-plugin-support" title="Permalink to this headline">¶</a></h1>
 <p>There is some special support for using compiler plugins. You can set
-<tt class="docutils literal"><span class="pre">auto-compiler-plugins</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> to enable this functionality.</p>
+<tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> to enable this functionality.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">autoCompilerPlugins</span> <span class="o">:=</span> <span class="kc">true</span>
 </pre></div>
 </div>
@@ -103,14 +103,13 @@ for specifying <tt class="docutils literal"><span class="pre">plugin</span></tt>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">addCompilerPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-tools.sxr&quot;</span> <span class="o">%%</span> <span class="s">&quot;sxr&quot;</span> <span class="o">%</span> <span class="s">&quot;0.2.7&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">test-compile</span></tt> actions will use any compiler
+<p>The <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">testCompile</span></tt> actions will use any compiler
 plugins found in the <tt class="docutils literal"><span class="pre">lib</span></tt> directory or in the <tt class="docutils literal"><span class="pre">plugin</span></tt>
 configuration. You are responsible for configuring the plugins as
 necessary. For example, Scala X-Ray requires the extra option:</p>
 <div class="highlight-scala"><div class="highlight"><pre>    <span class="c1">// declare the main Scala source directory as the base directory</span>
-<span class="n">scalacOptions</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">scalacOptions</span><span class="o">,</span> <span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">options</span><span class="o">,</span> <span class="n">base</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="n">options</span> <span class="o">:+</span> <span class="o">(</span><span class="s">&quot;-Psxr:base-directory:&quot;</span> <span class="o">+</span> <span class="n">base</span><span class="o">.</span><span class="n">getAbsolutePath</span><span class="o">)</span>
-<span class="o">}</span>
+<span class="n">scalacOptions</span> <span class="o">:=</span>
+    <span class="n">scalacOptions</span><span class="o">.</span><span class="n">value</span> <span class="o">:+</span> <span class="o">(</span><span class="s">&quot;-Psxr:base-directory:&quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">getAbsolutePath</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>You can still specify compiler plugins manually. For example:</p>
@@ -134,9 +133,8 @@ plugin. You can use the compiler plugin support for this, as shown here.</p>
 <p>Adding a version-specific compiler plugin can be done as follows:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">autoCompilerPlugins</span> <span class="o">:=</span> <span class="kc">true</span>
 
-<span class="n">libraryDependencies</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">scalaVersion</span><span class="o">,</span> <span class="n">libraryDependencies</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">ver</span><span class="o">,</span> <span class="n">deps</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="n">deps</span> <span class="o">:+</span> <span class="n">compilerPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-lang.plugins&quot;</span> <span class="o">%</span> <span class="s">&quot;continuations&quot;</span> <span class="o">%</span> <span class="n">ver</span><span class="o">)</span>
-<span class="o">}</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span>
+    <span class="n">compilerPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-lang.plugins&quot;</span> <span class="o">%</span> <span class="s">&quot;continuations&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
 
 <span class="n">scalacOptions</span> <span class="o">+=</span> <span class="s">&quot;-P:continuations:enable&quot;</span>
 </pre></div>

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -184,7 +184,7 @@ by the following grammar. <tt class="docutils literal"><span class="pre">'nl'</s
 <strong id="grammar-token-resources">resources           </strong> ::=  &quot;resources&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a>)*
 <strong id="grammar-token-repository">repository          </strong> ::=  ( <a class="reference internal" href="#grammar-token-predefinedRepository"><tt class="xref docutils literal"><span class="pre">predefinedRepository</span></tt></a> | <a class="reference internal" href="#grammar-token-customRepository"><tt class="xref docutils literal"><span class="pre">customRepository</span></tt></a> ) <a class="reference internal" href="#grammar-token-nl"><tt class="xref docutils literal"><span class="pre">nl</span></tt></a>
 <strong id="grammar-token-predefinedRepository">predefinedRepository</strong> ::=  &quot;local&quot; | &quot;maven-local&quot; | &quot;maven-central&quot;
-<strong id="grammar-token-customRepository">customRepository    </strong> ::=  <a class="reference internal" href="#grammar-token-label"><tt class="xref docutils literal"><span class="pre">label</span></tt></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a> [ [&quot;,&quot; <a class="reference internal" href="#grammar-token-ivyPattern"><tt class="xref docutils literal"><span class="pre">ivyPattern</span></tt></a>] &quot;,&quot; <a class="reference internal" href="#grammar-token-artifactPattern"><tt class="xref docutils literal"><span class="pre">artifactPattern</span></tt></a>]
+<strong id="grammar-token-customRepository">customRepository    </strong> ::=  <a class="reference internal" href="#grammar-token-label"><tt class="xref docutils literal"><span class="pre">label</span></tt></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-url"><tt class="xref docutils literal"><span class="pre">url</span></tt></a> [ [&quot;,&quot; <a class="reference internal" href="#grammar-token-ivyPattern"><tt class="xref docutils literal"><span class="pre">ivyPattern</span></tt></a>] [&quot;,&quot; <a class="reference internal" href="#grammar-token-artifactPattern"><tt class="xref docutils literal"><span class="pre">artifactPattern</span></tt></a>] [&quot;, mavenCompatible&quot;] [&quot;, bootOnly&quot;]]
 <strong id="grammar-token-property">property            </strong> ::=  <a class="reference internal" href="#grammar-token-label"><tt class="xref docutils literal"><span class="pre">label</span></tt></a> &quot;:&quot; <a class="reference internal" href="#grammar-token-propertyDefinition"><tt class="xref docutils literal"><span class="pre">propertyDefinition</span></tt></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-propertyDefinition"><tt class="xref docutils literal"><span class="pre">propertyDefinition</span></tt></a>)*
 <strong id="grammar-token-propertyDefinition">propertyDefinition  </strong> ::=  <a class="reference internal" href="#grammar-token-mode"><tt class="xref docutils literal"><span class="pre">mode</span></tt></a> &quot;=&quot; (<a class="reference internal" href="#grammar-token-set"><tt class="xref docutils literal"><span class="pre">set</span></tt></a> | <a class="reference internal" href="#grammar-token-prompt"><tt class="xref docutils literal"><span class="pre">prompt</span></tt></a>)
 <strong id="grammar-token-mode">mode                </strong> ::=  &quot;quick&quot; | &quot;new&quot; | &quot;fill&quot;
@@ -231,7 +231,7 @@ substituted.</p>
 
 [repositories]
   local
-  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
   maven-central
   sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
 
@@ -364,7 +364,7 @@ compile-time dependency. If you are building with sbt, your dependency
 definition would be:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-sbt&quot;</span> <span class="o">%</span> <span class="s">&quot;launcher-interface&quot;</span> <span class="o">%</span> <span class="s">&quot;0.12.0&quot;</span> <span class="o">%</span> <span class="s">&quot;provided&quot;</span>
 
-<span class="n">resolvers</span> <span class="o">&lt;+=</span> <span class="n">sbtResolver</span>
+<span class="n">resolvers</span> <span class="o">+=</span> <span class="n">sbtResolver</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
 <p>Make the entry point to your class implement 'xsbti.AppMain'. An example
@@ -415,7 +415,7 @@ it might look like:</p>
 [boot]
  directory: ${user.home}/.myapp/boot</pre>
 </div>
-<p>Then, <tt class="docutils literal"><span class="pre">publish-local</span></tt> or <tt class="docutils literal"><span class="pre">+publish-local</span></tt> the application to make it
+<p>Then, <tt class="docutils literal"><span class="pre">publishLocal</span></tt> or <tt class="docutils literal"><span class="pre">+publishLocal</span></tt> the application to make it
 available.</p>
 </div>
 <div class="section" id="running-an-application">

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -114,20 +114,21 @@ otherwise managing the jars in this directory. No modifications to your
 project definition are required to use this method unless you would like
 to change the location of the directory you store the jars in.</p>
 <p>To change the directory jars are stored in, change the
-<tt class="docutils literal"><span class="pre">unmanaged-base</span></tt> setting in your project definition. For example, to
+<tt class="docutils literal"><span class="pre">unmanagedBase</span></tt> setting in your project definition. For example, to
 use <tt class="docutils literal"><span class="pre">custom_lib/</span></tt>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span> <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span>
 </pre></div>
 </div>
 <p>If you want more control and flexibility, override the
-<tt class="docutils literal"><span class="pre">unmanaged-jars</span></tt> task, which ultimately provides the manual
+<tt class="docutils literal"><span class="pre">unmanagedJars</span></tt> task, which ultimately provides the manual
 dependencies to sbt. The default implementation is roughly:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">base</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span> <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span>
 </pre></div>
 </div>
 <p>If you want to add jars from multiple directories in addition to the
 default directory, you can do:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;++=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="o">{</span>
+         <span class="k">val</span> <span class="n">base</span> <span class="k">=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span>
     <span class="k">val</span> <span class="n">baseDirectories</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libA&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;b&quot;</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libC&quot;</span><span class="o">)</span>
     <span class="k">val</span> <span class="n">customJars</span> <span class="k">=</span> <span class="o">(</span><span class="n">baseDirectories</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;d&quot;</span> <span class="o">/</span> <span class="s">&quot;my.jar&quot;</span><span class="o">)</span>
     <span class="n">customJars</span><span class="o">.</span><span class="n">classpath</span>
@@ -186,7 +187,7 @@ this kind of dependency, that dependency probably wasn't published for
 the version of Scala you are using. See <a class="reference internal" href="Cross-Build.html"><em>Cross-building</em></a> for details.</p>
 <p>Ivy can select the latest revision of a module according to constraints
 you specify. Instead of a fixed revision like <tt class="docutils literal"><span class="pre">&quot;1.6.1&quot;</span></tt>, you specify
-<tt class="docutils literal"><span class="pre">&quot;latest.integration&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;2.9.+&quot;</span></tt>, or <tt class="docutils literal"><span class="pre">&quot;[1.0,)&quot;</span></tt>. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.2.0/ivyfile/dependency.html#revision">Ivy
+<tt class="docutils literal"><span class="pre">&quot;latest.integration&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;2.9.+&quot;</span></tt>, or <tt class="docutils literal"><span class="pre">&quot;[1.0,)&quot;</span></tt>. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision">Ivy
 revisions</a>
 documentation for details.</p>
 </div>
@@ -217,8 +218,8 @@ repository:</p>
 <h4>Override default resolvers<a class="headerlink" href="#override-default-resolvers" title="Permalink to this headline">¶</a></h4>
 <p><tt class="docutils literal"><span class="pre">resolvers</span></tt> configures additional, inline user resolvers. By default,
 <tt class="docutils literal"><span class="pre">sbt</span></tt> combines these resolvers with default repositories (Maven
-Central and the local Ivy repository) to form <tt class="docutils literal"><span class="pre">external-resolvers</span></tt>. To
-have more control over repositories, set <tt class="docutils literal"><span class="pre">external-resolvers</span></tt>
+Central and the local Ivy repository) to form <tt class="docutils literal"><span class="pre">externalResolvers</span></tt>. To
+have more control over repositories, set <tt class="docutils literal"><span class="pre">externalResolvers</span></tt>
 directly. To only specify repositories in addition to the usual
 defaults, configure <tt class="docutils literal"><span class="pre">resolvers</span></tt>.</p>
 <p>For example, to use the Sonatype OSS Snapshots repository in addition to
@@ -227,9 +228,8 @@ the default repositories,</p>
 </pre></div>
 </div>
 <p>To use the local repository, but not the Maven Central repository:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">&lt;&lt;=</span> <span class="n">resolvers</span> <span class="n">map</span> <span class="o">{</span> <span class="n">rs</span> <span class="k">=&gt;</span>
-  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">rs</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
-<span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">:=</span>
+  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">resolvers</span><span class="o">.</span><span class="n">value</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -294,9 +294,9 @@ method. For example, to get the jdk15 version of TestNG:</p>
 </pre></div>
 </div>
 <p>To obtain particular classifiers for all dependencies transitively, run
-the <tt class="docutils literal"><span class="pre">update-classifiers</span></tt> task. By default, this resolves all artifacts
+the <tt class="docutils literal"><span class="pre">updateClassifiers</span></tt> task. By default, this resolves all artifacts
 with the <tt class="docutils literal"><span class="pre">sources</span></tt> or <tt class="docutils literal"><span class="pre">javadoc</span></tt> classifier. Select the classifiers
-to obtain by configuring the <tt class="docutils literal"><span class="pre">transitive-classifiers</span></tt> setting. For
+to obtain by configuring the <tt class="docutils literal"><span class="pre">transitiveClassifiers</span></tt> setting. For
 example, to only retrieve sources:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">transitiveClassifiers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sources&quot;</span><span class="o">)</span>
 </pre></div>
@@ -330,8 +330,8 @@ for API details.</p>
 <div class="section" id="download-sources">
 <h4>Download Sources<a class="headerlink" href="#download-sources" title="Permalink to this headline">¶</a></h4>
 <p>Downloading source and API documentation jars is usually handled by an
-IDE plugin. These plugins use the <tt class="docutils literal"><span class="pre">update-classifiers</span></tt> and
-<tt class="docutils literal"><span class="pre">update-sbt-classifiers</span></tt> tasks, which produce an <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a>
+IDE plugin. These plugins use the <tt class="docutils literal"><span class="pre">updateClassifiers</span></tt> and
+<tt class="docutils literal"><span class="pre">updateSbtClassifiers</span></tt> tasks, which produce an <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a>
 referencing these jars.</p>
 <p>To have sbt download the dependency's sources without using an IDE
 plugin, add <tt class="docutils literal"><span class="pre">withSources()</span></tt> to the dependency definition. For API
@@ -345,7 +345,7 @@ for that.</p>
 </div>
 <div class="section" id="extra-attributes">
 <h4>Extra Attributes<a class="headerlink" href="#extra-attributes" title="Permalink to this headline">¶</a></h4>
-<p><a class="reference external" href="http://ant.apache.org/ivy/history/2.2.0/concept.html#extra">Extra
+<p><a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra">Extra
 attributes</a>
 can be specified by passing key/value pairs to the <tt class="docutils literal"><span class="pre">extra</span></tt> method.</p>
 <p>To select dependencies by extra attributes:</p>
@@ -353,7 +353,7 @@ can be specified by passing key/value pairs to the <tt class="docutils literal">
 </pre></div>
 </div>
 <p>To define extra attributes on the current project:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">&lt;&lt;=</span> <span class="n">projectID</span> <span class="o">{</span> <span class="n">id</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">id</span> <span class="k">=&gt;</span>
     <span class="n">id</span> <span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">,</span> <span class="s">&quot;component&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;compiler-interface&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>

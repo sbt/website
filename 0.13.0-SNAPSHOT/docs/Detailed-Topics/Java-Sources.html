@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -99,10 +99,10 @@ class files.</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">compile</span></tt> will compile the sources under <tt class="docutils literal"><span class="pre">src/main/java</span></tt> by
 default.</li>
-<li><tt class="docutils literal"><span class="pre">test-compile</span></tt> will compile the sources under <tt class="docutils literal"><span class="pre">src/test/java</span></tt> by
+<li><tt class="docutils literal"><span class="pre">testCompile</span></tt> will compile the sources under <tt class="docutils literal"><span class="pre">src/test/java</span></tt> by
 default.</li>
 </ul>
-<p>Pass options to the Java compiler by setting <tt class="docutils literal"><span class="pre">javac-options</span></tt>:</p>
+<p>Pass options to the Java compiler by setting <tt class="docutils literal"><span class="pre">javacOptions</span></tt>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="o">+=</span> <span class="s">&quot;-g:none&quot;</span>
 </pre></div>
 </div>
@@ -112,7 +112,7 @@ sbt. Multi-element options, such as <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 <p>You can specify the order in which Scala and Java sources are built with
-the <tt class="docutils literal"><span class="pre">compile-order</span></tt> setting. Possible values are from the
+the <tt class="docutils literal"><span class="pre">compileOrder</span></tt> setting. Possible values are from the
 <tt class="docutils literal"><span class="pre">CompileOrder</span></tt> enumeration: <tt class="docutils literal"><span class="pre">Mixed</span></tt>, <tt class="docutils literal"><span class="pre">JavaThenScala</span></tt>, and
 <tt class="docutils literal"><span class="pre">ScalaThenJava</span></tt>. If you have circular dependencies between Scala and
 Java sources, you need the default, <tt class="docutils literal"><span class="pre">Mixed</span></tt>, which passes both Java
@@ -144,10 +144,10 @@ list of unmanaged source directories. For Java-only projects, the
 unnecessary Scala directories can be ignored by modifying
 <tt class="docutils literal"><span class="pre">unmanagedSourceDirectories</span></tt>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Include only src/main/java in the compile configuration</span>
-<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">join</span>
+<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">::</span> <span class="nc">Nil</span>
 
 <span class="c1">// Include only src/test/java in the test configuration</span>
-<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">&lt;&lt;=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">join</span>
+<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">value</span> <span class="o">::</span> <span class="nc">Nil</span>
 </pre></div>
 </div>
 <p>However, there should not be any harm in leaving the Scala directories

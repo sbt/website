@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -109,12 +109,12 @@ Commands typically support tab completion for most of their syntax.</p>
 </div>
 <p>To get further completions, hit tab again:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>&lt;TAB&gt;
-<span class="go">test-frameworks   test-listeners    test-loader       test-only         test-options      test:</span>
+<span class="go">testFrameworks   testListeners    testLoader       testOnly         testOptions      test:</span>
 </pre></div>
 </div>
 <p>Now, there is more than one possibility for the next character, so sbt prints the available options.
-We will select <tt class="docutils literal"><span class="pre">test-only</span></tt> and get more suggestions by entering the rest of the command and hitting tab twice:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only&lt;TAB&gt;&lt;TAB&gt;
+We will select <tt class="docutils literal"><span class="pre">testOnly</span></tt> and get more suggestions by entering the rest of the command and hitting tab twice:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly&lt;TAB&gt;&lt;TAB&gt;
 <span class="go">--                      sbt.DagSpecification    sbt.EmptyRelationTest   sbt.KeyTest             sbt.RelationTest        sbt.SettingsTest</span>
 </pre></div>
 </div>
@@ -130,8 +130,8 @@ If tests have been added, renamed, or removed since the last test compilation, t
 <div class="full-howto section" id="show-keybindings">
 <h2>Show JLine keybindings<a class="headerlink" href="#show-keybindings" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Both the Scala and sbt command prompts use JLine for interaction.  The Scala REPL contains a <tt class="docutils literal"><span class="pre">:keybindings</span></tt> command to show many of the keybindings used for JLine.  For sbt, this can be used by running one of the <tt class="docutils literal"><span class="pre">console</span></tt> commands (<tt class="docutils literal"><span class="pre">console</span></tt>, <tt class="docutils literal"><span class="pre">console-quick</span></tt>, or <tt class="docutils literal"><span class="pre">console-project</span></tt>) and then running <tt class="docutils literal"><span class="pre">:keybindings</span></tt>.  For example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-project
+<p>Both the Scala and sbt command prompts use JLine for interaction.  The Scala REPL contains a <tt class="docutils literal"><span class="pre">:keybindings</span></tt> command to show many of the keybindings used for JLine.  For sbt, this can be used by running one of the <tt class="docutils literal"><span class="pre">console</span></tt> commands (<tt class="docutils literal"><span class="pre">console</span></tt>, <tt class="docutils literal"><span class="pre">consoleQuick</span></tt>, or <tt class="docutils literal"><span class="pre">consoleProject</span></tt>) and then running <tt class="docutils literal"><span class="pre">:keybindings</span></tt>.  For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> consoleProject
 <span class="go">[info] Starting scala interpreter...</span>
 <span class="go">...</span>
 <span class="go">scala&gt; :keybindings</span>
@@ -187,7 +187,7 @@ search history backwards.  The following commands are supported:</p>
 History is thus separate for each subproject.
 The location can be changed with the <tt class="docutils literal"><span class="pre">historyPath</span></tt> setting, which has type <tt class="docutils literal"><span class="pre">Option[File]</span></tt>.
 For example, history can be stored in the root directory for the project instead of the output directory:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The history path needs to be set for each project, since sbt will use the value of <tt class="docutils literal"><span class="pre">historyPath</span></tt> for the current project (as selected by the <tt class="docutils literal"><span class="pre">project</span></tt> command).</p>
@@ -197,10 +197,8 @@ For example, history can be stored in the root directory for the project instead
 <p>The previous section describes how to configure the location of the history file.
 This setting can be used to share the interactive history among all projects in a build instead of using a different history for each project.
 The way this is done is to set <tt class="docutils literal"><span class="pre">historyPath</span></tt> to be the same file, such as a file in the root project's <tt class="docutils literal"><span class="pre">target/</span></tt> directory:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span>
-  <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span>
-    <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
-  <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span>
+    <span class="nc">Some</span><span class="o">(</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">in</span> <span class="pre">LocalRootProject</span></tt> part means to get the output directory for the root project for the build.</p>

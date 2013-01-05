@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -118,26 +118,26 @@ libraries because your users don't typically need your test dependencies
 to use your library.</p>
 <p>With the library dependency defined, you can then add test sources in
 the locations listed above and compile and run tests. The tasks for
-running tests are <tt class="docutils literal"><span class="pre">test</span></tt> and <tt class="docutils literal"><span class="pre">test-only</span></tt>. The <tt class="docutils literal"><span class="pre">test</span></tt> task accepts
+running tests are <tt class="docutils literal"><span class="pre">test</span></tt> and <tt class="docutils literal"><span class="pre">testOnly</span></tt>. The <tt class="docutils literal"><span class="pre">test</span></tt> task accepts
 no command line arguments and runs all tests:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>
 </pre></div>
 </div>
-<div class="section" id="test-only">
-<h3>test-only<a class="headerlink" href="#test-only" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">test-only</span></tt> task accepts a whitespace separated list of test names
+<div class="section" id="testonly">
+<h3>testOnly<a class="headerlink" href="#testonly" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">testOnly</span></tt> task accepts a whitespace separated list of test names
 to run. For example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only org.example.MyTest1 org.example.MyTest2
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest1 org.example.MyTest2
 </pre></div>
 </div>
 <p>It supports wildcards as well:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only org.example.*Slow org.example.MyTest1
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.*Slow org.example.MyTest1
 </pre></div>
 </div>
 </div>
-<div class="section" id="test-quick">
-<h3>test-quick<a class="headerlink" href="#test-quick" title="Permalink to this headline">¶</a></h3>
-<p>The <tt class="docutils literal"><span class="pre">test-quick</span></tt> task, like <tt class="docutils literal"><span class="pre">test-only</span></tt>, allows to filter the tests
+<div class="section" id="testquick">
+<h3>testQuick<a class="headerlink" href="#testquick" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">testQuick</span></tt> task, like <tt class="docutils literal"><span class="pre">testOnly</span></tt>, allows to filter the tests
 to run to specific tests or wildcards using the same syntax to indicate
 the filters. In addition to the explicit filter, only the tests that
 satisfy one of the following conditions are run:</p>
@@ -153,7 +153,7 @@ different project, recompiled.</li>
 last <tt class="docutils literal"><span class="pre">test:compile</span></tt>. This means that a new sources aren't available
 for tab completion until they are compiled and deleted sources won't be
 removed from tab completion until a recompile. A new test source can
-still be manually written out and run using <tt class="docutils literal"><span class="pre">test-only</span></tt>.</p>
+still be manually written out and run using <tt class="docutils literal"><span class="pre">testOnly</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="other-tasks">
@@ -164,9 +164,9 @@ are referenced in Scala code with <tt class="docutils literal"><span class="pre"
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">test:compile</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">test:console</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">test:console-quick</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:consoleQuick</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">test:run</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">test:run-main</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:runMain</span></tt></li>
 </ul>
 <p>See <a class="reference internal" href="../Getting-Started/Running.html"><em>Running</em></a> for details on these tasks.</p>
 </div>
@@ -184,8 +184,8 @@ tests for that file complete. This can be disabled with:</p>
 <div class="section" id="test-framework-arguments">
 <h3>Test Framework Arguments<a class="headerlink" href="#test-framework-arguments" title="Permalink to this headline">¶</a></h3>
 <p>Arguments to the test framework may be provided on the command line to
-the <tt class="docutils literal"><span class="pre">test-only</span></tt> tasks following a <tt class="docutils literal"><span class="pre">--</span></tt> separator. For example:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only org.example.MyTest -- -d -S
+the <tt class="docutils literal"><span class="pre">testOnly</span></tt> tasks following a <tt class="docutils literal"><span class="pre">--</span></tt> separator. For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest -- -d -S
 </pre></div>
 </div>
 <p>To specify test framework arguments as part of the build, add options
@@ -251,7 +251,7 @@ available with <tt class="docutils literal"><span class="pre">testGrouping</span
     <span class="n">tests</span> <span class="n">groupBy</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">name</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="n">map</span> <span class="o">{</span>
       <span class="k">case</span> <span class="o">(</span><span class="n">letter</span><span class="o">,</span> <span class="n">tests</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">Group</span><span class="o">(</span><span class="n">letter</span><span class="o">.</span><span class="n">toString</span><span class="o">,</span> <span class="n">tests</span><span class="o">,</span> <span class="nc">SubProcess</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-Dfirst.letter&quot;</span><span class="o">+</span><span class="n">letter</span><span class="o">)))</span>
     <span class="o">}</span> <span class="n">toSeq</span><span class="o">;</span>
-  <span class="n">testGrouping</span> <span class="o">&lt;&lt;=</span> <span class="n">definedTests</span> <span class="n">in</span> <span class="nc">Test</span> <span class="n">map</span> <span class="n">groupByFirst</span>
+  <span class="n">testGrouping</span> <span class="o">:=</span> <span class="n">groupByFirst</span><span class="o">(</span> <span class="o">(</span><span class="n">definedTests</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">value</span> <span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -316,7 +316,7 @@ test classpath</li>
 </ul>
 <p>The standard testing tasks are available, but must be prefixed with
 <tt class="docutils literal"><span class="pre">it:</span></tt>. For example,</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> it:test-only org.example.AnIntegrationTest
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> it:testOnly org.example.AnIntegrationTest
 </pre></div>
 </div>
 <p>Similarly the standard settings may be configured for the
@@ -427,7 +427,7 @@ packaging tasks and settings.</li>
 <p>To run tests for the added configuration (here, <tt class="docutils literal"><span class="pre">&quot;fun&quot;</span></tt>), prefix it
 with the configuration name as before:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> fun:test
-<span class="gp">&gt;</span> fun:test-only org.example.AFunTest
+<span class="gp">&gt;</span> fun:testOnly org.example.AFunTest
 </pre></div>
 </div>
 <div class="section" id="application-to-parallel-execution">
@@ -508,8 +508,8 @@ or
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Testing</a><ul>
 <li><a class="reference internal" href="#basics">Basics</a><ul>
-<li><a class="reference internal" href="#test-only">test-only</a></li>
-<li><a class="reference internal" href="#test-quick">test-quick</a><ul>
+<li><a class="reference internal" href="#testonly">testOnly</a></li>
+<li><a class="reference internal" href="#testquick">testQuick</a><ul>
 <li><a class="reference internal" href="#tab-completion">Tab completion</a></li>
 </ul>
 </li>

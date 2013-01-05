@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -95,7 +95,7 @@
 <div class="section" id="first-pgp-signatures">
 <h2>First - PGP Signatures<a class="headerlink" href="#first-pgp-signatures" title="Permalink to this headline">¶</a></h2>
 <p>You'll need to PGP sign your artifacts for the Sonatype repository.
-Don't worry, there's a <a class="reference external" href="http://scala-sbt.org/xsbt-gpg-plugin">plugin for
+Don't worry, there's a <a class="reference external" href="http://scala-sbt.org/sbt-pgp">plugin for
 that</a>. Follow the instructions
 for the plugin and you'll have PGP signed artifacts in no time.</p>
 <p><em>Note: The plugin is a jvm-only solution to generate PGP keys and sign
@@ -112,9 +112,9 @@ settings so that the correct metadata is generated.</p>
 <p>is used to ensure POMs are generated and pushed. Next, you have to set
 up the repositories you wish to push too. Luckily, Sonatype's OSSRH uses
 the same URLs for everyone:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="n">version</span> <span class="o">{</span> <span class="o">(</span><span class="n">v</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
   <span class="k">else</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span>  <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>
@@ -278,9 +278,9 @@ the artefacts, you'll need to include &#64;jsuereth's <tt class="docutils litera
 <p>Finally, you'll need to tweak the generated POM in your <tt class="docutils literal"><span class="pre">build.sbt</span></tt>.
 The tweaks include specifying the project's authors, URL, SCM and many
 others:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="n">version</span> <span class="o">{</span> <span class="n">v</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
   <span class="k">else</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>

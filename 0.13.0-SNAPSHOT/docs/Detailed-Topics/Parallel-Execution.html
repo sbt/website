@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -111,7 +111,7 @@ declaration of the tasks would be:</p>
   <span class="n">f</span>
 <span class="o">}</span>
 
-<span class="n">read</span> <span class="o">&lt;&lt;=</span> <span class="n">write</span> <span class="n">map</span> <span class="o">{</span> <span class="n">f</span> <span class="k">=&gt;</span> <span class="nc">IO</span><span class="o">.</span><span class="n">read</span><span class="o">(</span><span class="n">f</span><span class="o">)</span> <span class="o">}</span>
+<span class="n">read</span> <span class="o">:=</span> <span class="nc">IO</span><span class="o">.</span><span class="n">read</span><span class="o">(</span><span class="n">write</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>This establishes an ordering: <tt class="docutils literal"><span class="pre">read</span></tt> must run after <tt class="docutils literal"><span class="pre">write</span></tt>. We've
@@ -173,12 +173,16 @@ to be 1 for the tags provided to it as arguments. The second method,
 <tt class="docutils literal"><span class="pre">tagw</span></tt>, accepts pairs of tags and weights. For example, the following
 associates the <tt class="docutils literal"><span class="pre">CPU</span></tt> and <tt class="docutils literal"><span class="pre">Compile</span></tt> tags with the <tt class="docutils literal"><span class="pre">compile</span></tt> task
 (with a weight of 1).</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">compile</span> <span class="o">&lt;&lt;=</span> <span class="n">myCompileTask</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="nc">Tags</span><span class="o">.</span><span class="nc">Compile</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">myCompileTask</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="nc">Tags</span><span class="o">.</span><span class="nc">Compile</span><span class="o">)</span>
+
+<span class="n">compile</span> <span class="o">:=</span> <span class="n">myCompileTask</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
 <p>Different weights may be specified by passing tag/weight pairs to
 <tt class="docutils literal"><span class="pre">tagw</span></tt>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">download</span> <span class="o">&lt;&lt;=</span> <span class="n">downloadImpl</span><span class="o">.</span><span class="n">tagw</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Network</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">downloadImpl</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span> <span class="n">tagw</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Network</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">)</span>
+
+<span class="n">download</span> <span class="o">:=</span> <span class="n">downloadImpl</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
 </div>
@@ -186,8 +190,9 @@ associates the <tt class="docutils literal"><span class="pre">CPU</span></tt> an
 <h4>Defining Restrictions<a class="headerlink" href="#defining-restrictions" title="Permalink to this headline">¶</a></h4>
 <p>Once tasks are tagged, the <tt class="docutils literal"><span class="pre">concurrentRestrictions</span></tt> setting sets
 restrictions on the tasks that may be concurrently executed based on the
-weighted tags of those tasks. For example,</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span>
+weighted tags of those tasks.  This is necessarily a global set of rules,
+so it must be scoped <tt class="docutils literal"><span class="pre">in</span> <span class="pre">Global</span></tt>.  For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span>
   <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span>
   <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Network</span><span class="o">,</span> <span class="mi">10</span><span class="o">),</span>
   <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Test</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
@@ -281,21 +286,21 @@ define any tags.</li>
 <li><tt class="docutils literal"><span class="pre">compile</span></tt>: <tt class="docutils literal"><span class="pre">Compile</span></tt>, <tt class="docutils literal"><span class="pre">CPU</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">test</span></tt>: <tt class="docutils literal"><span class="pre">Test</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">update</span></tt>: <tt class="docutils literal"><span class="pre">Update</span></tt>, <tt class="docutils literal"><span class="pre">Network</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">publish</span></tt>, <tt class="docutils literal"><span class="pre">publish-local</span></tt>: <tt class="docutils literal"><span class="pre">Publish</span></tt>, <tt class="docutils literal"><span class="pre">Network</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">publish</span></tt>, <tt class="docutils literal"><span class="pre">publishLocal</span></tt>: <tt class="docutils literal"><span class="pre">Publish</span></tt>, <tt class="docutils literal"><span class="pre">Network</span></tt></li>
 </ul>
 <p>Of additional note is that the default <tt class="docutils literal"><span class="pre">test</span></tt> task will propagate its
 tags to each child task created for each test class.</p>
 <p>The default rules provide the same behavior as previous versions of sbt:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="o">&lt;&lt;=</span> <span class="n">parallelExecution</span> <span class="o">{</span> <span class="n">par</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">max</span> <span class="k">=</span> <span class="nc">Runtime</span><span class="o">.</span><span class="n">getRuntime</span><span class="o">.</span><span class="n">availableProcessors</span>
-  <span class="nc">Tags</span><span class="o">.</span><span class="n">limitAll</span><span class="o">(</span><span class="k">if</span><span class="o">(</span><span class="n">par</span><span class="o">)</span> <span class="n">max</span> <span class="k">else</span> <span class="mi">1</span><span class="o">)</span> <span class="o">::</span> <span class="nc">Nil</span>
+  <span class="nc">Tags</span><span class="o">.</span><span class="n">limitAll</span><span class="o">(</span><span class="k">if</span><span class="o">(</span><span class="n">parallelExecution</span><span class="o">.</span><span class="n">value</span><span class="o">)</span> <span class="n">max</span> <span class="k">else</span> <span class="mi">1</span><span class="o">)</span> <span class="o">::</span> <span class="nc">Nil</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 <p>As before, <tt class="docutils literal"><span class="pre">parallelExecution</span> <span class="pre">in</span> <span class="pre">Test</span></tt> controls whether tests are
 mapped to separate tasks. To restrict the number of concurrently
 executing tests in all projects, use:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="o">+=</span> <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Test</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">+=</span> <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Test</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -308,9 +313,11 @@ example:</p>
 </pre></div>
 </div>
 <p>Then, use this tag as any other tag. For example:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">aCustomTask</span> <span class="o">&lt;&lt;=</span> <span class="n">aCustomTask</span><span class="o">.</span><span class="n">tag</span><span class="o">(</span><span class="nc">Custom</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">aImpl</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Custom</span><span class="o">)</span>
 
-<span class="n">concurrentRestrictions</span> <span class="o">+=</span>
+<span class="n">aCustomTask</span> <span class="o">:=</span> <span class="n">aImpl</span><span class="o">.</span><span class="n">value</span>
+
+<span class="n">concurrentRestrictions</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">+=</span>
   <span class="nc">Tags</span><span class="o">.</span><span class="n">limit</span><span class="o">(</span><span class="nc">Custom</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
@@ -324,7 +331,9 @@ change or require further work.</p>
 <p>Currently, a tag applies only to the immediate computation it is defined
 on. For example, in the following, the second compile definition has no
 tags applied to it. Only the first computation is labeled.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">compile</span> <span class="o">&lt;&lt;=</span> <span class="n">myCompileTask</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="nc">Tags</span><span class="o">.</span><span class="nc">Compile</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">myCompileTask</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="nc">Tags</span><span class="o">.</span><span class="nc">Compile</span><span class="o">)</span>
+
+<span class="n">compile</span> <span class="o">:=</span> <span class="n">myCompileTask</span><span class="o">.</span><span class="n">value</span>
 
 <span class="n">compile</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">...</span> <span class="k">do</span> <span class="n">some</span> <span class="n">post</span> <span class="n">processing</span> <span class="o">...</span> <span class="o">}</span>
 </pre></div>
@@ -349,13 +358,8 @@ determine a good set of default tags and rules.</p>
 <h4>Adjustments to Defaults<a class="headerlink" href="#adjustments-to-defaults" title="Permalink to this headline">¶</a></h4>
 <p>Rules should be easier to remove or redefine, perhaps by giving them
 names. As it is, rules must be appended or all rules must be completely
-redefined.</p>
-<p>Redefining the tags of a task looks like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">compile</span> <span class="o">&lt;&lt;=</span> <span class="n">compile</span><span class="o">.</span><span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">Network</span><span class="o">)</span>
-</pre></div>
-</div>
-<p>This will overwrite the previous weight if the tag (Network) was already
-defined.</p>
+redefined.  Also, tags can only be defined for tasks at the original
+definition site when using the <tt class="docutils literal"><span class="pre">:=</span></tt> syntax.</p>
 <p>For removing tags, an implementation of <tt class="docutils literal"><span class="pre">removeTag</span></tt> should follow from
 the implementation of <tt class="docutils literal"><span class="pre">tag</span></tt> in a straightforward manner.</p>
 </div>
@@ -372,7 +376,7 @@ parallel execution service (<tt class="docutils literal"><span class="pre">java.
 This intermediate queue restricts new tasks from being forwarded to the
 <tt class="docutils literal"><span class="pre">j.u.c.CompletionService</span></tt> according to the
 <tt class="docutils literal"><span class="pre">sbt.ConcurrentRestrictions</span></tt> implementation. See the
-<a class="reference external" href="https://github.com/harrah/xsbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala">sbt.ConcurrentRestrictions</a>
+<a class="reference external" href="https://github.com/sbt/sbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala">sbt.ConcurrentRestrictions</a>
 API documentation for details.</p>
 </div>
 </div>

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -117,10 +117,10 @@ executed. See <a class="reference internal" href="../Getting-Started/Multi-Proje
 <h2>Project-level tasks<a class="headerlink" href="#project-level-tasks" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">clean</span></tt> Deletes all generated files (the <tt class="docutils literal"><span class="pre">target</span></tt> directory).</li>
-<li><tt class="docutils literal"><span class="pre">publish-local</span></tt> Publishes artifacts (such as jars) to the local Ivy
+<li><tt class="docutils literal"><span class="pre">publishLocal</span></tt> Publishes artifacts (such as jars) to the local Ivy
 repository as described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
 <li><tt class="docutils literal"><span class="pre">publish</span></tt> Publishes artifacts (such as jars) to the repository
-defined by the <tt class="docutils literal"><span class="pre">publish-to</span></tt> setting, described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
+defined by the <tt class="docutils literal"><span class="pre">publishTo</span></tt> setting, described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
 <li><tt class="docutils literal"><span class="pre">update</span></tt> Resolves and retrieves external dependencies as described
 in <a class="reference internal" href="../Getting-Started/Library-Dependencies.html"><em>library dependencies</em></a>.</li>
 </ul>
@@ -143,14 +143,14 @@ the compiled sources, all jars in the <tt class="docutils literal"><span class="
 libraries. To return to sbt, type <tt class="docutils literal"><span class="pre">:quit</span></tt>, Ctrl+D (Unix), or Ctrl+Z
 (Windows). Similarly, <tt class="docutils literal"><span class="pre">test:console</span></tt> starts the interpreter with
 the test classes and classpath.</li>
-<li><tt class="docutils literal"><span class="pre">console-quick</span></tt> Starts the Scala interpreter with the project's
-compile-time dependencies on the classpath. <tt class="docutils literal"><span class="pre">test:console-quick</span></tt>
+<li><tt class="docutils literal"><span class="pre">consoleQuick</span></tt> Starts the Scala interpreter with the project's
+compile-time dependencies on the classpath. <tt class="docutils literal"><span class="pre">test:consoleQuick</span></tt>
 uses the test dependencies. This task differs from <tt class="docutils literal"><span class="pre">console</span></tt> in
 that it does not force compilation of the current project's sources.</li>
-<li><tt class="docutils literal"><span class="pre">console-project</span></tt> Enters an interactive session with sbt and the
+<li><tt class="docutils literal"><span class="pre">consoleProject</span></tt> Enters an interactive session with sbt and the
 build definition on the classpath. The build definition and related
 values are bound to variables and common packages and values are
-imported. See the <a class="reference internal" href="Console-Project.html"><em>console-project documentation</em></a> for more information.</li>
+imported. See the <a class="reference internal" href="Console-Project.html"><em>consoleProject documentation</em></a> for more information.</li>
 <li><tt class="docutils literal"><span class="pre">doc</span></tt> Generates API documentation for Scala source files in
 <tt class="docutils literal"><span class="pre">src/main/scala</span></tt> using scaladoc. <tt class="docutils literal"><span class="pre">test:doc</span></tt> generates API
 documentation for source files in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
@@ -159,13 +159,13 @@ documentation for source files in <tt class="docutils literal"><span class="pre"
 <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>. <tt class="docutils literal"><span class="pre">test:package</span></tt> creates a jar containing the
 files in <tt class="docutils literal"><span class="pre">src/test/resources</span></tt> and the class compiled from
 <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">package-doc</span></tt> Creates a jar file containing API documentation
+<li><tt class="docutils literal"><span class="pre">packageDoc</span></tt> Creates a jar file containing API documentation
 generated from Scala source files in <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>.
-<tt class="docutils literal"><span class="pre">test:package-doc</span></tt> creates a jar containing API documentation for
+<tt class="docutils literal"><span class="pre">test:packageDoc</span></tt> creates a jar containing API documentation for
 test sources files in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">package-src</span></tt>: Creates a jar file containing all main source files
+<li><tt class="docutils literal"><span class="pre">packageSrc</span></tt>: Creates a jar file containing all main source files
 and resources. The packaged paths are relative to <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>
-and <tt class="docutils literal"><span class="pre">src/main/resources</span></tt>. Similarly, <tt class="docutils literal"><span class="pre">test:package-src</span></tt> operates
+and <tt class="docutils literal"><span class="pre">src/main/resources</span></tt>. Similarly, <tt class="docutils literal"><span class="pre">test:packageSrc</span></tt> operates
 on test source files and resources.</li>
 <li><tt class="docutils literal"><span class="pre">run</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the main class for the project in the same
 virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>. The main class is passed the
@@ -173,18 +173,18 @@ virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt
 details on the use of <tt class="docutils literal"><span class="pre">System.exit</span></tt> and multithreading (including
 GUIs) in code run by this action. <tt class="docutils literal"><span class="pre">test:run</span></tt> runs a main class in
 the test code.</li>
-<li><tt class="docutils literal"><span class="pre">run-main</span> <span class="pre">&lt;main-class&gt;</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the specified main class
+<li><tt class="docutils literal"><span class="pre">runMain</span> <span class="pre">&lt;main-class&gt;</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the specified main class
 for the project in the same virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>. The main
 class is passed the <tt class="docutils literal"><span class="pre">argument</span></tt>s provided. Please see <a class="reference internal" href="Running-Project-Code.html"><em>Running Project Code</em></a>
 for details on the use of <tt class="docutils literal"><span class="pre">System.exit</span></tt> and
 multithreading (including GUIs) in code run by this action.
-<tt class="docutils literal"><span class="pre">test:run-main</span></tt> runs the specified main class in the test code.</li>
+<tt class="docutils literal"><span class="pre">test:runMain</span></tt> runs the specified main class in the test code.</li>
 <li><tt class="docutils literal"><span class="pre">test</span></tt> Runs all tests detected during test compilation. See
 <a class="reference internal" href="Testing.html"><em>Testing</em></a> for details.</li>
-<li><tt class="docutils literal"><span class="pre">test-only</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests provided as arguments. <tt class="docutils literal"><span class="pre">*</span></tt>
+<li><tt class="docutils literal"><span class="pre">testOnly</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests provided as arguments. <tt class="docutils literal"><span class="pre">*</span></tt>
 (will be) interpreted as a wildcard in the test name. See <a class="reference internal" href="Testing.html"><em>Testing</em></a>
 for details.</li>
-<li><tt class="docutils literal"><span class="pre">test-quick</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests specified as arguments (or all
+<li><tt class="docutils literal"><span class="pre">testQuick</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests specified as arguments (or all
 tests if no arguments are given) that:<ol class="arabic">
 <li>have not been run yet OR</li>
 <li>failed the last time they were run OR</li>
@@ -227,7 +227,7 @@ should be on its own line. Empty lines and lines beginning with '#'
 are ignored</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">+</span> <span class="pre">&lt;command&gt;</span></tt> Executes the project specified action or method for
-all versions of Scala defined in the <tt class="docutils literal"><span class="pre">cross-scala-versions</span></tt>
+all versions of Scala defined in the <tt class="docutils literal"><span class="pre">crossScalaVersions</span></tt>
 setting.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">++</span> <span class="pre">&lt;version&gt;</span> <span class="pre">&lt;command&gt;</span></tt> Temporarily changes the version of Scala

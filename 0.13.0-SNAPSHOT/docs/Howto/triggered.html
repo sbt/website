@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -94,15 +94,15 @@
 <div class="full-howto section" id="basic">
 <h2>Run a command when sources change<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>You can make a command run when certain files change by prefixing the command with <tt class="docutils literal"><span class="pre">~</span></tt>.  Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.  This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but typically the basic settings <tt class="docutils literal"><span class="pre">watch-sources</span></tt> and <tt class="docutils literal"><span class="pre">poll-interval</span></tt> are modified as described in later sections.</p>
+<p>You can make a command run when certain files change by prefixing the command with <tt class="docutils literal"><span class="pre">~</span></tt>.  Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.  This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but typically the basic settings <tt class="docutils literal"><span class="pre">watchSources</span></tt> and <tt class="docutils literal"><span class="pre">pollInterval</span></tt> are modified as described in later sections.</p>
 <p>The original use-case for triggered execution was continuous compilation:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="k">:</span><span class="kt">compile</span>
 
 <span class="o">&gt;</span> <span class="o">~</span> <span class="n">compile</span>
 </pre></div>
 </div>
-<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <tt class="docutils literal"><span class="pre">test-only</span></tt> for the specified test.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="o">-</span><span class="n">only</span> <span class="n">example</span><span class="o">.</span><span class="nc">TestA</span>
+<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for the specified test.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">testOnly</span> <span class="n">example</span><span class="o">.</span><span class="nc">TestA</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="multi">
@@ -121,7 +121,7 @@
 <li><tt class="docutils literal"><span class="pre">watchTransitiveSources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watchSources</span></tt> for the current project and all execution and classpath dependencies (see <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on inter-project dependencies).</li>
 </ul>
 <p>To add the file <tt class="docutils literal"><span class="pre">demo/example.txt</span></tt> to the files to watch,</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="interval">

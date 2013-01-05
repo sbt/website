@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -106,9 +106,9 @@ context, called a &quot;scope.&quot;</p>
 have a different value in each project.</li>
 <li>the <tt class="docutils literal"><span class="pre">compile</span></tt> key may have a different value for your main sources
 and your test sources, if you want to compile them differently.</li>
-<li>the <tt class="docutils literal"><span class="pre">package-options</span></tt> key (which contains options for creating jar
+<li>the <tt class="docutils literal"><span class="pre">packageOptions</span></tt> key (which contains options for creating jar
 packages) may have different values when packaging class files
-(<tt class="docutils literal"><span class="pre">package-bin</span></tt>) or packaging source code (<tt class="docutils literal"><span class="pre">package-src</span></tt>).</li>
+(<tt class="docutils literal"><span class="pre">packageBin</span></tt>) or packaging source code (<tt class="docutils literal"><span class="pre">packageSrc</span></tt>).</li>
 </ul>
 <p><em>There is no single value for a given key name</em>, because the value may
 differ according to scope.</p>
@@ -157,18 +157,18 @@ comes from Ivy, which sbt uses for <a class="reference internal" href="Library-D
 running are scoped to a configuration and therefore may work differently
 in each configuration. The most obvious examples are the task keys
 <tt class="docutils literal"><span class="pre">compile</span></tt>, <tt class="docutils literal"><span class="pre">package</span></tt>, and <tt class="docutils literal"><span class="pre">run</span></tt>; but all the keys which <em>affect</em>
-those keys (such as <tt class="docutils literal"><span class="pre">source-directories</span></tt> or <tt class="docutils literal"><span class="pre">scalac-options</span></tt> or
-<tt class="docutils literal"><span class="pre">full-classpath</span></tt>) are also scoped to the configuration.</p>
+those keys (such as <tt class="docutils literal"><span class="pre">sourceDirectories</span></tt> or <tt class="docutils literal"><span class="pre">scalacOptions</span></tt> or
+<tt class="docutils literal"><span class="pre">fullClasspath</span></tt>) are also scoped to the configuration.</p>
 </div>
 <div class="section" id="scoping-by-task-axis">
 <h3>Scoping by task axis<a class="headerlink" href="#scoping-by-task-axis" title="Permalink to this headline">¶</a></h3>
-<p>Settings can affect how a task works. For example, the <tt class="docutils literal"><span class="pre">package-src</span></tt>
-task is affected by the <tt class="docutils literal"><span class="pre">package-options</span></tt> setting.</p>
-<p>To support this, a task key (such as <tt class="docutils literal"><span class="pre">package-src</span></tt>) can be a scope for
-another key (such as <tt class="docutils literal"><span class="pre">package-options</span></tt>).</p>
-<p>The various tasks that build a package (<tt class="docutils literal"><span class="pre">package-src</span></tt>,
-<tt class="docutils literal"><span class="pre">package-bin</span></tt>, <tt class="docutils literal"><span class="pre">package-doc</span></tt>) can share keys related to packaging,
-such as <tt class="docutils literal"><span class="pre">artifact-name</span></tt> and <tt class="docutils literal"><span class="pre">package-options</span></tt>. Those keys can have
+<p>Settings can affect how a task works. For example, the <tt class="docutils literal"><span class="pre">packageSrc</span></tt>
+task is affected by the <tt class="docutils literal"><span class="pre">packageOptions</span></tt> setting.</p>
+<p>To support this, a task key (such as <tt class="docutils literal"><span class="pre">packageSrc</span></tt>) can be a scope for
+another key (such as <tt class="docutils literal"><span class="pre">packageOptions</span></tt>).</p>
+<p>The various tasks that build a package (<tt class="docutils literal"><span class="pre">packageSrc</span></tt>,
+<tt class="docutils literal"><span class="pre">packageBin</span></tt>, <tt class="docutils literal"><span class="pre">packageDoc</span></tt>) can share keys related to packaging,
+such as <tt class="docutils literal"><span class="pre">artifactName</span></tt> and <tt class="docutils literal"><span class="pre">packageOptions</span></tt>. Those keys can have
 distinct values for each packaging task.</p>
 </div>
 </div>
@@ -220,30 +220,30 @@ configuration or task.</li>
 <div class="section" id="examples-of-scoped-key-notation">
 <h3>Examples of scoped key notation<a class="headerlink" href="#examples-of-scoped-key-notation" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">full-classpath</span></tt>: just a key, so the default scopes are used:
+<li><tt class="docutils literal"><span class="pre">fullClasspath</span></tt>: just a key, so the default scopes are used:
 current project, a key-dependent configuration, and global task
 scope.</li>
-<li><tt class="docutils literal"><span class="pre">test:full-classpath</span></tt>: specifies the configuration, so this is
-<tt class="docutils literal"><span class="pre">full-classpath</span></tt> in the <tt class="docutils literal"><span class="pre">test</span></tt> configuration, with defaults for
+<li><tt class="docutils literal"><span class="pre">test:fullClasspath</span></tt>: specifies the configuration, so this is
+<tt class="docutils literal"><span class="pre">fullClasspath</span></tt> in the <tt class="docutils literal"><span class="pre">test</span></tt> configuration, with defaults for
 the other two scope axes.</li>
-<li><tt class="docutils literal"><span class="pre">*:full-classpath</span></tt>: specifies <tt class="docutils literal"><span class="pre">Global</span></tt> for the configuration,
+<li><tt class="docutils literal"><span class="pre">*:fullClasspath</span></tt>: specifies <tt class="docutils literal"><span class="pre">Global</span></tt> for the configuration,
 rather than the default configuration.</li>
-<li><tt class="docutils literal"><span class="pre">doc::full-classpath</span></tt>: specifies the <tt class="docutils literal"><span class="pre">full-classpath</span></tt> key scoped
+<li><tt class="docutils literal"><span class="pre">doc::fullClasspath</span></tt>: specifies the <tt class="docutils literal"><span class="pre">fullClasspath</span></tt> key scoped
 to the <tt class="docutils literal"><span class="pre">doc</span></tt> task, with the defaults for the project and
 configuration axes.</li>
-<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath</span></tt>
+<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span></tt>
 specifies a project,
 <tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span></tt>, where the project
 is identified with the build <tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}</span></tt> and
 then a project id inside that build <tt class="docutils literal"><span class="pre">default-aea33a</span></tt>. Also
 specifies configuration <tt class="docutils literal"><span class="pre">test</span></tt>, but leaves the default task axis.</li>
-<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}/test:full-classpath</span></tt> sets the
+<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}/test:fullClasspath</span></tt> sets the
 project axis to &quot;entire build&quot; where the build is
 <tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">{.}/test:full-classpath</span></tt> sets the project axis to &quot;entire build&quot;
+<li><tt class="docutils literal"><span class="pre">{.}/test:fullClasspath</span></tt> sets the project axis to &quot;entire build&quot;
 where the build is <tt class="docutils literal"><span class="pre">{.}</span></tt>. <tt class="docutils literal"><span class="pre">{.}</span></tt> can be written <tt class="docutils literal"><span class="pre">ThisBuild</span></tt> in
 Scala code.</li>
-<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}/compile:doc::full-classpath</span></tt> sets
+<li><tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</span></tt> sets
 all three scope axes.</li>
 </ul>
 </div>
@@ -251,40 +251,40 @@ all three scope axes.</li>
 <div class="section" id="inspecting-scopes">
 <h2>Inspecting scopes<a class="headerlink" href="#inspecting-scopes" title="Permalink to this headline">¶</a></h2>
 <p>In sbt's interactive mode, you can use the <tt class="docutils literal"><span class="pre">inspect</span></tt> command to
-understand keys and their scopes. Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">test:full-classpath</span></tt>:</p>
+understand keys and their scopes. Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">test:fullClasspath</span></tt>:</p>
 <div class="highlight-text"><div class="highlight"><pre>$ sbt
-&gt; inspect test:full-classpath
+&gt; inspect test:fullClasspath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
 [info] Dependencies:
-[info]  test:exported-products
-[info]  test:dependency-classpath
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
 [info] Reverse dependencies:
-[info]  test:run-main
+[info]  test:runMain
 [info]  test:run
-[info]  test:test-loader
+[info]  test:testLoader
 [info]  test:console
 [info] Delegates:
-[info]  test:full-classpath
-[info]  runtime:full-classpath
-[info]  compile:full-classpath
-[info]  *:full-classpath
-[info]  {.}/test:full-classpath
-[info]  {.}/runtime:full-classpath
-[info]  {.}/compile:full-classpath
-[info]  {.}/*:full-classpath
-[info]  */test:full-classpath
-[info]  */runtime:full-classpath
-[info]  */compile:full-classpath
-[info]  */*:full-classpath
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
 [info] Related:
-[info]  compile:full-classpath
-[info]  compile:full-classpath(for doc)
-[info]  test:full-classpath(for doc)
-[info]  runtime:full-classpath
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
 </pre></div>
 </div>
 <p>On the first line, you can see this is a task (as opposed to a setting,
@@ -293,40 +293,40 @@ The value resulting from the task will have type
 <tt class="docutils literal"><span class="pre">scala.collection.Seq[sbt.Attributed[java.io.File]]</span></tt>.</p>
 <p>&quot;Provided by&quot; points you to the scoped key that defines the value, in
 this case
-<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath</span></tt>
-(which is the <tt class="docutils literal"><span class="pre">full-classpath</span></tt> key scoped to the <tt class="docutils literal"><span class="pre">test</span></tt>
+<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span></tt>
+(which is the <tt class="docutils literal"><span class="pre">fullClasspath</span></tt> key scoped to the <tt class="docutils literal"><span class="pre">test</span></tt>
 configuration and the <tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span></tt>
 project).</p>
 <p>&quot;Dependencies&quot; may not make sense yet; stay tuned for the <a class="reference internal" href="More-About-Settings.html"><em>next page</em></a>.</p>
 <p>You can also see the delegates; if the value were not defined, sbt would
 search through:</p>
 <ul class="simple">
-<li>two other configurations (<tt class="docutils literal"><span class="pre">runtime:full-classpath</span></tt>,
-<tt class="docutils literal"><span class="pre">compile:full-classpath</span></tt>). In these scoped keys, the project is
+<li>two other configurations (<tt class="docutils literal"><span class="pre">runtime:fullClasspath</span></tt>,
+<tt class="docutils literal"><span class="pre">compile:fullClasspath</span></tt>). In these scoped keys, the project is
 unspecified meaning &quot;current project&quot; and the task is unspecified
 meaning <tt class="docutils literal"><span class="pre">Global</span></tt></li>
-<li>configuration set to <tt class="docutils literal"><span class="pre">Global</span></tt> (<tt class="docutils literal"><span class="pre">*:full-classpath</span></tt>), since project
+<li>configuration set to <tt class="docutils literal"><span class="pre">Global</span></tt> (<tt class="docutils literal"><span class="pre">*:fullClasspath</span></tt>), since project
 is still unspecified it's &quot;current project&quot; and task is still
 unspecified so <tt class="docutils literal"><span class="pre">Global</span></tt></li>
 <li>project set to <tt class="docutils literal"><span class="pre">{.}</span></tt> or <tt class="docutils literal"><span class="pre">ThisBuild</span></tt> (meaning the entire build, no
 specific project)</li>
-<li>project axis set to <tt class="docutils literal"><span class="pre">Global</span></tt> (<tt class="docutils literal"><span class="pre">*/test:full-classpath</span></tt>) (remember,
+<li>project axis set to <tt class="docutils literal"><span class="pre">Global</span></tt> (<tt class="docutils literal"><span class="pre">*/test:fullClasspath</span></tt>) (remember,
 an unspecified project means current, so searching <tt class="docutils literal"><span class="pre">Global</span></tt> here is
 new; i.e. <tt class="docutils literal"><span class="pre">*</span></tt> and &quot;no project shown&quot; are different for the project
-axis; i.e. <tt class="docutils literal"><span class="pre">*/test:full-classpath</span></tt> is not the same as
-<tt class="docutils literal"><span class="pre">test:full-classpath</span></tt>)</li>
+axis; i.e. <tt class="docutils literal"><span class="pre">*/test:fullClasspath</span></tt> is not the same as
+<tt class="docutils literal"><span class="pre">test:fullClasspath</span></tt>)</li>
 <li>both project and configuration set to <tt class="docutils literal"><span class="pre">Global</span></tt>
-(<tt class="docutils literal"><span class="pre">*/*:full-classpath</span></tt>) (remember that unspecified task means
-<tt class="docutils literal"><span class="pre">Global</span></tt> already, so <tt class="docutils literal"><span class="pre">*/*:full-classpath</span></tt> uses <tt class="docutils literal"><span class="pre">Global</span></tt> for all
+(<tt class="docutils literal"><span class="pre">*/*:fullClasspath</span></tt>) (remember that unspecified task means
+<tt class="docutils literal"><span class="pre">Global</span></tt> already, so <tt class="docutils literal"><span class="pre">*/*:fullClasspath</span></tt> uses <tt class="docutils literal"><span class="pre">Global</span></tt> for all
 three axes)</li>
 </ul>
-<p>Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">full-classpath</span></tt> (as opposed to the above example,
-<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">test:full-classpath</span></tt>) to get a sense of the difference.
+<p>Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">fullClasspath</span></tt> (as opposed to the above example,
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">test:fullClasspath</span></tt>) to get a sense of the difference.
 Because the configuration is omitted, it is autodetected as <tt class="docutils literal"><span class="pre">compile</span></tt>.
-<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">compile:full-classpath</span></tt> should therefore look the same as
-<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">full-classpath</span></tt>.</p>
-<p>Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">*:full-classpath</span></tt> for another contrast.
-<tt class="docutils literal"><span class="pre">full-classpath</span></tt> is not defined in the <tt class="docutils literal"><span class="pre">Global</span></tt> configuration by
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">compile:fullClasspath</span></tt> should therefore look the same as
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">fullClasspath</span></tt>.</p>
+<p>Try <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">*:fullClasspath</span></tt> for another contrast.
+<tt class="docutils literal"><span class="pre">fullClasspath</span></tt> is not defined in the <tt class="docutils literal"><span class="pre">Global</span></tt> configuration by
 default.</p>
 <p>Again, for more details, see <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a>.</p>
 </div>
@@ -353,7 +353,7 @@ name scoped to the <tt class="docutils literal"><span class="pre">Compile</span>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
 </pre></div>
 </div>
-<p>or you could set the name scoped to the <tt class="docutils literal"><span class="pre">package-bin</span></tt> task (pointless!
+<p>or you could set the name scoped to the <tt class="docutils literal"><span class="pre">packageBin</span></tt> task (pointless!
 just an example):</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="n">packageBin</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
 </pre></div>

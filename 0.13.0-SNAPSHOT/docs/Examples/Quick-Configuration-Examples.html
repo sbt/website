@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -109,10 +109,10 @@ setting is otherwise a normal Scala expression with expected type
 <span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.0-SNAPSHOT&quot;</span>
 
 <span class="c1">// set the main Scala source directory to be &lt;base&gt;/src</span>
-<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span>
+<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span>
 
 <span class="c1">// set the Scala test source directory to be &lt;base&gt;/test</span>
-<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
+<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;test&quot;</span>
 
 <span class="c1">// add a test dependency on ScalaCheck</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalacheck&quot;</span> <span class="o">%</span> <span class="s">&quot;1.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
@@ -141,7 +141,7 @@ setting is otherwise a normal Scala expression with expected type
 <span class="c1">// append -deprecation to the options passed to the Scala compiler</span>
 <span class="n">scalacOptions</span> <span class="o">+=</span> <span class="s">&quot;-deprecation&quot;</span>
 
-<span class="c1">// define the statements initially evaluated when entering &#39;console&#39;, &#39;console-quick&#39;, or &#39;console-project&#39;</span>
+<span class="c1">// define the statements initially evaluated when entering &#39;console&#39;, &#39;consoleQuick&#39;, or &#39;consoleProject&#39;</span>
 <span class="n">initialCommands</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;</span>
 <span class="s">  import System.{currentTimeMillis =&gt; now}</span>
 <span class="s">  def time[T](f: =&gt; T): T = {</span>
@@ -150,7 +150,7 @@ setting is otherwise a normal Scala expression with expected type
 <span class="s">  }</span>
 <span class="s">&quot;&quot;&quot;</span>
 
-<span class="c1">// set the initial commands when entering &#39;console&#39; or &#39;console-quick&#39;, but not &#39;console-project&#39;</span>
+<span class="c1">// set the initial commands when entering &#39;console&#39; or &#39;consoleQuick&#39;, but not &#39;consoleProject&#39;</span>
 <span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;import myproject._&quot;</span>
 
 <span class="c1">// set the main class for packaging the main jar</span>
@@ -163,7 +163,7 @@ setting is otherwise a normal Scala expression with expected type
 <span class="n">mainClass</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;myproject.MyMain&quot;</span><span class="o">)</span>
 
 <span class="c1">// add &lt;base&gt;/input to the files that &#39;~&#39; triggers on</span>
-<span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;input&quot;</span> <span class="o">}</span>
+<span class="n">watchSources</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;input&quot;</span>
 
 <span class="c1">// add a maven-style repository</span>
 <span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;name&quot;</span> <span class="n">at</span> <span class="s">&quot;url&quot;</span>

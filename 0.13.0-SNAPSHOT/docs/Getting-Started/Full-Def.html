@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -172,10 +172,10 @@ to understand how they relate.</p>
 
 <span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
 
-    <span class="k">val</span> <span class="n">sampleKeyA</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-a&quot;</span><span class="o">,</span> <span class="s">&quot;demo key A&quot;</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">sampleKeyB</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-b&quot;</span><span class="o">,</span> <span class="s">&quot;demo key B&quot;</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">sampleKeyC</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-c&quot;</span><span class="o">,</span> <span class="s">&quot;demo key C&quot;</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">sampleKeyD</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-d&quot;</span><span class="o">,</span> <span class="s">&quot;demo key D&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyA</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;demo key A&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyB</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;demo key B&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyC</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;demo key C&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyD</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;demo key D&quot;</span><span class="o">)</span>
 
     <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">super</span><span class="o">.</span><span class="n">settings</span> <span class="o">++</span>
         <span class="nc">Seq</span><span class="o">(</span><span class="n">sampleKeyA</span> <span class="o">:=</span> <span class="s">&quot;A: in Build.settings in Build.scala&quot;</span><span class="o">,</span> <span class="n">resolvers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">())</span>
@@ -192,17 +192,17 @@ to understand how they relate.</p>
 <span class="n">sampleKeyD</span> <span class="o">:=</span> <span class="s">&quot;D: in build.sbt&quot;</span>
 </pre></div>
 </div>
-<p>Start up the sbt interactive prompt. Type <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-a</span></tt> and you
+<p>Start up the sbt interactive prompt. Type <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sampleKeyA</span></tt> and you
 should see (among other things):</p>
 <div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = A: in Build.settings in Build.scala
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}/*:sample-a
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
 </pre></div>
 </div>
-<p>and then <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-c</span></tt> and you should see:</p>
+<p>and then <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sampleKeyC</span></tt> and you should see:</p>
 <div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}/*:sample-c
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
 </pre></div>
 </div>
 <p>Note that the &quot;Provided by&quot; shows the same scope for the two values.
@@ -210,25 +210,25 @@ That is, <tt class="docutils literal"><span class="pre">sampleKeyC</span> <span 
 placing a setting in the <tt class="docutils literal"><span class="pre">Build.settings</span></tt> list in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file.
 sbt takes build-scoped settings from both places to create the build
 definition.</p>
-<p>Now, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-b</span></tt>:</p>
+<p>Now, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sampleKeyB</span></tt>:</p>
 <div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = B: in the root project settings in Build.scala
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}hello/*:sample-b
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
 </pre></div>
 </div>
-<p>Note that <tt class="docutils literal"><span class="pre">sample-b</span></tt> is scoped to the project
+<p>Note that <tt class="docutils literal"><span class="pre">sampleKeyB</span></tt> is scoped to the project
 (<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}hello</span></tt>) rather than the entire build
 (<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}</span></tt>).</p>
-<p>As you've probably guessed, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-d</span></tt> matches <tt class="docutils literal"><span class="pre">sample-b</span></tt>:</p>
+<p>As you've probably guessed, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sampleKeyD</span></tt> matches <tt class="docutils literal"><span class="pre">sampleKeyB</span></tt>:</p>
 <div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = D: in build.sbt
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}hello/*:sample-d
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
 </pre></div>
 </div>
 <p>sbt <em>appends</em> the settings from <tt class="docutils literal"><span class="pre">.sbt</span></tt> files to the settings from
 <tt class="docutils literal"><span class="pre">Build.settings</span></tt> and <tt class="docutils literal"><span class="pre">Project.settings</span></tt> which means <tt class="docutils literal"><span class="pre">.sbt</span></tt>
 settings take precedence. Try changing <tt class="docutils literal"><span class="pre">Build.scala</span></tt> so it sets key
-<tt class="docutils literal"><span class="pre">sample-c</span></tt> or <tt class="docutils literal"><span class="pre">sample-d</span></tt>, which are also set in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. The
+<tt class="docutils literal"><span class="pre">sampleC</span></tt> or <tt class="docutils literal"><span class="pre">sampleD</span></tt>, which are also set in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. The
 setting in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> should &quot;win&quot; over the one in <tt class="docutils literal"><span class="pre">Build.scala</span></tt>.</p>
 <p>One other thing you may have noticed: <tt class="docutils literal"><span class="pre">sampleKeyC</span></tt> and <tt class="docutils literal"><span class="pre">sampleKeyD</span></tt>
 were available inside <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. That's because sbt imports the
@@ -250,16 +250,11 @@ explicitly specify another scope.</li>
 </div>
 <div class="section" id="when-to-use-scala-files">
 <h2>When to use <tt class="docutils literal"><span class="pre">.scala</span></tt> files<a class="headerlink" href="#when-to-use-scala-files" title="Permalink to this headline">¶</a></h2>
-<p>In <tt class="docutils literal"><span class="pre">.scala</span></tt> files, you are not limited to a series of settings
-expressions. You can write any Scala code including <tt class="docutils literal"><span class="pre">val</span></tt>, <tt class="docutils literal"><span class="pre">object</span></tt>,
+<p>In <tt class="docutils literal"><span class="pre">.scala</span></tt> files, you can write any Scala code including <tt class="docutils literal"><span class="pre">val</span></tt>, <tt class="docutils literal"><span class="pre">object</span></tt>,
 and method definitions.</p>
 <p><em>One recommended approach is to define settings in ``.sbt`` files, using
 ``.scala`` files when you need to factor out a ``val`` or ``object`` or
 method definition.</em></p>
-<p>Because the <tt class="docutils literal"><span class="pre">.sbt</span></tt> format allows only single expressions, it doesn't
-give you a way to share code among expressions. When you need to share
-code, you need a <tt class="docutils literal"><span class="pre">.scala</span></tt> file so you can set common variables or
-define methods.</p>
 <p>There's one build definition, which is a nested project inside your main
 project. <tt class="docutils literal"><span class="pre">.sbt</span></tt> and <tt class="docutils literal"><span class="pre">.scala</span></tt> files are compiled together to create
 that single definition.</p>

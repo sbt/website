@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -109,9 +109,9 @@ build, but are not necessary. An example is an IDE plugin.</p>
 <p>There are two options for settings that are specific to a user. An
 example of such a setting is inserting the local Maven repository at the
 beginning of the resolvers list:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">&lt;&lt;=</span> <span class="n">resolvers</span> <span class="o">{</span><span class="n">rs</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">localMaven</span> <span class="k">=</span> <span class="s">&quot;Local Maven Repository&quot;</span> <span class="n">at</span> <span class="s">&quot;file://&quot;</span><span class="o">+</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">+</span><span class="s">&quot;/.m2/repository&quot;</span>
-  <span class="n">localMaven</span> <span class="o">+:</span> <span class="n">rs</span>
+  <span class="n">localMaven</span> <span class="o">+:</span> <span class="n">resolvers</span><span class="o">.</span><span class="n">value</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -147,7 +147,7 @@ version should go in <tt class="docutils literal"><span class="pre">crossTarget<
 is especially important for plugins. A user might change the <tt class="docutils literal"><span class="pre">target</span></tt>
 setting to point to <tt class="docutils literal"><span class="pre">build/</span></tt>, for example, and the plugin needs to
 respect that. Instead, use the setting, like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">myDirectory</span> <span class="o">&lt;&lt;=</span> <span class="n">target</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;sub-directory&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myDirectory</span> <span class="o">:=</span> <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;sub-directory&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -167,11 +167,10 @@ about the user or other processes modifying the files, but you can make
 the I/O that is under the build's control more predictable by treating
 file contents as immutable at the level of Tasks.</p>
 <p>For example:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">makeFile</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;make-file&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">makeFile</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;Creates a file with some content.&quot;</span><span class="o">)</span>
 
 <span class="c1">// define a task that creates a file,</span>
 <span class="c1">//  writes some content, and returns the File</span>
-<span class="c1">// The write is completely</span>
 <span class="n">makeFile</span> <span class="o">:=</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/tmp/data.txt&quot;</span><span class="o">)</span>
     <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="s">&quot;Some content&quot;</span><span class="o">)</span>
@@ -181,9 +180,8 @@ file contents as immutable at the level of Tasks.</p>
 <span class="c1">// The result of makeFile is the constructed File,</span>
 <span class="c1">//   so useFile can map makeFile and simultaneously</span>
 <span class="c1">//   get the File and declare the dependency on makeFile</span>
-<span class="n">useFile</span> <span class="o">&lt;&lt;=</span> <span class="n">makeFile</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">f</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="n">doSomething</span><span class="o">(</span> <span class="n">f</span> <span class="o">)</span>
-<span class="o">}</span>
+<span class="n">useFile</span> <span class="o">:=</span>
+    <span class="n">doSomething</span><span class="o">(</span> <span class="n">makeFile</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
 </pre></div>
 </div>
 <p>This arrangement is not always possible, but it should be the rule and
@@ -203,7 +201,7 @@ not the exception.</p>
 way involves referencing the <tt class="docutils literal"><span class="pre">baseDirectory</span></tt> setting. For example, the
 following defines the myPath setting to be the <tt class="docutils literal"><span class="pre">&lt;base&gt;/licenses/</span></tt>
 directory.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">myPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;licenses&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myPath</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;licenses&quot;</span>
 </pre></div>
 </div>
 <p>In Java (and thus in Scala), a relative File is relative to the current

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -101,11 +101,7 @@ the base directory, and files ending in <tt class="docutils literal"><span class
 <tt class="docutils literal"><span class="pre">project</span></tt> subdirectory of the base directory.</p>
 <p>You can use either one exclusively, or use both. A good approach is to
 use <tt class="docutils literal"><span class="pre">.sbt</span></tt> files for most purposes, and use <tt class="docutils literal"><span class="pre">.scala</span></tt> files only to
-contain what can't be done in <tt class="docutils literal"><span class="pre">.sbt</span></tt>:</p>
-<ul class="simple">
-<li>to customize sbt (add new settings or tasks)</li>
-<li>to define nested sub-projects</li>
-</ul>
+contain what can't be done in <tt class="docutils literal"><span class="pre">.sbt</span></tt>.</p>
 <p>This page discusses <tt class="docutils literal"><span class="pre">.sbt</span></tt> files. See <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a> (later in Getting Started) for
 more on <tt class="docutils literal"><span class="pre">.scala</span></tt> files and how they relate to <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.</p>
 </div>
@@ -119,8 +115,7 @@ the build.</p>
 of your project.</p>
 <p><em>Build definition files do not affect sbt's map directly.</em></p>
 <p>Instead, the build definition creates a huge list of objects with type
-<tt class="docutils literal"><span class="pre">Setting[T]</span></tt> where <tt class="docutils literal"><span class="pre">T</span></tt> is the type of the value in the map. (Scala's
-<tt class="docutils literal"><span class="pre">Setting[T]</span></tt> is like <tt class="docutils literal"><span class="pre">Setting&lt;T&gt;</span></tt> in Java.) A <tt class="docutils literal"><span class="pre">Setting</span></tt> describes
+<tt class="docutils literal"><span class="pre">Setting[T]</span></tt> where <tt class="docutils literal"><span class="pre">T</span></tt> is the type of the value in the map.  A <tt class="docutils literal"><span class="pre">Setting</span></tt> describes
 a <em>transformation to the map</em>, such as adding a new key-value pair or
 appending to an existing value. (In the spirit of functional
 programming, a transformation returns a new map, it does not update the
@@ -158,11 +153,12 @@ be looking at the equivalent <tt class="docutils literal"><span class="pre">.sca
 </pre></div>
 </div>
 <p>A <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file is a list of <tt class="docutils literal"><span class="pre">Setting</span></tt>, separated by blank lines.
-Each <tt class="docutils literal"><span class="pre">Setting</span></tt> is defined with a Scala expression.</p>
-<p>The expressions in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> are independent of one another, and
-they are expressions, rather than complete Scala statements. An
-implication of this is that you can't define a top-level <tt class="docutils literal"><span class="pre">val</span></tt>,
-<tt class="docutils literal"><span class="pre">object</span></tt>, class, or method in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>.</p>
+Each <tt class="docutils literal"><span class="pre">Setting</span></tt> is defined with a Scala expression.
+The expressions in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> are independent of one another, and
+they are expressions, rather than complete Scala statements.  These
+expressions may be interspersed with <tt class="docutils literal"><span class="pre">val``s,</span> <span class="pre">``lazy</span> <span class="pre">val``s,</span> <span class="pre">and</span> <span class="pre">``def``s,</span>
+<span class="pre">but</span> <span class="pre">top-level</span> <span class="pre">``object``s</span> <span class="pre">and</span> <span class="pre">classes</span> <span class="pre">are</span> <span class="pre">not</span> <span class="pre">allowed</span> <span class="pre">in</span> <span class="pre">``build.sbt</span></tt>.
+Those should go in the <tt class="docutils literal"><span class="pre">project/</span></tt> directory as full Scala source files.</p>
 <p>On the left, <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">version</span></tt>, and <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> are <em>keys</em>. A
 key is an instance of <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt>, <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt>, or
 <tt class="docutils literal"><span class="pre">InputKey[T]</span></tt> where <tt class="docutils literal"><span class="pre">T</span></tt> is the expected value type. The kinds of key
@@ -180,8 +176,12 @@ itself, which is <tt class="docutils literal"><span class="pre">SettingKey[Strin
 <tt class="docutils literal"><span class="pre">Setting[String]</span></tt> is a transformation to add or replace the <tt class="docutils literal"><span class="pre">name</span></tt>
 key in sbt's map, giving it the value <tt class="docutils literal"><span class="pre">&quot;hello&quot;</span></tt>.</p>
 <p>If you use the wrong value type, the build definition will not compile:</p>
-<p><tt class="docutils literal"><span class="pre">scala</span> <span class="pre">name</span> <span class="pre">:=</span> <span class="pre">42</span>&nbsp; <span class="pre">//</span> <span class="pre">will</span> <span class="pre">not</span> <span class="pre">compile</span></tt> ### Settings are separated by
-blank lines</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="mi">42</span>  <span class="c1">// will not compile</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settings-are-separated-by-blank-lines">
+<h2>Settings are separated by blank lines<a class="headerlink" href="#settings-are-separated-by-blank-lines" title="Permalink to this headline">¶</a></h2>
 <p>You can't write a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> like this:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// will NOT work, no blank lines</span>
 <span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
@@ -269,18 +269,9 @@ that task. This is why typing <tt class="docutils literal"><span class="pre">com
 <p>If you type the name of a setting key rather than a task key, the value
 of the setting key will be displayed. Typing a task key name executes
 the task but doesn't display the resulting value; to see a task's
-result, use <tt class="docutils literal"><span class="pre">show</span> <span class="pre">&lt;task</span> <span class="pre">name&gt;</span></tt> rather than plain <tt class="docutils literal"><span class="pre">&lt;task</span> <span class="pre">name&gt;</span></tt>.</p>
-<p>In build definition files, keys are named with <tt class="docutils literal"><span class="pre">camelCase</span></tt> following
-Scala convention, but the sbt command line uses
-<tt class="docutils literal"><span class="pre">hyphen-separated-words</span></tt> instead. The hyphen-separated string used in
-sbt comes from the definition of the key (see
-<a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>). For
-example, in <tt class="docutils literal"><span class="pre">Keys.scala</span></tt>, there's this key:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalacOptions</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]](</span><span class="s">&quot;scalac-options&quot;</span><span class="o">,</span> <span class="s">&quot;Options for the Scala compiler.&quot;</span><span class="o">)</span>
-</pre></div>
-</div>
-<p>In sbt you type <tt class="docutils literal"><span class="pre">scalac-options</span></tt> but in a build definition file you
-use <tt class="docutils literal"><span class="pre">scalacOptions</span></tt>.</p>
+result, use <tt class="docutils literal"><span class="pre">show</span> <span class="pre">&lt;task</span> <span class="pre">name&gt;</span></tt> rather than plain <tt class="docutils literal"><span class="pre">&lt;task</span> <span class="pre">name&gt;</span></tt>.
+The convention for keys names is to use <tt class="docutils literal"><span class="pre">camelCase</span></tt> so that the
+command line name and the Scala identifiers are the same.</p>
 <p>To learn more about any key, type <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">&lt;keyname&gt;</span></tt> at the sbt
 interactive prompt. Some of the information <tt class="docutils literal"><span class="pre">inspect</span></tt> displays won't
 make sense yet, but at the top it shows you the setting's value type and
@@ -336,6 +327,7 @@ covering it later on.</p>
 <li><a class="reference internal" href="#sbt-vs-scala-definition"><tt class="docutils literal"><span class="pre">.sbt</span></tt> vs. <tt class="docutils literal"><span class="pre">.scala</span></tt> Definition</a></li>
 <li><a class="reference internal" href="#what-is-a-build-definition">What is a build definition?</a></li>
 <li><a class="reference internal" href="#how-build-sbt-defines-settings">How <tt class="docutils literal"><span class="pre">build.sbt</span></tt> defines settings</a></li>
+<li><a class="reference internal" href="#settings-are-separated-by-blank-lines">Settings are separated by blank lines</a></li>
 <li><a class="reference internal" href="#keys-are-defined-in-the-keys-object">Keys are defined in the Keys object</a></li>
 <li><a class="reference internal" href="#other-ways-to-transform-settings">Other ways to transform settings</a></li>
 <li><a class="reference internal" href="#task-keys">Task Keys</a></li>

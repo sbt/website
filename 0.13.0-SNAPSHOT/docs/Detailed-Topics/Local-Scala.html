@@ -35,7 +35,7 @@
     <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="Detailed Topics" href="index.html" />
-    <link rel="next" title="Mapping Files" href="Mapping-Files.html" />
+    <link rel="next" title="Macro Projects" href="Macro-Projects.html" />
     <link rel="prev" title="Library Management" href="Library-Management.html" /> 
   </head>
   <body>
@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -69,7 +69,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="Mapping-Files.html">Mapping Files</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="Macro-Projects.html">Macro Projects</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
@@ -91,12 +91,12 @@
             
   <div class="section" id="local-scala">
 <h1>Local Scala<a class="headerlink" href="#local-scala" title="Permalink to this headline">¶</a></h1>
-<p>To use a locally built Scala version, define the <tt class="docutils literal"><span class="pre">scala-home</span></tt> setting,
+<p>To use a locally built Scala version, define the <tt class="docutils literal"><span class="pre">scalaHome</span></tt> setting,
 which is of type <tt class="docutils literal"><span class="pre">Option[File]</span></tt>. This Scala version will only be used
 for the build and not for sbt, which will still use the version it was
 compiled against.</p>
 <p>Example: <tt class="docutils literal"><span class="pre">scala</span> <span class="pre">scalaHome</span> <span class="pre">:=</span> <span class="pre">Some(file(&quot;/path/to/scala&quot;))</span></tt></p>
-<p>Using a local Scala version will override the <tt class="docutils literal"><span class="pre">scala-version</span></tt> setting
+<p>Using a local Scala version will override the <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> setting
 and will not work with <a class="reference internal" href="Cross-Build.html"><em>cross building</em></a>.</p>
 <p>sbt reuses the class loader for the local Scala version. If you
 recompile your local Scala version and you are using sbt interactively,

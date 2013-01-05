@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -104,12 +104,12 @@ are implemented in
 described in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>. Read
 about <tt class="docutils literal"><span class="pre">InputKey</span></tt> on the <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> page.</p>
 <p>Some examples from <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalaVersion</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;scala-version&quot;</span><span class="o">,</span> <span class="s">&quot;The version of Scala used for building.&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">clean</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;clean&quot;</span><span class="o">,</span> <span class="s">&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalaVersion</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;The version of Scala used for building.&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">clean</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The key constructors have two string parameters: the name of the key
-(<tt class="docutils literal"><span class="pre">&quot;scala-version&quot;</span></tt>) and a documentation string
+(<tt class="docutils literal"><span class="pre">&quot;scalaVersion&quot;</span></tt>) and a documentation string
 (<tt class="docutils literal"><span class="pre">&quot;The</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">scala</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">building.&quot;</span></tt>).</p>
 <p>Remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> that
 the type parameter <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> indicates the type of
@@ -142,8 +142,8 @@ code with the task key:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>If the task has dependencies, you'd use <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> instead of course, as
-discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<p>If the task has dependencies, you'd reference their value using
+<tt class="docutils literal"><span class="pre">value</span></tt>, as discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
 <p>The hardest part about implementing tasks is often not sbt-specific;
 tasks are just Scala code. The hard part could be writing the &quot;meat&quot; of
 your task that does whatever you're trying to do. For example, maybe
@@ -152,17 +152,16 @@ library (you would <a class="reference internal" href="Using-Plugins.html"><em>a
 and write code based on the HTML library, perhaps).</p>
 <p>sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-<a class="reference external" href="../../api/index.html#sbt.IO$">IO</a> to
-manipulate files and directories.</p>
+<a class="reference external" href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.</p>
 </div>
 <div class="section" id="extending-but-not-replacing-a-task">
 <h2>Extending but not replacing a task<a class="headerlink" href="#extending-but-not-replacing-a-task" title="Permalink to this headline">¶</a></h2>
 <p>If you want to run an existing task while also taking another action,
-use <tt class="docutils literal"><span class="pre">~=</span></tt> or <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> to take the existing task as input (which will
+use <tt class="docutils literal"><span class="pre">:=</span></tt> or <tt class="docutils literal"><span class="pre">~=</span></tt> to take the existing task as input (which will
 imply running that task), and then do whatever else you like after the
 previous implementation completes.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// These two settings are equivalent</span>
-<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+<span class="n">intTask</span> <span class="o">:=</span> <span class="n">intTask</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="n">intTask</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
 </pre></div>
 </div>

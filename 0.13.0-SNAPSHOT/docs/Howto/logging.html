@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -129,8 +129,8 @@ This output can be recalled for the command just executed by running <tt class="
 <span class="go">[debug]   Classpath:</span>
 <span class="go">[debug]     /tmp/e/target/scala-2.9.2/classes</span>
 <span class="go">[debug]     /tmp/e/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar</span>
-<span class="go">[debug] Waiting for thread run-main to exit</span>
-<span class="go">[debug]     Thread run-main exited.</span>
+<span class="go">[debug] Waiting for thread runMain to exit</span>
+<span class="go">[debug]     Thread runMain exited.</span>
 <span class="go">[debug] Interrupting remaining threads (should be all daemons).</span>
 <span class="go">[debug] Sandboxed run complete..</span>
 <span class="go">[debug] Exited with code 0</span>
@@ -188,10 +188,10 @@ Compiling code that uses the deprecated <tt class="docutils literal"><span class
 </pre></div>
 </div>
 <p>The details aren't provided, so it is necessary to add <tt class="docutils literal"><span class="pre">-deprecation</span></tt> to the options passed to the compiler (<tt class="docutils literal"><span class="pre">scalacOptions</span></tt>) and recompile.
-An alternative when using Scala 2.10 and later is to run <tt class="docutils literal"><span class="pre">print-warnings</span></tt>.
+An alternative when using Scala 2.10 and later is to run <tt class="docutils literal"><span class="pre">printWarnings</span></tt>.
 This task will display all warnings from the previous compilation.
 For example,</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> print-warnings
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> printWarnings
 <span class="go">[warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead</span>
 <span class="go">[warn]      def x = error(&quot;Failed.&quot;)</span>
 <span class="go">[warn]              ^</span>
@@ -226,9 +226,9 @@ For example, to change the logging level for compilation to only show warnings a
 <p>A common scenario is that after running a task, you notice that you need more information than was shown by default.
 A <tt class="docutils literal"><span class="pre">logLevel</span></tt> based solution typically requires changing the logging level and running a task again.
 However, there are two cases where this is unnecessary.
-First, warnings from a previous compilation may be displayed using <tt class="docutils literal"><span class="pre">print-warnings</span></tt> for the main sources or <tt class="docutils literal"><span class="pre">test:print-warnings</span></tt> for test sources.
+First, warnings from a previous compilation may be displayed using <tt class="docutils literal"><span class="pre">printWarnings</span></tt> for the main sources or <tt class="docutils literal"><span class="pre">test:printWarnings</span></tt> for test sources.
 Second, output from the previous execution is available either for a single task or for in its entirety.
-See the section on <a class="reference external" href="#printwarnings">print-warnings</a> and the sections on <a class="reference external" href="#last">previous output</a>.</p>
+See the section on <a class="reference external" href="#printwarnings">printWarnings</a> and the sections on <a class="reference external" href="#last">previous output</a>.</p>
 <div class="full-howto section" id="trace">
 <h2>Configure printing of stack traces<a class="headerlink" href="#trace" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -279,9 +279,10 @@ The new function prepends our custom logger to the ones provided by the old func
 <h2>Log messages in a task<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>The special task <tt class="docutils literal"><span class="pre">streams</span></tt> provides per-task logging and I/O via a <a class="reference external" href="../../api/#sbt.std.Streams">Streams</a> instance.
-To log, a task maps the <tt class="docutils literal"><span class="pre">streams</span></tt> task and uses its <tt class="docutils literal"><span class="pre">log</span></tt> member:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(...,</span> <span class="n">streams</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(...,</span> <span class="n">s</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="o">(</span><span class="s">&quot;A warning.&quot;</span><span class="o">)</span>
+To log, a task uses the <tt class="docutils literal"><span class="pre">log</span></tt> member from the <tt class="docutils literal"><span class="pre">streams</span></tt> task:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">{</span>
+       <span class="k">val</span> <span class="n">log</span> <span class="k">=</span> <span class="n">streams</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">log</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="o">(</span><span class="s">&quot;A warning.&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -132,18 +132,19 @@ to change the location of the directory you store the jars in.</p>
 <p>To change the directory jars are stored in, change the
 <tt class="docutils literal"><span class="pre">unmanaged-base</span></tt> setting in your project definition. For example, to
 use <tt class="docutils literal"><span class="pre">custom_lib/</span></tt>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span> <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span>
 </pre></div>
 </div>
 <p>If you want more control and flexibility, override the
 <tt class="docutils literal"><span class="pre">unmanaged-jars</span></tt> task, which ultimately provides the manual
 dependencies to sbt. The default implementation is roughly:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">base</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span> <span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span>
 </pre></div>
 </div>
 <p>If you want to add jars from multiple directories in addition to the
 default directory, you can do:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;++=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">base</span> <span class="k">=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span>
     <span class="k">val</span> <span class="n">baseDirectories</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libA&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;b&quot;</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libC&quot;</span><span class="o">)</span>
     <span class="k">val</span> <span class="n">customJars</span> <span class="k">=</span> <span class="o">(</span><span class="n">baseDirectories</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;d&quot;</span> <span class="o">/</span> <span class="s">&quot;my.jar&quot;</span><span class="o">)</span>
     <span class="n">customJars</span><span class="o">.</span><span class="n">classpath</span>
@@ -155,9 +156,8 @@ default directory, you can do:</p>
 <h2>Resolver.withDefaultResolvers method<a class="headerlink" href="#resolver-withdefaultresolvers-method" title="Permalink to this headline">¶</a></h2>
 <p>To use the local and Maven Central repositories, but not the Scala Tools
 releases repository:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">&lt;&lt;=</span> <span class="n">resolvers</span> <span class="n">map</span> <span class="o">{</span> <span class="n">rs</span> <span class="k">=&gt;</span>
-  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">rs</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">scalaTools</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
-<span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">:=</span>
+  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">resolvers</span><span class="o">.</span><span class="n">value</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">scalaTools</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -210,7 +210,7 @@ example, to only retrieve sources:</p>
 </pre></div>
 </div>
 <p>To define extra attributes on the current project:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">&lt;&lt;=</span> <span class="n">projectID</span> <span class="o">{</span> <span class="n">id</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">id</span> <span class="k">=&gt;</span>
     <span class="n">id</span> <span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">,</span> <span class="s">&quot;component&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;compiler-interface&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>

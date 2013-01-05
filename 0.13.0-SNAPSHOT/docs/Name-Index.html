@@ -47,7 +47,7 @@
           <li><a href="index.html">Documentation</a></li>
           <li><a href="Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -188,16 +188,13 @@ an object that provides all of the built-in keys for settings and tasks.</li>
 <p>See the <a class="reference internal" href="Getting-Started/Basic-Def.html"><em>Getting Started Guide</em></a> for
 details.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=</span></tt>, <tt class="docutils literal"><span class="pre">~=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;+=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;++=</span></tt> These
-construct a
-<a class="reference external" href="../api/sbt/Init$Setting.html">Setting</a>,
+<li><tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=</span></tt>, <tt class="docutils literal"><span class="pre">~=</span></tt> These
+construct a <a class="reference external" href="../api/sbt/Init$Setting.html">Setting</a>,
 which is the fundamental type in the <a class="reference internal" href="Getting-Started/Basic-Def.html"><em>settings</em></a> system.</li>
-<li><tt class="docutils literal"><span class="pre">map</span></tt> This defines a task initialization that uses other tasks or
-settings. See <a class="reference internal" href="Getting-Started/More-About-Settings.html"><em>more about settings</em></a>.
-It is a common name used for many other types in Scala, such as collections.</li>
-<li><tt class="docutils literal"><span class="pre">apply</span></tt> This defines a setting initialization using other settings.
-It is not typically written out. See <a class="reference internal" href="Getting-Started/More-About-Settings.html"><em>more about settings</em></a>.
-This is a common name in Scala.</li>
+<li><tt class="docutils literal"><span class="pre">value</span></tt> This uses the value of another setting or task in the definition of a new setting or task.
+This method is special (it is a macro) and cannot be used except in the argument of one of the setting
+definition methods above (<tt class="docutils literal"><span class="pre">:=</span></tt>, ...) or in the standalone construction methods <tt class="docutils literal"><span class="pre">Def.setting</span></tt> and <tt class="docutils literal"><span class="pre">Def.task</span></tt>.
+See <a class="reference internal" href="Getting-Started/More-About-Settings.html"><em>more about settings</em></a> for details.</li>
 <li><tt class="docutils literal"><span class="pre">in</span></tt> specifies the <a class="reference external" href="../api/sbt/Scope.html">Scope</a> or part of the
 <a class="reference external" href="../api/sbt/Scope.html">Scope</a> of a setting being referenced. See <a class="reference internal" href="Getting-Started/Scopes.html"><em>scopes</em></a>.</li>
 </ul>

@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -94,16 +94,16 @@
 <p>You can make a command run when certain files change by prefixing the
 command with <tt class="docutils literal"><span class="pre">~</span></tt>. Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.
 This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but
-typically the basic settings <tt class="docutils literal"><span class="pre">watch-sources</span></tt> and <tt class="docutils literal"><span class="pre">poll-interval</span></tt> are
+typically the basic settings <tt class="docutils literal"><span class="pre">watchSources</span></tt> and <tt class="docutils literal"><span class="pre">pollInterval</span></tt> are
 modified.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">watch-sources</span></tt> defines the files for a single project that are
+<li><tt class="docutils literal"><span class="pre">watchSources</span></tt> defines the files for a single project that are
 monitored for changes. By default, a project watches resources and
 Scala and Java sources.</li>
-<li><tt class="docutils literal"><span class="pre">watch-transitive-sources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watch-sources</span></tt> for
+<li><tt class="docutils literal"><span class="pre">watchTransitiveSources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watchSources</span></tt> for
 the current project and all execution and classpath dependencies (see
-<a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a> for details on inter-project dependencies).</li>
-<li><tt class="docutils literal"><span class="pre">poll-interval</span></tt> selects the interval between polling for changes in
+<a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a> for details on interProject dependencies).</li>
+<li><tt class="docutils literal"><span class="pre">pollInterval</span></tt> selects the interval between polling for changes in
 milliseconds. The default value is <tt class="docutils literal"><span class="pre">500</span> <span class="pre">ms</span></tt>.</li>
 </ul>
 <p>Some example usages are described below.</p>
@@ -122,8 +122,8 @@ milliseconds. The default value is <tt class="docutils literal"><span class="pre
 One use is for test driven development, as suggested by Erick on the
 mailing list.</p>
 <p>The following will poll for changes to your source code (main or test)
-and run <tt class="docutils literal"><span class="pre">test-only</span></tt> for the specified test.</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ <span class="nb">test</span>-only example.TestA
+and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for the specified test.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ testOnly example.TestA
 </pre></div>
 </div>
 </div>

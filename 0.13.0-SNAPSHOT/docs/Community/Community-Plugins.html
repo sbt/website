@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -101,23 +101,23 @@ organize sbt software into one central location.</p>
 </div>
 <div class="section" id="community-ivy-repository">
 <h2>Community Ivy Repository<a class="headerlink" href="#community-ivy-repository" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="http://www.typesafe.com">Typesafe, Inc.</a> has provided a freely available <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt">Ivy Repository</a> for sbt projects to use.
+<p><a class="reference external" href="http://www.typesafe.com">Typesafe, Inc.</a> has provided a freely available <a class="reference external" href="http://repo.scala-sbt.org/scalasbt">Ivy Repository</a> for sbt projects to use.
 If you would like to publish your project to this Ivy repository, first contact <a class="reference external" href="http://groups.google.com/group/sbt-repo-admins?hl=en">sbt-repo-admins</a> and request privileges (we have to verify code ownership, rights to publish, etc.).  After which, you can deploy your plugins using the following configuration:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/&quot;</span><span class="o">))(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">))</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span><span class="o">))(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">))</span>
 
 <span class="n">publishMavenStyle</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
 <p>You'll also need to add your credentials somewhere.  For example, you might use a <tt class="docutils literal"><span class="pre">~/.sbt/sbtpluginpublish.sbt</span></tt> file:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Artifactory Realm&quot;</span><span class="o">,</span> <span class="s">&quot;scalasbt.artifactoryonline.com&quot;</span><span class="o">,</span> <span class="s">&quot;jsuereth&quot;</span><span class="o">,</span> <span class="s">&quot;@my encrypted password@&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Artifactory Realm&quot;</span><span class="o">,</span> <span class="s">&quot;repo.scala-sbt.org&quot;</span><span class="o">,</span> <span class="s">&quot;jsuereth&quot;</span><span class="o">,</span> <span class="s">&quot;@my encrypted password@&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Where <tt class="docutils literal"><span class="pre">&#64;my</span> <span class="pre">encrypted</span> <span class="pre">password&#64;</span></tt> is actually obtained using the following <a class="reference external" href="http://wiki.jfrog.org/confluence/display/RTF/Centrally+Secure+Passwords">instructions</a>.</p>
 <p><em>Note: Your code must abide by the</em> <a class="reference external" href="Repository-Rules">repository polices</a>.</p>
 <p>To automatically deploy snapshot/release versions of your plugin use the following configuration:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="n">version</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span>
-   <span class="k">val</span> <span class="n">scalasbt</span> <span class="k">=</span> <span class="s">&quot;http://scalasbt.artifactoryonline.com/scalasbt/&quot;</span>
-   <span class="k">val</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">url</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;-SNAPSHOT&quot;</span><span class="o">))</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">scalasbt</span> <span class="k">=</span> <span class="s">&quot;http://repo.scala-sbt.org/scalasbt/&quot;</span>
+   <span class="k">val</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">url</span><span class="o">)</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;-SNAPSHOT&quot;</span><span class="o">))</span>
      <span class="o">(</span><span class="s">&quot;sbt-plugin-snapshots&quot;</span><span class="o">,</span> <span class="n">scalasbt</span><span class="o">+</span><span class="s">&quot;sbt-plugin-snapshots&quot;</span><span class="o">)</span>
    <span class="k">else</span>
      <span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="n">scalasbt</span><span class="o">+</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">)</span>
@@ -129,7 +129,7 @@ If you would like to publish your project to this Ivy repository, first contact 
 </div>
 <div class="section" id="available-plugins">
 <h2>Available Plugins<a class="headerlink" href="#available-plugins" title="Permalink to this headline">¶</a></h2>
-<p>Please feel free to <a class="reference external" href="https://github.com/harrah/xsbt/pulls">submit a pull request</a> that adds your plugin to the list.</p>
+<p>Please feel free to <a class="reference external" href="https://github.com/sbt/sbt/pulls">submit a pull request</a> that adds your plugin to the list.</p>
 <div class="section" id="plugins-for-ides">
 <h3>Plugins for IDEs:<a class="headerlink" href="#plugins-for-ides" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
@@ -145,7 +145,7 @@ If you would like to publish your project to this Ivy repository, first contact 
 <div class="section" id="web-plugins">
 <h3>Web Plugins<a class="headerlink" href="#web-plugins" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>xsbt-web-plugin: <a class="reference external" href="https://github.com/siasia/xsbt-web-plugin">https://github.com/siasia/xsbt-web-plugin</a></li>
+<li>xsbt-web-plugin: <a class="reference external" href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">https://github.com/JamesEarlDouglas/xsbt-web-plugin</a></li>
 <li>xsbt-webstart: <a class="reference external" href="https://github.com/ritschwumm/xsbt-webstart">https://github.com/ritschwumm/xsbt-webstart</a></li>
 <li>sbt-appengine: <a class="reference external" href="https://github.com/sbt/sbt-appengine">https://github.com/sbt/sbt-appengine</a></li>
 <li>sbt-gwt-plugin: <a class="reference external" href="https://github.com/thunderklaus/sbt-gwt-plugin">https://github.com/thunderklaus/sbt-gwt-plugin</a></li>
@@ -163,6 +163,10 @@ If you would like to publish your project to this Ivy repository, first contact 
 <a class="reference external" href="https://github.com/guardian/sbt-teamcity-test-reporting-plugin">https://github.com/guardian/sbt-teamcity-test-reporting-plugin</a></li>
 <li>xsbt-cucumber-plugin:
 <a class="reference external" href="https://github.com/skipoleschris/xsbt-cucumber-plugin">https://github.com/skipoleschris/xsbt-cucumber-plugin</a></li>
+<li>sbt-multi-jvm:
+<a class="reference external" href="https://github.com/typesafehub/sbt-multi-jvm">https://github.com/typesafehub/sbt-multi-jvm</a></li>
+<li>schoir (Distributed testing plugin):
+<a class="reference external" href="https://github.com/typesafehub/schoir">https://github.com/typesafehub/schoir</a></li>
 </ul>
 </div>
 <div class="section" id="static-code-analysis-plugins">
@@ -181,6 +185,8 @@ only supports Java projects atm)</li>
 <li>xsbt-proguard-plugin: <a class="reference external" href="https://github.com/siasia/xsbt-proguard-plugin">https://github.com/siasia/xsbt-proguard-plugin</a></li>
 <li>sbt-deploy: <a class="reference external" href="https://github.com/reaktor/sbt-deploy">https://github.com/reaktor/sbt-deploy</a></li>
 <li>sbt-appbundle (os x standalone): <a class="reference external" href="https://github.com/sbt/sbt-appbundle">https://github.com/sbt/sbt-appbundle</a></li>
+<li>sbt-onejar (Packages your project using One-JAR™):
+<a class="reference external" href="https://github.com/sbt/sbt-onejar">https://github.com/sbt/sbt-onejar</a></li>
 </ul>
 </div>
 <div class="section" id="frontend-development-plugins">
@@ -213,12 +219,18 @@ only supports Java projects atm)</li>
 <a class="reference external" href="http://software.clapper.org/sbt-izpack/">http://software.clapper.org/sbt-izpack/</a></li>
 <li>sbt-ghpages-plugin (publishes generated site and api):
 <a class="reference external" href="https://github.com/jsuereth/xsbt-ghpages-plugin">https://github.com/jsuereth/xsbt-ghpages-plugin</a></li>
-<li>sbt-gpg-plugin (PGP signing plugin, can generate keys too):
-<a class="reference external" href="https://github.com/sbt/xsbt-gpg-plugin">https://github.com/sbt/xsbt-gpg-plugin</a></li>
+<li>sbt-pgp (PGP signing plugin, can generate keys too):
+<a class="reference external" href="https://github.com/sbt/sbt-pgp">https://github.com/sbt/sbt-pgp</a></li>
 <li>sbt-release (customizable release process):
-<a class="reference external" href="https://github.com/gseitz/sbt-release">https://github.com/gseitz/sbt-release</a></li>
+<a class="reference external" href="https://github.com/sbt/sbt-release">https://github.com/sbt/sbt-release</a></li>
 <li>sbt-unique-version (emulates unique snapshots):
 <a class="reference external" href="https://github.com/sbt/sbt-unique-version">https://github.com/sbt/sbt-unique-version</a></li>
+<li>sbt-pack (generates packages with dependent jars and launch scripts):
+<a class="reference external" href="https://github.com/xerial/sbt-pack">https://github.com/xerial/sbt-pack</a></li>
+<li>sbt-start-script:
+<a class="reference external" href="https://github.com/sbt/sbt-start-script">https://github.com/sbt/sbt-start-script</a></li>
+<li>sbt-native-packager:
+<a class="reference external" href="https://github.com/sbt/sbt-native-packager">https://github.com/sbt/sbt-native-packager</a></li>
 </ul>
 </div>
 <div class="section" id="system-plugins">
@@ -230,6 +242,10 @@ only supports Java projects atm)</li>
 <a class="reference external" href="https://github.com/philcali/cronish-sbt">https://github.com/philcali/cronish-sbt</a></li>
 <li>git (executes git commands): <a class="reference external" href="https://github.com/sbt/sbt-git-plugin">https://github.com/sbt/sbt-git-plugin</a></li>
 <li>svn (execute svn commands): <a class="reference external" href="https://github.com/xuwei-k/sbtsvn">https://github.com/xuwei-k/sbtsvn</a></li>
+<li>sbt-groll (sbt plugin to navigate the Git history):
+<a class="reference external" href="https://github.com/sbt/sbt-groll">https://github.com/sbt/sbt-groll</a></li>
+<li>sbt-twt (twitter processor for sbt):
+<a class="reference external" href="https://github.com/sbt/sbt-twt">https://github.com/sbt/sbt-twt</a></li>
 </ul>
 </div>
 <div class="section" id="code-generator-plugins">
@@ -240,10 +256,10 @@ only supports Java projects atm)</li>
 <li>sbt-scalaxb (XSD and WSDL binding):
 <a class="reference external" href="https://github.com/eed3si9n/scalaxb">https://github.com/eed3si9n/scalaxb</a></li>
 <li>sbt-protobuf (Google Protocol Buffers):
-<a class="reference external" href="https://github.com/gseitz/sbt-protobuf">https://github.com/gseitz/sbt-protobuf</a></li>
+<a class="reference external" href="https://github.com/sbt/sbt-protobuf">https://github.com/sbt/sbt-protobuf</a></li>
 <li>sbt-avro (Apache Avro): <a class="reference external" href="https://github.com/cavorite/sbt-avro">https://github.com/cavorite/sbt-avro</a></li>
 <li>sbt-xjc (XSD binding, using <a class="reference external" href="http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html">JAXB XJC</a>):
-<a class="reference external" href="https://github.com/retronym/sbt-xjc">https://github.com/retronym/sbt-xjc</a></li>
+<a class="reference external" href="https://github.com/sbt/sbt-xjc">https://github.com/sbt/sbt-xjc</a></li>
 <li>xsbt-scalate-generate (Generate/Precompile Scalate Templates):
 <a class="reference external" href="https://github.com/backchatio/xsbt-scalate-generate">https://github.com/backchatio/xsbt-scalate-generate</a></li>
 <li>sbt-antlr (Generate Java source code based on ANTLR3 grammars):
@@ -262,6 +278,8 @@ information): <a class="reference external" href="https://bitbucket.org/lukas_pu
 <li>sbtend (Generate Java source code from
 <a class="reference external" href="http://www.eclipse.org/xtend/">xtend</a> ):
 <a class="reference external" href="https://github.com/xuwei-k/sbtend">https://github.com/xuwei-k/sbtend</a></li>
+<li>sbt-boilerplate (generating scala.Tuple/Function related boilerplate code):
+<a class="reference external" href="https://github.com/sbt/sbt-boilerplate">https://github.com/sbt/sbt-boilerplate</a></li>
 </ul>
 </div>
 <div class="section" id="database-plugins">
@@ -278,6 +296,8 @@ information): <a class="reference external" href="https://bitbucket.org/lukas_pu
 <ul class="simple">
 <li>sbt-lwm (Convert lightweight markup files, e.g., Markdown and
 Textile, to HTML): <a class="reference external" href="http://software.clapper.org/sbt-lwm/">http://software.clapper.org/sbt-lwm/</a></li>
+<li>sbt-site (Site generation for SBT):
+<a class="reference external" href="https://github.com/sbt/sbt-site">https://github.com/sbt/sbt-site</a></li>
 </ul>
 </div>
 <div class="section" id="utility-plugins">
@@ -306,6 +326,14 @@ versions of sbt): <a class="reference external" href="https://github.com/jrudolp
 <li>sbt-man (Looks up scaladoc): <a class="reference external" href="https://github.com/sbt/sbt-man">https://github.com/sbt/sbt-man</a></li>
 <li>sbt-taglist (Looks for TODO-tags in the sources):
 <a class="reference external" href="https://github.com/johanandren/sbt-taglist">https://github.com/johanandren/sbt-taglist</a></li>
+<li>migration-manager:
+<a class="reference external" href="https://github.com/typesafehub/migration-manager">https://github.com/typesafehub/migration-manager</a></li>
+<li>sbt-scalariform (adding support for source code formatting using Scalariform):
+<a class="reference external" href="https://github.com/sbt/sbt-scalariform">https://github.com/sbt/sbt-scalariform</a></li>
+<li>sbt-aspectj:
+<a class="reference external" href="https://github.com/sbt/sbt-aspectj">https://github.com/sbt/sbt-aspectj</a></li>
+<li>sbt-properties:
+<a class="reference external" href="https://github.com/sbt/sbt-properties">https://github.com/sbt/sbt-properties</a></li>
 </ul>
 </div>
 <div class="section" id="code-coverage-plugins">

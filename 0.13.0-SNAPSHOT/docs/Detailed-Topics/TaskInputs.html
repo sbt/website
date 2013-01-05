@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -136,8 +136,7 @@ reasons this is bad include:</p>
 <p>The first point is like declaring a task dependency, the second is like
 two tasks modifying the same state (either project variables or files),
 and the third is a consequence of unsynchronized, shared state.</p>
-<p>In Scala, we have the built-in functionality to easily fix this:
-<tt class="docutils literal"><span class="pre">lazy</span> <span class="pre">val</span></tt>.</p>
+<p>In Scala, we have the built-in functionality to easily fix this: <tt class="docutils literal"><span class="pre">lazy</span> <span class="pre">val</span></tt>.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">foo</span><span class="k">:</span> <span class="kt">Foo</span> <span class="o">=</span> <span class="o">...</span> <span class="n">initialize</span> <span class="n">foo</span> <span class="o">...</span>
 </pre></div>
 </div>
@@ -156,25 +155,20 @@ generate its own result. Other tasks can use this result and be assured
 that the task has run (once) and be thread-safe and typesafe in the
 process.</p>
 <p>The general form of a task definition looks like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">aTask</span><span class="o">,</span> <span class="n">bTask</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">,</span> <span class="n">b</span><span class="k">:</span> <span class="kt">B</span><span class="o">)</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=</span> <span class="n">aTask</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">val</span> <span class="n">b</span><span class="k">:</span> <span class="kt">B</span> <span class="o">=</span> <span class="n">bTask</span><span class="o">.</span><span class="n">value</span>
   <span class="o">...</span> <span class="k">do</span> <span class="n">something</span> <span class="k">with</span> <span class="n">a</span><span class="o">,</span> <span class="n">b</span> <span class="n">and</span> <span class="n">generate</span> <span class="n">a</span> <span class="n">result</span> <span class="o">...</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 <p>(This is only intended to be a discussion of the ideas behind tasks, so
 see the <a class="reference internal" href="Tasks.html"><em>sbt Tasks</em></a> page
-for details on usage.) Basically, <tt class="docutils literal"><span class="pre">myTask</span></tt> is defined by declaring
-<tt class="docutils literal"><span class="pre">aTask</span></tt> and <tt class="docutils literal"><span class="pre">bTask</span></tt> as inputs and by defining the function to apply
-to the results of these tasks. Here, <tt class="docutils literal"><span class="pre">aTask</span></tt> is assumed to produce a
+for details on usage.)  Here, <tt class="docutils literal"><span class="pre">aTask</span></tt> is assumed to produce a
 result of type <tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">bTask</span></tt> is assumed to produce a result of
 type <tt class="docutils literal"><span class="pre">B</span></tt>.</p>
 <div class="section" id="application">
 <h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
-<p>Apply this in practice:</p>
-<ol class="arabic simple">
-<li>Determine the tasks that produce the values you need</li>
-<li><tt class="docutils literal"><span class="pre">map</span></tt> the tasks with the function that implements your task.</li>
-</ol>
 <p>As an example, consider generating a zip file containing the binary jar,
 source jar, and documentation jar for your project. First, determine
 what tasks produce the jars. In this case, the input tasks are
@@ -184,8 +178,11 @@ jar that they generated. Our zip file task is defined by mapping these
 package tasks and including their outputs in a zip file. As good
 practice, we then return the File for this zip so that other tasks can
 map on the zip task.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">zip</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">packageSrc</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">packageDoc</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">zipPath</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span>
-  <span class="o">(</span><span class="n">bin</span><span class="k">:</span> <span class="kt">File</span><span class="o">,</span> <span class="n">src</span><span class="k">:</span> <span class="kt">File</span><span class="o">,</span> <span class="n">doc</span><span class="k">:</span> <span class="kt">File</span><span class="o">,</span> <span class="n">out</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">zip</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">bin</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">(</span><span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span>
+    <span class="k">val</span> <span class="n">src</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">(</span><span class="n">packageSrc</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span>
+    <span class="k">val</span> <span class="n">doc</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">(</span><span class="n">packageDoc</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span>
+    <span class="k">val</span> <span class="n">out</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="n">zipPath</span><span class="o">.</span><span class="n">value</span>
     <span class="k">val</span> <span class="n">inputs</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[(</span><span class="kt">File</span>,<span class="kt">String</span><span class="o">)]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">bin</span><span class="o">,</span> <span class="n">src</span><span class="o">,</span> <span class="n">doc</span><span class="o">)</span> <span class="n">x</span> <span class="nc">Path</span><span class="o">.</span><span class="n">flat</span>
     <span class="nc">IO</span><span class="o">.</span><span class="n">zip</span><span class="o">(</span><span class="n">inputs</span><span class="o">,</span> <span class="n">out</span><span class="o">)</span>
     <span class="n">out</span>
@@ -197,10 +194,8 @@ in the zip. See <a class="reference internal" href="Mapping-Files.html"><em>Mapp
 The explicit types are not required, but are included for clarity.</p>
 <p>The <tt class="docutils literal"><span class="pre">zipPath</span></tt> input would be a custom task to define the location of
 the zip file. For example:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">zipPath</span> <span class="o">&lt;&lt;=</span> <span class="n">target</span> <span class="n">map</span> <span class="o">{</span>
-  <span class="o">(</span><span class="n">t</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=&gt;</span>
-    <span class="n">t</span> <span class="o">/</span> <span class="s">&quot;out.zip&quot;</span>
-<span class="o">}</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">zipPath</span> <span class="o">:=</span>
+   <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;out.zip&quot;</span>
 </pre></div>
 </div>
 </div>
