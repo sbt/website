@@ -47,7 +47,7 @@
           <li><a href="../index.html">Documentation</a></li>
           <li><a href="../Getting-Started/Setup.html">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
-          <li><a href="http://github.com/harrah/xsbt">Project</a></li>           
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
       </div>
     </div>
@@ -133,7 +133,7 @@
 <h2>Modify the contents of the package<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>The contents of a package are defined by the <tt class="docutils literal"><span class="pre">mappings</span></tt> task, of type <tt class="docutils literal"><span class="pre">Seq[(File,String)]</span></tt>.  The <tt class="docutils literal"><span class="pre">mappings</span></tt> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <tt class="docutils literal"><span class="pre">in/example.txt</span></tt> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span>
    <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;in&quot;</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span>
 <span class="o">}</span>
 </pre></div>
