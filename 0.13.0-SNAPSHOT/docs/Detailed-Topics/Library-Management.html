@@ -93,7 +93,7 @@
 <h1>Library Management<a class="headerlink" href="#library-management" title="Permalink to this headline">¶</a></h1>
 <p>There's now a <a class="reference internal" href="../Getting-Started/Library-Dependencies.html"><em>getting started page</em></a>
 about library management, which you may want to read first.</p>
-<p><em>Wiki Maintenance Note:</em> it would be nice to remove the overlap between
+<p><em>Documentation Maintenance Note:</em> it would be nice to remove the overlap between
 this page and the getting started page, leaving this page with the more
 advanced topics such as checksums and external Ivy files.</p>
 <div class="section" id="introduction">
@@ -408,6 +408,105 @@ the <em>checksums</em> setting.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="conflict-management">
+<h4>Conflict Management<a class="headerlink" href="#conflict-management" title="Permalink to this headline">¶</a></h4>
+<p>The conflict manager decides what to do when  dependency resolution brings in different versions of the same library.
+By default, the latest revision is selected.
+This can be changed by setting <tt class="docutils literal"><span class="pre">conflictManager</span></tt>, which has type <a class="reference external" href="../../api/sbt/ConflictManager.html">ConflictManager</a>.
+See the <a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html">Ivy documentation</a> for details on the different conflict managers.
+For example, to specify that no conflicts are allowed,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">conflictManager</span> <span class="o">:=</span> <span class="nc">ConflictManager</span><span class="o">.</span><span class="n">strict</span>
+</pre></div>
+</div>
+<p>With this set, any conflicts will generate an error.
+To resolve a conflict,</p>
+<blockquote>
+<div><ul class="simple">
+<li>configure a dependency override if the conflict is for a transitive dependency</li>
+<li>force the revision if it is a direct dependency</li>
+</ul>
+</div></blockquote>
+<p>Both are explained in the following sections.</p>
+</div>
+<div class="section" id="forcing-a-revision">
+<h4>Forcing a revision<a class="headerlink" href="#forcing-a-revision" title="Permalink to this headline">¶</a></h4>
+<p>The following direct dependencies will introduce a conflict on the log4j version because spark requires log4j 1.2.16.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.14&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The default conflict manager will select the newer version of log4j, 1.2.16.
+This can be confirmed in the output of <tt class="docutils literal"><span class="pre">show</span> <span class="pre">update</span></tt>, which shows the newer version as being selected and the older version as not selected:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.16: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.14
+...</pre>
+</div>
+<p>To say that we prefer the version we've specified over the version from indirect dependencies, use <tt class="docutils literal"><span class="pre">force()</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.14&quot;</span> <span class="n">force</span><span class="o">()</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The output of <tt class="docutils literal"><span class="pre">show</span> <span class="pre">update</span></tt> is now reversed:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.14: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.16
+...</pre>
+</div>
+<p><strong>Note:</strong> this is an Ivy-only feature and cannot be included in a published pom.xml.</p>
+</div>
+<div class="section" id="forcing-a-revision-without-introducing-a-dependency">
+<h4>Forcing a revision without introducing a dependency<a class="headerlink" href="#forcing-a-revision-without-introducing-a-dependency" title="Permalink to this headline">¶</a></h4>
+<p>Use of the <tt class="docutils literal"><span class="pre">force()</span></tt> method described in the previous section requires having a direct dependency.
+However, it may be desirable to force a revision without introducing that direct dependency.
+Ivy provides overrides for this and in sbt, overrides are configured in sbt with the <tt class="docutils literal"><span class="pre">dependencyOverrides</span></tt> setting, which is a set of <a href="#id2"><span class="problematic" id="id3">``</span></a>ModuleID``s.
+For example, the following dependency definitions conflict because spark uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+   <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+   <span class="s">&quot;org.scalaxb&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalaxb&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0.0&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The default conflict manager chooses the latest revision of log4j, 1.2.17:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.17: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.16
+...</pre>
+</div>
+<p>To change the version selected, add an override:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">dependencyOverrides</span> <span class="o">+=</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.16&quot;</span>
+</pre></div>
+</div>
+<p>This will not add a direct dependency on log4j, but will force the revision to be 1.2.16.
+This is confirmed by the output of <tt class="docutils literal"><span class="pre">show</span> <span class="pre">update</span></tt>:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.16
+...</pre>
+</div>
+<p><strong>Note:</strong> this is an Ivy-only feature and will not be included in a published pom.xml.</p>
+</div>
+<div class="section" id="packaging-pom">
+<span id="id4"></span><h4>packaging=&quot;pom&quot;<a class="headerlink" href="#packaging-pom" title="Permalink to this headline">¶</a></h4>
+<p>A pom.xml that has <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt> is not supposed to have artifacts.
+However, some published poms have an associated main artifact, so Ivy checks if one exists.
+This check can be time consuming to the point of taking most of the time for <tt class="docutils literal"><span class="pre">update</span></tt> on larger projects.
+Therefore, sbt disables this check and requires you to explicitly request the main jar.</p>
+<p>For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.velocity&quot;</span> <span class="o">%</span> <span class="s">&quot;velocity&quot;</span> <span class="o">%</span> <span class="s">&quot;1.5&quot;</span> <span class="n">jar</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="publishing">
 <h4>Publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h4>
 <p>Finally, see <a class="reference internal" href="Publishing.html"><em>Publishing</em></a> for how to publish your project.</p>
@@ -514,6 +613,10 @@ specify repositories inline or in an Ivy <tt class="docutils literal"><span clas
 <li><a class="reference internal" href="#inline-ivy-xml">Inline Ivy XML</a></li>
 <li><a class="reference internal" href="#ivy-home-directory">Ivy Home Directory</a></li>
 <li><a class="reference internal" href="#checksums">Checksums</a></li>
+<li><a class="reference internal" href="#conflict-management">Conflict Management</a></li>
+<li><a class="reference internal" href="#forcing-a-revision">Forcing a revision</a></li>
+<li><a class="reference internal" href="#forcing-a-revision-without-introducing-a-dependency">Forcing a revision without introducing a dependency</a></li>
+<li><a class="reference internal" href="#packaging-pom">packaging=&quot;pom&quot;</a></li>
 <li><a class="reference internal" href="#publishing">Publishing</a></li>
 </ul>
 </li>
