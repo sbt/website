@@ -25,7 +25,7 @@
         VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  false
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -99,7 +99,7 @@
 <li>Support for plugin configuration in <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> has been removed.  It was deprecated since 0.11.2.</li>
 <li>Dropped support for tab completing the right side of a setting for the <tt class="docutils literal"><span class="pre">set</span></tt> command.  The new task macros make this tab completion obsolete.</li>
 <li>The convention for keys is now camelCase only.  Details below.</li>
-<li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue">#636</span></a>.</li>
+<li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue closed">#636</span></a>.</li>
 </ul>
 </div>
 <div class="section" id="features">
@@ -110,6 +110,7 @@
 <li>Support defining Projects in .sbt files: vals of type Project are added to the Build.  Details below.</li>
 <li>New syntax for settings, tasks, and input tasks.  Details below.</li>
 <li>Automatically link to external API scaladocs of dependencies by setting <tt class="docutils literal"><span class="pre">autoAPIMappings</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  This requires at least Scala 2.10.1 and for dependencies to define <tt class="docutils literal"><span class="pre">apiURL</span></tt> for their scaladoc location.  Mappings may be manually added to the <tt class="docutils literal"><span class="pre">apiMappings</span></tt> task as well.</li>
+<li>Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">/path/to/scala/home</span></tt>.</li>
 </ul>
 </div>
 <div class="section" id="fixes">

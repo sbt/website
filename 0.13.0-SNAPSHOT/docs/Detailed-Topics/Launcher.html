@@ -25,7 +25,7 @@
         VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  false
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -180,7 +180,7 @@ by the following grammar. <tt class="docutils literal"><span class="pre">'nl'</s
 <strong id="grammar-token-name">name                </strong> ::=  &quot;name&quot; &quot;:&quot; text
 <strong id="grammar-token-class">class               </strong> ::=  &quot;class&quot; &quot;:&quot; text
 <strong id="grammar-token-components">components          </strong> ::=  &quot;components&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-component"><tt class="xref docutils literal"><span class="pre">component</span></tt></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-component"><tt class="xref docutils literal"><span class="pre">component</span></tt></a>)*
-<strong id="grammar-token-crossVersioned">crossVersioned      </strong> ::=  &quot;cross-versioned&quot; &quot;:&quot;  <a class="reference internal" href="#grammar-token-boolean"><tt class="xref docutils literal"><span class="pre">boolean</span></tt></a>
+<strong id="grammar-token-crossVersioned">crossVersioned      </strong> ::=  &quot;cross-versioned&quot; &quot;:&quot;  (&quot;true&quot; | &quot;false&quot; | &quot;none&quot; | &quot;binary&quot; | &quot;full&quot;)
 <strong id="grammar-token-resources">resources           </strong> ::=  &quot;resources&quot; &quot;:&quot; <a class="reference internal" href="#grammar-token-path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a> (&quot;,&quot; <a class="reference internal" href="#grammar-token-path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a>)*
 <strong id="grammar-token-repository">repository          </strong> ::=  ( <a class="reference internal" href="#grammar-token-predefinedRepository"><tt class="xref docutils literal"><span class="pre">predefinedRepository</span></tt></a> | <a class="reference internal" href="#grammar-token-customRepository"><tt class="xref docutils literal"><span class="pre">customRepository</span></tt></a> ) <a class="reference internal" href="#grammar-token-nl"><tt class="xref docutils literal"><span class="pre">nl</span></tt></a>
 <strong id="grammar-token-predefinedRepository">predefinedRepository</strong> ::=  &quot;local&quot; | &quot;maven-local&quot; | &quot;maven-central&quot;
@@ -256,7 +256,9 @@ classifiers, such as 'sources', of extra Scala artifacts to retrieve.</p>
 the organization, module ID, and version of the application,
 respectively. These are used to resolve and retrieve the application
 from the repositories listed in <tt class="docutils literal"><span class="pre">[repositories]</span></tt>. If
-<tt class="docutils literal"><span class="pre">app.cross-versioned</span></tt> is true, the resolved module ID is
+<tt class="docutils literal"><span class="pre">app.cross-versioned</span></tt> is <tt class="docutils literal"><span class="pre">binary</span></tt>, the resolved module ID is
+<tt class="docutils literal"><span class="pre">{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}</span></tt>.
+If <tt class="docutils literal"><span class="pre">app.cross-versioned</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">full</span></tt>, the resolved module ID is
 <tt class="docutils literal"><span class="pre">{app.name+'_'+scala.version}</span></tt>. The <tt class="docutils literal"><span class="pre">scala.version</span></tt> property must be
 specified and cannot be <tt class="docutils literal"><span class="pre">auto</span></tt> when cross-versioned. The paths given
 in <tt class="docutils literal"><span class="pre">app.resources</span></tt> are added to the application's classpath. If the
@@ -408,7 +410,7 @@ it might look like:</p>
   name: xsbt-test
   version: 0.12.0
   class: xsbt.test.Main
-  cross-versioned: true
+  cross-versioned: binary
 [repositories]
   local
   maven-central

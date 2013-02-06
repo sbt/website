@@ -25,7 +25,7 @@
         VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  false
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -230,13 +230,13 @@ are ignored</p>
 all versions of Scala defined in the <tt class="docutils literal"><span class="pre">crossScalaVersions</span></tt>
 setting.</p>
 </li>
-<li><p class="first"><tt class="docutils literal"><span class="pre">++</span> <span class="pre">&lt;version&gt;</span> <span class="pre">&lt;command&gt;</span></tt> Temporarily changes the version of Scala
+<li><p class="first"><tt class="docutils literal"><span class="pre">++</span> <span class="pre">&lt;version|home-directory&gt;</span> <span class="pre">&lt;command&gt;</span></tt> Temporarily changes the version of Scala
 building the project and executes the provided command. <tt class="docutils literal"><span class="pre">&lt;command&gt;</span></tt>
 is optional. The specified version of Scala is used until the project
 is reloaded, settings are modified (such as by the <tt class="docutils literal"><span class="pre">set</span></tt> or
 <tt class="docutils literal"><span class="pre">session</span></tt> commands), or <tt class="docutils literal"><span class="pre">++</span></tt> is run again. <tt class="docutils literal"><span class="pre">&lt;version&gt;</span></tt> does not
 need to be listed in the build definition, but it must be available
-in a repository.</p>
+in a repository.  Alternatively, specify the path to a Scala installation.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">;</span> <span class="pre">A</span> <span class="pre">;</span> <span class="pre">B</span></tt> Execute A and if it succeeds, run B. Note that the
 leading semicolon is required.</p>
