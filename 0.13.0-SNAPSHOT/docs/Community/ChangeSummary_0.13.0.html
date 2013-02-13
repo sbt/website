@@ -224,7 +224,7 @@ Instances of <tt class="docutils literal"><span class="pre">AddSettings</span></
 The configurable settings are per-user settings (from ~/.sbt, for example), settings from .sbt files, and plugin settings (project-level only).
 The order in which these instances are provided to <tt class="docutils literal"><span class="pre">autoSettings</span></tt> determines the order in which they are appended to the settings explicitly provided in <tt class="docutils literal"><span class="pre">Project.settings</span></tt>.</p>
 <p>For .sbt files, <tt class="docutils literal"><span class="pre">AddSettings.defaultSbtFiles</span></tt> adds the settings from all .sbt files in the project's base directory as usual.
-The alternative method <tt class="docutils literal"><span class="pre">AddSettings.sbtFiles</span></tt> accepts a sequence of <a href="#id1"><span class="problematic" id="id2">``</span></a>File``s that will be loaded according to the standard .sbt format.
+The alternative method <tt class="docutils literal"><span class="pre">AddSettings.sbtFiles</span></tt> accepts a sequence of <tt class="docutils literal"><span class="pre">Files</span></tt> that will be loaded according to the standard .sbt format.
 Relative files are resolved against the project's base directory.</p>
 <p>Plugin settings may be included on a per-Plugin basis by using the <tt class="docutils literal"><span class="pre">AddSettings.plugins</span></tt> method and passing a <tt class="docutils literal"><span class="pre">Plugin</span> <span class="pre">=&gt;</span> <span class="pre">Boolean</span></tt>.
 The settings controlled here are only the automatic per-project settings.

@@ -2,24 +2,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>xsbt</title>
+          <title>xsbt - xsbt</title>
+          <meta name="description" content="xsbt - xsbt" />
+          <meta name="keywords" content="xsbt xsbt" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
-      <link type="text/css" media="screen" rel="stylesheet" href="../lib/template.css" />
-      <script type="text/javascript" src="../lib/jquery.js"></script>
+      <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
       <script type="text/javascript" src="../lib/jquery-ui.js"></script>
       <script type="text/javascript" src="../lib/template.js"></script>
       <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../index.html';
+            var hash = 'xsbt.package';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
     
         </head>
-        <body onload="sh_highlightDocument('../lib/', '.min.js');" class="value">
+        <body class="value">
       <div id="definition">
         <img src="../lib/package_big.png" />
         
         <h1>xsbt</h1>
       </div>
 
-      <h4 class="signature" id="signature">
+      <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">package</span>
@@ -29,11 +44,11 @@
       </span>
       </h4>
       
-      <div class="fullcommenttop" id="comment"></div>
-    
+          <div id="comment" class="fullcommenttop"></div>
+        
 
       <div id="mbrsel">
-        <div id="textfilter"><span class="pre"></span><span class="input"><input accesskey="/" type="text" /></span><span class="post"></span></div>
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
         
         
         <div id="visbl">
@@ -46,9 +61,10 @@
         <div id="allMembers">
         
 
-        <div class="types members" id="types">
+        <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li visbl="pub" name="xsbt.API" data-isabs="false">
+              <ol><li name="xsbt.API" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="APIextendsCompat"></a>
       <a id="API:API"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -56,11 +72,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="API.html"><span class="name">API</span></a><span class="result"> extends Compat</span>
+        <a href="API.html"><span class="name">API</span></a><span class="result"> extends <a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Analyzer" data-isabs="false">
+    </li><li name="xsbt.Analyzer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="AnalyzerextendsCompat"></a>
       <a id="Analyzer:Analyzer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -68,11 +85,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="Analyzer.html"><span class="name">Analyzer</span></a><span class="result"> extends Compat</span>
+        <a href="Analyzer.html"><span class="name">Analyzer</span></a><span class="result"> extends <a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.CallbackGlobal" data-isabs="true">
+    </li><li name="xsbt.CallbackGlobal" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="CallbackGlobalextendsGlobalwithGlobalCompat"></a>
       <a id="CallbackGlobal:CallbackGlobal"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -80,11 +98,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="CallbackGlobal.html"><span class="name">CallbackGlobal</span></a><span class="result"> extends Global with GlobalCompat</span>
+        <a href="CallbackGlobal.html"><span class="name">CallbackGlobal</span></a><span class="result"> extends <span class="extype" name="scala.tools.nsc.Global">Global</span> with <a href="GlobalCompat.html" class="extype" name="xsbt.GlobalCompat">GlobalCompat</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Compat" data-isabs="true">
+    </li><li name="xsbt.Compat" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="CompatextendsAnyRef"></a>
       <a id="Compat:Compat"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -92,11 +111,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="Compat.html"><span class="name">Compat</span></a><span class="result"> extends AnyRef</span>
+        <a href="Compat.html"><span class="name">Compat</span></a><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.CompilerInterface" data-isabs="false">
+    </li><li name="xsbt.CompilerInterface" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CompilerInterfaceextendsAnyRef"></a>
       <a id="CompilerInterface:CompilerInterface"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -104,11 +124,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="CompilerInterface.html"><span class="name">CompilerInterface</span></a><span class="result"> extends AnyRef</span>
+        <a href="CompilerInterface.html"><span class="name">CompilerInterface</span></a><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.ConsoleInterface" data-isabs="false">
+    </li><li name="xsbt.ConsoleInterface" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ConsoleInterfaceextendsAnyRef"></a>
       <a id="ConsoleInterface:ConsoleInterface"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -116,11 +137,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="ConsoleInterface.html"><span class="name">ConsoleInterface</span></a><span class="result"> extends AnyRef</span>
+        <a href="ConsoleInterface.html"><span class="name">ConsoleInterface</span></a><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.GlobalCompat" data-isabs="true">
+    </li><li name="xsbt.GlobalCompat" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="GlobalCompatextendsAnyRef"></a>
       <a id="GlobalCompat:GlobalCompat"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -128,11 +150,12 @@
         <span class="kind">trait</span>
       </span>
       <span class="symbol">
-        <a href="GlobalCompat.html"><span class="name">GlobalCompat</span></a><span class="result"> extends AnyRef</span>
+        <a href="GlobalCompat.html"><span class="name">GlobalCompat</span></a><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.IPC" data-isabs="false">
+    </li><li name="xsbt.IPC" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IPCextendsNotNull"></a>
       <a id="IPC:IPC"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -140,11 +163,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="IPC.html"><span class="name">IPC</span></a><span class="result"> extends NotNull</span>
+        <a href="IPC.html"><span class="name">IPC</span></a><span class="result"> extends <span class="extype" name="scala.NotNull">NotNull</span></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.InterfaceCompileFailed" data-isabs="false">
+    </li><li name="xsbt.InterfaceCompileFailed" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InterfaceCompileFailedextendsCompileFailed"></a>
       <a id="InterfaceCompileFailed:InterfaceCompileFailed"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -152,11 +176,12 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="InterfaceCompileFailed.html"><span class="name">InterfaceCompileFailed</span></a><span class="result"> extends CompileFailed</span>
+        <a href="InterfaceCompileFailed.html"><span class="name">InterfaceCompileFailed</span></a><span class="result"> extends <a href="../xsbti/CompileFailed.html" class="extype" name="xsbti.CompileFailed">CompileFailed</a></span>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.ScaladocInterface" data-isabs="false">
+    </li><li name="xsbt.ScaladocInterface" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ScaladocInterfaceextendsAnyRef"></a>
       <a id="ScaladocInterface:ScaladocInterface"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -164,7 +189,7 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="ScaladocInterface.html"><span class="name">ScaladocInterface</span></a><span class="result"> extends AnyRef</span>
+        <a href="ScaladocInterface.html"><span class="name">ScaladocInterface</span></a><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
@@ -173,9 +198,10 @@
 
         
 
-        <div class="values members" id="values">
+        <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li visbl="pub" name="xsbt.API" data-isabs="false">
+              <ol><li name="xsbt.API" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="API"></a>
       <a id="API:API"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -183,11 +209,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="API$.html"><span class="name">API</span></a><span class="result"> extends AnyRef</span>
+        <a href="API$.html"><span class="name">API</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Analyzer" data-isabs="false">
+    </li><li name="xsbt.Analyzer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Analyzer"></a>
       <a id="Analyzer:Analyzer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -195,11 +222,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Analyzer$.html"><span class="name">Analyzer</span></a><span class="result"> extends AnyRef</span>
+        <a href="Analyzer$.html"><span class="name">Analyzer</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Command" data-isabs="false">
+    </li><li name="xsbt.Command" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Command"></a>
       <a id="Command:Command"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -207,11 +235,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Command$.html"><span class="name">Command</span></a><span class="result"> extends AnyRef</span>
+        <a href="Command$.html"><span class="name">Command</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.IPC" data-isabs="false">
+    </li><li name="xsbt.IPC" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="IPC"></a>
       <a id="IPC:IPC"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -219,11 +248,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="IPC$.html"><span class="name">IPC</span></a><span class="result"> extends AnyRef</span>
+        <a href="IPC$.html"><span class="name">IPC</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Log" data-isabs="false">
+    </li><li name="xsbt.Log" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Log"></a>
       <a id="Log:Log"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -231,11 +261,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Log$.html"><span class="name">Log</span></a><span class="result"> extends AnyRef</span>
+        <a href="Log$.html"><span class="name">Log</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.MakeSettings" data-isabs="false">
+    </li><li name="xsbt.MakeSettings" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MakeSettings"></a>
       <a id="MakeSettings:MakeSettings"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -243,11 +274,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="MakeSettings$.html"><span class="name">MakeSettings</span></a><span class="result"> extends AnyRef</span>
+        <a href="MakeSettings$.html"><span class="name">MakeSettings</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.Message" data-isabs="false">
+    </li><li name="xsbt.Message" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Message"></a>
       <a id="Message:Message"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -255,11 +287,12 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a href="Message$.html"><span class="name">Message</span></a><span class="result"> extends AnyRef</span>
+        <a href="Message$.html"><span class="name">Message</span></a>
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.api" data-isabs="false">
+    </li><li name="xsbt.api" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="api"></a>
       <a id="api:api"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -271,7 +304,8 @@
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.boot" data-isabs="false">
+    </li><li name="xsbt.boot" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="boot"></a>
       <a id="boot:boot"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -283,7 +317,8 @@
       </span>
       </h4>
       
-    </li><li visbl="pub" name="xsbt.datatype" data-isabs="false">
+    </li><li name="xsbt.datatype" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="datatype"></a>
       <a id="datatype:datatype"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -299,10 +334,20 @@
             </div>
 
         
+
+        
         </div>
 
         <div id="inheritedMembers">
         
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
         </div>
 
       </div>

@@ -1,0 +1,793 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+        <head>
+          <title>ContextUtil - sbt.appmacro.ContextUtil</title>
+          <meta name="description" content="ContextUtil - sbt.appmacro.ContextUtil" />
+          <meta name="keywords" content="ContextUtil sbt.appmacro.ContextUtil" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../lib/template.js"></script>
+      <script type="text/javascript" src="../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../index.html';
+            var hash = 'sbt.appmacro.ContextUtil';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="ContextUtil$.html" title="Go to companion"><img src="../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="sbt">sbt</a>.<a href="package.html" class="extype" name="sbt.appmacro">appmacro</a></p>
+        <h1><a href="ContextUtil$.html" title="Go to companion">ContextUtil</a></h1>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ContextUtil</span><span class="tparams">[<span name="C">C &lt;: <span class="extype" name="scala.reflect.macros.Context">Context</span></span>]</span><span class="result"> extends <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Utility methods for macros.  Several methods assume that the context's universe is a full compiler (<code>scala.tools.nsc.Global</code>).
+This is not thread safe due to the underlying Context and related data structures not being thread safe.
+Use <code>ContextUtil[c.type](c)</code> to construct.</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="sbt.appmacro.ContextUtil"><span>ContextUtil</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show all</span></li>
+            </ol>
+            <a href="http://docs.scala-lang.org/overviews/scaladoc/usage.html#members" target="_blank">Learn more about member selection</a>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="sbt.appmacro.ContextUtil#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(ctx:C):sbt.appmacro.ContextUtil[C]"></a>
+      <a id="&lt;init&gt;:ContextUtil[C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ContextUtil</span><span class="params">(<span name="ctx">ctx: <span class="extype" name="sbt.appmacro.ContextUtil.C">C</span></span>)</span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:AnyRef):Boolean"></a>
+      <a id="!=(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:AnyRef):Boolean"></a>
+      <a id="==(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.Any#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#alist" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="alist:ContextUtil.this.ctx.universe.Symbol"></a>
+      <a id="alist:Symbol"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">alist</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.ContextUtil#alistTC" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="alistTC:ContextUtil.this.ctx.universe.Type"></a>
+      <a id="alistTC:scala.reflect.macros.Universe.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">alistTC</span><span class="result">: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.ContextUtil#alistType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="alistType:ContextUtil.this.ctx.Type"></a>
+      <a id="alistType:C.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">alistType</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Type">C.Type</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#checkReferences" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="checkReferences(defs:scala.collection.Set[ContextUtil.this.ctx.universe.Symbol],isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean):ContextUtil.this.ctx.universe.Tree=&gt;Unit"></a>
+      <a id="checkReferences(Set[Symbol],(Tree)⇒Boolean):(Tree)⇒Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkReferences</span><span class="params">(<span name="defs">defs: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">A function that checks the provided tree for illegal references to M instances defined in the
+ expression passed to the macro and for illegal dereferencing of M instances.</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#collectDefs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="collectDefs(tree:ContextUtil.this.ctx.universe.Tree,isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean):scala.collection.Set[ContextUtil.this.ctx.universe.Symbol]"></a>
+      <a id="collectDefs(Tree,(Tree)⇒Boolean):Set[Symbol]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">collectDefs</span><span class="params">(<span name="tree">tree: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Collects all definitions in the tree for use in checkReferences.</p><div class="fullcomment"><div class="comment cmt"><p>Collects all definitions in the tree for use in checkReferences.
+This excludes definitions in wrapped expressions because checkReferences won't allow nested dereferencing anyway.</p></div></div>
+    </li><li name="sbt.appmacro.ContextUtil#ctx" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ctx:C"></a>
+      <a id="ctx:C"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ctx</span><span class="result">: <span class="extype" name="sbt.appmacro.ContextUtil.C">C</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.ContextUtil#emptyTypeBounds" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="emptyTypeBounds:ContextUtil.this.ctx.universe.TypeBounds"></a>
+      <a id="emptyTypeBounds:scala.reflect.macros.Universe.TypeBounds"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">emptyTypeBounds</span><span class="result">: <span class="extype" name="scala.reflect.api.Types.TypeBounds">scala.reflect.macros.Universe.TypeBounds</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">&gt;: Nothing &lt;: Any</p>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#extractTC" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="extractTC(tcp:Singleton,name:String)(implicitit:ContextUtil.this.ctx.TypeTag[sbt.appmacro.ContextUtil.&lt;refinement&gt;.type]):ContextUtil.this.ctx.Type"></a>
+      <a id="extractTC(Singleton,String)(C.TypeTag[tcp]):C.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">extractTC</span><span class="params">(<span name="tcp">tcp: <span class="extype" name="scala.Singleton">Singleton</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="it">it: <span class="extype" name="scala.reflect.macros.Aliases.TypeTag">C.TypeTag</span>[<span class="extype" name="sbt.appmacro.ContextUtil.extractTC.tcp">tcp</span>]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Type">C.Type</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Returns a Type representing the type constructor tcp.</p><div class="fullcomment"><div class="comment cmt"><p>Returns a Type representing the type constructor tcp.&lt;name&gt;.  For example, given
+ <code>object Demo { type M[x] = List[x] }</code>, the call <code>extractTC(Demo, &quot;M&quot;)</code> will return a type representing
+the type constructor <code>[x] List[x]</code>.
+</p></div></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#freshMethodParameter" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="freshMethodParameter(tpe:ContextUtil.this.ctx.universe.Type):ContextUtil.this.ctx.universe.ValDef"></a>
+      <a id="freshMethodParameter(scala.reflect.macros.Universe.Type):scala.reflect.macros.Universe.ValDef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freshMethodParameter</span><span class="params">(<span name="tpe">tpe: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Trees.ValDef">scala.reflect.macros.Universe.ValDef</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a ValDef with a parameter modifier, a unique name, with the provided Type and with an empty rhs.</p>
+    </li><li name="sbt.appmacro.ContextUtil#freshTermName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="freshTermName(prefix:String):ContextUtil.this.ctx.universe.TermName"></a>
+      <a id="freshTermName(String):scala.reflect.macros.Universe.TermName"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freshTermName</span><span class="params">(<span name="prefix">prefix: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Names.TermName">scala.reflect.macros.Universe.TermName</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a unique term name with the given prefix within this Context.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a unique term name with the given prefix within this Context.
+(The current implementation uses Context.fresh, which increments</p></div></div>
+    </li><li name="sbt.appmacro.ContextUtil#freshValDef" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="freshValDef(tpe:ContextUtil.this.ctx.universe.Type,sym:ContextUtil.this.ctx.universe.Symbol):ContextUtil.this.ctx.universe.ValDef"></a>
+      <a id="freshValDef(scala.reflect.macros.Universe.Type,Symbol):scala.reflect.macros.Universe.ValDef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freshValDef</span><span class="params">(<span name="tpe">tpe: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>, <span name="sym">sym: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Trees.ValDef">scala.reflect.macros.Universe.ValDef</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a new, local ValDef with the given Type, a unique name,
+the same position as <code>sym</code>, and an empty implementation (no rhs).</p>
+    </li><li name="sbt.appmacro.ContextUtil#functionType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="functionType(args:List[ContextUtil.this.ctx.universe.Type],result:ContextUtil.this.ctx.universe.Type):ContextUtil.this.ctx.universe.Type"></a>
+      <a id="functionType(List[scala.reflect.macros.Universe.Type],scala.reflect.macros.Universe.Type):scala.reflect.macros.Universe.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">functionType</span><span class="params">(<span name="args">args: <a href="../../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[<span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>]</span>, <span name="result">result: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#getPos" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="getPos(sym:ContextUtil.this.ctx.universe.Symbol):ContextUtil.this.ctx.universe.Position"></a>
+      <a id="getPos(Symbol):scala.reflect.macros.Universe.Position"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getPos</span><span class="params">(<span name="sym">sym: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Positions.Position">scala.reflect.macros.Universe.Position</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#idTC" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="idTC:ContextUtil.this.ctx.universe.Type"></a>
+      <a id="idTC:scala.reflect.macros.Universe.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">idTC</span><span class="result">: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">The type representing the type constructor <code>[X] X</code></p>
+    </li><li name="sbt.appmacro.ContextUtil#illegalReference" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="illegalReference(defs:scala.collection.Set[ContextUtil.this.ctx.universe.Symbol],sym:ContextUtil.this.ctx.universe.Symbol):Boolean"></a>
+      <a id="illegalReference(Set[Symbol],Symbol):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">illegalReference</span><span class="params">(<span name="defs">defs: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>, <span name="sym">sym: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">A reference is illegal if it is to an M instance defined within the scope of the macro call.</p><div class="fullcomment"><div class="comment cmt"><p>A reference is illegal if it is to an M instance defined within the scope of the macro call.
+As an approximation, disallow referenced to any local definitions <code>defs</code>.</p></div></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#isWrapper" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="isWrapper(methodName:String):ContextUtil.this.ctx.universe.Tree=&gt;Boolean"></a>
+      <a id="isWrapper(String):(Tree)⇒Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isWrapper</span><span class="params">(<span name="methodName">methodName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.ContextUtil#localModifiers" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="localModifiers:ContextUtil.this.ctx.universe.Modifiers"></a>
+      <a id="localModifiers:scala.reflect.macros.Universe.Modifiers"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">localModifiers</span><span class="result">: <span class="extype" name="scala.reflect.api.Trees.Modifiers">scala.reflect.macros.Universe.Modifiers</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Modifiers for a local val.</p>
+    </li><li name="sbt.appmacro.ContextUtil#localValDef" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="localValDef(tpt:ContextUtil.this.ctx.universe.Tree,rhs:ContextUtil.this.ctx.universe.Tree):ContextUtil.this.ctx.universe.ValDef"></a>
+      <a id="localValDef(Tree,Tree):scala.reflect.macros.Universe.ValDef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">localValDef</span><span class="params">(<span name="tpt">tpt: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="rhs">rhs: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Trees.ValDef">scala.reflect.macros.Universe.ValDef</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a ValDef with local modifiers and a unique name.</p>
+    </li><li name="sbt.appmacro.ContextUtil#method" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="method(obj:ContextUtil.this.ctx.universe.Symbol,name:String):ContextUtil.this.ctx.universe.Symbol"></a>
+      <a id="method(Symbol,String):Symbol"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">method</span><span class="params">(<span name="obj">obj: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Returns the symbol for the non-private method named <code>name</code> for the class/module <code>obj</code>.</p>
+    </li><li name="sbt.appmacro.ContextUtil#mkTuple" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="mkTuple(args:List[ContextUtil.this.ctx.universe.Tree]):ContextUtil.this.ctx.universe.Tree"></a>
+      <a id="mkTuple(List[Tree]):Tree"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mkTuple</span><span class="params">(<span name="args">args: <a href="../../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a tuple value of the right TupleN type from the provided inputs.</p>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#newTCVariable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="newTCVariable(owner:ContextUtil.this.ctx.universe.Symbol):ContextUtil.this.ctx.universe.TypeSymbol"></a>
+      <a id="newTCVariable(Symbol):scala.reflect.macros.Universe.TypeSymbol"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">newTCVariable</span><span class="params">(<span name="owner">owner: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Symbols.TypeSymbol">scala.reflect.macros.Universe.TypeSymbol</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a new, synthetic type variable that is a type constructor.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a new, synthetic type variable that is a type constructor. For example, in type Y[L[x]], L is such a type variable.</p></div></div>
+    </li><li name="sbt.appmacro.ContextUtil#newTypeVariable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="newTypeVariable(owner:ContextUtil.this.ctx.universe.Symbol,prefix:String):ContextUtil.this.ctx.universe.TypeSymbol"></a>
+      <a id="newTypeVariable(Symbol,String):scala.reflect.macros.Universe.TypeSymbol"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">newTypeVariable</span><span class="params">(<span name="owner">owner: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>, <span name="prefix">prefix: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;T0&quot;</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Symbols.TypeSymbol">scala.reflect.macros.Universe.TypeSymbol</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Creates a new, synthetic type variable with the specified <code>owner</code>.</p>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#parameterModifiers" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="parameterModifiers:ContextUtil.this.ctx.universe.Modifiers"></a>
+      <a id="parameterModifiers:scala.reflect.macros.Universe.Modifiers"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">parameterModifiers</span><span class="result">: <span class="extype" name="scala.reflect.api.Trees.Modifiers">scala.reflect.macros.Universe.Modifiers</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.ContextUtil#refVal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="refVal(vd:ContextUtil.this.ctx.universe.ValDef):ContextUtil.this.ctx.universe.Tree"></a>
+      <a id="refVal(scala.reflect.macros.Universe.ValDef):Tree"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">refVal</span><span class="params">(<span name="vd">vd: <span class="extype" name="scala.reflect.api.Trees.ValDef">scala.reflect.macros.Universe.ValDef</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Create a Tree that references the <code>val</code> represented by <code>vd</code>.</p>
+    </li><li name="sbt.appmacro.ContextUtil#refVar" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="refVar(variable:ContextUtil.this.ctx.universe.TypeSymbol):ContextUtil.this.ctx.universe.Type"></a>
+      <a id="refVar(scala.reflect.macros.Universe.TypeSymbol):scala.reflect.macros.Universe.Type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">refVar</span><span class="params">(<span name="variable">variable: <span class="extype" name="scala.reflect.api.Symbols.TypeSymbol">scala.reflect.macros.Universe.TypeSymbol</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">A Type that references the given type variable.</p>
+    </li><li name="sbt.appmacro.ContextUtil#singleton" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="singleton[T&lt;:Singleton](i:T)(implicitit:ContextUtil.this.ctx.TypeTag[i.type]):ContextUtil.this.ctx.universe.Symbol"></a>
+      <a id="singleton[T&lt;:Singleton](T)(C.TypeTag[i.type]):Symbol"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">singleton</span><span class="tparams">[<span name="T">T &lt;: <span class="extype" name="scala.Singleton">Singleton</span></span>]</span><span class="params">(<span name="i">i: <span class="extype" name="sbt.appmacro.ContextUtil.singleton.T">T</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="it">it: <span class="extype" name="scala.reflect.macros.Aliases.TypeTag">C.TypeTag</span>[<span class="extype" name="sbt.appmacro.ContextUtil.singleton.i">i</span>.type]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Returns the Symbol that references the statically accessible singleton <code>i</code>.</p>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="sbt.appmacro.ContextUtil#transformWrappers" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="transformWrappers(t:ContextUtil.this.ctx.universe.Tree,isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean,subWrapper:(ContextUtil.this.ctx.universe.Type,ContextUtil.this.ctx.universe.Tree)=&gt;ContextUtil.this.ctx.universe.Tree):ContextUtil.this.ctx.universe.Tree"></a>
+      <a id="transformWrappers(Tree,(Tree)⇒Boolean,(scala.reflect.macros.Universe.Type,Tree)⇒Tree):Tree"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">transformWrappers</span><span class="params">(<span name="t">t: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="subWrapper">subWrapper: (<span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>, <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Substitutes wrappers in tree <code>t</code> with the result of <code>subWrapper</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Substitutes wrappers in tree <code>t</code> with the result of <code>subWrapper</code>.
+A wrapper is a Tree of the form <code>f[T](v)</code> for which isWrapper(&lt;Tree of f&gt;) returns true.
+Typically, <code>f</code> is a <code>Select</code> or <code>Ident</code>.
+The wrapper is replaced with the result of <code>subWrapper(&lt;Type of T&gt;, &lt;Tree of v&gt;)</code></p></div></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
