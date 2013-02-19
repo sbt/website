@@ -393,22 +393,35 @@ The user should never see this method because it is compile-time only and only u
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li name="sbt.appmacro.InputWrapper#wrapKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="wrapKey[T](c:scala.reflect.macros.Context)(ts:c.Expr[Any])(implicitevidence$2:c.WeakTypeTag[T]):c.Expr[T]"></a>
-      <a id="wrapKey[T](Context)(scala.reflect.macros.Context.Expr[Any])(scala.reflect.macros.Context.WeakTypeTag[T]):scala.reflect.macros.Context.Expr[T]"></a>
+    </li><li name="sbt.appmacro.InputWrapper#wrapImpl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wrapImpl[T,S&lt;:Singleton](c:scala.reflect.macros.Context,s:S,wrapName:String)(ts:c.Expr[Any],pos:c.Position)(implicitevidence$3:c.WeakTypeTag[T],implicitit:c.TypeTag[s.type]):c.Expr[T]"></a>
+      <a id="wrapImpl[T,S&lt;:Singleton](Context,S,String)(scala.reflect.macros.Context.Expr[Any],scala.reflect.macros.Context.Position)(scala.reflect.macros.Context.WeakTypeTag[T],scala.reflect.macros.Context.TypeTag[s.type]):scala.reflect.macros.Context.Expr[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">wrapKey</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="c">c: <span class="extype" name="scala.reflect.macros.Context">Context</span></span>)</span><span class="params">(<span name="ts">ts: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="scala.Any">Any</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.macros.Aliases.WeakTypeTag">scala.reflect.macros.Context.WeakTypeTag</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapKey.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapKey.T">T</span>]</span>
+        <span class="name">wrapImpl</span><span class="tparams">[<span name="T">T</span>, <span name="S">S &lt;: <span class="extype" name="scala.Singleton">Singleton</span></span>]</span><span class="params">(<span name="c">c: <span class="extype" name="scala.reflect.macros.Context">Context</span></span>, <span name="s">s: <span class="extype" name="sbt.appmacro.InputWrapper.wrapImpl.S">S</span></span>, <span name="wrapName">wrapName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="params">(<span name="ts">ts: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="scala.Any">Any</span>]</span>, <span name="pos">pos: <span class="extype" name="scala.reflect.macros.Aliases.Position">scala.reflect.macros.Context.Position</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.macros.Aliases.WeakTypeTag">scala.reflect.macros.Context.WeakTypeTag</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapImpl.T">T</span>]</span>, <span name="it">it: <span class="extype" name="scala.reflect.macros.Aliases.TypeTag">scala.reflect.macros.Context.TypeTag</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapImpl.s">s</span>.type]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapImpl.T">T</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Wraps an arbitrary Tree in a call to the <code>wrap</code> method of this module for later processing by an enclosing macro.</p><div class="fullcomment"><div class="comment cmt"><p>Wraps an arbitrary Tree in a call to the <code>wrap</code> method of this module for later processing by an enclosing macro.
-The resulting Tree is the manually constructed version of:</p><p><code>c.universe.reify { InputWrapper.&lt;WrapName&gt;[T](ts.splice) }</code>
+      <p class="shortcomment cmt">Wraps an arbitrary Tree in a call to the <code>&lt;s&gt;.&lt;wrapName&gt;</code> method of this module for later processing by an enclosing macro.</p><div class="fullcomment"><div class="comment cmt"><p>Wraps an arbitrary Tree in a call to the <code>&lt;s&gt;.&lt;wrapName&gt;</code> method of this module for later processing by an enclosing macro.
+The resulting Tree is the manually constructed version of:</p><p><code>c.universe.reify { &lt;s&gt;.&lt;wrapName&gt;[T](ts.splice) }</code>
 </p></div></div>
-    </li><li name="sbt.appmacro.InputWrapper#wrap_☃☃" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.appmacro.InputWrapper#wrapKey" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="wrapKey[T](c:scala.reflect.macros.Context)(ts:c.Expr[Any],pos:c.Position)(implicitevidence$2:c.WeakTypeTag[T]):c.Expr[T]"></a>
+      <a id="wrapKey[T](Context)(scala.reflect.macros.Context.Expr[Any],scala.reflect.macros.Context.Position)(scala.reflect.macros.Context.WeakTypeTag[T]):scala.reflect.macros.Context.Expr[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wrapKey</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="c">c: <span class="extype" name="scala.reflect.macros.Context">Context</span></span>)</span><span class="params">(<span name="ts">ts: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="scala.Any">Any</span>]</span>, <span name="pos">pos: <span class="extype" name="scala.reflect.macros.Aliases.Position">scala.reflect.macros.Context.Position</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.macros.Aliases.WeakTypeTag">scala.reflect.macros.Context.WeakTypeTag</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapKey.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Aliases.Expr">scala.reflect.macros.Context.Expr</span>[<span class="extype" name="sbt.appmacro.InputWrapper.wrapKey.T">T</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.appmacro.InputWrapper#wrap_☃☃" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wrap_☃☃[T](in:Any):T"></a>
       <a id="wrap_☃☃[T](Any):T"></a>
       <h4 class="signature">
@@ -420,7 +433,13 @@ The resulting Tree is the manually constructed version of:</p><p><code>c.univers
         <span title="gt4s: wrap_$u2603$u2603" class="name">wrap_☃☃</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="in">in: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="sbt.appmacro.InputWrapper.wrap_☃☃.T">T</span></span>
       </span>
       </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@compileTimeOnly</span><span class="args">(<span>
       
+      <span class="defval" name="&quot;`value` can only be used within a task or setting macro, such as :=, +=, ++=, Def.task, or Def.setting.&quot;">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
     </li></ol>
             </div>
 
