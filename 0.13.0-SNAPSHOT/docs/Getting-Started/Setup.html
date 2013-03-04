@@ -109,53 +109,26 @@ to learn more about build definitions.</li>
 </div>
 <div class="section" id="installing-sbt">
 <h2>Installing sbt<a class="headerlink" href="#installing-sbt" title="Permalink to this headline">¶</a></h2>
-<p>sbt comes pre-built with several available packages for different operating systems.</p>
-<dl class="docutils">
-<dt>Here's the available download packages:</dt>
-<dd><ul class="first last simple">
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0-SNAPSHOT/sbt.zip">ZIP</a> or <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0-SNAPSHOT/sbt.tgz">TGZ</a> packages</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0-SNAPSHOT/sbt.msi">MSI</a> for Windows</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0-SNAPSHOT/sbt.rpm">RPM</a> package</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0-SNAPSHOT/sbt.deb">DEB</a> package</li>
-<li>Homebrew or Macports for <a class="reference internal" href="#mac">Mac</a></li>
-<li><a class="reference internal" href="#gentoo">Gentoo</a> emerge overlays</li>
-</ul>
-</dd>
-</dl>
-<p>Please report any issues to the <a class="reference external" href="https://github.com/sbt/sbt-launcher-package/issues">sbt-launcher-package</a> project.</p>
-<p>You may also try out the <a class="reference internal" href="#id1">Manual Installation</a>.</p>
-<div class="section" id="mac">
-<h3>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h3>
-<p>Use either <a class="reference external" href="http://macports.org/">MacPorts</a>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> port install sbt
-</pre></div>
-</div>
-<p>Or <a class="reference external" href="http://mxcl.github.com/homebrew/">HomeBrew</a>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> brew install sbt
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Please make sure to report any issues with these packages to the relevant maintainers.</p>
-</div>
-</div>
-<div class="section" id="gentoo">
-<h3>Gentoo<a class="headerlink" href="#gentoo" title="Permalink to this headline">¶</a></h3>
-<p>In official tree there is no ebuild for sbt. But there are ebuilds to
-merge sbt from binaries:
-<a class="reference external" href="https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin">https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin</a>. To
-merge sbt from this ebuilds you can do next:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir -p /usr/local/portage <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /usr/local/portage
-<span class="gp">$</span> git clone git://github.com/whiter4bbit/overlays.git
-<span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;PORTDIR_OVERLAY=$PORTDIR_OVERLAY /usr/local/portage/overlays&quot;</span> &gt;&gt; /etc/make.conf
-<span class="gp">$</span> emerge sbt-bin
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Please report any issues with the ebuild <a class="reference external" href="https://github.com/whiter4bbit/overlays/issues">here</a>.</p>
-</div>
-</div>
+<p>The latest development versions of 0.13.0 are available as nightly builds on <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/">Typesafe Snapshots</a>.</p>
+<p>To use a nightly build, the instructions are the same for normal manual setup except:</p>
+<ol class="arabic simple">
+<li>Download the launcher jar from one of the subdirectories of &lt;<a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/">http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/</a>.
+They should be listed in chronological order, so the most recent one will be last.</li>
+<li>The version number is the name of the subdirectory and is of the form
+<tt class="docutils literal"><span class="pre">0.13.x-yyyyMMdd-HHmmss</span></tt>. Use this in a <tt class="docutils literal"><span class="pre">build.properties</span></tt> file.</li>
+<li>Call your script something like <tt class="docutils literal"><span class="pre">sbt-nightly</span></tt> to retain access to a
+stable <tt class="docutils literal"><span class="pre">sbt</span></tt> launcher.  The documentation will refer to the script as <tt class="docutils literal"><span class="pre">sbt</span></tt>, however.</li>
+</ol>
+<p>Related to the third point, remember that an <tt class="docutils literal"><span class="pre">sbt.version</span></tt> setting in
+<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt> determines the version of sbt
+to use in a project. If it is not present, the default version
+associated with the launcher is used. This means that you must set
+<tt class="docutils literal"><span class="pre">sbt.version=yyyyMMdd-HHmmss</span></tt> in an existing
+<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt>. You can verify the right
+version of sbt is being used to build a project by running
+<tt class="docutils literal"><span class="pre">sbtVersion</span></tt>.</p>
+<p>To reduce problems, it is recommended to not use a launcher jar for one
+nightly version to launch a different nightly version of sbt.</p>
 <div class="section" id="manual-installation">
 <h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="windows">
@@ -165,12 +138,12 @@ merge sbt from this ebuilds you can do next:</p>
 <span class="gp">$</span> java -Xmx512M -jar <span class="s2">&quot;%SCRIPT_DIR%sbt-launch.jar&quot;</span> %*
 </pre></div>
 </div>
-<p>and put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch//0.13.0-SNAPSHOT/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file. Put <tt class="docutils literal"><span class="pre">sbt.bat</span></tt> on your path so
+<p>and put sbt-launch.jar in the same directory as the batch file. Put <tt class="docutils literal"><span class="pre">sbt.bat</span></tt> on your path so
 that you can launch <tt class="docutils literal"><span class="pre">sbt</span></tt> in any directory by typing <tt class="docutils literal"><span class="pre">sbt</span></tt> at the command prompt.</p>
 </div>
 <div class="section" id="unix">
 <h4>Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
-<p>Download <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch//0.13.0-SNAPSHOT/sbt-launch.jar">sbt-launch.jar</a> and place it in <tt class="docutils literal"><span class="pre">~/bin</span></tt>.</p>
+<p>Put sbt-launch.jar in <tt class="docutils literal"><span class="pre">~/bin</span></tt>.</p>
 <p>Create a script to run the jar, by placing this in a file called <tt class="docutils literal"><span class="pre">sbt</span></tt>
 in your <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</span>
@@ -184,7 +157,7 @@ in your <tt class="docutils literal"><span class="pre">~/bin</span></tt> directo
 </div>
 <div class="section" id="tips-and-notes">
 <h3>Tips and Notes<a class="headerlink" href="#tips-and-notes" title="Permalink to this headline">¶</a></h3>
-<p>If you have any trouble running <tt class="docutils literal"><span class="pre">sbt</span></tt>, see <a class="reference internal" href="../Detailed-Topics/Setup-Notes.html"><em>Setup Notes</em></a> on terminal
+<p>If you have any trouble running sbt, see <a class="reference internal" href="../Detailed-Topics/Setup-Notes.html"><em>Setup Notes</em></a> on terminal
 encodings, HTTP proxies, and JVM options.</p>
 </div>
 <div class="section" id="next">
@@ -203,8 +176,6 @@ encodings, HTTP proxies, and JVM options.</p>
 <li><a class="reference internal" href="#">Setup</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#installing-sbt">Installing sbt</a><ul>
-<li><a class="reference internal" href="#mac">Mac</a></li>
-<li><a class="reference internal" href="#gentoo">Gentoo</a></li>
 <li><a class="reference internal" href="#manual-installation">Manual Installation</a><ul>
 <li><a class="reference internal" href="#windows">Windows</a></li>
 <li><a class="reference internal" href="#unix">Unix</a></li>

@@ -312,15 +312,15 @@
       </h4>
       
     </li><li name="sbt.Classpaths#cachedUpdate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="cachedUpdate(cacheFile:java.io.File,label:String,module:sbt.IvySbt#Module,config:sbt.UpdateConfiguration,scalaInstance:Option[(sbt.ScalaInstance,String)],skip:Boolean,force:Boolean,depsUpdated:Boolean,log:sbt.Logger):sbt.UpdateReport"></a>
-      <a id="cachedUpdate(File,String,Module,UpdateConfiguration,Option[(ScalaInstance,String)],Boolean,Boolean,Boolean,Logger):UpdateReport"></a>
+      <a id="cachedUpdate(cacheFile:java.io.File,label:String,module:sbt.IvySbt#Module,config:sbt.UpdateConfiguration,transform:sbt.UpdateReport=&gt;sbt.UpdateReport,skip:Boolean,force:Boolean,depsUpdated:Boolean,log:sbt.Logger):sbt.UpdateReport"></a>
+      <a id="cachedUpdate(File,String,Module,UpdateConfiguration,(UpdateReport)⇒UpdateReport,Boolean,Boolean,Boolean,Logger):UpdateReport"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">cachedUpdate</span><span class="params">(<span name="cacheFile">cacheFile: <span class="extype" name="java.io.File">File</span></span>, <span name="label">label: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="module">module: <a href="IvySbt$Module.html" class="extype" name="sbt.IvySbt.Module">Module</a></span>, <span name="config">config: <a href="UpdateConfiguration.html" class="extype" name="sbt.UpdateConfiguration">UpdateConfiguration</a></span>, <span name="scalaInstance">scalaInstance: <span class="extype" name="scala.Option">Option</span>[(<a href="ScalaInstance.html" class="extype" name="sbt.ScalaInstance">ScalaInstance</a>, <span class="extype" name="scala.Predef.String">String</span>)]</span>, <span name="skip">skip: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="force">force: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="depsUpdated">depsUpdated: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>
+        <span class="name">cachedUpdate</span><span class="params">(<span name="cacheFile">cacheFile: <span class="extype" name="java.io.File">File</span></span>, <span name="label">label: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="module">module: <a href="IvySbt$Module.html" class="extype" name="sbt.IvySbt.Module">Module</a></span>, <span name="config">config: <a href="UpdateConfiguration.html" class="extype" name="sbt.UpdateConfiguration">UpdateConfiguration</a></span>, <span name="transform">transform: (<a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a>) ⇒ <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>, <span name="skip">skip: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="force">force: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="depsUpdated">depsUpdated: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>
       </span>
       </h4>
       
@@ -1163,15 +1163,15 @@
       </h4>
       
     </li><li name="sbt.Classpaths#substituteScalaFiles" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="substituteScalaFiles(scalaInstance:sbt.ScalaInstance,ScalaOrg:String,report:sbt.UpdateReport):sbt.UpdateReport"></a>
-      <a id="substituteScalaFiles(ScalaInstance,String,UpdateReport):UpdateReport"></a>
+      <a id="substituteScalaFiles(scalaJars:Seq[java.io.File],scalaOrg:String,report:sbt.UpdateReport):sbt.UpdateReport"></a>
+      <a id="substituteScalaFiles(Seq[File],String,UpdateReport):UpdateReport"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">substituteScalaFiles</span><span class="params">(<span name="scalaInstance">scalaInstance: <a href="ScalaInstance.html" class="extype" name="sbt.ScalaInstance">ScalaInstance</a></span>, <span name="ScalaOrg">ScalaOrg: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="report">report: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>)</span><span class="result">: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>
+        <span class="name">substituteScalaFiles</span><span class="params">(<span name="scalaJars">scalaJars: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="scalaOrg">scalaOrg: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="report">report: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>)</span><span class="result">: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>
       </span>
       </h4>
       
@@ -1402,6 +1402,22 @@
                 <span class="name">@deprecated</span>
               
         </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Explicitly specify the organization using the other variant.</p></dd></dl></div>
+    </li><li name="sbt.Classpaths#substituteScalaFiles" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="substituteScalaFiles(scalaInstance:sbt.ScalaInstance,scalaOrg:String,report:sbt.UpdateReport):sbt.UpdateReport"></a>
+      <a id="substituteScalaFiles(ScalaInstance,String,UpdateReport):UpdateReport"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Directly provide the jar files.">substituteScalaFiles</span><span class="params">(<span name="scalaInstance">scalaInstance: <a href="ScalaInstance.html" class="extype" name="sbt.ScalaInstance">ScalaInstance</a></span>, <span name="scalaOrg">scalaOrg: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="report">report: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>)</span><span class="result">: <a href="UpdateReport.html" class="extype" name="sbt.UpdateReport">UpdateReport</a></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Directly provide the jar files.</p></dd></dl></div>
     </li><li name="sbt.Classpaths#substituteScalaFiles" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="substituteScalaFiles(scalaInstance:sbt.ScalaInstance,report:sbt.UpdateReport):sbt.UpdateReport"></a>
       <a id="substituteScalaFiles(ScalaInstance,UpdateReport):UpdateReport"></a>

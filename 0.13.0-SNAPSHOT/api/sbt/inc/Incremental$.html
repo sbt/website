@@ -155,29 +155,29 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="sbt.inc.Incremental#RecompileAllFraction" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="RecompileAllFraction:Double(0.5)"></a>
-      <a id="RecompileAllFraction:Double(0.5)"></a>
+    </li><li name="sbt.inc.Incremental#apiDebug" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apiDebug(options:sbt.inc.IncOptions):Boolean"></a>
+      <a id="apiDebug(IncOptions):Boolean"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
-        <span class="kind">val</span>
+        <span class="modifier"></span>
+        <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">RecompileAllFraction</span><span class="result">: Double(0.5)</span>
+        <span class="name">apiDebug</span><span class="params">(<span name="options">options: <a href="IncOptions.html" class="extype" name="sbt.inc.IncOptions">IncOptions</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
       
-    </li><li name="sbt.inc.Incremental#TransitiveStep" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="TransitiveStep:Int(2)"></a>
-      <a id="TransitiveStep:Int(2)"></a>
+    </li><li name="sbt.inc.Incremental#apiDebugProp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apiDebugProp:String"></a>
+      <a id="apiDebugProp:String"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">TransitiveStep</span><span class="result">: Int(2)</span>
+        <span class="name">apiDebugProp</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4>
       
@@ -195,15 +195,15 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="sbt.inc.Incremental#changedIncremental" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="changedIncremental[T](lastSources:scala.collection.Set[T],oldAPI:T=&gt;xsbti.api.Source,newAPI:T=&gt;xsbti.api.Source):sbt.inc.APIChanges[T]"></a>
-      <a id="changedIncremental[T](Set[T],(T)⇒Source,(T)⇒Source):APIChanges[T]"></a>
+      <a id="changedIncremental[T](lastSources:scala.collection.Set[T],oldAPI:T=&gt;xsbti.api.Source,newAPI:T=&gt;xsbti.api.Source,options:sbt.inc.IncOptions):sbt.inc.APIChanges[T]"></a>
+      <a id="changedIncremental[T](Set[T],(T)⇒Source,(T)⇒Source,IncOptions):APIChanges[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">changedIncremental</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="lastSources">lastSources: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>]</span>, <span name="oldAPI">oldAPI: (<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>) ⇒ <a href="../../xsbti/api/Source.html" class="extype" name="xsbti.api.Source">Source</a></span>, <span name="newAPI">newAPI: (<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>) ⇒ <a href="../../xsbti/api/Source.html" class="extype" name="xsbti.api.Source">Source</a></span>)</span><span class="result">: <a href="APIChanges.html" class="extype" name="sbt.inc.APIChanges">APIChanges</a>[<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>]</span>
+        <span class="name">changedIncremental</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="lastSources">lastSources: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>]</span>, <span name="oldAPI">oldAPI: (<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>) ⇒ <a href="../../xsbti/api/Source.html" class="extype" name="xsbti.api.Source">Source</a></span>, <span name="newAPI">newAPI: (<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>) ⇒ <a href="../../xsbti/api/Source.html" class="extype" name="xsbti.api.Source">Source</a></span>, <span name="options">options: <a href="IncOptions.html" class="extype" name="sbt.inc.IncOptions">IncOptions</a></span>)</span><span class="result">: <a href="APIChanges.html" class="extype" name="sbt.inc.APIChanges">APIChanges</a>[<span class="extype" name="sbt.inc.Incremental.changedIncremental.T">T</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Accepts the sources that were recompiled during the last step and functions
@@ -212,15 +212,15 @@ providing the API before and after the last step.  The functions should return
 an empty API if the file did not/does not exist.
 </p></div></div>
     </li><li name="sbt.inc.Incremental#changedInitial" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="changedInitial(entry:String=&gt;Option[java.io.File],sources:Set[java.io.File],previousAnalysis:sbt.inc.Analysis,current:sbt.inc.ReadStamps,forEntry:java.io.File=&gt;Option[sbt.inc.Analysis])(implicitequivS:Equiv[sbt.inc.Stamp]):sbt.inc.InitialChanges"></a>
-      <a id="changedInitial((String)⇒Option[File],Set[File],Analysis,ReadStamps,(File)⇒Option[Analysis])(Equiv[Stamp]):InitialChanges"></a>
+      <a id="changedInitial(entry:String=&gt;Option[java.io.File],sources:Set[java.io.File],previousAnalysis:sbt.inc.Analysis,current:sbt.inc.ReadStamps,forEntry:java.io.File=&gt;Option[sbt.inc.Analysis],options:sbt.inc.IncOptions)(implicitequivS:Equiv[sbt.inc.Stamp]):sbt.inc.InitialChanges"></a>
+      <a id="changedInitial((String)⇒Option[File],Set[File],Analysis,ReadStamps,(File)⇒Option[Analysis],IncOptions)(Equiv[Stamp]):InitialChanges"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">changedInitial</span><span class="params">(<span name="entry">entry: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="sources">sources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="previousAnalysis">previousAnalysis: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="current">current: <a href="ReadStamps.html" class="extype" name="sbt.inc.ReadStamps">ReadStamps</a></span>, <span name="forEntry">forEntry: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="equivS">equivS: <a href="../../scala/package.html#Equiv[T]=scala.math.Equiv[T]" class="extmbr" name="scala.Equiv">Equiv</a>[<a href="Stamp.html" class="extype" name="sbt.inc.Stamp">Stamp</a>]</span>)</span><span class="result">: <a href="InitialChanges.html" class="extype" name="sbt.inc.InitialChanges">InitialChanges</a></span>
+        <span class="name">changedInitial</span><span class="params">(<span name="entry">entry: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="sources">sources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="previousAnalysis">previousAnalysis: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="current">current: <a href="ReadStamps.html" class="extype" name="sbt.inc.ReadStamps">ReadStamps</a></span>, <span name="forEntry">forEntry: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>]</span>, <span name="options">options: <a href="IncOptions.html" class="extype" name="sbt.inc.IncOptions">IncOptions</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="equivS">equivS: <a href="../../scala/package.html#Equiv[T]=scala.math.Equiv[T]" class="extmbr" name="scala.Equiv">Equiv</a>[<a href="Stamp.html" class="extype" name="sbt.inc.Stamp">Stamp</a>]</span>)</span><span class="result">: <a href="InitialChanges.html" class="extype" name="sbt.inc.InitialChanges">InitialChanges</a></span>
       </span>
       </h4>
       
@@ -254,15 +254,15 @@ an empty API if the file did not/does not exist.
               
         </dd></dl></div>
     </li><li name="sbt.inc.Incremental#compile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="compile(sources:Set[java.io.File],entry:String=&gt;Option[java.io.File],previous:sbt.inc.Analysis,current:sbt.inc.ReadStamps,forEntry:java.io.File=&gt;Option[sbt.inc.Analysis],doCompile:(Set[java.io.File],xsbti.compile.DependencyChanges)=&gt;sbt.inc.Analysis,log:sbt.Logger)(implicitequivS:Equiv[sbt.inc.Stamp]):(Boolean,sbt.inc.Analysis)"></a>
-      <a id="compile(Set[File],(String)⇒Option[File],Analysis,ReadStamps,(File)⇒Option[Analysis],(Set[File],DependencyChanges)⇒Analysis,Logger)(Equiv[Stamp]):(Boolean,Analysis)"></a>
+      <a id="compile(sources:Set[java.io.File],entry:String=&gt;Option[java.io.File],previous:sbt.inc.Analysis,current:sbt.inc.ReadStamps,forEntry:java.io.File=&gt;Option[sbt.inc.Analysis],doCompile:(Set[java.io.File],xsbti.compile.DependencyChanges)=&gt;sbt.inc.Analysis,log:sbt.Logger,options:sbt.inc.IncOptions)(implicitequivS:Equiv[sbt.inc.Stamp]):(Boolean,sbt.inc.Analysis)"></a>
+      <a id="compile(Set[File],(String)⇒Option[File],Analysis,ReadStamps,(File)⇒Option[Analysis],(Set[File],DependencyChanges)⇒Analysis,Logger,IncOptions)(Equiv[Stamp]):(Boolean,Analysis)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">compile</span><span class="params">(<span name="sources">sources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="entry">entry: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="previous">previous: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="current">current: <a href="ReadStamps.html" class="extype" name="sbt.inc.ReadStamps">ReadStamps</a></span>, <span name="forEntry">forEntry: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>]</span>, <span name="doCompile">doCompile: (<span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>], <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a>) ⇒ <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="equivS">equivS: <a href="../../scala/package.html#Equiv[T]=scala.math.Equiv[T]" class="extmbr" name="scala.Equiv">Equiv</a>[<a href="Stamp.html" class="extype" name="sbt.inc.Stamp">Stamp</a>]</span>)</span><span class="result">: (<span class="extype" name="scala.Boolean">Boolean</span>, <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>)</span>
+        <span class="name">compile</span><span class="params">(<span name="sources">sources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="entry">entry: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="previous">previous: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="current">current: <a href="ReadStamps.html" class="extype" name="sbt.inc.ReadStamps">ReadStamps</a></span>, <span name="forEntry">forEntry: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Option">Option</span>[<a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>]</span>, <span name="doCompile">doCompile: (<span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>], <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a>) ⇒ <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="options">options: <a href="IncOptions.html" class="extype" name="sbt.inc.IncOptions">IncOptions</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="equivS">equivS: <a href="../../scala/package.html#Equiv[T]=scala.math.Equiv[T]" class="extmbr" name="scala.Equiv">Equiv</a>[<a href="Stamp.html" class="extype" name="sbt.inc.Stamp">Stamp</a>]</span>)</span><span class="result">: (<span class="extype" name="scala.Boolean">Boolean</span>, <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a>)</span>
       </span>
       </h4>
       
@@ -279,19 +279,22 @@ an empty API if the file did not/does not exist.
       </span>
       </h4>
       
-    </li><li name="sbt.inc.Incremental#cycle" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="cycle(invalidatedRaw:Set[java.io.File],allSources:Set[java.io.File],binaryChanges:xsbti.compile.DependencyChanges,previous:sbt.inc.Analysis,doCompile:(Set[java.io.File],xsbti.compile.DependencyChanges)=&gt;sbt.inc.Analysis,cycleNum:Int,log:sbt.Logger):sbt.inc.Analysis"></a>
-      <a id="cycle(Set[File],Set[File],DependencyChanges,Analysis,(Set[File],DependencyChanges)⇒Analysis,Int,Logger):Analysis"></a>
+    </li><li name="sbt.inc.Incremental#cycle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="cycle(invalidatedRaw:Set[java.io.File],allSources:Set[java.io.File],binaryChanges:xsbti.compile.DependencyChanges,previous:sbt.inc.Analysis,doCompile:(Set[java.io.File],xsbti.compile.DependencyChanges)=&gt;sbt.inc.Analysis,classfileManager:sbt.inc.ClassfileManager,cycleNum:Int,log:sbt.Logger,options:sbt.inc.IncOptions):sbt.inc.Analysis"></a>
+      <a id="cycle(Set[File],Set[File],DependencyChanges,Analysis,(Set[File],DependencyChanges)⇒Analysis,ClassfileManager,Int,Logger,IncOptions):Analysis"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">cycle</span><span class="params">(<span name="invalidatedRaw">invalidatedRaw: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="allSources">allSources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="binaryChanges">binaryChanges: <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a></span>, <span name="previous">previous: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="doCompile">doCompile: (<span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>], <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a>) ⇒ <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="cycleNum">cycleNum: <span class="extype" name="scala.Int">Int</span></span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>
+        <span class="name">cycle</span><span class="params">(<span name="invalidatedRaw">invalidatedRaw: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="allSources">allSources: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="binaryChanges">binaryChanges: <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a></span>, <span name="previous">previous: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="doCompile">doCompile: (<span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>], <a href="../../xsbti/compile/DependencyChanges.html" class="extype" name="xsbti.compile.DependencyChanges">DependencyChanges</a>) ⇒ <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="classfileManager">classfileManager: <a href="ClassfileManager.html" class="extype" name="sbt.inc.ClassfileManager">ClassfileManager</a></span>, <span name="cycleNum">cycleNum: <span class="extype" name="scala.Int">Int</span></span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="options">options: <a href="IncOptions.html" class="extype" name="sbt.inc.IncOptions">IncOptions</a></span>)</span><span class="result">: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>
       </span>
       </h4>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@tailrec</span><span class="args">()</span>
+              
+        </dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -543,6 +546,19 @@ Callers may want to augment the returned set with 'modified' or all sources reco
       </span>
       <span class="symbol">
         <span class="name">orTrue</span><span class="params">(<span name="o">o: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Boolean">Boolean</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.inc.Incremental#prune" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="prune(invalidatedSrcs:Set[java.io.File],previous:sbt.inc.Analysis,classfileManager:sbt.inc.ClassfileManager):sbt.inc.Analysis"></a>
+      <a id="prune(Set[File],Analysis,ClassfileManager):Analysis"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">prune</span><span class="params">(<span name="invalidatedSrcs">invalidatedSrcs: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="previous">previous: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="classfileManager">classfileManager: <a href="ClassfileManager.html" class="extype" name="sbt.inc.ClassfileManager">ClassfileManager</a></span>)</span><span class="result">: <a href="Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>
       </span>
       </h4>
       

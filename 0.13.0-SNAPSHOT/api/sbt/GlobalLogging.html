@@ -40,11 +40,15 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">GlobalLogging</span><span class="params">(<span name="full">full: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="backed">backed: <a href="ConsoleLogger.html" class="extype" name="sbt.ConsoleLogger">ConsoleLogger</a></span>, <span name="backing">backing: <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">GlobalLogging</span><span class="params">(<span name="full">full: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="console">console: <a href="ConsoleOut.html" class="extype" name="sbt.ConsoleOut">ConsoleOut</a></span>, <span name="backed">backed: <a href="AbstractLogger.html" class="extype" name="sbt.AbstractLogger">AbstractLogger</a></span>, <span name="backing">backing: <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>, <span name="newLogger">newLogger: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Provides the current global logging configuration.</p><p><code>full</code> is the current global logger.  It should not be set directly because it is generated as needed from <code>backing.newLogger</code>.
+<code>console</code> is where all logging from all ConsoleLoggers should go.
+<code>backed</code> is the Logger that other loggers should feed into.
+<code>backing</code> tracks the files that persist the global logging.
+<code>newLogger</code> creates a new global logging configuration from a sink and backing configuration.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -85,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="sbt.GlobalLogging#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(full:sbt.Logger,backed:sbt.ConsoleLogger,backing:sbt.GlobalLogBacking):sbt.GlobalLogging"></a>
+      <a id="&lt;init&gt;(full:sbt.Logger,console:sbt.ConsoleOut,backed:sbt.AbstractLogger,backing:sbt.GlobalLogBacking,newLogger:(java.io.PrintWriter,sbt.GlobalLogBacking)=&gt;sbt.GlobalLogging):sbt.GlobalLogging"></a>
       <a id="&lt;init&gt;:GlobalLogging"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -93,7 +97,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">GlobalLogging</span><span class="params">(<span name="full">full: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="backed">backed: <a href="ConsoleLogger.html" class="extype" name="sbt.ConsoleLogger">ConsoleLogger</a></span>, <span name="backing">backing: <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>)</span>
+        <span class="name">GlobalLogging</span><span class="params">(<span name="full">full: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="console">console: <a href="ConsoleOut.html" class="extype" name="sbt.ConsoleOut">ConsoleOut</a></span>, <span name="backed">backed: <a href="AbstractLogger.html" class="extype" name="sbt.AbstractLogger">AbstractLogger</a></span>, <span name="backing">backing: <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>, <span name="newLogger">newLogger: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>)</span>
       </span>
       </h4>
       
@@ -185,15 +189,15 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="sbt.GlobalLogging#backed" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="backed:sbt.ConsoleLogger"></a>
-      <a id="backed:ConsoleLogger"></a>
+      <a id="backed:sbt.AbstractLogger"></a>
+      <a id="backed:AbstractLogger"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">backed</span><span class="result">: <a href="ConsoleLogger.html" class="extype" name="sbt.ConsoleLogger">ConsoleLogger</a></span>
+        <span class="name">backed</span><span class="result">: <a href="AbstractLogger.html" class="extype" name="sbt.AbstractLogger">AbstractLogger</a></span>
       </span>
       </h4>
       
@@ -226,6 +230,19 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li name="sbt.GlobalLogging#console" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="console:sbt.ConsoleOut"></a>
+      <a id="console:ConsoleOut"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">console</span><span class="result">: <a href="ConsoleOut.html" class="extype" name="sbt.ConsoleOut">ConsoleOut</a></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -307,6 +324,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="sbt.GlobalLogging#newLogger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="newLogger:(java.io.PrintWriter,sbt.GlobalLogBacking)=&gt;sbt.GlobalLogging"></a>
+      <a id="newLogger:(PrintWriter,GlobalLogBacking)⇒GlobalLogging"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">newLogger</span><span class="result">: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="GlobalLogBacking.html" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>

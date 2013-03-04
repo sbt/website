@@ -104,13 +104,27 @@
 </div>
 <div class="section" id="features">
 <h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Use the repositories in boot.properties as the default project resolvers.  Add <tt class="docutils literal"><span class="pre">bootOnly</span></tt> to a repository in boot.properties to specify that it should not be used by projects by default.  (Josh S., <a class="reference external" href="https://github.com/sbt/sbt/issues/608" title="Allow the launcher to provide default repositories for SBT builds"><span class="xref issue closed">#608</span></a>)</li>
-<li>Support vals and defs in .sbt files.  Details below.</li>
-<li>Support defining Projects in .sbt files: vals of type Project are added to the Build.  Details below.</li>
-<li>New syntax for settings, tasks, and input tasks.  Details below.</li>
-<li>Automatically link to external API scaladocs of dependencies by setting <tt class="docutils literal"><span class="pre">autoAPIMappings</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  This requires at least Scala 2.10.1 and for dependencies to define <tt class="docutils literal"><span class="pre">apiURL</span></tt> for their scaladoc location.  Mappings may be manually added to the <tt class="docutils literal"><span class="pre">apiMappings</span></tt> task as well.</li>
-<li>Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">/path/to/scala/home</span></tt>.</li>
+<ul>
+<li><p class="first">Use the repositories in boot.properties as the default project resolvers.  Add <tt class="docutils literal"><span class="pre">bootOnly</span></tt> to a repository in boot.properties to specify that it should not be used by projects by default.  (Josh S., <a class="reference external" href="https://github.com/sbt/sbt/issues/608" title="Allow the launcher to provide default repositories for SBT builds"><span class="xref issue closed">#608</span></a>)</p>
+</li>
+<li><p class="first">Support vals and defs in .sbt files.  Details below.</p>
+</li>
+<li><p class="first">Support defining Projects in .sbt files: vals of type Project are added to the Build.  Details below.</p>
+</li>
+<li><p class="first">New syntax for settings, tasks, and input tasks.  Details below.</p>
+</li>
+<li><p class="first">Automatically link to external API scaladocs of dependencies by setting <tt class="docutils literal"><span class="pre">autoAPIMappings</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  This requires at least Scala 2.10.1 and for dependencies to define <tt class="docutils literal"><span class="pre">apiURL</span></tt> for their scaladoc location.  Mappings may be manually added to the <tt class="docutils literal"><span class="pre">apiMappings</span></tt> task as well.</p>
+</li>
+<li><p class="first">Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">/path/to/scala/home</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">export</span></tt> command</p>
+<blockquote>
+<div><ul class="simple">
+<li>For tasks, prints the contents of the 'export' stream.  By convention, this should be the equivalent command line(s) representation.  <tt class="docutils literal"><span class="pre">compile</span></tt>, <tt class="docutils literal"><span class="pre">doc</span></tt>, and <tt class="docutils literal"><span class="pre">console</span></tt> show the approximate command lines for their execution.  Classpath tasks print the classpath string suitable for passing as an option.</li>
+<li>For settings, directly prints the value of a setting instead of going through the logger</li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </div>
 <div class="section" id="fixes">
@@ -119,10 +133,12 @@
 <div class="section" id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Run the API extraction phase after the compiler's <tt class="docutils literal"><span class="pre">pickler</span></tt> phase instead of <tt class="docutils literal"><span class="pre">typer</span></tt> to allow compiler plugins after <tt class="docutils literal"><span class="pre">typer</span></tt>.</li>
+<li>Run the API extraction phase after the compiler's <tt class="docutils literal"><span class="pre">pickler</span></tt> phase instead of <tt class="docutils literal"><span class="pre">typer</span></tt> to allow compiler plugins after <tt class="docutils literal"><span class="pre">typer</span></tt>. (Adriaan M., <a class="reference external" href="https://github.com/sbt/sbt/issues/609" title="allow customizing apiExtractor's phase"><span class="xref issue closed">#609</span></a>)</li>
 <li>Record defining source position of settings.  <tt class="docutils literal"><span class="pre">inspect</span></tt> shows the definition location of all settings contributing to a defined value.</li>
 <li>Allow the root project to be specified explicitly in <tt class="docutils literal"><span class="pre">Build.rootProject</span></tt>.</li>
 <li>Tasks that need a directory for storing cache information can now use the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> method on <tt class="docutils literal"><span class="pre">streams</span></tt>.  This supersedes the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> setting.</li>
+<li>The environment variables used when forking <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> may be set via <tt class="docutils literal"><span class="pre">envVars</span></tt>, which is a <tt class="docutils literal"><span class="pre">Task[Map[String,String]]</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/665" title="Support passing environment variables to forked processes"><span class="xref issue closed">#665</span></a>)</li>
+<li>Restore class files after an unsuccessful compilation.  This is useful when an error occurs in a later incremental step that requires a fix in the originally changed files.</li>
 </ul>
 </div>
 <div class="section" id="other">

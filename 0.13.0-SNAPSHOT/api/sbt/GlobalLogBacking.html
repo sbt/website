@@ -40,11 +40,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">GlobalLogBacking</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="last">last: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="newLogger">newLogger: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="GlobalLogging.html" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>, <span name="newBackingFile">newBackingFile: () ⇒ <span class="extype" name="java.io.File">File</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">GlobalLogBacking</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="last">last: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="newBackingFile">newBackingFile: () ⇒ <span class="extype" name="java.io.File">File</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Tracks the files that persist the global logging.
+<code>file</code> is the current backing file.  <code>last</code> is the previous backing file, if there is one.
+<code>newBackingFile</code> creates a new temporary location for the next backing file.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -85,7 +87,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="sbt.GlobalLogBacking#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(file:java.io.File,last:Option[java.io.File],newLogger:(java.io.PrintWriter,sbt.GlobalLogBacking)=&gt;sbt.GlobalLogging,newBackingFile:()=&gt;java.io.File):sbt.GlobalLogBacking"></a>
+      <a id="&lt;init&gt;(file:java.io.File,last:Option[java.io.File],newBackingFile:()=&gt;java.io.File):sbt.GlobalLogBacking"></a>
       <a id="&lt;init&gt;:GlobalLogBacking"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -93,7 +95,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">GlobalLogBacking</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="last">last: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="newLogger">newLogger: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="GlobalLogging.html" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>, <span name="newBackingFile">newBackingFile: () ⇒ <span class="extype" name="java.io.File">File</span></span>)</span>
+        <span class="name">GlobalLogBacking</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="last">last: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="newBackingFile">newBackingFile: () ⇒ <span class="extype" name="java.io.File">File</span></span>)</span>
       </span>
       </h4>
       
@@ -307,19 +309,6 @@
       </span>
       </h4>
       
-    </li><li name="sbt.GlobalLogBacking#newLogger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="newLogger:(java.io.PrintWriter,sbt.GlobalLogBacking)=&gt;sbt.GlobalLogging"></a>
-      <a id="newLogger:(PrintWriter,GlobalLogBacking)⇒GlobalLogging"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">newLogger</span><span class="result">: (<span class="extype" name="java.io.PrintWriter">PrintWriter</span>, <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a>) ⇒ <a href="GlobalLogging.html" class="extype" name="sbt.GlobalLogging">GlobalLogging</a></span>
-      </span>
-      </h4>
-      
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -358,7 +347,7 @@
         <span class="name">shift</span><span class="params">(<span name="newFile">newFile: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Shifts the current backing file to <code>last</code> and sets the current backing to <code>newFile</code>.</p>
     </li><li name="sbt.GlobalLogBacking#shiftNew" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="shiftNew():sbt.GlobalLogBacking"></a>
       <a id="shiftNew():GlobalLogBacking"></a>
@@ -371,7 +360,7 @@
         <span class="name">shiftNew</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Shifts the current backing file to <code>last</code> and sets the current backing to a new temporary file generated by <code>newBackingFile</code>.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -385,7 +374,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="sbt.GlobalLogBacking#unshift" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.GlobalLogBacking#unshift" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="unshift:sbt.GlobalLogBacking"></a>
       <a id="unshift:GlobalLogBacking"></a>
       <h4 class="signature">
@@ -397,7 +386,8 @@
         <span class="name">unshift</span><span class="result">: <a href="" class="extype" name="sbt.GlobalLogBacking">GlobalLogBacking</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">If there is a previous backing file in <code>last</code>, that becomes the current backing file and the previous backing is cleared.</p><div class="fullcomment"><div class="comment cmt"><p>If there is a previous backing file in <code>last</code>, that becomes the current backing file and the previous backing is cleared.
+Otherwise, no changes are made.</p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

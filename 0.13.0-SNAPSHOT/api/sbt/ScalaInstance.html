@@ -48,7 +48,8 @@
 is that the compiler requires the location of the library/compiler jars on the (boot)classpath and the loader is used
 for the compiler itself.
 The 'version' field is the version used to obtain the Scala classes.  This is typically the version for the maven repository.
-The 'actualVersion' field should be used to uniquely identify the compiler.  It is obtained from the compiler.properties file.</p></div><div class="toggleContainer block">
+The 'actualVersion' field should be used to uniquely identify the compiler.  It is obtained from the compiler.properties file.</p><p>This should be constructed via the ScalaInstance.apply methods.  The primary constructor is deprecated.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">xsbti.compile.ScalaInstance</a>, <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -230,19 +231,6 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li name="sbt.ScalaInstance#compilerJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="compilerJar:java.io.File"></a>
-      <a id="compilerJar:File"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">compilerJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -279,19 +267,6 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
       </span>
       <span class="symbol">
         <span class="name">explicitActual</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
-      </span>
-      </h4>
-      
-    </li><li name="sbt.ScalaInstance#extraJars" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="extraJars:Seq[java.io.File]"></a>
-      <a id="extraJars:Seq[File]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">extraJars</span><span class="result">: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
       
@@ -376,19 +351,6 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
       </span>
       </h4>
       
-    </li><li name="sbt.ScalaInstance#libraryJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="libraryJar:java.io.File"></a>
-      <a id="libraryJar:File"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">libraryJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd></dl></div>
     </li><li name="sbt.ScalaInstance#loader" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loader:ClassLoader"></a>
       <a id="loader:ClassLoader"></a>
@@ -441,19 +403,6 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="sbt.ScalaInstance#otherJars" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="otherJars():Array[java.io.File]"></a>
-      <a id="otherJars():Array[File]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">otherJars</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.io.File">File</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -546,7 +495,74 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
 
         
 
-        
+        <div id="values" class="values members">
+              <h3>Deprecated Value Members</h3>
+              <ol><li name="sbt.ScalaInstance#compilerJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="compilerJar:java.io.File"></a>
+      <a id="compilerJar:File"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Only allJars and jars can be reliably provided for modularized Scala.">compilerJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>
+    </li><li name="sbt.ScalaInstance#extraJars" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="extraJars:Seq[java.io.File]"></a>
+      <a id="extraJars:Seq[File]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Only allJars and jars can be reliably provided for modularized Scala.">extraJars</span><span class="result">: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="java.io.File">File</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>
+    </li><li name="sbt.ScalaInstance#libraryJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="libraryJar:java.io.File"></a>
+      <a id="libraryJar:File"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Only allJars and jars can be reliably provided for modularized Scala.">libraryJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>
+    </li><li name="sbt.ScalaInstance#otherJars" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="otherJars():Array[java.io.File]"></a>
+      <a id="otherJars():Array[File]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Only allJars and jars can be reliably provided for modularized Scala.">otherJars</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.io.File">File</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>
+    </li></ol>
+            </div>
         </div>
 
         <div id="inheritedMembers">

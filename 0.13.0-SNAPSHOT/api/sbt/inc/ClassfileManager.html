@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>SimpleReader - xsbt.boot.SimpleReader</title>
-          <meta name="description" content="SimpleReader - xsbt.boot.SimpleReader" />
-          <meta name="keywords" content="SimpleReader xsbt.boot.SimpleReader" />
+          <title>ClassfileManager - sbt.inc.ClassfileManager</title>
+          <meta name="description" content="ClassfileManager - sbt.inc.ClassfileManager" />
+          <meta name="keywords" content="ClassfileManager sbt.inc.ClassfileManager" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -17,7 +17,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../index.html';
-            var hash = 'xsbt.boot.SimpleReader$';
+            var hash = 'sbt.inc.ClassfileManager';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -27,26 +27,27 @@
    	  </script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <img src="../../lib/object_big.png" />
-        <p id="owner"><a href="../package.html" class="extype" name="xsbt">xsbt</a>.<a href="package.html" class="extype" name="xsbt.boot">boot</a></p>
-        <h1>SimpleReader</h1>
+        <a href="ClassfileManager$.html" title="Go to companion"><img src="../../lib/trait_to_object_big.png" /></a>
+        <p id="owner"><a href="../package.html" class="extype" name="sbt">sbt</a>.<a href="package.html" class="extype" name="sbt.inc">inc</a></p>
+        <h1><a href="ClassfileManager$.html" title="Go to companion">ClassfileManager</a></h1>
       </div>
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">object</span>
+        <span class="kind">trait</span>
       </span>
       <span class="symbol">
-        <span class="name">SimpleReader</span><span class="result"> extends <a href="JLine.html" class="extype" name="xsbt.boot.JLine">JLine</a></span>
+        <span class="name">ClassfileManager</span><span class="result"> extends <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>During an incremental compilation run, a ClassfileManager deletes class files and is notified of generated class files.
+A ClassfileManager can be used only once.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="JLine.html" class="extype" name="xsbt.boot.JLine">JLine</a>, <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -64,7 +65,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="xsbt.boot.SimpleReader"><span>SimpleReader</span></li><li class="in" name="xsbt.boot.JLine"><span>JLine</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="sbt.inc.ClassfileManager"><span>ClassfileManager</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -86,10 +87,54 @@
 
         
 
-        
+        <div id="values" class="values members">
+              <h3>Abstract Value Members</h3>
+              <ol><li name="sbt.inc.ClassfileManager#complete" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="complete(success:Boolean):Unit"></a>
+      <a id="complete(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">complete</span><span class="params">(<span name="success">success: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Called once at the end of the whole compilation run, with <code>success</code> indicating whether compilation succeeded (true) or not (false).</p>
+    </li><li name="sbt.inc.ClassfileManager#delete" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="delete(classes:Iterable[java.io.File]):Unit"></a>
+      <a id="delete(Iterable[File]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">delete</span><span class="params">(<span name="classes">classes: <a href="../../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<span class="extype" name="java.io.File">File</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Called once per compilation step with the class files to delete prior to that step's compilation.</p><div class="fullcomment"><div class="comment cmt"><p>Called once per compilation step with the class files to delete prior to that step's compilation.
+The files in <code>classes</code> must not exist if this method returns normally.
+Any empty ancestor directories of deleted files must not exist either.</p></div></div>
+    </li><li name="sbt.inc.ClassfileManager#generated" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="generated(classes:Iterable[java.io.File]):Unit"></a>
+      <a id="generated(Iterable[File]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">generated</span><span class="params">(<span name="classes">classes: <a href="../../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<span class="extype" name="java.io.File">File</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Called once per compilation step with the class files generated during that step.</p>
+    </li></ol>
+            </div>
 
         <div id="values" class="values members">
-              <h3>Value Members</h3>
+              <h3>Concrete Value Members</h3>
               <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:AnyRef):Boolean"></a>
       <a id="!=(AnyRef):Boolean"></a>
@@ -304,32 +349,6 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="xsbt.boot.JLine#readLine" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="readLine(prompt:String):Option[String]"></a>
-      <a id="readLine(String):Option[String]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">readLine</span><span class="params">(<span name="prompt">prompt: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="java.lang.String">String</span>]</span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="JLine.html" class="extype" name="xsbt.boot.JLine">JLine</a></dd></dl></div>
-    </li><li name="xsbt.boot.SimpleReader#reader" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="reader:jline.ConsoleReader"></a>
-      <a id="reader:ConsoleReader"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">reader</span><span class="result">: <span class="extype" name="jline.ConsoleReader">ConsoleReader</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[this] </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="xsbt.boot.SimpleReader">SimpleReader</a> → <a href="JLine.html" class="extype" name="xsbt.boot.JLine">JLine</a></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -413,9 +432,7 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="xsbt.boot.JLine">
-              <h3>Inherited from <a href="JLine.html" class="extype" name="xsbt.boot.JLine">JLine</a></h3>
-            </div><div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>

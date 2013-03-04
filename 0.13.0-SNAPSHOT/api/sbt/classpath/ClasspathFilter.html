@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>FilteredLoader - sbt.classpath.FilteredLoader</title>
-          <meta name="description" content="FilteredLoader - sbt.classpath.FilteredLoader" />
-          <meta name="keywords" content="FilteredLoader sbt.classpath.FilteredLoader" />
+          <title>ClasspathFilter - sbt.classpath.ClasspathFilter</title>
+          <meta name="description" content="ClasspathFilter - sbt.classpath.ClasspathFilter" />
+          <meta name="keywords" content="ClasspathFilter sbt.classpath.ClasspathFilter" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -17,7 +17,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../index.html';
-            var hash = 'sbt.classpath.FilteredLoader';
+            var hash = 'sbt.classpath.ClasspathFilter';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -31,7 +31,7 @@
       <div id="definition">
         <img src="../../lib/class_big.png" />
         <p id="owner"><a href="../package.html" class="extype" name="sbt">sbt</a>.<a href="package.html" class="extype" name="sbt.classpath">classpath</a></p>
-        <h1>FilteredLoader</h1>
+        <h1>ClasspathFilter</h1>
       </div>
 
       <h4 id="signature" class="signature">
@@ -40,12 +40,11 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">FilteredLoader</span><span class="result"> extends <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>
+        <span class="name">ClasspathFilter</span><span class="result"> extends <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Delegates class loading to <code>parent</code> for all classes included by <code>filter</code>.  An attempt to load classes excluded by <code>filter</code>
-results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Doesn't load any classes itself, but instead verifies that all classes loaded through <code>parent</code> either come from <code>root</code> or <code>classpath</code>.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="java.lang.ClassLoader">ClassLoader</span>, <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -65,7 +64,7 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="sbt.classpath.FilteredLoader"><span>FilteredLoader</span></li><li class="in" name="java.lang.ClassLoader"><span>ClassLoader</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="sbt.classpath.ClasspathFilter"><span>ClasspathFilter</span></li><li class="in" name="java.lang.ClassLoader"><span>ClassLoader</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -85,29 +84,16 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="sbt.classpath.FilteredLoader#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(parent:ClassLoader,excludePackages:Iterable[String]):sbt.classpath.FilteredLoader"></a>
-      <a id="&lt;init&gt;:FilteredLoader"></a>
+              <ol><li name="sbt.classpath.ClasspathFilter#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(parent:ClassLoader,root:ClassLoader,classpath:Set[java.io.File]):sbt.classpath.ClasspathFilter"></a>
+      <a id="&lt;init&gt;:ClasspathFilter"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">FilteredLoader</span><span class="params">(<span name="parent">parent: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="excludePackages">excludePackages: <a href="../../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span>
-      </span>
-      </h4>
-      
-    </li><li name="sbt.classpath.FilteredLoader#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(parent:ClassLoader,filter:sbt.classpath.ClassFilter):sbt.classpath.FilteredLoader"></a>
-      <a id="&lt;init&gt;:FilteredLoader"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">new</span>
-      </span>
-      <span class="symbol">
-        <span class="name">FilteredLoader</span><span class="params">(<span name="parent">parent: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="filter">filter: <a href="ClassFilter.html" class="extype" name="sbt.classpath.ClassFilter">ClassFilter</a></span>)</span>
+        <span class="name">ClasspathFilter</span><span class="params">(<span name="parent">parent: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="root">root: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="classpath">classpath: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>)</span>
       </span>
       </h4>
       
@@ -472,8 +458,8 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ClassLoader</dd></dl></div>
-    </li><li name="java.lang.ClassLoader#getResource" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getResource(x$1:String):java.net.URL"></a>
+    </li><li name="sbt.classpath.ClasspathFilter#getResource" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getResource(name:String):java.net.URL"></a>
       <a id="getResource(String):URL"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -481,10 +467,10 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getResource</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.net.URL">URL</span></span>
+        <span class="name">getResource</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.net.URL">URL</span></span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ClassLoader</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.classpath.ClasspathFilter">ClasspathFilter</a> → ClassLoader</dd></dl></div>
     </li><li name="java.lang.ClassLoader#getResourceAsStream" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getResourceAsStream(x$1:String):java.io.InputStream"></a>
       <a id="getResourceAsStream(String):InputStream"></a>
@@ -498,8 +484,8 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ClassLoader</dd></dl></div>
-    </li><li name="java.lang.ClassLoader#getResources" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getResources(x$1:String):java.util.Enumeration[java.net.URL]"></a>
+    </li><li name="sbt.classpath.ClasspathFilter#getResources" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getResources(name:String):java.util.Enumeration[java.net.URL]"></a>
       <a id="getResources(String):Enumeration[URL]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -507,13 +493,10 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getResources</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.Enumeration">Enumeration</span>[<span class="extype" name="java.net.URL">URL</span>]</span>
+        <span class="name">getResources</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.Enumeration">Enumeration</span>[<span class="extype" name="java.net.URL">URL</span>]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ClassLoader</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
-              
-        </dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.classpath.ClasspathFilter">ClasspathFilter</a> → ClassLoader</dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -540,25 +523,19 @@ results in a <code>ClassNotFoundException</code>.</p></div><div class="toggleCon
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="sbt.classpath.FilteredLoader#loadClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="sbt.classpath.ClasspathFilter#loadClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loadClass(className:String,resolve:Boolean):Class[_]"></a>
       <a id="loadClass(String,Boolean):Class[_]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
         <span class="name">loadClass</span><span class="params">(<span name="className">className: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="resolve">resolve: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Class">Class</span>[_]</span>
       </span>
       </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.classpath.FilteredLoader">FilteredLoader</a> → ClassLoader</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">(<span>
-      
-      <span class="symbol">classOf[ClassNotFoundException]</span>
-    </span>)</span>
-              
-        </dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.classpath.ClasspathFilter">ClasspathFilter</a> → ClassLoader</dd></dl></div>
     </li><li name="java.lang.ClassLoader#loadClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loadClass(x$1:String):Class[_]"></a>
       <a id="loadClass(String):Class[_]"></a>
