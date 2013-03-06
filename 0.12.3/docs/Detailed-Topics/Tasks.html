@@ -1,0 +1,700 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tasks &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.3-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Testing" href="Testing.html" />
+    <link rel="prev" title="Task Inputs/Dependencies" href="TaskInputs.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Tasks</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.3-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Testing.html">Testing</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="TaskInputs.html">Task Inputs/Dependencies</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.3-RC1">Version 0.12.3-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="tasks">
+<h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
+<p>Tasks and settings are now introduced in the <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>getting started guide</em></a>,
+which you may wish to read first.  This older page has some additional detail.</p>
+<p><em>Wiki Maintenance Note:</em> This page should have its overlap with the
+getting started guide cleaned up, and just have any advanced or
+additional notes. It should maybe also be consolidated with
+<a class="reference internal" href="TaskInputs.html"><em>Task Inputs/Dependencies</em></a>.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>sbt 0.10+ has a new task system that integrates with the new settings
+system. Both settings and tasks produce values, but there are two major
+differences between them:</p>
+<ol class="arabic simple">
+<li>Settings are evaluated at project load time. Tasks are executed on
+demand, often in response to a command from the user.</li>
+<li>At the beginning of project loading, settings and their dependencies
+are fixed. Tasks can introduce new tasks during execution, however.
+(Tasks have flatMap, but Settings do not.)</li>
+</ol>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>There are several features of the task system:</p>
+<ol class="arabic simple">
+<li>By integrating with the settings system, tasks can be added, removed,
+and modified as easily and flexibly as settings.</li>
+<li><a class="reference internal" href="TaskInputs.html"><em>Input Tasks</em></a>, the successor to method tasks, use
+<a class="reference internal" href="Parsing-Input.html"><em>parser combinators</em></a> to define the syntax for their
+arguments. This allows flexible syntax and tab-completions in the
+same way as <a class="reference internal" href="../Extending/Commands.html"><em>Commands</em></a>.</li>
+<li>Tasks produce values. Other tasks can access a task's value with the
+<tt class="docutils literal"><span class="pre">map</span></tt> and <tt class="docutils literal"><span class="pre">flatMap</span></tt> methods.</li>
+<li>The <tt class="docutils literal"><span class="pre">flatMap</span></tt> method allows dynamically changing the structure of
+the task graph. Tasks can be injected into the execution graph based
+on the result of another task.</li>
+<li>There are ways to handle task failure, similar to
+<tt class="docutils literal"><span class="pre">try/catch/finally</span></tt>.</li>
+<li>Each task has access to its own Logger that by default persists the
+logging for that task at a more verbose level than is initially
+printed to the screen.</li>
+</ol>
+<p>These features are discussed in detail in the following sections. The
+context for the code snippets will be either the body of a <tt class="docutils literal"><span class="pre">Build</span></tt>
+object in a <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala file</em></a> or an expression
+in a <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>build.sbt</em></a>.</p>
+</div>
+<div class="section" id="defining-a-new-task">
+<h2>Defining a New Task<a class="headerlink" href="#defining-a-new-task" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hello-world-example-sbt">
+<h3>Hello World example (sbt)<a class="headerlink" href="#hello-world-example-sbt" title="Permalink to this headline">¶</a></h3>
+<p>build.sbt</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;hello&quot;</span><span class="o">)</span> <span class="o">:=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;hello world!&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hello-world-example-scala">
+<h3>Hello World example (scala)<a class="headerlink" href="#hello-world-example-scala" title="Permalink to this headline">¶</a></h3>
+<p>project/Build.scala</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">hwsettings</span> <span class="k">=</span> <span class="nc">Defaults</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span><span class="o">,</span>
+    <span class="n">name</span>         <span class="o">:=</span> <span class="s">&quot;world&quot;</span><span class="o">,</span>
+    <span class="n">version</span>      <span class="o">:=</span> <span class="s">&quot;1.0-SNAPSHOT&quot;</span><span class="o">,</span>
+    <span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.0-1&quot;</span>
+  <span class="o">)</span>
+
+  <span class="k">val</span> <span class="n">hello</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;hello&quot;</span><span class="o">,</span> <span class="s">&quot;Prints &#39;Hello World&#39;&quot;</span><span class="o">)</span>
+
+  <span class="k">val</span> <span class="n">helloTask</span> <span class="k">=</span> <span class="n">hello</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">project</span> <span class="k">=</span> <span class="nc">Project</span> <span class="o">(</span>
+    <span class="s">&quot;project&quot;</span><span class="o">,</span>
+    <span class="n">file</span> <span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">),</span>
+    <span class="n">settings</span> <span class="k">=</span> <span class="n">hwsettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">helloTask</span><span class="o">)</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Run &quot;sbt hello&quot; from command line to invoke the task. Run &quot;sbt tasks&quot; to
+see this task listed.</p>
+</div>
+<div class="section" id="define-the-key">
+<h3>Define the key<a class="headerlink" href="#define-the-key" title="Permalink to this headline">¶</a></h3>
+<p>To declare a new task, define a <tt class="docutils literal"><span class="pre">TaskKey</span></tt> in your
+<a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sampleTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;sample-task&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The name of the <tt class="docutils literal"><span class="pre">val</span></tt> is used when referring to the task in Scala
+code. The string passed to the <tt class="docutils literal"><span class="pre">TaskKey</span></tt> method is used at runtime,
+such as at the command line. By convention, the Scala identifier is
+camelCase and the runtime identifier uses hyphens. The type parameter
+passed to <tt class="docutils literal"><span class="pre">TaskKey</span></tt> (here, <tt class="docutils literal"><span class="pre">Int</span></tt>) is the type of value produced by
+the task.</p>
+<p>We'll define a couple of other of tasks for the examples:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;int-task&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;string-task&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The examples themselves are valid entries in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> or can be
+provided as part of a sequence to <tt class="docutils literal"><span class="pre">Project.settings</span></tt> (see
+<a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a>).</p>
+</div>
+<div class="section" id="implement-the-task">
+<h3>Implement the task<a class="headerlink" href="#implement-the-task" title="Permalink to this headline">¶</a></h3>
+<p>There are three main parts to implementing a task once its key is
+defined:</p>
+<ol class="arabic simple">
+<li>Determine the settings and other tasks needed by the task. They are
+the task's inputs.</li>
+<li>Define a function that takes these inputs and produces a value.</li>
+<li>Determine the scope the task will go in.</li>
+</ol>
+<p>These parts are then combined like the parts of a setting are combined.</p>
+<div class="section" id="tasks-without-inputs">
+<h4>Tasks without inputs<a class="headerlink" href="#tasks-without-inputs" title="Permalink to this headline">¶</a></h4>
+<p>A task that takes no arguments can be defined using <tt class="docutils literal"><span class="pre">:=</span></tt></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+
+<span class="n">stringTask</span> <span class="o">:=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+
+<span class="n">sampleTask</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;sum: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">)</span>
+   <span class="n">sum</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As mentioned in the introduction, a task is evaluated on demand.
+Each time <tt class="docutils literal"><span class="pre">sample-task</span></tt> is invoked, for example, it will print the sum.
+If the username changes between runs, <tt class="docutils literal"><span class="pre">string-task</span></tt> will take different values in those separate runs.
+(Within a run, each task is evaluated at most once.)
+In contrast, settings are evaluated once on project load and are fixed until the next reload.</p>
+</div>
+<div class="section" id="tasks-with-inputs">
+<h4>Tasks with inputs<a class="headerlink" href="#tasks-with-inputs" title="Permalink to this headline">¶</a></h4>
+<p>Tasks with other tasks or settings as inputs are defined using <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>.
+The right hand side will typically call <tt class="docutils literal"><span class="pre">map</span></tt> or <tt class="docutils literal"><span class="pre">flatMap</span></tt> on other
+settings or tasks. (Contrast this with the <tt class="docutils literal"><span class="pre">apply</span></tt> method that is used
+for settings.) The function argument to <tt class="docutils literal"><span class="pre">map</span></tt> or <tt class="docutils literal"><span class="pre">flatMap</span></tt> is the
+task body. The following are equivalent ways of defining a task that
+adds one to value produced by <tt class="docutils literal"><span class="pre">int-task</span></tt> and returns the result.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">count</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+
+<span class="n">sampleTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="k">_</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Multiple inputs are handled as with settings. The <tt class="docutils literal"><span class="pre">map</span></tt> and
+<tt class="docutils literal"><span class="pre">flatMap</span></tt> are done on a tuple of inputs:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">stringTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">sampleTask</span><span class="o">,</span> <span class="n">intTask</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">sample</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">intValue</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="s">&quot;Sample: &quot;</span> <span class="o">+</span> <span class="n">sample</span> <span class="o">+</span> <span class="s">&quot;, int: &quot;</span> <span class="o">+</span> <span class="n">intValue</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-scope">
+<h4>Task Scope<a class="headerlink" href="#task-scope" title="Permalink to this headline">¶</a></h4>
+<p>As with settings, tasks can be defined in a specific scope. For example,
+there are separate <tt class="docutils literal"><span class="pre">compile</span></tt> tasks for the <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt>
+scopes. The scope of a task is defined the same as for a setting. In the
+following example, <tt class="docutils literal"><span class="pre">test:sample-task</span></tt> uses the result of
+<tt class="docutils literal"><span class="pre">compile:int-task</span></tt>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleTask</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="nc">Compile</span><span class="o">).</span><span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">intValue</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">intValue</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="o">}</span>
+
+<span class="c1">// more succinctly:</span>
+<span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="k">_</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inline-task-keys">
+<h4>Inline task keys<a class="headerlink" href="#inline-task-keys" title="Permalink to this headline">¶</a></h4>
+<p>Although generally not recommended, it is possible to specify the task
+key inline:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;sample-task&quot;</span><span class="o">)</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">&lt;&lt;=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;int-task&quot;</span><span class="o">)</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="k">_</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>The type argument to <tt class="docutils literal"><span class="pre">TaskKey</span></tt> must be explicitly specified because of
+<tt class="docutils literal"><span class="pre">SI-4653</span></tt>. It is not recommended because:</p>
+<ol class="arabic simple">
+<li>Tasks are no longer referenced by Scala identifiers (like
+<tt class="docutils literal"><span class="pre">sampleTask</span></tt>), but by Strings (like <tt class="docutils literal"><span class="pre">&quot;sample-task&quot;</span></tt>)</li>
+<li>The type information must be repeated.</li>
+<li>Keys should come with a description, which would need to be repeated
+as well.</li>
+</ol>
+</div>
+<div class="section" id="on-precedence">
+<h4>On precedence<a class="headerlink" href="#on-precedence" title="Permalink to this headline">¶</a></h4>
+<p>As a reminder, method precedence is by the name of the method.</p>
+<ol class="arabic simple">
+<li>Assignment methods have the lowest precedence. These are methods with
+names ending in <tt class="docutils literal"><span class="pre">=</span></tt>, except for <tt class="docutils literal"><span class="pre">!=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;=</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>, and names
+that start with <tt class="docutils literal"><span class="pre">=</span></tt>.</li>
+<li>Methods starting with a letter have the next highest precedence.</li>
+<li>Methods with names that start with a symbol and aren't included in 1.
+have the highest precedence. (This category is divided further
+according to the specific character it starts with. See the Scala
+specification for details.)</li>
+</ol>
+<p>Therefore, the second variant in the previous example is equivalent to
+the following:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">)</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="k">_</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="modifying-an-existing-task">
+<h2>Modifying an Existing Task<a class="headerlink" href="#modifying-an-existing-task" title="Permalink to this headline">¶</a></h2>
+<p>The examples in this section use the following key definitions, which
+would go in a <tt class="docutils literal"><span class="pre">Build</span></tt> object in a <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a>.
+Alternatively, the keys may be specified inline, as discussed above.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">unitTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;unit-task&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;int-task&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;string-task&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The examples themselves are valid settings in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file or as
+part of a sequence provided to <tt class="docutils literal"><span class="pre">Project.settings</span></tt>.</p>
+<p>In the general case, modify a task by declaring the previous task as an
+input.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// initial definition</span>
+<span class="n">intTask</span> <span class="o">:=</span> <span class="mi">3</span>
+
+<span class="c1">// overriding definition that references the previous definition</span>
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Completely override a task by not declaring the previous task as an
+input. Each of the definitions in the following example completely
+overrides the previous one. That is, when <tt class="docutils literal"><span class="pre">int-task</span></tt> is run, it will
+only print <tt class="docutils literal"><span class="pre">#3</span></tt>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;#1&quot;</span><span class="o">)</span>
+    <span class="mi">3</span>
+<span class="o">}</span>
+
+<span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;#2&quot;</span><span class="o">)</span>
+    <span class="mi">5</span>
+<span class="o">}</span>
+
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">sampleTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;#3&quot;</span><span class="o">)</span>
+    <span class="n">value</span> <span class="o">-</span> <span class="mi">3</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>To apply a transformation to a single task, without using additional
+tasks as inputs, use <tt class="docutils literal"><span class="pre">~=</span></tt>. This accepts the function to apply to the
+task's result:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="mi">3</span>
+
+<span class="c1">// increment the value returned by intTask</span>
+<span class="n">intTask</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-operations">
+<h2>Task Operations<a class="headerlink" href="#task-operations" title="Permalink to this headline">¶</a></h2>
+<p>The previous sections used the <tt class="docutils literal"><span class="pre">map</span></tt> method to define a task in terms
+of the results of other tasks. This is the most common method, but there
+are several others. The examples in this section use the task keys
+defined in the previous section.</p>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>To depend on the side effect of some tasks without using their values
+and without doing additional work, use <tt class="docutils literal"><span class="pre">dependOn</span></tt> on a sequence of
+tasks. The defining task key (the part on the left side of <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>) must
+be of type <tt class="docutils literal"><span class="pre">Unit</span></tt>, since no value is returned.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unitTask</span> <span class="o">&lt;&lt;=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">stringTask</span><span class="o">,</span> <span class="n">sampleTask</span><span class="o">).</span><span class="n">dependOn</span>
+</pre></div>
+</div>
+<p>To add dependencies to an existing task without using their values, call
+<tt class="docutils literal"><span class="pre">dependsOn</span></tt> on the task and provide the tasks to depend on. For
+example, the second task definition here modifies the original to
+require that <tt class="docutils literal"><span class="pre">string-task</span></tt> and <tt class="docutils literal"><span class="pre">sample-task</span></tt> run first:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="mi">4</span>
+
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span><span class="o">.</span><span class="n">dependsOn</span><span class="o">(</span><span class="n">stringTask</span><span class="o">,</span> <span class="n">sampleTask</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="streams-per-task-logging">
+<h3>Streams: Per-task logging<a class="headerlink" href="#streams-per-task-logging" title="Permalink to this headline">¶</a></h3>
+<p>New in sbt 0.10+ are per-task loggers, which are part of a more general
+system for task-specific data called Streams. This allows controlling
+the verbosity of stack traces and logging individually for tasks as well
+as recalling the last logging for a task. Tasks also have access to
+their own persisted binary or text data.</p>
+<p>To use Streams, <tt class="docutils literal"><span class="pre">map</span></tt> or <tt class="docutils literal"><span class="pre">flatMap</span></tt> the <tt class="docutils literal"><span class="pre">streams</span></tt> task. This is a
+special task that provides an instance of
+<a class="reference external" href="../../api/sbt/std/TaskStreams.html">TaskStreams</a>
+for the defining task. This type provides access to named binary and
+text streams, named loggers, and a default logger. The default
+<a class="reference external" href="../../api/sbt/Logger.html">Logger</a>,
+which is the most commonly used aspect, is obtained by the <tt class="docutils literal"><span class="pre">log</span></tt>
+method:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">&lt;&lt;=</span> <span class="n">streams</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">TaskStreams</span><span class="o">)</span> <span class="k">=&gt;</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="o">(</span><span class="s">&quot;Saying hi...&quot;</span><span class="o">)</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="o">(</span><span class="s">&quot;Hello!&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>You can scope logging settings by the specific task's scope:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">logLevel</span> <span class="n">in</span> <span class="n">myTask</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Debug</span>
+
+<span class="n">traceLevel</span> <span class="n">in</span> <span class="n">myTask</span> <span class="o">:=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>To obtain the last logging output from a task, use the <tt class="docutils literal"><span class="pre">last</span></tt> command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> last my-task
+<span class="go">[debug] Saying hi...</span>
+<span class="go">[info] Hello!</span>
+</pre></div>
+</div>
+<p>The verbosity with which logging is persisted is controlled using the
+<tt class="docutils literal"><span class="pre">persist-log-level</span></tt> and <tt class="docutils literal"><span class="pre">persist-trace-level</span></tt> settings. The <tt class="docutils literal"><span class="pre">last</span></tt>
+command displays what was logged according to these levels. The levels
+do not affect already logged information.</p>
+</div>
+<div class="section" id="handling-failure">
+<h3>Handling Failure<a class="headerlink" href="#handling-failure" title="Permalink to this headline">¶</a></h3>
+<p>This section discusses the <tt class="docutils literal"><span class="pre">andFinally</span></tt>, <tt class="docutils literal"><span class="pre">mapFailure</span></tt>, and <tt class="docutils literal"><span class="pre">mapR</span></tt>
+methods, which are used to handle failure of other tasks.</p>
+<div class="section" id="andfinally">
+<h4>andFinally<a class="headerlink" href="#andfinally" title="Permalink to this headline">¶</a></h4>
+<p>The <tt class="docutils literal"><span class="pre">andFinally</span></tt> method defines a new task that runs the original task
+and evaluates a side effect regardless of whether the original task
+succeeded. The result of the task is the result of the original task.
+For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;I didn&#39;t succeed.&quot;</span><span class="o">)</span>
+
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>This modifies the original <tt class="docutils literal"><span class="pre">intTask</span></tt> to always print &quot;andFinally&quot; even
+if the task fails.</p>
+<p>Note that <tt class="docutils literal"><span class="pre">andFinally</span></tt> constructs a new task. This means that the new
+task has to be invoked in order for the extra block to run. This is
+important when calling andFinally on another task instead of overriding
+a task like in the previous example. For example, consider this code:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;I didn&#39;t succeed.&quot;</span><span class="o">)</span>
+
+<span class="n">otherIntTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">int-task</span></tt> is run directly, <tt class="docutils literal"><span class="pre">other-int-task</span></tt> is never involved in
+execution. This case is similar to the following plain Scala code:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">intTask</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span>
+  <span class="n">error</span><span class="o">(</span><span class="s">&quot;I didn&#39;t succeed.&quot;</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">otherIntTask</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span>
+  <span class="k">try</span> <span class="o">{</span> <span class="n">intTask</span> <span class="o">}</span>
+  <span class="k">finally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;finally&quot;</span><span class="o">)</span> <span class="o">}</span>
+
+<span class="n">intTask</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>It is obvious here that calling intTask() will never result in &quot;finally&quot;
+being printed.</p>
+</div>
+<div class="section" id="mapfailure">
+<h4>mapFailure<a class="headerlink" href="#mapfailure" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">mapFailure</span></tt> accepts a function of type <tt class="docutils literal"><span class="pre">Incomplete</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>, where
+<tt class="docutils literal"><span class="pre">T</span></tt> is a type parameter. In the case of multiple inputs, the function
+has type <tt class="docutils literal"><span class="pre">Seq[Incomplete]</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>.
+<a class="reference external" href="../../api/sbt/Incomplete.html">Incomplete</a>
+is an exception with information about any tasks that caused the failure
+and any underlying exceptions thrown during task execution. The
+resulting task defined by <tt class="docutils literal"><span class="pre">mapFailure</span></tt> fails if its input succeeds and
+evaluates the provided function if it fails.</p>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;Failed.&quot;</span><span class="o">)</span>
+
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">mapFailure</span> <span class="o">{</span> <span class="o">(</span><span class="n">inc</span><span class="k">:</span> <span class="kt">Incomplete</span><span class="o">)</span> <span class="k">=&gt;</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;Ignoring failure: &quot;</span> <span class="o">+</span> <span class="n">inc</span><span class="o">)</span>
+   <span class="mi">3</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This overrides the <tt class="docutils literal"><span class="pre">int-task</span></tt> so that the original exception is printed and the constant <tt class="docutils literal"><span class="pre">3</span></tt> is returned.</p>
+<p><tt class="docutils literal"><span class="pre">mapFailure</span></tt> does not prevent other tasks that depend on the target
+from failing. Consider the following example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="k">if</span><span class="o">(</span><span class="n">shouldSucceed</span><span class="o">)</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;Failed.&quot;</span><span class="o">)</span>
+
+<span class="c1">// return 3 if int-task fails. if it succeeds, this task will fail</span>
+<span class="n">aTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">mapFailure</span> <span class="o">{</span> <span class="o">(</span><span class="n">inc</span><span class="k">:</span> <span class="kt">Incomplete</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="mi">3</span> <span class="o">}</span>
+
+<span class="c1">// a new task that increments the result of int-task</span>
+<span class="n">bTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">map</span> <span class="o">{</span> <span class="o">\</span><span class="k">_</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">}</span>
+
+<span class="n">cTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">aTask</span><span class="o">,</span> <span class="n">bTask</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>The following table lists the results of each task depending on the initially invoked task:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="17%" />
+<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">invoked task</th>
+<th class="head">int-task result</th>
+<th class="head">a-task result</th>
+<th class="head">b-task result</th>
+<th class="head">c-task result</th>
+<th class="head">overall result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>int-task</td>
+<td>failure</td>
+<td>not run</td>
+<td>not run</td>
+<td>not run</td>
+<td>failure</td>
+</tr>
+<tr class="row-odd"><td>a-task</td>
+<td>failure</td>
+<td>success</td>
+<td>not run</td>
+<td>not run</td>
+<td>success</td>
+</tr>
+<tr class="row-even"><td>b-task</td>
+<td>failure</td>
+<td>not run</td>
+<td>failure</td>
+<td>not run</td>
+<td>failure</td>
+</tr>
+<tr class="row-odd"><td>c-task</td>
+<td>failure</td>
+<td>success</td>
+<td>failure</td>
+<td>failure</td>
+<td>failure</td>
+</tr>
+<tr class="row-even"><td>int-task</td>
+<td>success</td>
+<td>not run</td>
+<td>not run</td>
+<td>not run</td>
+<td>success</td>
+</tr>
+<tr class="row-odd"><td>a-task</td>
+<td>success</td>
+<td>failure</td>
+<td>not run</td>
+<td>not run</td>
+<td>failure</td>
+</tr>
+<tr class="row-even"><td>b-task</td>
+<td>success</td>
+<td>not run</td>
+<td>success</td>
+<td>not run</td>
+<td>success</td>
+</tr>
+<tr class="row-odd"><td>c-task</td>
+<td>success</td>
+<td>failure</td>
+<td>success</td>
+<td>failure</td>
+<td>failure</td>
+</tr>
+</tbody>
+</table>
+<p>The overall result is always the same as the root task (the directly
+invoked task). A <tt class="docutils literal"><span class="pre">mapFailure</span></tt> turns a success into a failure, and a
+failure into whatever the result of evaluating the supplied function is.
+A <tt class="docutils literal"><span class="pre">map</span></tt> fails when the input fails and applies the supplied function
+to a successfully completed input.</p>
+<p>In the case of more than one input, <tt class="docutils literal"><span class="pre">mapFailure</span></tt> fails if all inputs
+succeed. If at least one input fails, the supplied function is provided
+with the list of <tt class="docutils literal"><span class="pre">Incomplete</span></tt>s. For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">cTask</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">aTask</span><span class="o">,</span> <span class="n">bTask</span><span class="o">)</span> <span class="n">mapFailure</span> <span class="o">{</span> <span class="o">(</span><span class="n">incs</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Incomplete</span><span class="o">])</span> <span class="k">=&gt;</span> <span class="mi">3</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>The following table lists the results of invoking <tt class="docutils literal"><span class="pre">c-task</span></tt>, depending
+on the success of <tt class="docutils literal"><span class="pre">aTask</span></tt> and <tt class="docutils literal"><span class="pre">bTask</span></tt>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">a-task result</th>
+<th class="head">b-task result</th>
+<th class="head">c-task result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>failure</td>
+<td>failure</td>
+<td>success</td>
+</tr>
+<tr class="row-odd"><td>failure</td>
+<td>success</td>
+<td>success</td>
+</tr>
+<tr class="row-even"><td>success</td>
+<td>failure</td>
+<td>success</td>
+</tr>
+<tr class="row-odd"><td>success</td>
+<td>success</td>
+<td>failure</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mapr">
+<h4>mapR<a class="headerlink" href="#mapr" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">mapR</span></tt> accepts a function of type <tt class="docutils literal"><span class="pre">Result[S]</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>, where <tt class="docutils literal"><span class="pre">S</span></tt> is
+the type of the task being mapped and <tt class="docutils literal"><span class="pre">T</span></tt> is a type parameter. In the
+case of multiple inputs, the function has type
+<tt class="docutils literal"><span class="pre">(Result[A],</span> <span class="pre">Result[B],</span> <span class="pre">...)</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>.
+<a class="reference external" href="https://github.com/harrah/xsbt/latest/api/sbt/Result.html">Result</a>
+has the same structure as <tt class="docutils literal"><span class="pre">Either[Incomplete,</span> <span class="pre">S]</span></tt> for a task result of
+type <tt class="docutils literal"><span class="pre">S</span></tt>. That is, it has two subtypes:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Inc</span></tt>, which wraps <tt class="docutils literal"><span class="pre">Incomplete</span></tt> in case of failure</li>
+<li><tt class="docutils literal"><span class="pre">Value</span></tt>, which wraps a task's result in case of success.</li>
+</ul>
+<p>Thus, <tt class="docutils literal"><span class="pre">mapR</span></tt> is always invoked whether or not the original task
+succeeds or fails.</p>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;Failed.&quot;</span><span class="o">)</span>
+
+<span class="n">intTask</span> <span class="o">&lt;&lt;=</span> <span class="n">intTask</span> <span class="n">mapR</span> <span class="o">{</span>
+   <span class="k">case</span> <span class="nc">Inc</span><span class="o">(</span><span class="n">inc</span><span class="k">:</span> <span class="kt">Incomplete</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="s">&quot;Ignoring failure: &quot;</span> <span class="o">+</span> <span class="n">inc</span><span class="o">)</span>
+      <span class="mi">3</span>
+   <span class="k">case</span> <span class="nc">Value</span><span class="o">(</span><span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="s">&quot;Using successful result: &quot;</span> <span class="o">+</span> <span class="n">v</span><span class="o">)</span>
+      <span class="n">v</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This overrides the original <tt class="docutils literal"><span class="pre">int-task</span></tt> definition so that if the original task fails, the exception is printed and the constant <tt class="docutils literal"><span class="pre">3</span></tt> is returned. If it succeeds, the value is printed and returned.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Tasks</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#defining-a-new-task">Defining a New Task</a><ul>
+<li><a class="reference internal" href="#hello-world-example-sbt">Hello World example (sbt)</a></li>
+<li><a class="reference internal" href="#hello-world-example-scala">Hello World example (scala)</a></li>
+<li><a class="reference internal" href="#define-the-key">Define the key</a></li>
+<li><a class="reference internal" href="#implement-the-task">Implement the task</a><ul>
+<li><a class="reference internal" href="#tasks-without-inputs">Tasks without inputs</a></li>
+<li><a class="reference internal" href="#tasks-with-inputs">Tasks with inputs</a></li>
+<li><a class="reference internal" href="#task-scope">Task Scope</a></li>
+<li><a class="reference internal" href="#inline-task-keys">Inline task keys</a></li>
+<li><a class="reference internal" href="#on-precedence">On precedence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modifying-an-existing-task">Modifying an Existing Task</a></li>
+<li><a class="reference internal" href="#task-operations">Task Operations</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#streams-per-task-logging">Streams: Per-task logging</a></li>
+<li><a class="reference internal" href="#handling-failure">Handling Failure</a><ul>
+<li><a class="reference internal" href="#andfinally">andFinally</a></li>
+<li><a class="reference internal" href="#mapfailure">mapFailure</a></li>
+<li><a class="reference internal" href="#mapr">mapR</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

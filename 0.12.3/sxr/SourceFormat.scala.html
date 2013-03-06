@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>SourceFormat.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010 Mark Harrah
+ */</span>
+<span class="keyword">package</span> xsbt.api
+
+	<span class="keyword">import</span> xsbti.SafeLazy
+	<span class="keyword">import</span> xsbti.api._
+	<span class="keyword">import</span> sbt.Using
+	<span class="keyword">import</span> sbinary._
+	<span class="keyword">import</span> <span title="object sbinary.DefaultProtocol">DefaultProtocol</span>._
+	<span class="keyword">import</span> <span title="object sbinary.Operations">Operations</span>.<span class="delimiter">{</span>read,write<span class="delimiter">}</span>
+	<span class="keyword">import</span> java.io.File
+	<span class="keyword">import</span> scala.collection.mutable
+
+<span class="keyword">object</span> <a title="object xsbt.api.SourceFormat" id="10092">SourceFormat</a> <span title="ScalaObject" class="keyword">extends</span> <span title="sbinary.Format[xsbti.api.Source]">Format</span><span class="delimiter">[</span>Source<span class="delimiter">]</span>
+<span class="delimiter">{</span>
+	<span class="keyword">import</span> java.io._
+	<span class="keyword">def</span> <a title="(in: sbinary.Input)xsbti.api.Source" id="239782">reads</a><span class="delimiter">(</span><a title="sbinary.Input" id="244536">in</a>: <span title="sbinary.Input">Input</span><span class="delimiter">)</span>: <a href="xsbti/api/Source.java.html#10438" title="xsbti.api.Source">Source</a> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.io.ObjectInputStream" id="244538">oin</a> = <span title="java.io.ObjectInputStream" class="keyword">new</span> <span title="java.io.ObjectInputStream">ObjectInputStream</span><span class="delimiter">(</span><span title="xsbt.api.InputWrapperStream" class="keyword">new</span> <a href="#10094" title="xsbt.api.InputWrapperStream">InputWrapperStream</a><span class="delimiter">(</span><a href="#244536" title="sbinary.Input">in</a><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="keyword">try</span> <span class="delimiter">{</span> <a href="#244538" title="java.io.ObjectInputStream">oin</a>.<span title="()java.lang.Object">readObject</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="xsbti.api.Source" class="delimiter">[</span><a href="xsbti/api/Source.java.html#10438" title="xsbti.api.Source">Source</a><span class="delimiter">]</span> <span class="delimiter">}</span> <span class="keyword">finally</span> <span class="delimiter">{</span> <a href="#244538" title="java.io.ObjectInputStream">oin</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(out: sbinary.Output, src: xsbti.api.Source)Unit" id="239783">writes</a><span class="delimiter">(</span><a title="sbinary.Output" id="244714">out</a>: <span title="sbinary.Output">Output</span>, <a title="xsbti.api.Source" id="244715">src</a>: <a href="xsbti/api/Source.java.html#10438" title="xsbti.api.Source">Source</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.io.ObjectOutputStream" id="244719">oout</a> = <span title="java.io.ObjectOutputStream" class="keyword">new</span> <span title="java.io.ObjectOutputStream">ObjectOutputStream</span><span class="delimiter">(</span><span title="xsbt.api.OutputWrapperStream" class="keyword">new</span> <a href="#10095" title="xsbt.api.OutputWrapperStream">OutputWrapperStream</a><span class="delimiter">(</span><a href="#244714" title="sbinary.Output">out</a><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="keyword">try</span> <span class="delimiter">{</span> <a href="#244719" title="java.io.ObjectOutputStream">oout</a>.<span title="(x$1: Any)Unit">writeObject</span><span class="delimiter">(</span><a href="#244715" title="xsbti.api.Source">src</a><span class="delimiter">)</span> <span class="delimiter">}</span> <span class="keyword">finally</span> <span class="delimiter">{</span> <a href="#244719" title="java.io.ObjectOutputStream">oout</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class InputWrapperStream extends java.io.InputStream with ScalaObject" id="10094">InputWrapperStream</a><a href="#10094" title="ScalaObject" class="delimiter">(</a><a title="sbinary.Input" id="244713">in</a>: <span title="sbinary.Input">Input</span><span class="delimiter">)</span> <span class="keyword">extends</span> java.io.<span title="java.io.InputStream">InputStream</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(b: Byte)Int" id="244710">toInt</a><span class="delimiter">(</span><a title="Byte" id="244882">b</a>: <span title="Byte">Byte</span><span class="delimiter">)</span> = <span title="Int" class="keyword">if</span><span class="delimiter">(</span><a href="#244882" title="Byte">b</a> <span title="(x: Int)Boolean">&lt;</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span> <a href="#244882" title="Byte">b</a> <span title="(x: Int)Int">+</span> <span title="Int(256)" class="int">256</span> <span class="keyword">else</span> <a href="#244882" title="Byte">b</a>.<span title="=&gt; Int">toInt</span>
+	<span class="keyword">def</span> <a title="()Int" id="244711">read</a><span class="delimiter">(</span><span class="delimiter">)</span> = <span class="keyword">try</span> <span class="delimiter">{</span> <a href="#244710" title="(b: Byte)Int">toInt</a><span class="delimiter">(</span><a href="#244713" title="sbinary.Input">in</a>.<span title="=&gt; Byte">readByte</span><span class="delimiter">)</span>  <span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Int(-1)" id="244897">e</a>: sbinary.<span title="sbinary.EOF">EOF</span> =&gt; -<span title="Int(-1)" class="int">1</span> <span class="delimiter">}</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="(b: Array[Byte], off: Int, len: Int)Int" id="244712">read</a><span class="delimiter">(</span><a title="Array[Byte]" id="244914">b</a>: <span title="Array[Byte]">Array</span><span class="delimiter">[</span>Byte<span class="delimiter">]</span>, <a title="Int" id="244915">off</a>: <span title="Int">Int</span>, <a title="Int" id="244916">len</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <a href="#244713" title="sbinary.Input">in</a>.<span title="(target: Array[Byte], offset: Int, length: Int)Int">readTo</span><span class="delimiter">(</span><a href="#244914" title="Array[Byte]">b</a>, <a href="#244915" title="Int">off</a>, <a href="#244916" title="Int">len</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class OutputWrapperStream extends java.io.OutputStream with ScalaObject" id="10095">OutputWrapperStream</a><a href="#10095" title="ScalaObject" class="delimiter">(</a><a title="sbinary.Output" id="244879">out</a>: <span title="sbinary.Output">Output</span><span class="delimiter">)</span> <span class="keyword">extends</span> java.io.<span title="java.io.OutputStream">OutputStream</span>
+<span class="delimiter">{</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="(bs: Array[Byte], off: Int, len: Int)Unit" id="244877">write</a><span class="delimiter">(</span><a title="Array[Byte]" id="244930">bs</a>: <span title="Array[Byte]">Array</span><span class="delimiter">[</span>Byte<span class="delimiter">]</span>, <a title="Int" id="244931">off</a>: <span title="Int">Int</span>, <a title="Int" id="244932">len</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <a href="#244879" title="sbinary.Output">out</a>.<span title="(source: Array[Byte], offset: Int, length: Int)Unit">writeAll</span><span class="delimiter">(</span><a href="#244930" title="Array[Byte]">bs</a>, <a href="#244931" title="Int">off</a>, <a href="#244932" title="Int">len</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(b: Int)Unit" id="244878">write</a><span class="delimiter">(</span><a title="Int" id="244939">b</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <a href="#244879" title="sbinary.Output">out</a>.<span title="(value: Byte)Unit">writeByte</span><span class="delimiter">(</span><a href="#244939" title="Int">b</a>.<span title="=&gt; Byte">toByte</span><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">trait</span> <a title="trait References extends java.lang.Object" id="10096">References</a> <span title="java.lang.Object" class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(s: xsbti.api.Structure)Int" id="173398">id</a><span class="delimiter">(</span><a title="xsbti.api.Structure" id="173413">s</a>: <a href="xsbti/api/Structure.java.html#10450" title="xsbti.api.Structure">Structure</a><span class="delimiter">)</span>: <span title="Int">Int</span>
+	<span class="keyword">def</span> <a title="(s: xsbti.api.ClassLike)Int" id="173399">id</a><span class="delimiter">(</span><a title="xsbti.api.ClassLike" id="173412">s</a>: <a href="xsbti/api/ClassLike.java.html#10268" title="xsbti.api.ClassLike">ClassLike</a><span class="delimiter">)</span>: <span title="Int">Int</span>
+	<span class="keyword">def</span> <a title="(id: Int)xsbti.api.Structure" id="173400">structure</a><span class="delimiter">(</span><a title="Int" id="173420">id</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <a href="xsbti/api/Structure.java.html#10450" title="xsbti.api.Structure">Structure</a>
+	<span class="keyword">def</span> <a title="(id: Int)xsbti.api.ClassLike" id="173401">classLike</a><span class="delimiter">(</span><a title="Int" id="173804">id</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <a href="xsbti/api/ClassLike.java.html#10268" title="xsbti.api.ClassLike">ClassLike</a>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

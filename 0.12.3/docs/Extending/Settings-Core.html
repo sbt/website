@@ -1,0 +1,322 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Settings Core &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.3-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Extending sbt" href="index.html" />
+    <link rel="next" title="Index" href="../Name-Index.html" />
+    <link rel="prev" title="Plugins Best Practices" href="Plugins-Best-Practices.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Settings Core</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.3-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="../Name-Index.html">Index</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Extending sbt</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Plugins-Best-Practices.html">Plugins Best Practices</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.3-RC1">Version 0.12.3-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="settings-core">
+<h1>Settings Core<a class="headerlink" href="#settings-core" title="Permalink to this headline">¶</a></h1>
+<p>This page describes the core settings engine a bit. This may be useful
+for using it outside of sbt. It may also be useful for understanding how
+sbt works internally.</p>
+<p>The documentation is comprised of two parts. The first part shows an
+example settings system built on top of the settings engine. The second
+part comments on how sbt's settings system is built on top of the
+settings engine. This may help illuminate what exactly the core settings
+engine provides and what is needed to build something like the sbt
+settings system.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setting-up">
+<h3>Setting up<a class="headerlink" href="#setting-up" title="Permalink to this headline">¶</a></h3>
+<p>To run this example, first create a new project with the following
+build.sbt file:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">&lt;+=</span> <span class="n">sbtVersion</span><span class="o">(</span><span class="s">&quot;org.scala-sbt&quot;</span> <span class="o">%%</span> <span class="s">&quot;collections&quot;</span> <span class="o">%</span> <span class="k">_</span><span class="o">)</span>
+
+<span class="n">resolvers</span> <span class="o">&lt;+=</span> <span class="n">sbtResolver</span>
+</pre></div>
+</div>
+<p>Then, put the following examples in source files
+<tt class="docutils literal"><span class="pre">SettingsExample.scala</span></tt> and <tt class="docutils literal"><span class="pre">SettingsUsage.scala</span></tt>. Finally, run sbt
+and enter the REPL using <tt class="docutils literal"><span class="pre">console</span></tt>. To see the output described below,
+enter <tt class="docutils literal"><span class="pre">SettingsUsage</span></tt>.</p>
+</div>
+<div class="section" id="example-settings-system">
+<h3>Example Settings System<a class="headerlink" href="#example-settings-system" title="Permalink to this headline">¶</a></h3>
+<p>The first part of the example defines the custom settings system. There
+are three main parts:</p>
+<ol class="arabic simple">
+<li>Define the Scope type.</li>
+<li>Define a function that converts that Scope (plus an AttributeKey) to
+a String.</li>
+<li>Define a delegation function that defines the sequence of Scopes in
+which to look up a value.</li>
+</ol>
+<p>There is also a fourth, but its usage is likely to be specific to sbt at
+this time. The example uses a trivial implementation for this part.</p>
+<p><tt class="docutils literal"><span class="pre">SettingsExample.scala</span></tt></p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">sbt._</span>
+
+<span class="cm">/** Define our settings system */</span>
+
+<span class="c1">// A basic scope indexed by an integer.</span>
+<span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">Scope</span><span class="o">(</span><span class="n">index</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+
+<span class="c1">// Extend the Init trait.</span>
+<span class="c1">//  (It is done this way because the Scope type parameter is used everywhere in Init.</span>
+<span class="c1">//  Lots of type constructors would become binary, which as you may know requires lots of type lambdas</span>
+<span class="c1">//  when you want a type function with only one parameter.</span>
+<span class="c1">//  That would be a general pain.)</span>
+<span class="k">object</span> <span class="nc">SettingsExample</span> <span class="k">extends</span> <span class="nc">Init</span><span class="o">[</span><span class="kt">Scope</span><span class="o">]</span>
+<span class="o">{</span>
+    <span class="c1">// Provides a way of showing a Scope+AttributeKey[_]</span>
+    <span class="k">val</span> <span class="n">showFullKey</span><span class="k">:</span> <span class="kt">Show</span><span class="o">[</span><span class="kt">ScopedKey</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Show</span><span class="o">[</span><span class="kt">ScopedKey</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="o">{</span>
+        <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="k">_</span><span class="o">])</span> <span class="k">=</span> <span class="n">key</span><span class="o">.</span><span class="n">scope</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="n">key</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">label</span>
+    <span class="o">}</span>
+
+    <span class="c1">// A sample delegation function that delegates to a Scope with a lower index.</span>
+    <span class="k">val</span> <span class="n">delegates</span><span class="k">:</span> <span class="kt">Scope</span> <span class="o">=&gt;</span> <span class="nc">Seq</span><span class="o">[</span><span class="kt">Scope</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span> <span class="k">case</span> <span class="n">s</span> <span class="k">@</span> <span class="nc">Scope</span><span class="o">(</span><span class="n">index</span><span class="o">)</span> <span class="k">=&gt;</span>
+        <span class="n">s</span> <span class="o">+:</span> <span class="o">(</span><span class="k">if</span><span class="o">(</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="nc">Nil</span> <span class="k">else</span> <span class="n">delegates</span><span class="o">(</span><span class="nc">Scope</span><span class="o">(</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="o">))</span> <span class="o">)</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Not using this feature in this example.</span>
+    <span class="k">val</span> <span class="n">scopeLocal</span><span class="k">:</span> <span class="kt">ScopeLocal</span> <span class="o">=</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="nc">Nil</span>
+
+    <span class="c1">// These three functions + a scope (here, Scope) are sufficient for defining our settings system.</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
+<p>This part shows how to use the system we just defined. The end result is
+a <tt class="docutils literal"><span class="pre">Settings[Scope]</span></tt> value. This type is basically a mapping
+<tt class="docutils literal"><span class="pre">Scope</span> <span class="pre">-&gt;</span> <span class="pre">AttributeKey[T]</span> <span class="pre">-&gt;</span> <span class="pre">Option[T]</span></tt>. See the <a class="reference external" href="../../api/sbt/Settings.html">Settings API
+documentation</a>
+for details.</p>
+<p><tt class="docutils literal"><span class="pre">SettingsUsage.scala</span></tt></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="cm">/** Usage Example **/</span>
+
+   <span class="k">import</span> <span class="nn">sbt._</span>
+   <span class="k">import</span> <span class="nn">SettingsExample._</span>
+   <span class="k">import</span> <span class="nn">Types._</span>
+
+<span class="k">object</span> <span class="nc">SettingsUsage</span>
+<span class="o">{</span>
+
+      <span class="c1">// Define some keys</span>
+   <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="nc">AttributeKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;a&quot;</span><span class="o">)</span>
+   <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">AttributeKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;b&quot;</span><span class="o">)</span>
+
+      <span class="c1">// Scope these keys</span>
+   <span class="k">val</span> <span class="n">a3</span> <span class="k">=</span> <span class="nc">ScopedKey</span><span class="o">(</span><span class="nc">Scope</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> <span class="n">a</span><span class="o">)</span>
+   <span class="k">val</span> <span class="n">a4</span> <span class="k">=</span> <span class="nc">ScopedKey</span><span class="o">(</span><span class="nc">Scope</span><span class="o">(</span><span class="mi">4</span><span class="o">),</span> <span class="n">a</span><span class="o">)</span>
+   <span class="k">val</span> <span class="n">a5</span> <span class="k">=</span> <span class="nc">ScopedKey</span><span class="o">(</span><span class="nc">Scope</span><span class="o">(</span><span class="mi">5</span><span class="o">),</span> <span class="n">a</span><span class="o">)</span>
+
+   <span class="k">val</span> <span class="n">b4</span> <span class="k">=</span> <span class="nc">ScopedKey</span><span class="o">(</span><span class="nc">Scope</span><span class="o">(</span><span class="mi">4</span><span class="o">),</span> <span class="n">b</span><span class="o">)</span>
+
+      <span class="c1">// Define some settings</span>
+   <span class="k">val</span> <span class="n">mySettings</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+      <span class="n">setting</span><span class="o">(</span> <span class="n">a3</span><span class="o">,</span> <span class="n">value</span><span class="o">(</span> <span class="mi">3</span> <span class="o">)</span> <span class="o">),</span>
+      <span class="n">setting</span><span class="o">(</span> <span class="n">b4</span><span class="o">,</span> <span class="n">app</span><span class="o">(</span><span class="n">a4</span> <span class="o">:^:</span> <span class="nc">KNil</span><span class="o">)</span> <span class="o">{</span> <span class="k">case</span> <span class="n">av</span> <span class="o">:+:</span> <span class="nc">HNil</span> <span class="k">=&gt;</span> <span class="n">av</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">}</span> <span class="o">),</span>
+      <span class="n">update</span><span class="o">(</span><span class="n">a5</span><span class="o">)(</span><span class="k">_</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+   <span class="o">)</span>
+
+      <span class="c1">// &quot;compiles&quot; and applies the settings.</span>
+      <span class="c1">//  This can be split into multiple steps to access intermediate results if desired.</span>
+      <span class="c1">//  The &#39;inspect&#39; command operates on the output of &#39;compile&#39;, for example.</span>
+   <span class="k">val</span> <span class="n">applied</span><span class="k">:</span> <span class="kt">Settings</span><span class="o">[</span><span class="kt">Scope</span><span class="o">]</span> <span class="k">=</span> <span class="n">make</span><span class="o">(</span><span class="n">mySettings</span><span class="o">)(</span><span class="n">delegates</span><span class="o">,</span> <span class="n">scopeLocal</span><span class="o">,</span> <span class="n">showFullKey</span><span class="o">)</span>
+
+   <span class="c1">// Show results.</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="mi">5</span><span class="o">;</span> <span class="n">k</span> <span class="k">&lt;-</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">))</span> <span class="o">{</span>
+      <span class="n">println</span><span class="o">(</span> <span class="n">k</span><span class="o">.</span><span class="n">label</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s">&quot; = &quot;</span> <span class="o">+</span> <span class="n">applied</span><span class="o">.</span><span class="n">get</span><span class="o">(</span> <span class="nc">Scope</span><span class="o">(</span><span class="n">i</span><span class="o">),</span> <span class="n">k</span><span class="o">)</span> <span class="o">)</span>
+   <span class="o">}</span>
+</pre></div>
+</div>
+<p>This produces the following output when run:
+<tt class="docutils literal"><span class="pre">a0</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b0</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a1</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b1</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a2</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b2</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a3</span> <span class="pre">=</span> <span class="pre">Some(3)</span> <span class="pre">b3</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a4</span> <span class="pre">=</span> <span class="pre">Some(3)</span> <span class="pre">b4</span> <span class="pre">=</span> <span class="pre">Some(9)</span> <span class="pre">a5</span> <span class="pre">=</span> <span class="pre">Some(4)</span> <span class="pre">b5</span> <span class="pre">=</span> <span class="pre">Some(9)</span></tt></p>
+<ul class="simple">
+<li>For the None results, we never defined the value and there was no
+value to delegate to.</li>
+<li>For a3, we explicitly defined it to be 3.</li>
+<li>a4 wasn't defined, so it delegates to a3 according to our delegates
+function.</li>
+<li>b4 gets the value for a4 (which delegates to a3, so it is 3) and
+multiplies by 3</li>
+<li>a5 is defined as the previous value of a5 + 1 and since no previous
+value of a5 was defined, it delegates to a4, resulting in 3+1=4.</li>
+<li>b5 isn't defined explicitly, so it delegates to b4 and is therefore
+equal to 9 as well</li>
+</ul>
+</div>
+</div>
+<div class="section" id="sbt-settings-discussion">
+<h2>sbt Settings Discussion<a class="headerlink" href="#sbt-settings-discussion" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scopes">
+<h3>Scopes<a class="headerlink" href="#scopes" title="Permalink to this headline">¶</a></h3>
+<p>sbt defines a more complicated scope than the one shown here for the
+standard usage of settings in a build. This scope has four components:
+the project axis, the configuration axis, the task axis, and the extra
+axis. Each component may be
+<a class="reference external" href="../../api/sbt/Global$.html">Global</a> (no specific value), <a class="reference external" href="../../api/sbt/This$.html">This</a> (current context), or <a class="reference external" href="../../api/sbt/Select.html">Select</a>
+(containing a specific value). sbt resolves <tt class="docutils literal"><span class="pre">This_</span></tt> to either
+<a class="reference external" href="../../api/sbt/Global$.html">Global</a> or <a class="reference external" href="../../api/sbt/Select.html">Select</a> depending on the context.</p>
+<p>For example, in a project, a <a class="reference external" href="../../api/sbt/This$.html">This</a> project axis becomes a
+<a class="reference external" href="../../api/sbt/Select.html">Select</a> referring to the defining project. All other axes that are
+<a class="reference external" href="../../api/sbt/This$.html">This</a> are translated to <a class="reference external" href="../../api/sbt/Global$.html">Global</a>.
+Functions like inConfig and inTask transform This into a
+<a class="reference external" href="../../api/sbt/Select.html">Select</a> for a specific value. For example, <tt class="docutils literal"><span class="pre">inConfig(Compile)(someSettings)</span></tt>
+translates the configuration axis for all settings in <em>someSettings</em> to
+be <tt class="docutils literal"><span class="pre">Select(Compile)</span></tt> if the axis value is <a class="reference external" href="../../api/sbt/This$.html">This</a>.</p>
+<p>So, from the example and from sbt's scopes, you can see that the core
+settings engine does not impose much on the structure of a scope. All it
+requires is a delegates function <tt class="docutils literal"><span class="pre">Scope</span> <span class="pre">=&gt;</span> <span class="pre">Seq[Scope]</span></tt> and a
+<tt class="docutils literal"><span class="pre">display</span></tt> function. You can choose a scope type that makes sense for
+your situation.</p>
+</div>
+<div class="section" id="constructing-settings">
+<h3>Constructing settings<a class="headerlink" href="#constructing-settings" title="Permalink to this headline">¶</a></h3>
+<p>The <em>app</em>, <em>value</em>, <em>update</em>, and related methods are the core methods
+for constructing settings. This example obviously looks rather different
+from sbt's interface because these methods are not typically used
+directly, but are wrapped in a higher-level abstraction.</p>
+<p>With the core settings engine, you work with HLists to access other
+settings. In sbt's higher-level system, there are wrappers around HList
+for TupleN and FunctionN for N = 1-9 (except Tuple1 isn't actually
+used). When working with arbitrary arity, it is useful to make these
+wrappers at the highest level possible. This is because once wrappers
+are defined, code must be duplicated for every N. By making the wrappers
+at the top-level, this requires only one level of duplication.</p>
+<p>Additionally, sbt uniformly integrates its task engine into the settings
+system. The underlying settings engine has no notion of tasks. This is
+why sbt uses a <tt class="docutils literal"><span class="pre">SettingKey</span></tt> type and a <tt class="docutils literal"><span class="pre">TaskKey</span></tt> type. Methods on an
+underlying <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt> are basically translated to operating on an
+underlying <tt class="docutils literal"><span class="pre">SettingKey[Task[T]]</span></tt> (and they both wrap an underlying
+<tt class="docutils literal"><span class="pre">AttributeKey</span></tt>).</p>
+<p>For example, <tt class="docutils literal"><span class="pre">a</span> <span class="pre">:=</span> <span class="pre">3</span></tt> for a SettingKey <em>a</em> will very roughly translate
+to <tt class="docutils literal"><span class="pre">setting(a,</span> <span class="pre">value(3))</span></tt>. For a TaskKey <em>a</em>, it will roughly
+translate to <tt class="docutils literal"><span class="pre">setting(a,</span> <span class="pre">value(</span> <span class="pre">task</span> <span class="pre">{</span> <span class="pre">3</span> <span class="pre">}</span> <span class="pre">)</span> <span class="pre">)</span></tt>. See
+<a class="reference external" href="../../sxr/Structure.scala">main/Structure.scala</a>
+for details.</p>
+</div>
+<div class="section" id="settings-definitions">
+<h3>Settings definitions<a class="headerlink" href="#settings-definitions" title="Permalink to this headline">¶</a></h3>
+<p>sbt also provides a way to define these settings in a file (build.sbt
+and Build.scala). This is done for build.sbt using basic parsing and
+then passing the resulting chunks of code to <tt class="docutils literal"><span class="pre">compile/Eval.scala</span></tt>. For
+all definitions, sbt manages the classpaths and recompilation process to
+obtain the settings. It also provides a way for users to define project,
+task, and configuration delegation, which ends up being used by the
+delegates function.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Settings Core</a><ul>
+<li><a class="reference internal" href="#example">Example</a><ul>
+<li><a class="reference internal" href="#setting-up">Setting up</a></li>
+<li><a class="reference internal" href="#example-settings-system">Example Settings System</a></li>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sbt-settings-discussion">sbt Settings Discussion</a><ul>
+<li><a class="reference internal" href="#scopes">Scopes</a></li>
+<li><a class="reference internal" href="#constructing-settings">Constructing settings</a></li>
+<li><a class="reference internal" href="#settings-definitions">Settings definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

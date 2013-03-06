@@ -1,0 +1,306 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resolvers &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.3-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Running Project Code" href="Running-Project-Code.html" />
+    <link rel="prev" title="Publishing" href="Publishing.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Resolvers</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.3-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Running-Project-Code.html">Running Project Code</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Publishing.html">Publishing</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.3-RC1">Version 0.12.3-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="resolvers">
+<h1>Resolvers<a class="headerlink" href="#resolvers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="maven">
+<h2>Maven<a class="headerlink" href="#maven" title="Permalink to this headline">¶</a></h2>
+<p>Resolvers for Maven2 repositories are added as follows:</p>
+<p><tt class="docutils literal"><span class="pre">scala</span> <span class="pre">resolvers</span> <span class="pre">+=</span> <span class="pre">&quot;Sonatype</span> <span class="pre">OSS</span> <span class="pre">Snapshots&quot;</span> <span class="pre">at</span> <span class="pre">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span></tt>
+This is the most common kind of user-defined resolvers. The rest of this
+page describes how to define other types of repositories.</p>
+</div>
+<div class="section" id="predefined">
+<h2>Predefined<a class="headerlink" href="#predefined" title="Permalink to this headline">¶</a></h2>
+<p>A few predefined repositories are available and are listed below</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">DefaultMavenRepository</span></tt> This is the main Maven repository at
+<a class="reference external" href="http://repo1.maven.org/maven2/">http://repo1.maven.org/maven2/</a> and is included by default</li>
+<li><tt class="docutils literal"><span class="pre">JavaNet1Repository</span></tt> This is the Maven 1 repository at
+<a class="reference external" href="http://download.java.net/maven/1/">http://download.java.net/maven/1/</a></li>
+</ul>
+<p>For example, to use the <tt class="docutils literal"><span class="pre">java.net</span></tt> repository, use the following
+setting in your build definition:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">JavaNet1Repository</span>
+</pre></div>
+</div>
+<p>Predefined repositories will go under Resolver going forward so they are
+in one place:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="nc">Resolver</span><span class="o">.</span><span class="n">sonatypeRepo</span><span class="o">(</span><span class="s">&quot;releases&quot;</span><span class="o">)</span>  <span class="c1">// Or &quot;snapshots&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom">
+<h2>Custom<a class="headerlink" href="#custom" title="Permalink to this headline">¶</a></h2>
+<p>sbt provides an interface to the repository types available in Ivy:
+file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
+<a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns">patterns</a>
+to configure repositories.</p>
+<p>Construct a repository definition using the factory in <tt class="docutils literal"><span class="pre">sbt.Resolver</span></tt>
+for the desired type. This factory creates a <tt class="docutils literal"><span class="pre">Repository</span></tt> object that
+can be further configured. The following table contains links to the Ivy
+documentation for the repository type and the API documentation for the
+factory and repository class. The SSH and SFTP repositories are
+configured identically except for the name of the factory. Use
+<tt class="docutils literal"><span class="pre">Resolver.ssh</span></tt> for SSH and <tt class="docutils literal"><span class="pre">Resolver.sftp</span></tt> for SFTP.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="20%" />
+<col width="20%" />
+<col width="24%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type</th>
+<th class="head">Factory</th>
+<th class="head">Ivy Docs</th>
+<th class="head">Factory API</th>
+<th class="head">Repository Class API</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Filesystem</td>
+<td><tt class="docutils literal"><span class="pre">Resolver.file</span></tt></td>
+<td><a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+<td><a class="reference external" href="../../api/sbt/Resolver$$file$.html">filesystem factory</a></td>
+<td><a class="reference external" href="../../api/sbt/FileRepository.html">FileRepository API</a></td>
+</tr>
+<tr class="row-odd"><td>SFTP</td>
+<td><tt class="docutils literal"><span class="pre">Resolver.sftp</span></tt></td>
+<td><a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+<td><a class="reference external" href="../../api/sbt/Resolver$$Define.html">sftp factory</a></td>
+<td><a class="reference external" href="../../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+</tr>
+<tr class="row-even"><td>SSH</td>
+<td><tt class="docutils literal"><span class="pre">Resolver.ssh</span></tt></td>
+<td><a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+<td><a class="reference external" href="../../api/sbt/Resolver$$Define.html">ssh factory</a></td>
+<td><a class="reference external" href="../../api/sbt/SshRepository.html">SshRepository API</a></td>
+</tr>
+<tr class="row-odd"><td>URL</td>
+<td><tt class="docutils literal"><span class="pre">Resolver.url</span></tt></td>
+<td><a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+<td><a class="reference external" href="../../api/sbt/Resolver$$url$.html">url factory</a></td>
+<td><a class="reference external" href="../../api/sbt/URLRepository.html">URLRepository API</a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="basic-examples">
+<h3>Basic Examples<a class="headerlink" href="#basic-examples" title="Permalink to this headline">¶</a></h3>
+<p>These are basic examples that use the default Maven-style repository
+layout.</p>
+<div class="section" id="filesystem">
+<h4>Filesystem<a class="headerlink" href="#filesystem" title="Permalink to this headline">¶</a></h4>
+<p>Define a filesystem repository in the <tt class="docutils literal"><span class="pre">test</span></tt> directory of the current
+working directory and declare that publishing to this repository must be
+atomic.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;my-test-repo&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;test&quot;</span><span class="o">))</span> <span class="n">transactional</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url">
+<h4>URL<a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h4>
+<p>Define a URL repository at <tt class="docutils literal"><span class="pre">&quot;http://example.org/repo-releases/&quot;</span></tt>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;my-test-repo&quot;</span><span class="o">,</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://example.org/repo-releases/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>To specify an Ivy repository, use:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;my-test-repo&quot;</span><span class="o">,</span> <span class="n">url</span><span class="o">)(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>or customize the layout pattern described in the Custom Layout section
+below.</p>
+</div>
+<div class="section" id="sftp-and-ssh-repositories">
+<h4>SFTP and SSH Repositories<a class="headerlink" href="#sftp-and-ssh-repositories" title="Permalink to this headline">¶</a></h4>
+<p>The following defines a repository that is served by SFTP from host
+<tt class="docutils literal"><span class="pre">&quot;example.org&quot;</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">sftp</span><span class="o">(</span><span class="s">&quot;my-sftp-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To explicitly specify the port:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">sftp</span><span class="o">(</span><span class="s">&quot;my-sftp-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">,</span> <span class="mi">22</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To specify a base path:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">sftp</span><span class="o">(</span><span class="s">&quot;my-sftp-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">,</span> <span class="s">&quot;maven2/repo-releases/&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Authentication for the repositories returned by <tt class="docutils literal"><span class="pre">sftp</span></tt> and <tt class="docutils literal"><span class="pre">ssh</span></tt> can
+be configured by the <tt class="docutils literal"><span class="pre">as</span></tt> methods.</p>
+<p>To use password authentication:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">ssh</span><span class="o">(</span><span class="s">&quot;my-ssh-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span> <span class="n">as</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="s">&quot;password&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>or to be prompted for the password:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">ssh</span><span class="o">(</span><span class="s">&quot;my-ssh-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span> <span class="n">as</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To use key authentication:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">keyFile</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">...</span>
+  <span class="nc">Resolver</span><span class="o">.</span><span class="n">ssh</span><span class="o">(</span><span class="s">&quot;my-ssh-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span> <span class="n">as</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">keyFile</span><span class="o">,</span> <span class="s">&quot;keyFilePassword&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>or if no keyfile password is required or if you want to be prompted for
+it:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">ssh</span><span class="o">(</span><span class="s">&quot;my-ssh-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span> <span class="n">as</span><span class="o">(</span><span class="s">&quot;user&quot;</span><span class="o">,</span> <span class="n">keyFile</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To specify the permissions used when publishing to the server:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">ssh</span><span class="o">(</span><span class="s">&quot;my-ssh-repo&quot;</span><span class="o">,</span> <span class="s">&quot;example.org&quot;</span><span class="o">)</span> <span class="n">withPermissions</span><span class="o">(</span><span class="s">&quot;0644&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This is a chmod-like mode specification.</p>
+</div>
+</div>
+<div class="section" id="custom-layout">
+<h3>Custom Layout<a class="headerlink" href="#custom-layout" title="Permalink to this headline">¶</a></h3>
+<p>These examples specify custom repository layouts using patterns. The
+factory methods accept an <tt class="docutils literal"><span class="pre">Patterns</span></tt> instance that defines the
+patterns to use. The patterns are first resolved against the base file
+or URL. The default patterns give the default Maven-style layout.
+Provide a different Patterns object to use a different layout. For
+example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;my-test-repo&quot;</span><span class="o">,</span> <span class="n">url</span><span class="o">)(</span> <span class="nc">Patterns</span><span class="o">(</span><span class="s">&quot;[organisation]/[module]/[revision]/[artifact].[ext]&quot;</span><span class="o">)</span> <span class="o">)</span>
+</pre></div>
+</div>
+<p>You can specify multiple patterns or patterns for the metadata and
+artifacts separately. You can also specify whether the repository should
+be Maven compatible (as defined by Ivy). See the <a class="reference external" href="../../api/sbt/Patterns$.html">patterns
+API</a> for
+the methods to use.</p>
+<p>For filesystem and URL repositories, you can specify absolute patterns
+by omitting the base URL, passing an empty <tt class="docutils literal"><span class="pre">Patterns</span></tt> instance, and
+using <tt class="docutils literal"><span class="pre">ivys</span></tt> and <tt class="docutils literal"><span class="pre">artifacts</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;my-test-repo&quot;</span><span class="o">)</span> <span class="n">artifacts</span>
+        <span class="s">&quot;http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Resolvers</a><ul>
+<li><a class="reference internal" href="#maven">Maven</a></li>
+<li><a class="reference internal" href="#predefined">Predefined</a></li>
+<li><a class="reference internal" href="#custom">Custom</a><ul>
+<li><a class="reference internal" href="#basic-examples">Basic Examples</a><ul>
+<li><a class="reference internal" href="#filesystem">Filesystem</a></li>
+<li><a class="reference internal" href="#url">URL</a></li>
+<li><a class="reference internal" href="#sftp-and-ssh-repositories">SFTP and SSH Repositories</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-layout">Custom Layout</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

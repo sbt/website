@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>DependencyBuilders.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009,2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> impl
+
+<span class="keyword">import</span> <a href="StringUtilities.scala.html#10908" title="object sbt.StringUtilities">StringUtilities</a>.nonEmpty
+
+<span class="keyword">trait</span> <a title="trait DependencyBuilders extends java.lang.Object with ScalaObject" id="10609">DependencyBuilders</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">final</span> <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit sbt.impl.DependencyBuilders.toGroupID : (groupID: String)sbt.impl.GroupID" id="259109">toGroupID</a><span class="delimiter">(</span><a title="String" id="259114">groupID</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#10610" title="sbt.impl.GroupID">GroupID</a> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259114" title="String">groupID</a>, <span title="java.lang.String(&quot;Group ID&quot;)" class="string">&quot;Group ID&quot;</span><span class="delimiter">)</span>
+		<span title="sbt.impl.GroupID" class="keyword">new</span> <a href="#10610" title="sbt.impl.GroupID">GroupID</a><span class="delimiter">(</span><a href="#259114" title="String">groupID</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">final</span> <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit sbt.impl.DependencyBuilders.toRepositoryName : (name: String)sbt.impl.RepositoryName" id="259110">toRepositoryName</a><span class="delimiter">(</span><a title="String" id="259129">name</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#10613" title="sbt.impl.RepositoryName">RepositoryName</a> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259129" title="String">name</a>, <span title="java.lang.String(&quot;Repository name&quot;)" class="string">&quot;Repository name&quot;</span><span class="delimiter">)</span>
+		<span title="sbt.impl.RepositoryName" class="keyword">new</span> <a href="#10613" title="sbt.impl.RepositoryName">RepositoryName</a><span class="delimiter">(</span><a href="#259129" title="String">name</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">final</span> <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit sbt.impl.DependencyBuilders.moduleIDConfigurable : (m: sbt.ModuleID)sbt.impl.ModuleIDConfigurable" id="259111">moduleIDConfigurable</a><span class="delimiter">(</span><a title="sbt.ModuleID" id="259136">m</a>: <a href="IvyInterface.scala.html#10744" title="sbt.ModuleID">ModuleID</a><span class="delimiter">)</span>: <a href="#10612" title="sbt.impl.ModuleIDConfigurable">ModuleIDConfigurable</a> =
+	<span class="delimiter">{</span>
+		<span title="(requirement: Boolean, message: =&gt; Any)Unit">require</span><span class="delimiter">(</span><a href="#259136" title="sbt.ModuleID">m</a>.<a href="IvyInterface.scala.html#245824" title="=&gt; Option[String]">configurations</a>.<span title="=&gt; Boolean">isEmpty</span>, <span title="java.lang.String(&quot;Configurations already specified for module &quot;)" class="string">&quot;Configurations already specified for module &quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#259136" title="sbt.ModuleID">m</a><span class="delimiter">)</span>
+		<span title="sbt.impl.ModuleIDConfigurable" class="keyword">new</span> <a href="#10612" title="sbt.impl.ModuleIDConfigurable">ModuleIDConfigurable</a><span class="delimiter">(</span><a href="#259136" title="sbt.ModuleID">m</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class GroupID extends java.lang.Object with ScalaObject" id="10610">GroupID</a> <a href="#10610" title="ScalaObject" class="keyword">private</a><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="delimiter">(</span><a title="String" id="259128">groupID</a>: <span title="String">String</span><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(artifactID: String)sbt.impl.GroupArtifactID" id="259119">%</a> <span class="delimiter">(</span><a title="String" id="259150">artifactID</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#259123" title="(artifactID: String, cross: sbt.CrossVersion)sbt.impl.GroupArtifactID">groupArtifact</a><span class="delimiter">(</span><a href="#259150" title="String">artifactID</a>, <a href="CrossVersion.scala.html#10570" title="object sbt.CrossVersion">CrossVersion</a>.<a href="CrossVersion.scala.html#250974" title="object sbt.CrossVersion.Disabled">Disabled</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(artifactID: String)sbt.impl.GroupArtifactID" id="259120">%%</a> <span class="delimiter">(</span><a title="String" id="259168">artifactID</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#10611" title="sbt.impl.GroupArtifactID">GroupArtifactID</a> = <a href="#259123" title="(artifactID: String, cross: sbt.CrossVersion)sbt.impl.GroupArtifactID">groupArtifact</a><span class="delimiter">(</span><a href="#259168" title="String">artifactID</a>, <a href="CrossVersion.scala.html#10570" title="object sbt.CrossVersion">CrossVersion</a>.<a href="CrossVersion.scala.html#250980" title="=&gt; sbt.CrossVersion">binary</a><span class="delimiter">)</span>
+
+	@deprecated<span class="delimiter">(</span>deprecationMessage, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(artifactID: String, crossVersion: String =&gt; String)sbt.impl.GroupArtifactID" id="259121">%%</a> <span class="delimiter">(</span><a title="String" id="259170">artifactID</a>: <span title="String">String</span>, <a title="String =&gt; String" id="259171">crossVersion</a>: String =&gt; String<span class="delimiter">)</span> = <a href="#259123" title="(artifactID: String, cross: sbt.CrossVersion)sbt.impl.GroupArtifactID">groupArtifact</a><span class="delimiter">(</span><a href="#259170" title="String">artifactID</a>, <a href="CrossVersion.scala.html#10570" title="object sbt.CrossVersion">CrossVersion</a>.<a href="CrossVersion.scala.html#250981" title="(remapVersion: String =&gt; String)sbt.CrossVersion">binaryMapped</a><span class="delimiter">(</span><a href="#259171" title="String =&gt; String">crossVersion</a><span class="delimiter">)</span><span class="delimiter">)</span>
+	@deprecated<span class="delimiter">(</span>deprecationMessage, <span class="string">&quot;0.12.0&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(artifactID: String, alternatives: (String, String)*)sbt.impl.GroupArtifactID" id="259122">%%</a> <span class="delimiter">(</span><a title="String" id="259185">artifactID</a>: <span title="String">String</span>, <a title="(String, String)*" id="259186">alternatives</a>: <span title="(String, String)*" class="delimiter">(</span>String, String<span class="delimiter">)</span>*<span class="delimiter">)</span> = <a href="#259123" title="(artifactID: String, cross: sbt.CrossVersion)sbt.impl.GroupArtifactID">groupArtifact</a><span class="delimiter">(</span><a href="#259185" title="String">artifactID</a>, <a href="CrossVersion.scala.html#10570" title="object sbt.CrossVersion">CrossVersion</a>.<a href="CrossVersion.scala.html#250981" title="(remapVersion: String =&gt; String)sbt.CrossVersion">binaryMapped</a><span class="delimiter">(</span><span title="(elems: (String, String)*)scala.collection.immutable.Map[String,String]">Map</span><span class="delimiter">(</span><a href="#259186" title="(String, String)*">alternatives</a>: _*<span class="delimiter">)</span> <span title="(that: PartialFunction[String,String])PartialFunction[String,String]">orElse</span> <a href="#259200" title="String" class="delimiter">{</a> <span class="keyword">case</span> <a title="String" id="259201">s</a> =&gt; <a href="#259201" title="String">s</a> <span class="delimiter">}</span><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(artifactID: String, cross: sbt.CrossVersion)sbt.impl.GroupArtifactID" id="259123">groupArtifact</a><span class="delimiter">(</span><a title="String" id="259153">artifactID</a>: <span title="String">String</span>, <a title="sbt.CrossVersion" id="259154">cross</a>: <a href="CrossVersion.scala.html#10569" title="sbt.CrossVersion">CrossVersion</a><span class="delimiter">)</span> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259153" title="String">artifactID</a>, <span title="java.lang.String(&quot;Artifact ID&quot;)" class="string">&quot;Artifact ID&quot;</span><span class="delimiter">)</span>
+		<span title="sbt.impl.GroupArtifactID" class="keyword">new</span> <a href="#10611" title="sbt.impl.GroupArtifactID">GroupArtifactID</a><span class="delimiter">(</span><a href="#259128" title="String">groupID</a>, <a href="#259153" title="String">artifactID</a>, <a href="#259154" title="sbt.CrossVersion">cross</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="=&gt; java.lang.String" id="259124">deprecationMessage</a> = <span title="java.lang.String(&quot;Use the cross method on the constructed ModuleID.  For example: (\&quot;a\&quot; % \&quot;b\&quot; % \&quot;1\&quot;).cross(...)&quot;)" class="string">&quot;&quot;&quot;Use the cross method on the constructed ModuleID.  For example: (&quot;a&quot; % &quot;b&quot; % &quot;1&quot;).cross(...)&quot;&quot;&quot;</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class GroupArtifactID extends java.lang.Object with ScalaObject" id="10611">GroupArtifactID</a> <a href="#10611" title="ScalaObject" class="keyword">private</a><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="delimiter">(</span><a title="String" id="259165">groupID</a>: <span title="String">String</span>, <a title="String" id="259166">artifactID</a>: <span title="String">String</span>, <a title="sbt.CrossVersion" id="259167">crossVersion</a>: <a href="CrossVersion.scala.html#10569" title="sbt.CrossVersion">CrossVersion</a><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(revision: String)sbt.ModuleID" id="259164">%</a> <span class="delimiter">(</span><a title="String" id="259207">revision</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="IvyInterface.scala.html#10744" title="sbt.ModuleID">ModuleID</a> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259207" title="String">revision</a>, <span title="java.lang.String(&quot;Revision&quot;)" class="string">&quot;Revision&quot;</span><span class="delimiter">)</span>
+		<a href="IvyInterface.scala.html#245806" title="(organization: String, name: String, revision: String, configurations: Option[String], isChanging: Boolean, isTransitive: Boolean, isForce: Boolean, explicitArtifacts: Seq[sbt.Artifact], exclusions: Seq[sbt.ExclusionRule], extraAttributes: Map[String,String], crossVersion: sbt.CrossVersion)sbt.ModuleID">ModuleID</a><span class="delimiter">(</span><a href="#259165" title="String">groupID</a>, <a href="#259166" title="String">artifactID</a>, <a href="#259207" title="String">revision</a><span class="delimiter">)</span>.<a href="IvyInterface.scala.html#245845" title="(v: sbt.CrossVersion)sbt.ModuleID">cross</a><span class="delimiter">(</span><a href="#259167" title="sbt.CrossVersion">crossVersion</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class ModuleIDConfigurable extends java.lang.Object with ScalaObject" id="10612">ModuleIDConfigurable</a> <a href="#10612" title="ScalaObject" class="keyword">private</a><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="delimiter">(</span><a title="sbt.ModuleID" id="259147">moduleID</a>: <a href="IvyInterface.scala.html#10744" title="sbt.ModuleID">ModuleID</a><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(configuration: sbt.Configuration)sbt.ModuleID" id="259141">%</a> <span class="delimiter">(</span><a title="sbt.Configuration" id="259222">configuration</a>: <a href="IvyInterface.scala.html#10801" title="sbt.Configuration">Configuration</a><span class="delimiter">)</span>: <a href="IvyInterface.scala.html#10744" title="sbt.ModuleID">ModuleID</a> = <a href="#259142" title="(configurations: String)sbt.ModuleID">%</a><span class="delimiter">(</span><a href="#259222" title="sbt.Configuration">configuration</a>.<a href="IvyInterface.scala.html#259229" title="=&gt; String">name</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="(configurations: String)sbt.ModuleID" id="259142">%</a> <span class="delimiter">(</span><a title="String" id="259252">configurations</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="IvyInterface.scala.html#10744" title="sbt.ModuleID">ModuleID</a> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259252" title="String">configurations</a>, <span title="java.lang.String(&quot;Configurations&quot;)" class="string">&quot;Configurations&quot;</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="String" id="259256">c</a> = <a href="#259252" title="String">configurations</a>
+		<a href="#259147" title="sbt.ModuleID">moduleID</a>.<a href="IvyInterface.scala.html#251322" title="String" id="259276">copy</a><span class="delimiter">(</span>configurations = <span title="(x: String)Some[String]">Some</span><a title="Some[String]" id="259266" class="delimiter">(</a><a href="#259256" title="String">c</a><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class RepositoryName extends java.lang.Object with ScalaObject" id="10613">RepositoryName</a> <a href="#10613" title="ScalaObject" class="keyword">private</a><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="delimiter">(</span><a title="String" id="259135">name</a>: <span title="String">String</span><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(location: String)sbt.MavenRepository" id="259134">at</a> <span class="delimiter">(</span><a title="String" id="259279">location</a>: <span title="String">String</span><span class="delimiter">)</span> =
+	<span class="delimiter">{</span>
+		<a href="StringUtilities.scala.html#259106" title="(s: String, label: String)Unit">nonEmpty</a><span class="delimiter">(</span><a href="#259279" title="String">location</a>, <span title="java.lang.String(&quot;Repository location&quot;)" class="string">&quot;Repository location&quot;</span><span class="delimiter">)</span>
+		<span title="sbt.MavenRepository" class="keyword">new</span> <a href="IvyInterface.scala.html#10761" title="sbt.MavenRepository">MavenRepository</a><span class="delimiter">(</span><a href="#259135" title="String">name</a>, <a href="#259279" title="String">location</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

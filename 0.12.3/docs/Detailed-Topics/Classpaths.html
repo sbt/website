@@ -1,0 +1,263 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Classpaths, sources, and resources &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.3-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Command Line Reference" href="Command-Line-Reference.html" />
+    <link rel="prev" title="Best Practices" href="Best-Practices.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Classpaths, sources, and resources</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.3-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Command-Line-Reference.html">Command Line Reference</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Best-Practices.html">Best Practices</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.3-RC1">Version 0.12.3-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="classpaths-sources-and-resources">
+<h1>Classpaths, sources, and resources<a class="headerlink" href="#classpaths-sources-and-resources" title="Permalink to this headline">¶</a></h1>
+<p>This page discusses how sbt builds up classpaths for different actions,
+like <tt class="docutils literal"><span class="pre">compile</span></tt>, <tt class="docutils literal"><span class="pre">run</span></tt>, and <tt class="docutils literal"><span class="pre">test</span></tt> and how to override or augment
+these classpaths.</p>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>In sbt 0.10 and later, classpaths now include the Scala library and
+(when declared as a dependency) the Scala compiler. Classpath-related
+settings and tasks typically provide a value of type <tt class="docutils literal"><span class="pre">Classpath</span></tt>. This
+is an alias for <tt class="docutils literal"><span class="pre">Seq[Attributed[File]]</span></tt>.
+<a class="reference external" href="../../api/sbt/Attributed.html">Attributed</a>
+is a type that associates a heterogeneous map with each classpath entry.
+Currently, this allows sbt to associate the <tt class="docutils literal"><span class="pre">Analysis</span></tt> resulting from
+compilation with the corresponding classpath entry and for managed
+entries, the <tt class="docutils literal"><span class="pre">ModuleID</span></tt> and <tt class="docutils literal"><span class="pre">Artifact</span></tt> that defined the dependency.</p>
+<p>To explicitly extract the raw <tt class="docutils literal"><span class="pre">Seq[File]</span></tt>, use the <tt class="docutils literal"><span class="pre">files</span></tt> method
+implicitly added to <tt class="docutils literal"><span class="pre">Classpath</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">cp</span><span class="k">:</span> <span class="kt">Classpath</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">raw</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">files</span>
+</pre></div>
+</div>
+<p>To create a <tt class="docutils literal"><span class="pre">Classpath</span></tt> from a <tt class="docutils literal"><span class="pre">Seq[File]</span></tt>, use <tt class="docutils literal"><span class="pre">classpath</span></tt> and to
+create an <tt class="docutils literal"><span class="pre">Attributed[File]</span></tt> from a <tt class="docutils literal"><span class="pre">File</span></tt>, use
+<tt class="docutils literal"><span class="pre">Attributed.blank</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">raw</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">cp</span><span class="k">:</span> <span class="kt">Classpath</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">classpath</span>
+
+<span class="k">val</span> <span class="n">rawFile</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">..</span>
+<span class="k">val</span> <span class="n">af</span><span class="k">:</span> <span class="kt">Attributed</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Attributed</span><span class="o">.</span><span class="n">blank</span><span class="o">(</span><span class="n">rawFile</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="section" id="unmanaged-v-managed">
+<h3>Unmanaged v. managed<a class="headerlink" href="#unmanaged-v-managed" title="Permalink to this headline">¶</a></h3>
+<p>Classpaths, sources, and resources are separated into two main
+categories: unmanaged and managed. Unmanaged files are manually created
+files that are outside of the control of the build. They are the inputs
+to the build. Managed files are under the control of the build. These
+include generated sources and resources as well as resolved and
+retrieved dependencies and compiled classes.</p>
+<p>Tasks that produce managed files should be inserted as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="n">out</span> <span class="k">=&gt;</span>
+    <span class="n">generate</span><span class="o">(</span><span class="n">out</span> <span class="o">/</span> <span class="s">&quot;some_directory&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In this example, <tt class="docutils literal"><span class="pre">generate</span></tt> is some function of type
+<tt class="docutils literal"><span class="pre">File</span> <span class="pre">=&gt;</span> <span class="pre">Seq[File]</span></tt> that actually does the work. The <tt class="docutils literal"><span class="pre">&lt;+=</span></tt> method is
+like <tt class="docutils literal"><span class="pre">+=</span></tt>, but allows the right hand side to have inputs (like the
+difference between <tt class="docutils literal"><span class="pre">:=</span></tt> and <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>). So, we are appending a new task
+to the list of main source generators (<tt class="docutils literal"><span class="pre">sourceGenerators</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>).</p>
+<p>To insert a named task, which is the better approach for plugins:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">(</span><span class="n">mySourceGenerator</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">task</span>
+
+<span class="n">mySourceGenerator</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="n">map</span> <span class="o">{</span> <span class="n">out</span> <span class="k">=&gt;</span>
+    <span class="n">generate</span><span class="o">(</span><span class="n">out</span> <span class="o">/</span> <span class="s">&quot;some_directory&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">mySourceGenerator</span></tt> is defined as:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">mySourceGenerator</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](...)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">task</span></tt> method is used to refer to the actual task instead of the
+result of the task.</p>
+<p>For resources, there are similar keys <tt class="docutils literal"><span class="pre">resourceGenerators</span></tt> and
+<tt class="docutils literal"><span class="pre">resourceManaged</span></tt>.</p>
+<div class="section" id="excluding-source-files-by-name">
+<h4>Excluding source files by name<a class="headerlink" href="#excluding-source-files-by-name" title="Permalink to this headline">¶</a></h4>
+<p>The project base directory is by default a source directory in addition
+to <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>. You can exclude source files by name
+(<tt class="docutils literal"><span class="pre">butler.scala</span></tt> in the example below) like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">excludeFilter</span> <span class="n">in</span> <span class="n">unmanagedSources</span> <span class="o">:=</span> <span class="s">&quot;butler.scala&quot;</span>
+</pre></div>
+</div>
+<p>Read more on <a class="reference external" href="http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en">How to exclude .scala source file in project folder -
+Google
+Groups</a></p>
+</div>
+</div>
+<div class="section" id="external-v-internal">
+<h3>External v. internal<a class="headerlink" href="#external-v-internal" title="Permalink to this headline">¶</a></h3>
+<p>Classpaths are also divided into internal and external dependencies. The
+internal dependencies are inter-project dependencies. These effectively
+put the outputs of one project on the classpath of another project.</p>
+<p>External classpaths are the union of the unmanaged and managed
+classpaths.</p>
+</div>
+<div class="section" id="keys">
+<h3>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h3>
+<p>For classpaths, the relevant keys are:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">unmanaged-classpath</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">managed-classpath</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">external-dependency-classpath</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">internal-dependency-classpath</span></tt></li>
+</ul>
+<p>For sources:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">unmanaged-sources</span></tt> These are by default built up from
+<tt class="docutils literal"><span class="pre">unmanaged-source-directories</span></tt>, which consists of <tt class="docutils literal"><span class="pre">scala-source</span></tt>
+and <tt class="docutils literal"><span class="pre">java-source</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">managed-sources</span></tt> These are generated sources.</li>
+<li><tt class="docutils literal"><span class="pre">sources</span></tt> Combines <tt class="docutils literal"><span class="pre">managed-sources</span></tt> and <tt class="docutils literal"><span class="pre">unmanaged-sources</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">source-generators</span></tt> These are tasks that generate source files.
+Typically, these tasks will put sources in the directory provided by
+<tt class="docutils literal"><span class="pre">source-managed</span></tt>.</li>
+</ul>
+<p>For resources</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">unmanaged-resources</span></tt> These are by default built up from
+<tt class="docutils literal"><span class="pre">unmanaged-resource-directories</span></tt>, which by default is
+<tt class="docutils literal"><span class="pre">resource-directory</span></tt>, excluding files matched by
+<tt class="docutils literal"><span class="pre">default-excludes</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">managed-resources</span></tt> By default, this is empty for standard
+projects. sbt plugins will have a generated descriptor file here.</li>
+<li><tt class="docutils literal"><span class="pre">resource-generators</span></tt> These are tasks that generate resource files.
+Typically, these tasks will put resources in the directory provided
+by <tt class="docutils literal"><span class="pre">resource-managed</span></tt>.</li>
+</ul>
+<p>Use the <a class="reference internal" href="Inspecting-Settings.html"><em>inspect command</em></a> for more details.</p>
+<p>See also a related <a class="reference external" href="http://stackoverflow.com/a/7862872/850196">StackOverflow
+answer</a>.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>You have a standalone project which uses a library that loads
+xxx.properties from classpath at run time. You put xxx.properties inside
+directory &quot;config&quot;. When you run &quot;sbt run&quot;, you want the directory to be
+in classpath.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedClasspath</span> <span class="n">in</span> <span class="nc">Runtime</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">unmanagedClasspath</span> <span class="n">in</span> <span class="nc">Runtime</span><span class="o">,</span> <span class="n">baseDirectory</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">cp</span><span class="o">,</span> <span class="n">bd</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">cp</span> <span class="o">:+</span> <span class="nc">Attributed</span><span class="o">.</span><span class="n">blank</span><span class="o">(</span><span class="n">bd</span> <span class="o">/</span> <span class="s">&quot;config&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Or shorter:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedClasspath</span> <span class="n">in</span> <span class="nc">Runtime</span> <span class="o">&lt;+=</span> <span class="o">(</span><span class="n">baseDirectory</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="n">bd</span> <span class="k">=&gt;</span> <span class="nc">Attributed</span><span class="o">.</span><span class="n">blank</span><span class="o">(</span><span class="n">bd</span> <span class="o">/</span> <span class="s">&quot;config&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Classpaths, sources, and resources</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a><ul>
+<li><a class="reference internal" href="#unmanaged-v-managed">Unmanaged v. managed</a><ul>
+<li><a class="reference internal" href="#excluding-source-files-by-name">Excluding source files by name</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#external-v-internal">External v. internal</a></li>
+<li><a class="reference internal" href="#keys">Keys</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>
