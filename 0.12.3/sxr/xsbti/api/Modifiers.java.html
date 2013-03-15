@@ -14,20 +14,20 @@
 
 public <span class="keyword">final</span> <span class="keyword">class</span> <a title="object xsbti.api.Modifiers" id="10156">Modifiers</a> implements java.io.<span title="java.io.Serializable">Serializable</span>
 <span class="delimiter">{</span>
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201520">AbstractBit</a> = <span class="int">0</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201521">OverrideBit</a> = <span class="int">1</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201522">FinalBit</a> = <span class="int">2</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201523">SealedBit</a> = <span class="int">3</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201524">ImplicitBit</a> = <span class="int">4</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201525">LazyBit</a> = <span class="int">5</span>;
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201526">MacroBit</a> = <span class="int">6</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201637">AbstractBit</a> = <span class="int">0</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201638">OverrideBit</a> = <span class="int">1</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201639">FinalBit</a> = <span class="int">2</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201640">SealedBit</a> = <span class="int">3</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201641">ImplicitBit</a> = <span class="int">4</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201642">LazyBit</a> = <span class="int">5</span>;
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="Int" id="2201643">MacroBit</a> = <span class="int">6</span>;
 
-	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="(set: Boolean, bit: Int)Int" id="2201527">flag</a><span class="delimiter">(</span>boolean <a title="Boolean" id="2201528">set</a>, int <a title="Int" id="2201529">bit</a><span class="delimiter">)</span>
+	<span class="keyword">private</span> static <span class="keyword">final</span> int <a title="(set: Boolean, bit: Int)Int" id="2201644">flag</a><span class="delimiter">(</span>boolean <a title="Boolean" id="2201645">set</a>, int <a title="Int" id="2201646">bit</a><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> set ? <span class="delimiter">(</span><span class="int">1</span> &lt;&lt; bit<span class="delimiter">)</span> : <span class="int">0</span>;
 	<span class="delimiter">}</span>
 
-	public Modifiers<a href="#10156" title="xsbti.api.Modifiers" class="delimiter">(</a>boolean <a title="Boolean" id="90638">isAbstract</a>, boolean <a title="Boolean" id="90639">isOverride</a>, boolean <a title="Boolean" id="90640">isFinal</a>, boolean <a title="Boolean" id="90641">isSealed</a>, boolean <a title="Boolean" id="90642">isImplicit</a>, boolean <a title="Boolean" id="90643">isLazy</a>, boolean <a title="Boolean" id="90644">isMacro</a><span class="delimiter">)</span>
+	public Modifiers<a href="#10156" title="xsbti.api.Modifiers" class="delimiter">(</a>boolean <a title="Boolean" id="90640">isAbstract</a>, boolean <a title="Boolean" id="90641">isOverride</a>, boolean <a title="Boolean" id="90642">isFinal</a>, boolean <a title="Boolean" id="90643">isSealed</a>, boolean <a title="Boolean" id="90644">isImplicit</a>, boolean <a title="Boolean" id="90645">isLazy</a>, boolean <a title="Boolean" id="90646">isMacro</a><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">this</span>.flags = <span class="delimiter">(</span>byte<span class="delimiter">)</span><span class="delimiter">(</span>
 			flag<span class="delimiter">(</span>isAbstract, AbstractBit<span class="delimiter">)</span> |
@@ -40,47 +40,47 @@ public <span class="keyword">final</span> <span class="keyword">class</span> <a 
 		<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
 
-	<span class="keyword">private</span> <span class="keyword">final</span> byte <a title="Byte" id="90571">flags</a>;
+	<span class="keyword">private</span> <span class="keyword">final</span> byte <a title="Byte" id="90573">flags</a>;
 
-	<span class="keyword">private</span> <span class="keyword">final</span> boolean <a title="(bit: Int)Boolean" id="90572">flag</a><span class="delimiter">(</span>int <a title="Int" id="2201531">bit</a><span class="delimiter">)</span>
+	<span class="keyword">private</span> <span class="keyword">final</span> boolean <a title="(bit: Int)Boolean" id="90574">flag</a><span class="delimiter">(</span>int <a title="Int" id="2201648">bit</a><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> <span class="delimiter">(</span>flags &amp; <span class="delimiter">(</span><span class="int">1</span> &lt;&lt; bit<span class="delimiter">)</span><span class="delimiter">)</span> != <span class="int">0</span>;
 	<span class="delimiter">}</span>
 
-	public <span class="keyword">final</span> byte <a title="()Byte" id="90573">raw</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> byte <a title="()Byte" id="90575">raw</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flags;
 	<span class="delimiter">}</span>
 
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90574">isAbstract</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90576">isAbstract</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>AbstractBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90575">isOverride</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90577">isOverride</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>OverrideBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90576">isFinal</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90578">isFinal</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>FinalBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90577">isSealed</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90579">isSealed</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>SealedBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90578">isImplicit</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90580">isImplicit</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>ImplicitBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90579">isLazy</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90581">isLazy</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>LazyBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90580">isMacro</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public <span class="keyword">final</span> boolean <a title="()Boolean" id="90582">isMacro</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> flag<span class="delimiter">(</span>MacroBit<span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	public String <a title="()java.lang.String" id="90581">toString</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	public String <a title="()java.lang.String" id="90583">toString</a><span class="delimiter">(</span><span class="delimiter">)</span>
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> <span class="string">&quot;Modifiers(&quot;</span> + <span class="string">&quot;isAbstract: &quot;</span> + isAbstract<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isOverride: &quot;</span> + isOverride<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isFinal: &quot;</span> + isFinal<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isSealed: &quot;</span> + isSealed<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isImplicit: &quot;</span> + isImplicit<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isLazy: &quot;</span> + isLazy<span class="delimiter">(</span><span class="delimiter">)</span> + <span class="string">&quot;, &quot;</span> + <span class="string">&quot;isMacro: &quot;</span> + isMacro<span class="delimiter">(</span><span class="delimiter">)</span>+ <span class="string">&quot;)&quot;</span>;
 	<span class="delimiter">}</span>

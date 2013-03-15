@@ -19,11 +19,11 @@
 
 public <span class="keyword">abstract</span> <span class="keyword">class</span> <a title="object xsbti.api.AbstractLazy" id="10146">AbstractLazy</a>&lt;<a title="Nothing" id="10147">T</a>&gt; implements <a href="Lazy.java.html#10151" title="xsbti.api.Lazy">Lazy</a>&lt;<a href="#10147" title="T">T</a>&gt;, java.io.<span title="java.io.Serializable">Serializable</span>
 <span class="delimiter">{</span>
-	<span class="keyword">private</span> Object <a title="()java.lang.Object" id="110897">writeReplace</a><span class="delimiter">(</span><span class="delimiter">)</span> throws ObjectStreamException
+	<span class="keyword">private</span> Object <a title="()java.lang.Object" id="110899">writeReplace</a><span class="delimiter">(</span><span class="delimiter">)</span> throws ObjectStreamException
 	<span class="delimiter">{</span>
 		<span class="keyword">return</span> <span class="keyword">new</span> StrictLazy&lt;T&gt;<span class="delimiter">(</span>get<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>;
 	<span class="delimiter">}</span>
-	<span class="keyword">private</span> static <span class="keyword">final</span> <span class="keyword">class</span> <a title="object xsbti.api.AbstractLazy.StrictLazy" id="2201514">StrictLazy</a>&lt;<a id="2201515">T</a>&gt; implements Lazy&lt;T&gt;, java.io.Serializable
+	<span class="keyword">private</span> static <span class="keyword">final</span> <span class="keyword">class</span> <a title="object xsbti.api.AbstractLazy.StrictLazy" id="2201631">StrictLazy</a>&lt;<a id="2201632">T</a>&gt; implements Lazy&lt;T&gt;, java.io.Serializable
 	<span class="delimiter">{</span>
 		<span class="keyword">private</span> <span class="keyword">final</span> T value;
 		StrictLazy<span class="delimiter">(</span>T t<span class="delimiter">)</span>

@@ -27,7 +27,7 @@
 <span class="keyword">import</span> java.util.List;
 
 public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="12338">ForkMain</a> <span class="delimiter">{</span>
-	static <span class="keyword">class</span> <a title="object sbt.ForkMain.SubclassFingerscan" id="366163">SubclassFingerscan</a> implements TestFingerprint, Serializable <span class="delimiter">{</span>
+	static <span class="keyword">class</span> <a title="object sbt.ForkMain.SubclassFingerscan" id="366220">SubclassFingerscan</a> implements TestFingerprint, Serializable <span class="delimiter">{</span>
 		<span class="keyword">private</span> boolean isModule;
 		<span class="keyword">private</span> String superClassName;
 		SubclassFingerscan<span class="delimiter">(</span>SubclassFingerprint print<span class="delimiter">)</span> <span class="delimiter">{</span>
@@ -37,7 +37,7 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 		public boolean isModule<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> isModule; <span class="delimiter">}</span>
 		public String superClassName<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> superClassName; <span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	static <span class="keyword">class</span> <a title="object sbt.ForkMain.AnnotatedFingerscan" id="366166">AnnotatedFingerscan</a> implements AnnotatedFingerprint, Serializable <span class="delimiter">{</span>
+	static <span class="keyword">class</span> <a title="object sbt.ForkMain.AnnotatedFingerscan" id="366223">AnnotatedFingerscan</a> implements AnnotatedFingerprint, Serializable <span class="delimiter">{</span>
 		<span class="keyword">private</span> boolean isModule;
 		<span class="keyword">private</span> String annotationName;
 		AnnotatedFingerscan<span class="delimiter">(</span>AnnotatedFingerprint print<span class="delimiter">)</span> <span class="delimiter">{</span>
@@ -47,11 +47,11 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 		public boolean isModule<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> isModule; <span class="delimiter">}</span>
 		public String annotationName<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> annotationName; <span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	public static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkTestDefinition" id="366169">ForkTestDefinition</a> implements Serializable <span class="delimiter">{</span>
-		public String <a title="java.lang.String" id="2097679">name</a>;
-		public Fingerprint <a title="org.scalatools.testing.Fingerprint" id="2097680">fingerprint</a>;
+	public static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkTestDefinition" id="366226">ForkTestDefinition</a> implements Serializable <span class="delimiter">{</span>
+		public String <a title="java.lang.String" id="2097742">name</a>;
+		public Fingerprint <a title="org.scalatools.testing.Fingerprint" id="2097743">fingerprint</a>;
 
-		public ForkTestDefinition<a href="#366169" title="sbt.ForkMain.ForkTestDefinition" class="delimiter">(</a>String <a title="java.lang.String" id="2097682">name</a>, Fingerprint <a title="org.scalatools.testing.Fingerprint" id="2097683">fingerprint</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+		public ForkTestDefinition<a href="#366226" title="sbt.ForkMain.ForkTestDefinition" class="delimiter">(</a>String <a title="java.lang.String" id="2097745">name</a>, Fingerprint <a title="org.scalatools.testing.Fingerprint" id="2097746">fingerprint</a><span class="delimiter">)</span> <span class="delimiter">{</span>
 			<span class="keyword">this</span>.name = name;
 			<span class="keyword">if</span> <span class="delimiter">(</span>fingerprint instanceof SubclassFingerprint<span class="delimiter">)</span> <span class="delimiter">{</span>
 				<span class="keyword">this</span>.fingerprint = <span class="keyword">new</span> SubclassFingerscan<span class="delimiter">(</span><span class="delimiter">(</span>SubclassFingerprint<span class="delimiter">)</span> fingerprint<span class="delimiter">)</span>;
@@ -60,7 +60,7 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 			<span class="delimiter">}</span>
 		<span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkError" id="366172">ForkError</a> <span class="keyword">extends</span> Exception <span class="delimiter">{</span>
+	static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkError" id="366229">ForkError</a> <span class="keyword">extends</span> Exception <span class="delimiter">{</span>
 		<span class="keyword">private</span> String originalMessage;
 		<span class="keyword">private</span> ForkError cause;
 		ForkError<span class="delimiter">(</span>Throwable t<span class="delimiter">)</span> <span class="delimiter">{</span>
@@ -71,7 +71,7 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 		public String getMessage<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> originalMessage; <span class="delimiter">}</span>
 		public Exception getCause<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> cause; <span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkEvent" id="366175">ForkEvent</a> implements Event, Serializable <span class="delimiter">{</span>
+	static <span class="keyword">class</span> <a title="object sbt.ForkMain.ForkEvent" id="366232">ForkEvent</a> implements Event, Serializable <span class="delimiter">{</span>
 		<span class="keyword">private</span> String testName;
 		<span class="keyword">private</span> String description;
 		<span class="keyword">private</span> Result result;
@@ -87,7 +87,7 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 		public Result result<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> result; <span class="delimiter">}</span>
 		public Throwable error<span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span class="keyword">return</span> error; <span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	public static void <a title="(args: Array[java.lang.String])Unit" id="366176">main</a><span class="delimiter">(</span>String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[java.lang.String]" id="2207922">args</a><span class="delimiter">)</span> throws Exception <span class="delimiter">{</span>
+	public static void <a title="(args: Array[java.lang.String])Unit" id="366233">main</a><span class="delimiter">(</span>String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="Array[java.lang.String]" id="2208039">args</a><span class="delimiter">)</span> throws Exception <span class="delimiter">{</span>
 		Socket socket = <span class="keyword">new</span> Socket<span class="delimiter">(</span>InetAddress.getByName<span class="delimiter">(</span><span class="keyword">null</span><span class="delimiter">)</span>, Integer.valueOf<span class="delimiter">(</span>args<span class="delimiter">[</span><span class="int">0</span><span class="delimiter">]</span><span class="delimiter">)</span><span class="delimiter">)</span>;
 		<span class="keyword">final</span> ObjectInputStream is = <span class="keyword">new</span> ObjectInputStream<span class="delimiter">(</span>socket.getInputStream<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>;
 		<span class="keyword">final</span> ObjectOutputStream os = <span class="keyword">new</span> ObjectOutputStream<span class="delimiter">(</span>socket.getOutputStream<span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>;
@@ -102,7 +102,7 @@ public <span class="keyword">class</span> <a title="object sbt.ForkMain" id="123
 			System.exit<span class="delimiter">(</span><span class="int">0</span><span class="delimiter">)</span>;
 		<span class="delimiter">}</span>
 	<span class="delimiter">}</span>
-	<span class="keyword">private</span> static <span class="keyword">class</span> <a title="object sbt.ForkMain.Run" id="366179">Run</a> <span class="delimiter">{</span>
+	<span class="keyword">private</span> static <span class="keyword">class</span> <a title="object sbt.ForkMain.Run" id="366236">Run</a> <span class="delimiter">{</span>
 		boolean matches<span class="delimiter">(</span>Fingerprint f1, Fingerprint f2<span class="delimiter">)</span> <span class="delimiter">{</span>
 			<span class="keyword">if</span> <span class="delimiter">(</span>f1 instanceof SubclassFingerprint &amp;&amp; f2 instanceof SubclassFingerprint<span class="delimiter">)</span> <span class="delimiter">{</span>
 				<span class="keyword">final</span> SubclassFingerprint sf1 = <span class="delimiter">(</span>SubclassFingerprint<span class="delimiter">)</span> f1;
