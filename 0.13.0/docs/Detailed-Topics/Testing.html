@@ -1,0 +1,556 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Triggered Execution" href="Triggered-Execution.html" />
+    <link rel="prev" title="Tasks" href="Tasks.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Testing</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Triggered-Execution.html">Triggered Execution</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Tasks.html">Tasks</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="testing">
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>The standard source locations for testing are:</p>
+<ul class="simple">
+<li>Scala sources in <tt class="docutils literal"><span class="pre">src/test/scala/</span></tt></li>
+<li>Java sources in <tt class="docutils literal"><span class="pre">src/test/java/</span></tt></li>
+<li>Resources for the test classpath in <tt class="docutils literal"><span class="pre">src/test/resources/</span></tt></li>
+</ul>
+<p>The resources may be accessed from tests by using the <tt class="docutils literal"><span class="pre">getResource</span></tt>
+methods of <tt class="docutils literal"><span class="pre">java.lang.Class</span></tt> or <tt class="docutils literal"><span class="pre">java.lang.ClassLoader</span></tt>.</p>
+<p>The main Scala testing frameworks
+(<a class="reference external" href="http://etorreborre.github.com/specs2/">specs2</a>,
+<a class="reference external" href="http://code.google.com/p/scalacheck/">ScalaCheck</a>, and
+<a class="reference external" href="http://www.artima.com/scalatest/">ScalaTest</a>) provide an
+implementation of the common test interface and only need to be added to
+the classpath to work with sbt. For example, ScalaCheck may be used by
+declaring it as a <a class="reference internal" href="Library-Management.html"><em>managed dependency</em></a>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalacheck&quot;</span> <span class="o">%</span> <span class="s">&quot;1.9&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
+<p>The fourth component <tt class="docutils literal"><span class="pre">&quot;test&quot;</span></tt> is the <a class="reference internal" href="../Dormant/Configurations.html"><em>configuration</em></a>
+and means that ScalaCheck will only be on the test classpath and it
+isn't needed by the main sources. This is generally good practice for
+libraries because your users don't typically need your test dependencies
+to use your library.</p>
+<p>With the library dependency defined, you can then add test sources in
+the locations listed above and compile and run tests. The tasks for
+running tests are <tt class="docutils literal"><span class="pre">test</span></tt> and <tt class="docutils literal"><span class="pre">testOnly</span></tt>. The <tt class="docutils literal"><span class="pre">test</span></tt> task accepts
+no command line arguments and runs all tests:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>
+</pre></div>
+</div>
+<div class="section" id="testonly">
+<h3>testOnly<a class="headerlink" href="#testonly" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">testOnly</span></tt> task accepts a whitespace separated list of test names
+to run. For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest1 org.example.MyTest2
+</pre></div>
+</div>
+<p>It supports wildcards as well:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.*Slow org.example.MyTest1
+</pre></div>
+</div>
+</div>
+<div class="section" id="testquick">
+<h3>testQuick<a class="headerlink" href="#testquick" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">testQuick</span></tt> task, like <tt class="docutils literal"><span class="pre">testOnly</span></tt>, allows to filter the tests
+to run to specific tests or wildcards using the same syntax to indicate
+the filters. In addition to the explicit filter, only the tests that
+satisfy one of the following conditions are run:</p>
+<ul class="simple">
+<li>The tests that failed in the previous run</li>
+<li>The tests that were not run before</li>
+<li>The tests that have one or more transitive dependencies, maybe in a
+different project, recompiled.</li>
+</ul>
+<div class="section" id="tab-completion">
+<h4>Tab completion<a class="headerlink" href="#tab-completion" title="Permalink to this headline">¶</a></h4>
+<p>Tab completion is provided for test names based on the results of the
+last <tt class="docutils literal"><span class="pre">test:compile</span></tt>. This means that a new sources aren't available
+for tab completion until they are compiled and deleted sources won't be
+removed from tab completion until a recompile. A new test source can
+still be manually written out and run using <tt class="docutils literal"><span class="pre">testOnly</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="other-tasks">
+<h3>Other tasks<a class="headerlink" href="#other-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Tasks that are available for main sources are generally available for
+test sources, but are prefixed with <tt class="docutils literal"><span class="pre">test:</span></tt> on the command line and
+are referenced in Scala code with <tt class="docutils literal"><span class="pre">in</span> <span class="pre">Test</span></tt>. These tasks include:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">test:compile</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:console</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:consoleQuick</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:run</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">test:runMain</span></tt></li>
+</ul>
+<p>See <a class="reference internal" href="../Getting-Started/Running.html"><em>Running</em></a> for details on these tasks.</p>
+</div>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>By default, logging is buffered for each test source file until all
+tests for that file complete. This can be disabled with:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">logBuffered</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="test-framework-arguments">
+<h3>Test Framework Arguments<a class="headerlink" href="#test-framework-arguments" title="Permalink to this headline">¶</a></h3>
+<p>Arguments to the test framework may be provided on the command line to
+the <tt class="docutils literal"><span class="pre">testOnly</span></tt> tasks following a <tt class="docutils literal"><span class="pre">--</span></tt> separator. For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest -- -d -S
+</pre></div>
+</div>
+<p>To specify test framework arguments as part of the build, add options
+constructed by <tt class="docutils literal"><span class="pre">Tests.Argument</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="s">&quot;-d&quot;</span><span class="o">,</span> <span class="s">&quot;-g&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To specify them for a specific test framework only:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Argument</span><span class="o">(</span><span class="nc">TestFrameworks</span><span class="o">.</span><span class="nc">ScalaCheck</span><span class="o">,</span> <span class="s">&quot;-d&quot;</span><span class="o">,</span> <span class="s">&quot;-g&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-and-cleanup">
+<h3>Setup and Cleanup<a class="headerlink" href="#setup-and-cleanup" title="Permalink to this headline">¶</a></h3>
+<p>Specify setup and cleanup actions using <tt class="docutils literal"><span class="pre">Tests.Setup</span></tt> and
+<tt class="docutils literal"><span class="pre">Tests.Cleanup</span></tt>. These accept either a function of type <tt class="docutils literal"><span class="pre">()</span> <span class="pre">=&gt;</span> <span class="pre">Unit</span></tt>
+or a function of type <tt class="docutils literal"><span class="pre">ClassLoader</span> <span class="pre">=&gt;</span> <span class="pre">Unit</span></tt>. The variant that accepts
+a ClassLoader is passed the class loader that is (or was) used for
+running the tests. It provides access to the test classes as well as the
+test framework classes.</p>
+<p>Examples:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Setup</span><span class="o">(</span> <span class="o">()</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Setup&quot;</span><span class="o">)</span> <span class="o">)</span>
+
+<span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Cleanup</span><span class="o">(</span> <span class="o">()</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Cleanup&quot;</span><span class="o">)</span> <span class="o">)</span>
+
+<span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Setup</span><span class="o">(</span> <span class="n">loader</span> <span class="k">=&gt;</span> <span class="o">...</span> <span class="o">)</span>
+
+<span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="nc">Tests</span><span class="o">.</span><span class="nc">Cleanup</span><span class="o">(</span> <span class="n">loader</span> <span class="k">=&gt;</span> <span class="o">...</span> <span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-parallel-execution-of-tests">
+<h3>Disable Parallel Execution of Tests<a class="headerlink" href="#disable-parallel-execution-of-tests" title="Permalink to this headline">¶</a></h3>
+<p>By default, sbt runs all tasks in parallel. Because each test is mapped
+to a task, tests are also run in parallel by default. To make tests
+within a given project execute serially:</p>
+<p><tt class="docutils literal"><span class="pre">scala</span> <span class="pre">parallelExecution</span> <span class="pre">in</span> <span class="pre">Test</span> <span class="pre">:=</span> <span class="pre">false</span></tt> <tt class="docutils literal"><span class="pre">Test</span></tt> can be replaced
+with <tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> to only execute integration tests serially.
+Note that tests from different projects may still execute concurrently.</p>
+</div>
+<div class="section" id="filter-classes">
+<h3>Filter classes<a class="headerlink" href="#filter-classes" title="Permalink to this headline">¶</a></h3>
+<p>If you want to only run test classes whose name ends with &quot;Test&quot;, use
+<tt class="docutils literal"><span class="pre">Tests.Filter</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="nc">Tests</span><span class="o">.</span><span class="nc">Filter</span><span class="o">(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;Test&quot;</span><span class="o">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forking-tests">
+<h3>Forking tests<a class="headerlink" href="#forking-tests" title="Permalink to this headline">¶</a></h3>
+<p>In version 0.12.0, the facility to run tests in a separate JVM was added. The setting</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>specifies that all tests will be executed in a single external JVM. See
+<a class="reference internal" href="Forking.html"><em>Forking</em></a> for configuring standard options for forking. More control
+over how tests are assigned to JVMs and what options to pass to those is
+available with <tt class="docutils literal"><span class="pre">testGrouping</span></tt> key. For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">Tests._</span>
+
+<span class="o">{</span>
+  <span class="k">def</span> <span class="n">groupByFirst</span><span class="o">(</span><span class="n">tests</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">TestDefinition</span><span class="o">])</span> <span class="k">=</span>
+    <span class="n">tests</span> <span class="n">groupBy</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">name</span><span class="o">(</span><span class="mi">0</span><span class="o">))</span> <span class="n">map</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="o">(</span><span class="n">letter</span><span class="o">,</span> <span class="n">tests</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="nc">Group</span><span class="o">(</span><span class="n">letter</span><span class="o">.</span><span class="n">toString</span><span class="o">,</span> <span class="n">tests</span><span class="o">,</span> <span class="nc">SubProcess</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-Dfirst.letter&quot;</span><span class="o">+</span><span class="n">letter</span><span class="o">)))</span>
+    <span class="o">}</span> <span class="n">toSeq</span><span class="o">;</span>
+  <span class="n">testGrouping</span> <span class="o">:=</span> <span class="n">groupByFirst</span><span class="o">(</span> <span class="o">(</span><span class="n">definedTests</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">value</span> <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The tests in a single group are run sequentially. Controlling the number
+of forked JVMs allowed to run at the same time is through setting the
+limit on <tt class="docutils literal"><span class="pre">Tags.ForkedTestGroup</span></tt> tag which has 1 as a default value.
+<tt class="docutils literal"><span class="pre">Setup</span></tt> and <tt class="docutils literal"><span class="pre">Cleanup</span></tt> actions are not supported when a group is
+forked.</p>
+</div>
+</div>
+<div class="section" id="additional-test-configurations">
+<h2>Additional test configurations<a class="headerlink" href="#additional-test-configurations" title="Permalink to this headline">¶</a></h2>
+<p>You can add an additional test configuration to have a separate set of
+test sources and associated compilation, packaging, and testing tasks
+and settings. The steps are:</p>
+<ul class="simple">
+<li>Define the configuration</li>
+<li>Add the tasks and settings</li>
+<li>Declare library dependencies</li>
+<li>Create sources</li>
+<li>Run tasks</li>
+</ul>
+<p>The following two examples demonstrate this. The first example shows how
+to enable integration tests. The second shows how to define a customized
+test configuration. This allows you to define multiple types of tests
+per project.</p>
+<div class="section" id="integration-tests">
+<h3>Integration Tests<a class="headerlink" href="#integration-tests" title="Permalink to this headline">¶</a></h3>
+<p>The following full build configuration demonstrates integration tests.</p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">sbt._</span>
+  <span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nc">Build</span>
+<span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
+    <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span>
+      <span class="o">.</span><span class="n">configs</span><span class="o">(</span> <span class="nc">IntegrationTest</span> <span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="nc">Defaults</span><span class="o">.</span><span class="n">itSettings</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">specs</span> <span class="o">)</span>
+
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">specs</span> <span class="k">=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;specs&quot;</span> <span class="o">%</span> <span class="s">&quot;1.6.8&quot;</span> <span class="o">%</span> <span class="s">&quot;it,test&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">configs(IntegrationTest)</span></tt> adds the predefined integration test
+configuration. This configuration is referred to by the name <tt class="docutils literal"><span class="pre">it</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">settings(</span> <span class="pre">Defaults.itSettings</span> <span class="pre">:</span> <span class="pre">_*</span> <span class="pre">)</span></tt> adds compilation, packaging,
+and testing actions and settings in the <tt class="docutils literal"><span class="pre">IntegrationTest</span></tt>
+configuration.</li>
+<li><tt class="docutils literal"><span class="pre">settings(</span> <span class="pre">libraryDependencies</span> <span class="pre">+=</span> <span class="pre">specs</span> <span class="pre">)</span></tt> adds specs to both the
+standard <tt class="docutils literal"><span class="pre">test</span></tt> configuration and the integration test
+configuration <tt class="docutils literal"><span class="pre">it</span></tt>. To define a dependency only for integration
+tests, use <tt class="docutils literal"><span class="pre">&quot;it&quot;</span></tt> as the configuration instead of <tt class="docutils literal"><span class="pre">&quot;it,test&quot;</span></tt>.</li>
+</ul>
+<p>The standard source hierarchy is used:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">src/it/scala</span></tt> for Scala sources</li>
+<li><tt class="docutils literal"><span class="pre">src/it/java</span></tt> for Java sources</li>
+<li><tt class="docutils literal"><span class="pre">src/it/resources</span></tt> for resources that should go on the integration
+test classpath</li>
+</ul>
+<p>The standard testing tasks are available, but must be prefixed with
+<tt class="docutils literal"><span class="pre">it:</span></tt>. For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> it:testOnly org.example.AnIntegrationTest
+</pre></div>
+</div>
+<p>Similarly the standard settings may be configured for the
+<tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> configuration. If not specified directly, most
+<tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> settings delegate to <tt class="docutils literal"><span class="pre">Test</span></tt> settings by default.
+For example, if test options are specified as:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">+=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>then these will be picked up by the <tt class="docutils literal"><span class="pre">Test</span></tt> configuration and in turn
+by the <tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> configuration. Options can be added
+specifically for integration tests by putting them in the
+<tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">IntegrationTest</span> <span class="o">+=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Or, use <tt class="docutils literal"><span class="pre">:=</span></tt> to overwrite any existing options, declaring these to be
+the definitive integration test options:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">IntegrationTest</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(...)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-test-configuration">
+<h3>Custom test configuration<a class="headerlink" href="#custom-test-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The previous example may be generalized to a custom test configuration.</p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">sbt._</span>
+  <span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nc">Build</span>
+<span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
+    <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span>
+      <span class="o">.</span><span class="n">configs</span><span class="o">(</span> <span class="nc">FunTest</span> <span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">FunTest</span><span class="o">)(</span><span class="nc">Defaults</span><span class="o">.</span><span class="n">testSettings</span><span class="o">)</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">specs</span> <span class="o">)</span>
+
+  <span class="k">lazy</span> <span class="k">val</span> <span class="nc">FunTest</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;fun&quot;</span><span class="o">)</span> <span class="n">extend</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">specs</span> <span class="k">=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;specs&quot;</span> <span class="o">%</span> <span class="s">&quot;1.6.8&quot;</span> <span class="o">%</span> <span class="s">&quot;fun&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Instead of using the built-in configuration, we defined a new one:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="nc">FunTest</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;fun&quot;</span><span class="o">)</span> <span class="n">extend</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">extend(Test)</span></tt> part means to delegate to <tt class="docutils literal"><span class="pre">Test</span></tt> for undefined
+<tt class="docutils literal"><span class="pre">CustomTest</span></tt> settings. The line that adds the tasks and settings for
+the new test configuration is:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">settings</span><span class="o">(</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">FunTest</span><span class="o">)(</span><span class="nc">Defaults</span><span class="o">.</span><span class="n">testSettings</span><span class="o">)</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This says to add test and settings tasks in the <tt class="docutils literal"><span class="pre">FunTest</span></tt>
+configuration. We could have done it this way for integration tests as
+well. In fact, <tt class="docutils literal"><span class="pre">Defaults.itSettings</span></tt> is a convenience definition:
+<tt class="docutils literal"><span class="pre">val</span> <span class="pre">itSettings</span> <span class="pre">=</span> <span class="pre">inConfig(IntegrationTest)(Defaults.testSettings)</span></tt>.</p>
+<p>The comments in the integration test section hold, except with
+<tt class="docutils literal"><span class="pre">IntegrationTest</span></tt> replaced with <tt class="docutils literal"><span class="pre">FunTest</span></tt> and <tt class="docutils literal"><span class="pre">&quot;it&quot;</span></tt> replaced with
+<tt class="docutils literal"><span class="pre">&quot;fun&quot;</span></tt>. For example, test options can be configured specifically for
+<tt class="docutils literal"><span class="pre">FunTest</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testOptions</span> <span class="n">in</span> <span class="nc">FunTest</span> <span class="o">+=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Test tasks are run by prefixing them with <tt class="docutils literal"><span class="pre">fun:</span></tt></p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> fun:test
+</pre></div>
+</div>
+</div>
+<div class="section" id="additional-test-configurations-with-shared-sources">
+<h3>Additional test configurations with shared sources<a class="headerlink" href="#additional-test-configurations-with-shared-sources" title="Permalink to this headline">¶</a></h3>
+<p>An alternative to adding separate sets of test sources (and
+compilations) is to share sources. In this approach, the sources are
+compiled together using the same classpath and are packaged together.
+However, different tests are run depending on the configuration.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">B</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
+    <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span>
+      <span class="o">.</span><span class="n">configs</span><span class="o">(</span> <span class="nc">FunTest</span> <span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">FunTest</span><span class="o">)(</span><span class="nc">Defaults</span><span class="o">.</span><span class="n">testTasks</span><span class="o">)</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+      <span class="o">.</span><span class="n">settings</span><span class="o">(</span>
+         <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">specs</span><span class="o">,</span>
+         <span class="n">testOptions</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="nc">Tests</span><span class="o">.</span><span class="nc">Filter</span><span class="o">(</span><span class="n">itFilter</span><span class="o">)),</span>
+         <span class="n">testOptions</span> <span class="n">in</span> <span class="nc">FunTest</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="nc">Tests</span><span class="o">.</span><span class="nc">Filter</span><span class="o">(</span><span class="n">unitFilter</span><span class="o">))</span>
+         <span class="o">)</span>
+
+  <span class="k">def</span> <span class="n">itFilter</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">name</span> <span class="n">endsWith</span> <span class="s">&quot;ITest&quot;</span>
+  <span class="k">def</span> <span class="n">unitFilter</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="o">(</span><span class="n">name</span> <span class="n">endsWith</span> <span class="s">&quot;Test&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">itFilter</span><span class="o">(</span><span class="n">name</span><span class="o">)</span>
+
+  <span class="k">lazy</span> <span class="k">val</span> <span class="nc">FunTest</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;fun&quot;</span><span class="o">)</span> <span class="n">extend</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span>
+  <span class="k">lazy</span> <span class="k">val</span> <span class="n">specs</span> <span class="k">=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;specs&quot;</span> <span class="o">%</span> <span class="s">&quot;1.6.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The key differences are:</p>
+<ul class="simple">
+<li>We are now only adding the test tasks
+(<tt class="docutils literal"><span class="pre">inConfig(FunTest)(Defaults.testTasks)</span></tt>) and not compilation and
+packaging tasks and settings.</li>
+<li>We filter the tests to be run for each configuration.</li>
+</ul>
+<p>To run standard unit tests, run <tt class="docutils literal"><span class="pre">test</span></tt> (or equivalently,
+<tt class="docutils literal"><span class="pre">test:test</span></tt>):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>
+</pre></div>
+</div>
+<p>To run tests for the added configuration (here, <tt class="docutils literal"><span class="pre">&quot;fun&quot;</span></tt>), prefix it
+with the configuration name as before:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> fun:test
+<span class="gp">&gt;</span> fun:testOnly org.example.AFunTest
+</pre></div>
+</div>
+<div class="section" id="application-to-parallel-execution">
+<h4>Application to parallel execution<a class="headerlink" href="#application-to-parallel-execution" title="Permalink to this headline">¶</a></h4>
+<p>One use for this shared-source approach is to separate tests that can
+run in parallel from those that must execute serially. Apply the
+procedure described in this section for an additional configuration.
+Let's call the configuration <tt class="docutils literal"><span class="pre">serial</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="nc">Serial</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;serial&quot;</span><span class="o">)</span> <span class="n">extend</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Then, we can disable parallel execution in just that configuration
+using:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Serial</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p>The tests to run in parallel would be run with <tt class="docutils literal"><span class="pre">test</span></tt> and the ones to
+run in serial would be run with <tt class="docutils literal"><span class="pre">serial:test</span></tt>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="junit">
+<h2>JUnit<a class="headerlink" href="#junit" title="Permalink to this headline">¶</a></h2>
+<p>Support for JUnit is provided by
+<a class="reference external" href="https://github.com/szeiger/junit-interface">junit-interface</a>. To add
+JUnit support into your project, add the junit-interface dependency in
+your project's main build.sbt file.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;com.novocode&quot;</span> <span class="o">%</span> <span class="s">&quot;junit-interface&quot;</span> <span class="o">%</span> <span class="s">&quot;0.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test-&gt;default&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extensions">
+<h2>Extensions<a class="headerlink" href="#extensions" title="Permalink to this headline">¶</a></h2>
+<p>This page describes adding support for additional testing libraries and
+defining additional test reporters. You do this by implementing <tt class="docutils literal"><span class="pre">sbt</span></tt>
+interfaces (described below). If you are the author of the testing
+framework, you can depend on the test interface as a provided
+dependency. Alternatively, anyone can provide support for a test
+framework by implementing the interfaces in a separate project and
+packaging the project as an sbt <a class="reference internal" href="../Extending/Plugins.html"><em>Plugin</em></a>.</p>
+<div class="section" id="custom-test-framework">
+<h3>Custom Test Framework<a class="headerlink" href="#custom-test-framework" title="Permalink to this headline">¶</a></h3>
+<p>The main Scala testing libraries have built-in support for sbt.
+To add support for a different framework, implement the
+<a class="reference external" href="http://github.com/harrah/test-interface">uniform test interface</a>.</p>
+</div>
+<div class="section" id="custom-test-reporters">
+<h3>Custom Test Reporters<a class="headerlink" href="#custom-test-reporters" title="Permalink to this headline">¶</a></h3>
+<p>Test frameworks report status and results to test reporters. You can
+create a new test reporter by implementing either
+<a class="reference external" href="../../api/sbt/TestReportListener.html">TestReportListener</a>
+or
+<a class="reference external" href="../../api/sbt/TestsListener.html">TestsListener</a>.</p>
+</div>
+<div class="section" id="using-extensions">
+<h3>Using Extensions<a class="headerlink" href="#using-extensions" title="Permalink to this headline">¶</a></h3>
+<p>To use your extensions in a project definition:</p>
+<p>Modify the <tt class="docutils literal"><span class="pre">testFrameworks</span></tt>setting to reference your test framework:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testFrameworks</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">TestFramework</span><span class="o">(</span><span class="s">&quot;custom.framework.ClassName&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Specify the test reporters you want to use by overriding the
+<tt class="docutils literal"><span class="pre">testListeners</span></tt> method in your project definition.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">testListeners</span> <span class="o">+=</span> <span class="n">customTestListener</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">customTestListener</span></tt> is of type <tt class="docutils literal"><span class="pre">sbt.TestReportListener</span></tt>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Testing</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a><ul>
+<li><a class="reference internal" href="#testonly">testOnly</a></li>
+<li><a class="reference internal" href="#testquick">testQuick</a><ul>
+<li><a class="reference internal" href="#tab-completion">Tab completion</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-tasks">Other tasks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#test-framework-arguments">Test Framework Arguments</a></li>
+<li><a class="reference internal" href="#setup-and-cleanup">Setup and Cleanup</a></li>
+<li><a class="reference internal" href="#disable-parallel-execution-of-tests">Disable Parallel Execution of Tests</a></li>
+<li><a class="reference internal" href="#filter-classes">Filter classes</a></li>
+<li><a class="reference internal" href="#forking-tests">Forking tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-test-configurations">Additional test configurations</a><ul>
+<li><a class="reference internal" href="#integration-tests">Integration Tests</a></li>
+<li><a class="reference internal" href="#custom-test-configuration">Custom test configuration</a></li>
+<li><a class="reference internal" href="#additional-test-configurations-with-shared-sources">Additional test configurations with shared sources</a><ul>
+<li><a class="reference internal" href="#application-to-parallel-execution">Application to parallel execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#junit">JUnit</a></li>
+<li><a class="reference internal" href="#extensions">Extensions</a><ul>
+<li><a class="reference internal" href="#custom-test-framework">Custom Test Framework</a></li>
+<li><a class="reference internal" href="#custom-test-reporters">Custom Test Reporters</a></li>
+<li><a class="reference internal" href="#using-extensions">Using Extensions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

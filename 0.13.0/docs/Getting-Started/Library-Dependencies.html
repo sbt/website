@@ -1,0 +1,318 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Library Dependencies &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title=".scala Build Definition" href="Full-Def.html" />
+    <link rel="prev" title="More Kinds of Setting" href="More-About-Settings.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Library Dependencies</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Full-Def.html"><tt class="docutils literal docutils literal"><span class="pre">.scala</span></tt> Build Definition</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="More-About-Settings.html">More Kinds of Setting</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="library-dependencies">
+<h1>Library Dependencies<a class="headerlink" href="#library-dependencies" title="Permalink to this headline">¶</a></h1>
+<p>This page assumes you've read the earlier Getting Started pages, in
+particular <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>,
+<a class="reference internal" href="Scopes.html"><em>scopes</em></a>, and <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<p>Library dependencies can be added in two ways:</p>
+<ul class="simple">
+<li><em>unmanaged dependencies</em> are jars dropped into the <tt class="docutils literal"><span class="pre">lib</span></tt> directory</li>
+<li><em>managed dependencies</em> are configured in the build definition and
+downloaded automatically from repositories</li>
+</ul>
+<div class="section" id="unmanaged-dependencies">
+<h2>Unmanaged dependencies<a class="headerlink" href="#unmanaged-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Most people use managed dependencies instead of unmanaged. But unmanaged
+can be simpler when starting out.</p>
+<p>Unmanaged dependencies work like this: add jars to <tt class="docutils literal"><span class="pre">lib</span></tt> and they will
+be placed on the project classpath. Not much else to it!</p>
+<p>You can place test jars such as
+<a class="reference external" href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a class="reference external" href="http://code.google.com/p/specs/">specs</a>, and
+<a class="reference external" href="http://www.scalatest.org/">ScalaTest</a> in <tt class="docutils literal"><span class="pre">lib</span></tt> as well.</p>
+<p>Dependencies in <tt class="docutils literal"><span class="pre">lib</span></tt> go on all the classpaths (for <tt class="docutils literal"><span class="pre">compile</span></tt>,
+<tt class="docutils literal"><span class="pre">test</span></tt>, <tt class="docutils literal"><span class="pre">run</span></tt>, and <tt class="docutils literal"><span class="pre">console</span></tt>). If you wanted to change the
+classpath for just one of those, you would adjust
+<tt class="docutils literal"><span class="pre">dependencyClasspath</span> <span class="pre">in</span> <span class="pre">Compile</span></tt> or <tt class="docutils literal"><span class="pre">dependencyClasspath</span> <span class="pre">in</span> <span class="pre">Runtime</span></tt>
+for example. You could use <tt class="docutils literal"><span class="pre">~=</span></tt> to get the previous classpath value,
+filter some entries out, and return a new classpath value. See <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>
+for details of <tt class="docutils literal"><span class="pre">~=</span></tt>.</p>
+<p>There's nothing to add to <tt class="docutils literal"><span class="pre">build.sbt</span></tt> to use unmanaged dependencies,
+though you could change the <tt class="docutils literal"><span class="pre">unmanagedBase</span></tt> key if you'd like to use
+a different directory rather than <tt class="docutils literal"><span class="pre">lib</span></tt>.</p>
+<p>To use <tt class="docutils literal"><span class="pre">custom_lib</span></tt> instead of <tt class="docutils literal"><span class="pre">lib</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">baseDirectory</span></tt> is the project's root directory, so here you're
+changing <tt class="docutils literal"><span class="pre">unmanagedBase</span></tt> depending on <tt class="docutils literal"><span class="pre">baseDirectory</span></tt> using the
+special <tt class="docutils literal"><span class="pre">value</span></tt> method as explained in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<p>There's also an <tt class="docutils literal"><span class="pre">unmanagedJars</span></tt> task which lists the jars from the
+<tt class="docutils literal"><span class="pre">unmanagedBase</span></tt> directory. If you wanted to use multiple directories
+or do something else complex, you might need to replace the whole
+<tt class="docutils literal"><span class="pre">unmanagedJars</span></tt> task with one that does something else.</p>
+</div>
+<div class="section" id="managed-dependencies">
+<h2>Managed Dependencies<a class="headerlink" href="#managed-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>sbt uses <a class="reference external" href="http://ant.apache.org/ivy/">Apache Ivy</a> to implement managed
+dependencies, so if you're familiar with Maven or Ivy, you won't have
+much trouble.</p>
+<div class="section" id="the-librarydependencies-key">
+<h3>The <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> key<a class="headerlink" href="#the-librarydependencies-key" title="Permalink to this headline">¶</a></h3>
+<p>Most of the time, you can simply list your dependencies in the setting
+<tt class="docutils literal"><span class="pre">libraryDependencies</span></tt>. It's also possible to write a Maven POM file or
+Ivy configuration file to externally configure your dependencies, and
+have sbt use those external configuration files. You can learn more
+about that <a class="reference internal" href="../Detailed-Topics/Library-Management.html#external-maven-ivy"><em>here</em></a>.</p>
+<p>Declaring a dependency looks like this, where <tt class="docutils literal"><span class="pre">groupId</span></tt>,
+<tt class="docutils literal"><span class="pre">artifactId</span></tt>, and <tt class="docutils literal"><span class="pre">revision</span></tt> are strings:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span>
+</pre></div>
+</div>
+<p>or like this, where <tt class="docutils literal"><span class="pre">configuration</span></tt> is also a string:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span> <span class="o">%</span> <span class="n">configuration</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> is declared in <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a> like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">libraryDependencies</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">]](</span><span class="s">&quot;Declares managed dependencies.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">%</span></tt> methods create <tt class="docutils literal"><span class="pre">ModuleID</span></tt> objects from strings, then you add
+those <tt class="docutils literal"><span class="pre">ModuleID</span></tt> to <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt>.</p>
+<p>Of course, sbt (via Ivy) has to know where to download the module. If
+your module is in one of the default repositories sbt comes with, this
+will just work. For example, Apache Derby is in a default repository:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span>
+</pre></div>
+</div>
+<p>If you type that in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> and then <tt class="docutils literal"><span class="pre">update</span></tt>, sbt should
+download Derby to <tt class="docutils literal"><span class="pre">~/.ivy2/cache/org.apache.derby/</span></tt>. (By the way,
+<tt class="docutils literal"><span class="pre">update</span></tt> is a dependency of <tt class="docutils literal"><span class="pre">compile</span></tt> so there's no need to manually
+type <tt class="docutils literal"><span class="pre">update</span></tt> most of the time.)</p>
+<p>Of course, you can also use <tt class="docutils literal"><span class="pre">++=</span></tt> to add a list of dependencies all at
+once:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span><span class="o">,</span>
+    <span class="n">groupID</span> <span class="o">%</span> <span class="n">otherID</span> <span class="o">%</span> <span class="n">otherRevision</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>In rare cases you might find reasons to use <tt class="docutils literal"><span class="pre">:=</span></tt> with <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> as well.</p>
+</div>
+<div class="section" id="getting-the-right-scala-version-with">
+<h3>Getting the right Scala version with <tt class="docutils literal"><span class="pre">%%</span></tt><a class="headerlink" href="#getting-the-right-scala-version-with" title="Permalink to this headline">¶</a></h3>
+<p>If you use <tt class="docutils literal"><span class="pre">groupID</span> <span class="pre">%%</span> <span class="pre">artifactID</span> <span class="pre">%</span> <span class="pre">revision</span></tt> rather than
+<tt class="docutils literal"><span class="pre">groupID</span> <span class="pre">%</span> <span class="pre">artifactID</span> <span class="pre">%</span> <span class="pre">revision</span></tt> (the difference is the double <tt class="docutils literal"><span class="pre">%%</span></tt>
+after the groupID), sbt will add your project's Scala version to the
+artifact name. This is just a shortcut. You could write this without the
+<tt class="docutils literal"><span class="pre">%%</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-stm_2.9.1&quot;</span> <span class="o">%</span> <span class="s">&quot;0.3&quot;</span>
+</pre></div>
+</div>
+<p>Assuming the <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> for your build is <tt class="docutils literal"><span class="pre">2.9.1</span></tt>, the following
+is identical:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools&quot;</span> <span class="o">%%</span> <span class="s">&quot;scala-stm&quot;</span> <span class="o">%</span> <span class="s">&quot;0.3&quot;</span>
+</pre></div>
+</div>
+<p>The idea is that many dependencies are compiled for multiple Scala
+versions, and you'd like to get the one that matches your project.</p>
+<p>The complexity in practice is that often a dependency will work with a
+slightly different Scala version; but <tt class="docutils literal"><span class="pre">%%</span></tt> is not smart about that. So
+if the dependency is available for <tt class="docutils literal"><span class="pre">2.9.0</span></tt> but you're using
+<tt class="docutils literal"><span class="pre">scalaVersion</span> <span class="pre">:=</span> <span class="pre">&quot;2.9.1&quot;</span></tt>, you won't be able to use <tt class="docutils literal"><span class="pre">%%</span></tt> even though
+the <tt class="docutils literal"><span class="pre">2.9.0</span></tt> dependency likely works. If <tt class="docutils literal"><span class="pre">%%</span></tt> stops working just go
+see which versions the dependency is really built for, and hardcode the
+one you think will work (assuming there is one).</p>
+<p>See <a class="reference internal" href="../Detailed-Topics/Cross-Build.html"><em>Cross-building</em></a> for some more detail on this.</p>
+</div>
+<div class="section" id="ivy-revisions">
+<h3>Ivy revisions<a class="headerlink" href="#ivy-revisions" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">revision</span></tt> in <tt class="docutils literal"><span class="pre">groupID</span> <span class="pre">%</span> <span class="pre">artifactID</span> <span class="pre">%</span> <span class="pre">revision</span></tt> does not have to
+be a single fixed version. Ivy can select the latest revision of a
+module according to constraints you specify. Instead of a fixed revision
+like <tt class="docutils literal"><span class="pre">&quot;1.6.1&quot;</span></tt>, you specify <tt class="docutils literal"><span class="pre">&quot;latest.integration&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;2.9.+&quot;</span></tt>, or
+<tt class="docutils literal"><span class="pre">&quot;[1.0,)&quot;</span></tt>. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision">Ivy
+revisions</a>
+documentation for details.</p>
+</div>
+<div class="section" id="resolvers">
+<h3>Resolvers<a class="headerlink" href="#resolvers" title="Permalink to this headline">¶</a></h3>
+<p>Not all packages live on the same server; sbt uses the standard Maven2
+repository by default. If your dependency isn't on one of the default
+repositories, you'll have to add a <em>resolver</em> to help Ivy find it.</p>
+<p>To add an additional repository, use</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="n">name</span> <span class="n">at</span> <span class="n">location</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype OSS Snapshots&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">resolvers</span></tt> key is defined in
+<a class="reference external" href="../../sxr/Keys.scala.html">Keys</a> like
+this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">resolvers</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">Resolver</span><span class="o">]](</span><span class="s">&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">at</span></tt> method creates a <tt class="docutils literal"><span class="pre">Resolver</span></tt> object from two strings.</p>
+<p>sbt can search your local Maven repository if you add it as a
+repository:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Local Maven Repository&quot;</span> <span class="n">at</span> <span class="s">&quot;file://&quot;</span><span class="o">+</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">+</span><span class="s">&quot;/.m2/repository&quot;</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../Detailed-Topics/Resolvers.html"><em>Resolvers</em></a> for details on defining other types of repositories.</p>
+</div>
+<div class="section" id="overriding-default-resolvers">
+<h3>Overriding default resolvers<a class="headerlink" href="#overriding-default-resolvers" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">resolvers</span></tt> does not contain the default resolvers; only additional
+ones added by your build definition.</p>
+<p><tt class="docutils literal"><span class="pre">sbt</span></tt> combines <tt class="docutils literal"><span class="pre">resolvers</span></tt> with some default repositories to form
+<tt class="docutils literal"><span class="pre">externalResolvers</span></tt>.</p>
+<p>Therefore, to change or remove the default resolvers, you would need to
+override <tt class="docutils literal"><span class="pre">externalResolvers</span></tt> instead of <tt class="docutils literal"><span class="pre">resolvers</span></tt>.</p>
+</div>
+<div class="section" id="per-configuration-dependencies">
+<h3>Per-configuration dependencies<a class="headerlink" href="#per-configuration-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Often a dependency is used by your test code (in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>,
+which is compiled by the <tt class="docutils literal"><span class="pre">Test</span></tt> configuration) but not your main code.</p>
+<p>If you want a dependency to show up in the classpath only for the
+<tt class="docutils literal"><span class="pre">Test</span></tt> configuration and not the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration, add
+<tt class="docutils literal"><span class="pre">%</span> <span class="pre">&quot;test&quot;</span></tt> like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
+<p>Now, if you type <tt class="docutils literal"><span class="pre">show</span> <span class="pre">compile:dependencyClasspath</span></tt> at the sbt
+interactive prompt, you should not see derby. But if you type
+<tt class="docutils literal"><span class="pre">show</span> <span class="pre">test:dependencyClasspath</span></tt>, you should see the derby jar in the
+list.</p>
+<p>Typically, test-related dependencies such as
+<a class="reference external" href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a class="reference external" href="http://code.google.com/p/specs/">specs</a>, and
+<a class="reference external" href="http://www.scalatest.org/">ScalaTest</a> would be defined with
+<tt class="docutils literal"><span class="pre">%</span> <span class="pre">&quot;test&quot;</span></tt>.</p>
+<div class="section" id="next">
+<h4>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h4>
+<p>There are some more details and tips-and-tricks related to library
+dependencies <a class="reference internal" href="../Detailed-Topics/Library-Management.html"><em>on this page</em></a>, if you didn't find an
+answer on this introductory page.</p>
+<p>If you're reading Getting Started in order, for now, you might move on
+to read <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Library Dependencies</a><ul>
+<li><a class="reference internal" href="#unmanaged-dependencies">Unmanaged dependencies</a></li>
+<li><a class="reference internal" href="#managed-dependencies">Managed Dependencies</a><ul>
+<li><a class="reference internal" href="#the-librarydependencies-key">The <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> key</a></li>
+<li><a class="reference internal" href="#getting-the-right-scala-version-with">Getting the right Scala version with <tt class="docutils literal"><span class="pre">%%</span></tt></a></li>
+<li><a class="reference internal" href="#ivy-revisions">Ivy revisions</a></li>
+<li><a class="reference internal" href="#resolvers">Resolvers</a></li>
+<li><a class="reference internal" href="#overriding-default-resolvers">Overriding default resolvers</a></li>
+<li><a class="reference internal" href="#per-configuration-dependencies">Per-configuration dependencies</a><ul>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

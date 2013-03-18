@@ -1,0 +1,343 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Input Tasks &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Extending sbt" href="index.html" />
+    <link rel="next" title="Plugins" href="Plugins.html" />
+    <link rel="prev" title="Commands" href="Commands.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Input Tasks</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Plugins.html">Plugins</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Extending sbt</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Commands.html">Commands</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="input-tasks">
+<h1>Input Tasks<a class="headerlink" href="#input-tasks" title="Permalink to this headline">¶</a></h1>
+<p>Input Tasks parse user input and produce a task to run.
+<a class="reference internal" href="../Detailed-Topics/Parsing-Input.html"><em>Parsing and tab completion</em></a> describes how to use the parser
+combinators that define the input syntax and tab completion. This page
+describes how to hook those parser combinators into the input task
+system.</p>
+<div class="section" id="input-keys">
+<h2>Input Keys<a class="headerlink" href="#input-keys" title="Permalink to this headline">¶</a></h2>
+<p>A key for an input task is of type <tt class="docutils literal"><span class="pre">InputKey</span></tt> and represents the input
+task like a <tt class="docutils literal"><span class="pre">SettingKey</span></tt> represents a setting or a <tt class="docutils literal"><span class="pre">TaskKey</span></tt>
+represents a task. Define a new input task key using the
+<tt class="docutils literal"><span class="pre">inputKey.apply</span></tt> factory method:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// goes in project/Build.scala or in build.sbt</span>
+<span class="k">val</span> <span class="n">demo</span> <span class="k">=</span> <span class="n">inputKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;A demo input task.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The definition of an input task is similar to that of a normal task, but it can
+also use the result of a <a class="reference external" href="/Detailed-Topics/Parsing-Input">Parser</a> applied to
+user input.  Just as the special <tt class="docutils literal"><span class="pre">value</span></tt> method gets the value of a
+setting or task, the special <tt class="docutils literal"><span class="pre">parsed</span></tt> method gets the result of a <tt class="docutils literal"><span class="pre">Parser</span></tt>.</p>
+</div>
+<div class="section" id="basic-input-task-definition">
+<h2>Basic Input Task Definition<a class="headerlink" href="#basic-input-task-definition" title="Permalink to this headline">¶</a></h2>
+<p>The simplest input task accepts a space-delimited sequence of arguments.
+It does not provide useful tab completion and parsing is basic.  The built-in
+parser for space-delimited arguments is constructed via the <tt class="docutils literal"><span class="pre">spaceDelimited</span></tt>
+method, which accepts as its only argument the label to present to the user
+during tab completion.</p>
+<p>For example, the following task prints the current Scala version and then echoes
+the arguments passed to it on their own line.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">demo</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="c1">// get the result of parsing</span>
+  <span class="k">val</span> <span class="n">args</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">spaceDelimited</span><span class="o">(</span><span class="s">&quot;&lt;arg&gt;&quot;</span><span class="o">).</span><span class="n">parsed</span>
+    <span class="c1">// Here, we also use the value of the `scalaVersion` setting</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;The current Scala version is &quot;</span> <span class="o">+</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;The arguments to demo were:&quot;</span><span class="o">)</span>
+  <span class="n">args</span> <span class="n">foreach</span> <span class="n">println</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="input-task-using-parsers">
+<h2>Input Task using Parsers<a class="headerlink" href="#input-task-using-parsers" title="Permalink to this headline">¶</a></h2>
+<p>The Parser provided by the <tt class="docutils literal"><span class="pre">spaceDelimited</span></tt> method does not provide
+any flexibility in defining the input syntax.  Using a custom parser
+is just a matter of defining your own <tt class="docutils literal"><span class="pre">Parser</span></tt> as described on the
+<a class="reference internal" href="../Detailed-Topics/Parsing-Input.html"><em>Parsing and tab completion</em></a> page.</p>
+<div class="section" id="constructing-the-parser">
+<h3>Constructing the Parser<a class="headerlink" href="#constructing-the-parser" title="Permalink to this headline">¶</a></h3>
+<p>The first step is to construct the actual <tt class="docutils literal"><span class="pre">Parser</span></tt> by defining a value
+of one of the following types:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Parser[I]</span></tt>: a basic parser that does not use any settings</li>
+<li><tt class="docutils literal"><span class="pre">Initialize[Parser[I]]</span></tt>: a parser whose definition depends on one or more settings</li>
+<li><tt class="docutils literal"><span class="pre">Initialize[State</span> <span class="pre">=&gt;</span> <span class="pre">Parser[I]]</span></tt>: a parser that is defined using both settings and the current <a class="reference internal" href="Build-State.html"><em>state</em></a></li>
+</ul>
+<p>We already saw an example of the first case with <tt class="docutils literal"><span class="pre">spaceDelimited</span></tt>, which doesn't use any settings in its definition.
+As an example of the third case, the following defines a contrived <tt class="docutils literal"><span class="pre">Parser</span></tt> that uses the
+project's Scala and sbt version settings as well as the state.  To use these settings, we
+need to wrap the Parser construction in <tt class="docutils literal"><span class="pre">Def.setting</span></tt> and get the setting values with the
+special <tt class="docutils literal"><span class="pre">value</span></tt> method:</p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">complete.DefaultParsers._</span>
+
+<span class="k">val</span> <span class="n">parser</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">State</span> <span class="k">=&gt;</span> <span class="kt">Parser</span><span class="o">[(</span><span class="kt">String</span>,<span class="kt">String</span><span class="o">)]]</span> <span class="k">=</span>
+ <span class="nc">Def</span><span class="o">.</span><span class="n">setting</span> <span class="o">{</span>
+  <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="o">(</span> <span class="n">token</span><span class="o">(</span><span class="s">&quot;scala&quot;</span> <span class="o">&lt;~</span> <span class="nc">Space</span><span class="o">)</span> <span class="o">~</span> <span class="n">token</span><span class="o">(</span><span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span><span class="o">)</span> <span class="o">)</span> <span class="o">|</span>
+    <span class="o">(</span> <span class="n">token</span><span class="o">(</span><span class="s">&quot;sbt&quot;</span> <span class="o">&lt;~</span> <span class="nc">Space</span><span class="o">)</span> <span class="o">~</span> <span class="n">token</span><span class="o">(</span><span class="n">sbtVersion</span><span class="o">.</span><span class="n">value</span><span class="o">)</span> <span class="o">)</span> <span class="o">|</span>
+    <span class="o">(</span> <span class="n">token</span><span class="o">(</span><span class="s">&quot;commands&quot;</span> <span class="o">&lt;~</span> <span class="nc">Space</span><span class="o">)</span> <span class="o">~</span>
+        <span class="n">token</span><span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="n">remainingCommands</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">toString</span><span class="o">)</span> <span class="o">)</span>
+ <span class="o">}</span>
+</pre></div>
+</div>
+<p>This Parser definition will produce a value of type <tt class="docutils literal"><span class="pre">(String,String)</span></tt>.
+The input syntax defined isn't very flexible; it is just a demonstration. It
+will produce one of the following values for a successful parse
+(assuming the current Scala version is 2.10.0, the current sbt version is
+0.13.0, and there are 3 commands left to run):</p>
+<div class="highlight-text"><div class="highlight"><pre>(&quot;scala&quot;, &quot;2.10.0&quot;)
+(&quot;sbt&quot;, &quot;0.13.0&quot;)
+(&quot;commands&quot;, &quot;3&quot;)
+</pre></div>
+</div>
+<p>Again, we were able to access the current Scala and sbt version for the project because
+they are settings.  Tasks cannot be used to define the parser.</p>
+</div>
+<div class="section" id="constructing-the-task">
+<h3>Constructing the Task<a class="headerlink" href="#constructing-the-task" title="Permalink to this headline">¶</a></h3>
+<p>Next, we construct the actual task to execute from the result of the
+<tt class="docutils literal"><span class="pre">Parser</span></tt>. For this, we define a task as usual, but we can access the
+result of parsing via the special <tt class="docutils literal"><span class="pre">parsed</span></tt> method on <tt class="docutils literal"><span class="pre">Parser</span></tt>.</p>
+<p>The following contrived example uses the previous example's output (of
+type <tt class="docutils literal"><span class="pre">(String,String)</span></tt>) and the result of the <tt class="docutils literal"><span class="pre">package</span></tt> task to
+print some information to the screen.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">demo</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="o">(</span><span class="n">tpe</span><span class="o">,</span> <span class="n">value</span><span class="o">)</span> <span class="k">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parsed</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Type: &quot;</span> <span class="o">+</span> <span class="n">tpe</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Value: &quot;</span> <span class="o">+</span> <span class="n">value</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Packaged: &quot;</span> <span class="o">+</span> <span class="n">packageBin</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">getAbsolutePath</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-inputtask-type">
+<h2>The InputTask type<a class="headerlink" href="#the-inputtask-type" title="Permalink to this headline">¶</a></h2>
+<p>It helps to look at the <tt class="docutils literal"><span class="pre">InputTask</span></tt> type to understand more advanced usage of input tasks.
+The core input task type is:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">class</span> <span class="nc">InputTask</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="k">val</span> <span class="n">parser</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">Parser</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">T</span><span class="o">]])</span>
+</pre></div>
+</div>
+<p>Normally, an input task is assigned to a setting and you work with <tt class="docutils literal"><span class="pre">Initialize[InputTask[T]]</span></tt>.</p>
+<p>Breaking this down,</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>You can use other settings (via <tt class="docutils literal"><span class="pre">Initialize</span></tt>) to construct an input task.</li>
+<li>You can use the current <tt class="docutils literal"><span class="pre">State</span></tt> to construct the parser.</li>
+<li>The parser accepts user input and provides tab completion.</li>
+<li>The parser produces the task to run.</li>
+</ol>
+</div></blockquote>
+<p>So, you can use settings or <tt class="docutils literal"><span class="pre">State</span></tt> to construct the parser that defines an input task's command line syntax.
+This was described in the previous section.
+You can then use settings, <tt class="docutils literal"><span class="pre">State</span></tt>, or user input to construct the task to run.
+This is implicit in the input task syntax.</p>
+</div>
+<div class="section" id="using-other-input-tasks">
+<h2>Using other input tasks<a class="headerlink" href="#using-other-input-tasks" title="Permalink to this headline">¶</a></h2>
+<p>The types involved in an input task are composable, so it is possible to reuse input tasks.
+The <tt class="docutils literal"><span class="pre">.parsed</span></tt> and <tt class="docutils literal"><span class="pre">.</span></tt> methods are defined on InputTasks to make this more convenient in common situations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Call <tt class="docutils literal"><span class="pre">.parsed</span></tt> on an <tt class="docutils literal"><span class="pre">InputTask[T]</span></tt> or <tt class="docutils literal"><span class="pre">Initialize[InputTask[T]]</span></tt> to get the <tt class="docutils literal"><span class="pre">Task[T]</span></tt> created after parsing the command line</li>
+<li>Call <tt class="docutils literal"><span class="pre">.evaluated</span></tt> on an <tt class="docutils literal"><span class="pre">InputTask[T]</span></tt> or <tt class="docutils literal"><span class="pre">Initialize[InputTask[T]]</span></tt> to get the value of type <tt class="docutils literal"><span class="pre">T</span></tt> from evaluating that task</li>
+</ul>
+</div></blockquote>
+<p>In both situations, the underlying <tt class="docutils literal"><span class="pre">Parser</span></tt> is sequenced with other parsers in the input task definition.
+In the case of <tt class="docutils literal"><span class="pre">.evaluated</span></tt>, the generated task is evaluated.</p>
+<p>The following example applies the <tt class="docutils literal"><span class="pre">run</span></tt> input task, a literal separator parser <tt class="docutils literal"><span class="pre">--</span></tt>, and <tt class="docutils literal"><span class="pre">run</span></tt> again.
+The parsers are sequenced in order of syntactic appearance,
+so that the arguments before <tt class="docutils literal"><span class="pre">--</span></tt> are passed to the first <tt class="docutils literal"><span class="pre">run</span></tt> and the ones after are passed to the second.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">run2</span> <span class="k">=</span> <span class="n">inputKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span>
+        <span class="s">&quot;Runs the main class twice with different argument lists separated by ---&quot;</span><span class="o">)</span>
+
+     <span class="k">val</span> <span class="n">separator</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&quot;--&quot;</span>
+
+<span class="n">run2</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">one</span> <span class="k">=</span> <span class="o">(</span><span class="n">run</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">evaluated</span>
+   <span class="k">val</span> <span class="n">sep</span> <span class="k">=</span> <span class="n">separator</span><span class="o">.</span><span class="n">parsed</span>
+   <span class="k">val</span> <span class="n">two</span> <span class="k">=</span> <span class="o">(</span><span class="n">run</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">evaluated</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For a main class Demo that echoes its arguments, this looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">$</span> <span class="n">sbt</span>
+<span class="o">&gt;</span> <span class="n">run2</span> <span class="n">a</span> <span class="n">b</span> <span class="o">--</span> <span class="n">c</span> <span class="n">d</span>
+<span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="nc">Demo</span> <span class="n">c</span> <span class="n">d</span>
+<span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="nc">Demo</span> <span class="n">a</span> <span class="n">b</span>
+<span class="n">c</span>
+<span class="n">d</span>
+<span class="n">a</span>
+<span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="preapplying-input">
+<h2>Preapplying input<a class="headerlink" href="#preapplying-input" title="Permalink to this headline">¶</a></h2>
+<p>Because <tt class="docutils literal"><span class="pre">InputTasks</span></tt> are built from <tt class="docutils literal"><span class="pre">Parsers</span></tt>, it is possible to generate a new <tt class="docutils literal"><span class="pre">InputTask</span></tt> by applying some input programmatically.
+Two convenience methods are provided on <tt class="docutils literal"><span class="pre">InputTask[T]</span></tt> and <tt class="docutils literal"><span class="pre">Initialize[InputTask[T]]</span></tt> that accept the String to apply.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">partialInput</span></tt> applies the input and allows further input, such as from the command line</li>
+<li><tt class="docutils literal"><span class="pre">fullInput</span></tt> applies the input and terminates parsing, so that further input is not accepted</li>
+</ul>
+</div></blockquote>
+<p>In each case, the input is applied to the input task's parser.
+Because input tasks handle all input after the task name, they usually require initial whitespace to be provided in the input.</p>
+<p>Consider the example in the previous section.
+We can modify it so that we:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Explicitly specify all of the arguments to the first <tt class="docutils literal"><span class="pre">run</span></tt>.  We use <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">version</span></tt> to show that settings can be used to define and modify parsers.</li>
+<li>Define the initial arguments passed to the second <tt class="docutils literal"><span class="pre">run</span></tt>, but allow further input on the command line.</li>
+</ul>
+</div></blockquote>
+<p>NOTE: the current implementation of <tt class="docutils literal"><span class="pre">:=</span></tt> doesn't actually support applying input derived from settings yet.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">run2</span> <span class="k">=</span> <span class="n">inputKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Runs the main class twice: &quot;</span> <span class="o">+</span>
+   <span class="s">&quot;once with the project name and version as arguments&quot;</span>
+   <span class="s">&quot;and once with command line arguments preceded by hard coded values.&quot;</span><span class="o">)</span>
+
+<span class="c1">// The argument string for the first run task is &#39; &lt;name&gt; &lt;version&gt;&#39;</span>
+<span class="k">val</span> <span class="n">firstInput</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span>
+   <span class="nc">Def</span><span class="o">.</span><span class="n">setting</span><span class="o">(</span><span class="n">s</span><span class="s">&quot; ${name.value} ${version.value}&quot;</span><span class="o">)</span>
+
+<span class="c1">// Make the first arguments to the second run task &#39; red blue&#39;</span>
+<span class="k">val</span> <span class="n">secondInput</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">&quot; red blue&quot;</span>
+
+<span class="k">val</span> <span class="n">separator</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&quot;--&quot;</span>
+
+<span class="n">run2</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">one</span> <span class="k">=</span> <span class="o">(</span><span class="n">run</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">fullInput</span><span class="o">(</span><span class="n">firstInput</span><span class="o">.</span><span class="n">value</span><span class="o">).</span><span class="n">evaluated</span>
+   <span class="k">val</span> <span class="n">two</span> <span class="k">=</span> <span class="o">(</span><span class="n">run</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">partialInput</span><span class="o">(</span><span class="n">secondInput</span><span class="o">).</span><span class="n">evaluated</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For a main class Demo that echoes its arguments, this looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">$</span> <span class="n">sbt</span>
+<span class="o">&gt;</span> <span class="n">run2</span> <span class="n">green</span>
+<span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="nc">Demo</span> <span class="n">demo</span> <span class="mf">1.0</span>
+<span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="nc">Demo</span> <span class="n">red</span> <span class="n">blue</span> <span class="n">green</span>
+<span class="n">demo</span>
+<span class="mf">1.0</span>
+<span class="n">red</span>
+<span class="n">blue</span>
+<span class="n">green</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Input Tasks</a><ul>
+<li><a class="reference internal" href="#input-keys">Input Keys</a></li>
+<li><a class="reference internal" href="#basic-input-task-definition">Basic Input Task Definition</a></li>
+<li><a class="reference internal" href="#input-task-using-parsers">Input Task using Parsers</a><ul>
+<li><a class="reference internal" href="#constructing-the-parser">Constructing the Parser</a></li>
+<li><a class="reference internal" href="#constructing-the-task">Constructing the Task</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-inputtask-type">The InputTask type</a></li>
+<li><a class="reference internal" href="#using-other-input-tasks">Using other input tasks</a></li>
+<li><a class="reference internal" href="#preapplying-input">Preapplying input</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

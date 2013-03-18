@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Forking &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Global Settings" href="Global-Settings.html" />
+    <link rel="prev" title="Dependency Management Flow" href="Dependency-Management-Flow.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Forking</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Global-Settings.html">Global Settings</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Dependency-Management-Flow.html">Dependency Management Flow</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="forking">
+<h1>Forking<a class="headerlink" href="#forking" title="Permalink to this headline">¶</a></h1>
+<p>By default, the <tt class="docutils literal"><span class="pre">run</span></tt> task runs in the same JVM as sbt. Forking is
+required under <a class="reference internal" href="Running-Project-Code.html"><em>certain circumstances</em></a>, however.
+Or, you might want to fork Java processes when implementing new tasks.</p>
+<p>By default, a forked process uses the same Java and Scala versions being
+used for the build and the working directory and JVM options of the
+current process. This page discusses how to enable and configure forking
+for both <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> tasks. Each kind of task may be configured
+separately by scoping the relevant keys as explained below.</p>
+<div class="section" id="enable-forking">
+<h2>Enable forking<a class="headerlink" href="#enable-forking" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">fork</span></tt> setting controls whether forking is enabled (true) or not
+(false). It can be set in the <tt class="docutils literal"><span class="pre">run</span></tt> scope to only fork <tt class="docutils literal"><span class="pre">run</span></tt>
+commands or in the <tt class="docutils literal"><span class="pre">test</span></tt> scope to only fork <tt class="docutils literal"><span class="pre">test</span></tt> commands.</p>
+<p>To fork all test tasks (<tt class="docutils literal"><span class="pre">test</span></tt>, <tt class="docutils literal"><span class="pre">testOnly</span></tt>, and <tt class="docutils literal"><span class="pre">testQuick</span></tt>) and
+run tasks (<tt class="docutils literal"><span class="pre">run</span></tt>, <tt class="docutils literal"><span class="pre">runMain</span></tt>, <tt class="docutils literal"><span class="pre">test:run</span></tt>, and <tt class="docutils literal"><span class="pre">test:runMain</span></tt>),</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>To enable forking <tt class="docutils literal"><span class="pre">run</span></tt> tasks only, set <tt class="docutils literal"><span class="pre">fork</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> in the
+<tt class="docutils literal"><span class="pre">run</span></tt> scope.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>To only fork <tt class="docutils literal"><span class="pre">test:run</span></tt> and <tt class="docutils literal"><span class="pre">test:runMain</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>Similarly, set <tt class="docutils literal"><span class="pre">fork</span> <span class="pre">in</span> <span class="pre">(Compile,run)</span> <span class="pre">:=</span> <span class="pre">true</span></tt> to only fork the main
+<tt class="docutils literal"><span class="pre">run</span></tt> tasks. <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">runMain</span></tt> share the same configuration and
+cannot be configured separately.</p>
+<p>To enable forking all <tt class="docutils literal"><span class="pre">test</span></tt> tasks only, set <tt class="docutils literal"><span class="pre">fork</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> in
+the <tt class="docutils literal"><span class="pre">test</span></tt> scope:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="n">test</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Testing.html"><em>Testing</em></a> for more control over how tests are assigned to JVMs and
+what options to pass to each group.</p>
+</div>
+<div class="section" id="change-working-directory">
+<h2>Change working directory<a class="headerlink" href="#change-working-directory" title="Permalink to this headline">¶</a></h2>
+<p>To change the working directory when forked, set
+<tt class="docutils literal"><span class="pre">baseDirectory</span> <span class="pre">in</span> <span class="pre">run</span></tt> or <tt class="docutils literal"><span class="pre">baseDirectory</span> <span class="pre">in</span> <span class="pre">test</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// sets the working directory for all `run`-like tasks</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `run` and `runMain` only</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `test:run` and `test:runMain` only</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `test`, `testQuick`, and `testOnly`</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="n">test</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forked-jvm-options">
+<h2>Forked JVM options<a class="headerlink" href="#forked-jvm-options" title="Permalink to this headline">¶</a></h2>
+<p>To specify options to be provided to the forked JVM, set
+<tt class="docutils literal"><span class="pre">javaOptions</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="n">run</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+<p>or specify the configuration to affect only the main or test <tt class="docutils literal"><span class="pre">run</span></tt>
+tasks:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+<p>or only affect the <tt class="docutils literal"><span class="pre">test</span></tt> tasks:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="n">test</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="java-home">
+<h2>Java Home<a class="headerlink" href="#java-home" title="Permalink to this headline">¶</a></h2>
+<p>Select the Java installation to use by setting the <tt class="docutils literal"><span class="pre">javaHome</span></tt>
+directory:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaHome</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/jre/&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Note that if this is set globally, it also sets the Java installation
+used to compile Java sources. You can restrict it to running only by
+setting it in the <tt class="docutils literal"><span class="pre">run</span></tt> scope:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaHome</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/jre/&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>As with the other settings, you can specify the configuration to affect
+only the main or test <tt class="docutils literal"><span class="pre">run</span></tt> tasks or just the <tt class="docutils literal"><span class="pre">test</span></tt> tasks.</p>
+</div>
+<div class="section" id="configuring-output">
+<h2>Configuring output<a class="headerlink" href="#configuring-output" title="Permalink to this headline">¶</a></h2>
+<p>By default, forked output is sent to the Logger, with standard output
+logged at the <tt class="docutils literal"><span class="pre">Info</span></tt> level and standard error at the <tt class="docutils literal"><span class="pre">Error</span></tt> level.
+This can be configured with the <tt class="docutils literal"><span class="pre">outputStrategy</span></tt> setting, which is of
+type
+<a class="reference external" href="../../api/sbt/OutputStrategy.html">OutputStrategy</a>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// send output to the build&#39;s standard output and error</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">StdoutOutput</span><span class="o">)</span>
+
+<span class="c1">// send output to the provided OutputStream `someStream`</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">CustomOutput</span><span class="o">(</span><span class="n">someStream</span><span class="k">:</span> <span class="kt">OutputStream</span><span class="o">))</span>
+
+<span class="c1">// send output to the provided Logger `log` (unbuffered)</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">LoggedOutput</span><span class="o">(</span><span class="n">log</span><span class="k">:</span> <span class="kt">Logger</span><span class="o">))</span>
+
+<span class="c1">// send output to the provided Logger `log` after the process terminates</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">BufferedOutput</span><span class="o">(</span><span class="n">log</span><span class="k">:</span> <span class="kt">Logger</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>As with other settings, this can be configured individually for main or
+test <tt class="docutils literal"><span class="pre">run</span></tt> tasks or for <tt class="docutils literal"><span class="pre">test</span></tt> tasks.</p>
+</div>
+<div class="section" id="configuring-input">
+<h2>Configuring Input<a class="headerlink" href="#configuring-input" title="Permalink to this headline">¶</a></h2>
+<p>By default, the standard input of the sbt process is not forwarded to
+the forked process. To enable this, configure the <tt class="docutils literal"><span class="pre">connectInput</span></tt>
+setting:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">connectInput</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="direct-usage">
+<h2>Direct Usage<a class="headerlink" href="#direct-usage" title="Permalink to this headline">¶</a></h2>
+<p>To fork a new Java process, use the <a class="reference external" href="../../api/sbt/Fork$.html">Fork
+API</a>. The
+methods of interest are <tt class="docutils literal"><span class="pre">Fork.java</span></tt>, <tt class="docutils literal"><span class="pre">Fork.javac</span></tt>, <tt class="docutils literal"><span class="pre">Fork.scala</span></tt>,
+and <tt class="docutils literal"><span class="pre">Fork.scalac</span></tt>. See the
+<a class="reference external" href="../../api/sbt/Fork$.ForkJava.html">ForkJava</a>
+and
+<a class="reference external" href="../../api/sbt/Fork$.ForkScala.html">ForkScala</a>
+classes for the arguments and types.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Forking</a><ul>
+<li><a class="reference internal" href="#enable-forking">Enable forking</a></li>
+<li><a class="reference internal" href="#change-working-directory">Change working directory</a></li>
+<li><a class="reference internal" href="#forked-jvm-options">Forked JVM options</a></li>
+<li><a class="reference internal" href="#java-home">Java Home</a></li>
+<li><a class="reference internal" href="#configuring-output">Configuring output</a></li>
+<li><a class="reference internal" href="#configuring-input">Configuring Input</a></li>
+<li><a class="reference internal" href="#direct-usage">Direct Usage</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

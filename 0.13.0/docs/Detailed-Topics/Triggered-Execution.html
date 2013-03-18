@@ -1,0 +1,166 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Triggered Execution &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Understanding Incremental Recompilation" href="Understanding-incremental-recompilation.html" />
+    <link rel="prev" title="Testing" href="Testing.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Triggered Execution</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Understanding-incremental-recompilation.html">Understanding Incremental Recompilation</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Testing.html">Testing</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="triggered-execution">
+<h1>Triggered Execution<a class="headerlink" href="#triggered-execution" title="Permalink to this headline">¶</a></h1>
+<p>You can make a command run when certain files change by prefixing the
+command with <tt class="docutils literal"><span class="pre">~</span></tt>. Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.
+This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but
+typically the basic settings <tt class="docutils literal"><span class="pre">watchSources</span></tt> and <tt class="docutils literal"><span class="pre">pollInterval</span></tt> are
+modified.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">watchSources</span></tt> defines the files for a single project that are
+monitored for changes. By default, a project watches resources and
+Scala and Java sources.</li>
+<li><tt class="docutils literal"><span class="pre">watchTransitiveSources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watchSources</span></tt> for
+the current project and all execution and classpath dependencies (see
+<a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a> for details on interProject dependencies).</li>
+<li><tt class="docutils literal"><span class="pre">pollInterval</span></tt> selects the interval between polling for changes in
+milliseconds. The default value is <tt class="docutils literal"><span class="pre">500</span> <span class="pre">ms</span></tt>.</li>
+</ul>
+<p>Some example usages are described below.</p>
+<div class="section" id="compile">
+<h2>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h2>
+<p>The original use-case was continuous compilation:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ <span class="nb">test</span>:compile
+
+<span class="gp">&gt;</span> ~ compile
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>You can use the triggered execution feature to run any command or task.
+One use is for test driven development, as suggested by Erick on the
+mailing list.</p>
+<p>The following will poll for changes to your source code (main or test)
+and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for the specified test.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ testOnly example.TestA
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-multiple-commands">
+<h2>Running Multiple Commands<a class="headerlink" href="#running-multiple-commands" title="Permalink to this headline">¶</a></h2>
+<p>Occasionally, you may need to trigger the execution of multiple
+commands. You can use semicolons to separate the commands to be
+triggered.</p>
+<p>The following will poll for source changes and run <tt class="docutils literal"><span class="pre">clean</span></tt> and
+<tt class="docutils literal"><span class="pre">test</span></tt>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;clean ;<span class="nb">test</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Triggered Execution</a><ul>
+<li><a class="reference internal" href="#compile">Compile</a></li>
+<li><a class="reference internal" href="#testing">Testing</a></li>
+<li><a class="reference internal" href="#running-multiple-commands">Running Multiple Commands</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

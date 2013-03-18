@@ -1,0 +1,223 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title=".sbt Build Definition" href="Basic-Def.html" />
+    <link rel="prev" title="Directory structure" href="Directories.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Running</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Basic-Def.html"><tt class="docutils literal docutils literal"><span class="pre">.sbt</span></tt> Build Definition</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Directories.html">Directory structure</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="running">
+<h1>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h1>
+<p>This page describes how to use <tt class="docutils literal"><span class="pre">sbt</span></tt> once you have set up your
+project. It assumes you've <a class="reference internal" href="Setup.html"><em>installed sbt</em></a> and
+created a <a class="reference internal" href="Hello.html"><em>Hello, World</em></a> or other project.</p>
+<div class="section" id="interactive-mode">
+<h2>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h2>
+<p>Run sbt in your project directory with no arguments:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt
+</pre></div>
+</div>
+<p>Running sbt with no command line arguments starts it in interactive
+mode. Interactive mode has a command prompt (with tab completion and
+history!).</p>
+<p>For example, you could type <tt class="docutils literal"><span class="pre">compile</span></tt> at the sbt prompt:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> compile
+</pre></div>
+</div>
+<p>To <tt class="docutils literal"><span class="pre">compile</span></tt> again, press up arrow and then enter.</p>
+<p>To run your program, type <tt class="docutils literal"><span class="pre">run</span></tt>.</p>
+<p>To leave interactive mode, type <tt class="docutils literal"><span class="pre">exit</span></tt> or use Ctrl+D (Unix) or Ctrl+Z
+(Windows).</p>
+</div>
+<div class="section" id="batch-mode">
+<h2>Batch mode<a class="headerlink" href="#batch-mode" title="Permalink to this headline">¶</a></h2>
+<p>You can also run sbt in batch mode, specifying a space-separated list of
+sbt commands as arguments. For sbt commands that take arguments, pass
+the command and arguments as one argument to <tt class="docutils literal"><span class="pre">sbt</span></tt> by enclosing them
+in quotes. For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt clean compile <span class="s2">&quot;testOnly TestA TestB&quot;</span>
+</pre></div>
+</div>
+<p>In this example, <tt class="docutils literal"><span class="pre">test-only</span></tt> has arguments, <tt class="docutils literal"><span class="pre">TestA</span></tt> and <tt class="docutils literal"><span class="pre">TestB</span></tt>.
+The commands will be run in sequence (<tt class="docutils literal"><span class="pre">clean</span></tt>, <tt class="docutils literal"><span class="pre">compile</span></tt>, then
+<tt class="docutils literal"><span class="pre">test-only</span></tt>).</p>
+</div>
+<div class="section" id="continuous-build-and-test">
+<h2>Continuous build and test<a class="headerlink" href="#continuous-build-and-test" title="Permalink to this headline">¶</a></h2>
+<p>To speed up your edit-compile-test cycle, you can ask sbt to
+automatically recompile or run tests whenever you save a source file.</p>
+<p>Make a command run when one or more source files change by prefixing the
+command with <tt class="docutils literal"><span class="pre">~</span></tt>. For example, in interactive mode try:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ compile
+</pre></div>
+</div>
+<p>Press enter to stop watching for changes.</p>
+<p>You can use the <tt class="docutils literal"><span class="pre">~</span></tt> prefix with either interactive mode or batch mode.</p>
+<p>See <a class="reference internal" href="../Detailed-Topics/Triggered-Execution.html"><em>Triggered Execution</em></a> for more details.</p>
+</div>
+<div class="section" id="common-commands">
+<h2>Common commands<a class="headerlink" href="#common-commands" title="Permalink to this headline">¶</a></h2>
+<p>Here are some of the most common sbt commands. For a more complete list,
+see <a class="reference internal" href="../Detailed-Topics/Command-Line-Reference.html"><em>Command Line Reference</em></a>.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">clean</span></tt> Deletes all generated files (in the <tt class="docutils literal"><span class="pre">target</span></tt> directory).</li>
+<li><tt class="docutils literal"><span class="pre">compile</span></tt> Compiles the main sources (in <tt class="docutils literal"><span class="pre">src/main/scala</span></tt> and
+<tt class="docutils literal"><span class="pre">src/main/java</span></tt> directories).</li>
+<li><tt class="docutils literal"><span class="pre">test</span></tt> Compiles and runs all tests.</li>
+<li><tt class="docutils literal"><span class="pre">console</span></tt> Starts the Scala interpreter with a classpath including
+the compiled sources and all dependencies. To return to sbt, type
+<tt class="docutils literal"><span class="pre">:quit</span></tt>, Ctrl+D (Unix), or Ctrl+Z (Windows).</li>
+<li><tt class="docutils literal"><span class="pre">run</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the main class for the project in the same
+virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">package</span></tt> Creates a jar file containing the files in
+<tt class="docutils literal"><span class="pre">src/main/resources</span></tt> and the classes compiled from
+<tt class="docutils literal"><span class="pre">src/main/scala</span></tt> and <tt class="docutils literal"><span class="pre">src/main/java</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt> Displays detailed help for the specified command.
+If no command is provided, displays brief descriptions of all
+commands.</li>
+<li><tt class="docutils literal"><span class="pre">reload</span></tt> Reloads the build definition (<tt class="docutils literal"><span class="pre">build.sbt</span></tt>,
+<tt class="docutils literal"><span class="pre">project/*.scala</span></tt>, <tt class="docutils literal"><span class="pre">project/*.sbt</span></tt> files). Needed if you change
+the build definition.</li>
+</ul>
+</div>
+<div class="section" id="tab-completion">
+<h2>Tab completion<a class="headerlink" href="#tab-completion" title="Permalink to this headline">¶</a></h2>
+<p>Interactive mode has tab completion, including at an empty prompt. A
+special sbt convention is that pressing tab once may show only a subset
+of most likely completions, while pressing it more times shows more
+verbose choices.</p>
+</div>
+<div class="section" id="history-commands">
+<h2>History Commands<a class="headerlink" href="#history-commands" title="Permalink to this headline">¶</a></h2>
+<p>Interactive mode remembers history, even if you exit sbt and restart it.
+The simplest way to access history is with the up arrow key. The
+following commands are also supported:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">!</span></tt> Show history command help.</li>
+<li><tt class="docutils literal"><span class="pre">!!</span></tt> Execute the previous command again.</li>
+<li><tt class="docutils literal"><span class="pre">!:</span></tt> Show all previous commands.</li>
+<li><tt class="docutils literal"><span class="pre">!:n</span></tt> Show the last n commands.</li>
+<li><tt class="docutils literal"><span class="pre">!n</span></tt> Execute the command with index <tt class="docutils literal"><span class="pre">n</span></tt>, as shown by the <tt class="docutils literal"><span class="pre">!:</span></tt>
+command.</li>
+<li><tt class="docutils literal"><span class="pre">!-n</span></tt> Execute the nth command before this one.</li>
+<li><tt class="docutils literal"><span class="pre">!string</span></tt> Execute the most recent command starting with 'string'</li>
+<li><tt class="docutils literal"><span class="pre">!?string</span></tt> Execute the most recent command containing 'string'</li>
+</ul>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Move on to <a class="reference internal" href="Basic-Def.html"><em>understanding build.sbt</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Running</a><ul>
+<li><a class="reference internal" href="#interactive-mode">Interactive mode</a></li>
+<li><a class="reference internal" href="#batch-mode">Batch mode</a></li>
+<li><a class="reference internal" href="#continuous-build-and-test">Continuous build and test</a></li>
+<li><a class="reference internal" href="#common-commands">Common commands</a></li>
+<li><a class="reference internal" href="#tab-completion">Tab completion</a></li>
+<li><a class="reference internal" href="#history-commands">History Commands</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

@@ -1,0 +1,331 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>0.13.0 Changes &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0-M1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Contents" href="../index.html" />
+    <link rel="next" title="Community Repository Policy" href="Repository-Rules.html" />
+    <link rel="prev" title="0.12.0 Changes" href="ChangeSummary_0.12.0.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">0.13.0 Changes</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Repository-Rules.html">Community Repository Policy</a> <span class="divider">»</span>
+              </li>
+              <li>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="ChangeSummary_0.12.0.html">0.12.0 Changes</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="changes">
+<h1>0.13.0 Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="features-fixes-changes-with-compatibility-implications-incomplete-please-help">
+<h3>Features, fixes, changes with compatibility implications (incomplete, please help)<a class="headerlink" href="#features-fixes-changes-with-compatibility-implications-incomplete-please-help" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Moved to Scala 2.10 for sbt and build definitions.</li>
+<li>Support for plugin configuration in <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> has been removed.  It was deprecated since 0.11.2.</li>
+<li>Dropped support for tab completing the right side of a setting for the <tt class="docutils literal"><span class="pre">set</span></tt> command.  The new task macros make this tab completion obsolete.</li>
+<li>The convention for keys is now camelCase only.  Details below.</li>
+<li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue closed">#636</span></a>.</li>
+</ul>
+</div>
+<div class="section" id="features">
+<h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Use the repositories in boot.properties as the default project resolvers.  Add <tt class="docutils literal"><span class="pre">bootOnly</span></tt> to a repository in boot.properties to specify that it should not be used by projects by default.  (Josh S., <a class="reference external" href="https://github.com/sbt/sbt/issues/608" title="Allow the launcher to provide default repositories for SBT builds"><span class="xref issue closed">#608</span></a>)</p>
+</li>
+<li><p class="first">Support vals and defs in .sbt files.  Details below.</p>
+</li>
+<li><p class="first">Support defining Projects in .sbt files: vals of type Project are added to the Build.  Details below.</p>
+</li>
+<li><p class="first">New syntax for settings, tasks, and input tasks.  Details below.</p>
+</li>
+<li><p class="first">Automatically link to external API scaladocs of dependencies by setting <tt class="docutils literal"><span class="pre">autoAPIMappings</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  This requires at least Scala 2.10.1 and for dependencies to define <tt class="docutils literal"><span class="pre">apiURL</span></tt> for their scaladoc location.  Mappings may be manually added to the <tt class="docutils literal"><span class="pre">apiMappings</span></tt> task as well.</p>
+</li>
+<li><p class="first">Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">scala-version=/path/to/scala/home</span></tt>.  The scala-version part is optional, but is used as the version for any managed dependencies.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">export</span></tt> command</p>
+<blockquote>
+<div><ul class="simple">
+<li>For tasks, prints the contents of the 'export' stream.  By convention, this should be the equivalent command line(s) representation.  <tt class="docutils literal"><span class="pre">compile</span></tt>, <tt class="docutils literal"><span class="pre">doc</span></tt>, and <tt class="docutils literal"><span class="pre">console</span></tt> show the approximate command lines for their execution.  Classpath tasks print the classpath string suitable for passing as an option.</li>
+<li>For settings, directly prints the value of a setting instead of going through the logger</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>sbt no longer tries to warn on dependency conflicts.  Configure a <a class="reference internal" href="../Detailed-Topics/Library-Management.html#conflict-management"><em>conflict manager</em></a> instead.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue">#709</span></a>)</li>
+</ul>
+</div>
+<div class="section" id="improvements">
+<h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Run the API extraction phase after the compiler's <tt class="docutils literal"><span class="pre">pickler</span></tt> phase instead of <tt class="docutils literal"><span class="pre">typer</span></tt> to allow compiler plugins after <tt class="docutils literal"><span class="pre">typer</span></tt>. (Adriaan M., <a class="reference external" href="https://github.com/sbt/sbt/issues/609" title="allow customizing apiExtractor's phase"><span class="xref issue closed">#609</span></a>)</li>
+<li>Record defining source position of settings.  <tt class="docutils literal"><span class="pre">inspect</span></tt> shows the definition location of all settings contributing to a defined value.</li>
+<li>Allow the root project to be specified explicitly in <tt class="docutils literal"><span class="pre">Build.rootProject</span></tt>.</li>
+<li>Tasks that need a directory for storing cache information can now use the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> method on <tt class="docutils literal"><span class="pre">streams</span></tt>.  This supersedes the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> setting.</li>
+<li>The environment variables used when forking <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> may be set via <tt class="docutils literal"><span class="pre">envVars</span></tt>, which is a <tt class="docutils literal"><span class="pre">Task[Map[String,String]]</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/665" title="Support passing environment variables to forked processes"><span class="xref issue closed">#665</span></a>)</li>
+<li>Restore class files after an unsuccessful compilation.  This is useful when an error occurs in a later incremental step that requires a fix in the originally changed files.</li>
+</ul>
+</div>
+<div class="section" id="other">
+<h3>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The source layout for the sbt project itself follows the package name to accommodate to Eclipse users. (Grzegorz K., <a class="reference external" href="https://github.com/sbt/sbt/issues/613" title="Follow source layout conventions supported by Eclipse"><span class="xref issue closed">#613</span></a>)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="details-of-major-changes">
+<h2>Details of major changes<a class="headerlink" href="#details-of-major-changes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="camelcase-key-names">
+<h3>camelCase Key names<a class="headerlink" href="#camelcase-key-names" title="Permalink to this headline">¶</a></h3>
+<p>The convention for key names is now camelCase only instead of camelCase for Scala identifiers and hyphenated, lower-case on the command line.  camelCase is accepted for existing hyphenated key names and the hyphenated form will still be accepted on the command line for those existing tasks and settings declared with hyphenated names.  Only camelCase will be shown for tab completion, however.</p>
+</div>
+<div class="section" id="new-key-definition-methods">
+<h3>New key definition methods<a class="headerlink" href="#new-key-definition-methods" title="Permalink to this headline">¶</a></h3>
+<p>There are new methods that help avoid duplicating key names by declaring keys as:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">myTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;A (required) description of myTask.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The name will be picked up from the val identifier by the implementation of the taskKey macro so there is no reflection needed or runtime overhead.  Note that a description is mandatory and the method <tt class="docutils literal"><span class="pre">taskKey</span></tt> begins with a lowercase <tt class="docutils literal"><span class="pre">t</span></tt>.  Similar methods exist for keys for settings and input tasks: <tt class="docutils literal"><span class="pre">settingKey</span></tt> and <tt class="docutils literal"><span class="pre">inputKey</span></tt>.</p>
+</div>
+<div class="section" id="new-task-setting-syntax">
+<h3>New task/setting syntax<a class="headerlink" href="#new-task-setting-syntax" title="Permalink to this headline">¶</a></h3>
+<p>First, the old syntax is still supported with the intention of allowing conversion to the new syntax at your leisure.  There may be some incompatibilities and some may be unavoidable, but please report any issues you have with an existing build.</p>
+<p>The new syntax is implemented by making <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, and <tt class="docutils literal"><span class="pre">++=</span></tt> macros and making these the only required assignment methods.  To refer to the value of other settings or tasks, use the <tt class="docutils literal"><span class="pre">value</span></tt> method on settings and tasks.  This method is a stub that is removed at compile time by the macro, which will translate the implementation of the task/setting to the old syntax.</p>
+<p>For example, the following declares a dependency on <tt class="docutils literal"><span class="pre">scala-reflect</span></tt> using the value of the <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> setting:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-reflect&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">value</span></tt> method is only allowed within a call to <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, or <tt class="docutils literal"><span class="pre">++=</span></tt>.  To construct a setting or task outside of these methods, use <tt class="docutils literal"><span class="pre">Def.task</span></tt> or <tt class="docutils literal"><span class="pre">Def.setting</span></tt>.  For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">reflectDep</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">setting</span> <span class="o">{</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-reflect&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span> <span class="o">}</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">reflectDep</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>A similar method <tt class="docutils literal"><span class="pre">parsed</span></tt> is defined on <tt class="docutils literal"><span class="pre">Parser[T]</span></tt>, <tt class="docutils literal"><span class="pre">Initialize[Parser[T]]</span></tt> (a setting that provides a parser), and <tt class="docutils literal"><span class="pre">Initialize[State</span> <span class="pre">=&gt;</span> <span class="pre">Parser[T]]</span></tt> (a setting that uses the current <tt class="docutils literal"><span class="pre">State</span></tt> to provide a <tt class="docutils literal"><span class="pre">Parser[T]</span></tt>.  This method can be used when defining an input task to get the result of user input.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myInputTask</span> <span class="o">:=</span> <span class="o">{</span>
+     <span class="c1">// Define the parser, which is the standard space-delimited arguments parser.</span>
+   <span class="k">val</span> <span class="n">args</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">spaceDelimited</span><span class="o">(</span><span class="s">&quot;&lt;args&gt;&quot;</span><span class="o">).</span><span class="n">parsed</span>
+     <span class="c1">// Demonstrates using a setting value and a task result:</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;Project name: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;Classpath: &quot;</span> <span class="o">+</span> <span class="o">(</span><span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">file</span><span class="o">))</span>
+   <span class="n">println</span><span class="o">(</span><span class="s">&quot;Arguments:&quot;</span><span class="o">)</span>
+   <span class="k">for</span><span class="o">(</span><span class="n">arg</span> <span class="k">&lt;-</span> <span class="n">args</span><span class="o">)</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;  &quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For details, see <tt class="xref doc docutils literal"><span class="pre">Extending/Input-Tasks</span></tt>.</p>
+<p>To expect a task to fail and get the failing exception, use the <tt class="docutils literal"><span class="pre">failure</span></tt> method instead of <tt class="docutils literal"><span class="pre">value</span></tt>.  This provides an <tt class="docutils literal"><span class="pre">Incomplete</span></tt> value, which wraps the exception.  To get the result of a task whether or not it succeeds, use <tt class="docutils literal"><span class="pre">result</span></tt>, which provides a <tt class="docutils literal"><span class="pre">Result[T]</span></tt>.</p>
+<p>Dynamic settings and tasks (<tt class="docutils literal"><span class="pre">flatMap</span></tt>) have been cleaned up.  Use the <tt class="docutils literal"><span class="pre">Def.taskDyn</span></tt> and <tt class="docutils literal"><span class="pre">Def.settingDyn</span></tt> methods to define them (better name suggestions welcome).  These methods expect the result to be a task and setting, respectively.</p>
+</div>
+<div class="section" id="sbt-format-enhancements">
+<h3>.sbt format enhancements<a class="headerlink" href="#sbt-format-enhancements" title="Permalink to this headline">¶</a></h3>
+<p>vals and defs are now allowed in .sbt files.  They must follow the same rules as settings concerning blank lines, although multiple definitions may be grouped together.  For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">n</span> <span class="k">=</span> <span class="s">&quot;widgets&quot;</span>
+<span class="k">val</span> <span class="n">o</span> <span class="k">=</span> <span class="s">&quot;org.example&quot;</span>
+
+<span class="n">name</span> <span class="o">:=</span> <span class="n">n</span>
+
+<span class="n">organization</span> <span class="o">:=</span> <span class="n">o</span>
+</pre></div>
+</div>
+<p>All definitions are compiled before settings, but it will probably be best practice to put definitions together.
+Currently, the visibility of definitions is restricted to the .sbt file it is defined in.
+They are not visible in <tt class="docutils literal"><span class="pre">consoleProject</span></tt> or the <tt class="docutils literal"><span class="pre">set</span></tt> command at this time, either.
+Use Scala files in <tt class="docutils literal"><span class="pre">project/</span></tt> for visibility in all .sbt files.</p>
+<p>vals of type <tt class="docutils literal"><span class="pre">Project</span></tt> are added to the <tt class="docutils literal"><span class="pre">Build</span></tt> so that multi-project builds can be defined entirely in .sbt files now.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">)).</span><span class="n">dependsOn</span><span class="o">(</span><span class="n">b</span><span class="o">)</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sub&quot;</span><span class="o">)).</span><span class="n">settings</span><span class="o">(</span>
+   <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>Currently, it only makes sense to defines these in the root project's .sbt files.</p>
+<p>A shorthand for defining Projects is provided by a new macro called <tt class="docutils literal"><span class="pre">project</span></tt>.
+This requires the constructed Project to be directly assigned to a <tt class="docutils literal"><span class="pre">val</span></tt>.
+The name of this val is used for the project ID and base directory.
+The base directory can be changed with the <tt class="docutils literal"><span class="pre">in</span></tt> method.
+The previous example can also be written as:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">dependsOn</span><span class="o">(</span><span class="n">b</span><span class="o">)</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="n">project</span> <span class="n">in</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sub&quot;</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span>
+  <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>This macro is also available for use in Scala files.</p>
+</div>
+<div class="section" id="control-over-automatically-added-settings">
+<h3>Control over automatically added settings<a class="headerlink" href="#control-over-automatically-added-settings" title="Permalink to this headline">¶</a></h3>
+<p>sbt loads settings from a few places in addition to the settings explicitly defined by the <tt class="docutils literal"><span class="pre">Project.settings</span></tt> field.
+These include plugins, global settings, and .sbt files.
+The new <tt class="docutils literal"><span class="pre">Project.autoSettings</span></tt> method configures these sources: whether to include them for the project and in what order.</p>
+<p><tt class="docutils literal"><span class="pre">Project.autoSettings</span></tt> accepts a sequence of values of type <tt class="docutils literal"><span class="pre">AddSettings</span></tt>.
+Instances of <tt class="docutils literal"><span class="pre">AddSettings</span></tt> are constructed from methods in the <tt class="docutils literal"><span class="pre">AddSettings</span></tt> companion object.
+The configurable settings are per-user settings (from ~/.sbt, for example), settings from .sbt files, and plugin settings (project-level only).
+The order in which these instances are provided to <tt class="docutils literal"><span class="pre">autoSettings</span></tt> determines the order in which they are appended to the settings explicitly provided in <tt class="docutils literal"><span class="pre">Project.settings</span></tt>.</p>
+<p>For .sbt files, <tt class="docutils literal"><span class="pre">AddSettings.defaultSbtFiles</span></tt> adds the settings from all .sbt files in the project's base directory as usual.
+The alternative method <tt class="docutils literal"><span class="pre">AddSettings.sbtFiles</span></tt> accepts a sequence of <tt class="docutils literal"><span class="pre">Files</span></tt> that will be loaded according to the standard .sbt format.
+Relative files are resolved against the project's base directory.</p>
+<p>Plugin settings may be included on a per-Plugin basis by using the <tt class="docutils literal"><span class="pre">AddSettings.plugins</span></tt> method and passing a <tt class="docutils literal"><span class="pre">Plugin</span> <span class="pre">=&gt;</span> <span class="pre">Boolean</span></tt>.
+The settings controlled here are only the automatic per-project settings.
+Per-build and global settings will always be included.
+Settings that plugins require to be manually added still need to be added manually.</p>
+<p>For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">AddSettings._</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">autoSettings</span><span class="o">(</span>
+   <span class="n">userSettings</span><span class="o">,</span> <span class="n">allPlugins</span><span class="o">,</span> <span class="n">sbtFiles</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;explicit/a.txt&quot;</span><span class="o">))</span>
+<span class="o">)</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">sub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;sub&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;Sub&quot;</span><span class="o">))</span> <span class="n">autoSettings</span><span class="o">(</span>
+   <span class="n">defaultSbtFiles</span><span class="o">,</span> <span class="n">plugins</span><span class="o">(</span><span class="n">includePlugin</span><span class="o">)</span>
+<span class="o">)</span>
+
+<span class="k">def</span> <span class="n">includePlugin</span><span class="o">(</span><span class="n">p</span><span class="k">:</span> <span class="kt">Plugin</span><span class="o">)</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span>
+   <span class="n">p</span><span class="o">.</span><span class="n">getClass</span><span class="o">.</span><span class="n">getName</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">&quot;org.example.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resolving-scala-dependencies">
+<h3>Resolving Scala dependencies<a class="headerlink" href="#resolving-scala-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Scala dependencies (like scala-library and scala-compiler) are now resolved via the normal <tt class="docutils literal"><span class="pre">update</span></tt> task.  This means:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Scala jars won't be copied to the boot directory, except for those needed to run sbt.</li>
+<li>Scala SNAPSHOTs behave like normal SNAPSHOTs.  In particular, running <tt class="docutils literal"><span class="pre">update</span></tt> will properly re-resolve the dynamic revision.</li>
+<li>Scala jars are resolved using the same repositories and configuration as other dependencies.</li>
+<li>Scala dependencies are not resolved via <tt class="docutils literal"><span class="pre">update</span></tt> when <tt class="docutils literal"><span class="pre">scalaHome</span></tt> is set, but are instead obtained from the configured directory.</li>
+<li>The Scala version for sbt will still be resolved via the repositories configured for the launcher.</li>
+</ol>
+</div></blockquote>
+<p>sbt still needs access to the compiler and its dependencies in order to run <tt class="docutils literal"><span class="pre">compile</span></tt>, <tt class="docutils literal"><span class="pre">console</span></tt>, and other Scala-based tasks.  So, the Scala compiler jar and dependencies (like scala-reflect.jar and scala-library.jar) are defined and resolved in the <tt class="docutils literal"><span class="pre">scala-tool</span></tt> configuration (unless <tt class="docutils literal"><span class="pre">scalaHome</span></tt> is defined).  By default, this configuration and the dependencies in it are automatically added by sbt.  This occurs even when dependencies are configured in a <tt class="docutils literal"><span class="pre">pom.xml</span></tt> or <tt class="docutils literal"><span class="pre">ivy.xml</span></tt> and so it means that the version of Scala defined for your project must be resolvable by the resolvers configured for your project.</p>
+<p>If you need to manually configure where sbt gets the Scala compiler and library used for compilation, the REPL, and other Scala tasks, do one of the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Set <tt class="docutils literal"><span class="pre">scalaHome</span></tt> to use the existing Scala jars in a specific directory.  If <tt class="docutils literal"><span class="pre">autoScalaLibrary</span></tt> is true, the library jar found here will be added to the (unmanaged) classpath.</li>
+<li>Set <tt class="docutils literal"><span class="pre">managedScalaInstance</span> <span class="pre">:=</span> <span class="pre">false</span></tt> and explicitly define <tt class="docutils literal"><span class="pre">scalaInstance</span></tt>, which is of type <tt class="docutils literal"><span class="pre">ScalaInstance</span></tt>.  This defines the compiler, library, and other jars comprising Scala.  If <tt class="docutils literal"><span class="pre">autoScalaLibrary</span></tt> is true, the library jar from the defined <tt class="docutils literal"><span class="pre">ScalaInstance</span></tt> will be added to the (unmanaged) classpath.</li>
+</ol>
+</div></blockquote>
+<p>The <a class="reference internal" href="../Detailed-Topics/Configuring-Scala.html"><em>Configuring Scala</em></a> page provides full details.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">0.13.0 Changes</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#features-fixes-changes-with-compatibility-implications-incomplete-please-help">Features, fixes, changes with compatibility implications (incomplete, please help)</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#improvements">Improvements</a></li>
+<li><a class="reference internal" href="#other">Other</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#details-of-major-changes">Details of major changes</a><ul>
+<li><a class="reference internal" href="#camelcase-key-names">camelCase Key names</a></li>
+<li><a class="reference internal" href="#new-key-definition-methods">New key definition methods</a></li>
+<li><a class="reference internal" href="#new-task-setting-syntax">New task/setting syntax</a></li>
+<li><a class="reference internal" href="#sbt-format-enhancements">.sbt format enhancements</a></li>
+<li><a class="reference internal" href="#control-over-automatically-added-settings">Control over automatically added settings</a></li>
+<li><a class="reference internal" href="#resolving-scala-dependencies">Resolving Scala dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>
