@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-SNAPSHOT',
+        VERSION:     '0.13.0-M1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">0.13.0 Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="ChangeSummary_0.12.0.html">0.12.0 Changes</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-SNAPSHOT">Version 0.13.0-SNAPSHOT</option></select>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
               </li>
             </ul>         
           </div>
@@ -115,7 +115,9 @@
 </li>
 <li><p class="first">Automatically link to external API scaladocs of dependencies by setting <tt class="docutils literal"><span class="pre">autoAPIMappings</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  This requires at least Scala 2.10.1 and for dependencies to define <tt class="docutils literal"><span class="pre">apiURL</span></tt> for their scaladoc location.  Mappings may be manually added to the <tt class="docutils literal"><span class="pre">apiMappings</span></tt> task as well.</p>
 </li>
-<li><p class="first">Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">/path/to/scala/home</span></tt>.</p>
+<li><p class="first">Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">scala-version=/path/to/scala/home</span></tt>.  The scala-version part is optional, but is used as the version for any managed dependencies.</p>
+</li>
+<li><p class="first">New API for getting tasks and settings from multiple projects and configurations.  See the new section <a class="reference internal" href="../Detailed-Topics/Tasks.html#multiple-scopes"><em>getting values from multiple scopes</em></a>.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">export</span></tt> command</p>
 <blockquote>
@@ -129,6 +131,9 @@
 </div>
 <div class="section" id="fixes">
 <h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>sbt no longer tries to warn on dependency conflicts.  Configure a <a class="reference internal" href="../Detailed-Topics/Library-Management.html#conflict-management"><em>conflict manager</em></a> instead.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue">#709</span></a>)</li>
+</ul>
 </div>
 <div class="section" id="improvements">
 <h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h3>
@@ -188,6 +193,7 @@
 <span class="o">}</span>
 </pre></div>
 </div>
+<p>For details, see <tt class="xref doc docutils literal"><span class="pre">Extending/Input-Tasks</span></tt>.</p>
 <p>To expect a task to fail and get the failing exception, use the <tt class="docutils literal"><span class="pre">failure</span></tt> method instead of <tt class="docutils literal"><span class="pre">value</span></tt>.  This provides an <tt class="docutils literal"><span class="pre">Incomplete</span></tt> value, which wraps the exception.  To get the result of a task whether or not it succeeds, use <tt class="docutils literal"><span class="pre">result</span></tt>, which provides a <tt class="docutils literal"><span class="pre">Result[T]</span></tt>.</p>
 <p>Dynamic settings and tasks (<tt class="docutils literal"><span class="pre">flatMap</span></tt>) have been cleaned up.  Use the <tt class="docutils literal"><span class="pre">Def.taskDyn</span></tt> and <tt class="docutils literal"><span class="pre">Def.settingDyn</span></tt> methods to define them (better name suggestions welcome).  These methods expect the result to be a task and setting, respectively.</p>
 </div>

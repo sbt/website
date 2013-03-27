@@ -226,15 +226,15 @@ Use <code>ContextUtil[c.type](c)</code> to construct.</p></div><div class="toggl
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="sbt.appmacro.ContextUtil#checkReferences" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="checkReferences(defs:scala.collection.Set[ContextUtil.this.ctx.universe.Symbol],isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean):ContextUtil.this.ctx.universe.Tree=&gt;Unit"></a>
-      <a id="checkReferences(Set[Symbol],(Tree)⇒Boolean):(Tree)⇒Unit"></a>
+      <a id="checkReferences(defs:scala.collection.Set[ContextUtil.this.ctx.universe.Symbol],isWrapper:(String,ContextUtil.this.ctx.universe.Type,ContextUtil.this.ctx.universe.Tree)=&gt;Boolean):ContextUtil.this.ctx.universe.Tree=&gt;Unit"></a>
+      <a id="checkReferences(Set[Symbol],(String,scala.reflect.macros.Universe.Type,Tree)⇒Boolean):(Tree)⇒Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">checkReferences</span><span class="params">(<span name="defs">defs: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">checkReferences</span><span class="params">(<span name="defs">defs: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>, <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">A function that checks the provided tree for illegal references to M instances defined in the
@@ -256,15 +256,15 @@ Use <code>ContextUtil[c.type](c)</code> to construct.</p></div><div class="toggl
               
         </dd></dl></div>
     </li><li name="sbt.appmacro.ContextUtil#collectDefs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="collectDefs(tree:ContextUtil.this.ctx.universe.Tree,isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean):scala.collection.Set[ContextUtil.this.ctx.universe.Symbol]"></a>
-      <a id="collectDefs(Tree,(Tree)⇒Boolean):Set[Symbol]"></a>
+      <a id="collectDefs(tree:ContextUtil.this.ctx.universe.Tree,isWrapper:(String,ContextUtil.this.ctx.universe.Type,ContextUtil.this.ctx.universe.Tree)=&gt;Boolean):scala.collection.Set[ContextUtil.this.ctx.universe.Symbol]"></a>
+      <a id="collectDefs(Tree,(String,scala.reflect.macros.Universe.Type,Tree)⇒Boolean):Set[Symbol]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">collectDefs</span><span class="params">(<span name="tree">tree: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>
+        <span class="name">collectDefs</span><span class="params">(<span name="tree">tree: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>, <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.Set">Set</span>[<span class="extype" name="scala.reflect.macros.Universe.Symbol">Symbol</span>]</span>
       </span>
       </h4>
       <p class="shortcomment cmt">Collects all definitions in the tree for use in checkReferences.</p><div class="fullcomment"><div class="comment cmt"><p>Collects all definitions in the tree for use in checkReferences.
@@ -486,19 +486,6 @@ As an approximation, disallow referenced to any local definitions <code>defs</co
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="sbt.appmacro.ContextUtil#isWrapper" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="isWrapper(methodName:String):ContextUtil.this.ctx.universe.Tree=&gt;Boolean"></a>
-      <a id="isWrapper(String):(Tree)⇒Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">isWrapper</span><span class="params">(<span name="methodName">methodName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4>
-      
     </li><li name="sbt.appmacro.ContextUtil#localModifiers" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="localModifiers:ContextUtil.this.ctx.universe.Modifiers"></a>
       <a id="localModifiers:scala.reflect.macros.Universe.Modifiers"></a>
@@ -708,19 +695,19 @@ As an approximation, disallow referenced to any local definitions <code>defs</co
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="sbt.appmacro.ContextUtil#transformWrappers" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="transformWrappers(t:ContextUtil.this.ctx.universe.Tree,isWrapper:ContextUtil.this.ctx.universe.Tree=&gt;Boolean,subWrapper:(ContextUtil.this.ctx.universe.Type,ContextUtil.this.ctx.universe.Tree)=&gt;ContextUtil.this.ctx.universe.Tree):ContextUtil.this.ctx.universe.Tree"></a>
-      <a id="transformWrappers(Tree,(Tree)⇒Boolean,(scala.reflect.macros.Universe.Type,Tree)⇒Tree):Tree"></a>
+      <a id="transformWrappers(t:ContextUtil.this.ctx.universe.Tree,subWrapper:(String,ContextUtil.this.ctx.universe.Type,ContextUtil.this.ctx.universe.Tree)=&gt;sbt.appmacro.Converted[ContextUtil.this.ctx.type]):ContextUtil.this.ctx.universe.Tree"></a>
+      <a id="transformWrappers(Tree,(String,scala.reflect.macros.Universe.Type,Tree)⇒Converted[ctx.type]):Tree"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">transformWrappers</span><span class="params">(<span name="t">t: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="isWrapper">isWrapper: (<span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="subWrapper">subWrapper: (<span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>, <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>
+        <span class="name">transformWrappers</span><span class="params">(<span name="t">t: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>, <span name="subWrapper">subWrapper: (<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.reflect.api.Types.Type">scala.reflect.macros.Universe.Type</span>, <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span>) ⇒ <a href="Converted.html" class="extype" name="sbt.appmacro.Converted">Converted</a>[<a href="#ctx:C" class="extmbr" name="sbt.appmacro.ContextUtil#ctx">ctx</a>.type]</span>)</span><span class="result">: <span class="extype" name="scala.reflect.macros.Universe.Tree">Tree</span></span>
       </span>
       </h4>
       <p class="shortcomment cmt">Substitutes wrappers in tree <code>t</code> with the result of <code>subWrapper</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Substitutes wrappers in tree <code>t</code> with the result of <code>subWrapper</code>.
-A wrapper is a Tree of the form <code>f[T](v)</code> for which isWrapper(&lt;Tree of f&gt;) returns true.
+A wrapper is a Tree of the form <code>f[T](v)</code> for which isWrapper(&lt;Tree of f&gt;, &lt;Underlying Type&gt;, &lt;qual&gt;.target) returns true.
 Typically, <code>f</code> is a <code>Select</code> or <code>Ident</code>.
 The wrapper is replaced with the result of <code>subWrapper(&lt;Type of T&gt;, &lt;Tree of v&gt;)</code></p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">

@@ -36,7 +36,7 @@
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="Detailed Topics" href="index.html" />
     <link rel="next" title="Testing" href="Testing.html" />
-    <link rel="prev" title="Task Inputs/Dependencies" href="TaskInputs.html" /> 
+    <link rel="prev" title="Tasks/Settings: Motivation" href="TaskInputs.html" /> 
   </head>
   <body>
   <div class="navbar">
@@ -78,7 +78,7 @@
                 <a href="../index.html">Contents</a>
               </li>
               <li>
-                <span class="divider">«</span> <a href="TaskInputs.html">Task Inputs/Dependencies</a> <span class="divider">|</span>
+                <span class="divider">«</span> <a href="TaskInputs.html">Tasks/Settings: Motivation</a> <span class="divider">|</span>
               </li>
               <li>
                 <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
@@ -91,16 +91,12 @@
             
   <div class="section" id="tasks">
 <h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
-<p>Tasks and settings are now introduced in the <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>getting started guide</em></a>,
-which you may wish to read first.  This older page has some additional detail.</p>
-<p><em>Wiki Maintenance Note:</em> This page should have its overlap with the
-getting started guide cleaned up, and just have any advanced or
-additional notes. It should maybe also be consolidated with
-<a class="reference internal" href="TaskInputs.html"><em>Task Inputs/Dependencies</em></a>.</p>
+<p>Tasks and settings are introduced in the <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>getting started guide</em></a>,
+which you may wish to read first.
+This page has additional details and background and is intended more as a reference.</p>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>sbt 0.10+ has a new task system that integrates with the new settings
-system. Both settings and tasks produce values, but there are two major
+<p>Both settings and tasks produce values, but there are two major
 differences between them:</p>
 <ol class="arabic simple">
 <li>Settings are evaluated at project load time. Tasks are executed on
@@ -115,7 +111,7 @@ are fixed. Tasks can introduce new tasks during execution, however.</li>
 <ol class="arabic simple">
 <li>By integrating with the settings system, tasks can be added, removed,
 and modified as easily and flexibly as settings.</li>
-<li><a class="reference internal" href="TaskInputs.html"><em>Input Tasks</em></a>, use <a class="reference internal" href="Parsing-Input.html"><em>parser combinators</em></a> to define the syntax for their arguments.
+<li><a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> use <a class="reference internal" href="Parsing-Input.html"><em>parser combinators</em></a> to define the syntax for their arguments.
 This allows flexible syntax and tab-completions in the same way as <a class="reference internal" href="../Extending/Commands.html"><em>Commands</em></a>.</li>
 <li>Tasks produce values. Other tasks can access a task's value by calling <tt class="docutils literal"><span class="pre">value</span></tt> on it within a task definition.</li>
 <li>Dynamically changing the structure of the task graph is possible.
@@ -125,13 +121,10 @@ Tasks can be injected into the execution graph based on the result of another ta
 logging for that task at a more verbose level than is initially
 printed to the screen.</li>
 </ol>
-<p>These features are discussed in detail in the following sections. The
-context for the code snippets will be either the body of a <tt class="docutils literal"><span class="pre">Build</span></tt>
-object in a <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala file</em></a> or an expression
-in a <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>build.sbt</em></a>.</p>
+<p>These features are discussed in detail in the following sections.</p>
 </div>
-<div class="section" id="defining-a-new-task">
-<h2>Defining a New Task<a class="headerlink" href="#defining-a-new-task" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="defining-a-task">
+<h2>Defining a Task<a class="headerlink" href="#defining-a-task" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="hello-world-example-sbt">
 <h3>Hello World example (sbt)<a class="headerlink" href="#hello-world-example-sbt" title="Permalink to this headline">¶</a></h3>
 <p>build.sbt</p>
@@ -152,7 +145,7 @@ see this task listed.</p>
 <p>The name of the <tt class="docutils literal"><span class="pre">val</span></tt> is used when referring to the task in Scala code and at the command line.
 The string passed to the <tt class="docutils literal"><span class="pre">taskKey</span></tt> method is a description of the task.
 The type parameter passed to <tt class="docutils literal"><span class="pre">taskKey</span></tt> (here, <tt class="docutils literal"><span class="pre">Int</span></tt>) is the type of value produced by the task.</p>
-<p>We'll define a couple of other of tasks for the examples:</p>
+<p>We'll define a couple of other keys for the examples:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;An int task&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A string task&quot;</span><span class="o">)</span>
 </pre></div>
@@ -171,7 +164,7 @@ the task's inputs.</li>
 <li>Define the code that implements the task in terms of these inputs.</li>
 <li>Determine the scope the task will go in.</li>
 </ol>
-<p>These parts are then combined like the parts of a setting are combined.</p>
+<p>These parts are then combined just like the parts of a setting are combined.</p>
 <div class="section" id="defining-a-basic-task">
 <h4>Defining a basic task<a class="headerlink" href="#defining-a-basic-task" title="Permalink to this headline">¶</a></h4>
 <p>A task is defined using <tt class="docutils literal"><span class="pre">:=</span></tt></p>
@@ -214,11 +207,7 @@ there are separate <tt class="docutils literal"><span class="pre">compile</span>
 scopes. The scope of a task is defined the same as for a setting. In the
 following example, <tt class="docutils literal"><span class="pre">test:sampleTask</span></tt> uses the result of
 <tt class="docutils literal"><span class="pre">compile:intTask</span></tt>.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleTask</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span> <span class="o">:=</span>
-    <span class="n">intTask</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">*</span> <span class="mi">3</span>
-
-<span class="c1">// with a different punctuation style</span>
-<span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="o">(</span><span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">*</span> <span class="mi">3</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="o">(</span><span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">*</span> <span class="mi">3</span>
 </pre></div>
 </div>
 </div>
@@ -235,25 +224,29 @@ have the highest precedence. (This category is divided further
 according to the specific character it starts with. See the Scala
 specification for details.)</li>
 </ol>
-<p>Therefore, the second variant in the previous example is equivalent to
-the following:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">)</span> <span class="o">:=</span> <span class="o">(</span> <span class="o">(</span><span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">)</span>
+<p>Therefore, the the previous example is equivalent to the following:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="n">sampleTask</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).:=(</span> <span class="o">(</span><span class="n">intTask</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="section" id="separating-implementations">
+<h3>Separating implementations<a class="headerlink" href="#separating-implementations" title="Permalink to this headline">¶</a></h3>
+<p>The implementation of a task can be separated from the binding.
+For example, a basic separate definition looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Define a new, standalone task implemention</span>
+<span class="k">val</span> <span class="n">intTaskImpl</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span> <span class="k">=</span>
+   <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="n">sampleTask</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">}</span>
+
+<span class="c1">// Bind the implementation to a specific key</span>
+<span class="n">intTask</span> <span class="o">:=</span> <span class="n">intTaskImpl</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>Note that whenever <tt class="docutils literal"><span class="pre">.value</span></tt> is used, it must be within a task definition, such as
+within <tt class="docutils literal"><span class="pre">Def.task</span></tt> above or as an argument to <tt class="docutils literal"><span class="pre">:=</span></tt>.</p>
 </div>
 <div class="section" id="modifying-an-existing-task">
-<h2>Modifying an Existing Task<a class="headerlink" href="#modifying-an-existing-task" title="Permalink to this headline">¶</a></h2>
-<p>The examples in this section use the following key definitions, which
-would go in a <tt class="docutils literal"><span class="pre">Build</span></tt> object in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file or directly in a <tt class="docutils literal"><span class="pre">.sbt</span></tt> file.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">unitTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;A side-effecting task.&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;A task that returns an integer.&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A task that returns String&quot;</span><span class="o">)</span>
-</pre></div>
-</div>
-<p>The examples themselves are valid settings in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file or as
-part of a sequence provided to <tt class="docutils literal"><span class="pre">Project.settings</span></tt>.</p>
+<h3>Modifying an Existing Task<a class="headerlink" href="#modifying-an-existing-task" title="Permalink to this headline">¶</a></h3>
 <p>In the general case, modify a task by declaring the previous task as an
 input.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// initial definition</span>
@@ -284,30 +277,204 @@ only print <tt class="docutils literal"><span class="pre">#3</span></tt>.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="getting-values-from-multiple-scopes">
+<span id="multiple-scopes"></span><h2>Getting values from multiple scopes<a class="headerlink" href="#getting-values-from-multiple-scopes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Introduction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The general form of an expression that gets values from multiple scopes is:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">setting</span><span class="o">-</span><span class="n">or</span><span class="o">-</span><span class="n">task</span><span class="o">&gt;.</span><span class="n">all</span><span class="o">(&lt;</span><span class="n">scope</span><span class="o">-</span><span class="n">filter</span><span class="o">&gt;).</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">all</span></tt> method is implicitly added to tasks and settings.
+It accepts a <tt class="docutils literal"><span class="pre">ScopeFilter</span></tt> that will select the <tt class="docutils literal"><span class="pre">Scopes</span></tt>.
+The result has type <tt class="docutils literal"><span class="pre">Seq[T]</span></tt>, where <tt class="docutils literal"><span class="pre">T</span></tt> is the key's underlying type.</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>A common scenario is getting the sources for all subprojects for processing all at once, such as passing them to scaladoc.
+The task that we want to obtain values for is <tt class="docutils literal"><span class="pre">sources</span></tt> and we want to get the values in all non-root projects and in the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration.
+This looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
+
+<span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
+
+<span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="o">(</span>
+   <span class="n">sources</span> <span class="o">:=</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">filter</span> <span class="k">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span> <span class="n">inProjects</span><span class="o">(</span><span class="n">core</span><span class="o">,</span> <span class="n">util</span><span class="o">),</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span> <span class="o">)</span>
+      <span class="c1">// each sources definition is of type Seq[File],</span>
+      <span class="c1">//   giving us a Seq[Seq[File]] that we then flatten to Seq[File]</span>
+      <span class="k">val</span> <span class="n">allSources</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="k">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">all</span><span class="o">(</span><span class="n">filter</span><span class="o">).</span><span class="n">value</span>
+      <span class="n">allSources</span><span class="o">.</span><span class="n">flatten</span>
+   <span class="o">}</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The next section describes various ways to construct a ScopeFilter.</p>
+</div>
+<div class="section" id="scopefilter">
+<h3>ScopeFilter<a class="headerlink" href="#scopefilter" title="Permalink to this headline">¶</a></h3>
+<p>A basic <a class="reference external" href="../../api/sbt/ScopeFilter.html">ScopeFilter</a> is constructed by the <tt class="docutils literal"><span class="pre">ScopeFilter.apply</span></tt> method.
+This method makes a <tt class="docutils literal"><span class="pre">ScopeFilter</span></tt> from filters on the parts of a <tt class="docutils literal"><span class="pre">Scope</span></tt>: a <tt class="docutils literal"><span class="pre">ProjectFilter</span></tt>, <tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>, and <tt class="docutils literal"><span class="pre">TaskFilter</span></tt>.
+The simplest case is explicitly specifying the values for the parts:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span>
+   <span class="nc">ScopeFilter</span><span class="o">(</span>
+      <span class="n">inProjects</span><span class="o">(</span> <span class="n">core</span><span class="o">,</span> <span class="n">util</span> <span class="o">),</span>
+      <span class="n">inConfigurations</span><span class="o">(</span> <span class="nc">Compile</span><span class="o">,</span> <span class="nc">Test</span> <span class="o">)</span>
+   <span class="o">)</span>
+</pre></div>
+</div>
+<div class="section" id="unspecified-filters">
+<h4>Unspecified filters<a class="headerlink" href="#unspecified-filters" title="Permalink to this headline">¶</a></h4>
+<p>If the task filter is not specified, as in the example above, the default is to select scopes without a specific task (global).
+Similarly, an unspecified configuration filter will select scopes in the global configuration.
+The project filter should usually be explicit, but if left unspecified, the current project context will be used.</p>
+</div>
+<div class="section" id="more-on-filter-construction">
+<h4>More on filter construction<a class="headerlink" href="#more-on-filter-construction" title="Permalink to this headline">¶</a></h4>
+<p>The example showed the basic methods <tt class="docutils literal"><span class="pre">inProjects</span></tt> and <tt class="docutils literal"><span class="pre">inConfigurations</span></tt>.
+This section describes all methods for constructing a <tt class="docutils literal"><span class="pre">ProjectFilter</span></tt>, <tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>, or <tt class="docutils literal"><span class="pre">TaskFilter</span></tt>.
+These methods can be organized into four groups:</p>
+<ul class="simple">
+<li>Explicit member list (<tt class="docutils literal"><span class="pre">inProjects</span></tt>, <tt class="docutils literal"><span class="pre">inConfigurations</span></tt>, <tt class="docutils literal"><span class="pre">inTasks</span></tt>)</li>
+<li>Global value (<tt class="docutils literal"><span class="pre">inGlobalProject</span></tt>, <tt class="docutils literal"><span class="pre">inGlobalConfiguration</span></tt>, <tt class="docutils literal"><span class="pre">inGlobalTask</span></tt>)</li>
+<li>Default filter (<tt class="docutils literal"><span class="pre">inAnyProject</span></tt>, <tt class="docutils literal"><span class="pre">inAnyConfiguration</span></tt>, <tt class="docutils literal"><span class="pre">inAnyTask</span></tt>)</li>
+<li>Project relationships (<tt class="docutils literal"><span class="pre">inAggregates</span></tt>, <tt class="docutils literal"><span class="pre">inDependencies</span></tt>)</li>
+</ul>
+<p>See the <a class="reference external" href="../../api/sbt/ScopeFilter.html#Make">API documentation</a> for details.</p>
+</div>
+<div class="section" id="combining-scopefilters">
+<h4>Combining ScopeFilters<a class="headerlink" href="#combining-scopefilters" title="Permalink to this headline">¶</a></h4>
+<p><tt class="docutils literal"><span class="pre">ScopeFilters</span></tt> may be combined with the <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt>, <tt class="docutils literal"><span class="pre">||</span></tt>, <tt class="docutils literal"><span class="pre">--</span></tt>, and <tt class="docutils literal"><span class="pre">-</span></tt> methods:</p>
+<dl class="docutils">
+<dt>a &amp;&amp; b</dt>
+<dd>Selects scopes that match both <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt></dd>
+<dt>a || b</dt>
+<dd>Selects scopes that match either <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt></dd>
+<dt>a -- b</dt>
+<dd>Selects scopes that match <tt class="docutils literal"><span class="pre">a</span></tt> but not <tt class="docutils literal"><span class="pre">b</span></tt></dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-b</span></kbd></td>
+<td>Selects scopes that do not match <tt class="docutils literal"><span class="pre">b</span></tt></td></tr>
+</tbody>
+</table>
+<p>For example, the following selects the scope for the <tt class="docutils literal"><span class="pre">Compile</span></tt> and <tt class="docutils literal"><span class="pre">Test</span></tt> configurations of the <tt class="docutils literal"><span class="pre">core</span></tt> project
+and the global configuration of the <tt class="docutils literal"><span class="pre">util</span></tt> project:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span>
+   <span class="nc">ScopeFilter</span><span class="o">(</span> <span class="n">inProjects</span><span class="o">(</span><span class="n">core</span><span class="o">),</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="nc">Test</span><span class="o">))</span> <span class="o">||</span>
+   <span class="nc">ScopeFilter</span><span class="o">(</span> <span class="n">inProjects</span><span class="o">(</span><span class="n">util</span><span class="o">),</span> <span class="n">inGlobalConfiguration</span> <span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-operations">
+<h3>More operations<a class="headerlink" href="#more-operations" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">all</span></tt> method applies to both settings (values of type <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>)
+and tasks (values of type <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt>).
+It returns a setting or task that provides a <tt class="docutils literal"><span class="pre">Seq[T]</span></tt>, as shown in this table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Target</th>
+<th class="head">Result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Initialize[T]</td>
+<td>Initialize[Seq[T]]</td>
+</tr>
+<tr class="row-odd"><td>Initialize[Task[T]]</td>
+<td>Initialize[Task[Seq[T]]]</td>
+</tr>
+</tbody>
+</table>
+<p>This means that the <tt class="docutils literal"><span class="pre">all</span></tt> method can be combined with methods that construct tasks and settings.</p>
+<div class="section" id="missing-values">
+<h4>Missing values<a class="headerlink" href="#missing-values" title="Permalink to this headline">¶</a></h4>
+<p>Some scopes might not define a setting or task.
+The <tt class="docutils literal"><span class="pre">?</span></tt> and <tt class="docutils literal"><span class="pre">??</span></tt> methods can help in this case.
+They are both defined on settings and tasks and indicate what to do when a key is undefined.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">?</span></tt></dt>
+<dd>On a setting or task with underlying type <tt class="docutils literal"><span class="pre">T</span></tt>, this accepts no arguments and returns a setting or task (respectively) of type <tt class="docutils literal"><span class="pre">Option[T]</span></tt>.
+The result is <tt class="docutils literal"><span class="pre">None</span></tt> if the setting/task is undefined and <tt class="docutils literal"><span class="pre">Some[T]</span></tt> with the value if it is.</dd>
+<dt><tt class="docutils literal"><span class="pre">??</span></tt></dt>
+<dd>On a setting or task with underlying type <tt class="docutils literal"><span class="pre">T</span></tt>, this accepts an argument of type <tt class="docutils literal"><span class="pre">T</span></tt> and uses this argument if the setting/task is undefined.</dd>
+</dl>
+<p>The following contrived example sets the maximum errors to be the maximum of all aggregates of the current project.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">maxErrors</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="c1">// select the transitive aggregates for this project, but not the project itself</span>
+   <span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span>
+      <span class="nc">ScopeFilter</span><span class="o">(</span> <span class="n">inAggregates</span><span class="o">(</span><span class="nc">ThisProject</span><span class="o">,</span> <span class="n">includeRoot</span><span class="k">=</span><span class="kc">false</span><span class="o">)</span> <span class="o">)</span>
+   <span class="c1">// get the configured maximum errors in each selected scope,</span>
+   <span class="c1">// using 0 if not defined in a scope</span>
+   <span class="k">val</span> <span class="n">allVersions</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span>
+      <span class="o">(</span><span class="n">maxErrors</span> <span class="o">??</span> <span class="mi">0</span><span class="o">).</span><span class="n">all</span><span class="o">(</span><span class="n">filter</span><span class="o">).</span><span class="n">value</span>
+   <span class="n">allVersions</span><span class="o">.</span><span class="n">max</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-values-from-multiple-scopes">
+<h4>Multiple values from multiple scopes<a class="headerlink" href="#multiple-values-from-multiple-scopes" title="Permalink to this headline">¶</a></h4>
+<p>The target of <tt class="docutils literal"><span class="pre">all</span></tt> is any task or setting, including anonymous ones.
+This means it is possible to get multiple values at once without defining a new task or setting in each scope.
+A common use case is to pair each value obtained with the project, configuration, or full scope it came from.</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">resolvedScoped</span></tt></dt>
+<dd>Provides the full enclosing <tt class="docutils literal"><span class="pre">ScopedKey</span></tt> (which is a <tt class="docutils literal"><span class="pre">Scope</span></tt> + <tt class="docutils literal"><span class="pre">AttributeKey[_]</span></tt>)</dd>
+<dt><tt class="docutils literal"><span class="pre">thisProject</span></tt></dt>
+<dd>Provides the <tt class="docutils literal"><span class="pre">Project</span></tt> associated with this scope (undefined at the global and build levels)</dd>
+<dt><tt class="docutils literal"><span class="pre">thisProjectRef</span></tt></dt>
+<dd>Provides the <tt class="docutils literal"><span class="pre">ProjectRef</span></tt> for the context (undefined at the global and build levels)</dd>
+<dt><tt class="docutils literal"><span class="pre">configuration</span></tt></dt>
+<dd>Provides the <tt class="docutils literal"><span class="pre">Configuration</span></tt> for the context (undefined for the global configuration)</dd>
+</dl>
+<p>For example, the following defines a task that prints non-Compile configurations that define
+sbt plugins.  This might be used to identify an incorrectly configured build (or not, since this is
+a fairly contrived example):</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Select all configurations in the current project except for Compile</span>
+<span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span>
+   <span class="n">inProjects</span><span class="o">(</span><span class="nc">ThisProject</span><span class="o">),</span>
+   <span class="n">inAnyConfiguration</span> <span class="o">--</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span>
+<span class="o">)</span>
+
+<span class="c1">// Define a task that provides the name of the current configuration</span>
+<span class="c1">//   and the set of sbt plugins defined in the configuration</span>
+<span class="k">val</span> <span class="n">pluginsWithConfig</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span> <span class="o">(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">]]</span> <span class="k">=</span>
+   <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
+      <span class="o">(</span> <span class="n">configuration</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="n">definedSbtPlugins</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
+   <span class="o">}</span>
+
+<span class="n">checkPluginsTask</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">oddPlugins</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])]</span> <span class="k">=</span>
+      <span class="n">pluginsWithConfig</span><span class="o">.</span><span class="n">all</span><span class="o">(</span><span class="n">filter</span><span class="o">).</span><span class="n">value</span>
+   <span class="c1">// Print each configuration that defines sbt plugins</span>
+   <span class="k">for</span><span class="o">(</span> <span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">plugins</span><span class="o">)</span> <span class="k">&lt;-</span> <span class="n">oddPlugins</span> <span class="k">if</span> <span class="n">plugins</span><span class="o">.</span><span class="n">nonEmpty</span> <span class="o">)</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$config defines sbt plugins: ${plugins.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="advanced-task-operations">
 <h2>Advanced Task Operations<a class="headerlink" href="#advanced-task-operations" title="Permalink to this headline">¶</a></h2>
 <p>The examples in this section use the task keys defined in the previous section.</p>
-<div class="section" id="separating-implementations">
-<h3>Separating implementations<a class="headerlink" href="#separating-implementations" title="Permalink to this headline">¶</a></h3>
-<p>The implementation of a task can be separated from the binding.
-For example, a basic separate definition looks like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Define a new, standalone task implemention</span>
-<span class="k">val</span> <span class="n">intTaskImpl</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="n">sampleTask</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">}</span>
-
-<span class="c1">// Bind the implementation to a specific key</span>
-<span class="n">intTask</span> <span class="o">:=</span> <span class="n">intTaskImpl</span><span class="o">.</span><span class="n">value</span>
-</pre></div>
-</div>
-<p>Note that whenever <tt class="docutils literal"><span class="pre">.value</span></tt> is used, it must be within a task definition, such as
-within <tt class="docutils literal"><span class="pre">Def.task</span></tt> above or as an argument to <tt class="docutils literal"><span class="pre">:=</span></tt>.</p>
-</div>
 <div class="section" id="streams-per-task-logging">
 <h3>Streams: Per-task logging<a class="headerlink" href="#streams-per-task-logging" title="Permalink to this headline">¶</a></h3>
-<p>New in sbt 0.10+ are per-task loggers, which are part of a more general
-system for task-specific data called Streams. This allows controlling
-the verbosity of stack traces and logging individually for tasks as well
-as recalling the last logging for a task. Tasks also have access to
-their own persisted binary or text data.</p>
+<p>Per-task loggers are part of a more general system for task-specific data called Streams.
+This allows controlling the verbosity of stack traces and logging individually for tasks as well
+as recalling the last logging for a task.
+Tasks also have access to their own persisted binary or text data.</p>
 <p>To use Streams, get the value of the <tt class="docutils literal"><span class="pre">streams</span></tt> task. This is a
 special task that provides an instance of
 <a class="reference external" href="../../api/sbt/std/TaskStreams.html">TaskStreams</a>
@@ -317,7 +484,7 @@ text streams, named loggers, and a default logger. The default
 which is the most commonly used aspect, is obtained by the <tt class="docutils literal"><span class="pre">log</span></tt>
 method:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">{</span>
-       <span class="k">val</span> <span class="n">s</span><span class="k">:</span> <span class="kt">TaskStreams</span> <span class="o">=</span> <span class="n">streams</span><span class="o">.</span><span class="n">value</span>
+  <span class="k">val</span> <span class="n">s</span><span class="k">:</span> <span class="kt">TaskStreams</span> <span class="o">=</span> <span class="n">streams</span><span class="o">.</span><span class="n">value</span>
   <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="o">(</span><span class="s">&quot;Saying hi...&quot;</span><span class="o">)</span>
   <span class="n">s</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="o">(</span><span class="s">&quot;Hello!&quot;</span><span class="o">)</span>
 <span class="o">}</span>
@@ -378,12 +545,12 @@ from failing. Consider the following example:</p>
 <p>The following table lists the results of each task depending on the initially invoked task:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="16%" />
 <col width="17%" />
+<col width="18%" />
 <col width="15%" />
-<col width="16%" />
-<col width="16%" />
-<col width="21%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">invoked task</th>
@@ -537,7 +704,7 @@ being printed.</p>
 <li><a class="reference internal" href="#">Tasks</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#defining-a-new-task">Defining a New Task</a><ul>
+<li><a class="reference internal" href="#defining-a-task">Defining a Task</a><ul>
 <li><a class="reference internal" href="#hello-world-example-sbt">Hello World example (sbt)</a></li>
 <li><a class="reference internal" href="#define-the-key">Define the key</a></li>
 <li><a class="reference internal" href="#implement-the-task">Implement the task</a><ul>
@@ -547,11 +714,27 @@ being printed.</p>
 <li><a class="reference internal" href="#on-precedence">On precedence</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#separating-implementations">Separating implementations</a></li>
+<li><a class="reference internal" href="#modifying-an-existing-task">Modifying an Existing Task</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#modifying-an-existing-task">Modifying an Existing Task</a></li>
+<li><a class="reference internal" href="#getting-values-from-multiple-scopes">Getting values from multiple scopes</a><ul>
+<li><a class="reference internal" href="#id1">Introduction</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#scopefilter">ScopeFilter</a><ul>
+<li><a class="reference internal" href="#unspecified-filters">Unspecified filters</a></li>
+<li><a class="reference internal" href="#more-on-filter-construction">More on filter construction</a></li>
+<li><a class="reference internal" href="#combining-scopefilters">Combining ScopeFilters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-operations">More operations</a><ul>
+<li><a class="reference internal" href="#missing-values">Missing values</a></li>
+<li><a class="reference internal" href="#multiple-values-from-multiple-scopes">Multiple values from multiple scopes</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#advanced-task-operations">Advanced Task Operations</a><ul>
-<li><a class="reference internal" href="#separating-implementations">Separating implementations</a></li>
 <li><a class="reference internal" href="#streams-per-task-logging">Streams: Per-task logging</a></li>
 <li><a class="reference internal" href="#handling-failure">Handling Failure</a><ul>
 <li><a class="reference internal" href="#failure"><tt class="docutils literal"><span class="pre">failure</span></tt></a></li>

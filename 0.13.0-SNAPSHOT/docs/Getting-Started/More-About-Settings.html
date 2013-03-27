@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-SNAPSHOT',
+        VERSION:     '0.13.0-M1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">More Kinds of Setting</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Scopes.html">Scopes</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-SNAPSHOT">Version 0.13.0-SNAPSHOT</option></select>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
               </li>
             </ul>         
           </div>
@@ -113,7 +113,7 @@ creating a <tt class="docutils literal"><span class="pre">Setting</span></tt> wi
 </div>
 <div class="section" id="appending-to-previous-values-and">
 <h2>Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt><a class="headerlink" href="#appending-to-previous-values-and" title="Permalink to this headline">¶</a></h2>
-<p>Replacement with <tt class="docutils literal"><span class="pre">:=</span></tt> is the simplest transformation, but keys have
+<p>Assignment with <tt class="docutils literal"><span class="pre">:=</span></tt> is the simplest transformation, but keys have
 other methods as well. If the <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> is a sequence,
 i.e. the key's value type is a sequence, you can append to the sequence
 rather than replacing it.</p>
@@ -146,41 +146,9 @@ course:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="transforming-a-value">
-<h2>Transforming a value: <tt class="docutils literal"><span class="pre">~=</span></tt><a class="headerlink" href="#transforming-a-value" title="Permalink to this headline">¶</a></h2>
-<p>What happens if you want to <em>prepend</em> to
-<tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>, or filter out one of the default
-directories?</p>
-<p>You can create a <tt class="docutils literal"><span class="pre">Setting</span></tt> that depends on the previous value of a
-key.</p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">~=</span></tt> applies a function to the setting's previous value, producing
-a new value of the same type.</li>
-</ul>
-<p>To modify <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>, you could use <tt class="docutils literal"><span class="pre">~=</span></tt> as
-follows:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// filter out src/main/scala</span>
-<span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">srcDirs</span> <span class="k">=&gt;</span> <span class="n">srcDirs</span> <span class="n">filter</span><span class="o">(!</span><span class="k">_</span><span class="o">.</span><span class="n">getAbsolutePath</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;src/main/scala&quot;</span><span class="o">))</span> <span class="o">}</span>
-</pre></div>
-</div>
-<p>Here, <tt class="docutils literal"><span class="pre">srcDirs</span></tt> is a parameter to an anonymous function, and the old
-value of <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt> gets passed in to the
-anonymous function. The result of this function becomes the new value of
-<tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>.</p>
-<p>Or a simpler example:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// make the project name upper case</span>
-<span class="n">name</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">toUpperCase</span> <span class="o">}</span>
-</pre></div>
-</div>
-<p>The function you pass to the <tt class="docutils literal"><span class="pre">~=</span></tt> method will always have type
-<tt class="docutils literal"><span class="pre">T</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>, if the key has type <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> or <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt>. The
-function transforms the key's value into another value of the same type.</p>
-</div>
 <div class="section" id="computing-a-value-based-on-other-keys-values">
 <h2>Computing a value based on other keys' values<a class="headerlink" href="#computing-a-value-based-on-other-keys-values" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">~=</span></tt> defines a new value in terms of a key's previously-associated
-value. But what if you want to define a value in terms of <em>other</em> keys'
-values?  Reference the value of another task or setting by calling <tt class="docutils literal"><span class="pre">value</span></tt>
+<p>Reference the value of another task or setting by calling <tt class="docutils literal"><span class="pre">value</span></tt>
 on the key for the task or setting.  The <tt class="docutils literal"><span class="pre">value</span></tt> method is special and may
 only be called in the argument to <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, or <tt class="docutils literal"><span class="pre">++=</span></tt>.</p>
 <p>As a first example, consider defining the project organization to be the same as the project name.</p>
@@ -226,7 +194,7 @@ then the computation depends on that key. It just works!</p>
 </div>
 <div class="section" id="when-settings-are-undefined">
 <h3>When settings are undefined<a class="headerlink" href="#when-settings-are-undefined" title="Permalink to this headline">¶</a></h3>
-<p>Whenever a setting uses <tt class="docutils literal"><span class="pre">~=</span></tt> or <tt class="docutils literal"><span class="pre">:=</span></tt> to create a dependency on
+<p>Whenever a setting uses <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, or <tt class="docutils literal"><span class="pre">++=</span></tt> to create a dependency on
 itself or another key's value, the value it depends on must exist. If it
 does not, sbt will complain. It might say <em>&quot;Reference to undefined
 setting&quot;</em>, for example. When this happens, be sure you're using the key
@@ -289,7 +257,6 @@ move on to a specific key that comes up often: <tt class="docutils literal"><spa
 <li><a class="reference internal" href="#">More Kinds of Setting</a><ul>
 <li><a class="reference internal" href="#refresher-settings">Refresher: Settings</a></li>
 <li><a class="reference internal" href="#appending-to-previous-values-and">Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt></a></li>
-<li><a class="reference internal" href="#transforming-a-value">Transforming a value: <tt class="docutils literal"><span class="pre">~=</span></tt></a></li>
 <li><a class="reference internal" href="#computing-a-value-based-on-other-keys-values">Computing a value based on other keys' values</a><ul>
 <li><a class="reference internal" href="#settings-with-dependencies">Settings with dependencies</a></li>
 <li><a class="reference internal" href="#when-settings-are-undefined">When settings are undefined</a></li>

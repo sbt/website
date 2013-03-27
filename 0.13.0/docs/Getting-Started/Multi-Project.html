@@ -232,23 +232,6 @@ a task like <tt class="docutils literal"><span class="pre">compile</span></tt>, 
 necessarily have to compile the root project, you could compile only a
 subproject.</p>
 </div>
-<div class="section" id="sharing-settings">
-<h2>Sharing settings<a class="headerlink" href="#sharing-settings" title="Permalink to this headline">¶</a></h2>
-<p>When having a single <tt class="docutils literal"><span class="pre">.scala</span></tt> file setting up the different projects,
-it's easy to use reuse settings across different projects. But even when
-using different <tt class="docutils literal"><span class="pre">build.sbt</span></tt> files, it's still easy to share settings
-across all projects from the main build, by using the <tt class="docutils literal"><span class="pre">ThisBuild</span></tt>
-scope to make a setting apply globally. For instance, when a main
-project depends on a subproject, these two projects must typically be
-compiled with the same Scala version. To set it only once, it is enough
-to write, in the main <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file, the following line:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaVersion</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="s">&quot;2.10.0&quot;</span>
-</pre></div>
-</div>
-<p>replacing <tt class="docutils literal"><span class="pre">2.10.0</span></tt> with the desired Scala version. This setting will
-propagate across all subprojects. For more information on the
-<tt class="docutils literal"><span class="pre">ThisBuild</span></tt> scope, go back to the <a class="reference internal" href="Scopes.html"><em>page on scopes</em></a>.</p>
-</div>
 <div class="section" id="next">
 <h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
 <p>Move on to create <a class="reference internal" href="Custom-Settings.html"><em>custom settings</em></a>.</p>
@@ -270,7 +253,6 @@ propagate across all subprojects. For more information on the
 </ul>
 </li>
 <li><a class="reference internal" href="#navigating-projects-interactively">Navigating projects interactively</a></li>
-<li><a class="reference internal" href="#sharing-settings">Sharing settings</a></li>
 <li><a class="reference internal" href="#next">Next</a></li>
 </ul>
 </li>

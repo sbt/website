@@ -84,7 +84,23 @@
         <div id="allMembers">
         
 
-        
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="sbt.InputTask.InitializeInput" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="InitializeInput[T]extendsAnyRef"></a>
+      <a id="InitializeInput[T]:InitializeInput[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="InputTask$$InitializeInput.html"><span class="name">InitializeInput</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4>
+      
+    </li></ol>
+            </div>
 
         
 
@@ -184,21 +200,6 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li name="sbt.InputTask#create" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="create[I,T](p:sbt.Def.Initialize[sbt.State=&gt;sbt.complete.Parser[I]])(action:sbt.Def.Initialize[sbt.Task[I=&gt;T]]):sbt.Def.Initialize[sbt.InputTask[T]]"></a>
-      <a id="create[I,T](Def.Initialize[(State)⇒Parser[I]])(Def.Initialize[Task[(I)⇒T]]):Def.Initialize[InputTask[T]]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">create</span><span class="tparams">[<span name="I">I</span>, <span name="T">T</span>]</span><span class="params">(<span name="p">p: <a href="Def$.html#Initialize[T]extendsAnyRef" class="extmbr" name="sbt.Init.Initialize">Def.Initialize</a>[(<a href="State.html" class="extype" name="sbt.State">State</a>) ⇒ <a href="complete/Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.InputTask.create.I">I</span>]]</span>)</span><span class="params">(<span name="action">action: <a href="Def$.html#Initialize[T]extendsAnyRef" class="extmbr" name="sbt.Init.Initialize">Def.Initialize</a>[<a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<span class="extype" name="sbt.InputTask.create.I">I</span>) ⇒ <span class="extype" name="sbt.InputTask.create.T">T</span>]]</span>)</span><span class="result">: <a href="Def$.html#Initialize[T]extendsAnyRef" class="extmbr" name="sbt.Init.Initialize">Def.Initialize</a>[<a href="InputTask.html" class="extype" name="sbt.InputTask">InputTask</a>[<span class="extype" name="sbt.InputTask.create.T">T</span>]]</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Constructs an InputTask from:
- a) a Parser constructed using other Settings, but not Tasks
- b) an action constructed using Settings, Tasks, and the result of parsing</p>
     </li><li name="sbt.InputTask#createDyn" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createDyn[I,T](p:sbt.Def.Initialize[sbt.State=&gt;sbt.complete.Parser[I]])(action:sbt.Def.Initialize[sbt.Task[I=&gt;sbt.Def.Initialize[sbt.Task[T]]]]):sbt.Def.Initialize[sbt.InputTask[T]]"></a>
       <a id="createDyn[I,T](Def.Initialize[(State)⇒Parser[I]])(Def.Initialize[Task[(I)⇒Def.Initialize[Task[T]]]]):Def.Initialize[InputTask[T]]"></a>
@@ -347,6 +348,32 @@
       </span>
       </h4>
       <p class="shortcomment cmt">Implementation detail that is public because it is used y a macro.</p>
+    </li><li name="sbt.InputTask#inputTaskInitParsed" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="inputTaskInitParsed[T](in:sbt.Def.Initialize[sbt.InputTask[T]]):sbt.std.ParserInputTask[T]"></a>
+      <a id="inputTaskInitParsed[T](Def.Initialize[InputTask[T]]):ParserInputTask[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputTaskInitParsed</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="in">in: <a href="Def$.html#Initialize[T]extendsAnyRef" class="extmbr" name="sbt.Init.Initialize">Def.Initialize</a>[<a href="InputTask.html" class="extype" name="sbt.InputTask">InputTask</a>[<span class="extype" name="sbt.InputTask.inputTaskInitParsed.T">T</span>]]</span>)</span><span class="result">: <a href="std/ParserInputTask.html" class="extype" name="sbt.std.ParserInputTask">ParserInputTask</a>[<span class="extype" name="sbt.InputTask.inputTaskInitParsed.T">T</span>]</span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.InputTask#inputTaskParsed" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="inputTaskParsed[T](in:sbt.InputTask[T]):sbt.std.ParserInputTask[T]"></a>
+      <a id="inputTaskParsed[T](InputTask[T]):ParserInputTask[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputTaskParsed</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="in">in: <a href="InputTask.html" class="extype" name="sbt.InputTask">InputTask</a>[<span class="extype" name="sbt.InputTask.inputTaskParsed.T">T</span>]</span>)</span><span class="result">: <a href="std/ParserInputTask.html" class="extype" name="sbt.std.ParserInputTask">ParserInputTask</a>[<span class="extype" name="sbt.InputTask.inputTaskParsed.T">T</span>]</span>
+      </span>
+      </h4>
+      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>

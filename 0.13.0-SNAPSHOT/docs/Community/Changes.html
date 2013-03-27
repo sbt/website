@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-SNAPSHOT',
+        VERSION:     '0.13.0-M1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Nightly-Builds.html">Nightly Builds</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-SNAPSHOT">Version 0.13.0-SNAPSHOT</option></select>
+                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
               </li>
             </ul>         
           </div>
@@ -95,6 +95,31 @@
 <h2>0.12.2 to 0.13.0<a class="headerlink" href="#to-0-13-0" title="Permalink to this headline">¶</a></h2>
 <p>The changes for 0.13.0 are listed on a separate page. See
 <a class="reference internal" href="ChangeSummary_0.13.0.html"><em>0.13.0 Changes</em></a>.</p>
+</div>
+<div class="section" id="to-0-12-3">
+<h2>0.12.2 to 0.12.3<a class="headerlink" href="#to-0-12-3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Allow <tt class="docutils literal"><span class="pre">cleanKeepFiles</span></tt> to contain directories</li>
+<li>Disable Ivy debug-level logging for performance. (<a class="reference external" href="https://github.com/sbt/sbt/issues/635" title="Disable persistence of Ivy debug logging"><span class="xref issue closed">#635</span></a>)</li>
+<li>Invalidate artifacts not recorded in the original metadata when a module marked as changing changes. (<a class="reference external" href="https://github.com/sbt/sbt/issues/637" title="ZIP dependency SNAPSHOTs not being updated in 0.12.1"><span class="xref issue closed">#637</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/641" title="sbt SNAPSHOT dependency with classifiers not updating"><span class="xref issue closed">#641</span></a>)</li>
+<li>Ivy Artifact needs wildcard configuration added if no explicit ones are defined. (<a class="reference external" href="https://github.com/sbt/sbt/issues/439" title="classifier on dependency not set in published ivy.xml"><span class="xref issue closed">#439</span></a>)</li>
+<li>Right precedence of sbt.boot.properties lookup, handle qualifier correctly. (<a class="reference external" href="https://github.com/sbt/sbt/issues/651" title="Configuration.subPartsIndices bug"><span class="xref issue closed">#651</span></a>)</li>
+<li>Mark the tests failed exception as having already provided feedback.</li>
+<li>Handle exceptions not caught by the test framework when forking. (<a class="reference external" href="https://github.com/sbt/sbt/issues/653" title="Fork in test should handle exceptions during creation of test class"><span class="xref issue closed">#653</span></a>)</li>
+<li>Support <tt class="docutils literal"><span class="pre">reload</span> <span class="pre">plugins</span></tt> after ignoring a failure to load a project.</li>
+<li>Workaround for os deadlock detection at the process level. (<a class="reference external" href="https://github.com/sbt/sbt/issues/650" title="java.io.IOException: Resource deadlock avoided"><span class="xref issue closed">#650</span></a>)</li>
+<li>Fix for dependency on class file corresponding to a package. (Grzegorz K., <a class="reference external" href="https://github.com/sbt/sbt/issues/620" title="Spurious binary dependencies on case insensitive file systems"><span class="xref issue closed">#620</span></a>)</li>
+<li>Fix incremental compilation problem with package objects inheriting from invalidated sources in a subpackage.</li>
+<li>Use Ivy's default name for the resolution report so that links to other configurations work.</li>
+<li>Include jars from java.ext.dirs in incremental classpath. (<a class="reference external" href="https://github.com/sbt/sbt/issues/678" title="Dependency on jars from JRE's lib/ext causes SBT to compile classes over and over again."><span class="xref issue closed">#678</span></a>)</li>
+<li>Multi-line prompt text offset issue (Jibbers42, <a class="reference external" href="https://github.com/sbt/sbt/issues/625" title="Multi-line prompt text offset issue"><span class="xref issue closed">#625</span></a>)</li>
+<li>Added <tt class="docutils literal"><span class="pre">xml:space=&quot;preserve&quot;</span></tt> attribute to extraDependencyAttributes XML Block for publishing poms for plugins dependent on other plugins (Brendan M., <a class="reference external" href="https://github.com/sbt/sbt/issues/645" title="Generating a pom.xml with multiple dependencies with extra attributes is inconsistent with parsing it"><span class="xref issue closed">#645</span></a>)</li>
+<li>Tag the actual test task and not a later task.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/692" title="Cannot execute tests serially (tags are ignored)"><span class="xref issue closed">#692</span></a>)</li>
+<li>Make exclude-classifiers per-user instead of per-build. (<a class="reference external" href="https://github.com/sbt/sbt/issues/634" title="Document exclude-classifiers file and make it per-user"><span class="xref issue closed">#634</span></a>)</li>
+<li>Load global plugins in their own class loader and replace the base loader with that. (<a class="reference external" href="https://github.com/sbt/sbt/issues/272" title="global plugins don't get loaded automatically"><span class="xref issue closed">#272</span></a>)</li>
+<li>Demote the default conflict warnings to the debug level.  These will be removed completely in 0.13. (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue">#709</span></a>)</li>
+<li>Fix Ivy cache issues when multiple resolvers are involved. (<a class="reference external" href="https://github.com/sbt/sbt/issues/704" title="sbt publish with multiple sub-projects causes ivy cache errors."><span class="xref issue closed">#704</span></a>)</li>
+</ul>
 </div>
 <div class="section" id="to-0-12-2">
 <h2>0.12.1 to 0.12.2<a class="headerlink" href="#to-0-12-2" title="Permalink to this headline">¶</a></h2>
@@ -1309,6 +1334,7 @@ work as expected.)</li>
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Changes</a><ul>
 <li><a class="reference internal" href="#to-0-13-0">0.12.2 to 0.13.0</a></li>
+<li><a class="reference internal" href="#to-0-12-3">0.12.2 to 0.12.3</a></li>
 <li><a class="reference internal" href="#to-0-12-2">0.12.1 to 0.12.2</a></li>
 <li><a class="reference internal" href="#to-0-12-1">0.12.0 to 0.12.1</a></li>
 <li><a class="reference internal" href="#to-0-12-0">0.11.3 to 0.12.0</a></li>
