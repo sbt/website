@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.12.3-RC2',
+        VERSION:     '0.12.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Macro Projects</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.12.3-RC2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.12.3 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Local-Scala.html">Local Scala</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.12.3-RC2">Version 0.12.3-RC2</option></select>
+                <select id="versions"><option selected value="0.12.3">Version 0.12.3</option></select>
               </li>
             </ul>         
           </div>
@@ -196,10 +196,10 @@ For example, the <tt class="docutils literal"><span class="pre">main</span></tt>
 </pre></div>
 </div>
 <p>You may wish to disable publishing the macro implementation.
-This is done by overriding <tt class="docutils literal"><span class="pre">publish</span></tt> and <tt class="docutils literal"><span class="pre">deliver</span></tt> to do nothing:</p>
+This is done by overriding <tt class="docutils literal"><span class="pre">publish</span></tt> and <tt class="docutils literal"><span class="pre">publishLocal</span></tt> to do nothing:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">macroSub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">))</span> <span class="n">settings</span><span class="o">(</span>
     <span class="n">publish</span> <span class="o">:=</span> <span class="o">{},</span>
-    <span class="n">deliver</span> <span class="o">:=</span> <span class="o">{}</span>
+    <span class="n">publishLocal</span> <span class="o">:=</span> <span class="o">{}</span>
 <span class="o">)</span>
 </pre></div>
 </div>
