@@ -120,7 +120,7 @@ result:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span>
 <span class="k">object</span> <span class="nc">Demo</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
   <span class="o">...</span>
-  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoader</span> <span class="k">=</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoaders</span> <span class="k">=</span>
     <span class="nc">BuildLoader</span><span class="o">.</span><span class="n">resolve</span><span class="o">(</span><span class="n">demoResolver</span><span class="o">)</span> <span class="o">::</span>
     <span class="nc">Nil</span>
 
@@ -205,7 +205,7 @@ will load the build when evaluated. Register a builder by passing it to
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span>
 <span class="k">object</span> <span class="nc">Demo</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
   <span class="o">...</span>
-  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoader</span> <span class="k">=</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoaders</span> <span class="k">=</span>
     <span class="nc">BuildLoader</span><span class="o">.</span><span class="n">build</span><span class="o">(</span><span class="n">demoBuilder</span><span class="o">)</span> <span class="o">::</span>
     <span class="nc">Nil</span>
 
@@ -235,7 +235,7 @@ project/ directory.</p>
   <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;basic-pom-project&quot;</span><span class="o">)</span> <span class="o">)</span>
 
   <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoaders</span> <span class="k">=</span>
-    <span class="n">build</span><span class="o">(</span><span class="n">demoBuilder</span><span class="o">)</span> <span class="o">::</span>
+    <span class="nc">BuildLoader</span><span class="o">.</span><span class="n">build</span><span class="o">(</span><span class="n">demoBuilder</span><span class="o">)</span> <span class="o">::</span>
     <span class="nc">Nil</span>
 
   <span class="k">def</span> <span class="n">demoBuilder</span><span class="k">:</span> <span class="kt">BuildInfo</span> <span class="o">=&gt;</span> <span class="nc">Option</span><span class="o">[()</span> <span class="k">=&gt;</span> <span class="kt">BuildUnit</span><span class="o">]</span> <span class="k">=</span> <span class="n">info</span> <span class="k">=&gt;</span>
@@ -279,7 +279,7 @@ overriding <em>Build.buildLoaders</em> with the result:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span>
 <span class="k">object</span> <span class="nc">Demo</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
   <span class="o">...</span>
-  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoader</span> <span class="k">=</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">buildLoaders</span> <span class="k">=</span>
     <span class="nc">BuildLoader</span><span class="o">.</span><span class="n">transform</span><span class="o">(</span><span class="n">demoTransformer</span><span class="o">)</span> <span class="o">::</span>
     <span class="nc">Nil</span>
 
@@ -345,7 +345,7 @@ like a local directory.</p>
   <span class="k">val</span> <span class="n">newcp</span> <span class="k">=</span>
     <span class="k">for</span><span class="o">(</span> <span class="o">(</span><span class="n">proj</span><span class="o">,</span> <span class="n">deps</span><span class="o">)</span> <span class="k">&lt;-</span> <span class="n">deps</span><span class="o">.</span><span class="n">cp</span><span class="o">)</span> <span class="k">yield</span>
       <span class="o">(</span><span class="n">proj</span><span class="o">,</span> <span class="n">deps</span> <span class="n">map</span> <span class="n">substitute</span><span class="o">)</span>
-  <span class="k">new</span> <span class="nc">BuildDependencies</span><span class="o">(</span><span class="n">cp</span><span class="o">,</span> <span class="n">deps</span><span class="o">.</span><span class="n">aggregate</span><span class="o">)</span>
+  <span class="k">new</span> <span class="nc">BuildDependencies</span><span class="o">(</span><span class="n">newcp</span><span class="o">,</span> <span class="n">deps</span><span class="o">.</span><span class="n">aggregate</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
