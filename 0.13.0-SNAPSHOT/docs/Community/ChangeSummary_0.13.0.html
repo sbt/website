@@ -100,6 +100,7 @@
 <li>Dropped support for tab completing the right side of a setting for the <tt class="docutils literal"><span class="pre">set</span></tt> command.  The new task macros make this tab completion obsolete.</li>
 <li>The convention for keys is now camelCase only.  Details below.</li>
 <li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue closed">#636</span></a>.</li>
+<li>Fixed the default classifier for tests to be <tt class="docutils literal"><span class="pre">tests</span></tt> for proper Maven compatibility.</li>
 </ul>
 </div>
 <div class="section" id="features">
@@ -144,6 +145,7 @@
 <li>Tasks that need a directory for storing cache information can now use the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> method on <tt class="docutils literal"><span class="pre">streams</span></tt>.  This supersedes the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> setting.</li>
 <li>The environment variables used when forking <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> may be set via <tt class="docutils literal"><span class="pre">envVars</span></tt>, which is a <tt class="docutils literal"><span class="pre">Task[Map[String,String]]</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/665" title="Support passing environment variables to forked processes"><span class="xref issue closed">#665</span></a>)</li>
 <li>Restore class files after an unsuccessful compilation.  This is useful when an error occurs in a later incremental step that requires a fix in the originally changed files.</li>
+<li><tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> now supports compiler plugins defined in a internal dependency.  The plugin project must define <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  Depend on the plugin with <tt class="docutils literal"><span class="pre">...dependsOn(...</span> <span class="pre">%</span> <span class="pre">Configurations.CompilerPlugin)</span></tt>.</li>
 </ul>
 </div>
 <div class="section" id="other">
@@ -193,7 +195,7 @@
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>For details, see <tt class="xref doc docutils literal"><span class="pre">Extending/Input-Tasks</span></tt>.</p>
+<p>For details, see <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a>.</p>
 <p>To expect a task to fail and get the failing exception, use the <tt class="docutils literal"><span class="pre">failure</span></tt> method instead of <tt class="docutils literal"><span class="pre">value</span></tt>.  This provides an <tt class="docutils literal"><span class="pre">Incomplete</span></tt> value, which wraps the exception.  To get the result of a task whether or not it succeeds, use <tt class="docutils literal"><span class="pre">result</span></tt>, which provides a <tt class="docutils literal"><span class="pre">Result[T]</span></tt>.</p>
 <p>Dynamic settings and tasks (<tt class="docutils literal"><span class="pre">flatMap</span></tt>) have been cleaned up.  Use the <tt class="docutils literal"><span class="pre">Def.taskDyn</span></tt> and <tt class="docutils literal"><span class="pre">Def.settingDyn</span></tt> methods to define them (better name suggestions welcome).  These methods expect the result to be a task and setting, respectively.</p>
 </div>

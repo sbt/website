@@ -168,7 +168,7 @@ to a full configuration using Ivy.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span> <span class="o">%</span> <span class="n">configuration</span>
 </pre></div>
 </div>
-<p>See <a class="reference internal" href="../Dormant/Configurations.html"><em>Configurations</em></a> for details on configuration mappings. Also,
+<p>See <a class="reference internal" href="#ivy-configurations"><em>configurations</em></a> for details on configuration mappings. Also,
 several dependencies can be declared together:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
     <span class="n">groupID</span> <span class="o">%%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span><span class="o">,</span>
@@ -509,7 +509,56 @@ Therefore, sbt disables this check and requires you to explicitly request the ma
 </div>
 <div class="section" id="publishing">
 <h4>Publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h4>
-<p>Finally, see <a class="reference internal" href="Publishing.html"><em>Publishing</em></a> for how to publish your project.</p>
+<p>See <a class="reference internal" href="Publishing.html"><em>Publishing</em></a> for how to publish your project.</p>
+</div>
+<div class="section" id="configurations">
+<span id="ivy-configurations"></span><h4>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h4>
+<p>Ivy configurations are a useful feature for your build when you need
+custom groups of dependencies, such as for a plugin. Ivy configurations
+are essentially named sets of dependencies.  You can read the
+<a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/tutorial/conf.html">Ivy documentation</a>
+for details.</p>
+<p>The built-in use of configurations in sbt is similar to scopes in Maven.
+sbt adds dependencies to different classpaths by the configuration that
+they are defined in. See the description of <a class="reference external" href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">Maven
+Scopes</a>
+for details.</p>
+<p>You put a dependency in a configuration by selecting one or more of its
+configurations to map to one or more of your project's configurations.
+The most common case is to have one of your configurations <tt class="docutils literal"><span class="pre">A</span></tt> use a
+dependency's configuration <tt class="docutils literal"><span class="pre">B</span></tt>. The mapping for this looks like
+<tt class="docutils literal"><span class="pre">&quot;A-&gt;B&quot;</span></tt>. To apply this mapping to a dependency, add it to the end of
+your dependency definition:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2&quot;</span> <span class="o">%</span> <span class="s">&quot;test-&gt;compile&quot;</span>
+</pre></div>
+</div>
+<p>This says that your project's <tt class="docutils literal"><span class="pre">test</span></tt> configuration uses
+<tt class="docutils literal"><span class="pre">ScalaTest</span></tt>'s <tt class="docutils literal"><span class="pre">compile</span></tt> configuration. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/tutorial/conf.html">Ivy
+documentation</a>
+for more advanced mappings. Most projects published to Maven
+repositories will use the <tt class="docutils literal"><span class="pre">compile</span></tt> configuration.</p>
+<p>A useful application of configurations is to group dependencies that are
+not used on normal classpaths. For example, your project might use a
+<tt class="docutils literal"><span class="pre">&quot;js&quot;</span></tt> configuration to automatically download jQuery and then include
+it in your jar by modifying <tt class="docutils literal"><span class="pre">resources</span></tt>. For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">ivyConfigurations</span> <span class="o">+=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;js&quot;</span><span class="o">)</span> <span class="n">hide</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.3.2&quot;</span> <span class="o">%</span> <span class="s">&quot;js-&gt;default&quot;</span> <span class="n">from</span> <span class="s">&quot;http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js&quot;</span>
+
+<span class="n">resources</span> <span class="o">++=</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">select</span><span class="o">(</span> <span class="n">configurationFilter</span><span class="o">(</span><span class="s">&quot;js&quot;</span><span class="o">)</span> <span class="o">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">config</span></tt> method defines a new configuration with name <tt class="docutils literal"><span class="pre">&quot;js&quot;</span></tt> and
+makes it private to the project so that it is not used for publishing.
+See <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a> for more information on selecting managed
+artifacts.</p>
+<p>A configuration without a mapping (no <tt class="docutils literal"><span class="pre">&quot;-&gt;&quot;</span></tt>) is mapped to <tt class="docutils literal"><span class="pre">default</span></tt>
+or <tt class="docutils literal"><span class="pre">compile</span></tt>. The <tt class="docutils literal"><span class="pre">-&gt;</span></tt> is only needed when mapping to a different
+configuration than those. The ScalaTest dependency above can then be
+shortened to:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="maven-ivy">
@@ -618,6 +667,7 @@ specify repositories inline or in an Ivy <tt class="docutils literal"><span clas
 <li><a class="reference internal" href="#forcing-a-revision-without-introducing-a-dependency">Forcing a revision without introducing a dependency</a></li>
 <li><a class="reference internal" href="#packaging-pom">packaging=&quot;pom&quot;</a></li>
 <li><a class="reference internal" href="#publishing">Publishing</a></li>
+<li><a class="reference internal" href="#configurations">Configurations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#maven-ivy">Maven/Ivy</a><ul>
