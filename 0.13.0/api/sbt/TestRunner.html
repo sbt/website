@@ -85,7 +85,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="sbt.TestRunner#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(framework:org.scalatools.testing.Framework,loader:ClassLoader,listeners:Seq[sbt.TestReportListener],log:sbt.Logger):sbt.TestRunner"></a>
+      <a id="&lt;init&gt;(delegate:sbt.testing.Runner,listeners:Seq[sbt.TestReportListener],log:sbt.Logger):sbt.TestRunner"></a>
       <a id="&lt;init&gt;:TestRunner"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -93,7 +93,7 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">TestRunner</span><span class="params">(<span name="framework">framework: <span class="extype" name="org.scalatools.testing.Framework">Framework</span></span>, <span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="listeners">listeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span>
+        <span class="name">TestRunner</span><span class="params">(<span name="delegate">delegate: <span class="extype" name="sbt.testing.Runner">Runner</span></span>, <span name="listeners">listeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span>
       </span>
       </h4>
       
@@ -321,15 +321,15 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="sbt.TestRunner#run" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="run(testDefinition:sbt.TestDefinition,args:Seq[String]):sbt.TestResult.Value"></a>
-      <a id="run(TestDefinition,Seq[String]):TestResult.Value"></a>
+      <a id="run(testDefinition:sbt.TestDefinition,testTask:sbt.testing.Task):(sbt.SuiteResult,Seq[sbt.testing.Task])"></a>
+      <a id="run(TestDefinition,testing.Task):(SuiteResult,Seq[testing.Task])"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">run</span><span class="params">(<span name="testDefinition">testDefinition: <a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a></span>, <span name="args">args: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a></span>
+        <span class="name">run</span><span class="params">(<span name="testDefinition">testDefinition: <a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a></span>, <span name="testTask">testTask: <span class="extype" name="sbt.testing.Task">testing.Task</span></span>)</span><span class="result">: (<a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.testing.Task">testing.Task</span>])</span>
       </span>
       </h4>
       
@@ -359,6 +359,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="sbt.TestRunner#task" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="task(testDefinition:sbt.TestDefinition):sbt.testing.Task"></a>
+      <a id="task(TestDefinition):testing.Task"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">task</span><span class="params">(<span name="testDefinition">testDefinition: <a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a></span>)</span><span class="result">: <span class="extype" name="sbt.testing.Task">testing.Task</span></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <a id="toString():String"></a>

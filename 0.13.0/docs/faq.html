@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.13.0-M1',
+        VERSION:     '0.13.0-M2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Frequently Asked Questions</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-M2 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="Howto/triggered.html">Triggered execution</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+                <select id="versions"><option selected value="0.13.0-M2">Version 0.13.0-M2</option></select>
               </li>
             </ul>         
           </div>
@@ -498,27 +498,30 @@ in the scope. For example:</p>
 project source code. These dependencies can be declared in their own
 configuration and classpaths. These are the steps:</p>
 <ol class="arabic simple">
-<li>Define a new <a class="reference internal" href="Dormant/Configurations.html"><em>configuration</em></a>.</li>
+<li>Define a new <a class="reference internal" href="Detailed-Topics/Library-Management.html#ivy-configurations"><em>configuration</em></a>.</li>
 <li>Declare the tool <a class="reference internal" href="Detailed-Topics/Library-Management.html"><em>dependencies</em></a> in that
 configuration.</li>
 <li>Define a classpath that pulls the dependencies from the <a class="reference internal" href="Detailed-Topics/Update-Report.html"><em>Update Report</em></a> produced by <tt class="docutils literal"><span class="pre">update</span></tt>.</li>
 <li>Use the classpath to implement the task.</li>
 </ol>
 <p>As an example, consider a <tt class="docutils literal"><span class="pre">proguard</span></tt> task. This task needs the
-ProGuard jars in order to run the tool. Assuming a new configuration
-defined in the full build definition (#1):</p>
+ProGuard jars in order to run the tool. First, define and add the new configuration:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="nc">ProguardConfig</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;proguard&quot;</span><span class="o">)</span> <span class="n">hide</span>
+
+<span class="n">ivyConfigurations</span> <span class="o">+=</span> <span class="nc">ProguardConfig</span>
 </pre></div>
 </div>
-<p>the following are settings that implement #2-#4:</p>
+<p>Then,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Add proguard as a dependency in the custom configuration.</span>
 <span class="c1">//  This keeps it separate from project dependencies.</span>
 <span class="n">libraryDependencies</span> <span class="o">+=</span>
    <span class="s">&quot;net.sf.proguard&quot;</span> <span class="o">%</span> <span class="s">&quot;proguard&quot;</span> <span class="o">%</span> <span class="s">&quot;4.4&quot;</span> <span class="o">%</span> <span class="nc">ProguardConfig</span><span class="o">.</span><span class="n">name</span>
 
 <span class="c1">// Extract the dependencies from the UpdateReport.</span>
-<span class="n">managedClasspath</span> <span class="n">in</span> <span class="n">proguard</span> <span class="o">:=</span>
-    <span class="nc">Classpaths</span><span class="o">.</span><span class="n">managedJars</span><span class="o">(</span><span class="n">proguardConfig</span><span class="o">,</span> <span class="o">(</span><span class="n">classpathTypes</span> <span class="n">in</span> <span class="n">proguard</span><span class="o">).</span><span class="n">value</span><span class="o">,</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
+<span class="n">managedClasspath</span> <span class="n">in</span> <span class="n">proguard</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="c1">// these are the types of artifacts to include</span>
+    <span class="k">val</span> <span class="n">artifactTypes</span><span class="k">:</span> <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">(</span><span class="n">classpathTypes</span> <span class="n">in</span> <span class="n">proguard</span><span class="o">).</span><span class="n">value</span>
+    <span class="nc">Classpaths</span><span class="o">.</span><span class="n">managedJars</span><span class="o">(</span><span class="n">proguardConfig</span><span class="o">,</span> <span class="n">artifactTypes</span><span class="o">,</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
 <span class="o">}</span>
 
 <span class="c1">// Use the dependencies in a task, typically by putting them</span>
@@ -526,6 +529,18 @@ defined in the full build definition (#1):</p>
 <span class="c1">//  method.</span>
 <span class="n">proguard</span> <span class="o">:=</span> <span class="o">{</span>
         <span class="k">val</span> <span class="n">cp</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="o">(</span><span class="n">managedClasspath</span> <span class="n">in</span> <span class="n">proguard</span><span class="o">).</span><span class="n">value</span>
+  <span class="c1">// ... do something with , which includes proguard ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Defining the intermediate classpath is optional, but it can be useful for debugging or if it needs to
+be used by multiple tasks.
+It is also possible to specify artifact types inline.
+This alternative <tt class="docutils literal"><span class="pre">proguard</span></tt> task would look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">proguard</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">artifactTypes</span> <span class="k">=</span> <span class="nc">Set</span><span class="o">(</span><span class="s">&quot;jar&quot;</span><span class="o">)</span>
+        <span class="k">val</span> <span class="n">cp</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span>
+      <span class="nc">Classpaths</span><span class="o">.</span><span class="n">managedJars</span><span class="o">(</span><span class="n">proguardConfig</span><span class="o">,</span> <span class="n">artifactTypes</span><span class="o">,</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
   <span class="c1">// ... do something with , which includes proguard ...</span>
 <span class="o">}</span>
 </pre></div>

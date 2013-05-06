@@ -45,7 +45,7 @@
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Represents the source for Scala classes for a given version.  The reason both a ClassLoader and the jars are required
-is that the compiler requires the location of the library/compiler jars on the (boot)classpath and the loader is used
+is that the compiler requires the location of the library jar on the (boot)classpath and the loader is used
 for the compiler itself.
 The 'version' field is the version used to obtain the Scala classes.  This is typically the version for the maven repository.
 The 'actualVersion' field should be used to uniquely identify the compiler.  It is obtained from the compiler.properties file.</p><p>This should be constructed via the ScalaInstance.apply methods.  The primary constructor is deprecated.
@@ -351,6 +351,19 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
       </span>
       </h4>
       
+    </li><li name="sbt.ScalaInstance#libraryJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="libraryJar:java.io.File"></a>
+      <a id="libraryJar:File"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">libraryJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd></dl></div>
     </li><li name="sbt.ScalaInstance#loader" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loader:ClassLoader"></a>
       <a id="loader:ClassLoader"></a>
@@ -526,22 +539,6 @@ The 'actualVersion' field should be used to uniquely identify the compiler.  It 
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@deprecated</span>
-              
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>
-    </li><li name="sbt.ScalaInstance#libraryJar" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="libraryJar:java.io.File"></a>
-      <a id="libraryJar:File"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Only allJars and jars can be reliably provided for modularized Scala.">libraryJar</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
-      </span>
-      </h4>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.ScalaInstance">ScalaInstance</a> → <a href="../xsbti/compile/ScalaInstance.html" class="extype" name="xsbti.compile.ScalaInstance">ScalaInstance</a></dd><dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
         </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Only <code>allJars</code> and <code>jars</code> can be reliably provided for modularized Scala.</p></dd></dl></div>

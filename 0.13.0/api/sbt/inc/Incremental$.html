@@ -389,20 +389,19 @@ an empty API if the file did not/does not exist.
       </span>
       </h4>
       
-    </li><li name="sbt.inc.Incremental#invalidateDirect" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="invalidateDirect(dependsOnSrc:java.io.File=&gt;Set[java.io.File],modified:Set[java.io.File]):Set[java.io.File]"></a>
-      <a id="invalidateDirect((File)⇒Set[File],Set[File]):Set[File]"></a>
+    </li><li name="sbt.inc.Incremental#invalidateByExternal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="invalidateByExternal(relations:sbt.inc.Relations,external:Set[String],log:sbt.Logger):Set[java.io.File]"></a>
+      <a id="invalidateByExternal(Relations,Set[String],Logger):Set[File]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">invalidateDirect</span><span class="params">(<span name="dependsOnSrc">dependsOnSrc: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="modified">modified: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
+        <span class="name">invalidateByExternal</span><span class="params">(<span name="relations">relations: <a href="Relations.html" class="extype" name="sbt.inc.Relations">Relations</a></span>, <span name="external">external: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Only invalidates direct source dependencies.</p><div class="fullcomment"><div class="comment cmt"><p>Only invalidates direct source dependencies.  It excludes any sources that were recompiled during the previous run.
-Callers may want to augment the returned set with 'modified' or all sources recompiled up to this point.</p></div></div>
+      <p class="shortcomment cmt">Sources invalidated by <code>external</code> sources in other projects according to the previous <code>relations</code>.</p>
     </li><li name="sbt.inc.Incremental#invalidateDuplicates" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="invalidateDuplicates(merged:sbt.inc.Relations):Set[java.io.File]"></a>
       <a id="invalidateDuplicates(Relations):Set[File]"></a>
@@ -442,35 +441,19 @@ Callers may want to augment the returned set with 'modified' or all sources reco
       </span>
       </h4>
       <p class="shortcomment cmt">Invalidates sources based on initially detected 'changes' to the sources, products, and dependencies.</p>
-    </li><li name="sbt.inc.Incremental#invalidateStage2" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="invalidateStage2(dependsOnSrc:java.io.File=&gt;Set[java.io.File],initial:Set[java.io.File],log:sbt.Logger):Set[java.io.File]"></a>
-      <a id="invalidateStage2((File)⇒Set[File],Set[File],Logger):Set[File]"></a>
+    </li><li name="sbt.inc.Incremental#invalidateIntermediate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="invalidateIntermediate(relations:sbt.inc.Relations,modified:Set[java.io.File],log:sbt.Logger):Set[java.io.File]"></a>
+      <a id="invalidateIntermediate(Relations,Set[File],Logger):Set[File]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">invalidateStage2</span><span class="params">(<span name="dependsOnSrc">dependsOnSrc: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="initial">initial: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
+        <span class="name">invalidateIntermediate</span><span class="params">(<span name="relations">relations: <a href="Relations.html" class="extype" name="sbt.inc.Relations">Relations</a></span>, <span name="modified">modified: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.inc.Incremental#invalidateTransitive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="invalidateTransitive(dependsOnSrc:java.io.File=&gt;Set[java.io.File],modified:Set[java.io.File],log:sbt.Logger):Set[java.io.File]"></a>
-      <a id="invalidateTransitive((File)⇒Set[File],Set[File],Logger):Set[File]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">invalidateTransitive</span><span class="params">(<span name="dependsOnSrc">dependsOnSrc: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="modified">modified: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
-      </span>
-      </h4>
-      <p class="shortcomment cmt">Invalidates transitive source dependencies including <code>modified</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Invalidates transitive source dependencies including <code>modified</code>.</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@tailrec</span><span class="args">()</span>
-              
-        </dd></dl></div>
+      <p class="shortcomment cmt">Intermediate invalidation step: steps after the initial invalidation, but before the final transitive invalidation.</p>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -652,12 +635,9 @@ Callers may want to augment the returned set with 'modified' or all sources reco
         <span class="name">transitiveDependencies</span><span class="params">(<span name="dependsOnSrc">dependsOnSrc: (<span class="extype" name="java.io.File">File</span>) ⇒ <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="initial">initial: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>, <span name="log">log: <a href="../Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Returns the transitive source dependencies of <code>initial</code>, excluding the files in <code>initial</code> in most cases.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the transitive source dependencies of <code>initial</code>, excluding the files in <code>initial</code> in most cases.
-In three-stage incremental compilation, the <code>initial</code> files are the sources from step 2 that had API changes.
-Because strongly connected components (cycles) are included in step 2, the files with API changes shouldn't
-need to be compiled in step 3 if their dependencies haven't changed.  If there are new cycles introduced after
-step 2, these can require step 2 sources to be included in step 3 recompilation.
-</p></div></div>
+      <p class="shortcomment cmt">Returns the transitive source dependencies of <code>initial</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the transitive source dependencies of <code>initial</code>.
+Because the intermediate steps do not pull in cycles, this result includes the initial files
+if they are part of a cycle containing newly invalidated files .</p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

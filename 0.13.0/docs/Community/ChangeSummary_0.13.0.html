@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-M1',
+        VERSION:     '0.13.0-M2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">0.13.0 Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-M2 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="ChangeSummary_0.12.0.html">0.12.0 Changes</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+                <select id="versions"><option selected value="0.13.0-M2">Version 0.13.0-M2</option></select>
               </li>
             </ul>         
           </div>
@@ -100,6 +100,9 @@
 <li>Dropped support for tab completing the right side of a setting for the <tt class="docutils literal"><span class="pre">set</span></tt> command.  The new task macros make this tab completion obsolete.</li>
 <li>The convention for keys is now camelCase only.  Details below.</li>
 <li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue closed">#636</span></a>.</li>
+<li>Fixed the default classifier for tests to be <tt class="docutils literal"><span class="pre">tests</span></tt> for proper Maven compatibility.</li>
+<li>The global settings and plugins directories are now versioned.  Global settings go in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/</span></tt> and global plugins in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/plugins/</span></tt> by default.  Explicit overrides, such as via the <tt class="docutils literal"><span class="pre">sbt.global.base</span></tt> system property, are still respected.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/735" title="SBT global directory should be chosen by binary version"><span class="xref issue closed">#735</span></a>)</li>
+<li>sbt no longer canonicalizes files passed to scalac.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/723" title="drop canonicalization of files in incremental compiler"><span class="xref issue closed">#723</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="features">
@@ -117,7 +120,13 @@
 </li>
 <li><p class="first">Support setting Scala home directory temporary using the switch command: <tt class="docutils literal"><span class="pre">++</span> <span class="pre">scala-version=/path/to/scala/home</span></tt>.  The scala-version part is optional, but is used as the version for any managed dependencies.</p>
 </li>
+<li><p class="first">Add <tt class="docutils literal"><span class="pre">publishM2</span></tt> task for publishing to <tt class="docutils literal"><span class="pre">~/.m2/repository</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/485" title="publish-local can't publish to local Maven repository"><span class="xref issue closed">#485</span></a>)</p>
+</li>
+<li><p class="first">Use a default root project aggregating all projects if no root is defined.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/697" title=".scala defined builds: auto &quot;root&quot; Project"><span class="xref issue closed">#697</span></a>)</p>
+</li>
 <li><p class="first">New API for getting tasks and settings from multiple projects and configurations.  See the new section <a class="reference internal" href="../Detailed-Topics/Tasks.html#multiple-scopes"><em>getting values from multiple scopes</em></a>.</p>
+</li>
+<li><p class="first">Enhanced test interface for better support of test framework features.  (Details pending.)</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">export</span></tt> command</p>
 <blockquote>
@@ -132,7 +141,9 @@
 <div class="section" id="fixes">
 <h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>sbt no longer tries to warn on dependency conflicts.  Configure a <a class="reference internal" href="../Detailed-Topics/Library-Management.html#conflict-management"><em>conflict manager</em></a> instead.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue">#709</span></a>)</li>
+<li>sbt no longer tries to warn on dependency conflicts.  Configure a <a class="reference internal" href="../Detailed-Topics/Library-Management.html#conflict-management"><em>conflict manager</em></a> instead.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue closed">#709</span></a>)</li>
+<li>Properly handle failure in a multi-command that includes <tt class="docutils literal"><span class="pre">reload</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/732" title="`; reload; compile` makes sbt 0.12.0/0.12.3 exit if compilation fails"><span class="xref issue closed">#732</span></a>)</li>
+<li>Do not normalize types in the api extraction phase.  (Grzegorz K., <a class="reference external" href="https://github.com/sbt/sbt/issues/736" title="Sbt fails to detect change of structure when type aliases dealias to the same type"><span class="xref issue closed">#736</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="improvements">
@@ -144,6 +155,11 @@
 <li>Tasks that need a directory for storing cache information can now use the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> method on <tt class="docutils literal"><span class="pre">streams</span></tt>.  This supersedes the <tt class="docutils literal"><span class="pre">cacheDirectory</span></tt> setting.</li>
 <li>The environment variables used when forking <tt class="docutils literal"><span class="pre">run</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> may be set via <tt class="docutils literal"><span class="pre">envVars</span></tt>, which is a <tt class="docutils literal"><span class="pre">Task[Map[String,String]]</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/665" title="Support passing environment variables to forked processes"><span class="xref issue closed">#665</span></a>)</li>
 <li>Restore class files after an unsuccessful compilation.  This is useful when an error occurs in a later incremental step that requires a fix in the originally changed files.</li>
+<li>Better auto-generated IDs for default projects.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/554" title="Enhance .sbt format"><span class="xref issue closed">#554</span></a>)</li>
+<li>Fork run directly with 'java' to avoid additional class loader from 'scala' command.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/702" title="do not override Java logger settings"><span class="xref issue closed">#702</span></a>)</li>
+<li>Make autoCompilerPlugins support compiler plugins defined in a internal dependency (only if <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt> due to scalac limitations)</li>
+<li>Track ancestors of non-private templates and use this information to require fewer, smaller intermediate incremental compilation steps.</li>
+<li><tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> now supports compiler plugins defined in a internal dependency.  The plugin project must define <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  Depend on the plugin with <tt class="docutils literal"><span class="pre">...dependsOn(...</span> <span class="pre">%</span> <span class="pre">Configurations.CompilerPlugin)</span></tt>.</li>
 </ul>
 </div>
 <div class="section" id="other">
@@ -193,7 +209,7 @@
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>For details, see <tt class="xref doc docutils literal"><span class="pre">Extending/Input-Tasks</span></tt>.</p>
+<p>For details, see <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a>.</p>
 <p>To expect a task to fail and get the failing exception, use the <tt class="docutils literal"><span class="pre">failure</span></tt> method instead of <tt class="docutils literal"><span class="pre">value</span></tt>.  This provides an <tt class="docutils literal"><span class="pre">Incomplete</span></tt> value, which wraps the exception.  To get the result of a task whether or not it succeeds, use <tt class="docutils literal"><span class="pre">result</span></tt>, which provides a <tt class="docutils literal"><span class="pre">Result[T]</span></tt>.</p>
 <p>Dynamic settings and tasks (<tt class="docutils literal"><span class="pre">flatMap</span></tt>) have been cleaned up.  Use the <tt class="docutils literal"><span class="pre">Def.taskDyn</span></tt> and <tt class="docutils literal"><span class="pre">Def.settingDyn</span></tt> methods to define them (better name suggestions welcome).  These methods expect the result to be a task and setting, respectively.</p>
 </div>

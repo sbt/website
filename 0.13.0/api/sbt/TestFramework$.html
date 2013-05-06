@@ -184,6 +184,19 @@
                 <span class="name">@throws</span><span class="args">()</span>
               
         </dd></dl></div>
+    </li><li name="sbt.TestFramework#createTestFunction" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createTestFunction(loader:ClassLoader,testDefinition:sbt.TestDefinition,runner:sbt.TestRunner,testTask:sbt.testing.Task):sbt.TestFunction"></a>
+      <a id="createTestFunction(ClassLoader,TestDefinition,TestRunner,testing.Task):TestFunction"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createTestFunction</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="testDefinition">testDefinition: <a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a></span>, <span name="runner">runner: <a href="TestRunner.html" class="extype" name="sbt.TestRunner">TestRunner</a></span>, <span name="testTask">testTask: <span class="extype" name="sbt.testing.Task">testing.Task</span></span>)</span><span class="result">: <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a></span>
+      </span>
+      </h4>
+      
     </li><li name="sbt.TestFramework#createTestLoader" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createTestLoader(classpath:Seq[java.io.File],scalaInstance:sbt.ScalaInstance,tempDir:java.io.File):ClassLoader"></a>
       <a id="createTestLoader(Seq[File],ScalaInstance,File):ClassLoader"></a>
@@ -252,16 +265,16 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="sbt.TestFramework#getTests" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="getTests(framework:org.scalatools.testing.Framework):Seq[org.scalatools.testing.Fingerprint]"></a>
-      <a id="getTests(Framework):Seq[Fingerprint]"></a>
+    </li><li name="sbt.TestFramework#getFingerprints" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="getFingerprints(framework:sbt.testing.Framework):Seq[sbt.testing.Fingerprint]"></a>
+      <a id="getFingerprints(Framework):Seq[Fingerprint]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getTests</span><span class="params">(<span name="framework">framework: <span class="extype" name="org.scalatools.testing.Framework">Framework</span></span>)</span><span class="result">: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="org.scalatools.testing.Fingerprint">Fingerprint</span>]</span>
+        <span class="name">getFingerprints</span><span class="params">(<span name="framework">framework: <span class="extype" name="sbt.testing.Framework">Framework</span></span>)</span><span class="result">: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.testing.Fingerprint">Fingerprint</span>]</span>
       </span>
       </h4>
       
@@ -292,7 +305,7 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="sbt.TestFramework#matches" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="matches(a:org.scalatools.testing.Fingerprint,b:org.scalatools.testing.Fingerprint):Boolean"></a>
+      <a id="matches(a:sbt.testing.Fingerprint,b:sbt.testing.Fingerprint):Boolean"></a>
       <a id="matches(Fingerprint,Fingerprint):Boolean"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -300,7 +313,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">matches</span><span class="params">(<span name="a">a: <span class="extype" name="org.scalatools.testing.Fingerprint">Fingerprint</span></span>, <span name="b">b: <span class="extype" name="org.scalatools.testing.Fingerprint">Fingerprint</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">matches</span><span class="params">(<span name="a">a: <span class="extype" name="sbt.testing.Fingerprint">Fingerprint</span></span>, <span name="b">b: <span class="extype" name="sbt.testing.Fingerprint">Fingerprint</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
       
@@ -357,20 +370,20 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="sbt.TestFramework#testTasks" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="testTasks(frameworks:Seq[org.scalatools.testing.Framework],testLoader:ClassLoader,tests:Seq[sbt.TestDefinition],log:sbt.Logger,listeners:Seq[sbt.TestReportListener],testArgsByFramework:Map[org.scalatools.testing.Framework,Seq[String]]):(()=&gt;Unit,Seq[(String,()=&gt;sbt.TestResult.Value)],sbt.TestResult.Value=&gt;(()=&gt;Unit))"></a>
-      <a id="testTasks(Seq[Framework],ClassLoader,Seq[TestDefinition],Logger,Seq[TestReportListener],Map[Framework,Seq[String]]):(()⇒Unit,Seq[(String,()⇒TestResult.Value)],(TestResult.Value)⇒()⇒Unit)"></a>
+      <a id="testTasks(frameworks:Map[sbt.TestFramework,sbt.testing.Framework],runners:Map[sbt.TestFramework,sbt.testing.Runner],testLoader:ClassLoader,tests:Seq[sbt.TestDefinition],log:sbt.Logger,listeners:Seq[sbt.TestReportListener],testArgsByFramework:Map[sbt.testing.Framework,Seq[String]]):(()=&gt;Unit,Seq[(String,sbt.TestFunction)],sbt.TestResult.Value=&gt;(()=&gt;Unit))"></a>
+      <a id="testTasks(Map[TestFramework,Framework],Map[TestFramework,Runner],ClassLoader,Seq[TestDefinition],Logger,Seq[TestReportListener],Map[Framework,Seq[String]]):(()⇒Unit,Seq[(String,TestFunction)],(TestResult.Value)⇒()⇒Unit)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">testTasks</span><span class="params">(<span name="frameworks">frameworks: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="org.scalatools.testing.Framework">Framework</span>]</span>, <span name="testLoader">testLoader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="tests">tests: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="listeners">listeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="testArgsByFramework">testArgsByFramework: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.scalatools.testing.Framework">Framework</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: (() ⇒ <span class="extype" name="scala.Unit">Unit</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, () ⇒ <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)], (<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>) ⇒ () ⇒ <span class="extype" name="scala.Unit">Unit</span>)</span>
+        <span class="name">testTasks</span><span class="params">(<span name="frameworks">frameworks: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Framework">Framework</span>]</span>, <span name="runners">runners: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Runner">Runner</span>]</span>, <span name="testLoader">testLoader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="tests">tests: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="listeners">listeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="testArgsByFramework">testArgsByFramework: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="sbt.testing.Framework">Framework</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: (() ⇒ <span class="extype" name="scala.Unit">Unit</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a>)], (<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>) ⇒ () ⇒ <span class="extype" name="scala.Unit">Unit</span>)</span>
       </span>
       </h4>
       
     </li><li name="sbt.TestFramework#toString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="toString(f:org.scalatools.testing.Fingerprint):String"></a>
+      <a id="toString(f:sbt.testing.Fingerprint):String"></a>
       <a id="toString(Fingerprint):String"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -378,7 +391,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">toString</span><span class="params">(<span name="f">f: <span class="extype" name="org.scalatools.testing.Fingerprint">Fingerprint</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">toString</span><span class="params">(<span name="f">f: <span class="extype" name="sbt.testing.Fingerprint">Fingerprint</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
       
