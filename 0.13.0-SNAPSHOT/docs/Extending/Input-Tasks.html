@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-M1',
+        VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Input Tasks</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Commands.html">Commands</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+                <select id="versions"><option selected value="0.13.0-SNAPSHOT">Version 0.13.0-SNAPSHOT</option></select>
               </li>
             </ul>         
           </div>
@@ -219,7 +219,7 @@ This is implicit in the input task syntax.</p>
 <div class="section" id="using-other-input-tasks">
 <h2>Using other input tasks<a class="headerlink" href="#using-other-input-tasks" title="Permalink to this headline">¶</a></h2>
 <p>The types involved in an input task are composable, so it is possible to reuse input tasks.
-The <tt class="docutils literal"><span class="pre">.parsed</span></tt> and <tt class="docutils literal"><span class="pre">.</span></tt> methods are defined on InputTasks to make this more convenient in common situations:</p>
+The <tt class="docutils literal"><span class="pre">.parsed</span></tt> and <tt class="docutils literal"><span class="pre">.evaluated</span></tt> methods are defined on InputTasks to make this more convenient in common situations:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Call <tt class="docutils literal"><span class="pre">.parsed</span></tt> on an <tt class="docutils literal"><span class="pre">InputTask[T]</span></tt> or <tt class="docutils literal"><span class="pre">Initialize[InputTask[T]]</span></tt> to get the <tt class="docutils literal"><span class="pre">Task[T]</span></tt> created after parsing the command line</li>
@@ -232,9 +232,9 @@ In the case of <tt class="docutils literal"><span class="pre">.evaluated</span><
 The parsers are sequenced in order of syntactic appearance,
 so that the arguments before <tt class="docutils literal"><span class="pre">--</span></tt> are passed to the first <tt class="docutils literal"><span class="pre">run</span></tt> and the ones after are passed to the second.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">run2</span> <span class="k">=</span> <span class="n">inputKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span>
-        <span class="s">&quot;Runs the main class twice with different argument lists separated by ---&quot;</span><span class="o">)</span>
+        <span class="s">&quot;Runs the main class twice with different argument lists separated by --&quot;</span><span class="o">)</span>
 
-     <span class="k">val</span> <span class="n">separator</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&quot;--&quot;</span>
+<span class="k">val</span> <span class="n">separator</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&quot;--&quot;</span>
 
 <span class="n">run2</span> <span class="o">:=</span> <span class="o">{</span>
    <span class="k">val</span> <span class="n">one</span> <span class="k">=</span> <span class="o">(</span><span class="n">run</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">evaluated</span>

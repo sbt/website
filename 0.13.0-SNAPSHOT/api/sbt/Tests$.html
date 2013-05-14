@@ -191,15 +191,15 @@
       </h4>
       
     </li><li name="sbt.Tests.Output" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Output=(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])"></a>
-      <a id="Output:(TestResult.Value,Map[String,TestResult.Value])"></a>
+      <a id="OutputextendsProductwithSerializable"></a>
+      <a id="Output:Output"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">type</span>
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">Output</span><span class="result"> = (<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])</span>
+        <a href="Tests$$Output.html"><span class="name">Output</span></a><span class="params">(<span name="overall">overall: <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a></span>, <span name="events">events: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>]</span>, <span name="summaries">summaries: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<a href="Tests$$Summary.html" class="extype" name="sbt.Tests.Summary">Summary</a>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -229,6 +229,19 @@
       </span>
       </h4>
       
+    </li><li name="sbt.Tests.Summary" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SummaryextendsProductwithSerializable"></a>
+      <a id="Summary:Summary"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Tests$$Summary.html"><span class="name">Summary</span></a><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="summaryText">summaryText: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4>
+      
     </li><li name="sbt.Tests.TestRunPolicy" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="TestRunPolicyextendsAnyRef"></a>
       <a id="TestRunPolicy:TestRunPolicy"></a>
@@ -243,15 +256,15 @@
       </h4>
       
     </li><li name="sbt.Tests.TestRunnable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="TestRunnable=(String,()=&gt;sbt.TestResult.Value)"></a>
-      <a id="TestRunnable:(String,()⇒TestResult.Value)"></a>
+      <a id="TestRunnable=(String,sbt.TestFunction)"></a>
+      <a id="TestRunnable:(String,TestFunction)"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">type</span>
       </span>
       <span class="symbol">
-        <span class="name">TestRunnable</span><span class="result"> = (<span class="extype" name="scala.Predef.String">String</span>, () ⇒ <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)</span>
+        <span class="name">TestRunnable</span><span class="result"> = (<span class="extype" name="scala.Predef.String">String</span>, <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a>)</span>
       </span>
       </h4>
       
@@ -419,15 +432,15 @@
       </h4>
       
     </li><li name="sbt.Tests#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply(frameworks:Map[sbt.TestFramework,org.scalatools.testing.Framework],testLoader:ClassLoader,discovered:Seq[sbt.TestDefinition],config:sbt.Tests.Execution,log:sbt.Logger):sbt.Task[(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])]"></a>
-      <a id="apply(Map[TestFramework,Framework],ClassLoader,Seq[TestDefinition],Execution,Logger):Task[(TestResult.Value,Map[String,TestResult.Value])]"></a>
+      <a id="apply(frameworks:Map[sbt.TestFramework,sbt.testing.Framework],testLoader:ClassLoader,runners:Map[sbt.TestFramework,sbt.testing.Runner],discovered:Seq[sbt.TestDefinition],config:sbt.Tests.Execution,log:sbt.Logger):sbt.Task[sbt.Tests.Output]"></a>
+      <a id="apply(Map[TestFramework,Framework],ClassLoader,Map[TestFramework,Runner],Seq[TestDefinition],Execution,Logger):Task[Output]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="frameworks">frameworks: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="org.scalatools.testing.Framework">Framework</span>]</span>, <span name="testLoader">testLoader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="discovered">discovered: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="config">config: <a href="Tests$$Execution.html" class="extype" name="sbt.Tests.Execution">Execution</a></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])]</span>
+        <span class="name">apply</span><span class="params">(<span name="frameworks">frameworks: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Framework">Framework</span>]</span>, <span name="testLoader">testLoader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="runners">runners: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Runner">Runner</span>]</span>, <span name="discovered">discovered: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="config">config: <a href="Tests$$Execution.html" class="extype" name="sbt.Tests.Execution">Execution</a></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a>]</span>
       </span>
       </h4>
       
@@ -461,7 +474,7 @@
               
         </dd></dl></div>
     </li><li name="sbt.Tests#discover" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="discover(fingerprints:Seq[org.scalatools.testing.Fingerprint],definitions:Seq[xsbti.api.Definition],log:sbt.Logger):(Seq[sbt.TestDefinition],Set[String])"></a>
+      <a id="discover(fingerprints:Seq[sbt.testing.Fingerprint],definitions:Seq[xsbti.api.Definition],log:sbt.Logger):(Seq[sbt.TestDefinition],Set[String])"></a>
       <a id="discover(Seq[Fingerprint],Seq[Definition],Logger):(Seq[TestDefinition],Set[String])"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -469,12 +482,12 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">discover</span><span class="params">(<span name="fingerprints">fingerprints: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="org.scalatools.testing.Fingerprint">Fingerprint</span>]</span>, <span name="definitions">definitions: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="../xsbti/api/Definition.html" class="extype" name="xsbti.api.Definition">Definition</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: (<a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>], <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>])</span>
+        <span class="name">discover</span><span class="params">(<span name="fingerprints">fingerprints: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.testing.Fingerprint">Fingerprint</span>]</span>, <span name="definitions">definitions: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="../xsbti/api/Definition.html" class="extype" name="xsbti.api.Definition">Definition</a>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: (<a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>], <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>])</span>
       </span>
       </h4>
       
     </li><li name="sbt.Tests#discover" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="discover(frameworks:Seq[org.scalatools.testing.Framework],analysis:sbt.inc.Analysis,log:sbt.Logger):(Seq[sbt.TestDefinition],Set[String])"></a>
+      <a id="discover(frameworks:Seq[sbt.testing.Framework],analysis:sbt.inc.Analysis,log:sbt.Logger):(Seq[sbt.TestDefinition],Set[String])"></a>
       <a id="discover(Seq[Framework],Analysis,Logger):(Seq[TestDefinition],Set[String])"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -482,7 +495,7 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">discover</span><span class="params">(<span name="frameworks">frameworks: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="org.scalatools.testing.Framework">Framework</span>]</span>, <span name="analysis">analysis: <a href="inc/Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: (<a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>], <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>])</span>
+        <span class="name">discover</span><span class="params">(<span name="frameworks">frameworks: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.testing.Framework">Framework</span>]</span>, <span name="analysis">analysis: <a href="inc/Analysis.html" class="extype" name="sbt.inc.Analysis">Analysis</a></span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>)</span><span class="result">: (<a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>], <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="scala.Predef.String">String</span>])</span>
       </span>
       </h4>
       
@@ -529,15 +542,15 @@
               
         </dd></dl></div>
     </li><li name="sbt.Tests#foldTasks" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="foldTasks(results:Seq[sbt.Task[(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])]],parallel:Boolean):sbt.Task[(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])]"></a>
-      <a id="foldTasks(Seq[Task[(TestResult.Value,Map[String,TestResult.Value])]],Boolean):Task[(TestResult.Value,Map[String,TestResult.Value])]"></a>
+      <a id="foldTasks(results:Seq[sbt.Task[sbt.Tests.Output]],parallel:Boolean):sbt.Task[sbt.Tests.Output]"></a>
+      <a id="foldTasks(Seq[Task[Output]],Boolean):Task[Output]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">foldTasks</span><span class="params">(<span name="results">results: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])]]</span>, <span name="parallel">parallel: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])]</span>
+        <span class="name">foldTasks</span><span class="params">(<span name="results">results: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Task.html" class="extype" name="sbt.Task">Task</a>[<a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a>]]</span>, <span name="parallel">parallel: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a>]</span>
       </span>
       </h4>
       
@@ -581,28 +594,28 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="sbt.Tests#makeParallel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="makeParallel(runnables:Iterable[(String,()=&gt;sbt.TestResult.Value)],setupTasks:sbt.Task[Unit],tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):Iterable[sbt.Task[(String,sbt.TestResult.Value)]]"></a>
-      <a id="makeParallel(Iterable[(String,()⇒TestResult.Value)],Task[Unit],Seq[(Tag,Int)]):Iterable[Task[(String,TestResult.Value)]]"></a>
+      <a id="makeParallel(loader:ClassLoader,runnables:Iterable[(String,sbt.TestFunction)],setupTasks:sbt.Task[Unit],tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):sbt.Task[Map[String,sbt.SuiteResult]]"></a>
+      <a id="makeParallel(ClassLoader,Iterable[(String,TestFunction)],Task[Unit],Seq[(Tag,Int)]):Task[Map[String,SuiteResult]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">makeParallel</span><span class="params">(<span name="runnables">runnables: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="scala.Predef.String">String</span>, () ⇒ <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)]</span>, <span name="setupTasks">setupTasks: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.collection.Iterable">Iterable</span>[<a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)]]</span>
+        <span class="name">makeParallel</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="runnables">runnables: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a>)]</span>, <span name="setupTasks">setupTasks: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>]]</span>
       </span>
       </h4>
       
     </li><li name="sbt.Tests#makeSerial" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="makeSerial(runnables:Seq[(String,()=&gt;sbt.TestResult.Value)],setupTasks:sbt.Task[Unit],tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):sbt.Task[Seq[(String,sbt.TestResult.Value)]]"></a>
-      <a id="makeSerial(Seq[(String,()⇒TestResult.Value)],Task[Unit],Seq[(Tag,Int)]):Task[Seq[(String,TestResult.Value)]]"></a>
+      <a id="makeSerial(loader:ClassLoader,runnables:Seq[(String,sbt.TestFunction)],setupTasks:sbt.Task[Unit],tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):sbt.Task[List[(String,sbt.SuiteResult)]]"></a>
+      <a id="makeSerial(ClassLoader,Seq[(String,TestFunction)],Task[Unit],Seq[(Tag,Int)]):Task[List[(String,SuiteResult)]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">makeSerial</span><span class="params">(<span name="runnables">runnables: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, () ⇒ <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)]</span>, <span name="setupTasks">setupTasks: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.collection.Seq">Seq</span>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)]]</span>
+        <span class="name">makeSerial</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="runnables">runnables: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a>)]</span>, <span name="setupTasks">setupTasks: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<a href="../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>)]]</span>
       </span>
       </h4>
       
@@ -659,28 +672,28 @@
       </h4>
       
     </li><li name="sbt.Tests#processResults" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="processResults(results:Iterable[(String,sbt.TestResult.Value)]):(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])"></a>
-      <a id="processResults(Iterable[(String,TestResult.Value)]):(TestResult.Value,Map[String,TestResult.Value])"></a>
+      <a id="processResults(results:Iterable[(String,sbt.SuiteResult)]):sbt.Tests.Output"></a>
+      <a id="processResults(Iterable[(String,SuiteResult)]):Output"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">processResults</span><span class="params">(<span name="results">results: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>)]</span>)</span><span class="result">: (<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])</span>
+        <span class="name">processResults</span><span class="params">(<span name="results">results: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>)]</span>)</span><span class="result">: <a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a></span>
       </span>
       </h4>
       
     </li><li name="sbt.Tests#showResults" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="showResults(log:sbt.Logger,results:(sbt.TestResult.Value,Map[String,sbt.TestResult.Value]),noTestsMessage:=&gt;String):Unit"></a>
-      <a id="showResults(Logger,(TestResult.Value,Map[String,TestResult.Value]),⇒String):Unit"></a>
+      <a id="showResults(log:sbt.Logger,results:sbt.Tests.Output,noTestsMessage:=&gt;String):Unit"></a>
+      <a id="showResults(Logger,Output,⇒String):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">showResults</span><span class="params">(<span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="results">results: (<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])</span>, <span name="noTestsMessage">noTestsMessage: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">showResults</span><span class="params">(<span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="results">results: <a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a></span>, <span name="noTestsMessage">noTestsMessage: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
       
@@ -698,15 +711,15 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="sbt.Tests#testTask" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="testTask(frameworks:Seq[org.scalatools.testing.Framework],loader:ClassLoader,tests:Seq[sbt.TestDefinition],userSetup:Iterable[ClassLoader=&gt;Unit],userCleanup:Iterable[ClassLoader=&gt;Unit],log:sbt.Logger,testListeners:Seq[sbt.TestReportListener],arguments:Map[org.scalatools.testing.Framework,Seq[String]],config:sbt.Tests.Execution):sbt.Task[(sbt.TestResult.Value,Map[String,sbt.TestResult.Value])]"></a>
-      <a id="testTask(Seq[Framework],ClassLoader,Seq[TestDefinition],Iterable[(ClassLoader)⇒Unit],Iterable[(ClassLoader)⇒Unit],Logger,Seq[TestReportListener],Map[Framework,Seq[String]],Execution):Task[(TestResult.Value,Map[String,TestResult.Value])]"></a>
+      <a id="testTask(loader:ClassLoader,frameworks:Map[sbt.TestFramework,sbt.testing.Framework],runners:Map[sbt.TestFramework,sbt.testing.Runner],tests:Seq[sbt.TestDefinition],userSetup:Iterable[ClassLoader=&gt;Unit],userCleanup:Iterable[ClassLoader=&gt;Unit],log:sbt.Logger,testListeners:Seq[sbt.TestReportListener],arguments:Map[sbt.testing.Framework,Seq[String]],config:sbt.Tests.Execution):sbt.Task[sbt.Tests.Output]"></a>
+      <a id="testTask(ClassLoader,Map[TestFramework,Framework],Map[TestFramework,Runner],Seq[TestDefinition],Iterable[(ClassLoader)⇒Unit],Iterable[(ClassLoader)⇒Unit],Logger,Seq[TestReportListener],Map[Framework,Seq[String]],Execution):Task[Output]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">testTask</span><span class="params">(<span name="frameworks">frameworks: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="org.scalatools.testing.Framework">Framework</span>]</span>, <span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="tests">tests: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="userSetup">userSetup: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="java.lang.ClassLoader">ClassLoader</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="userCleanup">userCleanup: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="java.lang.ClassLoader">ClassLoader</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="testListeners">testListeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="arguments">arguments: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="org.scalatools.testing.Framework">Framework</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]]</span>, <span name="config">config: <a href="Tests$$Execution.html" class="extype" name="sbt.Tests.Execution">Execution</a></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[(<a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>, <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="TestResult$.html#ValueextendsOrdered[Enumeration.this.Value]withSerializable" class="extmbr" name="sbt.TestResult.Value">TestResult.Value</a>])]</span>
+        <span class="name">testTask</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="frameworks">frameworks: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Framework">Framework</span>]</span>, <span name="runners">runners: <span class="extype" name="scala.Predef.Map">Map</span>[<a href="TestFramework.html" class="extype" name="sbt.TestFramework">TestFramework</a>, <span class="extype" name="sbt.testing.Runner">Runner</span>]</span>, <span name="tests">tests: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestDefinition.html" class="extype" name="sbt.TestDefinition">TestDefinition</a>]</span>, <span name="userSetup">userSetup: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="java.lang.ClassLoader">ClassLoader</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="userCleanup">userCleanup: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[(<span class="extype" name="java.lang.ClassLoader">ClassLoader</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span>]</span>, <span name="log">log: <a href="Logger.html" class="extype" name="sbt.Logger">Logger</a></span>, <span name="testListeners">testListeners: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TestReportListener.html" class="extype" name="sbt.TestReportListener">TestReportListener</a>]</span>, <span name="arguments">arguments: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="sbt.testing.Framework">Framework</span>, <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]]</span>, <span name="config">config: <a href="Tests$$Execution.html" class="extype" name="sbt.Tests.Execution">Execution</a></span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<a href="Tests$$Output.html" class="extype" name="sbt.Tests.Output">Output</a>]</span>
       </span>
       </h4>
       
@@ -723,6 +736,32 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="sbt.Tests#toTask" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="toTask(loader:ClassLoader,name:String,fun:sbt.TestFunction,tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):sbt.Task[Map[String,sbt.SuiteResult]]"></a>
+      <a id="toTask(ClassLoader,String,TestFunction,Seq[(Tag,Int)]):Task[Map[String,SuiteResult]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toTask</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fun">fun: <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a></span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>]]</span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.Tests#toTasks" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="toTasks(loader:ClassLoader,runnables:Seq[(String,sbt.TestFunction)],tags:Seq[(sbt.ConcurrentRestrictions.Tag,Int)]):sbt.Task[Map[String,sbt.SuiteResult]]"></a>
+      <a id="toTasks(ClassLoader,Seq[(String,TestFunction)],Seq[(Tag,Int)]):Task[Map[String,SuiteResult]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toTasks</span><span class="params">(<span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>, <span name="runnables">runnables: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="TestFunction.html" class="extype" name="sbt.TestFunction">TestFunction</a>)]</span>, <span name="tags">tags: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<a href="ConcurrentRestrictions$$Tag.html" class="extype" name="sbt.ConcurrentRestrictions.Tag">Tag</a>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <a href="Task.html" class="extype" name="sbt.Task">Task</a>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <a href="SuiteResult.html" class="extype" name="sbt.SuiteResult">SuiteResult</a>]]</span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

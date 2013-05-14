@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.13.0-M1',
+        VERSION:     '0.13.0-SNAPSHOT',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Frequently Asked Questions</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="Howto/triggered.html">Triggered execution</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M1">Version 0.13.0-M1</option></select>
+                <select id="versions"><option selected value="0.13.0-SNAPSHOT">Version 0.13.0-SNAPSHOT</option></select>
               </li>
             </ul>         
           </div>
@@ -351,42 +351,8 @@ be adjusted to try relativizing against additional directories or
 something more appropriate for the generator.</p>
 </div>
 <div class="section" id="how-can-i-generate-source-code-or-resources">
-<span id="generate-sources-resources"></span><h3>How can I generate source code or resources?<a class="headerlink" href="#how-can-i-generate-source-code-or-resources" title="Permalink to this headline">¶</a></h3>
-<p>sbt provides standard hooks for adding source or resource generation
-tasks. A generation task should generate sources in a subdirectory of
-<tt class="docutils literal"><span class="pre">sourceManaged</span></tt> for sources or <tt class="docutils literal"><span class="pre">resourceManaged</span></tt> for resources and
-return a sequence of files generated. The key to add the task to is
-called <tt class="docutils literal"><span class="pre">sourceGenerators</span></tt> for sources and <tt class="docutils literal"><span class="pre">resourceGenerators</span></tt> for
-resources. It should be scoped according to whether the generated files
-are main (<tt class="docutils literal"><span class="pre">Compile</span></tt>) or test (<tt class="docutils literal"><span class="pre">Test</span></tt>) sources or resources. This
-basic structure looks like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<p>For example, assuming a method
-<tt class="docutils literal"><span class="pre">def</span> <span class="pre">makeSomeSources(base:</span> <span class="pre">File):</span> <span class="pre">Seq[File]</span></tt>,</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
-  <span class="n">makeSomeSources</span><span class="o">(</span> <span class="o">(</span><span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span><span class="o">)</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<p>As a specific example, the following generates a hello world source
-file:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
-  <span class="k">val</span> <span class="n">file</span> <span class="k">=</span> <span class="o">(</span><span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">)</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;Test.scala&quot;</span>
-  <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="s">&quot;&quot;&quot;object Test extends App { println(&quot;Hi&quot;) }&quot;&quot;&quot;</span><span class="o">)</span>
-  <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">)</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<p>Executing 'run' will print &quot;Hi&quot;. Change <tt class="docutils literal"><span class="pre">Compile</span></tt> to <tt class="docutils literal"><span class="pre">Test</span></tt> to make
-it a test source. To generate resources, change <tt class="docutils literal"><span class="pre">sourceGenerators</span></tt> to
-<tt class="docutils literal"><span class="pre">resourceGenerators</span></tt> and <tt class="docutils literal"><span class="pre">sourceManaged</span></tt> to <tt class="docutils literal"><span class="pre">resourceManaged</span></tt>.
-Normally, you would only want to generate sources when necessary and not
-every run.</p>
-<p>By default, generated sources and resources are not included in the
-packaged source artifact. To do so, add them as you would other
-mappings. See the <tt class="docutils literal"><span class="pre">Adding</span> <span class="pre">files</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">package</span></tt> section.</p>
+<h3>How can I generate source code or resources?<a class="headerlink" href="#how-can-i-generate-source-code-or-resources" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="Howto/generatefiles.html"><em>Generating files</em></a>.</p>
 </div>
 <div class="section" id="how-can-a-task-avoid-redoing-work-if-the-input-files-are-unchanged">
 <h3>How can a task avoid redoing work if the input files are unchanged?<a class="headerlink" href="#how-can-a-task-avoid-redoing-work-if-the-input-files-are-unchanged" title="Permalink to this headline">¶</a></h3>

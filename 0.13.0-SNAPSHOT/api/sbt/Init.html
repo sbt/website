@@ -250,7 +250,7 @@
       <a id="Setting[T]:Setting[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier">sealed </span>
         <span class="kind">class</span>
       </span>
       <span class="symbol">
@@ -477,15 +477,15 @@
       </h4>
       
     </li><li name="sbt.Init#Undefined" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="Undefined(definingKey:Init.this.ScopedKey[_],referencedKey:Init.this.ScopedKey[_]):Init.this.Undefined"></a>
-      <a id="Undefined(ScopedKey[_],ScopedKey[_]):Undefined"></a>
+      <a id="Undefined(definingKey:Init.this.ScopedKey[_],referencedKey:Init.this.ScopedKey[_],derived:Boolean):Init.this.Undefined"></a>
+      <a id="Undefined(ScopedKey[_],ScopedKey[_],Boolean):Undefined"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">Undefined</span><span class="params">(<span name="definingKey">definingKey: <a href="Init$ScopedKey.html" class="extype" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="referencedKey">referencedKey: <a href="Init$ScopedKey.html" class="extype" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>)</span><span class="result">: <a href="Init$Undefined.html" class="extype" name="sbt.Init.Undefined">Undefined</a></span>
+        <span class="name">Undefined</span><span class="params">(<span name="definingKey">definingKey: <a href="Init$ScopedKey.html" class="extype" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="referencedKey">referencedKey: <a href="Init$ScopedKey.html" class="extype" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="derived">derived: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="Init$Undefined.html" class="extype" name="sbt.Init.Undefined">Undefined</a></span>
       </span>
       </h4>
       
@@ -662,6 +662,19 @@ This can be useful when dealing with dynamic Initialize values.</p></div></div>
       </span>
       </h4>
       
+    </li><li name="sbt.Init#definedAtString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="definedAtString(settings:Seq[Init.this.Setting[_]]):String"></a>
+      <a id="definedAtString(Seq[Setting[_]]):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">definedAtString</span><span class="params">(<span name="settings">settings: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Init$Setting.html" class="extype" name="sbt.Init.Setting">Setting</a>[_]]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4>
+      
     </li><li name="sbt.Init#delegate" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="delegate(sMap:Init.this.ScopedMap)(implicitdelegates:Scope=&gt;Seq[Scope],implicitdisplay:sbt.Show[Init.this.ScopedKey[_]]):Init.this.ScopedMap"></a>
       <a id="delegate(ScopedMap)((Scope)⇒Seq[Scope],Show[ScopedKey[_]]):ScopedMap"></a>
@@ -672,6 +685,36 @@ This can be useful when dealing with dynamic Initialize values.</p></div></div>
       </span>
       <span class="symbol">
         <span class="name">delegate</span><span class="params">(<span name="sMap">sMap: <a href="#ScopedMap=sbt.IMap[Init.this.ScopedKey,Init.this.SettingSeq]" class="extmbr" name="sbt.Init.ScopedMap">ScopedMap</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="delegates">delegates: (<span class="extype" name="sbt.Init.Scope">Scope</span>) ⇒ <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.Init.Scope">Scope</span>]</span>, <span name="display">display: <a href="Show.html" class="extype" name="sbt.Show">Show</a>[<a href="Init$ScopedKey.html" class="extype" name="sbt.Init.ScopedKey">ScopedKey</a>[_]]</span>)</span><span class="result">: <a href="#ScopedMap=sbt.IMap[Init.this.ScopedKey,Init.this.SettingSeq]" class="extmbr" name="sbt.Init.ScopedMap">ScopedMap</a></span>
+      </span>
+      </h4>
+      
+    </li><li name="sbt.Init#derive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="derive[T](s:Init.this.Setting[T],allowDynamic:Boolean,filter:Scope=&gt;Boolean,trigger:sbt.AttributeKey[_]=&gt;Boolean):Init.this.Setting[T]"></a>
+      <a id="derive[T](Setting[T],Boolean,(Scope)⇒Boolean,(AttributeKey[_])⇒Boolean):Setting[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">derive</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="s">s: <a href="Init$Setting.html" class="extype" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Init.derive.T">T</span>]</span>, <span name="allowDynamic">allowDynamic: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="filter">filter: (<span class="extype" name="sbt.Init.Scope">Scope</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol"><span class="name"><a href="Types$.html">const(true)</a></span></span></span>, <span name="trigger">trigger: (<a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[_]) ⇒ <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol"><span class="name"><a href="Types$.html">const(true)</a></span></span></span>)</span><span class="result">: <a href="Init$Setting.html" class="extype" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Init.derive.T">T</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a derived setting that will be automatically defined in every scope where one of its dependencies
+is explicitly defined and the where the scope matches <code>filter</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a derived setting that will be automatically defined in every scope where one of its dependencies
+is explicitly defined and the where the scope matches <code>filter</code>.
+A setting initialized with dynamic dependencies is only allowed if <code>allowDynamic</code> is true.
+Only the static dependencies are tracked, however.</p></div></div>
+    </li><li name="sbt.Init#deriveAllowed" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="deriveAllowed[T](s:Init.this.Setting[T],allowDynamic:Boolean):Option[String]"></a>
+      <a id="deriveAllowed[T](Setting[T],Boolean):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">deriveAllowed</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="s">s: <a href="Init$Setting.html" class="extype" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Init.deriveAllowed.T">T</span>]</span>, <span name="allowDynamic">allowDynamic: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
       
