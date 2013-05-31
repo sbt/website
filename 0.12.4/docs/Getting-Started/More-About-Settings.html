@@ -1,0 +1,476 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>More Kinds of Setting &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Library Dependencies" href="Library-Dependencies.html" />
+    <link rel="prev" title="Scopes" href="Scopes.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">More Kinds of Setting</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Library-Dependencies.html">Library Dependencies</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Scopes.html">Scopes</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="more-kinds-of-setting">
+<h1>More Kinds of Setting<a class="headerlink" href="#more-kinds-of-setting" title="Permalink to this headline">¶</a></h1>
+<p>This page explains other ways to create a <tt class="docutils literal"><span class="pre">Setting</span></tt>, beyond the basic
+<tt class="docutils literal"><span class="pre">:=</span></tt> method. It assumes you've read <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> and <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.</p>
+<div class="section" id="refresher-settings">
+<h2>Refresher: Settings<a class="headerlink" href="#refresher-settings" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="Basic-Def.html"><em>Remember</em></a>, a build definition creates a
+list of <tt class="docutils literal"><span class="pre">Setting</span></tt>, which is then used to transform sbt's description
+of the build (which is a map of key-value pairs). A <tt class="docutils literal"><span class="pre">Setting</span></tt> is a
+transformation with sbt's earlier map as input and a new map as output.
+The new map becomes sbt's new state.</p>
+<p>Different settings transform the map in different ways.
+<a class="reference internal" href="Basic-Def.html"><em>Earlier</em></a>, you read about the <tt class="docutils literal"><span class="pre">:=</span></tt>
+method.</p>
+<p>The <tt class="docutils literal"><span class="pre">Setting</span></tt> which <tt class="docutils literal"><span class="pre">:=</span></tt> creates puts a fixed, constant value in the
+new, transformed map. For example, if you transform a map with the
+setting <tt class="docutils literal"><span class="pre">name</span> <span class="pre">:=</span> <span class="pre">&quot;hello&quot;</span></tt> the new map has the string <tt class="docutils literal"><span class="pre">&quot;hello&quot;</span></tt>
+stored under the key <tt class="docutils literal"><span class="pre">name</span></tt>.</p>
+<p>Settings must end up in the master list of settings to do any good (all
+lines in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> automatically end up in the list, but in a
+<a class="reference internal" href="Full-Def.html"><em>.scala file</em></a> you can get it wrong by
+creating a <tt class="docutils literal"><span class="pre">Setting</span></tt> without putting it where sbt will find it).</p>
+</div>
+<div class="section" id="appending-to-previous-values-and">
+<h2>Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt><a class="headerlink" href="#appending-to-previous-values-and" title="Permalink to this headline">¶</a></h2>
+<p>Replacement with <tt class="docutils literal"><span class="pre">:=</span></tt> is the simplest transformation, but keys have
+other methods as well. If the <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> is a sequence,
+i.e. the key's value type is a sequence, you can append to the sequence
+rather than replacing it.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">+=</span></tt> will append a single element to the sequence.</li>
+<li><tt class="docutils literal"><span class="pre">++=</span></tt> will concatenate another sequence.</li>
+</ul>
+<p>For example, the key <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt> has a
+<tt class="docutils literal"><span class="pre">Seq[File]</span></tt> as its value. By default this key's value would include
+<tt class="docutils literal"><span class="pre">src/main/scala</span></tt>. If you wanted to also compile source code in a
+directory called <tt class="docutils literal"><span class="pre">source</span></tt> (since you just have to be nonstandard), you
+could add that directory:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Or, using the <tt class="docutils literal"><span class="pre">file()</span></tt> function from the sbt package for convenience:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>(<tt class="docutils literal"><span class="pre">file()</span></tt> just creates a new <tt class="docutils literal"><span class="pre">File</span></tt>.)</p>
+<p>You could use <tt class="docutils literal"><span class="pre">++=</span></tt> to add more than one directory at a time:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;sources1&quot;</span><span class="o">),</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sources2&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Where <tt class="docutils literal"><span class="pre">Seq(a,</span> <span class="pre">b,</span> <span class="pre">c,</span> <span class="pre">...)</span></tt> is standard Scala syntax to construct a
+sequence.</p>
+<p>To replace the default source directories entirely, you use <tt class="docutils literal"><span class="pre">:=</span></tt> of
+course:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;sources1&quot;</span><span class="o">),</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sources2&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transforming-a-value">
+<h2>Transforming a value: <tt class="docutils literal"><span class="pre">~=</span></tt><a class="headerlink" href="#transforming-a-value" title="Permalink to this headline">¶</a></h2>
+<p>What happens if you want to <em>prepend</em> to
+<tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>, or filter out one of the default
+directories?</p>
+<p>You can create a <tt class="docutils literal"><span class="pre">Setting</span></tt> that depends on the previous value of a
+key.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">~=</span></tt> applies a function to the setting's previous value, producing
+a new value of the same type.</li>
+</ul>
+<p>To modify <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>, you could use <tt class="docutils literal"><span class="pre">~=</span></tt> as
+follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// filter out src/main/scala</span>
+<span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">srcDirs</span> <span class="k">=&gt;</span> <span class="n">srcDirs</span> <span class="n">filter</span><span class="o">(!</span><span class="k">_</span><span class="o">.</span><span class="n">getAbsolutePath</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;src/main/scala&quot;</span><span class="o">))</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Here, <tt class="docutils literal"><span class="pre">srcDirs</span></tt> is a parameter to an anonymous function, and the old
+value of <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt> gets passed in to the
+anonymous function. The result of this function becomes the new value of
+<tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt>.</p>
+<p>Or a simpler example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// make the project name upper case</span>
+<span class="n">name</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">toUpperCase</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>The function you pass to the <tt class="docutils literal"><span class="pre">~=</span></tt> method will always have type
+<tt class="docutils literal"><span class="pre">T</span> <span class="pre">=&gt;</span> <span class="pre">T</span></tt>, if the key has type <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> or <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt>. The
+function transforms the key's value into another value of the same type.</p>
+</div>
+<div class="section" id="computing-a-value-based-on-other-keys-values">
+<h2>Computing a value based on other keys' values: <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt><a class="headerlink" href="#computing-a-value-based-on-other-keys-values" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">~=</span></tt> defines a new value in terms of a key's previously-associated
+value. But what if you want to define a value in terms of <em>other</em> keys'
+values?</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> lets you compute a new value using the value(s) of arbitrary
+other keys.</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> has one argument, of type <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>. An
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> instance is a computation which takes the values
+associated with a set of keys as input, and returns a value of type
+<tt class="docutils literal"><span class="pre">T</span></tt> based on those other values. It initializes a value of type <tt class="docutils literal"><span class="pre">T</span></tt>.</p>
+<p>Given an <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>, <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> returns a <tt class="docutils literal"><span class="pre">Setting[T]</span></tt>, of course
+(just like <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">~=</span></tt>, etc.).</p>
+<div class="section" id="trivial-initialize-t-depending-on-one-other-key-with">
+<h3>Trivial <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>: depending on one other key with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt><a class="headerlink" href="#trivial-initialize-t-depending-on-one-other-key-with" title="Permalink to this headline">¶</a></h3>
+<p>All keys extend the <tt class="docutils literal"><span class="pre">Initialize</span></tt> trait already. So the simplest
+<tt class="docutils literal"><span class="pre">Initialize</span></tt> is just a key:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// useless but valid</span>
+<span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>When treated as an <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>, a <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> computes its
+current value. So <tt class="docutils literal"><span class="pre">name</span> <span class="pre">&lt;&lt;=</span> <span class="pre">name</span></tt> sets the value of <tt class="docutils literal"><span class="pre">name</span></tt> to the
+value that <tt class="docutils literal"><span class="pre">name</span></tt> already had.</p>
+<p>It gets a little more useful if you set a key to a <em>different</em> key. The
+keys must have identical value types, though.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// name our organization after our project (both are SettingKey[String])</span>
+<span class="n">organization</span> <span class="o">&lt;&lt;=</span> <span class="n">name</span>
+</pre></div>
+</div>
+<p>(Note: this is how you alias one key to another.)</p>
+<p>If the value types are not identical, you'll need to convert from
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> to another type, like <tt class="docutils literal"><span class="pre">Initialize[S]</span></tt>. This is done
+with the <tt class="docutils literal"><span class="pre">apply</span></tt> method on <tt class="docutils literal"><span class="pre">Initialize</span></tt>, like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// name is a Key[String], baseDirectory is a Key[File]</span>
+<span class="c1">// name the project after the directory it&#39;s inside</span>
+<span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">apply</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">getName</span><span class="o">)</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">apply</span></tt> is special in Scala and means you can invoke the object with
+function syntax; so you could also write this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">getName</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>That transforms the value of <tt class="docutils literal"><span class="pre">baseDirectory</span></tt> using the function
+<tt class="docutils literal"><span class="pre">_.getName</span></tt>, where the function <tt class="docutils literal"><span class="pre">_.getName</span></tt> takes a <tt class="docutils literal"><span class="pre">File</span></tt> and
+returns a <tt class="docutils literal"><span class="pre">String</span></tt>. <tt class="docutils literal"><span class="pre">getName</span></tt> is a method on the standard
+<tt class="docutils literal"><span class="pre">java.io.File</span></tt> object.</p>
+</div>
+<div class="section" id="settings-with-dependencies">
+<h3>Settings with dependencies<a class="headerlink" href="#settings-with-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>In the setting <tt class="docutils literal"><span class="pre">name</span> <span class="pre">&lt;&lt;=</span> <span class="pre">baseDirectory(_.getName)</span></tt>, <tt class="docutils literal"><span class="pre">name</span></tt> will have
+a <em>dependency</em> on <tt class="docutils literal"><span class="pre">baseDirectory</span></tt>. If you place the above in
+<tt class="docutils literal"><span class="pre">build.sbt</span></tt> and run the sbt interactive console, then type
+<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">name</span></tt>, you should see (in part):</p>
+<div class="highlight-text"><div class="highlight"><pre>[info] Dependencies:
+[info]  *:base-directory
+</pre></div>
+</div>
+<p>This is how sbt knows which settings depend on which other settings.
+Remember that some settings describe tasks, so this approach also
+creates dependencies between tasks.</p>
+<p>For example, if you <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">compile</span></tt> you'll see it depends on another
+key <tt class="docutils literal"><span class="pre">compile-inputs</span></tt>, and if you inspect <tt class="docutils literal"><span class="pre">compile-inputs</span></tt> it in turn
+depends on other keys. Keep following the dependency chains and magic
+happens. When you type <tt class="docutils literal"><span class="pre">compile</span></tt> sbt automatically performs an
+<tt class="docutils literal"><span class="pre">update</span></tt>, for example. It Just Works because the values required as
+inputs to the <tt class="docutils literal"><span class="pre">compile</span></tt> computation require sbt to do the <tt class="docutils literal"><span class="pre">update</span></tt>
+computation first.</p>
+<p>In this way, all build dependencies in sbt are <em>automatic</em> rather than
+explicitly declared. If you use a key's value in another computation,
+then the computation depends on that key. It just works!</p>
+</div>
+<div class="section" id="complex-initialize-t-depending-on-multiple-keys-with">
+<h3>Complex <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>: depending on multiple keys with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt><a class="headerlink" href="#complex-initialize-t-depending-on-multiple-keys-with" title="Permalink to this headline">¶</a></h3>
+<p>To support dependencies on multiple other keys, sbt adds <tt class="docutils literal"><span class="pre">apply</span></tt> and
+<tt class="docutils literal"><span class="pre">identity</span></tt> methods to tuples of <tt class="docutils literal"><span class="pre">Initialize</span></tt> objects. In Scala, you
+write a tuple like <tt class="docutils literal"><span class="pre">(1,</span> <span class="pre">&quot;a&quot;)</span></tt> (that one has type <tt class="docutils literal"><span class="pre">(Int,</span> <span class="pre">String)</span></tt>).</p>
+<p>So say you have a tuple of three <tt class="docutils literal"><span class="pre">Initialize</span></tt> objects; its type would
+be <tt class="docutils literal"><span class="pre">(Initialize[A],</span> <span class="pre">Initialize[B],</span> <span class="pre">Initialize[C])</span></tt>. The <tt class="docutils literal"><span class="pre">Initialize</span></tt>
+objects could be keys, since all <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> are also instances of
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>.</p>
+<p>Here's a simple example, in this case all three keys are strings:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// a tuple of three SettingKey[String], also a tuple of three Initialize[String]</span>
+<span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">apply</span></tt> method on a tuple of <tt class="docutils literal"><span class="pre">Initialize</span></tt> takes a function as
+its argument. Using each <tt class="docutils literal"><span class="pre">Initialize</span></tt> in the tuple, sbt computes a
+corresponding value (the current value of the key). These values are
+passed in to the function. The function then returns <em>one</em> value, which
+is wrapped up in a new <tt class="docutils literal"><span class="pre">Initialize</span></tt>. If you wrote it out with explicit
+types (Scala does not require this), it would look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">tuple</span><span class="k">:</span> <span class="o">(</span><span class="kt">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="nc">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="nc">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">combined</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">tuple</span><span class="o">.</span><span class="n">apply</span><span class="o">({</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">})</span>
+<span class="k">val</span> <span class="n">setting</span><span class="k">:</span> <span class="kt">Setting</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="n">combined</span>
+</pre></div>
+</div>
+<p>So each key is already an <tt class="docutils literal"><span class="pre">Initialize</span></tt>; but you can combine up to nine
+simple <tt class="docutils literal"><span class="pre">Initialize</span></tt> (such as keys) into one composite <tt class="docutils literal"><span class="pre">Initialize</span></tt>
+by placing them in tuples, and invoking the <tt class="docutils literal"><span class="pre">apply</span></tt> method.</p>
+<p>The <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> method on <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> is expecting an
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>, so you can use this technique to create an
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> with multiple dependencies on arbitrary keys.</p>
+<p>Because function syntax in Scala just calls the <tt class="docutils literal"><span class="pre">apply</span></tt> method, you
+could write the code like this, omitting the explicit <tt class="docutils literal"><span class="pre">.apply</span></tt> and
+just treating <tt class="docutils literal"><span class="pre">tuple</span></tt> as a function:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">tuple</span><span class="k">:</span> <span class="o">(</span><span class="kt">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="nc">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">],</span> <span class="nc">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">combined</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">tuple</span><span class="o">({</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">})</span>
+<span class="k">val</span> <span class="n">setting</span><span class="k">:</span> <span class="kt">Setting</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="n">combined</span>
+</pre></div>
+</div>
+<p>In a <tt class="docutils literal"><span class="pre">build.sbt</span></tt>, this code using intermediate <tt class="docutils literal"><span class="pre">val</span></tt> will not work,
+since you can only write single expressions in a <tt class="docutils literal"><span class="pre">.sbt</span></tt> file, not
+multiple statements.</p>
+<p>You can use a more concise syntax in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>, like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Here the tuple of <tt class="docutils literal"><span class="pre">Initialize</span></tt> (also a tuple of <tt class="docutils literal"><span class="pre">SettingKey</span></tt>) works
+as a function, taking the anonymous function delimited by <tt class="docutils literal"><span class="pre">{}</span></tt> as its
+argument, and returning an <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> where <tt class="docutils literal"><span class="pre">T</span></tt> is the result
+type of the anonymous function.</p>
+<p>Tuples of <tt class="docutils literal"><span class="pre">Initialize</span></tt> have one other method, <tt class="docutils literal"><span class="pre">identity</span></tt>, which
+simply returns an <tt class="docutils literal"><span class="pre">Initialize</span></tt> with a tuple value.
+<tt class="docutils literal"><span class="pre">(a:</span> <span class="pre">Initialize[A],</span> <span class="pre">b:</span> <span class="pre">Initialize[B]).identity</span></tt> would result in a
+value of type <tt class="docutils literal"><span class="pre">Initialize[(A,</span> <span class="pre">B)]</span></tt>. <tt class="docutils literal"><span class="pre">identity</span></tt> combines two
+<tt class="docutils literal"><span class="pre">Initialize</span></tt> into one, without losing or modifying any of the values.</p>
+</div>
+<div class="section" id="when-settings-are-undefined">
+<h3>When settings are undefined<a class="headerlink" href="#when-settings-are-undefined" title="Permalink to this headline">¶</a></h3>
+<p>Whenever a setting uses <tt class="docutils literal"><span class="pre">~=</span></tt> or <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> to create a dependency on
+itself or another key's value, the value it depends on must exist. If it
+does not, sbt will complain. It might say <em>&quot;Reference to undefined
+setting&quot;</em>, for example. When this happens, be sure you're using the key
+in the <a class="reference internal" href="Scopes.html"><em>scope</em></a> that defines it.</p>
+<p>It's possible to create cycles, which is an error; sbt will tell you if
+you do this.</p>
+</div>
+<div class="section" id="tasks-with-dependencies">
+<h3>Tasks with dependencies<a class="headerlink" href="#tasks-with-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>As noted in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>, task
+keys create a <tt class="docutils literal"><span class="pre">Setting[Task[T]]</span></tt> rather than a <tt class="docutils literal"><span class="pre">Setting[T]</span></tt> when you
+build a setting with <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>, etc. Similarly, task keys are
+instances of <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt> rather than <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>, and
+<tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> on a task key takes an <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt> parameter.</p>
+<p>The practical importance of this is that you can't have tasks as
+dependencies for a non-task setting.</p>
+<p>Take these two keys (from <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>):</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalacOptions</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]](</span><span class="s">&quot;scalac-options&quot;</span><span class="o">,</span> <span class="s">&quot;Options for the Scala compiler.&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">checksums</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]](</span><span class="s">&quot;checksums&quot;</span><span class="o">,</span> <span class="s">&quot;The list of checksums to generate and to verify for dependencies.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>(<tt class="docutils literal"><span class="pre">scalacOptions</span></tt> and <tt class="docutils literal"><span class="pre">checksums</span></tt> have nothing to do with each other,
+they are just two keys with the same value type, where one is a task.)</p>
+<p>You cannot compile a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> that tries to alias one of these to
+the other like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="o">&lt;&lt;=</span> <span class="n">checksums</span>
+
+<span class="n">checksums</span> <span class="o">&lt;&lt;=</span> <span class="n">scalacOptions</span>
+</pre></div>
+</div>
+<p>The issue is that <tt class="docutils literal"><span class="pre">scalacOptions.&lt;&lt;=</span></tt> expects an
+<tt class="docutils literal"><span class="pre">Initialize[Task[Seq[String]]]</span></tt> and <tt class="docutils literal"><span class="pre">checksums.&lt;&lt;=</span></tt> expects an
+<tt class="docutils literal"><span class="pre">Initialize[Seq[String]]</span></tt>. There is, however, a way to convert an
+<tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> to an <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt>, called <tt class="docutils literal"><span class="pre">map</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="o">&lt;&lt;=</span> <span class="n">checksums</span> <span class="n">map</span> <span class="n">identity</span>
+</pre></div>
+</div>
+<p>(<tt class="docutils literal"><span class="pre">identity</span></tt> is a standard Scala function that returns its input as its
+result.)</p>
+<p>There is no way to go the <em>other</em> direction, that is, a setting key
+can't depend on a task key. That's because a setting key is only
+computed once on project load, so the task would not be re-run every
+time, and tasks expect to re-run every time.</p>
+<p>A task can depend on both settings and other tasks, though, just use
+<tt class="docutils literal"><span class="pre">map</span></tt> rather than <tt class="docutils literal"><span class="pre">apply</span></tt> to build an <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt> rather
+than an <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>. Remember the usage of <tt class="docutils literal"><span class="pre">apply</span></tt> with a
+non-task setting looks like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>(<tt class="docutils literal"><span class="pre">(name,</span> <span class="pre">organization,</span> <span class="pre">version)</span></tt> has an apply method and is thus a
+function, taking the anonymous function in <tt class="docutils literal"><span class="pre">{}</span></tt> braces as a
+parameter.)</p>
+<p>To create an <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt> you need a <tt class="docutils literal"><span class="pre">map</span></tt> in there rather
+than <tt class="docutils literal"><span class="pre">apply</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// this WON&#39;T compile because name (on the left of &lt;&lt;=) is not a task and we used map</span>
+<span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">}</span>
+
+<span class="c1">// this WILL compile because packageBin is a task and we used map</span>
+<span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="o">(</span><span class="n">o</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">+</span> <span class="s">&quot;.jar&quot;</span><span class="o">)</span> <span class="o">}</span>
+
+<span class="c1">// this WILL compile because name is not a task and we used apply</span>
+<span class="n">name</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">o</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">}</span>
+
+<span class="c1">// this WON&#39;T compile because packageBin is a task and we used apply</span>
+<span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">organization</span><span class="o">,</span> <span class="n">version</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">o</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="o">(</span><span class="n">o</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">v</span> <span class="o">+</span> <span class="s">&quot;.jar&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p><em>Bottom line:</em> when converting a tuple of keys into an
+<tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt>, use <tt class="docutils literal"><span class="pre">map</span></tt>; when converting a tuple of keys
+into an <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> use <tt class="docutils literal"><span class="pre">apply</span></tt>; and you need the
+<tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt> if the key on the left side of <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> is a
+<tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt> rather than a <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt>.</p>
+</div>
+<div class="section" id="remember-aliases-use-not">
+<h3>Remember, aliases use <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> not <tt class="docutils literal"><span class="pre">:=</span></tt><a class="headerlink" href="#remember-aliases-use-not" title="Permalink to this headline">¶</a></h3>
+<p>If you want one key to be an alias for another, you might be tempted to
+use <tt class="docutils literal"><span class="pre">:=</span></tt> to create the following nonsense alias:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// doesn&#39;t work, and not useful</span>
+<span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">packageDoc</span> <span class="n">in</span> <span class="nc">Compile</span>
+</pre></div>
+</div>
+<p>The problem is that <tt class="docutils literal"><span class="pre">:=</span></tt>'s argument must be a value (or for tasks, a
+function returning a value). For <tt class="docutils literal"><span class="pre">packageBin</span></tt> which is a
+<tt class="docutils literal"><span class="pre">TaskKey[File]</span></tt>, it must be a <tt class="docutils literal"><span class="pre">File</span></tt> or a function <tt class="docutils literal"><span class="pre">=&gt;</span> <span class="pre">File</span></tt>.
+<tt class="docutils literal"><span class="pre">packageDoc</span></tt> is not a <tt class="docutils literal"><span class="pre">File</span></tt>, it's a key.</p>
+<p>The proper way to do this is with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>, which takes a key (really an
+<tt class="docutils literal"><span class="pre">Initialize</span></tt>, but keys are instances of <tt class="docutils literal"><span class="pre">Initialize</span></tt>):</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// works, still not useful</span>
+<span class="n">packageBin</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">packageDoc</span> <span class="n">in</span> <span class="nc">Compile</span>
+</pre></div>
+</div>
+<p>Here, <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> expects an <tt class="docutils literal"><span class="pre">Initialize[Task[File]]</span></tt>, which is a
+computation that will return a file later, when sbt runs the task. Which
+is what you want: you want to alias a task by making it run another
+task, not by setting it one time when sbt loads the project.</p>
+<p>(By the way: the <tt class="docutils literal"><span class="pre">in</span> <span class="pre">Compile</span></tt> scope is needed to avoid &quot;undefined&quot;
+errors, because the packaging tasks like <tt class="docutils literal"><span class="pre">packageBin</span></tt> are
+per-configuration, not global.)</p>
+</div>
+</div>
+<div class="section" id="appending-with-dependencies-and">
+<h2>Appending with dependencies: <tt class="docutils literal"><span class="pre">&lt;+=</span></tt> and <tt class="docutils literal"><span class="pre">&lt;++=</span></tt><a class="headerlink" href="#appending-with-dependencies-and" title="Permalink to this headline">¶</a></h2>
+<p>There are a couple more methods for appending to lists, which combine
+<tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt> with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>. That is, they let you compute a new
+list element or new list to concatenate, using dependencies on other
+keys in order to do so.</p>
+<p>These methods work exactly like <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>, but for <tt class="docutils literal"><span class="pre">&lt;++=</span></tt>, the function
+you write to convert the dependencies' values into a new value should
+create a <tt class="docutils literal"><span class="pre">Seq[T]</span></tt> instead of a <tt class="docutils literal"><span class="pre">T</span></tt>.</p>
+<p>Unlike <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> of course, <tt class="docutils literal"><span class="pre">&lt;+=</span></tt> and <tt class="docutils literal"><span class="pre">&lt;++=</span></tt> will append to the
+previous value of the key on the left, rather than replacing it.</p>
+<p>For example, say you have a coverage report named after the project, and
+you want to add it to the files removed by <tt class="docutils literal"><span class="pre">clean</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">cleanFiles</span> <span class="o">&lt;+=</span> <span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="o">{</span> <span class="n">n</span> <span class="k">=&gt;</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;coverage-report-&quot;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s">&quot;.txt&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>At this point you know how to get things done with settings, so we can
+move on to a specific key that comes up often: <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt>.
+<a class="reference internal" href="Library-Dependencies.html"><em>Learn about library dependencies</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">More Kinds of Setting</a><ul>
+<li><a class="reference internal" href="#refresher-settings">Refresher: Settings</a></li>
+<li><a class="reference internal" href="#appending-to-previous-values-and">Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt></a></li>
+<li><a class="reference internal" href="#transforming-a-value">Transforming a value: <tt class="docutils literal"><span class="pre">~=</span></tt></a></li>
+<li><a class="reference internal" href="#computing-a-value-based-on-other-keys-values">Computing a value based on other keys' values: <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt></a><ul>
+<li><a class="reference internal" href="#trivial-initialize-t-depending-on-one-other-key-with">Trivial <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>: depending on one other key with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt></a></li>
+<li><a class="reference internal" href="#settings-with-dependencies">Settings with dependencies</a></li>
+<li><a class="reference internal" href="#complex-initialize-t-depending-on-multiple-keys-with">Complex <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt>: depending on multiple keys with <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt></a></li>
+<li><a class="reference internal" href="#when-settings-are-undefined">When settings are undefined</a></li>
+<li><a class="reference internal" href="#tasks-with-dependencies">Tasks with dependencies</a></li>
+<li><a class="reference internal" href="#remember-aliases-use-not">Remember, aliases use <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> not <tt class="docutils literal"><span class="pre">:=</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#appending-with-dependencies-and">Appending with dependencies: <tt class="docutils literal"><span class="pre">&lt;+=</span></tt> and <tt class="docutils literal"><span class="pre">&lt;++=</span></tt></a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

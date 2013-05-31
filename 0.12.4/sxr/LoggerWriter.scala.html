@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>LoggerWriter.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009, 2010 Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="comment">/** Provides a `java.io.Writer` interface to a `Logger`.  Content is line-buffered and logged at `level`.
+* A line is delimited by `nl`, which is by default the platform line separator.*/</span>
+<span class="keyword">class</span> <a title="class LoggerWriter extends java.io.Writer with ScalaObject" id="13108">LoggerWriter</a><a href="#13108" title="ScalaObject" class="delimiter">(</a><a title="sbt.Logger" id="89114">delegate</a>: <a href="Logger.scala.html#13103" title="sbt.Logger">Logger</a>, <a title="Option[sbt.Level.Value]" id="89115">unbufferedLevel</a>: <span title="Option[sbt.Level.Value]">Option</span><span class="delimiter">[</span>Level.Value<span class="delimiter">]</span>, <a title="String" id="89118">nl</a>: <span title="String">String</span> = <span title="object java.lang.System">System</span>.<span title="(x$1: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;line.separator&quot;)" class="string">&quot;line.separator&quot;</span><span class="delimiter">)</span><span class="delimiter">)</span> <span class="keyword">extends</span> java.io.<span title="java.io.Writer">Writer</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(delegate: sbt.Logger, level: sbt.Level.Value)sbt.LoggerWriter" id="88985" class="keyword">this</a><span class="delimiter">(</span><a title="sbt.Logger" id="88998">delegate</a>: <a href="Logger.scala.html#13103" title="sbt.Logger">Logger</a>, <a title="sbt.Level.Value" id="88999">level</a>: Level.<span title="sbt.Level.Value">Value</span><span class="delimiter">)</span> = <a href="#13108" title="LoggerWriter.this.type" class="keyword">this</a><span class="delimiter">(</span><a href="#88998" title="sbt.Logger">delegate</a>, <span title="(x: sbt.Level.Value)Some[sbt.Level.Value]">Some</span><span class="delimiter">(</span><a href="#88999" title="sbt.Level.Value">level</a><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(delegate: sbt.Logger)sbt.LoggerWriter" id="88986" class="keyword">this</a><span class="delimiter">(</span><a title="sbt.Logger" id="88997">delegate</a>: <a href="Logger.scala.html#13103" title="sbt.Logger">Logger</a><span class="delimiter">)</span> = <a href="#13108" title="LoggerWriter.this.type" class="keyword">this</a><span class="delimiter">(</span><a href="#88997" title="sbt.Logger">delegate</a>, <span title="object None">None</span><span class="delimiter">)</span>
+	
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="StringBuilder" id="88987">buffer</a> = <span title="()StringBuilder" class="keyword">new</span> <span title="StringBuilder">StringBuilder</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">val</span> <a title="scala.collection.mutable.ListBuffer[String]" id="88988">lines</a> = <span title="scala.collection.mutable.ListBuffer[String]" class="keyword">new</span> collection.mutable.<span title="scala.collection.mutable.ListBuffer[String]">ListBuffer</span><span class="delimiter">[</span>String<span class="delimiter">]</span>
+
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()Unit" id="88989">close</a><span class="delimiter">(</span><span class="delimiter">)</span> = <a href="#88990" title="()Unit">flush</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()Unit" id="88990">flush</a><span class="delimiter">(</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+		<a href="#13108" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+			<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#88987" title="StringBuilder">buffer</a>.<span title="=&gt; Int">length</span> <span title="(x: Int)Boolean">&gt;</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+			<span class="delimiter">{</span>
+				<a href="#88994" title="(s: String)Unit">log</a><span class="delimiter">(</span><a href="#88987" title="StringBuilder">buffer</a>.<span title="()java.lang.String">toString</span><span class="delimiter">)</span>
+				<a href="#88987" title="StringBuilder">buffer</a>.<span title="()Unit">clear</span><span class="delimiter">(</span><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(level: sbt.Level.Value)Unit" id="88991">flushLines</a><span class="delimiter">(</span><a title="sbt.Level.Value" id="89147">level</a>: Level.<span title="sbt.Level.Value">Value</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+		<a href="#13108" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+			<span class="keyword">for</span><span class="delimiter">(</span><a title="String" id="2196704">line</a> &lt;- <a href="#88988" title="(f: String =&gt; Unit)Unit">lines</a><span class="delimiter">)</span>
+				<a href="#89114" title="sbt.Logger">delegate</a>.<a href="Logger.scala.html#53767" title="(level: sbt.Level.Value, message: =&gt; String)Unit">log</a><span class="delimiter">(</span><a href="#89147" title="sbt.Level.Value">level</a>, <a href="#2196704" title="String">line</a><span class="delimiter">)</span>
+			<a href="#88988" title="scala.collection.mutable.ListBuffer[String]">lines</a>.<span title="()Unit">clear</span><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="(content: Array[Char], offset: Int, length: Int)Unit" id="88992">write</a><span class="delimiter">(</span><a title="Array[Char]" id="2196711">content</a>: <span title="Array[Char]">Array</span><span class="delimiter">[</span>Char<span class="delimiter">]</span>, <a title="Int" id="2196712">offset</a>: <span title="Int">Int</span>, <a title="Int" id="2196713">length</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+		<a href="#13108" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+			<a href="#88987" title="StringBuilder">buffer</a>.<span title="(xs: Array[Char], offset: Int, len: Int)StringBuilder">appendAll</span><span class="delimiter">(</span><a href="#2196711" title="Array[Char]">content</a>, <a href="#2196712" title="Int">offset</a>, <a href="#2196713" title="Int">length</a><span class="delimiter">)</span>
+			<a href="#88993" title="()Unit">process</a><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="()Unit" id="88993">process</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Int" id="2196786">i</a> = <a href="#88987" title="StringBuilder">buffer</a>.<span title="(str: String)Int">indexOf</span><span class="delimiter">(</span><a href="#89118" title="String">nl</a><span class="delimiter">)</span>
+		<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#2196786" title="Int">i</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#88994" title="(s: String)Unit">log</a><span class="delimiter">(</span><a href="#88987" title="StringBuilder">buffer</a>.<span title="(start: Int, end: Int)String">substring</span><span class="delimiter">(</span><span title="Int(0)" class="int">0</span>, <a href="#2196786" title="Int">i</a><span class="delimiter">)</span><span class="delimiter">)</span>
+			<a href="#88987" title="StringBuilder">buffer</a>.<span title="(start: Int, end: Int)StringBuilder">delete</span><span class="delimiter">(</span><span title="Int(0)" class="int">0</span>, <a href="#2196786" title="Int">i</a> <span title="(x: Int)Int">+</span> <a href="#89118" title="String">nl</a>.<span title="()Int">length</span><span class="delimiter">)</span>
+			<a href="#88993" title="()Unit">process</a><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(s: String)Unit" id="88994">log</a><span class="delimiter">(</span><a title="String" id="2196680">s</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#89115" title="Option[sbt.Level.Value]">unbufferedLevel</a> <span title="Unit" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <span title="Unit">None</span> =&gt; <a href="#88988" title="scala.collection.mutable.ListBuffer[String]">lines</a> <span title="(x: String)LoggerWriter.this.lines.type">+=</span> <a href="#2196680" title="String">s</a>
+		<span class="keyword">case</span> <span title="Unit">Some</span><span class="delimiter">(</span><a title="sbt.Level.Value" id="2196836">level</a><span class="delimiter">)</span> =&gt; <a href="#89114" title="sbt.Logger">delegate</a>.<a href="Logger.scala.html#53767" title="(level: sbt.Level.Value, message: =&gt; String)Unit">log</a><span class="delimiter">(</span><a href="#2196836" title="sbt.Level.Value">level</a>, <a href="#2196680" title="String">s</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

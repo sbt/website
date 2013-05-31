@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Param.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010 Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> <a href="Types.scala.html#12641" title="object sbt.Types">Types</a>._
+
+<span class="comment">// Used to emulate ~&gt; literals</span>
+<span class="keyword">trait</span> <a title="trait Param[A[_], B[_]] extends java.lang.Object" id="12568">Param</a><span class="delimiter">[</span><a title="[_]&gt;: Nothing &lt;: Any" id="12569">A</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2153065">_</a><span class="delimiter">]</span>, <a title="[_]&gt;: Nothing &lt;: Any" id="12570">B</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2153066">_</a><span class="delimiter">]</span><span class="delimiter">]</span>
+<span title="java.lang.Object" class="delimiter">{</span>
+	<span class="keyword">type</span> <a title="&gt;: Nothing &lt;: Any" id="2153061">T</a>
+	<span class="keyword">def</span> <a title="=&gt; A[Param.this.T]" id="2153062">in</a>: <a href="#12569" title="A[Param.this.T]">A</a><span class="delimiter">[</span>T<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="(out: B[Param.this.T])Unit" id="2153063">ret</a><span class="delimiter">(</span><a title="B[Param.this.T]" id="2153068">out</a>: <a href="#12570" title="B[Param.this.T]">B</a><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; B[Param.this.T]" id="2153064">ret</a>: <a href="#12570" title="B[Param.this.T]">B</a><span class="delimiter">[</span>T<span class="delimiter">]</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="object sbt.Param" id="12571">Param</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">implicit</span> <span class="keyword">def</span> <a title="[A[_], B[_]](p: sbt.Param[A,B] =&gt; Unit)sbt.~&gt;[A,B]" id="2153070">pToT</a><span class="delimiter">[</span><a title="[_]&gt;: Nothing &lt;: Any" id="2153073">A</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2153077">_</a><span class="delimiter">]</span>, <a title="[_]&gt;: Nothing &lt;: Any" id="2153074">B</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2153078">_</a><span class="delimiter">]</span><span class="delimiter">]</span><span class="delimiter">(</span><a title="sbt.Param[A,B] =&gt; Unit" id="2153076">p</a>: Param<span class="delimiter">[</span>A,B<span class="delimiter">]</span> =&gt; Unit<span class="delimiter">)</span>: A<a href="TypeFunctions.scala.html#12630" title="sbt.~&gt;[A,B]">~&gt;</a>B = <a href="#2153081" title="java.lang.Object with sbt.~&gt;[A,B]" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with sbt.~&gt;[A,B]" id="2153081" class="delimiter">(</a>A <a href="TypeFunctions.scala.html#12630" title="sbt.~&gt;[A,B]">~&gt;</a> B<span class="delimiter">)</span> <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="[s](a: A[s])B[s]" id="2153085">apply</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2153087">s</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="A[s]" id="2153088">a</a>: <a href="#2153073" title="A[s]">A</a><span class="delimiter">[</span>s<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="#2153074" title="B[s]">B</a><span class="delimiter">[</span>s<span class="delimiter">]</span> = <span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="$anon extends sbt.Param[A,B]" id="2153098">v</a>: <a href="#2153099" title="$anon extends sbt.Param[A,B]">Param</a><span class="delimiter">[</span>A,B<span class="delimiter">]</span> <span class="delimiter">{</span> <span class="keyword">type</span> T = s<span class="delimiter">}</span> = <a href="#2153101" title="java.lang.Object with sbt.Param[A,B]{}" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with sbt.Param[A,B]" id="2153101">Param</a><span class="delimiter">[</span>A,B<span class="delimiter">]</span> <span class="delimiter">{</span> <span class="keyword">type</span> <a title="s" id="2153104">T</a> = <a href="#2153087" title="s">s</a>
+				<span class="keyword">def</span> <a title="=&gt; A[s]" id="2153105">in</a> = <a href="#2153088" title="A[s]">a</a>
+				<span class="keyword">private</span> <span class="keyword">var</span> <a title="B[this.T]" id="2153107">r</a>: <a href="#2153074" title="B[this.T]">B</a><span class="delimiter">[</span>T<span class="delimiter">]</span> = _
+				<span class="keyword">def</span> <a title="(b: B[this.T])Unit" id="2153109">ret</a><span class="delimiter">(</span><a title="B[this.T]" id="2153115">b</a>: <a href="#2153074" title="B[this.T]">B</a><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span> <span class="delimiter">{</span><a href="#2153107" title="(x$1: B[this.T])Unit">r</a> = <a href="#2153115" title="B[this.T]">b</a><span class="delimiter">}</span>
+				<span class="keyword">def</span> <a title="=&gt; B[this.T]" id="2153110">ret</a>: <a href="#2153074" title="B[this.T]">B</a><span class="delimiter">[</span>T<span class="delimiter">]</span> = <a href="#2153107" title="=&gt; B[this.T]">r</a>
+			<span class="delimiter">}</span>
+			<a href="#2153076" title="(v1: sbt.Param[A,B])Unit">p</a><span class="delimiter">(</span><a href="#2153098" title="$anon extends sbt.Param[A,B]">v</a><span class="delimiter">)</span>
+			<a href="#2153098" title="$anon extends sbt.Param[A,B]">v</a>.<a href="#2153064" title="=&gt; B[v.T]">ret</a>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

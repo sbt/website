@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>BootConfiguration.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009, 2010  Mark Harrah
+ */</span>
+ <span class="keyword">package</span> xsbt.boot
+
+	<span class="keyword">import</span> java.io.File
+
+<span class="comment">// &lt;boot.directory&gt;</span>
+<span class="comment">//     [&lt;scala-org&gt;.]scala-&lt;scala.version&gt;/    [baseDirectoryName]</span>
+<span class="comment">//          lib/    [ScalaDirectoryName]</span>
+<span class="comment">//          &lt;app.name&gt;-&lt;app.version&gt;/  [appDirectoryName]</span>
+<span class="comment">//</span>
+<span class="comment">// see also ProjectProperties for the set of constants that apply to the build.properties file in a project</span>
+<span class="comment">// The scala organization is used as a prefix in baseDirectoryName when a non-standard organization is used.</span>
+<span class="keyword">private</span> <span class="keyword">object</span> <a title="object xsbt.boot.BootConfiguration" id="10938">BootConfiguration</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="comment">// these are the Scala module identifiers to resolve/retrieve</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304584">ScalaOrg</a> = <span title="java.lang.String(&quot;org.scala-lang&quot;)" class="string">&quot;org.scala-lang&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304586">CompilerModuleName</a> = <span title="java.lang.String(&quot;scala-compiler&quot;)" class="string">&quot;scala-compiler&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304588">LibraryModuleName</a> = <span title="java.lang.String(&quot;scala-library&quot;)" class="string">&quot;scala-library&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304590">JUnitName</a> = <span title="java.lang.String(&quot;junit&quot;)" class="string">&quot;junit&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304592">SbtOrg</a> = <span title="java.lang.String(&quot;org.scala-sbt&quot;)" class="string">&quot;org.scala-sbt&quot;</span>
+
+	<span class="comment">/** The Ivy conflict manager to use for updating.*/</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304594">ConflictManagerName</a> = <span title="java.lang.String(&quot;latest-revision&quot;)" class="string">&quot;latest-revision&quot;</span>
+	<span class="comment">/** The name of the local Ivy repository, which is used when compiling sbt from source.*/</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304596">LocalIvyName</a> = <span title="java.lang.String(&quot;local&quot;)" class="string">&quot;local&quot;</span>
+	<span class="comment">/** The pattern used for the local Ivy repository, which is used when compiling sbt from source.*/</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304598">LocalPattern</a> = <span title="java.lang.String(&quot;[organisation]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]&quot;)" class="string">&quot;[organisation]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]&quot;</span>
+	<span class="comment">/** The artifact pattern used for the local Ivy repository.*/</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="304600">LocalArtifactPattern</a> = <a href="#304598" title="=&gt; java.lang.String">LocalPattern</a>
+	<span class="comment">/** The Ivy pattern used for the local Ivy repository.*/</span>
+	<span class="keyword">def</span> <a title="=&gt; java.lang.String" id="304601">LocalIvyPattern</a> = <a href="#304598" title="=&gt; java.lang.String">LocalPattern</a>
+
+	<span class="keyword">final</span> <span class="keyword">val</span> <a title="java.lang.String(&quot;ch.epfl.lamp.fjbg.&quot;)" id="304602">FjbgPackage</a> = <span title="java.lang.String(&quot;ch.epfl.lamp.fjbg.&quot;)" class="string">&quot;ch.epfl.lamp.fjbg.&quot;</span>
+	<span class="comment">/** The class name prefix used to hide the Scala classes used by this loader from the application */</span>
+	<span class="keyword">final</span> <span class="keyword">val</span> <a title="java.lang.String(&quot;scala.&quot;)" id="304604">ScalaPackage</a> = <span title="java.lang.String(&quot;scala.&quot;)" class="string">&quot;scala.&quot;</span>
+	<span class="comment">/** The class name prefix used to hide the Ivy classes used by this loader from the application*/</span>
+	<span class="keyword">final</span> <span class="keyword">val</span> <a title="java.lang.String(&quot;org.apache.ivy.&quot;)" id="304606">IvyPackage</a> = <span title="java.lang.String(&quot;org.apache.ivy.&quot;)" class="string">&quot;org.apache.ivy.&quot;</span>
+	<span class="comment">/** The class name prefix used to hide the launcher classes from the application.
+	* Note that access to xsbti classes are allowed.*/</span>
+	<span class="keyword">final</span> <span class="keyword">val</span> <a title="java.lang.String(&quot;xsbt.boot.&quot;)" id="304608">SbtBootPackage</a> = <span title="java.lang.String(&quot;xsbt.boot.&quot;)" class="string">&quot;xsbt.boot.&quot;</span>
+	<span class="comment">/** The prefix for JLine resources.*/</span>
+	<span class="keyword">final</span> <span class="keyword">val</span> <a title="java.lang.String(&quot;jline/&quot;)" id="304610">JLinePackagePath</a> = <span title="java.lang.String(&quot;jline/&quot;)" class="string">&quot;jline/&quot;</span>
+	<span class="comment">/** The loader will check that these classes can be loaded and will assume that their presence indicates
+	* the Scala compiler and library have been downloaded.*/</span>
+	<span class="keyword">val</span> <a title="List[java.lang.String]" id="304612">TestLoadScalaClasses</a> = <span title="java.lang.String(&quot;scala.Option&quot;)" class="string">&quot;scala.Option&quot;</span> <a href="#304634" title="(x: java.lang.String)List[java.lang.String]">::</a> <span title="java.lang.String(&quot;scala.tools.nsc.Global&quot;)" class="string">&quot;scala.tools.nsc.Global&quot;</span> <a href="#304635" title="(x: java.lang.String)List[java.lang.String]">::</a> <span title="object Nil">Nil</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304614">ScalaHomeProperty</a> = <span title="java.lang.String(&quot;scala.home&quot;)" class="string">&quot;scala.home&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304616">UpdateLogName</a> = <span title="java.lang.String(&quot;update.log&quot;)" class="string">&quot;update.log&quot;</span>
+	<span class="keyword">val</span> <a title="List[java.lang.String]" id="304618">DefaultChecksums</a> = <span title="java.lang.String(&quot;sha1&quot;)" class="string">&quot;sha1&quot;</span> <a href="#304644" title="(x: java.lang.String)List[java.lang.String]">::</a> <span title="java.lang.String(&quot;md5&quot;)" class="string">&quot;md5&quot;</span> <a href="#304645" title="(x: java.lang.String)List[java.lang.String]">::</a> <span title="object Nil">Nil</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304620">DefaultIvyConfiguration</a> = <span title="java.lang.String(&quot;default&quot;)" class="string">&quot;default&quot;</span>
+
+	<span class="comment">/** The name of the directory within the boot directory to retrieve scala to. */</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304622">ScalaDirectoryName</a> = <span title="java.lang.String(&quot;lib&quot;)" class="string">&quot;lib&quot;</span>
+
+	<span class="comment">/** The Ivy pattern to use for retrieving the scala compiler and library.  It is relative to the directory
+	* containing all jars for the requested version of scala. */</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304624">scalaRetrievePattern</a> = <a href="#304622" title="=&gt; java.lang.String">ScalaDirectoryName</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;/[artifact](-[classifier]).[ext]&quot;)" class="string">&quot;/[artifact](-[classifier]).[ext]&quot;</span>
+	
+	<span class="keyword">def</span> <a title="(classifier: String)java.lang.String" id="304626">artifactType</a><span class="delimiter">(</span><a title="String" id="304686">classifier</a>: <span title="String">String</span><span class="delimiter">)</span> =
+		<a href="#304686" title="String">classifier</a> <span title="java.lang.String" class="keyword">match</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">case</span> <span title="java.lang.String(&quot;src&quot;)" class="string">&quot;sources&quot;</span> =&gt; <span title="java.lang.String(&quot;src&quot;)" class="string">&quot;src&quot;</span>
+			<span class="keyword">case</span> <span title="java.lang.String(&quot;doc&quot;)" class="string">&quot;javadoc&quot;</span> =&gt; <span title="java.lang.String(&quot;doc&quot;)" class="string">&quot;doc&quot;</span>
+			<span class="keyword">case</span> <span title="java.lang.String(&quot;jar&quot;)">_</span> =&gt; <span title="java.lang.String(&quot;jar&quot;)" class="string">&quot;jar&quot;</span>
+		<span class="delimiter">}</span>
+		
+	<span class="comment">/** The Ivy pattern to use for retrieving the application and its dependencies.  It is relative to the directory
+	* containing all jars for the requested version of scala. */</span>
+	<span class="keyword">def</span> <a title="(appID: xsbti.ApplicationID)java.lang.String" id="304627">appRetrievePattern</a><span class="delimiter">(</span><a title="xsbti.ApplicationID" id="304691">appID</a>: xsbti.<a href="xsbti/ApplicationID.java.html#11219" title="xsbti.ApplicationID">ApplicationID</a><span class="delimiter">)</span> = <a href="#304630" title="(appID: xsbti.ApplicationID, sep: String)java.lang.String">appDirectoryName</a><span class="delimiter">(</span><a href="#304691" title="xsbti.ApplicationID">appID</a>, <span title="java.lang.String(&quot;/&quot;)" class="string">&quot;/&quot;</span><span class="delimiter">)</span> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;(/[component])/[artifact]-[revision](-[classifier]).[ext]&quot;)" class="string">&quot;(/[component])/[artifact]-[revision](-[classifier]).[ext]&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304628">ScalaVersionPrefix</a> = <span title="java.lang.String(&quot;scala-&quot;)" class="string">&quot;scala-&quot;</span>
+
+	<span class="comment">/** The name of the directory to retrieve the application and its dependencies to.*/</span>
+	<span class="keyword">def</span> <a title="(appID: xsbti.ApplicationID, sep: String)java.lang.String" id="304630">appDirectoryName</a><span class="delimiter">(</span><a title="xsbti.ApplicationID" id="304694">appID</a>: xsbti.<a href="xsbti/ApplicationID.java.html#11219" title="xsbti.ApplicationID">ApplicationID</a>, <a title="String" id="304695">sep</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#304694" title="xsbti.ApplicationID">appID</a>.<a href="xsbti/ApplicationID.java.html#304699" title="()java.lang.String">groupID</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304695" title="String">sep</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304694" title="xsbti.ApplicationID">appID</a>.<a href="xsbti/ApplicationID.java.html#304700" title="()java.lang.String">name</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304695" title="String">sep</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304694" title="xsbti.ApplicationID">appID</a>.<a href="xsbti/ApplicationID.java.html#304701" title="()java.lang.String">version</a>
+	<span class="comment">/** The name of the directory in the boot directory to put all jars for the given version of scala in.*/</span>
+	<span class="keyword">def</span> <a title="(scalaOrg: String, scalaVersion: Option[String])java.lang.String" id="304631">baseDirectoryName</a><span class="delimiter">(</span><a title="String" id="304712">scalaOrg</a>: <span title="String">String</span>, <a title="Option[String]" id="304713">scalaVersion</a>: <span title="Option[String]">Option</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span> = <a href="#304713" title="Option[String]">scalaVersion</a> <span title="java.lang.String" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <span title="java.lang.String(&quot;other&quot;)">None</span> =&gt; <span title="java.lang.String(&quot;other&quot;)" class="string">&quot;other&quot;</span>
+		<span class="keyword">case</span> <span title="java.lang.String">Some</span><span class="delimiter">(</span><a title="String" id="304717">sv</a><span class="delimiter">)</span> =&gt; <span class="delimiter">(</span><span title="java.lang.String" class="keyword">if</span> <span class="delimiter">(</span><a href="#304712" title="String">scalaOrg</a> <span title="(x$1: AnyRef)Boolean">==</span> <a href="#304584" title="=&gt; java.lang.String">ScalaOrg</a><span class="delimiter">)</span> <span title="java.lang.String(&quot;&quot;)" class="string">&quot;&quot;</span> <span class="keyword">else</span> <a href="#304712" title="String">scalaOrg</a> <span title="(x$1: Any)java.lang.String">+</span> <span title="java.lang.String(&quot;.&quot;)" class="string">&quot;.&quot;</span><span class="delimiter">)</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304628" title="=&gt; java.lang.String">ScalaVersionPrefix</a> <span title="(x$1: Any)java.lang.String">+</span> <a href="#304717" title="String">sv</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(dir: java.io.File)Option[String]" id="304632">extractScalaVersion</a><span class="delimiter">(</span><a title="java.io.File" id="304725">dir</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Option[String]">Option</span><span class="delimiter">[</span>String<span class="delimiter">]</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.lang.String" id="304729">name</a> = <a href="#304725" title="java.io.File">dir</a>.<span title="()java.lang.String">getName</span>
+		<span title="Option[String]" class="keyword">if</span><span class="delimiter">(</span><a href="#304729" title="java.lang.String">name</a>.<span title="(x$1: java.lang.CharSequence)Boolean">contains</span><span class="delimiter">(</span><a href="#304628" title="=&gt; java.lang.String">ScalaVersionPrefix</a><span class="delimiter">)</span><span class="delimiter">)</span>
+			<span title="(x: java.lang.String)Some[java.lang.String]">Some</span><span class="delimiter">(</span><a href="#304729" title="java.lang.String">name</a>.<span title="(x$1: Int)java.lang.String">substring</span><span class="delimiter">(</span><a href="#304729" title="java.lang.String">name</a>.<span title="(x$1: java.lang.String)Int">lastIndexOf</span><span class="delimiter">(</span><a href="#304628" title="=&gt; java.lang.String">ScalaVersionPrefix</a><span class="delimiter">)</span> <span title="(x: Int)Int">+</span> <a href="#304628" title="=&gt; java.lang.String">ScalaVersionPrefix</a>.<span title="()Int">length</span><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="keyword">else</span>
+			<span title="object None">None</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="keyword">private</span> <span class="keyword">object</span> <a title="object xsbt.boot.ProxyProperties" id="10940">ProxyProperties</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304745">HttpProxyEnv</a> = <span title="java.lang.String(&quot;http_proxy&quot;)" class="string">&quot;http_proxy&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304747">HttpProxyUser</a> = <span title="java.lang.String(&quot;http_proxy_user&quot;)" class="string">&quot;http_proxy_user&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304749">HttpProxyPassword</a> = <span title="java.lang.String(&quot;http_proxy_pass&quot;)" class="string">&quot;http_proxy_pass&quot;</span>
+
+	<span class="keyword">val</span> <a title="java.lang.String" id="304751">ProxyHost</a> = <span title="java.lang.String(&quot;http.proxyHost&quot;)" class="string">&quot;http.proxyHost&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304753">ProxyPort</a> = <span title="java.lang.String(&quot;http.proxyPort&quot;)" class="string">&quot;http.proxyPort&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304755">ProxyUser</a> = <span title="java.lang.String(&quot;http.proxyUser&quot;)" class="string">&quot;http.proxyUser&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="304757">ProxyPassword</a> = <span title="java.lang.String(&quot;http.proxyPassword&quot;)" class="string">&quot;http.proxyPassword&quot;</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

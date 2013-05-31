@@ -1,0 +1,350 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>.scala Build Definition &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Using Plugins" href="Using-Plugins.html" />
+    <link rel="prev" title="Library Dependencies" href="Library-Dependencies.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title"><tt class="docutils literal"><span class="pre">.scala</span></tt> Build Definition</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Using-Plugins.html">Using Plugins</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Library-Dependencies.html">Library Dependencies</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="scala-build-definition">
+<h1><tt class="docutils literal"><span class="pre">.scala</span></tt> Build Definition<a class="headerlink" href="#scala-build-definition" title="Permalink to this headline">¶</a></h1>
+<p>This page assumes you've read previous pages in the Getting Started
+Guide, <em>especially</em> <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>
+and <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<div class="section" id="sbt-is-recursive">
+<h2>sbt is recursive<a class="headerlink" href="#sbt-is-recursive" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">build.sbt</span></tt> is so simple, it conceals how sbt really works. sbt builds
+are defined with Scala code. That code, itself, has to be built. What
+better way than with sbt?</p>
+<p>The <tt class="docutils literal"><span class="pre">project</span></tt> directory <em>is another project inside your project</em> which
+knows how to build your project. The project inside <tt class="docutils literal"><span class="pre">project</span></tt> can (in
+theory) do anything any other project can do. <em>Your build definition is
+an sbt project.</em></p>
+<p>And the turtles go all the way down. If you like, you can tweak the
+build definition of the build definition project, by creating a
+<tt class="docutils literal"><span class="pre">project/project/</span></tt> directory.</p>
+<p>Here's an illustration.</p>
+<div class="highlight-text"><div class="highlight"><pre>hello/                  # your project&#39;s base directory
+
+    Hello.scala         # a source file in your project (could be in
+                        #   src/main/scala too)
+
+    build.sbt           # build.sbt is part of the source code for the
+                        #   build definition project inside project/
+
+    project/            # base directory of the build definition project
+
+        Build.scala     # a source file in the project/ project,
+                        #   that is, a source file in the build definition
+
+        build.sbt       # this is part of a build definition for a project
+                        #   in project/project ; build definition&#39;s build
+                        #   definition
+
+
+        project/        # base directory of the build definition project
+                        #   for the build definition
+
+            Build.scala # source file in the project/project/ project
+</pre></div>
+</div>
+<p><em>Don't worry!</em> Most of the time you are not going to need all that. But
+understanding the principle can be helpful.</p>
+<p>By the way: any time files ending in <tt class="docutils literal"><span class="pre">.scala</span></tt> or <tt class="docutils literal"><span class="pre">.sbt</span></tt> are used,
+naming them <tt class="docutils literal"><span class="pre">build.sbt</span></tt> and <tt class="docutils literal"><span class="pre">Build.scala</span></tt> are conventions only. This
+also means that multiple files are allowed.</p>
+</div>
+<div class="section" id="scala-source-files-in-the-build-definition-project">
+<h2><tt class="docutils literal"><span class="pre">.scala</span></tt> source files in the build definition project<a class="headerlink" href="#scala-source-files-in-the-build-definition-project" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">.sbt</span></tt> files are merged into their sibling <tt class="docutils literal"><span class="pre">project</span></tt> directory.
+Looking back at the project layout:</p>
+<div class="highlight-text"><div class="highlight"><pre>hello/                  # your project&#39;s base directory
+
+    build.sbt           # build.sbt is part of the source code for the
+                        #   build definition project inside project/
+
+    project/            # base directory of the build definition project
+
+        Build.scala     # a source file in the project/ project,
+                        #   that is, a source file in the build definition
+</pre></div>
+</div>
+<p>The Scala expressions in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> are compiled alongside and merged
+with <tt class="docutils literal"><span class="pre">Build.scala</span></tt> (or any other <tt class="docutils literal"><span class="pre">.scala</span></tt> files in the <tt class="docutils literal"><span class="pre">project/</span></tt>
+directory).</p>
+<p><em>``.sbt`` files in the base directory for a project become part of the
+``project`` build definition project also located in that base
+directory.</em></p>
+<p>The <tt class="docutils literal"><span class="pre">.sbt</span></tt> file format is a convenient shorthand for adding settings
+to the build definition project.</p>
+</div>
+<div class="section" id="relating-build-sbt-to-build-scala">
+<h2>Relating <tt class="docutils literal"><span class="pre">build.sbt</span></tt> to <tt class="docutils literal"><span class="pre">Build.scala</span></tt><a class="headerlink" href="#relating-build-sbt-to-build-scala" title="Permalink to this headline">¶</a></h2>
+<p>To mix <tt class="docutils literal"><span class="pre">.sbt</span></tt> and <tt class="docutils literal"><span class="pre">.scala</span></tt> files in your build definition, you need
+to understand how they relate.</p>
+<p>The following two files illustrate. First, if your project is in
+<tt class="docutils literal"><span class="pre">hello</span></tt>, create <tt class="docutils literal"><span class="pre">hello/project/Build.scala</span></tt> as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+
+    <span class="k">val</span> <span class="n">sampleKeyA</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-a&quot;</span><span class="o">,</span> <span class="s">&quot;demo key A&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyB</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-b&quot;</span><span class="o">,</span> <span class="s">&quot;demo key B&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyC</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-c&quot;</span><span class="o">,</span> <span class="s">&quot;demo key C&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">sampleKeyD</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-d&quot;</span><span class="o">,</span> <span class="s">&quot;demo key D&quot;</span><span class="o">)</span>
+
+    <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">super</span><span class="o">.</span><span class="n">settings</span> <span class="o">++</span>
+        <span class="nc">Seq</span><span class="o">(</span><span class="n">sampleKeyA</span> <span class="o">:=</span> <span class="s">&quot;A: in Build.settings in Build.scala&quot;</span><span class="o">,</span> <span class="n">resolvers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">())</span>
+
+    <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">&quot;hello&quot;</span><span class="o">,</span>
+                            <span class="n">base</span> <span class="k">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">),</span>
+                            <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">sampleKeyB</span> <span class="o">:=</span> <span class="s">&quot;B: in the root project settings in Build.scala&quot;</span><span class="o">))</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Now, create <tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt> as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleKeyC</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="s">&quot;C: in build.sbt scoped to ThisBuild&quot;</span>
+
+<span class="n">sampleKeyD</span> <span class="o">:=</span> <span class="s">&quot;D: in build.sbt&quot;</span>
+</pre></div>
+</div>
+<p>Start up the sbt interactive prompt. Type <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-a</span></tt> and you
+should see (among other things):</p>
+<div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = A: in Build.settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sample-a
+</pre></div>
+</div>
+<p>and then <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-c</span></tt> and you should see:</p>
+<div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sample-c
+</pre></div>
+</div>
+<p>Note that the &quot;Provided by&quot; shows the same scope for the two values.
+That is, <tt class="docutils literal"><span class="pre">sampleKeyC</span> <span class="pre">in</span> <span class="pre">ThisBuild</span></tt> in a <tt class="docutils literal"><span class="pre">.sbt</span></tt> file is equivalent to
+placing a setting in the <tt class="docutils literal"><span class="pre">Build.settings</span></tt> list in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file.
+sbt takes build-scoped settings from both places to create the build
+definition.</p>
+<p>Now, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-b</span></tt>:</p>
+<div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = B: in the root project settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sample-b
+</pre></div>
+</div>
+<p>Note that <tt class="docutils literal"><span class="pre">sample-b</span></tt> is scoped to the project
+(<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}hello</span></tt>) rather than the entire build
+(<tt class="docutils literal"><span class="pre">{file:/home/hp/checkout/hello/}</span></tt>).</p>
+<p>As you've probably guessed, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">sample-d</span></tt> matches <tt class="docutils literal"><span class="pre">sample-b</span></tt>:</p>
+<div class="highlight-text"><div class="highlight"><pre>[info] Setting: java.lang.String = D: in build.sbt
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sample-d
+</pre></div>
+</div>
+<p>sbt <em>appends</em> the settings from <tt class="docutils literal"><span class="pre">.sbt</span></tt> files to the settings from
+<tt class="docutils literal"><span class="pre">Build.settings</span></tt> and <tt class="docutils literal"><span class="pre">Project.settings</span></tt> which means <tt class="docutils literal"><span class="pre">.sbt</span></tt>
+settings take precedence. Try changing <tt class="docutils literal"><span class="pre">Build.scala</span></tt> so it sets key
+<tt class="docutils literal"><span class="pre">sample-c</span></tt> or <tt class="docutils literal"><span class="pre">sample-d</span></tt>, which are also set in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. The
+setting in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> should &quot;win&quot; over the one in <tt class="docutils literal"><span class="pre">Build.scala</span></tt>.</p>
+<p>One other thing you may have noticed: <tt class="docutils literal"><span class="pre">sampleKeyC</span></tt> and <tt class="docutils literal"><span class="pre">sampleKeyD</span></tt>
+were available inside <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. That's because sbt imports the
+contents of your <tt class="docutils literal"><span class="pre">Build</span></tt> object into your <tt class="docutils literal"><span class="pre">.sbt</span></tt> files. In this case
+<tt class="docutils literal"><span class="pre">import</span> <span class="pre">HelloBuild._</span></tt> was implicitly done for the <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file.</p>
+<p>In summary:</p>
+<ul class="simple">
+<li>In <tt class="docutils literal"><span class="pre">.scala</span></tt> files, you can add settings to <tt class="docutils literal"><span class="pre">Build.settings</span></tt> for
+sbt to find, and they are automatically build-scoped.</li>
+<li>In <tt class="docutils literal"><span class="pre">.scala</span></tt> files, you can add settings to <tt class="docutils literal"><span class="pre">Project.settings</span></tt> for
+sbt to find, and they are automatically project-scoped.</li>
+<li>Any <tt class="docutils literal"><span class="pre">Build</span></tt> object you write in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file will have its
+contents imported and available to <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.</li>
+<li>The settings in <tt class="docutils literal"><span class="pre">.sbt</span></tt> files are <em>appended</em> to the settings in
+<tt class="docutils literal"><span class="pre">.scala</span></tt> files.</li>
+<li>The settings in <tt class="docutils literal"><span class="pre">.sbt</span></tt> files are project-scoped unless you
+explicitly specify another scope.</li>
+</ul>
+</div>
+<div class="section" id="when-to-use-scala-files">
+<h2>When to use <tt class="docutils literal"><span class="pre">.scala</span></tt> files<a class="headerlink" href="#when-to-use-scala-files" title="Permalink to this headline">¶</a></h2>
+<p>In <tt class="docutils literal"><span class="pre">.scala</span></tt> files, you are not limited to a series of settings
+expressions. You can write any Scala code including <tt class="docutils literal"><span class="pre">val</span></tt>, <tt class="docutils literal"><span class="pre">object</span></tt>,
+and method definitions.</p>
+<p><em>One recommended approach is to define settings in ``.sbt`` files, using
+``.scala`` files when you need to factor out a ``val`` or ``object`` or
+method definition.</em></p>
+<p>Because the <tt class="docutils literal"><span class="pre">.sbt</span></tt> format allows only single expressions, it doesn't
+give you a way to share code among expressions. When you need to share
+code, you need a <tt class="docutils literal"><span class="pre">.scala</span></tt> file so you can set common variables or
+define methods.</p>
+<p>There's one build definition, which is a nested project inside your main
+project. <tt class="docutils literal"><span class="pre">.sbt</span></tt> and <tt class="docutils literal"><span class="pre">.scala</span></tt> files are compiled together to create
+that single definition.</p>
+<p><tt class="docutils literal"><span class="pre">.scala</span></tt> files are also required to define multiple projects in a
+single build. More on that is coming up in <a class="reference internal" href="Multi-Project.html"><em>Multi-Project Builds</em></a>.</p>
+<p>(A disadvantage of using <tt class="docutils literal"><span class="pre">.sbt</span></tt> files in a <a class="reference internal" href="Multi-Project.html"><em>multi-project build</em></a> is that they'll be spread around
+in different directories; for that reason, some people prefer to put
+settings in their <tt class="docutils literal"><span class="pre">.scala</span></tt> files if they have sub-projects. This will
+be clearer after you see how <a class="reference internal" href="Multi-Project.html"><em>multi-project builds</em></a> work.)</p>
+</div>
+<div class="section" id="the-build-definition-project-in-interactive-mode">
+<h2>The build definition project in interactive mode<a class="headerlink" href="#the-build-definition-project-in-interactive-mode" title="Permalink to this headline">¶</a></h2>
+<p>You can switch the sbt interactive prompt to have the build definition
+project in <tt class="docutils literal"><span class="pre">project/</span></tt> as the current project. To do so, type
+<tt class="docutils literal"><span class="pre">reload</span> <span class="pre">plugins</span></tt>.</p>
+<div class="highlight-text"><div class="highlight"><pre>&gt; reload plugins
+[info] Set current project to default-a0e8e4 (in build file:/home/hp/checkout/hello/project/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/project/Build.scala)
+&gt; reload return
+[info] Loading project definition from /home/hp/checkout/hello/project
+[info] Set current project to hello (in build file:/home/hp/checkout/hello/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
+&gt;
+</pre></div>
+</div>
+<p>As shown above, you use <tt class="docutils literal"><span class="pre">reload</span> <span class="pre">return</span></tt> to leave the build definition
+project and return to your regular project.</p>
+</div>
+<div class="section" id="reminder-it-s-all-immutable">
+<h2>Reminder: it's all immutable<a class="headerlink" href="#reminder-it-s-all-immutable" title="Permalink to this headline">¶</a></h2>
+<p>It would be wrong to think that the settings in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> are added
+to the <tt class="docutils literal"><span class="pre">settings</span></tt> fields in <tt class="docutils literal"><span class="pre">Build</span></tt> and <tt class="docutils literal"><span class="pre">Project</span></tt> objects.
+Instead, the settings list from <tt class="docutils literal"><span class="pre">Build</span></tt> and <tt class="docutils literal"><span class="pre">Project</span></tt>, and the
+settings from <tt class="docutils literal"><span class="pre">build.sbt</span></tt>, are concatenated into another immutable
+list which is then used by sbt. The <tt class="docutils literal"><span class="pre">Build</span></tt> and <tt class="docutils literal"><span class="pre">Project</span></tt> objects
+are &quot;immutable configuration&quot; forming only part of the complete build
+definition.</p>
+<p>In fact, there are other sources of settings as well. They are appended
+in this order:</p>
+<ul class="simple">
+<li>Settings from <tt class="docutils literal"><span class="pre">Build.settings</span></tt> and <tt class="docutils literal"><span class="pre">Project.settings</span></tt> in your
+<tt class="docutils literal"><span class="pre">.scala</span></tt> files.</li>
+<li>Your user-global settings; for example in <tt class="docutils literal"><span class="pre">~/.sbt/build.sbt</span></tt> you
+can define settings affecting <em>all</em> your projects.</li>
+<li>Settings injected by plugins, see <a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a> coming up next.</li>
+<li>Settings from <tt class="docutils literal"><span class="pre">.sbt</span></tt> files in the project.</li>
+<li>Build definition projects (i.e. projects inside <tt class="docutils literal"><span class="pre">project</span></tt>) have
+settings from global plugins (<tt class="docutils literal"><span class="pre">~/.sbt/plugins</span></tt>) added. <a class="reference internal" href="Using-Plugins.html"><em>Using plugins</em></a> explains this more.</li>
+</ul>
+<p>Later settings override earlier ones. The entire list of settings forms
+the build definition.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Move on to <a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">.scala</span></tt> Build Definition</a><ul>
+<li><a class="reference internal" href="#sbt-is-recursive">sbt is recursive</a></li>
+<li><a class="reference internal" href="#scala-source-files-in-the-build-definition-project"><tt class="docutils literal"><span class="pre">.scala</span></tt> source files in the build definition project</a></li>
+<li><a class="reference internal" href="#relating-build-sbt-to-build-scala">Relating <tt class="docutils literal"><span class="pre">build.sbt</span></tt> to <tt class="docutils literal"><span class="pre">Build.scala</span></tt></a></li>
+<li><a class="reference internal" href="#when-to-use-scala-files">When to use <tt class="docutils literal"><span class="pre">.scala</span></tt> files</a></li>
+<li><a class="reference internal" href="#the-build-definition-project-in-interactive-mode">The build definition project in interactive mode</a></li>
+<li><a class="reference internal" href="#reminder-it-s-all-immutable">Reminder: it's all immutable</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

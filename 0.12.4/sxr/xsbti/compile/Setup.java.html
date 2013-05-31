@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/compile/Setup.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbti.compile;
+
+<span class="keyword">import</span> java.io.File;
+<span class="keyword">import</span> xsbti.Maybe;
+
+<span class="comment">/** Configures incremental recompilation. */</span>
+public interface <a title="object xsbti.compile.Setup" id="153439">Setup</a>&lt;<a title="Nothing" id="10238">Analysis</a>&gt;
+<span class="delimiter">{</span>
+	<span class="comment">/** Provides the Analysis for the given classpath entry.*/</span>
+	Maybe&lt;<a href="#10238" title="Analysis">Analysis</a>&gt; <a title="(file: java.io.File)xsbti.Maybe[Analysis]" id="153440">analysisMap</a><span class="delimiter">(</span>File <a title="java.io.File" id="153463">file</a><span class="delimiter">)</span>;
+
+	<span class="comment">/** Provides a function to determine if classpath entry `file` contains a given class.
+	* The returned function should generally cache information about `file`, such as the list of entries in a jar.
+	*/</span>
+	<a href="DefinesClass.java.html#10190" title="xsbti.compile.DefinesClass">DefinesClass</a> <a title="(file: java.io.File)xsbti.compile.DefinesClass" id="153441">definesClass</a><span class="delimiter">(</span>File <a title="java.io.File" id="153468">file</a><span class="delimiter">)</span>;
+
+	<span class="comment">/** If true, no sources are actually compiled and the Analysis from the previous compilation is returned.*/</span>
+	boolean <a title="()Boolean" id="153442">skip</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+
+	<span class="comment">/** The file used to cache information across compilations.
+	* This file can be removed to force a full recompilation. 
+	* The file should be unique and not shared between compilations. */</span>
+	File <a title="()java.io.File" id="153443">cacheFile</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+
+	<a href="GlobalsCache.java.html#10201" title="xsbti.compile.GlobalsCache">GlobalsCache</a> <a title="()xsbti.compile.GlobalsCache" id="153444">cache</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

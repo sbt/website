@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Extending sbt &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Contents" href="../index.html" />
+    <link rel="next" title="Build Loaders" href="Build-Loaders.html" />
+    <link rel="prev" title="Opportunites" href="../Community/Opportunities.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Extending sbt</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Build-Loaders.html">Build Loaders</a> <span class="divider">»</span>
+              </li>
+              <li>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="../Community/Opportunities.html">Opportunites</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="extending-sbt">
+<h1>Extending sbt<a class="headerlink" href="#extending-sbt" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation has pages on how to extend sbt with plugins and commands.</p>
+<p>To understand the pages in here, you'll need the
+<a class="reference internal" href="../Getting-Started/Welcome.html"><em>Getting Started Guide</em></a> as a foundation.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Build-Loaders.html">Build Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build-Loaders.html#custom-resolver">Custom Resolver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-Loaders.html#custom-builder">Custom Builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-Loaders.html#custom-transformer">Custom Transformer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-Loaders.html#the-builddependencies-type">The BuildDependencies type</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Build-State.html">State and actions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#command-related-data">Command-related data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#project-related-data">Project-related data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#project-data">Project data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#classpaths">Classpaths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#running-tasks">Running tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build-State.html#using-state-in-a-task">Using State in a task</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Command-Line-Applications.html#hello-world-example">Hello World Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Commands.html">Commands</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Commands.html#what-is-a-command">What is a &quot;command&quot;?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Commands.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Commands.html#defining-a-command">Defining a Command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Commands.html#full-example">Full Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Input-Tasks.html">Input Tasks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Input-Tasks.html#input-keys">Input Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Input-Tasks.html#basic-input-task-definition">Basic Input Task Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Input-Tasks.html#input-task-using-parsers">Input Task using Parsers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#using-a-binary-sbt-plugin">Using a binary sbt plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#by-description">By Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#by-example">By Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#creating-a-plugin">Creating a plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Plugins-Best-Practices.html">Plugins Best Practices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Plugins-Best-Practices.html#avoid-overriding-settings">Avoid overriding <tt class="docutils literal"><span class="pre">settings</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins-Best-Practices.html#reuse-existing-keys">Reuse existing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins-Best-Practices.html#avoid-namespace-clashes">Avoid namespace clashes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins-Best-Practices.html#configuration-advice">Configuration Advice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Plugins-Best-Practices.html#mucking-with-global-build-state">Mucking with Global build state</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Settings-Core.html">Settings Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Settings-Core.html#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Settings-Core.html#sbt-settings-discussion">sbt Settings Discussion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Extending sbt</a><ul>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

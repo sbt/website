@@ -1,0 +1,429 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command Line Reference &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Compiler Plugin Support" href="Compiler-Plugins.html" />
+    <link rel="prev" title="Classpaths, sources, and resources" href="Classpaths.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Command Line Reference</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Compiler-Plugins.html">Compiler Plugin Support</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Classpaths.html">Classpaths, sources, and resources</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="command-line-reference">
+<h1>Command Line Reference<a class="headerlink" href="#command-line-reference" title="Permalink to this headline">¶</a></h1>
+<p>This page is a relatively complete list of command line options,
+commands, and tasks you can use from the sbt interactive prompt or in
+batch mode. See <a class="reference internal" href="../Getting-Started/Running.html"><em>Running</em></a> in the Getting
+Started Guide for an intro to the basics, while this page has a lot more
+detail.</p>
+<div class="section" id="notes-on-the-command-line">
+<h2>Notes on the command line<a class="headerlink" href="#notes-on-the-command-line" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>There is a technical distinction in sbt between <em>tasks</em>, which are
+&quot;inside&quot; the build definition, and <em>commands</em>, which manipulate the
+build definition itself. If you're interested in creating a command,
+see <a class="reference internal" href="../Extending/Commands.html"><em>Commands</em></a>. This specific sbt meaning of &quot;command&quot; means
+there's no good general term for &quot;thing you can type at the sbt
+prompt&quot;, which may be a setting, task, or command.</li>
+<li>Some tasks produce useful values. The <tt class="docutils literal"><span class="pre">toString</span></tt> representation of
+these values can be shown using <tt class="docutils literal"><span class="pre">show</span> <span class="pre">&lt;task&gt;</span></tt> to run the task
+instead of just <tt class="docutils literal"><span class="pre">&lt;task&gt;</span></tt>.</li>
+<li>In a multi-project build, execution dependencies and the
+<tt class="docutils literal"><span class="pre">aggregate</span></tt> setting control which tasks from which projects are
+executed. See <a class="reference internal" href="../Getting-Started/Multi-Project.html"><em>multi-project builds</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="project-level-tasks">
+<h2>Project-level tasks<a class="headerlink" href="#project-level-tasks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">clean</span></tt> Deletes all generated files (the <tt class="docutils literal"><span class="pre">target</span></tt> directory).</li>
+<li><tt class="docutils literal"><span class="pre">publish-local</span></tt> Publishes artifacts (such as jars) to the local Ivy
+repository as described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
+<li><tt class="docutils literal"><span class="pre">publish</span></tt> Publishes artifacts (such as jars) to the repository
+defined by the <tt class="docutils literal"><span class="pre">publish-to</span></tt> setting, described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
+<li><tt class="docutils literal"><span class="pre">update</span></tt> Resolves and retrieves external dependencies as described
+in <a class="reference internal" href="../Getting-Started/Library-Dependencies.html"><em>library dependencies</em></a>.</li>
+</ul>
+</div>
+<div class="section" id="configuration-level-tasks">
+<h2>Configuration-level tasks<a class="headerlink" href="#configuration-level-tasks" title="Permalink to this headline">¶</a></h2>
+<p>Configuration-level tasks are tasks associated with a configuration. For
+example, <tt class="docutils literal"><span class="pre">compile</span></tt>, which is equivalent to <tt class="docutils literal"><span class="pre">compile:compile</span></tt>,
+compiles the main source code (the <tt class="docutils literal"><span class="pre">compile</span></tt> configuration).
+<tt class="docutils literal"><span class="pre">test:compile</span></tt> compiles the test source code (test <tt class="docutils literal"><span class="pre">test</span></tt>
+configuration). Most tasks for the <tt class="docutils literal"><span class="pre">compile</span></tt> configuration have an
+equivalent in the <tt class="docutils literal"><span class="pre">test</span></tt> configuration that can be run using a
+<tt class="docutils literal"><span class="pre">test:</span></tt> prefix.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">compile</span></tt> Compiles the main sources (in the <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>
+directory). <tt class="docutils literal"><span class="pre">test:compile</span></tt> compiles test sources (in the
+<tt class="docutils literal"><span class="pre">src/test/scala/</span></tt> directory).</li>
+<li><tt class="docutils literal"><span class="pre">console</span></tt> Starts the Scala interpreter with a classpath including
+the compiled sources, all jars in the <tt class="docutils literal"><span class="pre">lib</span></tt> directory, and managed
+libraries. To return to sbt, type <tt class="docutils literal"><span class="pre">:quit</span></tt>, Ctrl+D (Unix), or Ctrl+Z
+(Windows). Similarly, <tt class="docutils literal"><span class="pre">test:console</span></tt> starts the interpreter with
+the test classes and classpath.</li>
+<li><tt class="docutils literal"><span class="pre">console-quick</span></tt> Starts the Scala interpreter with the project's
+compile-time dependencies on the classpath. <tt class="docutils literal"><span class="pre">test:console-quick</span></tt>
+uses the test dependencies. This task differs from <tt class="docutils literal"><span class="pre">console</span></tt> in
+that it does not force compilation of the current project's sources.</li>
+<li><tt class="docutils literal"><span class="pre">console-project</span></tt> Enters an interactive session with sbt and the
+build definition on the classpath. The build definition and related
+values are bound to variables and common packages and values are
+imported. See the <a class="reference internal" href="Console-Project.html"><em>console-project documentation</em></a> for more information.</li>
+<li><tt class="docutils literal"><span class="pre">doc</span></tt> Generates API documentation for Scala source files in
+<tt class="docutils literal"><span class="pre">src/main/scala</span></tt> using scaladoc. <tt class="docutils literal"><span class="pre">test:doc</span></tt> generates API
+documentation for source files in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">package</span></tt> Creates a jar file containing the files in
+<tt class="docutils literal"><span class="pre">src/main/resources</span></tt> and the classes compiled from
+<tt class="docutils literal"><span class="pre">src/main/scala</span></tt>. <tt class="docutils literal"><span class="pre">test:package</span></tt> creates a jar containing the
+files in <tt class="docutils literal"><span class="pre">src/test/resources</span></tt> and the class compiled from
+<tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">package-doc</span></tt> Creates a jar file containing API documentation
+generated from Scala source files in <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>.
+<tt class="docutils literal"><span class="pre">test:package-doc</span></tt> creates a jar containing API documentation for
+test sources files in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">package-src</span></tt>: Creates a jar file containing all main source files
+and resources. The packaged paths are relative to <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>
+and <tt class="docutils literal"><span class="pre">src/main/resources</span></tt>. Similarly, <tt class="docutils literal"><span class="pre">test:package-src</span></tt> operates
+on test source files and resources.</li>
+<li><tt class="docutils literal"><span class="pre">run</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the main class for the project in the same
+virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>. The main class is passed the
+<tt class="docutils literal"><span class="pre">argument</span></tt>s provided. Please see <a class="reference internal" href="Running-Project-Code.html"><em>Running Project Code</em></a> for
+details on the use of <tt class="docutils literal"><span class="pre">System.exit</span></tt> and multithreading (including
+GUIs) in code run by this action. <tt class="docutils literal"><span class="pre">test:run</span></tt> runs a main class in
+the test code.</li>
+<li><tt class="docutils literal"><span class="pre">run-main</span> <span class="pre">&lt;main-class&gt;</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the specified main class
+for the project in the same virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>. The main
+class is passed the <tt class="docutils literal"><span class="pre">argument</span></tt>s provided. Please see <a class="reference internal" href="Running-Project-Code.html"><em>Running Project Code</em></a>
+for details on the use of <tt class="docutils literal"><span class="pre">System.exit</span></tt> and
+multithreading (including GUIs) in code run by this action.
+<tt class="docutils literal"><span class="pre">test:run-main</span></tt> runs the specified main class in the test code.</li>
+<li><tt class="docutils literal"><span class="pre">test</span></tt> Runs all tests detected during test compilation. See
+<a class="reference internal" href="Testing.html"><em>Testing</em></a> for details.</li>
+<li><tt class="docutils literal"><span class="pre">test-only</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests provided as arguments. <tt class="docutils literal"><span class="pre">*</span></tt>
+(will be) interpreted as a wildcard in the test name. See <a class="reference internal" href="Testing.html"><em>Testing</em></a>
+for details.</li>
+<li><tt class="docutils literal"><span class="pre">test-quick</span> <span class="pre">&lt;test&gt;*</span></tt> Runs the tests specified as arguments (or all
+tests if no arguments are given) that:<ol class="arabic">
+<li>have not been run yet OR</li>
+<li>failed the last time they were run OR</li>
+<li>had any transitive dependencies recompiled since the last
+successful run <tt class="docutils literal"><span class="pre">*</span></tt> (will be) interpreted as a wildcard in the
+test name. See <a class="reference internal" href="Testing.html"><em>Testing</em></a> for details.</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="general-commands">
+<h2>General commands<a class="headerlink" href="#general-commands" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">exit</span></tt> or <tt class="docutils literal"><span class="pre">quit</span></tt> End the current interactive session or build.
+Additionally, <tt class="docutils literal"><span class="pre">Ctrl+D</span></tt> (Unix) or <tt class="docutils literal"><span class="pre">Ctrl+Z</span></tt> (Windows) will exit the
+interactive prompt.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt> Displays detailed help for the specified command.
+If the command does not exist, <tt class="docutils literal"><span class="pre">help</span></tt> lists detailed help for
+commands whose name or description match the argument, which is
+interpreted as a regular expression. If no command is provided,
+displays brief descriptions of the main commands. Related commands
+are <tt class="docutils literal"><span class="pre">tasks</span></tt> and <tt class="docutils literal"><span class="pre">settings</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">projects</span> <span class="pre">[add|remove</span> <span class="pre">&lt;URI&gt;]</span></tt> List all available projects if no
+arguments provided or adds/removes the build at the provided URI.
+(See <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on multi-project builds.)</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">project</span> <span class="pre">&lt;project-id&gt;</span></tt> Change the current project to the project
+with ID <tt class="docutils literal"><span class="pre">&lt;project-id&gt;</span></tt>. Further operations will be done in the
+context of the given project. (See <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details
+on multiple project builds.)</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">~</span> <span class="pre">&lt;command&gt;</span></tt> Executes the project specified action or method
+whenever source files change. See <a class="reference internal" href="Triggered-Execution.html"><em>Triggered Execution</em></a> for
+details.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">&lt;</span> <span class="pre">filename</span></tt> Executes the commands in the given file. Each command
+should be on its own line. Empty lines and lines beginning with '#'
+are ignored</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">+</span> <span class="pre">&lt;command&gt;</span></tt> Executes the project specified action or method for
+all versions of Scala defined in the <tt class="docutils literal"><span class="pre">cross-scala-versions</span></tt>
+setting.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">++</span> <span class="pre">&lt;version&gt;</span> <span class="pre">&lt;command&gt;</span></tt> Temporarily changes the version of Scala
+building the project and executes the provided command. <tt class="docutils literal"><span class="pre">&lt;command&gt;</span></tt>
+is optional. The specified version of Scala is used until the project
+is reloaded, settings are modified (such as by the <tt class="docutils literal"><span class="pre">set</span></tt> or
+<tt class="docutils literal"><span class="pre">session</span></tt> commands), or <tt class="docutils literal"><span class="pre">++</span></tt> is run again. <tt class="docutils literal"><span class="pre">&lt;version&gt;</span></tt> does not
+need to be listed in the build definition, but it must be available
+in a repository.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">;</span> <span class="pre">A</span> <span class="pre">;</span> <span class="pre">B</span></tt> Execute A and if it succeeds, run B. Note that the
+leading semicolon is required.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">eval</span> <span class="pre">&lt;Scala-expression&gt;</span></tt> Evaluates the given Scala expression and
+returns the result and inferred type. This can be used to set system
+properties, as a calculator, to fork processes, etc ... For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="n">eval</span> <span class="nc">System</span><span class="o">.</span><span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;demo&quot;</span><span class="o">,</span> <span class="s">&quot;true&quot;</span><span class="o">)</span>
+<span class="o">&gt;</span> <span class="n">eval</span> <span class="mi">1</span><span class="o">+</span><span class="mi">1</span>
+<span class="o">&gt;</span> <span class="n">eval</span> <span class="s">&quot;ls -l&quot;</span> <span class="o">!</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="commands-for-managing-the-build-definition">
+<h2>Commands for managing the build definition<a class="headerlink" href="#commands-for-managing-the-build-definition" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">reload</span> <span class="pre">[plugins|return]</span></tt> If no argument is specified, reloads the
+build, recompiling any build or plugin definitions as necessary.
+<tt class="docutils literal"><span class="pre">reload</span> <span class="pre">plugins</span></tt> changes the current project to the build
+definition project (in <tt class="docutils literal"><span class="pre">project/</span></tt>). This can be useful to directly
+manipulate the build definition. For example, running <tt class="docutils literal"><span class="pre">clean</span></tt> on
+the build definition project will force snapshots to be updated and
+the build definition to be recompiled. <tt class="docutils literal"><span class="pre">reload</span> <span class="pre">return</span></tt> changes back
+to the main project.</li>
+<li><tt class="docutils literal"><span class="pre">set</span> <span class="pre">&lt;setting-expression&gt;</span></tt> Evaluates and applies the given setting
+definition. The setting applies until sbt is restarted, the build is
+reloaded, or the setting is overridden by another <tt class="docutils literal"><span class="pre">set</span></tt> command or
+removed by the <tt class="docutils literal"><span class="pre">session</span></tt> command. See
+<a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> and
+<a class="reference internal" href="Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> for details.</li>
+<li><tt class="docutils literal"><span class="pre">session</span> <span class="pre">&lt;command&gt;</span></tt> Manages session settings defined by the <tt class="docutils literal"><span class="pre">set</span></tt>
+command. It can persist settings configured at the prompt. See
+<a class="reference internal" href="Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> for details.</li>
+<li><tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">&lt;setting-key&gt;</span></tt> Displays information about settings, such
+as the value, description, defining scope, dependencies, delegation
+chain, and related settings. See <a class="reference internal" href="Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> for details.</li>
+</ul>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>System properties can be provided either as JVM options, or as SBT
+arguments, in both cases as <tt class="docutils literal"><span class="pre">-Dprop=value</span></tt>. The following properties
+influence SBT execution. Also see <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>.</p>
+<table>
+  <thead>
+    <tr>
+      <td><p><em>Property</em></p>
+</td>
+      <td><p><em>Values</em></p>
+</td>
+      <td><p><em>Default</em></p>
+</td>
+      <td><p><em>Meaning</em></p>
+</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.log.noformat</span></tt></p>
+</td>
+      <td><p>Boolean</p>
+</td>
+      <td><p>false</p>
+</td>
+      <td><p>If true, disable ANSI color codes. Useful on build servers or terminals
+that don't support color.</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.global.base</span></tt></p>
+</td>
+      <td><p>Directory</p>
+</td>
+      <td><p><tt class="docutils literal"><span class="pre">~/.sbt</span></tt></p>
+</td>
+      <td><p>The directory containing global settings and plugins</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.ivy.home</span></tt></p>
+</td>
+      <td><p>Directory</p>
+</td>
+      <td><p><tt class="docutils literal"><span class="pre">~/.ivy2</span></tt></p>
+</td>
+      <td><p>The directory containing the local Ivy repository and artifact cache</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.boot.directory</span></tt></p>
+</td>
+      <td><p>Directory</p>
+</td>
+      <td><p><tt class="docutils literal"><span class="pre">~/.sbt/boot</span></tt></p>
+</td>
+      <td><p>Path to shared boot directory</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.main.class</span></tt></p>
+</td>
+      <td><p>String</p>
+</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">xsbt.inc.debug</span></tt></p>
+</td>
+      <td><p>Boolean</p>
+</td>
+      <td><p>false</p>
+</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.version</span></tt></p>
+</td>
+      <td><p>Version</p>
+</td>
+      <td><p>0.11.3</p>
+</td>
+      <td><p>sbt version to use, usually taken from project/build.properties</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.boot.properties</span></tt></p>
+</td>
+      <td><p>File</p>
+</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt></p>
+</td>
+      <td><p>Boolean</p>
+</td>
+      <td><p>false</p>
+</td>
+      <td><p>If true, repositories configured in a build definition are ignored and
+the repositories configured for the launcher are used instead. See
+<tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt> and the <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a> documentation.</p>
+</td>
+    </tr>
+    <tr>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt></p>
+</td>
+      <td><p>File</p>
+</td>
+      <td><p>~/.sbt/repositories</p>
+</td>
+      <td><p>A file containing the repositories to use for the launcher. The format
+is the same as a <tt class="docutils literal"><span class="pre">[repositories]</span></tt> section for a <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>
+configuration file. This setting is typically used in conjuction with
+setting <tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt> to true (see previous row and the
+<a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a> documentation).</p>
+</td>
+    </tr></tbody></div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Command Line Reference</a><ul>
+<li><a class="reference internal" href="#notes-on-the-command-line">Notes on the command line</a></li>
+<li><a class="reference internal" href="#project-level-tasks">Project-level tasks</a></li>
+<li><a class="reference internal" href="#configuration-level-tasks">Configuration-level tasks</a></li>
+<li><a class="reference internal" href="#general-commands">General commands</a></li>
+<li><a class="reference internal" href="#commands-for-managing-the-build-definition">Commands for managing the build definition</a></li>
+<li><a class="reference internal" href="#command-line-options">Command Line Options</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

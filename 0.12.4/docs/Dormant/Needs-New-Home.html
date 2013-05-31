@@ -1,0 +1,398 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Snippets of docs that need to move to another page &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Dormant Pages" href="Dormant.html" />
+    <link rel="next" title="Introduction" href="Settings.html" />
+    <link rel="prev" title="Naming the Scala build file" href="Introduction-to-Full-Configurations.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Snippets of docs that need to move to another page</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Settings.html">Introduction</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="Dormant.html">Dormant Pages</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Introduction-to-Full-Configurations.html">Naming the Scala build file</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <p><em>Wiki Maintenance Note:</em> This page is a dumping ground for little bits
+of text, examples, and information that needs to find a new home
+somewhere else on the wiki.</p>
+<div class="section" id="snippets-of-docs-that-need-to-move-to-another-page">
+<h1>Snippets of docs that need to move to another page<a class="headerlink" href="#snippets-of-docs-that-need-to-move-to-another-page" title="Permalink to this headline">¶</a></h1>
+<p>Temporarily change the logging level and configure how stack traces are
+displayed by modifying the <tt class="docutils literal"><span class="pre">log-level</span></tt> or <tt class="docutils literal"><span class="pre">trace-level</span></tt> settings:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>logLevel :<span class="o">=</span> Level.Warn
+</pre></div>
+</div>
+<p>Valid <tt class="docutils literal"><span class="pre">Level</span></tt> values are <tt class="docutils literal"><span class="pre">Debug,</span> <span class="pre">Info,</span> <span class="pre">Warn,</span> <span class="pre">Error</span></tt>.</p>
+<p>You can run an action for multiple versions of Scala by prefixing the
+action with <tt class="docutils literal"><span class="pre">+</span></tt>. See [[Cross Build]] for details. You can temporarily
+switch to another version of Scala using <tt class="docutils literal"><span class="pre">++</span> <span class="pre">&lt;version&gt;</span></tt>. This version
+does not have to be listed in your build definition, but it does have to
+be available in a repository. You can also include the initial command
+to run after switching to that version. For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ++2.9.1 console-quick
+<span class="go">...</span>
+<span class="go">Welcome to Scala version 2.9.1.final (Java HotSpot(TM) Server VM, Java 1.6.0).</span>
+<span class="go">...</span>
+<span class="go">scala&gt;</span>
+<span class="go">...</span>
+<span class="gp">&gt;</span> ++2.8.1 console-quick
+<span class="go">...</span>
+<span class="go">Welcome to Scala version 2.8.1 (Java HotSpot(TM) Server VM, Java 1.6.0).</span>
+<span class="go">...</span>
+<span class="go">scala&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="manual-dependency-management">
+<h1>Manual Dependency Management<a class="headerlink" href="#manual-dependency-management" title="Permalink to this headline">¶</a></h1>
+<p>Manually managing dependencies involves copying any jars that you want
+to use to the <tt class="docutils literal"><span class="pre">lib</span></tt> directory. sbt will put these jars on the
+classpath during compilation, testing, running, and when using the
+interpreter. You are responsible for adding, removing, updating, and
+otherwise managing the jars in this directory. No modifications to your
+project definition are required to use this method unless you would like
+to change the location of the directory you store the jars in.</p>
+<p>To change the directory jars are stored in, change the
+<tt class="docutils literal"><span class="pre">unmanaged-base</span></tt> setting in your project definition. For example, to
+use <tt class="docutils literal"><span class="pre">custom_lib/</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>If you want more control and flexibility, override the
+<tt class="docutils literal"><span class="pre">unmanaged-jars</span></tt> task, which ultimately provides the manual
+dependencies to sbt. The default implementation is roughly:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">base</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>If you want to add jars from multiple directories in addition to the
+default directory, you can do:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;++=</span> <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span>
+    <span class="k">val</span> <span class="n">baseDirectories</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libA&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;b&quot;</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libC&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">customJars</span> <span class="k">=</span> <span class="o">(</span><span class="n">baseDirectories</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;d&quot;</span> <span class="o">/</span> <span class="s">&quot;my.jar&quot;</span><span class="o">)</span>
+    <span class="n">customJars</span><span class="o">.</span><span class="n">classpath</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>See [[Paths]] for more information on building up paths.</p>
+<div class="section" id="resolver-withdefaultresolvers-method">
+<h2>Resolver.withDefaultResolvers method<a class="headerlink" href="#resolver-withdefaultresolvers-method" title="Permalink to this headline">¶</a></h2>
+<p>To use the local and Maven Central repositories, but not the Scala Tools
+releases repository:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">&lt;&lt;=</span> <span class="n">resolvers</span> <span class="n">map</span> <span class="o">{</span> <span class="n">rs</span> <span class="k">=&gt;</span>
+  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">rs</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">scalaTools</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="explicit-url">
+<h2>Explicit URL<a class="headerlink" href="#explicit-url" title="Permalink to this headline">¶</a></h2>
+<p>If your project requires a dependency that is not present in a
+repository, a direct URL to its jar can be specified with the <tt class="docutils literal"><span class="pre">from</span></tt>
+method as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;slinky&quot;</span> <span class="o">%</span> <span class="s">&quot;slinky&quot;</span> <span class="o">%</span> <span class="s">&quot;2.1&quot;</span> <span class="n">from</span> <span class="s">&quot;http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar&quot;</span>
+</pre></div>
+</div>
+<p>The URL is only used as a fallback if the dependency cannot be found
+through the configured repositories. Also, when you publish a project, a
+pom or ivy.xml is created listing your dependencies; the explicit URL is
+not included in this published metadata.</p>
+</div>
+<div class="section" id="disable-transitivity">
+<h2>Disable Transitivity<a class="headerlink" href="#disable-transitivity" title="Permalink to this headline">¶</a></h2>
+<p>By default, sbt fetches all dependencies, transitively. (That is, it
+downloads the dependencies of the dependencies you list.)</p>
+<p>In some instances, you may find that the dependencies listed for a
+project aren't necessary for it to build. Avoid fetching artifact
+dependencies with <tt class="docutils literal"><span class="pre">intransitive()</span></tt>, as in this example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.felix&quot;</span> <span class="o">%</span> <span class="s">&quot;org.apache.felix.framework&quot;</span> <span class="o">%</span> <span class="s">&quot;1.8.0&quot;</span> <span class="n">intransitive</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="classifiers">
+<h2>Classifiers<a class="headerlink" href="#classifiers" title="Permalink to this headline">¶</a></h2>
+<p>You can specify the classifer for a dependency using the <tt class="docutils literal"><span class="pre">classifier</span></tt>
+method. For example, to get the jdk15 version of TestNG:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.testng&quot;</span> <span class="o">%</span> <span class="s">&quot;testng&quot;</span> <span class="o">%</span> <span class="s">&quot;5.7&quot;</span> <span class="n">classifier</span> <span class="s">&quot;jdk15&quot;</span>
+</pre></div>
+</div>
+<p>To obtain particular classifiers for all dependencies transitively, run
+the <tt class="docutils literal"><span class="pre">update-classifiers</span></tt> task. By default, this resolves all artifacts
+with the <tt class="docutils literal"><span class="pre">sources</span></tt> or <tt class="docutils literal"><span class="pre">javadoc</span></tt> classifer. Select the classifiers to
+obtain by configuring the <tt class="docutils literal"><span class="pre">transitive-classifiers</span></tt> setting. For
+example, to only retrieve sources:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">transitiveClassifiers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sources&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extra-attributes">
+<h2>Extra Attributes<a class="headerlink" href="#extra-attributes" title="Permalink to this headline">¶</a></h2>
+<p>[Extra attributes] can be specified by passing key/value pairs to the
+<tt class="docutils literal"><span class="pre">extra</span></tt> method.</p>
+<p>To select dependencies by extra attributes:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org&quot;</span> <span class="o">%</span> <span class="s">&quot;name&quot;</span> <span class="o">%</span> <span class="s">&quot;rev&quot;</span> <span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To define extra attributes on the current project:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">&lt;&lt;=</span> <span class="n">projectID</span> <span class="o">{</span> <span class="n">id</span> <span class="k">=&gt;</span>
+    <span class="n">id</span> <span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">,</span> <span class="s">&quot;component&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;compiler-interface&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inline-ivy-xml">
+<h2>Inline Ivy XML<a class="headerlink" href="#inline-ivy-xml" title="Permalink to this headline">¶</a></h2>
+<p>sbt additionally supports directly specifying the configurations or
+dependencies sections of an Ivy configuration file inline. You can mix
+this with inline Scala dependency and repository declarations.</p>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">ivyXML</span> <span class="o">:=</span>
+  <span class="o">&lt;</span><span class="n">dependencies</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">dependency</span> <span class="n">org</span><span class="o">=</span><span class="s">&quot;javax.mail&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mail&quot;</span> <span class="n">rev</span><span class="o">=</span><span class="s">&quot;1.4.2&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">exclude</span> <span class="n">module</span><span class="o">=</span><span class="s">&quot;activation&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">dependencies</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ivy-home-directory">
+<h2>Ivy Home Directory<a class="headerlink" href="#ivy-home-directory" title="Permalink to this headline">¶</a></h2>
+<p>By default, sbt uses the standard Ivy home directory location
+<tt class="docutils literal"><span class="pre">${user.home}/.ivy2/</span></tt>. This can be configured machine-wide, for use by
+both the sbt launcher and by projects, by setting the system property
+<tt class="docutils literal"><span class="pre">sbt.ivy.home</span></tt> in the sbt startup script (described in
+[[Setup|Getting Started Setup]]).</p>
+<p>For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dsbt.ivy.home=/tmp/.ivy2/ ...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checksums">
+<h2>Checksums<a class="headerlink" href="#checksums" title="Permalink to this headline">¶</a></h2>
+<p>sbt ([through Ivy]) verifies the checksums of downloaded files by
+default. It also publishes checksums of artifacts by default. The
+checksums to use are specified by the <em>checksums</em> setting.</p>
+<p>To disable checksum checking during update:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="n">in</span> <span class="n">update</span> <span class="o">:=</span> <span class="nc">Nil</span>
+</pre></div>
+</div>
+<p>To disable checksum creation during artifact publishing:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="n">in</span> <span class="n">publishLocal</span> <span class="o">:=</span> <span class="nc">Nil</span>
+
+<span class="n">checksums</span> <span class="n">in</span> <span class="n">publish</span> <span class="o">:=</span> <span class="nc">Nil</span>
+</pre></div>
+</div>
+<p>The default value is:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sha1&quot;</span><span class="o">,</span> <span class="s">&quot;md5&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="publishing">
+<h2>Publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h2>
+<p>Finally, see [[Publishing]] for how to publish your project.</p>
+<div class="section" id="maven-ivy">
+<h3>Maven/Ivy<a class="headerlink" href="#maven-ivy" title="Permalink to this headline">¶</a></h3>
+<p>For this method, create the configuration files as you would for Maven
+(<tt class="docutils literal"><span class="pre">pom.xml</span></tt>) or Ivy (<tt class="docutils literal"><span class="pre">ivy.xml</span></tt> and optionally <tt class="docutils literal"><span class="pre">ivysettings.xml</span></tt>).
+External configuration is selected by using one of the following
+expressions.</p>
+</div>
+</div>
+<div class="section" id="ivy-settings-resolver-configuration">
+<h2>Ivy settings (resolver configuration)<a class="headerlink" href="#ivy-settings-resolver-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-settings-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ivy-file-dependency-configuration">
+<h2>Ivy file (dependency configuration)<a class="headerlink" href="#ivy-file-dependency-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvyFile</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvyFile</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Because Ivy files specify their own configurations, sbt needs to know
+which configurations to use for the compile, runtime, and test
+classpaths. For example, to specify that the Compile classpath should
+use the 'default' configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;default&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="maven-pom-dependencies-only">
+<h2>Maven pom (dependencies only)<a class="headerlink" href="#maven-pom-dependencies-only" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalPom</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalPom</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="full-ivy-example">
+<h2>Full Ivy Example<a class="headerlink" href="#full-ivy-example" title="Permalink to this headline">¶</a></h2>
+<p>For example, a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> using external Ivy files might look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">()</span>
+
+<span class="n">externalIvyFile</span><span class="o">(</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;ivyA.xml&quot;</span><span class="o">}</span> <span class="o">)</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="nc">Compile</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="nc">Test</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Runtime</span> <span class="o">:=</span> <span class="nc">Runtime</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="known-limitations">
+<h2>Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h2>
+<p>Maven support is dependent on Ivy's support for Maven POMs. Known issues
+with this support:</p>
+<ul class="simple">
+<li>Specifying <tt class="docutils literal"><span class="pre">relativePath</span></tt> in the <tt class="docutils literal"><span class="pre">parent</span></tt> section of a POM will
+produce an error.</li>
+<li>Ivy ignores repositories specified in the POM. A workaround is to
+specify repositories inline or in an Ivy <tt class="docutils literal"><span class="pre">ivysettings.xml</span></tt> file.</li>
+</ul>
+</div>
+<div class="section" id="configuration-dependencies">
+<h2>Configuration dependencies<a class="headerlink" href="#configuration-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The GSG on multi-project builds doesn't describe delegation among
+configurations. The FAQ entry about porting multi-project build from 0.7
+mentions &quot;configuration dependencies&quot; but there's nothing really to link
+to that explains them.</p>
+</div>
+<div class="section" id="these-should-be-faqs-maybe-just-pointing-to-topic-pages">
+<h2>These should be FAQs (maybe just pointing to topic pages)<a class="headerlink" href="#these-should-be-faqs-maybe-just-pointing-to-topic-pages" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Run your program in its own VM</li>
+<li>Run your program with a particular version of Scala</li>
+<li>Run your webapp within an embedded jetty server</li>
+<li>Create a WAR that can be deployed to an external app server</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Snippets of docs that need to move to another page</a></li>
+<li><a class="reference internal" href="#manual-dependency-management">Manual Dependency Management</a><ul>
+<li><a class="reference internal" href="#resolver-withdefaultresolvers-method">Resolver.withDefaultResolvers method</a></li>
+<li><a class="reference internal" href="#explicit-url">Explicit URL</a></li>
+<li><a class="reference internal" href="#disable-transitivity">Disable Transitivity</a></li>
+<li><a class="reference internal" href="#classifiers">Classifiers</a></li>
+<li><a class="reference internal" href="#extra-attributes">Extra Attributes</a></li>
+<li><a class="reference internal" href="#inline-ivy-xml">Inline Ivy XML</a></li>
+<li><a class="reference internal" href="#ivy-home-directory">Ivy Home Directory</a></li>
+<li><a class="reference internal" href="#checksums">Checksums</a></li>
+<li><a class="reference internal" href="#publishing">Publishing</a><ul>
+<li><a class="reference internal" href="#maven-ivy">Maven/Ivy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ivy-settings-resolver-configuration">Ivy settings (resolver configuration)</a></li>
+<li><a class="reference internal" href="#ivy-file-dependency-configuration">Ivy file (dependency configuration)</a></li>
+<li><a class="reference internal" href="#maven-pom-dependencies-only">Maven pom (dependencies only)</a></li>
+<li><a class="reference internal" href="#full-ivy-example">Full Ivy Example</a></li>
+<li><a class="reference internal" href="#known-limitations">Known limitations</a></li>
+<li><a class="reference internal" href="#configuration-dependencies">Configuration dependencies</a></li>
+<li><a class="reference internal" href="#these-should-be-faqs-maybe-just-pointing-to-topic-pages">These should be FAQs (maybe just pointing to topic pages)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

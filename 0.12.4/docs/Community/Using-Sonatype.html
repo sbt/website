@@ -1,0 +1,353 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Deploying to Sonatype &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Community" href="index.html" />
+    <link rel="next" title="Nightly Builds" href="Nightly-Builds.html" />
+    <link rel="prev" title="Community Plugins" href="Community-Plugins.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Deploying to Sonatype</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Nightly-Builds.html">Nightly Builds</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Community</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Community-Plugins.html">Community Plugins</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="deploying-to-sonatype">
+<h1>Deploying to Sonatype<a class="headerlink" href="#deploying-to-sonatype" title="Permalink to this headline">¶</a></h1>
+<p>Deploying to sonatype is easy! Just follow these simple steps:</p>
+<div class="section" id="first-pgp-signatures">
+<h2>First - PGP Signatures<a class="headerlink" href="#first-pgp-signatures" title="Permalink to this headline">¶</a></h2>
+<p>You'll need to PGP sign your artifacts for the Sonatype repository.
+Don't worry, there's a <a class="reference external" href="http://scala-sbt.org/sbt-pgp">plugin for
+that</a>. Follow the instructions
+for the plugin and you'll have PGP signed artifacts in no time.</p>
+<p><em>Note: The plugin is a jvm-only solution to generate PGP keys and sign
+artifacts. It can work with the GPG command line tool, but the command
+line is not needed.</em></p>
+</div>
+<div class="section" id="second-maven-publishing-settings">
+<h2>Second - Maven Publishing Settings<a class="headerlink" href="#second-maven-publishing-settings" title="Permalink to this headline">¶</a></h2>
+<p>To publish to a maven repository, you'll need to configure a few
+settings so that the correct metadata is generated.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishMavenStyle</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>is used to ensure POMs are generated and pushed. Next, you have to set
+up the repositories you wish to push too. Luckily, Sonatype's OSSRH uses
+the same URLs for everyone:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="n">version</span> <span class="o">{</span> <span class="o">(</span><span class="n">v</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=&gt;</span>
+  <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span>  <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Another good idea is to not publish your test artifacts (this is the default):</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishArtifact</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="third-pom-metadata">
+<h2>Third - POM Metadata<a class="headerlink" href="#third-pom-metadata" title="Permalink to this headline">¶</a></h2>
+<p>Now, we want to control what's available in the <tt class="docutils literal"><span class="pre">pom.xml</span></tt> file. This
+file describes our project in the maven repository and is used by
+indexing services for search and discover. This means it's important
+that <tt class="docutils literal"><span class="pre">pom.xml</span></tt> should have all information we wish to advertise as
+well as required info!</p>
+<p>First, let's make sure no repositories show up in the POM file. To
+publish on maven-central, all <em>required</em> artifacts must also be hosted
+on maven central. However, sometimes we have optional dependencies for
+special features. If that's the case, let's remove the repositories for
+optional dependencies in our artifact:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">pomIncludeRepository</span> <span class="o">:=</span> <span class="o">{</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">false</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>Next, the POM metadata that isn't generated by sbt must be added. This
+is done through the <tt class="docutils literal"><span class="pre">pomExtra</span></tt> configuration option:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">pomExtra</span> <span class="o">:=</span> <span class="o">(</span>
+  <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">jsuereth</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="n">arm</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">licenses</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">license</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="nc">BSD</span><span class="o">-</span><span class="n">style</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">www</span><span class="o">.</span><span class="n">opensource</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">bsd</span><span class="o">-</span><span class="n">license</span><span class="o">.</span><span class="n">php</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">distribution</span><span class="o">&gt;</span><span class="n">repo</span><span class="o">&lt;/</span><span class="n">distribution</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">license</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">licenses</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">scm</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="k">:</span><span class="kt">jsuereth/scala-arm.git&lt;/url&gt;</span>
+    <span class="o">&lt;</span><span class="n">connection</span><span class="o">&gt;</span><span class="n">scm</span><span class="k">:</span><span class="kt">git:git@github.com:jsuereth/scala-arm.git&lt;/connection&gt;</span>
+  <span class="o">&lt;/</span><span class="n">scm</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">developers</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">developer</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">id</span><span class="o">&gt;</span><span class="n">jsuereth</span><span class="o">&lt;/</span><span class="n">id</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="nc">Josh</span> <span class="nc">Suereth</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">jsuereth</span><span class="o">.</span><span class="n">com</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">developer</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">developers</span><span class="o">&gt;)</span>
+</pre></div>
+</div>
+<p>Specifically, the <tt class="docutils literal"><span class="pre">url</span></tt>, <tt class="docutils literal"><span class="pre">license</span></tt>, <tt class="docutils literal"><span class="pre">scm.url</span></tt>, <tt class="docutils literal"><span class="pre">scm.connection</span></tt>
+and <tt class="docutils literal"><span class="pre">developer</span></tt> sections are required. The above is an example from
+the <a class="reference external" href="http://jsuereth.com/scala-arm">scala-arm</a> project.</p>
+<p><em>Note</em> that sbt will automatically inject <tt class="docutils literal"><span class="pre">licenses</span></tt> and <tt class="docutils literal"><span class="pre">url</span></tt> nodes
+if they are already present in your build file. Thus an alternative to
+the above <tt class="docutils literal"><span class="pre">pomExtra</span></tt> is to include the following entries:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">licenses</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;BSD-style&quot;</span> <span class="o">-&gt;</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://www.opensource.org/licenses/bsd-license.php&quot;</span><span class="o">))</span>
+
+<span class="n">homepage</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://jsuereth.com/scala-arm&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>This might be advantageous if those keys are used also by other plugins
+(e.g. <tt class="docutils literal"><span class="pre">ls</span></tt>). You <strong>cannot use both</strong> the sbt <tt class="docutils literal"><span class="pre">licenses</span></tt> key and the
+<tt class="docutils literal"><span class="pre">licenses</span></tt> section in <tt class="docutils literal"><span class="pre">pomExtra</span></tt> at the same time, as this will
+produce duplicate entries in the final POM file, leading to a rejection
+in Sonatype's staging process.</p>
+<p><em>The full format of a pom.xml file is `outlined
+here &lt;http://maven.apache.org/pom.html&gt;`_.</em></p>
+</div>
+<div class="section" id="fourth-adding-credentials">
+<h2>Fourth - Adding credentials<a class="headerlink" href="#fourth-adding-credentials" title="Permalink to this headline">¶</a></h2>
+<p>The credentials for your Sonatype OSSRH account need to be added
+somewhere. Common convention is a <tt class="docutils literal"><span class="pre">~/.sbt/sonatype.sbt</span></tt> file with the
+following:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Sonatype Nexus Repository Manager&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;oss.sonatype.org&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;&lt;your username&gt;&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;&lt;your password&gt;&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p><em>Note: The first two strings must be
+``&quot;Sonatype Nexus Repository Manager&quot;`` and ``&quot;oss.sonatype.org&quot;`` for
+Ivy to use the credentials.</em></p>
+</div>
+<div class="section" id="finally-publish">
+<h2>Finally - Publish<a class="headerlink" href="#finally-publish" title="Permalink to this headline">¶</a></h2>
+<p>In sbt, run <tt class="docutils literal"><span class="pre">publish-signed</span></tt> and you should see something like the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> publish-signed
+<span class="go">Please enter your PGP passphrase&gt; ***********</span>
+<span class="go">[info] Packaging /home/josh/projects/typesafe/scala-arm/target/scala-2.9.1/scala-arm_2.9.1-1.2.jar ...</span>
+<span class="go">[info] Wrote /home/josh/projects/typesafe/scala-arm/target/scala-2.9.1/scala-arm_2.9.1-1.2.pom</span>
+<span class="go">[info] Packaging /home/josh/projects/typesafe/scala-arm/target/scala-2.9.1/scala-arm_2.9.1-1.2-javadoc.jar ...</span>
+<span class="go">[info] Packaging /home/josh/projects/typesafe/scala-arm/target/scala-2.9.1/scala-arm_2.9.1-1.2-sources.jar ...</span>
+<span class="go">[info] :: delivering :: com.jsuereth#scala-arm_2.9.1;1.2 :: 1.2 :: release :: Mon Jan 23 13:16:57 EST 2012</span>
+<span class="go">[info] Done packaging.</span>
+<span class="go">[info] Done packaging.</span>
+<span class="go">[info] Done packaging.</span>
+<span class="go">[info]  delivering ivy file to /home/josh/projects/typesafe/scala-arm/target/scala-2.9.1/ivy-1.2.xml</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2-sources.jar</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2-javadoc.jar.asc</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2-sources.jar.asc</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2.jar</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2.jar.asc</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2.pom.asc</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2.pom</span>
+<span class="go">[info]  published scala-arm_2.9.1 to https://oss.sonatype.org/service/local/staging/deploy/maven2/com/jsuereth/scala-arm_2.9.1/1.2/scala-arm_2.9.1-1.2-javadoc.jar</span>
+<span class="go">[success] Total time: 9 s, completed Jan 23, 2012 1:17:03 PM</span>
+</pre></div>
+</div>
+<p>After publishing you have to follow the <a class="reference external" href="https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt">Release workflow of
+nexus</a>.
+In the future, we hope to provide a Nexus sbt plugin that allows the
+release workflow procedures to be performed directly from sbt.</p>
+<p><em>Note: Staged releases allow testing across large projects of
+independent releases before pushing the full project.</em></p>
+<p><em>Note:</em> An error message of
+<tt class="docutils literal"><span class="pre">PGPException:</span> <span class="pre">checksum</span> <span class="pre">mismatch</span> <span class="pre">at</span> <span class="pre">0</span> <span class="pre">of</span> <span class="pre">20</span></tt> indicates that you got
+the passphrase wrong. We have found at least on OS X that there may be
+issues with characters outside the 7-bit ASCII range (e.g. Umlauts). If
+you are absolutely sure that you typed the right phrase and the error
+doesn't disappear, try changing the passphrase.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>To get your project hosted on Sonatype (and Maven Central), you will
+need to:</p>
+<ul class="simple">
+<li>Have GPG key pair, with published public key,</li>
+<li>An sbt file with your Sonatype credentials <em>that is not pushed to the VCS</em>,</li>
+<li>Modify <tt class="docutils literal"><span class="pre">project/plugins.sbt</span></tt> to include the <tt class="docutils literal"><span class="pre">xsbt-gpg-plugin</span></tt> to sign the artefacts,</li>
+<li>Modify <tt class="docutils literal"><span class="pre">build.sbt</span></tt> with the required elements in the generated POM.</li>
+</ul>
+<p>Starting with a project that is not being published, you'll need to
+install GPG, generate and publish your key. Swtiching to sbt, you'll
+then need to:</p>
+<div class="section" id="sbt-sonatype-sbt">
+<h3>~/.sbt/sonatype.sbt<a class="headerlink" href="#sbt-sonatype-sbt" title="Permalink to this headline">¶</a></h3>
+<p>This file (kept <em>outside the VCS</em>) contains the Sonatype credentials
+settings:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Sonatype Nexus Repository Manager&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;oss.sonatype.org&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;your-sonatype-username&quot;</span><span class="o">,</span>
+                           <span class="s">&quot;your-sonatype-password&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="project-plugins-sbt">
+<h3>project/plugins.sbt<a class="headerlink" href="#project-plugins-sbt" title="Permalink to this headline">¶</a></h3>
+<p>This file specifies the plugins for your project. If you intend to sign
+the artefacts, you'll need to include &#64;jsuereth's <tt class="docutils literal"><span class="pre">xsbt-gpg-plugin</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Resolver</span><span class="o">.</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;sbt-plugin-releases&quot;</span><span class="o">,</span> <span class="cm">/* no new line */</span>
+  <span class="k">new</span> <span class="nc">URL</span><span class="o">(</span><span class="s">&quot;http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases&quot;</span><span class="o">))</span> <span class="cm">/* no new line */</span>
+  <span class="o">(</span><span class="nc">Resolver</span><span class="o">.</span><span class="n">ivyStylePatterns</span><span class="o">)</span>
+
+<span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;com.jsuereth&quot;</span> <span class="o">%</span> <span class="s">&quot;xsbt-gpg-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-sbt">
+<h3>build.sbt<a class="headerlink" href="#build-sbt" title="Permalink to this headline">¶</a></h3>
+<p>Finally, you'll need to tweak the generated POM in your <tt class="docutils literal"><span class="pre">build.sbt</span></tt>.
+The tweaks include specifying the project's authors, URL, SCM and many
+others:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">&lt;&lt;=</span> <span class="n">version</span> <span class="o">{</span> <span class="n">v</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span>
+  <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">v</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="n">publishMavenStyle</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="n">publishArtifact</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="n">pomIncludeRepository</span> <span class="o">:=</span> <span class="o">{</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="kc">false</span> <span class="o">}</span>
+
+<span class="n">pomExtra</span> <span class="o">:=</span> <span class="o">(</span>
+  <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">your</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">url</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">licenses</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">license</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="nc">BSD</span><span class="o">-</span><span class="n">style</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">www</span><span class="o">.</span><span class="n">opensource</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">licenses</span><span class="o">/</span><span class="n">bsd</span><span class="o">-</span><span class="n">license</span><span class="o">.</span><span class="n">php</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">distribution</span><span class="o">&gt;</span><span class="n">repo</span><span class="o">&lt;/</span><span class="n">distribution</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">license</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">licenses</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">scm</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="k">:</span><span class="kt">your-account/your-project.git&lt;/url&gt;</span>
+    <span class="o">&lt;</span><span class="n">connection</span><span class="o">&gt;</span><span class="n">scm</span><span class="k">:</span><span class="kt">git:git@github.com:your-account/your-project.git&lt;/connection&gt;</span>
+  <span class="o">&lt;/</span><span class="n">scm</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">developers</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">developer</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">id</span><span class="o">&gt;</span><span class="n">you</span><span class="o">&lt;/</span><span class="n">id</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="nc">Your</span> <span class="nc">Name</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="n">http</span><span class="o">://</span><span class="n">your</span><span class="o">.</span><span class="n">url</span><span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">developer</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">developers</span><span class="o">&gt;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Deploying to Sonatype</a><ul>
+<li><a class="reference internal" href="#first-pgp-signatures">First - PGP Signatures</a></li>
+<li><a class="reference internal" href="#second-maven-publishing-settings">Second - Maven Publishing Settings</a></li>
+<li><a class="reference internal" href="#third-pom-metadata">Third - POM Metadata</a></li>
+<li><a class="reference internal" href="#fourth-adding-credentials">Fourth - Adding credentials</a></li>
+<li><a class="reference internal" href="#finally-publish">Finally - Publish</a></li>
+<li><a class="reference internal" href="#summary">Summary</a><ul>
+<li><a class="reference internal" href="#sbt-sonatype-sbt">~/.sbt/sonatype.sbt</a></li>
+<li><a class="reference internal" href="#project-plugins-sbt">project/plugins.sbt</a></li>
+<li><a class="reference internal" href="#build-sbt">build.sbt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>

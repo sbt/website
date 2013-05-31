@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>Signal.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">object</span> <a title="object sbt.Signals" id="12621">Signals</a>
+<span title="ScalaObject" class="delimiter">{</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="401856">CONT</a> = <span title="java.lang.String(&quot;CONT&quot;)" class="string">&quot;CONT&quot;</span>
+	<span class="keyword">val</span> <a title="java.lang.String" id="401858">INT</a> = <span title="java.lang.String(&quot;INT&quot;)" class="string">&quot;INT&quot;</span>
+	<span class="keyword">def</span> <a title="[T](handler: () =&gt; Unit, signal: String)(action: () =&gt; T)T" id="401860">withHandler</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="401870">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="() =&gt; Unit" id="401864">handler</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; Unit, <a title="String" id="401868">signal</a>: <span title="String">String</span> = <a href="#401858" title="=&gt; java.lang.String">INT</a><span class="delimiter">)</span><span class="delimiter">(</span><a title="() =&gt; T" id="401866">action</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; T<span class="delimiter">)</span>: <a href="#401870" title="T">T</a> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Either[Throwable,T]" id="2159802">result</a> = 
+			<span class="keyword">try</span>
+			<span class="delimiter">{</span>
+				<span class="keyword">val</span> <a title="sbt.Signals0" id="2159803">signals</a> = <span title="sbt.Signals0" class="keyword">new</span> <a href="#12623" title="sbt.Signals0">Signals0</a>
+				<a href="#2159803" title="sbt.Signals0">signals</a>.<a href="#2159806" title="(signal: String, handler: () =&gt; Unit, action: () =&gt; T)Either[Throwable,T]">withHandler</a><span class="delimiter">(</span><a href="#401868" title="String">signal</a>, <a href="#401864" title="() =&gt; Unit">handler</a>, <a href="#401866" title="() =&gt; T">action</a><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+			<span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Right[Nothing,T]" id="2159823">e</a>: <span title="java.lang.LinkageError">LinkageError</span> =&gt; <span title="(b: T)Right[Nothing,T]">Right</span><span class="delimiter">(</span><a href="#401866" title="()T">action</a><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+
+		<a href="#2159802" title="Either[Throwable,T]">result</a> <span title="T" class="keyword">match</span> <span class="delimiter">{</span>
+			<span class="keyword">case</span> <span title="Nothing">Left</span><span class="delimiter">(</span><a title="Throwable" id="2159829">e</a><span class="delimiter">)</span> =&gt; <span title="Nothing" class="keyword">throw</span> <a href="#2159829" title="Throwable">e</a>
+			<span class="keyword">case</span> <span title="T">Right</span><span class="delimiter">(</span><a title="T" id="2159831">v</a><span class="delimiter">)</span> =&gt; <a href="#2159831" title="T">v</a>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(signal: String)Boolean" id="401863">supported</a><span class="delimiter">(</span><a title="String" id="2159832">signal</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+		<span class="keyword">try</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="sbt.Signals0" id="2159834">signals</a> = <span title="sbt.Signals0" class="keyword">new</span> <a href="#12623" title="sbt.Signals0">Signals0</a>
+			<a href="#2159834" title="sbt.Signals0">signals</a>.<a href="#2159805" title="(signal: String)Boolean">supported</a><span class="delimiter">(</span><a href="#2159832" title="String">signal</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Boolean(false)" id="2159837">e</a>: <span title="java.lang.LinkageError">LinkageError</span> =&gt; <span title="Boolean(false)" class="keyword">false</span> <span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span class="comment">// Must only be referenced using a</span>
+<span class="comment">//   try { } catch { case e: LinkageError =&gt; ... }</span>
+<span class="comment">// block to </span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class Signals0 extends java.lang.Object with ScalaObject" id="12623">Signals0</a>
+<a href="#12623" title="ScalaObject" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="(signal: String)Boolean" id="2159805">supported</a><span class="delimiter">(</span><a title="String" id="2159835">signal</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+	<span class="delimiter">{</span>
+			<span class="keyword">import</span> sun.misc.Signal
+		<span class="keyword">try</span> <span class="delimiter">{</span> <span title="sun.misc.Signal" class="keyword">new</span> <span title="sun.misc.Signal">Signal</span><span class="delimiter">(</span><a href="#2159835" title="String">signal</a><span class="delimiter">)</span>; <span title="Boolean(true)" class="keyword">true</span> <span class="delimiter">}</span>
+		<span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Boolean(false)" id="2159866">e</a>: <span title="IllegalArgumentException">IllegalArgumentException</span> =&gt; <span title="Boolean(false)" class="keyword">false</span> <span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">// returns a LinkageError in `action` as Left(t) in order to avoid it being</span>
+	<span class="comment">// incorrectly swallowed as missing Signal/SignalHandler</span>
+	<span class="keyword">def</span> <a title="[T](signal: String, handler: () =&gt; Unit, action: () =&gt; T)Either[Throwable,T]" id="2159806">withHandler</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="2159808">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="String" id="2159809">signal</a>: <span title="String">String</span>, <a title="() =&gt; Unit" id="2159810">handler</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; Unit, <a title="() =&gt; T" id="2159811">action</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; T<span class="delimiter">)</span>: <span title="Either[Throwable,T]">Either</span><span class="delimiter">[</span>Throwable, T<span class="delimiter">]</span> =
+	<span class="delimiter">{</span>
+			<span class="keyword">import</span> sun.misc.<span class="delimiter">{</span>Signal,SignalHandler<span class="delimiter">}</span>
+		<span class="keyword">val</span> <a title="sun.misc.Signal" id="2159868">intSignal</a> = <span title="sun.misc.Signal" class="keyword">new</span> <span title="sun.misc.Signal">Signal</span><span class="delimiter">(</span><a href="#2159809" title="String">signal</a><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="newHandler extends java.lang.Object with sun.misc.SignalHandler" id="2159869">newHandler</a> = <a href="#2159871" title="java.lang.Object with sun.misc.SignalHandler" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with sun.misc.SignalHandler" id="2159871">SignalHandler</a> <span class="delimiter">{</span>
+			<span class="keyword">def</span> <a title="(sig: sun.misc.Signal)Unit" id="2159878">handle</a><span class="delimiter">(</span><a title="sun.misc.Signal" id="2159879">sig</a>: <span title="sun.misc.Signal">Signal</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a href="#2159810" title="()Unit">handler</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="delimiter">}</span>	
+
+		<span class="keyword">val</span> <a title="sun.misc.SignalHandler" id="2159870">oldHandler</a> = <span title="object sun.misc.Signal">Signal</span>.<span title="(x$1: sun.misc.Signal, x$2: sun.misc.SignalHandler)sun.misc.SignalHandler">handle</span><span class="delimiter">(</span><a href="#2159868" title="sun.misc.Signal">intSignal</a>, <a href="#2159869" title="newHandler extends java.lang.Object with sun.misc.SignalHandler">newHandler</a><span class="delimiter">)</span>
+
+		<span class="keyword">try</span> <span title="(b: T)Right[Nothing,T]">Right</span><span class="delimiter">(</span><a href="#2159811" title="()T">action</a><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="keyword">catch</span> <span class="delimiter">{</span> <span class="keyword">case</span> <a title="Left[java.lang.LinkageError,Nothing]" id="2159895">e</a>: <span title="java.lang.LinkageError">LinkageError</span> =&gt; <span title="(a: java.lang.LinkageError)Left[java.lang.LinkageError,Nothing]">Left</span><span class="delimiter">(</span><a href="#2159895" title="java.lang.LinkageError">e</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+		<span class="keyword">finally</span> <span title="object sun.misc.Signal">Signal</span>.<span title="(x$1: sun.misc.Signal, x$2: sun.misc.SignalHandler)sun.misc.SignalHandler">handle</span><span title="Unit" class="delimiter">(</span><a href="#2159868" title="sun.misc.Signal">intSignal</a>, <a href="#2159870" title="sun.misc.SignalHandler">oldHandler</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

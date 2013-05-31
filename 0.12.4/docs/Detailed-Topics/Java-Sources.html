@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Java Sources &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Launcher Specification" href="Launcher.html" />
+    <link rel="prev" title="Interacting with the Configuration System" href="Inspecting-Settings.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Java Sources</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.12.4 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Launcher.html">Launcher Specification</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Inspecting-Settings.html">Interacting with the Configuration System</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.12.4">Version 0.12.4</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="java-sources">
+<h1>Java Sources<a class="headerlink" href="#java-sources" title="Permalink to this headline">¶</a></h1>
+<p>sbt has support for compiling Java sources with the limitation that
+dependency tracking is limited to the dependencies present in compiled
+class files.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">compile</span></tt> will compile the sources under <tt class="docutils literal"><span class="pre">src/main/java</span></tt> by
+default.</li>
+<li><tt class="docutils literal"><span class="pre">test-compile</span></tt> will compile the sources under <tt class="docutils literal"><span class="pre">src/test/java</span></tt> by
+default.</li>
+</ul>
+<p>Pass options to the Java compiler by setting <tt class="docutils literal"><span class="pre">javac-options</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="o">+=</span> <span class="s">&quot;-g:none&quot;</span>
+</pre></div>
+</div>
+<p>As with options for the Scala compiler, the arguments are not parsed by
+sbt. Multi-element options, such as <tt class="docutils literal"><span class="pre">-source</span> <span class="pre">1.5</span></tt>, are specified like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-source&quot;</span><span class="o">,</span> <span class="s">&quot;1.5&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>You can specify the order in which Scala and Java sources are built with
+the <tt class="docutils literal"><span class="pre">compile-order</span></tt> setting. Possible values are from the
+<tt class="docutils literal"><span class="pre">CompileOrder</span></tt> enumeration: <tt class="docutils literal"><span class="pre">Mixed</span></tt>, <tt class="docutils literal"><span class="pre">JavaThenScala</span></tt>, and
+<tt class="docutils literal"><span class="pre">ScalaThenJava</span></tt>. If you have circular dependencies between Scala and
+Java sources, you need the default, <tt class="docutils literal"><span class="pre">Mixed</span></tt>, which passes both Java
+and Scala sources to <tt class="docutils literal"><span class="pre">scalac</span></tt> and then compiles the Java sources with
+<tt class="docutils literal"><span class="pre">javac</span></tt>. If you do not have circular dependencies, you can use one of
+the other two options to speed up your build by not passing the Java
+sources to <tt class="docutils literal"><span class="pre">scalac</span></tt>. For example, if your Scala sources depend on your
+Java sources, but your Java sources do not depend on your Scala sources,
+you can do:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">compileOrder</span> <span class="o">:=</span> <span class="nc">CompileOrder</span><span class="o">.</span><span class="nc">JavaThenScala</span>
+</pre></div>
+</div>
+<p>To specify different orders for main and test sources, scope the setting
+by configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Java then Scala for main sources</span>
+<span class="n">compileOrder</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="nc">CompileOrder</span><span class="o">.</span><span class="nc">JavaThenScala</span>
+
+<span class="c1">// allow circular dependencies for test sources</span>
+<span class="n">compileOrder</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="nc">CompileOrder</span><span class="o">.</span><span class="nc">Mixed</span>
+</pre></div>
+</div>
+<p>Note that in an incremental compilation setting, it is not practical to
+ensure complete isolation between Java sources and Scala sources because
+they share the same output directory. So, previously compiled classes
+not involved in the current recompilation may be picked up. A clean
+compile will always provide full checking, however.</p>
+<p>By default, sbt includes <tt class="docutils literal"><span class="pre">src/main/scala</span></tt> and <tt class="docutils literal"><span class="pre">src/main/java</span></tt> in its
+list of unmanaged source directories. For Java-only projects, the
+unnecessary Scala directories can be ignored by modifying
+<tt class="docutils literal"><span class="pre">unmanagedSourceDirectories</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Include only src/main/java in the compile configuration</span>
+<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">join</span>
+
+<span class="c1">// Include only src/test/java in the test configuration</span>
+<span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">&lt;&lt;=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">join</span>
+</pre></div>
+</div>
+<p>However, there should not be any harm in leaving the Scala directories
+if they are empty.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Java Sources</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+
+  </body>
+</html>
