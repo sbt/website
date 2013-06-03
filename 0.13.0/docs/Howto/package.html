@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-M2',
+        VERSION:     '0.13.0-Beta1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Configure packaging</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-Beta1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="metadata.html">Project metadata</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M2">Version 0.13.0-M2</option></select>
+                <select id="versions"><option selected value="0.13.0-Beta1">Version 0.13.0-Beta1</option></select>
               </li>
             </ul>         
           </div>
@@ -132,7 +132,7 @@
 <div class="full-howto section" id="contents">
 <h2>Modify the contents of the package<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The contents of a package are defined by the <tt class="docutils literal"><span class="pre">mappings</span></tt> task, of type <tt class="docutils literal"><span class="pre">Seq[(File,String)]</span></tt>.  The <tt class="docutils literal"><span class="pre">mappings</span></tt> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <tt class="docutils literal"><span class="pre">in/example.txt</span></tt> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
+<p id="modify-package-contents">The contents of a package are defined by the <tt class="docutils literal"><span class="pre">mappings</span></tt> task, of type <tt class="docutils literal"><span class="pre">Seq[(File,String)]</span></tt>.  The <tt class="docutils literal"><span class="pre">mappings</span></tt> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <tt class="docutils literal"><span class="pre">in/example.txt</span></tt> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="o">{</span>
    <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;in&quot;</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span>
 <span class="o">}</span>

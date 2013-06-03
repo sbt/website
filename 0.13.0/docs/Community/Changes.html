@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-M2',
+        VERSION:     '0.13.0-Beta1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-Beta1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Nightly-Builds.html">Nightly Builds</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M2">Version 0.13.0-M2</option></select>
+                <select id="versions"><option selected value="0.13.0-Beta1">Version 0.13.0-Beta1</option></select>
               </li>
             </ul>         
           </div>
@@ -92,9 +92,29 @@
   <div class="section" id="changes">
 <h1>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="to-0-13-0">
-<h2>0.12.2 to 0.13.0<a class="headerlink" href="#to-0-13-0" title="Permalink to this headline">¶</a></h2>
+<h2>0.12.4 to 0.13.0<a class="headerlink" href="#to-0-13-0" title="Permalink to this headline">¶</a></h2>
 <p>The changes for 0.13.0 are listed on a separate page. See
 <a class="reference internal" href="ChangeSummary_0.13.0.html"><em>0.13.0 Changes</em></a>.</p>
+</div>
+<div class="section" id="to-0-12-4">
+<h2>0.12.3 to 0.12.4<a class="headerlink" href="#to-0-12-4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Work around URI problems with encoding and resolving. (<a class="reference external" href="https://github.com/sbt/sbt/issues/725" title="URI.resolve should take a URI not a path"><span class="xref issue closed">#725</span></a>)</li>
+<li>Allow -cp argument to <tt class="docutils literal"><span class="pre">apply</span></tt> command to be quoted.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/724" title="apply command doesn't handle paths with SPACEs"><span class="xref issue closed">#724</span></a>)</li>
+<li>Make <tt class="docutils literal"><span class="pre">sbtBinaryVersion</span></tt> use the new approach for 0.13 and later to support cross-building plugins.</li>
+<li>Pull <tt class="docutils literal"><span class="pre">sbtDependency</span></tt> version from <tt class="docutils literal"><span class="pre">sbtVersion</span></tt> to facilitate cross-building plugins.</li>
+<li>Proper support for stashing on-failure handlers.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/732" title="`; reload; compile` makes sbt 0.12.0/0.12.3 exit if compilation fails"><span class="xref issue closed">#732</span></a>)</li>
+<li>Include files with zip extension in unmanaged jars.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/750" title="Sbt doesnt pick up zip library file in the project lib folder"><span class="xref issue closed">#750</span></a>)</li>
+<li>Only add automatically detected plugins to options once.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/757" title="Scala no longer likes being told things twice (-Xplugin specified twice in test:compile::scalacOptions)"><span class="xref issue closed">#757</span></a>)</li>
+<li>Properly handle failure in a multi-command that includes <tt class="docutils literal"><span class="pre">reload</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/732" title="`; reload; compile` makes sbt 0.12.0/0.12.3 exit if compilation fails"><span class="xref issue closed">#732</span></a>)</li>
+<li>Incremental compiler: remove resident compiler code (wasn't used and was a compatibility liability)</li>
+<li>Incremental compiler: properly track <tt class="docutils literal"><span class="pre">abstract</span> <span class="pre">override</span></tt> modifier.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/726" title="Spurious incremental recompilation due to invalid value for OVERRIDE flag"><span class="xref issue closed">#726</span></a>)</li>
+<li>Incremental compiler: do not normalize types in the api extraction phase. (<a class="reference external" href="https://github.com/sbt/sbt/issues/736" title="Sbt fails to detect change of structure when type aliases dealias to the same type"><span class="xref issue closed">#736</span></a>)</li>
+<li>Ivy cache: account for <tt class="docutils literal"><span class="pre">localOnly</span></tt> when cache subclass overrides <tt class="docutils literal"><span class="pre">isChanging</span></tt></li>
+<li>Ivy cache: fix corruption when developing sbt or sbt plugins. (<a class="reference external" href="https://github.com/sbt/sbt/issues/768" title="Sbt lost ivy dependencies at specific condition."><span class="xref issue">#768</span></a>)</li>
+<li>Ivy cache: invalidate when artifact download fails to avoid locking into bad resolver. (<a class="reference external" href="https://github.com/sbt/sbt/issues/760" title="New resolvers are ignored after attempting to download artifacts without them"><span class="xref issue closed">#760</span></a>)</li>
+<li>Ivy cache: use publication date from metadata instead of original file's last modified time when deleting out of date artifacts.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/764" title="Snapshot dependendency is always redownloaded in sbt 0.12.3"><span class="xref issue closed">#764</span></a>)</li>
+</ul>
 </div>
 <div class="section" id="to-0-12-3">
 <h2>0.12.2 to 0.12.3<a class="headerlink" href="#to-0-12-3" title="Permalink to this headline">¶</a></h2>
@@ -1333,7 +1353,8 @@ work as expected.)</li>
                 <div id="scroller">
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Changes</a><ul>
-<li><a class="reference internal" href="#to-0-13-0">0.12.2 to 0.13.0</a></li>
+<li><a class="reference internal" href="#to-0-13-0">0.12.4 to 0.13.0</a></li>
+<li><a class="reference internal" href="#to-0-12-4">0.12.3 to 0.12.4</a></li>
 <li><a class="reference internal" href="#to-0-12-3">0.12.2 to 0.12.3</a></li>
 <li><a class="reference internal" href="#to-0-12-2">0.12.1 to 0.12.2</a></li>
 <li><a class="reference internal" href="#to-0-12-1">0.12.0 to 0.12.1</a></li>

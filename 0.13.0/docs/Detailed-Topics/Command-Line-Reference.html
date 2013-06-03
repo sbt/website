@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-M2',
+        VERSION:     '0.13.0-Beta1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Command Line Reference</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-M2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-Beta1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Classpaths.html">Classpaths, sources, and resources</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-M2">Version 0.13.0-M2</option></select>
+                <select id="versions"><option selected value="0.13.0-Beta1">Version 0.13.0-Beta1</option></select>
               </li>
             </ul>         
           </div>
@@ -297,14 +297,16 @@ influence SBT execution. Also see <a class="reference internal" href="Launcher.h
   </thead>
   <tbody>
     <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.log.noformat</span></tt></p>
+      <td><p><tt class="docutils literal"><span class="pre">sbt.log.format</span></tt></p>
 </td>
       <td><p>Boolean</p>
 </td>
-      <td><p>false</p>
+      <td><p>unset</p>
 </td>
-      <td><p>If true, disable ANSI color codes. Useful on build servers or terminals
-that don't support color.</p>
+      <td><p>If true, enable ANSI escape codes such as colors.
+If false, disable them, which can be useful on build servers or terminals
+that don't support color.
+If unset, whether to use escape codes is automatically detected.</p>
 </td>
     </tr>
     <tr>

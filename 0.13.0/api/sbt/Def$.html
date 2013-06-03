@@ -9,11 +9,6 @@
           
       <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
       <link href="../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
-      <script type="text/javascript" src="../lib/jquery.js" id="jquery-js"></script>
-      <script type="text/javascript" src="../lib/jquery-ui.js"></script>
-      <script type="text/javascript" src="../lib/template.js"></script>
-      <script type="text/javascript" src="../lib/tools.tooltip.js"></script>
-      
       <script type="text/javascript">
          if(top === self) {
             var url = '../index.html';
@@ -260,7 +255,7 @@
       <a id="Setting[T]:Setting[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
-        <span class="modifier">final </span>
+        <span class="modifier">sealed </span>
         <span class="kind">class</span>
       </span>
       <span class="symbol">
@@ -471,15 +466,15 @@
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
     </li><li name="sbt.Init#Undefined" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="Undefined(definingKey:Init.this.ScopedKey[_],referencedKey:Init.this.ScopedKey[_]):Init.this.Undefined"></a>
-      <a id="Undefined(ScopedKey[_],ScopedKey[_]):Undefined"></a>
+      <a id="Undefined(definingKey:Init.this.ScopedKey[_],referencedKey:Init.this.ScopedKey[_],derived:Boolean):Init.this.Undefined"></a>
+      <a id="Undefined(ScopedKey[_],ScopedKey[_],Boolean):Undefined"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">Undefined</span><span class="params">(<span name="definingKey">definingKey: <a href="#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="referencedKey">referencedKey: <a href="#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>)</span><span class="result">: <a href="#UndefinedextendsAnyRef" class="extmbr" name="sbt.Init.Undefined">Undefined</a></span>
+        <span class="name">Undefined</span><span class="params">(<span name="definingKey">definingKey: <a href="#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="referencedKey">referencedKey: <a href="#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">ScopedKey</a>[_]</span>, <span name="derived">derived: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="#UndefinedextendsAnyRef" class="extmbr" name="sbt.Init.Undefined">Undefined</a></span>
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
@@ -627,7 +622,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#colored" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
@@ -669,6 +667,19 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
+    </li><li name="sbt.Init#definedAtString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="definedAtString(settings:Seq[Init.this.Setting[_]]):String"></a>
+      <a id="definedAtString(Seq[Setting[_]]):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">definedAtString</span><span class="params">(<span name="settings">settings: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Setting</a>[_]]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
     </li><li name="sbt.Init#delegate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="delegate(sMap:Init.this.ScopedMap)(implicitdelegates:Scope=&gt;Seq[Scope],implicitdisplay:sbt.Show[Init.this.ScopedKey[_]]):Init.this.ScopedMap"></a>
       <a id="delegate(ScopedMap)((Scope)⇒Seq[Scope],Show[ScopedKey[_]]):ScopedMap"></a>
@@ -682,6 +693,36 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
+    </li><li name="sbt.Init#derive" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="derive[T](s:Init.this.Setting[T],allowDynamic:Boolean,filter:Scope=&gt;Boolean,trigger:sbt.AttributeKey[_]=&gt;Boolean):Init.this.Setting[T]"></a>
+      <a id="derive[T](Setting[T],Boolean,(Scope)⇒Boolean,(AttributeKey[_])⇒Boolean):Setting[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">derive</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="s">s: <a href="#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Init.derive.T">T</span>]</span>, <span name="allowDynamic">allowDynamic: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="filter">filter: (<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol"><span class="name"><a href="Types$.html">const(true)</a></span></span></span>, <span name="trigger">trigger: (<a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[_]) ⇒ <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol"><span class="name"><a href="Types$.html">const(true)</a></span></span></span>)</span><span class="result">: <a href="#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Init.derive.T">T</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a derived setting that will be automatically defined in every scope where one of its dependencies
+is explicitly defined and the where the scope matches <code>filter</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs a derived setting that will be automatically defined in every scope where one of its dependencies
+is explicitly defined and the where the scope matches <code>filter</code>.
+A setting initialized with dynamic dependencies is only allowed if <code>allowDynamic</code> is true.
+Only the static dependencies are tracked, however.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
+    </li><li name="sbt.Def#deriveAllowed" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="deriveAllowed[T](s:sbt.Def.Setting[T],allowDynamic:Boolean):Option[String]"></a>
+      <a id="deriveAllowed[T](Setting[T],Boolean):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">deriveAllowed</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="s">s: <a href="#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Setting</a>[<span class="extype" name="sbt.Def.deriveAllowed.T">T</span>]</span>, <span name="allowDynamic">allowDynamic: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="sbt.Def">Def</a> → <a href="Init.html" class="extype" name="sbt.Init">Init</a></dd></dl></div>
     </li><li name="sbt.Def#displayFull" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="displayFull(scoped:sbt.Def.ScopedKey[_],keyNameColor:Option[String]):String"></a>
       <a id="displayFull(ScopedKey[_],Option[String]):String"></a>
@@ -786,7 +827,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Init#flattenLocals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -880,7 +924,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.KeyMacro&quot;, &quot;methodName&quot; = &quot;inputKeyImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#inputTask" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -896,7 +943,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.TaskMacro&quot;, &quot;methodName&quot; = &quot;inputTaskMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#inputTaskDyn" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -912,7 +962,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.TaskMacro&quot;, &quot;methodName&quot; = &quot;inputTaskDynMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1188,7 +1241,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.SettingMacro&quot;, &quot;methodName&quot; = &quot;settingMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Init#setting" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1217,7 +1273,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.SettingMacro&quot;, &quot;methodName&quot; = &quot;settingDynMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#settingKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1233,7 +1292,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.KeyMacro&quot;, &quot;methodName&quot; = &quot;settingKeyImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#showFullKey" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
@@ -1354,7 +1416,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.TaskMacro&quot;, &quot;methodName&quot; = &quot;taskMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#taskDyn" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1370,7 +1435,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.TaskMacro&quot;, &quot;methodName&quot; = &quot;taskDynMacroImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#taskKey" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1386,7 +1454,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@macroImpl</span><span class="args">()</span>
+                <span class="name">@macroImpl</span><span class="args">(<span>
+      
+      <span class="defval" name="`macro`(&quot;versionFormat&quot; = 1, &quot;className&quot; = &quot;sbt.std.KeyMacro&quot;, &quot;methodName&quot; = &quot;taskKeyImpl&quot;, &quot;signature&quot; = List(-1, -1, 0))[T]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="sbt.Def#toIParser" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
@@ -1532,7 +1603,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1548,7 +1622,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -1564,7 +1641,10 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
-                <span class="name">@throws</span><span class="args">()</span>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
               
         </dd></dl></div>
     </li></ol>
@@ -1600,7 +1680,6 @@ This can be useful when dealing with dynamic Initialize values.</p></div><dl cla
       <div id="tooltip"></div>
 
       <div id="footer">  </div>
-
-
+      <script defer="defer" type="text/javascript" id="jquery-js" src="../lib/jquery.js"></script><script defer="defer" type="text/javascript" id="jquery-ui-js" src="../lib/jquery-ui.js"></script><script defer="defer" type="text/javascript" id="tools-tooltip-js" src="../lib/tools.tooltip.js"></script><script defer="defer" type="text/javascript" id="template-js" src="../lib/template.js"></script>
     </body>
       </html>
