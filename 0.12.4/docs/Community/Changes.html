@@ -109,6 +109,7 @@
 <li>Ivy cache: fix corruption when developing sbt or sbt plugins. (<a class="reference external" href="https://github.com/sbt/sbt/issues/768" title="Sbt lost ivy dependencies at specific condition."><span class="xref issue">#768</span></a>)</li>
 <li>Ivy cache: invalidate when artifact download fails to avoid locking into bad resolver. (<a class="reference external" href="https://github.com/sbt/sbt/issues/760" title="New resolvers are ignored after attempting to download artifacts without them"><span class="xref issue closed">#760</span></a>)</li>
 <li>Ivy cache: use publication date from metadata instead of original file's last modified time when deleting out of date artifacts.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/764" title="Snapshot dependendency is always redownloaded in sbt 0.12.3"><span class="xref issue closed">#764</span></a>)</li>
+<li>Ivy: Fix regression in 0.12.3 where artifacts without an explicit configuration wouldn't be listed in ivy.xml.</li>
 </ul>
 </div>
 <div class="section" id="to-0-12-3">
@@ -1403,6 +1404,16 @@ work as expected.)</li>
       </div>
     </div>
   </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
   
 
   </body>
