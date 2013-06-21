@@ -96,140 +96,133 @@
 <p>This page presents an index of the how-to topics with short examples for many of them.
 Click <tt class="docutils literal"><span class="pre">(details)</span></tt> to jump to the full explanation.
 See also the <a class="reference internal" href="index.html"><em>Basic Index</em></a>, which omits the examples and just lists the topics.</p>
-<div class="doc-howto-summary section" id="generating-files">
-<h3>Generating files<a class="reference external" href="generatefiles.html"> (details)</a><a class="headerlink" href="#generating-files" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="generate-sources">
-<h4>Generate sources<a class="reference external" href="generatefiles.html#sources"> (details)</a><a class="headerlink" href="#generate-sources" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
+<div class="doc-howto-summary section" id="triggered-execution">
+<h3>Triggered execution<a class="reference external" href="triggered.html"> (details)</a><a class="headerlink" href="#triggered-execution" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="run-a-command-when-sources-change">
+<h4>Run a command when sources change<a class="reference external" href="triggered.html#basic"> (details)</a><a class="headerlink" href="#run-a-command-when-sources-change" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ <span class="nb">test</span>
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="generate-resources">
-<h4>Generate resources<a class="reference external" href="generatefiles.html#resources"> (details)</a><a class="headerlink" href="#generate-resources" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
+<div class="howto-summary section" id="run-multiple-commands-when-sources-change">
+<h4>Run multiple commands when sources change<a class="reference external" href="triggered.html#multi"> (details)</a><a class="headerlink" href="#run-multiple-commands-when-sources-change" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;a ;b
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="configure-the-sources-that-are-checked-for-changes">
+<h4>Configure the sources that are checked for changes<a class="reference external" href="triggered.html#sources"> (details)</a><a class="headerlink" href="#configure-the-sources-that-are-checked-for-changes" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="set-the-time-interval-between-checks-for-changes-to-sources">
+<h4>Set the time interval between checks for changes to sources<a class="reference external" href="triggered.html#interval"> (details)</a><a class="headerlink" href="#set-the-time-interval-between-checks-for-changes-to-sources" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
 </pre></div>
 </div>
 </p>
 </div>
 </div>
-<div class="doc-howto-summary section" id="configure-and-use-logging">
-<h3>Configure and use logging<a class="reference external" href="logging.html"> (details)</a><a class="headerlink" href="#configure-and-use-logging" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="view-the-logging-output-of-the-previously-executed-command">
-<h4>View the logging output of the previously executed command<a class="reference external" href="logging.html#last"> (details)</a><a class="headerlink" href="#view-the-logging-output-of-the-previously-executed-command" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> last
+<div class="doc-howto-summary section" id="interactive-mode">
+<h3>Interactive mode<a class="reference external" href="interactive.html"> (details)</a><a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="use-tab-completion">
+<h4>Use tab completion<a class="reference external" href="interactive.html#basic_completion"> (details)</a><a class="headerlink" href="#use-tab-completion" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only &lt;TAB&gt;
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="view-the-previous-logging-output-of-a-specific-task">
-<h4>View the previous logging output of a specific task<a class="reference external" href="logging.html#tasklast"> (details)</a><a class="headerlink" href="#view-the-previous-logging-output-of-a-specific-task" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> last compile
+<div class="howto-summary section" id="show-more-tab-completion-suggestions">
+<h4>Show more tab completion suggestions<a class="reference external" href="interactive.html#verbose_completion"> (details)</a><a class="headerlink" href="#show-more-tab-completion-suggestions" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-text"><div class="highlight"><pre>Press tab multiple times.
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="show-warnings-from-the-previous-compilation">
-<h4>Show warnings from the previous compilation<a class="reference external" href="logging.html#printwarnings"> (details)</a><a class="headerlink" href="#show-warnings-from-the-previous-compilation" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> print-warnings
+<div class="howto-summary section" id="show-jline-keybindings">
+<h4>Show JLine keybindings<a class="reference external" href="interactive.html#show_keybindings"> (details)</a><a class="headerlink" href="#show-jline-keybindings" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-quick
+<span class="go">scala&gt; :keybindings</span>
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="change-the-logging-level-globally">
-<h4>Change the logging level globally<a class="reference external" href="logging.html#level"> (details)</a><a class="headerlink" href="#change-the-logging-level-globally" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>every logLevel :<span class="o">=</span> Level.Debug
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="configure-printing-of-stack-traces">
-<h4>Configure printing of stack traces<a class="reference external" href="logging.html#trace"> (details)</a><a class="headerlink" href="#configure-printing-of-stack-traces" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>every traceLevel :<span class="o">=</span> 5<span class="sb">`</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="print-the-output-of-tests-immediately-instead-of-buffering">
-<h4>Print the output of tests immediately instead of buffering<a class="reference external" href="logging.html#nobuffer"> (details)</a><a class="headerlink" href="#print-the-output-of-tests-immediately-instead-of-buffering" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">logBuffered</span> <span class="o">:=</span> <span class="kc">false</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="add-a-custom-logger">
-<h4>Add a custom logger<a class="reference external" href="logging.html#custom"> (details)</a><a class="headerlink" href="#add-a-custom-logger" title="Permalink to this headline">¶</a></h4>
+<div class="howto-summary section" id="modify-the-default-jline-keybindings">
+<h4>Modify the default JLine keybindings<a class="reference external" href="interactive.html#change_keybindings"> (details)</a><a class="headerlink" href="#modify-the-default-jline-keybindings" title="Permalink to this headline">¶</a></h4>
 <p></p>
 </div>
-<div class="howto-summary section" id="log-messages-in-a-task">
-<h4>Log messages in a task<a class="reference external" href="logging.html#log"> (details)</a><a class="headerlink" href="#log-messages-in-a-task" title="Permalink to this headline">¶</a></h4>
-<p></p>
+<div class="howto-summary section" id="configure-the-prompt-string">
+<h4>Configure the prompt string<a class="reference external" href="interactive.html#prompt"> (details)</a><a class="headerlink" href="#configure-the-prompt-string" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="use-history">
+<h4>Use history<a class="reference external" href="interactive.html#history"> (details)</a><a class="headerlink" href="#use-history" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> !
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="change-the-location-of-the-interactive-history-file">
+<h4>Change the location of the interactive history file<a class="reference external" href="interactive.html#history_file"> (details)</a><a class="headerlink" href="#change-the-location-of-the-interactive-history-file" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="use-the-same-history-for-all-projects">
+<h4>Use the same history for all projects<a class="reference external" href="interactive.html#share_history"> (details)</a><a class="headerlink" href="#use-the-same-history-for-all-projects" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="disable-interactive-history">
+<h4>Disable interactive history<a class="reference external" href="interactive.html#disable_history"> (details)</a><a class="headerlink" href="#disable-interactive-history" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="run-commands-before-entering-interactive-mode">
+<h4>Run commands before entering interactive mode<a class="reference external" href="interactive.html#pre_commands"> (details)</a><a class="headerlink" href="#run-commands-before-entering-interactive-mode" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt clean compile shell
+</pre></div>
+</div>
+</p>
 </div>
 </div>
-<div class="doc-howto-summary section" id="configure-and-use-scala">
-<h3>Configure and use Scala<a class="reference external" href="scala.html"> (details)</a><a class="headerlink" href="#configure-and-use-scala" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="set-the-scala-version-used-for-building-the-project">
-<h4>Set the Scala version used for building the project<a class="reference external" href="scala.html#version"> (details)</a><a class="headerlink" href="#set-the-scala-version-used-for-building-the-project" title="Permalink to this headline">¶</a></h4>
+<div class="doc-howto-summary section" id="project-metadata">
+<h3>Project metadata<a class="reference external" href="metadata.html"> (details)</a><a class="headerlink" href="#project-metadata" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="set-the-project-name">
+<h4>Set the project name<a class="reference external" href="metadata.html#name"> (details)</a><a class="headerlink" href="#set-the-project-name" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;demo&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="set-the-project-version">
+<h4>Set the project version<a class="reference external" href="metadata.html#version"> (details)</a><a class="headerlink" href="#set-the-project-version" title="Permalink to this headline">¶</a></h4>
 <p><div class="highlight-scala"><div class="highlight"><pre><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="disable-the-automatic-dependency-on-the-scala-library">
-<h4>Disable the automatic dependency on the Scala library<a class="reference external" href="scala.html#noauto"> (details)</a><a class="headerlink" href="#disable-the-automatic-dependency-on-the-scala-library" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+<div class="howto-summary section" id="set-the-project-organization">
+<h4>Set the project organization<a class="reference external" href="metadata.html#organization"> (details)</a><a class="headerlink" href="#set-the-project-organization" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
 </pre></div>
 </div>
 </p>
 </div>
-<div class="howto-summary section" id="temporarily-switch-to-a-different-scala-version">
-<h4>Temporarily switch to a different Scala version<a class="reference external" href="scala.html#temporary"> (details)</a><a class="headerlink" href="#temporarily-switch-to-a-different-scala-version" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ++ 2.8.2
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="use-a-local-scala-installation-for-building-a-project">
-<h4>Use a local Scala installation for building a project<a class="reference external" href="scala.html#local"> (details)</a><a class="headerlink" href="#use-a-local-scala-installation-for-building-a-project" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="build-a-project-against-multiple-scala-versions">
-<h4>Build a project against multiple Scala versions<a class="reference external" href="scala.html#cross"> (details)</a><a class="headerlink" href="#build-a-project-against-multiple-scala-versions" title="Permalink to this headline">¶</a></h4>
-<p></p>
-</div>
-<div class="howto-summary section" id="enter-the-scala-repl-with-a-project-s-dependencies-on-the-classpath-but-not-the-compiled-project-classes">
-<h4>Enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes<a class="reference external" href="scala.html#console-quick"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-a-project-s-dependencies-on-the-classpath-but-not-the-compiled-project-classes" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-quick
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="enter-the-scala-repl-with-a-project-s-dependencies-and-compiled-code-on-the-classpath">
-<h4>Enter the Scala REPL with a project's dependencies and compiled code on the classpath<a class="reference external" href="scala.html#console"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-a-project-s-dependencies-and-compiled-code-on-the-classpath" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="enter-the-scala-repl-with-plugins-and-the-build-definition-on-the-classpath">
-<h4>Enter the Scala REPL with plugins and the build definition on the classpath<a class="reference external" href="scala.html#console-project"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-plugins-and-the-build-definition-on-the-classpath" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-project
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="define-the-initial-commands-evaluated-when-entering-the-scala-repl">
-<h4>Define the initial commands evaluated when entering the Scala REPL<a class="reference external" href="scala.html#initial"> (details)</a><a class="headerlink" href="#define-the-initial-commands-evaluated-when-entering-the-scala-repl" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hi!&quot;)&quot;&quot;&quot;</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="use-the-scala-repl-from-project-code">
-<h4>Use the Scala REPL from project code<a class="reference external" href="scala.html#embed"> (details)</a><a class="headerlink" href="#use-the-scala-repl-from-project-code" title="Permalink to this headline">¶</a></h4>
+<div class="howto-summary section" id="set-the-project-homepage-and-other-metadata-used-in-a-published-pom-xml">
+<h4>set the project homepage and other metadata used in a published pom.xml<a class="reference external" href="metadata.html#other"> (details)</a><a class="headerlink" href="#set-the-project-homepage-and-other-metadata-used-in-a-published-pom-xml" title="Permalink to this headline">¶</a></h4>
 <p></p>
 </div>
 </div>
@@ -386,6 +379,143 @@ See also the <a class="reference internal" href="index.html"><em>Basic Index</em
 </p>
 </div>
 </div>
+<div class="doc-howto-summary section" id="configure-and-use-scala">
+<h3>Configure and use Scala<a class="reference external" href="scala.html"> (details)</a><a class="headerlink" href="#configure-and-use-scala" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="set-the-scala-version-used-for-building-the-project">
+<h4>Set the Scala version used for building the project<a class="reference external" href="scala.html#version"> (details)</a><a class="headerlink" href="#set-the-scala-version-used-for-building-the-project" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="disable-the-automatic-dependency-on-the-scala-library">
+<h4>Disable the automatic dependency on the Scala library<a class="reference external" href="scala.html#noauto"> (details)</a><a class="headerlink" href="#disable-the-automatic-dependency-on-the-scala-library" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="temporarily-switch-to-a-different-scala-version">
+<h4>Temporarily switch to a different Scala version<a class="reference external" href="scala.html#temporary"> (details)</a><a class="headerlink" href="#temporarily-switch-to-a-different-scala-version" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ++ 2.8.2
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="use-a-local-scala-installation-for-building-a-project">
+<h4>Use a local Scala installation for building a project<a class="reference external" href="scala.html#local"> (details)</a><a class="headerlink" href="#use-a-local-scala-installation-for-building-a-project" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="build-a-project-against-multiple-scala-versions">
+<h4>Build a project against multiple Scala versions<a class="reference external" href="scala.html#cross"> (details)</a><a class="headerlink" href="#build-a-project-against-multiple-scala-versions" title="Permalink to this headline">¶</a></h4>
+<p></p>
+</div>
+<div class="howto-summary section" id="enter-the-scala-repl-with-a-project-s-dependencies-on-the-classpath-but-not-the-compiled-project-classes">
+<h4>Enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes<a class="reference external" href="scala.html#console-quick"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-a-project-s-dependencies-on-the-classpath-but-not-the-compiled-project-classes" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-quick
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="enter-the-scala-repl-with-a-project-s-dependencies-and-compiled-code-on-the-classpath">
+<h4>Enter the Scala REPL with a project's dependencies and compiled code on the classpath<a class="reference external" href="scala.html#console"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-a-project-s-dependencies-and-compiled-code-on-the-classpath" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="enter-the-scala-repl-with-plugins-and-the-build-definition-on-the-classpath">
+<h4>Enter the Scala REPL with plugins and the build definition on the classpath<a class="reference external" href="scala.html#console-project"> (details)</a><a class="headerlink" href="#enter-the-scala-repl-with-plugins-and-the-build-definition-on-the-classpath" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-project
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="define-the-initial-commands-evaluated-when-entering-the-scala-repl">
+<h4>Define the initial commands evaluated when entering the Scala REPL<a class="reference external" href="scala.html#initial"> (details)</a><a class="headerlink" href="#define-the-initial-commands-evaluated-when-entering-the-scala-repl" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hi!&quot;)&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="use-the-scala-repl-from-project-code">
+<h4>Use the Scala REPL from project code<a class="reference external" href="scala.html#embed"> (details)</a><a class="headerlink" href="#use-the-scala-repl-from-project-code" title="Permalink to this headline">¶</a></h4>
+<p></p>
+</div>
+</div>
+<div class="doc-howto-summary section" id="generating-files">
+<h3>Generating files<a class="reference external" href="generatefiles.html"> (details)</a><a class="headerlink" href="#generating-files" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="generate-sources">
+<h4>Generate sources<a class="reference external" href="generatefiles.html#sources"> (details)</a><a class="headerlink" href="#generate-sources" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="generate-resources">
+<h4>Generate resources<a class="reference external" href="generatefiles.html#resources"> (details)</a><a class="headerlink" href="#generate-resources" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</p>
+</div>
+</div>
+<div class="doc-howto-summary section" id="configure-and-use-logging">
+<h3>Configure and use logging<a class="reference external" href="logging.html"> (details)</a><a class="headerlink" href="#configure-and-use-logging" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="view-the-logging-output-of-the-previously-executed-command">
+<h4>View the logging output of the previously executed command<a class="reference external" href="logging.html#last"> (details)</a><a class="headerlink" href="#view-the-logging-output-of-the-previously-executed-command" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> last
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="view-the-previous-logging-output-of-a-specific-task">
+<h4>View the previous logging output of a specific task<a class="reference external" href="logging.html#tasklast"> (details)</a><a class="headerlink" href="#view-the-previous-logging-output-of-a-specific-task" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> last compile
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="show-warnings-from-the-previous-compilation">
+<h4>Show warnings from the previous compilation<a class="reference external" href="logging.html#printwarnings"> (details)</a><a class="headerlink" href="#show-warnings-from-the-previous-compilation" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> print-warnings
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="change-the-logging-level-globally">
+<h4>Change the logging level globally<a class="reference external" href="logging.html#level"> (details)</a><a class="headerlink" href="#change-the-logging-level-globally" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>every logLevel :<span class="o">=</span> Level.Debug
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="configure-printing-of-stack-traces">
+<h4>Configure printing of stack traces<a class="reference external" href="logging.html#trace"> (details)</a><a class="headerlink" href="#configure-printing-of-stack-traces" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>every traceLevel :<span class="o">=</span> 5<span class="sb">`</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="print-the-output-of-tests-immediately-instead-of-buffering">
+<h4>Print the output of tests immediately instead of buffering<a class="reference external" href="logging.html#nobuffer"> (details)</a><a class="headerlink" href="#print-the-output-of-tests-immediately-instead-of-buffering" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">logBuffered</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="add-a-custom-logger">
+<h4>Add a custom logger<a class="reference external" href="logging.html#custom"> (details)</a><a class="headerlink" href="#add-a-custom-logger" title="Permalink to this headline">¶</a></h4>
+<p></p>
+</div>
+<div class="howto-summary section" id="log-messages-in-a-task">
+<h4>Log messages in a task<a class="reference external" href="logging.html#log"> (details)</a><a class="headerlink" href="#log-messages-in-a-task" title="Permalink to this headline">¶</a></h4>
+<p></p>
+</div>
+</div>
 <div class="doc-howto-summary section" id="configure-packaging">
 <h3>Configure packaging<a class="reference external" href="package.html"> (details)</a><a class="headerlink" href="#configure-packaging" title="Permalink to this headline">¶</a></h3>
 <div class="howto-summary section" id="use-the-packaged-jar-on-classpaths-instead-of-class-directory">
@@ -411,136 +541,6 @@ See also the <a class="reference internal" href="index.html"><em>Basic Index</em
 <h4>Modify the contents of the package<a class="reference external" href="package.html#contents"> (details)</a><a class="headerlink" href="#modify-the-contents-of-the-package" title="Permalink to this headline">¶</a></h4>
 <p><div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">&lt;+=</span>
    <span class="n">baseDirectory</span> <span class="n">map</span> <span class="o">{</span> <span class="n">dir</span> <span class="k">=&gt;</span> <span class="o">(</span> <span class="n">dir</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span> <span class="o">}</span>
-</pre></div>
-</div>
-</p>
-</div>
-</div>
-<div class="doc-howto-summary section" id="project-metadata">
-<h3>Project metadata<a class="reference external" href="metadata.html"> (details)</a><a class="headerlink" href="#project-metadata" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="set-the-project-name">
-<h4>Set the project name<a class="reference external" href="metadata.html#name"> (details)</a><a class="headerlink" href="#set-the-project-name" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;demo&quot;</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="set-the-project-version">
-<h4>Set the project version<a class="reference external" href="metadata.html#version"> (details)</a><a class="headerlink" href="#set-the-project-version" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="set-the-project-organization">
-<h4>Set the project organization<a class="reference external" href="metadata.html#organization"> (details)</a><a class="headerlink" href="#set-the-project-organization" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="set-the-project-homepage-and-other-metadata-used-in-a-published-pom-xml">
-<h4>set the project homepage and other metadata used in a published pom.xml<a class="reference external" href="metadata.html#other"> (details)</a><a class="headerlink" href="#set-the-project-homepage-and-other-metadata-used-in-a-published-pom-xml" title="Permalink to this headline">¶</a></h4>
-<p></p>
-</div>
-</div>
-<div class="doc-howto-summary section" id="triggered-execution">
-<h3>Triggered execution<a class="reference external" href="triggered.html"> (details)</a><a class="headerlink" href="#triggered-execution" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="run-a-command-when-sources-change">
-<h4>Run a command when sources change<a class="reference external" href="triggered.html#basic"> (details)</a><a class="headerlink" href="#run-a-command-when-sources-change" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ <span class="nb">test</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="run-multiple-commands-when-sources-change">
-<h4>Run multiple commands when sources change<a class="reference external" href="triggered.html#multi"> (details)</a><a class="headerlink" href="#run-multiple-commands-when-sources-change" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;a ;b
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="configure-the-sources-that-are-checked-for-changes">
-<h4>Configure the sources that are checked for changes<a class="reference external" href="triggered.html#sources"> (details)</a><a class="headerlink" href="#configure-the-sources-that-are-checked-for-changes" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">&lt;+=</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="k">_</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span> <span class="o">}</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="set-the-time-interval-between-checks-for-changes-to-sources">
-<h4>Set the time interval between checks for changes to sources<a class="reference external" href="triggered.html#interval"> (details)</a><a class="headerlink" href="#set-the-time-interval-between-checks-for-changes-to-sources" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
-</pre></div>
-</div>
-</p>
-</div>
-</div>
-<div class="doc-howto-summary section" id="interactive-mode">
-<h3>Interactive mode<a class="reference external" href="interactive.html"> (details)</a><a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h3>
-<div class="howto-summary section" id="use-tab-completion">
-<h4>Use tab completion<a class="reference external" href="interactive.html#basic_completion"> (details)</a><a class="headerlink" href="#use-tab-completion" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>-only &lt;TAB&gt;
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="show-more-tab-completion-suggestions">
-<h4>Show more tab completion suggestions<a class="reference external" href="interactive.html#verbose_completion"> (details)</a><a class="headerlink" href="#show-more-tab-completion-suggestions" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-text"><div class="highlight"><pre>Press tab multiple times.
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="show-jline-keybindings">
-<h4>Show JLine keybindings<a class="reference external" href="interactive.html#show_keybindings"> (details)</a><a class="headerlink" href="#show-jline-keybindings" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> console-quick
-<span class="go">scala&gt; :keybindings</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="modify-the-default-jline-keybindings">
-<h4>Modify the default JLine keybindings<a class="reference external" href="interactive.html#change_keybindings"> (details)</a><a class="headerlink" href="#modify-the-default-jline-keybindings" title="Permalink to this headline">¶</a></h4>
-<p></p>
-</div>
-<div class="howto-summary section" id="configure-the-prompt-string">
-<h4>Configure the prompt string<a class="reference external" href="interactive.html#prompt"> (details)</a><a class="headerlink" href="#configure-the-prompt-string" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="use-history">
-<h4>Use history<a class="reference external" href="interactive.html#history"> (details)</a><a class="headerlink" href="#use-history" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> !
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="change-the-location-of-the-interactive-history-file">
-<h4>Change the location of the interactive history file<a class="reference external" href="interactive.html#history_file"> (details)</a><a class="headerlink" href="#change-the-location-of-the-interactive-history-file" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span><span class="o">(</span><span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">))</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="use-the-same-history-for-all-projects">
-<h4>Use the same history for all projects<a class="reference external" href="interactive.html#share_history"> (details)</a><a class="headerlink" href="#use-the-same-history-for-all-projects" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">&lt;&lt;=</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">)</span> <span class="o">{</span> <span class="n">t</span> <span class="k">=&gt;</span> <span class="nc">Some</span><span class="o">(</span><span class="n">t</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span> <span class="o">}</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="disable-interactive-history">
-<h4>Disable interactive history<a class="reference external" href="interactive.html#disable_history"> (details)</a><a class="headerlink" href="#disable-interactive-history" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">None</span>
-</pre></div>
-</div>
-</p>
-</div>
-<div class="howto-summary section" id="run-commands-before-entering-interactive-mode">
-<h4>Run commands before entering interactive mode<a class="reference external" href="interactive.html#pre_commands"> (details)</a><a class="headerlink" href="#run-commands-before-entering-interactive-mode" title="Permalink to this headline">¶</a></h4>
-<p><div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt clean compile shell
 </pre></div>
 </div>
 </p>
