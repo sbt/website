@@ -14,12 +14,12 @@
 
 	<span class="keyword">import</span> java.io.File;
 
-public interface <a title="object xsbti.Launcher" id="313380">Launcher</a>
+public interface <a title="object xsbti.Launcher" id="313383">Launcher</a>
 <span class="delimiter">{</span>
-	public static <span class="keyword">final</span> int <a title="Int" id="313688">InterfaceVersion</a> = <span class="int">1</span>;
-	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String)xsbti.ScalaProvider" id="313381">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313910">version</a><span class="delimiter">)</span>;
-	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String)xsbti.ScalaProvider" id="313382">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313908">version</a>, String <a title="java.lang.String" id="313909">reason</a><span class="delimiter">)</span>;
-	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String, scalaOrg: java.lang.String)xsbti.ScalaProvider" id="313383">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313905">version</a>, String <a title="java.lang.String" id="313906">reason</a>, String <a title="java.lang.String" id="313907">scalaOrg</a><span class="delimiter">)</span>;
+	public static <span class="keyword">final</span> int <a title="Int" id="313691">InterfaceVersion</a> = <span class="int">1</span>;
+	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String)xsbti.ScalaProvider" id="313384">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313913">version</a><span class="delimiter">)</span>;
+	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String)xsbti.ScalaProvider" id="313385">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313911">version</a>, String <a title="java.lang.String" id="313912">reason</a><span class="delimiter">)</span>;
+	public <a href="ScalaProvider.java.html#11291" title="xsbti.ScalaProvider">ScalaProvider</a> <a title="(version: java.lang.String, reason: java.lang.String, scalaOrg: java.lang.String)xsbti.ScalaProvider" id="313386">getScala</a><span class="delimiter">(</span>String <a title="java.lang.String" id="313908">version</a>, String <a title="java.lang.String" id="313909">reason</a>, String <a title="java.lang.String" id="313910">scalaOrg</a><span class="delimiter">)</span>;
 	<span class="comment">/**
 	 * returns an `AppProvider` which is able to resolve an application
 	 * and instantiate its `xsbti.Main` in a new classloader.
@@ -27,33 +27,33 @@ public interface <a title="object xsbti.Launcher" id="313380">Launcher</a>
 	 * @param id  The artifact coordinates of the application.
 	 * @param version The version to resolve
 	 */</span>
-	public <a href="AppProvider.java.html#11214" title="xsbti.AppProvider">AppProvider</a> <a title="(id: xsbti.ApplicationID, version: java.lang.String)xsbti.AppProvider" id="313384">app</a><span class="delimiter">(</span><a href="ApplicationID.java.html#11219" title="xsbti.ApplicationID">ApplicationID</a> <a title="xsbti.ApplicationID" id="313685">id</a>, String <a title="java.lang.String" id="313686">version</a><span class="delimiter">)</span>;
+	public <a href="AppProvider.java.html#11214" title="xsbti.AppProvider">AppProvider</a> <a title="(id: xsbti.ApplicationID, version: java.lang.String)xsbti.AppProvider" id="313387">app</a><span class="delimiter">(</span><a href="ApplicationID.java.html#11219" title="xsbti.ApplicationID">ApplicationID</a> <a title="xsbti.ApplicationID" id="313688">id</a>, String <a title="java.lang.String" id="313689">version</a><span class="delimiter">)</span>;
 	<span class="comment">/**
 	 * This returns the &quot;top&quot; classloader for a launched application.   This classlaoder
 	 * lives somewhere *above* that used for the application.   This classloader
 	 * is used for doing any sort of JNA/native library loads so that downstream
 	 * loaders can share native libraries rather than run into &quot;load-once&quot; restrictions.
 	 */</span>
-	public ClassLoader <a title="()java.lang.ClassLoader" id="313385">topLoader</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public ClassLoader <a title="()java.lang.ClassLoader" id="313388">topLoader</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/**
 	 * Return the global lock for interacting with the file system.
 	 *
 	 * A mechanism to do file-based locking correctly on the JVM.  See
 	 * the [[GlobalLock]] class for more details.
 	 */</span>
-	public <a href="GlobalLock.java.html#11242" title="xsbti.GlobalLock">GlobalLock</a> <a title="()xsbti.GlobalLock" id="313386">globalLock</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public <a href="GlobalLock.java.html#11242" title="xsbti.GlobalLock">GlobalLock</a> <a title="()xsbti.GlobalLock" id="313389">globalLock</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/** Value of the `sbt.boot.dir` property, or the default
 	 *  boot configuration defined in `boot.directory`.
 	 */</span>
-	public File <a title="()java.io.File" id="313387">bootDirectory</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public File <a title="()java.io.File" id="313390">bootDirectory</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/** Configured launcher repositories.  These repositories
 	 *  are the same ones used to load the launcher.
 	 */</span>
-	public xsbti.<a href="Repository.java.html#11282" title="xsbti.Repository">Repository</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.Repository]" id="313388">ivyRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public xsbti.<a href="Repository.java.html#11282" title="xsbti.Repository">Repository</a><span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[xsbti.Repository]" id="313391">ivyRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/** The user has configured the launcher with the only repositories
 	 * it wants to use for this applciation.
 	 */</span>
-	public boolean <a title="()Boolean" id="313389">isOverrideRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public boolean <a title="()Boolean" id="313392">isOverrideRepositories</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/**
 	 * The value of `ivy.ivy-home` of the boot properties file.
 	 * This defaults to the `sbt.ivy.home` property, or `~/.ivy2`.
@@ -62,12 +62,12 @@ public interface <a title="object xsbti.Launcher" id="313380">Launcher</a>
 	 *
 	 * @returns a file, or null if not set.
 	 */</span>
-	public File <a title="()java.io.File" id="313390">ivyHome</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public File <a title="()java.io.File" id="313393">ivyHome</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 	<span class="comment">/** An array of the checksums that should be checked when retreiving artifacts.
 	 *  Configured via the the `ivy.checksums` section of the boot configuration.
 	 *  Defaults to sha1, md5 or the value of the `sbt.checksums` property.
 	 */</span>
-	public String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[java.lang.String]" id="313391">checksums</a><span class="delimiter">(</span><span class="delimiter">)</span>;
+	public String<span class="delimiter">[</span><span title="Array" class="delimiter">]</span> <a title="()Array[java.lang.String]" id="313394">checksums</a><span class="delimiter">(</span><span class="delimiter">)</span>;
 <span class="delimiter">}</span>
 
         </pre>
