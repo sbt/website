@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Nightly Builds</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Using-Sonatype.html">Deploying to Sonatype</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -91,7 +91,26 @@
             
   <div class="section" id="nightly-builds">
 <h1>Nightly Builds<a class="headerlink" href="#nightly-builds" title="Permalink to this headline">¶</a></h1>
-<p>See the <a class="reference external" href="http://scala-sbt.org/snapshot/docs/Getting-Started/Setup">setup instructions</a> for the latest snapshot.</p>
+<p>The latest development versions of 0.13 are available as nightly builds on <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/">Typesafe Snapshots</a>.</p>
+<p>To use a nightly build, the instructions are the same for <a class="reference internal" href="../Getting-Started/Setup.html"><em>normal manual setup</em></a> except:</p>
+<ol class="arabic simple">
+<li>Download the launcher jar from one of the subdirectories of &lt;<a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/">http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/</a>.
+They should be listed in chronological order, so the most recent one will be last.</li>
+<li>The version number is the name of the subdirectory and is of the form
+<tt class="docutils literal"><span class="pre">0.13.x-yyyyMMdd-HHmmss</span></tt>. Use this in a <tt class="docutils literal"><span class="pre">build.properties</span></tt> file.</li>
+<li>Call your script something like <tt class="docutils literal"><span class="pre">sbt-nightly</span></tt> to retain access to a
+stable <tt class="docutils literal"><span class="pre">sbt</span></tt> launcher.  The documentation will refer to the script as <tt class="docutils literal"><span class="pre">sbt</span></tt>, however.</li>
+</ol>
+<p>Related to the third point, remember that an <tt class="docutils literal"><span class="pre">sbt.version</span></tt> setting in
+<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt> determines the version of sbt
+to use in a project. If it is not present, the default version
+associated with the launcher is used. This means that you must set
+<tt class="docutils literal"><span class="pre">sbt.version=yyyyMMdd-HHmmss</span></tt> in an existing
+<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt>. You can verify the right
+version of sbt is being used to build a project by running
+<tt class="docutils literal"><span class="pre">about</span></tt>.</p>
+<p>To reduce problems, it is recommended to not use a launcher jar for one
+nightly version to launch a different nightly version of sbt.</p>
 </div>
 
 

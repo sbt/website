@@ -161,6 +161,19 @@
       </span>
       </h4>
       <p class="shortcomment cmt">The application base directory, which is not necessarily the current working directory.</p>
+    </li><li name="sbt.StateOps#classLoaderCache" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="classLoaderCache:sbt.classpath.ClassLoaderCache"></a>
+      <a id="classLoaderCache:ClassLoaderCache"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">classLoaderCache</span><span class="result">: <span class="extype" name="sbt.classpath.ClassLoaderCache">ClassLoaderCache</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Get the class loader cache for the application.</p>
     </li><li name="sbt.StateOps#clearGlobalLog" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="clearGlobalLog:sbt.State"></a>
       <a id="clearGlobalLog:State"></a>
@@ -239,6 +252,32 @@
       </span>
       </h4>
       <p class="shortcomment cmt">Returns true if <code>key</code> exists in the custom attributes map, false if it does not exist.</p>
+    </li><li name="sbt.StateOps#initializeClassLoaderCache" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="initializeClassLoaderCache:sbt.State"></a>
+      <a id="initializeClassLoaderCache:State"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">initializeClassLoaderCache</span><span class="result">: <a href="State.html" class="extype" name="sbt.State">State</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Create and register a class loader cache.</p><div class="fullcomment"><div class="comment cmt"><p>Create and register a class loader cache.  This should be called once at the application entry-point.</p></div></div>
+    </li><li name="sbt.StateOps#interactive" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="interactive:Boolean"></a>
+      <a id="interactive:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">interactive</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">An advisory flag that is <code>true</code> if this application will execute commands based on user input.</p>
     </li><li name="sbt.StateOps#keepLastLog" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="keepLastLog:sbt.State"></a>
       <a id="keepLastLog:State"></a>
@@ -363,6 +402,19 @@ This means that any commands added to this State will be dropped.</p></div></div
       </span>
       </h4>
       <p class="shortcomment cmt">Runs any defined exitHooks and then clears them.</p>
+    </li><li name="sbt.StateOps#setInteractive" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="setInteractive(flag:Boolean):sbt.State"></a>
+      <a id="setInteractive(Boolean):State"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setInteractive</span><span class="params">(<span name="flag">flag: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="State.html" class="extype" name="sbt.State">State</a></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Changes the advisory <code>interactive</code> flag.</p>
     </li><li name="sbt.StateOps#setNext" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="setNext(n:sbt.State.Next):sbt.State"></a>
       <a id="setNext(Next):State"></a>

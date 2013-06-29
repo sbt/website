@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Setup</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Welcome.html">Welcome!</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -101,52 +101,81 @@
 <li>Create your build definition.</li>
 </ul>
 </li>
-<li>Move on to <a class="reference internal" href="Running.html"><em>running</em></a> to learn how to run
-sbt.</li>
+<li>Move on to <a class="reference internal" href="Running.html"><em>running</em></a> to learn how to run sbt.</li>
 <li>Then move on to <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>
 to learn more about build definitions.</li>
 </ul>
 </div>
 <div class="section" id="installing-sbt">
 <h2>Installing sbt<a class="headerlink" href="#installing-sbt" title="Permalink to this headline">¶</a></h2>
-<p>The latest development versions of 0.13.0 are available as nightly builds on <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/">Typesafe Snapshots</a>.</p>
-<p>To use a nightly build, the instructions are the same for normal manual setup except:</p>
-<ol class="arabic simple">
-<li>Download the launcher jar from one of the subdirectories of &lt;<a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/">http://repo.typesafe.com/typesafe/ivy-snapshots/org.scala-sbt/sbt-launch/</a>.
-They should be listed in chronological order, so the most recent one will be last.</li>
-<li>The version number is the name of the subdirectory and is of the form
-<tt class="docutils literal"><span class="pre">0.13.x-yyyyMMdd-HHmmss</span></tt>. Use this in a <tt class="docutils literal"><span class="pre">build.properties</span></tt> file.</li>
-<li>Call your script something like <tt class="docutils literal"><span class="pre">sbt-nightly</span></tt> to retain access to a
-stable <tt class="docutils literal"><span class="pre">sbt</span></tt> launcher.  The documentation will refer to the script as <tt class="docutils literal"><span class="pre">sbt</span></tt>, however.</li>
-</ol>
-<p>Related to the third point, remember that an <tt class="docutils literal"><span class="pre">sbt.version</span></tt> setting in
-<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt> determines the version of sbt
-to use in a project. If it is not present, the default version
-associated with the launcher is used. This means that you must set
-<tt class="docutils literal"><span class="pre">sbt.version=yyyyMMdd-HHmmss</span></tt> in an existing
-<tt class="docutils literal"><span class="pre">&lt;build-base&gt;/project/build.properties</span></tt>. You can verify the right
-version of sbt is being used to build a project by running
-<tt class="docutils literal"><span class="pre">sbtVersion</span></tt>.</p>
-<p>To reduce problems, it is recommended to not use a launcher jar for one
-nightly version to launch a different nightly version of sbt.</p>
-<div class="section" id="manual-installation">
-<h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="windows">
-<span id="id1"></span><h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
-<p>Create a batch file <tt class="docutils literal"><span class="pre">sbt.bat</span></tt>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">set </span><span class="nv">SCRIPT_DIR</span><span class="o">=</span>%~dp0
-<span class="gp">$</span> java -Xmx512M -jar <span class="s2">&quot;%SCRIPT_DIR%sbt-launch.jar&quot;</span> %*
+<p>sbt provides several packages for different operating systems or you can do <a class="reference internal" href="#manual-installation">Manual Installation</a>.</p>
+<dl class="docutils">
+<dt>Officially supported packages:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0/sbt.msi">MSI</a> for Windows</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0/sbt.zip">ZIP</a> or <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0/sbt.tgz">TGZ</a> packages</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0/sbt.rpm">RPM</a> package</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt//0.13.0/sbt.deb">DEB</a> package</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please report any issues with these to the <a class="reference external" href="https://github.com/sbt/sbt-launcher-package">sbt-launcher-package</a> project.</p>
+</div>
+<dl class="docutils">
+<dt><strong>Third-party packages</strong>:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#homebrew-setup"><em>Homebrew</em></a> or <a class="reference internal" href="#macports-setup"><em>Macports</em></a> for <a class="reference internal" href="#mac">Mac</a></li>
+<li><a class="reference internal" href="#gentoo">Gentoo</a> emerge overlays</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Third-party packages may not provide the latest version.
+Please make sure to report any issues with these packages to the relevant maintainers.</p>
+</div>
+<div class="section" id="mac">
+<h3>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="macports-setup">
+<span id="id1"></span><h4><a class="reference external" href="http://macports.org/">Macports</a><a class="headerlink" href="#macports-setup" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> port install sbt
 </pre></div>
 </div>
-<p>and put sbt-launch.jar in the same directory as the batch file. Put <tt class="docutils literal"><span class="pre">sbt.bat</span></tt> on your path so
-that you can launch <tt class="docutils literal"><span class="pre">sbt</span></tt> in any directory by typing <tt class="docutils literal"><span class="pre">sbt</span></tt> at the command prompt.</p>
 </div>
+<div class="section" id="homebrew-setup">
+<span id="id2"></span><h4><a class="reference external" href="http://mxcl.github.com/homebrew/">Homebrew</a><a class="headerlink" href="#homebrew-setup" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> brew install sbt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="gentoo">
+<h3>Gentoo<a class="headerlink" href="#gentoo" title="Permalink to this headline">¶</a></h3>
+<p>In the official tree there is no ebuild for sbt. But there are ebuilds to
+merge sbt from binaries:
+<a class="reference external" href="https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin">https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin</a>. To
+merge sbt from this ebuilds you can do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> mkdir -p /usr/local/portage <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /usr/local/portage
+<span class="gp">$</span> git clone git://github.com/whiter4bbit/overlays.git
+<span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;PORTDIR_OVERLAY=$PORTDIR_OVERLAY /usr/local/portage/overlays&quot;</span> &gt;&gt; /etc/make.conf
+<span class="gp">$</span> emerge sbt-bin
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please report any issues with the ebuild <a class="reference external" href="https://github.com/whiter4bbit/overlays/issues">here</a>.</p>
+</div>
+</div>
+<div class="section" id="manual-installation">
+<span id="id3"></span><h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="unix">
 <h4>Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
 <p>Put sbt-launch.jar in <tt class="docutils literal"><span class="pre">~/bin</span></tt>.</p>
-<p>Create a script to run the jar, by placing this in a file called <tt class="docutils literal"><span class="pre">sbt</span></tt>
-in your <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</span>
+<p>Create a script to run the jar, by creating <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt> with these contents:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar <span class="sb">`</span>dirname <span class="nv">$0</span><span class="sb">`</span>/sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
 </pre></div>
 </div>
 <p>Make the script executable:</p>
@@ -154,16 +183,56 @@ in your <tt class="docutils literal"><span class="pre">~/bin</span></tt> directo
 </pre></div>
 </div>
 </div>
+<div class="section" id="windows">
+<h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
+<p>Manual installation for Windows varies by terminal type and whether Cygwin is used.
+In all cases, put the batch file or script on the path so that you can launch <tt class="docutils literal"><span class="pre">sbt</span></tt>
+in any directory by typing <tt class="docutils literal"><span class="pre">sbt</span></tt> at the command prompt.  Also, adjust JVM settings
+according to your machine if necessary.</p>
+<p>For <strong>non-Cygwin users using the standard Windows terminal</strong>, create a batch file <tt class="docutils literal"><span class="pre">sbt.bat</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">set </span><span class="nv">SCRIPT_DIR</span><span class="o">=</span>%~dp0
+<span class="gp">$</span> java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize<span class="o">=</span>256M -jar <span class="s2">&quot;%SCRIPT_DIR%sbt-launch.jar&quot;</span> %*
+</pre></div>
+</div>
+<p>and put sbt-launch.jar in the same directory as the batch file.</p>
+<p>If using <strong>Cygwin with the standard Windows terminal</strong>, create a bash script <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
+</pre></div>
+</div>
+<p>Replace <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> with your path the the launcher jar and remember to use <tt class="docutils literal"><span class="pre">cygpath</span></tt> if necessary.
+Make the script executable:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
+</pre></div>
+</div>
+<p>If using <strong>Cygwin with an Ansi terminal</strong> (supports Ansi escape sequences and is configurable via <tt class="docutils literal"><span class="pre">stty</span></tt>), create a bash script <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="gp">$</span> stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
+<span class="gp">$</span> java -Djline.terminal<span class="o">=</span>jline.UnixTerminal -Dsbt.cygwin<span class="o">=</span><span class="nb">true</span> <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
+<span class="gp">$</span> stty icanon <span class="nb">echo</span> &gt; /dev/null 2&gt;&amp;1
+</pre></div>
+</div>
+<p>Replace <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> with your path the the launcher jar and remember to use <tt class="docutils literal"><span class="pre">cygpath</span></tt> if necessary.
+Then, make the script executable:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Other configurations are currently unsupported.
+Please feel free to <a class="reference external" href="https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md">submit a pull request</a> implementing or describing that support.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="tips-and-notes">
-<h3>Tips and Notes<a class="headerlink" href="#tips-and-notes" title="Permalink to this headline">¶</a></h3>
+<h2>Tips and Notes<a class="headerlink" href="#tips-and-notes" title="Permalink to this headline">¶</a></h2>
 <p>If you have any trouble running sbt, see <a class="reference internal" href="../Detailed-Topics/Setup-Notes.html"><em>Setup Notes</em></a> on terminal
 encodings, HTTP proxies, and JVM options.</p>
 </div>
 <div class="section" id="next">
-<h3>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h3>
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
 <p>Move on to <a class="reference internal" href="Hello.html"><em>create a simple project</em></a>.</p>
-</div>
 </div>
 </div>
 
@@ -176,15 +245,21 @@ encodings, HTTP proxies, and JVM options.</p>
 <li><a class="reference internal" href="#">Setup</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#installing-sbt">Installing sbt</a><ul>
+<li><a class="reference internal" href="#mac">Mac</a><ul>
+<li><a class="reference internal" href="#macports-setup">Macports</a></li>
+<li><a class="reference internal" href="#homebrew-setup">Homebrew</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gentoo">Gentoo</a></li>
 <li><a class="reference internal" href="#manual-installation">Manual Installation</a><ul>
-<li><a class="reference internal" href="#windows">Windows</a></li>
 <li><a class="reference internal" href="#unix">Unix</a></li>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#tips-and-notes">Tips and Notes</a></li>
 <li><a class="reference internal" href="#next">Next</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>

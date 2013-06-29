@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Command Line Reference</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Classpaths.html">Classpaths, sources, and resources</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -282,124 +282,99 @@ chain, and related settings. See <a class="reference internal" href="Inspecting-
 <p>System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as <tt class="docutils literal"><span class="pre">-Dprop=value</span></tt>. The following properties
 influence SBT execution. Also see <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>.</p>
-<table>
-  <thead>
-    <tr>
-      <td><p><em>Property</em></p>
-</td>
-      <td><p><em>Values</em></p>
-</td>
-      <td><p><em>Default</em></p>
-</td>
-      <td><p><em>Meaning</em></p>
-</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.log.format</span></tt></p>
-</td>
-      <td><p>Boolean</p>
-</td>
-      <td><p>unset</p>
-</td>
-      <td><p>If true, enable ANSI escape codes such as colors.
-If false, disable them, which can be useful on build servers or terminals
-that don't support color.
-If unset, whether to use escape codes is automatically detected.</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.global.base</span></tt></p>
-</td>
-      <td><p>Directory</p>
-</td>
-      <td><p><tt class="docutils literal"><span class="pre">~/.sbt</span></tt></p>
-</td>
-      <td><p>The directory containing global settings and plugins</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.ivy.home</span></tt></p>
-</td>
-      <td><p>Directory</p>
-</td>
-      <td><p><tt class="docutils literal"><span class="pre">~/.ivy2</span></tt></p>
-</td>
-      <td><p>The directory containing the local Ivy repository and artifact cache</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.boot.directory</span></tt></p>
-</td>
-      <td><p>Directory</p>
-</td>
-      <td><p><tt class="docutils literal"><span class="pre">~/.sbt/boot</span></tt></p>
-</td>
-      <td><p>Path to shared boot directory</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.main.class</span></tt></p>
-</td>
-      <td><p>String</p>
-</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">xsbt.inc.debug</span></tt></p>
-</td>
-      <td><p>Boolean</p>
-</td>
-      <td><p>false</p>
-</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.version</span></tt></p>
-</td>
-      <td><p>Version</p>
-</td>
-      <td><p>0.11.3</p>
-</td>
-      <td><p>sbt version to use, usually taken from project/build.properties</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.boot.properties</span></tt></p>
-</td>
-      <td><p>File</p>
-</td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt></p>
-</td>
-      <td><p>Boolean</p>
-</td>
-      <td><p>false</p>
-</td>
-      <td><p>If true, repositories configured in a build definition are ignored and
-the repositories configured for the launcher are used instead. See
-<tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt> and the <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a> documentation.</p>
-</td>
-    </tr>
-    <tr>
-      <td><p><tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt></p>
-</td>
-      <td><p>File</p>
-</td>
-      <td><p>~/.sbt/repositories</p>
-</td>
-      <td><p>A file containing the repositories to use for the launcher. The format
-is the same as a <tt class="docutils literal"><span class="pre">[repositories]</span></tt> section for a <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>
-configuration file. This setting is typically used in conjuction with
-setting <tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt> to true (see previous row and the
-<a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a> documentation).</p>
-</td>
-    </tr></tbody></div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="10%" />
+<col width="18%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Property</th>
+<th class="head">Values</th>
+<th class="head">Default</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.log.noformat</span></tt></td>
+<td>Boolean</td>
+<td>false</td>
+<td>If true, disable ANSI color codes. Useful on build
+servers or terminals that don't support color.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">sbt.global.base</span></tt></td>
+<td>Directory</td>
+<td>~/.sbt</td>
+<td>The directory containing global settings and
+plugins</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.ivy.home</span></tt></td>
+<td>Directory</td>
+<td>~/.ivy2</td>
+<td>The directory containing the local Ivy repository
+and artifact cache</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">sbt.boot.directory</span></tt></td>
+<td>Directory</td>
+<td>~/.sbt/boot</td>
+<td>Path to shared boot directory</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.main.class</span></tt></td>
+<td>String</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">xsbt.inc.debug</span></tt></td>
+<td>Boolean</td>
+<td>false</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.extraClasspath</span></tt></td>
+<td>Classpath
+Entries</td>
+<td>&nbsp;</td>
+<td>A list of classpath entries (jar files or
+directories) that are added to sbt's classpath.
+Note that the entries are deliminted by comma,
+e.g.: <tt class="docutils literal"><span class="pre">entry1,</span> <span class="pre">entry2,..</span></tt>. See also
+<tt class="docutils literal"><span class="pre">resources</span></tt> in the <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>
+documentation.</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">sbt.version</span></tt></td>
+<td>Version</td>
+<td>0.11.3</td>
+<td>sbt version to use, usually taken from
+project/build.properties</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.boot.properties</span></tt></td>
+<td>File</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt></td>
+<td>Boolean</td>
+<td>false</td>
+<td>If true, repositories configured in a build
+definition are ignored and the repositories
+configured for the launcher are used instead. See
+<tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt> and the <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>
+documentation.</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">sbt.repository.config</span></tt></td>
+<td>File</td>
+<td>~/.sbt/repositories</td>
+<td>A file containing the repositories to use for the
+launcher. The format is the same as a
+<tt class="docutils literal"><span class="pre">[repositories]</span></tt> section for a <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a>
+configuration file. This setting is typically used
+in conjuction with setting
+<tt class="docutils literal"><span class="pre">sbt.override.build.repos</span></tt> to true (see previous
+row and the <a class="reference internal" href="Launcher.html"><em>Launcher Specification</em></a> documentation).</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 

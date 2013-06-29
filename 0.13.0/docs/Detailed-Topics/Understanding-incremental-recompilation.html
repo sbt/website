@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Understanding Incremental Recompilation</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Triggered-Execution.html">Triggered Execution</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -139,10 +139,57 @@ it will, even though we might recompile extra files.</p>
 <p>SBT tracks source dependencies at the granularity of source files. For
 each source file, SBT tracks files which depend on it directly; if the
 <strong>interface</strong> of classes, objects or traits in a file changes, all files
-dependent on that source must be recompiled. In particular, this
-currently includes all transitive dependencies, that is, also
-dependencies of dependencies, dependencies of these and so on to
-arbitrary depth.</p>
+dependent on that source must be recompiled. At the moment sbt uses the
+following algorithm to calculate source files dependent on a given source
+file:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dependencies introduced through inheritance are included <em>transitively</em>;
+a dependency is introduced through inheritance if a class/trait in one
+file inherits from a trait/class in another file</li>
+<li>all other direct dependencies are included; other dependencies are also
+called &quot;meber reference&quot; dependencies because they are introduced by
+referring to a member (class, method, type, etc.) defined in some other
+source file</li>
+</ul>
+</div></blockquote>
+<p>Here's an example illustrating the definition above:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">//A.scala</span>
+<span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">foo</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="o">}</span>
+
+<span class="c1">//B.scala</span>
+<span class="k">class</span> <span class="nc">B</span> <span class="k">extends</span> <span class="n">A</span>
+
+<span class="c1">//C.scala</span>
+<span class="k">class</span> <span class="nc">C</span> <span class="k">extends</span> <span class="n">B</span>
+
+<span class="c1">//D.scala</span>
+<span class="k">class</span> <span class="nc">D</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span>
+
+<span class="c1">//E.scala</span>
+<span class="k">class</span> <span class="nc">E</span><span class="o">(</span><span class="n">d</span><span class="k">:</span> <span class="kt">D</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>There are the following dependencies through inheritance:</p>
+<div class="highlight-none"><div class="highlight"><pre>B.scala -&gt; A.scala
+C.scala -&gt; B.scala
+</pre></div>
+</div>
+<p>There are also the following member reference dependencies:</p>
+<div class="highlight-none"><div class="highlight"><pre>D.scala -&gt; A.scala
+E.scala -&gt; D.scala
+</pre></div>
+</div>
+<p>Now if the interface of <tt class="docutils literal"><span class="pre">A.scala</span></tt> is changed the following files
+will get invalidated: <tt class="docutils literal"><span class="pre">B.scala</span></tt>, <tt class="docutils literal"><span class="pre">C.scala</span></tt>, <tt class="docutils literal"><span class="pre">D.scala</span></tt>. Both
+<tt class="docutils literal"><span class="pre">B.scala</span></tt> and <tt class="docutils literal"><span class="pre">C.scala</span></tt> were included through transtive closure
+of inheritance dependencies. The <tt class="docutils literal"><span class="pre">E.scala</span></tt> was not included because
+<tt class="docutils literal"><span class="pre">E.scala</span></tt> doesn't depend directly on <tt class="docutils literal"><span class="pre">A.scala</span></tt>.</p>
+<p>The distinction between depdencies by inheritance or member reference
+is a new feature in sbt 0.13 and is responsible for improved recompilation
+times in many cases where deep inheritance chains are not used extensively.</p>
 <p>SBT does not instead track dependencies to source code at the
 granularity of individual output <tt class="docutils literal"><span class="pre">.class</span></tt> files, as one might hope.
 Doing so would be incorrect, because of some problems with sealed
@@ -186,6 +233,80 @@ dependencies cannot be easily tracked at the class level (see Scala
 issue <a class="reference external" href="https://issues.scala-lang.org/browse/SI-2559">SI-2559</a> for
 an example.)</li>
 </ol>
+<div class="section" id="debugging-an-interface-representation">
+<h3>Debugging an interface representation<a class="headerlink" href="#debugging-an-interface-representation" title="Permalink to this headline">¶</a></h3>
+<p>If you see spurious incremental recompilations or you want understand
+what changes to an extracted interface cause incremental recompilation
+then sbt 0.13 has the right tools for that.</p>
+<p>In order to debug the interface representation and its changes as you
+modify and recompile source code you need to do two things:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Enable incremental compiler's <tt class="docutils literal"><span class="pre">apiDebug</span></tt> option.</li>
+<li>Add <a class="reference external" href="https://code.google.com/p/java-diff-utils/">diff-utils library</a>
+to sbt's classpath. Check documentation of <tt class="docutils literal"><span class="pre">sbt.extraClasspath</span></tt>
+system property in the <a class="reference internal" href="Command-Line-Reference.html"><em>Command Line Reference</em></a>.</li>
+</ol>
+</div></blockquote>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Enabling the <tt class="docutils literal"><span class="pre">apiDebug</span></tt> option increases significantly
+memory consumption and degrades performance of the
+incremental compiler. The underlying reason is that in
+order to produce meaningful debugging information about
+interface differences incremental compiler has to retain
+the full representation of the interface instead of just
+hash sum as it does by default.</p>
+<p class="last">Keep this option enabled when you are debugging incremental
+compiler problem only.</p>
+</div>
+<p>Below is complete transcript which shows how to enable interface debugging
+in your project. First, we download the <tt class="docutils literal"><span class="pre">diffutils</span></tt> jar and pass it
+to sbt:</p>
+<div class="highlight-none"><div class="highlight"><pre>curl -O https://java-diff-utils.googlecode.com/files/diffutils-1.2.1.jar
+sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
+[info] Loading project definition from /Users/grek/tmp/sbt-013/project
+[info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
+&gt; set incOptions := incOptions.value.copy(apiDebug = true)
+[info] Defining *:incOptions
+[info] The new value will be used by compile:incCompileSetup, test:incCompileSetup
+[info] Reapplying settings...
+[info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
+</pre></div>
+</div>
+<p>Let's suppose you have the following source code in <tt class="docutils literal"><span class="pre">Test.scala</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
+   <span class="k">def</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">123</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>compile it and then change the <tt class="docutils literal"><span class="pre">Test.scala</span></tt> file so it looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
+   <span class="k">def</span> <span class="n">b</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">&quot;abc&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>and run <tt class="docutils literal"><span class="pre">compile</span></tt> task again. Now if you run <tt class="docutils literal"><span class="pre">last</span> <span class="pre">compile</span></tt> you should see
+the following lines in the debugging log</p>
+<div class="highlight-none"><div class="highlight"><pre>&gt; last compile
+[...]
+[debug] Detected a change in a public API:
+[debug] --- /Users/grek/tmp/sbt-013/Test.scala
+[debug] +++ /Users/grek/tmp/sbt-013/Test.scala
+[debug] @@ -23,7 +23,7 @@
+[debug]  ^inherited^ final def ##(): scala.this#Int
+[debug]  ^inherited^ final def synchronized[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](x$1: &lt;java.lang.Object.T0&gt;): &lt;java.lang.Object.T0&gt;
+[debug]  ^inherited^ final def $isInstanceOf[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](): scala.this#Boolean
+[debug]  ^inherited^ final def $asInstanceOf[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](): &lt;java.lang.Object.T0&gt;
+[debug]  def &lt;init&gt;(): this#A
+[debug] -def b: scala.this#Int
+[debug] +def b: java.lang.this#String
+[debug]  }
+</pre></div>
+</div>
+<p>You can see an unified diff of two interface textual represetantions. As you can see,
+the incremental compiler detected a change to the return type of <tt class="docutils literal"><span class="pre">b</span></tt> method.</p>
+</div>
 </div>
 <div class="section" id="how-to-take-advantage-of-sbt-heuristics">
 <h2>How to take advantage of SBT heuristics<a class="headerlink" href="#how-to-take-advantage-of-sbt-heuristics" title="Permalink to this headline">¶</a></h2>
@@ -334,7 +455,10 @@ in issue <a class="reference external" href="https://github.com/sbt/sbt/issues/3
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Understanding Incremental Recompilation</a><ul>
 <li><a class="reference internal" href="#sbt-heuristics">SBT heuristics</a></li>
-<li><a class="reference internal" href="#what-is-included-in-the-interface-of-a-scala-class">What is included in the interface of a Scala class</a></li>
+<li><a class="reference internal" href="#what-is-included-in-the-interface-of-a-scala-class">What is included in the interface of a Scala class</a><ul>
+<li><a class="reference internal" href="#debugging-an-interface-representation">Debugging an interface representation</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#how-to-take-advantage-of-sbt-heuristics">How to take advantage of SBT heuristics</a><ul>
 <li><a class="reference internal" href="#why-changing-the-implementation-of-a-method-might-affect-clients-and-why-type-annotations-help">Why changing the implementation of a method might affect clients, and why type annotations help</a></li>
 <li><a class="reference internal" href="#why-adding-a-member-requires-recompiling-existing-clients">Why adding a member requires recompiling existing clients</a></li>

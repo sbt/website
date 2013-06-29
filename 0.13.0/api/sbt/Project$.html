@@ -769,19 +769,6 @@
       </span>
       </h4>
       
-    </li><li name="sbt.Project#makeSettings" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="makeSettings(settings:Seq[sbt.Def.Setting[_]],delegates:sbt.Scope=&gt;Seq[sbt.Scope],scopeLocal:sbt.Def.ScopedKey[_]=&gt;Seq[sbt.Def.Setting[_]])(implicitdisplay:sbt.Show[sbt.Def.ScopedKey[_]]):sbt.Settings[sbt.Scope]"></a>
-      <a id="makeSettings(Seq[Def.Setting[_]],(Scope)⇒Seq[Scope],(Def.ScopedKey[_])⇒Seq[Def.Setting[_]])(Show[Def.ScopedKey[_]]):Settings[Scope]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">makeSettings</span><span class="params">(<span name="settings">settings: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Def$.html#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Def.Setting</a>[_]]</span>, <span name="delegates">delegates: (<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>) ⇒ <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>]</span>, <span name="scopeLocal">scopeLocal: (<a href="Def$.html#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">Def.ScopedKey</a>[_]) ⇒ <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Def$.html#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Def.Setting</a>[_]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="display">display: <a href="Show.html" class="extype" name="sbt.Show">Show</a>[<a href="Def$.html#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">Def.ScopedKey</a>[_]]</span>)</span><span class="result">: <a href="Settings.html" class="extype" name="sbt.Settings">Settings</a>[<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>]</span>
-      </span>
-      </h4>
-      
     </li><li name="sbt.Project#mapScope" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="mapScope(f:sbt.Scope=&gt;sbt.Scope):sbt.~&gt;[sbt.Def.ScopedKey,sbt.Def.ScopedKey]"></a>
       <a id="mapScope((Scope)⇒Scope):~&gt;[Def.ScopedKey,Def.ScopedKey]"></a>
@@ -808,6 +795,33 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="sbt.Project#normalizeModuleID" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="normalizeModuleID(id:String):String"></a>
+      <a id="normalizeModuleID(String):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">normalizeModuleID</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Normalize a String so that it is suitable for use as a dependency management module identifier.</p><div class="fullcomment"><div class="comment cmt"><p>Normalize a String so that it is suitable for use as a dependency management module identifier.
+This is a best effort implementation, since valid characters are not documented or consistent.</p></div></div>
+    </li><li name="sbt.Project#normalizeProjectID" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="normalizeProjectID(id:String):Either[String,String]"></a>
+      <a id="normalizeProjectID(String):Either[String,String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">normalizeProjectID</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="../scala/package.html#Either[+A,+B]=scala.util.Either[A,B]" class="extmbr" name="scala.Either">Either</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Constructs a valid Project ID based on <code>id</code> and returns it in Right or returns the error message in Left if one cannot be constructed.</p>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
       <a id="notify():Unit"></a>
@@ -1335,6 +1349,19 @@ The name of the val is used as the project ID and the name of the base directory
       </span>
       </h4>
       
+    </li><li name="sbt.Project#validProjectID" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="validProjectID(id:String):Option[String]"></a>
+      <a id="validProjectID(String):Option[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validProjectID</span><span class="params">(<span name="id">id: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Returns None if <code>id</code> is a valid Project ID or Some containing the parser error message if it is not.</p>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -1415,6 +1442,22 @@ The name of the val is used as the project ID and the name of the base directory
                 <span class="name">@deprecated</span>
               
         </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.11.1)</i> This method does not apply state changes requested during task execution.  Use 'runTask' instead, which does.</p></dd></dl></div>
+    </li><li name="sbt.Project#makeSettings" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="makeSettings(settings:Seq[sbt.Def.Setting[_]],delegates:sbt.Scope=&gt;Seq[sbt.Scope],scopeLocal:sbt.Def.ScopedKey[_]=&gt;Seq[sbt.Def.Setting[_]])(implicitdisplay:sbt.Show[sbt.Def.ScopedKey[_]]):sbt.Settings[sbt.Scope]"></a>
+      <a id="makeSettings(Seq[Def.Setting[_]],(Scope)⇒Seq[Scope],(Def.ScopedKey[_])⇒Seq[Def.Setting[_]])(Show[Def.ScopedKey[_]]):Settings[Scope]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.13.0) Use Def.make">makeSettings</span><span class="params">(<span name="settings">settings: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Def$.html#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Def.Setting</a>[_]]</span>, <span name="delegates">delegates: (<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>) ⇒ <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>]</span>, <span name="scopeLocal">scopeLocal: (<a href="Def$.html#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">Def.ScopedKey</a>[_]) ⇒ <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="Def$.html#Setting[T]extendsInit.this.SettingsDefinition" class="extmbr" name="sbt.Init.Setting">Def.Setting</a>[_]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="display">display: <a href="Show.html" class="extype" name="sbt.Show">Show</a>[<a href="Def$.html#ScopedKey[T]extendsInit.this.KeyedInitialize[T]withProductwithSerializable" class="extmbr" name="sbt.Init.ScopedKey">Def.ScopedKey</a>[_]]</span>)</span><span class="result">: <a href="Settings.html" class="extype" name="sbt.Settings">Settings</a>[<a href="Scope.html" class="extype" name="sbt.Scope">Scope</a>]</span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.13.0)</i> Use Def.make</p></dd></dl></div>
     </li></ol>
             </div>
         </div>

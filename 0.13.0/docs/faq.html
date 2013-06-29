@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Frequently Asked Questions</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="Howto/triggered.html">Triggered execution</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -94,7 +94,7 @@
 <h2>Project Information<a class="headerlink" href="#project-information" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-do-i-get-help">
 <h3>How do I get help?<a class="headerlink" href="#how-do-i-get-help" title="Permalink to this headline">¶</a></h3>
-<p>Please use the <a class="reference external" href="http://groups.google.com/group/simple-build-tool/topics">mailing list</a> for questions, comments, and discussions.</p>
+<p>Please use <a class="reference external" href="http://stackoverflow.com/tags/sbt">Stack Overflow</a> for questions.  Use the <a class="reference external" href="http://groups.google.com/group/simple-build-tool/topics">mailing list</a> for comments and discussions.</p>
 <ul class="simple">
 <li>Please state the problem or question clearly and provide enough
 context. Code examples and build transcripts are often useful when
@@ -124,149 +124,6 @@ request</a>.</li>
 <a class="reference internal" href="Community/Opportunities.html"><em>Opportunites</em></a> page for some ideas, but the most useful
 contributions are usually ones you want yourself.</li>
 </ul>
-<p>For more details on developing sbt, see
-<a class="reference external" href="http://harrah.github.com/xsbt/Developing.pdf">Developing.pdf</a></p>
-</div>
-</div>
-<div class="section" id="to-0-10-migration">
-<h2>0.7 to 0.10+ Migration<a class="headerlink" href="#to-0-10-migration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="how-do-i-migrate-from-0-7-to-0-10">
-<h3>How do I migrate from 0.7 to 0.10+?<a class="headerlink" href="#how-do-i-migrate-from-0-7-to-0-10" title="Permalink to this headline">¶</a></h3>
-<p>See the <a class="reference internal" href="Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x.html"><em>migration page</em></a> first and
-then the following questions.</p>
-</div>
-<div class="section" id="where-has-0-7-s-lib-managed-gone">
-<h3>Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?<a class="headerlink" href="#where-has-0-7-s-lib-managed-gone" title="Permalink to this headline">¶</a></h3>
-<p>By default, sbt 0.13 loads managed libraries from your ivy cache without
-copying them to a <tt class="docutils literal"><span class="pre">lib_managed</span></tt> directory. This fixes some bugs with
-the previous solution and keeps your project directory small. If you
-want to insulate your builds from the ivy cache being cleared, set
-<tt class="docutils literal"><span class="pre">retrieveManaged</span> <span class="pre">:=</span> <span class="pre">true</span></tt> and the dependencies will be copied to
-<tt class="docutils literal"><span class="pre">lib_managed</span></tt> as a build-local cache (while avoiding the issues of
-<tt class="docutils literal"><span class="pre">lib_managed</span></tt> in 0.7.x).</p>
-<p>This does mean that existing solutions for sharing libraries with your
-favoured IDE may not work. There are 0.13 plugins for IDEs being
-developed:</p>
-<ul class="simple">
-<li>IntelliJ IDEA: [[<a class="reference external" href="https://github.com/mpeltonen/sbt-idea">https://github.com/mpeltonen/sbt-idea</a>]]</li>
-<li>Netbeans: [[<a class="reference external" href="https://github.com/remeniuk/sbt-netbeans-plugin">https://github.com/remeniuk/sbt-netbeans-plugin</a>]]</li>
-<li>Eclipse: [[<a class="reference external" href="https://github.com/typesafehub/sbteclipse">https://github.com/typesafehub/sbteclipse</a>]]</li>
-</ul>
-</div>
-<div class="section" id="what-are-the-commands-i-can-use-in-version-vs-0-7">
-<h3>What are the commands I can use in 0.13 vs. 0.7?<a class="headerlink" href="#what-are-the-commands-i-can-use-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
-<p>For a list of commands, run <tt class="docutils literal"><span class="pre">help</span></tt>. For details on a specific command,
-run <tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt>. To view a list of tasks defined on the current
-project, run <tt class="docutils literal"><span class="pre">tasks</span></tt>. Alternatively, see the <a class="reference internal" href="Getting-Started/Running.html"><em>Running</em></a>
-page in the Getting Started Guide for descriptions of common commands and tasks.</p>
-<p>If in doubt start by just trying the old command as it may just work.
-The built in TAB completion will also assist you, so you can just press
-TAB at the beginning of a line and see what you get.</p>
-<p>The following commands work pretty much as in 0.7 out of the box:</p>
-<div class="highlight-text"><div class="highlight"><pre>reload
-update
-compile
-test
-testOnly
-publishLocal
-exit
-</pre></div>
-</div>
-</div>
-<div class="section" id="why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7">
-<h3>Why have the resolved dependencies in a multi-module project changed since 0.7?<a class="headerlink" href="#why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7" title="Permalink to this headline">¶</a></h3>
-<p>sbt 0.10 fixes a flaw in how dependencies get resolved in multi-module
-projects. This change ensures that only one version of a library appears
-on a classpath.</p>
-<p>Use <tt class="docutils literal"><span class="pre">last</span> <span class="pre">update</span></tt> to view the debugging output for the last <tt class="docutils literal"><span class="pre">update</span></tt>
-run. Use <tt class="docutils literal"><span class="pre">show</span> <span class="pre">update</span></tt> to view a summary of files comprising managed
-classpaths.</p>
-</div>
-<div class="section" id="my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">
-<h3>My tests all run really fast but some are broken that weren't in 0.7!<a class="headerlink" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7" title="Permalink to this headline">¶</a></h3>
-<p>Be aware that compilation and tests run in parallel by default in sbt
-0.13. If your test code isn't thread-safe then you may want to change
-this behaviour by adding one of the following to your <tt class="docutils literal"><span class="pre">build.sbt</span></tt>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Execute tests in the current project serially.</span>
-<span class="c1">// Tests from other projects may still run concurrently.</span>
-<span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
-
-<span class="c1">// Execute everything serially (including compilation and tests)</span>
-<span class="n">parallelExecution</span> <span class="o">:=</span> <span class="kc">false</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="how-do-i-set-log-levels-in-version-vs-0-7">
-<h3>How do I set log levels in 0.13 vs. 0.7?<a class="headerlink" href="#how-do-i-set-log-levels-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">warn</span></tt>, <tt class="docutils literal"><span class="pre">info</span></tt>, <tt class="docutils literal"><span class="pre">debug</span></tt> and <tt class="docutils literal"><span class="pre">error</span></tt> don't work any more.</p>
-<p>The new syntax in the sbt 0.13 shell is:
-<tt class="docutils literal"><span class="pre">text</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">logLevel</span> <span class="pre">:=</span> <span class="pre">Level.Warn</span></tt></p>
-<p>Or in your <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file write:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">logLevel</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Warn</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="what-happened-to-the-web-development-and-web-start-support-since-0-7">
-<h3>What happened to the web development and Web Start support since 0.7?<a class="headerlink" href="#what-happened-to-the-web-development-and-web-start-support-since-0-7" title="Permalink to this headline">¶</a></h3>
-<p>Web application support was split out into a plugin. See the
-<a class="reference external" href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a> project.</p>
-<p>For an early version of an xsbt Web Start plugin, visit the
-<a class="reference external" href="https://github.com/ritschwumm/xsbt-webstart">xsbt-webstart</a> project.</p>
-</div>
-<div class="section" id="how-are-inter-project-dependencies-different-in-version-vs-0-7">
-<h3>How are inter-project dependencies different in 0.13 vs. 0.7?<a class="headerlink" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
-<p>In 0.13, there are three types of project dependencies (classpath,
-execution, and configuration) and they are independently defined. These
-were combined in a single dependency type in 0.7.x. A declaration like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;A&quot;</span><span class="o">)</span>
-<span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;B&quot;</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span>
-</pre></div>
-</div>
-<p>meant that the <tt class="docutils literal"><span class="pre">B</span></tt> project had a classpath and execution dependency on
-<tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">A</span></tt> had a configuration dependency on <tt class="docutils literal"><span class="pre">B</span></tt>. Specifically,
-in 0.7.x:</p>
-<ol class="arabic simple">
-<li>Classpath: Classpaths for <tt class="docutils literal"><span class="pre">A</span></tt> were available on the appropriate
-classpath for <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
-<li>Execution: A task executed on <tt class="docutils literal"><span class="pre">B</span></tt> would be executed on <tt class="docutils literal"><span class="pre">A</span></tt> first.</li>
-<li>Configuration: For some settings, if they were not overridden in
-<tt class="docutils literal"><span class="pre">A</span></tt>, they would default to the value provided in <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
-</ol>
-<p>In 0.13, declare the specific type of dependency you want. Read about
-<a class="reference internal" href="Getting-Started/Multi-Project.html"><em>multi-project builds</em></a> in the Getting
-Started Guide for details.</p>
-</div>
-<div class="section" id="where-did-class-object-x-go-since-0-7">
-<h3>Where did class/object X go since 0.7?<a class="headerlink" href="#where-did-class-object-x-go-since-0-7" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
-<colgroup>
-<col width="51%" />
-<col width="49%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">0.7</th>
-<th class="head">0.13</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><div class="first last line-block">
-<div class="line"><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileUtilities$object.html">FileUtilities</a></div>
-</div>
-</td>
-<td><a class="reference external" href="../api/sbt/IO$.html">IO</a></td>
-</tr>
-<tr class="row-odd"><td><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path.html">Path class</a> and <a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path$.html">object</a></td>
-<td><a class="reference external" href="../api/sbt/Path$.html">Path object</a>, <tt class="docutils literal"><span class="pre">File</span></tt>, <a class="reference external" href="../api/sbt/RichFile.html">RichFile</a></td>
-</tr>
-<tr class="row-even"><td><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/PathFinder.html">PathFinder class</a></td>
-<td><tt class="docutils literal"><span class="pre">Seq[File]</span></tt>, <a class="reference external" href="../api/sbt/PathFinder.html">PathFinder class</a>, <a class="reference external" href="../api/sbt/PathFinder$.html">PathFinder object</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="where-can-i-find-plugins-for-version">
-<h3>Where can I find plugins for 0.13?<a class="headerlink" href="#where-can-i-find-plugins-for-version" title="Permalink to this headline">¶</a></h3>
-<p>See <a class="reference internal" href="Community/Community-Plugins.html"><em>Community Plugins</em></a> for a list of currently available plugins.</p>
 </div>
 </div>
 <div class="section" id="usage">
@@ -309,8 +166,8 @@ property to <tt class="docutils literal"><span class="pre">false</span></tt>. Fo
 <div class="section" id="build-definitions">
 <h2>Build definitions<a class="headerlink" href="#build-definitions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-are-the-and-methods">
-<h3>What are the <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=`</span></tt>, and <tt class="docutils literal"><span class="pre">~=</span></tt> methods?<a class="headerlink" href="#what-are-the-and-methods" title="Permalink to this headline">¶</a></h3>
-<p>These are methods on keys used to construct a <tt class="docutils literal"><span class="pre">Setting</span></tt>. The Getting
+<h3>What are the <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=</span></tt>, and <tt class="docutils literal"><span class="pre">~=</span></tt> methods?<a class="headerlink" href="#what-are-the-and-methods" title="Permalink to this headline">¶</a></h3>
+<p>These are methods on keys used to construct a <tt class="docutils literal"><span class="pre">Setting</span></tt> or a <tt class="docutils literal"><span class="pre">Task</span></tt>. The Getting
 Started Guide covers all these methods, see <a class="reference internal" href="Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a>
 and <a class="reference internal" href="Getting-Started/More-About-Settings.html"><em>more about settings</em></a> for example.</p>
 </div>
@@ -336,11 +193,12 @@ the <a class="reference external" href="../api/index">API Documentation</a> and 
 from the file to include to the path within the jar. See
 <a class="reference internal" href="Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for details on creating these mappings.</p>
 <p>For example, to add generated sources to the packaged source artifact:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageSrc</span><span class="o">)</span> <span class="o">&lt;++=</span>
-  <span class="o">(</span><span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">managedSources</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">)</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">base</span><span class="o">,</span> <span class="n">srcs</span><span class="o">)</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageSrc</span><span class="o">)</span> <span class="o">++=</span> <span class="o">{</span>
       <span class="k">import</span> <span class="nn">Path.</span><span class="o">{</span><span class="n">flat</span><span class="o">,</span> <span class="n">relativeTo</span><span class="o">}</span>
-    <span class="n">srcs</span> <span class="n">x</span> <span class="o">(</span><span class="n">relativeTo</span><span class="o">(</span><span class="n">base</span><span class="o">)</span> <span class="o">|</span> <span class="n">flat</span><span class="o">)</span>
-  <span class="o">}</span>
+   <span class="k">val</span> <span class="n">base</span> <span class="k">=</span> <span class="o">(</span><span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span>
+   <span class="k">val</span> <span class="n">srcs</span> <span class="k">=</span> <span class="o">(</span><span class="n">managedSources</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span>
+   <span class="n">srcs</span> <span class="n">x</span> <span class="o">(</span><span class="n">relativeTo</span><span class="o">(</span><span class="n">base</span><span class="o">)</span> <span class="o">|</span> <span class="n">flat</span><span class="o">)</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 <p>This takes sources from the <tt class="docutils literal"><span class="pre">managedSources</span></tt> task and relativizes them
@@ -682,9 +540,11 @@ that files in <tt class="docutils literal"><span class="pre">~/.sbt/plugins</spa
 as part of the general build definition. If you define your plugins in a
 file under <em>that</em> directory, they won't foul up your cross-compilations.
 Any file name ending in <tt class="docutils literal"><span class="pre">.sbt</span></tt> will do, but most people use
-<tt class="docutils literal"><span class="pre">~/.sbt/plugins/build.sbt</span></tt> or <tt class="docutils literal"><span class="pre">~/.sbt/plugins/plugins.sbt</span></tt>. ##
-Miscellaneous</p>
+<tt class="docutils literal"><span class="pre">~/.sbt/plugins/build.sbt</span></tt> or <tt class="docutils literal"><span class="pre">~/.sbt/plugins/plugins.sbt</span></tt>.</p>
 </div>
+</div>
+<div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-do-i-use-the-scala-interpreter-in-my-code">
 <h3>How do I use the Scala interpreter in my code?<a class="headerlink" href="#how-do-i-use-the-scala-interpreter-in-my-code" title="Permalink to this headline">¶</a></h3>
 <p>sbt runs tests in the same JVM as sbt itself and Scala classes are not
@@ -719,6 +579,147 @@ example:</p>
 </div>
 </div>
 </div>
+<div class="section" id="to-0-10-migration">
+<h2>0.7 to 0.10+ Migration<a class="headerlink" href="#to-0-10-migration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-do-i-migrate-from-0-7-to-0-10">
+<h3>How do I migrate from 0.7 to 0.10+?<a class="headerlink" href="#how-do-i-migrate-from-0-7-to-0-10" title="Permalink to this headline">¶</a></h3>
+<p>See the <a class="reference internal" href="Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x.html"><em>migration page</em></a> first and
+then the following questions.</p>
+</div>
+<div class="section" id="where-has-0-7-s-lib-managed-gone">
+<h3>Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?<a class="headerlink" href="#where-has-0-7-s-lib-managed-gone" title="Permalink to this headline">¶</a></h3>
+<p>By default, sbt 0.13 loads managed libraries from your ivy cache without
+copying them to a <tt class="docutils literal"><span class="pre">lib_managed</span></tt> directory. This fixes some bugs with
+the previous solution and keeps your project directory small. If you
+want to insulate your builds from the ivy cache being cleared, set
+<tt class="docutils literal"><span class="pre">retrieveManaged</span> <span class="pre">:=</span> <span class="pre">true</span></tt> and the dependencies will be copied to
+<tt class="docutils literal"><span class="pre">lib_managed</span></tt> as a build-local cache (while avoiding the issues of
+<tt class="docutils literal"><span class="pre">lib_managed</span></tt> in 0.7.x).</p>
+<p>This does mean that existing solutions for sharing libraries with your
+favoured IDE may not work. There are 0.13 plugins for IDEs being
+developed:</p>
+<ul class="simple">
+<li>IntelliJ IDEA: <a class="reference external" href="https://github.com/mpeltonen/sbt-idea">https://github.com/mpeltonen/sbt-idea</a></li>
+<li>Netbeans: <a class="reference external" href="https://github.com/remeniuk/sbt-netbeans-plugin">https://github.com/remeniuk/sbt-netbeans-plugin</a></li>
+<li>Eclipse: <a class="reference external" href="https://github.com/typesafehub/sbteclipse">https://github.com/typesafehub/sbteclipse</a></li>
+</ul>
+</div>
+<div class="section" id="what-are-the-commands-i-can-use-in-version-vs-0-7">
+<h3>What are the commands I can use in 0.13 vs. 0.7?<a class="headerlink" href="#what-are-the-commands-i-can-use-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<p>For a list of commands, run <tt class="docutils literal"><span class="pre">help</span></tt>. For details on a specific command,
+run <tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt>. To view a list of tasks defined on the current
+project, run <tt class="docutils literal"><span class="pre">tasks</span></tt>. Alternatively, see the <a class="reference internal" href="Getting-Started/Running.html"><em>Running</em></a>
+page in the Getting Started Guide for descriptions of common commands and tasks.</p>
+<p>If in doubt start by just trying the old command as it may just work.
+The built in TAB completion will also assist you, so you can just press
+TAB at the beginning of a line and see what you get.</p>
+<p>The following commands work pretty much as in 0.7 out of the box:</p>
+<div class="highlight-text"><div class="highlight"><pre>reload
+update
+compile
+test
+testOnly
+publishLocal
+exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7">
+<h3>Why have the resolved dependencies in a multi-module project changed since 0.7?<a class="headerlink" href="#why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7" title="Permalink to this headline">¶</a></h3>
+<p>sbt 0.10 fixes a flaw in how dependencies get resolved in multi-module
+projects. This change ensures that only one version of a library appears
+on a classpath.</p>
+<p>Use <tt class="docutils literal"><span class="pre">last</span> <span class="pre">update</span></tt> to view the debugging output for the last <tt class="docutils literal"><span class="pre">update</span></tt>
+run. Use <tt class="docutils literal"><span class="pre">show</span> <span class="pre">update</span></tt> to view a summary of files comprising managed
+classpaths.</p>
+</div>
+<div class="section" id="my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">
+<h3>My tests all run really fast but some are broken that weren't in 0.7!<a class="headerlink" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7" title="Permalink to this headline">¶</a></h3>
+<p>Be aware that compilation and tests run in parallel by default in sbt
+0.13. If your test code isn't thread-safe then you may want to change
+this behaviour by adding one of the following to your <tt class="docutils literal"><span class="pre">build.sbt</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Execute tests in the current project serially.</span>
+<span class="c1">// Tests from other projects may still run concurrently.</span>
+<span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// Execute everything serially (including compilation and tests)</span>
+<span class="n">parallelExecution</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-set-log-levels-in-version-vs-0-7">
+<h3>How do I set log levels in 0.13 vs. 0.7?<a class="headerlink" href="#how-do-i-set-log-levels-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">warn</span></tt>, <tt class="docutils literal"><span class="pre">info</span></tt>, <tt class="docutils literal"><span class="pre">debug</span></tt> and <tt class="docutils literal"><span class="pre">error</span></tt> don't work any more.</p>
+<p>The new syntax in the sbt 0.13 shell is:
+<tt class="docutils literal"><span class="pre">text</span> <span class="pre">&gt;</span> <span class="pre">set</span> <span class="pre">logLevel</span> <span class="pre">:=</span> <span class="pre">Level.Warn</span></tt></p>
+<p>Or in your <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file write:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">logLevel</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Warn</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="what-happened-to-the-web-development-and-web-start-support-since-0-7">
+<h3>What happened to the web development and Web Start support since 0.7?<a class="headerlink" href="#what-happened-to-the-web-development-and-web-start-support-since-0-7" title="Permalink to this headline">¶</a></h3>
+<p>Web application support was split out into a plugin. See the
+<a class="reference external" href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a> project.</p>
+<p>For an early version of an xsbt Web Start plugin, visit the
+<a class="reference external" href="https://github.com/ritschwumm/xsbt-webstart">xsbt-webstart</a> project.</p>
+</div>
+<div class="section" id="how-are-inter-project-dependencies-different-in-version-vs-0-7">
+<h3>How are inter-project dependencies different in 0.13 vs. 0.7?<a class="headerlink" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7" title="Permalink to this headline">¶</a></h3>
+<p>In 0.13, there are three types of project dependencies (classpath,
+execution, and configuration) and they are independently defined. These
+were combined in a single dependency type in 0.7.x. A declaration like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;A&quot;</span><span class="o">)</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="s">&quot;b&quot;</span><span class="o">,</span> <span class="s">&quot;B&quot;</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>meant that the <tt class="docutils literal"><span class="pre">B</span></tt> project had a classpath and execution dependency on
+<tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">A</span></tt> had a configuration dependency on <tt class="docutils literal"><span class="pre">B</span></tt>. Specifically,
+in 0.7.x:</p>
+<ol class="arabic simple">
+<li>Classpath: Classpaths for <tt class="docutils literal"><span class="pre">A</span></tt> were available on the appropriate
+classpath for <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
+<li>Execution: A task executed on <tt class="docutils literal"><span class="pre">B</span></tt> would be executed on <tt class="docutils literal"><span class="pre">A</span></tt> first.</li>
+<li>Configuration: For some settings, if they were not overridden in
+<tt class="docutils literal"><span class="pre">A</span></tt>, they would default to the value provided in <tt class="docutils literal"><span class="pre">B</span></tt>.</li>
+</ol>
+<p>In 0.13, declare the specific type of dependency you want. Read about
+<a class="reference internal" href="Getting-Started/Multi-Project.html"><em>multi-project builds</em></a> in the Getting
+Started Guide for details.</p>
+</div>
+<div class="section" id="where-did-class-object-x-go-since-0-7">
+<h3>Where did class/object X go since 0.7?<a class="headerlink" href="#where-did-class-object-x-go-since-0-7" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">0.7</th>
+<th class="head">0.13</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line"><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileUtilities$object.html">FileUtilities</a></div>
+</div>
+</td>
+<td><a class="reference external" href="../api/sbt/IO$.html">IO</a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path.html">Path class</a> and <a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path$.html">object</a></td>
+<td><a class="reference external" href="../api/sbt/Path$.html">Path object</a>, <tt class="docutils literal"><span class="pre">File</span></tt>, <a class="reference external" href="../api/sbt/RichFile.html">RichFile</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/PathFinder.html">PathFinder class</a></td>
+<td><tt class="docutils literal"><span class="pre">Seq[File]</span></tt>, <a class="reference external" href="../api/sbt/PathFinder.html">PathFinder class</a>, <a class="reference external" href="../api/sbt/PathFinder$.html">PathFinder object</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="where-can-i-find-plugins-for-version">
+<h3>Where can I find plugins for 0.13?<a class="headerlink" href="#where-can-i-find-plugins-for-version" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="Community/Community-Plugins.html"><em>Community Plugins</em></a> for a list of currently available plugins.</p>
+</div>
+</div>
 </div>
 
 
@@ -734,19 +735,6 @@ example:</p>
 <li><a class="reference internal" href="#how-can-i-help">How can I help?</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#to-0-10-migration">0.7 to 0.10+ Migration</a><ul>
-<li><a class="reference internal" href="#how-do-i-migrate-from-0-7-to-0-10">How do I migrate from 0.7 to 0.10+?</a></li>
-<li><a class="reference internal" href="#where-has-0-7-s-lib-managed-gone">Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?</a></li>
-<li><a class="reference internal" href="#what-are-the-commands-i-can-use-in-version-vs-0-7">What are the commands I can use in 0.13 vs. 0.7?</a></li>
-<li><a class="reference internal" href="#why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7">Why have the resolved dependencies in a multi-module project changed since 0.7?</a></li>
-<li><a class="reference internal" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">My tests all run really fast but some are broken that weren't in 0.7!</a></li>
-<li><a class="reference internal" href="#how-do-i-set-log-levels-in-version-vs-0-7">How do I set log levels in 0.13 vs. 0.7?</a></li>
-<li><a class="reference internal" href="#what-happened-to-the-web-development-and-web-start-support-since-0-7">What happened to the web development and Web Start support since 0.7?</a></li>
-<li><a class="reference internal" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7">How are inter-project dependencies different in 0.13 vs. 0.7?</a></li>
-<li><a class="reference internal" href="#where-did-class-object-x-go-since-0-7">Where did class/object X go since 0.7?</a></li>
-<li><a class="reference internal" href="#where-can-i-find-plugins-for-version">Where can I find plugins for 0.13?</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#usage">Usage</a><ul>
 <li><a class="reference internal" href="#my-last-command-didn-t-work-but-i-can-t-see-an-explanation-why">My last command didn't work but I can't see an explanation. Why?</a></li>
 <li><a class="reference internal" href="#how-do-i-disable-ansi-codes-in-the-output">How do I disable ansi codes in the output?</a></li>
@@ -754,7 +742,7 @@ example:</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#build-definitions">Build definitions</a><ul>
-<li><a class="reference internal" href="#what-are-the-and-methods">What are the <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=`</span></tt>, and <tt class="docutils literal"><span class="pre">~=</span></tt> methods?</a></li>
+<li><a class="reference internal" href="#what-are-the-and-methods">What are the <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=</span></tt>, and <tt class="docutils literal"><span class="pre">~=</span></tt> methods?</a></li>
 <li><a class="reference internal" href="#what-is-the-method">What is the <tt class="docutils literal"><span class="pre">%</span></tt> method?</a></li>
 <li><a class="reference internal" href="#what-is-moduleid-project">What is <tt class="docutils literal"><span class="pre">ModuleID</span></tt>, <tt class="docutils literal"><span class="pre">Project</span></tt>, ...?</a></li>
 <li><a class="reference internal" href="#how-do-i-add-files-to-a-jar-package">How do I add files to a jar package?</a></li>
@@ -784,7 +772,23 @@ example:</p>
 <li><a class="reference internal" href="#dependency-management">Dependency Management</a><ul>
 <li><a class="reference internal" href="#how-do-i-resolve-a-checksum-error">How do I resolve a checksum error?</a></li>
 <li><a class="reference internal" href="#i-ve-added-a-plugin-and-now-my-cross-compilations-fail">I've added a plugin, and now my cross-compilations fail!</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
 <li><a class="reference internal" href="#how-do-i-use-the-scala-interpreter-in-my-code">How do I use the Scala interpreter in my code?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-0-10-migration">0.7 to 0.10+ Migration</a><ul>
+<li><a class="reference internal" href="#how-do-i-migrate-from-0-7-to-0-10">How do I migrate from 0.7 to 0.10+?</a></li>
+<li><a class="reference internal" href="#where-has-0-7-s-lib-managed-gone">Where has 0.7's <tt class="docutils literal"><span class="pre">lib_managed</span></tt> gone?</a></li>
+<li><a class="reference internal" href="#what-are-the-commands-i-can-use-in-version-vs-0-7">What are the commands I can use in 0.13 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#why-have-the-resolved-dependencies-in-a-multi-module-project-changed-since-0-7">Why have the resolved dependencies in a multi-module project changed since 0.7?</a></li>
+<li><a class="reference internal" href="#my-tests-all-run-really-fast-but-some-are-broken-that-weren-t-in-0-7">My tests all run really fast but some are broken that weren't in 0.7!</a></li>
+<li><a class="reference internal" href="#how-do-i-set-log-levels-in-version-vs-0-7">How do I set log levels in 0.13 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#what-happened-to-the-web-development-and-web-start-support-since-0-7">What happened to the web development and Web Start support since 0.7?</a></li>
+<li><a class="reference internal" href="#how-are-inter-project-dependencies-different-in-version-vs-0-7">How are inter-project dependencies different in 0.13 vs. 0.7?</a></li>
+<li><a class="reference internal" href="#where-did-class-object-x-go-since-0-7">Where did class/object X go since 0.7?</a></li>
+<li><a class="reference internal" href="#where-can-i-find-plugins-for-version">Where can I find plugins for 0.13?</a></li>
 </ul>
 </li>
 </ul>

@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Nightly-Builds.html">Nightly Builds</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -107,11 +107,12 @@
 <li>Include files with zip extension in unmanaged jars.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/750" title="Sbt doesnt pick up zip library file in the project lib folder"><span class="xref issue closed">#750</span></a>)</li>
 <li>Only add automatically detected plugins to options once.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/757" title="Scala no longer likes being told things twice (-Xplugin specified twice in test:compile::scalacOptions)"><span class="xref issue closed">#757</span></a>)</li>
 <li>Properly handle failure in a multi-command that includes <tt class="docutils literal"><span class="pre">reload</span></tt>. (<a class="reference external" href="https://github.com/sbt/sbt/issues/732" title="`; reload; compile` makes sbt 0.12.0/0.12.3 exit if compilation fails"><span class="xref issue closed">#732</span></a>)</li>
+<li>Fix unsynchronized caching of Scala class loaders that could result in Scala classes being loaded in multiple class loaders.</li>
 <li>Incremental compiler: remove resident compiler code (wasn't used and was a compatibility liability)</li>
 <li>Incremental compiler: properly track <tt class="docutils literal"><span class="pre">abstract</span> <span class="pre">override</span></tt> modifier.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/726" title="Spurious incremental recompilation due to invalid value for OVERRIDE flag"><span class="xref issue closed">#726</span></a>)</li>
 <li>Incremental compiler: do not normalize types in the api extraction phase. (<a class="reference external" href="https://github.com/sbt/sbt/issues/736" title="Sbt fails to detect change of structure when type aliases dealias to the same type"><span class="xref issue closed">#736</span></a>)</li>
 <li>Ivy cache: account for <tt class="docutils literal"><span class="pre">localOnly</span></tt> when cache subclass overrides <tt class="docutils literal"><span class="pre">isChanging</span></tt></li>
-<li>Ivy cache: fix corruption when developing sbt or sbt plugins. (<a class="reference external" href="https://github.com/sbt/sbt/issues/768" title="Sbt lost ivy dependencies at specific condition."><span class="xref issue">#768</span></a>)</li>
+<li>Ivy cache: fix corruption when developing sbt or sbt plugins. (<a class="reference external" href="https://github.com/sbt/sbt/issues/768" title="Sbt lost ivy dependencies at specific condition."><span class="xref issue closed">#768</span></a>)</li>
 <li>Ivy cache: invalidate when artifact download fails to avoid locking into bad resolver. (<a class="reference external" href="https://github.com/sbt/sbt/issues/760" title="New resolvers are ignored after attempting to download artifacts without them"><span class="xref issue closed">#760</span></a>)</li>
 <li>Ivy cache: use publication date from metadata instead of original file's last modified time when deleting out of date artifacts.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/764" title="Snapshot dependendency is always redownloaded in sbt 0.12.3"><span class="xref issue closed">#764</span></a>)</li>
 </ul>

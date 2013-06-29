@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Build Loaders</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="index.html">Extending sbt</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -249,7 +249,7 @@ project/ directory.</p>
     <span class="k">val</span> <span class="n">pom</span> <span class="k">=</span> <span class="n">pomFile</span><span class="o">(</span><span class="n">info</span><span class="o">)</span>
     <span class="k">val</span> <span class="n">model</span> <span class="k">=</span> <span class="n">readPom</span><span class="o">(</span><span class="n">pom</span><span class="o">)</span>
 
-    <span class="k">val</span> <span class="n">n</span> <span class="k">=</span> <span class="nc">StringUtilities</span><span class="o">.</span><span class="n">normalize</span><span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="n">getName</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">n</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">normalizeProjectID</span><span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="n">getName</span><span class="o">)</span>
     <span class="k">val</span> <span class="n">base</span> <span class="k">=</span> <span class="nc">Option</span><span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="n">getProjectDirectory</span><span class="o">)</span> <span class="n">getOrElse</span> <span class="n">info</span><span class="o">.</span><span class="n">base</span>
     <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">base</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span> <span class="n">pomSettings</span><span class="o">(</span><span class="n">model</span><span class="o">)</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
     <span class="k">val</span> <span class="n">build</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Build</span> <span class="o">{</span> <span class="k">override</span> <span class="k">def</span> <span class="n">projects</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">root</span><span class="o">)</span> <span class="o">}</span>

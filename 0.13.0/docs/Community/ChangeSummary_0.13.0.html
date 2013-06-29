@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-Beta2',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">0.13.0 Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-Beta2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="ChangeSummary_0.12.0.html">0.12.0 Changes</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-Beta2">Version 0.13.0-Beta2</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -103,6 +103,8 @@
 <li>Fixed the default classifier for tests to be <tt class="docutils literal"><span class="pre">tests</span></tt> for proper Maven compatibility.</li>
 <li>The global settings and plugins directories are now versioned.  Global settings go in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/</span></tt> and global plugins in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/plugins/</span></tt> by default.  Explicit overrides, such as via the <tt class="docutils literal"><span class="pre">sbt.global.base</span></tt> system property, are still respected.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/735" title="SBT global directory should be chosen by binary version"><span class="xref issue closed">#735</span></a>)</li>
 <li>sbt no longer canonicalizes files passed to scalac.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/723" title="drop canonicalization of files in incremental compiler"><span class="xref issue closed">#723</span></a>)</li>
+<li>sbt now enforces that each project must have a unique <tt class="docutils literal"><span class="pre">target</span></tt> directory.</li>
+<li>sbt no longer overrides the Scala version in dependencies.  This allows independent configurations to depend on different Scala versions and treats Scala dependencies other than scala-library as normal dependencies.  However, it can result in resolved versions other than <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> for those other Scala libraries.</li>
 </ul>
 </div>
 <div class="section" id="features">
@@ -158,6 +160,7 @@
 <li>Make autoCompilerPlugins support compiler plugins defined in a internal dependency (only if <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt> due to scalac limitations)</li>
 <li>Track ancestors of non-private templates and use this information to require fewer, smaller intermediate incremental compilation steps.</li>
 <li><tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> now supports compiler plugins defined in a internal dependency.  The plugin project must define <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  Depend on the plugin with <tt class="docutils literal"><span class="pre">...dependsOn(...</span> <span class="pre">%</span> <span class="pre">Configurations.CompilerPlugin)</span></tt>.</li>
+<li>Add utilities for debugging API representation extracted by the incremental compiler. (Grzegorz K., <a class="reference external" href="https://github.com/sbt/sbt/issues/677" title="Debugging APIs progress"><span class="xref issue closed">#677</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/793" title="Log API diffs using ShowAPI and java-diff-utils library."><span class="xref issue closed">#793</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="other">
