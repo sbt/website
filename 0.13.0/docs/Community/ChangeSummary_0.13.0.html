@@ -99,12 +99,16 @@
 <li>Support for plugin configuration in <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> has been removed.  It was deprecated since 0.11.2.</li>
 <li>Dropped support for tab completing the right side of a setting for the <tt class="docutils literal"><span class="pre">set</span></tt> command.  The new task macros make this tab completion obsolete.</li>
 <li>The convention for keys is now camelCase only.  Details below.</li>
-<li>sbt no longer looks for main artifacts for poms with <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt>.  For details, see the <a class="reference internal" href="../Detailed-Topics/Library-Management.html#packaging-pom"><em>relevant Library Management section</em></a> and <a class="reference external" href="https://github.com/sbt/sbt/issues/636" title="Eliminate or make configurable check for main artifact for packaging=&quot;pom&quot;"><span class="xref issue closed">#636</span></a>.</li>
 <li>Fixed the default classifier for tests to be <tt class="docutils literal"><span class="pre">tests</span></tt> for proper Maven compatibility.</li>
 <li>The global settings and plugins directories are now versioned.  Global settings go in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/</span></tt> and global plugins in <tt class="docutils literal"><span class="pre">~/.sbt/0.13/plugins/</span></tt> by default.  Explicit overrides, such as via the <tt class="docutils literal"><span class="pre">sbt.global.base</span></tt> system property, are still respected.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/735" title="SBT global directory should be chosen by binary version"><span class="xref issue closed">#735</span></a>)</li>
 <li>sbt no longer canonicalizes files passed to scalac.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/723" title="drop canonicalization of files in incremental compiler"><span class="xref issue closed">#723</span></a>)</li>
 <li>sbt now enforces that each project must have a unique <tt class="docutils literal"><span class="pre">target</span></tt> directory.</li>
 <li>sbt no longer overrides the Scala version in dependencies.  This allows independent configurations to depend on different Scala versions and treats Scala dependencies other than scala-library as normal dependencies.  However, it can result in resolved versions other than <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> for those other Scala libraries.</li>
+<li>JLine is now configured differently for Cygwin.  See <a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>.</li>
+<li>Jline and Ansi codes work better on Windows now.  CI servers might have to explictly disable Ansi codes via <tt class="docutils literal"><span class="pre">-Dsbt.log.format=false</span></tt>.</li>
+<li>Forked tests and runs now use the project's base directory as the current working directory.</li>
+<li><tt class="docutils literal"><span class="pre">compileInputs</span></tt> is now defined in <tt class="docutils literal"><span class="pre">(Compile,compile)</span></tt> instead of just <tt class="docutils literal"><span class="pre">Compile</span></tt></li>
+<li>The result of running tests is now <a class="reference external" href="../../api/#sbt.Tests$$Output">Tests.Output</a>.</li>
 </ul>
 </div>
 <div class="section" id="features">

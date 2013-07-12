@@ -496,17 +496,6 @@ This is confirmed by the output of <tt class="docutils literal"><span class="pre
 </div>
 <p><strong>Note:</strong> this is an Ivy-only feature and will not be included in a published pom.xml.</p>
 </div>
-<div class="section" id="packaging-pom">
-<span id="id3"></span><h4>packaging=&quot;pom&quot;<a class="headerlink" href="#packaging-pom" title="Permalink to this headline">¶</a></h4>
-<p>A pom.xml that has <tt class="docutils literal"><span class="pre">packaging=&quot;pom&quot;</span></tt> is not supposed to have artifacts.
-However, some published poms have an associated main artifact, so Ivy checks if one exists.
-This check can be time consuming to the point of taking most of the time for <tt class="docutils literal"><span class="pre">update</span></tt> on larger projects.
-Therefore, sbt disables this check and requires you to explicitly request the main jar.</p>
-<p>For example,</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.velocity&quot;</span> <span class="o">%</span> <span class="s">&quot;velocity&quot;</span> <span class="o">%</span> <span class="s">&quot;1.5&quot;</span> <span class="n">jar</span><span class="o">()</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="publishing">
 <h4>Publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h4>
 <p>See <a class="reference internal" href="Publishing.html"><em>Publishing</em></a> for how to publish your project.</p>
@@ -665,7 +654,6 @@ specify repositories inline or in an Ivy <tt class="docutils literal"><span clas
 <li><a class="reference internal" href="#conflict-management">Conflict Management</a></li>
 <li><a class="reference internal" href="#forcing-a-revision">Forcing a revision</a></li>
 <li><a class="reference internal" href="#forcing-a-revision-without-introducing-a-dependency">Forcing a revision without introducing a dependency</a></li>
-<li><a class="reference internal" href="#packaging-pom">packaging=&quot;pom&quot;</a></li>
 <li><a class="reference internal" href="#publishing">Publishing</a></li>
 <li><a class="reference internal" href="#configurations">Configurations</a></li>
 </ul>
