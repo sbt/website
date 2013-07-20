@@ -148,6 +148,7 @@
 <h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>sbt no longer tries to warn on dependency conflicts.  Configure a <a class="reference internal" href="../Detailed-Topics/Library-Management.html#conflict-management"><em>conflict manager</em></a> instead.  (<a class="reference external" href="https://github.com/sbt/sbt/issues/709" title="Potentially incompatible versions of dependencies between 2.10.1 and 2.10.0"><span class="xref issue closed">#709</span></a>)</li>
+<li>Run test Cleanup and Setup when forking.  The test ClassLoader is not available because it is in another jvm.</li>
 </ul>
 </div>
 <div class="section" id="improvements">
@@ -165,6 +166,7 @@
 <li>Track ancestors of non-private templates and use this information to require fewer, smaller intermediate incremental compilation steps.</li>
 <li><tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> now supports compiler plugins defined in a internal dependency.  The plugin project must define <tt class="docutils literal"><span class="pre">exportJars</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.  Depend on the plugin with <tt class="docutils literal"><span class="pre">...dependsOn(...</span> <span class="pre">%</span> <span class="pre">Configurations.CompilerPlugin)</span></tt>.</li>
 <li>Add utilities for debugging API representation extracted by the incremental compiler. (Grzegorz K., <a class="reference external" href="https://github.com/sbt/sbt/issues/677" title="Debugging APIs progress"><span class="xref issue closed">#677</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/793" title="Log API diffs using ShowAPI and java-diff-utils library."><span class="xref issue closed">#793</span></a>)</li>
+<li><tt class="docutils literal"><span class="pre">consoleProject</span></tt> unifies the syntax for getting the value of a setting and executing a task.  See <a class="reference internal" href="../Detailed-Topics/Console-Project.html"><em>Console Project</em></a>.</li>
 </ul>
 </div>
 <div class="section" id="other">

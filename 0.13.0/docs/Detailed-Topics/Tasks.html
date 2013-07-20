@@ -128,7 +128,7 @@ printed to the screen.</li>
 <div class="section" id="hello-world-example-sbt">
 <h3>Hello World example (sbt)<a class="headerlink" href="#hello-world-example-sbt" title="Permalink to this headline">¶</a></h3>
 <p>build.sbt</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">hello</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Prints &#39;Hello World&#39;&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">hello</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Prints &#39;Hello World&#39;&quot;</span><span class="o">)</span>
 
 <span class="n">hello</span> <span class="o">:=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;hello world!&quot;</span><span class="o">)</span>
 </pre></div>
@@ -138,16 +138,16 @@ see this task listed.</p>
 </div>
 <div class="section" id="define-the-key">
 <h3>Define the key<a class="headerlink" href="#define-the-key" title="Permalink to this headline">¶</a></h3>
-<p>To declare a new task, define a val of type <tt class="docutils literal"><span class="pre">TaskKey</span></tt>:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sampleTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;A sample task.&quot;</span><span class="o">)</span>
+<p>To declare a new task, define a lazy val of type <tt class="docutils literal"><span class="pre">TaskKey</span></tt>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">sampleTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;A sample task.&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The name of the <tt class="docutils literal"><span class="pre">val</span></tt> is used when referring to the task in Scala code and at the command line.
 The string passed to the <tt class="docutils literal"><span class="pre">taskKey</span></tt> method is a description of the task.
 The type parameter passed to <tt class="docutils literal"><span class="pre">taskKey</span></tt> (here, <tt class="docutils literal"><span class="pre">Int</span></tt>) is the type of value produced by the task.</p>
 <p>We'll define a couple of other keys for the examples:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;An int task&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A string task&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">intTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;An int task&quot;</span><span class="o">)</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">stringTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A string task&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The examples themselves are valid entries in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> or can be
@@ -241,7 +241,7 @@ instead of the desired <tt class="docutils literal"><span class="pre">helloTask.
 <p>The implementation of a task can be separated from the binding.
 For example, a basic separate definition looks like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Define a new, standalone task implemention</span>
-<span class="k">val</span> <span class="n">intTaskImpl</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span> <span class="k">=</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">intTaskImpl</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span> <span class="k">=</span>
    <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="n">sampleTask</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">}</span>
 
 <span class="c1">// Bind the implementation to a specific key</span>
@@ -301,11 +301,11 @@ The result has type <tt class="docutils literal"><span class="pre">Seq[T]</span>
 <p>A common scenario is getting the sources for all subprojects for processing all at once, such as passing them to scaladoc.
 The task that we want to obtain values for is <tt class="docutils literal"><span class="pre">sources</span></tt> and we want to get the values in all non-root projects and in the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration.
 This looks like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
 
-<span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
 
-<span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="o">(</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="o">(</span>
    <span class="n">sources</span> <span class="o">:=</span> <span class="o">{</span>
       <span class="k">val</span> <span class="n">filter</span> <span class="k">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span> <span class="n">inProjects</span><span class="o">(</span><span class="n">core</span><span class="o">,</span> <span class="n">util</span><span class="o">),</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span> <span class="o">)</span>
       <span class="c1">// each sources definition is of type Seq[File],</span>
@@ -441,14 +441,14 @@ A common use case is to pair each value obtained with the project, configuration
 sbt plugins.  This might be used to identify an incorrectly configured build (or not, since this is
 a fairly contrived example):</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Select all configurations in the current project except for Compile</span>
-<span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span>
    <span class="n">inProjects</span><span class="o">(</span><span class="nc">ThisProject</span><span class="o">),</span>
    <span class="n">inAnyConfiguration</span> <span class="o">--</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span>
 <span class="o">)</span>
 
 <span class="c1">// Define a task that provides the name of the current configuration</span>
 <span class="c1">//   and the set of sbt plugins defined in the configuration</span>
-<span class="k">val</span> <span class="n">pluginsWithConfig</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span> <span class="o">(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">]]</span> <span class="k">=</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">pluginsWithConfig</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span> <span class="o">(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">]]</span> <span class="k">=</span>
    <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
       <span class="o">(</span> <span class="n">configuration</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="n">definedSbtPlugins</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
    <span class="o">}</span>
@@ -521,7 +521,7 @@ and any underlying exceptions thrown during task execution.</p>
 <p>For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;Failed.&quot;</span><span class="o">)</span>
 
-<span class="k">val</span> <span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Ignoring failure: &quot;</span> <span class="o">+</span> <span class="n">intTask</span><span class="o">.</span><span class="n">failure</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
    <span class="mi">3</span>
 <span class="o">}</span>
@@ -657,7 +657,7 @@ succeeded. The result of the task is the result of the original task.
 For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;I didn&#39;t succeed.&quot;</span><span class="o">)</span>
 
-<span class="k">val</span> <span class="n">intTaskImpl</span> <span class="k">=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">intTaskImpl</span> <span class="k">=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
 
 <span class="n">intTask</span> <span class="o">:=</span> <span class="n">intTaskImpl</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
@@ -670,7 +670,7 @@ important when calling andFinally on another task instead of overriding
 a task like in the previous example. For example, consider this code:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;I didn&#39;t succeed.&quot;</span><span class="o">)</span>
 
-<span class="k">val</span> <span class="n">intTaskImpl</span> <span class="k">=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">intTaskImpl</span> <span class="k">=</span> <span class="n">intTask</span> <span class="n">andFinally</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;andFinally&quot;</span><span class="o">)</span> <span class="o">}</span>
 
 <span class="n">otherIntTask</span> <span class="o">:=</span> <span class="n">intTaskImpl</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
