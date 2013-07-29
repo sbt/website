@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -194,12 +194,12 @@ result:</p>
 <div class="section" id="custom-builder">
 <h2>Custom Builder<a class="headerlink" href="#custom-builder" title="Permalink to this headline">¶</a></h2>
 <p>Once a project is resolved, it needs to be built and then presented to
-sbt as an instance of <tt class="docutils literal"><span class="pre">sbt.BuildUnit</span></tt>. A custom builder has type:</p>
+sbt as an instance of <span class="pre">sbt.BuildUnit</span>. A custom builder has type:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">BuildInfo</span> <span class="k">=&gt;</span> <span class="nc">Option</span><span class="o">[()</span> <span class="k">=&gt;</span> <span class="kt">BuildUnit</span><span class="o">]</span>
 </pre></div>
 </div>
 <p>A builder returns None if it does not want to handle the build
-identified by the <tt class="docutils literal"><span class="pre">BuildInfo</span></tt>. Otherwise, it provides a function that
+identified by the <span class="pre">BuildInfo</span>. Otherwise, it provides a function that
 will load the build when evaluated. Register a builder by passing it to
 <em>BuildLoader.build</em> and overriding <em>Build.buildLoaders</em> with the result:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span>
@@ -268,7 +268,7 @@ project/ directory.</p>
 </div>
 <div class="section" id="custom-transformer">
 <h2>Custom Transformer<a class="headerlink" href="#custom-transformer" title="Permalink to this headline">¶</a></h2>
-<p>Once a project has been loaded into an <tt class="docutils literal"><span class="pre">sbt.BuildUnit</span></tt>, it is
+<p>Once a project has been loaded into an <span class="pre">sbt.BuildUnit</span>, it is
 transformed by all registered transformers. A custom transformer has
 type:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">TransformInfo</span> <span class="k">=&gt;</span> <span class="nc">BuildUnit</span>
@@ -298,36 +298,36 @@ overriding <em>Build.buildLoaders</em> with the result:</p>
 </ul>
 <div class="section" id="manipulating-project-dependencies-in-settings">
 <h4>Manipulating Project Dependencies in Settings<a class="headerlink" href="#manipulating-project-dependencies-in-settings" title="Permalink to this headline">¶</a></h4>
-<p>The <tt class="docutils literal"><span class="pre">buildDependencies</span></tt> setting, in the Global scope, defines the
+<p>The <span class="pre">buildDependencies</span> setting, in the Global scope, defines the
 aggregation and classpath dependencies between projects. By default,
-this information comes from the dependencies defined by <tt class="docutils literal"><span class="pre">Project</span></tt>
-instances by the <tt class="docutils literal"><span class="pre">aggregate</span></tt> and <tt class="docutils literal"><span class="pre">dependsOn</span></tt> methods. Because
-<tt class="docutils literal"><span class="pre">buildDependencies</span></tt> is a setting and is used everywhere dependencies
+this information comes from the dependencies defined by <span class="pre">Project</span>
+instances by the <span class="pre">aggregate</span> and <span class="pre">dependsOn</span> methods. Because
+<span class="pre">buildDependencies</span> is a setting and is used everywhere dependencies
 need to be known (once all projects are loaded), plugins and build
 definitions can transform it to manipulate inter-project dependencies at
 setting evaluation time. The only requirement is that no new projects
 are introduced because all projects are loaded before settings get
 evaluated. That is, all Projects must have been declared directly in a
-Build or referenced as the argument to <tt class="docutils literal"><span class="pre">Project.aggregate</span></tt> or
-<tt class="docutils literal"><span class="pre">Project.dependsOn</span></tt>.</p>
+Build or referenced as the argument to <span class="pre">Project.aggregate</span> or
+<span class="pre">Project.dependsOn</span>.</p>
 </div>
 </div>
 </div>
 <div class="section" id="the-builddependencies-type">
 <h2>The BuildDependencies type<a class="headerlink" href="#the-builddependencies-type" title="Permalink to this headline">¶</a></h2>
-<p>The type of the <tt class="docutils literal"><span class="pre">buildDependencies</span></tt> setting is
+<p>The type of the <span class="pre">buildDependencies</span> setting is
 <a class="reference external" href="/api/sbt/BuildDependencies.html">BuildDependencies</a>.
-<tt class="docutils literal"><span class="pre">BuildDependencies</span></tt> provides mappings from a project to its aggregate
+<span class="pre">BuildDependencies</span> provides mappings from a project to its aggregate
 or classpath dependencies. For classpath dependencies, a dependency has
-type <tt class="docutils literal"><span class="pre">ClasspathDep[ProjectRef]</span></tt>, which combines a <tt class="docutils literal"><span class="pre">ProjectRef</span></tt> with
+type <span class="pre">ClasspathDep[ProjectRef]</span>, which combines a <span class="pre">ProjectRef</span> with
 a configuration (see <a class="reference external" href="../../api/sbt/ClasspathDep.html">ClasspathDep</a>
 and <a class="reference external" href="../../api/sbt/ProjectRef.html">ProjectRef</a>). For aggregate
-dependencies, the type of a dependency is just <tt class="docutils literal"><span class="pre">ProjectRef</span></tt>.</p>
-<p>The API for <tt class="docutils literal"><span class="pre">BuildDependencies</span></tt> is not extensive, covering only a
+dependencies, the type of a dependency is just <span class="pre">ProjectRef</span>.</p>
+<p>The API for <span class="pre">BuildDependencies</span> is not extensive, covering only a
 little more than the minimum required, and related APIs have more of an
 internal, unpolished feel. Most manipulations consist of modifying the
 relevant map (classpath or aggregate) manually and creating a new
-<tt class="docutils literal"><span class="pre">BuildDependencies</span></tt> instance.</p>
+<span class="pre">BuildDependencies</span> instance.</p>
 <div class="section" id="id6">
 <h3>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>As an example, the following replaces a reference to a specific build
@@ -351,8 +351,8 @@ like a local directory.</p>
 </div>
 <p>It is not limited to such basic translations, however. The configuration
 a dependency is defined in may be modified and dependencies may be added
-or removed. Modifying <tt class="docutils literal"><span class="pre">buildDependencies</span></tt> can be combined with
-modifying <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> to convert binary dependencies to and
+or removed. Modifying <span class="pre">buildDependencies</span> can be combined with
+modifying <span class="pre">libraryDependencies</span> to convert binary dependencies to and
 from source dependencies, for example.</p>
 </div>
 </div>

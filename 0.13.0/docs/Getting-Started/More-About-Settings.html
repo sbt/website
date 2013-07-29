@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,56 +91,56 @@
             
   <div class="section" id="more-kinds-of-setting">
 <h1>More Kinds of Setting<a class="headerlink" href="#more-kinds-of-setting" title="Permalink to this headline">¶</a></h1>
-<p>This page explains other ways to create a <tt class="docutils literal"><span class="pre">Setting</span></tt>, beyond the basic
-<tt class="docutils literal"><span class="pre">:=</span></tt> method. It assumes you've read <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> and <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.</p>
+<p>This page explains other ways to create a <span class="pre">Setting</span>, beyond the basic
+<span class="pre">:=</span> method. It assumes you've read <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> and <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.</p>
 <div class="section" id="refresher-settings">
 <h2>Refresher: Settings<a class="headerlink" href="#refresher-settings" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="Basic-Def.html"><em>Remember</em></a>, a build definition creates a
-list of <tt class="docutils literal"><span class="pre">Setting</span></tt>, which is then used to transform sbt's description
-of the build (which is a map of key-value pairs). A <tt class="docutils literal"><span class="pre">Setting</span></tt> is a
+list of <span class="pre">Setting</span>, which is then used to transform sbt's description
+of the build (which is a map of key-value pairs). A <span class="pre">Setting</span> is a
 transformation with sbt's earlier map as input and a new map as output.
 The new map becomes sbt's new state.</p>
 <p>Different settings transform the map in different ways.
-<a class="reference internal" href="Basic-Def.html"><em>Earlier</em></a>, you read about the <tt class="docutils literal"><span class="pre">:=</span></tt> method.</p>
-<p>The <tt class="docutils literal"><span class="pre">Setting</span></tt> which <tt class="docutils literal"><span class="pre">:=</span></tt> creates puts a fixed, constant value in the
+<a class="reference internal" href="Basic-Def.html"><em>Earlier</em></a>, you read about the <span class="pre">:=</span> method.</p>
+<p>The <span class="pre">Setting</span> which <span class="pre">:=</span> creates puts a fixed, constant value in the
 new, transformed map. For example, if you transform a map with the
-setting <tt class="docutils literal"><span class="pre">name</span> <span class="pre">:=</span> <span class="pre">&quot;hello&quot;</span></tt> the new map has the string <tt class="docutils literal"><span class="pre">&quot;hello&quot;</span></tt>
-stored under the key <tt class="docutils literal"><span class="pre">name</span></tt>.</p>
+setting <span class="pre">name := &quot;hello&quot;</span> the new map has the string <span class="pre">&quot;hello&quot;</span>
+stored under the key <span class="pre">name</span>.</p>
 <p>Settings must end up in the master list of settings to do any good (all
-lines in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> automatically end up in the list, but in a
+lines in a <span class="pre">build.sbt</span> automatically end up in the list, but in a
 <a class="reference internal" href="Full-Def.html"><em>.scala file</em></a> you can get it wrong by
-creating a <tt class="docutils literal"><span class="pre">Setting</span></tt> without putting it where sbt will find it).</p>
+creating a <span class="pre">Setting</span> without putting it where sbt will find it).</p>
 </div>
 <div class="section" id="appending-to-previous-values-and">
-<h2>Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt><a class="headerlink" href="#appending-to-previous-values-and" title="Permalink to this headline">¶</a></h2>
-<p>Assignment with <tt class="docutils literal"><span class="pre">:=</span></tt> is the simplest transformation, but keys have
-other methods as well. If the <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> is a sequence,
+<h2>Appending to previous values: <span class="pre">+=</span> and <span class="pre">++=</span><a class="headerlink" href="#appending-to-previous-values-and" title="Permalink to this headline">¶</a></h2>
+<p>Assignment with <span class="pre">:=</span> is the simplest transformation, but keys have
+other methods as well. If the <span class="pre">T</span> in <span class="pre">SettingKey[T]</span> is a sequence,
 i.e. the key's value type is a sequence, you can append to the sequence
 rather than replacing it.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">+=</span></tt> will append a single element to the sequence.</li>
-<li><tt class="docutils literal"><span class="pre">++=</span></tt> will concatenate another sequence.</li>
+<li><span class="pre">+=</span> will append a single element to the sequence.</li>
+<li><span class="pre">++=</span> will concatenate another sequence.</li>
 </ul>
-<p>For example, the key <tt class="docutils literal"><span class="pre">sourceDirectories</span> <span class="pre">in</span> <span class="pre">Compile</span></tt> has a
-<tt class="docutils literal"><span class="pre">Seq[File]</span></tt> as its value. By default this key's value would include
-<tt class="docutils literal"><span class="pre">src/main/scala</span></tt>. If you wanted to also compile source code in a
-directory called <tt class="docutils literal"><span class="pre">source</span></tt> (since you just have to be nonstandard), you
+<p>For example, the key <span class="pre">sourceDirectories in Compile</span> has a
+<span class="pre">Seq[File]</span> as its value. By default this key's value would include
+<span class="pre">src/main/scala</span>. If you wanted to also compile source code in a
+directory called <span class="pre">source</span> (since you just have to be nonstandard), you
 could add that directory:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Or, using the <tt class="docutils literal"><span class="pre">file()</span></tt> function from the sbt package for convenience:</p>
+<p>Or, using the <span class="pre">file()</span> function from the sbt package for convenience:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;source&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>(<tt class="docutils literal"><span class="pre">file()</span></tt> just creates a new <tt class="docutils literal"><span class="pre">File</span></tt>.)</p>
-<p>You could use <tt class="docutils literal"><span class="pre">++=</span></tt> to add more than one directory at a time:</p>
+<p>(<span class="pre">file()</span> just creates a new <span class="pre">File</span>.)</p>
+<p>You could use <span class="pre">++=</span> to add more than one directory at a time:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;sources1&quot;</span><span class="o">),</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sources2&quot;</span><span class="o">))</span>
 </pre></div>
 </div>
-<p>Where <tt class="docutils literal"><span class="pre">Seq(a,</span> <span class="pre">b,</span> <span class="pre">c,</span> <span class="pre">...)</span></tt> is standard Scala syntax to construct a
+<p>Where <span class="pre">Seq(a, b, c, ...)</span> is standard Scala syntax to construct a
 sequence.</p>
-<p>To replace the default source directories entirely, you use <tt class="docutils literal"><span class="pre">:=</span></tt> of
+<p>To replace the default source directories entirely, you use <span class="pre">:=</span> of
 course:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;sources1&quot;</span><span class="o">),</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;sources2&quot;</span><span class="o">))</span>
 </pre></div>
@@ -148,9 +148,9 @@ course:</p>
 </div>
 <div class="section" id="computing-a-value-based-on-other-keys-values">
 <h2>Computing a value based on other keys' values<a class="headerlink" href="#computing-a-value-based-on-other-keys-values" title="Permalink to this headline">¶</a></h2>
-<p>Reference the value of another task or setting by calling <tt class="docutils literal"><span class="pre">value</span></tt>
-on the key for the task or setting.  The <tt class="docutils literal"><span class="pre">value</span></tt> method is special and may
-only be called in the argument to <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, or <tt class="docutils literal"><span class="pre">++=</span></tt>.</p>
+<p>Reference the value of another task or setting by calling <span class="pre">value</span>
+on the key for the task or setting.  The <span class="pre">value</span> method is special and may
+only be called in the argument to <span class="pre">:=</span>, <span class="pre">+=</span>, or <span class="pre">++=</span>.</p>
 <p>As a first example, consider defining the project organization to be the same as the project name.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// name our organization after our project (both are SettingKey[String])</span>
 <span class="n">organization</span> <span class="o">:=</span> <span class="n">name</span><span class="o">.</span><span class="n">value</span>
@@ -162,7 +162,7 @@ only be called in the argument to <tt class="docutils literal"><span class="pre"
 <span class="n">name</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">getName</span>
 </pre></div>
 </div>
-<p>This transforms the value of <tt class="docutils literal"><span class="pre">baseDirectory</span></tt> using the standard <tt class="docutils literal"><span class="pre">getName</span></tt> method of <tt class="docutils literal"><span class="pre">java.io.File</span></tt>.</p>
+<p>This transforms the value of <span class="pre">baseDirectory</span> using the standard <span class="pre">getName</span> method of <span class="pre">java.io.File</span>.</p>
 <p>Using multiple inputs is similar.  For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;project &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s">&quot; from &quot;</span> <span class="o">+</span> <span class="n">organization</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s">&quot; version &quot;</span> <span class="o">+</span> <span class="n">version</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
@@ -170,10 +170,10 @@ only be called in the argument to <tt class="docutils literal"><span class="pre"
 <p>This sets the name in terms of its previous value as well as the organization and version settings.</p>
 <div class="section" id="settings-with-dependencies">
 <h3>Settings with dependencies<a class="headerlink" href="#settings-with-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>In the setting <tt class="docutils literal"><span class="pre">name</span> <span class="pre">:=</span> <span class="pre">baseDirectory.value.getName</span></tt>, <tt class="docutils literal"><span class="pre">name</span></tt> will have
-a <em>dependency</em> on <tt class="docutils literal"><span class="pre">baseDirectory</span></tt>. If you place the above in
-<tt class="docutils literal"><span class="pre">build.sbt</span></tt> and run the sbt interactive console, then type
-<tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">name</span></tt>, you should see (in part):</p>
+<p>In the setting <span class="pre">name := baseDirectory.value.getName</span>, <span class="pre">name</span> will have
+a <em>dependency</em> on <span class="pre">baseDirectory</span>. If you place the above in
+<span class="pre">build.sbt</span> and run the sbt interactive console, then type
+<span class="pre">inspect name</span>, you should see (in part):</p>
 <div class="highlight-text"><div class="highlight"><pre>[info] Dependencies:
 [info]  *:baseDirectory
 </pre></div>
@@ -181,12 +181,12 @@ a <em>dependency</em> on <tt class="docutils literal"><span class="pre">baseDire
 <p>This is how sbt knows which settings depend on which other settings.
 Remember that some settings describe tasks, so this approach also
 creates dependencies between tasks.</p>
-<p>For example, if you <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">compile</span></tt> you'll see it depends on another
-key <tt class="docutils literal"><span class="pre">compileInputs</span></tt>, and if you inspect <tt class="docutils literal"><span class="pre">compileInputs</span></tt> it in turn
+<p>For example, if you <span class="pre">inspect compile</span> you'll see it depends on another
+key <span class="pre">compileInputs</span>, and if you inspect <span class="pre">compileInputs</span> it in turn
 depends on other keys. Keep following the dependency chains and magic
-happens. When you type <tt class="docutils literal"><span class="pre">compile</span></tt> sbt automatically performs an
-<tt class="docutils literal"><span class="pre">update</span></tt>, for example. It Just Works because the values required as
-inputs to the <tt class="docutils literal"><span class="pre">compile</span></tt> computation require sbt to do the <tt class="docutils literal"><span class="pre">update</span></tt>
+happens. When you type <span class="pre">compile</span> sbt automatically performs an
+<span class="pre">update</span>, for example. It Just Works because the values required as
+inputs to the <span class="pre">compile</span> computation require sbt to do the <span class="pre">update</span>
 computation first.</p>
 <p>In this way, all build dependencies in sbt are <em>automatic</em> rather than
 explicitly declared. If you use a key's value in another computation,
@@ -194,7 +194,7 @@ then the computation depends on that key. It just works!</p>
 </div>
 <div class="section" id="when-settings-are-undefined">
 <h3>When settings are undefined<a class="headerlink" href="#when-settings-are-undefined" title="Permalink to this headline">¶</a></h3>
-<p>Whenever a setting uses <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, or <tt class="docutils literal"><span class="pre">++=</span></tt> to create a dependency on
+<p>Whenever a setting uses <span class="pre">:=</span>, <span class="pre">+=</span>, or <span class="pre">++=</span> to create a dependency on
 itself or another key's value, the value it depends on must exist. If it
 does not, sbt will complain. It might say <em>&quot;Reference to undefined
 setting&quot;</em>, for example. When this happens, be sure you're using the key
@@ -205,17 +205,17 @@ you do this.</p>
 <div class="section" id="tasks-with-dependencies">
 <h3>Tasks with dependencies<a class="headerlink" href="#tasks-with-dependencies" title="Permalink to this headline">¶</a></h3>
 <p>As noted in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>, task
-keys create a <tt class="docutils literal"><span class="pre">Setting[Task[T]]</span></tt> rather than a <tt class="docutils literal"><span class="pre">Setting[T]</span></tt> when you
-build a setting with <tt class="docutils literal"><span class="pre">:=</span></tt>, etc.  Tasks can use settings as inputs, but
+keys create a <span class="pre">Setting[Task[T]]</span> rather than a <span class="pre">Setting[T]</span> when you
+build a setting with <span class="pre">:=</span>, etc.  Tasks can use settings as inputs, but
 settings cannot use tasks as inputs.</p>
 <p>Take these two keys (from <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>):</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalacOptions</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]](</span><span class="s">&quot;Options for the Scala compiler.&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">checksums</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]](</span><span class="s">&quot;The list of checksums to generate and to verify for dependencies.&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>(<tt class="docutils literal"><span class="pre">scalacOptions</span></tt> and <tt class="docutils literal"><span class="pre">checksums</span></tt> have nothing to do with each other,
+<p>(<span class="pre">scalacOptions</span> and <span class="pre">checksums</span> have nothing to do with each other,
 they are just two keys with the same value type, where one is a task.)</p>
-<p>It is possible to compile a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> that aliases <tt class="docutils literal"><span class="pre">scalacOptions</span></tt> to <tt class="docutils literal"><span class="pre">checksums</span></tt>, but not the other way.
+<p>It is possible to compile a <span class="pre">build.sbt</span> that aliases <span class="pre">scalacOptions</span> to <span class="pre">checksums</span>, but not the other way.
 For example, this is allowed:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// The scalacOptions task may be defined in terms of the checksums setting</span>
 <span class="n">scalacOptions</span> <span class="o">:=</span> <span class="n">checksums</span><span class="o">.</span><span class="n">value</span>
@@ -232,10 +232,10 @@ time, and tasks expect to re-run every time.</p>
 </div>
 </div>
 <div class="section" id="appending-with-dependencies-and">
-<h2>Appending with dependencies: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt><a class="headerlink" href="#appending-with-dependencies-and" title="Permalink to this headline">¶</a></h2>
-<p>Other keys can be used when appending to an existing setting or task, just like they can for assigning with <tt class="docutils literal"><span class="pre">:=</span></tt>.</p>
+<h2>Appending with dependencies: <span class="pre">+=</span> and <span class="pre">++=</span><a class="headerlink" href="#appending-with-dependencies-and" title="Permalink to this headline">¶</a></h2>
+<p>Other keys can be used when appending to an existing setting or task, just like they can for assigning with <span class="pre">:=</span>.</p>
 <p>For example, say you have a coverage report named after the project, and
-you want to add it to the files removed by <tt class="docutils literal"><span class="pre">clean</span></tt>:</p>
+you want to add it to the files removed by <span class="pre">clean</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">cleanFiles</span> <span class="o">+=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;coverage-report-&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s">&quot;.txt&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
@@ -243,7 +243,7 @@ you want to add it to the files removed by <tt class="docutils literal"><span cl
 <div class="section" id="next">
 <h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
 <p>At this point you know how to get things done with settings, so we can
-move on to a specific key that comes up often: <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt>.
+move on to a specific key that comes up often: <span class="pre">libraryDependencies</span>.
 <a class="reference internal" href="Library-Dependencies.html"><em>Learn about library dependencies</em></a>.</p>
 </div>
 </div>
@@ -256,14 +256,14 @@ move on to a specific key that comes up often: <tt class="docutils literal"><spa
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">More Kinds of Setting</a><ul>
 <li><a class="reference internal" href="#refresher-settings">Refresher: Settings</a></li>
-<li><a class="reference internal" href="#appending-to-previous-values-and">Appending to previous values: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt></a></li>
+<li><a class="reference internal" href="#appending-to-previous-values-and">Appending to previous values: <span class="pre">+=</span> and <span class="pre">++=</span></a></li>
 <li><a class="reference internal" href="#computing-a-value-based-on-other-keys-values">Computing a value based on other keys' values</a><ul>
 <li><a class="reference internal" href="#settings-with-dependencies">Settings with dependencies</a></li>
 <li><a class="reference internal" href="#when-settings-are-undefined">When settings are undefined</a></li>
 <li><a class="reference internal" href="#tasks-with-dependencies">Tasks with dependencies</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#appending-with-dependencies-and">Appending with dependencies: <tt class="docutils literal"><span class="pre">+=</span></tt> and <tt class="docutils literal"><span class="pre">++=</span></tt></a></li>
+<li><a class="reference internal" href="#appending-with-dependencies-and">Appending with dependencies: <span class="pre">+=</span> and <span class="pre">++=</span></a></li>
 <li><a class="reference internal" href="#next">Next</a></li>
 </ul>
 </li>

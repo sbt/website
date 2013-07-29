@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -98,14 +98,14 @@ configuration file, and a java runtime version 1.6 or greater.</p>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>A user downloads the launcher jar and creates a script to run it. In
-this documentation, the script will be assumed to be called <tt class="docutils literal"><span class="pre">launch</span></tt>.
+this documentation, the script will be assumed to be called <span class="pre">launch</span>.
 For unix, the script would look like:
-<tt class="docutils literal"><span class="pre">java</span> <span class="pre">-jar</span> <span class="pre">sbt-launcher.jar</span> <span class="pre">&quot;$&#64;&quot;</span></tt></p>
+<span class="pre">java -jar sbt-launcher.jar &quot;$&#64;&quot;</span></p>
 <p>The user then downloads the configuration file for the application (call
-it <tt class="docutils literal"><span class="pre">my.app.configuration</span></tt>) and creates a script to launch it (call it
-<tt class="docutils literal"><span class="pre">myapp</span></tt>): <tt class="docutils literal"><span class="pre">launch</span> <span class="pre">&#64;my.app.configuration</span> <span class="pre">&quot;$&#64;&quot;</span></tt></p>
-<p>The user can then launch the application using <tt class="docutils literal"><span class="pre">myapp</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">...</span></tt></p>
-<p>Like the launcher used to distribute <tt class="docutils literal"><span class="pre">sbt</span></tt>, the downloaded launcher
+it <span class="pre">my.app.configuration</span>) and creates a script to launch it (call it
+<span class="pre">myapp</span>): <span class="pre">launch &#64;my.app.configuration &quot;$&#64;&quot;</span></p>
+<p>The user can then launch the application using <span class="pre">myapp arg1 arg2 ...</span></p>
+<p>Like the launcher used to distribute <span class="pre">sbt</span>, the downloaded launcher
 jar will retrieve Scala and the application according to the provided
 configuration file. The versions may be fixed or read from a different
 configuration file (the location of which is also configurable). The
@@ -118,7 +118,7 @@ information about how it was called: command line arguments, current
 working directory, Scala version, and application ID (organization,
 name, version). In addition, the application can ask the launcher to
 perform operations such as obtaining the Scala jars and a
-<tt class="docutils literal"><span class="pre">ClassLoader</span></tt> for any version of Scala retrievable from the
+<span class="pre">ClassLoader</span> for any version of Scala retrievable from the
 repositories specified in the configuration file. It can request that
 other applications be downloaded and run. When the application
 completes, it can tell the launcher to exit with a specific exit code or
@@ -133,13 +133,13 @@ configuring, writing, distributing, and running the application.</p>
 <p>The launcher may be configured in one of the following ways in
 increasing order of precedence:</p>
 <ul class="simple">
-<li>Replace the <tt class="docutils literal"><span class="pre">/sbt/sbt.boot.properties</span></tt> file in the jar</li>
-<li>Put a configuration file named <tt class="docutils literal"><span class="pre">sbt.boot.properties</span></tt> on the
-classpath. Put it in the classpath root without the <tt class="docutils literal"><span class="pre">/sbt</span></tt> prefix.</li>
+<li>Replace the <span class="pre">/sbt/sbt.boot.properties</span> file in the jar</li>
+<li>Put a configuration file named <span class="pre">sbt.boot.properties</span> on the
+classpath. Put it in the classpath root without the <span class="pre">/sbt</span> prefix.</li>
 <li>Specify the location of an alternate configuration on the command
 line. This can be done by either specifying the location as the
-system property <tt class="docutils literal"><span class="pre">sbt.boot.properties</span></tt> or as the first argument to
-the launcher prefixed by <tt class="docutils literal"><span class="pre">'&#64;'</span></tt>. The system property has lower
+system property <span class="pre">sbt.boot.properties</span> or as the first argument to
+the launcher prefixed by <span class="pre">'&#64;'</span>. The system property has lower
 precedence. Resolution of a relative path is first attempted against
 the current working directory, then against the user's home
 directory, and then against the directory containing the launcher
@@ -148,8 +148,8 @@ jar. An error is generated if none of these attempts succeed.</li>
 <div class="section" id="syntax">
 <h4>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h4>
 <p>The configuration file is line-based, read as UTF-8 encoded, and defined
-by the following grammar. <tt class="docutils literal"><span class="pre">'nl'</span></tt> is a newline or end of file and
-<tt class="docutils literal"><span class="pre">'text'</span></tt> is plain text without newlines or the surrounding delimiters
+by the following grammar. <span class="pre">'nl'</span> is a newline or end of file and
+<span class="pre">'text'</span> is plain text without newlines or the surrounding delimiters
 (such as parentheses or square brackets):</p>
 <pre>
 <strong id="grammar-token-configuration">configuration       </strong> ::=  <a class="reference internal" href="#grammar-token-scala"><tt class="xref docutils literal"><span class="pre">scala</span></tt></a> <a class="reference internal" href="#grammar-token-app"><tt class="xref docutils literal"><span class="pre">app</span></tt></a> <a class="reference internal" href="#grammar-token-repositories"><tt class="xref docutils literal"><span class="pre">repositories</span></tt></a> <a class="reference internal" href="#grammar-token-boot"><tt class="xref docutils literal"><span class="pre">boot</span></tt></a> <a class="reference internal" href="#grammar-token-log"><tt class="xref docutils literal"><span class="pre">log</span></tt></a> <a class="reference internal" href="#grammar-token-appProperties"><tt class="xref docutils literal"><span class="pre">appProperties</span></tt></a>
@@ -205,10 +205,10 @@ by the following grammar. <tt class="docutils literal"><span class="pre">'nl'</s
 <p>In addition to the grammar specified here, property values may include
 variable substitutions. A variable substitution has one of these forms:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">${variable.name}</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">${variable.name-default}</span></tt></li>
+<li><span class="pre">${variable.name}</span></li>
+<li><span class="pre">${variable.name-default}</span></li>
 </ul>
-<p>where <tt class="docutils literal"><span class="pre">variable.name</span></tt> is the name of a system property. If a system
+<p>where <span class="pre">variable.name</span> is the name of a system property. If a system
 property by that name exists, the value is substituted. If it does not
 exists and a default is specified, the default is substituted after
 recursively substituting variables in it. If the system property does
@@ -218,7 +218,8 @@ substituted.</p>
 <div class="section" id="example">
 <h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
 <p>The default configuration file for sbt looks like:</p>
-<div class="highlight-ini"><pre>[scala]
+<pre class="literal-block">
+[scala]
   version: ${sbt.scala.version-auto}
 
 [app]
@@ -231,9 +232,9 @@ substituted.</p>
 
 [repositories]
   local
-  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
+  typesafe-ivy-releases: <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/">http://repo.typesafe.com/typesafe/ivy-releases/</a>, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
   maven-central
-  sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
+  sonatype-snapshots: <a class="reference external" href="https://oss.sonatype.org/content/repositories/snapshots">https://oss.sonatype.org/content/repositories/snapshots</a>
 
 [boot]
   directory: ${sbt.boot.directory-${sbt.global.base-${user.home}/.sbt}/boot/}
@@ -242,31 +243,31 @@ substituted.</p>
   ivy-home: ${sbt.ivy.home-${user.home}/.ivy2/}
   checksums: ${sbt.checksums-sha1,md5}
   override-build-repos: ${sbt.override.build.repos-false}
-  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}</pre>
-</div>
+  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}
+</pre>
 </div>
 <div class="section" id="semantics">
 <h4>Semantics<a class="headerlink" href="#semantics" title="Permalink to this headline">¶</a></h4>
-<p>The <tt class="docutils literal"><span class="pre">scala.version</span></tt> property specifies the version of Scala used to
+<p>The <span class="pre">scala.version</span> property specifies the version of Scala used to
 run the application. If the application is not cross-built, this may be
-set to <tt class="docutils literal"><span class="pre">auto</span></tt> and it will be auto-detected from the application's
-dependencies. If specified, the <tt class="docutils literal"><span class="pre">scala.classifiers</span></tt> property defines
+set to <span class="pre">auto</span> and it will be auto-detected from the application's
+dependencies. If specified, the <span class="pre">scala.classifiers</span> property defines
 classifiers, such as 'sources', of extra Scala artifacts to retrieve.</p>
-<p>The <tt class="docutils literal"><span class="pre">app.org</span></tt>, <tt class="docutils literal"><span class="pre">app.name</span></tt>, and <tt class="docutils literal"><span class="pre">app.version</span></tt> properties specify
+<p>The <span class="pre">app.org</span>, <span class="pre">app.name</span>, and <span class="pre">app.version</span> properties specify
 the organization, module ID, and version of the application,
 respectively. These are used to resolve and retrieve the application
-from the repositories listed in <tt class="docutils literal"><span class="pre">[repositories]</span></tt>. If
-<tt class="docutils literal"><span class="pre">app.cross-versioned</span></tt> is <tt class="docutils literal"><span class="pre">binary</span></tt>, the resolved module ID is
-<tt class="docutils literal"><span class="pre">{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}</span></tt>.
-If <tt class="docutils literal"><span class="pre">app.cross-versioned</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">full</span></tt>, the resolved module ID is
-<tt class="docutils literal"><span class="pre">{app.name+'_'+scala.version}</span></tt>. The <tt class="docutils literal"><span class="pre">scala.version</span></tt> property must be
-specified and cannot be <tt class="docutils literal"><span class="pre">auto</span></tt> when cross-versioned. The paths given
-in <tt class="docutils literal"><span class="pre">app.resources</span></tt> are added to the application's classpath. If the
+from the repositories listed in <span class="pre">[repositories]</span>. If
+<span class="pre">app.cross-versioned</span> is <span class="pre">binary</span>, the resolved module ID is
+<span class="pre">{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}</span>.
+If <span class="pre">app.cross-versioned</span> is <span class="pre">true</span> or <span class="pre">full</span>, the resolved module ID is
+<span class="pre">{app.name+'_'+scala.version}</span>. The <span class="pre">scala.version</span> property must be
+specified and cannot be <span class="pre">auto</span> when cross-versioned. The paths given
+in <span class="pre">app.resources</span> are added to the application's classpath. If the
 path is relative, it is resolved against the application's working
-directory. If specified, the <tt class="docutils literal"><span class="pre">app.classifiers</span></tt> property defines
+directory. If specified, the <span class="pre">app.classifiers</span> property defines
 classifiers, like 'sources', of extra artifacts to retrieve for the
 application.</p>
-<p>Jars are retrieved to the directory given by <tt class="docutils literal"><span class="pre">boot.directory</span></tt>. By
+<p>Jars are retrieved to the directory given by <span class="pre">boot.directory</span>. By
 default, this is an absolute path that is shared by all launched
 instances on the machine. If multiple versions access it simultaneously.
 , you might see messages like:</p>
@@ -276,35 +277,35 @@ instances on the machine. If multiple versions access it simultaneously.
 <p>This boot directory may be relative to the current directory instead. In
 this case, the launched application will have a separate boot directory
 for each directory it is launched in.</p>
-<p>The <tt class="docutils literal"><span class="pre">boot.properties</span></tt> property specifies the location of the
-properties file to use if <tt class="docutils literal"><span class="pre">app.version</span></tt> or <tt class="docutils literal"><span class="pre">scala.version</span></tt> is
-specified as <tt class="docutils literal"><span class="pre">read</span></tt>. The <tt class="docutils literal"><span class="pre">prompt-create</span></tt>, <tt class="docutils literal"><span class="pre">prompt-fill</span></tt>, and
-<tt class="docutils literal"><span class="pre">quick-option</span></tt> properties together with the property definitions in
-<tt class="docutils literal"><span class="pre">[app.properties]</span></tt> can be used to initialize the <tt class="docutils literal"><span class="pre">boot.properties</span></tt>
+<p>The <span class="pre">boot.properties</span> property specifies the location of the
+properties file to use if <span class="pre">app.version</span> or <span class="pre">scala.version</span> is
+specified as <span class="pre">read</span>. The <span class="pre">prompt-create</span>, <span class="pre">prompt-fill</span>, and
+<span class="pre">quick-option</span> properties together with the property definitions in
+<span class="pre">[app.properties]</span> can be used to initialize the <span class="pre">boot.properties</span>
 file.</p>
 <p>The app.class property specifies the name of the entry point to the
 application. An application entry point must be a public class with a
-no-argument constructor that implements <tt class="docutils literal"><span class="pre">xsbti.AppMain</span></tt>. The
-<tt class="docutils literal"><span class="pre">AppMain</span></tt> interface specifies the entry method signature 'run'. The
+no-argument constructor that implements <span class="pre">xsbti.AppMain</span>. The
+<span class="pre">AppMain</span> interface specifies the entry method signature 'run'. The
 run method is passed an instance of AppConfiguration, which provides
-access to the startup environment. <tt class="docutils literal"><span class="pre">AppConfiguration</span></tt> also provides an
+access to the startup environment. <span class="pre">AppConfiguration</span> also provides an
 interface to retrieve other versions of Scala or other applications.
-Finally, the return type of the run method is <tt class="docutils literal"><span class="pre">xsbti.MainResult</span></tt>,
-which has two subtypes: <tt class="docutils literal"><span class="pre">xsbti.Reboot</span></tt> and <tt class="docutils literal"><span class="pre">xsbti.Exit</span></tt>. To exit
-with a specific code, return an instance of <tt class="docutils literal"><span class="pre">xsbti.Exit</span></tt> with the
+Finally, the return type of the run method is <span class="pre">xsbti.MainResult</span>,
+which has two subtypes: <span class="pre">xsbti.Reboot</span> and <span class="pre">xsbti.Exit</span>. To exit
+with a specific code, return an instance of <span class="pre">xsbti.Exit</span> with the
 requested code. To restart the application, return an instance of
 Reboot. You can change some aspects of the configuration with a reboot,
 such as the version of Scala, the application ID, and the arguments.</p>
-<p>The <tt class="docutils literal"><span class="pre">ivy.cache-directory</span></tt> property provides an alternative location
+<p>The <span class="pre">ivy.cache-directory</span> property provides an alternative location
 for the Ivy cache used by the launcher. This does not automatically set
 the Ivy cache for the application, but the application is provided this
-location through the AppConfiguration instance. The <tt class="docutils literal"><span class="pre">checksums</span></tt>
+location through the AppConfiguration instance. The <span class="pre">checksums</span>
 property selects the checksum algorithms (sha1 or md5) that are used to
-verify artifacts downloaded by the launcher. <tt class="docutils literal"><span class="pre">override-build-repos</span></tt> is
+verify artifacts downloaded by the launcher. <span class="pre">override-build-repos</span> is
 a flag that can inform the application that the repositories configured
 for the launcher should be used in the application. If
-<tt class="docutils literal"><span class="pre">repository-config</span></tt> is defined, the file it specifies should contain a
-<tt class="docutils literal"><span class="pre">[repositories]</span></tt> section that is used in place of the section in the
+<span class="pre">repository-config</span> is defined, the file it specifies should contain a
+<span class="pre">[repositories]</span> section that is used in place of the section in the
 original configuration file.</p>
 </div>
 </div>
@@ -315,15 +316,15 @@ described in the Configuration section and then parses it. If either the
 Scala version or the application version are specified as 'read', the
 launcher determines them in the following manner. The file given by the
 'boot.properties' property is read as a Java properties file to obtain
-the version. The expected property names are <tt class="docutils literal"><span class="pre">${app.name}.version</span></tt> for
-the application version (where <tt class="docutils literal"><span class="pre">${app.name}</span></tt> is replaced with the
-value of the <tt class="docutils literal"><span class="pre">app.name</span></tt> property from the boot configuration file) and
-<tt class="docutils literal"><span class="pre">scala.version</span></tt> for the Scala version. If the properties file does not
+the version. The expected property names are <span class="pre">${app.name}.version</span> for
+the application version (where <span class="pre">${app.name}</span> is replaced with the
+value of the <span class="pre">app.name</span> property from the boot configuration file) and
+<span class="pre">scala.version</span> for the Scala version. If the properties file does not
 exist, the default value provided is used. If no default was provided,
 an error is generated.</p>
 <p>Once the final configuration is resolved, the launcher proceeds to
 obtain the necessary jars to launch the application. The
-<tt class="docutils literal"><span class="pre">boot.directory</span></tt> property is used as a base directory to retrieve jars
+<span class="pre">boot.directory</span> property is used as a base directory to retrieve jars
 to. Locking is done on the directory, so it can be shared system-wide.
 The launcher retrieves the requested version of Scala to</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span><span class="o">{</span>boot.directory<span class="o">}</span>/<span class="k">${</span><span class="nv">scala</span><span class="p">.version</span><span class="k">}</span>/lib/
@@ -340,12 +341,12 @@ application itself. It and its dependencies are retrieved to</p>
 <p>Once all required code is downloaded, the class loaders are set up. The
 launcher creates a class loader for the requested version of Scala. It
 then creates a child class loader containing the jars for the requested
-'app.components' and with the paths specified in <tt class="docutils literal"><span class="pre">app.resources</span></tt>. An
+'app.components' and with the paths specified in <span class="pre">app.resources</span>. An
 application that does not use components will have all of its jars in
 this class loader.</p>
 <p>The main class for the application is then instantiated. It must be a
 public class with a public no-argument constructor and must conform to
-xsbti.AppMain. The <tt class="docutils literal"><span class="pre">run</span></tt> method is invoked and execution passes to the
+xsbti.AppMain. The <span class="pre">run</span> method is invoked and execution passes to the
 application. The argument to the 'run' method provides configuration
 information and a callback to obtain a class loader for any version of
 Scala that can be obtained from a repository in [repositories]. The
@@ -364,11 +365,11 @@ launcher and the version used to compile your application. The launcher
 interface class will be provided by the launcher, so it is only a
 compile-time dependency. If you are building with sbt, your dependency
 definition would be:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-sbt&quot;</span> <span class="o">%</span> <span class="s">&quot;launcher-interface&quot;</span> <span class="o">%</span> <span class="s">&quot;0.13.0&quot;</span> <span class="o">%</span> <span class="s">&quot;provided&quot;</span>
+<pre class="literal-block">
+libraryDependencies += &quot;org.scala-sbt&quot; % &quot;launcher-interface&quot; % &quot;0.13.0&quot; % &quot;provided&quot;
 
-<span class="n">resolvers</span> <span class="o">+=</span> <span class="n">sbtResolver</span><span class="o">.</span><span class="n">value</span>
-</pre></div>
-</div>
+resolvers += sbtResolver.value
+</pre>
 <p>Make the entry point to your class implement 'xsbti.AppMain'. An example
 that uses some of the information:</p>
 <div class="highlight-scala"><pre>package xsbt.test
@@ -387,14 +388,14 @@ class Main extends xsbti.AppMain
         // and how to return the code to exit with
         scalaVersion match
         {
-            case &quot;2.8.2&quot; =&gt;
+            case &quot;2.9.3&quot; =&gt;
                 new xsbti.Reboot {
                     def arguments = configuration.arguments
                     def baseDirectory = configuration.baseDirectory
-                    def scalaVersion = &quot;2.9.2
+                    def scalaVersion = &quot;2.10.2
                     def app = configuration.provider.id
                 }
-            case &quot;2.9.2&quot; =&gt; new Exit(1)
+            case &quot;2.10.2&quot; =&gt; new Exit(1)
             case _ =&gt; new Exit(0)
         }
     }
@@ -403,8 +404,9 @@ class Main extends xsbti.AppMain
 </div>
 <p>Next, define a configuration file for the launcher. For the above class,
 it might look like:</p>
-<div class="highlight-ini"><pre>[scala]
-  version: 2.9.2
+<pre class="literal-block">
+[scala]
+  version: 2.10.2
 [app]
   org: org.scala-sbt
   name: xsbt-test
@@ -415,9 +417,9 @@ it might look like:</p>
   local
   maven-central
 [boot]
-  directory: ${user.home}/.myapp/boot</pre>
-</div>
-<p>Then, <tt class="docutils literal"><span class="pre">publishLocal</span></tt> or <tt class="docutils literal"><span class="pre">+publishLocal</span></tt> the application to make it
+  directory: ${user.home}/.myapp/boot
+</pre>
+<p>Then, <span class="pre">publishLocal</span> or <span class="pre">+publishLocal</span> the application to make it
 available.</p>
 </div>
 <div class="section" id="running-an-application">
@@ -428,12 +430,12 @@ The second two require providing a configuration file for download.</p>
 <ul class="simple">
 <li>Replace the /sbt/sbt.boot.properties file in the launcher jar and
 distribute the modified jar. The user would need a script to run
-<tt class="docutils literal"><span class="pre">java</span> <span class="pre">-jar</span> <span class="pre">your-launcher.jar</span> <span class="pre">arg1</span> <span class="pre">arg2</span> <span class="pre">...</span></tt>.</li>
+<span class="pre">java -jar your-launcher.jar arg1 arg2 ...</span>.</li>
 <li>The user downloads the launcher jar and you provide the configuration
 file.<ul>
-<li>The user needs to run <tt class="docutils literal"><span class="pre">java</span> <span class="pre">-Dsbt.boot.properties=your.boot.properties</span> <span class="pre">-jar</span> <span class="pre">launcher.jar</span></tt>.</li>
+<li>The user needs to run <span class="pre">java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar</span>.</li>
 <li>The user already has a script to run the launcher (call it
-'launch'). The user needs to run <tt class="docutils literal"><span class="pre">launch</span> <span class="pre">&#64;your.boot.properties</span> <span class="pre">your-arg-1</span> <span class="pre">your-arg-2</span></tt></li>
+'launch'). The user needs to run <span class="pre">launch &#64;your.boot.properties your-arg-1 your-arg-2</span></li>
 </ul>
 </li>
 </ul>

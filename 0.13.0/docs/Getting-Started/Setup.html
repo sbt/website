@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -112,10 +112,10 @@ to learn more about build definitions.</li>
 <dl class="docutils">
 <dt>Officially supported packages:</dt>
 <dd><ul class="first last simple">
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC3/sbt.msi">MSI</a> for Windows</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC3/sbt.zip">ZIP</a> or <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC3/sbt.tgz">TGZ</a> packages</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC3/sbt.rpm">RPM</a> package</li>
-<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC3/sbt.deb">DEB</a> package</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC4/sbt.msi">MSI</a> for Windows</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC4/sbt.zip">ZIP</a> or <a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC4/sbt.tgz">TGZ</a> packages</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC4/sbt.rpm">RPM</a> package</li>
+<li><a class="reference external" href="http://scalasbt.artifactoryonline.com/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.0-RC4/sbt.deb">DEB</a> package</li>
 </ul>
 </dd>
 </dl>
@@ -170,11 +170,11 @@ merge sbt from this ebuilds you can do:</p>
 </div>
 <div class="section" id="manual-installation">
 <span id="id3"></span><h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
-<p>Manual installation requires downloading <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC3/sbt-launch.jar">sbt-launch.jar</a> and creating a script to start it.</p>
+<p>Manual installation requires downloading <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC4/sbt-launch.jar">sbt-launch.jar</a> and creating a script to start it.</p>
 <div class="section" id="unix">
 <h4>Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
-<p>Put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC3/sbt-launch.jar">sbt-launch.jar</a> in <tt class="docutils literal"><span class="pre">~/bin</span></tt>.</p>
-<p>Create a script to run the jar, by creating <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt> with these contents:</p>
+<p>Put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC4/sbt-launch.jar">sbt-launch.jar</a> in <span class="pre">~/bin</span>.</p>
+<p>Create a script to run the jar, by creating <span class="pre">~/bin/sbt</span> with these contents:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
 <span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar <span class="sb">`</span>dirname <span class="nv">$0</span><span class="sb">`</span>/sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
 </pre></div>
@@ -187,33 +187,33 @@ merge sbt from this ebuilds you can do:</p>
 <div class="section" id="windows">
 <h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
 <p>Manual installation for Windows varies by terminal type and whether Cygwin is used.
-In all cases, put the batch file or script on the path so that you can launch <tt class="docutils literal"><span class="pre">sbt</span></tt>
-in any directory by typing <tt class="docutils literal"><span class="pre">sbt</span></tt> at the command prompt.  Also, adjust JVM settings
+In all cases, put the batch file or script on the path so that you can launch <span class="pre">sbt</span>
+in any directory by typing <span class="pre">sbt</span> at the command prompt.  Also, adjust JVM settings
 according to your machine if necessary.</p>
-<p>For <strong>non-Cygwin users using the standard Windows terminal</strong>, create a batch file <tt class="docutils literal"><span class="pre">sbt.bat</span></tt>:</p>
+<p>For <strong>non-Cygwin users using the standard Windows terminal</strong>, create a batch file <span class="pre">sbt.bat</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">set </span><span class="nv">SCRIPT_DIR</span><span class="o">=</span>%~dp0
 <span class="gp">$</span> java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize<span class="o">=</span>256M -jar <span class="s2">&quot;%SCRIPT_DIR%sbt-launch.jar&quot;</span> %*
 </pre></div>
 </div>
-<p>and put the downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC3/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file.</p>
-<p>If using <strong>Cygwin with the standard Windows terminal</strong>, create a bash script <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt>:</p>
+<p>and put the downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC4/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file.</p>
+<p>If using <strong>Cygwin with the standard Windows terminal</strong>, create a bash script <span class="pre">~/bin/sbt</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
 <span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
 </pre></div>
 </div>
-<p>Replace <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC3/sbt-launch.jar">sbt-launch.jar</a> and remember to use <tt class="docutils literal"><span class="pre">cygpath</span></tt> if necessary.
+<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC4/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
 Make the script executable:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
 </pre></div>
 </div>
-<p>If using <strong>Cygwin with an Ansi terminal</strong> (supports Ansi escape sequences and is configurable via <tt class="docutils literal"><span class="pre">stty</span></tt>), create a bash script <tt class="docutils literal"><span class="pre">~/bin/sbt</span></tt>:</p>
+<p>If using <strong>Cygwin with an Ansi terminal</strong> (supports Ansi escape sequences and is configurable via <span class="pre">stty</span>), create a bash script <span class="pre">~/bin/sbt</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
 <span class="gp">$</span> stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
 <span class="gp">$</span> java -Djline.terminal<span class="o">=</span>jline.UnixTerminal -Dsbt.cygwin<span class="o">=</span><span class="nb">true</span> <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
 <span class="gp">$</span> stty icanon <span class="nb">echo</span> &gt; /dev/null 2&gt;&amp;1
 </pre></div>
 </div>
-<p>Replace <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC3/sbt-launch.jar">sbt-launch.jar</a> and remember to use <tt class="docutils literal"><span class="pre">cygpath</span></tt> if necessary.
+<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0-RC4/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
 Then, make the script executable:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
 </pre></div>

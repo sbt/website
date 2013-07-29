@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -113,27 +113,27 @@ only requires a JRE installed.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">cs sbt/sbt --branch 0.12.0</span>
 </pre></div>
 </div>
-<p>This will create two scripts: <tt class="docutils literal"><span class="pre">screpl</span></tt> and <tt class="docutils literal"><span class="pre">scalas</span></tt>.</p>
+<p>This will create two scripts: <span class="pre">screpl</span> and <span class="pre">scalas</span>.</p>
 </div>
 <div class="section" id="manual-setup">
 <h3>Manual Setup<a class="headerlink" href="#manual-setup" title="Permalink to this headline">¶</a></h3>
-<p>Duplicate your standard <tt class="docutils literal"><span class="pre">sbt</span></tt> script, which was set up according to
-<a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>, as <tt class="docutils literal"><span class="pre">scalas</span></tt> and <tt class="docutils literal"><span class="pre">screpl</span></tt> (or
+<p>Duplicate your standard <span class="pre">sbt</span> script, which was set up according to
+<a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>, as <span class="pre">scalas</span> and <span class="pre">screpl</span> (or
 whatever names you like).</p>
-<p><tt class="docutils literal"><span class="pre">scalas</span></tt> is the script runner and should use <tt class="docutils literal"><span class="pre">sbt.ScriptMain</span></tt> as
-the main class, by adding the <tt class="docutils literal"><span class="pre">-Dsbt.main.class=sbt.ScriptMain</span></tt>
-parameter to the <tt class="docutils literal"><span class="pre">java</span></tt> command. Its command line should look like:</p>
+<p><span class="pre">scalas</span> is the script runner and should use <span class="pre">sbt.ScriptMain</span> as
+the main class, by adding the <span class="pre">-Dsbt.main.class=sbt.ScriptMain</span>
+parameter to the <span class="pre">java</span> command. Its command line should look like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar &quot;$@&quot;</span>
 </pre></div>
 </div>
-<p>For the REPL runner <tt class="docutils literal"><span class="pre">screpl</span></tt>, use <tt class="docutils literal"><span class="pre">sbt.ConsoleMain</span></tt> as the main
+<p>For the REPL runner <span class="pre">screpl</span>, use <span class="pre">sbt.ConsoleMain</span> as the main
 class:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar &quot;$@&quot;</span>
 </pre></div>
 </div>
-<p>In each case, <tt class="docutils literal"><span class="pre">/home/user/.sbt/boot</span></tt> should be replaced with wherever
+<p>In each case, <span class="pre">/home/user/.sbt/boot</span> should be replaced with wherever
 you want sbt's boot directory to be; you might also need to give more
-memory to the JVM via <tt class="docutils literal"><span class="pre">-Xms512M</span> <span class="pre">-Xmx1536M</span></tt> or similar options, just
+memory to the JVM via <span class="pre">-Xms512M -Xmx1536M</span> or similar options, just
 like shown in <a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>.</p>
 </div>
 </div>
@@ -143,14 +143,14 @@ like shown in <a class="reference internal" href="../Getting-Started/Setup.html"
 <h3>sbt Script runner<a class="headerlink" href="#sbt-script-runner" title="Permalink to this headline">¶</a></h3>
 <p>The script runner can run a standard Scala script, but with the
 additional ability to configure sbt. sbt settings may be embedded in the
-script in a comment block that opens with <tt class="docutils literal"><span class="pre">/***</span></tt>.</p>
+script in a comment block that opens with <span class="pre">/</span><span class="pre"><a href="#id2"><span class="problematic" id="id3">**</span></a></span><span class="pre"><a href="#id4"><span class="problematic" id="id5">*</span></a></span>.</p>
 <div class="section" id="example">
 <h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
 <p>Copy the following script and make it executable. You may need to adjust
 the first line depending on your script name and operating system. When
 run, the example should retrieve Scala, the required dependencies,
 compile the script, and run it directly. For example, if you name it
-<tt class="docutils literal"><span class="pre">dispatch_example.scala</span></tt>, you would do on Unix:</p>
+<span class="pre">dispatch_example.scala</span>, you would do on Unix:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">chmod u+x dispatch_example.scala</span>
 <span class="go">./dispatch_example.scala</span>
 </pre></div>
@@ -202,8 +202,8 @@ or a resolver to use when retrieving dependencies.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="s">&quot;id at url&quot;</span>
 </pre></div>
 </div>
-<div class="section" id="id2">
-<h4>Example:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id6">
+<h4>Example:<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>To add the Sonatype snapshots repository and add Scalaz 7.0-SNAPSHOT to
 REPL classpath:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">screpl &quot;sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/&quot; &quot;org.scalaz%%scalaz-core%7.0-SNAPSHOT&quot;</span>
@@ -235,7 +235,7 @@ class is
 </ul>
 </li>
 <li><a class="reference internal" href="#sbt-repl-with-dependencies">sbt REPL with dependencies</a><ul>
-<li><a class="reference internal" href="#id2">Example:</a></li>
+<li><a class="reference internal" href="#id6">Example:</a></li>
 </ul>
 </li>
 </ul>

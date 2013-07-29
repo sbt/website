@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -119,9 +119,9 @@ define concrete Builds. A Build defines project relationships and
 configurations.</p>
 <div class="section" id="by-example">
 <h2>By Example<a class="headerlink" href="#by-example" title="Permalink to this headline">¶</a></h2>
-<p>Create a file with extension <tt class="docutils literal"><span class="pre">.scala</span></tt> in your <tt class="docutils literal"><span class="pre">project/</span></tt> directory
-(such as <tt class="docutils literal"><span class="pre">&lt;your-project&gt;/project/Build.scala</span></tt>).</p>
-<p>A sample <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt>:</p>
+<p>Create a file with extension <span class="pre">.scala</span> in your <span class="pre">project/</span> directory
+(such as <span class="pre">&lt;your-project&gt;/project/Build.scala</span>).</p>
+<p>A sample <span class="pre">project/Build.scala</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 
 <span class="k">object</span> <span class="nc">MyBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
@@ -144,16 +144,16 @@ configurations.</p>
 <p>(It is probably best to skip this section and come back after reading
 about project relationships. It is near the example for easier
 reference.)</p>
-<p>The configuration dependency <tt class="docutils literal"><span class="pre">sub2</span> <span class="pre">-&gt;</span> <span class="pre">root</span></tt> is specified as an
-argument to the <tt class="docutils literal"><span class="pre">delegates</span></tt> parameter of <tt class="docutils literal"><span class="pre">Project</span></tt>, which is by-name
-and of type <tt class="docutils literal"><span class="pre">Seq[ProjectReference]</span></tt> because by-name repeated
+<p>The configuration dependency <span class="pre">sub2 -&gt; root</span> is specified as an
+argument to the <span class="pre">delegates</span> parameter of <span class="pre">Project</span>, which is by-name
+and of type <span class="pre">Seq[ProjectReference]</span> because by-name repeated
 parameters are not allowed in Scala. There are also corresponding
-by-name parameters <tt class="docutils literal"><span class="pre">aggregate</span></tt> and <tt class="docutils literal"><span class="pre">dependencies</span></tt> for execution and
+by-name parameters <span class="pre">aggregate</span> and <span class="pre">dependencies</span> for execution and
 classpath dependencies. By-name parameters, being non-strict, are useful
-when there are cycles between the projects, as is the case for <tt class="docutils literal"><span class="pre">root</span></tt>
-and <tt class="docutils literal"><span class="pre">sub2</span></tt>. In the example, there is a <em>configuration</em> dependency
-<tt class="docutils literal"><span class="pre">sub2</span> <span class="pre">-&gt;</span> <span class="pre">root</span></tt>, a <em>classpath</em> dependency <tt class="docutils literal"><span class="pre">sub1</span> <span class="pre">-&gt;</span> <span class="pre">sub2</span></tt>, and an
-<em>execution</em> dependency <tt class="docutils literal"><span class="pre">root</span> <span class="pre">-&gt;</span> <span class="pre">sub1</span></tt>. This causes cycles at the
+when there are cycles between the projects, as is the case for <span class="pre">root</span>
+and <span class="pre">sub2</span>. In the example, there is a <em>configuration</em> dependency
+<span class="pre">sub2 -&gt; root</span>, a <em>classpath</em> dependency <span class="pre">sub1 -&gt; sub2</span>, and an
+<em>execution</em> dependency <span class="pre">root -&gt; sub1</span>. This causes cycles at the
 Scala-level, but not within a particular dependency type, which is not
 allowed.</p>
 </div>
@@ -161,7 +161,7 @@ allowed.</p>
 <div class="section" id="defining-projects">
 <h2>Defining Projects<a class="headerlink" href="#defining-projects" title="Permalink to this headline">¶</a></h2>
 <p>An internal project is defined by constructing an instance of
-<tt class="docutils literal"><span class="pre">Project</span></tt>. The minimum information for a new project is its ID string
+<span class="pre">Project</span>. The minimum information for a new project is its ID string
 and base directory. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 
@@ -170,7 +170,7 @@ and base directory. For example:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>This constructs a project definition for a project with ID 'a' and located in the <tt class="docutils literal"><span class="pre">subA/</span></tt> directory. Here, <tt class="docutils literal"><span class="pre">file(...)</span></tt> is equivalent to <tt class="docutils literal"><span class="pre">new</span> <span class="pre">File(...)</span></tt> and is resolved relative to the build's base directory.
+<p>This constructs a project definition for a project with ID 'a' and located in the <span class="pre">subA/</span> directory. Here, <span class="pre">file(...)</span> is equivalent to <span class="pre">new File(...)</span> and is resolved relative to the build's base directory.
 There are additional optional parameters to the Project constructor.
 These parameters configure the project and declare project
 relationships, as discussed in the next sections.</p>
@@ -182,8 +182,8 @@ a light configuration. Unlike a light configuration, the default
 settings can be replaced or manipulated and sequences of settings can be
 manipulated. In addition, a light configuration has default imports
 defined. A full definition needs to import these explicitly. In
-particular, all keys (like <tt class="docutils literal"><span class="pre">name</span></tt> and <tt class="docutils literal"><span class="pre">version</span></tt>) need to be imported
-from <tt class="docutils literal"><span class="pre">sbt.Keys</span></tt>.</p>
+particular, all keys (like <span class="pre">name</span> and <span class="pre">version</span>) need to be imported
+from <span class="pre">sbt.Keys</span>.</p>
 <div class="section" id="no-defaults">
 <h3>No defaults<a class="headerlink" href="#no-defaults" title="Permalink to this headline">¶</a></h3>
 <p>For example, to define a build from scratch (with no default settings or
@@ -221,23 +221,23 @@ its settings can be selected like:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Settings defined in <tt class="docutils literal"><span class="pre">.sbt</span></tt> files are appended to the settings for each
-<tt class="docutils literal"><span class="pre">Project</span></tt> definition.</p>
+<p>Settings defined in <span class="pre">.sbt</span> files are appended to the settings for each
+<span class="pre">Project</span> definition.</p>
 </div>
 <div class="section" id="build-level-settings">
 <h3>Build-level Settings<a class="headerlink" href="#build-level-settings" title="Permalink to this headline">¶</a></h3>
 <p>Lastly, settings can be defined for the entire build. In general, these
 are used when a setting is not defined for a project. These settings are
-declared either by augmenting <tt class="docutils literal"><span class="pre">Build.settings</span></tt> or defining settings in
+declared either by augmenting <span class="pre">Build.settings</span> or defining settings in
 the scope of the current build. For example, to set the shell prompt to
 be the id for the current project, the following setting can be added to
-a <tt class="docutils literal"><span class="pre">.sbt</span></tt> file:</p>
+a <span class="pre">.sbt</span> file:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">shellPrompt</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">s</span> <span class="k">=&gt;</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">s</span><span class="o">).</span><span class="n">currentProject</span><span class="o">.</span><span class="n">id</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
 </pre></div>
 </div>
-<p>(The value is a function <tt class="docutils literal"><span class="pre">State</span> <span class="pre">=&gt;</span> <span class="pre">String</span></tt>. <tt class="docutils literal"><span class="pre">State</span></tt> contains
+<p>(The value is a function <span class="pre">State =&gt; String</span>. <span class="pre">State</span> contains
 everything about the build and will be discussed elsewhere.)
-Alternatively, the setting can be defined in <tt class="docutils literal"><span class="pre">Build.settings</span></tt>:</p>
+Alternatively, the setting can be defined in <span class="pre">Build.settings</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">import</span> <span class="nn">Keys._</span>
 
@@ -257,21 +257,21 @@ described by execution, classpath, and configuration dependencies.</p>
 <div class="section" id="project-references">
 <h3>Project References<a class="headerlink" href="#project-references" title="Permalink to this headline">¶</a></h3>
 <p>When defining a dependency on another project, you provide a
-<tt class="docutils literal"><span class="pre">ProjectReference</span></tt>. In the simplest case, this is a <tt class="docutils literal"><span class="pre">Project</span></tt>
+<span class="pre">ProjectReference</span>. In the simplest case, this is a <span class="pre">Project</span>
 object. (Technically, there is an implicit conversion
-<tt class="docutils literal"><span class="pre">Project</span> <span class="pre">=&gt;</span> <span class="pre">ProjectReference</span></tt>) This indicates a dependency on a
+<span class="pre">Project =&gt; ProjectReference</span>) This indicates a dependency on a
 project within the same build. It is possible to declare a dependency on
 a project in a directory separate from the current build, in a git
 repository, or in a project packaged into a jar and accessible via
 http/https. These are referred to as external builds and projects. You
 can reference the root project in an external build with
-<tt class="docutils literal"><span class="pre">RootProject</span></tt>:</p>
+<span class="pre">RootProject</span>:</p>
 <div class="highlight-text"><div class="highlight"><pre>RootProject( file(&quot;/home/user/a-project&quot;) )
 RootProject( uri(&quot;git://github.com/dragos/dupcheck.git&quot;) )
 </pre></div>
 </div>
 <p>or a specific project within the external build can be referenced using
-a <tt class="docutils literal"><span class="pre">ProjectRef</span></tt>:</p>
+a <span class="pre">ProjectRef</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">ProjectRef</span><span class="o">(</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/dragos/dupcheck.git&quot;</span><span class="o">),</span> <span class="s">&quot;project-id&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
@@ -280,14 +280,14 @@ branch or tag. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">RootProject</span><span class="o">(</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/typesafehub/sbteclipse.git#v1.2&quot;</span><span class="o">)</span> <span class="o">)</span>
 </pre></div>
 </div>
-<p>Ultimately, a <tt class="docutils literal"><span class="pre">RootProject</span></tt> is resolved to a <tt class="docutils literal"><span class="pre">ProjectRef</span></tt> once the
+<p>Ultimately, a <span class="pre">RootProject</span> is resolved to a <span class="pre">ProjectRef</span> once the
 external project is loaded. Additionally, there are implicit conversions
-<tt class="docutils literal"><span class="pre">URI</span> <span class="pre">=&gt;</span> <span class="pre">RootProject</span></tt> and <tt class="docutils literal"><span class="pre">File</span> <span class="pre">=&gt;</span> <span class="pre">RootProject</span></tt> so that URIs and
+<span class="pre">URI =&gt; RootProject</span> and <span class="pre">File =&gt; RootProject</span> so that URIs and
 Files can be used directly. External, remote builds are retrieved or
-checked out to a staging directory in the user's <tt class="docutils literal"><span class="pre">.sbt</span></tt> directory so
+checked out to a staging directory in the user's <span class="pre">.sbt</span> directory so
 that they can be manipulated like local builds. Examples of using
 project references follow in the next sections.</p>
-<p>When using external projects, the <tt class="docutils literal"><span class="pre">sbt.boot.directory</span></tt> should be set
+<p>When using external projects, the <span class="pre">sbt.boot.directory</span> should be set
 (see [[Setup|Getting Started Setup]]) so that unnecessary
 recompilations do not occur (see <a class="reference external" href="https://github.com/sbt/sbt/issues/35" title="Spurious recompilation in multiproject builds with external subprojects."><span class="xref issue closed">#35</span></a>).</p>
 </div>
@@ -296,44 +296,44 @@ recompilations do not occur (see <a class="reference external" href="https://git
 <p>If project A has an execution dependency on project B, then when you
 execute a task on project A, it will also be run on project B. No
 ordering of these tasks is implied. An execution dependency is declared
-using the <tt class="docutils literal"><span class="pre">aggregate</span></tt> method on <tt class="docutils literal"><span class="pre">Project</span></tt>. For example:</p>
+using the <span class="pre">aggregate</span> method on <span class="pre">Project</span>. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span> <span class="n">aggregate</span><span class="o">(</span><span class="n">sub1</span><span class="o">)</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">sub1</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span> <span class="n">aggregate</span><span class="o">(</span><span class="n">sub2</span><span class="o">)</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">sub2</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span> <span class="n">aggregate</span><span class="o">(</span><span class="n">ext</span><span class="o">)</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">ext</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/dragos/dupcheck.git&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>If 'clean' is executed on <tt class="docutils literal"><span class="pre">sub2</span></tt>, it will also be executed on <tt class="docutils literal"><span class="pre">ext</span></tt>
-(the locally checked out version). If 'clean' is executed on <tt class="docutils literal"><span class="pre">root</span></tt>,
-it will also be executed on <tt class="docutils literal"><span class="pre">sub1</span></tt>, <tt class="docutils literal"><span class="pre">sub2</span></tt>, and <tt class="docutils literal"><span class="pre">ext</span></tt>.</p>
+<p>If 'clean' is executed on <span class="pre">sub2</span>, it will also be executed on <span class="pre">ext</span>
+(the locally checked out version). If 'clean' is executed on <span class="pre">root</span>,
+it will also be executed on <span class="pre">sub1</span>, <span class="pre">sub2</span>, and <span class="pre">ext</span>.</p>
 <p>Aggregation can be controlled more finely by configuring the
-<tt class="docutils literal"><span class="pre">aggregate</span></tt> setting. This setting is of type <tt class="docutils literal"><span class="pre">Aggregation</span></tt>:</p>
+<span class="pre">aggregate</span> setting. This setting is of type <span class="pre">Aggregation</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">sealed</span> <span class="k">trait</span> <span class="nc">Aggregation</span>
 <span class="k">final</span> <span class="k">case</span> <span class="k">class</span> <span class="nc">Implicit</span><span class="o">(</span><span class="n">enabled</span><span class="k">:</span> <span class="kt">Boolean</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Aggregation</span>
 <span class="k">final</span> <span class="k">class</span> <span class="nc">Explicit</span><span class="o">(</span><span class="k">val</span> <span class="n">deps</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">ProjectReference</span><span class="o">],</span> <span class="k">val</span> <span class="n">transitive</span><span class="k">:</span> <span class="kt">Boolean</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Aggregation</span>
 </pre></div>
 </div>
 <p>This key can be set in any scope, including per-task scopes. By default,
-aggregation is disabled for <tt class="docutils literal"><span class="pre">run</span></tt>, <tt class="docutils literal"><span class="pre">console-quick</span></tt>, <tt class="docutils literal"><span class="pre">console</span></tt>, and
-<tt class="docutils literal"><span class="pre">console-project</span></tt>. Re-enabling it from the command line for the
-current project for <tt class="docutils literal"><span class="pre">run</span></tt> would look like:</p>
+aggregation is disabled for <span class="pre">run</span>, <span class="pre">console-quick</span>, <span class="pre">console</span>, and
+<span class="pre">console-project</span>. Re-enabling it from the command line for the
+current project for <span class="pre">run</span> would look like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>aggregate in run :<span class="o">=</span> <span class="nb">true</span>
 </pre></div>
 </div>
-<p>(There is an implicit <tt class="docutils literal"><span class="pre">Boolean</span> <span class="pre">=&gt;</span> <span class="pre">Implicit</span></tt> where <tt class="docutils literal"><span class="pre">true</span></tt> translates
-to <tt class="docutils literal"><span class="pre">Implicit(true)</span></tt> and <tt class="docutils literal"><span class="pre">false</span></tt> translates to <tt class="docutils literal"><span class="pre">Implicit(false)</span></tt>).
+<p>(There is an implicit <span class="pre">Boolean =&gt; Implicit</span> where <span class="pre">true</span> translates
+to <span class="pre">Implicit(true)</span> and <span class="pre">false</span> translates to <span class="pre">Implicit(false)</span>).
 Similarly, aggregation can be disabled for the current project using:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>aggregate in clean :<span class="o">=</span> <span class="nb">false</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">Explicit</span></tt> allows finer control over the execution dependencies and
+<p><span class="pre">Explicit</span> allows finer control over the execution dependencies and
 transitivity. An instance is normally constructed using
-<tt class="docutils literal"><span class="pre">Aggregation.apply</span></tt>. No new projects may be introduced here (that is,
+<span class="pre">Aggregation.apply</span>. No new projects may be introduced here (that is,
 internal references have to be defined already in the Build's
-<tt class="docutils literal"><span class="pre">projects</span></tt> and externals must be a dependency in the Build
-definition). For example, to declare that <tt class="docutils literal"><span class="pre">root/clean</span></tt> aggregates
-<tt class="docutils literal"><span class="pre">sub1/clean</span></tt> and <tt class="docutils literal"><span class="pre">sub2/clean</span></tt> intransitively (that is, excluding
-<tt class="docutils literal"><span class="pre">ext</span></tt> even though <tt class="docutils literal"><span class="pre">sub2</span></tt> aggregates it):</p>
+<span class="pre">projects</span> and externals must be a dependency in the Build
+definition). For example, to declare that <span class="pre">root/clean</span> aggregates
+<span class="pre">sub1/clean</span> and <span class="pre">sub2/clean</span> intransitively (that is, excluding
+<span class="pre">ext</span> even though <span class="pre">sub2</span> aggregates it):</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="n">set</span> <span class="n">aggregate</span> <span class="n">in</span> <span class="n">clean</span> <span class="o">:=</span> <span class="nc">Aggregation</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="n">sub1</span><span class="o">,</span> <span class="n">sub2</span><span class="o">),</span> <span class="n">transitive</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
@@ -346,20 +346,20 @@ dependency will ensure its classpath is up-to-date, such as by fetching
 dependencies and recompiling modified sources.</p>
 <p>A classpath dependency declaration consists of a project reference and
 an optional configuration mapping. For example, to use project b's
-<tt class="docutils literal"><span class="pre">compile</span></tt> configuration from project a's <tt class="docutils literal"><span class="pre">test</span></tt> configuration:</p>
+<span class="pre">compile</span> configuration from project a's <span class="pre">test</span> configuration:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">b</span> <span class="o">%</span> <span class="s">&quot;test-&gt;compile&quot;</span><span class="o">)</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span>
 </pre></div>
 </div>
-<p>&quot;test-&gt;compile&quot;`` may be shortened to <tt class="docutils literal"><span class="pre">&quot;test&quot;</span></tt> in this case. The
-<tt class="docutils literal"><span class="pre">%</span></tt> call may be omitted, in which case the mapping is
-<tt class="docutils literal"><span class="pre">&quot;compile-&gt;compile&quot;</span></tt> by default.</p>
-<p>A useful configuration declaration is <tt class="docutils literal"><span class="pre">test-&gt;test</span></tt>. This means to use
+<p>&quot;test-&gt;compile&quot;` may be shortened to <span class="pre">&quot;test&quot;</span> in this case. The
+<span class="pre">%</span> call may be omitted, in which case the mapping is
+<span class="pre">&quot;compile-&gt;compile&quot;</span> by default.</p>
+<p>A useful configuration declaration is <span class="pre">test-&gt;test</span>. This means to use
 a dependency's test classes on the dependent's test classpath.</p>
 <p>Multiple declarations may be separated by a semicolon. For example, the
-following says to use the main classes of <tt class="docutils literal"><span class="pre">b</span></tt> for the compile
-classpath of <tt class="docutils literal"><span class="pre">a</span></tt> as well as the test classes of <tt class="docutils literal"><span class="pre">b</span></tt> for the test
-classpath of <tt class="docutils literal"><span class="pre">a</span></tt>:</p>
+following says to use the main classes of <span class="pre">b</span> for the compile
+classpath of <span class="pre">a</span> as well as the test classes of <span class="pre">b</span> for the test
+classpath of <span class="pre">a</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">b</span> <span class="o">%</span> <span class="s">&quot;compile;test-&gt;test&quot;</span><span class="o">)</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">b</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(...)</span>
 </pre></div>

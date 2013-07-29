@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -112,9 +112,9 @@ build.sbt file:</p>
 </pre></div>
 </div>
 <p>Then, put the following examples in source files
-<tt class="docutils literal"><span class="pre">SettingsExample.scala</span></tt> and <tt class="docutils literal"><span class="pre">SettingsUsage.scala</span></tt>. Finally, run sbt
-and enter the REPL using <tt class="docutils literal"><span class="pre">console</span></tt>. To see the output described below,
-enter <tt class="docutils literal"><span class="pre">SettingsUsage</span></tt>.</p>
+<span class="pre">SettingsExample.scala</span> and <span class="pre">SettingsUsage.scala</span>. Finally, run sbt
+and enter the REPL using <span class="pre">console</span>. To see the output described below,
+enter <span class="pre">SettingsUsage</span>.</p>
 </div>
 <div class="section" id="example-settings-system">
 <h3>Example Settings System<a class="headerlink" href="#example-settings-system" title="Permalink to this headline">¶</a></h3>
@@ -129,7 +129,7 @@ which to look up a value.</li>
 </ol>
 <p>There is also a fourth, but its usage is likely to be specific to sbt at
 this time. The example uses a trivial implementation for this part.</p>
-<p><tt class="docutils literal"><span class="pre">SettingsExample.scala</span></tt></p>
+<p><span class="pre">SettingsExample.scala</span></p>
 <div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">sbt._</span>
 
 <span class="cm">/** Define our settings system */</span>
@@ -165,11 +165,11 @@ this time. The example uses a trivial implementation for this part.</p>
 <div class="section" id="example-usage">
 <h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h3>
 <p>This part shows how to use the system we just defined. The end result is
-a <tt class="docutils literal"><span class="pre">Settings[Scope]</span></tt> value. This type is basically a mapping
-<tt class="docutils literal"><span class="pre">Scope</span> <span class="pre">-&gt;</span> <span class="pre">AttributeKey[T]</span> <span class="pre">-&gt;</span> <span class="pre">Option[T]</span></tt>. See the <a class="reference external" href="../../api/sbt/Settings.html">Settings API
+a <span class="pre">Settings[Scope]</span> value. This type is basically a mapping
+<span class="pre">Scope -&gt; AttributeKey[T] -&gt; Option[T]</span>. See the <a class="reference external" href="../../api/sbt/Settings.html">Settings API
 documentation</a>
 for details.</p>
-<p><tt class="docutils literal"><span class="pre">SettingsUsage.scala</span></tt></p>
+<p><span class="pre">SettingsUsage.scala</span></p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="cm">/** Usage Example **/</span>
 
    <span class="k">import</span> <span class="nn">sbt._</span>
@@ -208,8 +208,21 @@ for details.</p>
    <span class="o">}</span>
 </pre></div>
 </div>
-<p>This produces the following output when run:
-<tt class="docutils literal"><span class="pre">a0</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b0</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a1</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b1</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a2</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">b2</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a3</span> <span class="pre">=</span> <span class="pre">Some(3)</span> <span class="pre">b3</span> <span class="pre">=</span> <span class="pre">None</span> <span class="pre">a4</span> <span class="pre">=</span> <span class="pre">Some(3)</span> <span class="pre">b4</span> <span class="pre">=</span> <span class="pre">Some(9)</span> <span class="pre">a5</span> <span class="pre">=</span> <span class="pre">Some(4)</span> <span class="pre">b5</span> <span class="pre">=</span> <span class="pre">Some(9)</span></tt></p>
+<p>This produces the following output when run:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">a0</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">b0</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">a1</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">b1</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">a2</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">b2</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">a3</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+<span class="n">b3</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="n">a4</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span>
+<span class="n">b4</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">9</span><span class="o">)</span>
+<span class="n">a5</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">4</span><span class="o">)</span>
+<span class="n">b5</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">9</span><span class="o">)</span>
+</pre></div>
+</div>
 <ul class="simple">
 <li>For the None results, we never defined the value and there was no
 value to delegate to.</li>
@@ -234,19 +247,19 @@ standard usage of settings in a build. This scope has four components:
 the project axis, the configuration axis, the task axis, and the extra
 axis. Each component may be
 <a class="reference external" href="../../api/sbt/Global$.html">Global</a> (no specific value), <a class="reference external" href="../../api/sbt/This$.html">This</a> (current context), or <a class="reference external" href="../../api/sbt/Select.html">Select</a>
-(containing a specific value). sbt resolves <tt class="docutils literal"><span class="pre">This_</span></tt> to either
+(containing a specific value). sbt resolves <span class="pre"><a class="reference external" href="../../api/sbt/This$.html">This</a></span> to either
 <a class="reference external" href="../../api/sbt/Global$.html">Global</a> or <a class="reference external" href="../../api/sbt/Select.html">Select</a> depending on the context.</p>
 <p>For example, in a project, a <a class="reference external" href="../../api/sbt/This$.html">This</a> project axis becomes a
 <a class="reference external" href="../../api/sbt/Select.html">Select</a> referring to the defining project. All other axes that are
 <a class="reference external" href="../../api/sbt/This$.html">This</a> are translated to <a class="reference external" href="../../api/sbt/Global$.html">Global</a>.
 Functions like inConfig and inTask transform This into a
-<a class="reference external" href="../../api/sbt/Select.html">Select</a> for a specific value. For example, <tt class="docutils literal"><span class="pre">inConfig(Compile)(someSettings)</span></tt>
+<a class="reference external" href="../../api/sbt/Select.html">Select</a> for a specific value. For example, <span class="pre">inConfig(Compile)(someSettings)</span>
 translates the configuration axis for all settings in <em>someSettings</em> to
-be <tt class="docutils literal"><span class="pre">Select(Compile)</span></tt> if the axis value is <a class="reference external" href="../../api/sbt/This$.html">This</a>.</p>
+be <span class="pre">Select(Compile)</span> if the axis value is <a class="reference external" href="../../api/sbt/This$.html">This</a>.</p>
 <p>So, from the example and from sbt's scopes, you can see that the core
 settings engine does not impose much on the structure of a scope. All it
-requires is a delegates function <tt class="docutils literal"><span class="pre">Scope</span> <span class="pre">=&gt;</span> <span class="pre">Seq[Scope]</span></tt> and a
-<tt class="docutils literal"><span class="pre">display</span></tt> function. You can choose a scope type that makes sense for
+requires is a delegates function <span class="pre">Scope =&gt; Seq[Scope]</span> and a
+<span class="pre">display</span> function. You can choose a scope type that makes sense for
 your situation.</p>
 </div>
 <div class="section" id="constructing-settings">
@@ -264,13 +277,13 @@ are defined, code must be duplicated for every N. By making the wrappers
 at the top-level, this requires only one level of duplication.</p>
 <p>Additionally, sbt uniformly integrates its task engine into the settings
 system. The underlying settings engine has no notion of tasks. This is
-why sbt uses a <tt class="docutils literal"><span class="pre">SettingKey</span></tt> type and a <tt class="docutils literal"><span class="pre">TaskKey</span></tt> type. Methods on an
-underlying <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt> are basically translated to operating on an
-underlying <tt class="docutils literal"><span class="pre">SettingKey[Task[T]]</span></tt> (and they both wrap an underlying
-<tt class="docutils literal"><span class="pre">AttributeKey</span></tt>).</p>
-<p>For example, <tt class="docutils literal"><span class="pre">a</span> <span class="pre">:=</span> <span class="pre">3</span></tt> for a SettingKey <em>a</em> will very roughly translate
-to <tt class="docutils literal"><span class="pre">setting(a,</span> <span class="pre">value(3))</span></tt>. For a TaskKey <em>a</em>, it will roughly
-translate to <tt class="docutils literal"><span class="pre">setting(a,</span> <span class="pre">value(</span> <span class="pre">task</span> <span class="pre">{</span> <span class="pre">3</span> <span class="pre">}</span> <span class="pre">)</span> <span class="pre">)</span></tt>. See
+why sbt uses a <span class="pre">SettingKey</span> type and a <span class="pre">TaskKey</span> type. Methods on an
+underlying <span class="pre">TaskKey[T]</span> are basically translated to operating on an
+underlying <span class="pre">SettingKey[Task[T]]</span> (and they both wrap an underlying
+<span class="pre">AttributeKey</span>).</p>
+<p>For example, <span class="pre">a := 3</span> for a SettingKey <em>a</em> will very roughly translate
+to <span class="pre">setting(a, value(3))</span>. For a TaskKey <em>a</em>, it will roughly
+translate to <span class="pre">setting(a, value( task { 3 } ) )</span>. See
 <a class="reference external" href="../../sxr/Structure.scala">main/Structure.scala</a>
 for details.</p>
 </div>
@@ -278,7 +291,7 @@ for details.</p>
 <h3>Settings definitions<a class="headerlink" href="#settings-definitions" title="Permalink to this headline">¶</a></h3>
 <p>sbt also provides a way to define these settings in a file (build.sbt
 and Build.scala). This is done for build.sbt using basic parsing and
-then passing the resulting chunks of code to <tt class="docutils literal"><span class="pre">compile/Eval.scala</span></tt>. For
+then passing the resulting chunks of code to <span class="pre">compile/Eval.scala</span>. For
 all definitions, sbt manages the classpaths and recompilation process to
 obtain the settings. It also provides a way for users to define project,
 task, and configuration delegation, which ends up being used by the

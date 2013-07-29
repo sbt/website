@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -99,9 +99,9 @@ same except that their arguments are strict. There are two additional
 methods for controlling tab completion that are discussed at the end of
 the section.</p>
 <p>Parser combinators build up a parser from smaller parsers. A
-<tt class="docutils literal"><span class="pre">Parser[T]</span></tt> in its most basic usage is a function
-<tt class="docutils literal"><span class="pre">String</span> <span class="pre">=&gt;</span> <span class="pre">Option[T]</span></tt>. It accepts a <tt class="docutils literal"><span class="pre">String</span></tt> to parse and produces a
-value wrapped in <tt class="docutils literal"><span class="pre">Some</span></tt> if parsing succeeds or <tt class="docutils literal"><span class="pre">None</span></tt> if it fails.
+<span class="pre">Parser[T]</span> in its most basic usage is a function
+<span class="pre">String =&gt; Option[T]</span>. It accepts a <span class="pre">String</span> to parse and produces a
+value wrapped in <span class="pre">Some</span> if parsing succeeds or <span class="pre">None</span> if it fails.
 Error handling and tab completion make this picture more complicated,
 but we'll stick with Option for this discussion.</p>
 <p>The following examples assume the imports:</p>
@@ -119,9 +119,9 @@ val singleChar: Parser[Char] = &#x27;x&#x27;
 //   and failing otherwise
 val litString: Parser[String] = &quot;blue&quot;</pre>
 </div>
-<p>In these examples, implicit conversions produce a literal <tt class="docutils literal"><span class="pre">Parser</span></tt>
-from a <tt class="docutils literal"><span class="pre">Char</span></tt> or <tt class="docutils literal"><span class="pre">String</span></tt>. Other basic parser constructors are the
-<tt class="docutils literal"><span class="pre">charClass</span></tt>, <tt class="docutils literal"><span class="pre">success</span></tt> and <tt class="docutils literal"><span class="pre">failure</span></tt> methods:</p>
+<p>In these examples, implicit conversions produce a literal <span class="pre">Parser</span>
+from a <span class="pre">Char</span> or <span class="pre">String</span>. Other basic parser constructors are the
+<span class="pre">charClass</span>, <span class="pre">success</span> and <span class="pre">failure</span> methods:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// A parser that succeeds if the character is a digit, returning the matched Char</span>
 <span class="c1">//   The second argument, &quot;digit&quot;, describes the parser and is used in error messages</span>
 <span class="k">val</span> <span class="n">digit</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">Char</span><span class="o">]</span> <span class="k">=</span> <span class="n">charClass</span><span class="o">(</span> <span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">Char</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">isDigit</span><span class="o">,</span> <span class="s">&quot;digit&quot;</span><span class="o">)</span>
@@ -172,8 +172,8 @@ a parser.</p>
 <h2>Transforming results<a class="headerlink" href="#transforming-results" title="Permalink to this headline">¶</a></h2>
 <p>A key aspect of parser combinators is transforming results along the way
 into more useful data structures. The fundamental methods for this are
-<tt class="docutils literal"><span class="pre">map</span></tt> and <tt class="docutils literal"><span class="pre">flatMap</span></tt>. Here are examples of <tt class="docutils literal"><span class="pre">map</span></tt> and some
-convenience methods implemented on top of <tt class="docutils literal"><span class="pre">map</span></tt>.</p>
+<span class="pre">map</span> and <span class="pre">flatMap</span>. Here are examples of <span class="pre">map</span> and some
+convenience methods implemented on top of <span class="pre">map</span>.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Apply the `digits` parser and apply the provided function to the matched</span>
 <span class="c1">//   character sequence</span>
 <span class="k">val</span> <span class="n">num</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">digits</span> <span class="n">map</span> <span class="o">{</span> <span class="o">(</span><span class="n">chars</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Char</span><span class="o">])</span> <span class="k">=&gt;</span> <span class="n">chars</span><span class="o">.</span><span class="n">mkString</span><span class="o">.</span><span class="n">toInt</span> <span class="o">}</span>
@@ -198,30 +198,30 @@ convenience methods implemented on top of <tt class="docutils literal"><span cla
 <p>Most parsers have reasonable default tab completion behavior. For
 example, the string and character literal parsers will suggest the
 underlying literal for an empty input string. However, it is impractical
-to determine the valid completions for <tt class="docutils literal"><span class="pre">charClass</span></tt>, since it accepts
-an arbitrary predicate. The <tt class="docutils literal"><span class="pre">examples</span></tt> method defines explicit
+to determine the valid completions for <span class="pre">charClass</span>, since it accepts
+an arbitrary predicate. The <span class="pre">examples</span> method defines explicit
 completions for such a parser:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">digit</span> <span class="k">=</span> <span class="n">charClass</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">isDigit</span><span class="o">,</span> <span class="s">&quot;digit&quot;</span><span class="o">).</span><span class="n">examples</span><span class="o">(</span><span class="s">&quot;0&quot;</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="o">,</span> <span class="s">&quot;2&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Tab completion will use the examples as suggestions. The other method
-controlling tab completion is <tt class="docutils literal"><span class="pre">token</span></tt>. The main purpose of <tt class="docutils literal"><span class="pre">token</span></tt>
+controlling tab completion is <span class="pre">token</span>. The main purpose of <span class="pre">token</span>
 is to determine the boundaries for suggestions. For example, if your
 parser is:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="s">&quot;fg&quot;</span> <span class="o">|</span> <span class="s">&quot;bg&quot;</span><span class="o">)</span> <span class="o">~</span> <span class="sc">&#39; &#39;</span> <span class="o">~</span> <span class="o">(</span><span class="s">&quot;green&quot;</span> <span class="o">|</span> <span class="s">&quot;blue&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>then the potential completions on empty input are:
-<tt class="docutils literal"><span class="pre">console</span> <span class="pre">fg</span> <span class="pre">green</span> <span class="pre">fg</span> <span class="pre">blue</span> <span class="pre">bg</span> <span class="pre">green</span> <span class="pre">bg</span> <span class="pre">blue</span></tt></p>
+<span class="pre">console fg green fg blue bg green bg blue</span></p>
 <p>Typically, you want to suggest smaller segments or the number of
 suggestions becomes unmanageable. A better parser is:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">token</span><span class="o">(</span> <span class="o">(</span><span class="s">&quot;fg&quot;</span> <span class="o">|</span> <span class="s">&quot;bg&quot;</span><span class="o">)</span> <span class="o">~</span> <span class="sc">&#39; &#39;</span><span class="o">)</span> <span class="o">~</span> <span class="n">token</span><span class="o">(</span><span class="s">&quot;green&quot;</span> <span class="o">|</span> <span class="s">&quot;blue&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Now, the initial suggestions would be (with _ representing a space):
-<tt class="docutils literal"><span class="pre">console</span> <span class="pre">fg_</span> <span class="pre">bg_</span></tt></p>
+<span class="pre">console </span><span class="pre"><a href="#id1"><span class="problematic" id="id2">fg_</span></a></span><span class="pre"> </span><span class="pre"><a href="#id3"><span class="problematic" id="id4">bg_</span></a></span></p>
 <p>Be careful not to overlap or nest tokens, as in
-<tt class="docutils literal"><span class="pre">token(&quot;green&quot;</span> <span class="pre">~</span> <span class="pre">token(&quot;blue&quot;))</span></tt>. The behavior is unspecified (and
+<span class="pre">token(&quot;green&quot; ~ token(&quot;blue&quot;))</span>. The behavior is unspecified (and
 should generate an error in the future), but typically the outer most
 token definition will be used.</p>
 </div>

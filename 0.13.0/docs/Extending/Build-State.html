@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -94,16 +94,16 @@
 <p><a class="reference external" href="../../api/sbt/State$.html">State</a> is the entry point to all available
 information in sbt. The key methods are:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">definedCommands:</span> <span class="pre">Seq[Command]</span></tt> returns all registered Command
+<li><span class="pre">definedCommands: Seq[Command]</span> returns all registered Command
 definitions</li>
-<li><tt class="docutils literal"><span class="pre">remainingCommands:</span> <span class="pre">Seq[String]</span></tt> returns the remaining commands to
+<li><span class="pre">remainingCommands: Seq[String]</span> returns the remaining commands to
 be run</li>
-<li><tt class="docutils literal"><span class="pre">attributes:</span> <span class="pre">AttributeMap</span></tt> contains generic data.</li>
+<li><span class="pre">attributes: AttributeMap</span> contains generic data.</li>
 </ul>
-<p>The action part of a command performs work and transforms <tt class="docutils literal"><span class="pre">State</span></tt>. The
-following sections discuss <tt class="docutils literal"><span class="pre">State</span> <span class="pre">=&gt;</span> <span class="pre">State</span></tt> transformations. As
+<p>The action part of a command performs work and transforms <span class="pre">State</span>. The
+following sections discuss <span class="pre">State =&gt; State</span> transformations. As
 mentioned previously, a command will typically handle a parsed value as
-well: <tt class="docutils literal"><span class="pre">(State,</span> <span class="pre">T)</span> <span class="pre">=&gt;</span> <span class="pre">State</span></tt>.</p>
+well: <span class="pre">(State, T) =&gt; State</span>.</p>
 <div class="section" id="command-related-data">
 <h2>Command-related data<a class="headerlink" href="#command-related-data" title="Permalink to this headline">¶</a></h2>
 <p>A Command can modify the currently registered commands or the commands
@@ -140,7 +140,7 @@ execute:</p>
 commands run. The second inserts a command that will run next. The
 remaining commands will run after the inserted command completes.</p>
 <p>To indicate that a command has failed and execution should not continue,
-return <tt class="docutils literal"><span class="pre">state.fail</span></tt>.</p>
+return <span class="pre">state.fail</span>.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">success</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="o">...</span>
   <span class="k">if</span><span class="o">(</span><span class="n">success</span><span class="o">)</span> <span class="n">state</span> <span class="k">else</span> <span class="n">state</span><span class="o">.</span><span class="n">fail</span>
@@ -150,7 +150,7 @@ return <tt class="docutils literal"><span class="pre">state.fail</span></tt>.</p
 </div>
 <div class="section" id="project-related-data">
 <h2>Project-related data<a class="headerlink" href="#project-related-data" title="Permalink to this headline">¶</a></h2>
-<p>Project-related information is stored in <tt class="docutils literal"><span class="pre">attributes</span></tt>. Typically,
+<p>Project-related information is stored in <span class="pre">attributes</span>. Typically,
 commands won't access this directly but will instead use a convenience
 method to extract the most useful information:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">state</span><span class="k">:</span> <span class="kt">State</span>
@@ -160,32 +160,32 @@ method to extract the most useful information:</p>
 </div>
 <p><a class="reference external" href="../../api/sbt/Extracted.html">Extracted</a> provides:</p>
 <ul class="simple">
-<li>Access to the current build and project (<tt class="docutils literal"><span class="pre">currentRef</span></tt>)</li>
-<li>Access to initialized project setting data (<tt class="docutils literal"><span class="pre">structure.data</span></tt>)</li>
-<li>Access to session <tt class="docutils literal"><span class="pre">Setting</span></tt>s and the original, permanent settings
-from <tt class="docutils literal"><span class="pre">.sbt</span></tt> and <tt class="docutils literal"><span class="pre">.scala</span></tt> files (<tt class="docutils literal"><span class="pre">session.append</span></tt> and
-<tt class="docutils literal"><span class="pre">session.original</span></tt>, respectively)</li>
+<li>Access to the current build and project (<span class="pre">currentRef</span>)</li>
+<li>Access to initialized project setting data (<span class="pre">structure.data</span>)</li>
+<li>Access to session <span class="pre">Setting</span>s and the original, permanent settings
+from <span class="pre">.sbt</span> and <span class="pre">.scala</span> files (<span class="pre">session.append</span> and
+<span class="pre">session.original</span>, respectively)</li>
 <li>Access to the current <a class="reference external" href="../../api/sbt/compiler/Eval.html">Eval</a>
 instance for evaluating Scala expressions in the build context.</li>
 </ul>
 </div>
 <div class="section" id="project-data">
 <h2>Project data<a class="headerlink" href="#project-data" title="Permalink to this headline">¶</a></h2>
-<p>All project data is stored in <tt class="docutils literal"><span class="pre">structure.data</span></tt>, which is of type
-<tt class="docutils literal"><span class="pre">sbt.Settings[Scope]</span></tt>. Typically, one gets information of type <tt class="docutils literal"><span class="pre">T</span></tt>
+<p>All project data is stored in <span class="pre">structure.data</span>, which is of type
+<span class="pre">sbt.Settings[Scope]</span>. Typically, one gets information of type <span class="pre">T</span>
 in the following way:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">key</span><span class="k">:</span> <span class="kt">SettingKey</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
 <span class="k">val</span> <span class="n">scope</span><span class="k">:</span> <span class="kt">Scope</span>
 <span class="k">val</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="n">key</span> <span class="n">in</span> <span class="n">scope</span> <span class="n">get</span> <span class="n">structure</span><span class="o">.</span><span class="n">data</span>
 </pre></div>
 </div>
-<p>Here, a <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> is typically obtained from
+<p>Here, a <span class="pre">SettingKey[T]</span> is typically obtained from
 <a class="reference external" href="../../api/sbt/Keys$.html">Keys</a> and is the same type that is used to
-define settings in <tt class="docutils literal"><span class="pre">.sbt</span></tt> files, for example.
+define settings in <span class="pre">.sbt</span> files, for example.
 <a class="reference external" href="../../api/sbt/Scope.html">Scope</a> selects the scope the key is
-obtained for. There are convenience overloads of <tt class="docutils literal"><span class="pre">in</span></tt> that can be used
+obtained for. There are convenience overloads of <span class="pre">in</span> that can be used
 to specify only the required scope axes. See
-<a class="reference external" href="../../sxr/Structure.scala.html">Structure.scala</a> for where <tt class="docutils literal"><span class="pre">in</span></tt> and
+<a class="reference external" href="../../sxr/Structure.scala.html">Structure.scala</a> for where <span class="pre">in</span> and
 other parts of the settings interface are defined. Some examples:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">Keys._</span>
 <span class="k">val</span> <span class="n">extracted</span><span class="k">:</span> <span class="kt">Extracted</span>
@@ -204,10 +204,10 @@ information about build and project relationships. Key members are:</p>
 <span class="n">root</span><span class="k">:</span> <span class="kt">URI</span>
 </pre></div>
 </div>
-<p>A <tt class="docutils literal"><span class="pre">URI</span></tt> identifies a build and <tt class="docutils literal"><span class="pre">root</span></tt> identifies the initial build
+<p>A <span class="pre">URI</span> identifies a build and <span class="pre">root</span> identifies the initial build
 loaded. <a class="reference external" href="../../api/sbt/Load$$LoadedBuildUnit.html">LoadedBuildUnit</a>
 provides information about a single build. The key members of
-<tt class="docutils literal"><span class="pre">LoadedBuildUnit</span></tt> are:</p>
+<span class="pre">LoadedBuildUnit</span> are:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Defines the base directory for the build</span>
 <span class="n">localBase</span><span class="k">:</span> <span class="kt">File</span>
 
@@ -216,19 +216,19 @@ provides information about a single build. The key members of
 </pre></div>
 </div>
 <p><a class="reference external" href="../../api/sbt/ResolvedProject.html">ResolvedProject</a> has the same
-information as the <tt class="docutils literal"><span class="pre">Project</span></tt> used in a <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> except
+information as the <span class="pre">Project</span> used in a <span class="pre">project/Build.scala</span> except
 that <a class="reference external" href="../../api/sbt/ProjectReference.html">ProjectReferences</a> are
-resolved to <tt class="docutils literal"><span class="pre">ProjectRef</span></tt>s.</p>
+resolved to <span class="pre">ProjectRef</span>s.</p>
 </div>
 <div class="section" id="classpaths">
 <h2>Classpaths<a class="headerlink" href="#classpaths" title="Permalink to this headline">¶</a></h2>
-<p>Classpaths in sbt 0.10+ are of type <tt class="docutils literal"><span class="pre">Seq[Attributed[File]]</span></tt>. This
+<p>Classpaths in sbt 0.10+ are of type <span class="pre">Seq[Attributed[File]]</span>. This
 allows tagging arbitrary information to classpath entries. sbt currently
-uses this to associate an <tt class="docutils literal"><span class="pre">Analysis</span></tt> with an entry. This is how it
+uses this to associate an <span class="pre">Analysis</span> with an entry. This is how it
 manages the information needed for multi-project incremental
 recompilation. It also associates the ModuleID and Artifact with managed
 entries (those obtained by dependency management). When you only want
-the underlying <tt class="docutils literal"><span class="pre">Seq[File]</span></tt>, use <tt class="docutils literal"><span class="pre">files</span></tt>:</p>
+the underlying <span class="pre">Seq[File]</span>, use <span class="pre">files</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">attributedClasspath</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Attribute</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
 <span class="k">val</span> <span class="n">classpath</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="n">attributedClasspath</span><span class="o">.</span><span class="n">files</span>
 </pre></div>
@@ -240,7 +240,7 @@ the underlying <tt class="docutils literal"><span class="pre">Seq[File]</span></
 <a class="reference internal" href="Commands.html"><em>command</em></a> (<em>not from another task</em>) and get its
 result. For example, an IDE-related command might want to get the
 classpath from a project or a task might analyze the results of a
-compilation. The relevant method is <tt class="docutils literal"><span class="pre">Project.evaluateTask</span></tt>, which has
+compilation. The relevant method is <span class="pre">Project.evaluateTask</span>, which has
 the following signature:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">evaluateTask</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">taskKey</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">T</span><span class="o">]],</span> <span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">,</span>
   <span class="n">checkCycles</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="o">,</span> <span class="n">maxWorkers</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Result</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
@@ -278,7 +278,7 @@ the following signature:</p>
 </div>
 <div class="section" id="using-state-in-a-task">
 <h2>Using State in a task<a class="headerlink" href="#using-state-in-a-task" title="Permalink to this headline">¶</a></h2>
-<p>To access the current State from a task, use <tt class="docutils literal"><span class="pre">state</span></tt> task as an input.
+<p>To access the current State from a task, use <span class="pre">state</span> task as an input.
 For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">...</span> <span class="n">state</span><span class="o">.</span><span class="n">value</span> <span class="o">...</span>
 </pre></div>

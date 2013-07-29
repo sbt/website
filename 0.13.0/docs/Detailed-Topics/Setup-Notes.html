@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,18 +91,18 @@
             
   <div class="section" id="setup-notes">
 <h1>Setup Notes<a class="headerlink" href="#setup-notes" title="Permalink to this headline">¶</a></h1>
-<p>Some notes on how to set up your <tt class="docutils literal"><span class="pre">sbt</span></tt> script.</p>
+<p>Some notes on how to set up your <span class="pre">sbt</span> script.</p>
 <div class="section" id="do-not-put-sbt-launch-jar-on-your-classpath">
-<h2>Do not put <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> on your classpath.<a class="headerlink" href="#do-not-put-sbt-launch-jar-on-your-classpath" title="Permalink to this headline">¶</a></h2>
-<p>Do <em>not</em> put <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> in your <tt class="docutils literal"><span class="pre">$SCALA_HOME/lib</span></tt> directory,
-your project's <tt class="docutils literal"><span class="pre">lib</span></tt> directory, or anywhere it will be put on a
+<h2>Do not put <span class="pre">sbt-launch.jar</span> on your classpath.<a class="headerlink" href="#do-not-put-sbt-launch-jar-on-your-classpath" title="Permalink to this headline">¶</a></h2>
+<p>Do <em>not</em> put <span class="pre">sbt-launch.jar</span> in your <span class="pre">$SCALA_HOME/lib</span> directory,
+your project's <span class="pre">lib</span> directory, or anywhere it will be put on a
 classpath. It isn't a library.</p>
 </div>
 <div class="section" id="terminal-encoding">
 <h2>Terminal encoding<a class="headerlink" href="#terminal-encoding" title="Permalink to this headline">¶</a></h2>
 <p>The character encoding used by your terminal may differ from Java's
 default encoding for your platform. In this case, you will need to add
-the option <tt class="docutils literal"><span class="pre">-Dfile.encoding=&lt;encoding&gt;</span></tt> in your <tt class="docutils literal"><span class="pre">sbt</span></tt> script to set
+the option <span class="pre">-Dfile.encoding=&lt;encoding&gt;</span> in your <span class="pre">sbt</span> script to set
 the encoding, which might look like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dfile.encoding=UTF8</span>
 </pre></div>
@@ -113,21 +113,21 @@ the encoding, which might look like:</p>
 <p>If you find yourself running out of permgen space or your workstation is
 low on memory, adjust the JVM configuration as you would for any
 application. For example a common set of memory-related options is:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m``</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m`</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="boot-directory">
 <h2>Boot directory<a class="headerlink" href="#boot-directory" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> is just a bootstrap; the actual meat of sbt, and the
+<p><span class="pre">sbt-launch.jar</span> is just a bootstrap; the actual meat of sbt, and the
 Scala compiler and standard library, are downloaded to the shared
-directory <tt class="docutils literal"><span class="pre">$HOME/.sbt/boot/</span></tt>.</p>
-<p>To change the location of this directory, set the <tt class="docutils literal"><span class="pre">sbt.boot.directory</span></tt>
-system property in your <tt class="docutils literal"><span class="pre">sbt</span></tt> script. A relative path will be resolved
+directory <span class="pre">$HOME/.sbt/boot/</span>.</p>
+<p>To change the location of this directory, set the <span class="pre">sbt.boot.directory</span>
+system property in your <span class="pre">sbt</span> script. A relative path will be resolved
 against the current working directory, which can be useful if you want
 to avoid sharing the boot directory between projects. For example, the
 following uses the pre-0.11 style of putting the boot directory in
-<tt class="docutils literal"><span class="pre">project/boot/</span></tt>:</p>
+<span class="pre">project/boot/</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dsbt.boot.directory=project/boot/</span>
 </pre></div>
 </div>
@@ -135,9 +135,9 @@ following uses the pre-0.11 style of putting the boot directory in
 <div class="section" id="http-proxy">
 <h2>HTTP Proxy<a class="headerlink" href="#http-proxy" title="Permalink to this headline">¶</a></h2>
 <p>On Unix, sbt will pick up any HTTP proxy settings from the standard
-<tt class="docutils literal"><span class="pre">http_proxy</span></tt> environment variable. If you are behind a proxy requiring
-authentication, your <tt class="docutils literal"><span class="pre">sbt</span></tt> script must also pass flags to set the
-<tt class="docutils literal"><span class="pre">http.proxyUser</span></tt> and <tt class="docutils literal"><span class="pre">http.proxyPassword</span></tt> properties:</p>
+<span class="pre">http_proxy</span> environment variable. If you are behind a proxy requiring
+authentication, your <span class="pre">sbt</span> script must also pass flags to set the
+<span class="pre">http.proxyUser</span> and <span class="pre">http.proxyPassword</span> properties:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">java -Dhttp.proxyUser=username -Dhttp.proxyPassword=mypassword</span>
 </pre></div>
 </div>
@@ -156,7 +156,7 @@ if applicable, username and password:</p>
                 <div id="scroller">
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Setup Notes</a><ul>
-<li><a class="reference internal" href="#do-not-put-sbt-launch-jar-on-your-classpath">Do not put <tt class="docutils literal"><span class="pre">sbt-launch.jar</span></tt> on your classpath.</a></li>
+<li><a class="reference internal" href="#do-not-put-sbt-launch-jar-on-your-classpath">Do not put <span class="pre">sbt-launch.jar</span> on your classpath.</a></li>
 <li><a class="reference internal" href="#terminal-encoding">Terminal encoding</a></li>
 <li><a class="reference internal" href="#jvm-heap-permgen-and-stack-sizes">JVM heap, permgen, and stack sizes</a></li>
 <li><a class="reference internal" href="#boot-directory">Boot directory</a></li>

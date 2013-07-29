@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -93,33 +93,33 @@
 <h1>External Processes<a class="headerlink" href="#external-processes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">sbt</span></tt> includes a process library to simplify working with external
+<p><span class="pre">sbt</span> includes a process library to simplify working with external
 processes. The library is available without import in build definitions
 and at the interpreter started by the <a class="reference internal" href="Console-Project.html"><em>consoleProject</em></a> task.</p>
-<p>To run an external command, follow it with an exclamation mark <tt class="docutils literal"><span class="pre">!</span></tt>:</p>
+<p>To run an external command, follow it with an exclamation mark <span class="pre">!</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="s">&quot;find project -name *.jar&quot;</span> <span class="o">!</span>
 </pre></div>
 </div>
-<p>An implicit converts the <tt class="docutils literal"><span class="pre">String</span></tt> to <tt class="docutils literal"><span class="pre">sbt.ProcessBuilder</span></tt>, which
-defines the <tt class="docutils literal"><span class="pre">!</span></tt> method. This method runs the constructed command,
+<p>An implicit converts the <span class="pre">String</span> to <span class="pre">sbt.ProcessBuilder</span>, which
+defines the <span class="pre">!</span> method. This method runs the constructed command,
 waits until the command completes, and returns the exit code.
-Alternatively, the <tt class="docutils literal"><span class="pre">run</span></tt> method defined on <tt class="docutils literal"><span class="pre">ProcessBuilder</span></tt> runs the
-command and returns an instance of <tt class="docutils literal"><span class="pre">sbt.Process</span></tt>, which can be used to
-<tt class="docutils literal"><span class="pre">destroy</span></tt> the process before it completes. With no arguments, the
-<tt class="docutils literal"><span class="pre">!</span></tt> method sends output to standard output and standard error. You can
-pass a <tt class="docutils literal"><span class="pre">Logger</span></tt> to the <tt class="docutils literal"><span class="pre">!</span></tt> method to send output to the <tt class="docutils literal"><span class="pre">Logger</span></tt>:</p>
+Alternatively, the <span class="pre">run</span> method defined on <span class="pre">ProcessBuilder</span> runs the
+command and returns an instance of <span class="pre">sbt.Process</span>, which can be used to
+<span class="pre">destroy</span> the process before it completes. With no arguments, the
+<span class="pre">!</span> method sends output to standard output and standard error. You can
+pass a <span class="pre">Logger</span> to the <span class="pre">!</span> method to send output to the <span class="pre">Logger</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="s">&quot;find project -name *.jar&quot;</span> <span class="o">!</span> <span class="n">log</span>
 </pre></div>
 </div>
-<p>Two alternative implicit conversions are from <tt class="docutils literal"><span class="pre">scala.xml.Elem</span></tt> or
-<tt class="docutils literal"><span class="pre">List[String]</span></tt> to <tt class="docutils literal"><span class="pre">sbt.ProcessBuilder</span></tt>. These are useful for
+<p>Two alternative implicit conversions are from <span class="pre">scala.xml.Elem</span> or
+<span class="pre">List[String]</span> to <span class="pre">sbt.ProcessBuilder</span>. These are useful for
 constructing commands. An example of the first variant from the android
 plugin:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&lt;</span><span class="n">x</span><span class="o">&gt;</span> <span class="o">{</span><span class="n">dxPath</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">}</span> <span class="o">--</span><span class="n">dex</span> <span class="o">--</span><span class="n">output</span><span class="o">={</span><span class="n">classesDexPath</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">}</span> <span class="o">{</span><span class="n">classesMinJarPath</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">}&lt;/</span><span class="n">x</span><span class="o">&gt;</span> <span class="o">!</span>
 </pre></div>
 </div>
 <p>If you need to set the working directory or modify the environment, call
-<tt class="docutils literal"><span class="pre">sbt.Process</span></tt> explicitly, passing the command sequence (command and
+<span class="pre">sbt.Process</span> explicitly, passing the command sequence (command and
 argument list) or command string first and the working directory second.
 Any environment variables can be passed as a vararg list of key/value
 String pairs.</p>
@@ -127,35 +127,35 @@ String pairs.</p>
 </pre></div>
 </div>
 <p>Operators are defined to combine commands. These operators start with
-<tt class="docutils literal"><span class="pre">#</span></tt> in order to keep the precedence the same and to separate them from
-the operators defined elsewhere in <tt class="docutils literal"><span class="pre">sbt</span></tt> for filters. In the following
-operator definitions, <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are subcommands.</p>
+<span class="pre">#</span> in order to keep the precedence the same and to separate them from
+the operators defined elsewhere in <span class="pre">sbt</span> for filters. In the following
+operator definitions, <span class="pre">a</span> and <span class="pre">b</span> are subcommands.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#&amp;&amp;</span> <span class="pre">b</span></tt> Execute <tt class="docutils literal"><span class="pre">a</span></tt>. If the exit code is nonzero, return that
-exit code and do not execute <tt class="docutils literal"><span class="pre">b</span></tt>. If the exit code is zero, execute
-<tt class="docutils literal"><span class="pre">b</span></tt> and return its exit code.</li>
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#||</span> <span class="pre">b</span></tt> Execute <tt class="docutils literal"><span class="pre">a</span></tt>. If the exit code is zero, return zero for
-the exit code and do not execute <tt class="docutils literal"><span class="pre">b</span></tt>. If the exit code is nonzero,
-execute <tt class="docutils literal"><span class="pre">b</span></tt> and return its exit code.</li>
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#|</span> <span class="pre">b</span></tt> Execute <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt>, piping the output of <tt class="docutils literal"><span class="pre">a</span></tt> to the
-input of <tt class="docutils literal"><span class="pre">b</span></tt>.</li>
+<li><span class="pre">a #&amp;&amp; b</span> Execute <span class="pre">a</span>. If the exit code is nonzero, return that
+exit code and do not execute <span class="pre">b</span>. If the exit code is zero, execute
+<span class="pre">b</span> and return its exit code.</li>
+<li><span class="pre">a #|| b</span> Execute <span class="pre">a</span>. If the exit code is zero, return zero for
+the exit code and do not execute <span class="pre">b</span>. If the exit code is nonzero,
+execute <span class="pre">b</span> and return its exit code.</li>
+<li><span class="pre">a #| b</span> Execute <span class="pre">a</span> and <span class="pre">b</span>, piping the output of <span class="pre">a</span> to the
+input of <span class="pre">b</span>.</li>
 </ul>
-<p>There are also operators defined for redirecting output to <tt class="docutils literal"><span class="pre">File</span></tt>s
-and input from <tt class="docutils literal"><span class="pre">File</span></tt>s and <tt class="docutils literal"><span class="pre">URL</span></tt>s. In the following definitions,
-<tt class="docutils literal"><span class="pre">url</span></tt> is an instance of <tt class="docutils literal"><span class="pre">URL</span></tt> and <tt class="docutils literal"><span class="pre">file</span></tt> is an instance of
-<tt class="docutils literal"><span class="pre">File</span></tt>.</p>
+<p>There are also operators defined for redirecting output to <span class="pre">File</span>s
+and input from <span class="pre">File</span>s and <span class="pre">URL</span>s. In the following definitions,
+<span class="pre">url</span> is an instance of <span class="pre">URL</span> and <span class="pre">file</span> is an instance of
+<span class="pre">File</span>.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#&lt;</span> <span class="pre">url</span></tt> or <tt class="docutils literal"><span class="pre">url</span> <span class="pre">#&gt;</span> <span class="pre">a</span></tt> Use <tt class="docutils literal"><span class="pre">url</span></tt> as the input to <tt class="docutils literal"><span class="pre">a</span></tt>. <tt class="docutils literal"><span class="pre">a</span></tt>
-may be a <tt class="docutils literal"><span class="pre">File</span></tt> or a command.</li>
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#&lt;</span> <span class="pre">file</span></tt> or <tt class="docutils literal"><span class="pre">file</span> <span class="pre">#&gt;</span> <span class="pre">a</span></tt> Use <tt class="docutils literal"><span class="pre">file</span></tt> as the input to <tt class="docutils literal"><span class="pre">a</span></tt>.
-<tt class="docutils literal"><span class="pre">a</span></tt> may be a <tt class="docutils literal"><span class="pre">File</span></tt> or a command.</li>
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#&gt;</span> <span class="pre">file</span></tt> or <tt class="docutils literal"><span class="pre">file</span> <span class="pre">#&lt;</span> <span class="pre">a</span></tt> Write the output of <tt class="docutils literal"><span class="pre">a</span></tt> to <tt class="docutils literal"><span class="pre">file</span></tt>.
-<tt class="docutils literal"><span class="pre">a</span></tt> may be a <tt class="docutils literal"><span class="pre">File</span></tt>, <tt class="docutils literal"><span class="pre">URL</span></tt>, or a command.</li>
-<li><tt class="docutils literal"><span class="pre">a</span> <span class="pre">#&gt;&gt;</span> <span class="pre">file</span></tt> or <tt class="docutils literal"><span class="pre">file</span> <span class="pre">#&lt;&lt;</span> <span class="pre">a</span></tt> Append the output of <tt class="docutils literal"><span class="pre">a</span></tt> to
-<tt class="docutils literal"><span class="pre">file</span></tt>. <tt class="docutils literal"><span class="pre">a</span></tt> may be a <tt class="docutils literal"><span class="pre">File</span></tt>, <tt class="docutils literal"><span class="pre">URL</span></tt>, or a command.</li>
+<li><span class="pre">a #&lt; url</span> or <span class="pre">url #&gt; a</span> Use <span class="pre">url</span> as the input to <span class="pre">a</span>. <span class="pre">a</span>
+may be a <span class="pre">File</span> or a command.</li>
+<li><span class="pre">a #&lt; file</span> or <span class="pre">file #&gt; a</span> Use <span class="pre">file</span> as the input to <span class="pre">a</span>.
+<span class="pre">a</span> may be a <span class="pre">File</span> or a command.</li>
+<li><span class="pre">a #&gt; file</span> or <span class="pre">file #&lt; a</span> Write the output of <span class="pre">a</span> to <span class="pre">file</span>.
+<span class="pre">a</span> may be a <span class="pre">File</span>, <span class="pre">URL</span>, or a command.</li>
+<li><span class="pre">a #&gt;&gt; file</span> or <span class="pre">file #&lt;&lt; a</span> Append the output of <span class="pre">a</span> to
+<span class="pre">file</span>. <span class="pre">a</span> may be a <span class="pre">File</span>, <span class="pre">URL</span>, or a command.</li>
 </ul>
 <p>There are some additional methods to get the output from a forked
-process into a <tt class="docutils literal"><span class="pre">String</span></tt> or the output lines as a <tt class="docutils literal"><span class="pre">Stream[String]</span></tt>.
+process into a <span class="pre">String</span> or the output lines as a <span class="pre">Stream[String]</span>.
 Here are some examples, but see the <a class="reference external" href="../../api/sbt/ProcessBuilder.html">ProcessBuilder
 API</a>
 for details.</p>
@@ -163,34 +163,34 @@ for details.</p>
 <span class="k">val</span> <span class="n">lines2</span><span class="k">:</span> <span class="kt">Stream</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="s">&quot;ls&quot;</span> <span class="n">lines_!</span>
 </pre></div>
 </div>
-<p>Finally, there is a <tt class="docutils literal"><span class="pre">cat</span></tt> method to send the contents of <tt class="docutils literal"><span class="pre">File</span></tt>s
-and <tt class="docutils literal"><span class="pre">URL</span></tt>s to standard output.</p>
+<p>Finally, there is a <span class="pre">cat</span> method to send the contents of <span class="pre">File</span>s
+and <span class="pre">URL</span>s to standard output.</p>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>Download a <tt class="docutils literal"><span class="pre">URL</span></tt> to a <tt class="docutils literal"><span class="pre">File</span></tt>:</p>
+<p>Download a <span class="pre">URL</span> to a <span class="pre">File</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://databinder.net/dispatch/About&quot;</span><span class="o">)</span> <span class="o">#&gt;</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;About.html&quot;</span><span class="o">)</span> <span class="o">!</span>
 <span class="n">or</span>
 <span class="n">file</span><span class="o">(</span><span class="s">&quot;About.html&quot;</span><span class="o">)</span> <span class="o">#&lt;</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://databinder.net/dispatch/About&quot;</span><span class="o">)</span> <span class="o">!</span>
 </pre></div>
 </div>
-<p>Copy a <tt class="docutils literal"><span class="pre">File</span></tt>:</p>
+<p>Copy a <span class="pre">File</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">file</span><span class="o">(</span><span class="s">&quot;About.html&quot;</span><span class="o">)</span> <span class="o">#&gt;</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;About_copy.html&quot;</span><span class="o">)</span> <span class="o">!</span>
 <span class="n">or</span>
 <span class="n">file</span><span class="o">(</span><span class="s">&quot;About_copy.html&quot;</span><span class="o">)</span> <span class="o">#&lt;</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;About.html&quot;</span><span class="o">)</span> <span class="o">!</span>
 </pre></div>
 </div>
-<p>Append the contents of a <tt class="docutils literal"><span class="pre">URL</span></tt> to a <tt class="docutils literal"><span class="pre">File</span></tt> after filtering through
-<tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
+<p>Append the contents of a <span class="pre">URL</span> to a <span class="pre">File</span> after filtering through
+<span class="pre">grep</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://databinder.net/dispatch/About&quot;</span><span class="o">)</span> <span class="o">#&gt;</span> <span class="s">&quot;grep JSON&quot;</span> <span class="o">#&gt;&gt;</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;About_JSON&quot;</span><span class="o">)</span> <span class="o">!</span>
 <span class="n">or</span>
 <span class="n">file</span><span class="o">(</span><span class="s">&quot;About_JSON&quot;</span><span class="o">)</span> <span class="o">#&lt;&lt;</span> <span class="o">(</span> <span class="s">&quot;grep JSON&quot;</span> <span class="o">#&lt;</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://databinder.net/dispatch/About&quot;</span><span class="o">)</span> <span class="o">)</span>  <span class="o">!</span>
 </pre></div>
 </div>
-<p>Search for uses of <tt class="docutils literal"><span class="pre">null</span></tt> in the source directory:</p>
+<p>Search for uses of <span class="pre">null</span> in the source directory:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="s">&quot;find src -name *.scala -exec grep null {} ;&quot;</span>  <span class="o">#|</span>  <span class="s">&quot;xargs test -z&quot;</span>  <span class="o">#&amp;&amp;</span>  <span class="s">&quot;echo null-free&quot;</span>  <span class="o">#||</span>  <span class="s">&quot;echo null detected&quot;</span>  <span class="o">!</span>
 </pre></div>
 </div>
-<p>Use <tt class="docutils literal"><span class="pre">cat</span></tt>:</p>
+<p>Use <span class="pre">cat</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">spde</span> <span class="k">=</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://technically.us/spde/About&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">dispatch</span> <span class="k">=</span> <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://databinder.net/dispatch/About&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">build</span> <span class="k">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;project/build.properties&quot;</span><span class="o">)</span>

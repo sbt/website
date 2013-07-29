@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,25 +91,25 @@
             
   <div class="section" id="update-report">
 <h1>Update Report<a class="headerlink" href="#update-report" title="Permalink to this headline">¶</a></h1>
-<p><tt class="docutils literal"><span class="pre">update</span></tt> and related tasks produce a value of type
+<p><span class="pre">update</span> and related tasks produce a value of type
 <a class="reference external" href="../../api/sbt/UpdateReport.html">sbt.UpdateReport</a>
 This data structure provides information about the resolved
 configurations, modules, and artifacts. At the top level,
-<tt class="docutils literal"><span class="pre">UpdateReport</span></tt> provides reports of type <tt class="docutils literal"><span class="pre">ConfigurationReport</span></tt> for
-each resolved configuration. A <tt class="docutils literal"><span class="pre">ConfigurationReport</span></tt> supplies reports
-(of type <tt class="docutils literal"><span class="pre">ModuleReport</span></tt>) for each module resolved for a given
-configuration. Finally, a <tt class="docutils literal"><span class="pre">ModuleReport</span></tt> lists each successfully
-retrieved <tt class="docutils literal"><span class="pre">Artifact</span></tt> and the <tt class="docutils literal"><span class="pre">File</span></tt> it was retrieved to as well as
-the <tt class="docutils literal"><span class="pre">Artifact</span></tt>s that couldn't be downloaded. This missing
-<tt class="docutils literal"><span class="pre">Arifact</span></tt> list is always empty for <tt class="docutils literal"><span class="pre">update</span></tt>, which will fail if it is
-non-empty. However, it may be non-empty for <tt class="docutils literal"><span class="pre">updateClassifiers</span></tt> and
-<tt class="docutils literal"><span class="pre">updateSbtClassifers</span></tt>.</p>
+<span class="pre">UpdateReport</span> provides reports of type <span class="pre">ConfigurationReport</span> for
+each resolved configuration. A <span class="pre">ConfigurationReport</span> supplies reports
+(of type <span class="pre">ModuleReport</span>) for each module resolved for a given
+configuration. Finally, a <span class="pre">ModuleReport</span> lists each successfully
+retrieved <span class="pre">Artifact</span> and the <span class="pre">File</span> it was retrieved to as well as
+the <span class="pre">Artifact</span>s that couldn't be downloaded. This missing
+<span class="pre">Arifact</span> list is always empty for <span class="pre">update</span>, which will fail if it is
+non-empty. However, it may be non-empty for <span class="pre">updateClassifiers</span> and
+<span class="pre">updateSbtClassifers</span>.</p>
 <div class="section" id="filtering-a-report-and-getting-artifacts">
 <h2>Filtering a Report and Getting Artifacts<a class="headerlink" href="#filtering-a-report-and-getting-artifacts" title="Permalink to this headline">¶</a></h2>
-<p>A typical use of <tt class="docutils literal"><span class="pre">UpdateReport</span></tt> is to retrieve a list of files
+<p>A typical use of <span class="pre">UpdateReport</span> is to retrieve a list of files
 matching a filter. A conversion of type
-<tt class="docutils literal"><span class="pre">UpdateReport</span> <span class="pre">=&gt;</span> <span class="pre">RichUpdateReport</span></tt> implicitly provides these methods
-for <tt class="docutils literal"><span class="pre">UpdateReport</span></tt>. The filters are defined by the
+<span class="pre">UpdateReport =&gt; RichUpdateReport</span> implicitly provides these methods
+for <span class="pre">UpdateReport</span>. The filters are defined by the
 <a class="reference external" href="../../api/sbt/DependencyFilter.html">DependencyFilter</a>,
 <a class="reference external" href="../../api/sbt/ConfigurationFilter.html">ConfigurationFilter</a>,
 <a class="reference external" href="../../api/sbt/ModuleFilter.html">ModuleFilter</a>,
@@ -118,22 +118,22 @@ and
 types. Using these filter types, you can filter by the configuration
 name, the module organization, name, or revision, and the artifact name,
 type, extension, or classifier.</p>
-<p>The relevant methods (implicitly on <tt class="docutils literal"><span class="pre">UpdateReport</span></tt>) are:</p>
+<p>The relevant methods (implicitly on <span class="pre">UpdateReport</span>) are:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">matching</span><span class="o">(</span><span class="n">f</span><span class="k">:</span> <span class="kt">DependencyFilter</span><span class="o">)</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span>
 
 <span class="k">def</span> <span class="n">select</span><span class="o">(</span><span class="n">configuration</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">module</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">artifact</span><span class="k">:</span> <span class="kt">ArtifactFilter</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span>
 </pre></div>
 </div>
-<p>Any argument to <tt class="docutils literal"><span class="pre">select</span></tt> may be omitted, in which case all values are
+<p>Any argument to <span class="pre">select</span> may be omitted, in which case all values are
 allowed for the corresponding component. For example, if the
-<tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt> is not specified, all configurations are
+<span class="pre">ConfigurationFilter</span> is not specified, all configurations are
 accepted. The individual filter types are discussed below.</p>
 <div class="section" id="filter-basics">
 <h3>Filter Basics<a class="headerlink" href="#filter-basics" title="Permalink to this headline">¶</a></h3>
 <p>Configuration, module, and artifact filters are typically built by
-applying a <tt class="docutils literal"><span class="pre">NameFilter</span></tt> to each component of a <tt class="docutils literal"><span class="pre">Configuration</span></tt>,
-<tt class="docutils literal"><span class="pre">ModuleID</span></tt>, or <tt class="docutils literal"><span class="pre">Artifact</span></tt>. A basic <tt class="docutils literal"><span class="pre">NameFilter</span></tt> is implicitly
-constructed from a String, with <tt class="docutils literal"><span class="pre">*</span></tt> interpreted as a wildcard.</p>
+applying a <span class="pre">NameFilter</span> to each component of a <span class="pre">Configuration</span>,
+<span class="pre">ModuleID</span>, or <span class="pre">Artifact</span>. A basic <span class="pre">NameFilter</span> is implicitly
+constructed from a String, with <span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span> interpreted as a wildcard.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="c1">// each argument is of type NameFilter</span>
 <span class="k">val</span> <span class="n">mf</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;*sbt*&quot;</span><span class="o">,</span> <span class="n">name</span> <span class="k">=</span> <span class="s">&quot;main&quot;</span> <span class="o">|</span> <span class="s">&quot;actions&quot;</span><span class="o">,</span> <span class="n">revision</span> <span class="k">=</span> <span class="s">&quot;1.*&quot;</span> <span class="o">-</span> <span class="s">&quot;1.0&quot;</span><span class="o">)</span>
@@ -147,7 +147,7 @@ constructed from a String, with <tt class="docutils literal"><span class="pre">*
 <span class="k">val</span> <span class="n">cf</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span> <span class="o">=</span> <span class="n">configurationFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;compile&quot;</span> <span class="o">|</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Alternatively, these filters, including a <tt class="docutils literal"><span class="pre">NameFilter</span></tt>, may be
+<p>Alternatively, these filters, including a <span class="pre">NameFilter</span>, may be
 directly defined by an appropriate predicate (a single-argument function
 returning a Boolean).</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
@@ -166,18 +166,18 @@ returning a Boolean).</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>ConfigurationFilter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>A configuration filter essentially wraps a <tt class="docutils literal"><span class="pre">NameFilter</span></tt> and is
-explicitly constructed by the <tt class="docutils literal"><span class="pre">configurationFilter</span></tt> method:</p>
+<div class="section" id="id3">
+<h3>ConfigurationFilter<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>A configuration filter essentially wraps a <span class="pre">NameFilter</span> and is
+explicitly constructed by the <span class="pre">configurationFilter</span> method:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">configurationFilter</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span>
 </pre></div>
 </div>
 <p>If the argument is omitted, the filter matches all configurations.
-Functions of type <tt class="docutils literal"><span class="pre">String</span> <span class="pre">=&gt;</span> <span class="pre">Boolean</span></tt> are implicitly convertible to a
-<tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>. As with <tt class="docutils literal"><span class="pre">ModuleFilter</span></tt>, <tt class="docutils literal"><span class="pre">ArtifactFilter</span></tt>,
-and <tt class="docutils literal"><span class="pre">NameFilter</span></tt>, the <tt class="docutils literal"><span class="pre">&amp;</span></tt>, <tt class="docutils literal"><span class="pre">|</span></tt>, and <tt class="docutils literal"><span class="pre">-</span></tt> methods may be used to
-combine <tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>s.</p>
+Functions of type <span class="pre">String =&gt; Boolean</span> are implicitly convertible to a
+<span class="pre">ConfigurationFilter</span>. As with <span class="pre">ModuleFilter</span>, <span class="pre">ArtifactFilter</span>,
+and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id4"><span class="problematic" id="id5">|</span></a></span>, and <span class="pre">-</span> methods may be used to
+combine <span class="pre">ConfigurationFilter</span>s.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span> <span class="o">=</span> <span class="nc">Set</span><span class="o">(</span><span class="s">&quot;compile&quot;</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">b</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span> <span class="o">=</span> <span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">&quot;r&quot;</span><span class="o">)</span>
@@ -186,21 +186,21 @@ combine <tt class="docutils literal"><span class="pre">ConfigurationFilter</span
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id2">
-<h3>ModuleFilter<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>A module filter is defined by three <tt class="docutils literal"><span class="pre">NameFilter</span></tt>s: one for the
+<div class="section" id="id6">
+<h3>ModuleFilter<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>A module filter is defined by three <span class="pre">NameFilter</span>s: one for the
 organization, one for the module name, and one for the revision. Each
 component filter must match for the whole module filter to match. A
-module filter is explicitly constructed by the <tt class="docutils literal"><span class="pre">moduleFilter</span></tt> method:</p>
+module filter is explicitly constructed by the <span class="pre">moduleFilter</span> method:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">organization</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">name</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">revision</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">ModuleFilter</span>
 </pre></div>
 </div>
 <p>An omitted argument does not contribute to the match. If all arguments
-are omitted, the filter matches all <tt class="docutils literal"><span class="pre">ModuleID</span></tt>s. Functions of type
-<tt class="docutils literal"><span class="pre">ModuleID</span> <span class="pre">=&gt;</span> <span class="pre">Boolean</span></tt> are implicitly convertible to a
-<tt class="docutils literal"><span class="pre">ModuleFilter</span></tt>. As with <tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>, <tt class="docutils literal"><span class="pre">ArtifactFilter</span></tt>,
-and <tt class="docutils literal"><span class="pre">NameFilter</span></tt>, the <tt class="docutils literal"><span class="pre">&amp;</span></tt>, <tt class="docutils literal"><span class="pre">|</span></tt>, and <tt class="docutils literal"><span class="pre">-</span></tt> methods may be used to
-combine <tt class="docutils literal"><span class="pre">ModuleFilter</span></tt>s:</p>
+are omitted, the filter matches all <span class="pre">ModuleID</span>s. Functions of type
+<span class="pre">ModuleID =&gt; Boolean</span> are implicitly convertible to a
+<span class="pre">ModuleFilter</span>. As with <span class="pre">ConfigurationFilter</span>, <span class="pre">ArtifactFilter</span>,
+and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id7"><span class="problematic" id="id8">|</span></a></span>, and <span class="pre">-</span> methods may be used to
+combine <span class="pre">ModuleFilter</span>s:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;dispatch-twitter&quot;</span><span class="o">,</span> <span class="n">revision</span> <span class="k">=</span> <span class="s">&quot;0.7.8&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">b</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;dispatch-*&quot;</span><span class="o">)</span>
@@ -209,20 +209,20 @@ combine <tt class="docutils literal"><span class="pre">ModuleFilter</span></tt>s
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id3">
-<h3>ArtifactFilter<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>An artifact filter is defined by four <tt class="docutils literal"><span class="pre">NameFilter</span></tt>s: one for the
+<div class="section" id="id9">
+<h3>ArtifactFilter<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>An artifact filter is defined by four <span class="pre">NameFilter</span>s: one for the
 name, one for the type, one for the extension, and one for the
 classifier. Each component filter must match for the whole artifact
 filter to match. An artifact filter is explicitly constructed by the
-<tt class="docutils literal"><span class="pre">artifactFilter</span></tt> method:</p>
+<span class="pre">artifactFilter</span> method:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">artifactFilter</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">`type`</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">extension</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...,</span> <span class="n">classifier</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">ArtifactFilter</span>
 </pre></div>
 </div>
-<p>Functions of type <tt class="docutils literal"><span class="pre">Artifact</span> <span class="pre">=&gt;</span> <span class="pre">Boolean</span></tt> are implicitly convertible to
-an <tt class="docutils literal"><span class="pre">ArtifactFilter</span></tt>. As with <tt class="docutils literal"><span class="pre">ConfigurationFilter</span></tt>,
-<tt class="docutils literal"><span class="pre">ModuleFilter</span></tt>, and <tt class="docutils literal"><span class="pre">NameFilter</span></tt>, the <tt class="docutils literal"><span class="pre">&amp;</span></tt>, <tt class="docutils literal"><span class="pre">|</span></tt>, and <tt class="docutils literal"><span class="pre">-</span></tt>
-methods may be used to combine <tt class="docutils literal"><span class="pre">ArtifactFilter</span></tt>s:</p>
+<p>Functions of type <span class="pre">Artifact =&gt; Boolean</span> are implicitly convertible to
+an <span class="pre">ArtifactFilter</span>. As with <span class="pre">ConfigurationFilter</span>,
+<span class="pre">ModuleFilter</span>, and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id10"><span class="problematic" id="id11">|</span></a></span>, and <span class="pre">-</span>
+methods may be used to combine <span class="pre">ArtifactFilter</span>s:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ArtifactFilter</span> <span class="o">=</span> <span class="n">artifactFilter</span><span class="o">(</span><span class="n">classifier</span> <span class="k">=</span> <span class="s">&quot;javadoc&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">b</span><span class="k">:</span> <span class="kt">ArtifactFilter</span> <span class="o">=</span> <span class="n">artifactFilter</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;jar&quot;</span><span class="o">)</span>
@@ -231,17 +231,17 @@ methods may be used to combine <tt class="docutils literal"><span class="pre">Ar
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id4">
-<h3>DependencyFilter<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>A <tt class="docutils literal"><span class="pre">DependencyFilter</span></tt> is typically constructed by combining other
-<tt class="docutils literal"><span class="pre">DependencyFilter</span></tt>s together using <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt>, <tt class="docutils literal"><span class="pre">||</span></tt>, and <tt class="docutils literal"><span class="pre">--</span></tt>.
-Configuration, module, and artifact filters are <tt class="docutils literal"><span class="pre">DependencyFilter</span></tt>s
-themselves and can be used directly as a <tt class="docutils literal"><span class="pre">DependencyFilter</span></tt> or they
-can build up a <tt class="docutils literal"><span class="pre">DependencyFilter</span></tt>. Note that the symbols for the
-<tt class="docutils literal"><span class="pre">DependencyFilter</span></tt> combining methods are doubled up to distinguish
+<div class="section" id="id12">
+<h3>DependencyFilter<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>A <span class="pre">DependencyFilter</span> is typically constructed by combining other
+<span class="pre">DependencyFilter</span>s together using <span class="pre">&amp;&amp;</span>, <span class="pre">||</span>, and <span class="pre">--</span>.
+Configuration, module, and artifact filters are <span class="pre">DependencyFilter</span>s
+themselves and can be used directly as a <span class="pre">DependencyFilter</span> or they
+can build up a <span class="pre">DependencyFilter</span>. Note that the symbols for the
+<span class="pre">DependencyFilter</span> combining methods are doubled up to distinguish
 them from the combinators of the more specific filters for
 configurations, modules, and artifacts. These double-character methods
-will always return a <tt class="docutils literal"><span class="pre">DependencyFilter</span></tt>, whereas the single character
+will always return a <span class="pre">DependencyFilter</span>, whereas the single character
 methods preserve the more specific filter type. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 
@@ -249,11 +249,11 @@ methods preserve the more specific filter type. For example:</p>
   <span class="n">configurationFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;compile&quot;</span> <span class="o">|</span> <span class="s">&quot;test&quot;</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">artifactFilter</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;jar&quot;</span><span class="o">)</span> <span class="o">||</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;dispatch-*&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Here, we used <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> and <tt class="docutils literal"><span class="pre">||</span></tt> to combine individual component filters
+<p>Here, we used <span class="pre">&amp;&amp;</span> and <span class="pre">||</span> to combine individual component filters
 into a dependency filter, which can then be provided to the
-<tt class="docutils literal"><span class="pre">UpdateReport.matches</span></tt> method. Alternatively, the
-<tt class="docutils literal"><span class="pre">UpdateReport.select</span></tt> method may be used, which is equivalent to
-calling <tt class="docutils literal"><span class="pre">matches</span></tt> with its arguments combined with <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt>.</p>
+<span class="pre">UpdateReport.matches</span> method. Alternatively, the
+<span class="pre">UpdateReport.select</span> method may be used, which is equivalent to
+calling <span class="pre">matches</span> with its arguments combined with <span class="pre">&amp;&amp;</span>.</p>
 </div>
 </div>
 </div>
@@ -267,10 +267,10 @@ calling <tt class="docutils literal"><span class="pre">matches</span></tt> with 
 <li><a class="reference internal" href="#">Update Report</a><ul>
 <li><a class="reference internal" href="#filtering-a-report-and-getting-artifacts">Filtering a Report and Getting Artifacts</a><ul>
 <li><a class="reference internal" href="#filter-basics">Filter Basics</a></li>
-<li><a class="reference internal" href="#id1">ConfigurationFilter</a></li>
-<li><a class="reference internal" href="#id2">ModuleFilter</a></li>
-<li><a class="reference internal" href="#id3">ArtifactFilter</a></li>
-<li><a class="reference internal" href="#id4">DependencyFilter</a></li>
+<li><a class="reference internal" href="#id3">ConfigurationFilter</a></li>
+<li><a class="reference internal" href="#id6">ModuleFilter</a></li>
+<li><a class="reference internal" href="#id9">ArtifactFilter</a></li>
+<li><a class="reference internal" href="#id12">DependencyFilter</a></li>
 </ul>
 </li>
 </ul>

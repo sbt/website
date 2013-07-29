@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -69,7 +69,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="Basic-Def.html"><tt class="docutils literal docutils literal"><span class="pre">.sbt</span></tt> Build Definition</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="Basic-Def.html"><span class="pre">.sbt</span> Build Definition</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
@@ -91,7 +91,7 @@
             
   <div class="section" id="running">
 <h1>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h1>
-<p>This page describes how to use <tt class="docutils literal"><span class="pre">sbt</span></tt> once you have set up your
+<p>This page describes how to use <span class="pre">sbt</span> once you have set up your
 project. It assumes you've <a class="reference internal" href="Setup.html"><em>installed sbt</em></a> and
 created a <a class="reference internal" href="Hello.html"><em>Hello, World</em></a> or other project.</p>
 <div class="section" id="interactive-mode">
@@ -103,39 +103,39 @@ created a <a class="reference internal" href="Hello.html"><em>Hello, World</em><
 <p>Running sbt with no command line arguments starts it in interactive
 mode. Interactive mode has a command prompt (with tab completion and
 history!).</p>
-<p>For example, you could type <tt class="docutils literal"><span class="pre">compile</span></tt> at the sbt prompt:</p>
+<p>For example, you could type <span class="pre">compile</span> at the sbt prompt:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> compile
 </pre></div>
 </div>
-<p>To <tt class="docutils literal"><span class="pre">compile</span></tt> again, press up arrow and then enter.</p>
-<p>To run your program, type <tt class="docutils literal"><span class="pre">run</span></tt>.</p>
-<p>To leave interactive mode, type <tt class="docutils literal"><span class="pre">exit</span></tt> or use Ctrl+D (Unix) or Ctrl+Z
+<p>To <span class="pre">compile</span> again, press up arrow and then enter.</p>
+<p>To run your program, type <span class="pre">run</span>.</p>
+<p>To leave interactive mode, type <span class="pre">exit</span> or use Ctrl+D (Unix) or Ctrl+Z
 (Windows).</p>
 </div>
 <div class="section" id="batch-mode">
 <h2>Batch mode<a class="headerlink" href="#batch-mode" title="Permalink to this headline">¶</a></h2>
 <p>You can also run sbt in batch mode, specifying a space-separated list of
 sbt commands as arguments. For sbt commands that take arguments, pass
-the command and arguments as one argument to <tt class="docutils literal"><span class="pre">sbt</span></tt> by enclosing them
+the command and arguments as one argument to <span class="pre">sbt</span> by enclosing them
 in quotes. For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt clean compile <span class="s2">&quot;testOnly TestA TestB&quot;</span>
 </pre></div>
 </div>
-<p>In this example, <tt class="docutils literal"><span class="pre">test-only</span></tt> has arguments, <tt class="docutils literal"><span class="pre">TestA</span></tt> and <tt class="docutils literal"><span class="pre">TestB</span></tt>.
-The commands will be run in sequence (<tt class="docutils literal"><span class="pre">clean</span></tt>, <tt class="docutils literal"><span class="pre">compile</span></tt>, then
-<tt class="docutils literal"><span class="pre">test-only</span></tt>).</p>
+<p>In this example, <span class="pre">test-only</span> has arguments, <span class="pre">TestA</span> and <span class="pre">TestB</span>.
+The commands will be run in sequence (<span class="pre">clean</span>, <span class="pre">compile</span>, then
+<span class="pre">test-only</span>).</p>
 </div>
 <div class="section" id="continuous-build-and-test">
 <h2>Continuous build and test<a class="headerlink" href="#continuous-build-and-test" title="Permalink to this headline">¶</a></h2>
 <p>To speed up your edit-compile-test cycle, you can ask sbt to
 automatically recompile or run tests whenever you save a source file.</p>
 <p>Make a command run when one or more source files change by prefixing the
-command with <tt class="docutils literal"><span class="pre">~</span></tt>. For example, in interactive mode try:</p>
+command with <span class="pre">~</span>. For example, in interactive mode try:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ compile
 </pre></div>
 </div>
 <p>Press enter to stop watching for changes.</p>
-<p>You can use the <tt class="docutils literal"><span class="pre">~</span></tt> prefix with either interactive mode or batch mode.</p>
+<p>You can use the <span class="pre">~</span> prefix with either interactive mode or batch mode.</p>
 <p>See <a class="reference internal" href="../Detailed-Topics/Triggered-Execution.html"><em>Triggered Execution</em></a> for more details.</p>
 </div>
 <div class="section" id="common-commands">
@@ -143,23 +143,23 @@ command with <tt class="docutils literal"><span class="pre">~</span></tt>. For e
 <p>Here are some of the most common sbt commands. For a more complete list,
 see <a class="reference internal" href="../Detailed-Topics/Command-Line-Reference.html"><em>Command Line Reference</em></a>.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">clean</span></tt> Deletes all generated files (in the <tt class="docutils literal"><span class="pre">target</span></tt> directory).</li>
-<li><tt class="docutils literal"><span class="pre">compile</span></tt> Compiles the main sources (in <tt class="docutils literal"><span class="pre">src/main/scala</span></tt> and
-<tt class="docutils literal"><span class="pre">src/main/java</span></tt> directories).</li>
-<li><tt class="docutils literal"><span class="pre">test</span></tt> Compiles and runs all tests.</li>
-<li><tt class="docutils literal"><span class="pre">console</span></tt> Starts the Scala interpreter with a classpath including
+<li><span class="pre">clean</span> Deletes all generated files (in the <span class="pre">target</span> directory).</li>
+<li><span class="pre">compile</span> Compiles the main sources (in <span class="pre">src/main/scala</span> and
+<span class="pre">src/main/java</span> directories).</li>
+<li><span class="pre">test</span> Compiles and runs all tests.</li>
+<li><span class="pre">console</span> Starts the Scala interpreter with a classpath including
 the compiled sources and all dependencies. To return to sbt, type
-<tt class="docutils literal"><span class="pre">:quit</span></tt>, Ctrl+D (Unix), or Ctrl+Z (Windows).</li>
-<li><tt class="docutils literal"><span class="pre">run</span> <span class="pre">&lt;argument&gt;*</span></tt> Runs the main class for the project in the same
-virtual machine as <tt class="docutils literal"><span class="pre">sbt</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">package</span></tt> Creates a jar file containing the files in
-<tt class="docutils literal"><span class="pre">src/main/resources</span></tt> and the classes compiled from
-<tt class="docutils literal"><span class="pre">src/main/scala</span></tt> and <tt class="docutils literal"><span class="pre">src/main/java</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command&gt;</span></tt> Displays detailed help for the specified command.
+<span class="pre">:quit</span>, Ctrl+D (Unix), or Ctrl+Z (Windows).</li>
+<li><span class="pre">run &lt;argument&gt;*</span> Runs the main class for the project in the same
+virtual machine as <span class="pre">sbt</span>.</li>
+<li><span class="pre">package</span> Creates a jar file containing the files in
+<span class="pre">src/main/resources</span> and the classes compiled from
+<span class="pre">src/main/scala</span> and <span class="pre">src/main/java</span>.</li>
+<li><span class="pre">help &lt;command&gt;</span> Displays detailed help for the specified command.
 If no command is provided, displays brief descriptions of all
 commands.</li>
-<li><tt class="docutils literal"><span class="pre">reload</span></tt> Reloads the build definition (<tt class="docutils literal"><span class="pre">build.sbt</span></tt>,
-<tt class="docutils literal"><span class="pre">project/*.scala</span></tt>, <tt class="docutils literal"><span class="pre">project/*.sbt</span></tt> files). Needed if you change
+<li><span class="pre">reload</span> Reloads the build definition (<span class="pre">build.sbt</span>,
+<span class="pre">project/</span><span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">.scala</span>, <span class="pre">project/</span><span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">.sbt</span> files). Needed if you change
 the build definition.</li>
 </ul>
 </div>
@@ -176,15 +176,15 @@ verbose choices.</p>
 The simplest way to access history is with the up arrow key. The
 following commands are also supported:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">!</span></tt> Show history command help.</li>
-<li><tt class="docutils literal"><span class="pre">!!</span></tt> Execute the previous command again.</li>
-<li><tt class="docutils literal"><span class="pre">!:</span></tt> Show all previous commands.</li>
-<li><tt class="docutils literal"><span class="pre">!:n</span></tt> Show the last n commands.</li>
-<li><tt class="docutils literal"><span class="pre">!n</span></tt> Execute the command with index <tt class="docutils literal"><span class="pre">n</span></tt>, as shown by the <tt class="docutils literal"><span class="pre">!:</span></tt>
+<li><span class="pre">!</span> Show history command help.</li>
+<li><span class="pre">!!</span> Execute the previous command again.</li>
+<li><span class="pre">!:</span> Show all previous commands.</li>
+<li><span class="pre">!:n</span> Show the last n commands.</li>
+<li><span class="pre">!n</span> Execute the command with index <span class="pre">n</span>, as shown by the <span class="pre">!:</span>
 command.</li>
-<li><tt class="docutils literal"><span class="pre">!-n</span></tt> Execute the nth command before this one.</li>
-<li><tt class="docutils literal"><span class="pre">!string</span></tt> Execute the most recent command starting with 'string'</li>
-<li><tt class="docutils literal"><span class="pre">!?string</span></tt> Execute the most recent command containing 'string'</li>
+<li><span class="pre">!-n</span> Execute the nth command before this one.</li>
+<li><span class="pre">!string</span> Execute the most recent command starting with 'string'</li>
+<li><span class="pre">!?string</span> Execute the most recent command containing 'string'</li>
 </ul>
 </div>
 <div class="section" id="next">

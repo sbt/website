@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -112,7 +112,7 @@ is a quick way of configuring a build, consisting of a list of Scala
 expressions describing project settings. A <a class="reference internal" href="Full-Configuration.html"><em>full definition</em></a> is
 made up of one or more Scala source files that describe relationships
 between projects and introduce new configurations and settings. This
-page introduces the <tt class="docutils literal"><span class="pre">Setting</span></tt> type, which is used by light and full
+page introduces the <span class="pre">Setting</span> type, which is used by light and full
 definitions for general configuration.</p>
 <div class="section" id="introductory-examples">
 <h2>Introductory Examples<a class="headerlink" href="#introductory-examples" title="Permalink to this headline">¶</a></h2>
@@ -120,13 +120,13 @@ definitions for general configuration.</p>
 purpose of getting an idea of what they look like, not for full
 comprehension of details, which are described at <tt class="xref doc docutils literal"><span class="pre">light</span> <span class="pre">definition</span></tt>
 and <a class="reference internal" href="Full-Configuration.html"><em>full definition</em></a>.</p>
-<p><tt class="docutils literal"><span class="pre">&lt;base&gt;/build.sbt</span></tt> (light)</p>
+<p><span class="pre">&lt;base&gt;/build.sbt</span> (light)</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;My Project&quot;</span>
 
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;4.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">&lt;base&gt;/project/Build.scala</span></tt> (full)</p>
+<p><span class="pre">&lt;base&gt;/project/Build.scala</span> (full)</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">import</span> <span class="nn">Keys._</span>
 
@@ -144,31 +144,31 @@ and <a class="reference internal" href="Full-Configuration.html"><em>full defini
 </div>
 <div class="section" id="important-settings-background">
 <h1>Important Settings Background<a class="headerlink" href="#important-settings-background" title="Permalink to this headline">¶</a></h1>
-<p>The fundamental type of a configurable in sbt is a <tt class="docutils literal"><span class="pre">Setting[T]</span></tt>. Each
-line in the <tt class="docutils literal"><span class="pre">build.sbt</span></tt> example above is of this type. The arguments
-to the <tt class="docutils literal"><span class="pre">settings</span></tt> method in the <tt class="docutils literal"><span class="pre">Build.scala</span></tt> example are of type
-<tt class="docutils literal"><span class="pre">Setting[T]</span></tt>. Specifically, the <tt class="docutils literal"><span class="pre">name</span></tt> setting has type
-<tt class="docutils literal"><span class="pre">Setting[String]</span></tt> and the <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> setting has type
-<tt class="docutils literal"><span class="pre">Setting[Seq[ModuleID]]</span></tt>, where <tt class="docutils literal"><span class="pre">ModuleID</span></tt> represents a dependency.</p>
+<p>The fundamental type of a configurable in sbt is a <span class="pre">Setting[T]</span>. Each
+line in the <span class="pre">build.sbt</span> example above is of this type. The arguments
+to the <span class="pre">settings</span> method in the <span class="pre">Build.scala</span> example are of type
+<span class="pre">Setting[T]</span>. Specifically, the <span class="pre">name</span> setting has type
+<span class="pre">Setting[String]</span> and the <span class="pre">libraryDependencies</span> setting has type
+<span class="pre">Setting[Seq[ModuleID]]</span>, where <span class="pre">ModuleID</span> represents a dependency.</p>
 <p>Throughout the documentation, many examples show a setting, such as:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;4.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
 </pre></div>
 </div>
 <p>This setting expression either goes in a <tt class="xref doc docutils literal"><span class="pre">light</span> <span class="pre">definition</span></tt>
-<tt class="docutils literal"><span class="pre">(build.sbt)</span></tt> as is or in the <tt class="docutils literal"><span class="pre">settings</span></tt> of a <tt class="docutils literal"><span class="pre">Project</span></tt> instance
+<span class="pre">(build.sbt)</span> as is or in the <span class="pre">settings</span> of a <span class="pre">Project</span> instance
 in a <a class="reference internal" href="Full-Configuration.html"><em>full definition</em></a>
-<tt class="docutils literal"><span class="pre">(Build.scala)</span></tt> as shown in the example. This is an important point to
+<span class="pre">(Build.scala)</span> as shown in the example. This is an important point to
 understanding the context of examples in the documentation. (That is,
 you now know where to copy and paste examples now.)</p>
-<p>A <tt class="docutils literal"><span class="pre">Setting[T]</span></tt> describes how to initialize a setting of type <tt class="docutils literal"><span class="pre">T</span></tt>.
+<p>A <span class="pre">Setting[T]</span> describes how to initialize a setting of type <span class="pre">T</span>.
 The settings shown in the examples are expressions, not statements. In
 particular, there is no hidden mutable map that is being modified. Each
-<tt class="docutils literal"><span class="pre">Setting[T]</span></tt> is a value that describes an update to a map. The actual
+<span class="pre">Setting[T]</span> is a value that describes an update to a map. The actual
 map is rarely directly referenced by user code. It is not the final map
 that is usually important, but the operations on the map.</p>
-<p>To emphasize this, the setting in the following <tt class="docutils literal"><span class="pre">Build.scala</span></tt> fragment
+<p>To emphasize this, the setting in the following <span class="pre">Build.scala</span> fragment
 <em>is ignored</em> because it is a value that need to be included in the
-<tt class="docutils literal"><span class="pre">settings</span></tt> of a <tt class="docutils literal"><span class="pre">Project</span></tt>. (Unfortunately, Scala will discard
+<span class="pre">settings</span> of a <span class="pre">Project</span>. (Unfortunately, Scala will discard
 non-Unit values to get Unit, which is why there is no compile error.)</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">Bad</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
   <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;4.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
@@ -187,18 +187,18 @@ non-Unit values to get Unit, which is why there is no compile error.)</p>
 <div class="section" id="declaring-a-setting">
 <h1>Declaring a Setting<a class="headerlink" href="#declaring-a-setting" title="Permalink to this headline">¶</a></h1>
 <p>There is fundamentally one type of initialization, represented by the
-<tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt> method. The other initialization methods <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>,
-<tt class="docutils literal"><span class="pre">++=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;+=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;++=</span></tt>, and <tt class="docutils literal"><span class="pre">~=</span></tt> are convenience methods that can
-be defined in terms of <tt class="docutils literal"><span class="pre">&lt;&lt;=</span></tt>.</p>
+<span class="pre">&lt;&lt;=</span> method. The other initialization methods <span class="pre">:=</span>, <span class="pre">+=</span>,
+<span class="pre">++=</span>, <span class="pre">&lt;+=</span>, <span class="pre">&lt;++=</span>, and <span class="pre">~=</span> are convenience methods that can
+be defined in terms of <span class="pre">&lt;&lt;=</span>.</p>
 <p>The motivation behind the method names is:</p>
 <ul class="simple">
-<li>All methods end with <tt class="docutils literal"><span class="pre">=</span></tt> to obtain the lowest possible infix
+<li>All methods end with <span class="pre">=</span> to obtain the lowest possible infix
 precedence.</li>
-<li>A method starting with <tt class="docutils literal"><span class="pre">&lt;</span></tt> indicates that the initialization uses
+<li>A method starting with <span class="pre">&lt;</span> indicates that the initialization uses
 other settings.</li>
-<li>A single <tt class="docutils literal"><span class="pre">+</span></tt> means a single value is expected and will be appended
+<li>A single <span class="pre">+</span> means a single value is expected and will be appended
 to the current sequence.</li>
-<li><tt class="docutils literal"><span class="pre">++</span></tt> means a <tt class="docutils literal"><span class="pre">Seq[T]</span></tt> is expected. The sequence will be appended
+<li><span class="pre">++</span> means a <span class="pre">Seq[T]</span> is expected. The sequence will be appended
 to the current sequence.</li>
 </ul>
 <p>The following sections include descriptions and examples of each
@@ -212,7 +212,7 @@ types of the left and right hand sides of the methods follows this
 section.</p>
 <div class="section" id="id1">
 <h2>:=<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">:=</span></tt> is used to define a setting that overwrites any previous value
+<p><span class="pre">:=</span> is used to define a setting that overwrites any previous value
 without referring to other settings. For example, the following defines
 a setting that will set <em>name</em> to &quot;My Project&quot; regardless of whether
 <em>name</em> has already been initialized.</p>
@@ -223,17 +223,17 @@ a setting that will set <em>name</em> to &quot;My Project&quot; regardless of wh
 </div>
 <div class="section" id="and">
 <h2>+= and ++=<a class="headerlink" href="#and" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">+=</span></tt> is used to define a setting that will append a single value to
+<p><span class="pre">+=</span> is used to define a setting that will append a single value to
 the current sequence without referring to other settings. For example,
 the following defines a setting that will append a JUnit dependency to
 <em>libraryDependencies</em>. No other settings are referenced.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;4.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
 </pre></div>
 </div>
-<p>The related method <tt class="docutils literal"><span class="pre">++=</span></tt> appends a sequence to the current sequence,
+<p>The related method <span class="pre">++=</span> appends a sequence to the current sequence,
 also without using other settings. For example, the following defines a
 setting that will add dependencies on ScalaCheck and specs to the
-current list of dependencies. Because it will append a <tt class="docutils literal"><span class="pre">Seq</span></tt>, it uses
+current list of dependencies. Because it will append a <span class="pre">Seq</span>, it uses
 ++= instead of +=.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
    <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalacheck&quot;</span> <span class="o">%</span> <span class="s">&quot;1.9&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span><span class="o">,</span>
@@ -252,15 +252,15 @@ for the provided instances.</p>
 </div>
 <div class="section" id="id2">
 <h2>~=<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">~=</span></tt> is used to transform the current value of a setting. For example,
-the following defines a setting that will remove <tt class="docutils literal"><span class="pre">-Y</span></tt> compiler options
+<p><span class="pre">~=</span> is used to transform the current value of a setting. For example,
+the following defines a setting that will remove <span class="pre">-Y</span> compiler options
 from the current list of compiler options.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">options</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=&gt;</span>
    <span class="n">options</span> <span class="n">filterNot</span> <span class="o">(</span> <span class="k">_</span> <span class="n">startsWith</span> <span class="s">&quot;-Y&quot;</span> <span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>The earlier declaration of JUnit as a library dependency using <tt class="docutils literal"><span class="pre">+=</span></tt>
+<p>The earlier declaration of JUnit as a library dependency using <span class="pre">+=</span>
 could also be written as:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">deps</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">])</span> <span class="k">=&gt;</span>
   <span class="n">deps</span> <span class="o">:+</span> <span class="o">(</span><span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;junit&quot;</span> <span class="o">%</span> <span class="s">&quot;4.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
@@ -281,7 +281,7 @@ declaring JUnit as a dependency using &lt;&lt;= would look like:</p>
 </pre></div>
 </div>
 <p>This defines a setting that will apply the provided function to the
-previous value of <em>libraryDependencies</em>. <tt class="docutils literal"><span class="pre">apply</span></tt> and <tt class="docutils literal"><span class="pre">Seq[ModuleID]</span></tt>
+previous value of <em>libraryDependencies</em>. <span class="pre">apply</span> and <span class="pre">Seq[ModuleID]</span>
 are explicit for demonstration only and may be omitted.</p>
 </div>
 <div class="section" id="id4">
@@ -328,11 +328,11 @@ This type has two parts: a key (of type
 <a class="reference external" href="../../api/sbt/SettingKey.html">SettingKey</a>)
 and a scope (of type
 <a class="reference external" href="../../api/sbt/Scope$.html">Scope</a>). An
-unspecified scope is like using <tt class="docutils literal"><span class="pre">this</span></tt> to refer to the current
+unspecified scope is like using <span class="pre">this</span> to refer to the current
 context. The previous examples on this page have not defined an explicit
 scope. See [[Inspecting Settings]] for details on the axes that make up
 scopes.</p>
-<p>The target (the value on the left) of a method like <tt class="docutils literal"><span class="pre">:=</span></tt> identifies
+<p>The target (the value on the left) of a method like <span class="pre">:=</span> identifies
 one of the main constructs in sbt: a setting, a task, or an input task.
 It is not an actual setting or task, but a key representing a setting or
 task. A setting is a value assigned when a project is loaded. A task is
@@ -352,11 +352,11 @@ The remainder of this section only discusses settings. See [[Tasks]] and
 understanding of this page).</p>
 <p>To construct a
 <a class="reference external" href="../../api/sbt/ScopedSetting.html">ScopedSetting</a>,
-select the key and then scope it using the <tt class="docutils literal"><span class="pre">in</span></tt> method (see the
+select the key and then scope it using the <span class="pre">in</span> method (see the
 <a class="reference external" href="../../api/sbt/ScopedSetting.html">ScopedSetting</a>
 for API details). For example, the setting for compiler options for the
 test sources is referenced using the <em>scalacOptions</em> key and the
-<tt class="docutils literal"><span class="pre">Test</span></tt> configuration in the current project.</p>
+<span class="pre">Test</span> configuration in the current project.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">ref</span><span class="k">:</span> <span class="kt">ScopedSetting</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]]</span> <span class="k">=</span> <span class="n">scalacOptions</span> <span class="n">in</span> <span class="nc">Test</span>
 </pre></div>
 </div>
@@ -379,13 +379,13 @@ as such.</p>
 method used. In the case of :=, +=, ++=, and ~=, the type of the
 argument is straightforward (see the
 <a class="reference external" href="../../api/sbt/ScopedSetting.html">ScopedSetting</a>
-API). For &lt;&lt;=, &lt;+=, and &lt;++=, the type is <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> (for &lt;&lt;= and
-&lt;+=) or <tt class="docutils literal"><span class="pre">Initialize[Seq[T]]</span></tt> (for &lt;++=). This section discusses the
+API). For &lt;&lt;=, &lt;+=, and &lt;++=, the type is <span class="pre">Initialize[T]</span> (for &lt;&lt;= and
+&lt;+=) or <span class="pre">Initialize[Seq[T]]</span> (for &lt;++=). This section discusses the
 <a class="reference external" href="../../api/sbt/Init$Initialize.html">Initialize</a>
 type.</p>
-<p>A value of type <tt class="docutils literal"><span class="pre">Initialize[T]</span></tt> represents a computation that takes
+<p>A value of type <span class="pre">Initialize[T]</span> represents a computation that takes
 the values of other settings as inputs. For example, in the following
-setting, the argument to &lt;&lt;= is of type <tt class="docutils literal"><span class="pre">Initialize[File]</span></tt>:</p>
+setting, the argument to &lt;&lt;= is of type <span class="pre">Initialize[File]</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;&lt;=</span> <span class="n">baseDirectory</span> <span class="o">{</span>
    <span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span>
 <span class="o">}</span>
@@ -399,8 +399,8 @@ setting, the argument to &lt;&lt;= is of type <tt class="docutils literal"><span
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>To construct a value of type <tt class="docutils literal"><span class="pre">Initialize</span></tt>, construct a tuple of up to
-nine input <tt class="docutils literal"><span class="pre">ScopedSetting</span></tt>s. Then, define the function that will
+<p>To construct a value of type <span class="pre">Initialize</span>, construct a tuple of up to
+nine input <span class="pre">ScopedSetting</span>s. Then, define the function that will
 compute the value of the setting given the values for these input
 settings.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">path</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span>
@@ -411,7 +411,7 @@ settings.</p>
 </div>
 <p>This example takes the base directory, project name, and project version
 as inputs. The keys for these settings are defined in [sbt.Keys], along
-with all other built-in keys. The argument to the <tt class="docutils literal"><span class="pre">apply</span></tt> method is a
+with all other built-in keys. The argument to the <span class="pre">apply</span> method is a
 function that takes the values of those settings and computes a new
 value. In this case, that value is the path of a jar.</p>
 </div>
@@ -422,8 +422,8 @@ differences. First, the inputs are of type [ScopedTaskable]. The means
 that either settings
 (<a class="reference external" href="../../api/sbt/ScopedSetting.html">ScopedSetting</a>)
 or tasks ([ScopedTask]) may be used as the input to a task. Second, the
-name of the method used is <tt class="docutils literal"><span class="pre">map</span></tt> instead of <tt class="docutils literal"><span class="pre">apply</span></tt> and the
-resulting value is of type <tt class="docutils literal"><span class="pre">Initialize[Task[T]]</span></tt>. In the following
+name of the method used is <span class="pre">map</span> instead of <span class="pre">apply</span> and the
+resulting value is of type <span class="pre">Initialize[Task[T]]</span>. In the following
 example, the inputs are the [report|Update-Report] produced by the
 <em>update</em> task and the context <em>configuration</em>. The function computes the
 locations of the dependencies for that configuration.</p>
@@ -435,8 +435,8 @@ locations of the dependencies for that configuration.</p>
 </div>
 <p>As before, <em>update</em> and <em>configuration</em> are defined in
 <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>.
-<em>update</em> is of type <tt class="docutils literal"><span class="pre">TaskKey[UpdateReport]</span></tt> and <em>configuration</em> is of
-type <tt class="docutils literal"><span class="pre">SettingKey[Configuration]</span></tt>.</p>
+<em>update</em> is of type <span class="pre">TaskKey[UpdateReport]</span> and <em>configuration</em> is of
+type <span class="pre">SettingKey[Configuration]</span>.</p>
 </div>
 </div>
 

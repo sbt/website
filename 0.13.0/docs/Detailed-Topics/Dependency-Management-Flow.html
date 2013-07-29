@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -97,14 +97,14 @@ situation where the resolution cache got out of date (<a class="reference extern
 the current work flow with dependency management in sbt follows.</p>
 <div class="section" id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">update</span></tt> resolves dependencies according to the settings in a build
-file, such as <tt class="docutils literal"><span class="pre">libraryDependencies</span></tt> and <tt class="docutils literal"><span class="pre">resolvers</span></tt>. Other tasks use
-the output of <tt class="docutils literal"><span class="pre">update</span></tt> (an <tt class="docutils literal"><span class="pre">UpdateReport</span></tt>) to form various
-classpaths. Tasks that in turn use these classpaths, such as <tt class="docutils literal"><span class="pre">compile</span></tt>
-or <tt class="docutils literal"><span class="pre">run</span></tt>, thus indirectly depend on <tt class="docutils literal"><span class="pre">update</span></tt>. This means that before
-<tt class="docutils literal"><span class="pre">compile</span></tt> can run, the <tt class="docutils literal"><span class="pre">update</span></tt> task needs to run. However,
-resolving dependencies on every <tt class="docutils literal"><span class="pre">compile</span></tt> would be unnecessarily slow
-and so <tt class="docutils literal"><span class="pre">update</span></tt> must be particular about when it actually performs a
+<p><span class="pre">update</span> resolves dependencies according to the settings in a build
+file, such as <span class="pre">libraryDependencies</span> and <span class="pre">resolvers</span>. Other tasks use
+the output of <span class="pre">update</span> (an <span class="pre">UpdateReport</span>) to form various
+classpaths. Tasks that in turn use these classpaths, such as <span class="pre">compile</span>
+or <span class="pre">run</span>, thus indirectly depend on <span class="pre">update</span>. This means that before
+<span class="pre">compile</span> can run, the <span class="pre">update</span> task needs to run. However,
+resolving dependencies on every <span class="pre">compile</span> would be unnecessarily slow
+and so <span class="pre">update</span> must be particular about when it actually performs a
 resolution.</p>
 </div>
 <div class="section" id="caching-and-configuration">
@@ -117,51 +117,51 @@ present, sbt does not ask Ivy to perform resolution.</li>
 or changing the version or other attributes of a dependency, will
 automatically cause resolution to be performed. Updates to locally
 published dependencies should be detected in sbt 0.12.1 and later and
-will force an <tt class="docutils literal"><span class="pre">update</span></tt>. Dependent tasks like <tt class="docutils literal"><span class="pre">compile</span></tt> and
-<tt class="docutils literal"><span class="pre">run</span></tt> will get updated classpaths.</li>
-<li>Directly running the <tt class="docutils literal"><span class="pre">update</span></tt> task (as opposed to a task that
+will force an <span class="pre">update</span>. Dependent tasks like <span class="pre">compile</span> and
+<span class="pre">run</span> will get updated classpaths.</li>
+<li>Directly running the <span class="pre">update</span> task (as opposed to a task that
 depends on it) will force resolution to run, whether or not
 configuration changed. This should be done in order to refresh remote
 SNAPSHOT dependencies.</li>
-<li>When <tt class="docutils literal"><span class="pre">offline</span> <span class="pre">:=</span> <span class="pre">true</span></tt>, remote SNAPSHOTs will not be updated by a
-resolution, even an explicitly requested <tt class="docutils literal"><span class="pre">update</span></tt>. This should
+<li>When <span class="pre">offline := true</span>, remote SNAPSHOTs will not be updated by a
+resolution, even an explicitly requested <span class="pre">update</span>. This should
 effectively support working without a connection to remote
 repositories. Reproducible examples demonstrating otherwise are
-appreciated. Obviously, <tt class="docutils literal"><span class="pre">update</span></tt> must have successfully run before
+appreciated. Obviously, <span class="pre">update</span> must have successfully run before
 going offline.</li>
-<li>Overriding all of the above, <tt class="docutils literal"><span class="pre">skip</span> <span class="pre">in</span> <span class="pre">update</span> <span class="pre">:=</span> <span class="pre">true</span></tt> will tell sbt
+<li>Overriding all of the above, <span class="pre">skip in update := true</span> will tell sbt
 to never perform resolution. Note that this can cause dependent tasks
 to fail. For example, compilation may fail if jars have been deleted
 from the cache (and so needed classes are missing) or a dependency
 has been added (but will not be resolved because skip is true). Also,
-<tt class="docutils literal"><span class="pre">update</span></tt> itself will immediately fail if resolution has not been
-allowed to run since the last <tt class="docutils literal"><span class="pre">clean</span></tt>.</li>
+<span class="pre">update</span> itself will immediately fail if resolution has not been
+allowed to run since the last <span class="pre">clean</span>.</li>
 </ol>
 </div>
 <div class="section" id="general-troubleshooting-steps">
 <h2>General troubleshooting steps<a class="headerlink" href="#general-troubleshooting-steps" title="Permalink to this headline">¶</a></h2>
 <ol class="upperalpha simple">
-<li>Run <tt class="docutils literal"><span class="pre">update</span></tt> explicitly. This will typically fix problems with out
+<li>Run <span class="pre">update</span> explicitly. This will typically fix problems with out
 of date SNAPSHOTs or locally published artifacts.</li>
 <li>If a file cannot be
-found, look at the output of <tt class="docutils literal"><span class="pre">update</span></tt> to see where Ivy is looking for
+found, look at the output of <span class="pre">update</span> to see where Ivy is looking for
 the file. This may help diagnose an incorrectly defined dependency or a
 dependency that is actually not present in a repository.</li>
-<li><tt class="docutils literal"><span class="pre">last</span> <span class="pre">update</span></tt> contains more information about the most recent
+<li><span class="pre">last update</span> contains more information about the most recent
 resolution and download. The amount of debugging output from Ivy is
-high, so you may want to use <tt class="docutils literal"><span class="pre">lastGrep</span></tt> (run <tt class="docutils literal"><span class="pre">help</span> <span class="pre">lastGrep</span></tt> for
+high, so you may want to use <span class="pre">lastGrep</span> (run <span class="pre">help lastGrep</span> for
 usage).</li>
-<li>Run <tt class="docutils literal"><span class="pre">clean</span></tt> and then <tt class="docutils literal"><span class="pre">update</span></tt>. If this works, it could
+<li>Run <span class="pre">clean</span> and then <span class="pre">update</span>. If this works, it could
 indicate a bug in sbt, but the problem would need to be reproduced in
 order to diagnose and fix it.</li>
 <li>Before deleting all of the Ivy cache,
-first try deleting files in <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt> related to problematic
+first try deleting files in <span class="pre">~/.ivy2/cache</span> related to problematic
 dependencies. For example, if there are problems with dependency
-<tt class="docutils literal"><span class="pre">&quot;org.example&quot;</span> <span class="pre">%</span> <span class="pre">&quot;demo&quot;</span> <span class="pre">%</span> <span class="pre">&quot;1.0&quot;</span></tt>, delete
-<tt class="docutils literal"><span class="pre">~/.ivy2/cache/org.example/demo/1.0/</span></tt> and retry <tt class="docutils literal"><span class="pre">update</span></tt>. This
+<span class="pre">&quot;org.example&quot; % &quot;demo&quot; % &quot;1.0&quot;</span>, delete
+<span class="pre">~/.ivy2/cache/org.example/demo/1.0/</span> and retry <span class="pre">update</span>. This
 avoids needing to redownload all dependencies.</li>
 <li>Normal sbt usage
-should not require deleting files from <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt>, especially if
+should not require deleting files from <span class="pre">~/.ivy2/cache</span>, especially if
 the first four steps have been followed. If deleting the cache fixes a
 dependency management issue, please try to reproduce the issue and
 submit a test case.</li>
@@ -182,21 +182,21 @@ the main project. For example:</p>
 <h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
 <ol class="upperalpha simple">
 <li>Configure offline behavior for all projects on a machine by putting
-<tt class="docutils literal"><span class="pre">offline</span> <span class="pre">:=</span> <span class="pre">true</span></tt> in <tt class="docutils literal"><span class="pre">~/.sbt/global.sbt</span></tt>. A command that does this
+<span class="pre">offline := true</span> in <span class="pre">~/.sbt/global.sbt</span>. A command that does this
 for the user would make a nice pull request. Perhaps the setting of
-offline should go into the output of <tt class="docutils literal"><span class="pre">about</span></tt> or should it be a warning
-in the output of <tt class="docutils literal"><span class="pre">update</span></tt> or both?</li>
+offline should go into the output of <span class="pre">about</span> or should it be a warning
+in the output of <span class="pre">update</span> or both?</li>
 <li>The cache improvements in 0.12.1 address issues in the change detection
-for <tt class="docutils literal"><span class="pre">update</span></tt> so that it will correctly re-resolve automatically in more
+for <span class="pre">update</span> so that it will correctly re-resolve automatically in more
 situations. A problem with an out of date cache can usually be attributed
-to a bug in that change detection if explicitly running <tt class="docutils literal"><span class="pre">update</span></tt> fixes
+to a bug in that change detection if explicitly running <span class="pre">update</span> fixes
 the problem.</li>
 <li>A common solution to dependency management problems in sbt has been to
-remove <tt class="docutils literal"><span class="pre">~/.ivy2/cache</span></tt>. Before doing this with 0.12.1, be sure to
+remove <span class="pre">~/.ivy2/cache</span>. Before doing this with 0.12.1, be sure to
 follow the steps in the troubleshooting section first. In particular,
-verify that a <tt class="docutils literal"><span class="pre">clean</span></tt> and an explicit <tt class="docutils literal"><span class="pre">update</span></tt> do not solve the
+verify that a <span class="pre">clean</span> and an explicit <span class="pre">update</span> do not solve the
 issue.</li>
-<li>There is no need to mark SNAPSHOT dependencies as <tt class="docutils literal"><span class="pre">changing()</span></tt>
+<li>There is no need to mark SNAPSHOT dependencies as <span class="pre">changing()</span>
 because sbt configures Ivy to know this already.</li>
 </ol>
 </div>

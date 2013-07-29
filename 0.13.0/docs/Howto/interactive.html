@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,7 +91,7 @@
             
   <div class="section" id="interactive-mode">
 <h1>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h1>
-<p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <tt class="docutils literal"><span class="pre">shell</span></tt> command is invoked.</p>
+<p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <span class="pre">shell</span> command is invoked.</p>
 <div class="full-howto section" id="basic-completion">
 <h2>Use tab completion<a class="headerlink" href="#basic-completion" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -99,11 +99,11 @@
 Suggestions are provided that can complete the text entered to the left of the current cursor position.
 Any part of the suggestion that is unambiguous is automatically appended to the current text.
 Commands typically support tab completion for most of their syntax.</p>
-<p>As an example, entering <tt class="docutils literal"><span class="pre">tes</span></tt> and hitting tab:</p>
+<p>As an example, entering <span class="pre">tes</span> and hitting tab:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> tes&lt;TAB&gt;
 </pre></div>
 </div>
-<p>results in sbt appending a <tt class="docutils literal"><span class="pre">t</span></tt>:</p>
+<p>results in sbt appending a <span class="pre">t</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>
 </pre></div>
 </div>
@@ -113,24 +113,24 @@ Commands typically support tab completion for most of their syntax.</p>
 </pre></div>
 </div>
 <p>Now, there is more than one possibility for the next character, so sbt prints the available options.
-We will select <tt class="docutils literal"><span class="pre">testOnly</span></tt> and get more suggestions by entering the rest of the command and hitting tab twice:</p>
+We will select <span class="pre">testOnly</span> and get more suggestions by entering the rest of the command and hitting tab twice:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly&lt;TAB&gt;&lt;TAB&gt;
 <span class="go">--                      sbt.DagSpecification    sbt.EmptyRelationTest   sbt.KeyTest             sbt.RelationTest        sbt.SettingsTest</span>
 </pre></div>
 </div>
 <p>The first tab inserts an unambiguous space and the second suggests names of tests to run.
-The suggestion of <tt class="docutils literal"><span class="pre">--</span></tt> is for the separator between test names and options provided to the test framework.
+The suggestion of <span class="pre">--</span> is for the separator between test names and options provided to the test framework.
 The other suggestions are names of test classes for one of sbt's modules.
 Test name suggestions require tests to be compiled first.
 If tests have been added, renamed, or removed since the last test compilation, the completions will be out of date until another successful compile.</p>
 <div class="full-howto section" id="verbose-completion">
 <h2>Show more tab completion suggestions<a class="headerlink" href="#verbose-completion" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Some commands have different levels of completion.  Hitting tab multiple times increases the verbosity of completions.  (Presently, this feature is only used by the <tt class="docutils literal"><span class="pre">set</span></tt> command.)</p>
+<p>Some commands have different levels of completion.  Hitting tab multiple times increases the verbosity of completions.  (Presently, this feature is only used by the <span class="pre">set</span> command.)</p>
 <div class="full-howto section" id="show-keybindings">
 <h2>Show JLine keybindings<a class="headerlink" href="#show-keybindings" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Both the Scala and sbt command prompts use JLine for interaction.  The Scala REPL contains a <tt class="docutils literal"><span class="pre">:keybindings</span></tt> command to show many of the keybindings used for JLine.  For sbt, this can be used by running one of the <tt class="docutils literal"><span class="pre">console</span></tt> commands (<tt class="docutils literal"><span class="pre">console</span></tt>, <tt class="docutils literal"><span class="pre">consoleQuick</span></tt>, or <tt class="docutils literal"><span class="pre">consoleProject</span></tt>) and then running <tt class="docutils literal"><span class="pre">:keybindings</span></tt>.  For example:</p>
+<p>Both the Scala and sbt command prompts use JLine for interaction.  The Scala REPL contains a <span class="pre">:keybindings</span> command to show many of the keybindings used for JLine.  For sbt, this can be used by running one of the <span class="pre">console</span> commands (<span class="pre">console</span>, <span class="pre">consoleQuick</span>, or <span class="pre">consoleProject</span>) and then running <span class="pre">:keybindings</span>.  For example:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> consoleProject
 <span class="go">[info] Starting scala interpreter...</span>
 <span class="go">...</span>
@@ -147,13 +147,13 @@ If tests have been added, renamed, or removed since the last test compilation, t
 <h2>Modify the default JLine keybindings<a class="headerlink" href="#change-keybindings" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>JLine, used by both Scala and sbt, uses a configuration file for many of its keybindings.
-The location of this file can be changed with the system property <tt class="docutils literal"><span class="pre">jline.keybindings</span></tt>.
+The location of this file can be changed with the system property <span class="pre">jline.keybindings</span>.
 The default keybindings file is included in the sbt launcher and may be used as a starting point for customization.</p>
 <div class="full-howto section" id="prompt">
 <h2>Configure the prompt string<a class="headerlink" href="#prompt" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>By default, sbt only displays <tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">`</span> <span class="pre">to</span> <span class="pre">prompt</span> <span class="pre">for</span> <span class="pre">a</span> <span class="pre">command.</span>
-<span class="pre">This</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">changed</span> <span class="pre">through</span> <span class="pre">the</span> <span class="pre">``shellPrompt`</span></tt> setting, which has type <tt class="docutils literal"><span class="pre">State</span> <span class="pre">=&gt;</span> <span class="pre">String</span></tt>.
+<p>By default, sbt only displays <span class="pre">&gt; ` to prompt for a command.
+This can be changed through the </span><span class="pre"><a href="#id1"><span class="problematic" id="id2">`</span></a></span><span class="pre">shellPrompt</span> setting, which has type <span class="pre">State =&gt; String</span>.
 <a class="reference internal" href="../Extending/Build-State.html"><em>State</em></a> contains all state for sbt and thus provides access to all build information for use in the prompt string.</p>
 <p>Examples:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// set the prompt (for this build) to include the project id.</span>
@@ -168,59 +168,59 @@ The default keybindings file is included in the sbt launcher and may be used as 
 </div>
 <p>Interactive mode remembers history even if you exit sbt and restart it.
 The simplest way to access history is to press the up arrow key to cycle
-through previously entered commands.  Use <tt class="docutils literal"><span class="pre">Ctrl+r</span></tt> to incrementally
+through previously entered commands.  Use <span class="pre">Ctrl+r</span> to incrementally
 search history backwards.  The following commands are supported:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">!</span></tt> Show history command help.</li>
-<li><tt class="docutils literal"><span class="pre">!!</span></tt> Execute the previous command again.</li>
-<li><tt class="docutils literal"><span class="pre">!:</span></tt> Show all previous commands.</li>
-<li><tt class="docutils literal"><span class="pre">!:n</span></tt> Show the last n commands.</li>
-<li><tt class="docutils literal"><span class="pre">!n</span></tt> Execute the command with index <tt class="docutils literal"><span class="pre">n</span></tt>, as shown by the <tt class="docutils literal"><span class="pre">!:</span></tt> command.</li>
-<li><tt class="docutils literal"><span class="pre">!-n</span></tt> Execute the nth command before this one.</li>
-<li><tt class="docutils literal"><span class="pre">!string</span></tt> Execute the most recent command starting with 'string'</li>
-<li><tt class="docutils literal"><span class="pre">!?string</span></tt> Execute the most recent command containing 'string'</li>
+<li><span class="pre">!</span> Show history command help.</li>
+<li><span class="pre">!!</span> Execute the previous command again.</li>
+<li><span class="pre">!:</span> Show all previous commands.</li>
+<li><span class="pre">!:n</span> Show the last n commands.</li>
+<li><span class="pre">!n</span> Execute the command with index <span class="pre">n</span>, as shown by the <span class="pre">!:</span> command.</li>
+<li><span class="pre">!-n</span> Execute the nth command before this one.</li>
+<li><span class="pre">!string</span> Execute the most recent command starting with 'string'</li>
+<li><span class="pre">!?string</span> Execute the most recent command containing 'string'</li>
 </ul>
 <div class="full-howto section" id="history-file">
 <h2>Change the location of the interactive history file<a class="headerlink" href="#history-file" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>By default, interactive history is stored in the <tt class="docutils literal"><span class="pre">target/</span></tt> directory for the current project (but is not removed by a <tt class="docutils literal"><span class="pre">clean</span></tt>).
+<p>By default, interactive history is stored in the <span class="pre">target/</span> directory for the current project (but is not removed by a <span class="pre">clean</span>).
 History is thus separate for each subproject.
-The location can be changed with the <tt class="docutils literal"><span class="pre">historyPath</span></tt> setting, which has type <tt class="docutils literal"><span class="pre">Option[File]</span></tt>.
+The location can be changed with the <span class="pre">historyPath</span> setting, which has type <span class="pre">Option[File]</span>.
 For example, history can be stored in the root directory for the project instead of the output directory:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The history path needs to be set for each project, since sbt will use the value of <tt class="docutils literal"><span class="pre">historyPath</span></tt> for the current project (as selected by the <tt class="docutils literal"><span class="pre">project</span></tt> command).</p>
+<p>The history path needs to be set for each project, since sbt will use the value of <span class="pre">historyPath</span> for the current project (as selected by the <span class="pre">project</span> command).</p>
 <div class="full-howto section" id="share-history">
 <h2>Use the same history for all projects<a class="headerlink" href="#share-history" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>The previous section describes how to configure the location of the history file.
 This setting can be used to share the interactive history among all projects in a build instead of using a different history for each project.
-The way this is done is to set <tt class="docutils literal"><span class="pre">historyPath</span></tt> to be the same file, such as a file in the root project's <tt class="docutils literal"><span class="pre">target/</span></tt> directory:</p>
+The way this is done is to set <span class="pre">historyPath</span> to be the same file, such as a file in the root project's <span class="pre">target/</span> directory:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span>
     <span class="nc">Some</span><span class="o">(</span> <span class="o">(</span><span class="n">target</span> <span class="n">in</span> <span class="nc">LocalRootProject</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">in</span> <span class="pre">LocalRootProject</span></tt> part means to get the output directory for the root project for the build.</p>
+<p>The <span class="pre">in LocalRootProject</span> part means to get the output directory for the root project for the build.</p>
 <div class="full-howto section" id="disable-history">
 <h2>Disable interactive history<a class="headerlink" href="#disable-history" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>If, for whatever reason, you want to disable history, set <tt class="docutils literal"><span class="pre">historyPath</span></tt> to <tt class="docutils literal"><span class="pre">None</span></tt> in each project it should be disabled in:</p>
+<p>If, for whatever reason, you want to disable history, set <span class="pre">historyPath</span> to <span class="pre">None</span> in each project it should be disabled in:</p>
 <blockquote>
 <div>historyPath := None</div></blockquote>
 <div class="full-howto section" id="pre-commands">
 <h2>Run commands before entering interactive mode<a class="headerlink" href="#pre-commands" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Interactive mode is implemented by the <tt class="docutils literal"><span class="pre">shell</span></tt> command.
-By default, the <tt class="docutils literal"><span class="pre">shell</span></tt> command is run if no commands are provided to sbt on the command line.
-To run commands before entering interactive mode, specify them on the command line followed by <tt class="docutils literal"><span class="pre">shell</span></tt>.
+<p>Interactive mode is implemented by the <span class="pre">shell</span> command.
+By default, the <span class="pre">shell</span> command is run if no commands are provided to sbt on the command line.
+To run commands before entering interactive mode, specify them on the command line followed by <span class="pre">shell</span>.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt clean compile shell
 </pre></div>
 </div>
-<p>This runs <tt class="docutils literal"><span class="pre">clean</span></tt> and then <tt class="docutils literal"><span class="pre">compile</span></tt> before entering the interactive prompt.
-If either <tt class="docutils literal"><span class="pre">clean</span></tt> or <tt class="docutils literal"><span class="pre">compile</span></tt> fails, sbt will exit without going to the prompt.
-To enter the prompt whether or not these initial commands succeed, prepend <tt class="docutils literal"><span class="pre">-shell</span></tt>, which means to run <tt class="docutils literal"><span class="pre">shell</span></tt> if any command fails.
+<p>This runs <span class="pre">clean</span> and then <span class="pre">compile</span> before entering the interactive prompt.
+If either <span class="pre">clean</span> or <span class="pre">compile</span> fails, sbt will exit without going to the prompt.
+To enter the prompt whether or not these initial commands succeed, prepend <span class="pre">-shell</span>, which means to run <span class="pre">shell</span> if any command fails.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt -shell clean compile shell
 </pre></div>

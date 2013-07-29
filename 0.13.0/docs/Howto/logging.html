@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -95,15 +95,15 @@
 <h2>View the logging output of the previously executed command<a class="headerlink" href="#last" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>When a command is run, more detailed logging output is sent to a file than to the screen (by default).
-This output can be recalled for the command just executed by running <tt class="docutils literal"><span class="pre">last</span></tt>.</p>
-<p>For example, the output of <tt class="docutils literal"><span class="pre">run</span></tt> when the sources are uptodate is:</p>
+This output can be recalled for the command just executed by running <span class="pre">last</span>.</p>
+<p>For example, the output of <span class="pre">run</span> when the sources are uptodate is:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> run
 <span class="go">[info] Running A</span>
 <span class="go">Hi!</span>
 <span class="go">[success] Total time: 0 s, completed Feb 25, 2012 1:00:00 PM</span>
 </pre></div>
 </div>
-<p>The details of this execution can be recalled by running <tt class="docutils literal"><span class="pre">last</span></tt>:</p>
+<p>The details of this execution can be recalled by running <span class="pre">last</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> last
 <span class="go">[debug] Running task... Cancelable: false, max worker threads: 4, check cycles: false</span>
 <span class="go">[debug]</span>
@@ -142,8 +142,8 @@ This output can be recalled for the command just executed by running <tt class="
 <h2>View the previous logging output of a specific task<a class="headerlink" href="#tasklast" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>When a task is run, more detailed logging output is sent to a file than to the screen (by default).
-This output can be recalled for a specific task by running <tt class="docutils literal"><span class="pre">last</span> <span class="pre">&lt;task&gt;</span></tt>.
-For example, the first time <tt class="docutils literal"><span class="pre">compile</span></tt> is run, output might look like:</p>
+This output can be recalled for a specific task by running <span class="pre">last &lt;task&gt;</span>.
+For example, the first time <span class="pre">compile</span> is run, output might look like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> compile
 <span class="go">[info] Updating {file:/.../demo/}example...</span>
 <span class="go">[info] Resolving org.scala-lang#scala-library;2.9.2 ...</span>
@@ -180,15 +180,15 @@ For example,</p>
 <h2>Show warnings from the previous compilation<a class="headerlink" href="#printwarnings" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>The Scala compiler does not print the full details of warnings by default.
-Compiling code that uses the deprecated <tt class="docutils literal"><span class="pre">error</span></tt> method from Predef might generate the following output:</p>
+Compiling code that uses the deprecated <span class="pre">error</span> method from Predef might generate the following output:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> compile
 <span class="go">[info] Compiling 1 Scala source to &lt;...&gt;/classes...</span>
 <span class="go">[warn] there were 1 deprecation warnings; re-run with -deprecation for details</span>
 <span class="go">[warn] one warning found</span>
 </pre></div>
 </div>
-<p>The details aren't provided, so it is necessary to add <tt class="docutils literal"><span class="pre">-deprecation</span></tt> to the options passed to the compiler (<tt class="docutils literal"><span class="pre">scalacOptions</span></tt>) and recompile.
-An alternative when using Scala 2.10 and later is to run <tt class="docutils literal"><span class="pre">printWarnings</span></tt>.
+<p>The details aren't provided, so it is necessary to add <span class="pre">-deprecation</span> to the options passed to the compiler (<span class="pre">scalacOptions</span>) and recompile.
+An alternative when using Scala 2.10 and later is to run <span class="pre">printWarnings</span>.
 This task will display all warnings from the previous compilation.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> printWarnings
@@ -200,9 +200,9 @@ For example,</p>
 <div class="full-howto section" id="level">
 <h2>Change the logging level globally<a class="headerlink" href="#level" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The amount of logging is controlled by the <tt class="docutils literal"><span class="pre">logLevel</span></tt> setting, which takes values from the <tt class="docutils literal"><span class="pre">Level</span></tt> enumeration.
-Valid values are <tt class="docutils literal"><span class="pre">Error</span></tt>, <tt class="docutils literal"><span class="pre">Warn</span></tt>, <tt class="docutils literal"><span class="pre">Info</span></tt>, and <tt class="docutils literal"><span class="pre">Debug</span></tt> in order of increasing verbosity.
-To change the global logging level, set <tt class="docutils literal"><span class="pre">logLevel</span> <span class="pre">in</span> <span class="pre">Global</span></tt>.
+<p>The amount of logging is controlled by the <span class="pre">logLevel</span> setting, which takes values from the <span class="pre">Level</span> enumeration.
+Valid values are <span class="pre">Error</span>, <span class="pre">Warn</span>, <span class="pre">Info</span>, and <span class="pre">Debug</span> in order of increasing verbosity.
+To change the global logging level, set <span class="pre">logLevel in Global</span>.
 For example, to set it temporarily from the sbt prompt,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">   &gt; set logLevel in Global := Level.Warn</span>
 
@@ -212,8 +212,8 @@ For example, to set it temporarily from the sbt prompt,</p>
 <span class="go">  setting: logLevel in compile := Level.Debug</span>
 </pre></div>
 </div>
-<p>The amount of logging is controlled by the <tt class="docutils literal"><span class="pre">logLevel</span></tt> setting, which takes values from the <tt class="docutils literal"><span class="pre">Level</span></tt> enumeration.
-Valid values are <tt class="docutils literal"><span class="pre">Error</span></tt>, <tt class="docutils literal"><span class="pre">Warn</span></tt>, <tt class="docutils literal"><span class="pre">Info</span></tt>, and <tt class="docutils literal"><span class="pre">Debug</span></tt> in order of increasing verbosity.
+<p>The amount of logging is controlled by the <span class="pre">logLevel</span> setting, which takes values from the <span class="pre">Level</span> enumeration.
+Valid values are <span class="pre">Error</span>, <span class="pre">Warn</span>, <span class="pre">Info</span>, and <span class="pre">Debug</span> in order of increasing verbosity.
 The logging level may be configured globally, as described in the previous section, or it may be applied to a specific project, configuration, or task.
 For example, to change the logging level for compilation to only show warnings and errors:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>logLevel in compile :<span class="o">=</span> Level.Warn
@@ -224,9 +224,9 @@ For example, to change the logging level for compilation to only show warnings a
 </pre></div>
 </div>
 <p>A common scenario is that after running a task, you notice that you need more information than was shown by default.
-A <tt class="docutils literal"><span class="pre">logLevel</span></tt> based solution typically requires changing the logging level and running a task again.
+A <span class="pre">logLevel</span> based solution typically requires changing the logging level and running a task again.
 However, there are two cases where this is unnecessary.
-First, warnings from a previous compilation may be displayed using <tt class="docutils literal"><span class="pre">printWarnings</span></tt> for the main sources or <tt class="docutils literal"><span class="pre">test:printWarnings</span></tt> for test sources.
+First, warnings from a previous compilation may be displayed using <span class="pre">printWarnings</span> for the main sources or <span class="pre">test:printWarnings</span> for test sources.
 Second, output from the previous execution is available either for a single task or for in its entirety.
 See the section on <a class="reference external" href="#printwarnings">printWarnings</a> and the sections on <a class="reference external" href="#last">previous output</a>.</p>
 <div class="full-howto section" id="trace">
@@ -235,16 +235,16 @@ See the section on <a class="reference external" href="#printwarnings">printWarn
 <p>By default, sbt hides the stack trace of most exceptions thrown during execution.
 It prints a message that indicates how to display the exception.
 However, you may want to show more of stack traces by default.</p>
-<p>The setting to configure is <tt class="docutils literal"><span class="pre">traceLevel</span></tt>, which is a setting with an Int value.
-When <tt class="docutils literal"><span class="pre">traceLevel</span></tt> is set to a negative value, no stack traces are shown.
+<p>The setting to configure is <span class="pre">traceLevel</span>, which is a setting with an Int value.
+When <span class="pre">traceLevel</span> is set to a negative value, no stack traces are shown.
 When it is zero, the stack trace is displayed up to the first sbt stack frame.
 When positive, the stack trace is shown up to that many stack frames.</p>
 <p>For example, the following configures sbt to show stack traces up to the first sbt frame:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>every traceLevel :<span class="o">=</span> 0
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">every</span></tt> part means to override the setting in all scopes.
-To change the trace printing behavior for a single project, configuration, or task, scope <tt class="docutils literal"><span class="pre">traceLevel</span></tt> appropriately:</p>
+<p>The <span class="pre">every</span> part means to override the setting in all scopes.
+To change the trace printing behavior for a single project, configuration, or task, scope <span class="pre">traceLevel</span> appropriately:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in Test :<span class="o">=</span> 5
 <span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in update :<span class="o">=</span> 0
 <span class="gp">&gt;</span> <span class="nb">set </span>traceLevel in ThisProject :<span class="o">=</span> -1
@@ -255,16 +255,16 @@ To change the trace printing behavior for a single project, configuration, or ta
 </div>
 <p>By default, sbt buffers the logging output of a test until the whole class finishes.
 This is so that output does not get mixed up when executing in parallel.
-To disable buffering, set the <tt class="docutils literal"><span class="pre">logBuffered</span></tt> setting to false:</p>
+To disable buffering, set the <span class="pre">logBuffered</span> setting to false:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">logBuffered</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="custom">
 <h2>Add a custom logger<a class="headerlink" href="#custom" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The setting <tt class="docutils literal"><span class="pre">extraLoggers</span></tt> can be used to add custom loggers.
+<p>The setting <span class="pre">extraLoggers</span> can be used to add custom loggers.
 A custom logger should implement [AbstractLogger].
-<tt class="docutils literal"><span class="pre">extraLoggers</span></tt> is a function <tt class="docutils literal"><span class="pre">ScopedKey[_]</span> <span class="pre">=&gt;</span> <span class="pre">Seq[AbstractLogger]</span></tt>.
+<span class="pre">extraLoggers</span> is a function <span class="pre">ScopedKey[_] =&gt; Seq[AbstractLogger]</span>.
 This means that it can provide different logging based on the task that requests the logger.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">extraLoggers</span> <span class="o">~=</span> <span class="o">{</span> <span class="n">currentFunction</span> <span class="k">=&gt;</span>
     <span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="k">_</span><span class="o">])</span> <span class="k">=&gt;</span> <span class="o">{</span>
@@ -273,13 +273,13 @@ This means that it can provide different logging based on the task that requests
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Here, we take the current function for the setting <tt class="docutils literal"><span class="pre">currentFunction</span></tt> and provide a new function.
+<p>Here, we take the current function for the setting <span class="pre">currentFunction</span> and provide a new function.
 The new function prepends our custom logger to the ones provided by the old function.</p>
 <div class="full-howto section" id="log">
 <h2>Log messages in a task<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The special task <tt class="docutils literal"><span class="pre">streams</span></tt> provides per-task logging and I/O via a <a class="reference external" href="../../api/#sbt.std.Streams">Streams</a> instance.
-To log, a task uses the <tt class="docutils literal"><span class="pre">log</span></tt> member from the <tt class="docutils literal"><span class="pre">streams</span></tt> task:</p>
+<p>The special task <span class="pre">streams</span> provides per-task logging and I/O via a <a class="reference external" href="../../api/#sbt.std.Streams">Streams</a> instance.
+To log, a task uses the <span class="pre">log</span> member from the <span class="pre">streams</span> task:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">{</span>
        <span class="k">val</span> <span class="n">log</span> <span class="k">=</span> <span class="n">streams</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">log</span>
     <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="o">(</span><span class="s">&quot;A warning.&quot;</span><span class="o">)</span>

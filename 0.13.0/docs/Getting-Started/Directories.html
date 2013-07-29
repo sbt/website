@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -96,14 +96,14 @@ seen the <a class="reference internal" href="Hello.html"><em>Hello, World</em></
 <div class="section" id="base-directory">
 <h2>Base directory<a class="headerlink" href="#base-directory" title="Permalink to this headline">¶</a></h2>
 <p>In sbt's terminology, the &quot;base directory&quot; is the directory containing
-the project. So if you created a project <tt class="docutils literal"><span class="pre">hello</span></tt> containing
-<tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt> and <tt class="docutils literal"><span class="pre">hello/hw.scala</span></tt> as in the <a class="reference internal" href="Hello.html"><em>Hello, World</em></a>
-example, <tt class="docutils literal"><span class="pre">hello</span></tt> is your base directory.</p>
+the project. So if you created a project <span class="pre">hello</span> containing
+<span class="pre">hello/build.sbt</span> and <span class="pre">hello/hw.scala</span> as in the <a class="reference internal" href="Hello.html"><em>Hello, World</em></a>
+example, <span class="pre">hello</span> is your base directory.</p>
 </div>
 <div class="section" id="source-code">
 <h2>Source code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>Source code can be placed in the project's base directory as with
-<tt class="docutils literal"><span class="pre">hello/hw.scala</span></tt>. However, most people don't do this for real
+<span class="pre">hello/hw.scala</span>. However, most people don't do this for real
 projects; too much clutter.</p>
 <p>sbt uses the same directory structure as
 <a class="reference external" href="http://maven.apache.org/">Maven</a> for source files by default (all
@@ -125,42 +125,42 @@ paths are relative to the base directory):</p>
        &lt;test Java sources&gt;
 </pre></div>
 </div>
-<p>Other directories in <tt class="docutils literal"><span class="pre">src/</span></tt> will be ignored. Additionally, all hidden
+<p>Other directories in <span class="pre">src/</span> will be ignored. Additionally, all hidden
 directories will be ignored.</p>
 </div>
 <div class="section" id="sbt-build-definition-files">
 <h2>sbt build definition files<a class="headerlink" href="#sbt-build-definition-files" title="Permalink to this headline">¶</a></h2>
-<p>You've already seen <tt class="docutils literal"><span class="pre">build.sbt</span></tt> in the project's base directory. Other
-sbt files appear in a <tt class="docutils literal"><span class="pre">project</span></tt> subdirectory.</p>
-<p><tt class="docutils literal"><span class="pre">project</span></tt> can contain <tt class="docutils literal"><span class="pre">.scala</span></tt> files, which are combined with
-<tt class="docutils literal"><span class="pre">.sbt</span></tt> files to form the complete build definition.
+<p>You've already seen <span class="pre">build.sbt</span> in the project's base directory. Other
+sbt files appear in a <span class="pre">project</span> subdirectory.</p>
+<p><span class="pre">project</span> can contain <span class="pre">.scala</span> files, which are combined with
+<span class="pre">.sbt</span> files to form the complete build definition.
 See <a class="reference internal" href="Full-Def.html"><em>.scala build definitions</em></a> for more.</p>
 <div class="highlight-text"><div class="highlight"><pre>build.sbt
 project/
   Build.scala
 </pre></div>
 </div>
-<p>You may see <tt class="docutils literal"><span class="pre">.sbt</span></tt> files inside <tt class="docutils literal"><span class="pre">project/</span></tt> but they are not
-equivalent to <tt class="docutils literal"><span class="pre">.sbt</span></tt> files in the project's base directory. Explaining
+<p>You may see <span class="pre">.sbt</span> files inside <span class="pre">project/</span> but they are not
+equivalent to <span class="pre">.sbt</span> files in the project's base directory. Explaining
 this will <a class="reference internal" href="Full-Def.html"><em>come later</em></a>, since you'll need
 some background information first.</p>
 </div>
 <div class="section" id="build-products">
 <h2>Build products<a class="headerlink" href="#build-products" title="Permalink to this headline">¶</a></h2>
 <p>Generated files (compiled classes, packaged jars, managed files, caches,
-and documentation) will be written to the <tt class="docutils literal"><span class="pre">target</span></tt> directory by
+and documentation) will be written to the <span class="pre">target</span> directory by
 default.</p>
 </div>
 <div class="section" id="configuring-version-control">
 <h2>Configuring version control<a class="headerlink" href="#configuring-version-control" title="Permalink to this headline">¶</a></h2>
-<p>Your <tt class="docutils literal"><span class="pre">.gitignore</span></tt> (or equivalent for other version control systems)
+<p>Your <span class="pre">.gitignore</span> (or equivalent for other version control systems)
 should contain:</p>
 <div class="highlight-text"><div class="highlight"><pre>target/
 </pre></div>
 </div>
-<p>Note that this deliberately has a trailing <tt class="docutils literal"><span class="pre">/</span></tt> (to match only
-directories) and it deliberately has no leading <tt class="docutils literal"><span class="pre">/</span></tt> (to match
-<tt class="docutils literal"><span class="pre">project/target/</span></tt> in addition to plain <tt class="docutils literal"><span class="pre">target/</span></tt>).</p>
+<p>Note that this deliberately has a trailing <span class="pre">/</span> (to match only
+directories) and it deliberately has no leading <span class="pre">/</span> (to match
+<span class="pre">project/target/</span> in addition to plain <span class="pre">target/</span>).</p>
 <div class="section" id="next">
 <h3>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h3>
 <p>Learn about <a class="reference internal" href="Running.html"><em>running sbt</em></a>.</p>

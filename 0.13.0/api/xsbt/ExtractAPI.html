@@ -2,9 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>Compat - xsbt.Compat</title>
-          <meta name="description" content="Compat - xsbt.Compat" />
-          <meta name="keywords" content="Compat xsbt.Compat" />
+          <title>ExtractAPI - xsbt.ExtractAPI</title>
+          <meta name="description" content="ExtractAPI - xsbt.ExtractAPI" />
+          <meta name="keywords" content="ExtractAPI xsbt.ExtractAPI" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -12,7 +12,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../index.html';
-            var hash = 'xsbt.Compat';
+            var hash = 'xsbt.ExtractAPI';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,27 +26,26 @@
       <div id="definition">
         <img src="../lib/class_big.png" />
         <p id="owner"><a href="package.html" class="extype" name="xsbt">xsbt</a></p>
-        <h1>Compat</h1>
+        <h1>ExtractAPI</h1>
       </div>
 
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
-        <span class="modifier">abstract </span>
+        <span class="modifier"></span>
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">Compat</span><span class="result"> extends <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+        <span class="name">ExtractAPI</span><span class="tparams">[<span name="GlobalType">GlobalType &lt;: <a href="CallbackGlobal.html" class="extype" name="xsbt.CallbackGlobal">CallbackGlobal</a></span>]</span><span class="result"> extends <a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p> Collection of hacks that make it possible for the compiler interface
- to stay source compatible with Scala compiler 2.9, 2.10 and 2.11.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Extracts API representation out of Symbols and Types.</p><p>Each compilation unit should be processed by a fresh instance of this class.</p><p>This class depends on instance of CallbackGlobal instead of regular Global because
+it has a call to <code>addInheritedDependencies</code> method defined in CallbackGlobal. In the future
+we should refactor this code so inherited dependencies are just accumulated in a buffer and
+exposed to a client that can pass them to an instance of CallbackGlobal it holds.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
-        </div><div class="toggleContainer block">
-          <span class="toggle">Known Subclasses</span>
-          <div class="subClasses hiddenContent"><a href="API.html" class="extype" name="xsbt.API">API</a>, <a href="Analyzer.html" class="extype" name="xsbt.Analyzer">Analyzer</a>, <a href="ExtractAPI.html" class="extype" name="xsbt.ExtractAPI">ExtractAPI</a>, <a href="LocateClassFile.html" class="extype" name="xsbt.LocateClassFile">LocateClassFile</a></div>
+          <div class="superTypes hiddenContent"><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a>, <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -64,7 +63,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="xsbt.Compat"><span>Compat</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="xsbt.ExtractAPI"><span>ExtractAPI</span></li><li class="in" name="xsbt.Compat"><span>Compat</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -84,44 +83,44 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="xsbt.Compat#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;():xsbt.Compat"></a>
-      <a id="&lt;init&gt;:Compat"></a>
+              <ol><li name="xsbt.ExtractAPI#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(global:GlobalType,sourceFile:java.io.File):xsbt.ExtractAPI[GlobalType]"></a>
+      <a id="&lt;init&gt;:ExtractAPI[GlobalType]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Compat</span><span class="params">()</span>
+        <span class="name">ExtractAPI</span><span class="params">(<span name="global">global: <span class="extype" name="xsbt.ExtractAPI.GlobalType">GlobalType</span></span>, <span name="sourceFile">sourceFile: <span class="extype" name="java.io.File">File</span></span>)</span>
       </span>
       </h4>
       
+    </li></ol>
+            </div>
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="xsbt.ExtractAPI.SuppressSymbolRef" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SuppressSymbolRefextendsExtractAPI.this.global.TypeMap"></a>
+      <a id="SuppressSymbolRef:SuppressSymbolRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="ExtractAPI$SuppressSymbolRef.html"><span class="name">SuppressSymbolRef</span></a><span class="result"> extends <span class="extype" name="scala.reflect.internal.Types.TypeMap">GlobalType.TypeMap</span></span>
+      </span>
+      </h4>
+      <p class="comment cmt">Replace all types that directly refer to the <code>forbidden</code> symbol by <code>NoType</code>.</p>
     </li></ol>
             </div>
 
         
 
         <div id="values" class="values members">
-              <h3>Abstract Value Members</h3>
-              <ol><li name="xsbt.Compat#global" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
-      <a id="global:scala.tools.nsc.Global"></a>
-      <a id="global:Global"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier">abstract </span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">global</span><span class="result">: <span class="extype" name="scala.tools.nsc.Global">Global</span></span>
-      </span>
-      </h4>
-      
-    </li></ol>
-            </div>
-
-        <div id="values" class="values members">
-              <h3>Concrete Value Members</h3>
+              <h3>Value Members</h3>
               <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="!=(x$1:AnyRef):Boolean"></a>
       <a id="!=(AnyRef):Boolean"></a>
@@ -187,7 +186,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="xsbt.Compat#DummyValue" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="xsbt.Compat#DummyValue" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="DummyValue:Int"></a>
       <a id="DummyValue:Int"></a>
       <h4 class="signature">
@@ -199,8 +198,8 @@
         <span class="name">DummyValue</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      
-    </li><li name="xsbt.Compat#LocalChild" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
+    </li><li name="xsbt.Compat#LocalChild" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="LocalChild:Compat.this.global.tpnme.NameType"></a>
       <a id="LocalChild:scala.reflect.internal.StdNames.tpnme.NameType"></a>
       <h4 class="signature">
@@ -212,21 +211,21 @@
         <span class="name">LocalChild</span><span class="result">: <span class="extype" name="scala.reflect.api.StandardNames.TypeNamesApi.NameType">scala.reflect.internal.StdNames.tpnme.NameType</span></span>
       </span>
       </h4>
-      
-    </li><li name="xsbt.Compat#Nullary" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
+    </li><li name="xsbt.Compat#Nullary" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Nullary:Compat.this.global.NullaryMethodType.type"></a>
-      <a id="Nullary:scala.tools.nsc.Global.NullaryMethodType.type"></a>
+      <a id="Nullary:GlobalType.NullaryMethodType.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">Nullary</span><span class="result">: <span class="extype" name="scala.reflect.internal.Types.NullaryMethodType">scala.tools.nsc.Global.NullaryMethodType</span>.type</span>
+        <span class="name">Nullary</span><span class="result">: <span class="extype" name="scala.reflect.internal.Types.NullaryMethodType">GlobalType.NullaryMethodType</span>.type</span>
       </span>
       </h4>
-      
-    </li><li name="xsbt.Compat.NullaryMethodTpe" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
+    </li><li name="xsbt.Compat.NullaryMethodTpe" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="NullaryMethodTpe"></a>
       <a id="NullaryMethodTpe:NullaryMethodTpe"></a>
       <h4 class="signature">
@@ -238,20 +237,20 @@
         <a href="Compat$NullaryMethodTpe$.html"><span class="name">NullaryMethodTpe</span></a>
       </span>
       </h4>
-      
-    </li><li name="xsbt.Compat#ScalaObjectClass" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
+    </li><li name="xsbt.Compat#ScalaObjectClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ScalaObjectClass:Compat.this.global.ClassSymbol"></a>
-      <a id="ScalaObjectClass:scala.tools.nsc.Global.ClassSymbol"></a>
+      <a id="ScalaObjectClass:GlobalType.ClassSymbol"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">ScalaObjectClass</span><span class="result">: <span class="extype" name="scala.reflect.internal.Symbols.ClassSymbol">scala.tools.nsc.Global.ClassSymbol</span></span>
+        <span class="name">ScalaObjectClass</span><span class="result">: <span class="extype" name="scala.reflect.internal.Symbols.ClassSymbol">GlobalType.ClassSymbol</span></span>
       </span>
       </h4>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -265,6 +264,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="xsbt.ExtractAPI#classLike" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="classLike(in:ExtractAPI.this.global.Symbol,c:ExtractAPI.this.global.Symbol):xsbti.api.ClassLike"></a>
+      <a id="classLike(GlobalType.Symbol,GlobalType.Symbol):ClassLike"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">classLike</span><span class="params">(<span name="in">in: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">GlobalType.Symbol</span></span>, <span name="c">c: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">GlobalType.Symbol</span></span>)</span><span class="result">: <a href="../xsbti/api/ClassLike.html" class="extype" name="xsbti.api.ClassLike">ClassLike</a></span>
+      </span>
+      </h4>
+      
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -329,6 +341,21 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="xsbt.ExtractAPI#forceStructures" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="forceStructures():Unit"></a>
+      <a id="forceStructures():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">forceStructures</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4>
+      <p class="shortcomment cmt">Force all lazy structures.</p><div class="fullcomment"><div class="comment cmt"><p>Force all lazy structures.  This is necessary so that we see the symbols/types at this phase and
+so that we don't hold on to compiler objects and classes
+</p></div></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -342,19 +369,32 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="xsbt.Compat#hasMacro" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="xsbt.ExtractAPI#global" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="global:GlobalType"></a>
+      <a id="global:GlobalType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">global</span><span class="result">: <span class="extype" name="xsbt.ExtractAPI.GlobalType">GlobalType</span></span>
+      </span>
+      </h4>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="xsbt.ExtractAPI">ExtractAPI</a> → <a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
+    </li><li name="xsbt.Compat#hasMacro" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hasMacro(s:Compat.this.global.Symbol):Boolean"></a>
-      <a id="hasMacro(scala.tools.nsc.Global.Symbol):Boolean"></a>
+      <a id="hasMacro(GlobalType.Symbol):Boolean"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">hasMacro</span><span class="params">(<span name="s">s: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">scala.tools.nsc.Global.Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+        <span class="name">hasMacro</span><span class="params">(<span name="s">s: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">GlobalType.Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -381,19 +421,19 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="xsbt.Compat#moduleSuffix" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="xsbt.Compat#moduleSuffix" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="moduleSuffix(s:Compat.this.global.Symbol):String"></a>
-      <a id="moduleSuffix(scala.tools.nsc.Global.Symbol):String"></a>
+      <a id="moduleSuffix(GlobalType.Symbol):String"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">moduleSuffix</span><span class="params">(<span name="s">s: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">scala.tools.nsc.Global.Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">moduleSuffix</span><span class="params">(<span name="s">s: <span class="extype" name="scala.reflect.internal.Symbols.Symbol">GlobalType.Symbol</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -525,7 +565,9 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="xsbt.Compat">
+              <h3>Inherited from <a href="Compat.html" class="extype" name="xsbt.Compat">Compat</a></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>

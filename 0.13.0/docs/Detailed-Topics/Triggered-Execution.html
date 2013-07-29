@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -92,19 +92,19 @@
   <div class="section" id="triggered-execution">
 <h1>Triggered Execution<a class="headerlink" href="#triggered-execution" title="Permalink to this headline">¶</a></h1>
 <p>You can make a command run when certain files change by prefixing the
-command with <tt class="docutils literal"><span class="pre">~</span></tt>. Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.
-This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but
-typically the basic settings <tt class="docutils literal"><span class="pre">watchSources</span></tt> and <tt class="docutils literal"><span class="pre">pollInterval</span></tt> are
+command with <span class="pre">~</span>. Monitoring is terminated when <span class="pre">enter</span> is pressed.
+This triggered execution is configured by the <span class="pre">watch</span> setting, but
+typically the basic settings <span class="pre">watchSources</span> and <span class="pre">pollInterval</span> are
 modified.</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">watchSources</span></tt> defines the files for a single project that are
+<li><span class="pre">watchSources</span> defines the files for a single project that are
 monitored for changes. By default, a project watches resources and
 Scala and Java sources.</li>
-<li><tt class="docutils literal"><span class="pre">watchTransitiveSources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watchSources</span></tt> for
+<li><span class="pre">watchTransitiveSources</span> then combines the <span class="pre">watchSources</span> for
 the current project and all execution and classpath dependencies (see
 <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a> for details on interProject dependencies).</li>
-<li><tt class="docutils literal"><span class="pre">pollInterval</span></tt> selects the interval between polling for changes in
-milliseconds. The default value is <tt class="docutils literal"><span class="pre">500</span> <span class="pre">ms</span></tt>.</li>
+<li><span class="pre">pollInterval</span> selects the interval between polling for changes in
+milliseconds. The default value is <span class="pre">500 ms</span>.</li>
 </ul>
 <p>Some example usages are described below.</p>
 <div class="section" id="compile">
@@ -122,7 +122,7 @@ milliseconds. The default value is <tt class="docutils literal"><span class="pre
 One use is for test driven development, as suggested by Erick on the
 mailing list.</p>
 <p>The following will poll for changes to your source code (main or test)
-and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for the specified test.</p>
+and run <span class="pre">testOnly</span> for the specified test.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ testOnly example.TestA
 </pre></div>
 </div>
@@ -132,8 +132,8 @@ and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for 
 <p>Occasionally, you may need to trigger the execution of multiple
 commands. You can use semicolons to separate the commands to be
 triggered.</p>
-<p>The following will poll for source changes and run <tt class="docutils literal"><span class="pre">clean</span></tt> and
-<tt class="docutils literal"><span class="pre">test</span></tt>.</p>
+<p>The following will poll for source changes and run <span class="pre">clean</span> and
+<span class="pre">test</span>.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;clean ;<span class="nb">test</span>
 </pre></div>
 </div>

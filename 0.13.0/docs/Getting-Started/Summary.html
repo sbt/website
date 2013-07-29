@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -106,12 +106,12 @@ Scala syntax. <a class="reference external" href="http://www.artima.com/shop/pro
 Scala</a> written
 by the creator of Scala is a great introduction.</li>
 <li><a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a></li>
-<li>your build definition is one big list of <tt class="docutils literal"><span class="pre">Setting</span></tt> objects, where a
-<tt class="docutils literal"><span class="pre">Setting</span></tt> transforms the set of key-value pairs sbt uses to perform
+<li>your build definition is one big list of <span class="pre">Setting</span> objects, where a
+<span class="pre">Setting</span> transforms the set of key-value pairs sbt uses to perform
 tasks.</li>
-<li>to create a <tt class="docutils literal"><span class="pre">Setting</span></tt>, call one of a few methods on a key: <tt class="docutils literal"><span class="pre">:=</span></tt>, <tt class="docutils literal"><span class="pre">+=</span></tt>, <tt class="docutils literal"><span class="pre">++=</span></tt>, or <tt class="docutils literal"><span class="pre">~=</span></tt>.</li>
+<li>to create a <span class="pre">Setting</span>, call one of a few methods on a key: <span class="pre">:=</span>, <span class="pre">+=</span>, <span class="pre">++=</span>, or <span class="pre">~=</span>.</li>
 <li>there is no mutable state, only transformation; for example, a
-<tt class="docutils literal"><span class="pre">Setting</span></tt> transforms sbt's collection of key-value pairs into a new
+<span class="pre">Setting</span> transforms sbt's collection of key-value pairs into a new
 collection. It doesn't change anything in-place.</li>
 <li>each setting has a value of a particular type, determined by the key.</li>
 <li><em>tasks</em> are special settings where the computation to produce the
@@ -123,19 +123,19 @@ compute the value once, when first loading the build definition.</li>
 <li>scoping allows you to have different behaviors per-project, per-task,
 or per-configuration.</li>
 <li>a configuration is a kind of build, such as the main one
-(<tt class="docutils literal"><span class="pre">Compile</span></tt>) or the test one (<tt class="docutils literal"><span class="pre">Test</span></tt>).</li>
+(<span class="pre">Compile</span>) or the test one (<span class="pre">Test</span>).</li>
 <li>the per-project axis also supports &quot;entire build&quot; scope.</li>
 <li>scopes fall back to or <em>delegate</em> to more general scopes.</li>
 <li><a class="reference internal" href="Basic-Def.html"><em>.sbt</em></a> vs. <a class="reference internal" href="Full-Def.html"><em>.scala</em></a> build definition</li>
-<li>put most of your settings in <tt class="docutils literal"><span class="pre">build.sbt</span></tt>, but use <tt class="docutils literal"><span class="pre">.scala</span></tt> build
+<li>put most of your settings in <span class="pre">build.sbt</span>, but use <span class="pre">.scala</span> build
 definition files to <a class="reference internal" href="Multi-Project.html"><em>define multiple subprojects</em></a>
 , and to factor out common values, objects, and methods.</li>
 <li>the build definition is an sbt project in its own right, rooted in
-the <tt class="docutils literal"><span class="pre">project</span></tt> directory.</li>
+the <span class="pre">project</span> directory.</li>
 <li><a class="reference internal" href="Using-Plugins.html"><em>Plugins</em></a> are extensions to the
 build definition</li>
-<li>add plugins with the <tt class="docutils literal"><span class="pre">addSbtPlugin</span></tt> method in <tt class="docutils literal"><span class="pre">project/build.sbt</span></tt>
-(NOT <tt class="docutils literal"><span class="pre">build.sbt</span></tt> in the project's base directory).</li>
+<li>add plugins with the <span class="pre">addSbtPlugin</span> method in <span class="pre">project/build.sbt</span>
+(NOT <span class="pre">build.sbt</span> in the project's base directory).</li>
 </ul>
 <p>If any of this leaves you wondering rather than nodding, please ask for
 help on the <a class="reference external" href="http://groups.google.com/group/simple-build-tool/topics">mailing list</a>, go

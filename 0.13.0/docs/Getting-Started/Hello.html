@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -95,14 +95,14 @@
 <div class="section" id="create-a-project-directory-with-source-code">
 <h2>Create a project directory with source code<a class="headerlink" href="#create-a-project-directory-with-source-code" title="Permalink to this headline">¶</a></h2>
 <p>A valid sbt project can be a directory containing a single source file.
-Try creating a directory <tt class="docutils literal"><span class="pre">hello</span></tt> with a file <tt class="docutils literal"><span class="pre">hw.scala</span></tt>, containing
+Try creating a directory <span class="pre">hello</span> with a file <span class="pre">hw.scala</span>, containing
 the following:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">Hi</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="k">=</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hi!&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Now from inside the <tt class="docutils literal"><span class="pre">hello</span></tt> directory, start sbt and type <tt class="docutils literal"><span class="pre">run</span></tt> at
+<p>Now from inside the <span class="pre">hello</span> directory, start sbt and type <span class="pre">run</span> at
 the sbt interactive console. On Linux or OS X the commands might look
 like this:</p>
 <div class="highlight-text"><div class="highlight"><pre>$ mkdir hello
@@ -119,46 +119,46 @@ Hi!
 following automatically:</p>
 <ul class="simple">
 <li>Sources in the base directory</li>
-<li>Sources in <tt class="docutils literal"><span class="pre">src/main/scala</span></tt> or <tt class="docutils literal"><span class="pre">src/main/java</span></tt></li>
-<li>Tests in <tt class="docutils literal"><span class="pre">src/test/scala</span></tt> or <tt class="docutils literal"><span class="pre">src/test/java</span></tt></li>
-<li>Data files in <tt class="docutils literal"><span class="pre">src/main/resources</span></tt> or <tt class="docutils literal"><span class="pre">src/test/resources</span></tt></li>
-<li>jars in <tt class="docutils literal"><span class="pre">lib</span></tt></li>
+<li>Sources in <span class="pre">src/main/scala</span> or <span class="pre">src/main/java</span></li>
+<li>Tests in <span class="pre">src/test/scala</span> or <span class="pre">src/test/java</span></li>
+<li>Data files in <span class="pre">src/main/resources</span> or <span class="pre">src/test/resources</span></li>
+<li>jars in <span class="pre">lib</span></li>
 </ul>
 <p>By default, sbt will build projects with the same version of Scala used
 to run sbt itself.</p>
-<p>You can run the project with <tt class="docutils literal"><span class="pre">sbt</span> <span class="pre">run</span></tt> or enter the <a class="reference external" href="http://www.scala-lang.org/node/2097">Scala
-REPL</a> with <tt class="docutils literal"><span class="pre">sbt</span> <span class="pre">console</span></tt>.
-<tt class="docutils literal"><span class="pre">sbt</span> <span class="pre">console</span></tt> sets up your project's classpath so you can try out live
+<p>You can run the project with <span class="pre">sbt run</span> or enter the <a class="reference external" href="http://www.scala-lang.org/node/2097">Scala
+REPL</a> with <span class="pre">sbt console</span>.
+<span class="pre">sbt console</span> sets up your project's classpath so you can try out live
 Scala examples based on your project's code.</p>
 </div>
 <div class="section" id="build-definition">
 <h2>Build definition<a class="headerlink" href="#build-definition" title="Permalink to this headline">¶</a></h2>
 <p>Most projects will need some manual setup. Basic build settings go in a
-file called <tt class="docutils literal"><span class="pre">build.sbt</span></tt>, located in the project's base directory.</p>
-<p>For example, if your project is in the directory <tt class="docutils literal"><span class="pre">hello</span></tt>, in
-<tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt> you might write:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+file called <span class="pre">build.sbt</span>, located in the project's base directory.</p>
+<p>For example, if your project is in the directory <span class="pre">hello</span>, in
+<span class="pre">hello/build.sbt</span> you might write:</p>
+<pre class="literal-block">
+name := &quot;hello&quot;
 
-<span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+version := &quot;1.0&quot;
 
-<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.1&quot;</span>
-</pre></div>
-</div>
+scalaVersion := &quot;2.10.2&quot;
+</pre>
 <p>Notice the blank line between every item. This isn't just for show;
 they're actually required in order to separate each item. In <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> you'll learn more about
-how to write a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file.</p>
+how to write a <span class="pre">build.sbt</span> file.</p>
 <p>If you plan to package your project in a jar, you will want to set at
-least the name and version in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt>.</p>
+least the name and version in a <span class="pre">build.sbt</span>.</p>
 </div>
 <div class="section" id="setting-the-sbt-version">
 <h2>Setting the sbt version<a class="headerlink" href="#setting-the-sbt-version" title="Permalink to this headline">¶</a></h2>
 <p>You can force a particular version of sbt by creating a file
-<tt class="docutils literal"><span class="pre">hello/project/build.properties</span></tt>. In this file, write:</p>
-<div class="highlight-text"><div class="highlight"><pre>sbt.version=0.13.0
+<span class="pre">hello/project/build.properties</span>. In this file, write:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">sbt</span><span class="o">.</span><span class="n">version</span><span class="o">=|</span><span class="n">release</span><span class="o">|</span>
 </pre></div>
 </div>
 <p>to force the use of sbt 0.13.0.  sbt is 99% source compatible from release to release.
-Still, setting the sbt version in <tt class="docutils literal"><span class="pre">project/build.properties</span></tt> avoids
+Still, setting the sbt version in <span class="pre">project/build.properties</span> avoids
 any potential confusion.</p>
 <div class="section" id="next">
 <h3>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h3>

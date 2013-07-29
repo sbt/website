@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -112,23 +112,23 @@ transforms the build <a class="reference external" href="../../api/sbt/State.htm
 <p>In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
 Scala's standard library, these are very similar. The action part is a
-function <tt class="docutils literal"><span class="pre">(State,</span> <span class="pre">T)</span> <span class="pre">=&gt;</span> <span class="pre">State</span></tt>, where <tt class="docutils literal"><span class="pre">T</span></tt> is the data structure
+function <span class="pre">(State, T) =&gt; State</span>, where <span class="pre">T</span> is the data structure
 produced by the parser. See the <a class="reference internal" href="../Detailed-Topics/Parsing-Input.html"><em>Parsing and tab completion</em></a>
 page for how to use the parser combinators.</p>
 <p><a class="reference external" href="../../api/sbt/State.html">State</a> provides access to the build state,
-such as all registered <tt class="docutils literal"><span class="pre">Command</span></tt>s, the remaining commands to
+such as all registered <span class="pre">Command</span>s, the remaining commands to
 execute, and all project-related information. See <a class="reference internal" href="Build-State.html"><em>State and actions</em></a>
 for details on State.</p>
 <p>Finally, basic help information may be provided that is used by the
-<tt class="docutils literal"><span class="pre">help</span></tt> command to display command help.</p>
+<span class="pre">help</span> command to display command help.</p>
 </div>
 <div class="section" id="defining-a-command">
 <h2>Defining a Command<a class="headerlink" href="#defining-a-command" title="Permalink to this headline">¶</a></h2>
-<p>A command combines a function <tt class="docutils literal"><span class="pre">State</span> <span class="pre">=&gt;</span> <span class="pre">Parser[T]</span></tt> with an action
-<tt class="docutils literal"><span class="pre">(State,</span> <span class="pre">T)</span> <span class="pre">=&gt;</span> <span class="pre">State</span></tt>. The reason for <tt class="docutils literal"><span class="pre">State</span> <span class="pre">=&gt;</span> <span class="pre">Parser[T]</span></tt> and not
-simply <tt class="docutils literal"><span class="pre">Parser[T]</span></tt> is that often the current <tt class="docutils literal"><span class="pre">State</span></tt> is used to
+<p>A command combines a function <span class="pre">State =&gt; Parser[T]</span> with an action
+<span class="pre">(State, T) =&gt; State</span>. The reason for <span class="pre">State =&gt; Parser[T]</span> and not
+simply <span class="pre">Parser[T]</span> is that often the current <span class="pre">State</span> is used to
 build the parser. For example, the currently loaded projects (provided
-by <tt class="docutils literal"><span class="pre">State</span></tt>) determine valid completions for the <tt class="docutils literal"><span class="pre">project</span></tt> command.
+by <span class="pre">State</span>) determine valid completions for the <span class="pre">project</span> command.
 Examples for the general and specific cases are shown in the following
 sections.</p>
 <p>See <a class="reference external" href="../../sxr/Command.scala.html#10761">Command.scala</a> for the source
@@ -175,14 +175,14 @@ multiple arguments separated by spaces.</p>
 </div>
 <div class="section" id="full-example">
 <h2>Full Example<a class="headerlink" href="#full-example" title="Permalink to this headline">¶</a></h2>
-<p>The following example is a valid <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> that adds
+<p>The following example is a valid <span class="pre">project/Build.scala</span> that adds
 commands to a project. To try it out:</p>
 <ol class="arabic simple">
-<li>Copy the following build definition into <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> for
+<li>Copy the following build definition into <span class="pre">project/Build.scala</span> for
 a new project.</li>
 <li>Run sbt on the project.</li>
-<li>Try out the <tt class="docutils literal"><span class="pre">hello</span></tt>, <tt class="docutils literal"><span class="pre">helloAll</span></tt>, <tt class="docutils literal"><span class="pre">failIfTrue</span></tt>, <tt class="docutils literal"><span class="pre">color</span></tt>,
-and <tt class="docutils literal"><span class="pre">printState</span></tt> commands.</li>
+<li>Try out the <span class="pre">hello</span>, <span class="pre">helloAll</span>, <span class="pre">failIfTrue</span>, <span class="pre">color</span>,
+and <span class="pre">printState</span> commands.</li>
 <li>Use tab-completion and the code below as guidance.</li>
 </ol>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>

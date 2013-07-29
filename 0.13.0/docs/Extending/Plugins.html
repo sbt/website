@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -101,7 +101,7 @@ markdown processing task. A plugin can define a sequence of sbt Settings
 that are automatically added to all projects or that are explicitly
 declared for selected projects. For example, a plugin might add a
 'proguard' task and associated (overridable) settings. Because
-<a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <tt class="docutils literal"><span class="pre">commands</span></tt> setting, a plugin can
+<a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <span class="pre">commands</span> setting, a plugin can
 also fulfill the role that processors did in 0.7.x.</p>
 <p>The <a class="reference internal" href="Plugins-Best-Practices.html"><em>Plugins Best Practices</em></a> page describes the
 currently evolving guidelines to writing sbt plugins. See also the
@@ -110,7 +110,7 @@ general <a class="reference internal" href="../Detailed-Topics/Best-Practices.ht
 <div class="section" id="using-a-binary-sbt-plugin">
 <h2>Using a binary sbt plugin<a class="headerlink" href="#using-a-binary-sbt-plugin" title="Permalink to this headline">¶</a></h2>
 <p>A common situation is using a binary plugin published to a repository.
-Create <tt class="docutils literal"><span class="pre">project/plugins.sbt</span></tt> with the desired sbt plugins, any general
+Create <span class="pre">project/plugins.sbt</span> with the desired sbt plugins, any general
 dependencies, and any necessary repositories:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.example&quot;</span> <span class="o">%</span> <span class="s">&quot;plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0&quot;</span><span class="o">)</span>
 
@@ -127,36 +127,36 @@ plugins.</p>
 </div>
 <div class="section" id="by-description">
 <h2>By Description<a class="headerlink" href="#by-description" title="Permalink to this headline">¶</a></h2>
-<p>A plugin definition is a project in <tt class="docutils literal"><span class="pre">&lt;main-project&gt;/project/</span></tt>. This
+<p>A plugin definition is a project in <span class="pre">&lt;main-project&gt;/project/</span>. This
 project's classpath is the classpath used for build definitions in
-<tt class="docutils literal"><span class="pre">&lt;main-project&gt;/project/</span></tt> and any <tt class="docutils literal"><span class="pre">.sbt</span></tt> files in the project's base
-directory. It is also used for the <tt class="docutils literal"><span class="pre">eval</span></tt> and <tt class="docutils literal"><span class="pre">set</span></tt> commands.</p>
+<span class="pre">&lt;main-project&gt;/project/</span> and any <span class="pre">.sbt</span> files in the project's base
+directory. It is also used for the <span class="pre">eval</span> and <span class="pre">set</span> commands.</p>
 <p>Specifically,</p>
 <ol class="arabic simple">
-<li>Managed dependencies declared by the <tt class="docutils literal"><span class="pre">project/</span></tt> project are
+<li>Managed dependencies declared by the <span class="pre">project/</span> project are
 retrieved and are available on the build definition classpath, just
 like for a normal project.</li>
-<li>Unmanaged dependencies in <tt class="docutils literal"><span class="pre">project/lib/</span></tt> are available to the build
+<li>Unmanaged dependencies in <span class="pre">project/lib/</span> are available to the build
 definition, just like for a normal project.</li>
-<li>Sources in the <tt class="docutils literal"><span class="pre">project/</span></tt> project are the build definition files
+<li>Sources in the <span class="pre">project/</span> project are the build definition files
 and are compiled using the classpath built from the managed and
 unmanaged dependencies.</li>
 <li>Project dependencies can be declared in
-<tt class="docutils literal"><span class="pre">project/project/Build.scala</span></tt> and will be available to the build
-definition sources. Think of <tt class="docutils literal"><span class="pre">project/project/</span></tt> as the build
+<span class="pre">project/project/Build.scala</span> and will be available to the build
+definition sources. Think of <span class="pre">project/project/</span> as the build
 definition for the build definition.</li>
 </ol>
-<p>The build definition classpath is searched for <tt class="docutils literal"><span class="pre">sbt/sbt.plugins</span></tt>
+<p>The build definition classpath is searched for <span class="pre">sbt/sbt.plugins</span>
 descriptor files containing the names of Plugin implementations. A
 Plugin is a module that defines settings to automatically inject to
 projects. Additionally, all Plugin modules are wildcard imported for the
-<tt class="docutils literal"><span class="pre">eval</span></tt> and <tt class="docutils literal"><span class="pre">set</span></tt> commands and <tt class="docutils literal"><span class="pre">.sbt</span></tt> files. A Plugin
+<span class="pre">eval</span> and <span class="pre">set</span> commands and <span class="pre">.sbt</span> files. A Plugin
 implementation is not required to produce a plugin, however. It is a
 convenience for plugin consumers and because of the automatic nature, it
 is not always appropriate.</p>
-<p>The <tt class="docutils literal"><span class="pre">reload</span> <span class="pre">plugins</span></tt> command changes the current build to
-<tt class="docutils literal"><span class="pre">&lt;current-build&gt;/project/</span></tt>. This allows manipulating the build
-definition project like a normal project. <tt class="docutils literal"><span class="pre">reload</span> <span class="pre">return</span></tt> changes back
+<p>The <span class="pre">reload plugins</span> command changes the current build to
+<span class="pre">&lt;current-build&gt;/project/</span>. This allows manipulating the build
+definition project like a normal project. <span class="pre">reload return</span> changes back
 to the original build. Any session settings for the plugin definition
 project that have not been saved are dropped.</p>
 <p><em>Note</em>: At runtime, all plugins for all builds are loaded in a separate, parent class loader of the class loaders for builds.
@@ -169,7 +169,7 @@ processors so that once declared, it could be used in all projects for
 that user. In sbt 0.10+, plugins and processors are unified.
 Specifically, a plugin can add commands and plugins can be declared
 globally for a user.</p>
-<p>The <tt class="docutils literal"><span class="pre">~/.sbt/plugins/</span></tt> directory is treated as a global plugin
+<p>The <span class="pre">~/.sbt/plugins/</span> directory is treated as a global plugin
 definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.</p>
@@ -187,21 +187,21 @@ demonstrates how to declare plugins.</p>
 <ol class="arabic simple">
 <li>Download the jar manually from
 <a class="reference external" href="https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar">https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar</a></li>
-<li>Put it in <tt class="docutils literal"><span class="pre">project/lib/</span></tt></li>
+<li>Put it in <span class="pre">project/lib/</span></li>
 </ol>
 </div>
 <div class="section" id="b-automatically-managed-direct-editing-approach">
 <h4>1b) Automatically managed: direct editing approach<a class="headerlink" href="#b-automatically-managed-direct-editing-approach" title="Permalink to this headline">¶</a></h4>
-<p>Edit <tt class="docutils literal"><span class="pre">project/plugins.sbt</span></tt> to contain:</p>
+<p>Edit <span class="pre">project/plugins.sbt</span> to contain:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.clapper&quot;</span> <span class="o">%%</span> <span class="s">&quot;grizzled-scala&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0.4&quot;</span>
 </pre></div>
 </div>
-<p>If sbt is running, do <tt class="docutils literal"><span class="pre">reload</span></tt>.</p>
+<p>If sbt is running, do <span class="pre">reload</span>.</p>
 </div>
 <div class="section" id="c-automatically-managed-command-line-approach">
 <h4>1c) Automatically managed: command line approach<a class="headerlink" href="#c-automatically-managed-command-line-approach" title="Permalink to this headline">¶</a></h4>
-<p>We can change to the plugins project in <tt class="docutils literal"><span class="pre">project/</span></tt> using
-<tt class="docutils literal"><span class="pre">reload</span> <span class="pre">plugins</span></tt>.</p>
+<p>We can change to the plugins project in <span class="pre">project/</span> using
+<span class="pre">reload plugins</span>.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt
 <span class="gp">&gt;</span> reload plugins
 <span class="go">[info] Set current project to default (in build file:/Users/harrah/demo2/project/)</span>
@@ -209,8 +209,8 @@ demonstrates how to declare plugins.</p>
 </pre></div>
 </div>
 <p>Then, we can add dependencies like usual and save them to
-<tt class="docutils literal"><span class="pre">project/plugins.sbt</span></tt>. It is useful, but not required, to run
-<tt class="docutils literal"><span class="pre">update</span></tt> to verify that the dependencies are correct.</p>
+<span class="pre">project/plugins.sbt</span>. It is useful, but not required, to run
+<span class="pre">update</span> to verify that the dependencies are correct.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>libraryDependencies +<span class="o">=</span> <span class="s2">&quot;org.clapper&quot;</span> %% <span class="s2">&quot;grizzled-scala&quot;</span> % <span class="s2">&quot;1.0.4&quot;</span>
 <span class="go">...</span>
 <span class="gp">&gt;</span> update
@@ -230,7 +230,7 @@ demonstrates how to declare plugins.</p>
 <p>This variant shows how to use the external project support in sbt 0.10
 to declare a source dependency on a plugin. This means that the plugin
 will be built from source and used on the classpath.</p>
-<p>Edit <tt class="docutils literal"><span class="pre">project/project/Build.scala</span></tt></p>
+<p>Edit <span class="pre">project/project/Build.scala</span></p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">object</span> <span class="nc">PluginDef</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
    <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">projects</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">root</span><span class="o">)</span>
@@ -239,10 +239,10 @@ will be built from source and used on the classpath.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>If sbt is running, run <tt class="docutils literal"><span class="pre">reload</span></tt>.</p>
+<p>If sbt is running, run <span class="pre">reload</span>.</p>
 <p>Note that this approach can be useful used when developing a plugin. A
-project that uses the plugin will rebuild the plugin on <tt class="docutils literal"><span class="pre">reload</span></tt>. This
-saves the intermediate steps of <tt class="docutils literal"><span class="pre">publishLocal</span></tt> and <tt class="docutils literal"><span class="pre">cleanPlugins</span></tt>
+project that uses the plugin will rebuild the plugin on <span class="pre">reload</span>. This
+saves the intermediate steps of <span class="pre">publishLocal</span> and <span class="pre">cleanPlugins</span>
 required in 0.7. It can also be used to work with the development
 version of a plugin from its repository.</p>
 <p>It is recommended to explicitly specify the commit or tag by appending
@@ -254,12 +254,12 @@ it to the repository as a fragment:</p>
 <div class="section" id="use-the-library">
 <h4>2) Use the library<a class="headerlink" href="#use-the-library" title="Permalink to this headline">¶</a></h4>
 <p>Grizzled Scala is ready to be used in build definitions. This includes
-the <tt class="docutils literal"><span class="pre">eval</span></tt> and <tt class="docutils literal"><span class="pre">set</span></tt> commands and <tt class="docutils literal"><span class="pre">.sbt</span></tt> and <tt class="docutils literal"><span class="pre">project/*.scala</span></tt>
+the <span class="pre">eval</span> and <span class="pre">set</span> commands and <span class="pre">.sbt</span> and <span class="pre">project/</span><span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">.scala</span>
 files.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">eval </span>grizzled.sys.os
 </pre></div>
 </div>
-<p>In a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file:</p>
+<p>In a <span class="pre">build.sbt</span> file:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">grizzled.sys._</span>
 <span class="k">import</span> <span class="nn">OperatingSystem._</span>
 
@@ -275,8 +275,8 @@ files.</p>
 </div>
 <div class="section" id="creating-a-plugin">
 <h2>Creating a plugin<a class="headerlink" href="#creating-a-plugin" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Introduction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>Introduction<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>A minimal plugin is a Scala library that is built against the version of
 Scala that sbt runs (currently, 2.9.1) or a Java library. Nothing
 special needs to be done for this type of library, as shown in the
@@ -287,15 +287,15 @@ integrate.</p>
 </div>
 <div class="section" id="description">
 <h3>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
-<p>To make a plugin, create a project and configure <tt class="docutils literal"><span class="pre">sbtPlugin</span></tt> to
-<tt class="docutils literal"><span class="pre">true</span></tt>. Then, write the plugin code and publish your project to a
+<p>To make a plugin, create a project and configure <span class="pre">sbtPlugin</span> to
+<span class="pre">true</span>. Then, write the plugin code and publish your project to a
 repository. The plugin can be used as described in the previous section.</p>
-<p>A plugin can implement <tt class="docutils literal"><span class="pre">sbt.Plugin</span></tt>. The contents of a Plugin
-singleton, declared like <tt class="docutils literal"><span class="pre">object</span> <span class="pre">MyPlugin</span> <span class="pre">extends</span> <span class="pre">Plugin</span></tt>, are
-wildcard imported in <tt class="docutils literal"><span class="pre">set</span></tt>, <tt class="docutils literal"><span class="pre">eval</span></tt>, and <tt class="docutils literal"><span class="pre">.sbt</span></tt> files. Typically,
+<p>A plugin can implement <span class="pre">sbt.Plugin</span>. The contents of a Plugin
+singleton, declared like <span class="pre">object MyPlugin extends Plugin</span>, are
+wildcard imported in <span class="pre">set</span>, <span class="pre">eval</span>, and <span class="pre">.sbt</span> files. Typically,
 this is used to provide new keys (SettingKey, TaskKey, or InputKey) or
 core methods without requiring an import or qualification. In addition,
-the <tt class="docutils literal"><span class="pre">settings</span></tt> member of the <tt class="docutils literal"><span class="pre">Plugin</span></tt> is automatically appended to
+the <span class="pre">settings</span> member of the <span class="pre">Plugin</span> is automatically appended to
 each project's settings. This allows a plugin to automatically provide
 new functionality or new defaults. One main use of this feature is to
 globally add commands, like a processor in sbt 0.7.x. These features
@@ -305,7 +305,7 @@ control from the build author (the user of the plugin).</p>
 <div class="section" id="example-plugin">
 <h3>Example Plugin<a class="headerlink" href="#example-plugin" title="Permalink to this headline">¶</a></h3>
 <p>An example of a typical plugin:</p>
-<p><tt class="docutils literal"><span class="pre">build.sbt</span></tt>:</p>
+<p><span class="pre">build.sbt</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sbtPlugin</span> <span class="o">:=</span> <span class="kc">true</span>
 
 <span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;example-plugin&quot;</span>
@@ -313,7 +313,7 @@ control from the build author (the user of the plugin).</p>
 <span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">MyPlugin.scala</span></tt>:</p>
+<p><span class="pre">MyPlugin.scala</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">object</span> <span class="nc">MyPlugin</span> <span class="k">extends</span> <span class="nc">Plugin</span>
 <span class="o">{</span>
@@ -353,8 +353,8 @@ control from the build author (the user of the plugin).</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Individual settings could be defined in <tt class="docutils literal"><span class="pre">MyBuild.scala</span></tt> above or in a
-<tt class="docutils literal"><span class="pre">build.sbt</span></tt> file:</p>
+<p>Individual settings could be defined in <span class="pre">MyBuild.scala</span> above or in a
+<span class="pre">build.sbt</span> file:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">newSettings</span> <span class="o">:=</span> <span class="s">&quot;overridden&quot;</span>
 </pre></div>
 </div>
@@ -362,7 +362,7 @@ control from the build author (the user of the plugin).</p>
 <div class="section" id="example-command-plugin">
 <h3>Example command plugin<a class="headerlink" href="#example-command-plugin" title="Permalink to this headline">¶</a></h3>
 <p>A basic plugin that adds commands looks like:</p>
-<p><tt class="docutils literal"><span class="pre">build.sbt</span></tt></p>
+<p><span class="pre">build.sbt</span></p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sbtPlugin</span> <span class="o">:=</span> <span class="kc">true</span>
 
 <span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;example-plugin&quot;</span>
@@ -370,7 +370,7 @@ control from the build author (the user of the plugin).</p>
 <span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.example&quot;</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">MyPlugin.scala</span></tt></p>
+<p><span class="pre">MyPlugin.scala</span></p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">import</span> <span class="nn">Keys._</span>
 <span class="k">object</span> <span class="nc">MyPlugin</span> <span class="k">extends</span> <span class="nc">Plugin</span>
@@ -385,16 +385,16 @@ control from the build author (the user of the plugin).</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>This example demonstrates how to take a Command (here, <tt class="docutils literal"><span class="pre">myCommand</span></tt>)
+<p>This example demonstrates how to take a Command (here, <span class="pre">myCommand</span>)
 and distribute it in a plugin. Note that multiple commands can be
-included in one plugin (for example, use <tt class="docutils literal"><span class="pre">commands</span> <span class="pre">++=</span> <span class="pre">Seq(a,b)</span></tt>). See
+included in one plugin (for example, use <span class="pre">commands ++= Seq(a,b)</span>). See
 <a class="reference internal" href="Commands.html"><em>Commands</em></a> for defining more useful commands, including ones that
 accept arguments and affect the execution state.</p>
 </div>
 <div class="section" id="global-plugins-example">
 <h3>Global plugins example<a class="headerlink" href="#global-plugins-example" title="Permalink to this headline">¶</a></h3>
 <p>The simplest global plugin definition is declaring a library or plugin
-in <tt class="docutils literal"><span class="pre">~/.sbt/plugins/build.sbt</span></tt>:</p>
+in <span class="pre">~/.sbt/plugins/build.sbt</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.example&quot;</span> <span class="o">%%</span> <span class="s">&quot;example-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;0.1&quot;</span>
 </pre></div>
 </div>
@@ -402,27 +402,27 @@ in <tt class="docutils literal"><span class="pre">~/.sbt/plugins/build.sbt</span
 user.</p>
 <p>In addition:</p>
 <ol class="arabic simple">
-<li>Jars may be placed directly in <tt class="docutils literal"><span class="pre">~/.sbt/plugins/lib/</span></tt> and will be
+<li>Jars may be placed directly in <span class="pre">~/.sbt/plugins/lib/</span> and will be
 available to every build definition for the current user.</li>
 <li>Dependencies on plugins built from source may be declared in
 ~/.sbt/plugins/project/Build.scala` as described at
 <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a>.</li>
 <li>A Plugin may be directly defined in Scala source files in
-<tt class="docutils literal"><span class="pre">~/.sbt/plugins/</span></tt>, such as <tt class="docutils literal"><span class="pre">~/.sbt/plugins/MyPlugin.scala</span></tt>.
-<tt class="docutils literal"><span class="pre">~/.sbt/plugins/build.sbt</span></tt> should contain <tt class="docutils literal"><span class="pre">sbtPlugin</span> <span class="pre">:=</span> <span class="pre">true</span></tt>.
+<span class="pre">~/.sbt/plugins/</span>, such as <span class="pre">~/.sbt/plugins/MyPlugin.scala</span>.
+<span class="pre">~/.sbt/plugins/build.sbt</span> should contain <span class="pre">sbtPlugin := true</span>.
 This can be used for quicker turnaround when developing a plugin
 initially:<ol class="arabic">
 <li>Edit the global plugin code</li>
-<li><tt class="docutils literal"><span class="pre">reload</span></tt> the project you want to use the modified plugin in</li>
+<li><span class="pre">reload</span> the project you want to use the modified plugin in</li>
 <li>sbt will rebuild the plugin and use it for the project.
 Additionally, the plugin will be available in other projects on
 the machine without recompiling again. This approach skips the
-overhead of <tt class="docutils literal"><span class="pre">publishLocal</span></tt> and cleaning the plugins directory
+overhead of <span class="pre">publishLocal</span> and cleaning the plugins directory
 of the project using the plugin.</li>
 </ol>
 </li>
 </ol>
-<p>These are all consequences of <tt class="docutils literal"><span class="pre">~/.sbt/plugins/</span></tt> being a standard
+<p>These are all consequences of <span class="pre">~/.sbt/plugins/</span> being a standard
 project whose classpath is added to every sbt project's build
 definition.</p>
 </div>
@@ -460,7 +460,7 @@ plugin is consistent with and plays well with other plugins.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#creating-a-plugin">Creating a plugin</a><ul>
-<li><a class="reference internal" href="#id1">Introduction</a></li>
+<li><a class="reference internal" href="#id3">Introduction</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#example-plugin">Example Plugin</a></li>
 <li><a class="reference internal" href="#usage-example">Usage example</a></li>

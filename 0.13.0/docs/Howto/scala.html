@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,11 +91,11 @@
             
   <div class="section" id="configure-and-use-scala">
 <h1>Configure and use Scala<a class="headerlink" href="#configure-and-use-scala" title="Permalink to this headline">¶</a></h1>
-<p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <tt class="docutils literal"><span class="pre">shell</span></tt> command is invoked.</p>
+<p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <span class="pre">shell</span> command is invoked.</p>
 <div class="full-howto section" id="version">
 <h2>Set the Scala version used for building the project<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> configures the version of Scala used for compilation.  By default, sbt also adds a dependency on the Scala library with this version.  See the next section for how to disable this automatic dependency.  If the Scala version is not specified, the version sbt was built against is used.  It is recommended to explicitly specify the version of Scala.</p>
+<p>The <span class="pre">scalaVersion</span> configures the version of Scala used for compilation.  By default, sbt also adds a dependency on the Scala library with this version.  See the next section for how to disable this automatic dependency.  If the Scala version is not specified, the version sbt was built against is used.  It is recommended to explicitly specify the version of Scala.</p>
 <p>For example, to set the Scala version to &quot;2.9.2&quot;,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.2&quot;</span>
 </pre></div>
@@ -103,21 +103,21 @@
 <div class="full-howto section" id="noauto">
 <h2>Disable the automatic dependency on the Scala library<a class="headerlink" href="#noauto" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>sbt adds a dependency on the Scala standard library by default.  To disable this behavior, set the <tt class="docutils literal"><span class="pre">autoScalaLibrary</span></tt> setting to false.</p>
+<p>sbt adds a dependency on the Scala standard library by default.  To disable this behavior, set the <span class="pre">autoScalaLibrary</span> setting to false.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="temporary">
 <h2>Temporarily switch to a different Scala version<a class="headerlink" href="#temporary" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>To set the Scala version in all scopes to a specific value, use the <tt class="docutils literal"><span class="pre">++</span></tt> command.  For example, to temporarily use Scala 2.8.2, run:</p>
+<p>To set the Scala version in all scopes to a specific value, use the <span class="pre">++</span> command.  For example, to temporarily use Scala 2.8.2, run:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ++ 2.8.2
 </pre></div>
 </div>
 <div class="full-howto section" id="local">
 <h2>Use a local Scala installation for building a project<a class="headerlink" href="#local" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Defining the <tt class="docutils literal"><span class="pre">scalaHome</span></tt> setting with the path to the Scala home directory will use that Scala installation.  sbt still requires <tt class="docutils literal"><span class="pre">scalaVersion</span></tt> to be set when a local Scala version is used.  For example,</p>
+<p>Defining the <span class="pre">scalaHome</span> setting with the path to the Scala home directory will use that Scala installation.  sbt still requires <span class="pre">scalaVersion</span> to be set when a local Scala version is used.  For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.0-local&quot;</span>
 
 <span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/scala/home/&quot;</span><span class="o">))</span>
@@ -130,11 +130,11 @@
 <div class="full-howto section" id="consolequick">
 <h2>Enter the Scala REPL with a project's dependencies on the classpath, but not the compiled project classes<a class="headerlink" href="#consolequick" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">consoleQuick</span></tt> action retrieves dependencies and puts them on the classpath of the Scala REPL.  The project's sources are not compiled, but sources of any source dependencies are compiled.  To enter the REPL with test dependencies on the classpath but without compiling test sources, run <tt class="docutils literal"><span class="pre">test:consoleQuick</span></tt>.  This will force compilation of main sources.</p>
+<p>The <span class="pre">consoleQuick</span> action retrieves dependencies and puts them on the classpath of the Scala REPL.  The project's sources are not compiled, but sources of any source dependencies are compiled.  To enter the REPL with test dependencies on the classpath but without compiling test sources, run <span class="pre">test:consoleQuick</span>.  This will force compilation of main sources.</p>
 <div class="full-howto section" id="console">
 <h2>Enter the Scala REPL with a project's dependencies and compiled code on the classpath<a class="headerlink" href="#console" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">console</span></tt> action retrieves dependencies and compiles sources and puts them on the classpath of the Scala REPL.  To enter the REPL with test dependencies and compiled test sources on the classpath, run <tt class="docutils literal"><span class="pre">test:console</span></tt>.</p>
+<p>The <span class="pre">console</span> action retrieves dependencies and compiles sources and puts them on the classpath of the Scala REPL.  To enter the REPL with test dependencies and compiled test sources on the classpath, run <span class="pre">test:console</span>.</p>
 <div class="full-howto section" id="consoleproject">
 <h2>Enter the Scala REPL with plugins and the build definition on the classpath<a class="headerlink" href="#consoleproject" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -145,21 +145,21 @@
 <div class="full-howto section" id="initial">
 <h2>Define the initial commands evaluated when entering the Scala REPL<a class="headerlink" href="#initial" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Set <tt class="docutils literal"><span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">console</span></tt> to set the initial statements to evaluate when <tt class="docutils literal"><span class="pre">console</span></tt> and <tt class="docutils literal"><span class="pre">consoleQuick</span></tt> are run.  To configure <tt class="docutils literal"><span class="pre">consoleQuick</span></tt> separately, use <tt class="docutils literal"><span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">consoleQuick</span></tt>.
+<p>Set <span class="pre">initialCommands in console</span> to set the initial statements to evaluate when <span class="pre">console</span> and <span class="pre">consoleQuick</span> are run.  To configure <span class="pre">consoleQuick</span> separately, use <span class="pre">initialCommands in consoleQuick</span>.
 For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from console&quot;)&quot;&quot;&quot;</span>
 
 <span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleQuick</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from consoleQuick&quot;)&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">consoleProject</span></tt> command is configured separately by <tt class="docutils literal"><span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">consoleProject</span></tt>.  It does not use the value from <tt class="docutils literal"><span class="pre">initialCommands</span> <span class="pre">in</span> <span class="pre">console</span></tt> by default.  For example,</p>
+<p>The <span class="pre">consoleProject</span> command is configured separately by <span class="pre">initialCommands in consoleProject</span>.  It does not use the value from <span class="pre">initialCommands in console</span> by default.  For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleProject</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from consoleProject&quot;)&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="embed">
 <h2>Use the Scala REPL from project code<a class="headerlink" href="#embed" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>sbt runs tests in the same JVM as sbt itself and Scala classes are not in the same class loader as the application classes.  This is also the case in <tt class="docutils literal"><span class="pre">console</span></tt> and when <tt class="docutils literal"><span class="pre">run</span></tt> is not forked. Therefore, when using the Scala interpreter, it is important to set it up properly to avoid an error message like:</p>
+<p>sbt runs tests in the same JVM as sbt itself and Scala classes are not in the same class loader as the application classes.  This is also the case in <span class="pre">console</span> and when <span class="pre">run</span> is not forked. Therefore, when using the Scala interpreter, it is important to set it up properly to avoid an error message like:</p>
 <div class="highlight-text"><div class="highlight"><pre>Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
 ** Note that as of 2.8 scala does not assume use of the java classpath.
 ** For the old behavior pass -usejavacp to scala, or if using a Settings

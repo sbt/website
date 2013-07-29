@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -94,40 +94,40 @@
 <div class="full-howto section" id="basic">
 <h2>Run a command when sources change<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>You can make a command run when certain files change by prefixing the command with <tt class="docutils literal"><span class="pre">~</span></tt>.  Monitoring is terminated when <tt class="docutils literal"><span class="pre">enter</span></tt> is pressed.  This triggered execution is configured by the <tt class="docutils literal"><span class="pre">watch</span></tt> setting, but typically the basic settings <tt class="docutils literal"><span class="pre">watchSources</span></tt> and <tt class="docutils literal"><span class="pre">pollInterval</span></tt> are modified as described in later sections.</p>
+<p>You can make a command run when certain files change by prefixing the command with <span class="pre">~</span>.  Monitoring is terminated when <span class="pre">enter</span> is pressed.  This triggered execution is configured by the <span class="pre">watch</span> setting, but typically the basic settings <span class="pre">watchSources</span> and <span class="pre">pollInterval</span> are modified as described in later sections.</p>
 <p>The original use-case for triggered execution was continuous compilation:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="k">:</span><span class="kt">compile</span>
 
 <span class="o">&gt;</span> <span class="o">~</span> <span class="n">compile</span>
 </pre></div>
 </div>
-<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <tt class="docutils literal"><span class="pre">testOnly</span></tt> for the specified test.</p>
+<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <span class="pre">testOnly</span> for the specified test.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">testOnly</span> <span class="n">example</span><span class="o">.</span><span class="nc">TestA</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="multi">
 <h2>Run multiple commands when sources change<a class="headerlink" href="#multi" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The command passed to <tt class="docutils literal"><span class="pre">~</span></tt> may be any command string, so multiple commands may be run by separating them with a semicolon.  For example,</p>
+<p>The command passed to <span class="pre">~</span> may be any command string, so multiple commands may be run by separating them with a semicolon.  For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="o">;</span><span class="n">a</span> <span class="o">;</span><span class="n">b</span>
 </pre></div>
 </div>
-<p>This runs <tt class="docutils literal"><span class="pre">a</span></tt> and then <tt class="docutils literal"><span class="pre">b</span></tt> when sources change.</p>
+<p>This runs <span class="pre">a</span> and then <span class="pre">b</span> when sources change.</p>
 <div class="full-howto section" id="sources">
 <h2>Configure the sources that are checked for changes<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h2>
 </div>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">watchSources</span></tt> defines the files for a single project that are monitored for changes.  By default, a project watches resources and Scala and Java sources.</li>
-<li><tt class="docutils literal"><span class="pre">watchTransitiveSources</span></tt> then combines the <tt class="docutils literal"><span class="pre">watchSources</span></tt> for the current project and all execution and classpath dependencies (see <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on inter-project dependencies).</li>
+<li><span class="pre">watchSources</span> defines the files for a single project that are monitored for changes.  By default, a project watches resources and Scala and Java sources.</li>
+<li><span class="pre">watchTransitiveSources</span> then combines the <span class="pre">watchSources</span> for the current project and all execution and classpath dependencies (see <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on inter-project dependencies).</li>
 </ul>
-<p>To add the file <tt class="docutils literal"><span class="pre">demo/example.txt</span></tt> to the files to watch,</p>
+<p>To add the file <span class="pre">demo/example.txt</span> to the files to watch,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span>
 </pre></div>
 </div>
 <div class="full-howto section" id="interval">
 <h2>Set the time interval between checks for changes to sources<a class="headerlink" href="#interval" title="Permalink to this headline">¶</a></h2>
 </div>
-<p><tt class="docutils literal"><span class="pre">pollInterval</span></tt> selects the interval between polling for changes in milliseconds.  The default value is <tt class="docutils literal"><span class="pre">500</span> <span class="pre">ms</span></tt>.  To change it to <tt class="docutils literal"><span class="pre">1</span> <span class="pre">s</span></tt>,</p>
+<p><span class="pre">pollInterval</span> selects the interval between polling for changes in milliseconds.  The default value is <span class="pre">500 ms</span>.  To change it to <span class="pre">1 s</span>,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
 </pre></div>
 </div>

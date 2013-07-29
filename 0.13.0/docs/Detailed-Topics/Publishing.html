@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -95,16 +95,16 @@
 uploading a descriptor, such as an Ivy file or Maven POM, and artifacts,
 such as a jar or war, to a repository so that other projects can specify
 your project as a dependency.</p>
-<p>The <tt class="docutils literal"><span class="pre">publish</span></tt> action is used to publish your project to a remote
+<p>The <span class="pre">publish</span> action is used to publish your project to a remote
 repository. To use publishing, you need to specify the repository to
 publish to and the credentials to use. Once these are set up, you can
-run <tt class="docutils literal"><span class="pre">publish</span></tt>.</p>
-<p>The <tt class="docutils literal"><span class="pre">publishLocal</span></tt> action is used to publish your project to a local
+run <span class="pre">publish</span>.</p>
+<p>The <span class="pre">publishLocal</span> action is used to publish your project to a local
 Ivy repository. You can then use this project from other projects on the
 same machine.</p>
 <div class="section" id="define-the-repository">
 <h2>Define the repository<a class="headerlink" href="#define-the-repository" title="Permalink to this headline">¶</a></h2>
-<p>To specify the repository, assign a repository to <tt class="docutils literal"><span class="pre">publishTo</span></tt> and
+<p>To specify the repository, assign a repository to <span class="pre">publishTo</span> and
 optionally set the publishing style. For example, to upload to Nexus:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;Sonatype Snapshots Nexus&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span><span class="o">)</span>
 </pre></div>
@@ -121,7 +121,7 @@ optionally set the publishing style. For example, to upload to Nexus:</p>
 right repository depending on your artifacts: SNAPSHOT versions go to
 the /snapshot repository while other versions go to the /releases
 repository. Doing this selection can be done by using the value of the
-<tt class="docutils literal"><span class="pre">version</span></tt> SettingKey:</p>
+<span class="pre">version</span> SettingKey:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
@@ -143,8 +143,8 @@ first is to specify them inline:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span> <span class="o">/</span> <span class="s">&quot;.ivy2&quot;</span> <span class="o">/</span> <span class="s">&quot;.credentials&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The credentials file is a properties file with keys <tt class="docutils literal"><span class="pre">realm</span></tt>, <tt class="docutils literal"><span class="pre">host</span></tt>,
-<tt class="docutils literal"><span class="pre">user</span></tt>, and <tt class="docutils literal"><span class="pre">password</span></tt>. For example:</p>
+<p>The credentials file is a properties file with keys <span class="pre">realm</span>, <span class="pre">host</span>,
+<span class="pre">user</span>, and <span class="pre">password</span>. For example:</p>
 <div class="highlight-text"><div class="highlight"><pre>realm=Sonatype Nexus Repository Manager
 host=nexus.scala-tools.org
 user=admin
@@ -155,7 +155,7 @@ password=admin123
 <div class="section" id="cross-publishing">
 <h2>Cross-publishing<a class="headerlink" href="#cross-publishing" title="Permalink to this headline">¶</a></h2>
 <p>To support multiple incompatible Scala versions, enable cross building
-and do <tt class="docutils literal"><span class="pre">+</span> <span class="pre">publish</span></tt> (see <a class="reference internal" href="Cross-Build.html"><em>Cross-building</em></a>). See <a class="reference internal" href="Resolvers.html"><em>Resolvers</em></a> for other
+and do <span class="pre">+ publish</span> (see <a class="reference internal" href="Cross-Build.html"><em>Cross-building</em></a>). See <a class="reference internal" href="Resolvers.html"><em>Resolvers</em></a> for other
 supported repository types.</p>
 </div>
 <div class="section" id="published-artifacts">
@@ -167,10 +167,10 @@ for details.</p>
 </div>
 <div class="section" id="modifying-the-generated-pom">
 <h2>Modifying the generated POM<a class="headerlink" href="#modifying-the-generated-pom" title="Permalink to this headline">¶</a></h2>
-<p>When <tt class="docutils literal"><span class="pre">publishMavenStyle</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt>, a POM is generated by the
-<tt class="docutils literal"><span class="pre">makePom</span></tt> action and published to the repository instead of an Ivy
+<p>When <span class="pre">publishMavenStyle</span> is <span class="pre">true</span>, a POM is generated by the
+<span class="pre">makePom</span> action and published to the repository instead of an Ivy
 file. This POM file may be altered by changing a few settings. Set
-<tt class="docutils literal"><span class="pre">pomExtra</span></tt> to provide XML (<tt class="docutils literal"><span class="pre">scala.xml.NodeSeq</span></tt>) to insert directly
+<span class="pre">pomExtra</span> to provide XML (<span class="pre">scala.xml.NodeSeq</span>) to insert directly
 into the generated pom. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">pomExtra</span> <span class="o">:=</span>
 <span class="o">&lt;</span><span class="n">licenses</span><span class="o">&gt;</span>
@@ -182,8 +182,8 @@ into the generated pom. For example:</p>
 <span class="o">&lt;/</span><span class="n">licenses</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">makePom</span></tt> adds to the POM any Maven-style repositories you have
-declared. You can filter these by modifying <tt class="docutils literal"><span class="pre">pomRepositoryFilter</span></tt>,
+<p><span class="pre">makePom</span> adds to the POM any Maven-style repositories you have
+declared. You can filter these by modifying <span class="pre">pomRepositoryFilter</span>,
 which by default excludes local repositories. To instead only include
 local repositories:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">pomIncludeRepository</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">repo</span><span class="k">:</span> <span class="kt">MavenRepository</span><span class="o">)</span> <span class="k">=&gt;</span>
@@ -191,9 +191,9 @@ local repositories:</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>There is also a <tt class="docutils literal"><span class="pre">pomPostProcess</span></tt> setting that can be used to
+<p>There is also a <span class="pre">pomPostProcess</span> setting that can be used to
 manipulate the final XML before it is written. It's type is
-<tt class="docutils literal"><span class="pre">Node</span> <span class="pre">=&gt;</span> <span class="pre">Node</span></tt>.</p>
+<span class="pre">Node =&gt; Node</span>.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">pomPostProcess</span> <span class="o">:=</span> <span class="o">{</span> <span class="o">(</span><span class="n">node</span><span class="k">:</span> <span class="kt">Node</span><span class="o">)</span> <span class="k">=&gt;</span>
     <span class="o">...</span>
 <span class="o">}</span>
@@ -202,8 +202,8 @@ manipulate the final XML before it is written. It's type is
 </div>
 <div class="section" id="publishing-locally">
 <h2>Publishing Locally<a class="headerlink" href="#publishing-locally" title="Permalink to this headline">¶</a></h2>
-<p>The <tt class="docutils literal"><span class="pre">publishLocal</span></tt> command will publish to the local Ivy repository.
-By default, this is in <tt class="docutils literal"><span class="pre">${user.home}/.ivy2/local</span></tt>. Other projects on
+<p>The <span class="pre">publishLocal</span> command will publish to the local Ivy repository.
+By default, this is in <span class="pre">${user.home}/.ivy2/local</span>. Other projects on
 the same machine can then list the project as a dependency. For example,
 if the SBT project you are publishing has configuration parameters like:</p>
 <div class="highlight-scala"><pre>name := &#x27;My Project&#x27;
@@ -214,13 +214,13 @@ version := &#x27;0.1-SNAPSHOT&#x27;</pre>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.me&quot;</span> <span class="o">%%</span> <span class="s">&quot;my-project&quot;</span> <span class="o">%</span> <span class="s">&quot;0.1-SNAPSHOT&quot;</span>
 </pre></div>
 </div>
-<p>The version number you select must end with <tt class="docutils literal"><span class="pre">SNAPSHOT</span></tt>, or you must
+<p>The version number you select must end with <span class="pre">SNAPSHOT</span>, or you must
 change the version number each time you publish. Ivy maintains a cache,
 and it stores even local projects in that cache. If Ivy already has a
 version cached, it will not check the local repository for updates,
 unless the version number matches a <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#change">changing
 pattern</a>,
-and <tt class="docutils literal"><span class="pre">SNAPSHOT</span></tt> is one such pattern.</p>
+and <span class="pre">SNAPSHOT</span> is one such pattern.</p>
 </div>
 </div>
 

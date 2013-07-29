@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -125,15 +125,15 @@ is a bad way to expose a value whose initialization is deferred:</p>
 nearly the same situation as our two step task definitions. Particular
 reasons this is bad include:</p>
 <ol class="arabic simple">
-<li>A client needs to know to call <tt class="docutils literal"><span class="pre">makeFoo()</span></tt> first.</li>
-<li><tt class="docutils literal"><span class="pre">foo</span></tt> could be changed by other code. There could be a
-<tt class="docutils literal"><span class="pre">def</span> <span class="pre">makeFoo2()</span></tt>, for example.</li>
+<li>A client needs to know to call <span class="pre">makeFoo()</span> first.</li>
+<li><span class="pre">foo</span> could be changed by other code. There could be a
+<span class="pre">def makeFoo2()</span>, for example.</li>
 <li>Access to foo is not thread safe.</li>
 </ol>
 <p>The first point is like declaring a task dependency, the second is like
 two tasks modifying the same state (either project variables or files),
 and the third is a consequence of unsynchronized, shared state.</p>
-<p>In Scala, we have the built-in functionality to easily fix this: <tt class="docutils literal"><span class="pre">lazy</span> <span class="pre">val</span></tt>.</p>
+<p>In Scala, we have the built-in functionality to easily fix this: <span class="pre">lazy val</span>.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">foo</span><span class="k">:</span> <span class="kt">Foo</span> <span class="o">=</span> <span class="o">...</span> <span class="n">initialize</span> <span class="n">foo</span> <span class="o">...</span>
 </pre></div>
 </div>
@@ -141,10 +141,10 @@ and the third is a consequence of unsynchronized, shared state.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">doSomething</span><span class="o">(</span> <span class="n">foo</span> <span class="o">)</span>
 </pre></div>
 </div>
-<p>Here, <tt class="docutils literal"><span class="pre">lazy</span> <span class="pre">val</span></tt> gives us thread safety, guaranteed initialization
+<p>Here, <span class="pre">lazy val</span> gives us thread safety, guaranteed initialization
 before access, and immutability all in one, DRY construct. The task
 system in sbt does the same thing for tasks (and more, but we won't go
-into that here) that <tt class="docutils literal"><span class="pre">lazy</span> <span class="pre">val</span></tt> did for our bad example.</p>
+into that here) that <span class="pre">lazy val</span> did for our bad example.</p>
 <p>A task definition must declare its inputs and the type of its output.
 sbt will ensure that the input tasks have run and will then provide
 their results to the function that implements the task, which will
@@ -161,16 +161,16 @@ process.</p>
 </div>
 <p>(This is only intended to be a discussion of the ideas behind tasks, so
 see the <a class="reference internal" href="Tasks.html"><em>sbt Tasks</em></a> page
-for details on usage.)  Here, <tt class="docutils literal"><span class="pre">aTask</span></tt> is assumed to produce a
-result of type <tt class="docutils literal"><span class="pre">A</span></tt> and <tt class="docutils literal"><span class="pre">bTask</span></tt> is assumed to produce a result of
-type <tt class="docutils literal"><span class="pre">B</span></tt>.</p>
+for details on usage.)  Here, <span class="pre">aTask</span> is assumed to produce a
+result of type <span class="pre">A</span> and <span class="pre">bTask</span> is assumed to produce a result of
+type <span class="pre">B</span>.</p>
 <div class="section" id="application">
 <h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
 <p>As an example, consider generating a zip file containing the binary jar,
 source jar, and documentation jar for your project. First, determine
 what tasks produce the jars. In this case, the input tasks are
-<tt class="docutils literal"><span class="pre">packageBin</span></tt>, <tt class="docutils literal"><span class="pre">packageSrc</span></tt>, and <tt class="docutils literal"><span class="pre">packageDoc</span></tt> in the main
-<tt class="docutils literal"><span class="pre">Compile</span></tt> scope. The result of each of these tasks is the File for the
+<span class="pre">packageBin</span>, <span class="pre">packageSrc</span>, and <span class="pre">packageDoc</span> in the main
+<span class="pre">Compile</span> scope. The result of each of these tasks is the File for the
 jar that they generated. Our zip file task is defined by mapping these
 package tasks and including their outputs in a zip file. As good
 practice, we then return the File for this zip so that other tasks can
@@ -186,10 +186,10 @@ map on the zip task.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">val</span> <span class="pre">inputs</span></tt> line defines how the input files are mapped to paths
+<p>The <span class="pre">val inputs</span> line defines how the input files are mapped to paths
 in the zip. See <a class="reference internal" href="Mapping-Files.html"><em>Mapping Files</em></a> for details.
 The explicit types are not required, but are included for clarity.</p>
-<p>The <tt class="docutils literal"><span class="pre">zipPath</span></tt> input would be a custom task to define the location of
+<p>The <span class="pre">zipPath</span> input would be a custom task to define the location of
 the zip file. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">zipPath</span> <span class="o">:=</span>
    <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;out.zip&quot;</span>

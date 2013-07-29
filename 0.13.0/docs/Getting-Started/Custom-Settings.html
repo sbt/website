@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -100,37 +100,37 @@ Getting Started Guide, especially <a class="reference internal" href="Basic-Def.
 packed with examples illustrating how to define keys. Most of the keys
 are implemented in
 <a class="reference external" href="../../sxr/Defaults.scala.html">Defaults</a>.</p>
-<p>Keys have one of three types. <tt class="docutils literal"><span class="pre">SettingKey</span></tt> and <tt class="docutils literal"><span class="pre">TaskKey</span></tt> are
+<p>Keys have one of three types. <span class="pre">SettingKey</span> and <span class="pre">TaskKey</span> are
 described in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>. Read
-about <tt class="docutils literal"><span class="pre">InputKey</span></tt> on the <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> page.</p>
+about <span class="pre">InputKey</span> on the <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> page.</p>
 <p>Some examples from <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalaVersion</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;The version of Scala used for building.&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">clean</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>The key constructors have two string parameters: the name of the key
-(<tt class="docutils literal"><span class="pre">&quot;scalaVersion&quot;</span></tt>) and a documentation string
-(<tt class="docutils literal"><span class="pre">&quot;The</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">scala</span> <span class="pre">used</span> <span class="pre">for</span> <span class="pre">building.&quot;</span></tt>).</p>
+(<span class="pre">&quot;scalaVersion&quot;</span>) and a documentation string
+(<span class="pre">&quot;The version of scala used for building.&quot;</span>).</p>
 <p>Remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> that
-the type parameter <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">SettingKey[T]</span></tt> indicates the type of
-value a setting has. <tt class="docutils literal"><span class="pre">T</span></tt> in <tt class="docutils literal"><span class="pre">TaskKey[T]</span></tt> indicates the type of the
+the type parameter <span class="pre">T</span> in <span class="pre">SettingKey[T]</span> indicates the type of
+value a setting has. <span class="pre">T</span> in <span class="pre">TaskKey[T]</span> indicates the type of the
 task's result. Also remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>
 that a setting has a fixed value until project
 reload, while a task is re-computed for every &quot;task execution&quot; (every
 time someone types a command at the sbt interactive prompt or in batch
 mode).</p>
-<p>Keys may be defined in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file (as described in <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a>),
+<p>Keys may be defined in a <span class="pre">.scala</span> file (as described in <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a>),
 or in a plugin (as described in
-<a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a>). Any <tt class="docutils literal"><span class="pre">val</span></tt> found in
-a <tt class="docutils literal"><span class="pre">Build</span></tt> object in your <tt class="docutils literal"><span class="pre">.scala</span></tt> build definition files, or any
-<tt class="docutils literal"><span class="pre">val</span></tt> found in a <tt class="docutils literal"><span class="pre">Plugin</span></tt> object from a plugin, will be imported
-automatically into your <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.</p>
+<a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a>). Any <span class="pre">val</span> found in
+a <span class="pre">Build</span> object in your <span class="pre">.scala</span> build definition files, or any
+<span class="pre">val</span> found in a <span class="pre">Plugin</span> object from a plugin, will be imported
+automatically into your <span class="pre">.sbt</span> files.</p>
 </div>
 <div class="section" id="implementing-a-task">
 <h2>Implementing a task<a class="headerlink" href="#implementing-a-task" title="Permalink to this headline">¶</a></h2>
 <p>Once you've defined a key, you'll need to use it in some task. You could
 be defining your own task, or you could be planning to redefine an
-existing task. Either way looks the same; use <tt class="docutils literal"><span class="pre">:=</span></tt> to associate some
+existing task. Either way looks the same; use <span class="pre">:=</span> to associate some
 code with the task key:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleStringTask</span> <span class="o">:=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.home&quot;</span><span class="o">)</span>
 
@@ -142,7 +142,7 @@ code with the task key:</p>
 </pre></div>
 </div>
 <p>If the task has dependencies, you'd reference their value using
-<tt class="docutils literal"><span class="pre">value</span></tt>, as discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<span class="pre">value</span>, as discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
 <p>The hardest part about implementing tasks is often not sbt-specific;
 tasks are just Scala code. The hard part could be writing the &quot;meat&quot; of
 your task that does whatever you're trying to do. For example, maybe
@@ -155,7 +155,7 @@ you can often use the convenient APIs in
 </div>
 <div class="section" id="use-plugins">
 <h2>Use plugins!<a class="headerlink" href="#use-plugins" title="Permalink to this headline">¶</a></h2>
-<p>If you find you have a lot of custom code in <tt class="docutils literal"><span class="pre">.scala</span></tt> files, consider
+<p>If you find you have a lot of custom code in <span class="pre">.scala</span> files, consider
 moving it to a plugin for re-use across multiple projects.</p>
 <p>It's very easy to create a plugin, as <a class="reference internal" href="Using-Plugins.html"><em>teased earlier</em></a> and <a class="reference internal" href="../Extending/Plugins.html"><em>discussed at more length here</em></a>.</p>
 </div>

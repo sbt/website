@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -92,19 +92,19 @@
   <div class="section" id="compiler-plugin-support">
 <h1>Compiler Plugin Support<a class="headerlink" href="#compiler-plugin-support" title="Permalink to this headline">¶</a></h1>
 <p>There is some special support for using compiler plugins. You can set
-<tt class="docutils literal"><span class="pre">autoCompilerPlugins</span></tt> to <tt class="docutils literal"><span class="pre">true</span></tt> to enable this functionality.</p>
+<span class="pre">autoCompilerPlugins</span> to <span class="pre">true</span> to enable this functionality.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">autoCompilerPlugins</span> <span class="o">:=</span> <span class="kc">true</span>
 </pre></div>
 </div>
 <p>To use a compiler plugin, you either put it in your unmanaged library
-directory (<tt class="docutils literal"><span class="pre">lib/</span></tt> by default) or add it as managed dependency in the
-<tt class="docutils literal"><span class="pre">plugin</span></tt> configuration. <tt class="docutils literal"><span class="pre">addCompilerPlugin</span></tt> is a convenience method
-for specifying <tt class="docutils literal"><span class="pre">plugin</span></tt> as the configuration for a dependency:</p>
+directory (<span class="pre">lib/</span> by default) or add it as managed dependency in the
+<span class="pre">plugin</span> configuration. <span class="pre">addCompilerPlugin</span> is a convenience method
+for specifying <span class="pre">plugin</span> as the configuration for a dependency:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">addCompilerPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-tools.sxr&quot;</span> <span class="o">%%</span> <span class="s">&quot;sxr&quot;</span> <span class="o">%</span> <span class="s">&quot;0.2.7&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">compile</span></tt> and <tt class="docutils literal"><span class="pre">testCompile</span></tt> actions will use any compiler
-plugins found in the <tt class="docutils literal"><span class="pre">lib</span></tt> directory or in the <tt class="docutils literal"><span class="pre">plugin</span></tt>
+<p>The <span class="pre">compile</span> and <span class="pre">testCompile</span> actions will use any compiler
+plugins found in the <span class="pre">lib</span> directory or in the <span class="pre">plugin</span>
 configuration. You are responsible for configuring the plugins as
 necessary. For example, Scala X-Ray requires the extra option:</p>
 <div class="highlight-scala"><div class="highlight"><pre>    <span class="c1">// declare the main Scala source directory as the base directory</span>

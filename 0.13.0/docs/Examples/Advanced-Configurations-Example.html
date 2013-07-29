@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -93,18 +93,18 @@
 <h1>Advanced Configurations Example<a class="headerlink" href="#advanced-configurations-example" title="Permalink to this headline">¶</a></h1>
 <p>This is an example <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>full build definition</em></a> that
 demonstrates using Ivy configurations to group dependencies.</p>
-<p>The <tt class="docutils literal"><span class="pre">utils</span></tt> module provides utilities for other modules. It uses Ivy
+<p>The <span class="pre">utils</span> module provides utilities for other modules. It uses Ivy
 configurations to group dependencies so that a dependent project doesn't
 have to pull in all dependencies if it only uses a subset of
 functionality. This can be an alternative to having multiple utilities
 modules (and consequently, multiple utilities jars).</p>
-<p>In this example, consider a <tt class="docutils literal"><span class="pre">utils</span></tt> project that provides utilities
+<p>In this example, consider a <span class="pre">utils</span> project that provides utilities
 related to both Scalate and Saxon. It therefore needs both Scalate and
 Saxon on the compilation classpath and a project that uses all of the
 functionality of 'utils' will need these dependencies as well. However,
-project <tt class="docutils literal"><span class="pre">a</span></tt> only needs the utilities related to Scalate, so it doesn't
-need Saxon. By depending only on the <tt class="docutils literal"><span class="pre">scalate</span></tt> configuration of
-<tt class="docutils literal"><span class="pre">utils</span></tt>, it only gets the Scalate-related dependencies.</p>
+project <span class="pre">a</span> only needs the utilities related to Scalate, so it doesn't
+need Saxon. By depending only on the <span class="pre">scalate</span> configuration of
+<span class="pre">utils</span>, it only gets the Scalate-related dependencies.</p>
 <div class="highlight-scala"><div class="highlight"><pre>   <span class="k">import</span> <span class="nn">sbt._</span>
    <span class="k">import</span> <span class="nn">Keys._</span>
 

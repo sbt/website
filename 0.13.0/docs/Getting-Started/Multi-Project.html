@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -100,18 +100,18 @@ particular you need to understand <a class="reference internal" href="Basic-Def.
 <p>It can be useful to keep multiple related projects in a single build,
 especially if they depend on one another and you tend to modify them
 together.</p>
-<p>Each sub-project in a build has its own <tt class="docutils literal"><span class="pre">src/main/scala</span></tt>, generates
-its own jar file when you run <tt class="docutils literal"><span class="pre">package</span></tt>, and in general works like any
+<p>Each sub-project in a build has its own <span class="pre">src/main/scala</span>, generates
+its own jar file when you run <span class="pre">package</span>, and in general works like any
 other project.</p>
 </div>
 <div class="section" id="defining-projects-in-a-scala-file">
-<h2>Defining projects in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file<a class="headerlink" href="#defining-projects-in-a-scala-file" title="Permalink to this headline">¶</a></h2>
+<h2>Defining projects in a <span class="pre">.scala</span> file<a class="headerlink" href="#defining-projects-in-a-scala-file" title="Permalink to this headline">¶</a></h2>
 <p>To have multiple projects, you must declare each project and how they
-relate in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file; there's no way to do it in a <tt class="docutils literal"><span class="pre">.sbt</span></tt> file.
-However, you can define settings for each project in <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.
-Here's an example of a <tt class="docutils literal"><span class="pre">.scala</span></tt> file which defines a root project
-<tt class="docutils literal"><span class="pre">hello</span></tt>, where the root project aggregates two sub-projects,
-<tt class="docutils literal"><span class="pre">hello-foo</span></tt> and <tt class="docutils literal"><span class="pre">hello-bar</span></tt>:</p>
+relate in a <span class="pre">.scala</span> file; there's no way to do it in a <span class="pre">.sbt</span> file.
+However, you can define settings for each project in <span class="pre">.sbt</span> files.
+Here's an example of a <span class="pre">.scala</span> file which defines a root project
+<span class="pre">hello</span>, where the root project aggregates two sub-projects,
+<span class="pre">hello-foo</span> and <span class="pre">hello-bar</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">import</span> <span class="nn">Keys._</span>
 
@@ -127,19 +127,19 @@ Here's an example of a <tt class="docutils literal"><span class="pre">.scala</sp
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>sbt finds the list of <tt class="docutils literal"><span class="pre">Project</span></tt> objects using reflection, looking for
-fields with type <tt class="docutils literal"><span class="pre">Project</span></tt> in the <tt class="docutils literal"><span class="pre">Build</span></tt> object.</p>
-<p>Because project <tt class="docutils literal"><span class="pre">hello-foo</span></tt> is defined with <tt class="docutils literal"><span class="pre">base</span> <span class="pre">=</span> <span class="pre">file(&quot;foo&quot;)</span></tt>, it
-will be contained in the subdirectory <tt class="docutils literal"><span class="pre">foo</span></tt>. Its sources could be
-directly under <tt class="docutils literal"><span class="pre">foo</span></tt>, like <tt class="docutils literal"><span class="pre">foo/Foo.scala</span></tt>, or in
-<tt class="docutils literal"><span class="pre">foo/src/main/scala</span></tt>. The usual sbt <a class="reference internal" href="Directories.html"><em>directory structure</em></a>
-applies underneath <tt class="docutils literal"><span class="pre">foo</span></tt> with the exception of build definition files.</p>
-<p>Any <tt class="docutils literal"><span class="pre">.sbt</span></tt> files in <tt class="docutils literal"><span class="pre">foo</span></tt>, say <tt class="docutils literal"><span class="pre">foo/build.sbt</span></tt>, will be merged
+<p>sbt finds the list of <span class="pre">Project</span> objects using reflection, looking for
+fields with type <span class="pre">Project</span> in the <span class="pre">Build</span> object.</p>
+<p>Because project <span class="pre">hello-foo</span> is defined with <span class="pre">base = file(&quot;foo&quot;)</span>, it
+will be contained in the subdirectory <span class="pre">foo</span>. Its sources could be
+directly under <span class="pre">foo</span>, like <span class="pre">foo/Foo.scala</span>, or in
+<span class="pre">foo/src/main/scala</span>. The usual sbt <a class="reference internal" href="Directories.html"><em>directory structure</em></a>
+applies underneath <span class="pre">foo</span> with the exception of build definition files.</p>
+<p>Any <span class="pre">.sbt</span> files in <span class="pre">foo</span>, say <span class="pre">foo/build.sbt</span>, will be merged
 with the build definition for the entire build, but scoped to the
-<tt class="docutils literal"><span class="pre">hello-foo</span></tt> project.</p>
-<p>If your whole project is in <tt class="docutils literal"><span class="pre">hello</span></tt>, try defining a different version
-(<tt class="docutils literal"><span class="pre">version</span> <span class="pre">:=</span> <span class="pre">&quot;0.6&quot;</span></tt>) in <tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt>, <tt class="docutils literal"><span class="pre">hello/foo/build.sbt</span></tt>,
-and <tt class="docutils literal"><span class="pre">hello/bar/build.sbt</span></tt>. Now <tt class="docutils literal"><span class="pre">show</span> <span class="pre">version</span></tt> at the sbt interactive
+<span class="pre">hello-foo</span> project.</p>
+<p>If your whole project is in <span class="pre">hello</span>, try defining a different version
+(<span class="pre">version := &quot;0.6&quot;</span>) in <span class="pre">hello/build.sbt</span>, <span class="pre">hello/foo/build.sbt</span>,
+and <span class="pre">hello/bar/build.sbt</span>. Now <span class="pre">show version</span> at the sbt interactive
 prompt. You should get something like this (with whatever versions you
 defined):</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show version
@@ -151,84 +151,84 @@ defined):</p>
 <span class="go">[info]  0.5</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">hello-foo/*:version</span></tt> was defined in <tt class="docutils literal"><span class="pre">hello/foo/build.sbt</span></tt>,
-<tt class="docutils literal"><span class="pre">hello-bar/*:version</span></tt> was defined in <tt class="docutils literal"><span class="pre">hello/bar/build.sbt</span></tt>, and
-<tt class="docutils literal"><span class="pre">hello/*:version</span></tt> was defined in <tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt>. Remember the
-<a class="reference internal" href="Scopes.html"><em>syntax for scoped keys</em></a>. Each <tt class="docutils literal"><span class="pre">version</span></tt> key
-is scoped to a project, based on the location of the <tt class="docutils literal"><span class="pre">build.sbt</span></tt>. But
-all three <tt class="docutils literal"><span class="pre">build.sbt</span></tt> are part of the same build definition.</p>
-<p><em>Each project's settings can go in ``.sbt`` files in the base directory
-of that project</em>, while the <tt class="docutils literal"><span class="pre">.scala</span></tt> file can be as simple as the one
+<p><span class="pre">hello-foo/</span><span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">:version</span> was defined in <span class="pre">hello/foo/build.sbt</span>,
+<span class="pre">hello-bar/</span><span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">:version</span> was defined in <span class="pre">hello/bar/build.sbt</span>, and
+<span class="pre">hello/</span><span class="pre"><a href="#id5"><span class="problematic" id="id6">*</span></a></span><span class="pre">:version</span> was defined in <span class="pre">hello/build.sbt</span>. Remember the
+<a class="reference internal" href="Scopes.html"><em>syntax for scoped keys</em></a>. Each <span class="pre">version</span> key
+is scoped to a project, based on the location of the <span class="pre">build.sbt</span>. But
+all three <span class="pre">build.sbt</span> are part of the same build definition.</p>
+<p><em>Each project's settings can go in `.sbt` files in the base directory
+of that project</em>, while the <span class="pre">.scala</span> file can be as simple as the one
 shown above, listing the projects and base directories. <em>There is no
-need to put settings in the ``.scala`` file.</em></p>
+need to put settings in the `.scala` file.</em></p>
 <p>You may find it cleaner to put everything including settings in
-<tt class="docutils literal"><span class="pre">.scala</span></tt> files in order to keep all build definition under a single
-<tt class="docutils literal"><span class="pre">project</span></tt> directory, however. It's up to you.</p>
-<p>You cannot have a <tt class="docutils literal"><span class="pre">project</span></tt> subdirectory or <tt class="docutils literal"><span class="pre">project/*.scala</span></tt> files
-in the sub-projects. <tt class="docutils literal"><span class="pre">foo/project/Build.scala</span></tt> would be ignored.</p>
+<span class="pre">.scala</span> files in order to keep all build definition under a single
+<span class="pre">project</span> directory, however. It's up to you.</p>
+<p>You cannot have a <span class="pre">project</span> subdirectory or <span class="pre">project/</span><span class="pre"><a href="#id7"><span class="problematic" id="id8">*</span></a></span><span class="pre">.scala</span> files
+in the sub-projects. <span class="pre">foo/project/Build.scala</span> would be ignored.</p>
 </div>
 <div class="section" id="aggregation">
 <h2>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this headline">¶</a></h2>
 <p>Projects in the build can be completely independent of one another, if
 you want.</p>
 <p>In the above example, however, you can see the method call
-<tt class="docutils literal"><span class="pre">aggregate(foo,</span> <span class="pre">bar)</span></tt>. This aggregates <tt class="docutils literal"><span class="pre">hello-foo</span></tt> and <tt class="docutils literal"><span class="pre">hello-bar</span></tt>
+<span class="pre">aggregate(foo, bar)</span>. This aggregates <span class="pre">hello-foo</span> and <span class="pre">hello-bar</span>
 underneath the root project.</p>
 <p>Aggregation means that running a task on the aggregate project will also
 run it on the aggregated projects. Start up sbt with two subprojects as
-in the example, and try <tt class="docutils literal"><span class="pre">compile</span></tt>. You should see that all three
+in the example, and try <span class="pre">compile</span>. You should see that all three
 projects are compiled.</p>
-<p><em>In the project doing the aggregating</em>, the root <tt class="docutils literal"><span class="pre">hello</span></tt> project in
+<p><em>In the project doing the aggregating</em>, the root <span class="pre">hello</span> project in
 this case, you can control aggregation per-task. So for example in
-<tt class="docutils literal"><span class="pre">hello/build.sbt</span></tt> you could avoid aggregating the <tt class="docutils literal"><span class="pre">update</span></tt> task:</p>
+<span class="pre">hello/build.sbt</span> you could avoid aggregating the <span class="pre">update</span> task:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">aggregate</span> <span class="n">in</span> <span class="n">update</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">aggregate</span> <span class="pre">in</span> <span class="pre">update</span></tt> is the <tt class="docutils literal"><span class="pre">aggregate</span></tt> key scoped to the
-<tt class="docutils literal"><span class="pre">update</span></tt> task, see <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.</p>
+<p><span class="pre">aggregate in update</span> is the <span class="pre">aggregate</span> key scoped to the
+<span class="pre">update</span> task, see <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.</p>
 <p>Note: aggregation will run the aggregated tasks in parallel and with no
 defined ordering.</p>
 </div>
 <div class="section" id="classpath-dependencies">
 <h2>Classpath dependencies<a class="headerlink" href="#classpath-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>A project may depend on code in another project. This is done by adding
-a <tt class="docutils literal"><span class="pre">dependsOn</span></tt> method call. For example, if <tt class="docutils literal"><span class="pre">hello-foo</span></tt> needed
-<tt class="docutils literal"><span class="pre">hello-bar</span></tt> on its classpath, you would write in your <tt class="docutils literal"><span class="pre">Build.scala</span></tt>:</p>
+a <span class="pre">dependsOn</span> method call. For example, if <span class="pre">hello-foo</span> needed
+<span class="pre">hello-bar</span> on its classpath, you would write in your <span class="pre">Build.scala</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">foo</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">&quot;hello-foo&quot;</span><span class="o">,</span>
                        <span class="n">base</span> <span class="k">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">bar</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Now code in <tt class="docutils literal"><span class="pre">hello-foo</span></tt> can use classes from <tt class="docutils literal"><span class="pre">hello-bar</span></tt>. This also
+<p>Now code in <span class="pre">hello-foo</span> can use classes from <span class="pre">hello-bar</span>. This also
 creates an ordering between the projects when compiling them;
-<tt class="docutils literal"><span class="pre">hello-bar</span></tt> must be updated and compiled before <tt class="docutils literal"><span class="pre">hello-foo</span></tt> can be
+<span class="pre">hello-bar</span> must be updated and compiled before <span class="pre">hello-foo</span> can be
 compiled.</p>
-<p>To depend on multiple projects, use multiple arguments to <tt class="docutils literal"><span class="pre">dependsOn</span></tt>,
-like <tt class="docutils literal"><span class="pre">dependsOn(bar,</span> <span class="pre">baz)</span></tt>.</p>
+<p>To depend on multiple projects, use multiple arguments to <span class="pre">dependsOn</span>,
+like <span class="pre">dependsOn(bar, baz)</span>.</p>
 <div class="section" id="per-configuration-classpath-dependencies">
 <h3>Per-configuration classpath dependencies<a class="headerlink" href="#per-configuration-classpath-dependencies" title="Permalink to this headline">¶</a></h3>
-<p><tt class="docutils literal"><span class="pre">foo</span> <span class="pre">dependsOn(bar)</span></tt> means that the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration in
-<tt class="docutils literal"><span class="pre">foo</span></tt> depends on the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration in <tt class="docutils literal"><span class="pre">bar</span></tt>. You could
-write this explicitly as <tt class="docutils literal"><span class="pre">dependsOn(bar</span> <span class="pre">%</span> <span class="pre">&quot;compile-&gt;compile&quot;)</span></tt>.</p>
-<p>The <tt class="docutils literal"><span class="pre">-&gt;</span></tt> in <tt class="docutils literal"><span class="pre">&quot;compile-&gt;compile&quot;</span></tt> means &quot;depends on&quot; so
-<tt class="docutils literal"><span class="pre">&quot;test-&gt;compile&quot;</span></tt> means the <tt class="docutils literal"><span class="pre">Test</span></tt> configuration in <tt class="docutils literal"><span class="pre">foo</span></tt> would
-depend on the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration in <tt class="docutils literal"><span class="pre">bar</span></tt>.</p>
-<p>Omitting the <tt class="docutils literal"><span class="pre">-&gt;config</span></tt> part implies <tt class="docutils literal"><span class="pre">-&gt;compile</span></tt>, so
-<tt class="docutils literal"><span class="pre">dependsOn(bar</span> <span class="pre">%</span> <span class="pre">&quot;test&quot;)</span></tt> means that the <tt class="docutils literal"><span class="pre">Test</span></tt> configuration in
-<tt class="docutils literal"><span class="pre">foo</span></tt> depends on the <tt class="docutils literal"><span class="pre">Compile</span></tt> configuration in <tt class="docutils literal"><span class="pre">bar</span></tt>.</p>
-<p>A useful declaration is <tt class="docutils literal"><span class="pre">&quot;test-&gt;test&quot;</span></tt> which means <tt class="docutils literal"><span class="pre">Test</span></tt> depends on
-<tt class="docutils literal"><span class="pre">Test</span></tt>. This allows you to put utility code for testing in
-<tt class="docutils literal"><span class="pre">bar/src/test/scala</span></tt> and then use that code in <tt class="docutils literal"><span class="pre">foo/src/test/scala</span></tt>,
+<p><span class="pre">foo dependsOn(bar)</span> means that the <span class="pre">Compile</span> configuration in
+<span class="pre">foo</span> depends on the <span class="pre">Compile</span> configuration in <span class="pre">bar</span>. You could
+write this explicitly as <span class="pre">dependsOn(bar % &quot;compile-&gt;compile&quot;)</span>.</p>
+<p>The <span class="pre">-&gt;</span> in <span class="pre">&quot;compile-&gt;compile&quot;</span> means &quot;depends on&quot; so
+<span class="pre">&quot;test-&gt;compile&quot;</span> means the <span class="pre">Test</span> configuration in <span class="pre">foo</span> would
+depend on the <span class="pre">Compile</span> configuration in <span class="pre">bar</span>.</p>
+<p>Omitting the <span class="pre">-&gt;config</span> part implies <span class="pre">-&gt;compile</span>, so
+<span class="pre">dependsOn(bar % &quot;test&quot;)</span> means that the <span class="pre">Test</span> configuration in
+<span class="pre">foo</span> depends on the <span class="pre">Compile</span> configuration in <span class="pre">bar</span>.</p>
+<p>A useful declaration is <span class="pre">&quot;test-&gt;test&quot;</span> which means <span class="pre">Test</span> depends on
+<span class="pre">Test</span>. This allows you to put utility code for testing in
+<span class="pre">bar/src/test/scala</span> and then use that code in <span class="pre">foo/src/test/scala</span>,
 for example.</p>
 <p>You can have multiple configurations for a dependency, separated by
 semicolons. For example,
-<tt class="docutils literal"><span class="pre">dependsOn(bar</span> <span class="pre">%</span> <span class="pre">&quot;test-&gt;test;compile-&gt;compile&quot;)</span></tt>.</p>
+<span class="pre">dependsOn(bar % &quot;test-&gt;test;compile-&gt;compile&quot;)</span>.</p>
 </div>
 </div>
 <div class="section" id="navigating-projects-interactively">
 <h2>Navigating projects interactively<a class="headerlink" href="#navigating-projects-interactively" title="Permalink to this headline">¶</a></h2>
-<p>At the sbt interactive prompt, type <tt class="docutils literal"><span class="pre">projects</span></tt> to list your projects
-and <tt class="docutils literal"><span class="pre">project</span> <span class="pre">&lt;projectname&gt;</span></tt> to select a current project. When you run
-a task like <tt class="docutils literal"><span class="pre">compile</span></tt>, it runs on the current project. So you don't
+<p>At the sbt interactive prompt, type <span class="pre">projects</span> to list your projects
+and <span class="pre">project &lt;projectname&gt;</span> to select a current project. When you run
+a task like <span class="pre">compile</span>, it runs on the current project. So you don't
 necessarily have to compile the root project, you could compile only a
 subproject.</p>
 </div>
@@ -246,7 +246,7 @@ subproject.</p>
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Multi-Project Builds</a><ul>
 <li><a class="reference internal" href="#multiple-projects">Multiple projects</a></li>
-<li><a class="reference internal" href="#defining-projects-in-a-scala-file">Defining projects in a <tt class="docutils literal"><span class="pre">.scala</span></tt> file</a></li>
+<li><a class="reference internal" href="#defining-projects-in-a-scala-file">Defining projects in a <span class="pre">.scala</span> file</a></li>
 <li><a class="reference internal" href="#aggregation">Aggregation</a></li>
 <li><a class="reference internal" href="#classpath-dependencies">Classpath dependencies</a><ul>
 <li><a class="reference internal" href="#per-configuration-classpath-dependencies">Per-configuration classpath dependencies</a></li>

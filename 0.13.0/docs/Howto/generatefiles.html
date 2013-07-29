@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -95,11 +95,11 @@
 <div class="full-howto section" id="sources">
 <h2>Generate sources<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>A source generation task should generate sources in a subdirectory of <tt class="docutils literal"><span class="pre">sourceManaged</span></tt> and return a sequence of files generated.  The key to add the task to is called <tt class="docutils literal"><span class="pre">sourceGenerators</span></tt>.  It should be scoped according to whether the generated files are main (<tt class="docutils literal"><span class="pre">Compile</span></tt>) or test (<tt class="docutils literal"><span class="pre">Test</span></tt>) sources.  This basic structure looks like:</p>
+<p>A source generation task should generate sources in a subdirectory of <span class="pre">sourceManaged</span> and return a sequence of files generated.  The key to add the task to is called <span class="pre">sourceGenerators</span>.  It should be scoped according to whether the generated files are main (<span class="pre">Compile</span>) or test (<span class="pre">Test</span>) sources.  This basic structure looks like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>For example, assuming a method <tt class="docutils literal"><span class="pre">def</span> <span class="pre">makeSomeSources(base:</span> <span class="pre">File):</span> <span class="pre">Seq[File]</span></tt>,</p>
+<p>For example, assuming a method <span class="pre">def makeSomeSources(base: File): Seq[File]</span>,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">sourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span>
   <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="n">makeSomeSources</span><span class="o">(</span> <span class="o">(</span><span class="n">sourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">)</span> <span class="o">}</span>
 </pre></div>
@@ -112,16 +112,16 @@
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Executing 'run' will print &quot;Hi&quot;.  Change <tt class="docutils literal"><span class="pre">Compile</span></tt> to <tt class="docutils literal"><span class="pre">Test</span></tt> to make it a test source.  For efficiency, you would only want to generate sources when necessary and not every run.</p>
+<p>Executing 'run' will print &quot;Hi&quot;.  Change <span class="pre">Compile</span> to <span class="pre">Test</span> to make it a test source.  For efficiency, you would only want to generate sources when necessary and not every run.</p>
 <p>By default, generated sources are not included in the packaged source artifact.  To do so, add them as you would other mappings.  See <a class="reference internal" href="package.html#modify-package-contents"><em>Adding files to a package</em></a>.  A source generator can return both Java and Scala sources mixed together in the same sequence.  They will be distinguished by their extension later.</p>
 <div class="full-howto section" id="resources">
 <h2>Generate resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>A resource generation task should generate resources in a subdirectory of <tt class="docutils literal"><span class="pre">resourceManaged</span></tt> and return a sequence of files generated.  The key to add the task to is called <tt class="docutils literal"><span class="pre">resourceGenerators</span></tt>.  It should be scoped according to whether the generated files are main (<tt class="docutils literal"><span class="pre">Compile</span></tt>) or test (<tt class="docutils literal"><span class="pre">Test</span></tt>) resources.  This basic structure looks like:</p>
+<p>A resource generation task should generate resources in a subdirectory of <span class="pre">resourceManaged</span> and return a sequence of files generated.  The key to add the task to is called <span class="pre">resourceGenerators</span>.  It should be scoped according to whether the generated files are main (<span class="pre">Compile</span>) or test (<span class="pre">Test</span>) resources.  This basic structure looks like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="o">&lt;</span><span class="n">your</span> <span class="nc">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="n">here</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>For example, assuming a method <tt class="docutils literal"><span class="pre">def</span> <span class="pre">makeSomeResources(base:</span> <span class="pre">File):</span> <span class="pre">Seq[File]</span></tt>,</p>
+<p>For example, assuming a method <span class="pre">def makeSomeResources(base: File): Seq[File]</span>,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
   <span class="n">makeSomeResources</span><span class="o">(</span> <span class="o">(</span><span class="n">resourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span><span class="o">)</span>
 <span class="o">}</span>
@@ -136,7 +136,7 @@
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Change <tt class="docutils literal"><span class="pre">Compile</span></tt> to <tt class="docutils literal"><span class="pre">Test</span></tt> to make it a test resource.  Normally, you would only want to generate resources when necessary and not every run.</p>
+<p>Change <span class="pre">Compile</span> to <span class="pre">Test</span> to make it a test resource.  Normally, you would only want to generate resources when necessary and not every run.</p>
 <p>By default, generated resources are not included in the packaged source artifact.  To do so, add them as you would other mappings.  See <a class="reference internal" href="package.html#modify-package-contents"><em>Adding files to a package</em></a>.</p>
 </div>
 

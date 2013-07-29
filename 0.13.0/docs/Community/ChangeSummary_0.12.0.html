@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -105,15 +105,15 @@ section below)</li>
 below)</li>
 <li>Task axis syntax has changed from key(for task) to task::key (see
 details section below)</li>
-<li>The organization for sbt has to changed to <tt class="docutils literal"><span class="pre">org.scala-sbt</span></tt> (was:
+<li>The organization for sbt has to changed to <span class="pre">org.scala-sbt</span> (was:
 org.scala-tools.sbt). This affects users of the scripted plugin in
 particular.</li>
-<li><tt class="docutils literal"><span class="pre">artifactName</span></tt> type has changed to
-<tt class="docutils literal"><span class="pre">(ScalaVersion,</span> <span class="pre">Artifact,</span> <span class="pre">ModuleID)</span> <span class="pre">=&gt;</span> <span class="pre">String</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">javacOptions</span></tt> is now a task</li>
-<li><tt class="docutils literal"><span class="pre">session</span> <span class="pre">save</span></tt> overwrites settings in <tt class="docutils literal"><span class="pre">build.sbt</span></tt> (when appropriate). <a class="reference external" href="https://github.com/sbt/sbt/issues/369" title="Overwrite previous setting if possible."><span class="xref issue closed">#369</span></a></li>
+<li><span class="pre">artifactName</span> type has changed to
+<span class="pre">(ScalaVersion, Artifact, ModuleID) =&gt; String</span></li>
+<li><span class="pre">javacOptions</span> is now a task</li>
+<li><span class="pre">session save</span> overwrites settings in <span class="pre">build.sbt</span> (when appropriate). <a class="reference external" href="https://github.com/sbt/sbt/issues/369" title="Overwrite previous setting if possible."><span class="xref issue closed">#369</span></a></li>
 <li>scala-library.jar is now required to be on the classpath in order to
-compile Scala code. See the <tt class="docutils literal"><span class="pre">scala-library.jar</span></tt> section at the
+compile Scala code. See the <span class="pre">scala-library.jar</span> section at the
 bottom of the page for details.</li>
 </ul>
 </div>
@@ -121,15 +121,15 @@ bottom of the page for details.</li>
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Support for forking tests (<a class="reference external" href="https://github.com/sbt/sbt/issues/415" title="'fork in test' initial implementation."><span class="xref issue closed">#415</span></a>)</li>
-<li><tt class="docutils literal"><span class="pre">test-quick</span></tt> (see details section below)</li>
+<li><span class="pre">test-quick</span> (see details section below)</li>
 <li>Support globally overriding repositories (<a class="reference external" href="https://github.com/sbt/sbt/issues/472" title="Proxy repo config"><span class="xref issue closed">#472</span></a>)</li>
-<li>Added <tt class="docutils literal"><span class="pre">print-warnings</span></tt> task that will print unchecked and
+<li>Added <span class="pre">print-warnings</span> task that will print unchecked and
 deprecation warnings from the previous compilation without needing to
 recompile (Scala 2.10+ only)</li>
 <li>Support for loading an ivy settings file from a URL.</li>
-<li><tt class="docutils literal"><span class="pre">projects</span> <span class="pre">add/remove</span> <span class="pre">&lt;URI&gt;</span></tt> for temporarily working with other builds</li>
+<li><span class="pre">projects add/remove &lt;URI&gt;</span> for temporarily working with other builds</li>
 <li>Enhanced control over parallel execution (see details section below)</li>
-<li><tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">tree</span> <span class="pre">&lt;key&gt;</span></tt> for calling <tt class="docutils literal"><span class="pre">inspect</span></tt> command recursively (<a class="reference external" href="https://github.com/sbt/sbt/issues/274" title="&quot;inspect tree &lt;key&gt;&quot; command"><span class="xref issue closed">#274</span></a>)</li>
+<li><span class="pre">inspect tree &lt;key&gt;</span> for calling <span class="pre">inspect</span> command recursively (<a class="reference external" href="https://github.com/sbt/sbt/issues/274" title="&quot;inspect tree &lt;key&gt;&quot; command"><span class="xref issue closed">#274</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="fixes">
@@ -137,7 +137,7 @@ recompile (Scala 2.10+ only)</li>
 <ul class="simple">
 <li>Delete a symlink and not its contents when recursively deleting a directory.</li>
 <li>Fix detection of ancestors for java sources</li>
-<li>Fix the resolvers used for <tt class="docutils literal"><span class="pre">update-sbt-classifiers</span></tt> (<a class="reference external" href="https://github.com/sbt/sbt/issues/304" title="update-sbt-classifiers doesn't work for SNAPSHOT plugins"><span class="xref issue closed">#304</span></a>)</li>
+<li>Fix the resolvers used for <span class="pre">update-sbt-classifiers</span> (<a class="reference external" href="https://github.com/sbt/sbt/issues/304" title="update-sbt-classifiers doesn't work for SNAPSHOT plugins"><span class="xref issue closed">#304</span></a>)</li>
 <li>Fix auto-imports of plugins (<a class="reference external" href="https://github.com/sbt/sbt/issues/412" title="SBT 0.12.0 plugin source dependencies collide and yet don't."><span class="xref issue closed">#412</span></a>)</li>
 <li>Argument quoting (see details section below)</li>
 <li>Properly reset JLine after being stopped by Ctrl+z (unix only). <a class="reference external" href="https://github.com/sbt/sbt/issues/394" title="pausing and resuming sbt (^Z - fg) loses keyboard echo"><span class="xref issue closed">#394</span></a></li>
@@ -151,10 +151,10 @@ recompile (Scala 2.10+ only)</li>
 <li>Use java 7 Redirect.INHERIT to inherit input stream of subprocess (<a class="reference external" href="https://github.com/sbt/sbt/issues/462" title="Use java 7 Redirect.INHERIT to inherit subprocess' input stream."><span class="xref issue closed">#462</span></a>,<a class="reference external" href="https://github.com/sbt/sbt/issues/327" title="&quot;java.io.IOException: Broken pipe&quot; after foo!&lt; and a key stroke"><span class="xref issue closed">#327</span></a>).
 This should fix issues when forking interactive programs. (&#64;vigdorchik)</li>
 <li>Mirror ivy 'force' attribute (<a class="reference external" href="https://github.com/sbt/sbt/issues/361" title="Mirror ivy \'force\' attribute in sbt."><span class="xref issue closed">#361</span></a>)</li>
-<li>Various improvements to <tt class="docutils literal"><span class="pre">help</span></tt> and <tt class="docutils literal"><span class="pre">tasks</span></tt> commands as well as
-new <tt class="docutils literal"><span class="pre">settings</span></tt> command (<a class="reference external" href="https://github.com/sbt/sbt/issues/315" title="tasks list should be made comprehensible"><span class="xref issue closed">#315</span></a>)</li>
+<li>Various improvements to <span class="pre">help</span> and <span class="pre">tasks</span> commands as well as
+new <span class="pre">settings</span> command (<a class="reference external" href="https://github.com/sbt/sbt/issues/315" title="tasks list should be made comprehensible"><span class="xref issue closed">#315</span></a>)</li>
 <li>Bump jsch version to 0.1.46. (<a class="reference external" href="https://github.com/sbt/sbt/issues/403" title="update jsch please!"><span class="xref issue closed">#403</span></a>)</li>
-<li>Improved help commands: <tt class="docutils literal"><span class="pre">help</span></tt>, <tt class="docutils literal"><span class="pre">tasks</span></tt>, <tt class="docutils literal"><span class="pre">settings</span></tt>.</li>
+<li>Improved help commands: <span class="pre">help</span>, <span class="pre">tasks</span>, <span class="pre">settings</span>.</li>
 <li>Bump to JLine 1.0 (see details section below)</li>
 <li>Global repository setting (see details section below)</li>
 <li>Other fixes/improvements: <a class="reference external" href="https://github.com/sbt/sbt/issues/368" title="Resolving sbt-plugins from cache is slow"><span class="xref issue closed">#368</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/377" title="'test-' preffix should be stripped to obtain classifier."><span class="xref issue closed">#377</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/378" title="Plugin should be able to write to Build.settings as well as Project.settings"><span class="xref issue closed">#378</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/386" title="Topic/macro def"><span class="xref issue closed">#386</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/387" title="Sbt does not remove empty output directories when appropriate, causing incremental compilation to fail"><span class="xref issue closed">#387</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/388" title="Easy way to add aliases in build.sbt / Build.scala"><span class="xref issue closed">#388</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/389" title="Add option to preserve last modified date for IO.unzip"><span class="xref issue closed">#389</span></a></li>
@@ -167,7 +167,7 @@ new <tt class="docutils literal"><span class="pre">settings</span></tt> command 
 to change, but already being used in <a class="reference external" href="https://github.com/davidB/scala-maven-plugin/tree/feature/sbt-inc">a branch of the
 scala-maven-plugin</a>.</li>
 <li>Experimental support for keeping the Scala compiler resident. Enable
-by passing <tt class="docutils literal"><span class="pre">-Dsbt.resident.limit=n</span></tt> to sbt, where <tt class="docutils literal"><span class="pre">n</span></tt> is an
+by passing <span class="pre">-Dsbt.resident.limit=n</span> to sbt, where <span class="pre">n</span> is an
 integer indicating the maximum number of compilers to keep around.</li>
 <li>The <a class="reference external" href="http://www.scala-sbt.org/howto.html">Howto pages</a> on the <a class="reference external" href="http://www.scala-sbt.org">new
 site</a> are at least readable now. There is
@@ -180,10 +180,10 @@ more content to write and more formatting improvements are needed, so
 </div>
 <div class="section" id="plugin-configuration-directory">
 <h2>Plugin configuration directory<a class="headerlink" href="#plugin-configuration-directory" title="Permalink to this headline">¶</a></h2>
-<p>In 0.11.0, plugin configuration moved from <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> to just
-<tt class="docutils literal"><span class="pre">project/</span></tt>, with <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> being deprecated. Only 0.11.2
+<p>In 0.11.0, plugin configuration moved from <span class="pre">project/plugins/</span> to just
+<span class="pre">project/</span>, with <span class="pre">project/plugins/</span> being deprecated. Only 0.11.2
 had a deprecation message, but in all of 0.11.x, the presence of the old
-style <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> directory took precedence over the new style.
+style <span class="pre">project/plugins/</span> directory took precedence over the new style.
 In 0.12.0, the new style takes precedence. Support for the old style
 won't be removed until 0.13.0.</p>
 <ol class="arabic simple">
@@ -191,7 +191,7 @@ won't be removed until 0.13.0.</p>
 styles are still supported; only the behavior when there is a
 conflict has changed.</li>
 <li>In practice, switching from an older branch of a project to a new
-branch would often leave an empty <tt class="docutils literal"><span class="pre">project/plugins/</span></tt> directory that
+branch would often leave an empty <span class="pre">project/plugins/</span> directory that
 would cause the old style to be used, despite there being no
 configuration there.</li>
 <li>Therefore, the intention is that this change is strictly an
@@ -205,9 +205,9 @@ noticed by other projects.</li>
 settings and tasks that fixes <a class="reference external" href="https://github.com/sbt/sbt/issues/202" title="Task-scoped keys"><span class="xref issue closed">#202</span></a></p>
 <ol class="arabic simple">
 <li>The syntax before 0.12 has been
-<tt class="docutils literal"><span class="pre">{build}project/config:key(for</span> <span class="pre">task)</span></tt></li>
+<span class="pre">{build}project/config:key(for task)</span></li>
 <li>The proposed (and implemented) change for 0.12 is
-<tt class="docutils literal"><span class="pre">{build}project/config:task::key</span></tt></li>
+<span class="pre">{build}project/config:task::key</span></li>
 <li>By moving the task axis before the key, it allows for easier
 discovery (via tab completion) of keys in plugins.</li>
 <li>It is not planned to support the old syntax.</li>
@@ -231,12 +231,12 @@ wouldn't be run on the aggregated project (because it isn't the same
 as the compile:package key that existed on the current project).</li>
 <li>In 0.12, both of these situations result in the aggregated settings
 being selected. For example,<ol class="arabic">
-<li>Consider a project <tt class="docutils literal"><span class="pre">root</span></tt> that aggregates a subproject <tt class="docutils literal"><span class="pre">sub</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">root</span></tt> defines <tt class="docutils literal"><span class="pre">*:package</span></tt>.</li>
-<li><tt class="docutils literal"><span class="pre">sub</span></tt> defines <tt class="docutils literal"><span class="pre">compile:package</span></tt> and <tt class="docutils literal"><span class="pre">compile:compile</span></tt>.</li>
-<li>Running <tt class="docutils literal"><span class="pre">root/package</span></tt> will run <tt class="docutils literal"><span class="pre">root/*:package</span></tt> and
-<tt class="docutils literal"><span class="pre">sub/compile:package</span></tt></li>
-<li>Running <tt class="docutils literal"><span class="pre">root/compile</span></tt> will run <tt class="docutils literal"><span class="pre">sub/compile:compile</span></tt></li>
+<li>Consider a project <span class="pre">root</span> that aggregates a subproject <span class="pre">sub</span>.</li>
+<li><span class="pre">root</span> defines <span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">:package</span>.</li>
+<li><span class="pre">sub</span> defines <span class="pre">compile:package</span> and <span class="pre">compile:compile</span>.</li>
+<li>Running <span class="pre">root/package</span> will run <span class="pre">root/</span><span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">:package</span> and
+<span class="pre">sub/compile:package</span></li>
+<li>Running <span class="pre">root/compile</span> will run <span class="pre">sub/compile:compile</span></li>
 </ol>
 </li>
 <li>This change was made possible in part by the change to task axis
@@ -249,10 +249,10 @@ parsing.</li>
 <a class="reference internal" href="../Detailed-Topics/Parallel-Execution.html"><em>Parallel Execution</em></a></p>
 <ol class="arabic simple">
 <li>The default behavior should be the same as before, including the
-<tt class="docutils literal"><span class="pre">parallelExecution</span></tt> settings.</li>
+<span class="pre">parallelExecution</span> settings.</li>
 <li>The new capabilities of the system should otherwise be considered
 experimental.</li>
-<li>Therefore, <tt class="docutils literal"><span class="pre">parallelExecution</span></tt> won't be deprecated at this time.</li>
+<li>Therefore, <span class="pre">parallelExecution</span> won't be deprecated at this time.</li>
 </ol>
 </div>
 <div class="section" id="source-dependencies">
@@ -269,13 +269,13 @@ dependencies.</li>
 <p>Additionally, Sanjin's patches to add support for hg and svn URIs are
 included.</p>
 <ol class="arabic simple">
-<li>sbt uses subversion to retrieve URIs beginning with <tt class="docutils literal"><span class="pre">svn</span></tt> or
-<tt class="docutils literal"><span class="pre">svn+ssh</span></tt>. An optional fragment identifies a specific revision to
+<li>sbt uses subversion to retrieve URIs beginning with <span class="pre">svn</span> or
+<span class="pre">svn+ssh</span>. An optional fragment identifies a specific revision to
 checkout.</li>
 <li>Because a URI for mercurial doesn't have a mercurial-specific scheme,
-sbt requires the URI to be prefixed with <tt class="docutils literal"><span class="pre">hg:</span></tt> to identify it as a
+sbt requires the URI to be prefixed with <span class="pre">hg:</span> to identify it as a
 mercurial repository.</li>
-<li>Also, URIs that end with <tt class="docutils literal"><span class="pre">.git</span></tt> are now handled properly.</li>
+<li>Also, URIs that end with <span class="pre">.git</span> are now handled properly.</li>
 </ol>
 </div>
 <div class="section" id="cross-building">
@@ -283,7 +283,7 @@ mercurial repository.</li>
 <p>The cross version suffix is shortened to only include the major and
 minor version for Scala versions starting with the 2.10 series and for
 sbt versions starting with the 0.12 series. For example,
-<tt class="docutils literal"><span class="pre">sbinary_2.10</span></tt> for a normal library or <tt class="docutils literal"><span class="pre">sbt-plugin_2.10_0.12</span></tt> for an
+<span class="pre">sbinary_2.10</span> for a normal library or <span class="pre">sbt-plugin_2.10_0.12</span> for an
 sbt plugin. This requires forward and backward binary compatibility
 across incremental releases for both Scala and sbt.</p>
 <ol class="arabic simple">
@@ -298,36 +298,36 @@ full version string that represents binary compatibility. That is,
 equal binary versions implies binary compatibility. All Scala
 versions prior to 2.10 use the full version for the binary version to
 reflect previous sbt behavior. For 2.10 and later, the binary version
-is <tt class="docutils literal"><span class="pre">&lt;major&gt;.&lt;minor&gt;</span></tt>.</li>
+is <span class="pre">&lt;major&gt;.&lt;minor&gt;</span>.</li>
 <li>The cross version behavior for published artifacts is configured by
 the crossVersion setting. It can be configured for dependencies by
-using the <tt class="docutils literal"><span class="pre">cross</span></tt> method on <tt class="docutils literal"><span class="pre">ModuleID</span></tt> or by the traditional %%
+using the <span class="pre">cross</span> method on <span class="pre">ModuleID</span> or by the traditional %%
 dependency construction variant. By default, a dependency has cross
 versioning disabled when constructed with a single % and uses the
 binary Scala version when constructed with %%.</li>
 <li>The artifactName function now accepts a type ScalaVersion as its
 first argument instead of a String. The full type is now
-<tt class="docutils literal"><span class="pre">(ScalaVersion,</span> <span class="pre">ModuleID,</span> <span class="pre">Artifact)</span> <span class="pre">=&gt;</span> <span class="pre">String</span></tt>. ScalaVersion
+<span class="pre">(ScalaVersion, ModuleID, Artifact) =&gt; String</span>. ScalaVersion
 contains both the full Scala version (such as 2.10.0) as well as the
 binary Scala version (such as 2.10).</li>
 <li>The flexible version mapping added by Indrajit has been merged into
-the <tt class="docutils literal"><span class="pre">cross</span></tt> method and the %% variants accepting more than one
+the <span class="pre">cross</span> method and the %% variants accepting more than one
 argument have been deprecated. See <a class="reference internal" href="../Detailed-Topics/Cross-Build.html"><em>Cross-building</em></a> for details.</li>
 </ol>
 </div>
 <div class="section" id="global-repository-setting">
 <h2>Global repository setting<a class="headerlink" href="#global-repository-setting" title="Permalink to this headline">¶</a></h2>
 <p>Define the repositories to use by putting a standalone
-<tt class="docutils literal"><span class="pre">[repositories]</span></tt> section (see the
+<span class="pre">[repositories]</span> section (see the
 <a class="reference internal" href="../Detailed-Topics/Launcher.html"><em>Launcher Specification</em></a> page) in
-<tt class="docutils literal"><span class="pre">~/.sbt/repositories</span></tt> and pass <tt class="docutils literal"><span class="pre">-Dsbt.override.build.repos=true</span></tt> to
+<span class="pre">~/.sbt/repositories</span> and pass <span class="pre">-Dsbt.override.build.repos=true</span> to
 sbt. Only the repositories in that file will be used by the launcher for
 retrieving sbt and Scala and by sbt when retrieving project
 dependencies. (&#64;jsuereth)</p>
 </div>
 <div class="section" id="test-quick">
 <h2>test-quick<a class="headerlink" href="#test-quick" title="Permalink to this headline">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">test-quick</span></tt> (<a class="reference external" href="https://github.com/sbt/sbt/issues/393" title="Wip test quick"><span class="xref issue closed">#393</span></a>) runs the tests specified as arguments (or all tests if no arguments are
+<p><span class="pre">test-quick</span> (<a class="reference external" href="https://github.com/sbt/sbt/issues/393" title="Wip test quick"><span class="xref issue closed">#393</span></a>) runs the tests specified as arguments (or all tests if no arguments are
 given) that:</p>
 <ol class="arabic simple">
 <li>have not been run yet OR</li>
@@ -340,10 +340,10 @@ run</li>
 <h2>Argument quoting<a class="headerlink" href="#argument-quoting" title="Permalink to this headline">¶</a></h2>
 <p>Argument quoting (<a class="reference external" href="https://github.com/sbt/sbt/issues/396" title="Parser for escaped and verbatim string literals"><span class="xref issue closed">#396</span></a>) from the intereactive mode works like Scala string literals.</p>
 <ol class="arabic simple">
-<li><tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">command</span> <span class="pre">&quot;arg</span> <span class="pre">with</span> <span class="pre">spaces,\n</span> <span class="pre">escapes</span> <span class="pre">interpreted&quot;</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">command</span> <span class="pre">&quot;&quot;&quot;arg</span> <span class="pre">with</span> <span class="pre">spaces,\n</span> <span class="pre">escapes</span> <span class="pre">not</span> <span class="pre">interpreted&quot;&quot;&quot;</span></tt></li>
+<li><span class="pre">&gt; command &quot;arg with spaces,n escapes interpreted&quot;</span></li>
+<li><span class="pre">&gt; command &quot;&quot;&quot;arg with spaces,n escapes not interpreted&quot;&quot;&quot;</span></li>
 <li>For the first variant, note that paths on Windows use backslashes and
-need to be escaped (<tt class="docutils literal"><span class="pre">\\</span></tt>). Alternatively, use the second variant,
+need to be escaped (<span class="pre"></span>). Alternatively, use the second variant,
 which does not interpret escapes.</li>
 <li>For using either variant in batch mode, note that a shell will
 generally require the double quotes themselves to be escaped.</li>
@@ -355,7 +355,7 @@ generally require the double quotes themselves to be escaped.</li>
 to scalac even if scala-library.jar wasn't on the classpath. This
 allowed compiling Scala code without scala-library as a dependency, for
 example, but this was a misfeature. Instead, the Scala library should be
-declared as <tt class="docutils literal"><span class="pre">provided</span></tt>:</p>
+declared as <span class="pre">provided</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Don&#39;t automatically add the scala-library dependency</span>
 <span class="c1">// in the &#39;compile&#39; configuration</span>
 <span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>

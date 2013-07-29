@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -94,8 +94,8 @@
 <div class="full-howto section" id="taskhelp">
 <h2>Show or search help for a command, task, or setting<a class="headerlink" href="#taskhelp" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">help</span></tt> command is used to show available commands and search the help for commands, tasks, or settings.
-If run without arguments, <tt class="docutils literal"><span class="pre">help</span></tt> lists the available commands.</p>
+<p>The <span class="pre">help</span> command is used to show available commands and search the help for commands, tasks, or settings.
+If run without arguments, <span class="pre">help</span> lists the available commands.</p>
 <div class="highlight-scala"><pre>&gt; help
 
   help                         Displays this help message or prints detailed help on
@@ -107,30 +107,30 @@ If run without arguments, <tt class="docutils literal"><span class="pre">help</s
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="n">help</span> <span class="n">compile</span>
 </pre></div>
 </div>
-<p>If the argument passed to <tt class="docutils literal"><span class="pre">help</span></tt> is the name of an existing command, setting or task, the help
+<p>If the argument passed to <span class="pre">help</span> is the name of an existing command, setting or task, the help
 for that entity is displayed.  Otherwise, the argument is interpreted as a regular expression that
 is used to search the help of all commands, settings and tasks.</p>
-<p>The <tt class="docutils literal"><span class="pre">tasks</span></tt> command is like <tt class="docutils literal"><span class="pre">help</span></tt>, but operates only on tasks.
-Similarly, the <tt class="docutils literal"><span class="pre">settings</span></tt> command only operates on settings.</p>
-<p>See also <tt class="docutils literal"><span class="pre">help</span> <span class="pre">help</span></tt>, <tt class="docutils literal"><span class="pre">help</span> <span class="pre">tasks</span></tt>, and <tt class="docutils literal"><span class="pre">help</span> <span class="pre">settings</span></tt>.</p>
+<p>The <span class="pre">tasks</span> command is like <span class="pre">help</span>, but operates only on tasks.
+Similarly, the <span class="pre">settings</span> command only operates on settings.</p>
+<p>See also <span class="pre">help help</span>, <span class="pre">help tasks</span>, and <span class="pre">help settings</span>.</p>
 <div class="full-howto section" id="listtasks">
 <h2>List available tasks<a class="headerlink" href="#listtasks" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">tasks</span></tt> command, without arguments, lists the most commonly used tasks.
+<p>The <span class="pre">tasks</span> command, without arguments, lists the most commonly used tasks.
 It can take a regular expression to search task names and descriptions.
 The verbosity can be increased to show or search less commonly used tasks.
-See <tt class="docutils literal"><span class="pre">help</span> <span class="pre">tasks</span></tt> for details.</p>
+See <span class="pre">help tasks</span> for details.</p>
 <div class="full-howto section" id="listsettings">
 <h2>List available settings<a class="headerlink" href="#listsettings" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">settings</span></tt> command, without arguments, lists the most commonly used settings.
+<p>The <span class="pre">settings</span> command, without arguments, lists the most commonly used settings.
 It can take a regular expression to search setting names and descriptions.
 The verbosity can be increased to show or search less commonly used settings.
-See <tt class="docutils literal"><span class="pre">help</span> <span class="pre">settings</span></tt> for details.</p>
+See <span class="pre">help settings</span> for details.</p>
 <div class="full-howto section" id="dependencies">
 <h2>Display forward and reverse dependencies of a setting or task<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">inspect</span></tt> command displays several pieces of information about a given setting or task, including
+<p>The <span class="pre">inspect</span> command displays several pieces of information about a given setting or task, including
 the dependencies of a task/setting as well as the tasks/settings that depend on the it.  For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect <span class="nb">test</span>:compile
 <span class="go">...</span>
@@ -153,7 +153,7 @@ the dependencies of a task/setting as well as the tasks/settings that depend on 
 <h2>Display tree of setting/task dependencies<a class="headerlink" href="#taskdependencytree" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>In addition to displaying immediate forward and reverse dependencies as described in the previous section,
-the <tt class="docutils literal"><span class="pre">inspect</span></tt> command can display the full dependency tree for a task or setting.
+the <span class="pre">inspect</span> command can display the full dependency tree for a task or setting.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect tree clean
 <span class="go">[info] *:clean = Task[Unit]</span>
@@ -168,14 +168,14 @@ For example,</p>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>For each task, <tt class="docutils literal"><span class="pre">inspect</span> <span class="pre">tree</span></tt> show the type of the value generated by the task.
-For a setting, the <tt class="docutils literal"><span class="pre">toString</span></tt> of the setting is displayed.
-See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details on the <tt class="docutils literal"><span class="pre">inspect</span></tt> command.</p>
+<p>For each task, <span class="pre">inspect tree</span> show the type of the value generated by the task.
+For a setting, the <span class="pre">toString</span> of the setting is displayed.
+See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details on the <span class="pre">inspect</span> command.</p>
 <div class="full-howto section" id="description">
 <h2>Display the description and type of a setting or task<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>While the <tt class="docutils literal"><span class="pre">help</span></tt>, <tt class="docutils literal"><span class="pre">settings</span></tt>, and <tt class="docutils literal"><span class="pre">tasks</span></tt> commands display a description of a task,
-the <tt class="docutils literal"><span class="pre">inspect</span></tt> command also shows the type of a setting or task and the value of a setting.
+<p>While the <span class="pre">help</span>, <span class="pre">settings</span>, and <span class="pre">tasks</span> commands display a description of a task,
+the <span class="pre">inspect</span> command also shows the type of a setting or task and the value of a setting.
 For example:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
 <span class="go">[info] Task: sbt.UpdateReport</span>
@@ -199,7 +199,7 @@ For example:</p>
 <div class="full-howto section" id="related">
 <h2>Display related settings or tasks<a class="headerlink" href="#related" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">inspect</span></tt> command can help find scopes where a setting or task is defined.
+<p>The <span class="pre">inspect</span> command can help find scopes where a setting or task is defined.
 The following example shows that different options may be specified to the Scala
 for testing and API documentation generation.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect scalacOptions
@@ -215,7 +215,7 @@ for testing and API documentation generation.</p>
 <div class="full-howto section" id="projects">
 <h2>Show the list of projects and builds<a class="headerlink" href="#projects" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">projects</span></tt> command displays the currently loaded projects.
+<p>The <span class="pre">projects</span> command displays the currently loaded projects.
 The projects are grouped by their enclosing build and the current project is indicated by an asterisk.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> projects
@@ -229,14 +229,14 @@ For example,</p>
 <div class="full-howto section" id="session">
 <h2>Show the current session (temporary) settings<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h2>
 </div>
-<p><tt class="docutils literal"><span class="pre">session</span> <span class="pre">list</span></tt> displays the settings that have been added at the command line for the current project.  For example,</p>
+<p><span class="pre">session list</span> displays the settings that have been added at the command line for the current project.  For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> session list
 <span class="go">  1. maxErrors := 5</span>
 <span class="go">  2. scalacOptions += &quot;-explaintypes&quot;</span>
 </pre></div>
 </div>
-<p><tt class="docutils literal"><span class="pre">session</span> <span class="pre">list-all</span></tt> displays the settings added for all projects.
-For details, see <tt class="docutils literal"><span class="pre">help</span> <span class="pre">session</span></tt>.</p>
+<p><span class="pre">session list-all</span> displays the settings added for all projects.
+For details, see <span class="pre">help session</span>.</p>
 <div class="full-howto section" id="about">
 <h2>Show basic information about sbt and the current build<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -251,13 +251,13 @@ For details, see <tt class="docutils literal"><span class="pre">help</span> <spa
 <div class="full-howto section" id="value">
 <h2>Show the value of a setting<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">inspect</span></tt> command shows the value of a setting as part of its output, but the <tt class="docutils literal"><span class="pre">show</span></tt> command is dedicated to this job.
+<p>The <span class="pre">inspect</span> command shows the value of a setting as part of its output, but the <span class="pre">show</span> command is dedicated to this job.
 It shows the output of the setting provided as an argument.  For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show organization
 <span class="go">[info] com.github.sbt</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">show</span></tt> command also works for tasks, described next.</p>
+<p>The <span class="pre">show</span> command also works for tasks, described next.</p>
 <div class="full-howto section" id="result">
 <h2>Show the result of executing a task<a class="headerlink" href="#result" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -269,8 +269,8 @@ It shows the output of the setting provided as an argument.  For example,</p>
 <span class="go">[info]              org.scala-lang:scala-library:2.9.2: ...</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">show</span></tt> command will execute the task provided as an argument and then print the result.
-Note that this is different from the behavior of the <tt class="docutils literal"><span class="pre">inspect</span></tt> command (described in other sections),
+<p>The <span class="pre">show</span> command will execute the task provided as an argument and then print the result.
+Note that this is different from the behavior of the <span class="pre">inspect</span> command (described in other sections),
 which does not execute a task and thus can only display its type and not its generated value.</p>
 <div class="full-howto section" id="classpath">
 <h2>Show the classpath used for compilation or testing<a class="headerlink" href="#classpath" title="Permalink to this headline">¶</a></h2>
@@ -289,8 +289,8 @@ which does not execute a task and thus can only display its type and not its gen
 <div class="full-howto section" id="applications">
 <h2>Show the main classes detected in a project<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>sbt detects the classes with public, static main methods for use by the <tt class="docutils literal"><span class="pre">run</span></tt> method and to tab-complete the <tt class="docutils literal"><span class="pre">runMain</span></tt> method.
-The <tt class="docutils literal"><span class="pre">discoveredMainClasses</span></tt> task does this discovery and provides as its result the list of class names.
+<p>sbt detects the classes with public, static main methods for use by the <span class="pre">run</span> method and to tab-complete the <span class="pre">runMain</span> method.
+The <span class="pre">discoveredMainClasses</span> task does this discovery and provides as its result the list of class names.
 For example, the following shows the main classes discovered in the main sources:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show compile:discoveredMainClasses
 <span class="go">... &lt;runs compile if out of date&gt; ...</span>
@@ -301,7 +301,7 @@ For example, the following shows the main classes discovered in the main sources
 <h2>Show the test classes detected in a project<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>sbt detects tests according to fingerprints provided by test frameworks.
-The <tt class="docutils literal"><span class="pre">definedTestNames</span></tt> task provides as its result the list of test names detected in this way.
+The <span class="pre">definedTestNames</span> task provides as its result the list of test names detected in this way.
 For example,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show <span class="nb">test</span>:definedTestNames
 <span class="go">... &lt; runs test:compile if out of date &gt; ...</span>

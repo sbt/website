@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -99,12 +99,12 @@ page should help you migrate to 0.13 with a minimum of fuss.</p>
 <ol class="arabic simple">
 <li>Faster builds (because it is smarter at re-compiling only what it
 must)</li>
-<li>Easier configuration. For simple projects a single <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file
+<li>Easier configuration. For simple projects a single <span class="pre">build.sbt</span> file
 in your root directory is easier to create than
-<tt class="docutils literal"><span class="pre">project/build/MyProject.scala</span></tt> was.</li>
-<li>No more <tt class="docutils literal"><span class="pre">lib_managed</span></tt> directory, reducing disk usage and avoiding
+<span class="pre">project/build/MyProject.scala</span> was.</li>
+<li>No more <span class="pre">lib_managed</span> directory, reducing disk usage and avoiding
 backup and version control hassles.</li>
-<li><tt class="docutils literal"><span class="pre">update</span></tt> is now much faster and it's invoked automatically by sbt.</li>
+<li><span class="pre">update</span> is now much faster and it's invoked automatically by sbt.</li>
 <li>Terser output. (Yet you can ask for more details if something goes
 wrong.)</li>
 </ol>
@@ -134,23 +134,23 @@ complex one next.</p>
 </div>
 </div>
 <div class="section" id="preserve-project-for-0-7-x-project">
-<h2>Preserve <tt class="docutils literal"><span class="pre">project/</span></tt> for 0.7.x project<a class="headerlink" href="#preserve-project-for-0-7-x-project" title="Permalink to this headline">¶</a></h2>
-<p>Rename your <tt class="docutils literal"><span class="pre">project/</span></tt> directory to something like <tt class="docutils literal"><span class="pre">project-old</span></tt>.
+<h2>Preserve <span class="pre">project/</span> for 0.7.x project<a class="headerlink" href="#preserve-project-for-0-7-x-project" title="Permalink to this headline">¶</a></h2>
+<p>Rename your <span class="pre">project/</span> directory to something like <span class="pre">project-old</span>.
 This will hide it from sbt 0.13 but keep it in case you want to switch
 back to 0.7.x.</p>
 </div>
 <div class="section" id="create-build-sbt-for-version">
-<h2>Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.13<a class="headerlink" href="#create-build-sbt-for-version" title="Permalink to this headline">¶</a></h2>
-<p>Create a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file in the root directory of your project. See
+<h2>Create <span class="pre">build.sbt</span> for 0.13<a class="headerlink" href="#create-build-sbt-for-version" title="Permalink to this headline">¶</a></h2>
+<p>Create a <span class="pre">build.sbt</span> file in the root directory of your project. See
 <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> in the Getting
 Started Guide, and for simple examples <a class="reference internal" href="../Examples/Quick-Configuration-Examples.html"><em>Basic Definition Examples</em></a>.
 If you have a simple project then converting your existing project file
 to this format is largely a matter of re-writing your dependencies and
 maven archive declarations in a modified yet familiar syntax.</p>
-<p>This <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file combines aspects of the old
-<tt class="docutils literal"><span class="pre">project/build/ProjectName.scala</span></tt> and <tt class="docutils literal"><span class="pre">build.properties</span></tt> files. It
+<p>This <span class="pre">build.sbt</span> file combines aspects of the old
+<span class="pre">project/build/ProjectName.scala</span> and <span class="pre">build.properties</span> files. It
 looks like a property file, yet contains Scala code in a special format.</p>
-<p>A <tt class="docutils literal"><span class="pre">build.properties</span></tt> file like:</p>
+<p>A <span class="pre">build.properties</span> file like:</p>
 <div class="highlight-text"><div class="highlight"><pre>#Project properties
 #Fri Jan 07 15:34:00 GMT 2011
 project.organization=org.myproject
@@ -162,7 +162,7 @@ build.scala.versions=2.8.1
 project.initialize=false
 </pre></div>
 </div>
-<p>Now becomes part of your <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file with lines like:</p>
+<p>Now becomes part of your <span class="pre">build.sbt</span> file with lines like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;My Project&quot;</span>
 
 <span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
@@ -172,7 +172,7 @@ project.initialize=false
 <span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.2&quot;</span>
 </pre></div>
 </div>
-<p>Currently, a <tt class="docutils literal"><span class="pre">project/build.properties</span></tt> is still needed to explicitly
+<p>Currently, a <span class="pre">project/build.properties</span> is still needed to explicitly
 select the sbt version. For example:</p>
 <div class="highlight-text"><div class="highlight"><pre>sbt.version=|release|
 </pre></div>
@@ -186,10 +186,10 @@ debugging, see below.</p>
 <div class="section" id="switching-back-to-sbt-0-7-x">
 <h2>Switching back to sbt 0.7.x<a class="headerlink" href="#switching-back-to-sbt-0-7-x" title="Permalink to this headline">¶</a></h2>
 <p>If you get stuck and want to switch back, you can leave your
-<tt class="docutils literal"><span class="pre">build.sbt</span></tt> file alone. sbt 0.7.x will not understand or notice it.
-Just rename your 0.13 <tt class="docutils literal"><span class="pre">project</span></tt> directory to something like
-<tt class="docutils literal"><span class="pre">project10</span></tt> and rename the backup of your old project from
-<tt class="docutils literal"><span class="pre">project-old</span></tt> to <tt class="docutils literal"><span class="pre">project</span></tt> again.</p>
+<span class="pre">build.sbt</span> file alone. sbt 0.7.x will not understand or notice it.
+Just rename your 0.13 <span class="pre">project</span> directory to something like
+<span class="pre">project10</span> and rename the backup of your old project from
+<span class="pre">project-old</span> to <span class="pre">project</span> again.</p>
 <div class="section" id="faqs">
 <h3>FAQs<a class="headerlink" href="#faqs" title="Permalink to this headline">¶</a></h3>
 <p>There's a section in the <a class="reference internal" href="../faq.html"><em>FAQ</em></a> about migration from 0.7 that covers
@@ -211,8 +211,8 @@ several other important points.</p>
 <li><a class="reference internal" href="#step-3-a-technique-for-switching-an-existing-project">Step 3: A technique for switching an existing project</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#preserve-project-for-0-7-x-project">Preserve <tt class="docutils literal"><span class="pre">project/</span></tt> for 0.7.x project</a></li>
-<li><a class="reference internal" href="#create-build-sbt-for-version">Create <tt class="docutils literal"><span class="pre">build.sbt</span></tt> for 0.13</a></li>
+<li><a class="reference internal" href="#preserve-project-for-0-7-x-project">Preserve <span class="pre">project/</span> for 0.7.x project</a></li>
+<li><a class="reference internal" href="#create-build-sbt-for-version">Create <span class="pre">build.sbt</span> for 0.13</a></li>
 <li><a class="reference internal" href="#run-sbt-version">Run sbt 0.13</a></li>
 <li><a class="reference internal" href="#switching-back-to-sbt-0-7-x">Switching back to sbt 0.7.x</a><ul>
 <li><a class="reference internal" href="#faqs">FAQs</a></li>

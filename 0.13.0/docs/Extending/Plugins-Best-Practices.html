@@ -58,7 +58,7 @@
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
           <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
-          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/release/docs/"> 
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
       </div>
@@ -91,22 +91,22 @@
             
   <div class="section" id="plugins-best-practices">
 <h1>Plugins Best Practices<a class="headerlink" href="#plugins-best-practices" title="Permalink to this headline">¶</a></h1>
-<p><em>This page is intended primarily for SBT plugin authors.</em></p>
+<p><em>This page is intended primarily for sbt plugin authors.</em></p>
 <p>A plugin developer should strive for consistency and ease of use.
 Specifically:</p>
 <ul class="simple">
 <li>Plugins should play well with other plugins. Avoiding namespace
-clashes (in both SBT and Scala) is paramount.</li>
+clashes (in both sbt and Scala) is paramount.</li>
 <li>Plugins should follow consistent conventions. The experiences of an
-SBT <em>user</em> should be consistent, no matter what plugins are pulled
+sbt <em>user</em> should be consistent, no matter what plugins are pulled
 in.</li>
 </ul>
 <p>Here are some current plugin best practices. <strong>NOTE:</strong> Best practices
 are evolving, so check back frequently.</p>
 <div class="section" id="avoid-overriding-settings">
-<h2>Avoid overriding <tt class="docutils literal"><span class="pre">settings</span></tt><a class="headerlink" href="#avoid-overriding-settings" title="Permalink to this headline">¶</a></h2>
-<p>SBT will automatically load your plugin's <tt class="docutils literal"><span class="pre">settings</span></tt> into the build.
-Overriding <tt class="docutils literal"><span class="pre">val</span> <span class="pre">settings</span></tt> should only be done by plugins intending to
+<h2>Avoid overriding <span class="pre">settings</span><a class="headerlink" href="#avoid-overriding-settings" title="Permalink to this headline">¶</a></h2>
+<p>sbt will automatically load your plugin's <span class="pre">settings</span> into the build.
+Overriding <span class="pre">val settings</span> should only be done by plugins intending to
 provide commands. Regular plugins defining tasks and settings should
 provide a sequence named after the plugin like so:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">obfuscateSettings</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(...)</span>
@@ -117,28 +117,28 @@ used. See later section for how the settings should be scoped.</p>
 </div>
 <div class="section" id="reuse-existing-keys">
 <h2>Reuse existing keys<a class="headerlink" href="#reuse-existing-keys" title="Permalink to this headline">¶</a></h2>
-<p>SBT has a number of <a class="reference external" href="../../api/sbt/Keys%24.html">predefined keys</a>.
+<p>sbt has a number of <a class="reference external" href="../../api/sbt/Keys%24.html">predefined keys</a>.
 Where possible, reuse them in your plugin. For instance, don't define:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sourceFiles</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](</span><span class="s">&quot;Some source files&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Instead, simply reuse SBT's existing <tt class="docutils literal"><span class="pre">sources</span></tt> key.</p>
+<p>Instead, simply reuse sbt's existing <span class="pre">sources</span> key.</p>
 </div>
 <div class="section" id="avoid-namespace-clashes">
 <h2>Avoid namespace clashes<a class="headerlink" href="#avoid-namespace-clashes" title="Permalink to this headline">¶</a></h2>
-<p>Sometimes, you need a new key, because there is no existing SBT key. In
+<p>Sometimes, you need a new key, because there is no existing sbt key. In
 this case, use a plugin-specific prefix, both in the (string) key name
-used in the SBT namespace and in the Scala <tt class="docutils literal"><span class="pre">val</span></tt>. There are two
+used in the sbt namespace and in the Scala <span class="pre">val</span>. There are two
 acceptable ways to accomplish this goal.</p>
 <div class="section" id="just-use-a-val-prefix">
-<h3>Just use a <tt class="docutils literal"><span class="pre">val</span></tt> prefix<a class="headerlink" href="#just-use-a-val-prefix" title="Permalink to this headline">¶</a></h3>
+<h3>Just use a <span class="pre">val</span> prefix<a class="headerlink" href="#just-use-a-val-prefix" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">sbtobfuscate</span>
 <span class="k">object</span> <span class="nc">Plugin</span> <span class="k">extends</span> <span class="n">sbt</span><span class="o">.</span><span class="nc">Plugin</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">obfuscateStylesheet</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;Obfuscate stylesheet&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>In this approach, every <tt class="docutils literal"><span class="pre">val</span></tt> starts with <tt class="docutils literal"><span class="pre">obfuscate</span></tt>. A user of the
+<p>In this approach, every <span class="pre">val</span> starts with <span class="pre">obfuscate</span>. A user of the
 plugin would refer to the settings like this:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">obfuscateStylesheet</span> <span class="o">:=</span> <span class="o">...</span>
 </pre></div>
@@ -183,12 +183,12 @@ and your plugin defines a target directory to receive the resulting
 PDFs. That target directory is scoped in its own configuration, so it is
 distinct from other target directories. Thus, these two definitions use
 the same <em>key</em>, but they represent distinct <em>values</em>. So, in a user's
-<tt class="docutils literal"><span class="pre">build.sbt</span></tt>, we might see:</p>
+<span class="pre">build.sbt</span>, we might see:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">target</span> <span class="n">in</span> <span class="nc">PDFPlugin</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;mytarget&quot;</span> <span class="o">/</span> <span class="s">&quot;pdf&quot;</span>
 <span class="n">target</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;mytarget&quot;</span>
 </pre></div>
 </div>
-<p>In the PDF plugin, this is achieved with an <tt class="docutils literal"><span class="pre">inConfig</span></tt> definition:</p>
+<p>In the PDF plugin, this is achieved with an <span class="pre">inConfig</span> definition:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">settings</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">sbt.Project.Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">LWM</span><span class="o">)(</span><span class="nc">Seq</span><span class="o">(</span>
   <span class="n">target</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;target&quot;</span> <span class="o">/</span> <span class="s">&quot;docs&quot;</span> <span class="k">#</span> <span class="n">the</span> <span class="n">default</span> <span class="n">value</span>
 <span class="o">))</span>
@@ -216,9 +216,9 @@ task (see below).</p>
 </div>
 <p>should be used to create a &quot;cross-task&quot; configuration. The task
 definitions don't change in this case, but the default configuration
-does. For example, the <tt class="docutils literal"><span class="pre">profile</span></tt> configuration can extend the test
+does. For example, the <span class="pre">profile</span> configuration can extend the test
 configuration with additional settings and changes to allow profiling in
-SBT. Plugins should not create arbitrary Configurations, but utilize
+sbt. Plugins should not create arbitrary Configurations, but utilize
 them for specific purposes and builds.</p>
 <p>Configurations actually tie into dependency resolution (with Ivy) and
 can alter generated pom files.</p>
@@ -248,10 +248,10 @@ flexibility.</p>
 <span class="o">)</span>
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">baseObfuscateSettings</span></tt> value provides base configuration for the
+<p>The <span class="pre">baseObfuscateSettings</span> value provides base configuration for the
 plugin's tasks. This can be re-used in other configurations if projects
-require it. The <tt class="docutils literal"><span class="pre">obfuscateSettings</span></tt> value provides the default
-<tt class="docutils literal"><span class="pre">Compile</span></tt> scoped settings for projects to use directly. This gives the
+require it. The <span class="pre">obfuscateSettings</span> value provides the default
+<span class="pre">Compile</span> scoped settings for projects to use directly. This gives the
 greatest flexibility in using features provided by a plugin. Here's how
 the raw settings may be reused:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">Project</span><span class="o">.</span><span class="n">inConfig</span><span class="o">(</span><span class="nc">Test</span><span class="o">)(</span><span class="n">sbtObfuscate</span><span class="o">.</span><span class="nc">Plugin</span><span class="o">.</span><span class="n">baseObfuscateSettings</span><span class="o">)</span>
@@ -281,8 +281,8 @@ task itself.</p>
 <span class="o">)</span>
 </pre></div>
 </div>
-<p>In the above example, <tt class="docutils literal"><span class="pre">sources</span> <span class="pre">in</span> <span class="pre">obfuscate</span></tt> is scoped under the main
-task, <tt class="docutils literal"><span class="pre">obfuscate</span></tt>.</p>
+<p>In the above example, <span class="pre">sources in obfuscate</span> is scoped under the main
+task, <span class="pre">obfuscate</span>.</p>
 </div>
 </div>
 </div>
@@ -298,10 +298,10 @@ general rule is <em>be careful what you touch</em>.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Global settings should <em>not</em> be placed into a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file.</p>
+<p>Global settings should <em>not</em> be placed into a <span class="pre">build.sbt</span> file.</p>
 <p>When overriding global settings, care should be taken to ensure previous
 settings from other plugins are not ignored. e.g. when creating a new
-<tt class="docutils literal"><span class="pre">onLoad</span></tt> handler, ensure that the previous <tt class="docutils literal"><span class="pre">onLoad</span></tt> handler is not
+<span class="pre">onLoad</span> handler, ensure that the previous <span class="pre">onLoad</span> handler is not
 removed.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyPlugin</span> <span class="k">extends</span> <span class="nc">Plugin</span> <span class="o">{</span>
    <span class="k">val</span> <span class="n">globalSettigns</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
@@ -322,10 +322,10 @@ removed.</p>
                 <div id="scroller">
                   <div id="toc"><ul>
 <li><a class="reference internal" href="#">Plugins Best Practices</a><ul>
-<li><a class="reference internal" href="#avoid-overriding-settings">Avoid overriding <tt class="docutils literal"><span class="pre">settings</span></tt></a></li>
+<li><a class="reference internal" href="#avoid-overriding-settings">Avoid overriding <span class="pre">settings</span></a></li>
 <li><a class="reference internal" href="#reuse-existing-keys">Reuse existing keys</a></li>
 <li><a class="reference internal" href="#avoid-namespace-clashes">Avoid namespace clashes</a><ul>
-<li><a class="reference internal" href="#just-use-a-val-prefix">Just use a <tt class="docutils literal"><span class="pre">val</span></tt> prefix</a></li>
+<li><a class="reference internal" href="#just-use-a-val-prefix">Just use a <span class="pre">val</span> prefix</a></li>
 <li><a class="reference internal" href="#use-a-nested-object">Use a nested object</a></li>
 </ul>
 </li>
