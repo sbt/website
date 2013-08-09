@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Configure and use logging</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="interactive.html">Interactive mode</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -204,13 +204,11 @@ For example,</p>
 Valid values are <span class="pre">Error</span>, <span class="pre">Warn</span>, <span class="pre">Info</span>, and <span class="pre">Debug</span> in order of increasing verbosity.
 To change the global logging level, set <span class="pre">logLevel in Global</span>.
 For example, to set it temporarily from the sbt prompt,</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="go">   &gt; set logLevel in Global := Level.Warn</span>
-
-
-<span class="go">- id: tasklevel</span>
-<span class="go">  :title: Change the logging level for a specific task, configuration, or project</span>
-<span class="go">  setting: logLevel in compile := Level.Debug</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>logLevel in Global :<span class="o">=</span> Level.Warn
 </pre></div>
+</div>
+<div class="full-howto section" id="tasklevel">
+<h2>Change the logging level for a specific task, configuration, or project<a class="headerlink" href="#tasklevel" title="Permalink to this headline">¶</a></h2>
 </div>
 <p>The amount of logging is controlled by the <span class="pre">logLevel</span> setting, which takes values from the <span class="pre">Level</span> enumeration.
 Valid values are <span class="pre">Error</span>, <span class="pre">Warn</span>, <span class="pre">Info</span>, and <span class="pre">Debug</span> in order of increasing verbosity.
@@ -299,6 +297,7 @@ To log, a task uses the <span class="pre">log</span> member from the <span class
 <li><a class="reference internal" href="#tasklast">View the previous logging output of a specific task</a></li>
 <li><a class="reference internal" href="#printwarnings">Show warnings from the previous compilation</a></li>
 <li><a class="reference internal" href="#level">Change the logging level globally</a></li>
+<li><a class="reference internal" href="#tasklevel">Change the logging level for a specific task, configuration, or project</a></li>
 <li><a class="reference internal" href="#trace">Configure printing of stack traces</a></li>
 <li><a class="reference internal" href="#nobuffer">Print the output of tests immediately instead of buffering</a></li>
 <li><a class="reference internal" href="#custom">Add a custom logger</a></li>

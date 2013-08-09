@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Index</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="Extending/Settings-Core.html">Settings Core</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -207,17 +207,17 @@ and <a class="reference internal" href="Detailed-Topics/Paths.html"><em>Paths</e
 <ul class="simple">
 <li><span class="pre">/</span> When called on a single File, this is <span class="pre">new File(x,y)</span>. For
 <span class="pre">Seq[File]</span>, this is applied for each member of the sequence..</li>
-<li><span class="pre"><a href="#id8"><span class="problematic" id="id9">*</span></a></span> and <span class="pre"><a href="#id10"><span class="problematic" id="id11">**</span></a></span> are methods for selecting children (<span class="pre"><a href="#id12"><span class="problematic" id="id13">*</span></a></span>) or
-descendants (<span class="pre"><a href="#id14"><span class="problematic" id="id15">**</span></a></span>) of a <span class="pre">File</span> or <span class="pre">Seq[File]</span> that match a
+<li><span class="pre">*</span> and <span class="pre">**</span> are methods for selecting children (<span class="pre">*</span>) or
+descendants (<span class="pre">**</span>) of a <span class="pre">File</span> or <span class="pre">Seq[File]</span> that match a
 filter.</li>
-<li><span class="pre"><a href="#id16"><span class="problematic" id="id17">|</span></a></span>, <span class="pre">||</span>, <span class="pre">&amp;&amp;</span>, <span class="pre">&amp;</span>, <span class="pre">-</span>, and <span class="pre">--</span> are methods for
+<li><span class="pre">|</span>, <span class="pre">||</span>, <span class="pre">&amp;&amp;</span>, <span class="pre">&amp;</span>, <span class="pre">-</span>, and <span class="pre">--</span> are methods for
 combining filters, which are often used for selecting <span class="pre">File</span>s.
 See
 <a class="reference external" href="../api/sbt/NameFilter.html">NameFilter</a>
 and
 <a class="reference external" href="../api/sbt/FileFilter.html">FileFilter</a>.
 Note that methods with these names also exist for other types, such
-as collections (like `Seq) and
+as collections (like <span class="pre">Seq</span>) and
 <a class="reference external" href="../api/sbt/complete/Parser.html">Parser</a>
 (see <a class="reference internal" href="Detailed-Topics/Parsing-Input.html"><em>Parsing and tab completion</em></a>).</li>
 <li><span class="pre">x</span> Used to construct mappings from a <span class="pre">File</span> to another <span class="pre">File</span>
@@ -228,8 +228,8 @@ representation. This is a common name in Scala, used by types like
 <span class="pre">Option</span>.</li>
 </ul>
 </div>
-<div class="section" id="id19">
-<h3>Dependency Management<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>Dependency Management<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>See <a class="reference internal" href="Detailed-Topics/Library-Management.html"><em>Library Management</em></a> for full documentation.</p>
 <ul class="simple">
 <li><span class="pre">%</span> This is used to build up a
@@ -259,9 +259,9 @@ used for <a class="reference internal" href="Extending/Input-Tasks.html"><em>Inp
 <li><span class="pre">??</span>, <span class="pre">?</span> Methods for making a Parser optional. <span class="pre">?</span> is postfix.</li>
 <li><span class="pre">id</span> Used for turning a Char or String literal into a Parser. It is
 generally used to trigger an implicit conversion to a Parser.</li>
-<li><span class="pre"><a href="#id25"><span class="problematic" id="id26">|</span></a></span>, <span class="pre">||</span> Choice methods. These are common method names in Scala.</li>
+<li><span class="pre">|</span>, <span class="pre">||</span> Choice methods. These are common method names in Scala.</li>
 <li><span class="pre">^^^</span> Produces a constant value when a Parser matches.</li>
-<li><span class="pre">+</span>, <span class="pre"><a href="#id27"><span class="problematic" id="id28">*</span></a></span> Postfix repetition methods. These are common method
+<li><span class="pre">+</span>, <span class="pre">*</span> Postfix repetition methods. These are common method
 names in Scala.</li>
 <li><span class="pre">map</span>, <span class="pre">flatMap</span> Transforms the result of a Parser. These are
 common method names in Scala.</li>
@@ -285,7 +285,7 @@ is the type representing the actual forked process. The methods to
 combine processes start with <span class="pre">#</span> so that they share the same
 precedence.</p>
 <ul class="simple">
-<li><span class="pre">run</span>, <span class="pre">!</span>, <span class="pre">!!</span>, <span class="pre">!&lt;</span>, <span class="pre">lines</span>, <span class="pre"><a href="#id31"><span class="problematic" id="id32">lines_</span></a></span><span class="pre">!</span> are different
+<li><span class="pre">run</span>, <span class="pre">!</span>, <span class="pre">!!</span>, <span class="pre">!&lt;</span>, <span class="pre">lines</span>, <span class="pre">lines_!</span> are different
 ways to start a process once it has been defined. The <span class="pre">lines</span>
 variants produce a <span class="pre">Stream[String]</span> to obtain the output lines.</li>
 <li><span class="pre">#&lt;</span>, <span class="pre">#&lt;&lt;</span>, <span class="pre">#&gt;</span> are used to get input for a process from a
@@ -315,7 +315,7 @@ another.</li>
 <li><a class="reference internal" href="#methods">Methods</a><ul>
 <li><a class="reference internal" href="#id5">Settings and Tasks</a></li>
 <li><a class="reference internal" href="#file-and-io">File and IO</a></li>
-<li><a class="reference internal" href="#id19">Dependency Management</a></li>
+<li><a class="reference internal" href="#id9">Dependency Management</a></li>
 <li><a class="reference internal" href="#parsing">Parsing</a></li>
 <li><a class="reference internal" href="#processes">Processes</a></li>
 </ul>

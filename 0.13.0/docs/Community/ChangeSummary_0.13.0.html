@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">0.13.0 Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="ChangeSummary_0.12.0.html">0.12.0 Changes</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -106,6 +106,7 @@
 <li>sbt no longer overrides the Scala version in dependencies.  This allows independent configurations to depend on different Scala versions and treats Scala dependencies other than scala-library as normal dependencies.  However, it can result in resolved versions other than <span class="pre">scalaVersion</span> for those other Scala libraries.</li>
 <li>JLine is now configured differently for Cygwin.  See <a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>.</li>
 <li>Jline and Ansi codes work better on Windows now.  CI servers might have to explictly disable Ansi codes via <span class="pre">-Dsbt.log.format=false</span>.</li>
+<li>JLine now tries to respect <span class="pre">~/.inputrc</span>.</li>
 <li>Forked tests and runs now use the project's base directory as the current working directory.</li>
 <li><span class="pre">compileInputs</span> is now defined in <span class="pre">(Compile,compile)</span> instead of just <span class="pre">Compile</span></li>
 <li>The result of running tests is now <a class="reference external" href="../../api/#sbt.Tests$$Output">Tests.Output</a>.</li>

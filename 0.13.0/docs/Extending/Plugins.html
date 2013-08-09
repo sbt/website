@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Plugins</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Input-Tasks.html">Input Tasks</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -100,9 +100,8 @@ example, you might use
 markdown processing task. A plugin can define a sequence of sbt Settings
 that are automatically added to all projects or that are explicitly
 declared for selected projects. For example, a plugin might add a
-'proguard' task and associated (overridable) settings. Because
-<a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <span class="pre">commands</span> setting, a plugin can
-also fulfill the role that processors did in 0.7.x.</p>
+<span class="pre">proguard</span> task and associated (overridable) settings.
+Also, <a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <span class="pre">commands</span> setting</p>
 <p>The <a class="reference internal" href="Plugins-Best-Practices.html"><em>Plugins Best Practices</em></a> page describes the
 currently evolving guidelines to writing sbt plugins. See also the
 general <a class="reference internal" href="../Detailed-Topics/Best-Practices.html"><em>Best Practices</em></a>.</p>
@@ -141,7 +140,7 @@ definition, just like for a normal project.</li>
 <li>Sources in the <span class="pre">project/</span> project are the build definition files
 and are compiled using the classpath built from the managed and
 unmanaged dependencies.</li>
-<li>Project dependencies can be declared in
+<li>Project dependencies can be declared in <span class="pre">project/plugins.sbt</span> or
 <span class="pre">project/project/Build.scala</span> and will be available to the build
 definition sources. Think of <span class="pre">project/project/</span> as the build
 definition for the build definition.</li>
@@ -163,13 +162,7 @@ project that have not been saved are dropped.</p>
 This means that plugins will not see classes or resources from build definitions.</p>
 <div class="section" id="global-plugins">
 <h3>Global plugins<a class="headerlink" href="#global-plugins" title="Permalink to this headline">¶</a></h3>
-<p>In sbt 0.7.x, a processor was a way to add new commands to sbt and
-distribute them to users. A key feature was the ability to have per-user
-processors so that once declared, it could be used in all projects for
-that user. In sbt 0.10+, plugins and processors are unified.
-Specifically, a plugin can add commands and plugins can be declared
-globally for a user.</p>
-<p>The <span class="pre">~/.sbt/plugins/</span> directory is treated as a global plugin
+<p>The <span class="pre">~/.sbt/0.13/plugins/</span> directory is treated as a global plugin
 definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.</p>
@@ -227,34 +220,27 @@ demonstrates how to declare plugins.</p>
 </div>
 <div class="section" id="d-project-dependency">
 <h4>1d) Project dependency<a class="headerlink" href="#d-project-dependency" title="Permalink to this headline">¶</a></h4>
-<p>This variant shows how to use the external project support in sbt 0.10
-to declare a source dependency on a plugin. This means that the plugin
-will be built from source and used on the classpath.</p>
-<p>Edit <span class="pre">project/project/Build.scala</span></p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
-<span class="k">object</span> <span class="nc">PluginDef</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
-   <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">projects</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">root</span><span class="o">)</span>
-   <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;plugins&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span> <span class="n">webPlugin</span> <span class="o">)</span>
-   <span class="k">lazy</span> <span class="k">val</span> <span class="n">webPlugin</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/JamesEarlDouglas/xsbt-web-plugin&quot;</span><span class="o">)</span>
-<span class="o">}</span>
+<p>This variant shows how to use sbt's external project support to declare a source dependency on a plugin.
+This means that the plugin will be built from source and used on the classpath.</p>
+<p>Edit <span class="pre">project/plugins.sbt</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)</span> <span class="o">).</span><span class="n">dependsOn</span><span class="o">(</span> <span class="n">assemblyPlugin</span> <span class="o">)</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">assemblyPlugin</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/sbt/sbt-assembly&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>If sbt is running, run <span class="pre">reload</span>.</p>
-<p>Note that this approach can be useful used when developing a plugin. A
-project that uses the plugin will rebuild the plugin on <span class="pre">reload</span>. This
-saves the intermediate steps of <span class="pre">publishLocal</span> and <span class="pre">cleanPlugins</span>
-required in 0.7. It can also be used to work with the development
-version of a plugin from its repository.</p>
-<p>It is recommended to explicitly specify the commit or tag by appending
-it to the repository as a fragment:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">webPlugin</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/JamesEarlDouglas/xsbt-web-plugin#0.9.7&quot;</span><span class="o">)</span>
+<p>Note that this approach can be useful used when developing a plugin.
+A project that uses the plugin will rebuild the plugin on <span class="pre">reload</span>.
+This saves the intermediate steps of <span class="pre">publishLocal</span> and <span class="pre">update</span>.
+It can also be used to work with the development version of a plugin from its repository.</p>
+<p>It is recommended to explicitly specify the commit or tag by appending it to the repository as a fragment:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">assemblyPlugin</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/sbt/sbt-assembly#0.9.1&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="use-the-library">
 <h4>2) Use the library<a class="headerlink" href="#use-the-library" title="Permalink to this headline">¶</a></h4>
 <p>Grizzled Scala is ready to be used in build definitions. This includes
-the <span class="pre">eval</span> and <span class="pre">set</span> commands and <span class="pre">.sbt</span> and <span class="pre">project/</span><span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">.scala</span>
+the <span class="pre">eval</span> and <span class="pre">set</span> commands and <span class="pre">.sbt</span> and <span class="pre">project/*.scala</span>
 files.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">eval </span>grizzled.sys.os
 </pre></div>
@@ -275,10 +261,10 @@ files.</p>
 </div>
 <div class="section" id="creating-a-plugin">
 <h2>Creating a plugin<a class="headerlink" href="#creating-a-plugin" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>Introduction<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Introduction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>A minimal plugin is a Scala library that is built against the version of
-Scala that sbt runs (currently, 2.9.1) or a Java library. Nothing
+Scala that sbt runs (currently, 2.10.2) or a Java library. Nothing
 special needs to be done for this type of library, as shown in the
 previous section. A more typical plugin will provide sbt tasks,
 commands, or settings. This kind of plugin may provide these settings
@@ -294,13 +280,16 @@ repository. The plugin can be used as described in the previous section.</p>
 singleton, declared like <span class="pre">object MyPlugin extends Plugin</span>, are
 wildcard imported in <span class="pre">set</span>, <span class="pre">eval</span>, and <span class="pre">.sbt</span> files. Typically,
 this is used to provide new keys (SettingKey, TaskKey, or InputKey) or
-core methods without requiring an import or qualification. In addition,
-the <span class="pre">settings</span> member of the <span class="pre">Plugin</span> is automatically appended to
-each project's settings. This allows a plugin to automatically provide
-new functionality or new defaults. One main use of this feature is to
-globally add commands, like a processor in sbt 0.7.x. These features
-should be used judiciously because the automatic activation removes
-control from the build author (the user of the plugin).</p>
+core methods without requiring an import or qualification.</p>
+<p>In addition, a <span class="pre">Plugin</span> can implement <span class="pre">projectSettings</span>, <span class="pre">buildSettings</span>, and <span class="pre">globalSettings</span> as appropriate.
+The Plugin's <span class="pre">projectSettings</span> is automatically appended to each project's settings.
+The <span class="pre">buildSettings</span> is appended to each build's settings (that is, <span class="pre">in ThisBuild</span>).
+The <span class="pre">globalSettings</span> is appended once to the global settings (<span class="pre">in Global</span>).
+These allow a plugin to automatically provide new functionality or new defaults.
+One main use of this feature is to globally add commands, such as for IDE plugins.
+Use <span class="pre">globalSettings</span> to define the default value of a setting.</p>
+<p>These automatic features should be used judiciously because the automatic activation generally reduces control for the build author (the user of the plugin).
+Some control is returned to them via <span class="pre">Project.autoSettings</span>, which changes how automatically added settings are added and in what order.</p>
 </div>
 <div class="section" id="example-plugin">
 <h3>Example Plugin<a class="headerlink" href="#example-plugin" title="Permalink to this headline">¶</a></h3>
@@ -337,25 +326,11 @@ control from the build author (the user of the plugin).</p>
 </div>
 <div class="section" id="usage-example">
 <h3>Usage example<a class="headerlink" href="#usage-example" title="Permalink to this headline">¶</a></h3>
-<p>A light build definition that uses the plugin might look like:</p>
+<p>A build definition that uses the plugin might look like:</p>
+<p><span class="pre">build.sbt</span></p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="nc">MyPlugin</span><span class="o">.</span><span class="n">newSettings</span>
 
-<span class="n">newSetting</span> <span class="o">:=</span> <span class="s">&quot;light&quot;</span>
-</pre></div>
-</div>
-<p>A full build definition that uses this plugin might look like:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyBuild</span> <span class="k">extends</span> <span class="nc">Build</span>
-<span class="o">{</span>
-    <span class="k">lazy</span> <span class="k">val</span> <span class="n">projects</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">root</span><span class="o">)</span>
-    <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">settings</span><span class="o">(</span> <span class="nc">MyPlugin</span><span class="o">.</span><span class="n">newSettings</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span>
-        <span class="nc">MyPlugin</span><span class="o">.</span><span class="n">newSetting</span> <span class="o">:=</span> <span class="s">&quot;full&quot;</span>
-    <span class="o">)</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-<p>Individual settings could be defined in <span class="pre">MyBuild.scala</span> above or in a
-<span class="pre">build.sbt</span> file:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">newSettings</span> <span class="o">:=</span> <span class="s">&quot;overridden&quot;</span>
+<span class="n">newSetting</span> <span class="o">:=</span> <span class="s">&quot;example&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -394,7 +369,7 @@ accept arguments and affect the execution state.</p>
 <div class="section" id="global-plugins-example">
 <h3>Global plugins example<a class="headerlink" href="#global-plugins-example" title="Permalink to this headline">¶</a></h3>
 <p>The simplest global plugin definition is declaring a library or plugin
-in <span class="pre">~/.sbt/plugins/build.sbt</span>:</p>
+in <span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">build.sbt</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.example&quot;</span> <span class="o">%%</span> <span class="s">&quot;example-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;0.1&quot;</span>
 </pre></div>
 </div>
@@ -402,14 +377,14 @@ in <span class="pre">~/.sbt/plugins/build.sbt</span>:</p>
 user.</p>
 <p>In addition:</p>
 <ol class="arabic simple">
-<li>Jars may be placed directly in <span class="pre">~/.sbt/plugins/lib/</span> and will be
+<li>Jars may be placed directly in <span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">lib/</span> and will be
 available to every build definition for the current user.</li>
 <li>Dependencies on plugins built from source may be declared in
-~/.sbt/plugins/project/Build.scala` as described at
+<span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">project/Build.scala</span> as described at
 <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a>.</li>
 <li>A Plugin may be directly defined in Scala source files in
-<span class="pre">~/.sbt/plugins/</span>, such as <span class="pre">~/.sbt/plugins/MyPlugin.scala</span>.
-<span class="pre">~/.sbt/plugins/build.sbt</span> should contain <span class="pre">sbtPlugin := true</span>.
+<span class="pre">~/.sbt/0.13/plugins/</span>, such as <span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">MyPlugin.scala</span>.
+<span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">/build.sbt</span> should contain <span class="pre">sbtPlugin := true</span>.
 This can be used for quicker turnaround when developing a plugin
 initially:<ol class="arabic">
 <li>Edit the global plugin code</li>
@@ -422,7 +397,7 @@ of the project using the plugin.</li>
 </ol>
 </li>
 </ol>
-<p>These are all consequences of <span class="pre">~/.sbt/plugins/</span> being a standard
+<p>These are all consequences of <span class="pre">~/.sbt/0.13/plugins/</span> being a standard
 project whose classpath is added to every sbt project's build
 definition.</p>
 </div>
@@ -460,7 +435,7 @@ plugin is consistent with and plays well with other plugins.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#creating-a-plugin">Creating a plugin</a><ul>
-<li><a class="reference internal" href="#id3">Introduction</a></li>
+<li><a class="reference internal" href="#id1">Introduction</a></li>
 <li><a class="reference internal" href="#description">Description</a></li>
 <li><a class="reference internal" href="#example-plugin">Example Plugin</a></li>
 <li><a class="reference internal" href="#usage-example">Usage example</a></li>

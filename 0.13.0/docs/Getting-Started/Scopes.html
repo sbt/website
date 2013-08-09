@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Scopes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Basic-Def.html"><span class="pre">.sbt</span> Build Definition</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -209,7 +209,7 @@ build&quot; scope.</li>
 <li><span class="pre">intask</span> identifies the task axis.</li>
 <li><span class="pre">key</span> identifies the key being scoped.</li>
 </ul>
-<p><span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span> can appear for each axis, referring to the <span class="pre">Global</span> scope.</p>
+<p><span class="pre">*</span> can appear for each axis, referring to the <span class="pre">Global</span> scope.</p>
 <p>If you omit part of the scoped key, it will be inferred as follows:</p>
 <ul class="simple">
 <li>the current project will be used if you omit the project.</li>
@@ -226,24 +226,24 @@ scope.</li>
 <li><span class="pre">test:fullClasspath</span>: specifies the configuration, so this is
 <span class="pre">fullClasspath</span> in the <span class="pre">test</span> configuration, with defaults for
 the other two scope axes.</li>
-<li><span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">:fullClasspath</span>: specifies <span class="pre">Global</span> for the configuration,
+<li><span class="pre">*:fullClasspath</span>: specifies <span class="pre">Global</span> for the configuration,
 rather than the default configuration.</li>
 <li><span class="pre">doc::fullClasspath</span>: specifies the <span class="pre">fullClasspath</span> key scoped
 to the <span class="pre">doc</span> task, with the defaults for the project and
 configuration axes.</li>
-<li><span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a/test:fullClasspath</span>
+<li><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span>
 specifies a project,
-<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a</span>, where the project
-is identified with the build <span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}</span> and
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>, where the project
+is identified with the build <span class="pre">{file:/home/hp/checkout/hello/}</span> and
 then a project id inside that build <span class="pre">default-aea33a</span>. Also
 specifies configuration <span class="pre">test</span>, but leaves the default task axis.</li>
-<li><span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}/test:fullClasspath</span> sets the
+<li><span class="pre">{file:/home/hp/checkout/hello/}/test:fullClasspath</span> sets the
 project axis to &quot;entire build&quot; where the build is
-<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}</span></li>
+<span class="pre">{file:/home/hp/checkout/hello/}</span></li>
 <li><span class="pre">{.}/test:fullClasspath</span> sets the project axis to &quot;entire build&quot;
 where the build is <span class="pre">{.}</span>. <span class="pre">{.}</span> can be written <span class="pre">ThisBuild</span> in
 Scala code.</li>
-<li><span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}/compile:doc::fullClasspath</span> sets
+<li><span class="pre">{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</span> sets
 all three scope axes.</li>
 </ul>
 </div>
@@ -293,9 +293,9 @@ The value resulting from the task will have type
 <span class="pre">scala.collection.Seq[sbt.Attributed[java.io.File]]</span>.</p>
 <p>&quot;Provided by&quot; points you to the scoped key that defines the value, in
 this case
-<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a/test:fullClasspath</span>
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span>
 (which is the <span class="pre">fullClasspath</span> key scoped to the <span class="pre">test</span>
-configuration and the <span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a</span>
+configuration and the <span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>
 project).</p>
 <p>&quot;Dependencies&quot; may not make sense yet; stay tuned for the <a class="reference internal" href="More-About-Settings.html"><em>next page</em></a>.</p>
 <p>You can also see the delegates; if the value were not defined, sbt would
@@ -305,19 +305,19 @@ search through:</p>
 <span class="pre">compile:fullClasspath</span>). In these scoped keys, the project is
 unspecified meaning &quot;current project&quot; and the task is unspecified
 meaning <span class="pre">Global</span></li>
-<li>configuration set to <span class="pre">Global</span> (<span class="pre"><a href="#id5"><span class="problematic" id="id6">*</span></a></span><span class="pre">:fullClasspath</span>), since project
+<li>configuration set to <span class="pre">Global</span> (<span class="pre">*:fullClasspath</span>), since project
 is still unspecified it's &quot;current project&quot; and task is still
 unspecified so <span class="pre">Global</span></li>
 <li>project set to <span class="pre">{.}</span> or <span class="pre">ThisBuild</span> (meaning the entire build, no
 specific project)</li>
-<li>project axis set to <span class="pre">Global</span> (<span class="pre"><a href="#id7"><span class="problematic" id="id8">*</span></a></span><span class="pre">/test:fullClasspath</span>) (remember,
+<li>project axis set to <span class="pre">Global</span> (<span class="pre">*/test:fullClasspath</span>) (remember,
 an unspecified project means current, so searching <span class="pre">Global</span> here is
-new; i.e. <span class="pre"><a href="#id9"><span class="problematic" id="id10">*</span></a></span> and &quot;no project shown&quot; are different for the project
-axis; i.e. <span class="pre"><a href="#id11"><span class="problematic" id="id12">*</span></a></span><span class="pre">/test:fullClasspath</span> is not the same as
+new; i.e. <span class="pre">*</span> and &quot;no project shown&quot; are different for the project
+axis; i.e. <span class="pre">*/test:fullClasspath</span> is not the same as
 <span class="pre">test:fullClasspath</span>)</li>
 <li>both project and configuration set to <span class="pre">Global</span>
-(<span class="pre"><em>/</em></span><span class="pre">:fullClasspath</span>) (remember that unspecified task means
-<span class="pre">Global</span> already, so <span class="pre"><em>/</em></span><span class="pre">:fullClasspath</span> uses <span class="pre">Global</span> for all
+(<span class="pre">*/*:fullClasspath</span>) (remember that unspecified task means
+<span class="pre">Global</span> already, so <span class="pre">*/*:fullClasspath</span> uses <span class="pre">Global</span> for all
 three axes)</li>
 </ul>
 <p>Try <span class="pre">inspect fullClasspath</span> (as opposed to the above example,
@@ -325,7 +325,7 @@ three axes)</li>
 Because the configuration is omitted, it is autodetected as <span class="pre">compile</span>.
 <span class="pre">inspect compile:fullClasspath</span> should therefore look the same as
 <span class="pre">inspect fullClasspath</span>.</p>
-<p>Try <span class="pre">inspect </span><span class="pre"><a href="#id13"><span class="problematic" id="id14">*</span></a></span><span class="pre">:fullClasspath</span> for another contrast.
+<p>Try <span class="pre">inspect *:fullClasspath</span> for another contrast.
 <span class="pre">fullClasspath</span> is not defined in the <span class="pre">Global</span> configuration by
 default.</p>
 <p>Again, for more details, see <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a>.</p>
@@ -339,9 +339,9 @@ scoped to the current project, configuration <span class="pre">Global</span> and
 </pre></div>
 </div>
 <p>Run sbt and <span class="pre">inspect name</span> to see that it's provided by
-<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a/</span><span class="pre"><a href="#id15"><span class="problematic" id="id16">*</span></a></span><span class="pre">:name</span>, that is, the
-project is <span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a</span>, the
-configuration is <span class="pre"><a href="#id17"><span class="problematic" id="id18">*</span></a></span> (meaning global), and the task is not shown
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/*:name</span>, that is, the
+project is <span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>, the
+configuration is <span class="pre">*</span> (meaning global), and the task is not shown
 (which also means global).</p>
 <p><span class="pre">build.sbt</span> always defines settings for a single project, so the
 &quot;current project&quot; is the project you're defining in that particular
@@ -370,8 +370,8 @@ just an example):</p>
 <p>(<span class="pre">name in Global</span> implicitly converts the scope axis <span class="pre">Global</span> to a
 scope with all axes set to <span class="pre">Global</span>; the task and configuration are
 already <span class="pre">Global</span> by default, so here the effect is to make the project
-<span class="pre">Global</span>, that is, define <span class="pre"><em>/</em></span><span class="pre">:name</span> rather than
-<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/hp/checkout/hello/">file:/home/hp/checkout/hello/</a></span><span class="pre">}default-aea33a/</span><span class="pre"><a href="#id19"><span class="problematic" id="id20">*</span></a></span><span class="pre">:name</span>)</p>
+<span class="pre">Global</span>, that is, define <span class="pre">*/*:name</span> rather than
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/*:name</span>)</p>
 <p>If you aren't used to Scala, a reminder: it's important to understand
 that <span class="pre">in</span> and <span class="pre">:=</span> are just methods, not magic. Scala lets you write
 them in a nicer way, but you could also use the Java style:</p>

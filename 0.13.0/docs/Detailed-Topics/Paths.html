@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Paths</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Parsing-Input.html">Parsing and tab completion</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -154,7 +154,7 @@ call <span class="pre">get</span> on the resulting <span class="pre">PathFinder<
 a <span class="pre">Seq[File]</span>.</p>
 <div class="section" id="selecting-descendants">
 <h3>Selecting descendants<a class="headerlink" href="#selecting-descendants" title="Permalink to this headline">¶</a></h3>
-<p>The <span class="pre"><a href="#id2"><span class="problematic" id="id3">**</span></a></span> method accepts a <span class="pre">java.io.FileFilter</span> and selects all files
+<p>The <span class="pre">**</span> method accepts a <span class="pre">java.io.FileFilter</span> and selects all files
 matching that filter.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">scalaSources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;*.scala&quot;</span>
 </pre></div>
@@ -179,7 +179,7 @@ returns <span class="pre">File</span>s that existed at the time it was called.</
 <div class="section" id="selecting-children">
 <h3>Selecting children<a class="headerlink" href="#selecting-children" title="Permalink to this headline">¶</a></h3>
 <p>Selecting files that are immediate children of a subdirectory is done
-with a single <span class="pre"><a href="#id4"><span class="problematic" id="id5">*</span></a></span>:</p>
+with a single <span class="pre">*</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">scalaSources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;*.scala&quot;</span>
 </pre></div>
 </div>
@@ -188,7 +188,7 @@ directory.</p>
 </div>
 <div class="section" id="existing-files-only">
 <h3>Existing files only<a class="headerlink" href="#existing-files-only" title="Permalink to this headline">¶</a></h3>
-<p>If a selector, such as <span class="pre">/</span>, <span class="pre"><a href="#id6"><span class="problematic" id="id7">**</span></a></span>, or <span class="pre"><a href="#id8"><span class="problematic" id="id9">*</span></a></span>, is used on a path that
+<p>If a selector, such as <span class="pre">/</span>, <span class="pre">**</span>, or <span class="pre">*</span>, is used on a path that
 does not represent a directory, the path list will be empty:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">emptyFinder</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span> <span class="o">/</span> <span class="s">&quot;ivy.jar&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;not_possible&quot;</span>
 </pre></div>
@@ -196,9 +196,9 @@ does not represent a directory, the path list will be empty:</p>
 </div>
 <div class="section" id="name-filter">
 <h3>Name Filter<a class="headerlink" href="#name-filter" title="Permalink to this headline">¶</a></h3>
-<p>The argument to the child and descendent selectors <span class="pre"><a href="#id10"><span class="problematic" id="id11">*</span></a></span> and <span class="pre"><a href="#id12"><span class="problematic" id="id13">**</span></a></span> is
+<p>The argument to the child and descendent selectors <span class="pre">*</span> and <span class="pre">**</span> is
 actually a <span class="pre">NameFilter</span>. An implicit is used to convert a <span class="pre">String</span>
-to a <span class="pre">NameFilter</span> that interprets <span class="pre"><a href="#id14"><span class="problematic" id="id15">*</span></a></span> to represent zero or more
+to a <span class="pre">NameFilter</span> that interprets <span class="pre">*</span> to represent zero or more
 characters of any value. See the Name Filters section below for more
 information.</p>
 </div>
@@ -274,12 +274,12 @@ mappings from the input file to its (String) path in the jar or its
 </div>
 <div class="section" id="file-filters">
 <h2>File Filters<a class="headerlink" href="#file-filters" title="Permalink to this headline">¶</a></h2>
-<p>The argument to <span class="pre"><a href="#id16"><span class="problematic" id="id17">*</span></a></span> and <span class="pre"><a href="#id18"><span class="problematic" id="id19">**</span></a></span> is of type
+<p>The argument to <span class="pre">*</span> and <span class="pre">**</span> is of type
 <a class="reference external" href="http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html">java.io.FileFilter</a>.
 sbt provides combinators for constructing <span class="pre">FileFilter</span>s.</p>
 <p>First, a String may be implicitly converted to a <span class="pre">FileFilter</span>. The
 resulting filter selects files with a name matching the string, with a
-<span class="pre"><a href="#id20"><span class="problematic" id="id21">*</span></a></span> in the string interpreted as a wildcard. For example, the
+<span class="pre">*</span> in the string interpreted as a wildcard. For example, the
 following selects all Scala sources with the word &quot;Test&quot; in them:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">testSrcs</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span>  <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;*Test*.scala&quot;</span>
 </pre></div>

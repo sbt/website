@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Interacting with the Configuration System</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Global-Settings.html">Global Settings</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -111,8 +111,8 @@ above description, <span class="pre">{&lt;build-uri&gt;}</span> and <span class=
 project axis, <span class="pre">config:</span> is the configuration axis, and <span class="pre">inkey</span> is
 the task-specific axis. Unspecified components are taken to be the
 current project (project axis) or auto-detected (configuration and task
-axes). An asterisk (<span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span>) is used to explicitly refer to the <span class="pre">Global</span>
-context, as in <span class="pre"><em>/</em></span><span class="pre">:key</span>.</p>
+axes). An asterisk (<span class="pre">*</span>) is used to explicitly refer to the <span class="pre">Global</span>
+context, as in <span class="pre">*/*:key</span>.</p>
 <div class="section" id="selecting-the-configuration">
 <h3>Selecting the configuration<a class="headerlink" href="#selecting-the-configuration" title="Permalink to this headline">¶</a></h3>
 <p>In the case of an unspecified configuration (that is, when the
@@ -191,8 +191,8 @@ is defined. For example,</p>
 </pre></div>
 </div>
 <p>This shows that <span class="pre">libraryDependencies</span> has been defined on the current
-project (<span class="pre">{</span><span class="pre"><a class="reference external" href="file:/home/user/sample/">file:/home/user/sample/</a></span><span class="pre">}root</span>) in the global configuration
-(<span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">:</span>). For a task like <span class="pre">update</span>, the output looks like:</p>
+project (<span class="pre">{file:/home/user/sample/}root</span>) in the global configuration
+(<span class="pre">*:</span>). For a task like <span class="pre">update</span>, the output looks like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
 <span class="go">[info] Task: sbt.UpdateReport</span>
 <span class="go">[info] Provided by:</span>
@@ -292,7 +292,7 @@ Dependencies,</p>
 </pre></div>
 </div>
 <p>For <span class="pre">initialCommands</span>, we see that it comes from the global scope
-(<span class="pre"><em>/</em></span><span class="pre">:</span>). Combining this with the relevant output from
+(<span class="pre">*/*:</span>). Combining this with the relevant output from
 <span class="pre">inspect console</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">compile:console::initialCommands</span>
 </pre></div>
@@ -359,7 +359,7 @@ requested key.</p>
 </pre></div>
 </div>
 <p>This means that if there is no value specifically for
-<span class="pre"><a href="#id5"><span class="problematic" id="id6">*</span></a></span><span class="pre">:console::initialCommands</span>, the scopes listed under Delegates will
+<span class="pre">*:console::initialCommands</span>, the scopes listed under Delegates will
 be searched in order until a defined value is found.</p>
 </div>
 </div>

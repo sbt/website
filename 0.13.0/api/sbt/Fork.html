@@ -39,7 +39,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Represents a commad that can be forked.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
@@ -82,7 +83,7 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="sbt.Fork#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="sbt.Fork#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="&lt;init&gt;(commandName:String,runnerClass:Option[String]):sbt.Fork"></a>
       <a id="&lt;init&gt;:Fork"></a>
       <h4 class="signature">
@@ -94,7 +95,7 @@
         <span class="name">Fork</span><span class="params">(<span name="commandName">commandName: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="runnerClass">runnerClass: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">commandName</dt><dd class="cmt"><p>The java-like binary to fork.  This is expected to exist in bin/ of the Java home directory.</p></dd><dt class="param">runnerClass</dt><dd class="cmt"><p>If Some, this will be prepended to the <code>arguments</code> passed to the <code>apply</code> or <code>fork</code> methods.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -169,7 +170,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="sbt.Fork#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.Fork#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(config:sbt.ForkOptions,arguments:Seq[String]):Int"></a>
       <a id="apply(ForkOptions,Seq[String]):Int"></a>
       <h4 class="signature">
@@ -181,7 +182,10 @@
         <span class="name">apply</span><span class="params">(<span name="config">config: <a href="ForkOptions.html" class="extype" name="sbt.ForkOptions">ForkOptions</a></span>, <span name="arguments">arguments: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Forks the configured process, waits for it to complete, and returns the exit code.</p><div class="fullcomment"><div class="comment cmt"><p>Forks the configured process, waits for it to complete, and returns the exit code.
+The command executed is the <code>commandName</code> defined for this Fork instance.
+It is configured according to <code>config</code>.
+If <code>runnerClass</code> is defined for this Fork instance, it is prepended to <code>arguments</code> to define the arguments passed to the forked command.</p></div></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -214,7 +218,7 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.Fork#commandName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.Fork#commandName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="commandName:String"></a>
       <a id="commandName:String"></a>
       <h4 class="signature">
@@ -226,7 +230,7 @@
         <span class="name">commandName</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">The java-like binary to fork.</p><div class="fullcomment"><div class="comment cmt"><p>The java-like binary to fork.  This is expected to exist in bin/ of the Java home directory.</p></div></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -272,7 +276,7 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.Fork#fork" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.Fork#fork" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="fork(config:sbt.ForkOptions,arguments:Seq[String]):sbt.Process"></a>
       <a id="fork(ForkOptions,Seq[String]):Process"></a>
       <h4 class="signature">
@@ -284,7 +288,10 @@
         <span class="name">fork</span><span class="params">(<span name="config">config: <a href="ForkOptions.html" class="extype" name="sbt.ForkOptions">ForkOptions</a></span>, <span name="arguments">arguments: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <a href="Process.html" class="extype" name="sbt.Process">Process</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Forks the configured process and returns a <code>Process</code> that can be used to wait for completion or to terminate the forked process.</p><div class="fullcomment"><div class="comment cmt"><p>Forks the configured process and returns a <code>Process</code> that can be used to wait for completion or to terminate the forked process.
+The command executed is the <code>commandName</code> defined for this Fork instance.
+It is configured according to <code>config</code>.
+If <code>runnerClass</code> is defined for this Fork instance, it is prepended to <code>arguments</code> to define the arguments passed to the forked command.</p></div></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -375,7 +382,7 @@
         <span class="name">runnerClass</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">If Some, this will be prepended to the <code>arguments</code> passed to the <code>apply</code> or <code>fork</code> methods.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>

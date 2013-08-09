@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Update Report</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Understanding-incremental-recompilation.html">Understanding Incremental Recompilation</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -133,7 +133,7 @@ accepted. The individual filter types are discussed below.</p>
 <p>Configuration, module, and artifact filters are typically built by
 applying a <span class="pre">NameFilter</span> to each component of a <span class="pre">Configuration</span>,
 <span class="pre">ModuleID</span>, or <span class="pre">Artifact</span>. A basic <span class="pre">NameFilter</span> is implicitly
-constructed from a String, with <span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span> interpreted as a wildcard.</p>
+constructed from a String, with <span class="pre">*</span> interpreted as a wildcard.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="c1">// each argument is of type NameFilter</span>
 <span class="k">val</span> <span class="n">mf</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;*sbt*&quot;</span><span class="o">,</span> <span class="n">name</span> <span class="k">=</span> <span class="s">&quot;main&quot;</span> <span class="o">|</span> <span class="s">&quot;actions&quot;</span><span class="o">,</span> <span class="n">revision</span> <span class="k">=</span> <span class="s">&quot;1.*&quot;</span> <span class="o">-</span> <span class="s">&quot;1.0&quot;</span><span class="o">)</span>
@@ -166,8 +166,8 @@ returning a Boolean).</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h3>ConfigurationFilter<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>ConfigurationFilter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>A configuration filter essentially wraps a <span class="pre">NameFilter</span> and is
 explicitly constructed by the <span class="pre">configurationFilter</span> method:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">configurationFilter</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">NameFilter</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span>
@@ -176,7 +176,7 @@ explicitly constructed by the <span class="pre">configurationFilter</span> metho
 <p>If the argument is omitted, the filter matches all configurations.
 Functions of type <span class="pre">String =&gt; Boolean</span> are implicitly convertible to a
 <span class="pre">ConfigurationFilter</span>. As with <span class="pre">ModuleFilter</span>, <span class="pre">ArtifactFilter</span>,
-and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id4"><span class="problematic" id="id5">|</span></a></span>, and <span class="pre">-</span> methods may be used to
+and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre">|</span>, and <span class="pre">-</span> methods may be used to
 combine <span class="pre">ConfigurationFilter</span>s.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ConfigurationFilter</span> <span class="o">=</span> <span class="nc">Set</span><span class="o">(</span><span class="s">&quot;compile&quot;</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
@@ -186,8 +186,8 @@ combine <span class="pre">ConfigurationFilter</span>s.</p>
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id6">
-<h3>ModuleFilter<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>ModuleFilter<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>A module filter is defined by three <span class="pre">NameFilter</span>s: one for the
 organization, one for the module name, and one for the revision. Each
 component filter must match for the whole module filter to match. A
@@ -199,7 +199,7 @@ module filter is explicitly constructed by the <span class="pre">moduleFilter</s
 are omitted, the filter matches all <span class="pre">ModuleID</span>s. Functions of type
 <span class="pre">ModuleID =&gt; Boolean</span> are implicitly convertible to a
 <span class="pre">ModuleFilter</span>. As with <span class="pre">ConfigurationFilter</span>, <span class="pre">ArtifactFilter</span>,
-and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id7"><span class="problematic" id="id8">|</span></a></span>, and <span class="pre">-</span> methods may be used to
+and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre">|</span>, and <span class="pre">-</span> methods may be used to
 combine <span class="pre">ModuleFilter</span>s:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ModuleFilter</span> <span class="o">=</span> <span class="n">moduleFilter</span><span class="o">(</span><span class="n">name</span> <span class="k">=</span> <span class="s">&quot;dispatch-twitter&quot;</span><span class="o">,</span> <span class="n">revision</span> <span class="k">=</span> <span class="s">&quot;0.7.8&quot;</span><span class="o">)</span>
@@ -209,8 +209,8 @@ combine <span class="pre">ModuleFilter</span>s:</p>
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id9">
-<h3>ArtifactFilter<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>ArtifactFilter<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>An artifact filter is defined by four <span class="pre">NameFilter</span>s: one for the
 name, one for the type, one for the extension, and one for the
 classifier. Each component filter must match for the whole artifact
@@ -221,7 +221,7 @@ filter to match. An artifact filter is explicitly constructed by the
 </div>
 <p>Functions of type <span class="pre">Artifact =&gt; Boolean</span> are implicitly convertible to
 an <span class="pre">ArtifactFilter</span>. As with <span class="pre">ConfigurationFilter</span>,
-<span class="pre">ModuleFilter</span>, and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre"><a href="#id10"><span class="problematic" id="id11">|</span></a></span>, and <span class="pre">-</span>
+<span class="pre">ModuleFilter</span>, and <span class="pre">NameFilter</span>, the <span class="pre">&amp;</span>, <span class="pre">|</span>, and <span class="pre">-</span>
 methods may be used to combine <span class="pre">ArtifactFilter</span>s:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
 <span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">ArtifactFilter</span> <span class="o">=</span> <span class="n">artifactFilter</span><span class="o">(</span><span class="n">classifier</span> <span class="k">=</span> <span class="s">&quot;javadoc&quot;</span><span class="o">)</span>
@@ -231,8 +231,8 @@ methods may be used to combine <span class="pre">ArtifactFilter</span>s:</p>
 </div>
 <p>(The explicit types are optional here.)</p>
 </div>
-<div class="section" id="id12">
-<h3>DependencyFilter<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>DependencyFilter<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>A <span class="pre">DependencyFilter</span> is typically constructed by combining other
 <span class="pre">DependencyFilter</span>s together using <span class="pre">&amp;&amp;</span>, <span class="pre">||</span>, and <span class="pre">--</span>.
 Configuration, module, and artifact filters are <span class="pre">DependencyFilter</span>s
@@ -267,10 +267,10 @@ calling <span class="pre">matches</span> with its arguments combined with <span 
 <li><a class="reference internal" href="#">Update Report</a><ul>
 <li><a class="reference internal" href="#filtering-a-report-and-getting-artifacts">Filtering a Report and Getting Artifacts</a><ul>
 <li><a class="reference internal" href="#filter-basics">Filter Basics</a></li>
-<li><a class="reference internal" href="#id3">ConfigurationFilter</a></li>
-<li><a class="reference internal" href="#id6">ModuleFilter</a></li>
-<li><a class="reference internal" href="#id9">ArtifactFilter</a></li>
-<li><a class="reference internal" href="#id12">DependencyFilter</a></li>
+<li><a class="reference internal" href="#id1">ConfigurationFilter</a></li>
+<li><a class="reference internal" href="#id2">ModuleFilter</a></li>
+<li><a class="reference internal" href="#id3">ArtifactFilter</a></li>
+<li><a class="reference internal" href="#id4">DependencyFilter</a></li>
 </ul>
 </li>
 </ul>

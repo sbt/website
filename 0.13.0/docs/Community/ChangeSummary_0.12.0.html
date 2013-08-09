@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">0.12.0 Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -80,7 +80,7 @@
                 <span class="divider">«</span> <a href="../Dormant/Settings.html">Introduction</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -232,9 +232,9 @@ as the compile:package key that existed on the current project).</li>
 <li>In 0.12, both of these situations result in the aggregated settings
 being selected. For example,<ol class="arabic">
 <li>Consider a project <span class="pre">root</span> that aggregates a subproject <span class="pre">sub</span>.</li>
-<li><span class="pre">root</span> defines <span class="pre"><a href="#id1"><span class="problematic" id="id2">*</span></a></span><span class="pre">:package</span>.</li>
+<li><span class="pre">root</span> defines <span class="pre">*:package</span>.</li>
 <li><span class="pre">sub</span> defines <span class="pre">compile:package</span> and <span class="pre">compile:compile</span>.</li>
-<li>Running <span class="pre">root/package</span> will run <span class="pre">root/</span><span class="pre"><a href="#id3"><span class="problematic" id="id4">*</span></a></span><span class="pre">:package</span> and
+<li>Running <span class="pre">root/package</span> will run <span class="pre">root/*:package</span> and
 <span class="pre">sub/compile:package</span></li>
 <li>Running <span class="pre">root/compile</span> will run <span class="pre">sub/compile:compile</span></li>
 </ol>
@@ -340,10 +340,10 @@ run</li>
 <h2>Argument quoting<a class="headerlink" href="#argument-quoting" title="Permalink to this headline">¶</a></h2>
 <p>Argument quoting (<a class="reference external" href="https://github.com/sbt/sbt/issues/396" title="Parser for escaped and verbatim string literals"><span class="xref issue closed">#396</span></a>) from the intereactive mode works like Scala string literals.</p>
 <ol class="arabic simple">
-<li><span class="pre">&gt; command &quot;arg with spaces,n escapes interpreted&quot;</span></li>
-<li><span class="pre">&gt; command &quot;&quot;&quot;arg with spaces,n escapes not interpreted&quot;&quot;&quot;</span></li>
+<li><span class="pre">&gt; command &quot;arg with spaces, n escapes interpreted&quot;</span></li>
+<li><span class="pre">&gt; command &quot;&quot;&quot;arg with spaces, n escapes not interpreted&quot;&quot;&quot;</span></li>
 <li>For the first variant, note that paths on Windows use backslashes and
-need to be escaped (<span class="pre"></span>). Alternatively, use the second variant,
+need to be escaped (<span class="pre"> \</span>). Alternatively, use the second variant,
 which does not interpret escapes.</li>
 <li>For using either variant in batch mode, note that a shell will
 generally require the double quotes themselves to be escaped.</li>

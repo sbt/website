@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0',
+        VERSION:     '0.13.0-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Changes</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Nightly-Builds.html">Nightly Builds</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -248,7 +248,7 @@ org.scala-tools.sbt). This means you must use a 0.11.3 launcher to
 launch 0.11.3.</li>
 <li>The convenience objects <span class="pre">ScalaToolsReleases</span> and
 <span class="pre">ScalaToolsSnapshots</span> now point to
-<span class="pre"><a class="reference external" href="https://oss.sonatype.org/content/repositories/releases">https://oss.sonatype.org/content/repositories/releases</a></span> and
+<span class="pre">https://oss.sonatype.org/content/repositories/releases</span> and
 <span class="pre">.../snapshots</span></li>
 <li>The launcher no longer includes <span class="pre">scala-tools.org</span> repositories by
 default and instead uses the Sonatype OSS snapshots repository for
@@ -560,7 +560,7 @@ action (for <span class="pre">Processor</span>s)</li>
 <span class="pre">DefaultWebProject</span>. Paths selected by this <span class="pre">PathFinder</span> will not
 be pruned by <span class="pre">prepare-webapp</span> and will not be packaged by
 <span class="pre">package</span>. For example, to exclude the GAE datastore directory:
-<span class="pre">scala   override def webappUnmanaged =     (temporaryWarPath / &quot;WEB-INF&quot; / &quot;appengine-generated&quot; </span><span class="pre"><a href="#id2"><span class="problematic" id="id3">**</span></a></span><span class="pre"><a href="#id4"><span class="problematic" id="id5">*</span></a></span><span class="pre">)</span></li>
+<span class="pre">scala   override def webappUnmanaged =     (temporaryWarPath / &quot;WEB-INF&quot; / &quot;appengine-generated&quot; ***)</span></li>
 <li>Added some String generation methods to <span class="pre">PathFinder</span>: <span class="pre">toString</span>
 for debugging and <span class="pre">absString</span> and <span class="pre">relativeString</span> for joining
 the absolute (relative) paths by the platform separator.</li>
@@ -1194,7 +1194,7 @@ action if tests fail</li>
 <h2>0.2.2 to 0.2.3<a class="headerlink" href="#to-0-2-3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Added tests for <span class="pre">Dag</span>, <span class="pre">NameFilter</span>, <span class="pre">Version</span></li>
-<li>Fixed handling of trailing <span class="pre"><a href="#id6"><span class="problematic" id="id7">*</span></a></span>s in <span class="pre">GlobFilter</span> and added some
+<li>Fixed handling of trailing <span class="pre">*</span>s in <span class="pre">GlobFilter</span> and added some
 error-checking for control characters, which <span class="pre">Pattern</span> doesn't seem
 to like</li>
 <li>Fixed <span class="pre">Analysis.allProducts</span> implementation</li>
@@ -1232,8 +1232,8 @@ dashes)</li>
 consistent with other <span class="pre">PathFinders</span></li>
 <li>Added <span class="pre">---</span> operator for <span class="pre">PathFinder</span> that excludes paths from
 the <span class="pre">PathFinder</span> argument</li>
-<li>Removed <span class="pre"><a href="#id8"><span class="problematic" id="id9">**</span></a></span><span class="pre"><a href="#id10"><span class="problematic" id="id11">*</span></a></span> operator on <span class="pre">PathFinder</span></li>
-<li><span class="pre"><a href="#id12"><span class="problematic" id="id13">**</span></a></span> operator on <span class="pre">PathFinder</span> matches all descendents or self
+<li>Removed <span class="pre">***</span> operator on <span class="pre">PathFinder</span></li>
+<li><span class="pre">**</span> operator on <span class="pre">PathFinder</span> matches all descendents or self
 that match the <span class="pre">NameFilter</span> argument</li>
 <li>The above should fix bug <span class="pre">#6</span></li>
 <li>Added version increment and release actions.</li>
