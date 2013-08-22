@@ -39,7 +39,13 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A ClassLoader with two parents <code>parentA</code> and <code>parentB</code>.  The predicates direct lookups towards one parent or the other.</p><p>If <code>aOnlyClasses</code> returns <code>true</code> for a class name, class lookup delegates to <code>parentA</code> only.
+Otherwise, if <code>bOnlyClasses</code> returns <code>true</code> for a class name, class lookup delegates to <code>parentB</code> only.
+If both <code>aOnlyClasses</code> and <code>bOnlyClasses</code> are <code>false</code> for a given class name, both class loaders must load the same Class or
+a <a href="DifferentLoaders.html" class="extype" name="sbt.classpath.DifferentLoaders">DifferentLoaders</a> exception is thrown.</p><p>If <code>aOnlyResources</code> is <code>true</code> for a resource path, lookup delegates to <code>parentA</code> only.
+Otherwise, if <code>bOnlyResources</code> is <code>true</code> for a resource path, lookup delegates to <code>parentB</code> only.
+If neither are <code>true</code> for a resource path and either <code>parentA</code> or <code>parentB</code> return a valid URL, that valid URL is returned.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="java.lang.ClassLoader">ClassLoader</span>, <a href="../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>

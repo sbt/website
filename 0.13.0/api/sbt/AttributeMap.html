@@ -39,7 +39,9 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>An immutable map where a key is the tuple <code>(String,T)</code> for a fixed type <code>T</code> and can only be associated with values of type <code>T</code>.
+It is therefore possible for this map to contain mappings for keys with the same label but different types.
+Excluding this possibility is the responsibility of the client if desired.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -95,7 +97,7 @@
         <span title="gt4s: $plus$plus" class="name">++</span><span class="params">(<span name="o">o: <a href="" class="extype" name="sbt.AttributeMap">AttributeMap</a></span>)</span><span class="result">: <a href="" class="extype" name="sbt.AttributeMap">AttributeMap</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Combines the mappings in <code>o</code> with the mappings in this map, with mappings in <code>o</code> taking precedence over existing mappings.</p>
     </li><li name="sbt.AttributeMap#++" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="++(o:Iterable[sbt.AttributeEntry[_]]):sbt.AttributeMap"></a>
       <a id="++(Iterable[AttributeEntry[_]]):AttributeMap"></a>
@@ -108,8 +110,8 @@
         <span title="gt4s: $plus$plus" class="name">++</span><span class="params">(<span name="o">o: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<a href="AttributeEntry.html" class="extype" name="sbt.AttributeEntry">AttributeEntry</a>[_]]</span>)</span><span class="result">: <a href="" class="extype" name="sbt.AttributeMap">AttributeMap</a></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#apply" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Adds the mappings in <code>o</code> to this map, with mappings in <code>o</code> taking precedence over existing mappings.</p>
+    </li><li name="sbt.AttributeMap#apply" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="apply[T](k:sbt.AttributeKey[T]):T"></a>
       <a id="apply[T](AttributeKey[T]):T"></a>
       <h4 class="signature">
@@ -121,8 +123,9 @@
         <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="k">k: <a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[<span class="extype" name="sbt.AttributeMap.apply.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="sbt.AttributeMap.apply.T">T</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#contains" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Gets the value of type <code>T</code> associated with the key <code>k</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Gets the value of type <code>T</code> associated with the key <code>k</code>.
+If a key with the same label but different type is defined, this method will fail.</p></div></div>
+    </li><li name="sbt.AttributeMap#contains" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="contains[T](k:sbt.AttributeKey[T]):Boolean"></a>
       <a id="contains[T](AttributeKey[T]):Boolean"></a>
       <h4 class="signature">
@@ -134,8 +137,9 @@
         <span class="name">contains</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="k">k: <a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[<span class="extype" name="sbt.AttributeMap.contains.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#entries" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Returns true if this map contains a mapping for <code>k</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Returns true if this map contains a mapping for <code>k</code>.
+If a key with the same label but a different type is defined in this map, this method will return <code>false</code>.</p></div></div>
+    </li><li name="sbt.AttributeMap#entries" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="entries:Iterable[sbt.AttributeEntry[_]]"></a>
       <a id="entries:Iterable[AttributeEntry[_]]"></a>
       <h4 class="signature">
@@ -147,8 +151,8 @@
         <span class="name">entries</span><span class="result">: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<a href="AttributeEntry.html" class="extype" name="sbt.AttributeEntry">AttributeEntry</a>[_]]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#get" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">All mappings in this map.</p><div class="fullcomment"><div class="comment cmt"><p>All mappings in this map.  The <a href="AttributeEntry.html" class="extype" name="sbt.AttributeEntry">AttributeEntry</a> type preserves the typesafety of mappings, although the specific types are unknown.</p></div></div>
+    </li><li name="sbt.AttributeMap#get" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="get[T](k:sbt.AttributeKey[T]):Option[T]"></a>
       <a id="get[T](AttributeKey[T]):Option[T]"></a>
       <h4 class="signature">
@@ -160,7 +164,8 @@
         <span class="name">get</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="k">k: <a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[<span class="extype" name="sbt.AttributeMap.get.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="sbt.AttributeMap.get.T">T</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Gets the value of type <code>T</code> associated with the key <code>k</code> or <code>None</code> if no value is associated.</p><div class="fullcomment"><div class="comment cmt"><p>Gets the value of type <code>T</code> associated with the key <code>k</code> or <code>None</code> if no value is associated.
+If a key with the same label but a different type is defined, this method will return <code>None</code>.</p></div></div>
     </li><li name="sbt.AttributeMap#isEmpty" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="isEmpty:Boolean"></a>
       <a id="isEmpty:Boolean"></a>
@@ -173,8 +178,8 @@
         <span class="name">isEmpty</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#keys" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt"><code>true</code> if there are no mappings in this map, <code>false</code> if there are.</p>
+    </li><li name="sbt.AttributeMap#keys" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="keys:Iterable[sbt.AttributeKey[_]]"></a>
       <a id="keys:Iterable[AttributeKey[_]]"></a>
       <h4 class="signature">
@@ -186,8 +191,8 @@
         <span class="name">keys</span><span class="result">: <a href="../scala/package.html#Iterable[+A]=Iterable[A]" class="extmbr" name="scala.Iterable">Iterable</a>[<a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[_]]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#put" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">All keys with defined mappings.</p><div class="fullcomment"><div class="comment cmt"><p>All keys with defined mappings.  There may be multiple keys with the same <code>label</code>, but different types.</p></div></div>
+    </li><li name="sbt.AttributeMap#put" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="put[T](k:sbt.AttributeKey[T],value:T):sbt.AttributeMap"></a>
       <a id="put[T](AttributeKey[T],T):AttributeMap"></a>
       <h4 class="signature">
@@ -199,8 +204,9 @@
         <span class="name">put</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="k">k: <a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[<span class="extype" name="sbt.AttributeMap.put.T">T</span>]</span>, <span name="value">value: <span class="extype" name="sbt.AttributeMap.put.T">T</span></span>)</span><span class="result">: <a href="" class="extype" name="sbt.AttributeMap">AttributeMap</a></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.AttributeMap#remove" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Adds the mapping <code>k -&gt; value</code> to this map, replacing any existing mapping for <code>k</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Adds the mapping <code>k -&gt; value</code> to this map, replacing any existing mapping for <code>k</code>.
+Any mappings for keys with the same label but different types are unaffected.</p></div></div>
+    </li><li name="sbt.AttributeMap#remove" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="remove[T](k:sbt.AttributeKey[T]):sbt.AttributeMap"></a>
       <a id="remove[T](AttributeKey[T]):AttributeMap"></a>
       <h4 class="signature">
@@ -212,7 +218,8 @@
         <span class="name">remove</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="k">k: <a href="AttributeKey.html" class="extype" name="sbt.AttributeKey">AttributeKey</a>[<span class="extype" name="sbt.AttributeMap.remove.T">T</span>]</span>)</span><span class="result">: <a href="" class="extype" name="sbt.AttributeMap">AttributeMap</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Returns this map without the mapping for <code>k</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Returns this map without the mapping for <code>k</code>.
+This method will not remove a mapping for a key with the same label but a different type.</p></div></div>
     </li></ol>
             </div>
 

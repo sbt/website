@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-RC5',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title"><span class="pre">.scala</span> Build Definition</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Custom-Settings.html">Custom Settings and Tasks</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -250,20 +250,10 @@ explicitly specify another scope.</li>
 </div>
 <div class="section" id="when-to-use-scala-files">
 <h2>When to use <span class="pre">.scala</span> files<a class="headerlink" href="#when-to-use-scala-files" title="Permalink to this headline">¶</a></h2>
-<p>In <span class="pre">.scala</span> files, you can write any Scala code including <span class="pre">val</span>, <span class="pre">object</span>,
-and method definitions.</p>
-<p><em>One recommended approach is to define settings in `.sbt` files, using
-`.scala` files when you need to factor out a `val` or `object` or
-method definition.</em></p>
-<p>There's one build definition, which is a nested project inside your main
-project. <span class="pre">.sbt</span> and <span class="pre">.scala</span> files are compiled together to create
-that single definition.</p>
-<p><span class="pre">.scala</span> files are also required to define multiple projects in a
-single build. More on that is coming up in <a class="reference internal" href="Multi-Project.html"><em>Multi-Project Builds</em></a>.</p>
-<p>(A disadvantage of using <span class="pre">.sbt</span> files in a <a class="reference internal" href="Multi-Project.html"><em>multi-project build</em></a> is that they'll be spread around
-in different directories; for that reason, some people prefer to put
-settings in their <span class="pre">.scala</span> files if they have sub-projects. This will
-be clearer after you see how <a class="reference internal" href="Multi-Project.html"><em>multi-project builds</em></a> work.)</p>
+<p>In <span class="pre">.scala</span> files, you can write any Scala code, including top-level classes and objects.
+Also, there are no restrictions on blank lines, since they are standard <span class="pre">.scala</span> files.</p>
+<p>The recommended approach is to define most configuration in <span class="pre">.sbt</span> files, using
+<span class="pre">.scala</span> files for task implementations or to share values, such as keys, across <span class="pre">.sbt</span> files.</p>
 </div>
 <div class="section" id="the-build-definition-project-in-interactive-mode">
 <h2>The build definition project in interactive mode<a class="headerlink" href="#the-build-definition-project-in-interactive-mode" title="Permalink to this headline">¶</a></h2>

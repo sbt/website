@@ -39,7 +39,7 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Extends <code>URI</code> with additional convenience methods.</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -198,7 +198,7 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.RichURI#copy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.RichURI#copy" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="copy(scheme:String,userInfo:String,host:String,port:Int,path:String,query:String,fragment:String):java.net.URI"></a>
       <a id="copy(String,String,String,Int,String,String,String):URI"></a>
       <h4 class="signature">
@@ -210,7 +210,9 @@
         <span class="name">copy</span><span class="params">(<span name="scheme">scheme: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getScheme</span></span>, <span name="userInfo">userInfo: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getUserInfo</span></span>, <span name="host">host: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getHost</span></span>, <span name="port">port: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">uri.getPort</span></span>, <span name="path">path: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getPath</span></span>, <span name="query">query: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getQuery</span></span>, <span name="fragment">fragment: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">uri.getFragment</span></span>)</span><span class="result">: <span class="extype" name="java.net.URI">URI</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Provides a case-class-like <code>copy</code> method for URI.</p><div class="fullcomment"><div class="comment cmt"><p>Provides a case-class-like <code>copy</code> method for URI.
+Note that this method simply passes the individual components of this URI to the URI constructor
+that accepts each component individually.  It is thus limited by the implementation restrictions of the relevant methods.</p></div></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -281,7 +283,7 @@
         <span class="name">hasFragment</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Returns <code>true</code> if the fragment of the URI is defined.</p>
     </li><li name="sbt.RichURI#hasMarkerScheme" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="hasMarkerScheme:Boolean"></a>
       <a id="hasMarkerScheme:Boolean"></a>
@@ -294,7 +296,7 @@
         <span class="name">hasMarkerScheme</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Returns <code>true</code> if the scheme specific part of the URI is also a valid URI.</p>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -455,8 +457,8 @@
         <span class="name">withoutFragment</span><span class="result">: <span class="extype" name="java.net.URI">URI</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.RichURI#withoutMarkerScheme" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Returns a copy of the URI without the fragment.</p>
+    </li><li name="sbt.RichURI#withoutMarkerScheme" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="withoutMarkerScheme:java.net.URI"></a>
       <a id="withoutMarkerScheme:URI"></a>
       <h4 class="signature">
@@ -468,7 +470,9 @@
         <span class="name">withoutMarkerScheme</span><span class="result">: <span class="extype" name="java.net.URI">URI</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Strips the wrapper scheme from this URI.</p><div class="fullcomment"><div class="comment cmt"><p>Strips the wrapper scheme from this URI.
+If the URI has a fragment, the fragment is transferred to the wrapped URI.
+If this URI does not have a marker scheme, it is returned unchanged.</p></div></div>
     </li></ol>
             </div>
 

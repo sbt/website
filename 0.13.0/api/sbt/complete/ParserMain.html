@@ -165,7 +165,7 @@
         <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="p">p: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.apply.T">T</span>]</span>)</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.apply.T">T</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies parser <code>p</code> to input <code>s</code>.</p>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -179,7 +179,7 @@
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="sbt.complete.ParserMain#charClass" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.ParserMain#charClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="charClass(f:Char=&gt;Boolean,label:String):sbt.complete.Parser[Char]"></a>
       <a id="charClass((Char)⇒Boolean,String):Parser[Char]"></a>
       <h4 class="signature">
@@ -191,7 +191,8 @@
         <span class="name">charClass</span><span class="params">(<span name="f">f: (<span class="extype" name="scala.Char">Char</span>) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="label">label: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&lt;unspecified&gt;&quot;</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Defines a Parser that parses a single character only if the predicate <code>f</code> returns true for that character.</p><div class="fullcomment"><div class="comment cmt"><p>Defines a Parser that parses a single character only if the predicate <code>f</code> returns true for that character.
+If this parser fails, <code>label</code> is used as the failure message.</p></div></div>
     </li><li name="sbt.complete.ParserMain#chars" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="chars(legal:String):sbt.complete.Parser[Char]"></a>
       <a id="chars(String):Parser[Char]"></a>
@@ -204,7 +205,7 @@
         <span class="name">chars</span><span class="params">(<span name="legal">legal: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Defines a Parser that parses a single character only if it is contained in <code>legal</code>.</p>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -224,7 +225,7 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.complete.ParserMain#completions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.ParserMain#completions" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="completions(p:sbt.complete.Parser[_],s:String,level:Int):sbt.complete.Completions"></a>
       <a id="completions(Parser[_],String,Int):Completions"></a>
       <h4 class="signature">
@@ -236,7 +237,10 @@
         <span class="name">completions</span><span class="params">(<span name="p">p: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[_]</span>, <span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="level">level: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="Completions.html" class="extype" name="sbt.complete.Completions">Completions</a></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies parser <code>p</code> to input <code>s</code> and returns the completions at verbosity <code>level</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Applies parser <code>p</code> to input <code>s</code> and returns the completions at verbosity <code>level</code>.
+The interpretation of <code>level</code> is up to parser definitions, but 0 is the default by convention,
+with increasing positive numbers corresponding to increasing verbosity.  Typically no more than
+a few levels are defined.</p></div></div>
     </li><li name="sbt.complete.ParserMain#derive1" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="derive1[T](p:sbt.complete.Parser[T],c:Char):sbt.complete.Parser[T]"></a>
       <a id="derive1[T](Parser[T],Char):Parser[T]"></a>
@@ -249,7 +253,7 @@
         <span class="name">derive1</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="p">p: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.derive1.T">T</span>]</span>, <span name="c">c: <span class="extype" name="scala.Char">Char</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.derive1.T">T</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies parser <code>p</code> to a single character of input.</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -289,7 +293,7 @@
       </span>
       </h4>
       
-    </li><li name="sbt.complete.ParserMain#failure" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.ParserMain#failure" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="failure(msg:=&gt;String,definitive:Boolean):sbt.complete.Parser[Nothing]"></a>
       <a id="failure(⇒String,Boolean):Parser[Nothing]"></a>
       <h4 class="signature">
@@ -301,7 +305,8 @@
         <span class="name">failure</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="definitive">definitive: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Nothing">Nothing</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Defines a parser that always fails on any input with message <code>msg</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Defines a parser that always fails on any input with message <code>msg</code>.
+If <code>definitive</code> is <code>true</code>, any failures by later alternatives are discarded.</p></div></div>
     </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="finalize():Unit"></a>
       <a id="finalize():Unit"></a>
@@ -360,7 +365,7 @@
       </span>
       </h4>
       
-    </li><li name="sbt.complete.ParserMain#invalid" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.ParserMain#invalid" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="invalid(msgs:=&gt;Seq[String],definitive:Boolean):sbt.complete.Parser[Nothing]"></a>
       <a id="invalid(⇒Seq[String],Boolean):Parser[Nothing]"></a>
       <h4 class="signature">
@@ -372,7 +377,8 @@
         <span class="name">invalid</span><span class="params">(<span name="msgs">msgs: ⇒ <a href="../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="definitive">definitive: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Nothing">Nothing</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Defines a parser that always fails on any input with messages <code>msgs</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Defines a parser that always fails on any input with messages <code>msgs</code>.
+If <code>definitive</code> is <code>true</code>, any failures by later alternatives are discarded.</p></div></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -398,7 +404,7 @@
         <span class="name">literal</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Presents a literal String <code>s</code> as a Parser that only parses that exact text and provides it as the result.</p>
     </li><li name="sbt.complete.ParserMain#literal" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="literal(ch:Char):sbt.complete.Parser[Char]"></a>
       <a id="literal(Char):Parser[Char]"></a>
@@ -411,7 +417,7 @@
         <span class="name">literal</span><span class="params">(<span name="ch">ch: <span class="extype" name="scala.Char">Char</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Presents a single Char <code>ch</code> as a Parser that only parses that exact character.</p>
     </li><li name="sbt.complete.ParserMain#literalRichCharParser" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="literalRichCharParser(c:Char):sbt.complete.RichParser[Char]"></a>
       <a id="literalRichCharParser(Char):RichParser[Char]"></a>
@@ -516,7 +522,7 @@
       </span>
       </h4>
       
-    </li><li name="sbt.complete.ParserMain#parse" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.ParserMain#parse" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="parse[T](str:String,parser:sbt.complete.Parser[T]):Either[String,T]"></a>
       <a id="parse[T](String,Parser[T]):Either[String,T]"></a>
       <h4 class="signature">
@@ -528,8 +534,8 @@
         <span class="name">parse</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="str">str: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parser">parser: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.parse.T">T</span>]</span>)</span><span class="result">: <a href="../../scala/package.html#Either[+A,+B]=scala.util.Either[A,B]" class="extmbr" name="scala.Either">Either</a>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="sbt.complete.ParserMain.parse.T">T</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.complete.ParserMain#range" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Parses input <code>str</code> using <code>parser</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Parses input <code>str</code> using <code>parser</code>.  If successful, the result is provided wrapped in <code>Right</code>.  If unsuccesful, an error message is provided in <code>Left</code>.</p></div></div>
+    </li><li name="sbt.complete.ParserMain#range" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="range(r:scala.collection.immutable.NumericRange[Char]):sbt.complete.Parser[Char]"></a>
       <a id="range(NumericRange[Char]):Parser[Char]"></a>
       <h4 class="signature">
@@ -541,7 +547,7 @@
         <span class="name">range</span><span class="params">(<span name="r">r: <span class="extype" name="scala.collection.immutable.NumericRange">NumericRange</span>[<span class="extype" name="scala.Char">Char</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Char">Char</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Presents a Char range as a Parser.</p><div class="fullcomment"><div class="comment cmt"><p>Presents a Char range as a Parser.  A single Char is parsed only if it is in the given range.</p></div></div>
     </li><li name="sbt.complete.ParserMain#result" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="result[T](p:sbt.complete.Parser[T],s:String):Either[()=&gt;(Seq[String],Int),T]"></a>
       <a id="result[T](Parser[T],String):Either[()⇒(Seq[String],Int),T]"></a>
@@ -567,8 +573,8 @@
         <span class="name">richParser</span><span class="tparams">[<span name="A">A</span>]</span><span class="params">(<span name="a">a: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.richParser.A">A</span>]</span>)</span><span class="result">: <a href="RichParser.html" class="extype" name="sbt.complete.RichParser">RichParser</a>[<span class="extype" name="sbt.complete.ParserMain.richParser.A">A</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.complete.ParserMain#sample" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Provides combinators for Parsers.</p>
+    </li><li name="sbt.complete.ParserMain#sample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sample(str:String,parser:sbt.complete.Parser[_],completions:Boolean):Unit"></a>
       <a id="sample(String,Parser[_],Boolean):Unit"></a>
       <h4 class="signature">
@@ -580,8 +586,12 @@
         <span class="name">sample</span><span class="params">(<span name="str">str: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parser">parser: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[_]</span>, <span name="completions">completions: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.complete.ParserMain#sampleCompletions" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Convenience method to use when developing a parser.</p><div class="fullcomment"><div class="comment cmt"><p>Convenience method to use when developing a parser.
+<code>parser</code> is applied to the input <code>str</code>.
+If <code>completions</code> is true, the available completions for the input are displayed.
+Otherwise, the result of parsing is printed using the result's <code>toString</code> method.
+If parsing fails, the error message is displayed.</p><p>See also <a href="#sampleParse(str:String,parser:sbt.complete.Parser[_]):Unit" class="extmbr" name="sbt.complete.ParserMain#sampleParse">sampleParse</a> and <a href="#sampleCompletions(str:String,parser:sbt.complete.Parser[_],level:Int):Unit" class="extmbr" name="sbt.complete.ParserMain#sampleCompletions">sampleCompletions</a>.</p></div></div>
+    </li><li name="sbt.complete.ParserMain#sampleCompletions" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sampleCompletions(str:String,parser:sbt.complete.Parser[_],level:Int):Unit"></a>
       <a id="sampleCompletions(String,Parser[_],Int):Unit"></a>
       <h4 class="signature">
@@ -593,8 +603,10 @@
         <span class="name">sampleCompletions</span><span class="params">(<span name="str">str: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parser">parser: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[_]</span>, <span name="level">level: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.complete.ParserMain#sampleParse" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Convenience method to use when developing a parser.</p><div class="fullcomment"><div class="comment cmt"><p>Convenience method to use when developing a parser.
+<code>parser</code> is applied to the input <code>str</code> and the available completions are displayed on separate lines.
+If parsing fails, the error message is displayed.</p></div></div>
+    </li><li name="sbt.complete.ParserMain#sampleParse" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sampleParse(str:String,parser:sbt.complete.Parser[_]):Unit"></a>
       <a id="sampleParse(String,Parser[_]):Unit"></a>
       <h4 class="signature">
@@ -606,7 +618,9 @@
         <span class="name">sampleParse</span><span class="params">(<span name="str">str: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="parser">parser: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[_]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Convenience method to use when developing a parser.</p><div class="fullcomment"><div class="comment cmt"><p>Convenience method to use when developing a parser.
+<code>parser</code> is applied to the input <code>str</code> and the result of parsing is printed using the result's <code>toString</code> method.
+If parsing fails, the error message is displayed.</p></div></div>
     </li><li name="sbt.complete.ParserMain#seq" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="seq[T](p:Seq[sbt.complete.Parser[T]]):sbt.complete.Parser[Seq[T]]"></a>
       <a id="seq[T](Seq[Parser[T]]):Parser[Seq[T]]"></a>
@@ -658,7 +672,7 @@
         <span class="name">success</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="sbt.complete.ParserMain.success.T">T</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.ParserMain.success.T">T</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Defines a parser that always succeeds on empty input with the result <code>value</code>.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -826,7 +840,7 @@ parser <code>t</code> are used to complete if unambiguous.</p></div></div>
         <a href="ParserMain$$tilde$.html"><span title="gt4s: $tilde" class="name">~</span></a>
       </span>
       </h4>
-      
+      <p class="comment cmt">See <a href="ParserMain$$tilde$.html#unapply[A,B](t:(A,B)):Some[(A,B)]" class="extmbr" name="sbt.complete.ParserMain.~#unapply">unapply</a>.</p>
     </li></ol>
             </div>
 

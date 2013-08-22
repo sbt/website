@@ -163,7 +163,7 @@
       </span>
       </h4>
       <p class="shortcomment cmt">The newline string for this system, as obtained by the line.</p><div class="fullcomment"><div class="comment cmt"><p>The newline string for this system, as obtained by the line.separator system property.</p></div></div>
-    </li><li name="sbt.IO#append" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#append" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="append(file:java.io.File,bytes:Array[Byte]):Unit"></a>
       <a id="append(File,Array[Byte]):Unit"></a>
       <h4 class="signature">
@@ -175,8 +175,9 @@
         <span class="name">append</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="bytes">bytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#append" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Appends <code>bytes</code> to the existing contents of <code>file</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Appends <code>bytes</code> to the existing contents of <code>file</code>.
+If <code>file</code> does not exist, it is created, as are any parent directories.</p></div></div>
+    </li><li name="sbt.IO#append" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="append(file:java.io.File,content:String,charset:java.nio.charset.Charset):Unit"></a>
       <a id="append(File,String,Charset):Unit"></a>
       <h4 class="signature">
@@ -188,7 +189,8 @@
         <span class="name">append</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="content">content: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Appends <code>content</code> to the existing contents of <code>file</code> using <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p><div class="fullcomment"><div class="comment cmt"><p>Appends <code>content</code> to the existing contents of <code>file</code> using <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.
+If <code>file</code> does not exist, it is created, as are any parent directories.</p></div></div>
     </li><li name="sbt.IO#asFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asFile(url:java.net.URL):java.io.File"></a>
       <a id="asFile(URL):File"></a>
@@ -346,7 +348,7 @@ Note that Java standard library classes typically do not have a location associa
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.IO#copy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#copy" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="copy(sources:Traversable[(java.io.File,java.io.File)],overwrite:Boolean,preserveLastModified:Boolean):Set[java.io.File]"></a>
       <a id="copy(Traversable[(File,File)],Boolean,Boolean):Set[File]"></a>
       <h4 class="signature">
@@ -358,8 +360,12 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">copy</span><span class="params">(<span name="sources">sources: <a href="../scala/package.html#Traversable[+A]=Traversable[A]" class="extmbr" name="scala.Traversable">Traversable</a>[(<span class="extype" name="java.io.File">File</span>, <span class="extype" name="java.io.File">File</span>)]</span>, <span name="overwrite">overwrite: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="preserveLastModified">preserveLastModified: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Set">Set</span>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#copyDirectory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">For each pair in <code>sources</code>, copies the contents of the first File (the source) to the location of the second File (the target).</p><div class="fullcomment"><div class="comment cmt"><p>For each pair in <code>sources</code>, copies the contents of the first File (the source) to the location of the second File (the target).</p><p>A source file is always copied if <code>overwrite</code> is true.
+If <code>overwrite</code> is false, the source is only copied if the target is missing or is older than the source file according to last modified times.
+If the source is a directory, the corresponding directory is created.</p><p>If <code>preserveLastModified</code> is <code>true</code>, the last modified times are transferred as well.
+Any parent directories that do not exist are created.
+The set of all target files is returned, whether or not they were updated by this method.</p></div></div>
+    </li><li name="sbt.IO#copyDirectory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="copyDirectory(source:java.io.File,target:java.io.File,overwrite:Boolean,preserveLastModified:Boolean):Unit"></a>
       <a id="copyDirectory(File,File,Boolean,Boolean):Unit"></a>
       <h4 class="signature">
@@ -371,8 +377,13 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">copyDirectory</span><span class="params">(<span name="source">source: <span class="extype" name="java.io.File">File</span></span>, <span name="target">target: <span class="extype" name="java.io.File">File</span></span>, <span name="overwrite">overwrite: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="preserveLastModified">preserveLastModified: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#copyFile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Copies the contents of each file in the <code>source</code> directory to the corresponding file in the <code>target</code> directory.</p><div class="fullcomment"><div class="comment cmt"><p>Copies the contents of each file in the <code>source</code> directory to the corresponding file in the <code>target</code> directory.
+A source file is always copied if <code>overwrite</code> is true.
+If <code>overwrite</code> is false, the source is only copied if the target is missing or is older than the source file according to last modified times.
+Files in <code>target</code> without a corresponding file in <code>source</code> are left unmodified in any case.
+If <code>preserveLastModified</code> is <code>true</code>, the last modified times are transferred as well.
+Any parent directories that do not exist are created.</p></div></div>
+    </li><li name="sbt.IO#copyFile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="copyFile(sourceFile:java.io.File,targetFile:java.io.File,preserveLastModified:Boolean):Unit"></a>
       <a id="copyFile(File,File,Boolean):Unit"></a>
       <h4 class="signature">
@@ -384,7 +395,8 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">copyFile</span><span class="params">(<span name="sourceFile">sourceFile: <span class="extype" name="java.io.File">File</span></span>, <span name="targetFile">targetFile: <span class="extype" name="java.io.File">File</span></span>, <span name="preserveLastModified">preserveLastModified: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Copies the contents of <code>sourceFile</code> to the location of <code>targetFile</code>, overwriting any existing content.</p><div class="fullcomment"><div class="comment cmt"><p>Copies the contents of <code>sourceFile</code> to the location of <code>targetFile</code>, overwriting any existing content.
+If <code>preserveLastModified</code> is <code>true</code>, the last modified time is transferred as well.</p></div></div>
     </li><li name="sbt.IO#copyLastModified" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="copyLastModified(sourceFile:java.io.File,targetFile:java.io.File):Boolean"></a>
       <a id="copyLastModified(File,File):Boolean"></a>
@@ -397,8 +409,8 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">copyLastModified</span><span class="params">(<span name="sourceFile">sourceFile: <span class="extype" name="java.io.File">File</span></span>, <span name="targetFile">targetFile: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#createDirectories" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Transfers the last modified time of <code>sourceFile</code> to <code>targetFile</code>.</p>
+    </li><li name="sbt.IO#createDirectories" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="createDirectories(dirs:Traversable[java.io.File]):Unit"></a>
       <a id="createDirectories(Traversable[File]):Unit"></a>
       <h4 class="signature">
@@ -410,8 +422,8 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">createDirectories</span><span class="params">(<span name="dirs">dirs: <a href="../scala/package.html#Traversable[+A]=Traversable[A]" class="extmbr" name="scala.Traversable">Traversable</a>[<span class="extype" name="java.io.File">File</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#createDirectory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Creates directories <code>dirs</code> and all parent directories.</p><div class="fullcomment"><div class="comment cmt"><p>Creates directories <code>dirs</code> and all parent directories.  It tries to work around a race condition in <code>File.mkdirs()</code> by retrying up to a limit.</p></div></div>
+    </li><li name="sbt.IO#createDirectory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="createDirectory(dir:java.io.File):Unit"></a>
       <a id="createDirectory(File):Unit"></a>
       <h4 class="signature">
@@ -423,7 +435,7 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">createDirectory</span><span class="params">(<span name="dir">dir: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Creates directory <code>dir</code> and all parent directories.</p><div class="fullcomment"><div class="comment cmt"><p>Creates directory <code>dir</code> and all parent directories.  It tries to work around a race condition in <code>File.mkdirs()</code> by retrying up to a limit.</p></div></div>
     </li><li name="sbt.IO#createTemporaryDirectory" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createTemporaryDirectory:java.io.File"></a>
       <a id="createTemporaryDirectory:File"></a>
@@ -462,7 +474,7 @@ Note that Java standard library classes typically do not have a location associa
         <span class="name">defaultCharset</span><span class="result">: <span class="extype" name="java.nio.charset.Charset">Charset</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">The default Charset used when not specified: UTF-8.</p>
     </li><li name="sbt.IO#delete" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="delete(file:java.io.File):Unit"></a>
       <a id="delete(File):Unit"></a>
@@ -605,7 +617,7 @@ it does not already end with a slash.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="sbt.IO#foldLines" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#foldLines" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="foldLines[T](in:java.io.BufferedReader,init:T)(f:(T,String)=&gt;T):T"></a>
       <a id="foldLines[T](BufferedReader,T)((T,String)⇒T):T"></a>
       <h4 class="signature">
@@ -617,8 +629,9 @@ it does not already end with a slash.
         <span class="name">foldLines</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="in">in: <span class="extype" name="java.io.BufferedReader">BufferedReader</span></span>, <span name="init">init: <span class="extype" name="sbt.IO.foldLines.T">T</span></span>)</span><span class="params">(<span name="f">f: (<span class="extype" name="sbt.IO.foldLines.T">T</span>, <span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="sbt.IO.foldLines.T">T</span></span>)</span><span class="result">: <span class="extype" name="sbt.IO.foldLines.T">T</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#foreachLine" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Applies <code>f</code> to each line read from <code>in</code> and the accumulated value of type <code>T</code>, with initial value <code>init</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Applies <code>f</code> to each line read from <code>in</code> and the accumulated value of type <code>T</code>, with initial value <code>init</code>.
+This method does not close <code>in</code>.</p></div></div>
+    </li><li name="sbt.IO#foreachLine" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="foreachLine(in:java.io.BufferedReader)(f:String=&gt;Unit):Unit"></a>
       <a id="foreachLine(BufferedReader)((String)⇒Unit):Unit"></a>
       <h4 class="signature">
@@ -630,7 +643,7 @@ it does not already end with a slash.
         <span class="name">foreachLine</span><span class="params">(<span name="in">in: <span class="extype" name="java.io.BufferedReader">BufferedReader</span></span>)</span><span class="params">(<span name="f">f: (<span class="extype" name="scala.Predef.String">String</span>) ⇒ <span class="extype" name="scala.Unit">Unit</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies <code>f</code> to each line read from <code>in</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Applies <code>f</code> to each line read from <code>in</code>. This method does not close <code>in</code>.</p></div></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -696,7 +709,7 @@ it does not already end with a slash.
       </span>
       </h4>
       <p class="shortcomment cmt">Gzips the file 'in' and writes it to 'out'.</p><div class="fullcomment"><div class="comment cmt"><p>Gzips the file 'in' and writes it to 'out'.  'in' cannot be the same file as 'out'.</p></div></div>
-    </li><li name="sbt.IO#gzipFileIn" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#gzipFileIn" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gzipFileIn[T](file:java.io.File)(f:java.io.InputStream=&gt;T):T"></a>
       <a id="gzipFileIn[T](File)((InputStream)⇒T):T"></a>
       <h4 class="signature">
@@ -708,8 +721,10 @@ it does not already end with a slash.
         <span class="name">gzipFileIn</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="params">(<span name="f">f: (<span class="extype" name="java.io.InputStream">InputStream</span>) ⇒ <span class="extype" name="sbt.IO.gzipFileIn.T">T</span></span>)</span><span class="result">: <span class="extype" name="sbt.IO.gzipFileIn.T">T</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#gzipFileOut" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Applies <code>f</code> to a buffered gzip <code>InputStream</code> for <code>file</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Applies <code>f</code> to a buffered gzip <code>InputStream</code> for <code>file</code>.
+The streams involved are opened before calling <code>f</code> and closed after it returns.
+The result is the result of <code>f</code>.</p></div></div>
+    </li><li name="sbt.IO#gzipFileOut" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gzipFileOut[T](file:java.io.File)(f:java.io.OutputStream=&gt;T):T"></a>
       <a id="gzipFileOut[T](File)((OutputStream)⇒T):T"></a>
       <h4 class="signature">
@@ -721,7 +736,9 @@ it does not already end with a slash.
         <span class="name">gzipFileOut</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="params">(<span name="f">f: (<span class="extype" name="java.io.OutputStream">OutputStream</span>) ⇒ <span class="extype" name="sbt.IO.gzipFileOut.T">T</span></span>)</span><span class="result">: <span class="extype" name="sbt.IO.gzipFileOut.T">T</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies <code>f</code> to a buffered gzip <code>OutputStream</code> for <code>file</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Applies <code>f</code> to a buffered gzip <code>OutputStream</code> for <code>file</code>.
+The streams involved are opened before calling <code>f</code> and closed after it returns.
+The result is the result of <code>f</code>.</p></div></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -800,7 +817,7 @@ it does not already end with a slash.
       </span>
       </h4>
       <p class="shortcomment cmt">Returns the children of directory <code>dir</code> that match <code>filter</code> in a non-null array.</p>
-    </li><li name="sbt.IO#load" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#load" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="load(properties:java.util.Properties,from:java.io.File):Unit"></a>
       <a id="load(Properties,File):Unit"></a>
       <h4 class="signature">
@@ -812,8 +829,8 @@ it does not already end with a slash.
         <span class="name">load</span><span class="params">(<span name="properties">properties: <span class="extype" name="java.util.Properties">Properties</span></span>, <span name="from">from: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#move" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Reads the properties in <code>from</code> into <code>properties</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Reads the properties in <code>from</code> into <code>properties</code>.  If <code>from</code> does not exist, <code>properties</code> is left unchanged.</p></div></div>
+    </li><li name="sbt.IO#move" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="move(a:java.io.File,b:java.io.File):Unit"></a>
       <a id="move(File,File):Unit"></a>
       <h4 class="signature">
@@ -825,8 +842,11 @@ it does not already end with a slash.
         <span class="name">move</span><span class="params">(<span name="a">a: <span class="extype" name="java.io.File">File</span></span>, <span name="b">b: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#move" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Moves the contents of <code>a</code> to the location specified by <code>b</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Moves the contents of <code>a</code> to the location specified by <code>b</code>.
+This method deletes any content already at <code>b</code> and creates any parent directories of <code>b</code> if they do not exist.
+It will first try <code>File.renameTo</code> and if that fails, resort to copying and then deleting the original file.
+In either case, the original File will not exist on successful completion of this method.</p></div></div>
+    </li><li name="sbt.IO#move" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="move(files:Traversable[(java.io.File,java.io.File)]):Unit"></a>
       <a id="move(Traversable[(File,File)]):Unit"></a>
       <h4 class="signature">
@@ -838,7 +858,8 @@ it does not already end with a slash.
         <span class="name">move</span><span class="params">(<span name="files">files: <a href="../scala/package.html#Traversable[+A]=Traversable[A]" class="extmbr" name="scala.Traversable">Traversable</a>[(<span class="extype" name="java.io.File">File</span>, <span class="extype" name="java.io.File">File</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">For each pair in <code>files</code>, moves the contents of the first File to the location of the second.</p><div class="fullcomment"><div class="comment cmt"><p>For each pair in <code>files</code>, moves the contents of the first File to the location of the second.
+See <span class="extype" name="move(File,File)">move(File,File)</span> for the behavior of the individual move operations.</p></div></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -878,7 +899,7 @@ it does not already end with a slash.
       </span>
       </h4>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="sbt.IO#objectInputStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#objectInputStream" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="objectInputStream(wrapped:java.io.InputStream,loader:ClassLoader):java.io.ObjectInputStream"></a>
       <a id="objectInputStream(InputStream,ClassLoader):ObjectInputStream"></a>
       <h4 class="signature">
@@ -890,7 +911,8 @@ it does not already end with a slash.
         <span class="name">objectInputStream</span><span class="params">(<span name="wrapped">wrapped: <span class="extype" name="java.io.InputStream">InputStream</span></span>, <span name="loader">loader: <span class="extype" name="java.lang.ClassLoader">ClassLoader</span></span>)</span><span class="result">: <span class="extype" name="java.io.ObjectInputStream">ObjectInputStream</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Constructs an <code>ObjectInputStream</code> on <code>wrapped</code> that uses <code>loader</code> to load classes.</p><div class="fullcomment"><div class="comment cmt"><p>Constructs an <code>ObjectInputStream</code> on <code>wrapped</code> that uses <code>loader</code> to load classes.
+See also <a href="https://github.com/sbt/sbt/issues/136" target="_blank">issue 136</a>.</p></div></div>
     </li><li name="sbt.IO#parseClasspath" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="parseClasspath(s:String):Seq[java.io.File]"></a>
       <a id="parseClasspath(String):Seq[File]"></a>
@@ -903,7 +925,7 @@ it does not already end with a slash.
         <span class="name">parseClasspath</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="java.io.File">File</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Parses a classpath String into File entries according to the current platform's path separator.</p>
     </li><li name="sbt.IO#pathSplit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="pathSplit(s:String):Array[String]"></a>
       <a id="pathSplit(String):Array[String]"></a>
@@ -916,7 +938,7 @@ it does not already end with a slash.
         <span class="name">pathSplit</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Splits a String around path separator characters.</p>
+      <p class="shortcomment cmt">Splits a String around the platform's path separator characters.</p>
     </li><li name="sbt.IO#read" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="read(file:java.io.File,charset:java.nio.charset.Charset):String"></a>
       <a id="read(File,Charset):String"></a>
@@ -929,8 +951,8 @@ it does not already end with a slash.
         <span class="name">read</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#readBytes" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Reads the full contents of <code>file</code> into a String using <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p>
+    </li><li name="sbt.IO#readBytes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readBytes(in:java.io.InputStream):Array[Byte]"></a>
       <a id="readBytes(InputStream):Array[Byte]"></a>
       <h4 class="signature">
@@ -942,7 +964,7 @@ it does not already end with a slash.
         <span class="name">readBytes</span><span class="params">(<span name="in">in: <span class="extype" name="java.io.InputStream">InputStream</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">doesn't close the InputStream</p>
+      <p class="shortcomment cmt">Reads the full contents of <code>in</code> into a byte array.</p><div class="fullcomment"><div class="comment cmt"><p>Reads the full contents of <code>in</code> into a byte array.  This method does not close <code>in</code>.</p></div></div>
     </li><li name="sbt.IO#readBytes" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="readBytes(file:java.io.File):Array[Byte]"></a>
       <a id="readBytes(File):Array[Byte]"></a>
@@ -955,8 +977,8 @@ it does not already end with a slash.
         <span class="name">readBytes</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#readLines" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Reads the full contents of <code>in</code> into a byte array.</p>
+    </li><li name="sbt.IO#readLines" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readLines(in:java.io.BufferedReader):List[String]"></a>
       <a id="readLines(BufferedReader):List[String]"></a>
       <h4 class="signature">
@@ -968,7 +990,7 @@ it does not already end with a slash.
         <span class="name">readLines</span><span class="params">(<span name="in">in: <span class="extype" name="java.io.BufferedReader">BufferedReader</span></span>)</span><span class="result">: <a href="../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Reads all of the lines from <code>in</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Reads all of the lines from <code>in</code>.  This method does not close <code>in</code>.</p></div></div>
     </li><li name="sbt.IO#readLines" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="readLines(file:java.io.File,charset:java.nio.charset.Charset):List[String]"></a>
       <a id="readLines(File,Charset):List[String]"></a>
@@ -981,7 +1003,7 @@ it does not already end with a slash.
         <span class="name">readLines</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>)</span><span class="result">: <a href="../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Reads all of the lines in <code>file</code> using the provided <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p>
     </li><li name="sbt.IO#readLinesURL" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="readLinesURL(url:java.net.URL,charset:java.nio.charset.Charset):List[String]"></a>
       <a id="readLinesURL(URL,Charset):List[String]"></a>
@@ -994,8 +1016,8 @@ it does not already end with a slash.
         <span class="name">readLinesURL</span><span class="params">(<span name="url">url: <span class="extype" name="java.net.URL">URL</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>)</span><span class="result">: <a href="../scala/package.html#List[+A]=List[A]" class="extmbr" name="scala.List">List</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#readStream" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Reads all of the lines from <code>url</code> using the provided <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p>
+    </li><li name="sbt.IO#readStream" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readStream(in:java.io.InputStream,charset:java.nio.charset.Charset):String"></a>
       <a id="readStream(InputStream,Charset):String"></a>
       <h4 class="signature">
@@ -1007,7 +1029,7 @@ it does not already end with a slash.
         <span class="name">readStream</span><span class="params">(<span name="in">in: <span class="extype" name="java.io.InputStream">InputStream</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4>
-      <p class="shortcomment cmt">doesn't close the InputStream</p>
+      <p class="shortcomment cmt">Reads the full contents of <code>in</code> into a byte array.</p><div class="fullcomment"><div class="comment cmt"><p>Reads the full contents of <code>in</code> into a byte array.  This method does not close <code>in</code>.</p></div></div>
     </li><li name="sbt.IO#reader" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="reader[T](file:java.io.File,charset:java.nio.charset.Charset)(f:java.io.BufferedReader=&gt;T):T"></a>
       <a id="reader[T](File,Charset)((BufferedReader)⇒T):T"></a>
@@ -1021,7 +1043,7 @@ it does not already end with a slash.
       </span>
       </h4>
       
-    </li><li name="sbt.IO#relativize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#relativize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="relativize(base:java.io.File,file:java.io.File):Option[String]"></a>
       <a id="relativize(File,File):Option[String]"></a>
       <h4 class="signature">
@@ -1033,8 +1055,9 @@ it does not already end with a slash.
         <span class="name">relativize</span><span class="params">(<span name="base">base: <span class="extype" name="java.io.File">File</span></span>, <span name="file">file: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#resolve" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Returns the path for <code>file</code> relative to directory <code>base</code> or None if <code>base</code> is not a parent of <code>file</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Returns the path for <code>file</code> relative to directory <code>base</code> or None if <code>base</code> is not a parent of <code>file</code>.
+If <code>file</code> or <code>base</code> are not absolute, they are first resolved against the current working directory.</p></div></div>
+    </li><li name="sbt.IO#resolve" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="resolve(base:java.io.File,f:java.io.File):java.io.File"></a>
       <a id="resolve(File,File):File"></a>
       <h4 class="signature">
@@ -1046,7 +1069,9 @@ it does not already end with a slash.
         <span class="name">resolve</span><span class="params">(<span name="base">base: <span class="extype" name="java.io.File">File</span></span>, <span name="f">f: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="java.io.File">File</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Resolves <code>f</code> against <code>base</code>, which must be an absolute directory.</p><div class="fullcomment"><div class="comment cmt"><p>Resolves <code>f</code> against <code>base</code>, which must be an absolute directory.
+The result is guaranteed to be absolute.
+If <code>f</code> is absolute, it is returned without changes.</p></div></div>
     </li><li name="sbt.IO#split" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="split(name:String):(String,String)"></a>
       <a id="split(String):(String,String)"></a>
@@ -1392,7 +1417,7 @@ is deleted after the function returns.</p></div></div>
       </h4>
       <p class="shortcomment cmt">Creates a file in the default temporary directory, calls <code>action</code> with the file, deletes the file, and returns the result of calling <code>action</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Creates a file in the default temporary directory, calls <code>action</code> with the file, deletes the file, and returns the result of calling <code>action</code>.
 The name of the file will begin with <code>prefix</code>, which must be at least three characters long, and end with <code>postfix</code>, which has no minimum length.</p></div></div>
-    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="write(properties:java.util.Properties,label:String,to:java.io.File):Unit"></a>
       <a id="write(Properties,String,File):Unit"></a>
       <h4 class="signature">
@@ -1404,8 +1429,9 @@ The name of the file will begin with <code>prefix</code>, which must be at least
         <span class="name">write</span><span class="params">(<span name="properties">properties: <span class="extype" name="java.util.Properties">Properties</span></span>, <span name="label">label: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="to">to: <span class="extype" name="java.io.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Writes <code>properties</code> to the File <code>to</code>, using <code>label</code> as the comment on the first line.</p><div class="fullcomment"><div class="comment cmt"><p>Writes <code>properties</code> to the File <code>to</code>, using <code>label</code> as the comment on the first line.
+If any parent directories of <code>to</code> do not exist, they are first created.</p></div></div>
+    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="write(file:java.io.File,bytes:Array[Byte]):Unit"></a>
       <a id="write(File,Array[Byte]):Unit"></a>
       <h4 class="signature">
@@ -1417,8 +1443,9 @@ The name of the file will begin with <code>prefix</code>, which must be at least
         <span class="name">write</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="bytes">bytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Writes <code>bytes</code> to <code>file</code>, overwriting any existing content.</p><div class="fullcomment"><div class="comment cmt"><p>Writes <code>bytes</code> to <code>file</code>, overwriting any existing content.
+If any parent directories do not exist, they are first created.</p></div></div>
+    </li><li name="sbt.IO#write" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="write(file:java.io.File,content:String,charset:java.nio.charset.Charset,append:Boolean):Unit"></a>
       <a id="write(File,String,Charset,Boolean):Unit"></a>
       <h4 class="signature">
@@ -1430,7 +1457,10 @@ The name of the file will begin with <code>prefix</code>, which must be at least
         <span class="name">write</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="content">content: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>, <span name="append">append: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Writes <code>content</code> to <code>file</code> using <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p><div class="fullcomment"><div class="comment cmt"><p>Writes <code>content</code> to <code>file</code> using <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.
+If <code>append</code> is <code>false</code>, the existing contents of <code>file</code> are overwritten.
+If <code>append</code> is <code>true</code>, the new <code>content</code> is appended to the existing contents.
+If <code>file</code> or any parent directories do not exist, they are created.</p></div></div>
     </li><li name="sbt.IO#writeLines" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="writeLines(writer:java.io.PrintWriter,lines:Seq[String]):Unit"></a>
       <a id="writeLines(PrintWriter,Seq[String]):Unit"></a>
@@ -1443,8 +1473,8 @@ The name of the file will begin with <code>prefix</code>, which must be at least
         <span class="name">writeLines</span><span class="params">(<span name="writer">writer: <span class="extype" name="java.io.PrintWriter">PrintWriter</span></span>, <span name="lines">lines: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
-    </li><li name="sbt.IO#writeLines" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Writes <code>lines</code> to <code>writer</code> using <code>writer</code>'s <code>println</code> method.</p>
+    </li><li name="sbt.IO#writeLines" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="writeLines(file:java.io.File,lines:Seq[String],charset:java.nio.charset.Charset,append:Boolean):Unit"></a>
       <a id="writeLines(File,Seq[String],Charset,Boolean):Unit"></a>
       <h4 class="signature">
@@ -1456,7 +1486,11 @@ The name of the file will begin with <code>prefix</code>, which must be at least
         <span class="name">writeLines</span><span class="params">(<span name="file">file: <span class="extype" name="java.io.File">File</span></span>, <span name="lines">lines: <a href="../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="charset">charset: <span class="extype" name="java.nio.charset.Charset">Charset</span> = <span class="symbol"><span class="name"><a href="#defaultCharset:java.nio.charset.Charset">defaultCharset</a></span></span></span>, <span name="append">append: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Writes <code>lines</code> to <code>file</code> using the given <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.</p><div class="fullcomment"><div class="comment cmt"><p>Writes <code>lines</code> to <code>file</code> using the given <code>charset</code> or UTF-8 if <code>charset</code> is not explicitly specified.
+If <code>append</code> is <code>false</code>, the contents of the file are overwritten.
+If <code>append</code> is <code>true</code>, the lines are appended to the file.
+A newline is written after each line and NOT before the first line.
+If any parent directories of <code>file</code> do not exist, they are first created.</p></div></div>
     </li><li name="sbt.IO#writer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="writer[T](file:java.io.File,content:String,charset:java.nio.charset.Charset,append:Boolean)(f:java.io.BufferedWriter=&gt;T):T"></a>
       <a id="writer[T](File,String,Charset,Boolean)((BufferedWriter)⇒T):T"></a>

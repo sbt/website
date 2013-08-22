@@ -96,7 +96,7 @@
       </span>
       </h4>
       <p class="shortcomment cmt">Uses the specified message if the original Parser fails.</p>
-    </li><li name="sbt.complete.RichParser#&amp;" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+    </li><li name="sbt.complete.RichParser#&amp;" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="&amp;(o:sbt.complete.Parser[_]):sbt.complete.Parser[A]"></a>
       <a id="&amp;(Parser[_]):Parser[A]"></a>
       <h4 class="signature">
@@ -108,7 +108,8 @@
         <span title="gt4s: $amp" class="name">&amp;</span><span class="params">(<span name="o">o: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[_]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.A">A</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Apply the original parser, but only succeed if <code>o</code> also succeeds.</p><div class="fullcomment"><div class="comment cmt"><p>Apply the original parser, but only succeed if <code>o</code> also succeeds.
+Note that <code>o</code> does not need to consume the same amount of input to satisfy this condition.</p></div></div>
     </li><li name="sbt.complete.RichParser#*" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="*:sbt.complete.Parser[Seq[A]]"></a>
       <a id="*:Parser[Seq[A]]"></a>
@@ -121,7 +122,7 @@
         <span title="gt4s: $times" class="name">*</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<a href="../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.complete.RichParser.A">A</span>]]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies the original Parser zero or more times.</p>
+      <p class="shortcomment cmt">Apply the original Parser zero or more times and provide the (potentially empty) sequence of results.</p>
     </li><li name="sbt.complete.RichParser#+" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="+:sbt.complete.Parser[Seq[A]]"></a>
       <a id="+:Parser[Seq[A]]"></a>
@@ -134,8 +135,8 @@
         <span title="gt4s: $plus" class="name">+</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<a href="../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="sbt.complete.RichParser.A">A</span>]]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies the original Parser one or more times.</p>
-    </li><li name="sbt.complete.RichParser#&lt;~" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Apply the original Parser one or more times and provide the non-empty sequence of results.</p>
+    </li><li name="sbt.complete.RichParser#&lt;~" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="&lt;~[B](b:sbt.complete.Parser[B]):sbt.complete.Parser[A]"></a>
       <a id="&lt;~[B](Parser[B]):Parser[A]"></a>
       <h4 class="signature">
@@ -147,7 +148,8 @@
         <span title="gt4s: $less$tilde" class="name">&lt;~</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="b">b: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.&lt;~.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.A">A</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Produces a Parser that applies the original Parser and then applies <code>next</code> (in order), discarding the result of <code>next</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Produces a Parser that applies the original Parser and then applies <code>next</code> (in order), discarding the result of <code>next</code>.
+(The arrow point in the direction of the retained result.)</p></div></div>
     </li><li name="sbt.complete.RichParser#?" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="?:sbt.complete.Parser[Option[A]]"></a>
       <a id="?:Parser[Option[A]]"></a>
@@ -160,7 +162,7 @@
         <span title="gt4s: $qmark" class="name">?</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="scala.Option">Option</span>[<span class="extype" name="sbt.complete.RichParser.A">A</span>]]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies the original Parser zero or one times.</p>
+      <p class="shortcomment cmt">Apply the original Parser zero or one times, returning None if it was applied zero times or the result wrapped in Some if it was applied once.</p>
     </li><li name="sbt.complete.RichParser#??" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="??[B&gt;:A](alt:B):sbt.complete.Parser[B]"></a>
       <a id="??[B&gt;:A](B):Parser[B]"></a>
@@ -173,7 +175,7 @@
         <span title="gt4s: $qmark$qmark" class="name">??</span><span class="tparams">[<span name="B">B &gt;: <span class="extype" name="sbt.complete.RichParser.A">A</span></span>]</span><span class="params">(<span name="alt">alt: <span class="extype" name="sbt.complete.RichParser.??.B">B</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.??.B">B</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Apply the original Parser, but provide <code>alt</code> as the result if it fails.</p>
     </li><li name="sbt.complete.RichParser#^^^" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="^^^[B](value:B):sbt.complete.Parser[B]"></a>
       <a id="^^^[B](B):Parser[B]"></a>
@@ -186,7 +188,7 @@
         <span title="gt4s: $up$up$up" class="name">^^^</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="value">value: <span class="extype" name="sbt.complete.RichParser.^^^.B">B</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.^^^.B">B</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Apply the original Parser, but provide <code>value</code> as the result if it succeeds.</p>
     </li><li name="sbt.complete.RichParser#examples" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="examples(s:Set[String],check:Boolean):sbt.complete.Parser[A]"></a>
       <a id="examples(Set[String],Boolean):Parser[A]"></a>
@@ -240,7 +242,8 @@ capture it and fail locally instead of allowing the exception to propagate up an
       </span>
       </h4>
       <p class="shortcomment cmt">Produces a Parser that filters the original parser.</p><div class="fullcomment"><div class="comment cmt"><p>Produces a Parser that filters the original parser.
-If 'f' is not true when applied to the output of the original parser, the Parser returned by this method fails.</p></div></div>
+If 'f' is not true when applied to the output of the original parser, the Parser returned by this method fails.
+The failure message is constructed by applying <code>msg</code> to the String that was successfully parsed by the original parser.</p></div></div>
     </li><li name="sbt.complete.RichParser#flatMap" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="flatMap[B](f:A=&gt;sbt.complete.Parser[B]):sbt.complete.Parser[B]"></a>
       <a id="flatMap[B]((A)⇒Parser[B]):Parser[B]"></a>
@@ -253,7 +256,7 @@ If 'f' is not true when applied to the output of the original parser, the Parser
         <span class="name">flatMap</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="sbt.complete.RichParser.A">A</span>) ⇒ <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.flatMap.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.flatMap.B">B</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Applies the original parser, applies <code>f</code> to the result to get the next parser, and applies that parser and uses its result for the overall result.</p>
     </li><li name="sbt.complete.RichParser#id" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="id:sbt.complete.Parser[A]"></a>
       <a id="id:Parser[A]"></a>
@@ -280,7 +283,7 @@ For example, <code>'c'.id</code> or <code>&quot;asdf&quot;.id</code></p></div></
         <span class="name">map</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="f">f: (<span class="extype" name="sbt.complete.RichParser.A">A</span>) ⇒ <span class="extype" name="sbt.complete.RichParser.map.B">B</span></span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.map.B">B</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies the original Parser to the input and then applies <code>f</code> to the result.</p>
+      <p class="shortcomment cmt">Apply the original Parser to the input and then apply <code>f</code> to the result.</p>
     </li><li name="sbt.complete.RichParser#string" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="string(implicitev:&lt;:&lt;[A,Seq[Char]]):sbt.complete.Parser[String]"></a>
       <a id="string(&lt;:&lt;[A,Seq[Char]]):Parser[String]"></a>
@@ -306,7 +309,7 @@ For example, <code>'c'.id</code> or <code>&quot;asdf&quot;.id</code></p></div></
         <span title="gt4s: $bar" class="name">|</span><span class="tparams">[<span name="B">B &gt;: <span class="extype" name="sbt.complete.RichParser.A">A</span></span>]</span><span class="params">(<span name="b">b: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.|.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.|.B">B</span>]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies either the original Parser or <code>b</code>.</p>
+      <p class="shortcomment cmt">Apply either the original Parser or <code>b</code>.</p>
     </li><li name="sbt.complete.RichParser#||" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="||[B](b:sbt.complete.Parser[B]):sbt.complete.Parser[Either[A,B]]"></a>
       <a id="||[B](Parser[B]):Parser[Either[A,B]]"></a>
@@ -319,8 +322,8 @@ For example, <code>'c'.id</code> or <code>&quot;asdf&quot;.id</code></p></div></
         <span title="gt4s: $bar$bar" class="name">||</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="b">b: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.||.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<a href="../../scala/package.html#Either[+A,+B]=scala.util.Either[A,B]" class="extmbr" name="scala.Either">Either</a>[<span class="extype" name="sbt.complete.RichParser.A">A</span>, <span class="extype" name="sbt.complete.RichParser.||.B">B</span>]]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies either the original Parser or <code>b</code>.</p>
-    </li><li name="sbt.complete.RichParser#~" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Apply either the original Parser or <code>b</code>.</p>
+    </li><li name="sbt.complete.RichParser#~" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="~[B](next:sbt.complete.Parser[B]):sbt.complete.Parser[(A,B)]"></a>
       <a id="~[B](Parser[B]):Parser[(A,B)]"></a>
       <h4 class="signature">
@@ -332,8 +335,8 @@ For example, <code>'c'.id</code> or <code>&quot;asdf&quot;.id</code></p></div></
         <span title="gt4s: $tilde" class="name">~</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="next">next: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.~.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[(<span class="extype" name="sbt.complete.RichParser.A">A</span>, <span class="extype" name="sbt.complete.RichParser.~.B">B</span>)]</span>
       </span>
       </h4>
-      <p class="shortcomment cmt">Produces a Parser that applies the original Parser and then applies <code>next</code> (in order).</p>
-    </li><li name="sbt.complete.RichParser#~&gt;" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">Apply the original Parser and then apply <code>next</code> (in order).</p><div class="fullcomment"><div class="comment cmt"><p>Apply the original Parser and then apply <code>next</code> (in order).  The result of both is provides as a pair.</p></div></div>
+    </li><li name="sbt.complete.RichParser#~&gt;" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="~&gt;[B](b:sbt.complete.Parser[B]):sbt.complete.Parser[B]"></a>
       <a id="~&gt;[B](Parser[B]):Parser[B]"></a>
       <h4 class="signature">
@@ -345,7 +348,8 @@ For example, <code>'c'.id</code> or <code>&quot;asdf&quot;.id</code></p></div></
         <span title="gt4s: $tilde$greater" class="name">~&gt;</span><span class="tparams">[<span name="B">B</span>]</span><span class="params">(<span name="b">b: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.~&gt;.B">B</span>]</span>)</span><span class="result">: <a href="Parser.html" class="extype" name="sbt.complete.Parser">Parser</a>[<span class="extype" name="sbt.complete.RichParser.~&gt;.B">B</span>]</span>
       </span>
       </h4>
-      
+      <p class="shortcomment cmt">Produces a Parser that applies the original Parser and then applies <code>next</code> (in order), discarding the result of the original parser.</p><div class="fullcomment"><div class="comment cmt"><p>Produces a Parser that applies the original Parser and then applies <code>next</code> (in order), discarding the result of the original parser.
+(The arrow point in the direction of the retained result.)</p></div></div>
     </li><li name="sbt.complete.RichParser#-" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="-(o:sbt.complete.Parser[_]):sbt.complete.Parser[A]"></a>
       <a id="-(Parser[_]):Parser[A]"></a>

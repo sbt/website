@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.0-RC5',
+        VERSION:     '0.13.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Launcher Specification</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.0-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="Java-Sources.html">Java Sources</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.0-RC5">Version 0.13.0-RC5</option></select>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
               </li>
             </ul>         
           </div>
@@ -225,7 +225,7 @@ substituted.</p>
 [app]
   org: ${sbt.organization-org.scala-sbt}
   name: sbt
-  version: ${sbt.version-read(sbt.version)[0.13.0-RC5]}
+  version: ${sbt.version-read(sbt.version)[0.13.0]}
   class: ${sbt.main.class-sbt.xMain}
   components: xsbti,extra
   cross-versioned: ${sbt.cross.versioned-false}
@@ -366,7 +366,7 @@ interface class will be provided by the launcher, so it is only a
 compile-time dependency. If you are building with sbt, your dependency
 definition would be:</p>
 <pre class="literal-block">
-libraryDependencies += &quot;org.scala-sbt&quot; % &quot;launcher-interface&quot; % &quot;0.13.0-RC5&quot; % &quot;provided&quot;
+libraryDependencies += &quot;org.scala-sbt&quot; % &quot;launcher-interface&quot; % &quot;0.13.0&quot; % &quot;provided&quot;
 
 resolvers += sbtResolver.value
 </pre>
@@ -410,7 +410,7 @@ it might look like:</p>
 [app]
   org: org.scala-sbt
   name: xsbt-test
-  version: 0.13.0-RC5
+  version: 0.13.0
   class: xsbt.test.Main
   cross-versioned: binary
 [repositories]
