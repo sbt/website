@@ -517,9 +517,75 @@ See also the <a class="reference internal" href="index.html"><em>Basic Index</em
 </div>
 </p>
 </div>
+<div class="howto-summary section" id="define-the-commands-evaluated-when-exiting-the-scala-repl">
+<h4>Define the commands evaluated when exiting the Scala REPL<a class="reference external" href="scala.html#cleanup"> (details)</a><a class="headerlink" href="#define-the-commands-evaluated-when-exiting-the-scala-repl" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">cleanupCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Bye!&quot;)&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
 <div class="howto-summary section" id="use-the-scala-repl-from-project-code">
 <h4>Use the Scala REPL from project code<a class="reference external" href="scala.html#embed"> (details)</a><a class="headerlink" href="#use-the-scala-repl-from-project-code" title="Permalink to this headline">¶</a></h4>
 <p></p>
+</div>
+</div>
+<div class="doc-howto-summary section" id="generate-documentation">
+<h3>Generate Documentation<a class="reference external" href="scaladoc.html"> (details)</a><a class="headerlink" href="#generate-documentation" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="select-javadoc-or-scaladoc">
+<h4>Select javadoc or scaladoc<a class="reference external" href="scaladoc.html#generate-javadoc-or-scaladoc"> (details)</a><a class="headerlink" href="#select-javadoc-or-scaladoc" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-text"><div class="highlight"><pre>sbt will run javadoc if there are only Java sources in the project, scaladoc otherwise.
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="set-the-options-used-for-generating-scaladoc-independently-of-compilation">
+<h4>Set the options used for generating scaladoc independently of compilation<a class="reference external" href="scaladoc.html#definitive-doc-options"> (details)</a><a class="headerlink" href="#set-the-options-used-for-generating-scaladoc-independently-of-compilation" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-groups&quot;</span><span class="o">,</span> <span class="s">&quot;-implicits&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="add-options-for-scaladoc-to-the-compilation-options">
+<h4>Add options for scaladoc to the compilation options<a class="reference external" href="scaladoc.html#additional-doc-options"> (details)</a><a class="headerlink" href="#add-options-for-scaladoc-to-the-compilation-options" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-groups&quot;</span><span class="o">,</span> <span class="s">&quot;-implicits&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="set-the-options-used-for-generating-javadoc-independently-of-compilation">
+<h4>Set the options used for generating javadoc independently of compilation<a class="reference external" href="scaladoc.html#definitive-javadoc-options"> (details)</a><a class="headerlink" href="#set-the-options-used-for-generating-javadoc-independently-of-compilation" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-notimestamp&quot;</span><span class="o">,</span> <span class="s">&quot;-linksource&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="add-options-for-javadoc-to-the-compilation-options">
+<h4>Add options for javadoc to the compilation options<a class="reference external" href="scaladoc.html#additional-doc-options"> (details)</a><a class="headerlink" href="#add-options-for-javadoc-to-the-compilation-options" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-notimestamp&quot;</span><span class="o">,</span> <span class="s">&quot;-linksource&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="enable-automatic-linking-to-the-external-scaladoc-of-managed-dependencies">
+<h4>Enable automatic linking to the external Scaladoc of managed dependencies<a class="reference external" href="scaladoc.html#auto-link"> (details)</a><a class="headerlink" href="#enable-automatic-linking-to-the-external-scaladoc-of-managed-dependencies" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">autoAPIMappings</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="enable-manual-linking-to-the-external-scaladoc-of-managed-dependencies">
+<h4>Enable manual linking to the external Scaladoc of managed dependencies<a class="reference external" href="scaladoc.html#manual-api-links"> (details)</a><a class="headerlink" href="#enable-manual-linking-to-the-external-scaladoc-of-managed-dependencies" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">apiMappings</span> <span class="o">+=</span> <span class="o">(</span> <span class="o">&lt;</span><span class="nc">File</span><span class="o">&gt;</span> <span class="o">-&gt;</span> <span class="o">&lt;</span><span class="nc">URL</span><span class="o">&gt;</span> <span class="o">)</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="define-the-location-of-api-documentation-for-a-library">
+<h4>Define the location of API documentation for a library.<a class="reference external" href="scaladoc.html#define-api-url"> (details)</a><a class="headerlink" href="#define-the-location-of-api-documentation-for-a-library" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">apiURL</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://example.org/api/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</p>
 </div>
 </div>
 <div class="doc-howto-summary section" id="triggered-execution">

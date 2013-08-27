@@ -1,0 +1,211 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generate Documentation &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="How to..." href="index.html" />
+    <link rel="next" title="Triggered execution" href="triggered.html" />
+    <link rel="prev" title="Configure and use Scala" href="scala.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Generate Documentation</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.0 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.0/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="triggered.html">Triggered execution</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">How to...</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="scala.html">Configure and use Scala</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.0">Version 0.13.0</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="generate-documentation">
+<h1>Generate Documentation<a class="headerlink" href="#generate-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="full-howto section" id="generate-javadoc-or-scaladoc">
+<h2>Select javadoc or scaladoc<a class="headerlink" href="#generate-javadoc-or-scaladoc" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>sbt will run <span class="pre">javadoc</span> if there are only Java sources in the project.
+If there are any Scala sources, sbt will run <span class="pre">scaladoc</span>.
+(This situation results from <span class="pre">scaladoc</span> not processing Javadoc comments in Java sources nor linking to Javadoc.)</p>
+<div class="full-howto section" id="definitive-doc-options">
+<h2>Set the options used for generating scaladoc independently of compilation<a class="headerlink" href="#definitive-doc-options" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Scope <span class="pre">scalacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">scaladoc</span>.
+Use <span class="pre">:=</span> to definitively set the options without appending to the options for <span class="pre">compile</span>.
+Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-groups&quot;</span><span class="o">,</span> <span class="s">&quot;-implicits&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="additional-doc-options">
+<h2>Add options for scaladoc to the compilation options<a class="headerlink" href="#additional-doc-options" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Scope <span class="pre">scalacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">scaladoc</span>.
+Use <span class="pre">+=</span> or <span class="pre">++=</span> to append options to the base options.
+To append a single option, use <span class="pre">+=</span>.
+To append a <span class="pre">Seq[String]</span>, use <span class="pre">++=</span>.
+Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-groups&quot;</span><span class="o">,</span> <span class="s">&quot;-implicits&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="definitive-javadoc-options">
+<h2>Set the options used for generating javadoc independently of compilation<a class="headerlink" href="#definitive-javadoc-options" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Scope <span class="pre">javacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">javadoc</span>.
+Use <span class="pre">:=</span> to definitively set the options without appending to the options for <span class="pre">compile</span>.
+Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.</p>
+<div class="full-howto section" id="id1">
+<h2>Add options for javadoc to the compilation options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Scope <span class="pre">javacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">javadoc</span>.
+Use <span class="pre">+=</span> or <span class="pre">++=</span> to append options to the base options.
+To append a single option, use <span class="pre">+=</span>.
+To append a <span class="pre">Seq[String]</span>, use <span class="pre">++=</span>.
+Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javacOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">doc</span><span class="o">)</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-notimestamp&quot;</span><span class="o">,</span> <span class="s">&quot;-linksource&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="auto-link">
+<h2>Enable automatic linking to the external Scaladoc of managed dependencies<a class="headerlink" href="#auto-link" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Set <span class="pre">autoAPIMappings := true</span> for sbt to tell <span class="pre">scaladoc</span> where it can find the API documentation for managed dependencies.
+This requires that dependencies have this information in its metadata and you are using <span class="pre">scaladoc</span> for Scala 2.10.2 or later.</p>
+<div class="full-howto section" id="manual-api-links">
+<h2>Enable manual linking to the external Scaladoc of managed dependencies<a class="headerlink" href="#manual-api-links" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Add mappings of type <span class="pre">(File, URL)</span> to <span class="pre">apiMappings</span> to manually tell <span class="pre">scaladoc</span> where it can find the API documentation for dependencies.
+(This requires <span class="pre">scaladoc</span> for Scala 2.10.2 or later.)
+These mappings are used in addition to <span class="pre">autoAPIMappings</span>, so this manual configuration is typically done for unmanaged dependencies.
+The <span class="pre">File</span> key is the location of the dependency as passed to the classpath.
+The <span class="pre">URL</span> value is the base URL of the API documentation for the dependency.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">apiMappings</span> <span class="o">+=</span> <span class="o">(</span>
+  <span class="o">(</span><span class="n">unmanagedBase</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;a-library.jar&quot;</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">url</span><span class="o">(</span><span class="s">&quot;http://example.org/api/&quot;</span><span class="o">)</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="define-api-url">
+<h2>Define the location of API documentation for a library.<a class="headerlink" href="#define-api-url" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Set <span class="pre">apiURL</span> to define the base <span class="pre">URL</span> for the Scaladocs for your library.
+This will enable clients of your library to automatically link against the API documentation using <span class="pre">autoAPIMappings</span>.
+(This only works for Scala 2.10.2 and later.)
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">apiURL</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://example.org/api/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>This information will get included in a property of the published <span class="pre">pom.xml</span>, where it can be automatically consumed by sbt.</p>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Generate Documentation</a><ul>
+<li><a class="reference internal" href="#generate-javadoc-or-scaladoc">Select javadoc or scaladoc</a></li>
+<li><a class="reference internal" href="#definitive-doc-options">Set the options used for generating scaladoc independently of compilation</a></li>
+<li><a class="reference internal" href="#additional-doc-options">Add options for scaladoc to the compilation options</a></li>
+<li><a class="reference internal" href="#definitive-javadoc-options">Set the options used for generating javadoc independently of compilation</a></li>
+<li><a class="reference internal" href="#id1">Add options for javadoc to the compilation options</a></li>
+<li><a class="reference internal" href="#auto-link">Enable automatic linking to the external Scaladoc of managed dependencies</a></li>
+<li><a class="reference internal" href="#manual-api-links">Enable manual linking to the external Scaladoc of managed dependencies</a></li>
+<li><a class="reference internal" href="#define-api-url">Define the location of API documentation for a library.</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

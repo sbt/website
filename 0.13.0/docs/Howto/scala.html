@@ -35,7 +35,7 @@
     <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="How to..." href="index.html" />
-    <link rel="next" title="Triggered execution" href="triggered.html" />
+    <link rel="next" title="Generate Documentation" href="scaladoc.html" />
     <link rel="prev" title="Running commands" href="runningcommands.html" /> 
   </head>
   <body>
@@ -69,7 +69,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="triggered.html">Triggered execution</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="scaladoc.html">Generate Documentation</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">How to...</a>
@@ -91,7 +91,6 @@
             
   <div class="section" id="configure-and-use-scala">
 <h1>Configure and use Scala<a class="headerlink" href="#configure-and-use-scala" title="Permalink to this headline">¶</a></h1>
-<p>By default, sbt's interactive mode is started when no commands are provided on the command line or when the <span class="pre">shell</span> command is invoked.</p>
 <div class="full-howto section" id="version">
 <h2>Set the Scala version used for building the project<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -156,6 +155,20 @@ For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">initialCommands</span> <span class="n">in</span> <span class="n">consoleProject</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Hello from consoleProject&quot;)&quot;&quot;&quot;</span>
 </pre></div>
 </div>
+<div class="full-howto section" id="cleanup">
+<h2>Define the commands evaluated when exiting the Scala REPL<a class="headerlink" href="#cleanup" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Set <span class="pre">cleanupCommands in console</span> to set the statements to evaluate after exiting the Scala REPL started by <span class="pre">console</span> and <span class="pre">consoleQuick</span>.  To configure <span class="pre">consoleQuick</span> separately, use <span class="pre">cleanupCommands in consoleQuick</span>.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">cleanupCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Bye from console&quot;)&quot;&quot;&quot;</span>
+
+<span class="n">cleanupCommands</span> <span class="n">in</span> <span class="n">consoleQuick</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Bye from consoleQuick&quot;)&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>The <span class="pre">consoleProject</span> command is configured separately by <span class="pre">cleanupCommands in consoleProject</span>.  It does not use the value from <span class="pre">cleanupCommands in console</span> by default.  For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">cleanupCommands</span> <span class="n">in</span> <span class="n">consoleProject</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;println(&quot;Bye from consoleProject&quot;)&quot;&quot;&quot;</span>
+</pre></div>
+</div>
 <div class="full-howto section" id="embed">
 <h2>Use the Scala REPL from project code<a class="headerlink" href="#embed" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -198,6 +211,7 @@ For example,</p>
 <li><a class="reference internal" href="#console">Enter the Scala REPL with a project's dependencies and compiled code on the classpath</a></li>
 <li><a class="reference internal" href="#consoleproject">Enter the Scala REPL with plugins and the build definition on the classpath</a></li>
 <li><a class="reference internal" href="#initial">Define the initial commands evaluated when entering the Scala REPL</a></li>
+<li><a class="reference internal" href="#cleanup">Define the commands evaluated when exiting the Scala REPL</a></li>
 <li><a class="reference internal" href="#embed">Use the Scala REPL from project code</a></li>
 </ul>
 </li>
