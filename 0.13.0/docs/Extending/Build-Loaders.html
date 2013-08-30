@@ -334,7 +334,8 @@ relevant map (classpath or aggregate) manually and creating a new
 URI with a new URI. This could be used to translate all references to a
 certain git repository to a different one or to a different mechanism,
 like a local directory.</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">buildDependencies</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">~=</span> <span class="o">{</span>  <span class="n">deps</span> <span class="k">=&gt;</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">buildDependencies</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">deps</span> <span class="k">=</span> <span class="o">(</span><span class="n">buildDependencies</span> <span class="n">in</span> <span class="nc">Global</span><span class="o">).</span><span class="n">value</span>
   <span class="k">val</span> <span class="n">oldURI</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;...&quot;</span><span class="o">)</span> <span class="c1">// the URI to replace</span>
   <span class="k">val</span> <span class="n">newURI</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;...&quot;</span><span class="o">)</span> <span class="c1">// the URI replacing oldURI</span>
   <span class="k">def</span> <span class="n">substitute</span><span class="o">(</span><span class="n">dep</span><span class="k">:</span> <span class="kt">ClasspathDep</span><span class="o">[</span><span class="kt">ProjectRef</span><span class="o">])</span><span class="k">:</span> <span class="kt">ClasspathDep</span><span class="o">[</span><span class="kt">ProjectRef</span><span class="o">]</span> <span class="k">=</span>

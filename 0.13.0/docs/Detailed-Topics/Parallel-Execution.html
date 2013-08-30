@@ -335,7 +335,10 @@ tags applied to it. Only the first computation is labeled.</p>
 
 <span class="n">compile</span> <span class="o">:=</span> <span class="n">myCompileTask</span><span class="o">.</span><span class="n">value</span>
 
-<span class="n">compile</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">...</span> <span class="k">do</span> <span class="n">some</span> <span class="n">post</span> <span class="n">processing</span> <span class="o">...</span> <span class="o">}</span>
+<span class="n">compile</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">result</span> <span class="k">=</span> <span class="n">compile</span><span class="o">.</span><span class="n">value</span>
+  <span class="o">...</span> <span class="k">do</span> <span class="n">some</span> <span class="n">post</span> <span class="n">processing</span> <span class="o">...</span>
+<span class="o">}</span>
 </pre></div>
 </div>
 <p>Is this desirable? expected? If not, what is a better, alternative

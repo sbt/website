@@ -134,7 +134,7 @@ need Saxon. By depending only on the <span class="pre">scalate</span> configurat
       <span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Common</span> <span class="o">:=</span> <span class="nc">CustomCompile</span><span class="o">,</span>
         <span class="c1">// Modify the default Ivy configurations.</span>
         <span class="c1">//   &#39;overrideConfigs&#39; ensures that Compile is replaced by CustomCompile</span>
-      <span class="n">ivyConfigurations</span> <span class="o">~=</span> <span class="n">overrideConfigs</span><span class="o">(</span><span class="nc">Scalate</span><span class="o">,</span> <span class="nc">Saxon</span><span class="o">,</span> <span class="nc">Common</span><span class="o">,</span> <span class="nc">CustomCompile</span><span class="o">),</span>
+      <span class="n">ivyConfigurations</span> <span class="o">:=</span> <span class="n">overrideConfigs</span><span class="o">(</span><span class="nc">Scalate</span><span class="o">,</span> <span class="nc">Saxon</span><span class="o">,</span> <span class="nc">Common</span><span class="o">,</span> <span class="nc">CustomCompile</span><span class="o">)(</span><span class="n">ivyConfigurations</span><span class="o">.</span><span class="n">value</span><span class="o">),</span>
         <span class="c1">// Put all dependencies without an explicit configuration into Common (optional)</span>
       <span class="n">defaultConfiguration</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Common</span><span class="o">),</span>
         <span class="c1">// Declare dependencies in the appropriate configurations</span>

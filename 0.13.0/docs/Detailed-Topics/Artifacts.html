@@ -133,8 +133,9 @@ API or you can disable some of the main artifacts.</p>
 <span class="pre">SettingKey[File]</span>). They are scoped by <span class="pre">(&lt;config&gt;, &lt;task&gt;)</span> as
 indicated in the previous section.</p>
 <p>To modify the type of the main artifact, for example:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">art</span><span class="k">:</span> <span class="kt">Artifact</span><span class="o">)</span> <span class="k">=&gt;</span>
-  <span class="n">art</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;bundle&quot;</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">previous</span><span class="k">:</span> <span class="kt">Artifact</span> <span class="o">=</span> <span class="o">(</span><span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)).</span><span class="n">value</span>
+  <span class="n">previous</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;bundle&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -228,8 +229,9 @@ instead of the <span class="pre">.jar</span> file.</p>
 <span class="n">publishArtifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">:=</span> <span class="kc">false</span>
 
 <span class="c1">// create an Artifact for publishing the .war file</span>
-<span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageWar</span><span class="o">)</span> <span class="o">~=</span> <span class="o">{</span> <span class="o">(</span><span class="n">art</span><span class="k">:</span> <span class="kt">Artifact</span><span class="o">)</span> <span class="k">=&gt;</span>
-  <span class="n">art</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;war&quot;</span><span class="o">,</span> <span class="n">extension</span> <span class="k">=</span> <span class="s">&quot;war&quot;</span><span class="o">)</span>
+<span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageWar</span><span class="o">)</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">previous</span><span class="k">:</span> <span class="kt">Artifact</span> <span class="o">=</span> <span class="o">(</span><span class="n">artifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageWar</span><span class="o">)).</span><span class="n">value</span>
+  <span class="n">previous</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">`type`</span> <span class="k">=</span> <span class="s">&quot;war&quot;</span><span class="o">,</span> <span class="n">extension</span> <span class="k">=</span> <span class="s">&quot;war&quot;</span><span class="o">)</span>
 <span class="o">}</span>
 
 <span class="c1">// add the .war file to what gets published</span>

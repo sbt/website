@@ -167,7 +167,7 @@ property to <span class="pre">false</span>. For example,</p>
 <div class="section" id="build-definitions">
 <h2>Build definitions<a class="headerlink" href="#build-definitions" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="what-are-the-and-methods">
-<h3>What are the <span class="pre">:=</span>, <span class="pre">+=</span>, <span class="pre">++=</span>, and <span class="pre">~=</span> methods?<a class="headerlink" href="#what-are-the-and-methods" title="Permalink to this headline">¶</a></h3>
+<h3>What are the <span class="pre">:=</span>, <span class="pre">+=</span>, and <span class="pre">++=</span> methods?<a class="headerlink" href="#what-are-the-and-methods" title="Permalink to this headline">¶</a></h3>
 <p>These are methods on keys used to construct a <span class="pre">Setting</span> or a <span class="pre">Task</span>. The Getting
 Started Guide covers all these methods, see <a class="reference internal" href="Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a>
 and <a class="reference internal" href="Getting-Started/More-About-Settings.html"><em>more about settings</em></a> for example.</p>
@@ -428,7 +428,10 @@ basic structure of defining <span class="pre">onLoad</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Compose our new function &#39;f&#39; with the existing transformation.</span>
 <span class="o">{</span>
   <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">State</span> <span class="k">=</span> <span class="o">...</span>
-  <span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">~=</span> <span class="o">(</span><span class="n">f</span> <span class="n">compose</span> <span class="k">_</span><span class="o">)</span>
+  <span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">previous</span> <span class="k">=</span> <span class="o">(</span><span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span><span class="o">).</span><span class="n">value</span>
+    <span class="n">f</span> <span class="n">compose</span> <span class="n">previous</span>
+  <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -445,7 +448,10 @@ has been loaded and prints that number:</p>
     <span class="n">println</span><span class="o">(</span><span class="s">&quot;Project load count: &quot;</span> <span class="o">+</span> <span class="n">previous</span><span class="o">)</span>
     <span class="n">s</span><span class="o">.</span><span class="n">put</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">previous</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
   <span class="o">}</span>
-  <span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">~=</span> <span class="o">(</span><span class="n">f</span> <span class="n">compose</span> <span class="k">_</span><span class="o">)</span>
+  <span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">previous</span> <span class="k">=</span> <span class="o">(</span><span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span><span class="o">).</span><span class="n">value</span>
+    <span class="n">f</span> <span class="n">compose</span> <span class="n">previous</span>
+  <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 </div>
@@ -481,23 +487,14 @@ before it is initialized with an empty sequence.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="c1">// error: Reference to uninitialized setting</span>
 <span class="n">settings</span> <span class="k">=</span> <span class="nc">Defaults</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span>
   <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;commons-io&quot;</span> <span class="o">%</span> <span class="s">&quot;commons-io&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span><span class="o">,</span>
-  <span class="n">fullClasspath</span> <span class="o">~=</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">filterNot</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;commons-io&quot;</span><span class="o">)))</span>
+  <span class="n">fullClasspath</span> <span class="o">:=</span> <span class="n">fullClasspath</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">filterNot</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;commons-io&quot;</span><span class="o">))</span>
 <span class="o">)</span>
-</pre></div>
-</div>
-<p>Generally, all of the setting definition methods can be expressed in terms of
-<span class="pre">:=</span>. To better understand the error, we can rewrite the setting as:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// error: Reference to uninitialized setting</span>
-<span class="n">fullClasspath</span> <span class="o">:=</span> <span class="n">fullClasspath</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">filterNot</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;commons-io&quot;</span><span class="o">))</span>
 </pre></div>
 </div>
 <p>This setting varies between the test and compile scopes. The solution is
 use the scoped setting, both as the input to the initializer, and the
 setting that we update.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">filterNot</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;commons-io&quot;</span><span class="o">))</span>
-
-<span class="c1">// or equivalently</span>
-<span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">~=</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">filterNot</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">&quot;commons-io&quot;</span><span class="o">)))</span>
 </pre></div>
 </div>
 </div>
@@ -744,7 +741,7 @@ Started Guide for details.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#build-definitions">Build definitions</a><ul>
-<li><a class="reference internal" href="#what-are-the-and-methods">What are the <span class="pre">:=</span>, <span class="pre">+=</span>, <span class="pre">++=</span>, and <span class="pre">~=</span> methods?</a></li>
+<li><a class="reference internal" href="#what-are-the-and-methods">What are the <span class="pre">:=</span>, <span class="pre">+=</span>, and <span class="pre">++=</span> methods?</a></li>
 <li><a class="reference internal" href="#what-is-the-method">What is the <span class="pre">%</span> method?</a></li>
 <li><a class="reference internal" href="#what-is-moduleid-project">What is <span class="pre">ModuleID</span>, <span class="pre">Project</span>, ...?</a></li>
 <li><a class="reference internal" href="#how-do-i-add-files-to-a-jar-package">How do I add files to a jar package?</a></li>
