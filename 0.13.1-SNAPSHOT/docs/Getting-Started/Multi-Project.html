@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Multi-Project Builds &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-SNAPSHOT',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Using Plugins" href="Using-Plugins.html" />
+    <link rel="prev" title="Library Dependencies" href="Library-Dependencies.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Multi-Project Builds</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Using-Plugins.html">Using Plugins</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Library-Dependencies.html">Library Dependencies</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-SNAPSHOT">Version 0.13.1-SNAPSHOT</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="multi-project-builds">
+<h1>Multi-Project Builds<a class="headerlink" href="#multi-project-builds" title="Permalink to this headline">¶</a></h1>
+<p>This page introduces multiple projects in a single build.</p>
+<p>Please read the earlier pages in the Getting Started Guide first, in
+particular you need to understand <a class="reference internal" href="Basic-Def.html"><em>build.sbt</em></a> before
+reading this page.</p>
+<div class="section" id="multiple-projects">
+<h2>Multiple projects<a class="headerlink" href="#multiple-projects" title="Permalink to this headline">¶</a></h2>
+<p>It can be useful to keep multiple related projects in a single build,
+especially if they depend on one another and you tend to modify them
+together.</p>
+<p>Each sub-project in a build has its own source directories, generates
+its own jar file when you run <span class="pre">package</span>, and in general works like any
+other project.</p>
+<p>A project is defined by declaring a <span class="pre">lazy val</span> of type <a class="reference external" href="../../api/sbt/Project.html">Project</a>.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
+</pre></div>
+</div>
+<p>The name of the val is used as the project's ID and base directory name.
+The ID is used to refer to the project at the command line.
+The base directory may be changed from the default using the <span class="pre">in</span> method.
+For example, the following is a more explicit way to write the previous example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;util&quot;</span><span class="o">)</span> <span class="o">)</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span> <span class="n">in</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;core&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Projects in the build can be completely independent of one another, but usually
+they will be related to one another by some kind of dependency.  There are two
+types of dependencies: aggregate and classpath.</p>
+<div class="section" id="aggregation">
+<h3>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this headline">¶</a></h3>
+<p>Aggregation means that running a task on the aggregate project will also
+run it on the aggregated projects. For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
+        <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)</span> <span class="o">)</span>
+   <span class="o">.</span><span class="n">aggregate</span><span class="o">(</span><span class="n">util</span><span class="o">,</span> <span class="n">core</span><span class="o">)</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
+
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
+</pre></div>
+</div>
+<p>In the above example, the root project aggregates <span class="pre">util</span> and <span class="pre">core</span>.
+Start up sbt with two subprojects as in the example, and try <span class="pre">compile</span>.
+You should see that all three projects are compiled.</p>
+<p><em>In the project doing the aggregating</em>, the <span class="pre">root</span> project in
+this case, you can control aggregation per-task.
+For example, to avoid aggregating the <span class="pre">update</span> task:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
+        <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)</span> <span class="o">)</span>
+   <span class="o">.</span><span class="n">aggregate</span><span class="o">(</span><span class="n">util</span><span class="o">,</span> <span class="n">core</span><span class="o">)</span>
+   <span class="o">.</span><span class="n">settings</span><span class="o">(</span>
+     <span class="n">aggregate</span> <span class="n">in</span> <span class="n">update</span> <span class="o">:=</span> <span class="kc">false</span>
+   <span class="o">)</span>
+
+<span class="o">[</span><span class="kt">...</span><span class="o">]</span>
+</pre></div>
+</div>
+<p><span class="pre">aggregate in update</span> is the <span class="pre">aggregate</span> key scoped to the <span class="pre">update</span> task.
+(See <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.)</p>
+<p>Note: aggregation will run the aggregated tasks in parallel and with no
+defined ordering between them.</p>
+</div>
+<div class="section" id="classpath-dependencies">
+<h3>Classpath dependencies<a class="headerlink" href="#classpath-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>A project may depend on code in another project. This is done by adding
+a <span class="pre">dependsOn</span> method call. For example, if <span class="pre">core</span> needed
+<span class="pre">util</span> on its classpath, you would define <span class="pre">core</span> as:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">dependsOn</span><span class="o">(</span><span class="n">util</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Now code in <span class="pre">core</span> can use classes from <span class="pre">util</span>.
+This also creates an ordering between the projects when compiling them;
+<span class="pre">util</span> must be updated and compiled before <span class="pre">core</span> can be compiled.</p>
+<p>To depend on multiple projects, use multiple arguments to <span class="pre">dependsOn</span>,
+like <span class="pre">dependsOn(bar, baz)</span>.</p>
+<div class="section" id="per-configuration-classpath-dependencies">
+<h4>Per-configuration classpath dependencies<a class="headerlink" href="#per-configuration-classpath-dependencies" title="Permalink to this headline">¶</a></h4>
+<p><span class="pre">foo dependsOn(bar)</span> means that the <span class="pre">compile</span> configuration in
+<span class="pre">foo</span> depends on the <span class="pre">compile</span> configuration in <span class="pre">bar</span>. You could
+write this explicitly as <span class="pre">dependsOn(bar % &quot;compile-&gt;compile&quot;)</span>.</p>
+<p>The <span class="pre">-&gt;</span> in <span class="pre">&quot;compile-&gt;compile&quot;</span> means &quot;depends on&quot; so
+<span class="pre">&quot;test-&gt;compile&quot;</span> means the <span class="pre">test</span> configuration in <span class="pre">foo</span> would
+depend on the <span class="pre">compile</span> configuration in <span class="pre">bar</span>.</p>
+<p>Omitting the <span class="pre">-&gt;config</span> part implies <span class="pre">-&gt;compile</span>, so
+<span class="pre">dependsOn(bar % &quot;test&quot;)</span> means that the <span class="pre">test</span> configuration in
+<span class="pre">foo</span> depends on the <span class="pre">Compile</span> configuration in <span class="pre">bar</span>.</p>
+<p>A useful declaration is <span class="pre">&quot;test-&gt;test&quot;</span> which means <span class="pre">test</span> depends on <span class="pre">test</span>.
+This allows you to put utility code for testing in <span class="pre">bar/src/test/scala</span> and then use that code in <span class="pre">foo/src/test/scala</span>,
+for example.</p>
+<p>You can have multiple configurations for a dependency, separated by
+semicolons. For example,
+<span class="pre">dependsOn(bar % &quot;test-&gt;test;compile-&gt;compile&quot;)</span>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="default-root-project">
+<h2>Default root project<a class="headerlink" href="#default-root-project" title="Permalink to this headline">¶</a></h2>
+<p>If a project is not defined for the root directory in the build, sbt creates a default
+one that aggregates all other projects in the build.</p>
+<p>Because project <span class="pre">hello-foo</span> is defined with <span class="pre">base = file(&quot;foo&quot;)</span>, it
+will be contained in the subdirectory <span class="pre">foo</span>. Its sources could be
+directly under <span class="pre">foo</span>, like <span class="pre">foo/Foo.scala</span>, or in
+<span class="pre">foo/src/main/scala</span>. The usual sbt <a class="reference internal" href="Directories.html"><em>directory structure</em></a>
+applies underneath <span class="pre">foo</span> with the exception of build definition files.</p>
+<p>Any <span class="pre">.sbt</span> files in <span class="pre">foo</span>, say <span class="pre">foo/build.sbt</span>, will be merged
+with the build definition for the entire build, but scoped to the
+<span class="pre">hello-foo</span> project.</p>
+<p>If your whole project is in <span class="pre">hello</span>, try defining a different version
+(<span class="pre">version := &quot;0.6&quot;</span>) in <span class="pre">hello/build.sbt</span>, <span class="pre">hello/foo/build.sbt</span>,
+and <span class="pre">hello/bar/build.sbt</span>. Now <span class="pre">show version</span> at the sbt interactive
+prompt. You should get something like this (with whatever versions you
+defined):</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show version
+<span class="go">[info] hello-foo/*:version</span>
+<span class="go">[info]  0.7</span>
+<span class="go">[info] hello-bar/*:version</span>
+<span class="go">[info]  0.9</span>
+<span class="go">[info] hello/*:version</span>
+<span class="go">[info]  0.5</span>
+</pre></div>
+</div>
+<p><span class="pre">hello-foo/*:version</span> was defined in <span class="pre">hello/foo/build.sbt</span>,
+<span class="pre">hello-bar/*:version</span> was defined in <span class="pre">hello/bar/build.sbt</span>, and
+<span class="pre">hello/*:version</span> was defined in <span class="pre">hello/build.sbt</span>. Remember the
+<a class="reference internal" href="Scopes.html"><em>syntax for scoped keys</em></a>. Each <span class="pre">version</span> key
+is scoped to a project, based on the location of the <span class="pre">build.sbt</span>. But
+all three <span class="pre">build.sbt</span> are part of the same build definition.</p>
+<p><em>Each project's settings can go in `.sbt` files in the base directory
+of that project</em>, while the <span class="pre">.scala</span> file can be as simple as the one
+shown above, listing the projects and base directories. <em>There is no
+need to put settings in the `.scala` file.</em></p>
+<p>You may find it cleaner to put everything including settings in
+<span class="pre">.scala</span> files in order to keep all build definition under a single
+<span class="pre">project</span> directory, however. It's up to you.</p>
+<p>You cannot have a <span class="pre">project</span> subdirectory or <span class="pre">project/*.scala</span> files
+in the sub-projects. <span class="pre">foo/project/Build.scala</span> would be ignored.</p>
+</div>
+<div class="section" id="navigating-projects-interactively">
+<h2>Navigating projects interactively<a class="headerlink" href="#navigating-projects-interactively" title="Permalink to this headline">¶</a></h2>
+<p>At the sbt interactive prompt, type <span class="pre">projects</span> to list your projects
+and <span class="pre">project &lt;projectname&gt;</span> to select a current project. When you run
+a task like <span class="pre">compile</span>, it runs on the current project. So you don't
+necessarily have to compile the root project, you could compile only a
+subproject.</p>
+<p>You can run a task in another project by explicitly specifying the
+project ID, such as <span class="pre">subProjectID/compile</span>.</p>
+</div>
+<div class="section" id="common-code">
+<h2>Common code<a class="headerlink" href="#common-code" title="Permalink to this headline">¶</a></h2>
+<p>The definitions in <span class="pre">.sbt</span> files are not visible in other <span class="pre">.sbt</span> files.
+In order to share code between <span class="pre">.sbt</span> files, define one or more Scala
+files in the <span class="pre">project/</span> directory of the build root.  This directory
+is also an sbt project, but for your build.</p>
+<p>For example:</p>
+<p><span class="pre">&lt;root&gt;/project/Common.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">Common</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">text</span> <span class="k">=</span> <span class="s">&quot;org.example&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><span class="pre">&lt;root&gt;</span>/build.sbt</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">organization</span> <span class="o">:=</span> <span class="nc">Common</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Full-Def.html"><em>.scala Build Definition</em></a> for details.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Move on to <a class="reference internal" href="Using-Plugins.html"><em>using plugins</em></a>.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Multi-Project Builds</a><ul>
+<li><a class="reference internal" href="#multiple-projects">Multiple projects</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#aggregation">Aggregation</a></li>
+<li><a class="reference internal" href="#classpath-dependencies">Classpath dependencies</a><ul>
+<li><a class="reference internal" href="#per-configuration-classpath-dependencies">Per-configuration classpath dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#default-root-project">Default root project</a></li>
+<li><a class="reference internal" href="#navigating-projects-interactively">Navigating projects interactively</a></li>
+<li><a class="reference internal" href="#common-code">Common code</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

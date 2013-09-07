@@ -1,0 +1,348 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Paths &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-SNAPSHOT',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="External Processes" href="Process.html" />
+    <link rel="prev" title="Parsing and tab completion" href="Parsing-Input.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Paths</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Process.html">External Processes</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Parsing-Input.html">Parsing and tab completion</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-SNAPSHOT">Version 0.13.1-SNAPSHOT</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="paths">
+<h1>Paths<a class="headerlink" href="#paths" title="Permalink to this headline">¶</a></h1>
+<p>This page describes files, sequences of files, and file filters. The
+base type used is
+<a class="reference external" href="http://download.oracle.com/javase/6/docs/api/java/io/File.html">java.io.File</a>,
+but several methods are augmented through implicits:</p>
+<ul class="simple">
+<li><a class="reference external" href="../../api/sbt/RichFile.html">RichFile</a>
+adds methods to <span class="pre">File</span></li>
+<li><a class="reference external" href="../../api/sbt/PathFinder.html">PathFinder</a>
+adds methods to <span class="pre">File</span> and <span class="pre">Seq[File]</span></li>
+<li><a class="reference external" href="../../api/sbt/Path$.html">Path</a> and
+<a class="reference external" href="../../api/sbt/IO$.html">IO</a> provide
+general methods related to files and I/O.</li>
+</ul>
+<div class="section" id="constructing-a-file">
+<h2>Constructing a File<a class="headerlink" href="#constructing-a-file" title="Permalink to this headline">¶</a></h2>
+<p>sbt 0.10+ uses
+<a class="reference external" href="http://download.oracle.com/javase/6/docs/api/java/io/File.html">java.io.File</a>
+to represent a file instead of the custom <span class="pre">sbt.Path</span> class that was in
+sbt 0.7 and earlier. sbt defines the alias <span class="pre">File</span> for <span class="pre">java.io.File</span>
+so that an extra import is not necessary. The <span class="pre">file</span> method is an
+alias for the single-argument <span class="pre">File</span> constructor to simplify
+constructing a new file from a String:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">source</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/code/A.scala&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Additionally, sbt augments File with a <span class="pre">/</span> method, which is an alias
+for the two-argument <span class="pre">File</span> constructor for building up a path:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">readme</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;README&quot;</span>
+</pre></div>
+</div>
+<p>Relative files should only be used when defining the base directory of a
+<span class="pre">Project</span>, where they will be resolved properly.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;root&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Elsewhere, files should be absolute or be built up from an absolute base
+<span class="pre">File</span>. The <span class="pre">baseDirectory</span> setting defines the base directory of
+the build or project depending on the scope.</p>
+<p>For example, the following setting sets the unmanaged library directory
+to be the &quot;custom_lib&quot; directory in a project's base directory:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span><span class="s">&quot;custom_lib&quot;</span>
+</pre></div>
+</div>
+<p>Or, more concisely:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span><span class="s">&quot;custom_lib&quot;</span>
+</pre></div>
+</div>
+<p>This setting sets the location of the shell history to be in the base
+directory of the build, irrespective of the project the setting is
+defined in:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">historyPath</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span> <span class="o">(</span><span class="n">baseDirectory</span> <span class="n">in</span> <span class="nc">ThisBuild</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;.history&quot;</span><span class="o">),</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="path-finders">
+<h2>Path Finders<a class="headerlink" href="#path-finders" title="Permalink to this headline">¶</a></h2>
+<p>A <span class="pre">PathFinder</span> computes a <span class="pre">Seq[File]</span> on demand. It is a way to
+build a sequence of files. There are several methods that augment
+<span class="pre">File</span> and <span class="pre">Seq[File]</span> to construct a <span class="pre">PathFinder</span>. Ultimately,
+call <span class="pre">get</span> on the resulting <span class="pre">PathFinder</span> to evaluate it and get back
+a <span class="pre">Seq[File]</span>.</p>
+<div class="section" id="selecting-descendants">
+<h3>Selecting descendants<a class="headerlink" href="#selecting-descendants" title="Permalink to this headline">¶</a></h3>
+<p>The <span class="pre">**</span> method accepts a <span class="pre">java.io.FileFilter</span> and selects all files
+matching that filter.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">scalaSources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;*.scala&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get">
+<h3>get<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h3>
+<p>This selects all files that end in <span class="pre">.scala</span> that are in <span class="pre">src</span> or a
+descendent directory. The list of files is not actually evaluated until
+<span class="pre">get</span> is called:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">scalaSources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">finder</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;*.scala&quot;</span>
+  <span class="n">finder</span><span class="o">.</span><span class="n">get</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If the filesystem changes, a second call to <span class="pre">get</span> on the same
+<span class="pre">PathFinder</span> object will reflect the changes. That is, the <span class="pre">get</span>
+method reconstructs the list of files each time. Also, <span class="pre">get</span> only
+returns <span class="pre">File</span>s that existed at the time it was called.</p>
+</div>
+<div class="section" id="selecting-children">
+<h3>Selecting children<a class="headerlink" href="#selecting-children" title="Permalink to this headline">¶</a></h3>
+<p>Selecting files that are immediate children of a subdirectory is done
+with a single <span class="pre">*</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">scalaSources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;*.scala&quot;</span>
+</pre></div>
+</div>
+<p>This selects all files that end in <span class="pre">.scala</span> that are in the <span class="pre">src</span>
+directory.</p>
+</div>
+<div class="section" id="existing-files-only">
+<h3>Existing files only<a class="headerlink" href="#existing-files-only" title="Permalink to this headline">¶</a></h3>
+<p>If a selector, such as <span class="pre">/</span>, <span class="pre">**</span>, or <span class="pre">*</span>, is used on a path that
+does not represent a directory, the path list will be empty:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">emptyFinder</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span> <span class="o">/</span> <span class="s">&quot;ivy.jar&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;not_possible&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="name-filter">
+<h3>Name Filter<a class="headerlink" href="#name-filter" title="Permalink to this headline">¶</a></h3>
+<p>The argument to the child and descendent selectors <span class="pre">*</span> and <span class="pre">**</span> is
+actually a <span class="pre">NameFilter</span>. An implicit is used to convert a <span class="pre">String</span>
+to a <span class="pre">NameFilter</span> that interprets <span class="pre">*</span> to represent zero or more
+characters of any value. See the Name Filters section below for more
+information.</p>
+</div>
+<div class="section" id="combining-pathfinders">
+<h3>Combining PathFinders<a class="headerlink" href="#combining-pathfinders" title="Permalink to this headline">¶</a></h3>
+<p>Another operation is concatenation of <span class="pre">PathFinder</span>s:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">multiPath</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span>
+   <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span> <span class="o">/</span> <span class="s">&quot;main&quot;</span><span class="o">)</span> <span class="o">+++</span>
+   <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span><span class="o">)</span> <span class="o">+++</span>
+   <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;target&quot;</span> <span class="o">/</span> <span class="s">&quot;classes&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>When evaluated using <span class="pre">get</span>, this will return <span class="pre">src/main/</span>, <span class="pre">lib/</span>,
+and <span class="pre">target/classes/</span>. The concatenated finder supports all standard
+methods. For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">jars</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span>
+   <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span> <span class="o">+++</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;target&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;*.jar&quot;</span>
+</pre></div>
+</div>
+<p>selects all jars directly in the &quot;lib&quot; and &quot;target&quot; directories.</p>
+<p>A common problem is excluding version control directories. This can be
+accomplished as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">sources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=</span>
+   <span class="o">(</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;*.scala&quot;</span><span class="o">)</span> <span class="o">---</span> <span class="o">(</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;.svn&quot;</span> <span class="o">**</span> <span class="s">&quot;*.scala&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The first selector selects all Scala sources and the second selects all
+sources that are a descendent of a <span class="pre">.svn</span> directory. The <span class="pre">---</span>
+method removes all files returned by the second selector from the
+sequence of files returned by the first selector.</p>
+</div>
+<div class="section" id="filtering">
+<h3>Filtering<a class="headerlink" href="#filtering" title="Permalink to this headline">¶</a></h3>
+<p>There is a <span class="pre">filter</span> method that accepts a predicate of type
+<span class="pre">File =&gt; Boolean</span> and is non-strict:</p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="c1">// selects all directories under &quot;src&quot;</span>
+<span class="k">def</span> <span class="n">srcDirs</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span> <span class="k">=</span> <span class="o">(</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="s">&quot;*&quot;</span><span class="o">)</span> <span class="n">filter</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">isDirectory</span> <span class="o">}</span>
+
+  <span class="c1">// selects archives (.zip or .jar) that are selected by &#39;somePathFinder&#39;</span>
+<span class="k">def</span> <span class="n">archivesOnly</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">PathFinder</span><span class="o">)</span> <span class="k">=</span> <span class="n">base</span> <span class="n">filter</span> <span class="nc">ClasspathUtilities</span><span class="o">.</span><span class="n">isArchive</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="empty-pathfinder">
+<h3>Empty PathFinder<a class="headerlink" href="#empty-pathfinder" title="Permalink to this headline">¶</a></h3>
+<p><span class="pre">PathFinder.empty</span> is a <span class="pre">PathFinder</span> that returns the empty sequence
+when <span class="pre">get</span> is called:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">assert</span><span class="o">(</span> <span class="nc">PathFinder</span><span class="o">.</span><span class="n">empty</span><span class="o">.</span><span class="n">get</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]()</span> <span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pathfinder-to-string-conversions">
+<h3>PathFinder to String conversions<a class="headerlink" href="#pathfinder-to-string-conversions" title="Permalink to this headline">¶</a></h3>
+<p>Convert a <span class="pre">PathFinder</span> to a String using one of the following methods:</p>
+<ul class="simple">
+<li><span class="pre">toString</span> is for debugging. It puts the absolute path of each
+component on its own line.</li>
+<li><span class="pre">absString</span> gets the absolute paths of each component and separates
+them by the platform's path separator.</li>
+<li><span class="pre">getPaths</span> produces a <span class="pre">Seq[String]</span> containing the absolute paths
+of each component</li>
+</ul>
+</div>
+<div class="section" id="mappings">
+<h3>Mappings<a class="headerlink" href="#mappings" title="Permalink to this headline">¶</a></h3>
+<p>The packaging and file copying methods in sbt expect values of type
+<span class="pre">Seq[(File,String)]</span> and <span class="pre">Seq[(File,File)]</span>, respectively. These are
+mappings from the input file to its (String) path in the jar or its
+(File) destination. This approach replaces the relative path approach
+(using the <span class="pre">##</span> method) from earlier versions of sbt.</p>
+<p>Mappings are discussed in detail on the <a class="reference internal" href="Mapping-Files.html"><em>Mapping Files</em></a> page.</p>
+</div>
+</div>
+<div class="section" id="file-filters">
+<h2>File Filters<a class="headerlink" href="#file-filters" title="Permalink to this headline">¶</a></h2>
+<p>The argument to <span class="pre">*</span> and <span class="pre">**</span> is of type
+<a class="reference external" href="http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html">java.io.FileFilter</a>.
+sbt provides combinators for constructing <span class="pre">FileFilter</span>s.</p>
+<p>First, a String may be implicitly converted to a <span class="pre">FileFilter</span>. The
+resulting filter selects files with a name matching the string, with a
+<span class="pre">*</span> in the string interpreted as a wildcard. For example, the
+following selects all Scala sources with the word &quot;Test&quot; in them:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">testSrcs</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span>  <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="s">&quot;*Test*.scala&quot;</span>
+</pre></div>
+</div>
+<p>There are some useful combinators added to <span class="pre">FileFilter</span>. The <span class="pre">||</span>
+method declares alternative <span class="pre">FileFilter</span>s. The following example
+selects all Java or Scala source files under &quot;src&quot;:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">sources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span>  <span class="o">=</span>  <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span><span class="o">)</span> <span class="o">**</span> <span class="o">(</span><span class="s">&quot;*.scala&quot;</span> <span class="o">||</span> <span class="s">&quot;*.java&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <span class="pre">--</span> method excludes a files matching a second filter from the
+files matched by the first:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">imageResources</span><span class="o">(</span><span class="n">base</span><span class="k">:</span> <span class="kt">File</span><span class="o">)</span><span class="k">:</span> <span class="kt">PathFinder</span> <span class="o">=</span>
+   <span class="o">(</span><span class="n">base</span><span class="o">/</span><span class="s">&quot;src&quot;</span><span class="o">/</span><span class="s">&quot;main&quot;</span><span class="o">/</span><span class="s">&quot;resources&quot;</span><span class="o">)</span> <span class="o">*</span> <span class="o">(</span><span class="s">&quot;*.png&quot;</span> <span class="o">--</span> <span class="s">&quot;logo.png&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This will get <span class="pre">right.png</span> and <span class="pre">left.png</span>, but not <span class="pre">logo.png</span>, for
+example.</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Paths</a><ul>
+<li><a class="reference internal" href="#constructing-a-file">Constructing a File</a></li>
+<li><a class="reference internal" href="#path-finders">Path Finders</a><ul>
+<li><a class="reference internal" href="#selecting-descendants">Selecting descendants</a></li>
+<li><a class="reference internal" href="#get">get</a></li>
+<li><a class="reference internal" href="#selecting-children">Selecting children</a></li>
+<li><a class="reference internal" href="#existing-files-only">Existing files only</a></li>
+<li><a class="reference internal" href="#name-filter">Name Filter</a></li>
+<li><a class="reference internal" href="#combining-pathfinders">Combining PathFinders</a></li>
+<li><a class="reference internal" href="#filtering">Filtering</a></li>
+<li><a class="reference internal" href="#empty-pathfinder">Empty PathFinder</a></li>
+<li><a class="reference internal" href="#pathfinder-to-string-conversions">PathFinder to String conversions</a></li>
+<li><a class="reference internal" href="#mappings">Mappings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-filters">File Filters</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

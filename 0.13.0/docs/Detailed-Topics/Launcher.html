@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -381,21 +380,21 @@ class Main extends xsbti.AppMain
         val scalaVersion = configuration.provider.scalaProvider.version
 
         // Print a message and the arguments to the application
-        println(&quot;Hello world!  Running Scala &quot; + scalaVersion)
+        println("Hello world!  Running Scala " + scalaVersion)
         configuration.arguments.foreach(println)
 
         // demonstrate the ability to reboot the application into different versions of Scala
         // and how to return the code to exit with
         scalaVersion match
         {
-            case &quot;2.9.3&quot; =&gt;
+            case "2.9.3" =&gt;
                 new xsbti.Reboot {
                     def arguments = configuration.arguments
                     def baseDirectory = configuration.baseDirectory
-                    def scalaVersion = &quot;2.10.2
+                    def scalaVersion = "2.10.2
                     def app = configuration.provider.id
                 }
-            case &quot;2.10.2&quot; =&gt; new Exit(1)
+            case "2.10.2" =&gt; new Exit(1)
             case _ =&gt; new Exit(0)
         }
     }

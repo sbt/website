@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Advanced Command Example &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-SNAPSHOT',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Advanced Configurations Example" href="Advanced-Configurations-Example.html" />
+    <link rel="prev" title="Examples" href="index.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Advanced Command Example</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-SNAPSHOT on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Advanced-Configurations-Example.html">Advanced Configurations Example</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Examples</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="index.html">Examples</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-SNAPSHOT">Version 0.13.1-SNAPSHOT</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="advanced-command-example">
+<h1>Advanced Command Example<a class="headerlink" href="#advanced-command-example" title="Permalink to this headline">¶</a></h1>
+<p>This is an advanced example showing some of the power of the new
+settings system. It shows how to temporarily modify all declared
+dependencies in the build, regardless of where they are defined. It
+directly operates on the final <span class="pre">Seq[Setting[_]]</span> produced from every
+setting involved in the build.</p>
+<p>The modifications are applied by running <em>canonicalize</em>. A <em>reload</em> or
+using <em>set</em> reverts the modifications, requiring <em>canonicalize</em> to be
+run again.</p>
+<p>This particular example shows how to transform all declared dependencies
+on ScalaCheck to use version 1.8. As an exercise, you might try
+transforming other dependencies, the repositories used, or the scalac
+options used. It is possible to add or remove settings as well.</p>
+<p>This kind of transformation is possible directly on the settings of
+Project, but it would not include settings automatically added from
+plugins or build.sbt files. What this example shows is doing it
+unconditionally on all settings in all projects in all builds, including
+external builds.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">Canon</span> <span class="k">extends</span> <span class="nc">Plugin</span>
+<span class="o">{</span>
+      <span class="c1">// Registers the canonicalize command in every project</span>
+   <span class="k">override</span> <span class="k">def</span> <span class="n">settings</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">commands</span> <span class="o">+=</span> <span class="n">canonicalize</span><span class="o">)</span>
+
+      <span class="c1">// Define the command.  This takes the existing settings (including any session settings)</span>
+      <span class="c1">// and applies &#39;f&#39; to each Setting[_]</span>
+   <span class="k">def</span> <span class="n">canonicalize</span> <span class="k">=</span> <span class="nc">Command</span><span class="o">.</span><span class="n">command</span><span class="o">(</span><span class="s">&quot;canonicalize&quot;</span><span class="o">)</span> <span class="o">{</span> <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="k">val</span> <span class="n">extracted</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
+      <span class="k">import</span> <span class="nn">extracted._</span>
+      <span class="k">val</span> <span class="n">transformed</span> <span class="k">=</span> <span class="n">session</span><span class="o">.</span><span class="n">mergeSettings</span> <span class="n">map</span> <span class="o">(</span> <span class="n">s</span> <span class="k">=&gt;</span> <span class="n">f</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="o">)</span>
+      <span class="k">val</span> <span class="n">newStructure</span> <span class="k">=</span> <span class="nc">Load</span><span class="o">.</span><span class="n">reapply</span><span class="o">(</span><span class="n">transformed</span><span class="o">,</span> <span class="n">structure</span><span class="o">)</span>
+      <span class="nc">Project</span><span class="o">.</span><span class="n">setProject</span><span class="o">(</span><span class="n">session</span><span class="o">,</span> <span class="n">newStructure</span><span class="o">,</span> <span class="n">state</span><span class="o">)</span>
+   <span class="o">}</span>
+
+      <span class="c1">// Transforms a Setting[_].</span>
+   <span class="k">def</span> <span class="n">f</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">])</span><span class="k">:</span> <span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]</span> <span class="k">=</span> <span class="n">s</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">key</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="c1">// transform all settings that modify libraryDependencies</span>
+      <span class="k">case</span> <span class="nc">Keys</span><span class="o">.</span><span class="n">libraryDependencies</span><span class="o">.</span><span class="n">key</span> <span class="k">=&gt;</span>
+         <span class="c1">// hey scalac.  T == Seq[ModuleID]</span>
+         <span class="n">s</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">]]].</span><span class="n">mapInit</span><span class="o">(</span><span class="n">mapLibraryDependencies</span><span class="o">)</span>
+      <span class="c1">// preserve other settings</span>
+      <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="n">s</span>
+   <span class="o">}</span>
+      <span class="c1">// This must be idempotent because it gets applied after every transformation.</span>
+      <span class="c1">// That is, if the user does:</span>
+      <span class="c1">//  libraryDependencies += a</span>
+      <span class="c1">//  libraryDependencies += b</span>
+      <span class="c1">// then this method will be called for Seq(a) and Seq(a,b)</span>
+   <span class="k">def</span> <span class="n">mapLibraryDependencies</span><span class="o">(</span><span class="n">key</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">]],</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">])</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">ModuleID</span><span class="o">]</span> <span class="k">=</span>
+     <span class="n">value</span> <span class="n">map</span> <span class="n">mapSingle</span>
+
+     <span class="c1">// This is the fundamental transformation.</span>
+     <span class="c1">// Here we map all declared ScalaCheck dependencies to be version 1.8</span>
+   <span class="k">def</span> <span class="n">mapSingle</span><span class="o">(</span><span class="n">module</span><span class="k">:</span> <span class="kt">ModuleID</span><span class="o">)</span><span class="k">:</span> <span class="kt">ModuleID</span> <span class="o">=</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">module</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;scalacheck&quot;</span><span class="o">)</span>
+         <span class="n">module</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">revision</span> <span class="k">=</span> <span class="s">&quot;1.8&quot;</span><span class="o">)</span>
+      <span class="k">else</span>
+         <span class="n">module</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Advanced Command Example</a></li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>
