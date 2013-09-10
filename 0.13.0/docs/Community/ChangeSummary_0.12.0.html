@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -111,7 +110,7 @@ particular.</li>
 <li><span class="pre">artifactName</span> type has changed to
 <span class="pre">(ScalaVersion, Artifact, ModuleID) =&gt; String</span></li>
 <li><span class="pre">javacOptions</span> is now a task</li>
-<li><span class="pre">session save</span> overwrites settings in <span class="pre">build.sbt</span> (when appropriate). <a class="reference external" href="https://github.com/sbt/sbt/issues/369" title="Overwrite previous setting if possible."><span class="xref issue closed">#369</span></a></li>
+<li><span class="pre">session save</span> overwrites settings in <span class="pre">build.sbt</span> (when appropriate). <a class="reference external" href="https://github.com/sbt/sbt/pull/369" title="Overwrite previous setting if possible."><span class="xref issue closed">#369</span></a></li>
 <li>scala-library.jar is now required to be on the classpath in order to
 compile Scala code. See the <span class="pre">scala-library.jar</span> section at the
 bottom of the page for details.</li>
@@ -120,16 +119,16 @@ bottom of the page for details.</li>
 <div class="section" id="features">
 <h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Support for forking tests (<a class="reference external" href="https://github.com/sbt/sbt/issues/415" title="'fork in test' initial implementation."><span class="xref issue closed">#415</span></a>)</li>
+<li>Support for forking tests (<a class="reference external" href="https://github.com/sbt/sbt/pull/415" title="'fork in test' initial implementation."><span class="xref issue closed">#415</span></a>)</li>
 <li><span class="pre">test-quick</span> (see details section below)</li>
-<li>Support globally overriding repositories (<a class="reference external" href="https://github.com/sbt/sbt/issues/472" title="Proxy repo config"><span class="xref issue closed">#472</span></a>)</li>
+<li>Support globally overriding repositories (<a class="reference external" href="https://github.com/sbt/sbt/pull/472" title="Proxy repo config"><span class="xref issue closed">#472</span></a>)</li>
 <li>Added <span class="pre">print-warnings</span> task that will print unchecked and
 deprecation warnings from the previous compilation without needing to
 recompile (Scala 2.10+ only)</li>
 <li>Support for loading an ivy settings file from a URL.</li>
 <li><span class="pre">projects add/remove &lt;URI&gt;</span> for temporarily working with other builds</li>
 <li>Enhanced control over parallel execution (see details section below)</li>
-<li><span class="pre">inspect tree &lt;key&gt;</span> for calling <span class="pre">inspect</span> command recursively (<a class="reference external" href="https://github.com/sbt/sbt/issues/274" title="&quot;inspect tree &lt;key&gt;&quot; command"><span class="xref issue closed">#274</span></a>)</li>
+<li><span class="pre">inspect tree &lt;key&gt;</span> for calling <span class="pre">inspect</span> command recursively (<a class="reference external" href="https://github.com/sbt/sbt/pull/274" title="&quot;inspect tree &lt;key&gt;&quot; command"><span class="xref issue closed">#274</span></a>)</li>
 </ul>
 </div>
 <div class="section" id="fixes">
@@ -148,16 +147,16 @@ recompile (Scala 2.10+ only)</li>
 <ul class="simple">
 <li>The launcher can launch all released sbt versions back to 0.7.0.</li>
 <li>A more refined hint to run 'last' is given when a stack trace is suppressed.</li>
-<li>Use java 7 Redirect.INHERIT to inherit input stream of subprocess (<a class="reference external" href="https://github.com/sbt/sbt/issues/462" title="Use java 7 Redirect.INHERIT to inherit subprocess' input stream."><span class="xref issue closed">#462</span></a>,<a class="reference external" href="https://github.com/sbt/sbt/issues/327" title="&quot;java.io.IOException: Broken pipe&quot; after foo!&lt; and a key stroke"><span class="xref issue closed">#327</span></a>).
+<li>Use java 7 Redirect.INHERIT to inherit input stream of subprocess (<a class="reference external" href="https://github.com/sbt/sbt/pull/462" title="Use java 7 Redirect.INHERIT to inherit subprocess' input stream."><span class="xref issue closed">#462</span></a>,<a class="reference external" href="https://github.com/sbt/sbt/issues/327" title="&quot;java.io.IOException: Broken pipe&quot; after foo!&lt; and a key stroke"><span class="xref issue closed">#327</span></a>).
 This should fix issues when forking interactive programs. (&#64;vigdorchik)</li>
-<li>Mirror ivy 'force' attribute (<a class="reference external" href="https://github.com/sbt/sbt/issues/361" title="Mirror ivy \'force\' attribute in sbt."><span class="xref issue closed">#361</span></a>)</li>
+<li>Mirror ivy 'force' attribute (<a class="reference external" href="https://github.com/sbt/sbt/pull/361" title="Mirror ivy \'force\' attribute in sbt."><span class="xref issue closed">#361</span></a>)</li>
 <li>Various improvements to <span class="pre">help</span> and <span class="pre">tasks</span> commands as well as
 new <span class="pre">settings</span> command (<a class="reference external" href="https://github.com/sbt/sbt/issues/315" title="tasks list should be made comprehensible"><span class="xref issue closed">#315</span></a>)</li>
 <li>Bump jsch version to 0.1.46. (<a class="reference external" href="https://github.com/sbt/sbt/issues/403" title="update jsch please!"><span class="xref issue closed">#403</span></a>)</li>
 <li>Improved help commands: <span class="pre">help</span>, <span class="pre">tasks</span>, <span class="pre">settings</span>.</li>
 <li>Bump to JLine 1.0 (see details section below)</li>
 <li>Global repository setting (see details section below)</li>
-<li>Other fixes/improvements: <a class="reference external" href="https://github.com/sbt/sbt/issues/368" title="Resolving sbt-plugins from cache is slow"><span class="xref issue closed">#368</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/377" title="'test-' preffix should be stripped to obtain classifier."><span class="xref issue closed">#377</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/378" title="Plugin should be able to write to Build.settings as well as Project.settings"><span class="xref issue closed">#378</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/386" title="Topic/macro def"><span class="xref issue closed">#386</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/387" title="Sbt does not remove empty output directories when appropriate, causing incremental compilation to fail"><span class="xref issue closed">#387</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/388" title="Easy way to add aliases in build.sbt / Build.scala"><span class="xref issue closed">#388</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/389" title="Add option to preserve last modified date for IO.unzip"><span class="xref issue closed">#389</span></a></li>
+<li>Other fixes/improvements: <a class="reference external" href="https://github.com/sbt/sbt/issues/368" title="Resolving sbt-plugins from cache is slow"><span class="xref issue closed">#368</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/pull/377" title="'test-' preffix should be stripped to obtain classifier."><span class="xref issue closed">#377</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/378" title="Plugin should be able to write to Build.settings as well as Project.settings"><span class="xref issue closed">#378</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/pull/386" title="Topic/macro def"><span class="xref issue closed">#386</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/387" title="Sbt does not remove empty output directories when appropriate, causing incremental compilation to fail"><span class="xref issue closed">#387</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/388" title="Easy way to add aliases in build.sbt / Build.scala"><span class="xref issue closed">#388</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/389" title="Add option to preserve last modified date for IO.unzip"><span class="xref issue closed">#389</span></a></li>
 </ul>
 </div>
 <div class="section" id="experimental-or-in-progress">
@@ -327,7 +326,7 @@ dependencies. (&#64;jsuereth)</p>
 </div>
 <div class="section" id="test-quick">
 <h2>test-quick<a class="headerlink" href="#test-quick" title="Permalink to this headline">¶</a></h2>
-<p><span class="pre">test-quick</span> (<a class="reference external" href="https://github.com/sbt/sbt/issues/393" title="Wip test quick"><span class="xref issue closed">#393</span></a>) runs the tests specified as arguments (or all tests if no arguments are
+<p><span class="pre">test-quick</span> (<a class="reference external" href="https://github.com/sbt/sbt/pull/393" title="Wip test quick"><span class="xref issue closed">#393</span></a>) runs the tests specified as arguments (or all tests if no arguments are
 given) that:</p>
 <ol class="arabic simple">
 <li>have not been run yet OR</li>
@@ -338,7 +337,7 @@ run</li>
 </div>
 <div class="section" id="argument-quoting">
 <h2>Argument quoting<a class="headerlink" href="#argument-quoting" title="Permalink to this headline">¶</a></h2>
-<p>Argument quoting (<a class="reference external" href="https://github.com/sbt/sbt/issues/396" title="Parser for escaped and verbatim string literals"><span class="xref issue closed">#396</span></a>) from the intereactive mode works like Scala string literals.</p>
+<p>Argument quoting (<a class="reference external" href="https://github.com/sbt/sbt/pull/396" title="Parser for escaped and verbatim string literals"><span class="xref issue closed">#396</span></a>) from the intereactive mode works like Scala string literals.</p>
 <ol class="arabic simple">
 <li><span class="pre">&gt; command &quot;arg with spaces, n escapes interpreted&quot;</span></li>
 <li><span class="pre">&gt; command &quot;&quot;&quot;arg with spaces, n escapes not interpreted&quot;&quot;&quot;</span></li>

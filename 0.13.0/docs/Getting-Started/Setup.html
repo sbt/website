@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -45,7 +44,7 @@
         <ul class="nav">
           <li><a href="http://www.scala-sbt.org/">Home</a></li>
           <li><a href="../index.html">Documentation</a></li>
-          <li><a href="Setup.html">Download</a></li>
+          <li><a href="#">Download</a></li>
           <li><a href="http://groups.google.com/group/simple-build-tool">Mailing List</a></li>
           <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
@@ -175,8 +174,8 @@ merge sbt from this ebuilds you can do:</p>
 <h4>Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
 <p>Put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0/sbt-launch.jar">sbt-launch.jar</a> in <span class="pre">~/bin</span>.</p>
 <p>Create a script to run the jar, by creating <span class="pre">~/bin/sbt</span> with these contents:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
-<span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar <span class="sb">`</span>dirname <span class="nv">$0</span><span class="sb">`</span>/sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="go">java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</span>
 </pre></div>
 </div>
 <p>Make the script executable:</p>
@@ -191,14 +190,14 @@ In all cases, put the batch file or script on the path so that you can launch <s
 in any directory by typing <span class="pre">sbt</span> at the command prompt.  Also, adjust JVM settings
 according to your machine if necessary.</p>
 <p>For <strong>non-Cygwin users using the standard Windows terminal</strong>, create a batch file <span class="pre">sbt.bat</span>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">set </span><span class="nv">SCRIPT_DIR</span><span class="o">=</span>%~dp0
-<span class="gp">$</span> java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize<span class="o">=</span>256M -jar <span class="s2">&quot;%SCRIPT_DIR%sbt-launch.jar&quot;</span> %*
+<div class="highlight-console"><div class="highlight"><pre><span class="go">set SCRIPT_DIR=%~dp0</span>
+<span class="go">java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</span>
 </pre></div>
 </div>
 <p>and put the downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file.</p>
 <p>If using <strong>Cygwin with the standard Windows terminal</strong>, create a bash script <span class="pre">~/bin/sbt</span>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
-<span class="gp">$</span> java <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="go">java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;</span>
 </pre></div>
 </div>
 <p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
@@ -207,10 +206,10 @@ Make the script executable:</p>
 </pre></div>
 </div>
 <p>If using <strong>Cygwin with an Ansi terminal</strong> (supports Ansi escape sequences and is configurable via <span class="pre">stty</span>), create a bash script <span class="pre">~/bin/sbt</span>:</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> <span class="nv">SBT_OPTS</span><span class="o">=</span><span class="s2">&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
-<span class="gp">$</span> stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
-<span class="gp">$</span> java -Djline.terminal<span class="o">=</span>jline.UnixTerminal -Dsbt.cygwin<span class="o">=</span><span class="nb">true</span> <span class="nv">$SBT_OPTS</span> -jar sbt-launch.jar <span class="s2">&quot;$@&quot;</span>
-<span class="gp">$</span> stty icanon <span class="nb">echo</span> &gt; /dev/null 2&gt;&amp;1
+<div class="highlight-console"><div class="highlight"><pre><span class="go">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
+<span class="go">stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1</span>
+<span class="go">java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;</span>
+<span class="go">stty icanon echo &gt; /dev/null 2&gt;&amp;1</span>
 </pre></div>
 </div>
 <p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.0/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
@@ -218,6 +217,8 @@ Then, make the script executable:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
 </pre></div>
 </div>
+<p>In order for backspace to work correctly in the scala console, you need to make sure your backspace key is sending the erase character as configured by stty.
+For the default cygwin terminal (mintty) you can find a setting under Options -&gt; Keys &quot;Backspace sends ^H&quot; which will need to be checked if your erase key is the cygwin default of ^H.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Other configurations are currently unsupported.
