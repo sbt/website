@@ -41,7 +41,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 バッチファイル `sbt.bat` を作成する:
 
     set SCRIPT_DIR=%~dp0
-    java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+    java -Dinput.encoding=Cp1252 -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 
 次に、[sbt-launch.jar] をバッチファイルと同じディレクトリにダウンロードしてくる。コマンドプロンプト上でどのディレクトリからでも `sbt` と打てば `sbt` が実行できるように `sbt.bat` にパスを通す。
 
@@ -53,7 +53,7 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 
  - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
  - [原文のページ](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
- - windows の場合は、msi を使用してインストールすると、sbtのコンソールでカラー表示が可能になるので、カラーにしたい方はそちらがオススメです。(windowsの場合は上記に書いてある手動でバッチファイルを置く方法では、カラー表示にならない)
+ - sbt0.13.0以降、windows の場合は、 `-Dinput.encoding=Cp1252` を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 [詳しい議論などはここを参照](https://github.com/sbt/sbt/issues/871)
 
 ## 続いては
 
