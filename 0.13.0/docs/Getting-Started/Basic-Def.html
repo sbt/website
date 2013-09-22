@@ -191,40 +191,48 @@ the next begins.</p>
 <p><span class="pre">.sbt</span> files contain a list of Scala expressions, not a single Scala
 program. These expressions have to be split up and passed to the
 compiler individually.</p>
-<p>If you want a single Scala program, use <a class="reference internal" href="Full-Def.html"><em>.scala files</em></a>
-rather than <span class="pre">.sbt</span> files; <span class="pre">.sbt</span> files are optional.
-<a class="reference internal" href="Full-Def.html"><em>Later on</em></a> this guide explains how to use
-<span class="pre">.scala</span> files. (Preview: the same settings expressions found in a
-<span class="pre">.sbt</span> file can always be listed in a <span class="pre">Seq[Setting]</span> in a <span class="pre">.scala</span>
-file instead.)</p>
 </div>
-<div class="section" id="keys-are-defined-in-the-keys-object">
-<h2>Keys are defined in the Keys object<a class="headerlink" href="#keys-are-defined-in-the-keys-object" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="keys">
+<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="types">
+<h3>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h3>
+<p>There are three flavors of key:</p>
+<ul class="simple">
+<li><span class="pre">SettingKey[T]</span>: a key for a value computed once (the value is
+computed one time when loading the project, and kept around).</li>
+<li><span class="pre">TaskKey[T]</span>: a key for a value, called a <em>task</em>,
+that has to be recomputed each time, potentially creating side effects.</li>
+<li><span class="pre">InputKey[T]</span>: a key for a task that has command line arguments as
+input. The Getting Started Guide doesn't cover <span class="pre">InputKey</span>, but when
+you finish this guide, check out <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> for more.</li>
+</ul>
+</div>
+<div class="section" id="built-in-keys">
+<h3>Built-in Keys<a class="headerlink" href="#built-in-keys" title="Permalink to this headline">¶</a></h3>
 <p>The built-in keys are just fields in an object called
 <a class="reference external" href="../../sxr/Keys.scala.html">Keys</a>. A
 <span class="pre">build.sbt</span> implicitly has an <span class="pre">import sbt.Keys._</span>, so
 <span class="pre">sbt.Keys.name</span> can be referred to as <span class="pre">name</span>.</p>
-<p>Custom keys may be defined in a <a class="reference internal" href="Full-Def.html"><em>.scala file</em></a> or a <a class="reference internal" href="Using-Plugins.html"><em>plugin</em></a>.</p>
 </div>
-<div class="section" id="other-ways-to-transform-settings">
-<h2>Other ways to transform settings<a class="headerlink" href="#other-ways-to-transform-settings" title="Permalink to this headline">¶</a></h2>
-<p>Replacement with <span class="pre">:=</span> is the simplest transformation, but there are
-several others. For example you can append to a list value with <span class="pre">+=</span>.</p>
-<p>The other transformations require an understanding of <a class="reference internal" href="Scopes.html"><em>scopes</em></a>, so the <a class="reference internal" href="Scopes.html"><em>next page</em></a> is about
-scopes and the <a class="reference internal" href="More-About-Settings.html"><em>page after that</em></a> goes into more detail about settings.</p>
+<div class="section" id="custom-keys">
+<h3>Custom Keys<a class="headerlink" href="#custom-keys" title="Permalink to this headline">¶</a></h3>
+<p>Custom keys may be defined with their respective creation methods: <span class="pre">settingKey</span>, <span class="pre">taskKey</span>, and <span class="pre">inputKey</span>.
+Each method expects the type of the value associated with the key as well as a description.
+The name of the key is taken from the <span class="pre">val</span> the key is assigned to.
+For example, to define a key for a new task called <span class="pre">hello</span>,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">hello</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;An example task&quot;</span><span class="o">)</span>
+</pre></div>
 </div>
-<div class="section" id="task-keys">
-<h2>Task Keys<a class="headerlink" href="#task-keys" title="Permalink to this headline">¶</a></h2>
-<p>There are three flavors of key:</p>
-<ul class="simple">
-<li><span class="pre">SettingKey[T]</span>: a key with a value computed once (the value is
-computed one time when loading the project, and kept around).</li>
-<li><span class="pre">TaskKey[T]</span>: a key with a value that has to be recomputed each
-time, potentially creating side effects.</li>
-<li><span class="pre">InputKey[T]</span>: a task key which has command line arguments as
-input. The Getting Started Guide doesn't cover <span class="pre">InputKey</span>, but when
-you finish this guide, check out <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> for more.</li>
-</ul>
+<p>Here we have used the fact that an <span class="pre">.sbt</span> file can contain <span class="pre">val</span>s and <span class="pre">def</span>s in addition to settings.
+All such definitions are evaluated before settings regardless of where they are defined in the file.
+<span class="pre">val</span>s and <span class="pre">def</span>s must be separated from settings by blank lines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Typically, <span class="pre">lazy val</span>s are used instead of <span class="pre">val</span>s to avoid initialization order problems.</p>
+</div>
+</div>
+<div class="section" id="task-v-setting-keys">
+<h3>Task v. Setting keys<a class="headerlink" href="#task-v-setting-keys" title="Permalink to this headline">¶</a></h3>
 <p>A <span class="pre">TaskKey[T]</span> is said to define a <em>task</em>. Tasks are operations such
 as <span class="pre">compile</span> or <span class="pre">package</span>. They may return <span class="pre">Unit</span> (<span class="pre">Unit</span> is
 Scala for <span class="pre">void</span>), or they may return a value related to the task, for
@@ -241,11 +249,23 @@ time.</p>
 <p><em>A given key always refers to either a task or a plain setting.</em> That
 is, &quot;taskiness&quot; (whether to re-run each time) is a property of the key,
 not the value.</p>
-<p>Using <span class="pre">:=</span>, you can assign a computation to a task, and that
-computation will be re-run each time:</p>
+</div>
+</div>
+<div class="section" id="defining-tasks-and-settings">
+<h2>Defining tasks and settings<a class="headerlink" href="#defining-tasks-and-settings" title="Permalink to this headline">¶</a></h2>
+<p>Using <span class="pre">:=</span>, you can assign a value to a setting and a computation to a task.
+For a setting, the value will be computed once at project load time.
+For a task, the computation will be re-run each time the task is executed.</p>
+<p>For example, to implement the <span class="pre">hello</span> task from the previous section,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">hello</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello!&quot;</span><span class="o">)</span> <span class="o">}</span>
 </pre></div>
 </div>
+<p>We already saw an example of defining settings when we defined the project's name,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="types-for-tasks-and-settings">
+<h3>Types for tasks and settings<a class="headerlink" href="#types-for-tasks-and-settings" title="Permalink to this headline">¶</a></h3>
 <p>From a type-system perspective, the <span class="pre">Setting</span> created from a task key
 is slightly different from the one created from a setting key.
 <span class="pre">taskKey := 42</span> results in a <span class="pre">Setting[Task[T]]</span> while
@@ -253,10 +273,11 @@ is slightly different from the one created from a setting key.
 makes no difference; the task key still creates a value of type <span class="pre">T</span>
 when the task executes.</p>
 <p>The <span class="pre">T</span> vs. <span class="pre">Task[T]</span> type difference has this implication: a
-setting key can't depend on a task key, because a setting key is
-evaluated only once on project load, and not re-run. More on this in
-<a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>, coming up
+setting can't depend on a task, because a setting is
+evaluated only once on project load and is not re-run.
+More on this in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>, coming up
 soon.</p>
+</div>
 </div>
 <div class="section" id="keys-in-sbt-interactive-mode">
 <h2>Keys in sbt interactive mode<a class="headerlink" href="#keys-in-sbt-interactive-mode" title="Permalink to this headline">¶</a></h2>
@@ -325,9 +346,17 @@ covering it later on.</p>
 <li><a class="reference internal" href="#what-is-a-build-definition">What is a build definition?</a></li>
 <li><a class="reference internal" href="#how-build-sbt-defines-settings">How <span class="pre">build.sbt</span> defines settings</a></li>
 <li><a class="reference internal" href="#settings-are-separated-by-blank-lines">Settings are separated by blank lines</a></li>
-<li><a class="reference internal" href="#keys-are-defined-in-the-keys-object">Keys are defined in the Keys object</a></li>
-<li><a class="reference internal" href="#other-ways-to-transform-settings">Other ways to transform settings</a></li>
-<li><a class="reference internal" href="#task-keys">Task Keys</a></li>
+<li><a class="reference internal" href="#keys">Keys</a><ul>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#built-in-keys">Built-in Keys</a></li>
+<li><a class="reference internal" href="#custom-keys">Custom Keys</a></li>
+<li><a class="reference internal" href="#task-v-setting-keys">Task v. Setting keys</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-tasks-and-settings">Defining tasks and settings</a><ul>
+<li><a class="reference internal" href="#types-for-tasks-and-settings">Types for tasks and settings</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#keys-in-sbt-interactive-mode">Keys in sbt interactive mode</a></li>
 <li><a class="reference internal" href="#imports-in-build-sbt">Imports in <span class="pre">build.sbt</span></a></li>
 <li><a class="reference internal" href="#adding-library-dependencies">Adding library dependencies</a></li>

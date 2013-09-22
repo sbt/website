@@ -214,13 +214,27 @@ setting:</p>
 <div class="section" id="direct-usage">
 <h2>Direct Usage<a class="headerlink" href="#direct-usage" title="Permalink to this headline">¶</a></h2>
 <p>To fork a new Java process, use the <a class="reference external" href="../../api/sbt/Fork$.html">Fork
-API</a>. The
-methods of interest are <span class="pre">Fork.java</span>, <span class="pre">Fork.javac</span>, <span class="pre">Fork.scala</span>,
-and <span class="pre">Fork.scalac</span>. See the
-<a class="reference external" href="../../api/sbt/Fork$.ForkJava.html">ForkJava</a>
-and
-<a class="reference external" href="../../api/sbt/Fork$.ForkScala.html">ForkScala</a>
-classes for the arguments and types.</p>
+API</a>.
+The values of interest are <span class="pre">Fork.java</span>, <span class="pre">Fork.javac</span>, <span class="pre">Fork.scala</span>, and <span class="pre">Fork.scalac</span>.
+These are of type <a class="reference external" href="../../api/sbt/Fork.html">Fork</a> and provide <span class="pre">apply</span> and <span class="pre">fork</span> methods.
+For example, to fork a new Java process,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">options</span> <span class="k">=</span> <span class="nc">ForkOptions</span><span class="o">(...)</span>
+<span class="k">val</span> <span class="n">arguments</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">mainClass</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">exitCode</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="nc">Fork</span><span class="o">.</span><span class="n">java</span><span class="o">(</span><span class="n">options</span><span class="o">,</span> <span class="n">mainClass</span> <span class="o">+:</span> <span class="n">arguments</span><span class="o">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../api/sbt/ForkOptions.html">ForkOptions</a> defines the Java installation to use, the working directory, environment variables, and more.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">cwd</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">javaDir</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">options</span> <span class="k">=</span> <span class="nc">ForkOptions</span><span class="o">(</span>
+   <span class="n">envVars</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;KEY&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;value&quot;</span><span class="o">),</span>
+   <span class="n">workingDirectory</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">cwd</span><span class="o">),</span>
+   <span class="n">javaHome</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">javaDir</span><span class="o">)</span>
+<span class="o">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 
