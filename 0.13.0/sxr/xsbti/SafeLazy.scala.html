@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/SafeLazy.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">// needs to be in xsbti package (or a subpackage) to pass through the filter in DualLoader</span>
+<span class="comment">//  and be accessible to the compiler-side interface</span>
+<span class="keyword">package</span> xsbti
+
+<span class="keyword">object</span> <a title="xsbti.SafeLazy.type" id="xsbti.SafeLazy">SafeLazy</a>
+<a href="#xsbti.SafeLazy" title="xsbti.SafeLazy.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="[T &lt;: AnyRef](eval: xsbti.F0[T])xsbti.api.Lazy[T]" id="xsbti.SafeLazy.apply(ac1d166719)">apply</a><span class="delimiter">[</span><a title=" &lt;: AnyRef" id="xsbti.SafeLazy.apply(ac1d166719);T">T</a> &lt;: AnyRef<span class="delimiter">]</span><span class="delimiter">(</span><a title="xsbti.F0[T]" id="xsbti.SafeLazy.apply(ac1d166719).eval">eval</a>: xsbti.<a href="F0.java.html#xsbti;F0" title="xsbti.F0[T]">F0</a><span class="delimiter">[</span>T<span class="delimiter">]</span><span class="delimiter">)</span>: xsbti.api.<a href="api/Lazy.java.html#xsbti.api;Lazy" title="xsbti.api.Lazy[T]">Lazy</a><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+		<a href="#xsbti.SafeLazy.apply(8c88397f5b)" title="(eval: =&gt; T)xsbti.api.Lazy[T]">apply</a><span class="delimiter">(</span> <a href="F0.java.html#xsbti;F0.apply" title="()T">eval</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="[T &lt;: AnyRef](eval: =&gt; T)xsbti.api.Lazy[T]" id="xsbti.SafeLazy.apply(8c88397f5b)">apply</a><span class="delimiter">[</span><a title=" &lt;: AnyRef" id="xsbti.SafeLazy.apply(8c88397f5b);T">T</a> &lt;: AnyRef<span class="delimiter">]</span><span class="delimiter">(</span><a title="=&gt; T" id="xsbti.SafeLazy.apply(8c88397f5b).eval">eval</a>: =&gt; T<span class="delimiter">)</span>: xsbti.api.<a href="api/Lazy.java.html#xsbti.api;Lazy" title="xsbti.api.Lazy[T]">Lazy</a><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+		<a href="#xsbti.SafeLazy.fromFunction0" title="(eval: () =&gt; T)xsbti.api.Lazy[T]">fromFunction0</a><span class="delimiter">(</span> <a href="#xsbti.SafeLazy.apply(8c88397f5b).eval" title="=&gt; T">eval</a> _ <span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="[T &lt;: AnyRef](eval: () =&gt; T)xsbti.api.Lazy[T]" id="xsbti.SafeLazy.fromFunction0">fromFunction0</a><span class="delimiter">[</span><a title=" &lt;: AnyRef" id="xsbti.SafeLazy.fromFunction0;T">T</a> &lt;: AnyRef<span class="delimiter">]</span><span class="delimiter">(</span><a title="() =&gt; T" id="xsbti.SafeLazy.fromFunction0.eval">eval</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; T<span class="delimiter">)</span>: xsbti.api.<a href="api/Lazy.java.html#xsbti.api;Lazy" title="xsbti.api.Lazy[T]">Lazy</a><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+		<span title="xsbti.SafeLazy.Impl[T]" class="keyword">new</span> <a href="#xsbti.SafeLazy;Impl" title="xsbti.SafeLazy.Impl[T]">Impl</a><span class="delimiter">(</span> <a href="#xsbti.SafeLazy.fromFunction0.eval" title="() =&gt; T">eval</a> <span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="[T &lt;: AnyRef](value: T)xsbti.api.Lazy[T]" id="xsbti.SafeLazy.strict">strict</a><span class="delimiter">[</span><a title=" &lt;: AnyRef" id="xsbti.SafeLazy.strict;T">T</a> &lt;: AnyRef<span class="delimiter">]</span><span class="delimiter">(</span><a title="T" id="xsbti.SafeLazy.strict.value">value</a>: <a href="#xsbti.SafeLazy.strict;T" title="T">T</a><span class="delimiter">)</span>: xsbti.api.<a href="api/Lazy.java.html#xsbti.api;Lazy" title="xsbti.api.Lazy[T]">Lazy</a><span class="delimiter">[</span>T<span class="delimiter">]</span> = <a href="#xsbti.SafeLazy.apply(8c88397f5b)" title="(eval: =&gt; T)xsbti.api.Lazy[T]">apply</a><span class="delimiter">(</span><a href="#xsbti.SafeLazy.strict.value" title="T">value</a><span class="delimiter">)</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class Impl[T &lt;: AnyRef] extends xsbti.api.AbstractLazy[T]" id="xsbti.SafeLazy;Impl">Impl</a><span class="delimiter">[</span><a title=" &lt;: AnyRef" id="xsbti.SafeLazy;Impl;T">T</a> &lt;: AnyRef<span class="delimiter">]</span><a href="#xsbti.SafeLazy;Impl" title="xsbti.SafeLazy.Impl[T]" class="delimiter">(</a><span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">var</span> <a title="() =&gt; T" id="xsbti.SafeLazy;Impl.eval">eval</a>: <span class="delimiter">(</span><span class="delimiter">)</span> =&gt; T<span class="delimiter">)</span> <span class="keyword">extends</span> xsbti.api.<a href="api/AbstractLazy.java.html#xsbti.api;AbstractLazy" title="xsbti.api.AbstractLazy[T]">AbstractLazy</a><span class="delimiter">[</span>T<span class="delimiter">]</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="T" id="xsbti.SafeLazy;Impl._t">_t</a> =
+		<span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="T" id="xsbti.SafeLazy;Impl._t.t">t</a> = <a href="#xsbti.SafeLazy;Impl.eval" title="()T">eval</a><span class="delimiter">(</span><span class="delimiter">)</span>
+			<a href="#xsbti.SafeLazy;Impl.eval" title="() =&gt; T">eval</a> = <span title="Null(null)" class="keyword">null</span> <span class="comment">// clear the reference, ensuring the only memory we hold onto is the result</span>
+			<a href="#xsbti.SafeLazy;Impl._t.t" title="T">t</a>
+		<span class="delimiter">}</span>
+		<span class="keyword">def</span> <a title="()T" id="xsbti.SafeLazy;Impl.get">get</a>: <a href="#xsbti.SafeLazy;Impl;T" title="T">T</a> = <a href="#xsbti.SafeLazy;Impl._t" title="=&gt; T">_t</a>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

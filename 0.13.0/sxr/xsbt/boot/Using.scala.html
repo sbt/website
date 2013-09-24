@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/boot/Using.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009  Mark Harrah
+ */</span>
+<span class="keyword">package</span> xsbt.boot
+
+<span class="keyword">import</span> java.io.<span class="delimiter">{</span>Closeable, File, FileInputStream, FileOutputStream, InputStream, OutputStream<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="xsbt.boot.Using.type" id="xsbt.boot.Using">Using</a>
+<a href="#xsbt.boot.Using" title="xsbt.boot.Using.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="[R &lt;: java.io.Closeable, T](create: R)(f: R =&gt; T)T" id="xsbt.boot.Using.apply">apply</a><span class="delimiter">[</span><a title=" &lt;: java.io.Closeable" id="xsbt.boot.Using.apply;R">R</a> &lt;: Closeable,<a title="" id="xsbt.boot.Using.apply;T">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="R" id="xsbt.boot.Using.apply.create">create</a>: <a href="#xsbt.boot.Using.apply;R" title="R">R</a><span class="delimiter">)</span><span class="delimiter">(</span><a title="R =&gt; T" id="xsbt.boot.Using.apply.f">f</a>: R =&gt; T<span class="delimiter">)</span>: <a href="#xsbt.boot.Using.apply;T" title="T">T</a> = <a href="#xsbt.boot.Using.withResource" title="(r: R)(f: R =&gt; T)T">withResource</a><span class="delimiter">(</span><a href="#xsbt.boot.Using.apply.create" title="R">create</a><span class="delimiter">)</span><span class="delimiter">(</span><a href="#xsbt.boot.Using.apply.f" title="R =&gt; T">f</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="[R &lt;: java.io.Closeable, T](r: R)(f: R =&gt; T)T" id="xsbt.boot.Using.withResource">withResource</a><span class="delimiter">[</span><a title=" &lt;: java.io.Closeable" id="xsbt.boot.Using.withResource;R">R</a> &lt;: Closeable,<a title="" id="xsbt.boot.Using.withResource;T">T</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="R" id="xsbt.boot.Using.withResource.r">r</a>: <a href="#xsbt.boot.Using.withResource;R" title="R">R</a><span class="delimiter">)</span><span class="delimiter">(</span><a title="R =&gt; T" id="xsbt.boot.Using.withResource.f">f</a>: R =&gt; T<span class="delimiter">)</span>: <a href="#xsbt.boot.Using.withResource;T" title="T">T</a> = <span class="keyword">try</span> <span class="delimiter">{</span> <a href="#xsbt.boot.Using.withResource.f" title="(v1: R)T">f</a><span class="delimiter">(</span><a href="#xsbt.boot.Using.withResource.r" title="R">r</a><span class="delimiter">)</span> <span class="delimiter">}</span> <span class="keyword">finally</span> <span class="delimiter">{</span> <a href="#xsbt.boot.Using.withResource.r" title="R">r</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span title="AnyRef" class="keyword">object</span> <a title="xsbt.boot.Copy.type" id="xsbt.boot.Copy">Copy</a>
+<a href="#xsbt.boot.Copy" title="xsbt.boot.Copy.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="(files: List[java.io.File], toDirectory: java.io.File)Boolean" id="xsbt.boot.Copy.apply(ba17a2aafe)">apply</a><span class="delimiter">(</span><a title="List[java.io.File]" id="xsbt.boot.Copy.apply(ba17a2aafe).files">files</a>: <span title="List[java.io.File]">List</span><span class="delimiter">[</span>File<span class="delimiter">]</span>, <a title="java.io.File" id="xsbt.boot.Copy.apply(ba17a2aafe).toDirectory">toDirectory</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> = <a href="#xsbt.boot.Copy.apply(ba17a2aafe).files" title="List[java.io.File]">files</a>.<span title="(f: java.io.File =&gt; Boolean)(implicit bf: scala.collection.generic.CanBuildFrom[List[java.io.File],Boolean,List[Boolean]])List[Boolean]">map</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.immutable.List.Coll,Boolean,List[Boolean]]" class="delimiter">(</span><a title="java.io.File" id="xsbt.boot.Copy.apply(ba17a2aafe).$anonfun.file">file</a> =&gt; <a href="#xsbt.boot.Copy.apply(6780cdd2d3)" title="(file: java.io.File, toDirectory: java.io.File)Boolean">apply</a><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(ba17a2aafe).$anonfun.file" title="java.io.File">file</a>, <a href="#xsbt.boot.Copy.apply(ba17a2aafe).toDirectory" title="java.io.File">toDirectory</a><span class="delimiter">)</span><span class="delimiter">)</span>.<span title="(elem: Any)Boolean">contains</span><span class="delimiter">(</span><span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="(file: java.io.File, toDirectory: java.io.File)Boolean" id="xsbt.boot.Copy.apply(6780cdd2d3)">apply</a><span class="delimiter">(</span><a title="java.io.File" id="xsbt.boot.Copy.apply(6780cdd2d3).file">file</a>: <span title="java.io.File">File</span>, <a title="java.io.File" id="xsbt.boot.Copy.apply(6780cdd2d3).toDirectory">toDirectory</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+	<span class="delimiter">{</span>
+		<a href="#xsbt.boot.Copy.apply(6780cdd2d3).toDirectory" title="java.io.File">toDirectory</a>.<span title="()Boolean">mkdirs</span><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="java.io.File" id="xsbt.boot.Copy.apply(6780cdd2d3).to">to</a> = <span title="(x$1: java.io.File, x$2: String)java.io.File" class="keyword">new</span> <span title="java.io.File">File</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).toDirectory" title="java.io.File">toDirectory</a>, <a href="#xsbt.boot.Copy.apply(6780cdd2d3).file" title="java.io.File">file</a>.<span title="()String">getName</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="Boolean" id="xsbt.boot.Copy.apply(6780cdd2d3).missing">missing</a> = <span title="=&gt; Boolean">!</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).to" title="java.io.File">to</a>.<span title="()Boolean">exists</span>
+		<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).missing" title="Boolean">missing</a><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<a href="#xsbt.boot.Using.apply" title="(create: java.io.FileInputStream)(f: java.io.FileInputStream =&gt; Unit)Unit">Using</a><span class="delimiter">(</span><span title="(x$1: java.io.File)java.io.FileInputStream" class="keyword">new</span> <span title="java.io.FileInputStream">FileInputStream</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).file" title="java.io.File">file</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a title="java.io.FileInputStream" id="xsbt.boot.Copy.apply(6780cdd2d3).$anonfun.in">in</a> =&gt;
+				<a href="#xsbt.boot.Using.apply" title="(create: java.io.FileOutputStream)(f: java.io.FileOutputStream =&gt; Unit)Unit">Using</a><span class="delimiter">(</span><span title="(x$1: java.io.File)java.io.FileOutputStream" class="keyword">new</span> <span title="java.io.FileOutputStream">FileOutputStream</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).to" title="java.io.File">to</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a title="java.io.FileOutputStream" id="xsbt.boot.Copy.apply(6780cdd2d3).$anonfun.$anonfun.out">out</a> =&gt;
+					<a href="#xsbt.boot.Copy.transfer" title="(in: java.io.InputStream, out: java.io.OutputStream)Unit">transfer</a><span class="delimiter">(</span><a href="#xsbt.boot.Copy.apply(6780cdd2d3).$anonfun.in" title="java.io.FileInputStream">in</a>, <a href="#xsbt.boot.Copy.apply(6780cdd2d3).$anonfun.$anonfun.out" title="java.io.FileOutputStream">out</a><span class="delimiter">)</span>
+				<span class="delimiter">}</span>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+		<a href="#xsbt.boot.Copy.apply(6780cdd2d3).missing" title="Boolean">missing</a>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(in: java.io.InputStream, out: java.io.OutputStream)Unit" id="xsbt.boot.Copy.transfer">transfer</a><span class="delimiter">(</span><a title="java.io.InputStream" id="xsbt.boot.Copy.transfer.in">in</a>: <span title="java.io.InputStream">InputStream</span>, <a title="java.io.OutputStream" id="xsbt.boot.Copy.transfer.out">out</a>: <span title="java.io.OutputStream">OutputStream</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Array[Byte]" id="xsbt.boot.Copy.transfer.buffer">buffer</a> = <span title="Array[Byte]" class="keyword">new</span> <span title="Array[Byte]">Array</span><span class="delimiter">[</span>Byte<span class="delimiter">]</span><span class="delimiter">(</span><span title="Int(8192)" class="int">8192</span><span class="delimiter">)</span>
+		<span class="keyword">def</span> <a title="()Unit" id="xsbt.boot.Copy.transfer.next">next</a><span class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="Int" id="xsbt.boot.Copy.transfer.next.read">read</a> = <a href="#xsbt.boot.Copy.transfer.in" title="java.io.InputStream">in</a>.<span title="(x$1: Array[Byte])Int">read</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.transfer.buffer" title="Array[Byte]">buffer</a><span class="delimiter">)</span>
+			<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.transfer.next.read" title="Int">read</a> <span title="(x: Int)Boolean">&gt;</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+			<span class="delimiter">{</span>
+				<a href="#xsbt.boot.Copy.transfer.out" title="java.io.OutputStream">out</a>.<span title="(x$1: Array[Byte], x$2: Int, x$3: Int)Unit">write</span><span class="delimiter">(</span><a href="#xsbt.boot.Copy.transfer.buffer" title="Array[Byte]">buffer</a>, <span title="Int(0)" class="int">0</span>, <a href="#xsbt.boot.Copy.transfer.next.read" title="Int">read</a><span class="delimiter">)</span>
+				<a href="#xsbt.boot.Copy.transfer.next" title="()Unit">next</a><span class="delimiter">(</span><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+		<a href="#xsbt.boot.Copy.transfer.next" title="()Unit">next</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>
