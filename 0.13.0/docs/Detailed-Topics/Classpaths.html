@@ -91,7 +91,7 @@
   <div class="section" id="classpaths-sources-and-resources">
 <h1>Classpaths, sources, and resources<a class="headerlink" href="#classpaths-sources-and-resources" title="Permalink to this headline">¶</a></h1>
 <p>This page discusses how sbt builds up classpaths for different actions,
-like <span class="pre">compile</span>, <span class="pre">run</span>, and <span class="pre">test</span> and how to override or augment
+like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> and how to override or augment
 these classpaths.</p>
 <div class="section" id="basics">
 <h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
@@ -149,8 +149,8 @@ to the list of main source generators (<span class="pre">sourceGenerators in Com
 </dl>
 <p>The <span class="pre">task</span> method is used to refer to the actual task instead of the
 result of the task.</p>
-<p>For resources, there are similar keys <span class="pre">resourceGenerators</span> and
-<span class="pre">resourceManaged</span>.</p>
+<p>For resources, there are similar keys <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resourceGenerators">resourceGenerators</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resourceManaged">resourceManaged</a>.</p>
 <div class="section" id="excluding-source-files-by-name">
 <h4>Excluding source files by name<a class="headerlink" href="#excluding-source-files-by-name" title="Permalink to this headline">¶</a></h4>
 <p>The project base directory is by default a source directory in addition
@@ -176,33 +176,33 @@ classpaths.</p>
 <h3>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h3>
 <p>For classpaths, the relevant keys are:</p>
 <ul class="simple">
-<li><span class="pre">unmanagedClasspath</span></li>
-<li><span class="pre">managedClasspath</span></li>
-<li><span class="pre">externalDependencyClasspath</span></li>
-<li><span class="pre">internalDependencyClasspath</span></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedClasspath">unmanagedClasspath</a></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.managedClasspath">managedClasspath</a></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.externalDependencyClasspath">externalDependencyClasspath</a></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.internalDependencyClasspath">internalDependencyClasspath</a></li>
 </ul>
 <p>For sources:</p>
 <ul class="simple">
-<li><span class="pre">unmanagedSources</span> These are by default built up from
-<span class="pre">unmanagedSourceDirectories</span>, which consists of <span class="pre">scalaSource</span>
-and <span class="pre">javaSource</span>.</li>
-<li><span class="pre">managedSources</span> These are generated sources.</li>
-<li><span class="pre">sources</span> Combines <span class="pre">managedSources</span> and <span class="pre">unmanagedSources</span>.</li>
-<li><span class="pre">sourceGenerators</span> These are tasks that generate source files.
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedSources">unmanagedSources</a> These are by default built up from
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedSourceDirectories">unmanagedSourceDirectories</a>, which consists of <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaSource">scalaSource</a>
+and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.javaSource">javaSource</a>.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.managedSources">managedSources</a> These are generated sources.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sources">sources</a> Combines <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.managedSources">managedSources</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedSources">unmanagedSources</a>.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sourceGenerators">sourceGenerators</a> These are tasks that generate source files.
 Typically, these tasks will put sources in the directory provided by
-<span class="pre">sourceManaged</span>.</li>
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sourceManaged">sourceManaged</a>.</li>
 </ul>
 <p>For resources</p>
 <ul class="simple">
-<li><span class="pre">unmanagedResources</span> These are by default built up from
-<span class="pre">unmanagedResourceDirectories</span>, which by default is
-<span class="pre">resourceDirectory</span>, excluding files matched by
-<span class="pre">defaultExcludes</span>.</li>
-<li><span class="pre">managedResources</span> By default, this is empty for standard
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedResources">unmanagedResources</a> These are by default built up from
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedResourceDirectories">unmanagedResourceDirectories</a>, which by default is
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resourceDirectory">resourceDirectory</a>, excluding files matched by
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.defaultExcludes">defaultExcludes</a>.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.managedResources">managedResources</a> By default, this is empty for standard
 projects. sbt plugins will have a generated descriptor file here.</li>
-<li><span class="pre">resourceGenerators</span> These are tasks that generate resource files.
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resourceGenerators">resourceGenerators</a> These are tasks that generate resource files.
 Typically, these tasks will put resources in the directory provided
-by <span class="pre">resourceManaged</span>.</li>
+by <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resourceManaged">resourceManaged</a>.</li>
 </ul>
 <p>Use the <a class="reference internal" href="Inspecting-Settings.html"><em>inspect command</em></a> for more details.</p>
 <p>See also a related <a class="reference external" href="http://stackoverflow.com/a/7862872/850196">StackOverflow

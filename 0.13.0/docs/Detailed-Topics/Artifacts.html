@@ -126,9 +126,9 @@ API or you can disable some of the main artifacts.</p>
 <div class="section" id="modifying-default-artifacts">
 <h2>Modifying default artifacts<a class="headerlink" href="#modifying-default-artifacts" title="Permalink to this headline">¶</a></h2>
 <p>Each built-in artifact has several configurable settings in addition to
-<span class="pre">publishArtifact</span>. The basic ones are <span class="pre">artifact</span> (of type
-<span class="pre">SettingKey[Artifact]</span>), <span class="pre">mappings</span> (of type
-<span class="pre">TaskKey[(File,String)]</span>), and <span class="pre">artifactPath</span> (of type
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishArtifact">publishArtifact</a>. The basic ones are <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifact">artifact</a> (of type
+<span class="pre">SettingKey[Artifact]</span>), <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> (of type
+<span class="pre">TaskKey[(File,String)]</span>), and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifactPath">artifactPath</a> (of type
 <span class="pre">SettingKey[File]</span>). They are scoped by <span class="pre">(&lt;config&gt;, &lt;task&gt;)</span> as
 indicated in the previous section.</p>
 <p>To modify the type of the main artifact, for example:</p>
@@ -138,7 +138,7 @@ indicated in the previous section.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>The generated artifact name is determined by the <span class="pre">artifactName</span>
+<p>The generated artifact name is determined by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifactName">artifactName</a>
 setting. This setting is of type
 <span class="pre">(ScalaVersion, ModuleID, Artifact) =&gt; String</span>. The ScalaVersion
 argument provides the full Scala version String and the binary
@@ -146,7 +146,7 @@ compatible part of the version String. The String result is the name of
 the file to produce. The default implementation is
 <span class="pre">Artifact.artifactName _</span>. The function may be modified to produce
 different local names for artifacts without affecting the published
-name, which is determined by the <span class="pre">artifact</span> definition combined with
+name, which is determined by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifact">artifact</a> definition combined with
 the repository pattern.</p>
 <p>For example, to produce a minimal name without a classifier or cross
 path:</p>
@@ -157,9 +157,9 @@ path:</p>
 </div>
 <p>(Note that in practice you rarely want to drop the classifier.)</p>
 <p>Finally, you can get the <span class="pre">(Artifact, File)</span> pair for the artifact by
-mapping the <span class="pre">packagedArtifact</span> task. Note that if you don't need the
+mapping the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packagedArtifact">packagedArtifact</a> task. Note that if you don't need the
 <span class="pre">Artifact</span>, you can get just the File from the package task
-(<span class="pre">package</span>, <span class="pre">packageDoc</span>, or <span class="pre">packageSrc</span>). In both cases,
+(<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageDoc">packageDoc</a>, or <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>). In both cases,
 mapping the task to get the file ensures that the artifact is generated
 first and so the file is guaranteed to be up-to-date.</p>
 <p>For example:</p>

@@ -129,10 +129,10 @@ in the build in <span class="pre">/home/user/sample/</span>:</p>
 <span class="gp">&gt;</span> <span class="o">{</span>file:/home/user/sample/<span class="o">}</span>root/compile:compile
 </pre></div>
 </div>
-<p>As another example, <span class="pre">run</span> by itself refers to <span class="pre">compile:run</span> because
-there is no global <span class="pre">run</span> task and the first configuration searched,
-<span class="pre">compile</span>, defines a <span class="pre">run</span>. Therefore, to reference the <span class="pre">run</span> task
-for the <span class="pre">test</span> configuration, the configuration axis must be specified
+<p>As another example, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> by itself refers to <span class="pre">compile:run</span> because
+there is no global <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> task and the first configuration searched,
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>, defines a <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>. Therefore, to reference the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> task
+for the <span class="pre">Test</span> configuration, the configuration axis must be specified
 like <span class="pre">test:run</span>. Some other examples that require the explicit
 <span class="pre">test:</span> axis:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>:consoleQuick
@@ -145,9 +145,9 @@ like <span class="pre">test:run</span>. Some other examples that require the exp
 <div class="section" id="task-specific-settings">
 <h3>Task-specific Settings<a class="headerlink" href="#task-specific-settings" title="Permalink to this headline">¶</a></h3>
 <p>Some settings are defined per-task. This is used when there are several
-related tasks, such as <span class="pre">package</span>, <span class="pre">packageSrc</span>, and
-<span class="pre">packageDoc</span>, in the same configuration (such as <span class="pre">compile</span> or
-<span class="pre">test</span>). For package tasks, their settings are the files to package,
+related tasks, such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>, and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageDoc">packageDoc</a>, in the same configuration (such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> or
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>). For package tasks, their settings are the files to package,
 the options to use, and the output file to produce. Each package task
 should be able to have different values for these settings.</p>
 <p>This is done with the task axis, which selects the task to apply a
@@ -189,9 +189,9 @@ is defined. For example,</p>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>This shows that <span class="pre">libraryDependencies</span> has been defined on the current
+<p>This shows that <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">libraryDependencies</a> has been defined on the current
 project (<span class="pre">{file:/home/user/sample/}root</span>) in the global configuration
-(<span class="pre">*:</span>). For a task like <span class="pre">update</span>, the output looks like:</p>
+(<span class="pre">*:</span>). For a task like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a>, the output looks like:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
 <span class="go">[info] Task: sbt.UpdateReport</span>
 <span class="go">[info] Provided by:</span>
@@ -224,7 +224,7 @@ Actual settings are what those dependencies get resolved to. This
 distinction is explained in more detail in the following sections.</p>
 <div class="section" id="requested-dependencies">
 <h4>Requested Dependencies<a class="headerlink" href="#requested-dependencies" title="Permalink to this headline">¶</a></h4>
-<p>As an example, we'll look at <span class="pre">console</span>:</p>
+<p>As an example, we'll look at <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console
 <span class="go">...</span>
 <span class="go">[info] Dependencies:</span>
@@ -240,15 +240,15 @@ distinction is explained in more detail in the following sections.</p>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>This shows the inputs to the <span class="pre">console</span> task. We can see that it gets
-its classpath and options from <span class="pre">fullClasspath</span> and
+<p>This shows the inputs to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> task. We can see that it gets
+its classpath and options from <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> and
 <span class="pre">scalacOptions(for console)</span>. The information provided by the
 <span class="pre">inspect</span> command can thus assist in finding the right setting to
-change. The convention for keys, like <span class="pre">console</span> and
-<span class="pre">fullClasspath</span>, is that the Scala identifier is camel case, while
+change. The convention for keys, like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a>, is that the Scala identifier is camel case, while
 the String representation is lowercase and separated by dashes. The
 Scala identifier for a configuration is uppercase to distinguish it from
-tasks like <span class="pre">compile</span> and <span class="pre">test</span>. For example, we can infer from the
+tasks like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>. For example, we can infer from the
 previous example how to add code to be run when the Scala interpreter
 starts up:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands in Compile in console :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
@@ -258,13 +258,13 @@ starts up:</p>
 <span class="go">...</span>
 </pre></div>
 </div>
-<p><span class="pre">inspect</span> showed that <span class="pre">console</span> used the setting
+<p><span class="pre">inspect</span> showed that <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> used the setting
 <span class="pre">compile:console::initialCommands</span>. Translating the
-<span class="pre">initialCommands</span> string to the Scala identifier gives us
-<span class="pre">initialCommands</span>. <span class="pre">compile</span> indicates that this is for the main
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.initialCommands">initialCommands</a> string to the Scala identifier gives us
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.initialCommands">initialCommands</a>. <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> indicates that this is for the main
 sources. <span class="pre">console::</span> indicates that the setting is specific to
-<span class="pre">console</span>. Because of this, we can set the initial commands on the
-<span class="pre">console</span> task without affecting the <span class="pre">consoleQuick</span> task, for
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a>. Because of this, we can set the initial commands on the
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> task without affecting the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.consoleQuick">consoleQuick</a> task, for
 example.</p>
 </div>
 <div class="section" id="actual-dependencies">
@@ -296,10 +296,10 @@ Dependencies,</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">compile:console::initialCommands</span>
 </pre></div>
 </div>
-<p>we know that we can set <span class="pre">initialCommands</span> as generally as the global
-scope, as specific as the current project's <span class="pre">console</span> task scope, or
+<p>we know that we can set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.initialCommands">initialCommands</a> as generally as the global
+scope, as specific as the current project's <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> task scope, or
 anything in between. This means that we can, for example, set
-<span class="pre">initialCommands</span> for the whole project and will affect <span class="pre">console</span>:</p>
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.initialCommands">initialCommands</a> for the whole project and will affect <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
 <span class="go">...</span>
 </pre></div>
@@ -318,9 +318,9 @@ looking at the reverse dependencies output of <span class="pre">inspect actual</
 <span class="go">...</span>
 </pre></div>
 </div>
-<p>We now know that by setting <span class="pre">initialCommands</span> on the whole project,
+<p>We now know that by setting <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.initialCommands">initialCommands</a> on the whole project,
 we affect all console tasks in all configurations in that project. If we
-didn't want the initial commands to apply for <span class="pre">consoleProject</span>, which
+didn't want the initial commands to apply for <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.consoleProject">consoleProject</a>, which
 doesn't have our project's classpath available, we could use the more
 specific task axis:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>initialCommands in console :<span class="o">=</span> <span class="s2">&quot;import mypackage._&quot;</span>
@@ -344,7 +344,7 @@ delegation chain is well-defined and is displayed in the Delegates
 section of the <span class="pre">inspect</span> command. The Delegates section shows the
 order in which scopes are searched when a value is not defined for the
 requested key.</p>
-<p>As an example, consider the initial commands for <span class="pre">console</span> again:</p>
+<p>As an example, consider the initial commands for <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> again:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect console::initialCommands
 <span class="go">...</span>
 <span class="go">[info] Delegates:</span>

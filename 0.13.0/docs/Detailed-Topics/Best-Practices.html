@@ -129,16 +129,16 @@ exists).</p>
 <div class="section" id="generated-files">
 <h2>Generated files<a class="headerlink" href="#generated-files" title="Permalink to this headline">¶</a></h2>
 <p>Write any generated files to a subdirectory of the output directory,
-which is specified by the <span class="pre">target</span> setting. This makes it easy to
+which is specified by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.target">target</a> setting. This makes it easy to
 clean up after a build and provides a single location to organize
 generated files. Any generated files that are specific to a Scala
-version should go in <span class="pre">crossTarget</span> for efficient cross-building.</p>
+version should go in <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.crossTarget">crossTarget</a> for efficient cross-building.</p>
 <p>For generating sources and resources, see <a class="reference internal" href="../Howto/generatefiles.html"><em>Generating files</em></a>.</p>
 </div>
 <div class="section" id="don-t-hard-code">
 <h2>Don't hard code<a class="headerlink" href="#don-t-hard-code" title="Permalink to this headline">¶</a></h2>
 <p>Don't hard code constants, like the output directory <span class="pre">target/</span>. This
-is especially important for plugins. A user might change the <span class="pre">target</span>
+is especially important for plugins. A user might change the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.target">target</a>
 setting to point to <span class="pre">build/</span>, for example, and the plugin needs to
 respect that. Instead, use the setting, like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">myDirectory</span> <span class="o">:=</span> <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;sub-directory&quot;</span>
@@ -192,7 +192,7 @@ not the exception.</p>
 </pre></div>
 </div>
 <p>This is related to the no hard coding best practice because the proper
-way involves referencing the <span class="pre">baseDirectory</span> setting. For example, the
+way involves referencing the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.baseDirectory">baseDirectory</a> setting. For example, the
 following defines the myPath setting to be the <span class="pre">&lt;base&gt;/licenses/</span>
 directory.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">myPath</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;licenses&quot;</span>

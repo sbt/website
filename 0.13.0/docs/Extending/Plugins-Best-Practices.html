@@ -121,7 +121,7 @@ Where possible, reuse them in your plugin. For instance, don't define:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sourceFiles</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](</span><span class="s">&quot;Some source files&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Instead, simply reuse sbt's existing <span class="pre">sources</span> key.</p>
+<p>Instead, simply reuse sbt's existing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sources">sources</a> key.</p>
 </div>
 <div class="section" id="avoid-namespace-clashes">
 <h2>Avoid namespace clashes<a class="headerlink" href="#avoid-namespace-clashes" title="Permalink to this headline">¶</a></h2>
@@ -300,7 +300,7 @@ general rule is <em>be careful what you touch</em>.</p>
 <p>Global settings should <em>not</em> be placed into a <span class="pre">build.sbt</span> file.</p>
 <p>When overriding global settings, care should be taken to ensure previous
 settings from other plugins are not ignored. e.g. when creating a new
-<span class="pre">onLoad</span> handler, ensure that the previous <span class="pre">onLoad</span> handler is not
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.onLoad">onLoad</a> handler, ensure that the previous <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.onLoad">onLoad</a> handler is not
 removed.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyPlugin</span> <span class="k">extends</span> <span class="nc">Plugin</span> <span class="o">{</span>
    <span class="k">val</span> <span class="n">globalSettigns</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>

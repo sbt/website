@@ -90,7 +90,7 @@
             
   <div class="section" id="running-project-code">
 <h1>Running Project Code<a class="headerlink" href="#running-project-code" title="Permalink to this headline">¶</a></h1>
-<p>The <span class="pre">run</span> and <span class="pre">console</span> actions provide a means for running user
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> actions provide a means for running user
 code in the same virtual machine as sbt. This page describes the
 problems with doing so, how sbt handles these problems, what types of
 code can use this feature, and what types of code must use a <a class="reference internal" href="Forking.html"><em>forked jvm</em></a>.
@@ -100,7 +100,7 @@ Skip to User Code if you just want to see when you should use a <a class="refere
 <div class="section" id="system-exit">
 <h3>System.exit<a class="headerlink" href="#system-exit" title="Permalink to this headline">¶</a></h3>
 <p>User code can call <span class="pre">System.exit</span>, which normally shuts down the JVM.
-Because the <span class="pre">run</span> and <span class="pre">console</span> actions run inside the same JVM as
+Because the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> actions run inside the same JVM as
 sbt, this also ends the build and requires restarting sbt.</p>
 </div>
 <div class="section" id="threads">
@@ -129,7 +129,7 @@ explained
 <span class="pre">SecurityException</span> when <span class="pre">System.exit</span> is called. This exception is
 caught by sbt. sbt then disposes of all top-level windows, interrupts
 (not stops) all user-created threads, and handles the exit code. If the
-exit code is nonzero, <span class="pre">run</span> and <span class="pre">console</span> complete unsuccessfully.
+exit code is nonzero, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> complete unsuccessfully.
 If the exit code is zero, they complete normally.</p>
 </div>
 <div class="section" id="id2">
@@ -150,8 +150,8 @@ thread(s).</p>
 </div>
 <div class="section" id="user-code">
 <h2>User Code<a class="headerlink" href="#user-code" title="Permalink to this headline">¶</a></h2>
-<p>Given the above, when can user code be run with the <span class="pre">run</span> and
-<span class="pre">console</span> actions?</p>
+<p>Given the above, when can user code be run with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> actions?</p>
 <p>The user code cannot rely on shutdown hooks and at least one of the
 following situations must apply for user code to run in the same JVM:</p>
 <ol class="arabic simple">

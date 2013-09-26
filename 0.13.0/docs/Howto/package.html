@@ -93,15 +93,15 @@
 <div class="full-howto section" id="export">
 <h2>Use the packaged jar on classpaths instead of class directory<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>By default, a project exports a directory containing its resources and compiled class files.  Set <span class="pre">exportJars</span> to true to export the packaged jar instead.  For example,</p>
+<p>By default, a project exports a directory containing its resources and compiled class files.  Set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.exportJars">exportJars</a> to true to export the packaged jar instead.  For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span>
 </pre></div>
 </div>
-<p>The jar will be used by <span class="pre">run</span>, <span class="pre">test</span>, <span class="pre">console</span>, and other tasks that use the full classpath.</p>
+<p>The jar will be used by <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a>, and other tasks that use the full classpath.</p>
 <div class="full-howto section" id="manifest">
 <h2>Add manifest attributes<a class="headerlink" href="#manifest" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>By default, sbt constructs a manifest for the binary package from settings such as <span class="pre">organization</span> and <span class="pre">mainClass</span>.  Additional attributes may be added to the <span class="pre">packageOptions</span> setting scoped by the configuration and package task.</p>
+<p>By default, sbt constructs a manifest for the binary package from settings such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.organization">organization</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mainClass">mainClass</a>.  Additional attributes may be added to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a> setting scoped by the configuration and package task.</p>
 <p>Main attributes may be added with <span class="pre">Package.ManifestAttributes</span>.  There are two variants of this method, once that accepts repeated arguments that map an attribute of type <span class="pre">java.util.jar.Attributes.Name</span> to a String value and other that maps attribute names (type String) to the String value.</p>
 <p>For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span>
@@ -127,17 +127,17 @@
 <div class="full-howto section" id="name">
 <h2>Change the file name of a package<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The <span class="pre">artifactName</span> setting controls the name of generated packages.  See the <a class="reference internal" href="../Detailed-Topics/Artifacts.html"><em>Artifacts</em></a> page for details.</p>
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifactName">artifactName</a> setting controls the name of generated packages.  See the <a class="reference internal" href="../Detailed-Topics/Artifacts.html"><em>Artifacts</em></a> page for details.</p>
 <div class="full-howto section" id="contents">
 <h2>Modify the contents of the package<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
 </div>
-<p id="modify-package-contents">The contents of a package are defined by the <span class="pre">mappings</span> task, of type <span class="pre">Seq[(File,String)]</span>.  The <span class="pre">mappings</span> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <span class="pre">in/example.txt</span> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
+<p id="modify-package-contents">The contents of a package are defined by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> task, of type <span class="pre">Seq[(File,String)]</span>.  The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <span class="pre">in/example.txt</span> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="o">{</span>
    <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;in&quot;</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Note that <span class="pre">mappings</span> is scoped by the configuration and the specific package task.  For example, the mappings for the test source package are defined by the <span class="pre">mappings in (Test, packageSrc)</span> task.</p>
+<p>Note that <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> is scoped by the configuration and the specific package task.  For example, the mappings for the test source package are defined by the <span class="pre">mappings in (Test, packageSrc)</span> task.</p>
 </div>
 
 

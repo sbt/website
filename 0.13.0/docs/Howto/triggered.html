@@ -93,14 +93,14 @@
 <div class="full-howto section" id="basic">
 <h2>Run a command when sources change<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>You can make a command run when certain files change by prefixing the command with <span class="pre">~</span>.  Monitoring is terminated when <span class="pre">enter</span> is pressed.  This triggered execution is configured by the <span class="pre">watch</span> setting, but typically the basic settings <span class="pre">watchSources</span> and <span class="pre">pollInterval</span> are modified as described in later sections.</p>
+<p>You can make a command run when certain files change by prefixing the command with <span class="pre">~</span>.  Monitoring is terminated when <span class="pre">enter</span> is pressed.  This triggered execution is configured by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watch">watch</a> setting, but typically the basic settings <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.pollInterval">pollInterval</a> are modified as described in later sections.</p>
 <p>The original use-case for triggered execution was continuous compilation:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">test</span><span class="k">:</span><span class="kt">compile</span>
 
 <span class="o">&gt;</span> <span class="o">~</span> <span class="n">compile</span>
 </pre></div>
 </div>
-<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <span class="pre">testOnly</span> for the specified test.</p>
+<p>You can use the triggered execution feature to run any command or task, however.  The following will poll for changes to your source code (main or test) and run <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a> for the specified test.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="o">~</span> <span class="n">testOnly</span> <span class="n">example</span><span class="o">.</span><span class="nc">TestA</span>
 </pre></div>
 </div>
@@ -116,8 +116,8 @@
 <h2>Configure the sources that are checked for changes<a class="headerlink" href="#sources" title="Permalink to this headline">¶</a></h2>
 </div>
 <ul class="simple">
-<li><span class="pre">watchSources</span> defines the files for a single project that are monitored for changes.  By default, a project watches resources and Scala and Java sources.</li>
-<li><span class="pre">watchTransitiveSources</span> then combines the <span class="pre">watchSources</span> for the current project and all execution and classpath dependencies (see <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on inter-project dependencies).</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> defines the files for a single project that are monitored for changes.  By default, a project watches resources and Scala and Java sources.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchTransitiveSources">watchTransitiveSources</a> then combines the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> for the current project and all execution and classpath dependencies (see <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala Build Definition</em></a> for details on inter-project dependencies).</li>
 </ul>
 <p>To add the file <span class="pre">demo/example.txt</span> to the files to watch,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">watchSources</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;examples.txt&quot;</span>
@@ -126,7 +126,7 @@
 <div class="full-howto section" id="interval">
 <h2>Set the time interval between checks for changes to sources<a class="headerlink" href="#interval" title="Permalink to this headline">¶</a></h2>
 </div>
-<p><span class="pre">pollInterval</span> selects the interval between polling for changes in milliseconds.  The default value is <span class="pre">500 ms</span>.  To change it to <span class="pre">1 s</span>,</p>
+<p><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.pollInterval">pollInterval</a> selects the interval between polling for changes in milliseconds.  The default value is <span class="pre">500 ms</span>.  To change it to <span class="pre">1 s</span>,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span> <span class="c1">// in ms</span>
 </pre></div>
 </div>

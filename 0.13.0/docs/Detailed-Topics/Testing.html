@@ -117,14 +117,14 @@ libraries because your users don't typically need your test dependencies
 to use your library.</p>
 <p>With the library dependency defined, you can then add test sources in
 the locations listed above and compile and run tests. The tasks for
-running tests are <span class="pre">test</span> and <span class="pre">testOnly</span>. The <span class="pre">test</span> task accepts
-no command line arguments and runs all tests:</p>
+running tests are <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a>. The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> task
+accepts no command line arguments and runs all tests:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">test</span>
 </pre></div>
 </div>
 <div class="section" id="testonly">
 <h3>testOnly<a class="headerlink" href="#testonly" title="Permalink to this headline">¶</a></h3>
-<p>The <span class="pre">testOnly</span> task accepts a whitespace separated list of test names
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a> task accepts a whitespace separated list of test names
 to run. For example:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest1 org.example.MyTest2
 </pre></div>
@@ -136,7 +136,7 @@ to run. For example:</p>
 </div>
 <div class="section" id="testquick">
 <h3>testQuick<a class="headerlink" href="#testquick" title="Permalink to this headline">¶</a></h3>
-<p>The <span class="pre">testQuick</span> task, like <span class="pre">testOnly</span>, allows to filter the tests
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testQuick">testQuick</a> task, like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a>, allows to filter the tests
 to run to specific tests or wildcards using the same syntax to indicate
 the filters. In addition to the explicit filter, only the tests that
 satisfy one of the following conditions are run:</p>
@@ -152,7 +152,7 @@ different project, recompiled.</li>
 last <span class="pre">test:compile</span>. This means that a new sources aren't available
 for tab completion until they are compiled and deleted sources won't be
 removed from tab completion until a recompile. A new test source can
-still be manually written out and run using <span class="pre">testOnly</span>.</p>
+still be manually written out and run using <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a>.</p>
 </div>
 </div>
 <div class="section" id="other-tasks">
@@ -173,7 +173,7 @@ are referenced in Scala code with <span class="pre">in Test</span>. These tasks 
 <div class="section" id="output">
 <h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
 <p>By default, logging is buffered for each test source file until all
-tests for that file complete. This can be disabled with:</p>
+tests for that file complete. This can be disabled by setting <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.logBuffered">logBuffered</a>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">logBuffered</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
@@ -183,7 +183,7 @@ tests for that file complete. This can be disabled with:</p>
 <div class="section" id="test-framework-arguments">
 <h3>Test Framework Arguments<a class="headerlink" href="#test-framework-arguments" title="Permalink to this headline">¶</a></h3>
 <p>Arguments to the test framework may be provided on the command line to
-the <span class="pre">testOnly</span> tasks following a <span class="pre">--</span> separator. For example:</p>
+the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a> tasks following a <span class="pre">--</span> separator. For example:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> testOnly org.example.MyTest -- -d -S
 </pre></div>
 </div>
@@ -225,8 +225,10 @@ test framework classes.</p>
 <p>By default, sbt runs all tasks in parallel. Because each test is mapped
 to a task, tests are also run in parallel by default. To make tests
 within a given project execute serially:</p>
-<p><span class="pre">scala parallelExecution in Test := false</span> <span class="pre">Test</span> can be replaced
-with <span class="pre">IntegrationTest</span> to only execute integration tests serially.
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p><span class="pre">Test</span> can be replaced with <span class="pre">IntegrationTest</span> to only execute integration tests serially.
 Note that tests from different projects may still execute concurrently.</p>
 </div>
 <div class="section" id="filter-classes">
@@ -246,7 +248,7 @@ Note that tests from different projects may still execute concurrently.</p>
 <p>specifies that all tests will be executed in a single external JVM. See
 <a class="reference internal" href="Forking.html"><em>Forking</em></a> for configuring standard options for forking. More control
 over how tests are assigned to JVMs and what options to pass to those is
-available with <span class="pre">testGrouping</span> key. For example:</p>
+available with <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testGrouping">testGrouping</a> key. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">Tests._</span>
 
 <span class="o">{</span>
@@ -447,7 +449,7 @@ using:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Serial</span> <span class="o">:=</span> <span class="kc">false</span>
 </pre></div>
 </div>
-<p>The tests to run in parallel would be run with <span class="pre">test</span> and the ones to
+<p>The tests to run in parallel would be run with <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> and the ones to
 run in serial would be run with <span class="pre">serial:test</span>.</p>
 </div>
 </div>
@@ -488,12 +490,12 @@ or
 <div class="section" id="using-extensions">
 <h3>Using Extensions<a class="headerlink" href="#using-extensions" title="Permalink to this headline">¶</a></h3>
 <p>To use your extensions in a project definition:</p>
-<p>Modify the <span class="pre">testFrameworks</span> setting to reference your test framework:</p>
+<p>Modify the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testFrameworks">testFrameworks</a> setting to reference your test framework:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">testFrameworks</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">TestFramework</span><span class="o">(</span><span class="s">&quot;custom.framework.ClassName&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 <p>Specify the test reporters you want to use by overriding the
-<span class="pre">testListeners</span> method in your project definition.</p>
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testListeners">testListeners</a> setting in your project definition.</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">testListeners</span> <span class="o">+=</span> <span class="n">customTestListener</span>
 </pre></div>
 </div>

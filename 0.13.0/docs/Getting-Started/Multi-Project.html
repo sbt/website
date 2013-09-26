@@ -100,7 +100,7 @@ reading this page.</p>
 especially if they depend on one another and you tend to modify them
 together.</p>
 <p>Each sub-project in a build has its own source directories, generates
-its own jar file when you run <span class="pre">package</span>, and in general works like any
+its own jar file when you run <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>, and in general works like any
 other project.</p>
 <p>A project is defined by declaring a <span class="pre">lazy val</span> of type <a class="reference external" href="../../api/sbt/Project.html">Project</a>.
 For example,</p>
@@ -138,11 +138,11 @@ run it on the aggregated projects. For example,</p>
 </pre></div>
 </div>
 <p>In the above example, the root project aggregates <span class="pre">util</span> and <span class="pre">core</span>.
-Start up sbt with two subprojects as in the example, and try <span class="pre">compile</span>.
+Start up sbt with two subprojects as in the example, and try <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>.
 You should see that all three projects are compiled.</p>
 <p><em>In the project doing the aggregating</em>, the <span class="pre">root</span> project in
 this case, you can control aggregation per-task.
-For example, to avoid aggregating the <span class="pre">update</span> task:</p>
+For example, to avoid aggregating the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> task:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span>
         <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)</span> <span class="o">)</span>
    <span class="o">.</span><span class="n">aggregate</span><span class="o">(</span><span class="n">util</span><span class="o">,</span> <span class="n">core</span><span class="o">)</span>
@@ -153,7 +153,7 @@ For example, to avoid aggregating the <span class="pre">update</span> task:</p>
 <span class="o">[</span><span class="kt">...</span><span class="o">]</span>
 </pre></div>
 </div>
-<p><span class="pre">aggregate in update</span> is the <span class="pre">aggregate</span> key scoped to the <span class="pre">update</span> task.
+<p><span class="pre">aggregate in update</span> is the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.aggregate">aggregate</a> key scoped to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> task.
 (See <a class="reference internal" href="Scopes.html"><em>scopes</em></a>.)</p>
 <p>Note: aggregation will run the aggregated tasks in parallel and with no
 defined ordering between them.</p>
@@ -237,7 +237,7 @@ in the sub-projects. <span class="pre">foo/project/Build.scala</span> would be i
 <h2>Navigating projects interactively<a class="headerlink" href="#navigating-projects-interactively" title="Permalink to this headline">¶</a></h2>
 <p>At the sbt interactive prompt, type <span class="pre">projects</span> to list your projects
 and <span class="pre">project &lt;projectname&gt;</span> to select a current project. When you run
-a task like <span class="pre">compile</span>, it runs on the current project. So you don't
+a task like <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>, it runs on the current project. So you don't
 necessarily have to compile the root project, you could compile only a
 subproject.</p>
 <p>You can run a task in another project by explicitly specifying the

@@ -108,7 +108,7 @@ See <a class="reference internal" href="Full-Def.html"><em>.scala build definiti
 <p>After examining a project and processing any build definition files, sbt
 will end up with an immutable map (set of key-value pairs) describing
 the build.</p>
-<p>For example, one key is <span class="pre">name</span> and it maps to a string value, the name
+<p>For example, one key is <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a> and it maps to a string value, the name
 of your project.</p>
 <p><em>Build definition files do not affect sbt's map directly.</em></p>
 <p>Instead, the build definition creates a huge list of objects with type
@@ -156,7 +156,7 @@ they are expressions, rather than complete Scala statements.  These
 expressions may be interspersed with <span class="pre">val`s, `lazy val`s, and `def`s,
 but top-level `object`s and classes are not allowed in `build.sbt</span>.
 Those should go in the <span class="pre">project/</span> directory as full Scala source files.</p>
-<p>On the left, <span class="pre">name</span>, <span class="pre">version</span>, and <span class="pre">scalaVersion</span> are <em>keys</em>. A
+<p>On the left, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.version">version</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaVersion">scalaVersion</a> are <em>keys</em>. A
 key is an instance of <span class="pre">SettingKey[T]</span>, <span class="pre">TaskKey[T]</span>, or
 <span class="pre">InputKey[T]</span> where <span class="pre">T</span> is the expected value type. The kinds of key
 are explained more below.</p>
@@ -167,10 +167,10 @@ could use a Java-like syntax to call the method:</p>
 </div>
 <p>But Scala allows <span class="pre">name := &quot;hello&quot;</span> instead (in Scala, any method can
 use either syntax).</p>
-<p>The <span class="pre">:=</span> method on key <span class="pre">name</span> returns a <span class="pre">Setting</span>, specifically a
-<span class="pre">Setting[String]</span>. <span class="pre">String</span> also appears in the type of <span class="pre">name</span>
+<p>The <span class="pre">:=</span> method on key <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a> returns a <span class="pre">Setting</span>, specifically a
+<span class="pre">Setting[String]</span>. <span class="pre">String</span> also appears in the type of <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>
 itself, which is <span class="pre">SettingKey[String]</span>. In this case, the returned
-<span class="pre">Setting[String]</span> is a transformation to add or replace the <span class="pre">name</span>
+<span class="pre">Setting[String]</span> is a transformation to add or replace the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>
 key in sbt's map, giving it the value <span class="pre">&quot;hello&quot;</span>.</p>
 <p>If you use the wrong value type, the build definition will not compile:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="mi">42</span>  <span class="c1">// will not compile</span>
@@ -212,7 +212,7 @@ you finish this guide, check out <a class="reference internal" href="../Extendin
 <p>The built-in keys are just fields in an object called
 <a class="reference external" href="../../sxr/sbt/Keys.scala.html">Keys</a>. A
 <span class="pre">build.sbt</span> implicitly has an <span class="pre">import sbt.Keys._</span>, so
-<span class="pre">sbt.Keys.name</span> can be referred to as <span class="pre">name</span>.</p>
+<span class="pre">sbt.Keys.name</span> can be referred to as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>.</p>
 </div>
 <div class="section" id="custom-keys">
 <h3>Custom Keys<a class="headerlink" href="#custom-keys" title="Permalink to this headline">¶</a></h3>
@@ -234,16 +234,16 @@ All such definitions are evaluated before settings regardless of where they are 
 <div class="section" id="task-v-setting-keys">
 <h3>Task v. Setting keys<a class="headerlink" href="#task-v-setting-keys" title="Permalink to this headline">¶</a></h3>
 <p>A <span class="pre">TaskKey[T]</span> is said to define a <em>task</em>. Tasks are operations such
-as <span class="pre">compile</span> or <span class="pre">package</span>. They may return <span class="pre">Unit</span> (<span class="pre">Unit</span> is
+as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> or <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>. They may return <span class="pre">Unit</span> (<span class="pre">Unit</span> is
 Scala for <span class="pre">void</span>), or they may return a value related to the task, for
-example <span class="pre">package</span> is a <span class="pre">TaskKey[File]</span> and its value is the jar file
+example <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a> is a <span class="pre">TaskKey[File]</span> and its value is the jar file
 it creates.</p>
-<p>Each time you start a task execution, for example by typing <span class="pre">compile</span>
+<p>Each time you start a task execution, for example by typing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>
 at the interactive sbt prompt, sbt will re-run any tasks involved
 exactly once.</p>
 <p>sbt's map describing the project can keep around a fixed string value
-for a setting such as <span class="pre">name</span>, but it has to keep around some
-executable code for a task such as <span class="pre">compile</span> -- even if that
+for a setting such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>, but it has to keep around some
+executable code for a task such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> -- even if that
 executable code eventually returns a string, it has to be re-run every
 time.</p>
 <p><em>A given key always refers to either a task or a plain setting.</em> That
@@ -282,8 +282,8 @@ soon.</p>
 <div class="section" id="keys-in-sbt-interactive-mode">
 <h2>Keys in sbt interactive mode<a class="headerlink" href="#keys-in-sbt-interactive-mode" title="Permalink to this headline">¶</a></h2>
 <p>In sbt's interactive mode, you can type the name of any task to execute
-that task. This is why typing <span class="pre">compile</span> runs the compile task.
-<span class="pre">compile</span> is a task key.</p>
+that task. This is why typing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> runs the compile task.
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> is a task key.</p>
 <p>If you type the name of a setting key rather than a task key, the value
 of the setting key will be displayed. Typing a task key name executes
 the task but doesn't display the resulting value; to see a task's
@@ -319,7 +319,7 @@ add managed dependencies, which will look like this in <span class="pre">build.s
 </div>
 <p>This is how you add a managed dependency on the Apache Derby library,
 version 10.4.1.3.</p>
-<p>The <span class="pre">libraryDependencies</span> key involves two complexities: <span class="pre">+=</span> rather
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">libraryDependencies</a> key involves two complexities: <span class="pre">+=</span> rather
 than <span class="pre">:=</span>, and the <span class="pre">%</span> method. <span class="pre">+=</span> appends to the key's old value
 rather than replacing it, this is explained in
 <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.

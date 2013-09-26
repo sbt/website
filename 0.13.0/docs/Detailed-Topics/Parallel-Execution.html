@@ -153,7 +153,7 @@ concurrency beyond the usual ordering declarations. There are two parts
 to these restrictions.</p>
 <ol class="arabic simple">
 <li>A task is tagged in order to classify its purpose and resource
-utilization. For example, the <span class="pre">compile</span> task may be tagged as
+utilization. For example, the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> task may be tagged as
 <span class="pre">Tags.Compile</span> and <span class="pre">Tags.CPU</span>.</li>
 <li>A list of rules restrict the tasks that may execute concurrently. For
 example, <span class="pre">Tags.limit(Tags.CPU, 4)</span> would allow up to four
@@ -170,7 +170,7 @@ this weight is an integer, but it may be a floating point in the future.
 Task: <span class="pre">tag</span> and <span class="pre">tagw</span>. The first method, <span class="pre">tag</span>, fixes the weight
 to be 1 for the tags provided to it as arguments. The second method,
 <span class="pre">tagw</span>, accepts pairs of tags and weights. For example, the following
-associates the <span class="pre">CPU</span> and <span class="pre">Compile</span> tags with the <span class="pre">compile</span> task
+associates the <span class="pre">CPU</span> and <span class="pre">Compile</span> tags with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> task
 (with a weight of 1).</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">myCompileTask</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span> <span class="n">tag</span><span class="o">(</span><span class="nc">Tags</span><span class="o">.</span><span class="nc">CPU</span><span class="o">,</span> <span class="nc">Tags</span><span class="o">.</span><span class="nc">Compile</span><span class="o">)</span>
 
@@ -187,7 +187,7 @@ associates the <span class="pre">CPU</span> and <span class="pre">Compile</span>
 </div>
 <div class="section" id="defining-restrictions">
 <h4>Defining Restrictions<a class="headerlink" href="#defining-restrictions" title="Permalink to this headline">¶</a></h4>
-<p>Once tasks are tagged, the <span class="pre">concurrentRestrictions</span> setting sets
+<p>Once tasks are tagged, the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.concurrentRestrictions">concurrentRestrictions</a> setting sets
 restrictions on the tasks that may be concurrently executed based on the
 weighted tags of those tasks.  This is necessarily a global set of rules,
 so it must be scoped <span class="pre">in Global</span>.  For example,</p>
@@ -282,12 +282,12 @@ define any tags.</li>
 </ul>
 <p>The tasks that are currently tagged by default are:</p>
 <ul class="simple">
-<li><span class="pre">compile</span>: <span class="pre">Compile</span>, <span class="pre">CPU</span></li>
-<li><span class="pre">test</span>: <span class="pre">Test</span></li>
-<li><span class="pre">update</span>: <span class="pre">Update</span>, <span class="pre">Network</span></li>
-<li><span class="pre">publish</span>, <span class="pre">publishLocal</span>: <span class="pre">Publish</span>, <span class="pre">Network</span></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> : <span class="pre">Compile</span>, <span class="pre">CPU</span></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> : <span class="pre">Test</span></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> : <span class="pre">Update</span>, <span class="pre">Network</span></li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publish">publish</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishLocal">publishLocal</a> : <span class="pre">Publish</span>, <span class="pre">Network</span></li>
 </ul>
-<p>Of additional note is that the default <span class="pre">test</span> task will propagate its
+<p>Of additional note is that the default <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> task will propagate its
 tags to each child task created for each test class.</p>
 <p>The default rules provide the same behavior as previous versions of sbt:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">concurrentRestrictions</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">{</span>

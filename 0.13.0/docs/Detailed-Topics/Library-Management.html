@@ -113,13 +113,13 @@ otherwise managing the jars in this directory. No modifications to your
 project definition are required to use this method unless you would like
 to change the location of the directory you store the jars in.</p>
 <p>To change the directory jars are stored in, change the
-<span class="pre">unmanagedBase</span> setting in your project definition. For example, to
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedBase">unmanagedBase</a> setting in your project definition. For example, to
 use <span class="pre">custom_lib/</span>:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span>
 </pre></div>
 </div>
 <p>If you want more control and flexibility, override the
-<span class="pre">unmanagedJars</span> task, which ultimately provides the manual
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedJars">unmanagedJars</a> task, which ultimately provides the manual
 dependencies to sbt. The default implementation is roughly:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span>
 </pre></div>
@@ -215,12 +215,12 @@ repository:</p>
 </div>
 <div class="section" id="override-default-resolvers">
 <h4>Override default resolvers<a class="headerlink" href="#override-default-resolvers" title="Permalink to this headline">¶</a></h4>
-<p><span class="pre">resolvers</span> configures additional, inline user resolvers. By default,
+<p><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">resolvers</a> configures additional, inline user resolvers. By default,
 <span class="pre">sbt</span> combines these resolvers with default repositories (Maven
-Central and the local Ivy repository) to form <span class="pre">externalResolvers</span>. To
-have more control over repositories, set <span class="pre">externalResolvers</span>
+Central and the local Ivy repository) to form <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.externalResolvers">externalResolvers</a>. To
+have more control over repositories, set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.externalResolvers">externalResolvers</a>
 directly. To only specify repositories in addition to the usual
-defaults, configure <span class="pre">resolvers</span>.</p>
+defaults, configure <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">resolvers</a>.</p>
 <p>For example, to use the Sonatype OSS Snapshots repository in addition to
 the default repositories,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype OSS Snapshots&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>
@@ -293,9 +293,9 @@ method. For example, to get the jdk15 version of TestNG:</p>
 </pre></div>
 </div>
 <p>To obtain particular classifiers for all dependencies transitively, run
-the <span class="pre">updateClassifiers</span> task. By default, this resolves all artifacts
+the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateClassifiers">updateClassifiers</a> task. By default, this resolves all artifacts
 with the <span class="pre">sources</span> or <span class="pre">javadoc</span> classifier. Select the classifiers
-to obtain by configuring the <span class="pre">transitiveClassifiers</span> setting. For
+to obtain by configuring the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.transitiveClassifiers">transitiveClassifiers</a> setting. For
 example, to only retrieve sources:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">transitiveClassifiers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sources&quot;</span><span class="o">)</span>
 </pre></div>
@@ -329,8 +329,8 @@ for API details.</p>
 <div class="section" id="download-sources">
 <h4>Download Sources<a class="headerlink" href="#download-sources" title="Permalink to this headline">¶</a></h4>
 <p>Downloading source and API documentation jars is usually handled by an
-IDE plugin. These plugins use the <span class="pre">updateClassifiers</span> and
-<span class="pre">updateSbtClassifiers</span> tasks, which produce an <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a>
+IDE plugin. These plugins use the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateClassifiers">updateClassifiers</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateSbtClassifiers">updateSbtClassifiers</a> tasks, which produce an <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a>
 referencing these jars.</p>
 <p>To have sbt download the dependency's sources without using an IDE
 plugin, add <span class="pre">withSources()</span> to the dependency definition. For API
@@ -412,7 +412,7 @@ the <em>checksums</em> setting.</p>
 <span id="id2"></span><h4>Conflict Management<a class="headerlink" href="#conflict-management" title="Permalink to this headline">¶</a></h4>
 <p>The conflict manager decides what to do when  dependency resolution brings in different versions of the same library.
 By default, the latest revision is selected.
-This can be changed by setting <span class="pre">conflictManager</span>, which has type <a class="reference external" href="../../api/sbt/ConflictManager.html">ConflictManager</a>.
+This can be changed by setting <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.conflictManager">conflictManager</a>, which has type <a class="reference external" href="../../api/sbt/ConflictManager.html">ConflictManager</a>.
 See the <a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html">Ivy documentation</a> for details on the different conflict managers.
 For example, to specify that no conflicts are allowed,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">conflictManager</span> <span class="o">:=</span> <span class="nc">ConflictManager</span><span class="o">.</span><span class="n">strict</span>
@@ -521,15 +521,15 @@ your dependency definition:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2&quot;</span> <span class="o">%</span> <span class="s">&quot;test-&gt;compile&quot;</span>
 </pre></div>
 </div>
-<p>This says that your project's <span class="pre">test</span> configuration uses
-<span class="pre">ScalaTest</span>'s <span class="pre">compile</span> configuration. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/tutorial/conf.html">Ivy
+<p>This says that your project's <span class="pre">&quot;test&quot;</span> configuration uses
+<span class="pre">ScalaTest</span>'s <span class="pre">&quot;compile&quot;</span> configuration. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0-rc1/tutorial/conf.html">Ivy
 documentation</a>
 for more advanced mappings. Most projects published to Maven
-repositories will use the <span class="pre">compile</span> configuration.</p>
+repositories will use the <span class="pre">&quot;compile&quot;</span> configuration.</p>
 <p>A useful application of configurations is to group dependencies that are
 not used on normal classpaths. For example, your project might use a
 <span class="pre">&quot;js&quot;</span> configuration to automatically download jQuery and then include
-it in your jar by modifying <span class="pre">resources</span>. For example:</p>
+it in your jar by modifying <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resources">resources</a>. For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">ivyConfigurations</span> <span class="o">+=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;js&quot;</span><span class="o">)</span> <span class="n">hide</span>
 
 <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.3.2&quot;</span> <span class="o">%</span> <span class="s">&quot;js-&gt;default&quot;</span> <span class="n">from</span> <span class="s">&quot;http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js&quot;</span>
@@ -541,8 +541,8 @@ it in your jar by modifying <span class="pre">resources</span>. For example:</p>
 makes it private to the project so that it is not used for publishing.
 See <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a> for more information on selecting managed
 artifacts.</p>
-<p>A configuration without a mapping (no <span class="pre">&quot;-&gt;&quot;</span>) is mapped to <span class="pre">default</span>
-or <span class="pre">compile</span>. The <span class="pre">-&gt;</span> is only needed when mapping to a different
+<p>A configuration without a mapping (no <span class="pre">&quot;-&gt;&quot;</span>) is mapped to <span class="pre">&quot;default&quot;</span>
+or <span class="pre">&quot;compile&quot;</span>. The <span class="pre">-&gt;</span> is only needed when mapping to a different
 configuration than those. The ScalaTest dependency above can then be
 shortened to:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>

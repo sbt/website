@@ -108,61 +108,61 @@ prompt&quot;, which may be a setting, task, or command.</li>
 these values can be shown using <span class="pre">show &lt;task&gt;</span> to run the task
 instead of just <span class="pre">&lt;task&gt;</span>.</li>
 <li>In a multi-project build, execution dependencies and the
-<span class="pre">aggregate</span> setting control which tasks from which projects are
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.aggregate">aggregate</a> setting control which tasks from which projects are
 executed. See <a class="reference internal" href="../Getting-Started/Multi-Project.html"><em>multi-project builds</em></a>.</li>
 </ul>
 </div>
 <div class="section" id="project-level-tasks">
 <h2>Project-level tasks<a class="headerlink" href="#project-level-tasks" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><span class="pre">clean</span> Deletes all generated files (the <span class="pre">target</span> directory).</li>
-<li><span class="pre">publishLocal</span> Publishes artifacts (such as jars) to the local Ivy
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.clean">clean</a> Deletes all generated files (the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.target">target</a> directory).</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishLocal">publishLocal</a> Publishes artifacts (such as jars) to the local Ivy
 repository as described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
-<li><span class="pre">publish</span> Publishes artifacts (such as jars) to the repository
-defined by the <span class="pre">publishTo</span> setting, described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
-<li><span class="pre">update</span> Resolves and retrieves external dependencies as described
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publish">publish</a> Publishes artifacts (such as jars) to the repository
+defined by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishTo">publishTo</a> setting, described in <a class="reference internal" href="Publishing.html"><em>Publishing</em></a>.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> Resolves and retrieves external dependencies as described
 in <a class="reference internal" href="../Getting-Started/Library-Dependencies.html"><em>library dependencies</em></a>.</li>
 </ul>
 </div>
 <div class="section" id="configuration-level-tasks">
 <h2>Configuration-level tasks<a class="headerlink" href="#configuration-level-tasks" title="Permalink to this headline">¶</a></h2>
 <p>Configuration-level tasks are tasks associated with a configuration. For
-example, <span class="pre">compile</span>, which is equivalent to <span class="pre">compile:compile</span>,
+example, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>, which is equivalent to <span class="pre">compile:compile</span>,
 compiles the main source code (the <span class="pre">compile</span> configuration).
 <span class="pre">test:compile</span> compiles the test source code (test <span class="pre">test</span>
 configuration). Most tasks for the <span class="pre">compile</span> configuration have an
 equivalent in the <span class="pre">test</span> configuration that can be run using a
 <span class="pre">test:</span> prefix.</p>
 <ul class="simple">
-<li><span class="pre">compile</span> Compiles the main sources (in the <span class="pre">src/main/scala</span>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> Compiles the main sources (in the <span class="pre">src/main/scala</span>
 directory). <span class="pre">test:compile</span> compiles test sources (in the
 <span class="pre">src/test/scala/</span> directory).</li>
-<li><span class="pre">console</span> Starts the Scala interpreter with a classpath including
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> Starts the Scala interpreter with a classpath including
 the compiled sources, all jars in the <span class="pre">lib</span> directory, and managed
 libraries. To return to sbt, type <span class="pre">:quit</span>, Ctrl+D (Unix), or Ctrl+Z
 (Windows). Similarly, <span class="pre">test:console</span> starts the interpreter with
 the test classes and classpath.</li>
-<li><span class="pre">consoleQuick</span> Starts the Scala interpreter with the project's
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.consoleQuick">consoleQuick</a> Starts the Scala interpreter with the project's
 compile-time dependencies on the classpath. <span class="pre">test:consoleQuick</span>
-uses the test dependencies. This task differs from <span class="pre">console</span> in
+uses the test dependencies. This task differs from <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> in
 that it does not force compilation of the current project's sources.</li>
-<li><span class="pre">consoleProject</span> Enters an interactive session with sbt and the
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.consoleProject">consoleProject</a> Enters an interactive session with sbt and the
 build definition on the classpath. The build definition and related
 values are bound to variables and common packages and values are
 imported. See the <a class="reference internal" href="Console-Project.html"><em>consoleProject documentation</em></a> for more information.</li>
-<li><span class="pre">doc</span> Generates API documentation for Scala source files in
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.doc">doc</a> Generates API documentation for Scala source files in
 <span class="pre">src/main/scala</span> using scaladoc. <span class="pre">test:doc</span> generates API
 documentation for source files in <span class="pre">src/test/scala</span>.</li>
-<li><span class="pre">package</span> Creates a jar file containing the files in
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a> Creates a jar file containing the files in
 <span class="pre">src/main/resources</span> and the classes compiled from
-<span class="pre">src/main/scala</span>. <span class="pre">test:package</span> creates a jar containing the
+<span class="pre">src/main/scala</span>. <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test:package">test:package</a> creates a jar containing the
 files in <span class="pre">src/test/resources</span> and the class compiled from
 <span class="pre">src/test/scala</span>.</li>
-<li><span class="pre">packageDoc</span> Creates a jar file containing API documentation
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageDoc">packageDoc</a> Creates a jar file containing API documentation
 generated from Scala source files in <span class="pre">src/main/scala</span>.
 <span class="pre">test:packageDoc</span> creates a jar containing API documentation for
 test sources files in <span class="pre">src/test/scala</span>.</li>
-<li><span class="pre">packageSrc</span>: Creates a jar file containing all main source files
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>: Creates a jar file containing all main source files
 and resources. The packaged paths are relative to <span class="pre">src/main/scala</span>
 and <span class="pre">src/main/resources</span>. Similarly, <span class="pre">test:packageSrc</span> operates
 on test source files and resources.</li>
@@ -178,7 +178,7 @@ class is passed the <span class="pre">argument</span>s provided. Please see <a c
 for details on the use of <span class="pre">System.exit</span> and
 multithreading (including GUIs) in code run by this action.
 <span class="pre">test:runMain</span> runs the specified main class in the test code.</li>
-<li><span class="pre">test</span> Runs all tests detected during test compilation. See
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> Runs all tests detected during test compilation. See
 <a class="reference internal" href="Testing.html"><em>Testing</em></a> for details.</li>
 <li><span class="pre">testOnly &lt;test&gt;*</span> Runs the tests provided as arguments. <span class="pre">*</span>
 (will be) interpreted as a wildcard in the test name. See <a class="reference internal" href="Testing.html"><em>Testing</em></a>

@@ -100,7 +100,7 @@ markdown processing task. A plugin can define a sequence of sbt Settings
 that are automatically added to all projects or that are explicitly
 declared for selected projects. For example, a plugin might add a
 <span class="pre">proguard</span> task and associated (overridable) settings.
-Also, <a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <span class="pre">commands</span> setting</p>
+Also, <a class="reference internal" href="Commands.html"><em>Commands</em></a> can be added with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.commands">commands</a> setting</p>
 <p>The <a class="reference internal" href="Plugins-Best-Practices.html"><em>Plugins Best Practices</em></a> page describes the
 currently evolving guidelines to writing sbt plugins. See also the
 general <a class="reference internal" href="../Detailed-Topics/Best-Practices.html"><em>Best Practices</em></a>.</p>
@@ -202,7 +202,7 @@ demonstrates how to declare plugins.</p>
 </div>
 <p>Then, we can add dependencies like usual and save them to
 <span class="pre">project/plugins.sbt</span>. It is useful, but not required, to run
-<span class="pre">update</span> to verify that the dependencies are correct.</p>
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> to verify that the dependencies are correct.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>libraryDependencies +<span class="o">=</span> <span class="s2">&quot;org.clapper&quot;</span> %% <span class="s2">&quot;grizzled-scala&quot;</span> % <span class="s2">&quot;1.0.4&quot;</span>
 <span class="go">...</span>
 <span class="gp">&gt;</span> update
@@ -229,7 +229,7 @@ This means that the plugin will be built from source and used on the classpath.<
 <p>If sbt is running, run <span class="pre">reload</span>.</p>
 <p>Note that this approach can be useful used when developing a plugin.
 A project that uses the plugin will rebuild the plugin on <span class="pre">reload</span>.
-This saves the intermediate steps of <span class="pre">publishLocal</span> and <span class="pre">update</span>.
+This saves the intermediate steps of <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishLocal">publishLocal</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a>.
 It can also be used to work with the development version of a plugin from its repository.</p>
 <p>It is recommended to explicitly specify the commit or tag by appending it to the repository as a fragment:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">assemblyPlugin</span> <span class="k">=</span> <span class="n">uri</span><span class="o">(</span><span class="s">&quot;git://github.com/sbt/sbt-assembly#0.9.1&quot;</span><span class="o">)</span>
@@ -391,7 +391,7 @@ initially:<ol class="arabic">
 <li>sbt will rebuild the plugin and use it for the project.
 Additionally, the plugin will be available in other projects on
 the machine without recompiling again. This approach skips the
-overhead of <span class="pre">publishLocal</span> and cleaning the plugins directory
+overhead of <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishLocal">publishLocal</a> and cleaning the plugins directory
 of the project using the plugin.</li>
 </ol>
 </li>

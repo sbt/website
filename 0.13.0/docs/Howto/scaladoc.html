@@ -99,7 +99,7 @@ If there are any Scala sources, sbt will run <span class="pre">scaladoc</span>.
 <div class="full-howto section" id="definitive-doc-options">
 <h2>Set the options used for generating scaladoc independently of compilation<a class="headerlink" href="#definitive-doc-options" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Scope <span class="pre">scalacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">scaladoc</span>.
+<p>Scope <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalacOptions">scalacOptions</a> to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.doc">doc</a> task to configure <span class="pre">scaladoc</span>.
 Use <span class="pre">:=</span> to definitively set the options without appending to the options for <span class="pre">compile</span>.
 Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.
 For example,</p>
@@ -109,7 +109,7 @@ For example,</p>
 <div class="full-howto section" id="additional-doc-options">
 <h2>Add options for scaladoc to the compilation options<a class="headerlink" href="#additional-doc-options" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Scope <span class="pre">scalacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">scaladoc</span>.
+<p>Scope <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalacOptions">scalacOptions</a> to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.doc">doc</a> task to configure <span class="pre">scaladoc</span>.
 Use <span class="pre">+=</span> or <span class="pre">++=</span> to append options to the base options.
 To append a single option, use <span class="pre">+=</span>.
 To append a <span class="pre">Seq[String]</span>, use <span class="pre">++=</span>.
@@ -121,13 +121,13 @@ For example,</p>
 <div class="full-howto section" id="definitive-javadoc-options">
 <h2>Set the options used for generating javadoc independently of compilation<a class="headerlink" href="#definitive-javadoc-options" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Scope <span class="pre">javacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">javadoc</span>.
+<p>Scope <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.javacOptions">javacOptions</a> to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.doc">doc</a> task to configure <span class="pre">javadoc</span>.
 Use <span class="pre">:=</span> to definitively set the options without appending to the options for <span class="pre">compile</span>.
 Scope to <span class="pre">Compile</span> for main sources or to <span class="pre">Test</span> for test sources.</p>
 <div class="full-howto section" id="id1">
 <h2>Add options for javadoc to the compilation options<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Scope <span class="pre">javacOptions</span> to the <span class="pre">doc</span> task to configure <span class="pre">javadoc</span>.
+<p>Scope <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.javacOptions">javacOptions</a> to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.doc">doc</a> task to configure <span class="pre">javadoc</span>.
 Use <span class="pre">+=</span> or <span class="pre">++=</span> to append options to the base options.
 To append a single option, use <span class="pre">+=</span>.
 To append a <span class="pre">Seq[String]</span>, use <span class="pre">++=</span>.
@@ -144,9 +144,9 @@ This requires that dependencies have this information in its metadata and you ar
 <div class="full-howto section" id="manual-api-links">
 <h2>Enable manual linking to the external Scaladoc of managed dependencies<a class="headerlink" href="#manual-api-links" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Add mappings of type <span class="pre">(File, URL)</span> to <span class="pre">apiMappings</span> to manually tell <span class="pre">scaladoc</span> where it can find the API documentation for dependencies.
+<p>Add mappings of type <span class="pre">(File, URL)</span> to <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.apiMappings">apiMappings</a> to manually tell <span class="pre">scaladoc</span> where it can find the API documentation for dependencies.
 (This requires <span class="pre">scaladoc</span> for Scala 2.10.2 or later.)
-These mappings are used in addition to <span class="pre">autoAPIMappings</span>, so this manual configuration is typically done for unmanaged dependencies.
+These mappings are used in addition to <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.autoAPIMappings">autoAPIMappings</a>, so this manual configuration is typically done for unmanaged dependencies.
 The <span class="pre">File</span> key is the location of the dependency as passed to the classpath.
 The <span class="pre">URL</span> value is the base URL of the API documentation for the dependency.
 For example,</p>
@@ -159,8 +159,8 @@ For example,</p>
 <div class="full-howto section" id="define-api-url">
 <h2>Define the location of API documentation for a library.<a class="headerlink" href="#define-api-url" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>Set <span class="pre">apiURL</span> to define the base <span class="pre">URL</span> for the Scaladocs for your library.
-This will enable clients of your library to automatically link against the API documentation using <span class="pre">autoAPIMappings</span>.
+<p>Set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.apiURL">apiURL</a> to define the base <span class="pre">URL</span> for the Scaladocs for your library.
+This will enable clients of your library to automatically link against the API documentation using <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.autoAPIMappings">autoAPIMappings</a>.
 (This only works for Scala 2.10.2 and later.)
 For example,</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">apiURL</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;http://example.org/api/&quot;</span><span class="o">))</span>

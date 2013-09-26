@@ -92,17 +92,17 @@
 <h1>Triggered Execution<a class="headerlink" href="#triggered-execution" title="Permalink to this headline">¶</a></h1>
 <p>You can make a command run when certain files change by prefixing the
 command with <span class="pre">~</span>. Monitoring is terminated when <span class="pre">enter</span> is pressed.
-This triggered execution is configured by the <span class="pre">watch</span> setting, but
-typically the basic settings <span class="pre">watchSources</span> and <span class="pre">pollInterval</span> are
+This triggered execution is configured by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watch">watch</a> setting, but
+typically the basic settings <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.pollInterval">pollInterval</a> are
 modified.</p>
 <ul class="simple">
-<li><span class="pre">watchSources</span> defines the files for a single project that are
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> defines the files for a single project that are
 monitored for changes. By default, a project watches resources and
 Scala and Java sources.</li>
-<li><span class="pre">watchTransitiveSources</span> then combines the <span class="pre">watchSources</span> for
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchTransitiveSources">watchTransitiveSources</a> then combines the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.watchSources">watchSources</a> for
 the current project and all execution and classpath dependencies (see
 <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>Full Configuration</em></a> for details on interProject dependencies).</li>
-<li><span class="pre">pollInterval</span> selects the interval between polling for changes in
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.pollInterval">pollInterval</a> selects the interval between polling for changes in
 milliseconds. The default value is <span class="pre">500 ms</span>.</li>
 </ul>
 <p>Some example usages are described below.</p>
@@ -121,7 +121,7 @@ milliseconds. The default value is <span class="pre">500 ms</span>.</li>
 One use is for test driven development, as suggested by Erick on the
 mailing list.</p>
 <p>The following will poll for changes to your source code (main or test)
-and run <span class="pre">testOnly</span> for the specified test.</p>
+and run <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a> for the specified test.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ testOnly example.TestA
 </pre></div>
 </div>
@@ -131,8 +131,8 @@ and run <span class="pre">testOnly</span> for the specified test.</p>
 <p>Occasionally, you may need to trigger the execution of multiple
 commands. You can use semicolons to separate the commands to be
 triggered.</p>
-<p>The following will poll for source changes and run <span class="pre">clean</span> and
-<span class="pre">test</span>.</p>
+<p>The following will poll for source changes and run <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.clean">clean</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>.</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;clean ;<span class="nb">test</span>
 </pre></div>
 </div>

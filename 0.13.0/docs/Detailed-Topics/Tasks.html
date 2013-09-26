@@ -202,7 +202,7 @@ produced by <span class="pre">intTask</span> and returns the result.</p>
 <div class="section" id="task-scope">
 <h4>Task Scope<a class="headerlink" href="#task-scope" title="Permalink to this headline">¶</a></h4>
 <p>As with settings, tasks can be defined in a specific scope. For example,
-there are separate <span class="pre">compile</span> tasks for the <span class="pre">compile</span> and <span class="pre">test</span>
+there are separate <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> tasks for the <span class="pre">compile</span> and <span class="pre">test</span>
 scopes. The scope of a task is defined the same as for a setting. In the
 following example, <span class="pre">test:sampleTask</span> uses the result of
 <span class="pre">compile:intTask</span>.</p>
@@ -298,7 +298,7 @@ The result has type <span class="pre">Seq[T]</span>, where <span class="pre">T</
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <p>A common scenario is getting the sources for all subprojects for processing all at once, such as passing them to scaladoc.
-The task that we want to obtain values for is <span class="pre">sources</span> and we want to get the values in all non-root projects and in the <span class="pre">Compile</span> configuration.
+The task that we want to obtain values for is <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sources">sources</a> and we want to get the values in all non-root projects and in the <span class="pre">Compile</span> configuration.
 This looks like:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span>
 
@@ -427,38 +427,38 @@ The result is <span class="pre">None</span> if the setting/task is undefined and
 This means it is possible to get multiple values at once without defining a new task or setting in each scope.
 A common use case is to pair each value obtained with the project, configuration, or full scope it came from.</p>
 <dl class="docutils">
-<dt><span class="pre">resolvedScoped</span></dt>
+<dt><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvedScoped">resolvedScoped</a></dt>
 <dd>Provides the full enclosing <span class="pre">ScopedKey</span> (which is a <span class="pre">Scope</span> + <span class="pre">AttributeKey[_]</span>)</dd>
-<dt><span class="pre">thisProject</span></dt>
+<dt><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.thisProject">thisProject</a></dt>
 <dd>Provides the <span class="pre">Project</span> associated with this scope (undefined at the global and build levels)</dd>
-<dt><span class="pre">thisProjectRef</span></dt>
+<dt><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.thisProjectRef">thisProjectRef</a></dt>
 <dd>Provides the <span class="pre">ProjectRef</span> for the context (undefined at the global and build levels)</dd>
-<dt><span class="pre">configuration</span></dt>
+<dt><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.configuration">configuration</a></dt>
 <dd>Provides the <span class="pre">Configuration</span> for the context (undefined for the global configuration)</dd>
 </dl>
 <p>For example, the following defines a task that prints non-Compile configurations that define
 sbt plugins.  This might be used to identify an incorrectly configured build (or not, since this is
 a fairly contrived example):</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Select all configurations in the current project except for Compile</span>
-<span class="k">lazy</span> <span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span>
-   <span class="n">inProjects</span><span class="o">(</span><span class="nc">ThisProject</span><span class="o">),</span>
-   <span class="n">inAnyConfiguration</span> <span class="o">--</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span>
+<div class="highlight-scala"><div class="highlight"><pre> <span class="c1">// Select all configurations in the current project except for Compile</span>
+ <span class="k">lazy</span> <span class="k">val</span> <span class="n">filter</span><span class="k">:</span> <span class="kt">ScopeFilter</span> <span class="o">=</span> <span class="nc">ScopeFilter</span><span class="o">(</span>
+    <span class="n">inProjects</span><span class="o">(</span><span class="nc">ThisProject</span><span class="o">),</span>
+    <span class="n">inAnyConfiguration</span> <span class="o">--</span> <span class="n">inConfigurations</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)</span>
 <span class="o">)</span>
 
-<span class="c1">// Define a task that provides the name of the current configuration</span>
-<span class="c1">//   and the set of sbt plugins defined in the configuration</span>
-<span class="k">lazy</span> <span class="k">val</span> <span class="n">pluginsWithConfig</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span> <span class="o">(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">]]</span> <span class="k">=</span>
-   <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
-      <span class="o">(</span> <span class="n">configuration</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="n">definedSbtPlugins</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
-   <span class="o">}</span>
+ <span class="c1">// Define a task that provides the name of the current configuration</span>
+ <span class="c1">//   and the set of sbt plugins defined in the configuration</span>
+ <span class="k">lazy</span> <span class="k">val</span> <span class="n">pluginsWithConfig</span><span class="k">:</span> <span class="kt">Initialize</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span> <span class="o">(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">]]</span> <span class="k">=</span>
+    <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
+       <span class="o">(</span> <span class="n">configuration</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="n">definedSbtPlugins</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
+    <span class="o">}</span>
 
-<span class="n">checkPluginsTask</span> <span class="o">:=</span> <span class="o">{</span>
-   <span class="k">val</span> <span class="n">oddPlugins</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])]</span> <span class="k">=</span>
-      <span class="n">pluginsWithConfig</span><span class="o">.</span><span class="n">all</span><span class="o">(</span><span class="n">filter</span><span class="o">).</span><span class="n">value</span>
-   <span class="c1">// Print each configuration that defines sbt plugins</span>
-   <span class="k">for</span><span class="o">(</span> <span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">plugins</span><span class="o">)</span> <span class="k">&lt;-</span> <span class="n">oddPlugins</span> <span class="k">if</span> <span class="n">plugins</span><span class="o">.</span><span class="n">nonEmpty</span> <span class="o">)</span>
-      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$config defines sbt plugins: ${plugins.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
-<span class="o">}</span>
+ <span class="n">checkPluginsTask</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">oddPlugins</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[(</span><span class="kt">String</span>, <span class="kt">Set</span><span class="o">[</span><span class="kt">String</span><span class="o">])]</span> <span class="k">=</span>
+       <span class="n">pluginsWithConfig</span><span class="o">.</span><span class="n">all</span><span class="o">(</span><span class="n">filter</span><span class="o">).</span><span class="n">value</span>
+    <span class="c1">// Print each configuration that defines sbt plugins</span>
+    <span class="k">for</span><span class="o">(</span> <span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">plugins</span><span class="o">)</span> <span class="k">&lt;-</span> <span class="n">oddPlugins</span> <span class="k">if</span> <span class="n">plugins</span><span class="o">.</span><span class="n">nonEmpty</span> <span class="o">)</span>
+       <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;$config defines sbt plugins: ${plugins.mkString(&quot;</span><span class="o">,</span> <span class="s">&quot;)}&quot;</span><span class="o">)</span>
+ <span class="o">}</span>
 </pre></div>
 </div>
 </div>
@@ -473,7 +473,7 @@ a fairly contrived example):</p>
 This allows controlling the verbosity of stack traces and logging individually for tasks as well
 as recalling the last logging for a task.
 Tasks also have access to their own persisted binary or text data.</p>
-<p>To use Streams, get the value of the <span class="pre">streams</span> task. This is a
+<p>To use Streams, get the value of the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.streams">streams</a> task. This is a
 special task that provides an instance of
 <a class="reference external" href="../../api/sbt/std/TaskStreams.html">TaskStreams</a>
 for the defining task. This type provides access to named binary and
@@ -501,7 +501,7 @@ method:</p>
 </pre></div>
 </div>
 <p>The verbosity with which logging is persisted is controlled using the
-<span class="pre">persistLogLevel</span> and <span class="pre">persistTraceLevel</span> settings. The <span class="pre">last</span>
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.persistLogLevel">persistLogLevel</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.persistTraceLevel">persistTraceLevel</a> settings. The <span class="pre">last</span>
 command displays what was logged according to these levels. The levels
 do not affect already logged information.</p>
 </div>
