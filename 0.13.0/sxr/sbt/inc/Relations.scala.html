@@ -32,7 +32,7 @@
 	<span class="comment">/** All sources _with at least one product_ . */</span>
 	<span class="keyword">def</span> <a title="=&gt; scala.collection.Set[java.io.File]" id="sbt.inc;Relations.allSources">allSources</a>: collection.<span title="scala.collection.Set[java.io.File]">Set</span><span class="delimiter">[</span>File<span class="delimiter">]</span>
 	
-	<span class="comment">/** All products associates with sources. */</span>
+	<span class="comment">/** All products associated with sources. */</span>
 	<span class="keyword">def</span> <a title="=&gt; scala.collection.Set[java.io.File]" id="sbt.inc;Relations.allProducts">allProducts</a>: collection.<span title="scala.collection.Set[java.io.File]">Set</span><span class="delimiter">[</span>File<span class="delimiter">]</span>
 
 	<span class="comment">/** All files that are recorded as a binary dependency of a source file.*/</span>
@@ -44,10 +44,10 @@
 	<span class="comment">/** All files in another compilation group (project) that are recorded as a source dependency of a source file in this group.*/</span>
 	<span class="keyword">def</span> <a title="=&gt; scala.collection.Set[String]" id="sbt.inc;Relations.allExternalDeps">allExternalDeps</a>: collection.<span title="scala.collection.Set[String]">Set</span><span class="delimiter">[</span>String<span class="delimiter">]</span>
 
-	<span class="comment">/** Fully qualified names of classes defined in source file `src`. */</span>
+	<span class="comment">/** Fully qualified names of classes generated from source file `src`. */</span>
 	<span class="keyword">def</span> <a title="(src: java.io.File)Set[String]" id="sbt.inc;Relations.classNames">classNames</a><span class="delimiter">(</span><a title="java.io.File" id="sbt.inc;Relations.classNames.src">src</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Set[String]">Set</span><span class="delimiter">[</span>String<span class="delimiter">]</span>
 
-	<span class="comment">/** Names of classes defined in source file `src`. */</span>
+	<span class="comment">/** Source files that generated a class with the given fully qualified `name`. */</span>
 	<span class="keyword">def</span> <a title="(name: String)Set[java.io.File]" id="sbt.inc;Relations.definesClass">definesClass</a><span class="delimiter">(</span><a title="String" id="sbt.inc;Relations.definesClass.name">name</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Set[java.io.File]">Set</span><span class="delimiter">[</span>File<span class="delimiter">]</span>
 	
 	<span class="comment">/** The classes that were generated for source file `src`. */</span>
@@ -110,7 +110,7 @@
 	<span class="comment">/** The inheritance dependency relations between sources.*/</span>
 	<span class="keyword">def</span> <a title="=&gt; sbt.inc.Relations.Source" id="sbt.inc;Relations.publicInherited">publicInherited</a>: <a href="#sbt.inc.Relations;Source" title="sbt.inc.Relations.Source">RSource</a>
 
-	<span class="comment">/** The relation between a source file and names of classes generated from it.*/</span>
+	<span class="comment">/** The relation between a source file and the fully qualified names of classes generated from it.*/</span>
 	<span class="keyword">def</span> <a title="=&gt; sbt.Relation[java.io.File,String]" id="sbt.inc;Relations.classes">classes</a>: <a href="../Relation.scala.html#sbt;Relation" title="sbt.Relation[java.io.File,String]">Relation</a><span class="delimiter">[</span>File, String<span class="delimiter">]</span>
 <span class="delimiter">}</span>
 
@@ -160,7 +160,7 @@
 * `publicInherited` defines relations for internal and external source dependencies, only including dependencies
 *   introduced by inheritance.
 *
-* `classes` is a relation between a source file and its generated class names.
+* `classes` is a relation between a source file and its generated fully-qualified class names.
 */</span>
 <span title="AnyRef" class="keyword">private</span> <span class="keyword">class</span> <a title="class MRelations extends AnyRef with sbt.inc.Relations" id="sbt.inc;MRelations">MRelations</a><a href="#sbt.inc;MRelations" title="sbt.inc.MRelations" class="delimiter">(</a><span class="keyword">val</span> <a title="sbt.Relation[java.io.File,java.io.File]" id="sbt.inc;MRelations.srcProd">srcProd</a>: <a href="../Relation.scala.html#sbt;Relation" title="sbt.Relation[java.io.File,java.io.File]">Relation</a><span class="delimiter">[</span>File, File<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="sbt.Relation[java.io.File,java.io.File]" id="sbt.inc;MRelations.binaryDep">binaryDep</a>: <a href="../Relation.scala.html#sbt;Relation" title="sbt.Relation[java.io.File,java.io.File]">Relation</a><span class="delimiter">[</span>File, File<span class="delimiter">]</span>,
 	<span class="comment">// direct should include everything in inherited</span>
