@@ -124,19 +124,24 @@ Any <span class="pre">val</span> found in a <span class="pre">Build</span> objec
 </div>
 <div class="section" id="implementing-a-task">
 <h2>Implementing a task<a class="headerlink" href="#implementing-a-task" title="Permalink to this headline">¶</a></h2>
-<p>Once you've defined a key, you'll need to use it in some task. You could
-be defining your own task, or you could be planning to redefine an
-existing task. Either way looks the same; use <span class="pre">:=</span> to associate some
-code with the task key:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">sampleStringTask</span> <span class="o">:=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.home&quot;</span><span class="o">)</span>
-
-<span class="n">sampleIntTask</span> <span class="o">:=</span> <span class="o">{</span>
-  <span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
-  <span class="n">println</span><span class="o">(</span><span class="s">&quot;sum: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">)</span>
-  <span class="n">sum</span>
-<span class="o">}</span>
-</pre></div>
-</div>
+<p>Once you've defined a key for your task, you'll need to complete it
+with a task definition. You could be defining your own task, or you
+could be planning to redefine an existing task. Either way looks the
+same; use <span class="pre">:=</span> to associate some code with the task key:</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><p class="first">val sampleStringTask = settingKey[String](&quot;A sample string task.&quot;)</p>
+<p>val sampleIntTask = settingKey[String](&quot;A sample int task.&quot;)</p>
+<p>sampleStringTask := System.getProperty(&quot;user.home&quot;)</p>
+<dl class="docutils">
+<dt>sampleIntTask := {</dt>
+<dd>val sum = 1 + 2
+println(&quot;sum: &quot; + sum)
+sum</dd>
+</dl>
+<p class="last">}</p>
+</dd>
+</dl>
 <p>If the task has dependencies, you'd reference their value using
 <span class="pre">value</span>, as discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
 <p>The hardest part about implementing tasks is often not sbt-specific;
