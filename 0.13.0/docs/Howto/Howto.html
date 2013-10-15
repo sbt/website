@@ -34,7 +34,7 @@
     <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
     <link rel="up" title="How to..." href="index.html" />
-    <link rel="next" title="Generating files" href="generatefiles.html" />
+    <link rel="next" title="Classpaths" href="classpaths.html" />
     <link rel="prev" title="How to..." href="index.html" /> 
   </head>
   <body>
@@ -68,7 +68,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="generatefiles.html">Generating files</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="classpaths.html">Classpaths</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">How to...</a>
@@ -95,6 +95,135 @@
 <p>This page presents an index of the how-to topics with short examples for many of them.
 Click <span class="pre">(details)</span> to jump to the full explanation.
 See also the <a class="reference internal" href="index.html"><em>Basic Index</em></a>, which omits the examples and just lists the topics.</p>
+<div class="doc-howto-summary section" id="classpaths">
+<h3>Classpaths<a class="reference external" href="classpaths.html"> (details)</a><a class="headerlink" href="#classpaths" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="include-a-new-type-of-managed-artifact-on-the-classpath-such-as-mar">
+<h4>Include a new type of managed artifact on the classpath, such as `mar`<a class="reference external" href="classpaths.html#classpath-types"> (details)</a><a class="headerlink" href="#include-a-new-type-of-managed-artifact-on-the-classpath-such-as-mar" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">classpathTypes</span> <span class="o">+=</span> <span class="s">&quot;mar&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-the-classpath-used-for-compilation">
+<h4>Get the classpath used for compilation<a class="reference external" href="classpaths.html#get-compile-classpath"> (details)</a><a class="headerlink" href="#get-the-classpath-used-for-compilation" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span> <span class="o">(</span><span class="n">dependencyClasspath</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">files</span> <span class="o">...</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-the-runtime-classpath-including-the-project-s-compiled-classes">
+<h4>Get the runtime classpath, including the project's compiled classes<a class="reference external" href="classpaths.html#get-runtime-classpath"> (details)</a><a class="headerlink" href="#get-the-runtime-classpath-including-the-project-s-compiled-classes" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span> <span class="o">(</span><span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Runtime</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">files</span> <span class="o">...</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-the-test-classpath-including-the-project-s-compiled-test-classes">
+<h4>Get the test classpath, including the project's compiled test classes<a class="reference external" href="classpaths.html#get-test-classpath"> (details)</a><a class="headerlink" href="#get-the-test-classpath-including-the-project-s-compiled-test-classes" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span> <span class="o">(</span><span class="n">fullClasspath</span> <span class="n">in</span> <span class="nc">Test</span><span class="o">).</span><span class="n">value</span><span class="o">.</span><span class="n">files</span> <span class="o">...</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="use-packaged-jars-on-classpaths-instead-of-class-directories">
+<h4>Use packaged jars on classpaths instead of class directories<a class="reference external" href="classpaths.html#export-jars"> (details)</a><a class="headerlink" href="#use-packaged-jars-on-classpaths-instead-of-class-directories" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-all-managed-jars-for-a-configuration">
+<h4>Get all managed jars for a configuration<a class="reference external" href="classpaths.html#managed-jars-in-config"> (details)</a><a class="headerlink" href="#get-all-managed-jars-for-a-configuration" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span> <span class="nc">Classpaths</span><span class="o">.</span><span class="n">managedJars</span><span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">artifactTypes</span><span class="o">,</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">)</span> <span class="o">...</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-the-files-included-in-a-classpath">
+<h4>Get the files included in a classpath<a class="reference external" href="classpaths.html#classpath-files"> (details)</a><a class="headerlink" href="#get-the-files-included-in-a-classpath" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="o">...</span> <span class="n">someClasspath</span><span class="o">.</span><span class="n">files</span> <span class="o">...</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="get-the-module-and-artifact-that-produced-a-classpath-entry">
+<h4>Get the module and artifact that produced a classpath entry<a class="reference external" href="classpaths.html#classpath-entry-module"> (details)</a><a class="headerlink" href="#get-the-module-and-artifact-that-produced-a-classpath-entry" title="Permalink to this headline">¶</a></h4>
+<p></p>
+</div>
+</div>
+<div class="doc-howto-summary section" id="customizing-paths">
+<h3>Customizing paths<a class="reference external" href="defaultpaths.html"> (details)</a><a class="headerlink" href="#customizing-paths" title="Permalink to this headline">¶</a></h3>
+<div class="howto-summary section" id="change-the-default-scala-source-directory">
+<h4>Change the default Scala source directory<a class="reference external" href="defaultpaths.html#scala-source-directory"> (details)</a><a class="headerlink" href="#change-the-default-scala-source-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="change-the-default-java-source-directory">
+<h4>Change the default Java source directory<a class="reference external" href="defaultpaths.html#java-source-directory"> (details)</a><a class="headerlink" href="#change-the-default-java-source-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">javaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="change-the-default-resource-directory">
+<h4>Change the default resource directory<a class="reference external" href="defaultpaths.html#resource-directory"> (details)</a><a class="headerlink" href="#change-the-default-resource-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceDirectory</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;resources&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="change-the-default-unmanaged-library-directory">
+<h4>Change the default (unmanaged) library directory<a class="reference external" href="defaultpaths.html#unmanaged-base-directory"> (details)</a><a class="headerlink" href="#change-the-default-unmanaged-library-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;jars&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="disable-using-the-project-s-base-directory-as-a-source-directory">
+<h4>Disable using the project's base directory as a source directory<a class="reference external" href="defaultpaths.html#disable-base-sources"> (details)</a><a class="headerlink" href="#disable-using-the-project-s-base-directory-as-a-source-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">sourcesInBase</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="add-an-additional-source-directory">
+<h4>Add an additional source directory<a class="reference external" href="defaultpaths.html#add-source-directory"> (details)</a><a class="headerlink" href="#add-an-additional-source-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">unmanagedSourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;extra-src&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="add-an-additional-resource-directory">
+<h4>Add an additional resource directory<a class="reference external" href="defaultpaths.html#add-resource-directory"> (details)</a><a class="headerlink" href="#add-an-additional-resource-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">unmanagedResourceDirectories</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;extra-resources&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="include-exclude-files-in-the-source-directory">
+<h4>Include/exclude files in the source directory<a class="reference external" href="defaultpaths.html#source-include-filter"> (details)</a><a class="headerlink" href="#include-exclude-files-in-the-source-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">includeFilter</span> <span class="n">in</span> <span class="n">unmanagedSources</span> <span class="o">:=</span> <span class="s">&quot;*.scala&quot;</span> <span class="o">||</span> <span class="s">&quot;*.java&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="include-exclude-files-in-the-resource-directory">
+<h4>Include/exclude files in the resource directory<a class="reference external" href="defaultpaths.html#resource-include-filter"> (details)</a><a class="headerlink" href="#include-exclude-files-in-the-resource-directory" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">includeFilter</span> <span class="n">in</span> <span class="n">unmanagedResources</span> <span class="o">:=</span> <span class="s">&quot;*.txt&quot;</span> <span class="o">||</span> <span class="s">&quot;*.html&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+<div class="howto-summary section" id="include-only-certain-unmanaged-libraries">
+<h4>Include only certain (unmanaged) libraries<a class="reference external" href="defaultpaths.html#lib-include-filter"> (details)</a><a class="headerlink" href="#include-only-certain-unmanaged-libraries" title="Permalink to this headline">¶</a></h4>
+<p><div class="highlight-scala"><div class="highlight"><pre> <span class="n">includeFilter</span> <span class="n">in</span> <span class="n">unmanagedJars</span> <span class="o">:=</span> <span class="s">&quot;*.jar&quot;</span> <span class="o">||</span> <span class="s">&quot;*.zip&quot;</span>
+</pre></div>
+</div>
+</p>
+</div>
+</div>
 <div class="doc-howto-summary section" id="generating-files">
 <h3>Generating files<a class="reference external" href="generatefiles.html"> (details)</a><a class="headerlink" href="#generating-files" title="Permalink to this headline">¶</a></h3>
 <div class="howto-summary section" id="generate-sources">
