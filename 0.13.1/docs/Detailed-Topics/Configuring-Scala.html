@@ -1,0 +1,274 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuring Scala &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Console Project" href="Console-Project.html" />
+    <link rel="prev" title="Compiler Plugin Support" href="Compiler-Plugins.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Configuring Scala</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Console-Project.html">Console Project</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Compiler-Plugins.html">Compiler Plugin Support</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC1">Version 0.13.1-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="configuring-scala">
+<h1>Configuring Scala<a class="headerlink" href="#configuring-scala" title="Permalink to this headline">¶</a></h1>
+<p>sbt needs to obtain Scala for a project and it can do this automatically or you can configure it explicitly.
+The Scala version that is configured for a project will compile, run, document, and provide a REPL for the project code.
+When compiling a project, sbt needs to run the Scala compiler as well as provide the compiler with a classpath, which may include several Scala jars, like the reflection jar.</p>
+<div class="section" id="automatically-managed-scala">
+<h2>Automatically managed Scala<a class="headerlink" href="#automatically-managed-scala" title="Permalink to this headline">¶</a></h2>
+<p>The most common case is when you want to use a version of Scala that is available in a repository.
+The only required configuration is the Scala version you want to use.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.0&quot;</span>
+</pre></div>
+</div>
+<p>This will retrieve Scala from the repositories configured via the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">resolvers</a> setting.
+It will use this version for building your project: compiling, running, scaladoc, and the REPL.</p>
+<div class="section" id="configuring-the-scala-library-dependency">
+<h3>Configuring the scala-library dependency<a class="headerlink" href="#configuring-the-scala-library-dependency" title="Permalink to this headline">¶</a></h3>
+<p>By default, the standard Scala library is automatically added as a dependency.
+If you want to configure it differently than the default or you have a project with only Java sources, set:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p>In order to compile Scala sources, the Scala library needs to be on the classpath.
+When <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.autoScalaLibrary">autoScalaLibrary</a> is true, the Scala library will be on all classpaths: test, runtime, and compile.
+Otherwise, you need to add it like any other dependency.
+For example, the following dependency definition uses Scala only for tests:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-library&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-additional-scala-dependencies">
+<h3>Configuring additional Scala dependencies<a class="headerlink" href="#configuring-additional-scala-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>When using a Scala dependency other than the standard library, add it as a normal managed dependency.
+For example, to depend on the Scala compiler,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-compiler&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>Note that this is necessary regardless of the value of the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.autoScalaLibrary">autoScalaLibrary</a> setting described in the previous section.</p>
+</div>
+<div class="section" id="configuring-scala-tool-dependencies">
+<h3>Configuring Scala tool dependencies<a class="headerlink" href="#configuring-scala-tool-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>In order to compile Scala code, run scaladoc, and provide a Scala REPL, sbt needs the <span class="pre">scala-compiler</span> jar.
+This should not be a normal dependency of the project, so sbt adds a dependency on <span class="pre">scala-compiler</span> in the special, private <span class="pre">scala-tool</span> configuration.
+It may be desirable to have more control over this in some situations.
+Disable this automatic behavior with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.managedScalaInstance">managedScalaInstance</a> key:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">managedScalaInstance</span> <span class="o">:=</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p>This will also disable the automatic dependency on <span class="pre">scala-library</span>.
+If you do not need the Scala compiler for anything (compiling, the REPL, scaladoc, etc...), you can stop here.
+sbt does not need an instance of Scala for your project in that case.
+Otherwise, sbt will still need access to the jars for the Scala compiler for compilation and other tasks.
+You can provide them by either declaring a dependency in the <span class="pre">scala-tool</span> configuration or by explicitly defining <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaInstance">scalaInstance</a>.</p>
+<p>In the first case, add the <span class="pre">scala-tool</span> configuration and add a dependency on <span class="pre">scala-compiler</span> in this configuration.
+The organization is not important, but sbt needs the module name to be <span class="pre">scala-compiler</span> and <span class="pre">scala-library</span> in order to handle those jars appropriately.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">managedScalaInstance</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// Add the configuration for the dependencies on Scala tool jars</span>
+<span class="c1">// You can also use a manually constructed configuration like:</span>
+<span class="c1">//   config(&quot;scala-tool&quot;).hide</span>
+<span class="n">ivyConfigurations</span> <span class="o">+=</span> <span class="nc">Configurations</span><span class="o">.</span><span class="nc">ScalaTool</span>
+
+<span class="c1">// Add the usual dependency on the library as well on the compiler in the</span>
+<span class="c1">//  &#39;scala-tool&#39; configuration</span>
+<span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+   <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-library&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span><span class="o">,</span>
+   <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-compiler&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span> <span class="o">%</span> <span class="s">&quot;scala-tool&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>In the second case, directly construct a value of type <a class="reference external" href="../../api/sbt/ScalaInstance.html">ScalaInstance</a>, typically using a method in the <a class="reference external" href="../../api/sbt/ScalaInstance$.html">companion object</a>, and assign it to <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaInstance">scalaInstance</a>.
+You will also need to add the <span class="pre">scala-library</span> jar to the classpath to compile and run Scala sources.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">managedScalaInstance</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="n">scalaInstance</span> <span class="o">:=</span> <span class="o">...</span>
+
+<span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="n">scalaInstance</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">libraryJar</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="switching-to-a-local-scala-version">
+<h3>Switching to a local Scala version<a class="headerlink" href="#switching-to-a-local-scala-version" title="Permalink to this headline">¶</a></h3>
+<p>To use a locally built Scala version, configure Scala home as described in the following section.
+Scala will still be resolved as before, but the jars will come from the configured Scala home directory.</p>
+</div>
+</div>
+<div class="section" id="using-scala-from-a-local-directory">
+<h2>Using Scala from a local directory<a class="headerlink" href="#using-scala-from-a-local-directory" title="Permalink to this headline">¶</a></h2>
+<p>The result of building Scala from source is a Scala home directory <span class="pre">&lt;base&gt;/build/pack/</span> that contains a subdirectory <span class="pre">lib/</span> containing the Scala library, compiler, and other jars.
+The same directory layout is obtained by downloading and extracting a Scala distribution.
+Such a Scala home directory may be used as the source for jars by setting <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaHome">scalaHome</a>.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/scala-2.10/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>By default, <span class="pre">lib/scala-library.jar</span> will be added to the unmanaged classpath and <span class="pre">lib/scala-compiler.jar</span> will be used to compile Scala sources and provide a Scala REPL.
+No managed dependency is recorded on <span class="pre">scala-library</span>.
+This means that Scala will only be resolved from a repository if you explicitly define a dependency on Scala or if Scala is depended on indirectly via a dependency.
+In these cases, the artifacts for the resolved dependencies will be substituted with jars in the Scala home <span class="pre">lib/</span> directory.</p>
+<div class="section" id="mixing-with-managed-dependencies">
+<h3>Mixing with managed dependencies<a class="headerlink" href="#mixing-with-managed-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>As an example, consider adding a dependency on <span class="pre">scala-reflect</span> when <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaHome">scalaHome</a> is configured:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/scala-2.10/&quot;</span><span class="o">))</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-reflect&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>This will be resolved as normal, except that sbt will see if <span class="pre">/home/user/scala-2.10/lib/scala-reflect.jar</span> exists.
+If it does, that file will be used in place of the artifact from the managed dependency.</p>
+</div>
+<div class="section" id="using-unmanaged-dependencies-only">
+<h3>Using unmanaged dependencies only<a class="headerlink" href="#using-unmanaged-dependencies-only" title="Permalink to this headline">¶</a></h3>
+<p>Instead of adding managed dependencies on Scala jars, you can directly add them.
+The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaInstance">scalaInstance</a> task provides structured access to the Scala distribution.
+For example, to add all jars in the Scala home <span class="pre">lib/</span> directory,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/scala-2.10/&quot;</span><span class="o">))</span>
+
+<span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="n">scalaInstance</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">jars</span>
+</pre></div>
+</div>
+<p>To add only some jars, filter the jars from <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaInstance">scalaInstance</a> before adding them.</p>
+</div>
+</div>
+<div class="section" id="sbt-s-scala-version">
+<h2>sbt's Scala version<a class="headerlink" href="#sbt-s-scala-version" title="Permalink to this headline">¶</a></h2>
+<p>sbt needs Scala jars to run itself since it is written in Scala.
+sbt uses that same version of Scala to compile the build definitions that you write for your project because they use sbt APIs.
+This version of Scala is fixed for a specific sbt release and cannot be changed.
+For sbt 0.13, this version is Scala 2.10.
+Because this Scala version is needed before sbt runs, the repositories used to retrieve this version are configured in the sbt <a class="reference internal" href="Launcher.html"><em>launcher</em></a>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Detailed-Topics/Configuring-Scala.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Configuring Scala</a><ul>
+<li><a class="reference internal" href="#automatically-managed-scala">Automatically managed Scala</a><ul>
+<li><a class="reference internal" href="#configuring-the-scala-library-dependency">Configuring the scala-library dependency</a></li>
+<li><a class="reference internal" href="#configuring-additional-scala-dependencies">Configuring additional Scala dependencies</a></li>
+<li><a class="reference internal" href="#configuring-scala-tool-dependencies">Configuring Scala tool dependencies</a></li>
+<li><a class="reference internal" href="#switching-to-a-local-scala-version">Switching to a local Scala version</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-scala-from-a-local-directory">Using Scala from a local directory</a><ul>
+<li><a class="reference internal" href="#mixing-with-managed-dependencies">Mixing with managed dependencies</a></li>
+<li><a class="reference internal" href="#using-unmanaged-dependencies-only">Using unmanaged dependencies only</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sbt-s-scala-version">sbt's Scala version</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

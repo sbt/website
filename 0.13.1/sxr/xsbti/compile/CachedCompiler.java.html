@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/compile/CachedCompiler.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.compile;
+
+import xsbti.AnalysisCallback;
+import xsbti.Logger;
+import xsbti.Reporter;
+import java.io.File;
+
+public interface CachedCompiler
+{
+	/** Returns an array of arguments representing the nearest command line equivalent of a call to run but without the command name itself.*/
+	public String[] commandArguments(File[] sources);
+	public void run(File[] sources, DependencyChanges cpChanges, AnalysisCallback callback, Logger log, Reporter delegate, CompileProgress progress);
+}
+
+        </pre>
+    </body>
+</html>

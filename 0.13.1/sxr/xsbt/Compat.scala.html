@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/Compat.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbt
+
+<span class="keyword">import</span> scala.tools.nsc.Global
+<span class="keyword">import</span> scala.tools.nsc.symtab.Flags
+
+<span class="comment">/**
+ *  Collection of hacks that make it possible for the compiler interface
+ *  to stay source compatible with Scala compiler 2.9, 2.10 and 2.11.
+ */</span>
+<span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class Compat extends AnyRef" id="xsbt;Compat">Compat</a>
+<a href="#xsbt;Compat" title="xsbt.Compat" class="delimiter">{</a>
+	<span class="keyword">val</span> <a title="=&gt; scala.tools.nsc.Global" id="xsbt;Compat.global">global</a>: <span title="scala.tools.nsc.Global">Global</span>
+	<span class="keyword">import</span> <a href="#xsbt;Compat.global" title="=&gt; scala.tools.nsc.Global">global</a>._
+	<span class="keyword">val</span> <a title="Compat.this.global.tpnme.NameType" id="xsbt;Compat.LocalChild">LocalChild</a> = <a href="#xsbt;Compat.global" title="=&gt; scala.tools.nsc.Global">global</a>.<span title="Compat.this.global.tpnme.type">tpnme</span>.<span title="=&gt; Compat.this.global.tpnme.NameType">LOCAL_CHILD</span>
+	<span class="keyword">val</span> <a title="Compat.this.global.NullaryMethodType.type" id="xsbt;Compat.Nullary">Nullary</a> = <a href="#xsbt;Compat.global" title="=&gt; scala.tools.nsc.Global">global</a>.<span title="Compat.this.global.NullaryMethodType.type">NullaryMethodType</span>
+	<span class="keyword">val</span> <a title="Compat.this.global.ClassSymbol" id="xsbt;Compat.ScalaObjectClass">ScalaObjectClass</a> = <a href="#xsbt;Compat.miscCompat" title="implicit xsbt.Compat.miscCompat : (n: AnyRef)Compat.this.MiscCompat">definitions</a>.<a href="#xsbt;Compat;MiscCompat.ScalaObjectClass" title="=&gt; Compat.this.global.ClassSymbol">ScalaObjectClass</a>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class MiscCompat extends AnyRef" id="xsbt;Compat;MiscCompat">MiscCompat</a>
+	<span class="delimiter">{</span>
+		<span class="comment">// in 2.9, nme.LOCALCHILD was renamed to tpnme.LOCAL_CHILD</span>
+		<span class="keyword">def</span> <a title="=&gt; Compat.this.global.nme.type" id="xsbt;Compat;MiscCompat.tpnme">tpnme</a> = <a href="#xsbt;Compat.global" title="Compat.this.global.nme.type">nme</a>
+		<span class="keyword">def</span> <a title="=&gt; Nothing" id="xsbt;Compat;MiscCompat.LOCAL_CHILD">LOCAL_CHILD</a> = <a href="#xsbt;Compat.miscCompat" title="implicit xsbt.Compat.miscCompat : (n: AnyRef)Compat.this.MiscCompat">nme</a>.<a href="#xsbt;Compat;MiscCompat.LOCALCHILD" title="=&gt; Nothing">LOCALCHILD</a>
+		<span class="keyword">def</span> <a title="=&gt; Nothing" id="xsbt;Compat;MiscCompat.LOCALCHILD">LOCALCHILD</a> = <a href="#xsbt;Compat.sourceCompatibilityOnly" title="=&gt; Nothing">sourceCompatibilityOnly</a>
+
+		<span class="comment">// in 2.10, ScalaObject was removed</span>
+		<span class="keyword">def</span> <a title="=&gt; Compat.this.global.ClassSymbol" id="xsbt;Compat;MiscCompat.ScalaObjectClass">ScalaObjectClass</a> = <a href="#xsbt;Compat.global" title="Compat.this.global.definitions.type">definitions</a>.<span title="=&gt; Compat.this.global.ClassSymbol">ObjectClass</span>
+
+		<span class="keyword">def</span> <a title="=&gt; Compat.this.NullaryMethodTpe.type" id="xsbt;Compat;MiscCompat.NullaryMethodType">NullaryMethodType</a> = <a href="#xsbt;Compat.NullaryMethodTpe" title="Compat.this.NullaryMethodTpe.type">NullaryMethodTpe</a>
+
+		<span class="keyword">def</span> <a title="=&gt; Int" id="xsbt;Compat;MiscCompat.MACRO">MACRO</a> = <a href="#xsbt;Compat.DummyValue" title="=&gt; Int">DummyValue</a>
+
+		<span class="comment">// in 2.10, sym.moduleSuffix exists, but genJVM.moduleSuffix(Symbol) does not</span>
+		<span class="keyword">def</span> <a title="(sym: Compat.this.global.Symbol)String" id="xsbt;Compat;MiscCompat.moduleSuffix">moduleSuffix</a><span class="delimiter">(</span><a title="Compat.this.global.Symbol" id="xsbt;Compat;MiscCompat.moduleSuffix.sym">sym</a>: <span title="Compat.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <span title="String">String</span> = <a href="#xsbt;Compat.sourceCompatibilityOnly" title="=&gt; Nothing">sourceCompatibilityOnly</a>
+		<span class="comment">// in 2.11 genJVM does not exist</span>
+		<span class="keyword">def</span> <a title="=&gt; Compat.this.MiscCompat" id="xsbt;Compat;MiscCompat.genJVM">genJVM</a> = <a href="#xsbt;Compat;MiscCompat" title="Compat.this.MiscCompat" class="keyword">this</a>
+	<span class="delimiter">}</span>
+	<span class="comment">// in 2.9, NullaryMethodType was added to Type</span>
+	<span class="keyword">object</span> <a title="Compat.this.NullaryMethodTpe.type" id="xsbt;Compat.NullaryMethodTpe">NullaryMethodTpe</a> <a href="#xsbt;Compat.NullaryMethodTpe" title="Compat.this.NullaryMethodTpe.type" class="delimiter">{</a>
+		<span class="keyword">def</span> <a title="(t: Compat.this.global.Type)Option[Compat.this.global.Type]" id="xsbt;Compat.NullaryMethodTpe.unapply">unapply</a><span class="delimiter">(</span><a title="Compat.this.global.Type" id="xsbt;Compat.NullaryMethodTpe.unapply.t">t</a>: <span title="Compat.this.global.Type">Type</span><span class="delimiter">)</span>: <span title="Option[Compat.this.global.Type]">Option</span><span class="delimiter">[</span>Type<span class="delimiter">]</span> = <span title="None.type">None</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">// before 2.10, sym.moduleSuffix doesn't exist, but genJVM.moduleSuffix does</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit xsbt.Compat.symbolCompat : (sym: Compat.this.global.Symbol)Compat.this.SymbolCompat" id="xsbt;Compat.symbolCompat">symbolCompat</a><span class="delimiter">(</span><a title="Compat.this.global.Symbol" id="xsbt;Compat.symbolCompat.sym">sym</a>: <span title="Compat.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <a href="#xsbt;Compat;SymbolCompat" title="Compat.this.SymbolCompat">SymbolCompat</a> = <span title="Compat.this.SymbolCompat" class="keyword">new</span> <a href="#xsbt;Compat;SymbolCompat" title="Compat.this.SymbolCompat">SymbolCompat</a><span class="delimiter">(</span><a href="#xsbt;Compat.symbolCompat.sym" title="Compat.this.global.Symbol">sym</a><span class="delimiter">)</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class SymbolCompat extends AnyRef" id="xsbt;Compat;SymbolCompat">SymbolCompat</a><a href="#xsbt;Compat;SymbolCompat" title="Compat.this.SymbolCompat" class="delimiter">(</a><a title="Compat.this.global.Symbol" id="xsbt;Compat;SymbolCompat.sym">sym</a>: <span title="Compat.this.global.Symbol">Symbol</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="xsbt;Compat;SymbolCompat.moduleSuffix">moduleSuffix</a> = <a href="#xsbt;Compat.global" title="=&gt; scala.tools.nsc.Global">global</a>.<a href="#xsbt;Compat.miscCompat" title="implicit xsbt.Compat.miscCompat : (n: AnyRef)Compat.this.MiscCompat">genJVM</a>.<a href="#xsbt;Compat;MiscCompat.moduleSuffix" title="(sym: Compat.this.global.Symbol)String">moduleSuffix</a><span class="delimiter">(</span><a href="#xsbt;Compat;SymbolCompat.sym" title="Compat.this.global.Symbol">sym</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+
+	<span class="keyword">val</span> <a title="Int" id="xsbt;Compat.DummyValue">DummyValue</a> = <span title="Int(0)" class="int">0</span>
+	<span class="keyword">def</span> <a title="(s: Compat.this.global.Symbol)Boolean" id="xsbt;Compat.hasMacro">hasMacro</a><span class="delimiter">(</span><a title="Compat.this.global.Symbol" id="xsbt;Compat.hasMacro.s">s</a>: <span title="Compat.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Int" id="xsbt;Compat.hasMacro.MACRO">MACRO</a> = Flags.<span title="Int(32768)">MACRO</span> <span class="comment">// will be DummyValue for versions before 2.10</span>
+		<a href="#xsbt;Compat.hasMacro.MACRO" title="Int">MACRO</a> <span title="(x: Int)Boolean">!=</span> <a href="#xsbt;Compat.DummyValue" title="=&gt; Int">DummyValue</a> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#xsbt;Compat.hasMacro.s" title="Compat.this.global.Symbol">s</a>.<span title="(mask: Long)Boolean">hasFlag</span><span class="delimiter">(</span><a href="#xsbt;Compat.hasMacro.MACRO" title="=&gt; Long">MACRO</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(s: Compat.this.global.Symbol)String" id="xsbt;Compat.moduleSuffix">moduleSuffix</a><span class="delimiter">(</span><a title="Compat.this.global.Symbol" id="xsbt;Compat.moduleSuffix.s">s</a>: <span title="Compat.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <span title="String">String</span> = <a href="#xsbt;Compat.moduleSuffix.s" title="Compat.this.global.Symbol">s</a>.<span title="=&gt; String">moduleSuffix</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="=&gt; Nothing" id="xsbt;Compat.sourceCompatibilityOnly">sourceCompatibilityOnly</a>: <span title="Nothing">Nothing</span> = <span title="Nothing" class="keyword">throw</span> <span title="(x$1: String)RuntimeException" class="keyword">new</span> <span title="RuntimeException">RuntimeException</span><span class="delimiter">(</span><span title="String(&quot;For source compatibility only: should not get here.&quot;)" class="string">&quot;For source compatibility only: should not get here.&quot;</span><span class="delimiter">)</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit xsbt.Compat.miscCompat : (n: AnyRef)Compat.this.MiscCompat" id="xsbt;Compat.miscCompat">miscCompat</a><span class="delimiter">(</span><a title="AnyRef" id="xsbt;Compat.miscCompat.n">n</a>: <span title="AnyRef">AnyRef</span><span class="delimiter">)</span>: <a href="#xsbt;Compat;MiscCompat" title="Compat.this.MiscCompat">MiscCompat</a> = <span title="Compat.this.MiscCompat" class="keyword">new</span> <a href="#xsbt;Compat;MiscCompat" title="Compat.this.MiscCompat">MiscCompat</a>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

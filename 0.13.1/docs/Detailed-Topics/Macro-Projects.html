@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Macro Projects &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Detailed Topics" href="index.html" />
+    <link rel="next" title="Mapping Files" href="Mapping-Files.html" />
+    <link rel="prev" title="Local Scala" href="Local-Scala.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Macro Projects</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Mapping-Files.html">Mapping Files</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Local-Scala.html">Local Scala</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC1">Version 0.13.1-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="macro-projects">
+<h1>Macro Projects<a class="headerlink" href="#macro-projects" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Some common problems arise when working with macros.</p>
+<ol class="arabic simple">
+<li>The current macro implementation in the compiler requires that macro implementations be compiled before they are used.  The solution is typically to put the macros in a subproject or in their own configuration.</li>
+<li>Sometimes the macro implementation should be distributed with the main code that uses them and sometimes the implementation should not be distributed at all.</li>
+</ol>
+<p>The rest of the page shows example solutions to these problems.</p>
+</div>
+<div class="section" id="defining-the-project-relationships">
+<h2>Defining the Project Relationships<a class="headerlink" href="#defining-the-project-relationships" title="Permalink to this headline">¶</a></h2>
+<p>The macro implementation will go in a subproject in the <span class="pre">macro/</span> directory.
+The main project in the project's base directory will depend on this subproject and use the macro.
+This configuration is shown in the following build definition:</p>
+<p><span class="pre">project/Build.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+
+<span class="k">object</span> <span class="nc">MacroBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+   <span class="k">lazy</span> <span class="k">val</span> <span class="n">main</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;main&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">macroSub</span><span class="o">)</span>
+   <span class="k">lazy</span> <span class="k">val</span> <span class="n">macroSub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">))</span> <span class="n">settings</span><span class="o">(</span>
+      <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-reflect&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span>
+   <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This specifies that the macro implementation goes in <span class="pre">macro/src/main/scala/</span> and tests go in <span class="pre">macro/src/test/scala/</span>.
+It also shows that we need a dependency on the compiler for the macro implementation.
+As an example macro, we'll use <span class="pre">desugar</span> from <a class="reference external" href="https://github.com/retronym/macrocosm">macrocosm</a>.</p>
+<p><span class="pre">macro/src/main/scala/demo/Demo.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">demo</span>
+
+<span class="k">import</span> <span class="nn">language.experimental.macros</span>
+<span class="k">import</span> <span class="nn">scala.reflect.macros.Context</span>
+
+<span class="k">object</span> <span class="nc">Demo</span> <span class="o">{</span>
+
+  <span class="c1">// Returns the tree of `a` after the typer, printed as source code.</span>
+  <span class="k">def</span> <span class="n">desugar</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Any</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">macro</span> <span class="n">desugarImpl</span>
+
+  <span class="k">def</span> <span class="n">desugarImpl</span><span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">Context</span><span class="o">)(</span><span class="n">a</span><span class="k">:</span> <span class="kt">c.Expr</span><span class="o">[</span><span class="kt">Any</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">c.universe._</span>
+
+    <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">show</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="n">tree</span><span class="o">)</span>
+    <span class="n">c</span><span class="o">.</span><span class="nc">Expr</span><span class="o">(</span>
+      <span class="nc">Literal</span><span class="o">(</span><span class="nc">Constant</span><span class="o">(</span><span class="n">s</span><span class="o">))</span>
+    <span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><span class="pre">macro/src/test/scala/demo/Usage.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">demo</span>
+
+<span class="k">object</span> <span class="nc">Usage</span> <span class="o">{</span>
+   <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="nc">Demo</span><span class="o">.</span><span class="n">desugar</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">).</span><span class="n">reverse</span><span class="o">)</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This can be then be run at the console:</p>
+<p>Actual tests can be defined and run as usual with <span class="pre">macro/test</span>.</p>
+<p>The main project can use the macro in the same way that the tests do.
+For example,</p>
+<p><span class="pre">src/main/scala/MainUsage.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">demo</span>
+
+<span class="k">object</span> <span class="nc">Usage</span> <span class="o">{</span>
+   <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="nc">Demo</span><span class="o">.</span><span class="n">desugar</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">).</span><span class="n">sorted</span><span class="o">)</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-interface">
+<h2>Common Interface<a class="headerlink" href="#common-interface" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, the macro implementation and the macro usage should share some common code.
+In this case, declare another subproject for the common code and have the main project and the macro subproject depend on the new subproject.
+For example, the project definitions from above would look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">main</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;main&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">macroSub</span><span class="o">,</span> <span class="n">commonSub</span><span class="o">)</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">macroSub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">commonSub</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span>
+    <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-reflect&quot;</span> <span class="o">%</span> <span class="n">scalaVersion</span><span class="o">.</span><span class="n">value</span>
+<span class="o">)</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">commonSub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;common&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;common&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Code in <span class="pre">common/src/main/scala/</span> is available for both the <span class="pre">macro</span> and <span class="pre">main</span> projects to use.</p>
+</div>
+<div class="section" id="distribution">
+<h2>Distribution<a class="headerlink" href="#distribution" title="Permalink to this headline">¶</a></h2>
+<p>To include the macro code with the main code, add the binary and source mappings from the macro subproject to the main project.
+For example, the <span class="pre">main</span> Project definition above would now look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">main</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;main&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">))</span> <span class="n">dependsOn</span><span class="o">(</span><span class="n">macroSub</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span>
+   <span class="c1">// include the macro classes and resources in the main jar</span>
+   <span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">++=</span> <span class="n">mappings</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="n">macroSub</span><span class="o">,</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">).</span><span class="n">value</span><span class="o">,</span>
+   <span class="c1">// include the macro sources in the main source jar</span>
+   <span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageSrc</span><span class="o">)</span> <span class="o">++=</span> <span class="n">mappings</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="n">macroSub</span><span class="o">,</span> <span class="nc">Compile</span><span class="o">,</span> <span class="n">packageSrc</span><span class="o">).</span><span class="n">value</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>You may wish to disable publishing the macro implementation.
+This is done by overriding <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publish">publish</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.publishLocal">publishLocal</a> to do nothing:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">macroSub</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">,</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;macro&quot;</span><span class="o">))</span> <span class="n">settings</span><span class="o">(</span>
+    <span class="n">publish</span> <span class="o">:=</span> <span class="o">{},</span>
+    <span class="n">publishLocal</span> <span class="o">:=</span> <span class="o">{}</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The techniques described here may also be used for the common interface described in the previous section.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Detailed-Topics/Macro-Projects.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Macro Projects</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#defining-the-project-relationships">Defining the Project Relationships</a></li>
+<li><a class="reference internal" href="#common-interface">Common Interface</a></li>
+<li><a class="reference internal" href="#distribution">Distribution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/Predefined.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti;
+
+public enum Predefined 
+{
+	Local(&quot;local&quot;),
+	MavenLocal(&quot;maven-local&quot;),
+	MavenCentral(&quot;maven-central&quot;),
+	ScalaToolsReleases(&quot;scala-tools-releases&quot;),
+	ScalaToolsSnapshots(&quot;scala-tools-snapshots&quot;),
+	SonatypeOSSReleases(&quot;sonatype-oss-releases&quot;),
+	SonatypeOSSSnapshots(&quot;sonatype-oss-snapshots&quot;);
+
+	private final String label;
+	private Predefined(String label) { this.label = label; }
+	public String toString() { return label; }
+
+	public static Predefined toValue(String s)
+	{
+		for(Predefined p : values())
+			if(s.equals(p.toString()))
+				return p;
+		
+		StringBuilder msg = new StringBuilder(&quot;Expected one of &quot;);
+		for(Predefined p : values())
+			msg.append(p.toString()).append(&quot;, &quot;);
+		msg.append(&quot;got '&quot;).append(s).append(&quot;'.&quot;);
+		throw new RuntimeException(msg.toString());
+	}
+}
+        </pre>
+    </body>
+</html>

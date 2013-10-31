@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/ModuleUtilities.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2008 Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">object</span> <a title="sbt.ModuleUtilities.type" id="sbt.ModuleUtilities">ModuleUtilities</a>
+<a href="#sbt.ModuleUtilities" title="sbt.ModuleUtilities.type" class="delimiter">{</a>
+	<span class="comment">/** Reflectively loads and returns the companion object for top-level class `className` from `loader`.
+	* The class name should not include the `$` that scalac appends to the underlying jvm class for 
+	* a companion object. */</span>
+	<span class="keyword">def</span> <a title="(className: String, loader: ClassLoader)AnyRef" id="sbt.ModuleUtilities.getObject">getObject</a><span class="delimiter">(</span><a title="String" id="sbt.ModuleUtilities.getObject.className">className</a>: <span title="String">String</span>, <a title="ClassLoader" id="sbt.ModuleUtilities.getObject.loader">loader</a>: <span title="ClassLoader">ClassLoader</span><span class="delimiter">)</span>: <span title="AnyRef">AnyRef</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Class[_]" id="sbt.ModuleUtilities.getObject.obj">obj</a> = <span title="Class.type">Class</span>.<span title="(x$1: String, x$2: Boolean, x$3: ClassLoader)Class[_]">forName</span><span class="delimiter">(</span><a href="#sbt.ModuleUtilities.getObject.className" title="String">className</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;$&quot;)" class="string">&quot;$&quot;</span>, <span title="Boolean(true)" class="keyword">true</span>, <a href="#sbt.ModuleUtilities.getObject.loader" title="ClassLoader">loader</a><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="java.lang.reflect.Field" id="sbt.ModuleUtilities.getObject.singletonField">singletonField</a> = <a href="#sbt.ModuleUtilities.getObject.obj" title="Class[_]">obj</a>.<span title="(x$1: String)java.lang.reflect.Field">getField</span><span class="delimiter">(</span><span title="String(&quot;MODULE$&quot;)" class="string">&quot;MODULE$&quot;</span><span class="delimiter">)</span>
+		<a href="#sbt.ModuleUtilities.getObject.singletonField" title="java.lang.reflect.Field">singletonField</a>.<span title="(x$1: Any)Object">get</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/compile/Setup.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.compile;
+
+import java.io.File;
+import java.util.Map;
+
+import xsbti.Maybe;
+import xsbti.Reporter;
+
+/** Configures incremental recompilation. */
+public interface Setup&lt;Analysis&gt;
+{
+	/** Provides the Analysis for the given classpath entry.*/
+	Maybe&lt;Analysis&gt; analysisMap(File file);
+
+	/** Provides a function to determine if classpath entry `file` contains a given class.
+	* The returned function should generally cache information about `file`, such as the list of entries in a jar.
+	*/
+	DefinesClass definesClass(File file);
+
+	/** If true, no sources are actually compiled and the Analysis from the previous compilation is returned.*/
+	boolean skip();
+
+	/** The file used to cache information across compilations.
+	* This file can be removed to force a full recompilation.
+	* The file should be unique and not shared between compilations. */
+	File cacheFile();
+
+	GlobalsCache cache();
+
+	/** If returned, the progress that should be used to report scala compilation to. */
+	Maybe&lt;CompileProgress&gt; progress();
+
+	/** The reporter that should be used to report scala compilation to. */
+	Reporter reporter();
+
+	/**
+	 * Returns incremental compiler options.
+	 *
+	 * @see sbt.inc.IncOptions for details
+	 *
+	 * You can get default options by calling &lt;code&gt;sbt.inc.IncOptions.toStringMap(sbt.inc.IncOptions.Default)&lt;/code&gt;.
+	 *
+	 * In the future, we'll extend API in &lt;code&gt;xsbti&lt;/code&gt; to provide factory methods that would allow to obtain
+	 * defaults values so one can depend on &lt;code&gt;xsbti&lt;/code&gt; package only.
+	 **/
+	Map&lt;String, String&gt; incrementalCompilerOptions();
+}
+
+        </pre>
+    </body>
+</html>

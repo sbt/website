@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started Summary &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Detailed Topics" href="../Detailed-Topics/index.html" />
+    <link rel="prev" title=".scala Build Definition" href="Full-Def.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Getting Started Summary</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="../Detailed-Topics/index.html">Detailed Topics</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Full-Def.html"><span class="pre">.scala</span> Build Definition</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC1">Version 0.13.1-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="getting-started-summary">
+<h1>Getting Started Summary<a class="headerlink" href="#getting-started-summary" title="Permalink to this headline">¶</a></h1>
+<p>This page wraps up the Getting Started Guide.</p>
+<p>To use sbt, there are a small number of concepts you must understand.
+These have some learning curve, but on the positive side, there isn't
+much to sbt <em>except</em> these concepts. sbt uses a small core of powerful
+concepts to do everything it does.</p>
+<p>If you've read the whole Getting Started series, now you know what you
+need to know.</p>
+<div class="section" id="sbt-the-core-concepts">
+<h2>sbt: The Core Concepts<a class="headerlink" href="#sbt-the-core-concepts" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>the basics of Scala. It's undeniably helpful to be familiar with
+Scala syntax. <a class="reference external" href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in
+Scala</a> written
+by the creator of Scala is a great introduction.</li>
+<li><a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a></li>
+<li>your build definition is one big list of <span class="pre">Setting</span> objects, where a
+<span class="pre">Setting</span> transforms the set of key-value pairs sbt uses to perform
+tasks.</li>
+<li>to create a <span class="pre">Setting</span>, call one of a few methods on a key: <span class="pre">:=</span>, <span class="pre">+=</span>, or <span class="pre">++=</span>.</li>
+<li>there is no mutable state, only transformation; for example, a
+<span class="pre">Setting</span> transforms sbt's collection of key-value pairs into a new
+collection. It doesn't change anything in-place.</li>
+<li>each setting has a value of a particular type, determined by the key.</li>
+<li><em>tasks</em> are special settings where the computation to produce the
+key's value will be re-run each time you kick off a task. Non-tasks
+compute the value once, when first loading the build definition.</li>
+<li><a class="reference internal" href="Scopes.html"><em>Scopes</em></a></li>
+<li>each key may have multiple values, in distinct scopes.</li>
+<li>scoping may use three axes: configuration, project, and task.</li>
+<li>scoping allows you to have different behaviors per-project, per-task,
+or per-configuration.</li>
+<li>a configuration is a kind of build, such as the main one
+(<span class="pre">Compile</span>) or the test one (<span class="pre">Test</span>).</li>
+<li>the per-project axis also supports &quot;entire build&quot; scope.</li>
+<li>scopes fall back to or <em>delegate</em> to more general scopes.</li>
+<li><a class="reference internal" href="Basic-Def.html"><em>.sbt</em></a> vs. <a class="reference internal" href="Full-Def.html"><em>.scala</em></a> build definition</li>
+<li>put most of your configuration in <span class="pre">build.sbt</span>, but use <span class="pre">.scala</span> build
+definition files for defining classes and larger task implementations.</li>
+<li>the build definition is an sbt project in its own right, rooted in
+the <span class="pre">project</span> directory.</li>
+<li><a class="reference internal" href="Using-Plugins.html"><em>Plugins</em></a> are extensions to the
+build definition</li>
+<li>add plugins with the <span class="pre">addSbtPlugin</span> method in <span class="pre">project/plugins.sbt</span>
+(NOT <span class="pre">build.sbt</span> in the project's base directory).</li>
+</ul>
+<p>If any of this leaves you wondering rather than nodding, please <a class="reference internal" href="../faq.html#getting-help"><em>ask for help</em></a>,
+go back and re-read, or try some experiments in sbt's interactive mode.</p>
+<p>Good luck!</p>
+</div>
+<div class="section" id="advanced-notes">
+<h2>Advanced Notes<a class="headerlink" href="#advanced-notes" title="Permalink to this headline">¶</a></h2>
+<p>The rest of this wiki consists of deeper dives and less-commonly-needed
+information.</p>
+<p>Since sbt is open source, don't forget you can check out the <a class="reference external" href="http://github.com/sbt/sbt">source code</a>
+too!</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Getting-Started/Summary.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Getting Started Summary</a><ul>
+<li><a class="reference internal" href="#sbt-the-core-concepts">sbt: The Core Concepts</a></li>
+<li><a class="reference internal" href="#advanced-notes">Advanced Notes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

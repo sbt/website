@@ -1,0 +1,369 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plugins Best Practices &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Extending sbt" href="index.html" />
+    <link rel="next" title="Settings Core" href="Settings-Core.html" />
+    <link rel="prev" title="Plugins" href="Plugins.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Plugins Best Practices</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC1 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Settings-Core.html">Settings Core</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Extending sbt</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Plugins.html">Plugins</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC1">Version 0.13.1-RC1</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="plugins-best-practices">
+<h1>Plugins Best Practices<a class="headerlink" href="#plugins-best-practices" title="Permalink to this headline">¶</a></h1>
+<p><em>This page is intended primarily for sbt plugin authors.</em></p>
+<p>A plugin developer should strive for consistency and ease of use.
+Specifically:</p>
+<ul class="simple">
+<li>Plugins should play well with other plugins. Avoiding namespace
+clashes (in both sbt and Scala) is paramount.</li>
+<li>Plugins should follow consistent conventions. The experiences of an
+sbt <em>user</em> should be consistent, no matter what plugins are pulled
+in.</li>
+</ul>
+<p>Here are some current plugin best practices. <strong>NOTE:</strong> Best practices
+are evolving, so check back frequently.</p>
+<div class="section" id="avoid-overriding-settings">
+<h2>Avoid overriding <span class="pre">settings</span><a class="headerlink" href="#avoid-overriding-settings" title="Permalink to this headline">¶</a></h2>
+<p>sbt will automatically load your plugin's <span class="pre">settings</span> into the build.
+Overriding <span class="pre">val settings</span> should only be done by plugins intending to
+provide commands. Regular plugins defining tasks and settings should
+provide a sequence named after the plugin like so:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">obfuscateSettings</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(...)</span>
+</pre></div>
+</div>
+<p>This allows build user to choose which subproject the plugin would be
+used. See later section for how the settings should be scoped.</p>
+</div>
+<div class="section" id="reuse-existing-keys">
+<h2>Reuse existing keys<a class="headerlink" href="#reuse-existing-keys" title="Permalink to this headline">¶</a></h2>
+<p>sbt has a number of <a class="reference external" href="../../api/sbt/Keys%24.html">predefined keys</a>.
+Where possible, reuse them in your plugin. For instance, don't define:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sourceFiles</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](</span><span class="s">&quot;Some source files&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Instead, simply reuse sbt's existing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sources">sources</a> key.</p>
+</div>
+<div class="section" id="avoid-namespace-clashes">
+<h2>Avoid namespace clashes<a class="headerlink" href="#avoid-namespace-clashes" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, you need a new key, because there is no existing sbt key. In
+this case, use a plugin-specific prefix, both in the (string) key name
+used in the sbt namespace and in the Scala <span class="pre">val</span>. There are two
+acceptable ways to accomplish this goal.</p>
+<div class="section" id="just-use-a-val-prefix">
+<h3>Just use a <span class="pre">val</span> prefix<a class="headerlink" href="#just-use-a-val-prefix" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">sbtobfuscate</span>
+<span class="k">object</span> <span class="nc">Plugin</span> <span class="k">extends</span> <span class="n">sbt</span><span class="o">.</span><span class="nc">Plugin</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">obfuscateStylesheet</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;Obfuscate stylesheet&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In this approach, every <span class="pre">val</span> starts with <span class="pre">obfuscate</span>. A user of the
+plugin would refer to the settings like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">obfuscateStylesheet</span> <span class="o">:=</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-a-nested-object">
+<h3>Use a nested object<a class="headerlink" href="#use-a-nested-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">package</span> <span class="nn">sbtobfuscate</span>
+<span class="k">object</span> <span class="nc">Plugin</span> <span class="k">extends</span> <span class="n">sbt</span><span class="o">.</span><span class="nc">Plugin</span> <span class="o">{</span>
+  <span class="k">object</span> <span class="nc">ObfuscateKeys</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">stylesheet</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;obfuscateStylesheet&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>In this approach, all non-common settings are in a nested object. A user
+of the plugin would refer to the settings like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">ObfuscateKeys._</span> <span class="c1">// place this at the top of build.sbt</span>
+
+<span class="n">stylesheet</span> <span class="o">:=</span> <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configuration-advice">
+<h2>Configuration Advice<a class="headerlink" href="#configuration-advice" title="Permalink to this headline">¶</a></h2>
+<p>Due to usability concerns from the shell, you could opt out of
+task-scoping described in this section, if your plugin makes heavy use
+of the shell. Using configuration-scoping the user could discover your
+tasks using tab completion:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">coffee:[tab]</span>
+</pre></div>
+</div>
+<p>This method no longer works with per-task keys, but there's a pending
+case, so hopefully it will be addressed in the future.</p>
+<div class="section" id="when-to-define-your-own-configuration">
+<h3>When to define your own configuration<a class="headerlink" href="#when-to-define-your-own-configuration" title="Permalink to this headline">¶</a></h3>
+<p>If your plugin introduces a new concept (even if that concept reuses an
+existing key), you want your own configuration. For instance, suppose
+you've built a plugin that produces PDF files from some kind of markup,
+and your plugin defines a target directory to receive the resulting
+PDFs. That target directory is scoped in its own configuration, so it is
+distinct from other target directories. Thus, these two definitions use
+the same <em>key</em>, but they represent distinct <em>values</em>. So, in a user's
+<span class="pre">build.sbt</span>, we might see:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">target</span> <span class="n">in</span> <span class="nc">PDFPlugin</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;mytarget&quot;</span> <span class="o">/</span> <span class="s">&quot;pdf&quot;</span>
+<span class="n">target</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;mytarget&quot;</span>
+</pre></div>
+</div>
+<p>In the PDF plugin, this is achieved with an <span class="pre">inConfig</span> definition:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">settings</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">sbt.Project.Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">LWM</span><span class="o">)(</span><span class="nc">Seq</span><span class="o">(</span>
+  <span class="n">target</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;target&quot;</span> <span class="o">/</span> <span class="s">&quot;docs&quot;</span> <span class="k">#</span> <span class="n">the</span> <span class="n">default</span> <span class="n">value</span>
+<span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="when-not-to-define-your-own-configuration">
+<h3>When <em>not</em> to define your own configuration.<a class="headerlink" href="#when-not-to-define-your-own-configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you're merely adding to existing definitions, don't define your own
+configuration. Instead, reuse an existing one <em>or</em> scope by the main
+task (see below).</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">akka</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;akka&quot;</span><span class="o">)</span>  <span class="c1">// This isn&#39;t needed.</span>
+<span class="k">val</span> <span class="n">akkaStartCluster</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;akkaStartCluster&quot;</span><span class="o">)</span>
+
+<span class="n">target</span> <span class="n">in</span> <span class="n">akkaStartCluster</span> <span class="o">:=</span> <span class="o">...</span> <span class="c1">// This is ok.</span>
+<span class="n">akkaStartCluster</span> <span class="n">in</span> <span class="n">akka</span> <span class="o">:=</span> <span class="o">...</span>   <span class="c1">// BAD.  No need for a Config for plugin-specific task.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration-cat-says-configuration-is-for-configuration">
+<h3>Configuration Cat says &quot;Configuration is for configuration&quot;<a class="headerlink" href="#configuration-cat-says-configuration-is-for-configuration" title="Permalink to this headline">¶</a></h3>
+<p>When defining a new type of configuration, e.g.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="nc">Config</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;profile&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>should be used to create a &quot;cross-task&quot; configuration. The task
+definitions don't change in this case, but the default configuration
+does. For example, the <span class="pre">profile</span> configuration can extend the test
+configuration with additional settings and changes to allow profiling in
+sbt. Plugins should not create arbitrary Configurations, but utilize
+them for specific purposes and builds.</p>
+<p>Configurations actually tie into dependency resolution (with Ivy) and
+can alter generated pom files.</p>
+<p>Configurations should <em>not</em> be used to namespace keys for a plugin. e.g.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="nc">Config</span> <span class="k">=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;my-plugin&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">pluginKey</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A plugin specific key&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="n">pluginKey</span> <span class="n">in</span> <span class="nc">Config</span>  <span class="c1">// DON&#39;T DO THIS!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="playing-nice-with-configurations">
+<h3>Playing nice with configurations<a class="headerlink" href="#playing-nice-with-configurations" title="Permalink to this headline">¶</a></h3>
+<p>Whether you ship with a configuration or not, a plugin should strive to
+support multiple configurations, including those created by the build
+user. Some tasks that are tied to a particular configuration can be
+re-used in other configurations. While you may not see the need
+immediately in your plugin, some project may and will ask you for the
+flexibility.</p>
+<div class="section" id="provide-raw-settings-and-configured-settings">
+<h4>Provide raw settings and configured settings<a class="headerlink" href="#provide-raw-settings-and-configured-settings" title="Permalink to this headline">¶</a></h4>
+<p>Split your settings by the configuration axis like so:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">obfuscate</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](</span><span class="s">&quot;obfuscate&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">obfuscateSettings</span> <span class="k">=</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)(</span><span class="n">baseObfuscateSettings</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">baseObfuscateSettings</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="n">obfuscate</span> <span class="o">:=</span> <span class="o">...</span> <span class="o">(</span><span class="n">sources</span> <span class="n">in</span> <span class="n">obfuscate</span><span class="o">).</span><span class="n">value</span> <span class="o">...,</span>
+  <span class="n">sources</span> <span class="n">in</span> <span class="n">obfuscate</span> <span class="o">:=</span> <span class="n">sources</span><span class="o">.</span><span class="n">value</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The <span class="pre">baseObfuscateSettings</span> value provides base configuration for the
+plugin's tasks. This can be re-used in other configurations if projects
+require it. The <span class="pre">obfuscateSettings</span> value provides the default
+<span class="pre">Compile</span> scoped settings for projects to use directly. This gives the
+greatest flexibility in using features provided by a plugin. Here's how
+the raw settings may be reused:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="nc">Project</span><span class="o">.</span><span class="n">inConfig</span><span class="o">(</span><span class="nc">Test</span><span class="o">)(</span><span class="n">sbtObfuscate</span><span class="o">.</span><span class="nc">Plugin</span><span class="o">.</span><span class="n">baseObfuscateSettings</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Alternatively, one could provide a utility method to load settings in a
+given configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">obfuscateSettingsIn</span><span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">Configuration</span><span class="o">)</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Project.Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span>
+  <span class="n">inConfig</span><span class="o">(</span><span class="n">c</span><span class="o">)(</span><span class="n">baseObfuscateSettings</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This could be used as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">seq</span><span class="o">(</span><span class="n">obfuscateSettingsIn</span><span class="o">(</span><span class="nc">Test</span><span class="o">)</span><span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-a-main-task-scope-for-settings">
+<h4>Using a 'main' task scope for settings<a class="headerlink" href="#using-a-main-task-scope-for-settings" title="Permalink to this headline">¶</a></h4>
+<p>Sometimes you want to define some settings for a particular 'main' task
+in your plugin. In this instance, you can scope your settings using the
+task itself.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">obfuscate</span> <span class="k">=</span> <span class="nc">TaskKey</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]](</span><span class="s">&quot;obfuscate&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">obfuscateSettings</span> <span class="k">=</span> <span class="n">inConfig</span><span class="o">(</span><span class="nc">Compile</span><span class="o">)(</span><span class="n">baseObfuscateSettings</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">baseObfuscateSettings</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="n">obfuscate</span> <span class="o">:=</span> <span class="o">...</span> <span class="o">(</span><span class="n">sources</span> <span class="n">in</span> <span class="n">obfuscate</span><span class="o">).</span><span class="n">value</span> <span class="o">...,</span>
+  <span class="n">sources</span> <span class="n">in</span> <span class="n">obfuscate</span> <span class="o">:=</span> <span class="n">sources</span><span class="o">.</span><span class="n">value</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>In the above example, <span class="pre">sources in obfuscate</span> is scoped under the main
+task, <span class="pre">obfuscate</span>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="mucking-with-global-build-state">
+<h2>Mucking with Global build state<a class="headerlink" href="#mucking-with-global-build-state" title="Permalink to this headline">¶</a></h2>
+<p>There may be times when you need to muck with global build state. The
+general rule is <em>be careful what you touch</em>.</p>
+<p>First, make sure your user does not include global build configuration in
+<em>every</em> project but rather in the build itself. e.g.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">super</span><span class="o">.</span><span class="n">settings</span> <span class="o">++</span> <span class="nc">MyPlugin</span><span class="o">.</span><span class="n">globalSettings</span>
+  <span class="k">val</span> <span class="n">main</span> <span class="k">=</span> <span class="n">project</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">),</span> <span class="s">&quot;root&quot;</span><span class="o">)</span> <span class="n">settings</span><span class="o">(</span><span class="nc">MyPlugin</span><span class="o">.</span><span class="n">globalSettings</span><span class="k">:_</span><span class="kt">*</span><span class="o">)</span> <span class="c1">// BAD!</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Global settings should <em>not</em> be placed into a <span class="pre">build.sbt</span> file.</p>
+<p>When overriding global settings, care should be taken to ensure previous
+settings from other plugins are not ignored. e.g. when creating a new
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.onLoad">onLoad</a> handler, ensure that the previous <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.onLoad">onLoad</a> handler is not
+removed.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyPlugin</span> <span class="k">extends</span> <span class="nc">Plugin</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">globalSettigns</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Setting</span><span class="o">[</span><span class="k">_</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+     <span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="o">(</span><span class="n">onLoad</span> <span class="n">in</span> <span class="nc">Global</span><span class="o">).</span><span class="n">value</span> <span class="n">andThen</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span>
+         <span class="o">...</span> <span class="k">return</span> <span class="k">new</span> <span class="n">state</span> <span class="o">...</span>
+     <span class="o">}</span>
+   <span class="o">)</span>
+ <span class="o">}</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Extending/Plugins-Best-Practices.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Plugins Best Practices</a><ul>
+<li><a class="reference internal" href="#avoid-overriding-settings">Avoid overriding <span class="pre">settings</span></a></li>
+<li><a class="reference internal" href="#reuse-existing-keys">Reuse existing keys</a></li>
+<li><a class="reference internal" href="#avoid-namespace-clashes">Avoid namespace clashes</a><ul>
+<li><a class="reference internal" href="#just-use-a-val-prefix">Just use a <span class="pre">val</span> prefix</a></li>
+<li><a class="reference internal" href="#use-a-nested-object">Use a nested object</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-advice">Configuration Advice</a><ul>
+<li><a class="reference internal" href="#when-to-define-your-own-configuration">When to define your own configuration</a></li>
+<li><a class="reference internal" href="#when-not-to-define-your-own-configuration">When <em>not</em> to define your own configuration.</a></li>
+<li><a class="reference internal" href="#configuration-cat-says-configuration-is-for-configuration">Configuration Cat says &quot;Configuration is for configuration&quot;</a></li>
+<li><a class="reference internal" href="#playing-nice-with-configurations">Playing nice with configurations</a><ul>
+<li><a class="reference internal" href="#provide-raw-settings-and-configured-settings">Provide raw settings and configured settings</a></li>
+<li><a class="reference internal" href="#using-a-main-task-scope-for-settings">Using a 'main' task scope for settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mucking-with-global-build-state">Mucking with Global build state</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

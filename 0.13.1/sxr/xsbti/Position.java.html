@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/Position.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+/* sbt -- Simple Build Tool
+ * Copyright 2008, 2009, 2010  Mark Harrah
+ */
+package xsbti;
+
+public interface Position
+{
+	Maybe&lt;Integer&gt; line();
+	String lineContent();
+	Maybe&lt;Integer&gt; offset();
+
+	// pointer to the column position of the error/warning
+	Maybe&lt;Integer&gt; pointer();
+	Maybe&lt;String&gt; pointerSpace();
+
+	Maybe&lt;String&gt; sourcePath();
+	Maybe&lt;java.io.File&gt; sourceFile();	
+}
+        </pre>
+    </body>
+</html>

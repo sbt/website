@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/compile/Inputs.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.compile;
+
+/** Configures a single compilation of a single set of sources.*/
+public interface Inputs&lt;Analysis,ScalaCompiler&gt;
+{
+	 /** The Scala and Java compilers to use for compilation.*/
+	Compilers&lt;ScalaCompiler&gt; compilers();
+
+	/** Standard compilation options, such as the sources and classpath to use. */
+	Options options();
+ 
+	/** Configures incremental compilation.*/
+	Setup&lt;Analysis&gt; setup();
+}
+
+        </pre>
+    </body>
+</html>
