@@ -1,0 +1,462 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scopes &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="More Kinds of Setting" href="More-About-Settings.html" />
+    <link rel="prev" title=".sbt Build Definition" href="Basic-Def.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Scopes</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="More-About-Settings.html">More Kinds of Setting</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Basic-Def.html"><span class="pre">.sbt</span> Build Definition</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="scopes">
+<h1>Scopes<a class="headerlink" href="#scopes" title="Permalink to this headline">¶</a></h1>
+<p>This page describes scopes. It assumes you've read and understood the
+previous page, <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>.</p>
+<div class="section" id="the-whole-story-about-keys">
+<h2>The whole story about keys<a class="headerlink" href="#the-whole-story-about-keys" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="Basic-Def.html"><em>Previously</em></a> we pretended that a key like
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a> corresponded to one entry in sbt's map of key-value pairs. This
+was a simplification.</p>
+<p>In truth, each key can have an associated value in more than one
+context, called a &quot;scope.&quot;</p>
+<p>Some concrete examples:</p>
+<ul class="simple">
+<li>if you have multiple projects in your build definition, a key can
+have a different value in each project.</li>
+<li>the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> key may have a different value for your main sources
+and your test sources, if you want to compile them differently.</li>
+<li>the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a> key (which contains options for creating jar
+packages) may have different values when packaging class files
+(<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageBin">packageBin</a>) or packaging source code (<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>).</li>
+</ul>
+<p><em>There is no single value for a given key name</em>, because the value may
+differ according to scope.</p>
+<p>However, there is a single value for a given <em>scoped</em> key.</p>
+<p>If you think about sbt processing a list of settings to generate a
+key-value map describing the project, as <a class="reference internal" href="Basic-Def.html"><em>discussed earlier</em></a>,
+the keys in that key-value map are <em>scoped</em> keys.
+Each setting defined in the build definition (for example in
+<span class="pre">build.sbt</span>) applies to a scoped key as well.</p>
+<p>Often the scope is implied or has a default, but if the defaults are
+wrong, you'll need to mention the desired scope in <span class="pre">build.sbt</span>.</p>
+</div>
+<div class="section" id="scope-axes">
+<h2>Scope axes<a class="headerlink" href="#scope-axes" title="Permalink to this headline">¶</a></h2>
+<p>A <em>scope axis</em> is a type, where each instance of the type can define its
+own scope (that is, each instance can have its own unique values for
+keys).</p>
+<p>There are three scope axes:</p>
+<ul class="simple">
+<li>Projects</li>
+<li>Configurations</li>
+<li>Tasks</li>
+</ul>
+<div class="section" id="scoping-by-project-axis">
+<h3>Scoping by project axis<a class="headerlink" href="#scoping-by-project-axis" title="Permalink to this headline">¶</a></h3>
+<p>If you <a class="reference internal" href="Multi-Project.html"><em>put multiple projects in a single build</em></a>, each project needs its own settings. That is, keys can
+be scoped according to the project.</p>
+<p>The project axis can also be set to &quot;entire build&quot;, so a setting applies
+to the entire build rather than a single project. Build-level settings
+are often used as a fallback when a project doesn't define a
+project-specific setting.</p>
+</div>
+<div class="section" id="scoping-by-configuration-axis">
+<h3>Scoping by configuration axis<a class="headerlink" href="#scoping-by-configuration-axis" title="Permalink to this headline">¶</a></h3>
+<p>A <em>configuration</em> defines a flavor of build, potentially with its own
+classpath, sources, generated packages, etc. The configuration concept
+comes from Ivy, which sbt uses for <a class="reference internal" href="Library-Dependencies.html"><em>managed dependencies</em></a>, and from
+<a class="reference external" href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a>.</p>
+<p>Some configurations you'll see in sbt:</p>
+<ul class="simple">
+<li><span class="pre">Compile</span> which defines the main build (<span class="pre">src/main/scala</span>).</li>
+<li><span class="pre">Test</span> which defines how to build tests (<span class="pre">src/test/scala</span>).</li>
+<li><span class="pre">Runtime</span> which defines the classpath for the <span class="pre">run</span> task.</li>
+</ul>
+<p>By default, all the keys associated with compiling, packaging, and
+running are scoped to a configuration and therefore may work differently
+in each configuration. The most obvious examples are the task keys
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>; but all the keys which <em>affect</em>
+those keys (such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.sourceDirectories">sourceDirectories</a> or <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalacOptions">scalacOptions</a> or
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a>) are also scoped to the configuration.</p>
+</div>
+<div class="section" id="scoping-by-task-axis">
+<h3>Scoping by task axis<a class="headerlink" href="#scoping-by-task-axis" title="Permalink to this headline">¶</a></h3>
+<p>Settings can affect how a task works. For example, the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>
+task is affected by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a> setting.</p>
+<p>To support this, a task key (such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>) can be a scope for
+another key (such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a>).</p>
+<p>The various tasks that build a package (<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageSrc">packageSrc</a>,
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageBin">packageBin</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageDoc">packageDoc</a>) can share keys related to packaging,
+such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifactName">artifactName</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a>. Those keys can have
+distinct values for each packaging task.</p>
+</div>
+</div>
+<div class="section" id="global-scope">
+<h2>Global scope<a class="headerlink" href="#global-scope" title="Permalink to this headline">¶</a></h2>
+<p>Each scope axis can be filled in with an instance of the axis type (for
+example the task axis can be filled in with a task), or the axis can be
+filled in with the special value <span class="pre">Global</span>.</p>
+<p><span class="pre">Global</span> means what you would expect: the setting's value applies to
+all instances of that axis. For example if the task axis is <span class="pre">Global</span>,
+then the setting would apply to all tasks.</p>
+</div>
+<div class="section" id="delegation">
+<h2>Delegation<a class="headerlink" href="#delegation" title="Permalink to this headline">¶</a></h2>
+<p>A scoped key may be undefined, if it has no value associated with it in
+its scope.</p>
+<p>For each scope, sbt has a fallback search path made up of other scopes.
+Typically, if a key has no associated value in a more-specific scope,
+sbt will try to get a value from a more general scope, such as the
+<span class="pre">Global</span> scope or the entire-build scope.</p>
+<p>This feature allows you to set a value once in a more general scope,
+allowing multiple more-specific scopes to inherit the value.</p>
+<p>You can see the fallback search path or &quot;delegates&quot; for a key using the
+<span class="pre">inspect</span> command, as described below. Read on.</p>
+</div>
+<div class="section" id="referring-to-scoped-keys-when-running-sbt">
+<h2>Referring to scoped keys when running sbt<a class="headerlink" href="#referring-to-scoped-keys-when-running-sbt" title="Permalink to this headline">¶</a></h2>
+<p>On the command line and in interactive mode, sbt displays (and parses)
+scoped keys like this:</p>
+<div class="highlight-text"><div class="highlight"><pre>{&lt;build-uri&gt;}&lt;project-id&gt;/config:intask::key
+</pre></div>
+</div>
+<ul class="simple">
+<li><span class="pre">{&lt;build-uri&gt;}&lt;project-id&gt;</span> identifies the project axis. The
+<span class="pre">&lt;project-id&gt;</span> part will be missing if the project axis has &quot;entire
+build&quot; scope.</li>
+<li><span class="pre">config</span> identifies the configuration axis.</li>
+<li><span class="pre">intask</span> identifies the task axis.</li>
+<li><span class="pre">key</span> identifies the key being scoped.</li>
+</ul>
+<p><span class="pre">*</span> can appear for each axis, referring to the <span class="pre">Global</span> scope.</p>
+<p>If you omit part of the scoped key, it will be inferred as follows:</p>
+<ul class="simple">
+<li>the current project will be used if you omit the project.</li>
+<li>a key-dependent configuration will be auto-detected if you omit the
+configuration or task.</li>
+</ul>
+<p>For more details, see <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a>.</p>
+<div class="section" id="examples-of-scoped-key-notation">
+<h3>Examples of scoped key notation<a class="headerlink" href="#examples-of-scoped-key-notation" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> specifies just a key, so the default scopes are used:
+current project, a key-dependent configuration, and global task
+scope.</li>
+<li><span class="pre">test:fullClasspath</span> specifies the configuration, so this is
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> in the <span class="pre">test</span> configuration, with defaults for
+the other two scope axes.</li>
+<li><span class="pre">*:fullClasspath</span> specifies <span class="pre">Global</span> for the configuration,
+rather than the default configuration.</li>
+<li><span class="pre">doc::fullClasspath</span> specifies the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> key scoped
+to the <span class="pre">doc</span> task, with the defaults for the project and
+configuration axes.</li>
+<li><span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span>
+specifies a project,
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>, where the project
+is identified with the build <span class="pre">{file:/home/hp/checkout/hello/}</span> and
+then a project id inside that build <span class="pre">default-aea33a</span>. Also
+specifies configuration <span class="pre">test</span>, but leaves the default task axis.</li>
+<li><span class="pre">{file:/home/hp/checkout/hello/}/test:fullClasspath</span> sets the
+project axis to &quot;entire build&quot; where the build is
+<span class="pre">{file:/home/hp/checkout/hello/}</span></li>
+<li><span class="pre">{.}/test:fullClasspath</span> sets the project axis to &quot;entire build&quot;
+where the build is <span class="pre">{.}</span>. <span class="pre">{.}</span> can be written <span class="pre">ThisBuild</span> in
+Scala code.</li>
+<li><span class="pre">{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</span> sets
+all three scope axes.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="inspecting-scopes">
+<h2>Inspecting scopes<a class="headerlink" href="#inspecting-scopes" title="Permalink to this headline">¶</a></h2>
+<p>In sbt's interactive mode, you can use the <span class="pre">inspect</span> command to
+understand keys and their scopes. Try <span class="pre">inspect test:fullClasspath</span>:</p>
+<div class="highlight-text"><div class="highlight"><pre>$ sbt
+&gt; inspect test:fullClasspath
+[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+[info] Description:
+[info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info] Dependencies:
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
+[info] Reverse dependencies:
+[info]  test:runMain
+[info]  test:run
+[info]  test:testLoader
+[info]  test:console
+[info] Delegates:
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
+[info] Related:
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
+</pre></div>
+</div>
+<p>On the first line, you can see this is a task (as opposed to a setting,
+as explained in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>).
+The value resulting from the task will have type
+<span class="pre">scala.collection.Seq[sbt.Attributed[java.io.File]]</span>.</p>
+<p>&quot;Provided by&quot; points you to the scoped key that defines the value, in
+this case
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</span>
+(which is the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> key scoped to the <span class="pre">test</span>
+configuration and the <span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>
+project).</p>
+<p>&quot;Dependencies&quot; may not make sense yet; stay tuned for the <a class="reference internal" href="More-About-Settings.html"><em>next page</em></a>.</p>
+<p>You can also see the delegates; if the value were not defined, sbt would
+search through:</p>
+<ul class="simple">
+<li>two other configurations (<span class="pre">runtime:fullClasspath</span>,
+<span class="pre">compile:fullClasspath</span>). In these scoped keys, the project is
+unspecified meaning &quot;current project&quot; and the task is unspecified
+meaning <span class="pre">Global</span></li>
+<li>configuration set to <span class="pre">Global</span> (<span class="pre">*:fullClasspath</span>), since project
+is still unspecified it's &quot;current project&quot; and task is still
+unspecified so <span class="pre">Global</span></li>
+<li>project set to <span class="pre">{.}</span> or <span class="pre">ThisBuild</span> (meaning the entire build, no
+specific project)</li>
+<li>project axis set to <span class="pre">Global</span> (<span class="pre">*/test:fullClasspath</span>) (remember,
+an unspecified project means current, so searching <span class="pre">Global</span> here is
+new; i.e. <span class="pre">*</span> and &quot;no project shown&quot; are different for the project
+axis; i.e. <span class="pre">*/test:fullClasspath</span> is not the same as
+<span class="pre">test:fullClasspath</span>)</li>
+<li>both project and configuration set to <span class="pre">Global</span>
+(<span class="pre">*/*:fullClasspath</span>) (remember that unspecified task means
+<span class="pre">Global</span> already, so <span class="pre">*/*:fullClasspath</span> uses <span class="pre">Global</span> for all
+three axes)</li>
+</ul>
+<p>Try <span class="pre">inspect fullClasspath</span> (as opposed to the above example,
+<span class="pre">inspect test:fullClasspath</span>) to get a sense of the difference.
+Because the configuration is omitted, it is autodetected as <span class="pre">compile</span>.
+<span class="pre">inspect compile:fullClasspath</span> should therefore look the same as
+<span class="pre">inspect fullClasspath</span>.</p>
+<p>Try <span class="pre">inspect *:fullClasspath</span> for another contrast.
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fullClasspath">fullClasspath</a> is not defined in the <span class="pre">Global</span> configuration by
+default.</p>
+<p>Again, for more details, see <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a>.</p>
+</div>
+<div class="section" id="referring-to-scopes-in-a-build-definition">
+<h2>Referring to scopes in a build definition<a class="headerlink" href="#referring-to-scopes-in-a-build-definition" title="Permalink to this headline">¶</a></h2>
+<p>If you create a setting in <span class="pre">build.sbt</span> with a bare key, it will be
+scoped to the current project, configuration <span class="pre">Global</span> and task
+<span class="pre">Global</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>Run sbt and <span class="pre">inspect name</span> to see that it's provided by
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/*:name</span>, that is, the
+project is <span class="pre">{file:/home/hp/checkout/hello/}default-aea33a</span>, the
+configuration is <span class="pre">*</span> (meaning global), and the task is not shown
+(which also means global).</p>
+<p><span class="pre">build.sbt</span> always defines settings for a single project, so the
+&quot;current project&quot; is the project you're defining in that particular
+<span class="pre">build.sbt</span>. (For <a class="reference internal" href="Multi-Project.html"><em>multi-project builds</em></a>, each project has its own <span class="pre">build.sbt</span>.)</p>
+<p>Keys have an overloaded method called <span class="pre">in</span> used to set the scope. The
+argument to <span class="pre">in</span> can be an instance of any of the scope axes. So for
+example, though there's no real reason to do this, you could set the
+name scoped to the <span class="pre">Compile</span> configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>or you could set the name scoped to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageBin">packageBin</a> task (pointless!
+just an example):</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="n">packageBin</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>or you could set the name with multiple scope axes, for example in the
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageBin">packageBin</a> task in the <span class="pre">Compile</span> configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>or you could use <span class="pre">Global</span> for all axes:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>(<span class="pre">name in Global</span> implicitly converts the scope axis <span class="pre">Global</span> to a
+scope with all axes set to <span class="pre">Global</span>; the task and configuration are
+already <span class="pre">Global</span> by default, so here the effect is to make the project
+<span class="pre">Global</span>, that is, define <span class="pre">*/*:name</span> rather than
+<span class="pre">{file:/home/hp/checkout/hello/}default-aea33a/*:name</span>)</p>
+<p>If you aren't used to Scala, a reminder: it's important to understand
+that <span class="pre">in</span> and <span class="pre">:=</span> are just methods, not magic. Scala lets you write
+them in a nicer way, but you could also use the Java style:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="nc">Compile</span><span class="o">).:=(</span><span class="s">&quot;hello&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>There's no reason to use this ugly syntax, but it illustrates that these
+are in fact methods.</p>
+</div>
+<div class="section" id="when-to-specify-a-scope">
+<h2>When to specify a scope<a class="headerlink" href="#when-to-specify-a-scope" title="Permalink to this headline">¶</a></h2>
+<p>You need to specify the scope if the key in question is normally scoped.
+For example, the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> task, by default, is scoped to <span class="pre">Compile</span>
+and <span class="pre">Test</span> configurations, and does not exist outside of those scopes.</p>
+<p>To change the value associated with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> key, you need to
+write <span class="pre">compile in Compile</span> or <span class="pre">compile in Test</span>. Using plain
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> would define a new compile task scoped to the current
+project, rather than overriding the standard compile tasks which are
+scoped to a configuration.</p>
+<p>If you get an error like <em>&quot;Reference to undefined setting&quot;</em>, often
+you've failed to specify a scope, or you've specified the wrong scope.
+The key you're using may be defined in some other scope. sbt will try to
+suggest what you meant as part of the error message; look for &quot;Did you
+mean compile:compile?&quot;</p>
+<p>One way to think of it is that a name is only <em>part</em> of a key. In
+reality, all keys consist of both a name, and a scope (where the scope
+has three axes). The entire expression
+<span class="pre">packageOptions in (Compile, packageBin)</span> is a key name, in other
+words. Simply <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a> is also a key name, but a different one
+(for keys with no <span class="pre">in</span>, a scope is implicitly assumed: current
+project, global config, global task).</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Now that you understand scopes, you can <a class="reference internal" href="More-About-Settings.html"><em>learn more about settings</em></a>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Getting-Started/Scopes.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Scopes</a><ul>
+<li><a class="reference internal" href="#the-whole-story-about-keys">The whole story about keys</a></li>
+<li><a class="reference internal" href="#scope-axes">Scope axes</a><ul>
+<li><a class="reference internal" href="#scoping-by-project-axis">Scoping by project axis</a></li>
+<li><a class="reference internal" href="#scoping-by-configuration-axis">Scoping by configuration axis</a></li>
+<li><a class="reference internal" href="#scoping-by-task-axis">Scoping by task axis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#global-scope">Global scope</a></li>
+<li><a class="reference internal" href="#delegation">Delegation</a></li>
+<li><a class="reference internal" href="#referring-to-scoped-keys-when-running-sbt">Referring to scoped keys when running sbt</a><ul>
+<li><a class="reference internal" href="#examples-of-scoped-key-notation">Examples of scoped key notation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inspecting-scopes">Inspecting scopes</a></li>
+<li><a class="reference internal" href="#referring-to-scopes-in-a-build-definition">Referring to scopes in a build definition</a></li>
+<li><a class="reference internal" href="#when-to-specify-a-scope">When to specify a scope</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

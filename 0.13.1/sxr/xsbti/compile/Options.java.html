@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/compile/Options.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.compile;
+
+import java.io.File;
+
+/** Standard compilation options.*/
+public interface Options
+{
+	/** The classpath to use for compilation.
+	* This will be modified according to the ClasspathOptions used to configure the ScalaCompiler.*/
+	File[] classpath();
+
+	/** All sources that should be recompiled.
+	* This should include Scala and Java sources, which are identified by their extension. */
+	File[] sources();
+
+	/** Output for the compilation. */
+	Output output();
+
+	/** The options to pass to the Scala compiler other than the sources and classpath to use. */
+	String[] options();
+
+	/** The options to pass to the Java compiler other than the sources and classpath to use. */
+	String[] javacOptions();
+
+	/** Controls the order in which Java and Scala sources are compiled.*/
+	CompileOrder order();
+}
+
+        </pre>
+    </body>
+</html>

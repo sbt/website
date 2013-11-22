@@ -1,0 +1,327 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>State and actions &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Extending sbt" href="index.html" />
+    <link rel="next" title="Creating Command Line Applications Using sbt" href="Command-Line-Applications.html" />
+    <link rel="prev" title="Build Loaders" href="Build-Loaders.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">State and actions</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Extending sbt</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Build-Loaders.html">Build Loaders</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="state-and-actions">
+<h1>State and actions<a class="headerlink" href="#state-and-actions" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="../../api/sbt/State$.html">State</a> is the entry point to all available
+information in sbt. The key methods are:</p>
+<ul class="simple">
+<li><span class="pre">definedCommands: Seq[Command]</span> returns all registered Command
+definitions</li>
+<li><span class="pre">remainingCommands: Seq[String]</span> returns the remaining commands to
+be run</li>
+<li><span class="pre">attributes: AttributeMap</span> contains generic data.</li>
+</ul>
+<p>The action part of a command performs work and transforms <span class="pre">State</span>. The
+following sections discuss <span class="pre">State =&gt; State</span> transformations. As
+mentioned previously, a command will typically handle a parsed value as
+well: <span class="pre">(State, T) =&gt; State</span>.</p>
+<div class="section" id="command-related-data">
+<h2>Command-related data<a class="headerlink" href="#command-related-data" title="Permalink to this headline">¶</a></h2>
+<p>A Command can modify the currently registered commands or the commands
+to be executed. This is done in the action part by transforming the
+(immutable) State provided to the command. A function that registers
+additional power commands might look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">powerCommands</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Command</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+
+<span class="k">val</span> <span class="n">addPower</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">State</span> <span class="k">=</span>
+  <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">definedCommands</span> <span class="k">=</span>
+      <span class="o">(</span><span class="n">state</span><span class="o">.</span><span class="n">definedCommands</span> <span class="o">++</span> <span class="n">powerCommands</span><span class="o">).</span><span class="n">distinct</span>
+    <span class="o">)</span>
+</pre></div>
+</div>
+<p>This takes the current commands, appends new commands, and drops
+duplicates. Alternatively, State has a convenience method for doing the
+above:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">addPower2</span> <span class="k">=</span> <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">state</span> <span class="o">++</span> <span class="n">powerCommands</span>
+</pre></div>
+</div>
+<p>Some examples of functions that modify the remaining commands to
+execute:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">appendCommand</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">State</span> <span class="k">=</span>
+  <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">remainingCommands</span> <span class="k">=</span> <span class="n">state</span><span class="o">.</span><span class="n">remainingCommands</span> <span class="o">:+</span> <span class="s">&quot;cleanup&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">insertCommand</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">State</span> <span class="k">=</span>
+  <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">remainingCommands</span> <span class="k">=</span> <span class="s">&quot;next-command&quot;</span> <span class="o">+:</span> <span class="n">state</span><span class="o">.</span><span class="n">remainingCommands</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The first adds a command that will run after all currently specified
+commands run. The second inserts a command that will run next. The
+remaining commands will run after the inserted command completes.</p>
+<p>To indicate that a command has failed and execution should not continue,
+return <span class="pre">state.fail</span>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">success</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="o">...</span>
+  <span class="k">if</span><span class="o">(</span><span class="n">success</span><span class="o">)</span> <span class="n">state</span> <span class="k">else</span> <span class="n">state</span><span class="o">.</span><span class="n">fail</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="project-related-data">
+<h2>Project-related data<a class="headerlink" href="#project-related-data" title="Permalink to this headline">¶</a></h2>
+<p>Project-related information is stored in <span class="pre">attributes</span>. Typically,
+commands won't access this directly but will instead use a convenience
+method to extract the most useful information:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">state</span><span class="k">:</span> <span class="kt">State</span>
+<span class="k">val</span> <span class="n">extracted</span><span class="k">:</span> <span class="kt">Extracted</span> <span class="o">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">state</span><span class="o">)</span>
+<span class="k">import</span> <span class="nn">extracted._</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../api/sbt/Extracted.html">Extracted</a> provides:</p>
+<ul class="simple">
+<li>Access to the current build and project (<span class="pre">currentRef</span>)</li>
+<li>Access to initialized project setting data (<span class="pre">structure.data</span>)</li>
+<li>Access to session <span class="pre">Setting</span>s and the original, permanent settings
+from <span class="pre">.sbt</span> and <span class="pre">.scala</span> files (<span class="pre">session.append</span> and
+<span class="pre">session.original</span>, respectively)</li>
+<li>Access to the current <a class="reference external" href="../../api/sbt/compiler/Eval.html">Eval</a>
+instance for evaluating Scala expressions in the build context.</li>
+</ul>
+</div>
+<div class="section" id="project-data">
+<h2>Project data<a class="headerlink" href="#project-data" title="Permalink to this headline">¶</a></h2>
+<p>All project data is stored in <span class="pre">structure.data</span>, which is of type
+<span class="pre">sbt.Settings[Scope]</span>. Typically, one gets information of type <span class="pre">T</span>
+in the following way:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">key</span><span class="k">:</span> <span class="kt">SettingKey</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">scope</span><span class="k">:</span> <span class="kt">Scope</span>
+<span class="k">val</span> <span class="n">value</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span> <span class="n">key</span> <span class="n">in</span> <span class="n">scope</span> <span class="n">get</span> <span class="n">structure</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>Here, a <span class="pre">SettingKey[T]</span> is typically obtained from
+<a class="reference external" href="../../api/sbt/Keys$.html">Keys</a> and is the same type that is used to
+define settings in <span class="pre">.sbt</span> files, for example.
+<a class="reference external" href="../../api/sbt/Scope.html">Scope</a> selects the scope the key is
+obtained for. There are convenience overloads of <span class="pre">in</span> that can be used
+to specify only the required scope axes. See
+<a class="reference external" href="../../sxr/sbt/Structure.scala.html">Structure.scala</a> for where <span class="pre">in</span> and
+other parts of the settings interface are defined. Some examples:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">Keys._</span>
+<span class="k">val</span> <span class="n">extracted</span><span class="k">:</span> <span class="kt">Extracted</span>
+<span class="k">import</span> <span class="nn">extracted._</span>
+
+<span class="c1">// get name of current project</span>
+<span class="k">val</span> <span class="n">nameOpt</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="n">name</span> <span class="n">in</span> <span class="n">currentRef</span> <span class="n">get</span> <span class="n">structure</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1">// get the package options for the `test:packageSrc` task or Nil if none are defined</span>
+<span class="k">val</span> <span class="n">pkgOpts</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">PackageOption</span><span class="o">]</span> <span class="k">=</span> <span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="n">currentRef</span><span class="o">,</span> <span class="nc">Test</span><span class="o">,</span> <span class="n">packageSrc</span><span class="o">)</span> <span class="n">get</span> <span class="n">structure</span><span class="o">.</span><span class="n">data</span> <span class="n">getOrElse</span> <span class="nc">Nil</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../api/sbt/Load$$BuildStructure.html">BuildStructure</a> contains
+information about build and project relationships. Key members are:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">units</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">URI</span>, <span class="kt">LoadedBuildUnit</span><span class="o">]</span>
+<span class="n">root</span><span class="k">:</span> <span class="kt">URI</span>
+</pre></div>
+</div>
+<p>A <span class="pre">URI</span> identifies a build and <span class="pre">root</span> identifies the initial build
+loaded. <a class="reference external" href="../../api/sbt/Load$$LoadedBuildUnit.html">LoadedBuildUnit</a>
+provides information about a single build. The key members of
+<span class="pre">LoadedBuildUnit</span> are:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Defines the base directory for the build</span>
+<span class="n">localBase</span><span class="k">:</span> <span class="kt">File</span>
+
+<span class="c1">// maps the project ID to the Project definition</span>
+<span class="n">defined</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">ResolvedProject</span><span class="o">]</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../api/sbt/ResolvedProject.html">ResolvedProject</a> has the same
+information as the <span class="pre">Project</span> used in a <span class="pre">project/Build.scala</span> except
+that <a class="reference external" href="../../api/sbt/ProjectReference.html">ProjectReferences</a> are
+resolved to <span class="pre">ProjectRef</span>s.</p>
+</div>
+<div class="section" id="classpaths">
+<h2>Classpaths<a class="headerlink" href="#classpaths" title="Permalink to this headline">¶</a></h2>
+<p>Classpaths in sbt 0.10+ are of type <span class="pre">Seq[Attributed[File]]</span>. This
+allows tagging arbitrary information to classpath entries. sbt currently
+uses this to associate an <span class="pre">Analysis</span> with an entry. This is how it
+manages the information needed for multi-project incremental
+recompilation. It also associates the ModuleID and Artifact with managed
+entries (those obtained by dependency management). When you only want
+the underlying <span class="pre">Seq[File]</span>, use <span class="pre">files</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">attributedClasspath</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Attribute</span><span class="o">[</span><span class="kt">File</span><span class="o">]]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">classpath</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">File</span><span class="o">]</span> <span class="k">=</span> <span class="n">attributedClasspath</span><span class="o">.</span><span class="n">files</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-tasks">
+<h2>Running tasks<a class="headerlink" href="#running-tasks" title="Permalink to this headline">¶</a></h2>
+<p>It can be useful to run a specific project task from a
+<a class="reference internal" href="Commands.html"><em>command</em></a> (<em>not from another task</em>) and get its
+result. For example, an IDE-related command might want to get the
+classpath from a project or a task might analyze the results of a
+compilation. The relevant method is <span class="pre">Project.evaluateTask</span>, which has
+the following signature:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">def</span> <span class="n">evaluateTask</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">taskKey</span><span class="k">:</span> <span class="kt">ScopedKey</span><span class="o">[</span><span class="kt">Task</span><span class="o">[</span><span class="kt">T</span><span class="o">]],</span> <span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">,</span>
+  <span class="n">checkCycles</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">false</span><span class="o">,</span> <span class="n">maxWorkers</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">...)</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Result</span><span class="o">[</span><span class="kt">T</span><span class="o">]]</span>
+</pre></div>
+</div>
+<p>For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">eval</span><span class="k">:</span> <span class="kt">State</span> <span class="o">=&gt;</span> <span class="nc">State</span> <span class="k">=</span> <span class="o">(</span><span class="n">state</span><span class="k">:</span> <span class="kt">State</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+
+    <span class="c1">// This selects the main &#39;compile&#39; task for the current project.</span>
+    <span class="c1">//   The value produced by &#39;compile&#39; is of type inc.Analysis,</span>
+    <span class="c1">//   which contains information about the compiled code.</span>
+    <span class="k">val</span> <span class="n">taskKey</span> <span class="k">=</span> <span class="nc">Keys</span><span class="o">.</span><span class="n">compile</span> <span class="n">in</span> <span class="nc">Compile</span>
+
+    <span class="c1">// Evaluate the task</span>
+    <span class="c1">// None if the key is not defined</span>
+    <span class="c1">// Some(Inc) if the task does not complete successfully (Inc for incomplete)</span>
+    <span class="c1">// Some(Value(v)) with the resulting value</span>
+    <span class="k">val</span> <span class="n">result</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Result</span><span class="o">[</span><span class="kt">inc.Analysis</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">evaluateTask</span><span class="o">(</span><span class="n">taskKey</span><span class="o">,</span> <span class="n">state</span><span class="o">)</span>
+    <span class="c1">// handle the result</span>
+    <span class="n">result</span> <span class="k">match</span>
+    <span class="o">{</span>
+        <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="c1">// Key wasn&#39;t defined.</span>
+        <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Inc</span><span class="o">(</span><span class="n">inc</span><span class="o">))</span> <span class="k">=&gt;</span> <span class="c1">// error detail, inc is of type Incomplete, use Incomplete.show(inc.tpe) to get an error message</span>
+        <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">Value</span><span class="o">(</span><span class="n">v</span><span class="o">))</span> <span class="k">=&gt;</span> <span class="c1">// do something with v: inc.Analysis</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>For getting the test classpath of a specific project, use this key:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">projectRef</span><span class="k">:</span> <span class="kt">ProjectRef</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">taskKey</span><span class="k">:</span> <span class="kt">Task</span><span class="o">[</span><span class="kt">Seq</span><span class="o">[</span><span class="kt">Attributed</span><span class="o">[</span><span class="kt">File</span><span class="o">]]]</span> <span class="k">=</span>
+  <span class="nc">Keys</span><span class="o">.</span><span class="n">fullClasspath</span> <span class="n">in</span> <span class="o">(</span><span class="n">projectRef</span><span class="o">,</span> <span class="nc">Test</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-state-in-a-task">
+<h2>Using State in a task<a class="headerlink" href="#using-state-in-a-task" title="Permalink to this headline">¶</a></h2>
+<p>To access the current State from a task, use the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.state">state</a> task as an input.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myTask</span> <span class="o">:=</span> <span class="o">...</span> <span class="n">state</span><span class="o">.</span><span class="n">value</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Extending/Build-State.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">State and actions</a><ul>
+<li><a class="reference internal" href="#command-related-data">Command-related data</a></li>
+<li><a class="reference internal" href="#project-related-data">Project-related data</a></li>
+<li><a class="reference internal" href="#project-data">Project data</a></li>
+<li><a class="reference internal" href="#classpaths">Classpaths</a></li>
+<li><a class="reference internal" href="#running-tasks">Running tasks</a></li>
+<li><a class="reference internal" href="#using-state-in-a-task">Using State in a task</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

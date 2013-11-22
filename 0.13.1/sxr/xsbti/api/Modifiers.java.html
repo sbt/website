@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/Modifiers.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.api;
+
+public final class Modifiers implements java.io.Serializable
+{
+	private static final int AbstractBit = 0;
+	private static final int OverrideBit = 1;
+	private static final int FinalBit = 2;
+	private static final int SealedBit = 3;
+	private static final int ImplicitBit = 4;
+	private static final int LazyBit = 5;
+	private static final int MacroBit = 6;
+
+	private static final int flag(boolean set, int bit)
+	{
+		return set ? (1 &lt;&lt; bit) : 0;
+	}
+
+	public Modifiers(boolean isAbstract, boolean isOverride, boolean isFinal, boolean isSealed, boolean isImplicit, boolean isLazy, boolean isMacro)
+	{
+		this.flags = (byte)(
+			flag(isAbstract, AbstractBit) |
+			flag(isOverride, OverrideBit) |
+			flag(isFinal, FinalBit) |
+			flag(isSealed, SealedBit) |
+			flag(isImplicit, ImplicitBit) |
+			flag(isLazy, LazyBit) |
+			flag(isMacro, MacroBit)
+		);
+	}
+
+	private final byte flags;
+
+	private final boolean flag(int bit)
+	{
+		return (flags &amp; (1 &lt;&lt; bit)) != 0;
+	}
+
+	public final byte raw()
+	{
+		return flags;
+	}
+
+	public final boolean isAbstract()
+	{
+		return flag(AbstractBit);
+	}
+	public final boolean isOverride()
+	{
+		return flag(OverrideBit);
+	}
+	public final boolean isFinal()
+	{
+		return flag(FinalBit);
+	}
+	public final boolean isSealed()
+	{
+		return flag(SealedBit);
+	}
+	public final boolean isImplicit()
+	{
+		return flag(ImplicitBit);
+	}
+	public final boolean isLazy()
+	{
+		return flag(LazyBit);
+	}
+	public final boolean isMacro()
+	{
+		return flag(MacroBit);
+	}
+	public boolean equals(Object o)
+	{
+		return (o instanceof Modifiers) &amp;&amp; flags == ((Modifiers)o).flags;
+	}
+	public int hashCode()
+	{
+		return flags;
+	}
+	public String toString()
+	{
+		return &quot;Modifiers(&quot; + &quot;isAbstract: &quot; + isAbstract() + &quot;, &quot; + &quot;isOverride: &quot; + isOverride() + &quot;, &quot; + &quot;isFinal: &quot; + isFinal() + &quot;, &quot; + &quot;isSealed: &quot; + isSealed() + &quot;, &quot; + &quot;isImplicit: &quot; + isImplicit() + &quot;, &quot; + &quot;isLazy: &quot; + isLazy() + &quot;, &quot; + &quot;isMacro: &quot; + isMacro()+ &quot;)&quot;;
+	}
+}
+
+        </pre>
+    </body>
+</html>

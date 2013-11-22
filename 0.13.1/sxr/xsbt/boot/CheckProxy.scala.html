@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/boot/CheckProxy.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009 Mark Harrah
+ */</span>
+<span class="keyword">package</span> xsbt.boot
+
+<span class="keyword">import</span> <a href="Pre.scala.html#xsbt.boot.Pre" title="xsbt.boot.Pre.type">Pre</a>._
+<span class="keyword">import</span> java.net.<span class="delimiter">{</span>MalformedURLException, URL<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="xsbt.boot.CheckProxy.type" id="xsbt.boot.CheckProxy">CheckProxy</a>
+<a href="#xsbt.boot.CheckProxy" title="xsbt.boot.CheckProxy.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="()Unit" id="xsbt.boot.CheckProxy.apply">apply</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">import</span> <a href="BootConfiguration.scala.html#xsbt.boot.ProxyProperties" title="xsbt.boot.ProxyProperties.type">ProxyProperties</a>._
+		<span class="keyword">for</span><span class="delimiter">(</span> <a title="xsbt.boot.ProxyProperties" id="xsbt.boot.CheckProxy.apply.$anonfun.pp">pp</a> &lt;- <span title="(elems: xsbt.boot.ProxyProperties*)Seq[xsbt.boot.ProxyProperties]">Seq</span><span title="(f: xsbt.boot.ProxyProperties =&gt; Unit)Unit" class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot.ProxyProperties.http" title="=&gt; xsbt.boot.ProxyProperties">http</a>, <a href="BootConfiguration.scala.html#xsbt.boot.ProxyProperties.https" title="=&gt; xsbt.boot.ProxyProperties">https</a>, <a href="BootConfiguration.scala.html#xsbt.boot.ProxyProperties.ftp" title="=&gt; xsbt.boot.ProxyProperties">ftp</a><span class="delimiter">)</span><span class="delimiter">)</span>
+			<a href="#xsbt.boot.CheckProxy.setFromEnv" title="(conf: xsbt.boot.ProxyProperties)Unit">setFromEnv</a><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.apply.$anonfun.pp" title="xsbt.boot.ProxyProperties">pp</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(conf: xsbt.boot.ProxyProperties)Unit" id="xsbt.boot.CheckProxy.setFromEnv">setFromEnv</a><span class="delimiter">(</span><a title="xsbt.boot.ProxyProperties" id="xsbt.boot.CheckProxy.setFromEnv.conf">conf</a>: <a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties" title="xsbt.boot.ProxyProperties">ProxyProperties</a><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">import</span> <a href="#xsbt.boot.CheckProxy.setFromEnv.conf" title="xsbt.boot.ProxyProperties">conf</a>._
+		<span class="keyword">val</span> <a title="String" id="xsbt.boot.CheckProxy.setFromEnv.proxyURL">proxyURL</a> = <span title="System.type">System</span>.<span title="(x$1: String)String">getenv</span><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.envURL" title="=&gt; String">envURL</a><span class="delimiter">)</span>
+		<span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.isDefined" title="(s: String)Boolean">isDefined</a><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.setFromEnv.proxyURL" title="String">proxyURL</a><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <span title="=&gt; Boolean">!</span><a href="#xsbt.boot.CheckProxy.isPropertyDefined" title="(k: String)Boolean">isPropertyDefined</a><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysHost" title="=&gt; String">sysHost</a><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <span title="=&gt; Boolean">!</span><a href="#xsbt.boot.CheckProxy.isPropertyDefined" title="(k: String)Boolean">isPropertyDefined</a><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysPort" title="=&gt; String">sysPort</a><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">try</span>
+			<span class="delimiter">{</span>
+				<span class="keyword">val</span> <a title="java.net.URL" id="xsbt.boot.CheckProxy.setFromEnv.proxy">proxy</a> = <span title="(x$1: String)java.net.URL" class="keyword">new</span> <span title="java.net.URL">URL</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.setFromEnv.proxyURL" title="String">proxyURL</a><span class="delimiter">)</span>
+				<a href="#xsbt.boot.CheckProxy.setProperty" title="(key: String, value: String)Unit">setProperty</a><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysHost" title="=&gt; String">sysHost</a>, <a href="#xsbt.boot.CheckProxy.setFromEnv.proxy" title="java.net.URL">proxy</a>.<span title="()String">getHost</span><span class="delimiter">)</span>
+				<span class="keyword">val</span> <a title="Int" id="xsbt.boot.CheckProxy.setFromEnv.port">port</a> = <a href="#xsbt.boot.CheckProxy.setFromEnv.proxy" title="java.net.URL">proxy</a>.<span title="()Int">getPort</span>
+				<span title="Any" class="keyword">if</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.setFromEnv.port" title="Int">port</a> <span title="(x: Int)Boolean">&gt;=</span> <span title="Int(0)" class="int">0</span><span class="delimiter">)</span>
+					<span title="System.type">System</span>.<span title="(x$1: String, x$2: String)String">setProperty</span><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysPort" title="=&gt; String">sysPort</a>, <a href="#xsbt.boot.CheckProxy.setFromEnv.port" title="Int">port</a>.<span title="()String">toString</span><span class="delimiter">)</span>
+				<a href="#xsbt.boot.CheckProxy.copyEnv" title="(envKey: String, sysKey: String)Unit">copyEnv</a><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.envUser" title="=&gt; String">envUser</a>, <a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysUser" title="=&gt; String">sysUser</a><span class="delimiter">)</span>
+				<a href="#xsbt.boot.CheckProxy.copyEnv" title="(envKey: String, sysKey: String)Unit">copyEnv</a><span class="delimiter">(</span><a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.envPassword" title="=&gt; String">envPassword</a>, <a href="BootConfiguration.scala.html#xsbt.boot;ProxyProperties.sysPassword" title="=&gt; String">sysPassword</a><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+			<span class="keyword">catch</span>
+			<span class="delimiter">{</span>
+				<span class="keyword">case</span> <a title="java.net.MalformedURLException" id="xsbt.boot.CheckProxy.setFromEnv.e">e</a>: <span title="java.net.MalformedURLException">MalformedURLException</span> =&gt;
+					<span title="System.type">System</span>.<span title="java.io.PrintStream">out</span>.<span title="(x$1: String)Unit">println</span><span class="delimiter">(</span><span title="String(&quot;Warning: could not parse http_proxy setting: &quot;)" class="string">&quot;Warning: could not parse http_proxy setting: &quot;</span> <span title="(x$1: Any)String">+</span> <a href="#xsbt.boot.CheckProxy.setFromEnv.e" title="java.net.MalformedURLException">e</a>.<span title="()String">toString</span><span class="delimiter">)</span>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(envKey: String, sysKey: String)Unit" id="xsbt.boot.CheckProxy.copyEnv">copyEnv</a><span class="delimiter">(</span><a title="String" id="xsbt.boot.CheckProxy.copyEnv.envKey">envKey</a>: <span title="String">String</span>, <a title="String" id="xsbt.boot.CheckProxy.copyEnv.sysKey">sysKey</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a href="#xsbt.boot.CheckProxy.setProperty" title="(key: String, value: String)Unit">setProperty</a><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.copyEnv.sysKey" title="String">sysKey</a>, <span title="System.type">System</span>.<span title="(x$1: String)String">getenv</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.copyEnv.envKey" title="String">envKey</a><span class="delimiter">)</span><span class="delimiter">)</span> <span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(key: String, value: String)Unit" id="xsbt.boot.CheckProxy.setProperty">setProperty</a><span class="delimiter">(</span><a title="String" id="xsbt.boot.CheckProxy.setProperty.key">key</a>: <span title="String">String</span>, <a title="String" id="xsbt.boot.CheckProxy.setProperty.value">value</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="delimiter">{</span> <span title="Unit" class="keyword">if</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.setProperty.value" title="String">value</a> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span> <span title="System.type">System</span>.<span title="(x$1: String, x$2: String)String">setProperty</span><span title="Unit" class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.setProperty.key" title="String">key</a>, <a href="#xsbt.boot.CheckProxy.setProperty.value" title="String">value</a><span class="delimiter">)</span> <span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(k: String)Boolean" id="xsbt.boot.CheckProxy.isPropertyDefined">isPropertyDefined</a><span class="delimiter">(</span><a title="String" id="xsbt.boot.CheckProxy.isPropertyDefined.k">k</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#xsbt.boot.CheckProxy.isDefined" title="(s: String)Boolean">isDefined</a><span class="delimiter">(</span><span title="System.type">System</span>.<span title="(x$1: String)String">getProperty</span><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.isPropertyDefined.k" title="String">k</a><span class="delimiter">)</span><span class="delimiter">)</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(s: String)Boolean" id="xsbt.boot.CheckProxy.isDefined">isDefined</a><span class="delimiter">(</span><a title="String" id="xsbt.boot.CheckProxy.isDefined.s">s</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="#xsbt.boot.CheckProxy.isDefined.s" title="String">s</a> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="Pre.scala.html#xsbt.boot.Pre.isNonEmpty" title="(line: String)Boolean">isNonEmpty</a><span class="delimiter">(</span><a href="#xsbt.boot.CheckProxy.isDefined.s" title="String">s</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

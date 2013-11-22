@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/Positions.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait SourcePosition extends AnyRef" id="sbt;SourcePosition">SourcePosition</a>
+
+<span title="AnyRef" class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait FilePosition extends AnyRef with sbt.SourcePosition" id="sbt;FilePosition">FilePosition</a> <span class="keyword">extends</span> <a href="#sbt;SourcePosition" title="sbt.SourcePosition">SourcePosition</a> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt;FilePosition.path">path</a>: <span title="String">String</span>
+	<span class="keyword">def</span> <a title="=&gt; Int" id="sbt;FilePosition.startLine">startLine</a>: <span title="Int">Int</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">case object</span> <a href="#sbt.NoPosition.productElement.x$1" title="sbt.NoPosition.type" id="sbt.NoPosition.readResolve">NoPosition</a> <span title="Product" class="keyword">extends</span> <a href="#sbt;SourcePosition" title="sbt.SourcePosition">SourcePosition</a>
+
+<span class="keyword">final</span> <span class="keyword">case class</span> <a title="class LinePosition extends AnyRef with sbt.FilePosition with Product with Serializable" id="sbt.LinePosition.readResolve">LinePosition</a><a href="#sbt.LinePosition.readResolve" title="Product" class="delimiter">(</a><a title="String" id="sbt;LinePosition.path">path</a>: <span title="String">String</span>, <a title="Int" id="sbt;LinePosition.startLine">startLine</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#sbt;FilePosition" title="sbt.FilePosition">FilePosition</a>
+
+<span class="keyword">final</span> <span class="keyword">case class</span> <a title="class LineRange extends AnyRef with Product with Serializable" id="sbt.LineRange.readResolve">LineRange</a><a href="#sbt.LineRange.readResolve" title="Product" class="delimiter">(</a><a title="Int" id="sbt;LineRange.start">start</a>: <span title="Int">Int</span>, <a title="Int" id="sbt;LineRange.end">end</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(n: Int)sbt.LineRange" id="sbt;LineRange.shift">shift</a><span class="delimiter">(</span><a title="Int" id="sbt;LineRange.shift.n">n</a>: <span title="Int">Int</span><span class="delimiter">)</span> = <span title="sbt.LineRange" class="keyword">new</span> <a href="#sbt.LineRange.readResolve" title="sbt.LineRange">LineRange</a><span class="delimiter">(</span><a href="#sbt;LineRange.start" title="=&gt; Int">start</a> <span title="(x: Int)Int">+</span> <a href="#sbt;LineRange.shift.n" title="Int">n</a>, <a href="#sbt;LineRange.end" title="=&gt; Int">end</a> <span title="(x: Int)Int">+</span> <a href="#sbt;LineRange.shift.n" title="Int">n</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">final</span> <span class="keyword">case class</span> <a title="class RangePosition extends AnyRef with sbt.FilePosition with Product with Serializable" id="sbt.RangePosition.readResolve">RangePosition</a><a href="#sbt.RangePosition.readResolve" title="Product" class="delimiter">(</a><a title="String" id="sbt;RangePosition.path">path</a>: <span title="String">String</span>, <a title="sbt.LineRange" id="sbt;RangePosition.range">range</a>: <a href="#sbt.LineRange.readResolve" title="sbt.LineRange">LineRange</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#sbt;FilePosition" title="sbt.FilePosition">FilePosition</a> <span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="=&gt; Int" id="sbt;RangePosition.startLine">startLine</a> = <a href="#sbt;RangePosition.range" title="=&gt; sbt.LineRange">range</a>.<a href="#sbt;LineRange.start" title="=&gt; Int">start</a>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/datatype/Line.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009  Mark Harrah
+ */</span>
+<span class="keyword">package</span> xsbt.datatype
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Line extends AnyRef with NotNull" id="xsbt.datatype;Line">Line</a> <span class="keyword">extends</span> <span title="NotNull">NotNull</span> <span class="delimiter">{</span> <span class="keyword">val</span> <a title="=&gt; Int" id="xsbt.datatype;Line.line">line</a>: <span title="Int">Int</span> <span class="delimiter">}</span>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class ClassLine extends AnyRef with xsbt.datatype.Line" id="xsbt.datatype;ClassLine">ClassLine</a><a href="#xsbt.datatype;ClassLine" title="xsbt.datatype.ClassLine" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="xsbt.datatype;ClassLine.name">name</a>: <span title="String">String</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;ClassLine.level">level</a>: <span title="Int">Int</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;ClassLine.line">line</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#xsbt.datatype;Line" title="xsbt.datatype.Line">Line</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class EnumLine extends AnyRef with xsbt.datatype.Line" id="xsbt.datatype;EnumLine">EnumLine</a><a href="#xsbt.datatype;EnumLine" title="xsbt.datatype.EnumLine" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="xsbt.datatype;EnumLine.name">name</a>: <span title="String">String</span>, <span class="keyword">val</span> <a title="Seq[String]" id="xsbt.datatype;EnumLine.members">members</a>: <span title="Seq[String]">Seq</span><span class="delimiter">[</span>String<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;EnumLine.line">line</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#xsbt.datatype;Line" title="xsbt.datatype.Line">Line</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class MemberLine extends AnyRef with xsbt.datatype.Line" id="xsbt.datatype;MemberLine">MemberLine</a><a href="#xsbt.datatype;MemberLine" title="xsbt.datatype.MemberLine" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="xsbt.datatype;MemberLine.name">name</a>: <span title="String">String</span>, <span class="keyword">val</span> <a title="String" id="xsbt.datatype;MemberLine.tpe">tpe</a>: <span title="String">String</span>, <span class="keyword">val</span> <a title="Boolean" id="xsbt.datatype;MemberLine.single">single</a>: <span title="Boolean">Boolean</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;MemberLine.level">level</a>: <span title="Int">Int</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;MemberLine.line">line</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#xsbt.datatype;Line" title="xsbt.datatype.Line">Line</a>
+<span class="keyword">final</span> <span class="keyword">class</span> <a title="class WhitespaceLine extends AnyRef with xsbt.datatype.Line" id="xsbt.datatype;WhitespaceLine">WhitespaceLine</a><a href="#xsbt.datatype;WhitespaceLine" title="xsbt.datatype.WhitespaceLine" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="xsbt.datatype;WhitespaceLine.comment">comment</a>: <span title="String">String</span>, <span class="keyword">val</span> <a title="Int" id="xsbt.datatype;WhitespaceLine.line">line</a>: <span title="Int">Int</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#xsbt.datatype;Line" title="xsbt.datatype.Line">Line</a>
+
+        </pre>
+    </body>
+</html>

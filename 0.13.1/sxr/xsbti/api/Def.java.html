@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/Def.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.api;
+
+import java.util.Arrays;
+import java.util.List;
+public final class Def extends ParameterizedDefinition 
+{
+	public Def(ParameterList[] valueParameters, Type returnType, TypeParameter[] typeParameters, String name, Access access, Modifiers modifiers, Annotation[] annotations)
+	{
+		super(typeParameters, name, access, modifiers, annotations);
+		this.valueParameters = valueParameters;
+		this.returnType = returnType;
+	}
+	private final ParameterList[] valueParameters;
+	private final Type returnType;
+	public final ParameterList[] valueParameters()
+	{
+		return valueParameters;
+	}
+	public final Type returnType()
+	{
+		return returnType;
+	}
+	public boolean equals(Object obj)
+	{
+		 if (this == obj) {
+			 return true;
+		} else if (!(obj instanceof Def)) {
+			 return false;
+		} else {
+			Def o = (Def)obj;
+			return Arrays.deepEquals(valueParameters(), o.valueParameters()) &amp;&amp; returnType().equals(o.returnType()) &amp;&amp; Arrays.deepEquals(typeParameters(), o.typeParameters()) &amp;&amp; name().equals(o.name()) &amp;&amp; access().equals(o.access()) &amp;&amp; modifiers().equals(o.modifiers()) &amp;&amp; Arrays.deepEquals(annotations(), o.annotations());
+		}
+	}
+	public int hashCode()
+	{
+		 return 37 * (37 * (37 * (37 * (37 * (37 * (37 * (17) + Arrays.deepHashCode(valueParameters())) + returnType().hashCode()) + Arrays.deepHashCode(typeParameters())) + name().hashCode()) + access().hashCode()) + modifiers().hashCode()) + Arrays.deepHashCode(annotations());
+	}
+	public String toString()
+	{
+		 return &quot;Def(&quot; + &quot;valueParameters: &quot; + Arrays.toString(valueParameters()) + &quot;, &quot; + &quot;returnType: &quot; + returnType() + &quot;, &quot; + &quot;typeParameters: &quot; + Arrays.toString(typeParameters()) + &quot;, &quot; + &quot;name: &quot; + name() + &quot;, &quot; + &quot;access: &quot; + access() + &quot;, &quot; + &quot;modifiers: &quot; + modifiers() + &quot;, &quot; + &quot;annotations: &quot; + Arrays.toString(annotations()) + &quot;)&quot;;
+	}
+}
+
+        </pre>
+    </body>
+</html>

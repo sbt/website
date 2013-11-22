@@ -1,0 +1,361 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Inspect the build &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="How to..." href="index.html" />
+    <link rel="next" title="Interactive mode" href="interactive.html" />
+    <link rel="prev" title="Generating files" href="generatefiles.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Inspect the build</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="interactive.html">Interactive mode</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">How to...</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="generatefiles.html">Generating files</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="inspect-the-build">
+<h1>Inspect the build<a class="headerlink" href="#inspect-the-build" title="Permalink to this headline">¶</a></h1>
+<div class="full-howto section" id="taskhelp">
+<h2>Show or search help for a command, task, or setting<a class="headerlink" href="#taskhelp" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">help</span> command is used to show available commands and search the help for commands, tasks, or settings.
+If run without arguments, <span class="pre">help</span> lists the available commands.</p>
+<div class="highlight-scala"><pre>&gt; help
+
+  help                         Displays this help message or prints detailed help on
+                                  requested commands (run &#x27;help &lt;command&gt;&#x27;).
+  about                        Displays basic information about sbt and the build.
+  reload                       (Re)loads the project in the current directory
+  ...</pre>
+</div>
+<div class="highlight-scala"><div class="highlight"><pre><span class="o">&gt;</span> <span class="n">help</span> <span class="n">compile</span>
+</pre></div>
+</div>
+<p>If the argument passed to <span class="pre">help</span> is the name of an existing command, setting or task, the help
+for that entity is displayed.  Otherwise, the argument is interpreted as a regular expression that
+is used to search the help of all commands, settings and tasks.</p>
+<p>The <span class="pre">tasks</span> command is like <span class="pre">help</span>, but operates only on tasks.
+Similarly, the <span class="pre">settings</span> command only operates on settings.</p>
+<p>See also <span class="pre">help help</span>, <span class="pre">help tasks</span>, and <span class="pre">help settings</span>.</p>
+<div class="full-howto section" id="listtasks">
+<h2>List available tasks<a class="headerlink" href="#listtasks" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">tasks</span> command, without arguments, lists the most commonly used tasks.
+It can take a regular expression to search task names and descriptions.
+The verbosity can be increased to show or search less commonly used tasks.
+See <span class="pre">help tasks</span> for details.</p>
+<div class="full-howto section" id="listsettings">
+<h2>List available settings<a class="headerlink" href="#listsettings" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">settings</span> command, without arguments, lists the most commonly used settings.
+It can take a regular expression to search setting names and descriptions.
+The verbosity can be increased to show or search less commonly used settings.
+See <span class="pre">help settings</span> for details.</p>
+<div class="full-howto section" id="dependencies">
+<h2>Display forward and reverse dependencies of a setting or task<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">inspect</span> command displays several pieces of information about a given setting or task, including
+the dependencies of a task/setting as well as the tasks/settings that depend on the it.  For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect <span class="nb">test</span>:compile
+<span class="go">...</span>
+<span class="go">[info] Dependencies:</span>
+<span class="go">[info]      test:compile::compileInputs</span>
+<span class="go">[info]      test:compile::streams</span>
+<span class="go">[info] Reverse dependencies:</span>
+<span class="go">[info]      test:definedTestNames</span>
+<span class="go">[info]      test:definedSbtPlugins</span>
+<span class="go">[info]      test:printWarnings</span>
+<span class="go">[info]      test:discoveredMainClasses</span>
+<span class="go">[info]      test:definedTests</span>
+<span class="go">[info]      test:exportedProducts</span>
+<span class="go">[info]      test:products</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details.</p>
+<div class="full-howto section" id="taskdependencytree">
+<h2>Display tree of setting/task dependencies<a class="headerlink" href="#taskdependencytree" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>In addition to displaying immediate forward and reverse dependencies as described in the previous section,
+the <span class="pre">inspect</span> command can display the full dependency tree for a task or setting.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect tree clean
+<span class="go">[info] *:clean = Task[Unit]</span>
+<span class="go">[info]   +-*:cleanFiles = List(&lt;project&gt;/lib_managed, &lt;project&gt;/target)</span>
+<span class="go">[info]   | +-{.}/*:managedDirectory = lib_managed</span>
+<span class="go">[info]   | +-*:target = target</span>
+<span class="go">[info]   |   +-*:baseDirectory = &lt;project&gt;</span>
+<span class="go">[info]   |     +-*:thisProject = Project(id: demo, base: &lt;project&gt;, ...</span>
+<span class="go">[info]   |</span>
+<span class="go">[info]   +-*:cleanKeepFiles = List(&lt;project&gt;/target/.history)</span>
+<span class="go">[info]     +-*:history = Some(&lt;project&gt;/target/.history)</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>For each task, <span class="pre">inspect tree</span> show the type of the value generated by the task.
+For a setting, the <span class="pre">toString</span> of the setting is displayed.
+See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details on the <span class="pre">inspect</span> command.</p>
+<div class="full-howto section" id="description">
+<h2>Display the description and type of a setting or task<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>While the <span class="pre">help</span>, <span class="pre">settings</span>, and <span class="pre">tasks</span> commands display a description of a task,
+the <span class="pre">inspect</span> command also shows the type of a setting or task and the value of a setting.
+For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect update
+<span class="go">[info] Task: sbt.UpdateReport</span>
+<span class="go">[info] Description:</span>
+<span class="go">[info]      Resolves and optionally retrieves dependencies, producing a report.</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect scalaVersion
+<span class="go">[info] Setting: java.lang.String = 2.9.2</span>
+<span class="go">[info] Description:</span>
+<span class="go">[info]      The version of Scala used for building.</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details.</p>
+<div class="full-howto section" id="delegates">
+<h2>Display the delegation chain of a setting or task<a class="headerlink" href="#delegates" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details.</p>
+<div class="full-howto section" id="related">
+<h2>Display related settings or tasks<a class="headerlink" href="#related" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">inspect</span> command can help find scopes where a setting or task is defined.
+The following example shows that different options may be specified to the Scala
+for testing and API documentation generation.</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> inspect scalacOptions
+<span class="go">...</span>
+<span class="go">[info] Related:</span>
+<span class="go">[info]      compile:doc::scalacOptions</span>
+<span class="go">[info]      test:scalacOptions</span>
+<span class="go">[info]      */*:scalacOptions</span>
+<span class="go">[info]      test:doc::scalacOptions</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="../Detailed-Topics/Inspecting-Settings.html"><em>Interacting with the Configuration System</em></a> page for details.</p>
+<div class="full-howto section" id="projects">
+<h2>Show the list of projects and builds<a class="headerlink" href="#projects" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">projects</span> command displays the currently loaded projects.
+The projects are grouped by their enclosing build and the current project is indicated by an asterisk.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> projects
+<span class="go">[info] In file:/home/user/demo/</span>
+<span class="go">[info]       * parent</span>
+<span class="go">[info]         sub</span>
+<span class="go">[info] In file:/home/user/dep/</span>
+<span class="go">[info]         sample</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="session">
+<h2>Show the current session (temporary) settings<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h2>
+</div>
+<p><span class="pre">session list</span> displays the settings that have been added at the command line for the current project.  For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> session list
+<span class="go">  1. maxErrors := 5</span>
+<span class="go">  2. scalacOptions += &quot;-explaintypes&quot;</span>
+</pre></div>
+</div>
+<p><span class="pre">session list-all</span> displays the settings added for all projects.
+For details, see <span class="pre">help session</span>.</p>
+<div class="full-howto section" id="about">
+<h2>Show basic information about sbt and the current build<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> about
+<span class="go">[info] This is sbt 0.12.0</span>
+<span class="go">[info] The current project is {file:~/code/sbt.github.com/}default</span>
+<span class="go">[info] The current project is built against Scala 2.9.2</span>
+<span class="go">[info] Available Plugins: com.jsuereth.ghpages.GhPages, com.jsuereth.git.GitPlugin, com.jsuereth.sbtsite.SitePlugin</span>
+<span class="go">[info] sbt, sbt plugins, and build definitions are using Scala 2.9.2</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="value">
+<h2>Show the value of a setting<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">inspect</span> command shows the value of a setting as part of its output, but the <span class="pre">show</span> command is dedicated to this job.
+It shows the output of the setting provided as an argument.  For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show organization
+<span class="go">[info] com.github.sbt</span>
+</pre></div>
+</div>
+<p>The <span class="pre">show</span> command also works for tasks, described next.</p>
+<div class="full-howto section" id="result">
+<h2>Show the result of executing a task<a class="headerlink" href="#result" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show update
+<span class="go">... &lt;output of update&gt; ...</span>
+<span class="go">[info] Update report:</span>
+<span class="go">[info]      Resolve time: 122 ms, Download time: 5 ms, Download size: 0 bytes</span>
+<span class="go">[info]      compile:</span>
+<span class="go">[info]              org.scala-lang:scala-library:2.9.2: ...</span>
+</pre></div>
+</div>
+<p>The <span class="pre">show</span> command will execute the task provided as an argument and then print the result.
+Note that this is different from the behavior of the <span class="pre">inspect</span> command (described in other sections),
+which does not execute a task and thus can only display its type and not its generated value.</p>
+<div class="full-howto section" id="classpath">
+<h2>Show the classpath used for compilation or testing<a class="headerlink" href="#classpath" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show compile:dependencyClasspath
+<span class="go">...</span>
+<span class="go">[info] ArrayBuffer(Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar))</span>
+</pre></div>
+</div>
+<p>For the test classpath,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show <span class="nb">test</span>:dependencyClasspath
+<span class="go">...</span>
+<span class="go">[info] ArrayBuffer(Attributed(~/code/sbt.github.com/target/scala-2.9.2/classes), Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar), Attributed(~/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="applications">
+<h2>Show the main classes detected in a project<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>sbt detects the classes with public, static main methods for use by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> method and to tab-complete the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.runMain">runMain</a> method.
+The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.discoveredMainClasses">discoveredMainClasses</a> task does this discovery and provides as its result the list of class names.
+For example, the following shows the main classes discovered in the main sources:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show compile:discoveredMainClasses
+<span class="go">... &lt;runs compile if out of date&gt; ...</span>
+<span class="go">[info] List(org.example.Main)</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="tests">
+<h2>Show the test classes detected in a project<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>sbt detects tests according to fingerprints provided by test frameworks.
+The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.definedTestNames">definedTestNames</a> task provides as its result the list of test names detected in this way.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> show <span class="nb">test</span>:definedTestNames
+<span class="go">... &lt; runs test:compile if out of date &gt; ...</span>
+<span class="go">[info] List(org.example.TestA, org.example.TestB)</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Howto/inspect.rst">Source for this page</a></p>
+</p>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Inspect the build</a><ul>
+<li><a class="reference internal" href="#taskhelp">Show or search help for a command, task, or setting</a></li>
+<li><a class="reference internal" href="#listtasks">List available tasks</a></li>
+<li><a class="reference internal" href="#listsettings">List available settings</a></li>
+<li><a class="reference internal" href="#dependencies">Display forward and reverse dependencies of a setting or task</a></li>
+<li><a class="reference internal" href="#taskdependencytree">Display tree of setting/task dependencies</a></li>
+<li><a class="reference internal" href="#description">Display the description and type of a setting or task</a></li>
+<li><a class="reference internal" href="#delegates">Display the delegation chain of a setting or task</a></li>
+<li><a class="reference internal" href="#related">Display related settings or tasks</a></li>
+<li><a class="reference internal" href="#projects">Show the list of projects and builds</a></li>
+<li><a class="reference internal" href="#session">Show the current session (temporary) settings</a></li>
+<li><a class="reference internal" href="#about">Show basic information about sbt and the current build</a></li>
+<li><a class="reference internal" href="#value">Show the value of a setting</a></li>
+<li><a class="reference internal" href="#result">Show the result of executing a task</a></li>
+<li><a class="reference internal" href="#classpath">Show the classpath used for compilation or testing</a></li>
+<li><a class="reference internal" href="#applications">Show the main classes detected in a project</a></li>
+<li><a class="reference internal" href="#tests">Show the test classes detected in a project</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

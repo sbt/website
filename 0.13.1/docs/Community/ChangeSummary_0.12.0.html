@@ -1,0 +1,417 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>0.12.0 Changes &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.1-RC3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Contents" href="../index.html" />
+    <link rel="next" title="0.13.0 Changes" href="ChangeSummary_0.13.0.html" />
+    <link rel="prev" title="Introduction" href="../Dormant/Settings.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">0.12.0 Changes</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="ChangeSummary_0.13.0.html">0.13.0 Changes</a> <span class="divider">»</span>
+              </li>
+              <li>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="../Dormant/Settings.html">Introduction</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="changes">
+<h1>0.12.0 Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="features-fixes-changes-with-compatibility-implications-incomplete-please-help">
+<h2>Features, fixes, changes with compatibility implications (incomplete, please help)<a class="headerlink" href="#features-fixes-changes-with-compatibility-implications-incomplete-please-help" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The cross versioning convention has changed for Scala versions 2.10
+and later as well as for sbt plugins.</li>
+<li>When invoked directly, 'update' will always perform an update (<a class="reference external" href="https://github.com/sbt/sbt/issues/335" title="Managed dependencies not updated"><span class="xref issue closed">#335</span></a>)</li>
+<li>The sbt plugins repository is added by default for plugins and plugin definitions. <a class="reference external" href="https://github.com/sbt/sbt/issues/380" title="nix scala-tools resolver and add a new default"><span class="xref issue closed">#380</span></a></li>
+<li>Plugin configuration directory precedence has changed (see details
+section below)</li>
+<li>Source dependencies have been fixed, but the fix required changes
+(see details section below)</li>
+<li>Aggregation has changed to be more flexible (see details section
+below)</li>
+<li>Task axis syntax has changed from key(for task) to task::key (see
+details section below)</li>
+<li>The organization for sbt has to changed to <span class="pre">org.scala-sbt</span> (was:
+org.scala-tools.sbt). This affects users of the scripted plugin in
+particular.</li>
+<li><span class="pre">artifactName</span> type has changed to
+<span class="pre">(ScalaVersion, Artifact, ModuleID) =&gt; String</span></li>
+<li><span class="pre">javacOptions</span> is now a task</li>
+<li><span class="pre">session save</span> overwrites settings in <span class="pre">build.sbt</span> (when appropriate). <a class="reference external" href="https://github.com/sbt/sbt/pull/369" title="Overwrite previous setting if possible."><span class="xref issue closed">#369</span></a></li>
+<li>scala-library.jar is now required to be on the classpath in order to
+compile Scala code. See the <span class="pre">scala-library.jar</span> section at the
+bottom of the page for details.</li>
+</ul>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Support for forking tests (<a class="reference external" href="https://github.com/sbt/sbt/pull/415" title="'fork in test' initial implementation."><span class="xref issue closed">#415</span></a>)</li>
+<li><span class="pre">test-quick</span> (see details section below)</li>
+<li>Support globally overriding repositories (<a class="reference external" href="https://github.com/sbt/sbt/pull/472" title="Proxy repo config"><span class="xref issue closed">#472</span></a>)</li>
+<li>Added <span class="pre">print-warnings</span> task that will print unchecked and
+deprecation warnings from the previous compilation without needing to
+recompile (Scala 2.10+ only)</li>
+<li>Support for loading an ivy settings file from a URL.</li>
+<li><span class="pre">projects add/remove &lt;URI&gt;</span> for temporarily working with other builds</li>
+<li>Enhanced control over parallel execution (see details section below)</li>
+<li><span class="pre">inspect tree &lt;key&gt;</span> for calling <span class="pre">inspect</span> command recursively (<a class="reference external" href="https://github.com/sbt/sbt/pull/274" title="&quot;inspect tree &lt;key&gt;&quot; command"><span class="xref issue closed">#274</span></a>)</li>
+</ul>
+</div>
+<div class="section" id="fixes">
+<h2>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Delete a symlink and not its contents when recursively deleting a directory.</li>
+<li>Fix detection of ancestors for java sources</li>
+<li>Fix the resolvers used for <span class="pre">update-sbt-classifiers</span> (<a class="reference external" href="https://github.com/sbt/sbt/issues/304" title="update-sbt-classifiers doesn't work for SNAPSHOT plugins"><span class="xref issue closed">#304</span></a>)</li>
+<li>Fix auto-imports of plugins (<a class="reference external" href="https://github.com/sbt/sbt/issues/412" title="SBT 0.12.0 plugin source dependencies collide and yet don't."><span class="xref issue closed">#412</span></a>)</li>
+<li>Argument quoting (see details section below)</li>
+<li>Properly reset JLine after being stopped by Ctrl+z (unix only). <a class="reference external" href="https://github.com/sbt/sbt/issues/394" title="pausing and resuming sbt (^Z - fg) loses keyboard echo"><span class="xref issue closed">#394</span></a></li>
+</ul>
+</div>
+<div class="section" id="improvements">
+<h2>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The launcher can launch all released sbt versions back to 0.7.0.</li>
+<li>A more refined hint to run 'last' is given when a stack trace is suppressed.</li>
+<li>Use java 7 Redirect.INHERIT to inherit input stream of subprocess (<a class="reference external" href="https://github.com/sbt/sbt/pull/462" title="Use java 7 Redirect.INHERIT to inherit subprocess' input stream."><span class="xref issue closed">#462</span></a>,<a class="reference external" href="https://github.com/sbt/sbt/issues/327" title="&quot;java.io.IOException: Broken pipe&quot; after foo!&lt; and a key stroke"><span class="xref issue closed">#327</span></a>).
+This should fix issues when forking interactive programs. (&#64;vigdorchik)</li>
+<li>Mirror ivy 'force' attribute (<a class="reference external" href="https://github.com/sbt/sbt/pull/361" title="Mirror ivy \'force\' attribute in sbt."><span class="xref issue closed">#361</span></a>)</li>
+<li>Various improvements to <span class="pre">help</span> and <span class="pre">tasks</span> commands as well as
+new <span class="pre">settings</span> command (<a class="reference external" href="https://github.com/sbt/sbt/issues/315" title="tasks list should be made comprehensible"><span class="xref issue closed">#315</span></a>)</li>
+<li>Bump jsch version to 0.1.46. (<a class="reference external" href="https://github.com/sbt/sbt/issues/403" title="update jsch please!"><span class="xref issue closed">#403</span></a>)</li>
+<li>Improved help commands: <span class="pre">help</span>, <span class="pre">tasks</span>, <span class="pre">settings</span>.</li>
+<li>Bump to JLine 1.0 (see details section below)</li>
+<li>Global repository setting (see details section below)</li>
+<li>Other fixes/improvements: <a class="reference external" href="https://github.com/sbt/sbt/issues/368" title="Resolving sbt-plugins from cache is slow"><span class="xref issue closed">#368</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/pull/377" title="'test-' preffix should be stripped to obtain classifier."><span class="xref issue closed">#377</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/378" title="Plugin should be able to write to Build.settings as well as Project.settings"><span class="xref issue closed">#378</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/pull/386" title="Topic/macro def"><span class="xref issue closed">#386</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/387" title="Sbt does not remove empty output directories when appropriate, causing incremental compilation to fail"><span class="xref issue closed">#387</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/388" title="Easy way to add aliases in build.sbt / Build.scala"><span class="xref issue closed">#388</span></a>, <a class="reference external" href="https://github.com/sbt/sbt/issues/389" title="Add option to preserve last modified date for IO.unzip"><span class="xref issue closed">#389</span></a></li>
+</ul>
+</div>
+<div class="section" id="experimental-or-in-progress">
+<h2>Experimental or In-progress<a class="headerlink" href="#experimental-or-in-progress" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>API for embedding incremental compilation. This interface is subject
+to change, but already being used in <a class="reference external" href="https://github.com/davidB/scala-maven-plugin/tree/feature/sbt-inc">a branch of the
+scala-maven-plugin</a>.</li>
+<li>Experimental support for keeping the Scala compiler resident. Enable
+by passing <span class="pre">-Dsbt.resident.limit=n</span> to sbt, where <span class="pre">n</span> is an
+integer indicating the maximum number of compilers to keep around.</li>
+<li>The <a class="reference external" href="http://www.scala-sbt.org/howto.html">Howto pages</a> on the <a class="reference external" href="http://www.scala-sbt.org">new
+site</a> are at least readable now. There is
+more content to write and more formatting improvements are needed, so
+<a class="reference external" href="https://github.com/sbt/sbt.github.com">pull requests are welcome</a>.</li>
+</ul>
+</div>
+<div class="section" id="details-of-major-changes-from-0-11-2-to-0-12-0">
+<h2>Details of major changes from 0.11.2 to 0.12.0<a class="headerlink" href="#details-of-major-changes-from-0-11-2-to-0-12-0" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="plugin-configuration-directory">
+<h2>Plugin configuration directory<a class="headerlink" href="#plugin-configuration-directory" title="Permalink to this headline">¶</a></h2>
+<p>In 0.11.0, plugin configuration moved from <span class="pre">project/plugins/</span> to just
+<span class="pre">project/</span>, with <span class="pre">project/plugins/</span> being deprecated. Only 0.11.2
+had a deprecation message, but in all of 0.11.x, the presence of the old
+style <span class="pre">project/plugins/</span> directory took precedence over the new style.
+In 0.12.0, the new style takes precedence. Support for the old style
+won't be removed until 0.13.0.</p>
+<ol class="arabic simple">
+<li>Ideally, a project should ensure there is never a conflict. Both
+styles are still supported; only the behavior when there is a
+conflict has changed.</li>
+<li>In practice, switching from an older branch of a project to a new
+branch would often leave an empty <span class="pre">project/plugins/</span> directory that
+would cause the old style to be used, despite there being no
+configuration there.</li>
+<li>Therefore, the intention is that this change is strictly an
+improvement for projects transitioning to the new style and isn't
+noticed by other projects.</li>
+</ol>
+</div>
+<div class="section" id="parsing-task-axis">
+<h2>Parsing task axis<a class="headerlink" href="#parsing-task-axis" title="Permalink to this headline">¶</a></h2>
+<p>There is an important change related to parsing the task axis for
+settings and tasks that fixes <a class="reference external" href="https://github.com/sbt/sbt/issues/202" title="Task-scoped keys"><span class="xref issue closed">#202</span></a></p>
+<ol class="arabic simple">
+<li>The syntax before 0.12 has been
+<span class="pre">{build}project/config:key(for task)</span></li>
+<li>The proposed (and implemented) change for 0.12 is
+<span class="pre">{build}project/config:task::key</span></li>
+<li>By moving the task axis before the key, it allows for easier
+discovery (via tab completion) of keys in plugins.</li>
+<li>It is not planned to support the old syntax.</li>
+</ol>
+</div>
+<div class="section" id="aggregation">
+<h2>Aggregation<a class="headerlink" href="#aggregation" title="Permalink to this headline">¶</a></h2>
+<p>Aggregation has been made more flexible. This is along the direction
+that has been previously discussed on the mailing list.</p>
+<ol class="arabic simple">
+<li>Before 0.12, a setting was parsed according to the current project
+and only the exact setting parsed was aggregated.</li>
+<li>Also, tab completion did not account for aggregation.</li>
+<li>This meant that if the setting/task didn't exist on the current
+project, parsing failed even if an aggregated project contained the
+setting/task.</li>
+<li>Additionally, if compile:package existed for the current project,
+*:package existed for an aggregated project, and the user requested
+'package' to run (without specifying the configuration), *:package
+wouldn't be run on the aggregated project (because it isn't the same
+as the compile:package key that existed on the current project).</li>
+<li>In 0.12, both of these situations result in the aggregated settings
+being selected. For example,<ol class="arabic">
+<li>Consider a project <span class="pre">root</span> that aggregates a subproject <span class="pre">sub</span>.</li>
+<li><span class="pre">root</span> defines <span class="pre">*:package</span>.</li>
+<li><span class="pre">sub</span> defines <span class="pre">compile:package</span> and <span class="pre">compile:compile</span>.</li>
+<li>Running <span class="pre">root/package</span> will run <span class="pre">root/*:package</span> and
+<span class="pre">sub/compile:package</span></li>
+<li>Running <span class="pre">root/compile</span> will run <span class="pre">sub/compile:compile</span></li>
+</ol>
+</li>
+<li>This change was made possible in part by the change to task axis
+parsing.</li>
+</ol>
+</div>
+<div class="section" id="parallel-execution">
+<h2>Parallel Execution<a class="headerlink" href="#parallel-execution" title="Permalink to this headline">¶</a></h2>
+<p>Fine control over parallel execution is supported as described here:
+<a class="reference internal" href="../Detailed-Topics/Parallel-Execution.html"><em>Parallel Execution</em></a></p>
+<ol class="arabic simple">
+<li>The default behavior should be the same as before, including the
+<span class="pre">parallelExecution</span> settings.</li>
+<li>The new capabilities of the system should otherwise be considered
+experimental.</li>
+<li>Therefore, <span class="pre">parallelExecution</span> won't be deprecated at this time.</li>
+</ol>
+</div>
+<div class="section" id="source-dependencies">
+<h2>Source dependencies<a class="headerlink" href="#source-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>A fix for issue <a class="reference external" href="https://github.com/sbt/sbt/issues/329" title="External projects cause plugin conflicts"><span class="xref issue closed">#329</span></a> is included in 0.12.0. This fix ensures that only one version of a plugin
+is loaded across all projects. There are two parts to this.</p>
+<ol class="arabic simple">
+<li>The version of a plugin is fixed by the first build to load it. In
+particular, the plugin version used in the root build (the one in
+which sbt is started in) always overrides the version used in
+dependencies.</li>
+<li>Plugins from all builds are loaded in the same class loader.</li>
+</ol>
+<p>Additionally, Sanjin's patches to add support for hg and svn URIs are
+included.</p>
+<ol class="arabic simple">
+<li>sbt uses subversion to retrieve URIs beginning with <span class="pre">svn</span> or
+<span class="pre">svn+ssh</span>. An optional fragment identifies a specific revision to
+checkout.</li>
+<li>Because a URI for mercurial doesn't have a mercurial-specific scheme,
+sbt requires the URI to be prefixed with <span class="pre">hg:</span> to identify it as a
+mercurial repository.</li>
+<li>Also, URIs that end with <span class="pre">.git</span> are now handled properly.</li>
+</ol>
+</div>
+<div class="section" id="cross-building">
+<h2>Cross building<a class="headerlink" href="#cross-building" title="Permalink to this headline">¶</a></h2>
+<p>The cross version suffix is shortened to only include the major and
+minor version for Scala versions starting with the 2.10 series and for
+sbt versions starting with the 0.12 series. For example,
+<span class="pre">sbinary_2.10</span> for a normal library or <span class="pre">sbt-plugin_2.10_0.12</span> for an
+sbt plugin. This requires forward and backward binary compatibility
+across incremental releases for both Scala and sbt.</p>
+<ol class="arabic simple">
+<li>This change has been a long time coming, but it requires everyone
+publishing an open source project to switch to 0.12 to publish for
+2.10 or adjust the cross versioned prefix in their builds
+appropriately.</li>
+<li>Obviously, using 0.12 to publish a library for 2.10 requires 0.12.0
+to be released before projects publish for 2.10.</li>
+<li>There is now the concept of a binary version. This is a subset of the
+full version string that represents binary compatibility. That is,
+equal binary versions implies binary compatibility. All Scala
+versions prior to 2.10 use the full version for the binary version to
+reflect previous sbt behavior. For 2.10 and later, the binary version
+is <span class="pre">&lt;major&gt;.&lt;minor&gt;</span>.</li>
+<li>The cross version behavior for published artifacts is configured by
+the crossVersion setting. It can be configured for dependencies by
+using the <span class="pre">cross</span> method on <span class="pre">ModuleID</span> or by the traditional %%
+dependency construction variant. By default, a dependency has cross
+versioning disabled when constructed with a single % and uses the
+binary Scala version when constructed with %%.</li>
+<li>The artifactName function now accepts a type ScalaVersion as its
+first argument instead of a String. The full type is now
+<span class="pre">(ScalaVersion, ModuleID, Artifact) =&gt; String</span>. ScalaVersion
+contains both the full Scala version (such as 2.10.0) as well as the
+binary Scala version (such as 2.10).</li>
+<li>The flexible version mapping added by Indrajit has been merged into
+the <span class="pre">cross</span> method and the %% variants accepting more than one
+argument have been deprecated. See <a class="reference internal" href="../Detailed-Topics/Cross-Build.html"><em>Cross-building</em></a> for details.</li>
+</ol>
+</div>
+<div class="section" id="global-repository-setting">
+<h2>Global repository setting<a class="headerlink" href="#global-repository-setting" title="Permalink to this headline">¶</a></h2>
+<p>Define the repositories to use by putting a standalone
+<span class="pre">[repositories]</span> section (see the
+<a class="reference internal" href="../Detailed-Topics/Launcher.html"><em>Launcher Specification</em></a> page) in
+<span class="pre">~/.sbt/repositories</span> and pass <span class="pre">-Dsbt.override.build.repos=true</span> to
+sbt. Only the repositories in that file will be used by the launcher for
+retrieving sbt and Scala and by sbt when retrieving project
+dependencies. (&#64;jsuereth)</p>
+</div>
+<div class="section" id="test-quick">
+<h2>test-quick<a class="headerlink" href="#test-quick" title="Permalink to this headline">¶</a></h2>
+<p><span class="pre">test-quick</span> (<a class="reference external" href="https://github.com/sbt/sbt/pull/393" title="Wip test quick"><span class="xref issue closed">#393</span></a>) runs the tests specified as arguments (or all tests if no arguments are
+given) that:</p>
+<ol class="arabic simple">
+<li>have not been run yet OR</li>
+<li>failed the last time they were run OR</li>
+<li>had any transitive dependencies recompiled since the last successful
+run</li>
+</ol>
+</div>
+<div class="section" id="argument-quoting">
+<h2>Argument quoting<a class="headerlink" href="#argument-quoting" title="Permalink to this headline">¶</a></h2>
+<p>Argument quoting (<a class="reference external" href="https://github.com/sbt/sbt/pull/396" title="Parser for escaped and verbatim string literals"><span class="xref issue closed">#396</span></a>) from the intereactive mode works like Scala string literals.</p>
+<ol class="arabic simple">
+<li><span class="pre">&gt; command &quot;arg with spaces, n escapes interpreted&quot;</span></li>
+<li><span class="pre">&gt; command &quot;&quot;&quot;arg with spaces, n escapes not interpreted&quot;&quot;&quot;</span></li>
+<li>For the first variant, note that paths on Windows use backslashes and
+need to be escaped (<span class="pre"> \</span>). Alternatively, use the second variant,
+which does not interpret escapes.</li>
+<li>For using either variant in batch mode, note that a shell will
+generally require the double quotes themselves to be escaped.</li>
+</ol>
+</div>
+<div class="section" id="scala-library-jar">
+<h2>scala-library.jar<a class="headerlink" href="#scala-library-jar" title="Permalink to this headline">¶</a></h2>
+<p>sbt versions prior to 0.12.0 provided the location of scala-library.jar
+to scalac even if scala-library.jar wasn't on the classpath. This
+allowed compiling Scala code without scala-library as a dependency, for
+example, but this was a misfeature. Instead, the Scala library should be
+declared as <span class="pre">provided</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// Don&#39;t automatically add the scala-library dependency</span>
+<span class="c1">// in the &#39;compile&#39; configuration</span>
+<span class="n">autoScalaLibrary</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-lang&quot;</span> <span class="o">%</span> <span class="s">&quot;scala-library&quot;</span> <span class="o">%</span> <span class="s">&quot;2.9.2&quot;</span> <span class="o">%</span> <span class="s">&quot;provided&quot;</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.1/src/sphinx/Community/ChangeSummary_0.12.0.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">0.12.0 Changes</a><ul>
+<li><a class="reference internal" href="#features-fixes-changes-with-compatibility-implications-incomplete-please-help">Features, fixes, changes with compatibility implications (incomplete, please help)</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+<li><a class="reference internal" href="#improvements">Improvements</a></li>
+<li><a class="reference internal" href="#experimental-or-in-progress">Experimental or In-progress</a></li>
+<li><a class="reference internal" href="#details-of-major-changes-from-0-11-2-to-0-12-0">Details of major changes from 0.11.2 to 0.12.0</a></li>
+<li><a class="reference internal" href="#plugin-configuration-directory">Plugin configuration directory</a></li>
+<li><a class="reference internal" href="#parsing-task-axis">Parsing task axis</a></li>
+<li><a class="reference internal" href="#aggregation">Aggregation</a></li>
+<li><a class="reference internal" href="#parallel-execution">Parallel Execution</a></li>
+<li><a class="reference internal" href="#source-dependencies">Source dependencies</a></li>
+<li><a class="reference internal" href="#cross-building">Cross building</a></li>
+<li><a class="reference internal" href="#global-repository-setting">Global repository setting</a></li>
+<li><a class="reference internal" href="#test-quick">test-quick</a></li>
+<li><a class="reference internal" href="#argument-quoting">Argument quoting</a></li>
+<li><a class="reference internal" href="#scala-library-jar">scala-library.jar</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>
