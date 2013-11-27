@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC3',
+        VERSION:     '0.13.1-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -34,9 +34,9 @@
     <script type="text/javascript" src="../../../versions.js"></script>
     <script type="text/javascript" src="../_static/set-versions.js"></script>
     <link rel="top" title="sbt Documentation" href="../index.html" />
-    <link rel="up" title="Detailed Topics" href="index.html" />
-    <link rel="next" title="Testing" href="Testing.html" />
-    <link rel="prev" title="Tasks/Settings: Motivation" href="TaskInputs.html" /> 
+    <link rel="up" title="Tasks, Commands, and Plugins" href="Tasks-and-Commands.html" />
+    <link rel="next" title="Input Tasks" href="../Extending/Input-Tasks.html" />
+    <link rel="prev" title="Tasks, Commands, and Plugins" href="Tasks-and-Commands.html" /> 
   </head>
   <body>
   <div class="navbar">
@@ -57,7 +57,7 @@
       <div class="page-title">Tasks</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -69,7 +69,7 @@
           <div class="span12">
             <ul class="breadcrumb">        
               <li>
-                 <span class="divider">|</span> <a href="Testing.html">Testing</a> <span class="divider">»</span>
+                 <span class="divider">|</span> <a href="../Extending/Input-Tasks.html">Input Tasks</a> <span class="divider">»</span>
               </li>
               <li>
                  <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
@@ -78,10 +78,10 @@
                 <a href="../index.html">Contents</a>
               </li>
               <li>
-                <span class="divider">«</span> <a href="TaskInputs.html">Tasks/Settings: Motivation</a> <span class="divider">|</span>
+                <span class="divider">«</span> <a href="Tasks-and-Commands.html">Tasks, Commands, and Plugins</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -196,7 +196,7 @@ produced by <span class="pre">intTask</span> and returns the result.</p>
 </pre></div>
 </div>
 <p>Multiple settings are handled similarly:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">stringTask</span> <span class="o">:=</span> <span class="s">&quot;Sample: &quot;</span> <span class="o">+</span> <span class="n">sampleTask</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s">&quot;, int: &quot;</span> <span class="o">+</span> <span class="n">intValue</span><span class="o">.</span><span class="n">value</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">stringTask</span> <span class="o">:=</span> <span class="s">&quot;Sample: &quot;</span> <span class="o">+</span> <span class="n">sampleTask</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="s">&quot;, int: &quot;</span> <span class="o">+</span> <span class="n">intTask</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
 </div>
@@ -506,6 +506,46 @@ method:</p>
 command displays what was logged according to these levels. The levels
 do not affect already logged information.</p>
 </div>
+<div class="section" id="dynamic-computations-with-def-taskdyn">
+<h3>Dynamic Computations with <span class="pre">Def.taskDyn</span><a class="headerlink" href="#dynamic-computations-with-def-taskdyn" title="Permalink to this headline">¶</a></h3>
+<p>It can be useful to use the result of a task to determine the
+next tasks to evaluate.  This is done using <span class="pre">Def.taskDyn</span>.  The
+result of <span class="pre">taskDyn</span> is called a dynamic task because it introduces
+dependencies at runtime.  The <span class="pre">taskDyn</span> method supports the same
+syntax as <span class="pre">Def.task</span> and <span class="pre">:=</span> except that you return a task instead
+of a plain value.</p>
+<p>For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">dynamic</span> <span class="k">=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">taskDyn</span> <span class="o">{</span>
+   <span class="c1">// decide what to evaluate based on the value of `stringTask`</span>
+   <span class="k">if</span><span class="o">(</span><span class="n">stringTask</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s">&quot;dev&quot;</span><span class="o">)</span>
+      <span class="c1">// create the dev-mode task: this is only evaluated if the</span>
+      <span class="c1">//   value of stringTask is &quot;dev&quot;</span>
+      <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
+         <span class="mi">3</span>
+      <span class="o">}</span>
+   <span class="k">else</span>
+      <span class="c1">// create the production task: only evaluated if the value</span>
+      <span class="c1">//    of the stringTask is not &quot;dev&quot;</span>
+      <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
+         <span class="n">intTask</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">5</span>
+      <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="n">myTask</span> <span class="o">:=</span> <span class="o">{</span>
+   <span class="k">val</span> <span class="n">num</span> <span class="k">=</span> <span class="n">dynamic</span><span class="o">.</span><span class="n">value</span>
+             <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Number selected was $num&quot;</span><span class="o">)</span>
+     <span class="o">}</span>
+</pre></div>
+</div>
+<p>The only static dependency of <span class="pre">myTask</span> is <span class="pre">stringTask</span>.
+The dependency on <span class="pre">intTask</span> is only introduced in non-dev mode.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A dynamic task cannot refer to itself or a circular dependency will result.
+In the example above, there would be a circular dependency if the code passed to <span class="pre">taskDyn</span> referenced <span class="pre">myTask</span>.</p>
+</div>
+</div>
 <div class="section" id="handling-failure">
 <h3>Handling Failure<a class="headerlink" href="#handling-failure" title="Permalink to this headline">¶</a></h3>
 <p>This section discusses the <span class="pre">failure</span>, <span class="pre">result</span>, and <span class="pre">andFinally</span>
@@ -521,7 +561,7 @@ and any underlying exceptions thrown during task execution.</p>
 <p>For example:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">intTask</span> <span class="o">:=</span> <span class="n">error</span><span class="o">(</span><span class="s">&quot;Failed.&quot;</span><span class="o">)</span>
 
-<span class="k">lazy</span> <span class="k">val</span> <span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
+<span class="n">intTask</span> <span class="o">:=</span> <span class="o">{</span>
    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Ignoring failure: &quot;</span> <span class="o">+</span> <span class="n">intTask</span><span class="o">.</span><span class="n">failure</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
    <span class="mi">3</span>
 <span class="o">}</span>
@@ -737,6 +777,7 @@ being printed.</p>
 </li>
 <li><a class="reference internal" href="#advanced-task-operations">Advanced Task Operations</a><ul>
 <li><a class="reference internal" href="#streams-per-task-logging">Streams: Per-task logging</a></li>
+<li><a class="reference internal" href="#dynamic-computations-with-def-taskdyn">Dynamic Computations with <span class="pre">Def.taskDyn</span></a></li>
 <li><a class="reference internal" href="#handling-failure">Handling Failure</a><ul>
 <li><a class="reference internal" href="#failure"><span class="pre">failure</span></a></li>
 <li><a class="reference internal" href="#result"><span class="pre">result</span></a></li>

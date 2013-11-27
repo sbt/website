@@ -22,7 +22,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC3',
+        VERSION:     '0.13.1-RC5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +57,7 @@
       <div class="page-title">Configure and use logging</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC3 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +81,7 @@
                 <span class="divider">«</span> <a href="interactive.html">Interactive mode</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC3">Version 0.13.1-RC3</option></select>
+                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
               </li>
             </ul>         
           </div>
@@ -200,13 +200,23 @@ For example,</p>
 <div class="full-howto section" id="level">
 <h2>Change the logging level globally<a class="headerlink" href="#level" title="Permalink to this headline">¶</a></h2>
 </div>
-<p>The amount of logging is controlled by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.logLevel">logLevel</a> setting, which takes values from the <span class="pre">Level</span> enumeration.
-Valid values are <span class="pre">Error</span>, <span class="pre">Warn</span>, <span class="pre">Info</span>, and <span class="pre">Debug</span> in order of increasing verbosity.
-To change the global logging level, set <span class="pre">logLevel in Global</span>.
-For example, to set it temporarily from the sbt prompt,</p>
-<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">set </span>logLevel in Global :<span class="o">=</span> Level.Warn
+<p>The quickest way to change logging levels is by using the <span class="pre">error</span>, <span class="pre">warn</span>, <span class="pre">info</span>, or <span class="pre">debug</span> commands.
+These set the default logging level for commands and tasks.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> warn
 </pre></div>
 </div>
+<p>will by default show only warnings and errors.
+To set the logging level before any commands are executed on startup, use <span class="pre">--</span> before the logging level.  For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt --warn
+<span class="gp">&gt;</span> compile
+<span class="go">[warn] there were 2 feature warning(s); re-run with -feature for details</span>
+<span class="go">[warn] one warning found</span>
+<span class="go">[success] Total time: 4 s, completed ...</span>
+<span class="gp">&gt;</span>
+</pre></div>
+</div>
+<p>The logging level can be overridden at a finer granularity, which is described next.</p>
 <div class="full-howto section" id="tasklevel">
 <h2>Change the logging level for a specific task, configuration, or project<a class="headerlink" href="#tasklevel" title="Permalink to this headline">¶</a></h2>
 </div>
