@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,7 +21,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC5',
+        VERSION:     '0.13.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +56,7 @@
       <div class="page-title">Parsing and tab completion</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +80,7 @@
                 <span class="divider">«</span> <a href="../Extending/Commands.html">Commands</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
+                <select id="versions"><option selected value="0.13.1">Version 0.13.1</option></select>
               </li>
             </ul>         
           </div>
@@ -112,13 +111,13 @@ but we'll stick with <span class="pre">Option</span> for this discussion.</p>
 <div class="section" id="basic-parsers">
 <h2>Basic parsers<a class="headerlink" href="#basic-parsers" title="Permalink to this headline">¶</a></h2>
 <p>The simplest parser combinators match exact inputs:</p>
-<div class="highlight-scala"><pre>// A parser that succeeds if the input is &#x27;x&#x27;, returning the Char &#x27;x&#x27;
+<div class="highlight-scala"><pre>// A parser that succeeds if the input is 'x', returning the Char 'x'
 //  and failing otherwise
-val singleChar: Parser[Char] = &#x27;x&#x27;
+val singleChar: Parser[Char] = 'x'
 
-// A parser that succeeds if the input is &quot;blue&quot;, returning the String &quot;blue&quot;
+// A parser that succeeds if the input is "blue", returning the String "blue"
 //   and failing otherwise
-val litString: Parser[String] = &quot;blue&quot;</pre>
+val litString: Parser[String] = "blue"</pre>
 </div>
 <p>In these examples, implicit conversions produce a literal <span class="pre">Parser</span>
 from a <span class="pre">Char</span> or <span class="pre">String</span>. Other basic parser constructors are the

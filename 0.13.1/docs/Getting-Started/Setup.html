@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,7 +21,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC5',
+        VERSION:     '0.13.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -45,7 +44,7 @@
         <ul class="nav">
           <li><a href="http://www.scala-sbt.org/">Home</a></li>
           <li><a href="../index.html">Documentation</a></li>
-          <li><a href="Setup.html">Download</a></li>
+          <li><a href="#">Download</a></li>
           <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
           <li><a href="http://github.com/sbt/sbt">Project</a></li>           
         </ul>
@@ -57,7 +56,7 @@
       <div class="page-title">Setup</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +80,7 @@
                 <span class="divider">«</span> <a href="Welcome.html">Welcome!</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
+                <select id="versions"><option selected value="0.13.1">Version 0.13.1</option></select>
               </li>
             </ul>         
           </div>
@@ -112,10 +111,10 @@ to learn more about build definitions.</li>
 <dl class="docutils">
 <dt>Officially supported packages:</dt>
 <dd><ul class="first last simple">
-<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1-RC5/sbt.msi">MSI</a> for Windows</li>
-<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1-RC5/sbt.zip">ZIP</a> or <a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1-RC5/sbt.tgz">TGZ</a> packages</li>
-<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1-RC5/sbt.rpm">RPM</a> package</li>
-<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1-RC5/sbt.deb">DEB</a> package</li>
+<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.msi">MSI</a> for Windows</li>
+<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.zip">ZIP</a> or <a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.tgz">TGZ</a> packages</li>
+<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.rpm">RPM</a> package</li>
+<li><a class="reference external" href="http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/0.13.1/sbt.deb">DEB</a> package</li>
 </ul>
 </dd>
 </dl>
@@ -170,10 +169,10 @@ merge sbt from this ebuilds you can do:</p>
 </div>
 <div class="section" id="manual-installation">
 <span id="id3"></span><h3>Manual Installation<a class="headerlink" href="#manual-installation" title="Permalink to this headline">¶</a></h3>
-<p>Manual installation requires downloading <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1-RC5/sbt-launch.jar">sbt-launch.jar</a> and creating a script to start it.</p>
+<p>Manual installation requires downloading <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1/sbt-launch.jar">sbt-launch.jar</a> and creating a script to start it.</p>
 <div class="section" id="unix">
 <h4>Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
-<p>Put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1-RC5/sbt-launch.jar">sbt-launch.jar</a> in <span class="pre">~/bin</span>.</p>
+<p>Put <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1/sbt-launch.jar">sbt-launch.jar</a> in <span class="pre">~/bin</span>.</p>
 <p>Create a script to run the jar, by creating <span class="pre">~/bin/sbt</span> with these contents:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
 <span class="go">java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;</span>
@@ -195,13 +194,13 @@ according to your machine if necessary.</p>
 <span class="go">java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*</span>
 </pre></div>
 </div>
-<p>and put the downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1-RC5/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file.</p>
+<p>and put the downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the batch file.</p>
 <p>If using <strong>Cygwin with the standard Windows terminal</strong>, create a bash script <span class="pre">~/bin/sbt</span>:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="go">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;</span>
 <span class="go">java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;</span>
 </pre></div>
 </div>
-<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1-RC5/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
+<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
 Make the script executable:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
 </pre></div>
@@ -213,7 +212,7 @@ Make the script executable:</p>
 <span class="go">stty icanon echo &gt; /dev/null 2&gt;&amp;1</span>
 </pre></div>
 </div>
-<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1-RC5/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
+<p>Replace <span class="pre">sbt-launch.jar</span> with the path to your downloaded <a class="reference external" href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.1/sbt-launch.jar">sbt-launch.jar</a> and remember to use <span class="pre">cygpath</span> if necessary.
 Then, make the script executable:</p>
 <div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> chmod u+x ~/bin/sbt
 </pre></div>

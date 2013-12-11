@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,7 +21,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC5',
+        VERSION:     '0.13.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +56,7 @@
       <div class="page-title">Launcher Specification</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +80,7 @@
                 <span class="divider">«</span> <a href="Advanced-Index.html">Advanced</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
+                <select id="versions"><option selected value="0.13.1">Version 0.13.1</option></select>
               </li>
             </ul>         
           </div>
@@ -226,7 +225,7 @@ substituted.</p>
 [app]
   org: ${sbt.organization-org.scala-sbt}
   name: sbt
-  version: ${sbt.version-read(sbt.version)[0.13.1-RC5]}
+  version: ${sbt.version-read(sbt.version)[0.13.1]}
   class: ${sbt.main.class-sbt.xMain}
   components: xsbti,extra
   cross-versioned: ${sbt.cross.versioned-false}
@@ -367,7 +366,7 @@ interface class will be provided by the launcher, so it is only a
 compile-time dependency. If you are building with sbt, your dependency
 definition would be:</p>
 <pre class="literal-block">
-libraryDependencies += &quot;org.scala-sbt&quot; % &quot;launcher-interface&quot; % &quot;0.13.1-RC5&quot; % &quot;provided&quot;
+libraryDependencies += &quot;org.scala-sbt&quot; % &quot;launcher-interface&quot; % &quot;0.13.1&quot; % &quot;provided&quot;
 
 resolvers += sbtResolver.value
 </pre>
@@ -382,21 +381,21 @@ class Main extends xsbti.AppMain
         val scalaVersion = configuration.provider.scalaProvider.version
 
         // Print a message and the arguments to the application
-        println(&quot;Hello world!  Running Scala &quot; + scalaVersion)
+        println("Hello world!  Running Scala " + scalaVersion)
         configuration.arguments.foreach(println)
 
         // demonstrate the ability to reboot the application into different versions of Scala
         // and how to return the code to exit with
         scalaVersion match
         {
-            case &quot;2.9.3&quot; =&gt;
+            case "2.9.3" =&gt;
                 new xsbti.Reboot {
                     def arguments = configuration.arguments
                     def baseDirectory = configuration.baseDirectory
-                    def scalaVersion = &quot;2.10.2
+                    def scalaVersion = "2.10.2
                     def app = configuration.provider.id
                 }
-            case &quot;2.10.2&quot; =&gt; new Exit(1)
+            case "2.10.2" =&gt; new Exit(1)
             case _ =&gt; new Exit(0)
         }
     }
@@ -411,7 +410,7 @@ it might look like:</p>
 [app]
   org: org.scala-sbt
   name: xsbt-test
-  version: 0.13.1-RC5
+  version: 0.13.1
   class: xsbt.test.Main
   cross-versioned: binary
 [repositories]

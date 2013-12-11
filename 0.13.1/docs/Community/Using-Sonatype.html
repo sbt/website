@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -22,7 +21,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.13.1-RC5',
+        VERSION:     '0.13.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  false
@@ -57,7 +56,7 @@
       <div class="page-title">Deploying to Sonatype</div>
       <div class="search-box">
         <form method="get" action="http://www.google.com/search" id="search">
-          <input type="search" placeholder="Search 0.13.1-RC5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="search" placeholder="Search 0.13.1 on Google" name="q" results="10" size="29" id="search-input">
           <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.1/docs/"> 
           <input type="submit" id="submit-search">
         </form>
@@ -81,7 +80,7 @@
                 <span class="divider">«</span> <a href="Community-Plugins.html">Community Plugins</a> <span class="divider">|</span>
               </li>
               <li>
-                <select id="versions"><option selected value="0.13.1-RC5">Version 0.13.1-RC5</option></select>
+                <select id="versions"><option selected value="0.13.1">Version 0.13.1</option></select>
               </li>
             </ul>         
           </div>
@@ -113,7 +112,7 @@ up the repositories you wish to push too. Luckily, Sonatype's OSSRH uses
 the same URLs for everyone:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">isSnapshot</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
   <span class="k">else</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span>  <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>
@@ -275,7 +274,7 @@ The tweaks include specifying the project's authors, URL, SCM and many
 others:</p>
 <div class="highlight-scala"><div class="highlight"><pre><span class="n">publishTo</span> <span class="o">:=</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">nexus</span> <span class="k">=</span> <span class="s">&quot;https://oss.sonatype.org/&quot;</span>
-  <span class="k">if</span> <span class="o">(</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">trim</span><span class="o">.</span><span class="n">endsWith</span><span class="o">(</span><span class="s">&quot;SNAPSHOT&quot;</span><span class="o">))</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">isSnapshot</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;snapshots&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;content/repositories/snapshots&quot;</span><span class="o">)</span>
   <span class="k">else</span>
     <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;releases&quot;</span> <span class="n">at</span> <span class="n">nexus</span> <span class="o">+</span> <span class="s">&quot;service/local/staging/deploy/maven2&quot;</span><span class="o">)</span>
