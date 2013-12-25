@@ -216,6 +216,8 @@ myPluginSettings
 `~/.sbt/plugins/build.sbt` を作って、そこに `addSbtPlugin()` 式を書くことで
 全プロジェクトにプラグインを追加することができる。
 
+(sbt 0.13.0 から、グローバルプラグイン設定のデフォルトディレクトリは `~/.sbt/0.13/plugins/` へ変更になっています)
+
 ## 利用可能なプラグイン
 
 [プラグインのリスト](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)がある。
