@@ -177,8 +177,7 @@ sbt は、`sbt/sbt.plugins` に列挙されたオブジェクトを探す。
 だけど、[マルチプロジェクトビルド](../multi-project)内のどのプロジェクトがプラグインを
 使うかをコントロールできなくなってしまうため、通常プラグインはこの方法を避けることが多い。
 
-sbt は、複数のセッティングをまとめて追加できる `seq` メソッドを提供する。
-あるプラグインが以下のような定義だとする:
+sbt は、複数のセッティングをまとめて追加できる。
 
 <pre>
 object MyPlugin extends Plugin {
@@ -189,16 +188,8 @@ object MyPlugin extends Plugin {
 このとき、以下のようにして `build.sbt` に全てのセッティングをまとめて追加できる:
 
 <pre>
-seq(myPluginSettings: _*)
+myPluginSettings
 </pre>
-
-`_*` 構文を見慣れてないという人のための解説:
-
- - `seq` は、可変長引数を受け取る: `def seq(settings: Setting[_]*)`
- - `_*` は列を可変長引数へと変換する
-
-つまり、`build.sbt` に `seq(myPluginSettings: _*)` と書けば、
-`myPluginSettings` 内の全てのセッティングをプロジェクトに追加できる。
 
 ## プラグインの作成
 
