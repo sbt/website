@@ -8,7 +8,9 @@ layout: default
 _始める sbt 1/14 ページ_ [次](setup)
 
 > 原文: [Getting Started Guide](http://www.scala-sbt.org/release/docs/Getting-Started/Welcome.html)<br>
-> [誤訳の報告をする](https://github.com/scalajp/sbt-getting-started-guide-ja/issues)。
+> [誤訳の報告をする](https://github.com/scalajp/sbt-getting-started-guide-ja/issues)。<br>
+> このスタートガイドは、sbt 0.11 〜 0.12 の頃に書かれたものです。書いてある内容はまだ十分有用ですが、sbt0.13ではある程度の機能追加などもされています。
+> sbt0.13での変更点や新機能に興味がある人は、こちら[sbt 0.13.0 の変更点](http://eed3si9n.com/ja/node/142) も一緒に読むといいでしょう。
 
 「始める sbt」で君も sbt を始めよう。
 
