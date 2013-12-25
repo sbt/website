@@ -158,7 +158,7 @@ $ sbt
 [info]     runtime:full-classpath
 </pre>
 
-一行目からこれが（[[.sbt ビルド定義|Basic Def]] で説明されているとおり、セッティングではなく）タスクであることが分かる。
+一行目からこれが（[.sbt ビルド定義](../basic-def) で説明されているとおり、セッティングではなく）タスクであることが分かる。
 このタスクの戻り値は `scala.collection.Seq[sbt.Attributed[java.io.File]]` の型をとる。
 
 "Provided by" は、この値を定義するスコープ付きキーを指し、この場合は、
@@ -194,7 +194,7 @@ $ sbt
 sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/hp/checkout/hello/}default-aea33a/*:name` により提供されていることを確認しよう。つまり、プロジェクトは、`{file:/home/hp/checkout/hello/}default-aea33a` で、コンフィギュレーションは `*` で、タスクは表示されていない（グローバルを指す）ということだ。
 
 `build.sbt` は常に単一のプロジェクトのセッティングを定義するため、「現プロジェクト」は今 `build.sbt` で定義しているプロジェクトを指す。
-（[[マルチプロジェクトビルド|Multi-Project]]の場合は、プロジェクトごとに `build.sbt` がある。）
+（[マルチプロジェクト・ビルド](../multi-project)の場合は、プロジェクトごとに `build.sbt` がある。）
 
 キーにはオーバーロードされた `in` メソッドがあり、それによりスコープを設定できる。
 `in` への引数として、どのスコープ軸のインスタンスでも渡すことができる。
