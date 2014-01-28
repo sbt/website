@@ -3,7 +3,7 @@ title: 他の種類のセッティング
 layout: default
 ---
 
-[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
+[Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html "Keys.scala"
 
 # 他の種類のセッティング
 

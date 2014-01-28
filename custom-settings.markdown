@@ -3,8 +3,8 @@ title: カスタムセッティングとタスク
 layout: default
 ---
 
-[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
-[Defaults]: http://www.scala-sbt.org/release/sxr/Defaults.scala.html "Defaults.scala"
+[Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html "Keys.scala"
+[Defaults]: http://www.scala-sbt.org/release/sxr/sbt/Defaults.scala.html "Defaults.scala"
 [IO]: http://www.scala-sbt.org/release/api/index.html#sbt.IO$ "IO object"
 
 # カスタムセッティングとタスク

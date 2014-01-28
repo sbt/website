@@ -3,7 +3,7 @@ title: ライブラリ依存性
 layout: default
 ---
 
-[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html "Keys.scala"
+[Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html "Keys.scala"
 [Apache Ivy]: http://ant.apache.org/ivy/
 [Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
 [Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra

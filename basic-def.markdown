@@ -3,7 +3,7 @@ title: `.sbt` ビルド定義
 layout: default
 ---
 
-[Keys]: http://www.scala-sbt.org/release/sxr/Keys.scala.html
+[Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
 
 # `.sbt` ビルド定義
 
