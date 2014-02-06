@@ -128,7 +128,7 @@ becomes sbt's new map.</p>
 <p>To create its map, sbt first sorts the list of settings so that all
 changes to the same key are made together, and values that depend on
 other keys are processed after the keys they depend on. Then sbt walks
-over the sorted list of <span class="pre">Setting</span> and applies each one to the map in
+over the sorted list of <span class="pre">Setting</span>s and applies each one to the map in
 turn.</p>
 <p>Summary: A build definition defines a list of <span class="pre">Setting[T]</span>, where a
 <span class="pre">Setting[T]</span> is a transformation affecting sbt's map of key-value
@@ -153,8 +153,8 @@ be looking at the equivalent <span class="pre">.scala</span> code.</p>
 Each <span class="pre">Setting</span> is defined with a Scala expression.
 The expressions in <span class="pre">build.sbt</span> are independent of one another, and
 they are expressions, rather than complete Scala statements.  These
-expressions may be interspersed with <span class="pre">val`s, `lazy val`s, and `def`s,
-but top-level `object`s and classes are not allowed in `build.sbt</span>.
+expressions may be interspersed with <span class="pre">val</span>s, <span class="pre">lazy val</span>s, and <span class="pre">def</span>s.
+Top-level <span class="pre">object</span>s and <span class="pre">class</span>es are not allowed in <span class="pre">build.sbt</span>.
 Those should go in the <span class="pre">project/</span> directory as full Scala source files.</p>
 <p>On the left, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.version">version</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaVersion">scalaVersion</a> are <em>keys</em>. A
 key is an instance of <span class="pre">SettingKey[T]</span>, <span class="pre">TaskKey[T]</span>, or
