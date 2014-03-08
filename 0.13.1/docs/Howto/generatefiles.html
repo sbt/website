@@ -127,7 +127,7 @@
 </pre></div>
 </div>
 <p>As a specific example, the following generates a properties file containing the application name and version:</p>
-<div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="o">{</span>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resourceGenerators</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">&lt;+=</span> <span class="nc">Def</span><span class="o">.</span><span class="n">task</span> <span class="o">{</span>
     <span class="k">val</span> <span class="n">file</span> <span class="k">=</span> <span class="o">(</span><span class="n">resourceManaged</span> <span class="n">in</span> <span class="nc">Compile</span><span class="o">).</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;demo&quot;</span> <span class="o">/</span> <span class="s">&quot;myapp.properties&quot;</span>
     <span class="k">val</span> <span class="n">contents</span> <span class="k">=</span> <span class="s">&quot;name=%s\nversion=%s&quot;</span><span class="o">.</span><span class="n">format</span><span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="n">value</span><span class="o">,</span><span class="n">version</span><span class="o">.</span><span class="n">value</span><span class="o">)</span>
     <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">file</span><span class="o">,</span> <span class="n">contents</span><span class="o">)</span>
