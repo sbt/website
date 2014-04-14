@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/AppMain.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti;
+
+/**
+ * The main entry interface for launching applications.   Classes which implement this interface
+ * can be launched via the sbt launcher.
+ * 
+ * In addition, classes can be adapted into this interface by the launcher if they have a static method
+ * matching one of these signatures:
+ * 
+ * - public static void main(String[] args)
+ * - public static int main(String[] args)
+ * - public static xsbti.Exit main(String[] args)
+ *
+ */
+public interface AppMain
+{
+	/** Run the application and return the result.
+	 * 
+	 * @param configuration  The configuration used to run the application.  Includes arguments and access to launcher features.
+	 * @return
+	 *        The result of running this app.  
+	 *        Note: the result can be things like &quot;Please reboot this application&quot;. 
+	 */
+	public MainResult run(AppConfiguration configuration);
+}
+        </pre>
+    </body>
+</html>

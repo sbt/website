@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sbt Launcher Architecture &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Sbt Launcher" href="index.html" />
+    <link rel="next" title="Examples" href="../Examples/index.html" />
+    <link rel="prev" title="Sbt Launcher Configuration" href="Configuration.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Sbt Launcher Architecture</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="../Examples/index.html">Examples</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="../Detailed-Topics/index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Configuration.html">Sbt Launcher Configuration</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="sbt-launcher-architecture">
+<h1>Sbt Launcher Architecture<a class="headerlink" href="#sbt-launcher-architecture" title="Permalink to this headline">¶</a></h1>
+<p>The sbt launcher is a mechanism whereby modules can be loaded from ivy and
+executed within a jvm.  It abstracts the mechanism of grabbing and caching jars,
+allowing users to focus on what application they want and control its versions.</p>
+<p>The launcher's primary goal is to take configuration for applications, mostly
+just ivy coordinates and a main class, and start the application.   The
+launcher resolves the ivy module, caches the required runtime jars and
+starts the application.</p>
+<p>The sbt launcher provides the application with the means to load a different
+application when it completes, exit normally, or load additional applications
+from inside another.</p>
+<p>The sbt launcher provides these core functions:</p>
+<ul class="simple">
+<li>Module Resolution</li>
+<li>Classloader Caching and Isolation</li>
+<li>File Locking</li>
+<li>Service Discovery and Isolation</li>
+</ul>
+<div class="section" id="module-resolution">
+<h2>Module Resolution<a class="headerlink" href="#module-resolution" title="Permalink to this headline">¶</a></h2>
+<p>The primary purpose of the sbt launcher is to resolve applications and run them.
+This is done through the <span class="pre">[app]</span> configuration section.  See :doc:Configuration
+for more information on how to configure module resolution.</p>
+<p>Module resolution is performed using the Ivy dependency managemnet library.  This
+library supports loading artifacts from Maven repositories as well.</p>
+</div>
+<div class="section" id="classloader-caching-and-isolation">
+<h2>Classloader Caching and Isolation<a class="headerlink" href="#classloader-caching-and-isolation" title="Permalink to this headline">¶</a></h2>
+<p>The sbt launcher's classloading structure is different than just starting an
+application in the standard java mechanism.   Every application loaded by
+by the launcher is given its own classloader.   This classloader is a child
+of the Scala classloader used by the application.   The Scala classloader can see
+all of the <span class="pre">xsbti.*</span> classes from the launcher itself.</p>
+<p>Here's an example classloader layout from an sbt launched application.</p>
+<img alt="../_images/classloaders.png" src="../_images/classloaders.png" />
+<p>In this diagram, three different applications were loaded.  Two of these use the
+same version of Scala (2.9.2).  In this case, sbt can share the same classloader
+for these applications.  This has the benefit that any JIT optimisations performed
+on scala classes can be re-used between applications thanks to the shared
+classloader.</p>
+</div>
+<div class="section" id="caching">
+<h2>Caching<a class="headerlink" href="#caching" title="Permalink to this headline">¶</a></h2>
+<p>The sbt launcher creates a secondary cache on top of Ivy's own cache.  This helps
+isolate applications from errors resulting from unstable revisions, like
+<span class="pre">-SNAPSHOT</span>.  For any launched application, the launcher creates a directory
+to store all its jars.  Here's an example layout.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">$</span><span class="o">{</span><span class="n">boot</span><span class="o">.</span><span class="n">directory</span><span class="o">}/</span>
+   <span class="n">scala_2</span><span class="o">.</span><span class="mf">9.2</span><span class="o">/</span>
+     <span class="n">lib</span><span class="o">/</span>
+       <span class="o">&lt;</span><span class="n">scala</span> <span class="n">library</span> <span class="n">jars</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">org</span><span class="o">&gt;/&lt;</span><span class="n">name</span><span class="o">&gt;/&lt;</span><span class="n">version</span><span class="o">&gt;/</span>
+           <span class="o">&lt;</span><span class="n">application</span><span class="o">-</span><span class="mi">1</span> <span class="n">jars</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">org</span><span class="o">&gt;/&lt;</span><span class="n">name</span><span class="o">&gt;/&lt;</span><span class="n">version</span><span class="o">&gt;/</span>
+           <span class="o">&lt;</span><span class="n">application</span><span class="o">-</span><span class="mi">2</span> <span class="n">jars</span><span class="o">&gt;</span>
+   <span class="n">scala_2</span><span class="o">.</span><span class="mf">10.3</span><span class="o">/</span>
+     <span class="n">lib</span><span class="o">/</span>
+       <span class="o">&lt;</span><span class="n">scala</span> <span class="n">library</span> <span class="n">jars</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="n">org</span><span class="o">&gt;/&lt;</span><span class="n">name</span><span class="o">&gt;/&lt;</span><span class="n">version</span><span class="o">&gt;/</span>
+           <span class="o">&lt;</span><span class="n">application</span><span class="o">-</span><span class="mi">3</span> <span class="n">jars</span><span class="o">&gt;/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="locking">
+<h2>Locking<a class="headerlink" href="#locking" title="Permalink to this headline">¶</a></h2>
+<p>In addition to providing a secondary cache, the launcher also provides a mechanism
+of safely doing file-based locks.  This is used in two places directly by the
+launcher:</p>
+<ol class="arabic simple">
+<li>Locking the boot directory.</li>
+<li>Ensuring located servers have at most one active process.</li>
+</ol>
+<p>This feature requires a filesystem which supports locking.  It is exposed via the
+<span class="pre">xsbti.GlobalLock</span> interface.</p>
+<p><em>Note:  This is both a thread and file lock.  Not only are we limiting access to a single process, but also a single thread within that process.</em></p>
+</div>
+<div class="section" id="service-discovery-and-isolation">
+<h2>Service Discovery and Isolation<a class="headerlink" href="#service-discovery-and-isolation" title="Permalink to this headline">¶</a></h2>
+<p>The launcher also provides a mechanism to ensure that only one instance of a
+server is running, while dynamically starting it when a client requests.  This
+is done through the <span class="pre">--locate</span> flag on the launcher.   When the launcher is
+started with the <span class="pre">--locate</span> flag it will do the following:</p>
+<ol class="arabic simple">
+<li>Lock on the configured server lock file.</li>
+<li>Read the server properties to find the URI of the previous server.</li>
+<li>If the port is still listening to connection requests, print this URI
+on the command line.</li>
+<li>If the port is not listening, start a new server and write the URI
+on the command line.</li>
+<li>Release all locks and shutdown.</li>
+</ol>
+<p>The configured <span class="pre">server.lock</span> file is thus used to prevent multiple servers from
+running.  Sbt itself uses this to prevent more than one server running on any
+given project directory by configuring <span class="pre">server.lock</span> to be
+<span class="pre">${user.dir}/.sbtserver</span>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Launcher/Architecture.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Sbt Launcher Architecture</a><ul>
+<li><a class="reference internal" href="#module-resolution">Module Resolution</a></li>
+<li><a class="reference internal" href="#classloader-caching-and-isolation">Classloader Caching and Isolation</a></li>
+<li><a class="reference internal" href="#caching">Caching</a></li>
+<li><a class="reference internal" href="#locking">Locking</a></li>
+<li><a class="reference internal" href="#service-discovery-and-isolation">Service Discovery and Isolation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

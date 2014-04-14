@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/ScalaProvider.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti;
+
+import java.io.File;
+
+/** Provides access to the jars and classes for a particular version of Scala.*/
+public interface ScalaProvider
+{
+	public Launcher launcher();
+	/** The version of Scala this instance provides.*/
+	public String version();
+
+	/** A ClassLoader that loads the classes from scala-library.jar and scala-compiler.jar.*/
+	public ClassLoader loader();
+	/** Returns the scala-library.jar and scala-compiler.jar for this version of Scala. */
+	public File[] jars();
+
+	/**@deprecated Only `jars` can be reliably provided for modularized Scala. (Since 0.13.0) */
+	@Deprecated
+	public File libraryJar();
+
+	/**@deprecated Only `jars` can be reliably provided for modularized Scala. (Since 0.13.0) */
+	@Deprecated
+	public File compilerJar();
+
+	/** Creates an application provider that will use 'loader()' as the parent ClassLoader for
+	* the application given by 'id'.  This method will retrieve the application if it has not already
+	* been retrieved.*/
+	public AppProvider app(ApplicationID id);
+}
+
+        </pre>
+    </body>
+</html>

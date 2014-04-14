@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using Plugins &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Custom Settings and Tasks" href="Custom-Settings.html" />
+    <link rel="prev" title="Multi-Project Builds" href="Multi-Project.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Using Plugins</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Custom-Settings.html">Custom Settings and Tasks</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Multi-Project.html">Multi-Project Builds</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="using-plugins">
+<h1>Using Plugins<a class="headerlink" href="#using-plugins" title="Permalink to this headline">¶</a></h1>
+<p>Please read the earlier pages in the Getting Started Guide first, in
+particular you need to understand <a class="reference internal" href="Basic-Def.html"><em>build.sbt</em></a> and
+<a class="reference internal" href="Library-Dependencies.html"><em>library dependencies</em></a>,
+before reading this page.</p>
+<div class="section" id="what-is-a-plugin">
+<h2>What is a plugin?<a class="headerlink" href="#what-is-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>A plugin extends the build definition, most commonly by adding new
+settings. The new settings could be new tasks. For example, a plugin
+could add a <span class="pre">codeCoverage</span> task which would generate a test coverage
+report.</p>
+</div>
+<div class="section" id="declaring-a-plugin">
+<h2>Declaring a plugin<a class="headerlink" href="#declaring-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>If your project is in directory <span class="pre">hello</span>, edit <span class="pre">hello/project/plugins.sbt</span> and declare the plugin dependency by passing the plugin's Ivy module ID to <span class="pre">addSbtPlugin</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;com.typesafe.sbt&quot;</span> <span class="o">%</span> <span class="s">&quot;sbt-site&quot;</span> <span class="o">%</span> <span class="s">&quot;0.7.0&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Not every plugin is located on one of the default repositories and a plugin's documentation may instruct you to also add the repository where it can be found:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Plugins usually provide settings that get added to a project to enable the plugin's functionality.
+This is described in the next section.</p>
+</div>
+<div class="section" id="adding-settings-for-a-plugin">
+<h2>Adding settings for a plugin<a class="headerlink" href="#adding-settings-for-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>A plugin can declare that its settings be automatically added, in which case you don't have to do anything to add them.
+However, plugins often avoid this because you wouldn't control which projects in a <a class="reference internal" href="Multi-Project.html"><em>multi-project build</em></a> would use the plugin.
+The plugin documentation will indicate how to configure it, but typically it involves adding the base settings for the plugin and customizing as necessary.</p>
+<p>For example, for the sbt-site plugin, add</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">site</span><span class="o">.</span><span class="n">settings</span>
+</pre></div>
+</div>
+<p>to a <span class="pre">build.sbt</span> to enable it for that project.</p>
+<p>If the build defines multiple projects, instead add it directly to the project:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// don&#39;t use the site plugin for the `util` project</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">util</span> <span class="k">=</span> <span class="n">project</span>
+
+<span class="c1">// enable the site plugin for the `core` project</span>
+<span class="k">lazy</span> <span class="k">val</span> <span class="n">core</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">settings</span><span class="o">(</span> <span class="n">site</span><span class="o">.</span><span class="n">settings</span> <span class="k">:</span> <span class="k">_</span><span class="kt">*</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="global-plugins">
+<h2>Global plugins<a class="headerlink" href="#global-plugins" title="Permalink to this headline">¶</a></h2>
+<p>Plugins can be installed for all your projects at once by dropping them in <span class="pre">~/.sbt/0.13/plugins/</span>.
+<span class="pre">~/.sbt/0.13/plugins/</span> is an sbt project whose classpath is exported to all sbt build definition projects.
+Roughly speaking, any <span class="pre">.sbt</span> or <span class="pre">.scala</span> files in <span class="pre">~/.sbt/0.13/plugins/</span> behave as if they were in the <span class="pre">project/</span> directory for all projects.</p>
+<p>You can create <span class="pre">~/.sbt/0.13/plugins/</span><span class="pre">build.sbt</span> and put <span class="pre">addSbtPlugin()</span>
+expressions in there to add plugins to all your projects at once.
+This feature should be used sparingly, however.
+See <a class="reference internal" href="../Detailed-Topics/Best-Practices.html#global-vs-local-plugins"><em>Best Practices</em></a>.</p>
+</div>
+<div class="section" id="available-plugins">
+<h2>Available Plugins<a class="headerlink" href="#available-plugins" title="Permalink to this headline">¶</a></h2>
+<p>There's <a class="reference internal" href="../Community/Community-Plugins.html"><em>a list of available plugins</em></a>.</p>
+<p>Some especially popular plugins are:</p>
+<ul class="simple">
+<li>those for IDEs (to import an sbt project into your IDE)</li>
+<li>those supporting web frameworks, such as
+<a class="reference external" href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a>.</li>
+</ul>
+<p><a class="reference internal" href="../Community/Community-Plugins.html"><em>Check out the list</em></a>.</p>
+</div>
+<div class="section" id="creating-a-plugin">
+<h2>Creating a Plugin<a class="headerlink" href="#creating-a-plugin" title="Permalink to this headline">¶</a></h2>
+<p>A minimal plugin is a Scala library that is built against the version of Scala for sbt itself, which is currently 2.10.
+Nothing special needs to be done for this type of plugin.
+It can be published as a normal project and declared in <span class="pre">project/plugins.sbt</span> like a normal dependency (without <span class="pre">addSbtPlugin</span>).</p>
+<p>A more typical plugin will provide sbt tasks, commands, or settings.
+This kind of plugin may provide these settings automatically or make them available for the user to explicitly integrate.
+To create an sbt plugin,</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create a new project for the plugin.</li>
+<li>Set <span class="pre">sbtPlugin := true</span> for the project in <span class="pre">build.sbt</span>.  This adds a dependency on sbt and will detect and record Plugins that you define.</li>
+<li>(optional) Define an <span class="pre">object</span> that extends <span class="pre">Plugin</span>.  The contents of this object will be automatically imported in <span class="pre">.sbt</span> files, so ensure it only contains important API definitions and types.</li>
+<li>Define any custom tasks or settings (see the next section <a class="reference internal" href="Custom-Settings.html"><em>Custom Settings and Tasks</em></a>).</li>
+<li>Collect the default settings to apply to a project in a list for the user to add.  Optionally override one or more of Plugin's methods to have settings automatically added to user projects.</li>
+<li>Publish the project.  There is a  <a class="reference internal" href="../Community/Community-Plugins.html"><em>community repository</em></a> available for open source plugins.</li>
+</ol>
+</div></blockquote>
+<p>For more details, including ways of developing plugins, see <a class="reference internal" href="../Extending/Plugins.html"><em>Plugins</em></a>.
+For best practices, see <a class="reference internal" href="../Extending/Plugins-Best-Practices.html"><em>Plugins Best Practices</em></a>.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Move on to create <a class="reference internal" href="Custom-Settings.html"><em>custom settings</em></a>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Getting-Started/Using-Plugins.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Using Plugins</a><ul>
+<li><a class="reference internal" href="#what-is-a-plugin">What is a plugin?</a></li>
+<li><a class="reference internal" href="#declaring-a-plugin">Declaring a plugin</a></li>
+<li><a class="reference internal" href="#adding-settings-for-a-plugin">Adding settings for a plugin</a></li>
+<li><a class="reference internal" href="#global-plugins">Global plugins</a></li>
+<li><a class="reference internal" href="#available-plugins">Available Plugins</a></li>
+<li><a class="reference internal" href="#creating-a-plugin">Creating a Plugin</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

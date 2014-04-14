@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/HList.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010 Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> <a href="Types.scala.html#sbt.Types" title="sbt.Types.type">Types</a>._
+
+<span class="comment">/** A minimal heterogeneous list type.  For background, see
+* http://apocalisp.wordpress.com/2010/07/06/type-level-programming-in-scala-part-6a-heterogeneous-list basics/ */</span>
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait HList extends AnyRef" id="sbt;HList">HList</a>
+<span class="delimiter">{</span>
+	<span class="keyword">type</span> <a title="[M[_]] &lt;: sbt.HList" id="sbt;HList;Wrap">Wrap</a><span class="delimiter">[</span><a title="[_]" id="sbt;HList;Wrap;M">M</a><span class="delimiter">[</span><a title="" id="sbt;HList;Wrap;M;_">_</a><span class="delimiter">]</span><span class="delimiter">]</span> &lt;: HList
+<span class="delimiter">}</span>
+<span title="AnyRef" class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait HNil extends AnyRef with sbt.HList" id="sbt;HNil">HNil</a> <span title="Unit" class="keyword">extends</span> <a href="#sbt;HList" title="sbt.HList">HList</a>
+<span class="delimiter">{</span>
+	<span class="keyword">type</span> <a title="[M[_]]sbt.HNil" id="sbt;HNil;Wrap">Wrap</a><span class="delimiter">[</span><a title="[_]" id="sbt;HNil;Wrap;M">M</a><span class="delimiter">[</span><a title="" id="sbt;HNil;Wrap;M;_">_</a><span class="delimiter">]</span><span class="delimiter">]</span> = <a href="#sbt;HNil" title="sbt.HNil">HNil</a>
+	<span class="keyword">def</span> <a title="[G](g: G)sbt.Types.:+:[G,sbt.HNil]" id="sbt;HNil.:+:">:+:</a> <span class="delimiter">[</span><a title="" id="sbt;HNil.:+:;G">G</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="G" id="sbt;HNil.:+:.g">g</a>: <a href="#sbt;HNil.:+:;G" title="G">G</a><span class="delimiter">)</span>: G <a href="#sbt.HCons.readResolve" title="sbt.Types.:+:[G,sbt.HNil]">:+:</a> HNil = <a href="#sbt.HCons.readResolve" title="(head: G, tail: sbt.HNil)sbt.HCons[G,sbt.HNil]">HCons</a><span class="delimiter">(</span><a href="#sbt;HNil.:+:.g" title="G">g</a>, <a href="#sbt;HNil" title="sbt.HNil" class="keyword">this</a><span class="delimiter">)</span>
+
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()String" id="sbt;HNil.toString">toString</a> = <span title="String(&quot;HNil&quot;)" class="string">&quot;HNil&quot;</span>
+<span class="delimiter">}</span>
+<span class="keyword">object</span> <a title="sbt.HNil.type" id="sbt.HNil">HNil</a> <a href="#sbt.HNil" title="sbt.HNil.type" class="keyword">extends</a> <a href="#sbt;HNil" title="sbt.HNil">HNil</a>
+<span class="keyword">final</span> <span class="keyword">case class</span> <a href="#sbt;HCons.productElement.x$1" title="class HCons[H, T &lt;: sbt.HList] extends AnyRef with sbt.HList with Product with Serializable" id="sbt.HCons.readResolve">HCons</a><span class="delimiter">[</span><a title="" id="sbt;HCons;H">H</a>, <a title=" &lt;: sbt.HList" id="sbt;HCons;T">T</a> &lt;: HList<span class="delimiter">]</span><a href="#sbt.HCons.readResolve" title="Product" class="delimiter">(</a><a title="H" id="sbt;HCons.head">head</a> : <a href="#sbt;HCons;H" title="H">H</a>, <a title="T" id="sbt;HCons.tail">tail</a> : <a href="#sbt;HCons;T" title="T">T</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#sbt;HList" title="sbt.HList">HList</a>
+<span class="delimiter">{</span>
+	<span class="keyword">type</span> <a title="[M[_]]sbt.Types.:+:[M[H],T#Wrap[M]]" id="sbt;HCons;Wrap">Wrap</a><span class="delimiter">[</span><a title="[_]" id="sbt;HCons;Wrap;M">M</a><span class="delimiter">[</span><a title="" id="sbt;HCons;Wrap;M;_">_</a><span class="delimiter">]</span><span class="delimiter">]</span> = M<span class="delimiter">[</span>H<span class="delimiter">]</span> <a href="#sbt.HCons.readResolve" title="sbt.Types.:+:[M[H],T#Wrap[M]]">:+:</a> T#Wrap<span class="delimiter">[</span>M<span class="delimiter">]</span>
+	<span class="keyword">def</span> <a title="[G](g: G)sbt.Types.:+:[G,sbt.Types.:+:[H,T]]" id="sbt;HCons.:+:">:+:</a> <span class="delimiter">[</span><a title="" id="sbt;HCons.:+:;G">G</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="G" id="sbt;HCons.:+:.g">g</a>: <a href="#sbt;HCons.:+:;G" title="G">G</a><span class="delimiter">)</span>: G <a href="#sbt.HCons.readResolve" title="sbt.Types.:+:[G,sbt.Types.:+:[H,T]]">:+:</a> H :+: T = <a href="#sbt.HCons.readResolve" title="(head: G, tail: sbt.HCons[H,T])sbt.HCons[G,sbt.HCons[H,T]]">HCons</a><span class="delimiter">(</span><a href="#sbt;HCons.:+:.g" title="G">g</a>, <a href="#sbt.HCons.readResolve" title="sbt.HCons[H,T]" class="keyword">this</a><span class="delimiter">)</span>
+
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="()String" id="sbt;HCons.toString">toString</a> = <a href="#sbt;HCons.head" title="implicit scala.Predef.any2stringadd : (x: Any)scala.runtime.StringAdd">head</a> <span title="(other: String)String">+</span> <span title="String(&quot; :+: &quot;)" class="string">&quot; :+: &quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt;HCons.tail" title="=&gt; T">tail</a>.<span title="()String">toString</span>
+<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="sbt.HList.type" id="sbt.HList">HList</a>
+<a href="#sbt.HList" title="sbt.HList.type" class="delimiter">{</a>
+	<span class="comment">// contains no type information: not even A</span>
+	<span class="keyword">implicit</span> <span class="keyword">def</span> <a title="[A](list: Traversable[A])sbt.HList" id="sbt.HList.fromList">fromList</a><span class="delimiter">[</span><a title="" id="sbt.HList.fromList;A">A</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="Traversable[A]" id="sbt.HList.fromList.list">list</a>: <span title="Traversable[A]">Traversable</span><span class="delimiter">[</span>A<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="#sbt;HList" title="sbt.HList">HList</a> = <span class="delimiter">(</span><span class="delimiter">(</span><a href="#sbt.HNil" title="sbt.HNil.type">HNil</a>: <a href="#sbt;HList" title="sbt.HList">HList</a><span class="delimiter">)</span> <a href="#sbt.HList.fromList.x$1" title="(z: sbt.HList)(op: (sbt.HList, A) =&gt; sbt.HList)sbt.HList">/:</a> <a href="#sbt.HList.fromList.list" title="Traversable[A]">list</a><span class="delimiter">)</span> <span class="delimiter">(</span> <span class="delimiter">(</span><a title="sbt.HList" id="sbt.HList.fromList.$anonfun.hl">hl</a>,<a title="A" id="sbt.HList.fromList.$anonfun.v">v</a><span class="delimiter">)</span> =&gt; <a href="#sbt.HCons.readResolve" title="(head: A, tail: sbt.HList)sbt.HCons[A,sbt.HList]">HCons</a><span class="delimiter">(</span><a href="#sbt.HList.fromList.$anonfun.v" title="A">v</a>, <a href="#sbt.HList.fromList.$anonfun.hl" title="sbt.HList">hl</a><span class="delimiter">)</span> <span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

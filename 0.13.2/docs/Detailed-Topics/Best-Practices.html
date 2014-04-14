@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>General Best Practices &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Plugins and Best Practices" href="Plugins-and-Best-Practices.html" />
+    <link rel="next" title="Plugins Best Practices" href="../Extending/Plugins-Best-Practices.html" />
+    <link rel="prev" title="Plugins and Best Practices" href="Plugins-and-Best-Practices.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">General Best Practices</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="../Extending/Plugins-Best-Practices.html">Plugins Best Practices</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="general-best-practices">
+<h1>General Best Practices<a class="headerlink" href="#general-best-practices" title="Permalink to this headline">¶</a></h1>
+<p>This page describes best practices for working with sbt.</p>
+<div class="section" id="project-vs-sbt">
+<span id="global-vs-local-plugins"></span><h2><span class="pre">project/</span> vs. <span class="pre">~/.sbt/</span><a class="headerlink" href="#project-vs-sbt" title="Permalink to this headline">¶</a></h2>
+<p>Anything that is necessary for building the project should go in
+<span class="pre">project/</span>. This includes things like the web plugin. <span class="pre">~/.sbt/</span>
+should contain local customizations and commands for working with a
+build, but are not necessary. An example is an IDE plugin.</p>
+</div>
+<div class="section" id="local-settings">
+<h2>Local settings<a class="headerlink" href="#local-settings" title="Permalink to this headline">¶</a></h2>
+<p>There are two options for settings that are specific to a user. An
+example of such a setting is inserting the local Maven repository at the
+beginning of the resolvers list:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">localMaven</span> <span class="k">=</span> <span class="s">&quot;Local Maven Repository&quot;</span> <span class="n">at</span> <span class="s">&quot;file://&quot;</span><span class="o">+</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">+</span><span class="s">&quot;/.m2/repository&quot;</span>
+  <span class="n">localMaven</span> <span class="o">+:</span> <span class="n">resolvers</span><span class="o">.</span><span class="n">value</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>Put settings specific to a user in a global <span class="pre">.sbt</span> file, such as
+<span class="pre">~/.sbt/local.sbt</span>. These settings will be applied to all projects.</li>
+<li>Put settings in a <span class="pre">.sbt</span> file in a project that isn't checked into
+version control, such as <span class="pre">&lt;project&gt;/local.sbt</span>. sbt combines the
+settings from multiple <span class="pre">.sbt</span> files, so you can still have the
+standard <span class="pre">&lt;project&gt;/build.sbt</span> and check that into version control.</li>
+</ol>
+</div>
+<div class="section" id="sbtrc">
+<h2>.sbtrc<a class="headerlink" href="#sbtrc" title="Permalink to this headline">¶</a></h2>
+<p>Put commands to be executed when sbt starts up in a <span class="pre">.sbtrc</span> file, one
+per line. These commands run before a project is loaded and are useful
+for defining aliases, for example. sbt executes commands in
+<span class="pre">$HOME/.sbtrc</span> (if it exists) and then <span class="pre">&lt;project&gt;/.sbtrc</span> (if it
+exists).</p>
+</div>
+<div class="section" id="generated-files">
+<h2>Generated files<a class="headerlink" href="#generated-files" title="Permalink to this headline">¶</a></h2>
+<p>Write any generated files to a subdirectory of the output directory,
+which is specified by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.target">target</a> setting. This makes it easy to
+clean up after a build and provides a single location to organize
+generated files. Any generated files that are specific to a Scala
+version should go in <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.crossTarget">crossTarget</a> for efficient cross-building.</p>
+<p>For generating sources and resources, see <a class="reference internal" href="../Howto/generatefiles.html"><em>Generating files</em></a>.</p>
+</div>
+<div class="section" id="don-t-hard-code">
+<h2>Don't hard code<a class="headerlink" href="#don-t-hard-code" title="Permalink to this headline">¶</a></h2>
+<p>Don't hard code constants, like the output directory <span class="pre">target/</span>. This
+is especially important for plugins. A user might change the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.target">target</a>
+setting to point to <span class="pre">build/</span>, for example, and the plugin needs to
+respect that. Instead, use the setting, like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myDirectory</span> <span class="o">:=</span> <span class="n">target</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;sub-directory&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="don-t-mutate-files">
+<h2>Don't &quot;mutate&quot; files<a class="headerlink" href="#don-t-mutate-files" title="Permalink to this headline">¶</a></h2>
+<p>A build naturally consists of a lot of file manipulation. How can we
+reconcile this with the task system, which otherwise helps us avoid
+mutable state? One approach, which is the recommended approach and the
+approach used by sbt's default tasks, is to only write to any given file
+once and only from a single task.</p>
+<p>A build product (or by-product) should be written exactly once by only
+one task. The task should then, at a minimum, provide the Files created
+as its result. Another task that wants to use Files should map the task,
+simultaneously obtaining the File reference and ensuring that the task
+has run (and thus the file is constructed). Obviously you cannot do much
+about the user or other processes modifying the files, but you can make
+the I/O that is under the build's control more predictable by treating
+file contents as immutable at the level of Tasks.</p>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">makeFile</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">File</span><span class="o">](</span><span class="s">&quot;Creates a file with some content.&quot;</span><span class="o">)</span>
+
+<span class="c1">// define a task that creates a file,</span>
+<span class="c1">//  writes some content, and returns the File</span>
+<span class="n">makeFile</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/tmp/data.txt&quot;</span><span class="o">)</span>
+    <span class="nc">IO</span><span class="o">.</span><span class="n">write</span><span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="s">&quot;Some content&quot;</span><span class="o">)</span>
+    <span class="n">f</span>
+<span class="o">}</span>
+
+<span class="c1">// The result of makeFile is the constructed File,</span>
+<span class="c1">//   so useFile can map makeFile and simultaneously</span>
+<span class="c1">//   get the File and declare the dependency on makeFile</span>
+<span class="n">useFile</span> <span class="o">:=</span>
+    <span class="n">doSomething</span><span class="o">(</span> <span class="n">makeFile</span><span class="o">.</span><span class="n">value</span> <span class="o">)</span>
+</pre></div>
+</div>
+<p>This arrangement is not always possible, but it should be the rule and
+not the exception.</p>
+</div>
+<div class="section" id="use-absolute-paths">
+<h2>Use absolute paths<a class="headerlink" href="#use-absolute-paths" title="Permalink to this headline">¶</a></h2>
+<p>Construct only absolute Files. Either specify an absolute path</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/A.scala&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>or construct the file from an absolute base:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;A.scala&quot;</span>
+</pre></div>
+</div>
+<p>This is related to the no hard coding best practice because the proper
+way involves referencing the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.baseDirectory">baseDirectory</a> setting. For example, the
+following defines the myPath setting to be the <span class="pre">&lt;base&gt;/licenses/</span>
+directory.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">myPath</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;licenses&quot;</span>
+</pre></div>
+</div>
+<p>In Java (and thus in Scala), a relative File is relative to the current
+working directory. The working directory is not always the same as the
+build root directory for a number of reasons.</p>
+<p>The only exception to this rule is when specifying the base directory
+for a Project. Here, sbt will resolve a relative File against the build
+root directory for you for convenience.</p>
+</div>
+<div class="section" id="parser-combinators">
+<h2>Parser combinators<a class="headerlink" href="#parser-combinators" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Use <span class="pre">token</span> everywhere to clearly delimit tab completion
+boundaries.</li>
+<li>Don't overlap or nest tokens. The behavior here is unspecified and
+will likely generate an error in the future.</li>
+<li>Use <span class="pre">flatMap</span> for general recursion. sbt's combinators are strict
+to limit the number of classes generated, so use <span class="pre">flatMap</span> like:</li>
+</ol>
+<div class="highlight-scala"><div class="highlight"><pre> <span class="k">lazy</span> <span class="k">val</span> <span class="n">parser</span><span class="k">:</span> <span class="kt">Parser</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span>
+   <span class="n">token</span><span class="o">(</span><span class="nc">IntBasic</span><span class="o">)</span> <span class="n">flatMap</span> <span class="o">{</span> <span class="n">i</span> <span class="k">=&gt;</span>
+     <span class="k">if</span><span class="o">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span>
+       <span class="n">success</span><span class="o">(</span><span class="n">i</span><span class="o">)</span>
+     <span class="k">else</span>
+       <span class="n">token</span><span class="o">(</span><span class="nc">Space</span> <span class="o">~&gt;</span> <span class="n">parser</span><span class="o">)</span>
+   <span class="o">}</span>
+
+<span class="nc">This</span> <span class="n">example</span> <span class="n">defines</span> <span class="n">a</span> <span class="n">parser</span> <span class="n">a</span> <span class="n">whitespace</span><span class="o">-</span><span class="n">delimited</span> <span class="n">list</span> <span class="n">of</span>
+<span class="n">integers</span><span class="o">,</span> <span class="n">ending</span> <span class="k">with</span> <span class="n">a</span> <span class="n">negative</span> <span class="n">number</span><span class="o">,</span> <span class="n">and</span> <span class="n">returning</span> <span class="n">that</span> <span class="k">final</span><span class="o">,</span>
+<span class="n">negative</span> <span class="n">number</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Detailed-Topics/Best-Practices.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">General Best Practices</a><ul>
+<li><a class="reference internal" href="#project-vs-sbt"><span class="pre">project/</span> vs. <span class="pre">~/.sbt/</span></a></li>
+<li><a class="reference internal" href="#local-settings">Local settings</a></li>
+<li><a class="reference internal" href="#sbtrc">.sbtrc</a></li>
+<li><a class="reference internal" href="#generated-files">Generated files</a></li>
+<li><a class="reference internal" href="#don-t-hard-code">Don't hard code</a></li>
+<li><a class="reference internal" href="#don-t-mutate-files">Don't &quot;mutate&quot; files</a></li>
+<li><a class="reference internal" href="#use-absolute-paths">Use absolute paths</a></li>
+<li><a class="reference internal" href="#parser-combinators">Parser combinators</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

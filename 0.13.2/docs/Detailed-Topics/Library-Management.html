@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Library Management &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Dependency Management" href="Dependency-Management-Index.html" />
+    <link rel="next" title="Proxy Repositories" href="Proxy-Repositories.html" />
+    <link rel="prev" title="Dependency Management Flow" href="Dependency-Management-Flow.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Library Management</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Proxy-Repositories.html">Proxy Repositories</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Dependency-Management-Flow.html">Dependency Management Flow</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="library-management">
+<h1>Library Management<a class="headerlink" href="#library-management" title="Permalink to this headline">¶</a></h1>
+<p>There's now a <a class="reference internal" href="../Getting-Started/Library-Dependencies.html"><em>getting started page</em></a>
+about library management, which you may want to read first.</p>
+<p><em>Documentation Maintenance Note:</em> it would be nice to remove the overlap between
+this page and the getting started page, leaving this page with the more
+advanced topics such as checksums and external Ivy files.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways for you to manage libraries with sbt: manually or
+automatically. These two ways can be mixed as well. This page discusses
+the two approaches. All configurations shown here are settings that go
+either directly in a <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt file</em></a> or are
+appended to the <span class="pre">settings</span> of a Project in a <a class="reference internal" href="../Getting-Started/Full-Def.html"><em>.scala file</em></a>.</p>
+</div>
+<div class="section" id="manual-dependency-management">
+<h2>Manual Dependency Management<a class="headerlink" href="#manual-dependency-management" title="Permalink to this headline">¶</a></h2>
+<p>Manually managing dependencies involves copying any jars that you want
+to use to the <span class="pre">lib</span> directory. sbt will put these jars on the
+classpath during compilation, testing, running, and when using the
+interpreter. You are responsible for adding, removing, updating, and
+otherwise managing the jars in this directory. No modifications to your
+project definition are required to use this method unless you would like
+to change the location of the directory you store the jars in.</p>
+<p>To change the directory jars are stored in, change the
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedBase">unmanagedBase</a> setting in your project definition. For example, to
+use <span class="pre">custom_lib/</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedBase</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;custom_lib&quot;</span>
+</pre></div>
+</div>
+<p>If you want more control and flexibility, override the
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.unmanagedJars">unmanagedJars</a> task, which ultimately provides the manual
+dependencies to sbt. The default implementation is roughly:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">).</span><span class="n">classpath</span>
+</pre></div>
+</div>
+<p>If you want to add jars from multiple directories in addition to the
+default directory, you can do:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">++=</span> <span class="o">{</span>
+         <span class="k">val</span> <span class="n">base</span> <span class="k">=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span>
+    <span class="k">val</span> <span class="n">baseDirectories</span> <span class="k">=</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libA&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;b&quot;</span> <span class="o">/</span> <span class="s">&quot;lib&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;libC&quot;</span><span class="o">)</span>
+    <span class="k">val</span> <span class="n">customJars</span> <span class="k">=</span> <span class="o">(</span><span class="n">baseDirectories</span> <span class="o">**</span> <span class="s">&quot;*.jar&quot;</span><span class="o">)</span> <span class="o">+++</span> <span class="o">(</span><span class="n">base</span> <span class="o">/</span> <span class="s">&quot;d&quot;</span> <span class="o">/</span> <span class="s">&quot;my.jar&quot;</span><span class="o">)</span>
+    <span class="n">customJars</span><span class="o">.</span><span class="n">classpath</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Paths.html"><em>Paths</em></a> for more information on building up paths.</p>
+</div>
+<div class="section" id="automatic-dependency-management">
+<h2>Automatic Dependency Management<a class="headerlink" href="#automatic-dependency-management" title="Permalink to this headline">¶</a></h2>
+<p>This method of dependency management involves specifying the direct
+dependencies of your project and letting sbt handle retrieving and
+updating your dependencies. sbt supports three ways of specifying these
+dependencies:</p>
+<ul class="simple">
+<li>Declarations in your project definition</li>
+<li>Maven POM files (dependency definitions only: no repositories)</li>
+<li>Ivy configuration and settings files</li>
+</ul>
+<p>sbt uses <a class="reference external" href="http://ant.apache.org/ivy/">Apache Ivy</a> to implement
+dependency management in all three cases. The default is to use inline
+declarations, but external configuration can be explicitly selected. The
+following sections describe how to use each method of automatic
+dependency management.</p>
+<div class="section" id="inline-declarations">
+<h3>Inline Declarations<a class="headerlink" href="#inline-declarations" title="Permalink to this headline">¶</a></h3>
+<p>Inline declarations are a basic way of specifying the dependencies to be
+automatically retrieved. They are intended as a lightweight alternative
+to a full configuration using Ivy.</p>
+<div class="section" id="dependencies">
+<h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
+<p>Declaring a dependency looks like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span> <span class="o">%</span> <span class="n">configuration</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="#ivy-configurations"><em>configurations</em></a> for details on configuration mappings. Also,
+several dependencies can be declared together:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="n">groupID</span> <span class="o">%%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span><span class="o">,</span>
+    <span class="n">groupID</span> <span class="o">%%</span> <span class="n">otherID</span> <span class="o">%</span> <span class="n">otherRevision</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>If you are using a dependency that was built with sbt, double the first
+<span class="pre">%</span> to be <span class="pre">%%</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="n">groupID</span> <span class="o">%%</span> <span class="n">artifactID</span> <span class="o">%</span> <span class="n">revision</span>
+</pre></div>
+</div>
+<p>This will use the right jar for the dependency built with the version of
+Scala that you are currently using. If you get an error while resolving
+this kind of dependency, that dependency probably wasn't published for
+the version of Scala you are using. See <a class="reference internal" href="Cross-Build.html"><em>Cross-building</em></a> for details.</p>
+<p>Ivy can select the latest revision of a module according to constraints
+you specify. Instead of a fixed revision like <span class="pre">&quot;1.6.1&quot;</span>, you specify
+<span class="pre">&quot;latest.integration&quot;</span>, <span class="pre">&quot;2.9.+&quot;</span>, or <span class="pre">&quot;[1.0,)&quot;</span>. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision">Ivy
+revisions</a>
+documentation for details.</p>
+</div>
+<div class="section" id="resolvers">
+<h4>Resolvers<a class="headerlink" href="#resolvers" title="Permalink to this headline">¶</a></h4>
+<p>sbt uses the standard Maven2 repository by default.</p>
+<p>Declare additional repositories with the form:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="n">name</span> <span class="n">at</span> <span class="n">location</span>
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span><span class="o">,</span>
+    <span class="s">&quot;org.specs&quot;</span> <span class="o">%</span> <span class="s">&quot;specs&quot;</span> <span class="o">%</span> <span class="s">&quot;1.6.1&quot;</span>
+<span class="o">)</span>
+
+<span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype OSS Snapshots&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>
+</pre></div>
+</div>
+<p>sbt can search your local Maven repository if you add it as a
+repository:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Local Maven Repository&quot;</span> <span class="n">at</span> <span class="s">&quot;file://&quot;</span><span class="o">+</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span><span class="o">.</span><span class="n">absolutePath</span><span class="o">+</span><span class="s">&quot;/.m2/repository&quot;</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Resolvers.html"><em>Resolvers</em></a> for details on defining other types of repositories.</p>
+</div>
+<div class="section" id="override-default-resolvers">
+<h4>Override default resolvers<a class="headerlink" href="#override-default-resolvers" title="Permalink to this headline">¶</a></h4>
+<p><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">resolvers</a> configures additional, inline user resolvers. By default,
+<span class="pre">sbt</span> combines these resolvers with default repositories (Maven
+Central and the local Ivy repository) to form <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.externalResolvers">externalResolvers</a>. To
+have more control over repositories, set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.externalResolvers">externalResolvers</a>
+directly. To only specify repositories in addition to the usual
+defaults, configure <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">resolvers</a>.</p>
+<p>For example, to use the Sonatype OSS Snapshots repository in addition to
+the default repositories,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype OSS Snapshots&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>
+</pre></div>
+</div>
+<p>To use the local repository, but not the Maven Central repository:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalResolvers</span> <span class="o">:=</span>
+  <span class="nc">Resolver</span><span class="o">.</span><span class="n">withDefaultResolvers</span><span class="o">(</span><span class="n">resolvers</span><span class="o">.</span><span class="n">value</span><span class="o">,</span> <span class="n">mavenCentral</span> <span class="k">=</span> <span class="kc">false</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="override-all-resolvers-for-all-builds">
+<h4>Override all resolvers for all builds<a class="headerlink" href="#override-all-resolvers-for-all-builds" title="Permalink to this headline">¶</a></h4>
+<p>The repositories used to retrieve sbt, Scala, plugins, and application
+dependencies can be configured globally and declared to override the
+resolvers configured in a build or plugin definition. There are two
+parts:</p>
+<ol class="arabic simple">
+<li>Define the repositories used by the launcher.</li>
+<li>Specify that these repositories should override those in build
+definitions.</li>
+</ol>
+<p>The repositories used by the launcher can be overridden by defining
+<span class="pre">~/.sbt/repositories</span>, which must contain a <span class="pre">[repositories]</span> section
+with the same format as the <a class="reference internal" href="Launcher.html"><em>Sbt Launcher</em></a> configuration file. For
+example:</p>
+<div class="highlight-ini"><pre>[repositories]
+local
+my-maven-repo: http://example.org/repo
+my-ivy-repo: http://example.org/ivy-repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]</pre>
+</div>
+<p>A different location for the repositories file may be specified by the
+<span class="pre">sbt.repository.config</span> system property in the sbt startup script. The
+final step is to set <span class="pre">sbt.override.build.repos</span> to true to use these
+repositories for dependency resolution and retrieval.</p>
+</div>
+<div class="section" id="explicit-url">
+<h4>Explicit URL<a class="headerlink" href="#explicit-url" title="Permalink to this headline">¶</a></h4>
+<p>If your project requires a dependency that is not present in a
+repository, a direct URL to its jar can be specified as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;slinky&quot;</span> <span class="o">%</span> <span class="s">&quot;slinky&quot;</span> <span class="o">%</span> <span class="s">&quot;2.1&quot;</span> <span class="n">from</span> <span class="s">&quot;http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar&quot;</span>
+</pre></div>
+</div>
+<p>The URL is only used as a fallback if the dependency cannot be found
+through the configured repositories. Also, the explicit URL is not
+included in published metadata (that is, the pom or ivy.xml).</p>
+</div>
+<div class="section" id="disable-transitivity">
+<h4>Disable Transitivity<a class="headerlink" href="#disable-transitivity" title="Permalink to this headline">¶</a></h4>
+<p>By default, these declarations fetch all project dependencies,
+transitively. In some instances, you may find that the dependencies
+listed for a project aren't necessary for it to build. Projects using
+the Felix OSGI framework, for instance, only explicitly require its main
+jar to compile and run. Avoid fetching artifact dependencies with either
+<span class="pre">intransitive()</span> or <span class="pre">notTransitive()</span>, as in this example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.felix&quot;</span> <span class="o">%</span> <span class="s">&quot;org.apache.felix.framework&quot;</span> <span class="o">%</span> <span class="s">&quot;1.8.0&quot;</span> <span class="n">intransitive</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="classifiers">
+<h4>Classifiers<a class="headerlink" href="#classifiers" title="Permalink to this headline">¶</a></h4>
+<p>You can specify the classifier for a dependency using the <span class="pre">classifier</span>
+method. For example, to get the jdk15 version of TestNG:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.testng&quot;</span> <span class="o">%</span> <span class="s">&quot;testng&quot;</span> <span class="o">%</span> <span class="s">&quot;5.7&quot;</span> <span class="n">classifier</span> <span class="s">&quot;jdk15&quot;</span>
+</pre></div>
+</div>
+<p>For multiple classifiers, use multiple <span class="pre">classifier</span> calls:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span>
+  <span class="s">&quot;org.lwjgl.lwjgl&quot;</span> <span class="o">%</span> <span class="s">&quot;lwjgl-platform&quot;</span> <span class="o">%</span> <span class="n">lwjglVersion</span> <span class="n">classifier</span> <span class="s">&quot;natives-windows&quot;</span> <span class="n">classifier</span> <span class="s">&quot;natives-linux&quot;</span> <span class="n">classifier</span> <span class="s">&quot;natives-osx&quot;</span>
+</pre></div>
+</div>
+<p>To obtain particular classifiers for all dependencies transitively, run
+the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateClassifiers">updateClassifiers</a> task. By default, this resolves all artifacts
+with the <span class="pre">sources</span> or <span class="pre">javadoc</span> classifier. Select the classifiers
+to obtain by configuring the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.transitiveClassifiers">transitiveClassifiers</a> setting. For
+example, to only retrieve sources:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">transitiveClassifiers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sources&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exclude-transitive-dependencies">
+<h4>Exclude Transitive Dependencies<a class="headerlink" href="#exclude-transitive-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>To exclude certain transitive dependencies of a dependency, use the
+<span class="pre">excludeAll</span> or <span class="pre">exclude</span> methods. The <span class="pre">exclude</span> method should be
+used when a pom will be published for the project. It requires the
+organization and module name to exclude. For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.15&quot;</span> <span class="n">exclude</span><span class="o">(</span><span class="s">&quot;javax.jms&quot;</span><span class="o">,</span> <span class="s">&quot;jms&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The <span class="pre">excludeAll</span> method is more flexible, but because it cannot be
+represented in a pom.xml, it should only be used when a pom doesn't need
+to be generated. For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.15&quot;</span> <span class="n">excludeAll</span><span class="o">(</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;com.sun.jdmk&quot;</span><span class="o">),</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;com.sun.jmx&quot;</span><span class="o">),</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;javax.jms&quot;</span><span class="o">)</span>
+  <span class="o">)</span>
+</pre></div>
+</div>
+<p>See
+<a class="reference external" href="../../api/sbt/ModuleID.html">ModuleID</a>
+for API details.</p>
+</div>
+<div class="section" id="download-sources">
+<h4>Download Sources<a class="headerlink" href="#download-sources" title="Permalink to this headline">¶</a></h4>
+<p>Downloading source and API documentation jars is usually handled by an
+IDE plugin. These plugins use the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateClassifiers">updateClassifiers</a> and
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.updateSbtClassifiers">updateSbtClassifiers</a> tasks, which produce an <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a>
+referencing these jars.</p>
+<p>To have sbt download the dependency's sources without using an IDE
+plugin, add <span class="pre">withSources()</span> to the dependency definition. For API
+jars, add <span class="pre">withJavadoc()</span>. For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span>
+  <span class="s">&quot;org.apache.felix&quot;</span> <span class="o">%</span> <span class="s">&quot;org.apache.felix.framework&quot;</span> <span class="o">%</span> <span class="s">&quot;1.8.0&quot;</span> <span class="n">withSources</span><span class="o">()</span> <span class="n">withJavadoc</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>Note that this is not transitive. Use the <span class="pre">update-*classifiers</span> tasks
+for that.</p>
+</div>
+<div class="section" id="extra-attributes">
+<h4>Extra Attributes<a class="headerlink" href="#extra-attributes" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0/concept.html#extra">Extra
+attributes</a>
+can be specified by passing key/value pairs to the <span class="pre">extra</span> method.</p>
+<p>To select dependencies by extra attributes:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org&quot;</span> <span class="o">%</span> <span class="s">&quot;name&quot;</span> <span class="o">%</span> <span class="s">&quot;rev&quot;</span> <span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>To define extra attributes on the current project:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">projectID</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">previous</span> <span class="k">=</span> <span class="n">projectID</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">previous</span><span class="o">.</span><span class="n">extra</span><span class="o">(</span><span class="s">&quot;color&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;blue&quot;</span><span class="o">,</span> <span class="s">&quot;component&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;compiler-interface&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inline-ivy-xml">
+<h4>Inline Ivy XML<a class="headerlink" href="#inline-ivy-xml" title="Permalink to this headline">¶</a></h4>
+<p>sbt additionally supports directly specifying the configurations or
+dependencies sections of an Ivy configuration file inline. You can mix
+this with inline Scala dependency and repository declarations.</p>
+<p>For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">ivyXML</span> <span class="o">:=</span>
+  <span class="o">&lt;</span><span class="n">dependencies</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">dependency</span> <span class="n">org</span><span class="o">=</span><span class="s">&quot;javax.mail&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;mail&quot;</span> <span class="n">rev</span><span class="o">=</span><span class="s">&quot;1.4.2&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">exclude</span> <span class="n">module</span><span class="o">=</span><span class="s">&quot;activation&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">dependencies</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ivy-home-directory">
+<h4>Ivy Home Directory<a class="headerlink" href="#ivy-home-directory" title="Permalink to this headline">¶</a></h4>
+<p>By default, sbt uses the standard Ivy home directory location
+<span class="pre">${user.home}/.ivy2/</span>. This can be configured machine-wide, for use by
+both the sbt launcher and by projects, by setting the system property
+<span class="pre">sbt.ivy.home</span> in the sbt startup script (described in
+<a class="reference internal" href="../Getting-Started/Setup.html"><em>Setup</em></a>).</p>
+<p>For example:</p>
+<div class="highlight-text"><div class="highlight"><pre>java -Dsbt.ivy.home=/tmp/.ivy2/ ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="checksums">
+<h4>Checksums<a class="headerlink" href="#checksums" title="Permalink to this headline">¶</a></h4>
+<p>sbt (<a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum">through
+Ivy</a>)
+verifies the checksums of downloaded files by default. It also publishes
+checksums of artifacts by default. The checksums to use are specified by
+the <em>checksums</em> setting.</p>
+<p>To disable checksum checking during update:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="n">in</span> <span class="n">update</span> <span class="o">:=</span> <span class="nc">Nil</span>
+</pre></div>
+</div>
+<p>To disable checksum creation during artifact publishing:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="n">in</span> <span class="n">publishLocal</span> <span class="o">:=</span> <span class="nc">Nil</span>
+
+<span class="n">checksums</span> <span class="n">in</span> <span class="n">publish</span> <span class="o">:=</span> <span class="nc">Nil</span>
+</pre></div>
+</div>
+<p>The default value is:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">checksums</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;sha1&quot;</span><span class="o">,</span> <span class="s">&quot;md5&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="conflict-management">
+<span id="id2"></span><h4>Conflict Management<a class="headerlink" href="#conflict-management" title="Permalink to this headline">¶</a></h4>
+<p>The conflict manager decides what to do when  dependency resolution brings in different versions of the same library.
+By default, the latest revision is selected.
+This can be changed by setting <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.conflictManager">conflictManager</a>, which has type <a class="reference external" href="../../api/sbt/ConflictManager.html">ConflictManager</a>.
+See the <a class="reference external" href="http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html">Ivy documentation</a> for details on the different conflict managers.
+For example, to specify that no conflicts are allowed,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">conflictManager</span> <span class="o">:=</span> <span class="nc">ConflictManager</span><span class="o">.</span><span class="n">strict</span>
+</pre></div>
+</div>
+<p>With this set, any conflicts will generate an error.
+To resolve a conflict,</p>
+<blockquote>
+<div><ul class="simple">
+<li>configure a dependency override if the conflict is for a transitive dependency</li>
+<li>force the revision if it is a direct dependency</li>
+</ul>
+</div></blockquote>
+<p>Both are explained in the following sections.</p>
+</div>
+<div class="section" id="forcing-a-revision">
+<h4>Forcing a revision<a class="headerlink" href="#forcing-a-revision" title="Permalink to this headline">¶</a></h4>
+<p>The following direct dependencies will introduce a conflict on the log4j version because spark requires log4j 1.2.16.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.14&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The default conflict manager will select the newer version of log4j, 1.2.16.
+This can be confirmed in the output of <span class="pre">show update</span>, which shows the newer version as being selected and the older version as not selected:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.16: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.14
+...</pre>
+</div>
+<p>To say that we prefer the version we've specified over the version from indirect dependencies, use <span class="pre">force()</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.14&quot;</span> <span class="n">force</span><span class="o">()</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The output of <span class="pre">show update</span> is now reversed:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.14: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.16
+...</pre>
+</div>
+<p><strong>Note:</strong> this is an Ivy-only feature and cannot be included in a published pom.xml.</p>
+</div>
+<div class="section" id="forcing-a-revision-without-introducing-a-dependency">
+<h4>Forcing a revision without introducing a dependency<a class="headerlink" href="#forcing-a-revision-without-introducing-a-dependency" title="Permalink to this headline">¶</a></h4>
+<p>Use of the <span class="pre">force()</span> method described in the previous section requires having a direct dependency.
+However, it may be desirable to force a revision without introducing that direct dependency.
+Ivy provides overrides for this and in sbt, overrides are configured in sbt with the <span class="pre">dependencyOverrides</span> setting, which is a set of <span class="pre">ModuleIDs</span>.
+For example, the following dependency definitions conflict because spark uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+   <span class="s">&quot;org.spark-project&quot;</span> <span class="o">%%</span> <span class="s">&quot;spark-core&quot;</span> <span class="o">%</span> <span class="s">&quot;0.5.1&quot;</span><span class="o">,</span>
+   <span class="s">&quot;org.scalaxb&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalaxb&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0.0&quot;</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p>The default conflict manager chooses the latest revision of log4j, 1.2.17:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.17: ...
+...
+[info]              (EVICTED) log4j:log4j:1.2.16
+...</pre>
+</div>
+<p>To change the version selected, add an override:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">dependencyOverrides</span> <span class="o">+=</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.16&quot;</span>
+</pre></div>
+</div>
+<p>This will not add a direct dependency on log4j, but will force the revision to be 1.2.16.
+This is confirmed by the output of <span class="pre">show update</span>:</p>
+<div class="highlight-scala"><pre>&gt; show update
+[info] compile:
+[info]              log4j:log4j:1.2.16
+...</pre>
+</div>
+<p><strong>Note:</strong> this is an Ivy-only feature and will not be included in a published pom.xml.</p>
+</div>
+<div class="section" id="publishing">
+<h4>Publishing<a class="headerlink" href="#publishing" title="Permalink to this headline">¶</a></h4>
+<p>See <a class="reference internal" href="Publishing.html"><em>Publishing</em></a> for how to publish your project.</p>
+</div>
+<div class="section" id="configurations">
+<span id="ivy-configurations"></span><h4>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h4>
+<p>Ivy configurations are a useful feature for your build when you need
+custom groups of dependencies, such as for a plugin. Ivy configurations
+are essentially named sets of dependencies.  You can read the
+<a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html">Ivy documentation</a>
+for details.</p>
+<p>The built-in use of configurations in sbt is similar to scopes in Maven.
+sbt adds dependencies to different classpaths by the configuration that
+they are defined in. See the description of <a class="reference external" href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">Maven
+Scopes</a>
+for details.</p>
+<p>You put a dependency in a configuration by selecting one or more of its
+configurations to map to one or more of your project's configurations.
+The most common case is to have one of your configurations <span class="pre">A</span> use a
+dependency's configuration <span class="pre">B</span>. The mapping for this looks like
+<span class="pre">&quot;A-&gt;B&quot;</span>. To apply this mapping to a dependency, add it to the end of
+your dependency definition:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2&quot;</span> <span class="o">%</span> <span class="s">&quot;test-&gt;compile&quot;</span>
+</pre></div>
+</div>
+<p>This says that your project's <span class="pre">&quot;test&quot;</span> configuration uses
+<span class="pre">ScalaTest</span>'s <span class="pre">&quot;compile&quot;</span> configuration. See the <a class="reference external" href="http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html">Ivy
+documentation</a>
+for more advanced mappings. Most projects published to Maven
+repositories will use the <span class="pre">&quot;compile&quot;</span> configuration.</p>
+<p>A useful application of configurations is to group dependencies that are
+not used on normal classpaths. For example, your project might use a
+<span class="pre">&quot;js&quot;</span> configuration to automatically download jQuery and then include
+it in your jar by modifying <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resources">resources</a>. For example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">ivyConfigurations</span> <span class="o">+=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;js&quot;</span><span class="o">)</span> <span class="n">hide</span>
+
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.3.2&quot;</span> <span class="o">%</span> <span class="s">&quot;js-&gt;default&quot;</span> <span class="n">from</span> <span class="s">&quot;http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js&quot;</span>
+
+<span class="n">resources</span> <span class="o">++=</span> <span class="n">update</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">select</span><span class="o">(</span> <span class="n">configurationFilter</span><span class="o">(</span><span class="s">&quot;js&quot;</span><span class="o">)</span> <span class="o">)</span>
+</pre></div>
+</div>
+<p>The <span class="pre">config</span> method defines a new configuration with name <span class="pre">&quot;js&quot;</span> and
+makes it private to the project so that it is not used for publishing.
+See <a class="reference internal" href="Update-Report.html"><em>Update Report</em></a> for more information on selecting managed
+artifacts.</p>
+<p>A configuration without a mapping (no <span class="pre">&quot;-&gt;&quot;</span>) is mapped to <span class="pre">&quot;default&quot;</span>
+or <span class="pre">&quot;compile&quot;</span>. The <span class="pre">-&gt;</span> is only needed when mapping to a different
+configuration than those. The ScalaTest dependency above can then be
+shortened to:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%</span> <span class="s">&quot;scalatest&quot;</span> <span class="o">%</span> <span class="s">&quot;1.0&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="maven-ivy">
+<span id="external-maven-ivy"></span><h3>Maven/Ivy<a class="headerlink" href="#maven-ivy" title="Permalink to this headline">¶</a></h3>
+<p>For this method, create the configuration files as you would for Maven
+(<span class="pre">pom.xml</span>) or Ivy (<span class="pre">ivy.xml</span> and optionally <span class="pre">ivysettings.xml</span>).
+External configuration is selected by using one of the following
+expressions.</p>
+<div class="section" id="ivy-settings-resolver-configuration">
+<h4>Ivy settings (resolver configuration)<a class="headerlink" href="#ivy-settings-resolver-configuration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-settings-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettingsURL</span><span class="o">(</span><span class="n">url</span><span class="o">(</span><span class="s">&quot;your_url_here&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ivy-file-dependency-configuration">
+<h4>Ivy file (dependency configuration)<a class="headerlink" href="#ivy-file-dependency-configuration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvyFile</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvyFile</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Because Ivy files specify their own configurations, sbt needs to know
+which configurations to use for the compile, runtime, and test
+classpaths. For example, to specify that the Compile classpath should
+use the 'default' configuration:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">config</span><span class="o">(</span><span class="s">&quot;default&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="maven-pom-dependencies-only">
+<h4>Maven pom (dependencies only)<a class="headerlink" href="#maven-pom-dependencies-only" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalPom</span><span class="o">()</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalPom</span><span class="o">(</span><span class="n">baseDirectory</span><span class="o">(</span><span class="k">_</span> <span class="o">/</span> <span class="s">&quot;custom-name.xml&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="full-ivy-example">
+<h4>Full Ivy Example<a class="headerlink" href="#full-ivy-example" title="Permalink to this headline">¶</a></h4>
+<p>For example, a <span class="pre">build.sbt</span> using external Ivy files might look like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">externalIvySettings</span><span class="o">()</span>
+
+<span class="n">externalIvyFile</span><span class="o">(</span> <span class="n">baseDirectory</span> <span class="o">{</span> <span class="n">base</span> <span class="k">=&gt;</span> <span class="n">base</span> <span class="o">/</span> <span class="s">&quot;ivyA.xml&quot;</span><span class="o">}</span> <span class="o">)</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="nc">Compile</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="nc">Test</span>
+
+<span class="n">classpathConfiguration</span> <span class="n">in</span> <span class="nc">Runtime</span> <span class="o">:=</span> <span class="nc">Runtime</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="known-limitations">
+<h4>Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h4>
+<p>Maven support is dependent on Ivy's support for Maven POMs. Known issues
+with this support:</p>
+<ul class="simple">
+<li>Specifying <span class="pre">relativePath</span> in the <span class="pre">parent</span> section of a POM will
+produce an error.</li>
+<li>Ivy ignores repositories specified in the POM. A workaround is to
+specify repositories inline or in an Ivy <span class="pre">ivysettings.xml</span> file.</li>
+</ul>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Detailed-Topics/Library-Management.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Library Management</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#manual-dependency-management">Manual Dependency Management</a></li>
+<li><a class="reference internal" href="#automatic-dependency-management">Automatic Dependency Management</a><ul>
+<li><a class="reference internal" href="#inline-declarations">Inline Declarations</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#resolvers">Resolvers</a></li>
+<li><a class="reference internal" href="#override-default-resolvers">Override default resolvers</a></li>
+<li><a class="reference internal" href="#override-all-resolvers-for-all-builds">Override all resolvers for all builds</a></li>
+<li><a class="reference internal" href="#explicit-url">Explicit URL</a></li>
+<li><a class="reference internal" href="#disable-transitivity">Disable Transitivity</a></li>
+<li><a class="reference internal" href="#classifiers">Classifiers</a></li>
+<li><a class="reference internal" href="#exclude-transitive-dependencies">Exclude Transitive Dependencies</a></li>
+<li><a class="reference internal" href="#download-sources">Download Sources</a></li>
+<li><a class="reference internal" href="#extra-attributes">Extra Attributes</a></li>
+<li><a class="reference internal" href="#inline-ivy-xml">Inline Ivy XML</a></li>
+<li><a class="reference internal" href="#ivy-home-directory">Ivy Home Directory</a></li>
+<li><a class="reference internal" href="#checksums">Checksums</a></li>
+<li><a class="reference internal" href="#conflict-management">Conflict Management</a></li>
+<li><a class="reference internal" href="#forcing-a-revision">Forcing a revision</a></li>
+<li><a class="reference internal" href="#forcing-a-revision-without-introducing-a-dependency">Forcing a revision without introducing a dependency</a></li>
+<li><a class="reference internal" href="#publishing">Publishing</a></li>
+<li><a class="reference internal" href="#configurations">Configurations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#maven-ivy">Maven/Ivy</a><ul>
+<li><a class="reference internal" href="#ivy-settings-resolver-configuration">Ivy settings (resolver configuration)</a></li>
+<li><a class="reference internal" href="#ivy-file-dependency-configuration">Ivy file (dependency configuration)</a></li>
+<li><a class="reference internal" href="#maven-pom-dependencies-only">Maven pom (dependencies only)</a></li>
+<li><a class="reference internal" href="#full-ivy-example">Full Ivy Example</a></li>
+<li><a class="reference internal" href="#known-limitations">Known limitations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

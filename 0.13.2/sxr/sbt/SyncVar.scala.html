@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/SyncVar.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="comment">// minimal copy of scala.concurrent.SyncVar since that version deprecated put and unset</span>
+<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class SyncVar[A] extends AnyRef" id="sbt;SyncVar">SyncVar</a><span class="delimiter">[</span><a title="" id="sbt;SyncVar;A">A</a><span class="delimiter">]</span>
+<a href="#sbt;SyncVar" title="sbt.SyncVar[A]" class="delimiter">{</a>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">var</span> <a title="Boolean" id="sbt;SyncVar.isDefined">isDefined</a>: <span title="Boolean">Boolean</span> = <span title="Boolean(false)" class="keyword">false</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">var</span> <a title="Option[A]" id="sbt;SyncVar.value">value</a>: <span title="Option[A]">Option</span><span class="delimiter">[</span>A<span class="delimiter">]</span> = <span title="None.type">None</span>
+
+	<span class="comment">/** Waits until a value is set and then gets it.  Does not clear the value */</span>
+	<span class="keyword">def</span> <a title="=&gt; A" id="sbt;SyncVar.get">get</a>: <a href="#sbt;SyncVar;A" title="A">A</a> = <a href="#sbt;SyncVar" title="(x$1: A)A">synchronized</a> <span class="delimiter">{</span>
+		<span title="Unit" class="keyword">while</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#sbt;SyncVar.isDefined" title="Boolean">isDefined</a><span class="delimiter">)</span> <a href="#sbt;SyncVar" title="()Unit">wait</a><a href="#sbt;SyncVar.get.while$1" title="()Unit" class="delimiter">(</a><span class="delimiter">)</span>
+		<a href="#sbt;SyncVar.value" title="Option[A]">value</a>.<span title="=&gt; A">get</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">/** Waits until a value is set, gets it, and finally clears the value. */</span>
+	<span class="keyword">def</span> <a title="()A" id="sbt;SyncVar.take">take</a><span class="delimiter">(</span><span class="delimiter">)</span>: <a href="#sbt;SyncVar;A" title="A">A</a> = <a href="#sbt;SyncVar" title="(x$1: A)A">synchronized</a> <span class="delimiter">{</span>
+		<span class="keyword">try</span> <a href="#sbt;SyncVar.get" title="=&gt; A">get</a> <span class="keyword">finally</span> <a href="#sbt;SyncVar.unset" title="()Unit">unset</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">/** Sets the value, whether or not it is currently defined. */</span>
+	<span class="keyword">def</span> <a title="(x: A)Unit" id="sbt;SyncVar.set">set</a><span class="delimiter">(</span><a title="A" id="sbt;SyncVar.set.x">x</a>: <a href="#sbt;SyncVar;A" title="A">A</a><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#sbt;SyncVar" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+ 		<a href="#sbt;SyncVar.isDefined" title="Boolean">isDefined</a> = <span title="Boolean(true)" class="keyword">true</span>
+		<a href="#sbt;SyncVar.value" title="Option[A]">value</a> = <span title="(x: A)Some[A]">Some</span><span class="delimiter">(</span><a href="#sbt;SyncVar.set.x" title="A">x</a><span class="delimiter">)</span>
+		<a href="#sbt;SyncVar" title="()Unit">notifyAll</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">/** Sets the value, first waiting until it is undefined if it is currently defined. */</span>
+	<span class="keyword">def</span> <a title="(x: A)Unit" id="sbt;SyncVar.put">put</a><span class="delimiter">(</span><a title="A" id="sbt;SyncVar.put.x">x</a>: <a href="#sbt;SyncVar;A" title="A">A</a><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#sbt;SyncVar" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+		<span title="Unit" class="keyword">while</span> <span class="delimiter">(</span><a href="#sbt;SyncVar.isDefined" title="Boolean">isDefined</a><span class="delimiter">)</span> <a href="#sbt;SyncVar" title="()Unit">wait</a><a href="#sbt;SyncVar.put.while$2" title="()Unit" class="delimiter">(</a><span class="delimiter">)</span>
+		<a href="#sbt;SyncVar.set" title="(x: A)Unit">set</a><span class="delimiter">(</span><a href="#sbt;SyncVar.put.x" title="A">x</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+
+	<span class="comment">/** Clears the value, whether or not it is current defined. */</span>
+	<span class="keyword">def</span> <a title="()Unit" id="sbt;SyncVar.unset">unset</a><span class="delimiter">(</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#sbt;SyncVar" title="(x$1: Unit)Unit">synchronized</a> <span class="delimiter">{</span>
+		<a href="#sbt;SyncVar.isDefined" title="Boolean">isDefined</a> = <span title="Boolean(false)" class="keyword">false</span>
+		<a href="#sbt;SyncVar.value" title="Option[A]">value</a> = <span title="None.type">None</span>
+		<a href="#sbt;SyncVar" title="()Unit">notifyAll</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+
+        </pre>
+    </body>
+</html>

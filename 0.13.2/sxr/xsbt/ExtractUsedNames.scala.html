@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/ExtractUsedNames.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> xsbt
+
+<span class="keyword">import</span> scala.tools.nsc._
+
+<span class="comment">/**
+ * Extracts simple names used in given compilation unit.
+ *
+ * Extracts simple (unqualified) names mentioned in given in non-definition position by collecting
+ * all symbols associated with non-definition trees and extracting names from all collected symbols.
+ *
+ * If given symbol is mentioned both in definition and in non-definition position (e.g. in member
+ * selection) then that symbol is collected. It means that names of symbols defined and used in the
+ * same compilation unit are extracted. We've considered not extracting names of those symbols
+ * as an optimization strategy. It turned out that this is not correct.  Check
+ * https://github.com/gkossakowski/sbt/issues/3 for an example of scenario where it matters.
+ *
+ * All extracted names are returned in _decoded_ form. This way we stay consistent with the rest
+ * of incremental compiler which works with names in decoded form.
+ *
+ * Names mentioned in Import nodes are handled properly but require some special logic for two
+ * reasons:
+ *
+ *   1. import node itself has a term symbol associated with it with a name `&lt;import`&gt;.
+ *      I (gkossakowski) tried to track down what role this symbol serves but I couldn't.
+ *      It doesn't look like there are many places in Scala compiler that refer to
+ *      that kind of symbols explicitly.
+ *   2. ImportSelector is not subtype of Tree therefore is not processed by `Tree.foreach`
+ *
+ * Another type of tree nodes that requires special handling is TypeTree. TypeTree nodes
+ * has a little bit odd representation:
+ *
+ *   1. TypeTree.hasSymbol always returns false even when TypeTree.symbol
+ *      returns a symbol
+ *   2. The original tree from which given TypeTree was derived is stored
+ *      in TypeTree.original but Tree.forech doesn't walk into original
+ *      tree so we missed it
+ *
+ * The tree walking algorithm walks into TypeTree.original explicitly.
+ *
+ */</span>
+<span class="keyword">class</span> <a title="class ExtractUsedNames[GlobalType &lt;: xsbt.CallbackGlobal] extends AnyRef" id="xsbt;ExtractUsedNames">ExtractUsedNames</a><span class="delimiter">[</span><a title=" &lt;: xsbt.CallbackGlobal" id="xsbt;ExtractUsedNames;GlobalType">GlobalType</a> &lt;: CallbackGlobal<span class="delimiter">]</span><a href="#xsbt;ExtractUsedNames" title="xsbt.ExtractUsedNames[GlobalType]" class="delimiter">(</a><span class="keyword">val</span> <a title="GlobalType" id="xsbt;ExtractUsedNames.global">global</a>: <a href="#xsbt;ExtractUsedNames;GlobalType" title="GlobalType">GlobalType</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+	<span class="keyword">import</span> <a href="#xsbt;ExtractUsedNames.global" title="=&gt; GlobalType">global</a>._
+
+	<span class="keyword">def</span> <a title="(unit: ExtractUsedNames.this.global.CompilationUnit)Set[String]" id="xsbt;ExtractUsedNames.extract">extract</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.CompilationUnit" id="xsbt;ExtractUsedNames.extract.unit">unit</a>: <span title="ExtractUsedNames.this.global.CompilationUnit">CompilationUnit</span><span class="delimiter">)</span>: <span title="Set[String]">Set</span><span class="delimiter">[</span>String<span class="delimiter">]</span> = <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="ExtractUsedNames.this.global.Tree" id="xsbt;ExtractUsedNames.extract.tree">tree</a> = <a href="#xsbt;ExtractUsedNames.extract.unit" title="ExtractUsedNames.this.global.CompilationUnit">unit</a>.<span title="=&gt; ExtractUsedNames.this.global.Tree">body</span>
+		<span class="keyword">val</span> <a title="Set[String]" id="xsbt;ExtractUsedNames.extract.extractedByTreeWalk">extractedByTreeWalk</a> = <a href="#xsbt;ExtractUsedNames.extractByTreeWalk" title="(tree: ExtractUsedNames.this.global.Tree)Set[String]">extractByTreeWalk</a><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extract.tree" title="ExtractUsedNames.this.global.Tree">tree</a><span class="delimiter">)</span>
+		<a href="#xsbt;ExtractUsedNames.extract.extractedByTreeWalk" title="Set[String]">extractedByTreeWalk</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(tree: ExtractUsedNames.this.global.Tree)Set[String]" id="xsbt;ExtractUsedNames.extractByTreeWalk">extractByTreeWalk</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Tree" id="xsbt;ExtractUsedNames.extractByTreeWalk.tree">tree</a>: <span title="ExtractUsedNames.this.global.Tree">Tree</span><span class="delimiter">)</span>: <span title="Set[String]">Set</span><span class="delimiter">[</span>String<span class="delimiter">]</span> = <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="scala.collection.mutable.ListBuffer[String]" id="xsbt;ExtractUsedNames.extractByTreeWalk.namesBuffer">namesBuffer</a> = collection.mutable.<span title="scala.collection.mutable.ListBuffer.type">ListBuffer</span>.<span title="[A]=&gt; scala.collection.mutable.ListBuffer[A]">empty</span><span title="scala.collection.mutable.ListBuffer[String]" class="delimiter">[</span><span title="String">String</span><span class="delimiter">]</span>
+		<span class="keyword">def</span> <a title="(symbol: ExtractUsedNames.this.global.Symbol)Unit" id="xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol">addSymbol</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Symbol" id="xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol.symbol">symbol</a>: <span title="ExtractUsedNames.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <span class="delimiter">{</span>
+			<span class="keyword">val</span> <a title="String" id="xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol.symbolNameAsString">symbolNameAsString</a> = <a href="#xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol.symbol" title="ExtractUsedNames.this.global.Symbol">symbol</a>.<span title="=&gt; symbol.NameType">name</span>.<span title="=&gt; String">decode</span>.<span title="()String">trim</span>
+			<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.namesBuffer" title="scala.collection.mutable.ListBuffer[String]">namesBuffer</a> <span title="(x: String)namesBuffer.type">+=</span> <a href="#xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol.symbolNameAsString" title="String">symbolNameAsString</a>
+		<span class="delimiter">}</span>
+		<span class="keyword">def</span> <a title="(node: ExtractUsedNames.this.global.Tree)Unit" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode">handleTreeNode</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Tree" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.node">node</a>: <span title="ExtractUsedNames.this.global.Tree">Tree</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.node" title="ExtractUsedNames.this.global.Tree">node</a> <span title="Unit" class="keyword">match</span> <span class="delimiter">{</span>
+			<span class="keyword">case</span> _: <span title="ExtractUsedNames.this.global.DefTree">DefTree</span> | _: <span title="ExtractUsedNames.this.global.Template">Template</span> =&gt; <span title="Unit" class="delimiter">(</span><span class="delimiter">)</span>
+			<span class="comment">// turns out that Import node has a TermSymbol associated with it</span>
+			<span class="comment">// I (Grzegorz) tried to understand why it's there and what does it represent but</span>
+			<span class="comment">// that logic was introduced in 2005 without any justification I'll just ignore the</span>
+			<span class="comment">// import node altogether and just process the selectors in the import node</span>
+			<span class="keyword">case</span> Import<span class="delimiter">(</span>_, <a title="List[ExtractUsedNames.this.global.ImportSelector]" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.selectors">selectors</a>: <span title="List[ExtractUsedNames.this.global.ImportSelector]">List</span><span class="delimiter">[</span>ImportSelector<span class="delimiter">]</span><span class="delimiter">)</span> =&gt;
+				<span class="keyword">def</span> <a title="(name: ExtractUsedNames.this.global.Name)Unit" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector">usedNameInImportSelector</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Name" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector.name">name</a>: <span title="ExtractUsedNames.this.global.Name">Name</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+					<span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector.name" title="ExtractUsedNames.this.global.Name">name</a> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector.name" title="ExtractUsedNames.this.global.Name">name</a> <span title="(x$1: AnyRef)Boolean">!=</span> <a href="#xsbt;ExtractUsedNames.global" title="ExtractUsedNames.this.global.nme.type">nme</a>.<span title="=&gt; ExtractUsedNames.this.global.nme.NameType">WILDCARD</span><span class="delimiter">)</span><span class="delimiter">)</span> <a href="#xsbt;ExtractUsedNames.extractByTreeWalk.namesBuffer" title="scala.collection.mutable.ListBuffer[String]">namesBuffer</a> <span title="(x: String)namesBuffer.type">+=</span> <a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector.name" title="ExtractUsedNames.this.global.Name">name</a>.<span title="()String">toString</span>
+				<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.selectors" title="List[ExtractUsedNames.this.global.ImportSelector]">selectors</a> <span title="(f: ExtractUsedNames.this.global.ImportSelector =&gt; Unit)Unit">foreach</span> <span class="delimiter">{</span> <a title="ExtractUsedNames.this.global.ImportSelector" id="xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.$anonfun.selector">selector</a> =&gt;
+					<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector" title="(name: ExtractUsedNames.this.global.Name)Unit">usedNameInImportSelector</a><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.$anonfun.selector" title="ExtractUsedNames.this.global.ImportSelector">selector</a>.<span title="=&gt; ExtractUsedNames.this.global.Name">name</span><span class="delimiter">)</span>
+					<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.usedNameInImportSelector" title="(name: ExtractUsedNames.this.global.Name)Unit">usedNameInImportSelector</a><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode.$anonfun.selector" title="ExtractUsedNames.this.global.ImportSelector">selector</a>.<span title="=&gt; ExtractUsedNames.this.global.Name">rename</span><span class="delimiter">)</span>
+				<span class="delimiter">}</span>
+			<span class="comment">// TODO: figure out whether we should process the original tree or walk the type</span>
+			<span class="comment">// the argument for processing the original tree: we process what user wrote</span>
+			<span class="comment">// the argument for processing the type: we catch all transformations that typer applies</span>
+			<span class="comment">// to types but that might be a bad thing because it might expand aliases eagerly which</span>
+			<span class="comment">// not what we need</span>
+			<span class="keyword">case</span> <span title="ExtractUsedNames.this.global.TypeTree">t</span>: <span title="ExtractUsedNames.this.global.TypeTree">TypeTree</span> <span class="keyword">if</span> <span title="ExtractUsedNames.this.global.TypeTree">t</span>.<span title="=&gt; ExtractUsedNames.this.global.Tree">original</span> <span title="(x$1: AnyRef)Boolean">!=</span> <span title="Null(null)" class="keyword">null</span> =&gt;
+				<span title="ExtractUsedNames.this.global.TypeTree">t</span>.<span title="=&gt; ExtractUsedNames.this.global.Tree">original</span>.<span title="(f: ExtractUsedNames.this.global.Tree =&gt; Unit)Unit">foreach</span><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode" title="(node: ExtractUsedNames.this.global.Tree)Unit">handleTreeNode</a><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="ExtractUsedNames.this.global.Tree">t</span> <span class="keyword">if</span> <span title="ExtractUsedNames.this.global.Tree">t</span>.<span title="=&gt; Boolean">hasSymbol</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#xsbt;ExtractUsedNames.eligibleAsUsedName" title="(symbol: ExtractUsedNames.this.global.Symbol)Boolean">eligibleAsUsedName</a><span class="delimiter">(</span><span title="ExtractUsedNames.this.global.Tree">t</span>.<span title="=&gt; ExtractUsedNames.this.global.Symbol">symbol</span><span class="delimiter">)</span> =&gt;
+				<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.addSymbol" title="(symbol: ExtractUsedNames.this.global.Symbol)Unit">addSymbol</a><span class="delimiter">(</span><span title="ExtractUsedNames.this.global.Tree">t</span>.<span title="=&gt; ExtractUsedNames.this.global.Symbol">symbol</span><span class="delimiter">)</span>
+			<span class="keyword">case</span> _ =&gt; <span title="Unit" class="delimiter">(</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+		<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.tree" title="ExtractUsedNames.this.global.Tree">tree</a>.<span title="(f: ExtractUsedNames.this.global.Tree =&gt; Unit)Unit">foreach</span><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.extractByTreeWalk.handleTreeNode" title="(node: ExtractUsedNames.this.global.Tree)Unit">handleTreeNode</a><span class="delimiter">)</span>
+		<a href="#xsbt;ExtractUsedNames.extractByTreeWalk.namesBuffer" title="scala.collection.mutable.ListBuffer[String]">namesBuffer</a>.<span title="scala.collection.immutable.Set[String]">toSet</span>
+	<span class="delimiter">}</span>
+
+
+	<span class="comment">/**
+	 * Needed for compatibility with Scala 2.8 which doesn't define `tpnme`
+	 */</span>
+	<span class="keyword">private</span> <span class="keyword">object</span> <a title="ExtractUsedNames.this.tpnme.type" id="xsbt;ExtractUsedNames.tpnme">tpnme</a> <a href="#xsbt;ExtractUsedNames.tpnme" title="ExtractUsedNames.this.tpnme.type" class="delimiter">{</a>
+		<span class="keyword">val</span> <a title="ExtractUsedNames.this.global.TypeName" id="xsbt;ExtractUsedNames.tpnme.EMPTY">EMPTY</a> = <a href="#xsbt;ExtractUsedNames.global" title="ExtractUsedNames.this.global.nme.type">nme</a>.<span title="=&gt; ExtractUsedNames.this.global.nme.NameType">EMPTY</span>.<span title="=&gt; ExtractUsedNames.this.global.TypeName">toTypeName</span>
+		<span class="keyword">val</span> <a title="ExtractUsedNames.this.global.TypeName" id="xsbt;ExtractUsedNames.tpnme.EMPTY_PACKAGE_NAME">EMPTY_PACKAGE_NAME</a> = <a href="#xsbt;ExtractUsedNames.global" title="ExtractUsedNames.this.global.nme.type">nme</a>.<span title="=&gt; ExtractUsedNames.this.global.nme.NameType">EMPTY_PACKAGE_NAME</span>.<span title="=&gt; ExtractUsedNames.this.global.TypeName">toTypeName</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(symbol: ExtractUsedNames.this.global.Symbol)Boolean" id="xsbt;ExtractUsedNames.eligibleAsUsedName">eligibleAsUsedName</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Symbol" id="xsbt;ExtractUsedNames.eligibleAsUsedName.symbol">symbol</a>: <span title="ExtractUsedNames.this.global.Symbol">Symbol</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> = <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="(name: ExtractUsedNames.this.global.Name)Boolean" id="xsbt;ExtractUsedNames.eligibleAsUsedName.emptyName">emptyName</a><span class="delimiter">(</span><a title="ExtractUsedNames.this.global.Name" id="xsbt;ExtractUsedNames.eligibleAsUsedName.emptyName.name">name</a>: <span title="ExtractUsedNames.this.global.Name">Name</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> = <a href="#xsbt;ExtractUsedNames.eligibleAsUsedName.emptyName.name" title="ExtractUsedNames.this.global.Name">name</a> <span title="Boolean" class="keyword">match</span> <span class="delimiter">{</span>
+			<span class="keyword">case</span> <a href="#xsbt;ExtractUsedNames.global" title="ExtractUsedNames.this.global.nme.type">nme</a>.<span title="=&gt; ExtractUsedNames.this.global.nme.NameType">EMPTY</span> | <a href="#xsbt;ExtractUsedNames.global" title="ExtractUsedNames.this.global.nme.type">nme</a>.<span title="=&gt; ExtractUsedNames.this.global.nme.NameType">EMPTY_PACKAGE_NAME</span> | <a href="#xsbt;ExtractUsedNames.tpnme" title="ExtractUsedNames.this.tpnme.type">tpnme</a>.<a href="#xsbt;ExtractUsedNames.tpnme.EMPTY" title="=&gt; ExtractUsedNames.this.global.TypeName">EMPTY</a> | <a href="#xsbt;ExtractUsedNames.tpnme" title="ExtractUsedNames.this.tpnme.type">tpnme</a>.<a href="#xsbt;ExtractUsedNames.tpnme.EMPTY_PACKAGE_NAME" title="=&gt; ExtractUsedNames.this.global.TypeName">EMPTY_PACKAGE_NAME</a> =&gt; <span title="Boolean(true)" class="keyword">true</span>
+			<span class="keyword">case</span> _ =&gt; <span title="Boolean(false)" class="keyword">false</span>
+		<span class="delimiter">}</span>
+
+		<span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.eligibleAsUsedName.symbol" title="ExtractUsedNames.this.global.Symbol">symbol</a> <span title="(x$1: AnyRef)Boolean">!=</span> <a href="#xsbt;ExtractUsedNames.global" title="=&gt; ExtractUsedNames.this.global.NoSymbol">NoSymbol</a><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span>
+		<span title="=&gt; Boolean">!</span><a href="#xsbt;ExtractUsedNames.eligibleAsUsedName.symbol" title="ExtractUsedNames.this.global.Symbol">symbol</a>.<span title="=&gt; Boolean">isSynthetic</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span>
+		<span title="=&gt; Boolean">!</span><a href="#xsbt;ExtractUsedNames.eligibleAsUsedName.emptyName" title="(name: ExtractUsedNames.this.global.Name)Boolean">emptyName</a><span class="delimiter">(</span><a href="#xsbt;ExtractUsedNames.eligibleAsUsedName.symbol" title="ExtractUsedNames.this.global.Symbol">symbol</a>.<span title="=&gt; symbol.NameType">name</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

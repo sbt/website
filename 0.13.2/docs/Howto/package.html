@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configure packaging &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="How to..." href="index.html" />
+    <link rel="next" title="Running commands" href="runningcommands.html" />
+    <link rel="prev" title="Project metadata" href="metadata.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Configure packaging</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="runningcommands.html">Running commands</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">How to...</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="metadata.html">Project metadata</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="configure-packaging">
+<h1>Configure packaging<a class="headerlink" href="#configure-packaging" title="Permalink to this headline">¶</a></h1>
+<div class="full-howto section" id="export">
+<h2>Use the packaged jar on classpaths instead of class directory<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>By default, a project exports a directory containing its resources and compiled class files.  Set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.exportJars">exportJars</a> to true to export the packaged jar instead.  For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">exportJars</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>The jar will be used by <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a>, and other tasks that use the full classpath.</p>
+<div class="full-howto section" id="manifest">
+<h2>Add manifest attributes<a class="headerlink" href="#manifest" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>By default, sbt constructs a manifest for the binary package from settings such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.organization">organization</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mainClass">mainClass</a>.  Additional attributes may be added to the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.packageOptions">packageOptions</a> setting scoped by the configuration and package task.</p>
+<p>Main attributes may be added with <span class="pre">Package.ManifestAttributes</span>.  There are two variants of this method, once that accepts repeated arguments that map an attribute of type <span class="pre">java.util.jar.Attributes.Name</span> to a String value and other that maps attribute names (type String) to the String value.</p>
+<p>For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span>
+    <span class="nc">Package</span><span class="o">.</span><span class="nc">ManifestAttributes</span><span class="o">(</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">jar</span><span class="o">.</span><span class="nc">Attributes</span><span class="o">.</span><span class="nc">Name</span><span class="o">.</span><span class="nc">SEALED</span> <span class="o">-&gt;</span> <span class="s">&quot;true&quot;</span> <span class="o">)</span>
+</pre></div>
+</div>
+<p>Other attributes may be added with <span class="pre">Package.JarManifest</span>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span>  <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">java.util.jar.</span><span class="o">{</span><span class="nc">Attributes</span><span class="o">,</span> <span class="nc">Manifest</span><span class="o">}</span>
+    <span class="k">val</span> <span class="n">manifest</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Manifest</span>
+    <span class="n">manifest</span><span class="o">.</span><span class="n">getAttributes</span><span class="o">(</span><span class="s">&quot;foo/bar/&quot;</span><span class="o">).</span><span class="n">put</span><span class="o">(</span><span class="nc">Attributes</span><span class="o">.</span><span class="nc">Name</span><span class="o">.</span><span class="nc">SEALED</span><span class="o">,</span> <span class="s">&quot;false&quot;</span><span class="o">)</span>
+    <span class="nc">Package</span><span class="o">.</span><span class="nc">JarManifest</span><span class="o">(</span> <span class="n">manifest</span> <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Or, to read the manifest from a file:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">packageOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span>  <span class="o">{</span>
+    <span class="k">val</span> <span class="n">manifest</span> <span class="k">=</span> <span class="nc">Using</span><span class="o">.</span><span class="n">fileInputStream</span><span class="o">(</span> <span class="n">in</span> <span class="k">=&gt;</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">jar</span><span class="o">.</span><span class="nc">Manifest</span><span class="o">(</span><span class="n">in</span><span class="o">)</span> <span class="o">)</span>
+    <span class="nc">Package</span><span class="o">.</span><span class="nc">JarManifest</span><span class="o">(</span> <span class="n">manifest</span> <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="name">
+<h2>Change the file name of a package<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.artifactName">artifactName</a> setting controls the name of generated packages.  See the <a class="reference internal" href="../Detailed-Topics/Artifacts.html"><em>Artifacts</em></a> page for details.</p>
+<div class="full-howto section" id="contents">
+<h2>Modify the contents of the package<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+</div>
+<p id="modify-package-contents">The contents of a package are defined by the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> task, of type <span class="pre">Seq[(File,String)]</span>.  The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> task is a sequence of mappings from a file to include in the package to the path in the package.  See <a class="reference internal" href="../Detailed-Topics/Mapping-Files.html"><em>Mapping Files</em></a> for convenience functions for generating these mappings.  For example, to add the file <span class="pre">in/example.txt</span> to the main binary jar with the path &quot;out/example.txt&quot;,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">mappings</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">+=</span> <span class="o">{</span>
+   <span class="o">(</span><span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;in&quot;</span> <span class="o">/</span> <span class="s">&quot;example.txt&quot;</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="s">&quot;out/example.txt&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Note that <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.mappings">mappings</a> is scoped by the configuration and the specific package task.  For example, the mappings for the test source package are defined by the <span class="pre">mappings in (Test, packageSrc)</span> task.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Howto/package.rst">Source for this page</a></p>
+</p>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Configure packaging</a><ul>
+<li><a class="reference internal" href="#export">Use the packaged jar on classpaths instead of class directory</a></li>
+<li><a class="reference internal" href="#manifest">Add manifest attributes</a></li>
+<li><a class="reference internal" href="#name">Change the file name of a package</a></li>
+<li><a class="reference internal" href="#contents">Modify the contents of the package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

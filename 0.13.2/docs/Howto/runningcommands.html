@@ -1,0 +1,184 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running commands &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="How to..." href="index.html" />
+    <link rel="next" title="Configure and use Scala" href="scala.html" />
+    <link rel="prev" title="Configure packaging" href="package.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Running commands</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.2 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.2/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="scala.html">Configure and use Scala</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">How to...</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="package.html">Configure packaging</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.2">Version 0.13.2</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="running-commands">
+<h1>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this headline">¶</a></h1>
+<div class="full-howto section" id="batch">
+<h2>Pass arguments to a command or task in batch mode<a class="headerlink" href="#batch" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>sbt interprets each command line argument provided to it as a command together with the command's arguments.
+Therefore, to run a command that takes arguments in batch mode, quote the command and its arguments.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">$</span> sbt <span class="s1">&#39;project X&#39;</span> clean <span class="s1">&#39;~ compile&#39;</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="multi">
+<h2>Provide multiple commands to run consecutively<a class="headerlink" href="#multi" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>Multiple commands can be scheduled at once by prefixing each command with a semicolon.
+This is useful for specifying multiple commands where a single command string is accepted.
+For example, the syntax for triggered execution is <span class="pre">~ &lt;command&gt;</span>.
+To have more than one command run for each triggering, use semicolons.
+For example, the following runs <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.clean">clean</a> and then <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> each time a source file changes:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> ~ ;clean;compile
+</pre></div>
+</div>
+<div class="full-howto section" id="read">
+<h2>Read commands from a file<a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">&lt;</span> command reads commands from the files provided to it as arguments.  Run <span class="pre">help &lt;</span> at the sbt prompt for details.</p>
+<div class="full-howto section" id="alias">
+<h2>Define an alias for a command or task<a class="headerlink" href="#alias" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">alias</span> command defines, removes, and displays aliases for commands.  Run <span class="pre">help alias</span> at the sbt prompt for details.</p>
+<p>Example usage:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">alias </span><span class="nv">a</span><span class="o">=</span>about
+<span class="gp">&gt;</span> <span class="nb">alias</span>
+<span class="go">    a = about</span>
+<span class="gp">&gt;</span> a
+<span class="go">[info] This is sbt ...</span>
+<span class="gp">&gt;</span> <span class="nb">alias </span><span class="nv">a</span><span class="o">=</span>
+<span class="gp">&gt;</span> <span class="nb">alias</span>
+<span class="gp">&gt;</span><span class="nb"> </span>a
+<span class="go">[error] Not a valid command: a ...</span>
+</pre></div>
+</div>
+<div class="full-howto section" id="eval">
+<h2>Quickly evaluate a Scala expression<a class="headerlink" href="#eval" title="Permalink to this headline">¶</a></h2>
+</div>
+<p>The <span class="pre">eval</span> command compiles and runs the Scala expression passed to it as an argument.
+The result is printed along with its type.
+For example,</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="gp">&gt;</span> <span class="nb">eval </span>2+2
+<span class="go">4: Int</span>
+</pre></div>
+</div>
+<p>Variables defined by an <span class="pre">eval</span> are not visible to subsequent <span class="pre">eval</span>s, although changes to system properties persist and affect the JVM that is running sbt.
+Use the Scala REPL (<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.console">console</a> and related commands) for full support for evaluating Scala code interactively.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.2/src/sphinx/Howto/runningcommands.rst">Source for this page</a></p>
+</p>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Running commands</a><ul>
+<li><a class="reference internal" href="#batch">Pass arguments to a command or task in batch mode</a></li>
+<li><a class="reference internal" href="#multi">Provide multiple commands to run consecutively</a></li>
+<li><a class="reference internal" href="#read">Read commands from a file</a></li>
+<li><a class="reference internal" href="#alias">Define an alias for a command or task</a></li>
+<li><a class="reference internal" href="#eval">Quickly evaluate a Scala expression</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

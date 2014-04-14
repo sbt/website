@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/boot/Boot.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009, 2010  Mark Harrah
+ */</span>
+ <span class="keyword">package</span> xsbt.boot
+
+<span class="keyword">import</span> java.io.File
+
+
+<span class="comment">// The entry point to the launcher</span>
+<span class="keyword">object</span> <a title="xsbt.boot.Boot.type" id="xsbt.boot.Boot">Boot</a>
+<a href="#xsbt.boot.Boot" title="xsbt.boot.Boot.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="(args: Array[String])Unit" id="xsbt.boot.Boot.main">main</a><span class="delimiter">(</span><a title="Array[String]" id="xsbt.boot.Boot.main.args">args</a>: <span title="Array[String]">Array</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span>
+	<span class="delimiter">{</span>
+	  <span class="keyword">val</span> <a title="xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.main.config">config</a> = <a href="#xsbt.boot.Boot.parseArgs" title="(args: Array[String])xsbt.boot.LauncherArguments">parseArgs</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.main.args" title="Array[String]">args</a><span class="delimiter">)</span>
+	  <span class="comment">// If we havne't exited, we set up some hooks and launch</span>
+	  <span title="System.type">System</span>.<span title="(x$1: String)String">clearProperty</span><span class="delimiter">(</span><span title="String(&quot;scala.home&quot;)" class="string">&quot;scala.home&quot;</span><span class="delimiter">)</span> <span class="comment">// avoid errors from mixing Scala versions in the same JVM</span>
+      <span title="System.type">System</span>.<span title="(x$1: String, x$2: String)String">setProperty</span><span class="delimiter">(</span><span title="String(&quot;jline.shutdownhook&quot;)" class="string">&quot;jline.shutdownhook&quot;</span>, <span title="String(&quot;false&quot;)" class="string">&quot;false&quot;</span><span class="delimiter">)</span> <span class="comment">// shutdown hooks cause class loader leaks</span>
+	  <span title="System.type">System</span>.<span title="(x$1: String, x$2: String)String">setProperty</span><span class="delimiter">(</span><span title="String(&quot;jline.esc.timeout&quot;)" class="string">&quot;jline.esc.timeout&quot;</span>, <span title="String(&quot;0&quot;)" class="string">&quot;0&quot;</span><span class="delimiter">)</span> <span class="comment">// starts up a thread otherwise</span>
+	  <a href="CheckProxy.scala.html#xsbt.boot.CheckProxy.apply" title="()Unit">CheckProxy</a><span class="delimiter">(</span><span class="delimiter">)</span>
+	  <a href="#xsbt.boot.Boot.run" title="(args: xsbt.boot.LauncherArguments)Unit">run</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.main.config" title="xsbt.boot.LauncherArguments">config</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">def</span> <a title="(args: Array[String])xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.parseArgs">parseArgs</a><span class="delimiter">(</span><a title="Array[String]" id="xsbt.boot.Boot.parseArgs.args">args</a>: <span title="Array[String]">Array</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a> = <span class="delimiter">{</span>
+	  @annotation.tailrec
+	  <span class="keyword">def</span> <a title="(args: List[String], isLocate: Boolean, remaining: List[String])xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.parseArgs.parse">parse</a><span class="delimiter">(</span><a title="List[String]" id="xsbt.boot.Boot.parseArgs.parse.args">args</a>: <span title="List[String]">List</span><span class="delimiter">[</span>String<span class="delimiter">]</span>, <a title="Boolean" id="xsbt.boot.Boot.parseArgs.parse.isLocate">isLocate</a>: <span title="Boolean">Boolean</span>, <a title="List[String]" id="xsbt.boot.Boot.parseArgs.parse.remaining">remaining</a>: <span title="List[String]">List</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a> = 
+	    <a href="#xsbt.boot.Boot.parseArgs.parse.args" title="List[String]">args</a> <span title="xsbt.boot.LauncherArguments" class="keyword">match</span> <span class="delimiter">{</span>
+  	      <span class="keyword">case</span> <span title="String(&quot;--version&quot;)" class="string">&quot;--version&quot;</span> :: <span title="List[String]">rest</span> =&gt;
+  	        <span title="(x: Any)Unit">println</span><span class="delimiter">(</span><span title="String(&quot;sbt launcher version &quot;)" class="string">&quot;sbt launcher version &quot;</span> <span title="(x$1: Any)String">+</span> <span title="Package.type">Package</span>.<span title="(x$1: String)Package">getPackage</span><span class="delimiter">(</span><span title="String(&quot;xsbt.boot&quot;)" class="string">&quot;xsbt.boot&quot;</span><span class="delimiter">)</span>.<span title="()String">getImplementationVersion</span><span class="delimiter">)</span>
+  	        <a href="#xsbt.boot.Boot.exit" title="(code: Int)Nothing">exit</a><span class="delimiter">(</span><span title="Int(1)" class="int">1</span><span class="delimiter">)</span>
+  	      <span class="keyword">case</span> <span title="String(&quot;--locate&quot;)" class="string">&quot;--locate&quot;</span> :: <span title="List[String]">rest</span> =&gt; <a href="#xsbt.boot.Boot.parseArgs.parse" title="(args: List[String], isLocate: Boolean, remaining: List[String])xsbt.boot.LauncherArguments">parse</a><span class="delimiter">(</span><span title="List[String]">rest</span>, <span title="Boolean(true)" class="keyword">true</span>, <a href="#xsbt.boot.Boot.parseArgs.parse.remaining" title="List[String]">remaining</a><span class="delimiter">)</span>
+  	      <span class="keyword">case</span> <a title="String" id="xsbt.boot.Boot.parseArgs.parse.next">next</a> :: <span title="List[String]">rest</span> =&gt; <a href="#xsbt.boot.Boot.parseArgs.parse" title="(args: List[String], isLocate: Boolean, remaining: List[String])xsbt.boot.LauncherArguments">parse</a><span class="delimiter">(</span><span title="List[String]">rest</span>, <a href="#xsbt.boot.Boot.parseArgs.parse.isLocate" title="Boolean">isLocate</a>, <a href="#xsbt.boot.Boot.parseArgs.parse.next" title="String">next</a> <a href="#xsbt.boot.Boot.parseArgs.parse.x$1" title="(x: String)List[String]">::</a> <a href="#xsbt.boot.Boot.parseArgs.parse.remaining" title="List[String]">remaining</a><span class="delimiter">)</span>
+	      <span class="keyword">case</span> <span title="scala.collection.immutable.Nil.type">Nil</span> =&gt; <span title="xsbt.boot.LauncherArguments" class="keyword">new</span> <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.parseArgs.parse.remaining" title="List[String]">remaining</a>.<span title="=&gt; List[String]">reverse</span>, <a href="#xsbt.boot.Boot.parseArgs.parse.isLocate" title="Boolean">isLocate</a><span class="delimiter">)</span>
+	    <span class="delimiter">}</span>
+	  <a href="#xsbt.boot.Boot.parseArgs.parse" title="(args: List[String], isLocate: Boolean, remaining: List[String])xsbt.boot.LauncherArguments">parse</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.parseArgs.args" title="(xs: Array[String])scala.collection.mutable.ArrayOps[String]">args</a>.<span title="=&gt; List[String]">toList</span>, <span title="Boolean(false)" class="keyword">false</span>, <span title="scala.collection.immutable.Nil.type">Nil</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	
+	<span class="comment">// this arrangement is because Scala does not always properly optimize away</span>
+	<span class="comment">// the tail recursion in a catch statement</span>
+	<span class="keyword">final</span> <span class="keyword">def</span> <a title="(args: xsbt.boot.LauncherArguments)Unit" id="xsbt.boot.Boot.run">run</a><span class="delimiter">(</span><a title="xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.run.args">args</a>: <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#xsbt.boot.Boot.runImpl" title="(args: xsbt.boot.LauncherArguments)Option[xsbt.boot.LauncherArguments]">runImpl</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.run.args" title="xsbt.boot.LauncherArguments">args</a><span class="delimiter">)</span> <span title="Unit" class="keyword">match</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> Some<span class="delimiter">(</span><a title="xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.run.newArgs">newArgs</a><span class="delimiter">)</span> =&gt; <a href="#xsbt.boot.Boot.run" title="(args: xsbt.boot.LauncherArguments)Unit">run</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.run.newArgs" title="xsbt.boot.LauncherArguments">newArgs</a><span class="delimiter">)</span>
+		<span class="keyword">case</span> <span title="None.type">None</span> =&gt; <span title="Unit" class="delimiter">(</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(args: xsbt.boot.LauncherArguments)Option[xsbt.boot.LauncherArguments]" id="xsbt.boot.Boot.runImpl">runImpl</a><span class="delimiter">(</span><a title="xsbt.boot.LauncherArguments" id="xsbt.boot.Boot.runImpl.args">args</a>: <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a><span class="delimiter">)</span>: <span title="Option[xsbt.boot.LauncherArguments]">Option</span><span class="delimiter">[</span>LauncherArguments<span class="delimiter">]</span> =
+		<span class="keyword">try</span>
+			<a href="Launch.scala.html#xsbt.boot.Launch.apply(dd095288e6)" title="(arguments: xsbt.boot.LauncherArguments)Option[Int]">Launch</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.runImpl.args" title="xsbt.boot.LauncherArguments">args</a><span class="delimiter">)</span> <span title="(f: Int =&gt; Nothing)Option[Nothing]">map</span> <a href="#xsbt.boot.Boot.exit" title="(code: Int)Nothing">exit</a>
+		<span class="keyword">catch</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">case</span> <a title="xsbt.boot.BootException" id="xsbt.boot.Boot.runImpl.b">b</a>: <a href="Exceptions.scala.html#xsbt.boot;BootException" title="xsbt.boot.BootException">BootException</a> =&gt; <a href="#xsbt.boot.Boot.errorAndExit" title="(msg: String)Nothing">errorAndExit</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.runImpl.b" title="xsbt.boot.BootException">b</a>.<a href="Exceptions.scala.html#xsbt.boot;BootException.toString" title="=&gt; String">toString</a><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="xsbti.RetrieveException">r</span>: xsbti.<a href="../../xsbti/RetrieveException.java.html#xsbti;RetrieveException" title="xsbti.RetrieveException">RetrieveException</a> =&gt; <a href="#xsbt.boot.Boot.errorAndExit" title="(msg: String)Nothing">errorAndExit</a><span class="delimiter">(</span><span title="String(&quot;Error: &quot;)" class="string">&quot;Error: &quot;</span> <span title="(x$1: Any)String">+</span> <span title="xsbti.RetrieveException">r</span>.<span title="()String">getMessage</span><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="xsbti.FullReload">r</span>: xsbti.<a href="../../xsbti/FullReload.java.html#xsbti;FullReload" title="xsbti.FullReload">FullReload</a> =&gt; <span title="(x: xsbt.boot.LauncherArguments)Some[xsbt.boot.LauncherArguments]">Some</span><span class="delimiter">(</span><span title="xsbt.boot.LauncherArguments" class="keyword">new</span> <a href="Launch.scala.html#xsbt.boot;LauncherArguments" title="xsbt.boot.LauncherArguments">LauncherArguments</a><span class="delimiter">(</span><span title="xsbti.FullReload">r</span>.<a href="../../xsbti/FullReload.java.html#xsbti;FullReload.arguments(bc54cffb3a)" title="(xs: Array[String])scala.collection.mutable.ArrayOps[String]">arguments</a>.<span title="=&gt; List[String]">toList</span>, <span title="Boolean(false)" class="keyword">false</span><span class="delimiter">)</span><span class="delimiter">)</span>
+			<span class="keyword">case</span> <a title="Throwable" id="xsbt.boot.Boot.runImpl.e">e</a>: <span title="Throwable">Throwable</span> =&gt;
+				<a href="#xsbt.boot.Boot.runImpl.e" title="Throwable">e</a>.<span title="()Unit">printStackTrace</span>
+				<a href="#xsbt.boot.Boot.errorAndExit" title="(msg: String)Nothing">errorAndExit</a><span class="delimiter">(</span><a href="Pre.scala.html#xsbt.boot.Pre" title="xsbt.boot.Pre.type">Pre</a>.<a href="Pre.scala.html#xsbt.boot.Pre.prefixError" title="(msg: String)String">prefixError</a><span class="delimiter">(</span><a href="#xsbt.boot.Boot.runImpl.e" title="Throwable">e</a>.<span title="()String">toString</span><span class="delimiter">)</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(msg: String)Nothing" id="xsbt.boot.Boot.errorAndExit">errorAndExit</a><span class="delimiter">(</span><a title="String" id="xsbt.boot.Boot.errorAndExit.msg">msg</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Nothing">Nothing</span> =
+	<span class="delimiter">{</span>
+		<span title="System.type">System</span>.<span title="java.io.PrintStream">out</span>.<span title="(x$1: String)Unit">println</span><span class="delimiter">(</span><a href="#xsbt.boot.Boot.errorAndExit.msg" title="String">msg</a><span class="delimiter">)</span>
+		<a href="#xsbt.boot.Boot.exit" title="(code: Int)Nothing">exit</a><span class="delimiter">(</span><span title="Int(1)" class="int">1</span><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span> <span class="keyword">def</span> <a title="(code: Int)Nothing" id="xsbt.boot.Boot.exit">exit</a><span class="delimiter">(</span><a title="Int" id="xsbt.boot.Boot.exit.code">code</a>: <span title="Int">Int</span><span class="delimiter">)</span>: <span title="Nothing">Nothing</span> =
+		<span title="System.type">System</span>.<span title="(x$1: Int)Unit">exit</span><span class="delimiter">(</span><a href="#xsbt.boot.Boot.exit.code" title="Int">code</a><span class="delimiter">)</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="Nothing" class="delimiter">[</span><span title="Nothing">Nothing</span><span class="delimiter">]</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>
