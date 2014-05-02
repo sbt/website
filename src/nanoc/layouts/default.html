@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>sbt - <%= @item[:title] %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="<%= @items['/bootstrap_style/'].path %>">
+    <link rel="stylesheet" href="<%= @items['/bootstrap-theme/'].path %>">
+    <link rel="stylesheet" href="<%= @items['/stylesheet/'].path %>">
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+    <!-- you don't need to keep this, but it's cool for stats! -->
+    <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
+  </head>
+  <body class="default">
+    <header class="navbar navbar-static-top">
+      <div class="splash">
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="logo">
+              <a href="<%= @items['/'].path %>">sbt</a>
+            </div>
+            <ul class="nav">
+              <li><a href="<%= @items['/documentation/'].path %>">Documentation</a></li>
+              <li><a href="<%= @items['/download/'].path %>">Download</a></li>
+              <li><a href="<%= @items['/community/'].path %>">Community</a></li>
+              <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo/'].path %>" alt="Source code"></a></li>
+              <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-white/'].path %>" alt="sbt on Twitter"></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container content">
+      <div class="row">
+        <div class="col-md-12">
+          <div id="main">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container footer">
+        <div class="row">
+          <div class="col-md-12">
+           © 2014 Typesafe Inc.
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Placed at the end -->
+    <script src="<%= @items['/jquery/'].path %>"></script>
+    <script src="<%= @items['/bootstrap/'].path %>"></script>
+  </body>
+</html>
