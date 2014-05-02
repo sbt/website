@@ -2,9 +2,6 @@
 title: Documentation
 ---
 
-Documentation
-=============
-
 sbt 0.13
 --------
 

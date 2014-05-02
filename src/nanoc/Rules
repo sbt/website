@@ -16,6 +16,7 @@
 compile '*' do
   if (item[:extension] == 'css') || (item[:extension] == 'min.css')
     # don’t filter stylesheets
+    filter :relativize_paths, :type => :css
   elsif (item[:extension] == 'js') || (item[:extension] == 'min.js')
     # don’t filter binary items
   elsif item.binary?
@@ -23,25 +24,29 @@ compile '*' do
   elsif (item[:extension] == 'md')
     filter :redcarpet
     layout item[:layout] || 'default'
+    filter :relativize_paths, :type => :html
   else
     filter :erb
     layout item[:layout] || 'default'
+    filter :relativize_paths, :type => :html
   end
 end
 
 route '*' do
   if (item[:extension] == 'css') || (item[:extension] == 'min.css')
     # Write item with identifier /foo/ to /foo.css
-    item.identifier.chop  + '.' + item[:extension]
+    '/assets' + item.identifier.chop  + '.' + item[:extension]
   elsif (item[:extension] == 'js') || (item[:extension] == 'min.js')
     # Write item with identifier /foo/ to /foo.css
-    item.identifier.chop  + '.' + item[:extension]
+    '/assets' + item.identifier.chop  + '.' + item[:extension]
   elsif item.binary?
     # Write item with identifier /foo/ to /foo.ext
-    item.identifier.chop + '.' + item[:extension]
+    '/assets' + item.identifier.chop + '.' + item[:extension]
+  elsif item.identifier == "/"
+    item.identifier + "index.html"
   else
-    # Write item with identifier /foo/ to /foo/index.html
-    item.identifier + 'index.html'
+    # Write item with identifier /foo/ to /foo.html
+    item.identifier.chop + '.html'
   end
 end
 

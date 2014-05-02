@@ -13,13 +13,11 @@
   </head>
   <body class="default">
     <header class="navbar navbar-static-top">
-      <div class="splash">
-      </div>
       <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="logo">
-              <a href="<%= @items['/'].path %>">sbt</a>
+              <a href="<%= @items['/'].path %>index.html">sbt</a>
             </div>
             <ul class="nav">
               <li><a href="<%= @items['/documentation/'].path %>">Documentation</a></li>
@@ -32,9 +30,18 @@
         </div>
       </div>
     </header>
+    <div class="top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1><%= @item[:title] %></h1>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container content">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
           <div id="main">
             <%= yield %>
           </div>
@@ -53,5 +60,6 @@
     <!-- Placed at the end -->
     <script src="<%= @items['/jquery/'].path %>"></script>
     <script src="<%= @items['/bootstrap/'].path %>"></script>
+    <script src="<%= @items['/arc/'].path %>"></script>
   </body>
 </html>
