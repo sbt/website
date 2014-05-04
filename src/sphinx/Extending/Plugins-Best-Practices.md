@@ -220,7 +220,7 @@ settings from other plugins are not ignored. e.g. when creating a new
 onLoad handler, ensure that the previous onLoad handler is not removed.
 
     object MyPlugin extends Plugin {
-       val globalSettigns: Seq[Setting[_]] = Seq(
+       val globalSettings: Seq[Setting[_]] = Seq(
          onLoad in Global := (onLoad in Global).value andThen { state =>
              ... return new state ...
          }
