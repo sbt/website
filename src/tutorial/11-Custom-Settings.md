@@ -1,3 +1,7 @@
+---
+out: Custom-Settings.html
+---
+
 Custom Settings and Tasks
 =========================
 
@@ -74,7 +78,7 @@ write code based on the HTML library, perhaps).
 
 sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-[IO](../../api/index.html#sbt.IO$) to manipulate files and directories.
+[IO](../../api/index.html#sbt.IO\$) to manipulate files and directories.
 
 Use plugins!
 ------------
@@ -85,10 +89,5 @@ plugin for re-use across multiple builds.
 It's very easy to create a plugin, as teased earlier \<Using-Plugins\>
 and discussed at more length here \</Extending/Plugins\>.
 
-Next
-----
-
 This page has been a quick taste; there's much much more about custom
 tasks on the /Detailed-Topics/Tasks page.
-
-Move on to Full-Def.

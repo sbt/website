@@ -1,3 +1,7 @@
+---
+out: Hello.html
+---
+
 Hello, World
 ============
 
@@ -71,8 +75,3 @@ hello/project/build.properties. In this file, write:
 to force the use of sbt |release|. sbt is 99% source compatible from
 release to release. Still, setting the sbt version in
 project/build.properties avoids any potential confusion.
-
-### Next
-
-Learn about the file and directory layout \<Directories\> of an sbt
-project.

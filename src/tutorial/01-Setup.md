@@ -1,3 +1,7 @@
+---
+out: Setup.html
+---
+
 Setup
 =====
 
@@ -168,8 +172,3 @@ Tips and Notes
 
 If you have any trouble running sbt, see /Detailed-Topics/Setup-Notes on
 terminal encodings, HTTP proxies, and JVM options.
-
-Next
-----
-
-Move on to create a simple project \<Hello\>.

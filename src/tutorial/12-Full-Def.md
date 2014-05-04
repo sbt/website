@@ -1,3 +1,7 @@
+---
+out: Full-Def.html
+---
+
 .scala Build Definition
 =======================
 
@@ -241,8 +245,3 @@ in this order:
 
 Later settings override earlier ones. The entire list of settings forms
 the build definition.
-
-Next
-----
-
-You're at the end of Getting Started! There's a brief recap \<Summary\>.

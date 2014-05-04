@@ -1,3 +1,7 @@
+---
+out: More-About-Settings.html
+---
+
 More Kinds of Setting
 =====================
 
@@ -169,10 +173,3 @@ For example, say you have a coverage report named after the project, and
 you want to add it to the files removed by clean:
 
     cleanFiles += file("coverage-report-" + name.value + ".txt")
-
-Next
-----
-
-At this point you know how to get things done with settings, so we can
-move on to a specific key that comes up often: libraryDependencies.
-Learn about library dependencies \<Library-Dependencies\>.

@@ -1,3 +1,7 @@
+---
+out: Running.html
+---
+
 Running
 =======
 
@@ -112,8 +116,3 @@ following commands are also supported:
 -   !-n Execute the nth command before this one.
 -   !string Execute the most recent command starting with 'string'
 -   !?string Execute the most recent command containing 'string'
-
-Next
-----
-
-Move on to understanding build.sbt \<Basic-Def\>.

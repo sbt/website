@@ -1,3 +1,7 @@
+---
+out: Scopes.html
+---
+
 Scopes
 ======
 
@@ -343,9 +347,3 @@ packageOptions in (Compile, packageBin) is a key name, in other words.
 Simply packageOptions is also a key name, but a different one (for keys
 with no in, a scope is implicitly assumed: current project, global
 config, global task).
-
-Next
-----
-
-Now that you understand scopes, you can
-learn more about settings \<More-About-Settings\>.

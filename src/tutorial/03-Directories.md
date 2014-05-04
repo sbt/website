@@ -1,3 +1,7 @@
+---
+out: Directories.html
+---
+
 Directory structure
 ===================
 
@@ -84,7 +88,3 @@ target/
 Note that this deliberately has a trailing / (to match only directories)
 and it deliberately has no leading / (to match project/target/ in
 addition to plain target/).
-
-### Next
-
-Learn about running sbt \<Running\>.

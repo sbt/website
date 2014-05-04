@@ -1,3 +1,7 @@
+---
+out: Using-Plugins.html
+---
+
 Using Plugins
 =============
 
@@ -152,8 +156,3 @@ plugin,
 For more details, including ways of developing plugins, see
 /Extending/Plugins. For best practices, see
 /Extending/Plugins-Best-Practices.
-
-Next
-----
-
-Move on to create custom settings \<Custom-Settings\>.

@@ -1,3 +1,7 @@
+---
+out: Basic-Def.html
+---
+
 .sbt Build Definition
 =====================
 
@@ -267,8 +271,3 @@ We'll skip over the details of library dependencies until later in the
 Getting Started Guide. There's a
 whole page \</Getting-Started/Library-Dependencies\> covering it later
 on.
-
-Next
-----
-
-Move on to learn about scopes \</Getting-Started/Scopes\>.

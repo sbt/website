@@ -1,3 +1,7 @@
+---
+out: Summary.html
+---
+
 Getting Started Summary
 =======================
 

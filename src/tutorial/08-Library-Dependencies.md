@@ -1,3 +1,7 @@
+---
+out: Library-Dependencies.html
+---
+
 Library Dependencies
 ====================
 
@@ -197,11 +201,6 @@ Typically, test-related dependencies such as
 [specs](http://code.google.com/p/specs/), and
 [ScalaTest](http://www.scalatest.org/) would be defined with % "test".
 
-#### Next
-
 There are some more details and tips-and-tricks related to library
 dependencies on this page \</Detailed-Topics/Library-Management\>, if
 you didn't find an answer on this introductory page.
-
-If you're reading Getting Started in order, for now, you might move on
-to read Multi-Project.

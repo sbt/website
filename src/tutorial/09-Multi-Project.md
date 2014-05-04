@@ -1,3 +1,7 @@
+---
+out: Multi-Project.html
+---
+
 Multi-Project Builds
 ====================
 
@@ -199,8 +203,3 @@ For example:
     organization := Common.text
 
 See Full-Def for details.
-
-Next
-----
-
-Move on to using plugins \<Using-Plugins\>.
