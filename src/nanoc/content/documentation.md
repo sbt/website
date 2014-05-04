@@ -5,6 +5,7 @@ title: Documentation
 sbt 0.13
 --------
 
+- [sbt tutorial](0.13/tutorial)
 - [sbt documentation](http://www.scala-sbt.org/0.13.2/docs/index.html)
 - [sbt API](http://www.scala-sbt.org/0.13.2/api/index.html)
 
