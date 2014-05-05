@@ -2,12 +2,16 @@
 out: Library-Dependencies.html
 ---
 
-Library Dependencies
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+  [More-About-Settings]: More-About-Settings.html
+  
+Library dependencies
 ====================
 
 This page assumes you've read the earlier Getting Started pages, in
-particular .sbt build definition \<Basic-Def\>, scopes \<Scopes\>, and
-more about settings \<More-About-Settings\>.
+particular .sbt build definition [.sbt build definition][Basic-Def], scopes [Scopes][Scopes], and
+more about settings [More kinds of setting][More-About-Settings].
 
 Library dependencies can be added in two ways:
 
@@ -44,7 +48,7 @@ To use custom\_lib instead of \`lib\`:
 
 baseDirectory is the project's root directory, so here you're changing
 unmanagedBase depending on baseDirectory using the special value method
-as explained in more about settings \<More-About-Settings\>.
+as explained in more about settings [More kinds of setting][More-About-Settings].
 
 There's also an unmanagedJars task which lists the jars from the
 unmanagedBase directory. If you wanted to use multiple directories or do

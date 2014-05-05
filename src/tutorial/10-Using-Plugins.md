@@ -2,12 +2,15 @@
 out: Using-Plugins.html
 ---
 
-Using Plugins
+  [Basic-Def]: Basic-Def.html
+  [Library-Dependencies]: Library-Dependencies.html
+
+Using plugins
 =============
 
 Please read the earlier pages in the Getting Started Guide first, in
-particular you need to understand build.sbt \<Basic-Def\> and
-library dependencies \<Library-Dependencies\>, before reading this page.
+particular you need to understand build.sbt [.sbt build definition][Basic-Def] and
+[library dependencies][Library-Dependencies], before reading this page.
 
 What is a plugin?
 -----------------

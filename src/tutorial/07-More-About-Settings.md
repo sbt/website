@@ -2,24 +2,28 @@
 out: More-About-Settings.html
 ---
 
-More Kinds of Setting
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+  [Full-Def]: Full-Def.html
+
+More kinds of setting
 =====================
 
 This page explains other ways to create a Setting, beyond the basic :=
-method. It assumes you've read .sbt build definition \<Basic-Def\> and
-scopes \<Scopes\>.
+method. It assumes you've read .sbt build definition [.sbt build definition][Basic-Def] and
+scopes [Scopes][Scopes].
 
 Refresher: Settings
 -------------------
 
-Remember \<Basic-Def\>, a build definition creates a list of Setting,
+Remember [.sbt build definition][Basic-Def], a build definition creates a list of Setting,
 which is then used to transform sbt's description of the build (which is
 a map of key-value pairs). A Setting is a transformation with sbt's
 earlier map as input and a new map as output. The new map becomes sbt's
 new state.
 
 Different settings transform the map in different ways.
-Earlier \<Basic-Def\>, you read about the := method.
+Earlier [.sbt build definition][Basic-Def], you read about the := method.
 
 The Setting which := creates puts a fixed, constant value in the new,
 transformed map. For example, if you transform a map with the setting
@@ -28,7 +32,7 @@ name.
 
 Settings must end up in the master list of settings to do any good (all
 lines in a build.sbt automatically end up in the list, but in a
-.scala file \<Full-Def\> you can get it wrong by creating a Setting
+[.scala file][Full-Def] you can get it wrong by creating a Setting
 without putting it where sbt will find it).
 
 Appending to previous values: += and ++=
@@ -129,14 +133,14 @@ Whenever a setting uses :=, +=, or ++= to create a dependency on itself
 or another key's value, the value it depends on must exist. If it does
 not, sbt will complain. It might say *"Reference to undefined setting"*,
 for example. When this happens, be sure you're using the key in the
-scope \<Scopes\> that defines it.
+[scope][Scopes] that defines it.
 
 It's possible to create cycles, which is an error; sbt will tell you if
 you do this.
 
 ### Tasks with dependencies
 
-As noted in .sbt build definition \<Basic-Def\>, task keys create a
+As noted in [.sbt build definition][Basic-Def], task keys create a
 Setting[Task[T]] rather than a Setting[T] when you build a setting with
 :=, etc. Tasks can use settings as inputs, but settings cannot use tasks
 as inputs.

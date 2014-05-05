@@ -2,13 +2,16 @@
 out: Multi-Project.html
 ---
 
-Multi-Project Builds
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+
+Multi-project builds
 ====================
 
 This page introduces multiple projects in a single build.
 
 Please read the earlier pages in the Getting Started Guide first, in
-particular you need to understand build.sbt \<Basic-Def\> before reading
+particular you need to understand build.sbt [.sbt build definition][Basic-Def] before reading
 this page.
 
 Multiple projects
@@ -77,7 +80,7 @@ the update task:
     [...]
 
 aggregate in update is the aggregate key scoped to the update task. (See
-scopes \<Scopes\>.)
+scopes [Scopes][Scopes].)
 
 Note: aggregation will run the aggregated tasks in parallel and with no
 defined ordering between them.
@@ -139,7 +142,7 @@ If your whole project is in hello, try defining a different version
 hello/bar/build.sbt. Now show version at the sbt interactive prompt. You
 should get something like this (with whatever versions you defined):
 
-``` {.sourceCode .console}
+```
 > show version
 [info] hello-foo/*:version
 [info]  0.7
@@ -152,7 +155,7 @@ should get something like this (with whatever versions you defined):
 hello-foo/\*:version was defined in hello/foo/build.sbt,
 hello-bar/\*:version was defined in hello/bar/build.sbt, and
 hello/\*:version was defined in hello/build.sbt. Remember the
-syntax for scoped keys \<Scopes\>. Each version key is scoped to a
+syntax for scoped keys [Scopes][Scopes]. Each version key is scoped to a
 project, based on the location of the build.sbt. But all three build.sbt
 are part of the same build definition.
 

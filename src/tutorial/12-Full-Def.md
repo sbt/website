@@ -2,12 +2,16 @@
 out: Full-Def.html
 ---
 
-.scala Build Definition
+  [Basic-Def]: Basic-Def.html
+  [More-About-Settings]: More-About-Settings.html
+  [Using-Plugins]: Using-Plugins.html
+
+.scala build definition
 =======================
 
 This page assumes you've read previous pages in the Getting Started
-Guide, *especially* .sbt build definition \<Basic-Def\> and
-more about settings \<More-About-Settings\>.
+Guide, *especially* .sbt build definition [.sbt build definition][Basic-Def] and
+more about settings [More kinds of setting][More-About-Settings].
 
 sbt is recursive
 ----------------
@@ -236,12 +240,12 @@ in this order:
     files.
 -   Your user-global settings; for example in |globalSbtFile| you can
     define settings affecting *all* your projects.
--   Settings injected by plugins, see using plugins \<Using-Plugins\>
+-   Settings injected by plugins, see [using plugins][Using-Plugins]
     coming up next.
 -   Settings from .sbt files in the project.
 -   Build definition projects (i.e. projects inside project) have
     settings from global plugins (|globalPluginsBase|) added.
-    Using plugins \<Using-Plugins\> explains this more.
+    [Using-Plugins] explains this more.
 
 Later settings override earlier ones. The entire list of settings forms
 the build definition.
