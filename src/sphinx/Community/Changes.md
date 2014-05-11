@@ -1,6 +1,11 @@
 Changes
 =======
 
+0.13.5-RC1 to 0.13.5-RC2
+------------------------
+
+-   Fixes auto plugins not detecting `object autoImport`. (gh-1314)
+
 0.13.2 to 0.13.5
 ----------------
 
@@ -59,47 +64,49 @@ Changes
 
 -   The Scala version for sbt and sbt plugins is now 2.10.3. This is a
     compatible version bump.
--   New method toTask on Initialize[InputTask[T]] to apply the full
+-   New method `toTask` on `Initialize[InputTask[T]]` to apply the full
     input and get a plain task out.
--   Improved performance of inspect tree
+-   Improved performance of `inspect tree`
 -   Work around various issues with Maven local repositories, including
     resolving -SNAPSHOTs from them. (gh-321)
 -   Better representation of no cross-version suffix in suffix conflict
-    error message: now shows \<none\> instead of just \_
--   TrapExit support for multiple, concurrent managed applications. Now
-    enabled by default for all run-like tasks. (gh-831)
+    error message: now shows `<none>` instead of just `_`
+-   `TrapExit` support for multiple, concurrent managed applications.
+    Now enabled by default for all `run`-like tasks. (gh-831)
 -   Add minimal support for class file formats 51.0, 52.0 in incremental
     compiler. (gh-842)
 -   Allow main class to be non-public. (gh-883)
--   Convert -classpath to CLASSPATH when forking on Windows and length
-    exceeds a heuristic maximum. (gh-755)
--   scalacOptions for .scala build definitions are now also used for
-    .sbt files
--   error, warn, info, debug commands to set log level and --error, ...
-    to set the level before the project is loaded. (gh-806)
--   sLog settings that provides a Logger for use by settings. (gh-806)
--   Early commands: any command prefixed with -- gets moved before other
-    commands on startup and doesn't force sbt into batch mode.
--   Deprecate internal -, --, and --- commands in favor of onFailure,
-    sbtClearOnFailure, and resumeFromFailure.
--   makePom no longer generates \<type\> elements for standard
+-   Convert `-classpath` to `CLASSPATH` when forking on Windows and
+    length exceeds a heuristic maximum. (gh-755)
+-   `scalacOptions` for `.scala` build definitions are now also used for
+    `.sbt` files
+-   `error`, `warn`, `info`, `debug` commands to set log level and
+    `--error`, ... to set the level before the project is loaded.
+    (gh-806)
+-   `sLog` settings that provides a `Logger` for use by settings.
+    (gh-806)
+-   Early commands: any command prefixed with `--` gets moved before
+    other commands on startup and doesn't force sbt into batch mode.
+-   Deprecate internal -, --, and --- commands in favor of `onFailure`,
+    `sbtClearOnFailure`, and `resumeFromFailure`.
+-   `makePom` no longer generates \<type\> elements for standard
     classifiers. (gh-728)
 -   Fix many instances of the Turkish i bug.
 -   Read https+ftp proxy environment variables into system properties
     where Java will use them. (gh-886)
--   The Process methods that are redirection-like no longer discard the
-    exit code of the input. This addresses an inconsistency with Fork,
-    where using the CustomOutput OutputStrategy makes the exit code
-    always zero.
--   Recover from failed reload command in the scripted sbt handler.
--   Parse external pom.xml with CustomPomParser to handle multiple
+-   The `Process` methods that are redirection-like no longer discard
+    the exit code of the input. This addresses an inconsistency with
+    `Fork`, where using the `CustomOutput` `OutputStrategy` makes the
+    exit code always zero.
+-   Recover from failed `reload` command in the scripted sbt handler.
+-   Parse external `pom.xml` with `CustomPomParser` to handle multiple
     definitions. (gh-758)
 -   Improve key collision error message (gh-877)
 -   Display the source position of an undefined setting.
--   Respect the -nowarn option when compiling Scala sources.
+-   Respect the `-nowarn` option when compiling Scala sources.
 -   Improve forked test debugging by listing tests run by sbt in debug
     output. (gh-868)
--   Fix scaladoc cache to track changes to -doc-root-content (gh-837)
+-   Fix scaladoc cache to track changes to `-doc-root-content` (gh-837)
 -   Incremental compiler: Internal refactoring in preparation for
     name-hashing (gh-936)
 -   Incremental compiler: improved cache loading/saving speed by
@@ -107,40 +114,40 @@ Changes
 -   Docs: many contributed miscellaneous fixes and additions
 -   Docs: link to page source now at the bottom of the page
 -   Docs: sitemap now automatically generated
--   Docs: custom :key: role enables links from a key name in the docs to
-    the val in sxr/sbt/Keys.scala
+-   Docs: custom
+    `role enables links from a key name in the docs to the val in`sxr/sbt/Keys.scala\`\`
 -   Docs: restore sxr support and fix links to sxr'd sources. (gh-863)
 
 0.12.4 to 0.13.0
 ----------------
 
 The changes for 0.13.0 are listed on a separate page. See
-ChangeSummary\_0.13.0.
+`ChangeSummary_0.13.0`.
 
 0.12.3 to 0.12.4
 ----------------
 
 -   Work around URI problems with encoding and resolving. (gh-725)
--   Allow -cp argument to apply command to be quoted. (gh-724)
--   Make sbtBinaryVersion use the new approach for 0.13 and later to
+-   Allow -cp argument to `apply` command to be quoted. (gh-724)
+-   Make `sbtBinaryVersion` use the new approach for 0.13 and later to
     support cross-building plugins.
--   Pull sbtDependency version from sbtVersion to facilitate
+-   Pull `sbtDependency` version from `sbtVersion` to facilitate
     cross-building plugins.
 -   Proper support for stashing on-failure handlers. (gh-732)
 -   Include files with zip extension in unmanaged jars. (gh-750)
 -   Only add automatically detected plugins to options once. (gh-757)
--   Properly handle failure in a multi-command that includes reload.
+-   Properly handle failure in a multi-command that includes `reload`.
     (gh-732)
 -   Fix unsynchronized caching of Scala class loaders that could result
     in Scala classes being loaded in multiple class loaders.
 -   Incremental compiler: remove resident compiler code (wasn't used and
     was a compatibility liability)
--   Incremental compiler: properly track abstract override modifier.
+-   Incremental compiler: properly track `abstract override` modifier.
     (gh-726)
 -   Incremental compiler: do not normalize types in the api extraction
     phase. (gh-736)
--   Ivy cache: account for localOnly when cache subclass overrides
-    isChanging
+-   Ivy cache: account for `localOnly` when cache subclass overrides
+    `isChanging`
 -   Ivy cache: fix corruption when developing sbt or sbt plugins.
     (gh-768)
 -   Ivy cache: invalidate when artifact download fails to avoid locking
@@ -152,7 +159,7 @@ ChangeSummary\_0.13.0.
 0.12.2 to 0.12.3
 ----------------
 
--   Allow cleanKeepFiles to contain directories
+-   Allow `cleanKeepFiles` to contain directories
 -   Disable Ivy debug-level logging for performance. (gh-635)
 -   Invalidate artifacts not recorded in the original metadata when a
     module marked as changing changes. (gh-637, gh-641)
@@ -163,7 +170,7 @@ ChangeSummary\_0.13.0.
 -   Mark the tests failed exception as having already provided feedback.
 -   Handle exceptions not caught by the test framework when forking.
     (gh-653)
--   Support reload plugins after ignoring a failure to load a project.
+-   Support `reload plugins` after ignoring a failure to load a project.
 -   Workaround for os deadlock detection at the process level. (gh-650)
 -   Fix for dependency on class file corresponding to a package.
     (Grzegorz K., gh-620)
@@ -173,7 +180,7 @@ ChangeSummary\_0.13.0.
     other configurations work.
 -   Include jars from java.ext.dirs in incremental classpath. (gh-678)
 -   Multi-line prompt text offset issue (Jibbers42, gh-625)
--   Added xml:space="preserve" attribute to extraDependencyAttributes
+-   Added `xml:space="preserve"` attribute to extraDependencyAttributes
     XML Block for publishing poms for plugins dependent on other plugins
     (Brendan M., gh-645)
 -   Tag the actual test task and not a later task. (gh-692)
@@ -189,16 +196,16 @@ ChangeSummary\_0.13.0.
 
 -   Support -Yrangepos. (Lex S., gh-607)
 -   Only make one call to test frameworks per test name. (gh-520)
--   Add -cp option to the apply method to make adding commands from an
-    external program easier.
+-   Add `-cp` option to the `apply` method to make adding commands from
+    an external program easier.
 -   Stable representation of refinement typerefs. This fixes unnecessary
     recompilations in some cases. (Adriaan M., gh-610)
--   Disable aggregation for run-main. (gh-606)
+-   Disable aggregation for `run-main`. (gh-606)
 -   Concurrent restrictions: Untagged should be set based on the task's
     tags, not the tags of all tasks.
 -   When preserving the last modified time of files, convert negative
     values to 0
--   Use java.lang.Throwable.setStackTrace when sending exceptions back
+-   Use `java.lang.Throwable.setStackTrace` when sending exceptions back
     from forked tests. (Eugene V., gh-543)
 -   Don't merge dependencies with mismatched transitive/force/changing
     values. (gh-582)
@@ -230,10 +237,10 @@ Dependency management fixes:
     for gh-468, gh-285, gh-419, gh-480.
 -   Don't write section of pom if scope is 'compile'.
 -   Ability to properly match on artifact type. Fixes gh-507 (Thomas).
--   Force update to run on changes to last modified time of artifacts or
-    cached descriptor (part of fix for gh-532). It may also fix issues
-    when working with multiple local projects via 'publish-local' and
-    binary dependencies.
+-   Force `update` to run on changes to last modified time of artifacts
+    or cached descriptor (part of fix for gh-532). It may also fix
+    issues when working with multiple local projects via 'publish-local'
+    and binary dependencies.
 -   Per-project resolution cache that deletes cached files before
     update. Notes:
 
@@ -261,7 +268,7 @@ Three stage incremental compilation:
     times with this approach.
 -   Code with deep inheritance hierarchies and large cycles between
     sources may take longer to compile.
--   last compile will show cycles that were processed in step 2.
+-   `last compile` will show cycles that were processed in step 2.
     Reducing large cycles of sources shown here may decrease compile
     times.
 
@@ -269,15 +276,16 @@ Miscellaneous fixes and improvements:
 
 -   Various test forking fixes. Fixes gh-512, gh-515.
 -   Proper isolation of build definition classes. Fixes gh-536, gh-511.
--   orbit packaging should be handled like a standard jar. Fixes gh-499.
--   In IO.copyFile, limit maximum size transferred via NIO. Fixes
+-   `orbit` packaging should be handled like a standard jar. Fixes
+    gh-499.
+-   In `IO.copyFile`, limit maximum size transferred via NIO. Fixes
     gh-491.
--   Add OSX JNI library extension in includeFilter by default. Fixes
+-   Add OSX JNI library extension in `includeFilter` by default. Fixes
     gh-500. (Indrajit)
--   Translate show x y into ;show x ;show y . Fixes gh-495.
+-   Translate `show x y` into `;show x ;show y` . Fixes gh-495.
 -   Clean up temporary directory on exit. Fixes gh-502.
--   set prints the scopes+keys it defines and affects.
--   Tab completion for set (experimental).
+-   `set` prints the scopes+keys it defines and affects.
+-   Tab completion for `set` (experimental).
 -   Report file name when an error occurs while opening a corrupt zip
     file in incremental compilation code. (James)
 -   Defer opening logging output files until an actual write. Helps
@@ -288,37 +296,37 @@ Miscellaneous fixes and improvements:
 
 Forward-compatible-only change (not present in 0.12.0):
 
--   sourcesInBase setting controls whether sources in base directory are
-    included. Fixes gh-494.
+-   `sourcesInBase` setting controls whether sources in base directory
+    are included. Fixes gh-494.
 
 0.11.3 to 0.12.0
 ----------------
 
 The changes for 0.12.0 are listed on a separate page. See
-ChangeSummary\_0.12.0.
+`ChangeSummary_0.12.0`.
 
 0.11.2 to 0.11.3
 ----------------
 
 Dropping scala-tools.org:
 
--   The sbt group ID is changed to org.scala-sbt (from
+-   The sbt group ID is changed to `org.scala-sbt` (from
     org.scala-tools.sbt). This means you must use a 0.11.3 launcher to
     launch 0.11.3.
--   The convenience objects ScalaToolsReleases and ScalaToolsSnapshots
+-   The convenience objects `ScalaToolsReleases` and ScalaToolsSnapshots
     now point to https://oss.sonatype.org/content/repositories/releases
     and .../snapshots
--   The launcher no longer includes scala-tools.org repositories by
+-   The launcher no longer includes `scala-tools.org` repositories by
     default and instead uses the Sonatype OSS snapshots repository for
     Scala snapshots.
--   The scala-tools.org releases repository is no longer included as an
-    application repository by default. The Sonatype OSS repository is
+-   The `scala-tools.org` releases repository is no longer included as
+    an application repository by default. The Sonatype OSS repository is
     *not* included by default in its place.
 
 Other fixes:
 
 -   Compiler interface works with 2.10
--   maxErrors setting is no longer ignored
+-   `maxErrors` setting is no longer ignored
 -   Correct test count. gh-372 (Eugene)
 -   Fix file descriptor leak in process library (Daniel)
 -   Buffer url input stream returned by Using. gh-437
@@ -349,15 +357,15 @@ Fixes:
 -   Fix forking git on windows (Stefan, Josh)
 -   gh-261 Fix whitespace handling for semicolon-separated commands
 -   gh-263 Fix handling of dependencies with an explicit URL
--   gh-272 Show deprecation message for project/plugins/
+-   gh-272 Show deprecation message for `project/plugins/`
 
 0.11.0 to 0.11.1
 ----------------
 
 Breaking change:
 
--   The scripted plugin is now in the sbt package so that it can be used
-    from a named package
+-   The scripted plugin is now in the `sbt` package so that it can be
+    used from a named package
 
 Notable behavior change:
 
@@ -367,7 +375,7 @@ Notable behavior change:
 
 Fixes and improvements:
 
--   Show help for a key with help \<key\>
+-   Show help for a key with `help <key>`
 -   gh-21 Reduced memory and time overhead of incremental recompilation
     with signature hash based approach.
 -   Rotate global log so that only output since last prompt is displayed
@@ -375,15 +383,15 @@ Fixes and improvements:
 -   gh-169 Add support for exclusions with excludeAll and exclude
     methods on ModuleID. (Indrajit)
 -   gh-235 Checksums configurable for launcher
--   gh-246 Invalidate update when update is invalidated for an internal
-    project dependency
--   gh-138 Include plugin sources and docs in update-sbt-classifiers
+-   gh-246 Invalidate `update` when `update` is invalidated for an
+    internal project dependency
+-   gh-138 Include plugin sources and docs in `update-sbt-classifiers`
 -   gh-219 Add cleanupCommands setting to specify commands to run before
     interpreter exits
 -   gh-46 Fix regression in caching missing classifiers for
-    update-classifiers and update-sbt-classifiers.
--   gh-228 Set connectInput to true to connect standard input to forked
-    run
+    `update-classifiers` and `update-sbt-classifiers`.
+-   gh-228 Set `connectInput` to true to connect standard input to
+    forked run
 -   gh-229 Limited task execution interruption using ctrl+c
 -   gh-220 Properly record source dependencies from separate compilation
     runs in the same step.
@@ -406,8 +414,8 @@ Major Improvements:
 -   Move to 2.9.1 for project definitions and plugins
 -   Drop support for 2.7
 -   Settings overhaul, mainly to make API documentation more usable
--   Support using native libraries in run and test (but not console, for
-    example)
+-   Support using native libraries in `run` and `test` (but not console,
+    for example)
 -   Automatic plugin cross-versioning. Use
 
         addSbtPlugin("group" % "name" % "version")
@@ -419,30 +427,31 @@ Fixes and Improvements:
 
 -   Display all undefined settings at once, instead of only the first
     one
--   Deprecate separate classpathFilter, defaultExcludes, and
+-   Deprecate separate `classpathFilter`, `defaultExcludes`, and
     sourceFilter keys in favor of includeFilter and excludeFilter
     explicitly scoped by unmanagedSources, unmanagedResources, or
     unmanagedJars as appropriate (Indrajit)
--   Default to using shared boot directory in \~/.sbt/boot/
--   Can put contents of project/plugins/ directly in project/ instead.
-    Will likely deprecate plugins/ directory
+-   Default to using shared boot directory in `~/.sbt/boot/`
+-   Can put contents of `project/plugins/` directly in `project/`
+    instead. Will likely deprecate plugins/ directory
 -   Key display is context sensitive. For example, in a single project,
     the build and project axes will not be displayed
 -   gh-114, gh-118, gh-121, gh-132, gh-135, gh-157: Various settings and
     error message improvements
--   gh-115: Support configuring checksums separately for publish and
-    update
--   gh-118: Add about command
--   gh-118, gh-131: Improve last command. Aggregate last \<task\> and
-    display all recent output for last
+-   gh-115: Support configuring checksums separately for `publish` and
+    `update`
+-   gh-118: Add `about` command
+-   gh-118, gh-131: Improve `last` command. Aggregate `last <task>` and
+    display all recent output for `last`
 -   gh-120: Support read-only external file projects (Fred)
--   gh-128: Add skip setting to override recompilation change detection
+-   gh-128: Add `skip` setting to override recompilation change
+    detection
 -   gh-139: Improvements to pom generation (Indrajit)
 -   gh-140, gh-145: Add standard manifest attributes to binary and
     source jars (Indrajit)
--   Allow sources used for doc generation to be different from sources
-    for compile
--   gh-156: Made package an alias for package-bin
+-   Allow sources used for `doc` generation to be different from sources
+    for `compile`
+-   gh-156: Made `package` an alias for `package-bin`
 -   gh-162: handling of optional dependencies in pom generation
 
 0.10.0 to 0.10.1
@@ -478,24 +487,23 @@ Some of the more visible changes:
 **Major redesign, only prominent changes listed.**
 
 -   Project definitions in Scala 2.8.1
--   New configuration system: /Examples/Quick-Configuration-Examples/,
+-   New configuration system: `/Examples/Quick-Configuration-Examples/`,
     /Getting-Started/Full-Def, and /Getting-Started/Basic-Def/
--   New task engine: /Detailed-Topics/Tasks
--   New multiple project support: /Getting-Started/Full-Def
+-   New task engine: `/Detailed-Topics/Tasks`
+-   New multiple project support: `/Getting-Started/Full-Def`
 -   More aggressive incremental recompilation for both Java and Scala
     sources
 -   Merged plugins and processors into improved plugins system:
     /Extending/Plugins
--   [Web
-    application](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
+-   `Web application <https://github.com/JamesEarlDouglas/xsbt-web-plugin>`\_
     and webstart support moved to plugins instead of core features
 -   Fixed all of the issues in (Google Code) issue \#44
 -   Managed dependencies automatically updated when configuration
     changes
--   update-sbt-classifiers and update-classifiers tasks for retrieving
-    sources and/or javadocs for dependencies, transitively
+-   `update-sbt-classifiers` and `update-classifiers` tasks for
+    retrieving sources and/or javadocs for dependencies, transitively
 -   Improved artifact handling and configuration
-    /Detailed-Topics/Artifacts
+    `/Detailed-Topics/Artifacts`
 -   Tab completion parser combinators for commands and input tasks:
     /Extending/Commands
 -   No project creation prompts anymore
@@ -516,32 +524,33 @@ Some of the more visible changes:
     incompatibility (issue 129).
 -   Provide application and boot classpaths to tests and 'run'ning code
     according to <http://gist.github.com/404272>
--   Fix provided configuration. It is no longer included on the
+-   Fix `provided` configuration. It is no longer included on the
     classpath of dependent projects.
 -   Scala 2.8.1 is the default version used when starting a new project.
--   Updated to [Ivy
-    2.2.0](http://ant.apache.org/ivy/history/2.2.0/release-notes.html).
+-   Updated to
+    `Ivy 2.2.0 <http://ant.apache.org/ivy/history/2.2.0/release-notes.html>`\_.
 -   Trond's patches that allow configuring
     [jetty-env.xml](http://github.com/sbt/sbt/commit/5e41a47f50e6) and
     [webdefault.xml](http://github.com/sbt/sbt/commit/030e2ee91bac0)
--   Doug's [patch](http://github.com/sbt/sbt/commit/aa75ecf7055db) to
+-   Doug's `patch <http://github.com/sbt/sbt/commit/aa75ecf7055db>`\_ to
     make 'projects' command show an asterisk next to current project
 -   Fixed issue 122
 -   Implemented issue 118
 -   Patch from Viktor and Ross for issue 123
 -   (RC1) Patch from Jorge for issue 100
--   (RC1) Fix \<packaging\> type
+-   (RC1) Fix `<packaging>` type
 
 0.7.3 to 0.7.4
 --------------
 
 -   prefix continuous compilation with run number for better feedback
     when logging level is 'warn'
--   Added pomIncludeRepository(repo: MavenRepository): Boolean that can
-    be overridden to exclude local repositories by default
--   Added pomPostProcess(pom: Node): Node to make advanced manipulation
-    of the default pom easier (pomExtra already covers basic cases)
--   Added reset command to reset JLine terminal. This needs to be run
+-   Added `pomIncludeRepository(repo: MavenRepository): Boolean` that
+    can be overridden to exclude local repositories by default
+-   Added `pomPostProcess(pom: Node): Node` to make advanced
+    manipulation of the default pom easier (pomExtra already covers
+    basic cases)
+-   Added `reset` command to reset JLine terminal. This needs to be run
     after suspending and then resuming sbt.
 -   Installer plugin is now a proper subproject of sbt.
 -   Plugins can now only be Scala sources. BND should be usable in a
@@ -551,52 +560,52 @@ Some of the more visible changes:
     instead of just logging a warning.
 -   Fix issue with using 2.8.0.RC1 compiler in tests.
 -   Precompile compiler interface against 2.8.0.RC2
--   Add consoleOptions for specifying options to the console. It
+-   Add `consoleOptions` for specifying options to the console. It
     defaults to compileOptions.
 -   Properly support sftp/ssh repositories using key-based
     authentication. See the updated section of the
     /Detailed-Topics/Resolvers page.
--   def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet.
+-   `def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet`.
     Default is DownloadOnly. Full will log metadata resolution and
     provide a final summary.
--   offline property for disabling checking for newer dynamic revisions
-    (like -SNAPSHOT). This allows working offline with remote snapshots.
-    Not honored for plugins yet.
--   History commands: !!, !?string, !-n, !n, !string, !:n, !: Run ! to
+-   `offline` property for disabling checking for newer dynamic
+    revisions (like -SNAPSHOT). This allows working offline with remote
+    snapshots. Not honored for plugins yet.
+-   History commands: `!!, !?string, !-n, !n, !string, !:n, !:` Run ! to
     see help.
--   New section in launcher configuration [ivy] with a single label
+-   New section in launcher configuration `[ivy]` with a single label
     cache-directory. Specify this to change the cache location used by
     the launcher.
--   New label classifiers under [app] to specify classifiers of
+-   New label `classifiers` under `[app]` to specify classifiers of
     additional artifacts to retrieve for the application.
--   Honor -Xfatal-warnings option added to compiler in 2.8.0.RC2.
--   Make scaladocTask a fileTask so that it runs only when index.html is
-    older than some input source.
--   Made it easier to create default test-\* tasks with different
+-   Honor `-Xfatal-warnings` option added to compiler in 2.8.0.RC2.
+-   Make `scaladocTask` a `fileTask` so that it runs only when
+    index.html is older than some input source.
+-   Made it easier to create default `test-*` tasks with different
     options
 -   Sort input source files for consistency, addressing scalac's issues
     with source file ordering.
 -   Derive Java source file from name of class file when no SourceFile
     attribute is present in the class file. Improves tracking when
     -g:none option is used.
--   Fix FileUtilities.unzip to be tail-recursive again.
+-   Fix `FileUtilities.unzip` to be tail-recursive again.
 
 0.7.2 to 0.7.3
 --------------
 
 -   Fixed issue with scala.library.jar not being on javac's classpath
 -   Fixed buffered logging for parallel execution
--   Fixed test-\* tab completion being permanently set on first
+-   Fixed `test-*` tab completion being permanently set on first
     completion
 -   Works with Scala 2.8 trunk again.
 -   Launcher: Maven local repository excluded when the Scala version is
     a snapshot. This should fix issues with out of date Scala snapshots.
 -   The compiler interface is precompiled against common Scala versions
     (for this release, 2.7.7 and 2.8.0.Beta1).
--   Added PathFinder.distinct
+-   Added `PathFinder.distinct`
 -   Running multiple commands at once at the interactive prompt is now
     supported. Prefix each command with ';'.
--   Run and return the output of a process as a String with !! or as a
+-   Run and return the output of a process as a String with `!!` or as a
     (blocking) Stream[String] with lines.
 -   Java tests + Annotation detection
 -   Test frameworks can now specify annotation fingerprints. Specify the
@@ -607,13 +616,13 @@ Some of the more visible changes:
 -   Discovered is new root of hierarchy representing discovered
     subclasses + annotations. TestDefinition no longer fulfills this
     role.
--   TestDefinition is modified to be name+Fingerprint and represents a
-    runnable test. It need not be Discovered, but could be file-based in
-    the future, for example.
--   Replaced testDefinitionClassNames method with fingerprints in
+-   `TestDefinition` is modified to be name+`Fingerprint` and represents
+    a runnable test. It need not be Discovered, but could be file-based
+    in the future, for example.
+-   Replaced testDefinitionClassNames method with `fingerprints` in
     CompileConfiguration.
--   Added foundAnnotation to AnalysisCallback
--   Added Runner2, Fingerprint, AnnotationFingerprint, and
+-   Added foundAnnotation to `AnalysisCallback`
+-   Added `Runner2`, `Fingerprint`, `AnnotationFingerprint`, and
     SubclassFingerprint to the test-interface. Existing test frameworks
     should still work. Implement Runner2 to use fingerprints other than
     SubclassFingerprint.
@@ -621,26 +630,27 @@ Some of the more visible changes:
 0.7.1 to 0.7.2
 --------------
 
--   Process.apply no longer uses CommandParser. This should fix issues
-    with the android-plugin.
--   Added sbt.impl.Arguments for parsing a command like a normal action
-    (for Processors)
--   Arguments are passed to javac using an argument file (@)
--   Added webappUnmanaged: PathFinder method to DefaultWebProject. Paths
-    selected by this PathFinder will not be pruned by prepare-webapp and
-    will not be packaged by package. For example, to exclude the GAE
-    datastore directory:
+-   `Process.apply` no longer uses `CommandParser`. This should fix
+    issues with the android-plugin.
+-   Added `sbt.impl.Arguments` for parsing a command like a normal
+    action (for Processors)
+-   Arguments are passed to `javac` using an argument file (`@`)
+-   Added `webappUnmanaged: PathFinder` method to DefaultWebProject.
+    Paths selected by this PathFinder will not be pruned by
+    prepare-webapp and will not be packaged by package. For example, to
+    exclude the GAE datastore directory:
     scala   override def webappUnmanaged =     (temporaryWarPath / "WEB-INF" / "appengine-generated" \*\*\*)
--   Added some String generation methods to \`PathFinder\`: toString for
+-   Added some String generation methods to `PathFinder`: `toString` for
     debugging and absString and relativeString for joining the absolute
     (relative) paths by the platform separator.
 -   Made tab completors lazier to reduce startup time.
--   Fixed console-project for custom subprojects
--   Processor split into Processor/BasicProcessor. Processor provides
-    high level of integration with command processing. BasicProcessor
-    operates on a Project but does not affect command processing.
--   Can now use Launcher externally, including launching sbt outside of
-    the official jar. This means a Project can now be created from
+-   Fixed `console-project` for custom subprojects
+-   `Processor` split into `Processor`/`BasicProcessor`. Processor
+    provides high level of integration with command processing.
+    BasicProcessor operates on a Project but does not affect command
+    processing.
+-   Can now use `Launcher` externally, including launching `sbt` outside
+    of the official jar. This means a Project can now be created from
     tests.
 -   Works with Scala 2.8 trunk
 -   Fixed logging level behavior on subprojects.
@@ -663,18 +673,18 @@ Some of the more visible changes:
 -   Properly track certain types of synthetic classes, such as for
     comprehension with \>30 clauses, during compilation.
 -   Jetty 7 support
--   Allow launcher in the project root directory or the lib directory.
+-   Allow launcher in the project root directory or the `lib` directory.
     The jar name must have the form 'sbt-launch.jar' in order to be
     excluded from the classpath.
--   Stack trace detail can be controlled with 'on', 'off', 'nosbt', or
-    an integer level. 'nosbt' means to show stack frames up to the first
-    sbt method. An integer level denotes the number of frames to show
-    for each cause. This feature is courtesty of Tony Sloane.
+-   Stack trace detail can be controlled with `'on'`, `'off'`, 'nosbt',
+    or an integer level. 'nosbt' means to show stack frames up to the
+    first sbt method. An integer level denotes the number of frames to
+    show for each cause. This feature is courtesty of Tony Sloane.
 -   New action 'test-run' method that is analogous to 'run', but for
     test classes.
 -   New action 'clean-plugins' task that clears built plugins (useful
     for plugin development).
--   Can provide commands from a file with new command: \<filename
+-   Can provide commands from a file with new command: `<filename`
 -   Can provide commands over loopback interface with new command:
     \<port
 -   Scala version handling has been completely redone.
@@ -687,11 +697,11 @@ Some of the more visible changes:
 -   Scala versions are specified in a space-delimited list in the
     build.scala.versions property.
 -   Dependency management:
--   make-pom task now uses custom pom generation code instead of Ivy's
+-   `make-pom` task now uses custom pom generation code instead of Ivy's
     pom writer.
 -   Basic support for writing out Maven-style repositories to the pom
--   Override the 'pomExtra' method to provide XML (scala.xml.NodeSeq) to
-    insert directly into the generated pom.
+-   Override the 'pomExtra' method to provide XML (`scala.xml.NodeSeq`)
+    to insert directly into the generated pom.
 -   Complete control over repositories is now possible by overriding
     ivyRepositories.
 -   The interface to Ivy can be used directly.
@@ -709,12 +719,12 @@ Some of the more visible changes:
 -   Provide a configuration file to the launcher and it can download the
     application and its dependencies from a repository and run it.
 -   sbt's configuration can be customized. For example,
--   The sbt version to use in projects can be fixed, instead of read
+-   The `sbt` version to use in projects can be fixed, instead of read
     from project/build.properties.
 -   The default values used to create a new project can be changed.
--   The repositories used to fetch sbt and its dependencies, including
+-   The repositories used to fetch `sbt` and its dependencies, including
     Scala, can be configured.
--   The location sbt is retrieved to is configurable. For example,
+-   The location `sbt` is retrieved to is configurable. For example,
     /home/user/.ivy2/sbt/ could be used instead of project/boot/.
 
 0.5.5 to 0.5.6
@@ -730,7 +740,7 @@ Some of the more visible changes:
 --------------
 
 -   Fixed problem with classifier support and the corresponding test
--   No longer need "-\>default" in configurations (automatically
+-   No longer need `"->default"` in configurations (automatically
     mapped).
 -   Can specify a specific nightly of Scala 2.8 to use (for example:
     2.8.0-20090910.003346-+)
@@ -747,34 +757,34 @@ Some of the more visible changes:
 0.5.2 to 0.5.4
 --------------
 
--   Many logging related changes and fixes. Added FilterLogger and
+-   Many logging related changes and fixes. Added `FilterLogger` and
     cleaned up interaction between Logger, scripted testing, and the
     builder projects. This included removing the recordingDepth hack
     from Logger. Logger buffering is now enabled/disabled per thread.
--   Fix compileOptions being fixed after the first compile
+-   Fix `compileOptions` being fixed after the first compile
 -   Minor fixes to output directory checking
--   Added defaultLoggingLevel method for setting the initial level of a
-    project's Logger
+-   Added `defaultLoggingLevel` method for setting the initial level of
+    a project's Logger
 -   Cleaned up internal approach to adding extra default configurations
     like plugin
--   Added syncPathsTask for synchronizing paths to a target directory
--   Allow multiple instances of Jetty (new jettyRunTasks can be defined
-    with different ports)
--   jettyRunTask accepts configuration in a single configuration wrapper
-    object instead of many parameters
+-   Added `syncPathsTask` for synchronizing paths to a target directory
+-   Allow multiple instances of Jetty (new `jettyRunTasks` can be
+    defined with different ports)
+-   `jettyRunTask` accepts configuration in a single configuration
+    wrapper object instead of many parameters
 -   Fix web application class loading (issue \#35) by using
     jettyClasspath=testClasspath---jettyRunClasspath for loading Jetty.
     A better way would be to have a jetty configuration and have
     jettyClasspath=managedClasspath('jetty'), but this maintains
     compatibility.
--   Copy resources to target/resources and target/test-resources using
-    copyResources and copyTestResources tasks. Properly include all
-    resources in web applications and classpaths (issue \#36).
+-   Copy resources to `target/resources` and `target/test-resources`
+    using copyResources and copyTestResources tasks. Properly include
+    all resources in web applications and classpaths (issue \#36).
     mainResources and testResources are now the definitive methods for
     getting resources.
--   Updated for 2.8 (sbt now compiles against September 11, 2009 nightly
-    build of Scala)
--   Fixed issue with position of \^ in compile errors
+-   Updated for 2.8 (`sbt` now compiles against September 11, 2009
+    nightly build of Scala)
+-   Fixed issue with position of `^` in compile errors
 -   Changed order of repositories (local, shared, Maven Central, user,
     Scala Tools)
 -   Added Maven Central to resolvers used to find Scala library/compiler
@@ -782,20 +792,20 @@ Some of the more visible changes:
 -   Fixed problem that prevented detecting user-specified subclasses
 -   Fixed exit code returned when exception thrown in main thread for
     TrapExit
--   Added javap task to DefaultProject. It has tab completion on
+-   Added `javap` task to `DefaultProject`. It has tab completion on
     compiled project classes and the run classpath is passed to javap so
     that library classes are available. Examples: :
 
         > javap your.Clazz
         > javap -c scala.List
 
--   Added exec task. Mixin Exec to project definition to use. This forks
-    the command following exec. Examples: :
+-   Added `exec` task. Mixin `Exec` to project definition to use. This
+    forks the command following exec. Examples: :
 
         > exec echo Hi
         > exec find src/main/scala -iname *.scala -exec wc -l {} ;
 
--   Added sh task for users with a unix-style shell available (runs
+-   Added `sh` task for users with a unix-style shell available (runs
     /bin/sh -c \<arguments\>). Mixin Exec to project definition to use.
     Example: :
 
@@ -807,16 +817,16 @@ Some of the more visible changes:
     source dependencies)
 -   Improved Ivy-related code to not load unnecessary default settings
 -   Fixed issue \#39 (sources were not relative in src package)
--   Implemented issue \#38 (InstallProject with 'install' task)
+-   Implemented issue \#38 (`InstallProject` with 'install' task)
 -   Vesa's patch for configuring the output of forked Scala/Java and
     processes
--   Don't buffer logging of forked run by default
--   Check Project.terminateWatch to determine if triggered execution
+-   Don't buffer logging of forked `run` by default
+-   Check `Project.terminateWatch` to determine if triggered execution
     should stop for a given keypress.
 -   Terminate triggered execution only on 'enter' by default
     (previously, any keypress stopped it)
 -   Fixed issue \#41 (parent project should not declare jar artifact)
--   Fixed issue \#42 (search parent directories for ivysettings.xml)
+-   Fixed issue \#42 (search parent directories for `ivysettings.xml`)
 -   Added support for extra attributes with Ivy. Use
     extra(key -\> value) on ModuleIDs and Artifacts. To define for a
     project's ID: :
@@ -830,28 +840,28 @@ Some of the more visible changes:
 0.5.1 to 0.5.2
 --------------
 
--   Fixed problem where dependencies of sbt plugins were not on the
+-   Fixed problem where dependencies of `sbt` plugins were not on the
     compile classpath
--   Added execTask that runs an sbt.ProcessBuilder when invoked
--   Added implicit conversion from scala.xml.Elem to sbt.ProcessBuilder
-    that takes the element's text content, trims it, and splits it
-    around whitespace to obtain the command.
+-   Added `execTask` that runs an `sbt.ProcessBuilder` when invoked
+-   Added implicit conversion from `scala.xml.Elem` to
+    sbt.ProcessBuilder that takes the element's text content, trims it,
+    and splits it around whitespace to obtain the command.
 -   Processes can now redirect standard input (see run with Boolean
     argument or !\< operator on ProcessBuilder), off by default
 -   Made scripted framework a plugin and scripted tests now go in
     src/sbt-test by default
 -   Can define and use an sbt test framework extension in a project
--   Fixed run action swallowing exceptions
+-   Fixed `run` action swallowing exceptions
 -   Fixed tab completion for method tasks for multi-project builds
--   Check that tasks in compoundTask do not reference static tasks
--   Make toString of Paths in subprojects relative to root project
+-   Check that tasks in `compoundTask` do not reference static tasks
+-   Make `toString` of `Path`s in subprojects relative to root project
     directory
--   crossScalaVersions is now inherited from parent if not specified
--   Added scala-library.jar to the javac classpath
--   Project dependencies are added to published ivy.xml
+-   `crossScalaVersions` is now inherited from parent if not specified
+-   Added `scala-library.jar` to the `javac` classpath
+-   Project dependencies are added to published `ivy.xml`
 -   Added dependency tracking for Java sources using classfile parsing
     (with the usual limitations)
--   Added Process.cat that will send contents of URLs and Files to
+-   Added `Process.cat` that will send contents of `URL`s and Files to
     standard output. Alternatively, cat can be used on a single URL or
     File. Example: :
 
@@ -865,32 +875,32 @@ Some of the more visible changes:
 0.4.6 to 0.5/0.5.1
 ------------------
 
--   Fixed ScalaTest framework dropping stack traces
+-   Fixed `ScalaTest` framework dropping stack traces
 -   Publish only public configurations by default
--   Loader now adds .m2/repository for downloading Scala jars
+-   Loader now adds `.m2/repository` for downloading Scala jars
 -   Can now fork the compiler and runner and the runner can use a
     different working directory.
 -   Maximum compiler errors shown is now configurable
--   Fixed rebuilding and republishing released versions of sbt against
+-   Fixed rebuilding and republishing released versions of `sbt` against
     new Scala versions (attempt \#2)
 -   Fixed snapshot reversion handling (Ivy needs changing pattern set on
     cache, apparently)
 -   Fixed handling of default configuration when useMavenConfiguration
     is true
--   Cleanup on Environment, Analysis, Conditional, MapUtilities, and
+-   Cleanup on Environment, Analysis, Conditional, `MapUtilities`, and
     more...
 -   Tests for Environment, source dependencies, library dependency
     management, and more...
 -   Dependency management and multiple Scala versions
 -   Experimental plugin for producing project bootstrapper in a
     self-extracting jar
--   Added ability to directly specify URL to use for dependency with the
-    from(url: URL) method defined on ModuleID
+-   Added ability to directly specify `URL` to use for dependency with
+    the from(url: URL) method defined on ModuleID
 -   Fixed issue \#30
--   Support cross-building with + when running batch actions
+-   Support cross-building with `+` when running batch actions
 -   Additional flattening for project definitions: sources can go either
     in project/build/src (recursively) or project/build (flat)
--   Fixed manual reboot not changing the version of Scala when it is
+-   Fixed manual `reboot` not changing the version of Scala when it is
     manually set
 -   Fixed tab completion for cross-building
 -   Fixed a class loading issue with web applications
@@ -900,30 +910,31 @@ Some of the more visible changes:
 
 -   Publishing to ssh/sftp/filesystem repository supported
 -   Exception traces are printed by default
--   Fixed warning message about no Class-Path attribute from showing up
-    for run
--   Fixed package-project operation
--   Fixed Path.fromFile
+-   Fixed warning message about no `Class-Path` attribute from showing
+    up for run
+-   Fixed `package-project` operation
+-   Fixed `Path.fromFile`
 -   Fixed issue with external process output being lost when sent to a
     BufferedLogger with parallelExecution enabled.
--   Preserve history across clean
+-   Preserve history across `clean`
 -   Fixed issue with making relative path in jar with wrong separator
--   Added cross-build functionality (prefix action with +).
--   Added methods scalaLibraryJar and scalaCompilerJar to FileUtilities
--   Include project dependencies for deliver/publish
--   Add Scala dependencies for make-pom/deliver/publish, which requires
-    these to depend on package
+-   Added cross-build functionality (prefix action with `+`).
+-   Added methods `scalaLibraryJar` and `scalaCompilerJar` to
+    FileUtilities
+-   Include project dependencies for `deliver`/`publish`
+-   Add Scala dependencies for `make-pom`/`deliver`/`publish`, which
+    requires these to depend on package
 -   Properly add compiler jar to run/test classpaths when main sources
     depend on it
--   TestFramework root ClassLoader filters compiler classes used by sbt,
-    which is required for projects using the compiler.
+-   `TestFramework` root `ClassLoader` filters compiler classes used by
+    sbt, which is required for projects using the compiler.
 -   Better access to dependencies:
--   mainDependencies and testDependencies provide an analysis of the
+-   `mainDependencies` and `testDependencies` provide an analysis of the
     dependencies of your code as determined during compilation
--   scalaJars is deprecated, use mainDependencies.scalaJars instead
+-   `scalaJars` is deprecated, use `mainDependencies.scalaJars` instead
     (provides a PathFinder, which is generally more useful)
--   Added jettyPort method to DefaultWebProject.
--   Fixed package-project to exclude project/boot and
+-   Added `jettyPort` method to `DefaultWebProject`.
+-   Fixed `package-project` to exclude `project/boot` and
     project/build/target
 -   Support specs 1.5.0 for Scala 2.7.4 version.
 -   Parallelization at the subtask level
@@ -933,16 +944,16 @@ Some of the more visible changes:
 --------------
 
 -   Sorted out repository situation in loader
--   Added support for http\_proxy environment variable
--   Added download method from Nathan to FileUtilities to retrieve the
-    contents of a URL.
+-   Added support for `http_proxy` environment variable
+-   Added `download` method from Nathan to `FileUtilities` to retrieve
+    the contents of a URL.
 -   Added special support for compiler plugins, see CompilerPlugins
     page.
--   reload command in scripted tests will now properly handle
+-   `reload` command in scripted tests will now properly handle
     success/failure
 -   Very basic support for Java sources: Java sources under
     src/main/java and src/test/java will be compiled.
--   parallelExecution defaults to value in parent project if there is
+-   `parallelExecution` defaults to value in parent project if there is
     one.
 -   Added 'console-project' that enters the Scala interpreter with the
     current Project bound to the variable project.
@@ -959,15 +970,15 @@ Some of the more visible changes:
     which one to use for run. For package, no Main-Class attribute is
     automatically added and a warning is printed.
 -   Updated build to cross-compile against Scala 2.7.4.
--   Fixed proguard task in sbt's project definition
--   Added manifestClassPath method that accepts the value for the
+-   Fixed `proguard` task in `sbt`'s project definition
+-   Added `manifestClassPath` method that accepts the value for the
     Class-Path attribute
--   Added PackageOption called ManifestAttributes that accepts
+-   Added `PackageOption` called `ManifestAttributes` that accepts
     (java.util.jar.Attributes.Name, String) or (String, String) pairs
     and adds them to the main manifest attributes
 -   Fixed some situations where characters would not be echoed at
     prompts other than main prompt.
--   Fixed issue \#20 (use http\_proxy environment variable)
+-   Fixed issue \#20 (use `http_proxy` environment variable)
 -   Implemented issue \#21 (native process wrapper)
 -   Fixed issue \#22 (rebuilding and republishing released versions of
     sbt against new Scala versions, specifically Scala 2.7.4)
@@ -979,22 +990,23 @@ Some of the more visible changes:
 
 -   Direct dependencies on Scala libraries are checked for version
     equality with scala.version
--   Transitive dependencies on scala-library and scala-compiler are
+-   Transitive dependencies on `scala-library` and `scala-compiler` are
     filtered
--   They are fixed by scala.version and provided on the classpath by sbt
--   To access them, use the scalaJars method,
+-   They are fixed by `scala.version` and provided on the classpath by
+    sbt
+-   To access them, use the `scalaJars` method,
     classOf[ScalaObject].getProtectionDomain.getCodeSource, or
     mainCompileConditional.analysis.allExternals
 -   The configurations checked/filtered as described above are
     configurable. Nonstandard configurations are not checked by default.
--   Version of sbt and Scala printed on startup
--   Launcher asks if you want to try a different version if sbt or Scala
-    could not be retrieved.
--   After changing scala.version or sbt.version with set, note is
+-   Version of `sbt` and Scala printed on startup
+-   Launcher asks if you want to try a different version if `sbt` or
+    Scala could not be retrieved.
+-   After changing `scala.version` or `sbt.version` with `set`, note is
     printed that reboot is required.
--   Moved managed dependency actions to BasicManagedProject (update is
+-   Moved managed dependency actions to `BasicManagedProject` (update is
     now available on ParentProject)
--   Cleaned up sbt's build so that you just need to do update and
+-   Cleaned up `sbt`'s build so that you just need to do `update` and
     full-build to build from source. The trunk version of sbt will be
     available for use from the loader.
 -   The loader is now a subproject.
@@ -1002,9 +1014,9 @@ Some of the more visible changes:
     package) for the main builder and proguard to build the loader.
 -   Fixed analysis plugin improperly including traits/abstract classes
     in subclass search
--   ScalaProjects already had everything required to be parent projects:
-    flipped the switch to enable it
--   Proper method task support in scripted tests (package group tests
+-   `ScalaProject`s already had everything required to be parent
+    projects: flipped the switch to enable it
+-   Proper method task support in scripted tests (`package` group tests
     rightly pass again)
 -   Improved tests in loader that check that all necessary libraries
     were downloaded properly
@@ -1012,19 +1024,19 @@ Some of the more visible changes:
 0.3.7 to 0.4
 ------------
 
--   Fixed issue with build.properties being unnecessarily updated in
+-   Fixed issue with `build.properties` being unnecessarily updated in
     sub-projects when loading.
--   Added method to compute the SHA-1 hash of a String
+-   Added method to compute the SHA-1 hash of a `String`
 -   Added pack200 methods
 -   Added initial process interface
 -   Added initial webstart support
 -   Added gzip methods
--   Added sleep and newer commands to scripted testing.
--   Scripted tests now test the version of sbt being built instead of
+-   Added `sleep` and `newer` commands to scripted testing.
+-   Scripted tests now test the version of `sbt` being built instead of
     the version doing the building.
--   testResources is put on the test classpath instead of
+-   `testResources` is put on the test classpath instead of
     testResourcesPath
--   Added jetty-restart, which does jetty-stop and then jetty-run
+-   Added `jetty-restart`, which does `jetty-stop` and then jetty-run
 -   Added automatic reloading of default web application
 -   Changed packaging behaviors (still likely to change)
 -   Inline configurations now allowed (can be used with configurations
@@ -1034,30 +1046,30 @@ Some of the more visible changes:
 -   Can specify that maven-like configurations should be automatically
     declared
 -   Fixed problem with nested modules being detected as tests
--   testResources, integrationTestResources, and mainResources should
-    now be added to appropriate classpaths
+-   `testResources`, `integrationTestResources`, and mainResources
+    should now be added to appropriate classpaths
 -   Added project organization as a property that defaults to inheriting
     from the parent project.
 -   Project creation now prompts for the organization.
 -   Added method tasks, which are top-level actions with parameters.
--   Made help, actions, and methods commands available to batch-style
-    invocation.
+-   Made `help`, `actions`, and `methods` commands available to
+    batch-style invocation.
 -   Applied Mikko's two fixes for webstart and fixed problem with
     pack200+sign. Also, fixed nonstandard behavior when gzip enabled.
--   Added control method to Logger for action lifecycle logging
+-   Added `control` method to `Logger` for action lifecycle logging
 -   Made standard logging level convenience methods final
--   Made BufferedLogger have a per-actor buffer instead of a global
+-   Made `BufferedLogger` have a per-actor buffer instead of a global
     buffer
--   Added a SynchronizedLogger and a MultiLogger (intended to be used
-    with the yet unwritten FileLogger)
--   Changed method of atomic logging to be a method logAll accepting
+-   Added a `SynchronizedLogger` and a `MultiLogger` (intended to be
+    used with the yet unwritten FileLogger)
+-   Changed method of atomic logging to be a method `logAll` accepting
     List[LogEvent] instead of doSynchronized
 -   Improved action lifecycle logging
 -   Parallel logging now provides immediate feedback about starting an
     action
 -   General cleanup, including removing unused classes and methods and
     reducing dependencies between classes
--   run is now a method task that accepts options to pass to the main
+-   `run` is now a method task that accepts options to pass to the main
     method (runOptions has been removed, runTask is no longer
     interactive, and run no longer starts a console if mainClass is
     undefined)
@@ -1068,24 +1080,24 @@ Some of the more visible changes:
     dependencies produce an error
 -   Interactive tasks must be executed directly on the project on which
     they are defined
--   Method tasks accept input arguments (Array[String]) and dynamically
-    create the task to run
+-   Method tasks accept input arguments (`Array[String]`) and
+    dynamically create the task to run
 -   Tasks can depend on tasks in other projects
 -   Tasks are run in parallel breadth-first style
--   Added test-only method task, which restricts the tests to run to
+-   Added `test-only` method task, which restricts the tests to run to
     only those passed as arguments.
--   Added test-failed method task, which restricts the tests to run.
+-   Added `test-failed` method task, which restricts the tests to run.
     First, only tests passed as arguments are run. If no tests are
     passed, no filtering is done. Then, only tests that failed the
     previous run are run.
--   Added test-quick method task, which restricts the tests to run.
+-   Added `test-quick` method task, which restricts the tests to run.
     First, only tests passed as arguments are run. If no tests are
     passed, no filtering is done. Then, only tests that failed the
     previous run or had a dependency change are run.
 -   Added launcher that allows declaring version of sbt/scala to build
     project with.
 -   Added tab completion with \~
--   Added basic tab completion for method tasks, including test-\*
+-   Added basic tab completion for method tasks, including `test-*`
 -   Changed default pack options to be the default options of
     Pack200.Packer
 -   Fixed \~ behavior when action doesn't exist
@@ -1095,11 +1107,11 @@ Some of the more visible changes:
 
 -   Improved classpath methods
 -   Refactored various features into separate project traits
--   ParentProject can now specify dependencies
--   Support for optional scope
+-   `ParentProject` can now specify dependencies
+-   Support for `optional` scope
 -   More API documentation
 -   Test resource paths provided on classpath for testing
--   Added some missing read methods in FileUtilities
+-   Added some missing read methods in `FileUtilities`
 -   Added scripted test framework
 -   Change detection using hashes of files
 -   Fixed problem with manifests not being generated (bug \#14)
@@ -1109,11 +1121,11 @@ Some of the more visible changes:
 -   trace is no longer a logging level but a flag enabling/disabling
     stack traces
 -   Project.loadProject and related methods now accept a Logger to use
--   Made hidden files and files that start with '.' excluded by default
-    ('.\*' is required because subversion seems to not mark .svn
+-   Made hidden files and files that start with `'.'` excluded by
+    default ('.\*' is required because subversion seems to not mark .svn
     directories hidden on Windows)
 -   Implemented exit codes
--   Added continuous compilation command cc
+-   Added continuous compilation command `cc`
 
 0.3.5 to 0.3.6
 --------------
@@ -1135,40 +1147,40 @@ Some of the more visible changes:
 -   Separated repository/dependency overriding so that repositories can
     be specified inline for use with ivy.xml or pom.xml files
 -   Added ability to specify Ivy XML configuration in Scala.
--   Added clean-cache action for deleting Ivy's cache
+-   Added `clean-cache` action for deleting Ivy's cache
 -   Some initial work towards accessing a resource directory from tests
--   Initial tests for Path
--   Some additional FileUtilities methods, some FileUtilities method
+-   Initial tests for `Path`
+-   Some additional `FileUtilities` methods, some `FileUtilities` method
     adjustments and some initial tests for FileUtilities
--   A basic framework for testing ReflectUtilities, not run by default
+-   A basic framework for testing `ReflectUtilities`, not run by default
     because of run time
--   Minor cleanup to Path and added non-empty check to path components
--   Catch additional exceptions in TestFramework
--   Added copyTask task creation method.
--   Added jetty-run action and added ability to package war files.
--   Added jetty-stop action.
--   Added console-quick action that is the same as console but doesn't
-    compile sources first.
--   Moved some custom ClassLoaders to ClasspathUtilities and improved a
-    check.
--   Added ability to specify hooks to call before sbt shuts down.
--   Added zip, unzip methods to FileUtilities
--   Added append equivalents to write\* methods in FileUtilites
+-   Minor cleanup to `Path` and added non-empty check to path components
+-   Catch additional exceptions in `TestFramework`
+-   Added `copyTask` task creation method.
+-   Added `jetty-run` action and added ability to package war files.
+-   Added `jetty-stop` action.
+-   Added `console-quick` action that is the same as `console` but
+    doesn't compile sources first.
+-   Moved some custom `ClassLoader`s to `ClasspathUtilities` and
+    improved a check.
+-   Added ability to specify hooks to call before `sbt` shuts down.
+-   Added `zip`, `unzip` methods to `FileUtilities`
+-   Added `append` equivalents to `write*` methods in FileUtilites
 -   Added first draft of integration testing
--   Added batch command compile-stats
+-   Added batch command `compile-stats`
 -   Added methods to create tasks that have basic conditional execution
     based on declared sources/products of the task
--   Added newerThan and olderThan methods to Path
--   Added reload action to reread the project definition without losing
-    the performance benefits of an already running jvm
--   Added help action to tab completion
+-   Added `newerThan` and `olderThan` methods to `Path`
+-   Added `reload` action to reread the project definition without
+    losing the performance benefits of an already running jvm
+-   Added `help` action to tab completion
 -   Added handling of (effectively empty) scala source files that create
     no class files: they are always interpreted as modified.
 -   Added prompt to retry project loading if compilation fails
--   package action now uses fileTask so that it only executes if files
-    are out of date
--   fixed ScalaTest framework wrapper so that it fails the test action
-    if tests fail
+-   `package` action now uses `fileTask` so that it only executes if
+    files are out of date
+-   fixed `ScalaTest` framework wrapper so that it fails the `test`
+    action if tests fail
 -   Inline dependencies can now specify configurations
 
 0.3.1 to 0.3.2
@@ -1189,22 +1201,22 @@ Some of the more visible changes:
 0.2.2 to 0.2.3
 --------------
 
--   Added tests for Dag, NameFilter, Version
--   Fixed handling of trailing \*s in GlobFilter and added some
+-   Added tests for `Dag`, `NameFilter`, `Version`
+-   Fixed handling of trailing `*`s in `GlobFilter` and added some
     error-checking for control characters, which Pattern doesn't seem to
     like
--   Fixed Analysis.allProducts implementation
+-   Fixed `Analysis.allProducts` implementation
 -   It previously returned the sources instead of the generated classes
 -   Will only affect the count of classes (it should be correct now) and
     the debugging of missed classes (erroneously listed classes as
     missed)
--   Made some implied preconditions on BasicVersion and OpaqueVersion
+-   Made some implied preconditions on `BasicVersion` and OpaqueVersion
     explicit
--   Made increment version behavior in ScalaProject easier to overload
--   Added Seq[..Option] alternative to ...Option\* for tasks
+-   Made increment version behavior in `ScalaProject` easier to overload
+-   Added `Seq[..Option]` alternative to `...Option*` for tasks
 -   Documentation generation fixed to use latest value of version
--   Fixed BasicVersion.incrementMicro
--   Fixed test class loading so that sbt can test the version of sbt
+-   Fixed `BasicVersion.incrementMicro`
+-   Fixed test class loading so that `sbt` can test the version of sbt
     being developed (previously, the classes from the executing version
     of sbt were tested)
 
@@ -1223,49 +1235,50 @@ Some of the more visible changes:
 -   Some cleanups related to creating filters
 -   Path should only 'get' itself if the underlying file exists to be
     consistent with other PathFinders
--   Added --- operator for PathFinder that excludes paths from the
+-   Added `---` operator for `PathFinder` that excludes paths from the
     PathFinder argument
--   Removed \*\*\* operator on PathFinder
--   \*\* operator on PathFinder matches all descendents or self that
+-   Removed `***` operator on `PathFinder`
+-   `**` operator on `PathFinder` matches all descendents or self that
     match the NameFilter argument
--   The above should fix bug \#6
+-   The above should fix bug `#6`
 -   Added version increment and release actions.
--   Can now build sbt with sbt. Build scripts build and clean will still
-    exist.
+-   Can now build sbt with sbt. Build scripts `build` and `clean` will
+    still exist.
 
 0.1.9 to 0.2.0
 --------------
 
 -   Implemented typed properties and access to system properties
--   Renamed metadata directory to project
--   Information previously in info file now obtained by properties:
--   info.name --\> name
--   info.currentVersion --\> version
--   Concrete Project subclasses should have a constructor that accepts a
-    single argument of type ProjectInfo (argument
+-   Renamed `metadata` directory to `project`
+-   Information previously in `info` file now obtained by properties:
+-   `info.name --> name`
+-   `info.currentVersion --> version`
+-   Concrete `Project` subclasses should have a constructor that accepts
+    a single argument of type ProjectInfo (argument
     dependencies: Iterable[Project] has been merged into ProjectInfo)
 
 0.1.8 to 0.1.9
 --------------
 
--   Better default implementation of allSources.
+-   Better default implementation of `allSources`.
 -   Generate warning if two jars on classpath have the same name.
 -   Upgraded to specs 1.4.0
--   Upgraded to ScalaCheck 1.5
+-   Upgraded to `ScalaCheck` 1.5
 -   Changed some update options to be final vals instead of objects.
 -   Added some more API documentation.
 -   Removed release action.
 -   Split compilation into separate main and test compilations.
--   A failure in a ScalaTest run now fails the test action.
--   Implemented reporters for compile/scaladoc, ScalaTest, ScalaCheck,
-    and specs that delegate to the appropriate sbt.Logger.
+-   A failure in a `ScalaTest` run now fails the test action.
+-   Implemented reporters for `compile/scaladoc`, `ScalaTest`,
+    ScalaCheck, and specs that delegate to the appropriate sbt.Logger.
 
 0.1.7 to 0.1.8
 --------------
 
 -   Improved configuring of tests to exclude.
 -   Simplified version handling.
--   Task && operator properly handles dependencies of tasks it combines.
+-   Task `&&` operator properly handles dependencies of tasks it
+    combines.
 -   Changed method of inline library dependency declarations to be
     simpler.
 -   Better handling of errors in parallel execution.
@@ -1276,10 +1289,10 @@ Some of the more visible changes:
 -   Added graph action to generate dot files (for graphiz) from
     dependency information (work in progress).
 -   Options are now passed to tasks as varargs.
--   Redesigned Path properly, including PathFinder returning a Set[Path]
-    now instead of Iterable[Path].
--   Moved paths out of ScalaProject and into BasicProjectPaths to keep
-    path definitions separate from task definitions.
+-   Redesigned `Path` properly, including `PathFinder` returning a
+    Set[Path] now instead of Iterable[Path].
+-   Moved paths out of `ScalaProject` and into `BasicProjectPaths` to
+    keep path definitions separate from task definitions.
 -   Added initial support for managing third-party libraries through the
     update task, which must be explicitly called (it is not a dependency
     of compile or any other task). This is experimental, undocumented,
@@ -1291,8 +1304,8 @@ Some of the more visible changes:
     is buffered until the project is finished executing. Still to be
     done is some sort of notification of project execution (which ones
     are currently executing, how many remain)
--   run and console are now specified as "interactive" actions, which
-    means they are only executed on the project in which they are
+-   `run` and `console` are now specified as "interactive" actions,
+    which means they are only executed on the project in which they are
     defined when called directly, and not on all dependencies. Their
     dependencies are still run on dependent projects.
 -   Generalized conditional tasks a bit. Of note is that analysis is no
@@ -1301,40 +1314,41 @@ Some of the more visible changes:
 -   Message now displayed when project definition is recompiled on
     startup
 -   Project no longer inherits from Logger, but now has a log member.
--   Dependencies passed to project are checked for null (may help with
+-   Dependencies passed to `project` are checked for null (may help with
     errors related to initialization/circular dependencies)
 -   Task dependencies are checked for null
 -   Projects in a multi-project configuration are checked to ensure that
     output paths are different (check can be disabled)
--   Made update task globally synchronized because Ivy is not
+-   Made `update` task globally synchronized because Ivy is not
     thread-safe.
 -   Generalized test framework, directly invoking frameworks now (used
     reflection before).
 -   Moved license files to licenses/
--   Added support for specs and some support for ScalaTest (the test
+-   Added support for `specs` and some support for `ScalaTest` (the test
     action doesn't fail if ScalaTest tests fail).
--   Added specs, ScalaCheck, ScalaTest jars to lib/
+-   Added `specs`, `ScalaCheck`, `ScalaTest` jars to lib/
 -   These are now required for compilation, but are optional at runtime.
 -   Added the appropriate licenses and notices.
--   Options for update action are now taken from updateOptions member.
--   Fixed SbtManager inline dependency manager to work properly.
+-   Options for `update` action are now taken from updateOptions member.
+-   Fixed `SbtManager` inline dependency manager to work properly.
 -   Improved Ivy configuration handling (not compiled with test
     dependencies yet though).
--   Added case class implementation of SbtManager called SimpleManager.
+-   Added case class implementation of `SbtManager` called
+    SimpleManager.
 -   Project definitions not specifying dependencies can now use just a
     single argument constructor.
 
 0.1.5 to 0.1.6
 --------------
 
--   run and console handle System.exit and multiple threads in user code
-    under certain circumstances (see RunningProjectCode).
+-   `run` and `console` handle `System.exit` and multiple threads in
+    user code under certain circumstances (see RunningProjectCode).
 
 0.1.4 to 0.1.5
 --------------
 
--   Generalized interface with plugin (see AnalysisCallback)
--   Split out task implementations and paths from Project to
+-   Generalized interface with plugin (see `AnalysisCallback`)
+-   Split out task implementations and paths from `Project` to
     ScalaProject
 -   Subproject support (changed required project constructor signature:
     see sbt/DefaultProject.scala)

@@ -8,11 +8,11 @@ A "command" looks similar to a task: it's a named operation that can be
 executed from the sbt console.
 
 However, a command's implementation takes as its parameter the entire
-state of the build (represented by /Extending/Build-State) and computes
-a new /Extending/Build-State. This means that a command can look at or
-modify other sbt settings, for example. Typically, you would resort to a
-command when you need to do something that's impossible in a regular
-task.
+state of the build (represented by `/Extending/Build-State`) and
+computes a new `/Extending/Build-State`. This means that a command can
+look at or modify other sbt settings, for example. Typically, you would
+resort to a command when you need to do something that's impossible in a
+regular task.
 
 Introduction
 ------------
@@ -30,29 +30,30 @@ There are three main aspects to commands:
 In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
 Scala's standard library, these are very similar. The action part is a
-function (State, T) =\> State, where T is the data structure produced by
-the parser. See the /Detailed-Topics/Parsing-Input page for how to use
-the parser combinators.
+function `(State, T) => State`, where `T` is the data structure produced
+by the parser. See the `/Detailed-Topics/Parsing-Input` page for how to
+use the parser combinators.
 
-[State](../../api/sbt/State.html) provides access to the build state,
-such as all registered Commands, the remaining commands to execute, and
-all project-related information. See Build-State for details on State.
+`State <../../api/sbt/State.html>`\_ provides access to the build state,
+such as all registered `Command`s, the remaining commands to execute,
+and all project-related information. See `Build-State` for details on
+State.
 
-Finally, basic help information may be provided that is used by the help
-command to display command help.
+Finally, basic help information may be provided that is used by the
+`help` command to display command help.
 
 Defining a Command
 ------------------
 
-A command combines a function State =\> Parser[T] with an action
-(State, T) =\> State. The reason for State =\> Parser[T] and not simply
-Parser[T] is that often the current State is used to build the parser.
-For example, the currently loaded projects (provided by State) determine
-valid completions for the project command. Examples for the general and
-specific cases are shown in the following sections.
+A command combines a function `State => Parser[T]` with an action
+`(State, T) => State`. The reason for `State => Parser[T]` and not
+simply `Parser[T]` is that often the current `State` is used to build
+the parser. For example, the currently loaded projects (provided by
+`State`) determine valid completions for the `project` command. Examples
+for the general and specific cases are shown in the following sections.
 
-See [Command.scala](../../sxr/sbt/Command.scala.html) for the source API
-details for constructing commands.
+See `Command.scala <../../sxr/sbt/Command.scala.html>`\_ for the source
+API details for constructing commands.
 
 ### General commands
 
@@ -92,14 +93,14 @@ multiple arguments separated by spaces.
 Full Example
 ------------
 
-The following example is a valid project/Build.scala that adds commands
-to a project. To try it out:
+The following example is a valid `project/Build.scala` that adds
+commands to a project. To try it out:
 
-1.  Copy the following build definition into project/Build.scala for a
+1.  Copy the following build definition into `project/Build.scala` for a
     new project.
 2.  Run sbt on the project.
-3.  Try out the hello, helloAll, failIfTrue, color, and printState
-    commands.
+3.  Try out the `hello`, `helloAll`, `failIfTrue`, `color`, and
+    printState commands.
 4.  Use tab-completion and the code below as guidance.
 
 <!-- -->

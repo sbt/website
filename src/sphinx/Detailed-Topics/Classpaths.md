@@ -2,7 +2,7 @@ Classpaths, sources, and resources
 ==================================
 
 This page discusses how sbt builds up classpaths for different actions,
-like compile, run, and test and how to override or augment these
+like `compile`, `run`, and `test` and how to override or augment these
 classpaths.
 
 Basics
@@ -10,22 +10,22 @@ Basics
 
 In sbt 0.10 and later, classpaths now include the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
-settings and tasks typically provide a value of type Classpath. This is
-an alias for Seq[Attributed[File]].
-[Attributed](../../api/sbt/Attributed.html) is a type that associates a
-heterogeneous map with each classpath entry. Currently, this allows sbt
-to associate the Analysis resulting from compilation with the
-corresponding classpath entry and for managed entries, the ModuleID and
-Artifact that defined the dependency.
+settings and tasks typically provide a value of type `Classpath`. This
+is an alias for `Seq[Attributed[File]]`.
+`Attributed <../../api/sbt/Attributed.html>`\_ is a type that associates
+a heterogeneous map with each classpath entry. Currently, this allows
+sbt to associate the `Analysis` resulting from compilation with the
+corresponding classpath entry and for managed entries, the `ModuleID`
+and `Artifact` that defined the dependency.
 
-To explicitly extract the raw Seq[File], use the files method implicitly
-added to \`Classpath\`:
+To explicitly extract the raw `Seq[File]`, use the `files` method
+implicitly added to `Classpath`:
 
     val cp: Classpath = ...
     val raw: Seq[File] = cp.files
 
-To create a Classpath from a Seq[File], use classpath and to create an
-Attributed[File] from a File, use \`Attributed.blank\`:
+To create a `Classpath` from a `Seq[File]`, use `classpath` and to
+create an `Attributed[File]` from a `File`, use `Attributed.blank`:
 
     val raw: Seq[File] = ...
     val cp: Classpath = raw.classpath
@@ -47,9 +47,9 @@ Tasks that produce managed files should be inserted as follows:
     sourceGenerators in Compile +=
         generate( (sourceManaged in Compile).value / "some_directory")
 
-In this example, generate is some function of type File =\> Seq[File]
+In this example, `generate` is some function of type `File => Seq[File]`
 that actually does the work. So, we are appending a new task to the list
-of main source generators (sourceGenerators in Compile).
+of main source generators (`sourceGenerators in Compile`).
 
 To insert a named task, which is the better approach for plugins:
 
@@ -61,23 +61,22 @@ To insert a named task, which is the better approach for plugins:
 
     sourceGenerators in Compile += (mySourceGenerator in Compile).task
 
-The task method is used to refer to the actual task instead of the
+The `task` method is used to refer to the actual task instead of the
 result of the task.
 
-For resources, there are similar keys resourceGenerators and
-resourceManaged.
+For resources, there are similar keys `resourceGenerators` and
+`resourceManaged`.
 
 #### Excluding source files by name
 
 The project base directory is by default a source directory in addition
-to src/main/scala. You can exclude source files by name (butler.scala in
-the example below) like:
+to `src/main/scala`. You can exclude source files by name
+(`butler.scala` in the example below) like:
 
     excludeFilter in unmanagedSources := "butler.scala" 
 
-Read more on [How to exclude .scala source file in project folder
--Google
-Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
+Read more on
+`How to exclude .scala source file in project folder - Google Groups <http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en>`\_
 
 ### External v. internal
 
@@ -92,38 +91,38 @@ classpaths.
 
 For classpaths, the relevant keys are:
 
--   unmanagedClasspath
--   managedClasspath
--   externalDependencyClasspath
--   internalDependencyClasspath
+-   `unmanagedClasspath`
+-   `managedClasspath`
+-   `externalDependencyClasspath`
+-   `internalDependencyClasspath`
 
 For sources:
 
--   unmanagedSources These are by default built up from
+-   `unmanagedSources` These are by default built up from
     unmanagedSourceDirectories, which consists of scalaSource and
     javaSource.
--   managedSources These are generated sources.
--   sources Combines managedSources and unmanagedSources.
--   sourceGenerators These are tasks that generate source files.
+-   `managedSources` These are generated sources.
+-   `sources` Combines `managedSources` and `unmanagedSources`.
+-   `sourceGenerators` These are tasks that generate source files.
     Typically, these tasks will put sources in the directory provided by
     sourceManaged.
 
 For resources
 
--   unmanagedResources These are by default built up from
+-   `unmanagedResources` These are by default built up from
     unmanagedResourceDirectories, which by default is resourceDirectory,
     excluding files matched by defaultExcludes.
--   managedResources By default, this is empty for standard projects.
+-   `managedResources` By default, this is empty for standard projects.
     sbt plugins will have a generated descriptor file here.
--   resourceGenerators These are tasks that generate resource files.
+-   `resourceGenerators` These are tasks that generate resource files.
     Typically, these tasks will put resources in the directory provided
     by resourceManaged.
 
-Use the inspect command \</Detailed-Topics/Inspecting-Settings\> for
+Use the `inspect command </Detailed-Topics/Inspecting-Settings>` for
 more details.
 
-See also a related [StackOverflow
-answer](http://stackoverflow.com/a/7862872/850196).
+See also a related
+`StackOverflow answer <http://stackoverflow.com/a/7862872/850196>`\_.
 
 ### Example
 

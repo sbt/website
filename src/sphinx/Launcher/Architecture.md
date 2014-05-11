@@ -26,7 +26,7 @@ Module Resolution
 -----------------
 
 The primary purpose of the sbt launcher is to resolve applications and
-run them. This is done through the [app] configuration section. See
+run them. This is done through the `[app]` configuration section. See
 :doc:Configuration for more information on how to configure module
 resolution.
 
@@ -41,7 +41,7 @@ The sbt launcher's classloading structure is different than just
 starting an application in the standard java mechanism. Every
 application loaded by by the launcher is given its own classloader. This
 classloader is a child of the Scala classloader used by the application.
-The Scala classloader can see all of the xsbti.\* classes from the
+The Scala classloader can see all of the `xsbti.*` classes from the
 launcher itself.
 
 Here's an example classloader layout from an sbt launched application.
@@ -59,7 +59,7 @@ Caching
 
 The sbt launcher creates a secondary cache on top of Ivy's own cache.
 This helps isolate applications from errors resulting from unstable
-revisions, like -SNAPSHOT. For any launched application, the launcher
+revisions, like `-SNAPSHOT`. For any launched application, the launcher
 creates a directory to store all its jars. Here's an example layout.
 
 Locking
@@ -73,7 +73,7 @@ directly by the launcher:
 2.  Ensuring located servers have at most one active process.
 
 This feature requires a filesystem which supports locking. It is exposed
-via the xsbti.GlobalLock interface.
+via the `xsbti.GlobalLock` interface.
 
 *Note: This is both a thread and file lock. Not only are we limiting
 access to a single process, but also a single thread within that
@@ -84,8 +84,9 @@ Service Discovery and Isolation
 
 The launcher also provides a mechanism to ensure that only one instance
 of a server is running, while dynamically starting it when a client
-requests. This is done through the --locate flag on the launcher. When
-the launcher is started with the --locate flag it will do the following:
+requests. This is done through the `--locate` flag on the launcher. When
+the launcher is started with the `--locate` flag it will do the
+following:
 
 1.  Lock on the configured server lock file.
 2.  Read the server properties to find the URI of the previous server.
@@ -95,7 +96,7 @@ the launcher is started with the --locate flag it will do the following:
     on the command line.
 5.  Release all locks and shutdown.
 
-The configured server.lock file is thus used to prevent multiple servers
-from running. Sbt itself uses this to prevent more than one server
-running on any given project directory by configuring server.lock to be
-\${user.dir}/.sbtserver.
+The configured `server.lock` file is thus used to prevent multiple
+servers from running. Sbt itself uses this to prevent more than one
+server running on any given project directory by configuring
+`server.lock` to be `${user.dir}/.sbtserver`.

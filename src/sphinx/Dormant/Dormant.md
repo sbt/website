@@ -2,7 +2,7 @@ Dormant Pages
 =============
 
 If you check out the documentation as a git repository, there's a
-Dormant directory (this one) which contains:
+`Dormant` directory (this one) which contains:
 
 -   "redirect" pages (empty pages that point to some new page). If you
     want to rename a page and think it has lots of incoming links from

@@ -6,23 +6,23 @@ Panorama general
 
 Para crear un proyecto de sbt, necesitará dar los siguientes pasos: -
 Instalar sbt y crear un script para iniciarlo. - Configurar un proyecto
-simple hola mundo \<Hello\>.
+simple `hola mundo <Hello>`.
 
 > -   Crear un directorio llamado project con archivos de código fuente
 >     en él.
 > -   Crear su *build definition* (definición de construcción del
 >     proyecto).
 
--   Continuar con ejecución \<Running\> para aprender a ejecutar sbt.
--   Enseguida continuar con .sbt build definition \<Basic-Def\> para
+-   Continuar con `ejecución <Running>` para aprender a ejecutar sbt.
+-   Enseguida continuar con `.sbt build definition <Basic-Def>` para
     aprender más sobre las *build definitions*.
 
 Instalando sbt
 --------------
 
 sbt proporciiona varios paquetes para diferentes sistemas operativos,
-pero también puede hacer una Instalación manual\_,
-Manual Installation\_.
+pero también puede hacer una `Instalación manual`\_,
+`Manual Installation`\_.
 
 Paquetes oficialmente soportados:
 :   -   MSI\_ para Windows
@@ -48,13 +48,15 @@ Paquetes oficialmente soportados:
 
 ### Mac
 
-#### [Macports](http://macports.org/)
+`Macports <http://macports.org/>`\_
+\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
 
 ``` {.sourceCode .console}
 $ port install sbt
 ```
 
-#### [Homebrew](http://mxcl.github.com/homebrew/)
+`Homebrew <http://mxcl.github.com/homebrew/>`\_
+\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~\~
 
 ``` {.sourceCode .console}
 $ brew install sbt
@@ -82,14 +84,14 @@ $ emerge sbt-bin
 
 ### Instalación manual
 
-La instalación manual requiere la descarga de sbt-launch.jar\_ y la
+La instalación manual requiere la descarga de `sbt-launch.jar`\_ y la
 creación de un script para ejecutarlo.
 
 #### Unix
 
-Ponga sbt-launch.jar\_ en \~/bin.
+Ponga `sbt-launch.jar`\_ en `~/bin`.
 
-Cree un script para ejecutar el jar, mediante la creación de \~/bin/sbt
+Cree un script para ejecutar el jar, mediante la creación de `~/bin/sbt`
 con el siguiente contenido:
 
 ``` {.sourceCode .console}
@@ -107,32 +109,32 @@ $ chmod u+x ~/bin/sbt
 
 La instalación manual para Windows varía según el tipo de terminal y
 dependiendo de si Cygwin es usado o no. En todos los casos, ponga el
-archivo batch o el script en el *path* de modo que pueda iniciar sbt en
-cualquier directorio mediante teclear sbt en la línea de comandos.
+archivo batch o el script en el *path* de modo que pueda iniciar `sbt`
+en cualquier directorio mediante teclear `sbt` en la línea de comandos.
 También, ajuste los settings de la JVM de acuerdo con su máquina si es
 necesario.
 
 Para **usuarios que no utilizan Cygwin, pero que usan la terminal
-standard de Windows**, cree un archivo batch \`sbt.bat\`:
+standard de Windows**, cree un archivo batch `sbt.bat`:
 
 ``` {.sourceCode .console}
 set SCRIPT_DIR=%~dp0
 java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 ```
 
-y ponga el sbt-launch.jar\_ que descargó en el mismo directorio que
+y ponga el `sbt-launch.jar`\_ que descargó en el mismo directorio que
 archivo batch.
 
 Si utiliza **Cygwin con la terminal standard de Windows**, cree un
-script de bash \`\~/bin/sbt\`:
+script de bash `~/bin/sbt`:
 
 ``` {.sourceCode .console}
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
 java $SBT_OPTS -jar sbt-launch.jar "$@"
 ```
 
-Reemplace sbt-launch.jar con la ruta hasta el sbt-launch.jar\_ que
-descargó y recuerde utilizar cygpath si es necesario. Haga el scrip
+Reemplace `sbt-launch.jar` con la ruta hasta el `sbt-launch.jar`\_ que
+descargó y recuerde utilizar `cygpath` si es necesario. Haga el scrip
 ejecutable con:
 
 ``` {.sourceCode .console}
@@ -140,8 +142,8 @@ $ chmod u+x ~/bin/sbt
 ```
 
 Si utiliza **Cygwin con una terminal Ansi** (que soporte secuentas de
-escape Ansi y que sea configurable mediante stty), cree un script
-\`\~/bin/sbt\`:
+escape Ansi y que sea configurable mediante `stty`), cree un script
+`~/bin/sbt`:
 
 ``` {.sourceCode .console}
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
@@ -150,9 +152,9 @@ java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-la
 stty icanon echo > /dev/null 2>&1
 ```
 
-Reemplace sbt-launch.jar con la ruta hasta el sbt-launch.jar\_ que
-descargó y recuerde utilizar cygpath si es necesario. Entonces, haga que
-el script sea ejecutable con:
+Reemplace `sbt-launch.jar` con la ruta hasta el `sbt-launch.jar`\_ que
+descargó y recuerde utilizar `cygpath` si es necesario. Entonces, haga
+que el script sea ejecutable con:
 
 ``` {.sourceCode .console}
 $ chmod u+x ~/bin/sbt
@@ -174,11 +176,11 @@ tecla de borrado envía el caracter por default de cygwin \^H.
 Tips y notas
 ------------
 
-Si tiene algún problema ejecutando sbt, vea /Detailed-Topics/Setup-Notes
-en las codificaciones de la terminal, HTTP proxies, y opciones de la
-JVM.
+Si tiene algún problema ejecutando sbt, vea
+`/Detailed-Topics/Setup-Notes` en las codificaciones de la terminal,
+HTTP proxies, y opciones de la JVM.
 
 Siguiente
 ---------
 
-Continúe creando un projecto simple \<Hello\>.
+Continúe `creando un projecto simple <Hello>`.

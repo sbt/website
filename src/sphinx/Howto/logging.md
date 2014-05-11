@@ -3,9 +3,9 @@ Configure and use logging
 
 When a command is run, more detailed logging output is sent to a file
 than to the screen (by default). This output can be recalled for the
-command just executed by running last.
+command just executed by running `last`.
 
-For example, the output of run when the sources are uptodate is:
+For example, the output of `run` when the sources are uptodate is:
 
 ``` {.sourceCode .console}
 > run
@@ -14,7 +14,7 @@ Hi!
 [success] Total time: 0 s, completed Feb 25, 2012 1:00:00 PM
 ```
 
-The details of this execution can be recalled by running \`last\`:
+The details of this execution can be recalled by running `last`:
 
 ``` {.sourceCode .console}
 > last
@@ -55,7 +55,7 @@ file are described in following sections.
 
 When a task is run, more detailed logging output is sent to a file than
 to the screen (by default). This output can be recalled for a specific
-task by running last \<task\>. For example, the first time compile is
+task by running `last <task>`. For example, the first time `compile` is
 run, output might look like:
 
 ``` {.sourceCode .console}
@@ -96,7 +96,7 @@ and:
 ```
 
 The Scala compiler does not print the full details of warnings by
-default. Compiling code that uses the deprecated error method from
+default. Compiling code that uses the deprecated `error` method from
 Predef might generate the following output:
 
 ``` {.sourceCode .console}
@@ -106,9 +106,9 @@ Predef might generate the following output:
 [warn] one warning found
 ```
 
-The details aren't provided, so it is necessary to add -deprecation to
-the options passed to the compiler (scalacOptions) and recompile. An
-alternative when using Scala 2.10 and later is to run printWarnings.
+The details aren't provided, so it is necessary to add `-deprecation` to
+the options passed to the compiler (`scalacOptions`) and recompile. An
+alternative when using Scala 2.10 and later is to run `printWarnings`.
 This task will display all warnings from the previous compilation. For
 example,
 
@@ -119,16 +119,16 @@ example,
 [warn]          ^
 ```
 
-The quickest way to change logging levels is by using the error, warn,
-info, or debug commands. These set the default logging level for
-commands and tasks. For example,
+The quickest way to change logging levels is by using the `error`,
+`warn`, `info`, or `debug` commands. These set the default logging level
+for commands and tasks. For example,
 
 ``` {.sourceCode .console}
 > warn
 ```
 
 will by default show only warnings and errors. To set the logging level
-before any commands are executed on startup, use -- before the logging
+before any commands are executed on startup, use `--` before the logging
 level. For example,
 
 ``` {.sourceCode .console}
@@ -155,13 +155,13 @@ described next.
 >
 > logLevel in compile := Level.Debug
 
-The amount of logging is controlled by the logLevel setting, which takes
-values from the Level enumeration. Valid values are Error, Warn, Info,
-and Debug in order of increasing verbosity. The logging level may be
-configured globally, as described in the previous section, or it may be
-applied to a specific project, configuration, or task. For example, to
-change the logging level for compilation to only show warnings and
-errors:
+The amount of logging is controlled by the `logLevel` setting, which
+takes values from the `Level` enumeration. Valid values are `Error`,
+`Warn`, `Info`, and `Debug` in order of increasing verbosity. The
+logging level may be configured globally, as described in the previous
+section, or it may be applied to a specific project, configuration, or
+task. For example, to change the logging level for compilation to only
+show warnings and errors:
 
 ``` {.sourceCode .console}
 > set logLevel in compile := Level.Warn
@@ -174,22 +174,23 @@ To enable debug logging for all tasks in the current project,
 ```
 
 A common scenario is that after running a task, you notice that you need
-more information than was shown by default. A logLevel based solution
+more information than was shown by default. A `logLevel` based solution
 typically requires changing the logging level and running a task again.
 However, there are two cases where this is unnecessary. First, warnings
-from a previous compilation may be displayed using printWarnings for the
-main sources or test:printWarnings for test sources. Second, output from
-the previous execution is available either for a single task or for in
-its entirety. See the section on [printWarnings](#printwarnings) and the
-sections on [previous output](#last).
+from a previous compilation may be displayed using `printWarnings` for
+the main sources or `test:printWarnings` for test sources. Second,
+output from the previous execution is available either for a single task
+or for in its entirety. See the section on
+`printWarnings <#printwarnings>`\_ and the sections on
+`previous output <#last>`\_.
 
 By default, sbt hides the stack trace of most exceptions thrown during
 execution. It prints a message that indicates how to display the
 exception. However, you may want to show more of stack traces by
 default.
 
-The setting to configure is traceLevel, which is a setting with an Int
-value. When traceLevel is set to a negative value, no stack traces are
+The setting to configure is `traceLevel`, which is a setting with an Int
+value. When `traceLevel` is set to a negative value, no stack traces are
 shown. When it is zero, the stack trace is displayed up to the first sbt
 stack frame. When positive, the stack trace is shown up to that many
 stack frames.
@@ -201,9 +202,9 @@ first sbt frame:
 > set every traceLevel := 0
 ```
 
-The every part means to override the setting in all scopes. To change
+The `every` part means to override the setting in all scopes. To change
 the trace printing behavior for a single project, configuration, or
-task, scope traceLevel appropriately:
+task, scope `traceLevel` appropriately:
 
 ``` {.sourceCode .console}
 > set traceLevel in Test := 5
@@ -213,14 +214,14 @@ task, scope traceLevel appropriately:
 
 By default, sbt buffers the logging output of a test until the whole
 class finishes. This is so that output does not get mixed up when
-executing in parallel. To disable buffering, set the logBuffered setting
-to false:
+executing in parallel. To disable buffering, set the `logBuffered`
+setting to false:
 
     logBuffered := false
 
-The setting extraLoggers can be used to add custom loggers. A custom
-logger should implement [AbstractLogger]. extraLoggers is a function
-ScopedKey[\_] =\> Seq[AbstractLogger]. This means that it can provide
+The setting `extraLoggers` can be used to add custom loggers. A custom
+logger should implement [AbstractLogger]. `extraLoggers` is a function
+`ScopedKey[_] => Seq[AbstractLogger]`. This means that it can provide
 different logging based on the task that requests the logger.
 
     extraLoggers := {
@@ -230,13 +231,13 @@ different logging based on the task that requests the logger.
         }
     }
 
-Here, we take the current function currentFunction for the setting and
+Here, we take the current function `currentFunction` for the setting and
 provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
 
-The special task streams provides per-task logging and I/O via a
-[Streams](../../api/#sbt.std.Streams) instance. To log, a task uses the
-log member from the streams task:
+The special task `streams` provides per-task logging and I/O via a
+`Streams <../../api/#sbt.std.Streams>`\_ instance. To log, a task uses
+the `log` member from the `streams` task:
 
     myTask := {
        val log = streams.value.log

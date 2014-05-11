@@ -3,17 +3,18 @@ Parsing and tab completion
 
 This page describes the parser combinators in sbt. These parser
 combinators are typically used to parse user input and provide tab
-completion for /Extending/Input-Tasks and /Extending/Commands. If you
-are already familiar with Scala's parser combinators, the methods are
-mostly the same except that their arguments are strict. There are two
-additional methods for controlling tab completion that are discussed at
-the end of the section.
+completion for `/Extending/Input-Tasks` and `/Extending/Commands`. If
+you are already familiar with Scala's parser combinators, the methods
+are mostly the same except that their arguments are strict. There are
+two additional methods for controlling tab completion that are discussed
+at the end of the section.
 
-Parser combinators build up a parser from smaller parsers. A Parser[T]
-in its most basic usage is a function String =\> Option[T]. It accepts a
-String to parse and produces a value wrapped in Some if parsing succeeds
-or None if it fails. Error handling and tab completion make this picture
-more complicated, but we'll stick with Option for this discussion.
+Parser combinators build up a parser from smaller parsers. A `Parser[T]`
+in its most basic usage is a function `String => Option[T]`. It accepts
+a `String` to parse and produces a value wrapped in `Some` if parsing
+succeeds or `None` if it fails. Error handling and tab completion make
+this picture more complicated, but we'll stick with `Option` for this
+discussion.
 
 The following examples assume the imports: :
 
@@ -33,9 +34,9 @@ The simplest parser combinators match exact inputs:
     //   and failing otherwise
     val litString: Parser[String] = "blue"
 
-In these examples, implicit conversions produce a literal Parser from a
-Char or String. Other basic parser constructors are the charClass,
-success and failure methods:
+In these examples, implicit conversions produce a literal `Parser` from
+a `Char` or `String`. Other basic parser constructors are the
+`charClass`, `success` and `failure` methods:
 
     // A parser that succeeds if the character is a digit, returning the matched Char 
     //   The second argument, "digit", describes the parser and is used in error messages
@@ -52,19 +53,20 @@ Built-in parsers
 ----------------
 
 sbt comes with several built-in parsers defined in
-[sbt.complete.DefaultParsers](../../api/sbt/complete/DefaultParsers$.html).
+`sbt.complete.DefaultParsers <../../api/sbt/complete/DefaultParsers$.html>`\_.
 Some commonly used built-in parsers are:
 
-> -   Space, NotSpace, OptSpace, and OptNotSpace for parsing spaces or
->     non-spaces, required or not.
-> -   StringBasic for parsing text that may be quoted.
-> -   IntBasic for parsing a signed Int value.
-> -   Digit and HexDigit for parsing a single decimal or hexadecimal
+> -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
+>     spaces or non-spaces, required or not.
+> -   `StringBasic` for parsing text that may be quoted.
+> -   `IntBasic` for parsing a signed Int value.
+> -   `Digit` and `HexDigit` for parsing a single decimal or hexadecimal
 >     digit.
-> -   Bool for parsing a Boolean value
+> -   `Bool` for parsing a `Boolean` value
 
-See the [DefaultParsers
-API](../../api/sbt/complete/DefaultParsers$.html) for details.
+See the
+`DefaultParsers API <../../api/sbt/complete/DefaultParsers$.html>`\_ for
+details.
 
 Combining parsers
 -----------------
@@ -104,8 +106,8 @@ Transforming results
 
 A key aspect of parser combinators is transforming results along the way
 into more useful data structures. The fundamental methods for this are
-map and flatMap. Here are examples of map and some convenience methods
-implemented on top of map.
+`map` and `flatMap`. Here are examples of `map` and some convenience
+methods implemented on top of `map`.
 
     // Apply the `digits` parser and apply the provided function to the matched
     //   character sequence
@@ -130,21 +132,21 @@ Controlling tab completion
 Most parsers have reasonable default tab completion behavior. For
 example, the string and character literal parsers will suggest the
 underlying literal for an empty input string. However, it is impractical
-to determine the valid completions for charClass, since it accepts an
-arbitrary predicate. The examples method defines explicit completions
+to determine the valid completions for `charClass`, since it accepts an
+arbitrary predicate. The `examples` method defines explicit completions
 for such a parser:
 
     val digit = charClass(_.isDigit, "digit").examples("0", "1", "2")
 
 Tab completion will use the examples as suggestions. The other method
-controlling tab completion is token. The main purpose of token is to
+controlling tab completion is `token`. The main purpose of `token` is to
 determine the boundaries for suggestions. For example, if your parser
 is:
 
     ("fg" | "bg") ~ ' ' ~ ("green" | "blue")
 
 then the potential completions on empty input are:
-console fg green fg blue bg green bg blue
+`console fg green fg blue bg green bg blue`
 
 Typically, you want to suggest smaller segments or the number of
 suggestions becomes unmanageable. A better parser is:
@@ -152,9 +154,9 @@ suggestions becomes unmanageable. A better parser is:
     token( ("fg" | "bg") ~ ' ') ~ token("green" | "blue")
 
 Now, the initial suggestions would be (with \_ representing a space):
-console fg\_ bg\_
+`console fg_ bg_`
 
 Be careful not to overlap or nest tokens, as in
-token("green" \~ token("blue")). The behavior is unspecified (and should
-generate an error in the future), but typically the outer most token
-definition will be used.
+`token("green" ~ token("blue"))`. The behavior is unspecified (and
+should generate an error in the future), but typically the outer most
+token definition will be used.

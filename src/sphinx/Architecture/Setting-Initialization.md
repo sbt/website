@@ -14,7 +14,7 @@ into the a task graph. This task graph is then used to execute your
 build.
 
 All of sbt's loading semantics are contained within the
-Load.scala \<../../sxr/sbt/Load.scala.html\> file. It is approximately
+`Load.scala <../../sxr/sbt/Load.scala.html>` file. It is approximately
 the following:
 
 ![image](settings-initialization-load-ordering.png)
@@ -130,7 +130,7 @@ For example, let's see what happens if we move the `build.sbt` files
 
 Let's create an example project the following defintiion:
 
-project/build.scala :
+`project/build.scala` :
 
     object MyTestBuild extends Build {
 
@@ -147,7 +147,7 @@ the current scala version is not the in the `2.10.x` series. Now, when
 issuing a release we want to lock down the version. Most tools assume
 this can happen by writing a `version.sbt` file:
 
-version.sbt :
+`version.sbt` :
 
     version := "1.0.0"
 

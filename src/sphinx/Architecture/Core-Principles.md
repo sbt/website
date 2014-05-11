@@ -27,7 +27,7 @@ Commands are actually string processors which take some string input and
 act on it, returning the next build state.
 
 The details of the command engine are covered in
-the command engine section \<Command-Engine\>.
+`the command engine section <Command-Engine>`.
 
 So, the entirety of sbt is driven off the `sbt.State` class. Since this
 class needs to be resilient in the face of custom code and plugins, it
@@ -35,32 +35,32 @@ needs a mechanism to store the state from any potential client. In
 dynamic languages, this can be done directly on objects.
 
 A naive approach in Scala is to use a `Map<String,Any>`. However, this
-vioaltes tennant \#1: Everythign should have a Type. So, sbt defines a
+vioaltes tennant \#1: Everythign should have a `Type`. So, sbt defines a
 new type of map called an `AttributeMap`. An `AttributeMap` is a
 key-value storage mechanism where keys are both strings *and* expected
-Types for their value.
+`Type`s for their value.
 
 Here is what the typesafe `AttributeKey` key looks like :
 
     sealed trait AttributeKey[T] {
       /** The label is the identifier for the key and is camelCase by convention. */
       def label: String
-      /** The runtime evidence for `T` */
+      /** The runtime evidence for ``T`` */
       def manifest: Manifest[T]
     }
 
-These keys store both a label (`string`) and some runtime type
+These keys store both a `label` (`string`) and some runtime type
 information (`manifest`). To put or get something on the AttributeMap,
 we first need to construct one of these keys. Let's look at the basic
 definition of the `AttributeMap` :
 
     trait AttributeMap {
-      /** Gets the value of type `T` associated with the key `k` or `None` if no value is associated. 
-      * If a key with the same label but a different type is defined, this method will return `None`. */
+      /** Gets the value of type ``T`` associated with the key ``k`` or ``None`` if no value is associated. 
+      * If a key with the same label but a different type is defined, this method will return ``None``. */
       def get[T](k: AttributeKey[T]): Option[T]
 
 
-      /** Adds the mapping `k -> value` to this map, replacing any existing mapping for `k`.
+      /** Adds the mapping ``k -> value`` to this map, replacing any existing mapping for ``k``.
       * Any mappings for keys with the same label but different types are unaffected. */
       def put[T](k: AttributeKey[T], value: T): AttributeMap
     }

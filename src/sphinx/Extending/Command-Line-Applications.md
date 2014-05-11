@@ -2,15 +2,15 @@ Creating Command Line Applications Using sbt
 ============================================
 
 There are several components of sbt that may be used to create a command
-line application. The launcher \</Detailed-Topics/Launcher\> and the
-command system \<Commands\> are the two main ones illustrated here.
+line application. The `launcher </Detailed-Topics/Launcher>` and the
+`command system <Commands>` are the two main ones illustrated here.
 
-As described on the launcher page \</Detailed-Topics/Launcher\>, a
+As described on the `launcher page </Detailed-Topics/Launcher>`, a
 launched application implements the xsbti.AppMain interface and defines
 a brief configuration file that users pass to the launcher to run the
 application. To use the command system, an application sets up a
-State \<Build-State\> instance that provides
-command implementations \<Commands\> and the initial commands to run. A
+`State <Build-State>` instance that provides
+`command implementations <Commands>` and the initial commands to run. A
 minimal hello world example is given below.
 
 Hello World Example
@@ -25,8 +25,8 @@ There are three files in this example:
 To try out this example:
 
 1.  Put the first two files in a new directory
-2.  Run sbt publishLocal in that directory
-3.  Run sbt @path/to/hello.build.properties to run the application.
+2.  Run `sbt publishLocal` in that directory
+3.  Run `sbt @path/to/hello.build.properties` to run the application.
 
 Like for sbt itself, you can specify commands from the command line
 (batch mode) or run them at an prompt (interactive mode).
@@ -35,8 +35,8 @@ Like for sbt itself, you can specify commands from the command line
 
 The build.sbt file should define the standard settings: name, version,
 and organization. To use the sbt command system, a dependency on the
-command module is needed. To use the task system, add a dependency on
-the task-system module as well.
+`command` module is needed. To use the task system, add a dependency on
+the `task-system` module as well.
 
     organization := "org.example"
 
@@ -49,7 +49,7 @@ the task-system module as well.
 ### Application: Main.scala
 
 The application itself is defined by implementing
-[xsbti.AppMain](../../api/xsbti/AppMain.html). The basic steps are
+`xsbti.AppMain <../../api/xsbti/AppMain.html>`\_. The basic steps are
 
 1.  Provide command definitions. These are the commands that are
     available for users to run.
@@ -106,7 +106,7 @@ The application itself is defined by implementing
 The launcher needs a configuration file in order to retrieve and run an
 application.
 
-hello.build.properties
+`hello.build.properties`
 
 ``` {.sourceCode .ini}
 [scala]

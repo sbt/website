@@ -39,10 +39,10 @@ Modifying default artifacts
 ---------------------------
 
 Each built-in artifact has several configurable settings in addition to
-publishArtifact. The basic ones are artifact (of type
-SettingKey[Artifact]), mappings (of type TaskKey[(File,String)]), and
-artifactPath (of type SettingKey[File]). They are scoped by
-(\<config\>, \<task\>) as indicated in the previous section.
+`publishArtifact`. The basic ones are `artifact` (of type
+`SettingKey[Artifact]`), `mappings` (of type `TaskKey[(File,String)]`),
+and `artifactPath` (of type `SettingKey[File]`). They are scoped by
+`(<config>, <task>)` as indicated in the previous section.
 
 To modify the type of the main artifact, for example:
 
@@ -51,14 +51,14 @@ To modify the type of the main artifact, for example:
       previous.copy(`type` = "bundle")
     }
 
-The generated artifact name is determined by the artifactName setting.
-This setting is of type (ScalaVersion, ModuleID, Artifact) =\> String.
+The generated artifact name is determined by the `artifactName` setting.
+This setting is of type `(ScalaVersion, ModuleID, Artifact) => String`.
 The ScalaVersion argument provides the full Scala version String and the
 binary compatible part of the version String. The String result is the
 name of the file to produce. The default implementation is
-Artifact.artifactName \_. The function may be modified to produce
+`Artifact.artifactName _`. The function may be modified to produce
 different local names for artifacts without affecting the published
-name, which is determined by the artifact definition combined with the
+name, which is determined by the `artifact` definition combined with the
 repository pattern.
 
 For example, to produce a minimal name without a classifier or cross
@@ -70,11 +70,11 @@ path:
 
 (Note that in practice you rarely want to drop the classifier.)
 
-Finally, you can get the (Artifact, File) pair for the artifact by
-mapping the packagedArtifact task. Note that if you don't need the
-Artifact, you can get just the File from the package task (package,
-packageDoc, or packageSrc). In both cases, mapping the task to get the
-file ensures that the artifact is generated first and so the file is
+Finally, you can get the `(Artifact, File)` pair for the artifact by
+mapping the `packagedArtifact` task. Note that if you don't need the
+`Artifact`, you can get just the File from the package task (`package`,
+`packageDoc`, or `packageSrc`). In both cases, mapping the task to get
+the file ensures that the artifact is generated first and so the file is
 guaranteed to be up-to-date.
 
 For example:
@@ -95,7 +95,7 @@ artifacts to publish. Multiple artifacts are allowed when using Ivy
 metadata, but a Maven POM file only supports distinguishing artifacts
 based on classifiers and these are not recorded in the POM.
 
-Basic Artifact construction look like:
+Basic `Artifact` construction look like:
 
     Artifact("name", "type", "extension")
     Artifact("name", "classifier")
@@ -108,11 +108,11 @@ For example:
     Artifact("myproject", "image", "jpg")
     Artifact("myproject", "jdk15")
 
-See the [Ivy
-documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
-for more details on artifacts. See the [Artifact
-API](../../api/sbt/Artifact$.html) for combining the parameters above
-and specifying [Configurations] and extra attributes.
+See the
+`Ivy documentation <http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html>`\_
+for more details on artifacts. See the
+`Artifact API <../../api/sbt/Artifact$.html>`\_ for combining the
+parameters above and specifying [Configurations] and extra attributes.
 
 To declare these artifacts for publishing, map them to the task that
 generates the artifact:
@@ -126,9 +126,9 @@ generates the artifact:
 
     addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 
-addArtifact returns a sequence of settings (wrapped in a
-[SettingsDefinition](../../api/#sbt.Init$SettingsDefinition)). In a full
-build configuration, usage looks like:
+`addArtifact` returns a sequence of settings (wrapped in a
+`SettingsDefinition <../../api/#sbt.Init$SettingsDefinition>`\_). In a
+full build configuration, usage looks like:
 
     ...
     lazy val proj = Project(...)
@@ -138,8 +138,8 @@ build configuration, usage looks like:
 Publishing .war files
 ---------------------
 
-A common use case for web applications is to publish the .war file
-instead of the .jar file.
+A common use case for web applications is to publish the `.war` file
+instead of the `.jar` file.
 
     // disable .jar publishing 
     publishArtifact in (Compile, packageBin) := false 
@@ -157,14 +157,14 @@ Using dependencies with artifacts
 ---------------------------------
 
 To specify the artifacts to use from a dependency that has custom or
-multiple artifacts, use the artifacts method on your dependencies. For
+multiple artifacts, use the `artifacts` method on your dependencies. For
 example:
 
     libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
 
-The from and classifer methods (described on the
-Library Management \<Library-Management\> page) are actually convenience
-methods that translate to \`artifacts\`:
+The `from` and `classifer` methods (described on the
+`Library Management <Library-Management>` page) are actually convenience
+methods that translate to `artifacts`:
 
     def from(url: String) = artifacts( Artifact(name, new URL(url)) )
     def classifier(c: String) = artifacts( Artifact(name, c) )

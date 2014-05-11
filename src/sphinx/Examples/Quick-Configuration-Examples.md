@@ -2,13 +2,13 @@ Basic Definition Examples
 =========================
 
 Listed here are some examples of settings (each setting is independent).
-See .sbt build definition \</Getting-Started/Basic-Def\> for details.
+See `.sbt build definition </Getting-Started/Basic-Def>` for details.
 
 *Please note* that blank lines are used to separate individual settings.
 Avoid using blank lines within a single multiline expression. As
-explained in .sbt build definition \</Getting-Started/Basic-Def\>, each
+explained in `.sbt build definition </Getting-Started/Basic-Def>`, each
 setting is otherwise a normal Scala expression with expected type
-[sbt.SettingDefinition](../../api/sbt/Init$SettingsDefinition.html).
+`sbt.SettingDefinition <../../api/sbt/Init$SettingsDefinition.html>`\_.
 
     // set the name of the project
     name := "My Project"

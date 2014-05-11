@@ -5,9 +5,9 @@ This page describes how to modify the default source, resource, and
 library directories and what files get included from them.
 
 The directory that contains the main Scala sources is by default
-src/main/scala. For test Scala sources, it is src/test/scala. To change
-this, modify scalaSource in the Compile (for main sources) or Test (for
-test sources). For example, :
+`src/main/scala`. For test Scala sources, it is `src/test/scala`. To
+change this, modify `scalaSource` in the `Compile` (for main sources) or
+`Test` (for test sources). For example, :
 
     scalaSource in Compile := baseDirectory.value / "src"
 
@@ -19,9 +19,9 @@ test sources). For example, :
 > directory.
 
 The directory that contains the main Java sources is by default
-src/main/java. For test Java sources, it is src/test/java. To change
-this, modify javaSource in the Compile (for main sources) or Test (for
-test sources).
+`src/main/java`. For test Java sources, it is `src/test/java`. To change
+this, modify `javaSource` in the `Compile` (for main sources) or `Test`
+(for test sources).
 
 For example, :
 
@@ -35,9 +35,9 @@ For example, :
 > directory.
 
 The directory that contains the main resources is by default
-src/main/resources. For test resources, it is src/test/resources. To
-change this, modify resourceDirectory in either the Compile or Test
-configuration.
+`src/main/resources`. For test resources, it is `src/test/resources`. To
+change this, modify `resourceDirectory` in either the `Compile` or
+`Test` configuration.
 
 For example, :
 
@@ -45,32 +45,34 @@ For example, :
 
     resourceDirectory in Test := baseDirectory.value / "test-resources"
 
-The directory that contains the unmanaged libraries is by default lib/.
-To change this, modify unmanagedBase. This setting can be changed at the
-project level or in the Compile, Runtime, or Test configurations.
+The directory that contains the unmanaged libraries is by default
+`lib/`. To change this, modify `unmanagedBase`. This setting can be
+changed at the project level or in the `Compile`, `Runtime`, or `Test`
+configurations.
 
 When defined without a configuration, the directory is the default
 directory for all configurations. For example, the following declares
-jars/ as containing libraries: :
+`jars/` as containing libraries: :
 
     unmanagedBase := baseDirectory.value / "jars"
 
-When set for Compile, Runtime, or Test, unmanagedBase is the directory
-containing libraries for that configuration, overriding the default. For
-example, the following declares lib/main/ to contain jars only for
-Compile and not for running or testing: :
+When set for `Compile`, `Runtime`, or `Test`, `unmanagedBase` is the
+directory containing libraries for that configuration, overriding the
+default. For example, the following declares `lib/main/` to contain jars
+only for `Compile` and not for running or testing: :
 
     unmanagedBase in Compile := baseDirectory.value / "lib" / "main"
 
-By default, sbt includes .scala files from the project's base directory
-as main source files. To disable this, configure sourcesInBase: :
+By default, sbt includes `.scala` files from the project's base
+directory as main source files. To disable this, configure
+`sourcesInBase`: :
 
     sourcesInBase := false
 
-sbt collects sources from unmanagedSourceDirectories, which by default
-consists of scalaSource and javaSource. Add a directory to
-unmanagedSourceDirectories in the appropriate configuration to add a
-source directory. For example, to add extra-src to be an additional
+sbt collects `sources` from `unmanagedSourceDirectories`, which by
+default consists of `scalaSource` and `javaSource`. Add a directory to
+`unmanagedSourceDirectories` in the appropriate configuration to add a
+source directory. For example, to add `extra-src` to be an additional
 directory containing main sources, :
 
     unmanagedSourceDirectories in Compile += baseDirectory.value / "extra-src"
@@ -81,11 +83,11 @@ directory containing main sources, :
 > sources that are manually created and managed. See
 > /Howto/generatefiles for working with automatically generated sources.
 
-sbt collects resources from unmanagedResourceDirectories, which by
-default consists of resourceDirectory. Add a directory to
-unmanagedResourceDirectories in the appropriate configuration to add
-another resource directory. For example, to add extra-resources to be an
-additional directory containing main resources, :
+sbt collects `resources` from `unmanagedResourceDirectories`, which by
+default consists of `resourceDirectory`. Add a directory to
+`unmanagedResourceDirectories` in the appropriate configuration to add
+another resource directory. For example, to add `extra-resources` to be
+an additional directory containing main resources, :
 
     unmanagedResourceDirectories in Compile += baseDirectory.value / "extra-resources"
 
@@ -96,19 +98,19 @@ additional directory containing main resources, :
 > /Howto/generatefiles for working with automatically generated
 > resources.
 
-When sbt traverses unmanagedSourceDirectories for sources, it only
-includes directories and files that match includeFilter and do not match
-excludeFilter. includeFilter and excludeFilter have type
-java.io.FileFilter and sbt
-provides some useful combinators \<file-filter\> for constructing a
-FileFilter. For example, in addition to the default hidden files
-exclusion, the following also ignores files containing impl in their
+When sbt traverses `unmanagedSourceDirectories` for sources, it only
+includes directories and files that match `includeFilter` and do not
+match `excludeFilter`. `includeFilter` and `excludeFilter` have type
+`java.io.FileFilter` and sbt
+`provides some useful combinators <file-filter>` for constructing a
+`FileFilter`. For example, in addition to the default hidden files
+exclusion, the following also ignores files containing `impl` in their
 name, :
 
     excludeFilter in unmanagedSources := HiddenFileFilter || "*impl*"
 
-To have different filters for main and test libraries, configure Compile
-and Test separately: :
+To have different filters for main and test libraries, configure
+`Compile` and `Test` separately: :
 
     includeFilter in (Compile, unmanagedSources) := "*.scala" || "*.java"
 
@@ -119,19 +121,19 @@ and Test separately: :
 > By default, sbt includes .scala and .java sources, excluding hidden
 > files.
 
-When sbt traverses unmanagedResourceDirectories for resources, it only
-includes directories and files that match includeFilter and do not match
-excludeFilter. includeFilter and excludeFilter have type
-java.io.FileFilter and sbt
-provides some useful combinators \<file-filter\> for constructing a
-FileFilter. For example, in addition to the default hidden files
-exclusion, the following also ignores files containing impl in their
+When sbt traverses `unmanagedResourceDirectories` for resources, it only
+includes directories and files that match `includeFilter` and do not
+match `excludeFilter`. `includeFilter` and `excludeFilter` have type
+`java.io.FileFilter` and sbt
+`provides some useful combinators <file-filter>` for constructing a
+`FileFilter`. For example, in addition to the default hidden files
+exclusion, the following also ignores files containing `impl` in their
 name, :
 
     excludeFilter in unmanagedSources := HiddenFileFilter || "*impl*"
 
-To have different filters for main and test libraries, configure Compile
-and Test separately: :
+To have different filters for main and test libraries, configure
+`Compile` and `Test` separately: :
 
     includeFilter in (Compile, unmanagedSources) := "*.txt"
 
@@ -141,18 +143,18 @@ and Test separately: :
 >
 > By default, sbt includes all files that are not hidden.
 
-When sbt traverses unmanagedBase for resources, it only includes
-directories and files that match includeFilter and do not match
-excludeFilter. includeFilter and excludeFilter have type
-java.io.FileFilter and sbt
-provides some useful combinators \<file-filter\> for constructing a
-FileFilter. For example, in addition to the default hidden files
+When sbt traverses `unmanagedBase` for resources, it only includes
+directories and files that match `includeFilter` and do not match
+`excludeFilter`. `includeFilter` and `excludeFilter` have type
+`java.io.FileFilter` and sbt
+`provides some useful combinators <file-filter>` for constructing a
+`FileFilter`. For example, in addition to the default hidden files
 exclusion, the following also ignores zips, :
 
     excludeFilter in unmanagedJars := HiddenFileFilter || "*.zip"
 
-To have different filters for main and test libraries, configure Compile
-and Test separately: :
+To have different filters for main and test libraries, configure
+`Compile` and `Test` separately: :
 
     includeFilter in (Compile, unmanagedJars) := "*.jar"
 

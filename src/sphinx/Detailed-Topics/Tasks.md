@@ -2,7 +2,7 @@ Tasks
 =====
 
 Tasks and settings are introduced in the
-getting started guide \</Getting-Started/Basic-Def\>, which you may wish
+`getting started guide </Getting-Started/Basic-Def>`, which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
 
@@ -24,16 +24,17 @@ There are several features of the task system:
 
 1.  By integrating with the settings system, tasks can be added,
     removed, and modified as easily and flexibly as settings.
-2.  Input Tasks \</Extending/Input-Tasks\> use
-    parser combinators \<Parsing-Input\> to define the syntax for their
+2.  `Input Tasks </Extending/Input-Tasks>` use
+    `parser combinators <Parsing-Input>` to define the syntax for their
     arguments. This allows flexible syntax and tab-completions in the
     same way as /Extending/Commands.
 3.  Tasks produce values. Other tasks can access a task's value by
-    calling value on it within a task definition.
+    calling `value` on it within a task definition.
 4.  Dynamically changing the structure of the task graph is possible.
     Tasks can be injected into the execution graph based on the result
     of another task.
-5.  There are ways to handle task failure, similar to try/catch/finally.
+5.  There are ways to handle task failure, similar to
+    `try/catch/finally`.
 6.  Each task has access to its own Logger that by default persists the
     logging for that task at a more verbose level than is initially
     printed to the screen.
@@ -56,23 +57,23 @@ see this task listed.
 
 ### Define the key
 
-To declare a new task, define a lazy val of type \`TaskKey\`:
+To declare a new task, define a lazy val of type `TaskKey`:
 
     lazy val sampleTask = taskKey[Int]("A sample task.")
 
-The name of the val is used when referring to the task in Scala code and
-at the command line. The string passed to the taskKey method is a
-description of the task. The type parameter passed to taskKey (here,
-Int) is the type of value produced by the task.
+The name of the `val` is used when referring to the task in Scala code
+and at the command line. The string passed to the `taskKey` method is a
+description of the task. The type parameter passed to `taskKey` (here,
+`Int`) is the type of value produced by the task.
 
 We'll define a couple of other keys for the examples:
 
     lazy val intTask = taskKey[Int]("An int task")
     lazy val stringTask = taskKey[String]("A string task")
 
-The examples themselves are valid entries in a build.sbt or can be
-provided as part of a sequence to Project.settings (see
-Full Configuration \</Getting-Started/Full-Def\>).
+The examples themselves are valid entries in a `build.sbt` or can be
+provided as part of a sequence to `Project.settings` (see
+`Full Configuration </Getting-Started/Full-Def>`).
 
 ### Implement the task
 
@@ -89,7 +90,7 @@ combined.
 
 #### Defining a basic task
 
-A task is defined using :=
+A task is defined using `:=`
 
     intTask := 1 + 2
 
@@ -102,19 +103,19 @@ A task is defined using :=
     }
 
 As mentioned in the introduction, a task is evaluated on demand. Each
-time sampleTask is invoked, for example, it will print the sum. If the
-username changes between runs, stringTask will take different values in
-those separate runs. (Within a run, each task is evaluated at most
+time `sampleTask` is invoked, for example, it will print the sum. If the
+username changes between runs, `stringTask` will take different values
+in those separate runs. (Within a run, each task is evaluated at most
 once.) In contrast, settings are evaluated once on project load and are
 fixed until the next reload.
 
 #### Tasks with inputs
 
-Tasks with other tasks or settings as inputs are also defined using :=.
-The values of the inputs are referenced by the value method. This method
-is special syntax and can only be called when defining a task, such as
-in the argument to :=. The following defines a task that adds one to the
-value produced by intTask and returns the result.
+Tasks with other tasks or settings as inputs are also defined using
+`:=`. The values of the inputs are referenced by the `value` method.
+This method is special syntax and can only be called when defining a
+task, such as in the argument to `:=`. The following defines a task that
+adds one to the value produced by `intTask` and returns the result.
 
     sampleTask := intTask.value + 1
 
@@ -125,9 +126,10 @@ Multiple settings are handled similarly:
 #### Task Scope
 
 As with settings, tasks can be defined in a specific scope. For example,
-there are separate compile tasks for the compile and test scopes. The
-scope of a task is defined the same as for a setting. In the following
-example, test:sampleTask uses the result of compile:intTask.
+there are separate `compile` tasks for the `compile` and `test` scopes.
+The scope of a task is defined the same as for a setting. In the
+following example, `test:sampleTask` uses the result of
+`compile:intTask`.
 
     sampleTask in Test := (intTask in Compile).value * 3
 
@@ -154,8 +156,8 @@ Additionally, the braces in the following are necessary:
     helloTask := { "echo Hello" ! }
 
 Without them, Scala interprets the line as
-( helloTask.:=("echo Hello") ).! instead of the desired
-helloTask.:=( "echo Hello".! ).
+`( helloTask.:=("echo Hello") ).!` instead of the desired
+`helloTask.:=( "echo Hello".! )`.
 
 ### Separating implementations
 
@@ -169,8 +171,8 @@ example, a basic separate definition looks like:
     // Bind the implementation to a specific key
     intTask := intTaskImpl.value
 
-Note that whenever .value is used, it must be within a task definition,
-such as within Def.task above or as an argument to :=.
+Note that whenever `.value` is used, it must be within a task
+definition, such as within `Def.task` above or as an argument to `:=`.
 
 ### Modifying an Existing Task
 
@@ -185,8 +187,8 @@ input.
 
 Completely override a task by not declaring the previous task as an
 input. Each of the definitions in the following example completely
-overrides the previous one. That is, when intTask is run, it will only
-print \#3.
+overrides the previous one. That is, when `intTask` is run, it will only
+print `#3`.
 
     intTask := {
         println("#1")
@@ -213,16 +215,17 @@ is:
 
     <setting-or-task>.all(<scope-filter>).value
 
-The all method is implicitly added to tasks and settings. It accepts a
-ScopeFilter that will select the Scopes. The result has type Seq[T],
-where T is the key's underlying type.
+The `all` method is implicitly added to tasks and settings. It accepts a
+`ScopeFilter` that will select the `Scopes`. The result has type
+`Seq[T]`, where `T` is the key's underlying type.
 
 ### Example
 
 A common scenario is getting the sources for all subprojects for
 processing all at once, such as passing them to scaladoc. The task that
-we want to obtain values for is sources and we want to get the values in
-all non-root projects and in the Compile configuration. This looks like:
+we want to obtain values for is `sources` and we want to get the values
+in all non-root projects and in the `Compile` configuration. This looks
+like:
 
     lazy val core = project
 
@@ -242,10 +245,10 @@ The next section describes various ways to construct a ScopeFilter.
 
 ### ScopeFilter
 
-A basic ScopeFilter is constructed by the ScopeFilter.apply method. This
-method makes a ScopeFilter from filters on the parts of a \`Scope\`: a
-ProjectFilter, ConfigurationFilter, and TaskFilter. The simplest case is
-explicitly specifying the values for the parts:
+A basic `ScopeFilter` is constructed by the `ScopeFilter.apply` method.
+This method makes a `ScopeFilter` from filters on the parts of a
+`Scope`: a `ProjectFilter`, `ConfigurationFilter`, and `TaskFilter`. The
+simplest case is explicitly specifying the values for the parts:
 
     val filter: ScopeFilter =
        ScopeFilter(
@@ -263,22 +266,24 @@ left unspecified, the current project context will be used.
 
 #### More on filter construction
 
-The example showed the basic methods inProjects and inConfigurations.
-This section describes all methods for constructing a ProjectFilter,
-ConfigurationFilter, or TaskFilter. These methods can be organized into
-four groups:
+The example showed the basic methods `inProjects` and
+`inConfigurations`. This section describes all methods for constructing
+a `ProjectFilter`, `ConfigurationFilter`, or `TaskFilter`. These methods
+can be organized into four groups:
 
--   Explicit member list (inProjects, inConfigurations, inTasks)
--   Global value (inGlobalProject, inGlobalConfiguration, inGlobalTask)
--   Default filter (inAnyProject, inAnyConfiguration, inAnyTask)
--   Project relationships (inAggregates, inDependencies)
+-   Explicit member list (`inProjects`, `inConfigurations`, `inTasks`)
+-   Global value (`inGlobalProject`, `inGlobalConfiguration`,
+    `inGlobalTask`)
+-   Default filter (`inAnyProject`, `inAnyConfiguration`, `inAnyTask`)
+-   Project relationships (`inAggregates`, `inDependencies`)
 
-See the [API documentation](../../api/sbt/ScopeFilter$$Make.html) for
+See the `API documentation <../../api/sbt/ScopeFilter$$Make.html>`\_ for
 details.
 
 #### Combining ScopeFilters
 
-ScopeFilters may be combined with the &&, ||, --, and - methods:
+`ScopeFilters` may be combined with the `&&`, `||`, `--`, and `-`
+methods:
 
 a && b
 :   Selects scopes that match both a and b
@@ -292,9 +297,9 @@ a -- b
 -b
 :   Selects scopes that do not match b
 
-For example, the following selects the scope for the Compile and Test
-configurations of the core project and the global configuration of the
-util project:
+For example, the following selects the scope for the `Compile` and
+`Test` configurations of the `core` project and the global configuration
+of the `util` project:
 
     val filter: ScopeFilter =
        ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
@@ -302,31 +307,32 @@ util project:
 
 ### More operations
 
-The all method applies to both settings (values of type Initialize[T])
-and tasks (values of type Initialize[Task[T]]). It returns a setting or
-task that provides a Seq[T], as shown in this table:
+The `all` method applies to both settings (values of type
+`Initialize[T]`) and tasks (values of type `Initialize[Task[T]]`). It
+returns a setting or task that provides a `Seq[T]`, as shown in this
+table:
 
   Target                Result
   --------------------- --------------------------
   Initialize[T]         Initialize[Seq[T]]
   Initialize[Task[T]]   Initialize[Task[Seq[T]]]
 
-This means that the all method can be combined with methods that
+This means that the `all` method can be combined with methods that
 construct tasks and settings.
 
 #### Missing values
 
-Some scopes might not define a setting or task. The ? and ?? methods can
-help in this case. They are both defined on settings and tasks and
+Some scopes might not define a setting or task. The `?` and `??` methods
+can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
 
-?
+`?`
 :   On a setting or task with underlying type T, this accepts no
     arguments and returns a setting or task (respectively) of type
     Option[T]. The result is None if the setting/task is undefined and
     Some[T] with the value if it is.
 
-??
+`??`
 :   On a setting or task with underlying type T, this accepts an
     argument of type T and uses this argument if the setting/task is
     undefined.
@@ -347,25 +353,25 @@ maximum of all aggregates of the current project.
 
 #### Multiple values from multiple scopes
 
-The target of all is any task or setting, including anonymous ones. This
-means it is possible to get multiple values at once without defining a
-new task or setting in each scope. A common use case is to pair each
-value obtained with the project, configuration, or full scope it came
-from.
+The target of `all` is any task or setting, including anonymous ones.
+This means it is possible to get multiple values at once without
+defining a new task or setting in each scope. A common use case is to
+pair each value obtained with the project, configuration, or full scope
+it came from.
 
-resolvedScoped
+`resolvedScoped`
 :   Provides the full enclosing ScopedKey (which is a Scope +
     AttributeKey[\_])
 
-thisProject
+`thisProject`
 :   Provides the Project associated with this scope (undefined at the
     global and build levels)
 
-thisProjectRef
+`thisProjectRef`
 :   Provides the ProjectRef for the context (undefined at the global and
     build levels)
 
-configuration
+`configuration`
 :   Provides the Configuration for the context (undefined for the global
     configuration)
 
@@ -411,13 +417,13 @@ traces and logging individually for tasks as well as recalling the last
 logging for a task. Tasks also have access to their own persisted binary
 or text data.
 
-To use Streams, get the value of the streams task. This is a special
+To use Streams, get the value of the `streams` task. This is a special
 task that provides an instance of
-[TaskStreams](../../api/sbt/std/TaskStreams.html) for the defining task.
-This type provides access to named binary and text streams, named
+`TaskStreams <../../api/sbt/std/TaskStreams.html>`\_ for the defining
+task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-[Logger](../../api/sbt/Logger.html), which is the most commonly used
-aspect, is obtained by the log method:
+`Logger <../../api/sbt/Logger.html>`\_, which is the most commonly used
+aspect, is obtained by the `log` method:
 
     myTask := {
       val s: TaskStreams = streams.value
@@ -431,7 +437,7 @@ You can scope logging settings by the specific task's scope:
 
     traceLevel in myTask := 5
 
-To obtain the last logging output from a task, use the last command:
+To obtain the last logging output from a task, use the `last` command:
 
 ``` {.sourceCode .console}
 $ last myTask
@@ -440,17 +446,18 @@ $ last myTask
 ```
 
 The verbosity with which logging is persisted is controlled using the
-persistLogLevel and persistTraceLevel settings. The last command
+`persistLogLevel` and `persistTraceLevel` settings. The `last` command
 displays what was logged according to these levels. The levels do not
 affect already logged information.
 
-### Dynamic Computations with Def.taskDyn
+Dynamic Computations with `Def.taskDyn`
+---------------------------------------
 
 It can be useful to use the result of a task to determine the next tasks
-to evaluate. This is done using Def.taskDyn. The result of taskDyn is
-called a dynamic task because it introduces dependencies at runtime. The
-taskDyn method supports the same syntax as Def.task and := except that
-you return a task instead of a plain value.
+to evaluate. This is done using `Def.taskDyn`. The result of `taskDyn`
+is called a dynamic task because it introduces dependencies at runtime.
+The `taskDyn` method supports the same syntax as `Def.task` and `:=`
+except that you return a task instead of a plain value.
 
 For example, :
 
@@ -476,8 +483,8 @@ For example, :
          println(s"Number selected was $num")
      }
 
-The only static dependency of myTask is stringTask. The dependency on
-intTask is only introduced in non-dev mode.
+The only static dependency of `myTask` is `stringTask`. The dependency
+on `intTask` is only introduced in non-dev mode.
 
 > **note**
 >
@@ -487,15 +494,15 @@ intTask is only introduced in non-dev mode.
 
 ### Handling Failure
 
-This section discusses the failure, result, and andFinally methods,
-which are used to handle failure of other tasks.
+This section discusses the `failure`, `result`, and `andFinally`
+methods, which are used to handle failure of other tasks.
 
-#### failure
+#### `failure`
 
-The failure method creates a new task that returns the Incomplete value
-when the original task fails to complete normally. If the original task
-succeeds, the new task fails.
-[Incomplete](../../api/sbt/Incomplete.html) is an exception with
+The `failure` method creates a new task that returns the `Incomplete`
+value when the original task fails to complete normally. If the original
+task succeeds, the new task fails.
+`Incomplete <../../api/sbt/Incomplete.html>`\_ is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 
@@ -508,10 +515,10 @@ For example:
        3
     }
 
-This overrides the intTask so that the original exception is printed and
-the constant 3 is returned.
+This overrides the `intTask` so that the original exception is printed
+and the constant `3` is returned.
 
-failure does not prevent other tasks that depend on the target from
+`failure` does not prevent other tasks that depend on the target from
 failing. Consider the following example:
 
     intTask := if(shouldSucceed) 5 else error("Failed.")
@@ -539,21 +546,21 @@ initially invoked task:
   cTask          success          failure        success        failure        failure
 
 The overall result is always the same as the root task (the directly
-invoked task). A failure turns a success into a failure, and a failure
-into an Incomplete. A normal task definition fails when any of its
+invoked task). A `failure` turns a success into a failure, and a failure
+into an `Incomplete`. A normal task definition fails when any of its
 inputs fail and computes its value otherwise.
 
-#### result
+#### `result`
 
-The result method creates a new task that returns the full Result[T]
-value for the original task. [Result](../../api/sbt/Result.html) has the
-same structure as Either[Incomplete, T] for a task result of type T.
-That is, it has two subtypes:
+The `result` method creates a new task that returns the full `Result[T]`
+value for the original task. `Result <../../api/sbt/Result.html>`\_ has
+the same structure as `Either[Incomplete, T]` for a task result of type
+`T`. That is, it has two subtypes:
 
--   Inc, which wraps Incomplete in case of failure
--   Value, which wraps a task's result in case of success.
+-   `Inc`, which wraps `Incomplete` in case of failure
+-   `Value`, which wraps a task's result in case of success.
 
-Thus, the task created by result executes whether or not the original
+Thus, the task created by `result` executes whether or not the original
 task succeeds or fails.
 
 For example:
@@ -569,14 +576,14 @@ For example:
           v
     }
 
-This overrides the original intTask definition so that if the original
-task fails, the exception is printed and the constant 3 is returned. If
-it succeeds, the value is printed and returned.
+This overrides the original `intTask` definition so that if the original
+task fails, the exception is printed and the constant `3` is returned.
+If it succeeds, the value is printed and returned.
 
 #### andFinally
 
-The andFinally method defines a new task that runs the original task and
-evaluates a side effect regardless of whether the original task
+The `andFinally` method defines a new task that runs the original task
+and evaluates a side effect regardless of whether the original task
 succeeded. The result of the task is the result of the original task.
 For example:
 
@@ -586,13 +593,13 @@ For example:
 
     intTask := intTaskImpl.value
 
-This modifies the original intTask to always print "andFinally" even if
-the task fails.
+This modifies the original `intTask` to always print "andFinally" even
+if the task fails.
 
-Note that andFinally constructs a new task. This means that the new task
-has to be invoked in order for the extra block to run. This is important
-when calling andFinally on another task instead of overriding a task
-like in the previous example. For example, consider this code:
+Note that `andFinally` constructs a new task. This means that the new
+task has to be invoked in order for the extra block to run. This is
+important when calling andFinally on another task instead of overriding
+a task like in the previous example. For example, consider this code:
 
     intTask := error("I didn't succeed.")
 
@@ -600,8 +607,8 @@ like in the previous example. For example, consider this code:
 
     otherIntTask := intTaskImpl.value
 
-If intTask is run directly, otherIntTask is never involved in execution.
-This case is similar to the following plain Scala code:
+If `intTask` is run directly, `otherIntTask` is never involved in
+execution. This case is similar to the following plain Scala code:
 
     def intTask(): Int =
       error("I didn't succeed.")

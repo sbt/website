@@ -21,41 +21,40 @@ Don't use default package
 Users who have their build files in some package will not be able to use
 your plugin if it's defined in default (no-name) package.
 
-Avoid older sbt.Plugin mechanism
---------------------------------
+Avoid older `sbt.Plugin` mechanism ----------------------------------
 
-sbt has deprecated the old sbt.Plugin mechanism in favor of
-sbt.AutoPlugin. The new mechanism features a set of user-level controls
-and dependency declarations that cleans up a lot of long-standing issues
-with plugins.
+sbt has deprecated the old `sbt.Plugin` mechanism in favor of
+`sbt.AutoPlugin`. The new mechanism features a set of user-level
+controls and dependency declarations that cleans up a lot of
+long-standing issues with plugins.
 
 Reuse existing keys
 -------------------
 
-sbt has a number of [predefined keys](../../api/sbt/Keys%24.html). Where
-possible, reuse them in your plugin. For instance, don't define:
+sbt has a number of `predefined keys <../../api/sbt/Keys%24.html>`\_.
+Where possible, reuse them in your plugin. For instance, don't define:
 
     val sourceFiles = settingKey[Seq[File]]("Some source files")
 
-Instead, simply reuse sbt's existing sources key.
+Instead, simply reuse sbt's existing `sources` key.
 
 Avoid namespace clashes
 -----------------------
 
 Sometimes, you need a new key, because there is no existing sbt key. In
 this case, use a plugin-specific prefix, both in the (string) key name
-used in the sbt namespace and in the Scala val. There are two acceptable
-ways to accomplish this goal.
+used in the sbt namespace and in the Scala `val`. There are two
+acceptable ways to accomplish this goal.
 
-### Just use a val prefix
+### Just use a `val` prefix
 
     package sbtobfuscate
     object Plugin extends sbt.Plugin {
       val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
     }
 
-In this approach, every val starts with obfuscate. A user of the plugin
-would refer to the settings like this:
+In this approach, every `val` starts with `obfuscate`. A user of the
+plugin would refer to the settings like this:
 
     obfuscateStylesheet := ...
 
@@ -99,12 +98,12 @@ and your plugin defines a target directory to receive the resulting
 PDFs. That target directory is scoped in its own configuration, so it is
 distinct from other target directories. Thus, these two definitions use
 the same *key*, but they represent distinct *values*. So, in a user's
-build.sbt, we might see:
+`build.sbt`, we might see:
 
     target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
     target in Compile := baseDirectory.value / "mytarget"
 
-In the PDF plugin, this is achieved with an inConfig definition:
+In the PDF plugin, this is achieved with an `inConfig` definition:
 
     val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
       target := baseDirectory.value / "target" / "docs" # the default value
@@ -130,7 +129,7 @@ When defining a new type of configuration, e.g.
 
 should be used to create a "cross-task" configuration. The task
 definitions don't change in this case, but the default configuration
-does. For example, the profile configuration can extend the test
+does. For example, the `profile` configuration can extend the test
 configuration with additional settings and changes to allow profiling in
 sbt. Plugins should not create arbitrary Configurations, but utilize
 them for specific purposes and builds.
@@ -164,9 +163,9 @@ Split your settings by the configuration axis like so:
       sources in obfuscate := sources.value
     )
 
-The baseObfuscateSettings value provides base configuration for the
+The `baseObfuscateSettings` value provides base configuration for the
 plugin's tasks. This can be re-used in other configurations if projects
-require it. The obfuscateSettings value provides the default Compile
+require it. The `obfuscateSettings` value provides the default `Compile`
 scoped settings for projects to use directly. This gives the greatest
 flexibility in using features provided by a plugin. Here's how the raw
 settings may be reused:
@@ -196,8 +195,8 @@ task itself.
       sources in obfuscate := sources.value
     )
 
-In the above example, sources in obfuscate is scoped under the main
-task, obfuscate.
+In the above example, `sources in obfuscate` is scoped under the main
+task, `obfuscate`.
 
 Mucking with Global build state
 -------------------------------
@@ -213,11 +212,12 @@ in *every* project but rather in the build itself. e.g.
       val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
     }
 
-Global settings should *not* be placed into a build.sbt file.
+Global settings should *not* be placed into a `build.sbt` file.
 
 When overriding global settings, care should be taken to ensure previous
 settings from other plugins are not ignored. e.g. when creating a new
-onLoad handler, ensure that the previous onLoad handler is not removed.
+`onLoad` handler, ensure that the previous `onLoad` handler is not
+removed.
 
     object MyPlugin extends Plugin {
        val globalSettigns: Seq[Setting[_]] = Seq(

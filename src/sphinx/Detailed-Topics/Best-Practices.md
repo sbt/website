@@ -3,11 +3,11 @@ General Best Practices
 
 This page describes best practices for working with sbt.
 
-project/ vs. \~/.sbt/
----------------------
+`project/` vs. `~/.sbt/`
+------------------------
 
 Anything that is necessary for building the project should go in
-project/. This includes things like the web plugin. \~/.sbt/ should
+`project/`. This includes things like the web plugin. `~/.sbt/` should
 contain local customizations and commands for working with a build, but
 are not necessary. An example is an IDE plugin.
 
@@ -23,9 +23,9 @@ beginning of the resolvers list:
       localMaven +: resolvers.value
     }
 
-1.  Put settings specific to a user in a global .sbt file, such as
+1.  Put settings specific to a user in a global `.sbt` file, such as
     \~/.sbt/local.sbt. These settings will be applied to all projects.
-2.  Put settings in a .sbt file in a project that isn't checked into
+2.  Put settings in a `.sbt` file in a project that isn't checked into
     version control, such as \<project\>/local.sbt. sbt combines the
     settings from multiple .sbt files, so you can still have the
     standard \<project\>/build.sbt and check that into version control.
@@ -33,29 +33,30 @@ beginning of the resolvers list:
 .sbtrc
 ------
 
-Put commands to be executed when sbt starts up in a .sbtrc file, one per
-line. These commands run before a project is loaded and are useful for
-defining aliases, for example. sbt executes commands in \$HOME/.sbtrc
-(if it exists) and then \<project\>/.sbtrc (if it exists).
+Put commands to be executed when sbt starts up in a `.sbtrc` file, one
+per line. These commands run before a project is loaded and are useful
+for defining aliases, for example. sbt executes commands in
+`$HOME/.sbtrc` (if it exists) and then `<project>/.sbtrc` (if it
+exists).
 
 Generated files
 ---------------
 
 Write any generated files to a subdirectory of the output directory,
-which is specified by the target setting. This makes it easy to clean up
-after a build and provides a single location to organize generated
+which is specified by the `target` setting. This makes it easy to clean
+up after a build and provides a single location to organize generated
 files. Any generated files that are specific to a Scala version should
-go in crossTarget for efficient cross-building.
+go in `crossTarget` for efficient cross-building.
 
-For generating sources and resources, see /Howto/generatefiles.
+For generating sources and resources, see `/Howto/generatefiles`.
 
 Don't hard code
 ---------------
 
-Don't hard code constants, like the output directory target/. This is
-especially important for plugins. A user might change the target setting
-to point to build/, for example, and the plugin needs to respect that.
-Instead, use the setting, like:
+Don't hard code constants, like the output directory `target/`. This is
+especially important for plugins. A user might change the `target`
+setting to point to `build/`, for example, and the plugin needs to
+respect that. Instead, use the setting, like:
 
     myDirectory := target.value / "sub-directory"
 
@@ -110,8 +111,8 @@ or construct the file from an absolute base:
     base / "A.scala"
 
 This is related to the no hard coding best practice because the proper
-way involves referencing the baseDirectory setting. For example, the
-following defines the myPath setting to be the \<base\>/licenses/
+way involves referencing the `baseDirectory` setting. For example, the
+following defines the myPath setting to be the `<base>/licenses/`
 directory.
 
     myPath := baseDirectory.value / "licenses"
@@ -127,10 +128,10 @@ root directory for you for convenience.
 Parser combinators
 ------------------
 
-1.  Use token everywhere to clearly delimit tab completion boundaries.
+1.  Use `token` everywhere to clearly delimit tab completion boundaries.
 2.  Don't overlap or nest tokens. The behavior here is unspecified and
     will likely generate an error in the future.
-3.  Use flatMap for general recursion. sbt's combinators are strict to
+3.  Use `flatMap` for general recursion. sbt's combinators are strict to
     limit the number of classes generated, so use flatMap like:
 
 ``` {.sourceCode .scala}

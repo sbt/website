@@ -1,19 +1,19 @@
 State and actions
 =================
 
-[State](../../api/sbt/State$.html) is the entry point to all available
-information in sbt. The key methods are:
+`State <../../api/sbt/State$.html>`\_ is the entry point to all
+available information in sbt. The key methods are:
 
--   definedCommands: Seq[Command] returns all registered Command
+-   `definedCommands: Seq[Command]` returns all registered Command
     definitions
--   remainingCommands: Seq[String] returns the remaining commands to be
-    run
--   attributes: AttributeMap contains generic data.
+-   `remainingCommands: Seq[String]` returns the remaining commands to
+    be run
+-   `attributes: AttributeMap` contains generic data.
 
-The action part of a command performs work and transforms State. The
-following sections discuss State =\> State transformations. As mentioned
-previously, a command will typically handle a parsed value as well:
-(State, T) =\> State.
+The action part of a command performs work and transforms `State`. The
+following sections discuss `State => State` transformations. As
+mentioned previously, a command will typically handle a parsed value as
+well: `(State, T) => State`.
 
 Command-related data
 --------------------
@@ -53,7 +53,7 @@ commands run. The second inserts a command that will run next. The
 remaining commands will run after the inserted command completes.
 
 To indicate that a command has failed and execution should not continue,
-return state.fail.
+return `state.fail`.
 
     (state: State) => {
       val success: Boolean = ...
@@ -63,43 +63,43 @@ return state.fail.
 Project-related data
 --------------------
 
-Project-related information is stored in attributes. Typically, commands
-won't access this directly but will instead use a convenience method to
-extract the most useful information:
+Project-related information is stored in `attributes`. Typically,
+commands won't access this directly but will instead use a convenience
+method to extract the most useful information:
 
     val state: State
     val extracted: Extracted = Project.extract(state)
     import extracted._
 
-[Extracted](../../api/sbt/Extracted.html) provides:
+`Extracted <../../api/sbt/Extracted.html>`\_ provides:
 
--   Access to the current build and project (currentRef)
--   Access to initialized project setting data (structure.data)
--   Access to session Settings and the original, permanent settings from
-    .sbt and .scala files (session.append and session.original,
+-   Access to the current build and project (`currentRef`)
+-   Access to initialized project setting data (`structure.data`)
+-   Access to session `Setting`s and the original, permanent settings
+    from .sbt and .scala files (session.append and session.original,
     respectively)
--   Access to the current [Eval](../../api/sbt/compiler/Eval.html)
+-   Access to the current `Eval <../../api/sbt/compiler/Eval.html>`\_
     instance for evaluating Scala expressions in the build context.
 
 Project data
 ------------
 
-All project data is stored in structure.data, which is of type
-sbt.Settings[Scope]. Typically, one gets information of type T in the
-following way:
+All project data is stored in `structure.data`, which is of type
+`sbt.Settings[Scope]`. Typically, one gets information of type `T` in
+the following way:
 
     val key: SettingKey[T]
     val scope: Scope
     val value: Option[T] = key in scope get structure.data
 
-Here, a SettingKey[T] is typically obtained from
-[Keys](../../api/sbt/Keys$.html) and is the same type that is used to
-define settings in .sbt files, for example.
-[Scope](../../api/sbt/Scope.html) selects the scope the key is obtained
-for. There are convenience overloads of in that can be used to specify
-only the required scope axes. See
-[Structure.scala](../../sxr/sbt/Structure.scala.html) for where in and
-other parts of the settings interface are defined. Some examples:
+Here, a `SettingKey[T]` is typically obtained from
+`Keys <../../api/sbt/Keys$.html>`\_ and is the same type that is used to
+define settings in `.sbt` files, for example.
+`Scope <../../api/sbt/Scope.html>`\_ selects the scope the key is
+obtained for. There are convenience overloads of `in` that can be used
+to specify only the required scope axes. See
+`Structure.scala <../../sxr/sbt/Structure.scala.html>`\_ for where `in`
+and other parts of the settings interface are defined. Some examples:
 
     import Keys._
     val extracted: Extracted
@@ -111,16 +111,16 @@ other parts of the settings interface are defined. Some examples:
     // get the package options for the `test:packageSrc` task or Nil if none are defined
     val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 
-[BuildStructure](../../api/sbt/Load$$BuildStructure.html) contains
+`BuildStructure <../../api/sbt/Load$$BuildStructure.html>`\_ contains
 information about build and project relationships. Key members are:
 
     units: Map[URI, LoadedBuildUnit]
     root: URI
 
-A URI identifies a build and root identifies the initial build loaded.
-[LoadedBuildUnit](../../api/sbt/Load$$LoadedBuildUnit.html) provides
-information about a single build. The key members of LoadedBuildUnit
-are:
+A `URI` identifies a build and `root` identifies the initial build
+loaded. `LoadedBuildUnit <../../api/sbt/Load$$LoadedBuildUnit.html>`\_
+provides information about a single build. The key members of
+`LoadedBuildUnit` are:
 
     // Defines the base directory for the build
     localBase: File
@@ -128,21 +128,21 @@ are:
     // maps the project ID to the Project definition
     defined: Map[String, ResolvedProject]
 
-[ResolvedProject](../../api/sbt/ResolvedProject.html) has the same
-information as the Project used in a project/Build.scala except that
-[ProjectReferences](../../api/sbt/ProjectReference.html) are resolved to
-ProjectRefs.
+`ResolvedProject <../../api/sbt/ResolvedProject.html>`\_ has the same
+information as the `Project` used in a `project/Build.scala` except that
+`ProjectReferences <../../api/sbt/ProjectReference.html>`\_ are resolved
+to `ProjectRef`s.
 
 Classpaths
 ----------
 
-Classpaths in sbt 0.10+ are of type Seq[Attributed[File]]. This allows
+Classpaths in sbt 0.10+ are of type `Seq[Attributed[File]]`. This allows
 tagging arbitrary information to classpath entries. sbt currently uses
-this to associate an Analysis with an entry. This is how it manages the
-information needed for multi-project incremental recompilation. It also
-associates the ModuleID and Artifact with managed entries (those
+this to associate an `Analysis` with an entry. This is how it manages
+the information needed for multi-project incremental recompilation. It
+also associates the ModuleID and Artifact with managed entries (those
 obtained by dependency management). When you only want the underlying
-Seq[File], use \`files\`:
+`Seq[File]`, use `files`:
 
     val attributedClasspath: Seq[Attribute[File]] = ...
     val classpath: Seq[File] = attributedClasspath.files
@@ -151,10 +151,10 @@ Running tasks
 -------------
 
 It can be useful to run a specific project task from a
-command \<Commands\> (*not from another task*) and get its result. For
+`command <Commands>` (*not from another task*) and get its result. For
 example, an IDE-related command might want to get the classpath from a
 project or a task might analyze the results of a compilation. The
-relevant method is Project.evaluateTask, which has the following
+relevant method is `Project.evaluateTask`, which has the following
 signature:
 
     def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
@@ -192,7 +192,7 @@ For getting the test classpath of a specific project, use this key:
 Using State in a task
 ---------------------
 
-To access the current State from a task, use the state task as an input.
-For example,
+To access the current State from a task, use the `state` task as an
+input. For example,
 
     myTask := ... state.value ...

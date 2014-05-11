@@ -10,8 +10,8 @@ Overview
 --------
 
 A user downloads the launcher jar and creates a script to run it. In
-this documentation, the script will be assumed to be called launch. For
-unix, the script would look like: java -jar sbt-launcher.jar "\$@"
+this documentation, the script will be assumed to be called `launch`.
+For unix, the script would look like: `java -jar sbt-launcher.jar "$@"`
 
 The user can now launch servers and applications which provide sbt
 launcher configuration.
@@ -19,13 +19,14 @@ launcher configuration.
 ### Applications
 
 To launch an application, the user then downloads the configuration file
-for the application (call it my.app.configuration) and creates a script
-to launch it (call it myapp): launch @my.app.configuration "\$@"
+for the application (call it `my.app.configuration`) and creates a
+script to launch it (call it `myapp`):
+`launch @my.app.configuration "$@"`
 
-The user can then launch the application using myapp arg1 arg2 ...
+The user can then launch the application using `myapp arg1 arg2 ...`
 
 More on launcher configuration can be found at
-Launcher Configuration \</Launcher/Configuration\>
+`Launcher Configuration </Launcher/Configuration>`
 
 ### Servers
 
@@ -37,14 +38,15 @@ done by having clients always use the launcher as a *service locator*.
 
 To discover where a server is running (or launch it if it is not
 running), the user downloads the configuration file for the server (call
-it my.server.configuration) and creates a script to discover the server
-(call it find-myserver): launch --locate @my.server.properties.
+it `my.server.configuration`) and creates a script to discover the
+server (call it `find-myserver`):
+`launch --locate @my.server.properties`.
 
 This command will print out one string, the URI at which to reach the
-server, e.g. sbt://127.0.0.1:65501. Clients should use the IP/port to
+server, e.g. `sbt://127.0.0.1:65501`. Clients should use the IP/port to
 connect to to the server and initiate their connection.
 
-When using the locate feature, the sbt launcher makes these following
+When using the `locate` feature, the sbt launcher makes these following
 restrictions to servers:
 
 -   The Server must have a starting class that extends the
@@ -60,7 +62,7 @@ restrictions to servers:
 
 ### Resolving Applications/Servers
 
-Like the launcher used to distribute sbt, the downloaded launcher jar
+Like the launcher used to distribute `sbt`, the downloaded launcher jar
 will retrieve Scala and the application according to the provided
 configuration file. The versions may be fixed or read from a different
 configuration file (the location of which is also configurable). The
@@ -73,7 +75,7 @@ application/server and calls its entry point. The application is passed
 information about how it was called: command line arguments, current
 working directory, Scala version, and application ID (organization,
 name, version). In addition, the application can ask the launcher to
-perform operations such as obtaining the Scala jars and a ClassLoader
+perform operations such as obtaining the Scala jars and a `ClassLoader`
 for any version of Scala retrievable from the repositories specified in
 the configuration file. It can request that other applications be
 downloaded and run. When the application completes, it can tell the
@@ -136,9 +138,9 @@ class Main extends xsbti.AppMain
 Next, define a configuration file for the launcher. For the above class,
 it might look like:
 
-Then, publishLocal or +publishLocal the application to make it
+Then, `publishLocal` or `+publishLocal` the application to make it
 available. For more information, please see
-Launcher Configuration \</Detailed-Topics/Launcher/Configuration\>
+`Launcher Configuration </Detailed-Topics/Launcher/Configuration>`
 
 ### Running an Application
 
@@ -163,10 +165,10 @@ Let's review what's happening when the launcher starts your application.
 
 On startup, the launcher searches for its configuration and then parses
 it. Once the final configuration is resolved, the launcher proceeds to
-obtain the necessary jars to launch the application. The boot.directory
-property is used as a base directory to retrieve jars to. Locking is
-done on the directory, so it can be shared system-wide. The launcher
-retrieves the requested version of Scala to
+obtain the necessary jars to launch the application. The
+`boot.directory` property is used as a base directory to retrieve jars
+to. Locking is done on the directory, so it can be shared system-wide.
+The launcher retrieves the requested version of Scala to
 
 ``` {.sourceCode .console}
 ${boot.directory}/${scala.version}/lib/
@@ -185,13 +187,13 @@ ${boot.directory}/${scala.version}/${app.org}/${app.name}/.
 Once all required code is downloaded, the class loaders are set up. The
 launcher creates a class loader for the requested version of Scala. It
 then creates a child class loader containing the jars for the requested
-'app.components' and with the paths specified in app.resources. An
+'app.components' and with the paths specified in `app.resources`. An
 application that does not use components will have all of its jars in
 this class loader.
 
 The main class for the application is then instantiated. It must be a
 public class with a public no-argument constructor and must conform to
-xsbti.AppMain. The run method is invoked and execution passes to the
+xsbti.AppMain. The `run` method is invoked and execution passes to the
 application. The argument to the 'run' method provides configuration
 information and a callback to obtain a class loader for any version of
 Scala that can be obtained from a repository in [repositories]. The

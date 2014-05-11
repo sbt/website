@@ -26,19 +26,19 @@ To reduce compile times, sbt uses two strategies:
     (part of) Scalac will have already been JIT-compiled. In the future,
     sbt will reintroduce support for reusing the same compiler instance,
     similarly to fsc.
-4.  When a source file A.scala is modified, sbt goes to great effort to
-    recompile other source files depending on A.scala only if required -
-    that is, only if the interface of A.scala was modified. With other
-    build management tools (especially for Java, like ant), when a
-    developer changes a source file in a non-binary-compatible way, he
-    needs to manually ensure that dependencies are also recompiled -
-    often by manually running the clean command to remove existing
-    compilation output; otherwise compilation might succeed even when
-    dependent class files might need to be recompiled. What is worse,
-    the change to one source might make dependencies incorrect, but this
-    is not discovered automatically: One might get a compilation success
-    with incorrect source code. Since Scala compile times are so high,
-    running clean is particularly undesirable.
+4.  When a source file `A.scala` is modified, sbt goes to great effort
+    to recompile other source files depending on A.scala only if
+    required - that is, only if the interface of A.scala was modified.
+    With other build management tools (especially for Java, like ant),
+    when a developer changes a source file in a non-binary-compatible
+    way, he needs to manually ensure that dependencies are also
+    recompiled - often by manually running the clean command to remove
+    existing compilation output; otherwise compilation might succeed
+    even when dependent class files might need to be recompiled. What is
+    worse, the change to one source might make dependencies incorrect,
+    but this is not discovered automatically: One might get a
+    compilation success with incorrect source code. Since Scala compile
+    times are so high, running clean is particularly undesirable.
 
 By organizing your source code appropriately, you can minimize the
 amount of code affected by a change. sbt cannot determine precisely
@@ -98,11 +98,11 @@ D.scala -> A.scala
 E.scala -> D.scala
 ```
 
-Now if the interface of A.scala is changed the following files will get
-invalidated: B.scala, C.scala, D.scala. Both B.scala and C.scala were
-included through transtive closure of inheritance dependencies. The
-E.scala was not included because E.scala doesn't depend directly on
-A.scala.
+Now if the interface of `A.scala` is changed the following files will
+get invalidated: `B.scala`, `C.scala`, `D.scala`. Both `B.scala` and
+`C.scala` were included through transtive closure of inheritance
+dependencies. The `E.scala` was not included because `E.scala` doesn't
+depend directly on `A.scala`.
 
 The distinction between depdencies by inheritance or member reference is
 a new feature in sbt 0.13 and is responsible for improved recompilation
@@ -110,15 +110,15 @@ times in many cases where deep inheritance chains are not used
 extensively.
 
 sbt does not instead track dependencies to source code at the
-granularity of individual output .class files, as one might hope. Doing
-so would be incorrect, because of some problems with sealed classes (see
-below for discussion).
+granularity of individual output `.class` files, as one might hope.
+Doing so would be incorrect, because of some problems with sealed
+classes (see below for discussion).
 
 Dependencies on binary files are different - they are tracked both on
-the .class level and on the source file level. Adding a new
-implementation of a sealed trait to source file A affects all clients of
-that sealed trait, and such dependencies are tracked at the source file
-level.
+the `.class` level and on the source file level. Adding a new
+implementation of a sealed trait to source file `A` affects all clients
+of that sealed trait, and such dependencies are tracked at the source
+file level.
 
 Different sources are moreover recompiled together; hence a compile
 error in one source implies that no bytecode is generated for any of
@@ -143,13 +143,13 @@ just to illustrate the ideas; this list is not intended to be complete.
 2.  Adding a method to a trait requires recompiling all implementing
     classes. The same is true for most changes to a method signature in
     a trait.
-3.  Calls to super.methodName in traits are resolved to calls to an
+3.  Calls to `super.methodName` in traits are resolved to calls to an
     abstract method called fullyQualifiedTraitName\$\$super\$methodName;
     such methods only exist if they are used. Hence, adding the first
     call to super.methodName for a specific methodName changes the
     interface. At present, this is not yet handled—see gh-466.
-4.  sealed hierarchies of case classes allow to check exhaustiveness of
-    pattern matching. Hence pattern matches using case classes must
+4.  `sealed` hierarchies of case classes allow to check exhaustiveness
+    of pattern matching. Hence pattern matches using case classes must
     depend on the complete hierarchy - this is one reason why
     dependencies cannot be easily tracked at the class level (see Scala
     issue [SI-2559](https://issues.scala-lang.org/browse/SI-2559) for an
@@ -172,7 +172,7 @@ modify and recompile source code you need to do two things:
 
 > **warning**
 >
-> Enabling the apiDebug option increases significantly
+> Enabling the `apiDebug` option increases significantly
 > :   memory consumption and degrades performance of the incremental
 >     compiler. The underlying reason is that in order to produce
 >     meaningful debugging information about interface differences
@@ -183,8 +183,8 @@ modify and recompile source code you need to do two things:
 > problem only.
 
 Below is complete transcript which shows how to enable interface
-debugging in your project. First, we download the diffutils jar and pass
-it to sbt:
+debugging in your project. First, we download the `diffutils` jar and
+pass it to sbt:
 
 ``` {.sourceCode .none}
 curl -O https://java-diff-utils.googlecode.com/files/diffutils-1.2.1.jar
@@ -198,20 +198,20 @@ sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
 [info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
 ```
 
-Let's suppose you have the following source code in \`Test.scala\`:
+Let's suppose you have the following source code in `Test.scala`:
 
     class A {
        def b: Int = 123
     }
 
-compile it and then change the Test.scala file so it looks like:
+compile it and then change the `Test.scala` file so it looks like:
 
     class A {
        def b: String = "abc"
     }
 
-and run compile task again. Now if you run last compile you should see
-the following lines in the debugging log
+and run `compile` task again. Now if you run `last compile` you should
+see the following lines in the debugging log
 
 ``` {.sourceCode .none}
 > last compile
@@ -232,7 +232,7 @@ the following lines in the debugging log
 
 You can see an unified diff of two interface textual represetantions. As
 you can see, the incremental compiler detected a change to the return
-type of b method.
+type of `b` method.
 
 How to take advantage of sbt heuristics
 ---------------------------------------
@@ -245,7 +245,7 @@ XXX Please note that this part of the documentation is a first draft;
 part of the strategy might be unsound, part of it might be not yet
 implemented.
 
-1.  Adding, removing, modifying private methods does not require
+1.  Adding, removing, modifying `private` methods does not require
     recompilation of client classes. Therefore, suppose you add a method
     to a class with a lot of dependencies, and that this method is only
     used in the declaring class; marking it private will prevent
@@ -287,7 +287,7 @@ often invasive, and reducing compilation times is not often a good
 enough motivation. That is why we discuss also some of the implications
 from the point of view of binary compatibility and software engineering.
 
-Consider the following source file \`A.scala\`:
+Consider the following source file `A.scala`:
 
 ``` {.sourceCode .scala}
 import java.io._
@@ -297,11 +297,11 @@ object A {
 }
 ```
 
-Let us now consider the public interface of trait A. Note that the
-return type of method openFiles is not specified explicitly, but
-computed by type inference to be List[FileWriter]. Suppose that after
+Let us now consider the public interface of trait `A`. Note that the
+return type of method `openFiles` is not specified explicitly, but
+computed by type inference to be `List[FileWriter]`. Suppose that after
 writing this source code, we introduce client code and then modify
-A.scala as follows:
+`A.scala` as follows:
 
 ``` {.sourceCode .scala}
 import java.io._
@@ -311,7 +311,7 @@ object A {
 }
 ```
 
-Type inference will now compute as result type Vector[BufferedWriter];
+Type inference will now compute as result type `Vector[BufferedWriter]`;
 in other words, changing the implementation lead to a change of the
 public interface, with two undesirable consequences:
 
@@ -342,11 +342,11 @@ Of course, we cannot solve them in general: if we want to alter the
 interface of a module, breakage might result. However, often we can
 remove *implementation details* from the interface of a module. In the
 example above, for instance, it might well be that the intended return
-type is more general - namely Seq[Writer]. It might also not be the case
-- this is a design choice to be decided on a case-by-case basis. In this
-example I will assume however that the designer chooses Seq[Writer],
-since it is a reasonable choice both in the above simplified example and
-in a real-world extension of the above code.
+type is more general - namely `Seq[Writer]`. It might also not be the
+case - this is a design choice to be decided on a case-by-case basis. In
+this example I will assume however that the designer chooses
+`Seq[Writer]`, since it is a reasonable choice both in the above
+simplified example and in a real-world extension of the above code.
 
 The client snippets above will now become
 
@@ -380,13 +380,14 @@ other software component.
 
 In Java adding a member does not require recompiling existing valid
 source code. The same should seemingly hold also in Scala, but this is
-not the case: implicit conversions might enrich class Foo with method
-bar without modifying class Foo itself (see discussion in issue gh-288 -
-XXX integrate more). However, if another method bar is introduced in
-class Foo, this method should be used in preference to the one added
-through implicit conversions. Therefore any class depending on Foo
-should be recompiled. One can imagine more fine-grained tracking of
-dependencies, but this is currently not implemented.
+not the case: implicit conversions might enrich class `Foo` with method
+`bar` without modifying class `Foo` itself (see discussion in issue
+gh-288 - XXX integrate more). However, if another method `bar` is
+introduced in class `Foo`, this method should be used in preference to
+the one added through implicit conversions. Therefore any class
+depending on `Foo` should be recompiled. One can imagine more
+fine-grained tracking of dependencies, but this is currently not
+implemented.
 
 Further references
 ------------------

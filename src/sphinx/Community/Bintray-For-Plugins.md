@@ -4,9 +4,9 @@ Bintray For Plugins
 **This is currently in Beta mode.**
 
 sbt hosts their community plugin repository on
-[Bintray](http://bintray.com/sbt). Bintray is a repository hosting site,
-similar to github, which allows users to contribute their own plugins,
-while sbt can aggregate them together in a common repository.
+`Bintray <http://bintray.com/sbt>`\_. Bintray is a repository hosting
+site, similar to github, which allows users to contribute their own
+plugins, while sbt can aggregate them together in a common repository.
 
 This document walks you through the means to create your own repository
 for hosting your sbt plugins and then linking them into the sbt shared
@@ -101,8 +101,7 @@ Make a release
 --------------
 
 \*Note: bintray does not support snapshots. We recommend using
-[git-revisions supplied by the sbt-git
-plugin](https://github.com/sbt/sbt-git#versioning-with-git).
+`git-revisions supplied by the sbt-git plugin <https://github.com/sbt/sbt-git#versioning-with-git>`\_.
 
 Once your build is configured, open the sbt console in your build and
 run:
@@ -112,7 +111,7 @@ sbt> publish
 ```
 
 The plugin will ask you for your credentials. If you don't know where
-they are, you can find them on [Bintray](http://bintray.com).
+they are, you can find them on `Bintray <http://bintray.com>`\_.
 
 1.  Login to the website with your credentials.
 2.  Click on your username
@@ -129,8 +128,9 @@ Linking your package to the sbt organization
 --------------------------------------------
 
 Now that your plugin is packaged on bintray, you can include it in the
-community sbt repository. To do so, go to the [Community sbt
-repository](https://bintray.com/sbt/sbt-plugin-releases) screen.
+community sbt repository. To do so, go to the
+`Community sbt repository <https://bintray.com/sbt/sbt-plugin-releases>`\_
+screen.
 
 1.  Click the green `include my package` button and select your plugin.
 

@@ -2,7 +2,7 @@ Input Tasks
 ===========
 
 Input Tasks parse user input and produce a task to run.
-/Detailed-Topics/Parsing-Input/ describes how to use the parser
+`/Detailed-Topics/Parsing-Input/` describes how to use the parser
 combinators that define the input syntax and tab completion. This page
 describes how to hook those parser combinators into the input task
 system.
@@ -10,9 +10,9 @@ system.
 Input Keys
 ----------
 
-A key for an input task is of type InputKey and represents the input
-task like a SettingKey represents a setting or a TaskKey represents a
-task. Define a new input task key using the inputKey.apply factory
+A key for an input task is of type `InputKey` and represents the input
+task like a `SettingKey` represents a setting or a `TaskKey` represents
+a task. Define a new input task key using the `inputKey.apply` factory
 method:
 
     // goes in project/Build.scala or in build.sbt
@@ -20,9 +20,9 @@ method:
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
-Parser \</Detailed-Topics/Parsing-Input\> applied to user input. Just as
-the special value method gets the value of a setting or task, the
-special parsed method gets the result of a Parser.
+`Parser </Detailed-Topics/Parsing-Input>` applied to user input. Just as
+the special `value` method gets the value of a setting or task, the
+special `parsed` method gets the result of a `Parser`.
 
 Basic Input Task Definition
 ---------------------------
@@ -30,7 +30,7 @@ Basic Input Task Definition
 The simplest input task accepts a space-delimited sequence of arguments.
 It does not provide useful tab completion and parsing is basic. The
 built-in parser for space-delimited arguments is constructed via the
-spaceDelimited method, which accepts as its only argument the label to
+`spaceDelimited` method, which accepts as its only argument the label to
 present to the user during tab completion.
 
 For example, the following task prints the current Scala version and
@@ -48,29 +48,28 @@ then echoes the arguments passed to it on their own line.
 Input Task using Parsers
 ------------------------
 
-The Parser provided by the spaceDelimited method does not provide any
+The Parser provided by the `spaceDelimited` method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
-a matter of defining your own Parser as described on the
-/Detailed-Topics/Parsing-Input page.
+a matter of defining your own `Parser` as described on the
+`/Detailed-Topics/Parsing-Input` page.
 
 ### Constructing the Parser
 
-The first step is to construct the actual Parser by defining a value of
-one of the following types:
+The first step is to construct the actual `Parser` by defining a value
+of one of the following types:
 
--   \`Parser[I]\`: a basic parser that does not use any settings
--   \`Initialize[Parser[I]]\`: a parser whose definition depends on one
-    or more settings
--   \`Initialize[State =\>
-    Parser[I]]: a parser that is defined using both settings and the current :doc:state
-    \<Build-State\>\`
+-   `Parser[I]`: a basic parser that does not use any settings
+-   `Initialize[Parser[I]]`: a parser whose definition depends on one or
+    more settings
+-   `Initialize[State => Parser[I]]`: a parser that is defined using
+    both settings and the current `state <Build-State>`
 
-We already saw an example of the first case with spaceDelimited, which
+We already saw an example of the first case with `spaceDelimited`, which
 doesn't use any settings in its definition. As an example of the third
-case, the following defines a contrived Parser that uses the project's
+case, the following defines a contrived `Parser` that uses the project's
 Scala and sbt version settings as well as the state. To use these
-settings, we need to wrap the Parser construction in Def.setting and get
-the setting values with the special value method:
+settings, we need to wrap the Parser construction in `Def.setting` and
+get the setting values with the special `value` method:
 
     import complete.DefaultParsers._
 
@@ -84,11 +83,12 @@ the setting values with the special value method:
 >
 >     }
 >
-This Parser definition will produce a value of type (String,String). The
-input syntax defined isn't very flexible; it is just a demonstration. It
-will produce one of the following values for a successful parse
-(assuming the current Scala version is |scalaRelease|, the current sbt
-version is |release|, and there are 3 commands left to run):
+This Parser definition will produce a value of type `(String,String)`.
+The input syntax defined isn't very flexible; it is just a
+demonstration. It will produce one of the following values for a
+successful parse (assuming the current Scala version is |scalaRelease|,
+the current sbt version is |release|, and there are 3 commands left to
+run):
 
 Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
@@ -97,12 +97,12 @@ parser.
 ### Constructing the Task
 
 Next, we construct the actual task to execute from the result of the
-Parser. For this, we define a task as usual, but we can access the
-result of parsing via the special parsed method on Parser.
+`Parser`. For this, we define a task as usual, but we can access the
+result of parsing via the special `parsed` method on `Parser`.
 
 The following contrived example uses the previous example's output (of
-type (String,String)) and the result of the package task to print some
-information to the screen.
+type `(String,String)`) and the result of the `package` task to print
+some information to the screen.
 
     demo := {
         val (tpe, value) = parser.parsed
@@ -114,13 +114,13 @@ information to the screen.
 The InputTask type
 ------------------
 
-It helps to look at the InputTask type to understand more advanced usage
-of input tasks. The core input task type is:
+It helps to look at the `InputTask` type to understand more advanced
+usage of input tasks. The core input task type is:
 
     class InputTask[T](val parser: State => Parser[Task[T]])
 
 Normally, an input task is assigned to a setting and you work with
-Initialize[InputTask[T]].
+`Initialize[InputTask[T]]`.
 
 Breaking this down,
 
@@ -130,31 +130,32 @@ Breaking this down,
 > 3.  The parser accepts user input and provides tab completion.
 > 4.  The parser produces the task to run.
 
-So, you can use settings or State to construct the parser that defines
+So, you can use settings or `State` to construct the parser that defines
 an input task's command line syntax. This was described in the previous
-section. You can then use settings, State, or user input to construct
+section. You can then use settings, `State`, or user input to construct
 the task to run. This is implicit in the input task syntax.
 
 Using other input tasks
 -----------------------
 
 The types involved in an input task are composable, so it is possible to
-reuse input tasks. The .parsed and .evaluated methods are defined on
+reuse input tasks. The `.parsed` and `.evaluated` methods are defined on
 InputTasks to make this more convenient in common situations:
 
-> -   Call .parsed on an InputTask[T] or Initialize[InputTask[T]] to get
->     the Task[T] created after parsing the command line
-> -   Call .evaluated on an InputTask[T] or Initialize[InputTask[T]] to
->     get the value of type T from evaluating that task
+> -   Call `.parsed` on an `InputTask[T]` or `Initialize[InputTask[T]]`
+>     to get the `Task[T]` created after parsing the command line
+> -   Call `.evaluated` on an `InputTask[T]` or
+>     `Initialize[InputTask[T]]` to get the value of type `T` from
+>     evaluating that task
 
-In both situations, the underlying Parser is sequenced with other
-parsers in the input task definition. In the case of .evaluated, the
+In both situations, the underlying `Parser` is sequenced with other
+parsers in the input task definition. In the case of `.evaluated`, the
 generated task is evaluated.
 
-The following example applies the run input task, a literal separator
-parser --, and run again. The parsers are sequenced in order of
-syntactic appearance, so that the arguments before -- are passed to the
-first run and the ones after are passed to the second.
+The following example applies the `run` input task, a literal separator
+parser `--`, and `run` again. The parsers are sequenced in order of
+syntactic appearance, so that the arguments before `--` are passed to
+the first `run` and the ones after are passed to the second.
 
     val run2 = inputKey[Unit](
         "Runs the main class twice with different argument lists separated by --")
@@ -181,15 +182,15 @@ For a main class Demo that echoes its arguments, this looks like:
 Preapplying input
 -----------------
 
-Because InputTasks are built from Parsers, it is possible to generate a
-new InputTask by applying some input programmatically. (It is also
-possible to generate a Task, which is covered in the next section.) Two
-convenience methods are provided on InputTask[T] and
-Initialize[InputTask[T]] that accept the String to apply.
+Because `InputTasks` are built from `Parsers`, it is possible to
+generate a new `InputTask` by applying some input programmatically. (It
+is also possible to generate a `Task`, which is covered in the next
+section.) Two convenience methods are provided on `InputTask[T]` and
+`Initialize[InputTask[T]]` that accept the String to apply.
 
-> -   partialInput applies the input and allows further input, such as
+> -   `partialInput` applies the input and allows further input, such as
 >     from the command line
-> -   fullInput applies the input and terminates parsing, so that
+> -   `fullInput` applies the input and terminates parsing, so that
 >     further input is not accepted
 
 In each case, the input is applied to the input task's parser. Because
@@ -199,14 +200,14 @@ initial whitespace to be provided in the input.
 Consider the example in the previous section. We can modify it so that
 we:
 
-> -   Explicitly specify all of the arguments to the first run. We use
->     name and version to show that settings can be used to define and
->     modify parsers.
-> -   Define the initial arguments passed to the second run, but allow
+> -   Explicitly specify all of the arguments to the first `run`. We use
+>     `name` and `version` to show that settings can be used to define
+>     and modify parsers.
+> -   Define the initial arguments passed to the second `run`, but allow
 >     further input on the command line.
 
-NOTE: the current implementation of := doesn't actually support applying
-input derived from settings yet.
+NOTE: the current implementation of `:=` doesn't actually support
+applying input derived from settings yet.
 
     lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
        "once with the project name and version as arguments"
@@ -239,12 +240,12 @@ For a main class Demo that echoes its arguments, this looks like:
 Get a Task from an InputTask
 ----------------------------
 
-The previous section showed how to derive a new InputTask by applying
-input. In this section, applying input produces a Task. The toTask
-method on Initialize[InputTask[T]] accepts the String input to apply and
-produces a task that can be used normally. For example, the following
-defines a plain task runFixed that can be used by other tasks or run
-directly without providing any input, :
+The previous section showed how to derive a new `InputTask` by applying
+input. In this section, applying input produces a `Task`. The `toTask`
+method on `Initialize[InputTask[T]]` accepts the `String` input to apply
+and produces a task that can be used normally. For example, the
+following defines a plain task `runFixed` that can be used by other
+tasks or run directly without providing any input, :
 
     lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
 
@@ -253,8 +254,8 @@ directly without providing any input, :
        println("Done!")
     }
 
-For a main class Demo that echoes its arguments, running runFixed looks
-like:
+For a main class Demo that echoes its arguments, running `runFixed`
+looks like:
 
     $ sbt
     > runFixed
@@ -263,8 +264,8 @@ like:
     green
     Done!
 
-Each call to toTask generates a new task, but each task is configured
-the same as the original InputTask (in this case, run) but with
+Each call to `toTask` generates a new task, but each task is configured
+the same as the original `InputTask` (in this case, `run`) but with
 different input applied. For example, :
 
     lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
@@ -277,12 +278,12 @@ different input applied. For example, :
        println("Done!")
     }
 
-The different toTask calls define different tasks that each run the
-project's main class in a new jvm. That is, the fork setting configures
-both, each has the same classpath, and each run the same main class.
-However, each task passes different arguments to the main class. For a
-main class Demo that echoes its arguments, the output of running
-runFixed2 might look like:
+The different `toTask` calls define different tasks that each run the
+project's main class in a new jvm. That is, the `fork` setting
+configures both, each has the same classpath, and each run the same main
+class. However, each task passes different arguments to the main class.
+For a main class Demo that echoes its arguments, the output of running
+`runFixed2` might look like:
 
     $ sbt
     > runFixed2

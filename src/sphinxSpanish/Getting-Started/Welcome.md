@@ -15,20 +15,20 @@ mantnere una *build definition*.
 ¡Es *altamente recomendable* leer la Guía de inicio!
 
 Si usted tiene mucha prisa, los conceptos más importantes pueden
-encontrarse en sbt build definition \<Basic-Def\>, scopes \<Scopes\>, y
-más sobre settings \<More-About-Settings\>. Pero no prometemos que sea
+encontrarse en `sbt build definition <Basic-Def>`, `scopes <Scopes>`, y
+`más sobre settings <More-About-Settings>`. Pero no prometemos que sea
 una buena idea dejar de leer las otras páginas de la guía.
 
 Es mejor leer en orden, ya que las páginas posteriores de la Guía de
 inicio utilizan conceptos introducidos con anterioridad.
 
-La Guía inicia con Configuración \<Setup\>.
+La Guía inicia con `Configuración <Setup>`.
 
 Gracias por utilizar sbt *¡Diviértase!*
 
 Traducciones a otros lenguajes
 ------------------------------
 
--   [Japonés](http://scalajp.github.com/sbt-getting-started-guide-ja/)
+-   `Japonés <http://scalajp.github.com/sbt-getting-started-guide-ja/>`\_
 -   Inglés
 

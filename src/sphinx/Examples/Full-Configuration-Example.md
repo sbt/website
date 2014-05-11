@@ -143,9 +143,9 @@ into multiple files.
 External Builds
 ===============
 
--   [Mojolly Backchat Build](http://gist.github.com/1021873)
--   [Scalaz
-    Build](https://github.com/scalaz/scalaz/blob/master/project/ScalazBuild.scala)
+-   `Mojolly Backchat Build <http://gist.github.com/1021873>`\_
+-   \`Scalaz
+    Build \<https://github.com/scalaz/scalaz/blob/master/project/ScalazBuild.scala\>\_
 -   Source Code Generation
 -   Generates Scaladoc and Scala X-Ray HTML Sources, with a unified view
     of source from all sub-projects
