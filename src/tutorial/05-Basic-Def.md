@@ -15,7 +15,7 @@ This page describes sbt build definitions, including some "theory" and
 the syntax of `build.sbt`. It assumes you know how to [use sbt][Running]
 and have read the previous pages in the Getting Started Guide.
 
-### .sbt vs. .scala Build Definition
+### `.sbt` vs `.scala` Build Definition
 
 An sbt build definition can contain files ending in `.sbt`, located in the
 base directory of a project, and files ending in `.scala`, located in the

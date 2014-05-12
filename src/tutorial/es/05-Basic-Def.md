@@ -1,12 +1,22 @@
-`.sbt` Build Definition
-=======================
+---
+out: Basic-Def.html
+---
+
+  [More-About-Settings]: More-About-Settings.html
+  [Full-Def]: Full-Def.html
+  [Running]: Running.html
+  [Library-Dependencies]: Library-Dependencies.html
+  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
+
+`.sbt` build definition
+-----------------------
 
 Esta página describe las *build definitions*, incluyendo algo de
 "teoría" y la sintaxis de `build.sbt`. Se asume que usted sabe como
-`usar sbt <Running>` y que ha leído las páginas previas en la
-`Guía de inicio <index.html>`.
+[usar sbt][Running] y que ha leído las páginas previas en la
+Guía de inicio.
 
-`.sbt` vs. `.scala` Build Definition ----------------------------------
+### `.sbt` vs `.scala` Build Definition
 
 Una *build definition* para sbt puede contener archivos con terminación
 `.sbt`, localizados en el directorio base de un proyecto, y archivos con
@@ -18,11 +28,10 @@ mayoría de los casos. Los archivos `.scala` se usan típicamente para
 compartir código entre archivos `.sbt` y para *build definitions* más
 complicadas.
 
-Vea `.scala build definition <Full-Def>` (más adelante en la *Guía de
+Vea [.scala build definition][Full-Def] (más adelante en la *Guía de
 inicio*) para más información sobre los archivos `.scala`.
 
-¿Qué es una *Build Definition*?
--------------------------------
+### ¿Qué es una *Build Definition*?
 
 Después de examinar un proyecto y procesar los archivos para la
 definición de la construcción del proyecto, sbt termina con un mapa
@@ -40,13 +49,15 @@ de objectos con el tipo `Setting[T]` donde `T` es el tipo del valor en
 el mapa. Un `Setting` describe una *transformación del mapa*, tal como
 añadir un nuevo valor llave-valor o agregar a un valor existente. (En el
 espíritu de la programación funcional con estructuras de datos y valores
-inmutables, una transformación regresa un nuevo mapa - no se actualiza
+inmutables, una transformación regresa un nuevo mapa -- no se actualiza
 el viejo mapa en sí mismo).
 
 En `build.sbt`, usted puede crear un `Setting[String]` para el nombre de
 su proyecto como se indica a continuación:
 
-    name := "hello"
+```scala
+name := "hello"
+```
 
 Este `Setting[String]` transforma el mapa al añadir (o reemplazar) la
 llave `name`, dándole el valor
@@ -63,8 +74,7 @@ Resumen: Una definición de construcción define una lista de
 `Setting[T]`, donde un `Setting[T]` es una transformación que afecta el
 mapa de pares de llaves-valores de sbt y `T` es el tipo de cada valor.
 
-De qué manera `build.sbt` define la configuración
--------------------------------------------------
+### De qué manera `build.sbt` define la configuración
 
 `build.sbt` define una `Seq[Setting[_]]`; se trata de una lista de
 expresiones de Scala, separada por líneas en blanco, donde cada una se
@@ -75,11 +85,13 @@ equivalente.
 
 A continuación se muestra un ejemplo:
 
-    name := "hello"
+```scala
+name := "hello"
 
-    version := "1.0"
+version := "1.0"
 
-    scalaVersion := "2.10.4"
+scalaVersion := "2.10.3"
+```
 
 Cada `Setting` se define con una expresión de Scala. Las expresiones en
 `build.sbt` son independientes la una de la otra, y son expresiones, más
@@ -97,7 +109,9 @@ Las *keys* tienen un método llamado `:=`, que regresa un `Setting[T]`.
 Usted podría usar una sintáxis similar a la de Java para invocar al
 método:
 
-    name.:=("hello")
+```scala
+name.:=("hello")
+```
 
 Pero Scala permite usar `name := "hello"` en lugar de lo anterior (en
 Scala, un método con un único parámetro puede utilizar cualquiera de las
@@ -113,17 +127,21 @@ reemplazar la *key* `name` en el mapa de sbt, dándole el valor
 Si usted usa el tipo de valor equivocado, la definición de la
 construcción no compilará:
 
-    name := 42  // no compila
+```scala
+name := 42  // no compila
+```
 
-Las *settings* (configuraciones) deben estar separadas por líneas en blanco
----------------------------------------------------------------------------
+### Las *settings* (configuraciones) deben estar separadas por líneas en blanco
 
 No es posible escribir un `build.sbt` como el siguiente:
 
-    // NO compila, pues no hay líneas en blanco
-    name := "hello"
-    version := "1.0"
-    scalaVersion := "2.10.3"
+
+```scala
+// NO compila, pues no hay líneas en blanco
+name := "hello"
+version := "1.0"
+scalaVersion := "2.10.3"
+```
 
 sbt necesita un tipo de delimitador para indicar donde termina una
 expresión y comienza la siguiente.
@@ -132,10 +150,9 @@ Los archivos `.sbt` contienen una lista de expresiones de Scala, no un
 único programa de Scala. Estas expresiones tienen que separarse y
 pasarse al compilador de manera individual.
 
-Keys
-----
+### Keys
 
-### Tipos
+#### Tipos
 
 Existen tres tipos de llaves:
 
@@ -148,14 +165,14 @@ Existen tres tipos de llaves:
     la línea de comandos como entrada. Vea /Extending/Input-Tasks para
     más detalles.
 
-### Built-in Keys (Llaves ya incluídas)
+#### Built-in Keys (Llaves ya incluídas)
 
 Las llaves ya incluídas son simplemente campos de un objeto llamado
-`Keys <../../sxr/sbt/Keys.scala.html>`\_. Un archivo `build.sbt` tiene
+[Keys](../../sxr/sbt/Keys.scala.html). Un archivo `build.sbt` tiene
 implícitamente un `import sbt.Keys._`, de modo que `sbt.Keys.name` puede
 ser referido como `name`.
 
-### Custom Keys (llaves personalizadas)
+#### Custom Keys (llaves personalizadas)
 
 Las llaves personalizadas pueden definirse con sus métodos de creación
 respectivos: `settingKey`, `taskKey`, e `inputKey`. Cada método espera
@@ -163,7 +180,9 @@ el tipo del valor asociado con la llave así como una descripción. El
 nombre de la llave se toma del `val` al que se le asignó la llave. Por
 ejemplo, para definir una llave para una nueva tarea llamado `hello`, :
 
-    lazy val hello = taskKey[Unit]("An example task")
+```scala
+lazy val hello = taskKey[Unit]("An example task")
+```
 
 Aquí se usó el hecho de que un archivo `.sbt` puede contener `val`s y
 `def`s además de *settings* (configuraciones). Todas estas definiciones
@@ -171,12 +190,10 @@ son evaluadas antes que las configuraciones sin importar donde se
 definan en el archivo. `val`s y `def`s deben estar separadas de las
 *settings* mediante líneas blancas.
 
-> **note**
->
-> Típicamente, se utilizan lazy vals en lugar de vals para evitar
+> **Note**: Típicamente, se utilizan lazy vals en lugar de vals para evitar
 > problemas de inicialización.
 
-### Task vs. Setting keys (Llaves para *Tasks* vs. Llaves para *Settings*)
+#### Task vs. Setting keys (Llaves para *Tasks* vs. Llaves para *Settings*)
 
 Se dice que una `TaskKey[T]` define una *task*. Las *tasks* son
 operaciones tales como `compile` o `package`. Pueden regresar `Unit`
@@ -198,8 +215,7 @@ vez.
 decir, "taskiness" (si debe ejecutarse cada vez) es una propiedad de la
 *key*, no del valor.
 
-Definiendo tasks y settings
----------------------------
+### Definiendo tasks y settings
 
 Usando `:=`, usted puede asignar un valor a un *setting* y un cómputo a
 una *task*. En el caso de un *setting*, el valor será calculado una sola
@@ -208,14 +224,18 @@ realizará cada vez que se ejecute la tarea.
 
 Por ejemplo, para implementar la tarea `hello` de la sección anterior, :
 
-    hello := { println("Hello!") }
+```scala
+hello := { println("Hello!") }
+```
 
 Ya vimos un ejemplo de definición de un *setting* para el nombre del
 proyecto, :
 
-    name := "hello"
+```scala
+name := "hello"
+```
 
-### Tipos para las tareas y los settings
+#### Tipos para las tareas y los settings
 
 Desde la perspectiva del sistema de tipos, el `Setting` creado a partir
 de una *task key* es ligeramente distinta de la creada a partir de una
@@ -228,10 +248,9 @@ La diferencia entre los tipos `T` y `Task[T]` tiene la siguiente
 implicación: un *setting* no puede depender de una *task*, poque un
 *setting* es evaluado únicamente una vez al momento de cargar el
 proyecto y no se vuelve a ejecutar. Se escribirá más sobre este asunto
-pronto en `more about settings <More-About-Settings>`.
+pronto en [more kinds of setting][More-About-Settings].
 
-Keys en modo sbt interactivo
-----------------------------
+### Keys en modo sbt interactivo
 
 En el modo interactivo de sbt, usted puede teclear el nombre de
 cualquier tarea para ejecutar dicha tarea. Es por esto que al teclear
@@ -253,32 +272,34 @@ información que `inspect` despliega no tendrá sentido todavía, pero en
 la parte superior le mostrará el tipo del valor para el *setting* y una
 breve descripción del tal.
 
-Imports en `build.sbt`
-----------------------
+### Imports en `build.sbt`
 
 Puede poner sentencias import en la parte superior de `build.sbt`; no
 necesitan estar separadas por líneas en blanco.
 
 Hay algunos imports por default, como se indica a continuación:
 
-    import sbt._
-    import Process._
-    import Keys._
+```scala
+import sbt._
+import Process._
+import Keys._
+```
 
-(Además, si usted tiene `archivos .scala <Full-Def>`, el contenido de
+(Además, si usted tiene [archivos .scala][Full-Def], el contenido de
 cualquier objeto `Build` o `Plugin` en estos archivos será importado.
 Más sobre este asunto cuando se llegue a
-`definiciones de construccion .scala <Full-Def>`.)
+[definiciones de construccion .scala][Full-Def].)
 
-Añadiendo dependencias (librerías)
-----------------------------------
+### Añadiendo dependencias (librerías)
 
 Para agregar dependencias de librerías de terceros, hay dos opciones. La
 primera es añadir jars en el directorio `lib/` (para *unmanaged
 dependencies*) y la otra es agregar *managed dependencies*, que se verán
 como se muestra a continuación en `build.sbt`:
 
-    libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+```scala
+libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+```
 
 Así es como se agrega una *managed dependency* sobre la librería Apache
 Derby, versión 10.4.1.3.
@@ -286,17 +307,12 @@ Derby, versión 10.4.1.3.
 La key `libraryDependencies` envuelve dos complejidades: `+=` más bien
 que `:=`, y el método `%`. `+=` agrega algo al valor anterior de la
 *key* más bien que reemplazarlo; esto se explica en
-`más sobre los settings </Getting-Started/More-About-Settings>`. El
+[más sobre los settings][More-About-Settings]. El
 método `%` se usa para construir un ID para un módulo de Ivy a partir de
 cadenas, como se explica en
-`library dependencies </Getting-Started/Library-Dependencies>`.
+[library dependencies][Library-Dependencies].
 
 Por lo pronto, omitiremos los detalles del manejo de las dependencias
 (librerías) hasta más tarde en la Guía de inicio. Hay una
-`página completa </Getting-Started/Library-Dependencies>` que cubre el
+[página completa][Library-Dependencies] que cubre el
 tema más tarde.
-
-A continuación
---------------
-
-Siga con `aprenda más sobre scopes </Getting-Started/Scopes>`.
