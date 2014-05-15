@@ -250,8 +250,8 @@ tests if no arguments are given) that:
 Argument quoting (gh-396) from the intereactive mode works like Scala
 string literals.
 
-1.  `> command "arg with spaces,\n escapes interpreted"`
-2.  `> command """arg with spaces,\n escapes not interpreted"""`
+1.  `> command "arg with spaces,\\n escapes interpreted"`
+2.  `> command """arg with spaces,\\n escapes not interpreted"""`
 3.  For the first variant, note that paths on Windows use backslashes
     and need to be escaped (\\\\). Alternatively, use the second
     variant, which does not interpret escapes.

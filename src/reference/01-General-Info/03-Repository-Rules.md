@@ -1,5 +1,5 @@
 Community Repository Policy
-===========================
+---------------------------
 
 The community repository has the following guideline for artifacts
 published to it:
