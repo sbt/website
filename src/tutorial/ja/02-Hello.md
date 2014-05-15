@@ -14,10 +14,10 @@ layout: default
 一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、作って実行してみよう:
 
 <pre>
-  $ mkdir hello
-  $ cd hello
-  $ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
-  $ sbt
+  \$ mkdir hello
+  \$ cd hello
+  \$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
+  \$ sbt
   ...
   > run
   ...

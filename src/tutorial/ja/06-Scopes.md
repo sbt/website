@@ -123,7 +123,7 @@ sbt のインタラクティブモード内で `inspect` コマンドを使っ�
 例えば、`inspect test:full-classpath` と試してみよう:
 
 <pre>
-$ sbt
+\$ sbt
 > inspect test:full-classpath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:

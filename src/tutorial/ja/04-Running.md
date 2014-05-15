@@ -14,7 +14,7 @@ layout: default
 
 プロジェクトのディレクトリで、sbt を引数なしで実行する:
 
-    $ sbt
+    \$ sbt
 
 sbt をコマンドライン引数なしで実行するとインタラクティブモードが開始する。
 インタラクティブモードにはコマンドプロンプト（とタブ補完と履歴も！）がある。
@@ -35,7 +35,7 @@ sbt アクションを空白で区切られたリストとして引数に渡す�
 引数を取る sbt コマンドに関しては、コマンドと引数の両方を引用符で囲むことで一つの引数として `sbt` に渡す。
 例えば、
 
-    $ sbt clean compile "test-only TestA TestB"
+    \$ sbt clean compile "test-only TestA TestB"
 
 この例では、`test-only` は `TestA` と `TestB` の二つの引数を取る。
 アクションは順に実行される（`clean`、`compile`、そして `test-only`）。
