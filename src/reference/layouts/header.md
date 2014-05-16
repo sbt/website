@@ -1,3 +1,4 @@
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
 <div class="container navbar-static-top nav">
     <div class="logo">
       <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
