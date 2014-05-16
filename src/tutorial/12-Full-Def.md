@@ -67,7 +67,7 @@ that multiple files are allowed.
 `.sbt` files are merged into their sibling project directory. Looking back
 at the project layout:
 
-``` {.sourceCode .text}
+```
 hello/                  # your project's base directory
 
     build.sbt           # build.sbt is part of the source code for the

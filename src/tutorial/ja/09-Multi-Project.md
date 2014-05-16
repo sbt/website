@@ -1,19 +1,21 @@
 ---
-title: マルチプロジェクト・ビルド
-layout: default
+out: Multi-Project.html
 ---
 
-# マルチプロジェクト・ビルド
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+  [Directories]: Directories.html
+  [Full-Def]: Full-Def.html
 
-[前](../using-plugins) _始める sbt 12/14 ページ_ [次](../custom-settings)
+マルチプロジェクト・ビルド
+----------------------
 
 このページでは、一つのプロジェクトで複数のプロジェクトを管理する方法を紹介する。
 
 このガイドの前のページ、特に
-[build.sbt](../basic-def) と
-[.scala ビルド定義](../full-def)を理解していることが必要になる。
+[build.sbt][Basic-Def] を理解していることが必要になる。
 
-## 複数のプロジェクト
+### 複数のプロジェクト
 
 単一のビルドに複数のプロジェクトを入れておくと、
 プロジェクト間に依存性がある場合や、
@@ -23,7 +25,7 @@ layout: default
 `package` を実行すると独自の jar ファイルを生成するなど、
 普通のプロジェクト同様に振る舞う。
 
-## `.scala` ファイル内でのプロジェクトの定義
+### `.scala` ファイル内でのプロジェクトの定義
 
 複数のプロジェクトを持つには、全てのプロジェクトとその関係を `.scala` ファイルで宣言する必要があり、
 `.sbt` ファイルからは不可能だ。
@@ -31,7 +33,7 @@ layout: default
 以下に、ルートプロジェクト `hello` が、二つのサブプロジェクト `hello-foo` と `hello-bar` を
 集約（aggregate）する `.scala` ビルド定義を例に説明する:
 
-<pre>
+```scala
 import sbt._
 import Keys._
 
@@ -45,7 +47,7 @@ object HelloBuild extends Build {
     lazy val bar = Project(id = "hello-bar",
                            base = file("bar"))
 }
-</pre>
+```
 
 sbt は、リフレクションを用いて `Build` オブジェクト内の
 `Project` 型を持ったフィールドを検索することで、`Project` オブジェクトの全リストを作成する。
@@ -65,7 +67,7 @@ sbt は、リフレクションを用いて `Build` オブジェクト内の
 次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
 以下のように表示されるはずだ（定義したバージョンによるが）:
 
-<pre>
+```
 > show version
 [info] hello-foo/*:version
 [info] 	0.7
@@ -73,7 +75,7 @@ sbt は、リフレクションを用いて `Build` オブジェクト内の
 [info] 	0.9
 [info] hello/*:version
 [info] 	0.5
-</pre>
+```
 
 `hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
 `hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
@@ -95,7 +97,7 @@ _全てのセッティングを `.scala` ファイル内で宣言することは
 サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
 `foo/project/Build.scala` は無視される。
 
-## 集約
+### 集約
 
 もし望むなら、ビルド内のプロジェクトは、お互いに対して完全に独立であることができる。
 
@@ -110,9 +112,9 @@ _集約プロジェクト内で_（この場合は、ルートの `hello` プロ
 タスクごとに集約をコントロールすることができる。
 例えば `hello/build.sbt` 内で、`update` タスクの集約を以下のようにして回避できる:
 
-<pre>
+```scala
 aggregate in update := false
-</pre>
+```
 
 `aggregate in update` は、`update` タスクにスコープ付けされた `aggregate` キーだ
 （[スコープ](../scope)参照）。
@@ -126,10 +128,10 @@ aggregate in update := false
 例えば、`hello-foo` が `hello-bar` のクラスパスが必要な場合は、
 `Build.scala` 内に以下のように書く:
 
-<pre>
+```scala
     lazy val foo = Project(id = "hello-foo",
                            base = file("foo")) dependsOn(bar)
-</pre>
+```
 
 これで `hello-foo` 内のコードから `hello-bar` のクラスを利用することができる。
 これは、プロジェクトをコンパイルするときの順序も作り出す。
@@ -139,7 +141,7 @@ aggregate in update := false
 複数のプロジェクトに依存するには、`dependsOn(bar, baz)` というふうに、
 `dependsOn` に複数の引数を渡せばいい。
 
-### コンフィギュレーションごとのクラスパス依存性
+#### コンフィギュレーションごとのクラスパス依存性
 
 `foo dependsOn(bar)` は、`foo` の `Compile` コンフィギュレーションが
 `bar` の `Compile` コンフィギュレーションに依存することを意味する。
@@ -160,13 +162,9 @@ aggregate in update := false
 複数のコンフィギュレーション依存性を宣言する場合は、セミコロンで区切る。
 例えば、`dependsOn(bar % "test->test;compile->compile")` と書ける。
 
-## プロジェクトの切り替え
+### プロジェクトの切り替え
 
 sbt インタラクティブプロンプトから、`projects` と打ち込むことでプロジェクトの全リストが表示され、
 `project <プロジェクト名>` で、現在プロジェクトを選択できる。
 `compile` のようなタスクを実行すると、それは現在プロジェクトに対して実行される。
 これにより、ルートプロジェクトをコンパイルせずに、サブプロジェクトのみをコンパイルすることができる。
-
-## 続いては
-
-[カスタムセッティングの作成](../custom-settings)に進む。

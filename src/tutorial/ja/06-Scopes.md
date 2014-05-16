@@ -1,19 +1,22 @@
 ---
-title: スコープ
-layout: default
+out: Scopes.html
 ---
 
-[MavenScopes]: http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
+  [MavenScopes]: http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
+  [Basic-Def]: Basic-Def.html
+  [More-About-Settings]: More-About-Settings.html
+  [Library-Dependencies]: Library-Dependencies.html
+  [Multi-Project]: Multi-Project.html
+  [Inspecting-Settings]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html
 
-# スコープ
+スコープ
+-------
 
-[前](../basic-def) _始める sbt 7/14 ページ_ [次](../more-about-settings)
+このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義][Basic-Def]を読んで理解したことを前提とする。
 
-このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義](../basic-def)を読んで理解したことを前提とする。
+### キーに関する本当の話
 
-## キーに関する本当の話
-
-[これまでは](../basic-def)、あたかも `name` のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
+[これまでは][Basic-Def]、あたかも `name` のようなキーは単一の sbt のマップのキー・値ペアの項目に対応するフリをして話を進めてきた。
 それは単純化した話だ。
 
 実のところは、全てのキーは、「スコープ」と呼ばれる文脈に関連付けられた値を複数もつことができる。
@@ -28,12 +31,12 @@ layout: default
 
 しかし、_スコープ付き_キーには単一の値が存在する。
 
-[これまで見てきた](../basic-def)ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、_スコープ付き_キーであることが分かる。
+[これまで見てきた][Basic-Def]ように、sbt が、プロジェクトを記述するキー・値のマップを生成するためにセッティングのリストを処理していくことを考えると、このキー・値マップ内のキーは、_スコープ付き_キーであることが分かる。
 また、（`build.sbt` などの）ビルド定義内の、セッティングもスコープ付きキーに適用されるものだ。
 
 スコープは、デフォルトがあったり、暗示されていたりするが、デフォルトが間違っていれば `build.sbt` にてスコープを指定しなければいけない。
 
-## スコープ軸
+### スコープ軸
 
 _スコープ軸_（scope axis）は、型であり、そのインスタンスは独自のスコープを定義する
 （つまり、各インスタンスはキーの独自の値を持つことができる）。
@@ -44,18 +47,18 @@ _スコープ軸_（scope axis）は、型であり、そのインスタンス�
  - コンフィギュレーション
  - タスク
 
-### プロジェクト軸によるスコープ付け
+#### プロジェクト軸によるスコープ付け
 
-[一つのビルドに複数のプロジェクトを入れる](../multi-project)場合、それぞれのプロジェクトにセッティングが必要だ。
+[一つのビルドに複数のプロジェクトを入れる][Multi-Project]場合、それぞれのプロジェクトにセッティングが必要だ。
 つまり、キーはプロジェクトによりスコープ付けされる。
 
 プロジェクト軸は「ビルド全体」に設定することもでき、その場合はセッティングは単一のプロジェクトではなくビルド全体に適用される。
 ビルドレベルでのセッティングは、プロジェクトが特定のセッティングを定義しない場合のフォールバックとして使われることがよくある。
 
-### コンフィギュレーション軸によるスコープ付け
+#### コンフィギュレーション軸によるスコープ付け
 
 _コンフィギュレーション_（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
-コンフィギュレーションの概念は、sbt が [マネージ依存性](../library-dependencies) に使っている Ivy と、[MavenScopes] に由来する。
+コンフィギュレーションの概念は、sbt が [マネージ依存性][Library-Dependencies] に使っている Ivy と、[MavenScopes][MavenScopes] に由来する。
 
 sbt で使われるコンフィギュレーションには以下のものがある:
 
@@ -68,7 +71,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 その最たる例が `compile`、`package` と `run` のタスクキーだが、
 （`source-directories` や `scalac-options` や `full-classpath` など）それらのキーに_影響を及ぼす_全てのキーもコンフィグレーションにスコープ付けされている。
 
-### タスク軸によるスコープ付け
+#### タスク軸によるスコープ付け
 
 セッティングはタスクの動作に影響を与えることもできる。例えば、`pakcage-src` は `package-options` セッティングの影響を受ける。
 
@@ -76,7 +79,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 
 パッケージを構築するさまざまなタスク（`package-src`、`package-bin`、`package-duc`）は、`artifact-name` や `package-option` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
 
-## グローバルスコープ
+### グローバルスコープ
 
 それぞれのスコープ軸は、その軸の型のインスタンスを代入する（例えば、タスク軸にはタスクを代入する）か、
 もしくは、`Global` という特殊な値を代入することができる。
@@ -84,7 +87,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 `Global` は、予想通りのもので、その軸の全てのインスタンスに対して適用されるセッティングの値だ。
 例えば、タスク軸が `Global` ならば、全てのタスクに適用される。
 
-## 委譲
+### 委譲
 
 スコープ付きキーは、そのスコープに関連付けられた値がなければ未定義であることもできる。
 
@@ -96,15 +99,17 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
 
 以下に、`inspect` を使ったキーのフォールバック検索パス、別名「委譲」（delegate）の探し方を説明する。
 
-## sbt 実行中のスコープ付きキーの参照方法
+### sbt 実行中のスコープ付きキーの参照方法
 
 コマンドラインとインタラクティブモードにおいて、sbt はスコープ付きキーを以下のように表示し（パースする）:
 
-    {<ビルド-uri>}<プロジェクト-id>/コンフィギュレーション:キー(for タスクキー)
+```
+{<ビルド-uri>}<プロジェクト-id>/コンフィギュレーション:タスクキー::キー
+```
 
  - `{<ビルド-uri>}<プロジェクト-id>` は、プロジェクト軸を特定する。<プロジェクト-id> がなければ、プロジェクト軸は「ビルド全体」スコープとなる。
  - `コンフィギュレーション` は、コンフィギュレーション軸を特定する。
- - `(for タスクキー)` は、タスク軸を特定する。
+ - `タスクキー` は、タスク軸を特定する。
  - `キー` は、スコープ付けされるキーを特定する。
 
 全ての軸において、`*` を使って `Global` スコープを表すことができる。
@@ -115,57 +120,57 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
  - コンフィグレーションを省略した場合は、キーに依存したコンフィギュレーションが自動検知される。
  - タスクを省略した場合は、`Global` タスクが使われる。
 
-さらに詳しくは、[[Inspecting Settings]] 参照。
+さらに詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
 
-## スコープの検査
+### スコープの検査
 
 sbt のインタラクティブモード内で `inspect` コマンドを使ってキーとそのスコープを理解することができる。
 例えば、`inspect test:full-classpath` と試してみよう:
 
-<pre>
+```
 \$ sbt
-> inspect test:full-classpath
+> inspect test:fullClasspath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:
-[info]     The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info]     {file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
 [info] Dependencies:
-[info]     test:exported-products
-[info]     test:dependency-classpath
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
 [info] Reverse dependencies:
-[info]     test:run-main
-[info]     test:run
-[info]     test:test-loader
-[info]     test:console
+[info]  test:runMain
+[info]  test:run
+[info]  test:testLoader
+[info]  test:console
 [info] Delegates:
-[info]     test:full-classpath
-[info]     runtime:full-classpath
-[info]     compile:full-classpath
-[info]     *:full-classpath
-[info]     {.}/test:full-classpath
-[info]     {.}/runtime:full-classpath
-[info]     {.}/compile:full-classpath
-[info]     {.}/*:full-classpath
-[info]     */test:full-classpath
-[info]     */runtime:full-classpath
-[info]     */compile:full-classpath
-[info]     */*:full-classpath
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
 [info] Related:
-[info]     compile:full-classpath
-[info]     compile:full-classpath(for doc)
-[info]     test:full-classpath(for doc)
-[info]     runtime:full-classpath
-</pre>
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
+```
 
-一行目からこれが（[.sbt ビルド定義](../basic-def) で説明されているとおり、セッティングではなく）タスクであることが分かる。
+一行目からこれが（[.sbt ビルド定義][Basic-Def]で説明されているとおり、セッティングではなく）タスクであることが分かる。
 このタスクの戻り値は `scala.collection.Seq[sbt.Attributed[java.io.File]]` の型をとる。
 
 "Provided by" は、この値を定義するスコープ付きキーを指し、この場合は、
 `{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath`
 （`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `full-classpath` キー）。
 
-"Dependencies" は、まだ意味不明だろうけど、[次のページ](../more-about-settings)まで待ってて。
+"Dependencies" は、まだ意味不明だろうけど、[次のページ][More-About-Settings]まで待ってて。
 
 ここで委譲も見ることができ、もし値が定義されていなければ、sbt は以下を検索する:
 
@@ -183,36 +188,48 @@ sbt のインタラクティブモード内で `inspect` コマンドを使っ�
 次に、`inspect *:full-classpath` も実行して違いを比べてみよう。
 `full-classpath` はデフォルトでは、`Global` コンフィギュレーションには定義されていない。
 
-より詳しくは、[[Inspecting Settings]] 参照。
+より詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
 
 ## ビルド定義からスコープを参照する
 
 `build.sbt` で裸のキーを使ってセッティングを作った場合は、現プロジェクト、`Global` コンフィグレーション、`Global` タスクにスコープ付けされる:
 
-    name := "hello"
+```scala
+name := "hello"
+```
 
 sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/hp/checkout/hello/}default-aea33a/*:name` により提供されていることを確認しよう。つまり、プロジェクトは、`{file:/home/hp/checkout/hello/}default-aea33a` で、コンフィギュレーションは `*` で、タスクは表示されていない（グローバルを指す）ということだ。
 
+<!-- TODO: Fix this. -->
+
 `build.sbt` は常に単一のプロジェクトのセッティングを定義するため、「現プロジェクト」は今 `build.sbt` で定義しているプロジェクトを指す。
-（[マルチプロジェクト・ビルド](../multi-project)の場合は、プロジェクトごとに `build.sbt` がある。）
+（[マルチプロジェクト・ビルド][Multi-Project]の場合は、プロジェクトごとに `build.sbt` がある。）
 
 キーにはオーバーロードされた `in` メソッドがあり、それによりスコープを設定できる。
 `in` への引数として、どのスコープ軸のインスタンスでも渡すことができる。
 これをやる意味は全くないけど、例として `Compile` コンフィギュレーションでスコープ付けされた `name` の設定を以下に示す:
 
-    name in Compile := "hello"
+```scala
+name in Compile := "hello"
+```
 
 また、`package-bin` タスクでスコープ付けされた `name` の設定（これも意味なし！ただの例だよ）:
 
-    name in packageBin := "hello"
+```scala
+name in packageBin := "hello"
+```
 
 もしくは、例えば `Compile` コンフィギュレーションの `packageBin` の `name` など、複数のスコープ軸でスコープ付けする:
 
-    name in (Compile, packageBin) := "hello"
+```scala
+name in (Compile, packageBin) := "hello"
+```
 
 もしくは、全ての軸に対して `Global` を使う:
 
-    name in Global := "hello"
+```scala
+name in Global := "hello"
+```
 
 （`name in Global`  は、スコープ軸である `Global` を全ての軸を `Global` に設定したスコープに暗黙の変換が行われる。
 タスクとコンフィギュレーションは既にデフォルトで `Global` であるため、事実上行なっているのはプロジェクトを `Global` に指定することだ。つまり、`{file:/home/hp/checkout/hello/}default-aea33a/*:name` ではなく、`*/*:name` が定義される。）
@@ -220,11 +237,13 @@ sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/
 Scala に慣れていない場合に注意して欲しいのは、`in` や `:=` はただのメソッドであって、魔法ではないということだ。
 Scala ではキレイに書くことができるけど、Java 風に以下のようにも書き下すこともできる:
 
-    name.in(Compile).:=("hello")
+```scala
+name.in(Compile).:=("hello")
+```
 
 こんな醜い構文で書く必要は一切無いけど、これらが実際にメソッドであることを示している。
 
-## いつスコープを指定するべきか
+### いつスコープを指定するべきか
 
 あるキーが、通常スコープ付けされている場合は、スコープを指定してそのキーを使う必要がある。
 例えば、`compile` タスクは、デフォルトで `Compile` と `Test` コンフィギュレーションにスコープ付けされているけど、
@@ -242,7 +261,3 @@ _"Reference to undefined setting"_ のようなエラーに遭遇した場合は
 つまり、`packageOptions in (Compile, packageBin)` という式全体でキー名だということだ。
 単に `packageOptions` と言っただけでもキー名だけど、それは別のキーだ
 （`in` 無しのキーのスコープは暗黙で決定され、現プロジェクト、`Global` コンフィグレーション、`Global` タスクとなる）。
-
-## 続いて
-
-スコープを理解したから、[セッティングについてさらに深く](../more-about-settings)理解することができる。

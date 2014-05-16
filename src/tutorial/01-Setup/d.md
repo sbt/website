@@ -32,7 +32,7 @@ Make the script executable:
 
 Manual installation for Windows varies by terminal type and whether
 Cygwin is used. In all cases, put the batch file or script on the path
-so that you can launch sbt in any directory by typing sbt at the command
+so that you can launch sbt in any directory by typing `sbt` at the command
 prompt. Also, adjust JVM settings according to your machine if
 necessary.
 

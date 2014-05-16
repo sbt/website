@@ -164,6 +164,8 @@ according to constraints you specify. Instead of a fixed revision like
 revisions](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
 documentation for details.
 
+<!-- TODO: Add aliases -->
+
 #### Resolvers
 
 Not all packages live on the same server; sbt uses the standard Maven2

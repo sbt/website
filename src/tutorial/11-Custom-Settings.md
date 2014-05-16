@@ -76,7 +76,7 @@ sampleIntTask := {
 }
 ```
 
-If the task has dependencies, you'd reference their value using value,
+If the task has dependencies, you'd reference their value using `value`,
 as discussed in [more kinds of setting][More-About-Settings].
 
 The hardest part about implementing tasks is often not sbt-specific;

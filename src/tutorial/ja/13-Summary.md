@@ -1,11 +1,15 @@
 ---
-title: まとめ
-layout: default
+out: Summary.html
 ---
 
-# まとめ
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+  [Full-Def]: Full-Def.html
+  [Using-Plugins]: Using-Plugins.html
+  [getting-help]: http://www.scala-sbt.org/release/docs/faq.html#getting-help
 
-[前](../custom-settings) _始める sbt 14/14 ページ_ 
+まとめ
+-----
 
 このページで、このガイドを総括してみよう。
 
@@ -16,12 +20,12 @@ sbt は、強力なコア・コンセプトだけを用いて全てを実現し�
 
 もし、この「始める sbt」シリーズをここまで読破したなら、何を知るべきかはもう分かっていると思う。
 
-## sbt: コア・コンセプト
+### sbt: コア・コンセプト
 
  - Scala の基本。Scala の構文に慣れていると役立つのは言うまでもない。
    Scala の設計者自身による [Scalaスケーラブルプログラミング](http://www.impressjapan.jp/books/3084)
    （[原著](http://www.artima.com/shop/programming_in_scala_2ed)）は、素晴らしい入門書だ。
- - [.sbt ビルド定義](../basic-def)  
+ - [.sbt ビルド定義][Basic-Def]  
    - ビルド定義は、`Setting` オブジェクトが入った一つの大きなリストであり、
    　`Setting` は、sbt がタスクを実行するのに使うキー・値のペアを変換する。
    - `Setting` を作成するには、キーに定義されているメソッドを呼び出す
@@ -32,7 +36,7 @@ sbt は、強力なコア・コンセプトだけを用いて全てを実現し�
    - _タスク_は、特殊なセッティングで、タスクを実行するたびに、
      キーの値を生成する計算が再実行される。
 	 非タスクのセッティングは、ビルド定義の読み込み時に値が一度だけ計算される。
- - [スコープ](../scope)
+ - [スコープ][Scopes]
    - それぞれのキーは、異なるスコープごとに別の値を取ることができる。
    - スコープ付けには、コンフィギュレーション、プロジェクト、タスクの三つの軸を用いることができる。
    - スコープ付けにより、プロジェクトごと、タスクごと、またはコンフィギュレーションごとに、異なる振る舞いを持たせることができる。
@@ -40,21 +44,23 @@ sbt は、強力なコア・コンセプトだけを用いて全てを実現し�
    - プロジェクト軸は、「ビルド全体」を指すスコープにも設定することができる。
    - スコープは、より一般的なスコープにフォールバックし、これを_委譲_（delegate）という。
    
- - [.sbt](../basic-def) 対 [.scala](../full-def) ビルド定義
+ - [.sbt][Basic-Def] 対 [.scala][Full-Def] ビルド定義
    - `build.sbt` にセッティングのほとんどを置き、
-     `.scala` ビルドファイルは、[複数のサブプロジェクトの定義](../multi-project)と
-	 共通の値、オブジェクト、メソッドなどをくくり出すのに使う。(sbt 0.13.0 からは、build.sbtで可能なことが増えています)
+     `.scala` ビルドファイルは、共通の値、オブジェクト、メソッドなどをくくり出すのに使う。
    - ビルド定義そのものも、れっきとした sbt プロジェクトで、`project` ディレクトリを基とする。
- - [プラグイン](../using-plugins)はビルド定義の拡張だ。
+ - [プラグイン][Using-Plugins]はビルド定義の拡張だ。
    - プラグインは、`addSbtPlugin` メソッドを用いて `project/build.sbt` に追加する。
      （プロジェクトのベースディレクトリにある `build.sbt` ではないことに注意）
 
-以上のうち、一つでも分からないことがあれば、[メーリングリスト（英語）](http://groups.google.com/group/simple-build-tool/topics)で質問してみるか、
+以上のうち、一つでも分からないことがあれば、[質問してみるか][getting-help]、
 もう一度再読してみるか、
 sbt のインタラクティブモードで実験してみよう。
 
 じゃ、頑張って！
 
-## 上級者への注意
+### 上級者への注意
+
+<!-- TODO: Link to reference. The rest of this wiki consists of deeper dives and less-commonly-needed
+information. -->
 
 sbt はオープンソースであるため、いつでもソースを見れることも忘れずに！

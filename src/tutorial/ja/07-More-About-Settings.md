@@ -1,32 +1,33 @@
 ---
-title: 他の種類のセッティング
-layout: default
+out: More-About-Settings.html
 ---
 
-[Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html "Keys.scala"
+  [Basic-Def]: Basic-Def.html
+  [Scopes]: Scopes.html
+  [Full-Def]: Full-Def.html
+  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
 
-# 他の種類のセッティング
-
-[前](../scope) _始める sbt 8/14 ページ_ [次](../library-dependencies)
+他の種類のセッティング
+-------------------
 
 このページでは、基本的な `:=` メソッドを超えた、より高度な `Settings` の作り方を説明する。
-君が、[.sbt ビルド定義](../basic-def)と[スコープ](../scope)を読んだことを前提とする。
+君が、[.sbt ビルド定義][Basic-Def]と[スコープ][Scopes]を読んだことを前提とする。
 
-## 復習: セッティング
+### 復習: セッティング
 
-ビルド定義は `Setting` のリストを作り、それが sbt の（キーと値のペアのマップで表現される）ビルドの記述を変換するのに使われるということは[覚えている](../basic-def)と思う。
+ビルド定義は `Setting` のリストを作り、それが sbt の（キーと値のペアのマップで表現される）ビルドの記述を変換するのに使われるということは[覚えている][Basic-Def]と思う。
 `Setting` は、は古いマップをインプットにとり、新たなマップをアウトプットに出す変換だ。新たなマップが sbt の新しい内部状態となる。
 
-セッティングは種類により異なる方法でマップを変換する。[これまでは](../basic-def)、`:=` メソッドをみてきた。
+セッティングは種類により異なる方法でマップを変換する。[これまでは][Basic-Def]、`:=` メソッドをみてきた。
 
 `:=` が作る `Setting` は、不変の固定値を新たに変換されたマップに代入する。
 例えば、マップを `name := "hello"` というセッティングで変換すると、新しいマップは `name` キーの中に `"hello"` を格納する。
 
 セッティングがその効果を発揮するにはセッティングのマスターリストに入らなくてはいけない
 （`build.sbt` の全ての行は自動的にそのリストに入るけど、
-[.scala ファイル](../full-def)の場合は、sbt が検知しない場所に `Setting` を作ってしまうことができる）。
+[.scala ファイル][Full-Def]の場合は、sbt が検知しない場所に `Setting` を作ってしまうことができる）。
 
-## 既存の値に追加する: `+=` と `++=`
+### 既存の値に追加する: `+=` と `++=`
 
 `:=` による置換が最も単純な変換だけど、キーには他のメソッドもある。
 `SettingKey[T]` の `T` が列の場合、つまりキーの値の型が列の場合は、置換のかわりに列に追加することができる。
@@ -39,25 +40,33 @@ layout: default
 （君がどうしても非標準じゃないと気が済まないので）`source` という名前のディレクトリに入ったソースもコンパイルしたいとすると、
 以下のようにして設定できる:
 
-    sourceDirectories in Compile += new File("source")
+```scala
+sourceDirectories in Compile += new File("source")
+```
 
 もしくは、sbt パッケージに入っている `file()` 関数を使って:
 
-    sourceDirectories in Compile += file("source")
+```scala
+sourceDirectories in Compile += file("source")
+```
 
 （`file()` は、単に新しい `File` 作る）
 
 `++=` を使って複数のディレクトリを一度に加える事もできる:
 
-    sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
+```scala
+sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
+```
 
 このでの `Seq(a, b, c, ...)` は、列を構築する標準的な Scala の構文だ。
 
 デフォルトのソースディレクトリを完全に置き換えてしまいたい場合は、当然 `:=` を使えばいい:
 
-    sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
+```scala
+sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
+```
 
-## 値の変換: `~=`
+### 値の変換: `~=`
 
 `sourceDirectories in Compile` の_先頭に_要素を追加したり、デフォルトのディレクトリを filter したい場合はどうすればいいだろう？
 
@@ -67,20 +76,24 @@ layout: default
 
 `sourceDirectories in Compile` を変更するには、以下のように `~=` を用いる:
 
-    // src/main/scala を filter out する
-    sourceDirectories in Compile ~= { srcDirs => srcDirs filter(!_.getAbsolutePath.endsWith("src/main/scala")) }
+```scala
+// src/main/scala を filter out する
+sourceDirectories in Compile ~= { srcDirs => srcDirs filter(!_.getAbsolutePath.endsWith("src/main/scala")) }
+```
 
 ここでは、`srcDirs` は匿名関数のパラメータで、`sourceDirectories in Compile` の古い値が匿名関数に渡される。
 この関数の戻り値が `sourceDirectories in Compile` の新たな値となる。
 
 もっと簡単な例だと:
 
-    // プロジェクト名を大文字にする
-    name ~= { _.toUpperCase }
+```scala
+// プロジェクト名を大文字にする
+name ~= { _.toUpperCase }
+```
 
 関数は、キーの値を同じ型の別の値に変換するため、キーの型が `SettingKey[T]` か `TaskKey[T]` のとき、`~=` に渡す関数は常に `T => T` 型でなければいけない。
 
-## 別のキーの値から値を計算する: `<<=`
+### 別のキーの値から値を計算する: `<<=`
 
 `~=` は、キーの古い値に基づいて新たな値を定義する。
 だけど、_他の_キーの値に基づいて値を定義したいとしたらどうだろう？
@@ -93,43 +106,53 @@ layout: default
 
 （`:=`、`+=`、`~=` その他同様）`Initialize[T]` を受け取った `<<=` は、`Setting[T]` を返す。
 
-### 単純な `Initialize[T]`: 単一のキーに依存した `<<=`
+#### 単純な `Initialize[T]`: 単一のキーに依存した `<<=`
 
 全てのキーは `Initilize` trait を拡張するため、最も単純な `Initialize` は、ただのキーだ:
 
-    // 意味はないけど、妥当だ
-    name <<= name
+```scala
+// 意味はないけど、妥当だ
+name <<= name
+```
 
 `Initialize[T]` として取り扱った場合、`SettingKey[T]` はその現在値を計算する。
 そのため、`name <<= name` は `name` の値を `name` の値に代入する。
 
 _別の_キーをキーに代入することで、少しは役に立つようになる。キーは同じ値の型を持たなくてはいけない。
 
-    // プロジェクト名を使って組織名を命名する（両者とも SettingKey[String]）
-    organization <<= name
+```scala
+// プロジェクト名を使って組織名を命名する（両者とも SettingKey[String]）
+organization <<= name
+```
 
 （注意: これが別のキーへのエイリアスの作り方だ）
 
 値の型が同一じゃない場合は、`Initialize[T]` から例えば `Initialize[S]` みたいな感じで別の型にしてやる必要がある。
 これには、以下のように `Initialize` の `apply` メソッドを使う:
 
-    // name は Key[String] で、baseDirectory は Key[File] だ。
-    // プロジェクトの現在ディレクトリに基づいて名前を付ける。
-    name <<= baseDirectory.apply(_.getName)
+```scala
+// name は Key[String] で、baseDirectory は Key[File] だ。
+// プロジェクトの現在ディレクトリに基づいて名前を付ける。
+name <<= baseDirectory.apply(_.getName)
+```
 
 `apply` は Scala の特殊なメソッドで、関数の呼び出し構文を使ってオブジェクトを叩くことができるため、このように書ける:
 
-    name <<= baseDirectory(_.getName)
+```scala
+name <<= baseDirectory(_.getName)
+```
 
 これは、`baseDirectory` の値を、`File` を受け取り `String` を返す `_.getName` という関数を使って変換する。
 `getName` は、普通の `java.io.File` オブジェクトにあるメソッドだ。
 
-### 依存性を持ったセッティング
+#### 依存性を持ったセッティング
 
 `name <<= baseDirectory(_.getName)` というセッティングにおいて、`name` は、`baseDirectory` に_依存性_（dependency）を持つ。上記を `build.sbt` に書いて、sbt のインタラクティブモードで走らせ、`inspect name` と打ち込むと、以下のように表示される（一部抜粋）:
 
-    [info] Dependencies:
-    [info] 	*:base-directory
+```
+[info] Dependencies:
+[info] 	*:base-directory
+```
 
 このようにして、sbt はどのセッティングが別のセッティングに依存するかを知っている。
 タスクを記述するセッティングもあるため、この方法でタスク間の依存性も作ることができる。
@@ -143,7 +166,7 @@ _別の_キーをキーに代入することで、少しは役に立つように
 このようにして、sbt の全てのビルドの依存性は、明示的には宣言されず、_自動化_されている。
 あるキーの値を別の計算で使うと、その計算はキーに依存する。とにかくちゃんと動く！
 
-### 複雑な `Initialize[T]`: 複数のキーへ依存する `<<=`
+#### 複雑な `Initialize[T]`: 複数のキーへ依存する `<<=`
 
 複数のキーへの依存性をサポートするために、sbt は、`Initialize` オブジェクトのタプルに `apply` メソッドと `identity` メソッドを追加する。
 Scala では、タプルを `(1, "a")` のように書く（これは、`(Int, String)` の型を持つ）。
@@ -154,18 +177,22 @@ Scala では、タプルを `(1, "a")` のように書く（これは、`(Int, S
 
 以下に、全てのキーが文字列の場合の単純な例を示す:
 
-    // 三つの SettingKey[String] のタプル。三つの Initialize[String] の他プリでもある。
-    (name, organization, version)
+```scala
+// 三つの SettingKey[String] のタプル。三つの Initialize[String] のタプルでもある。
+(name, organization, version)
+```
 
 `Initialize` のタプルの `apply` メソッドは、関数を引数として受け取る。
 タプル中のそれぞれの `Initialize` を使って、sbt は対応する値を計算する（キーの現在値）。
 これらの値は関数に渡され、その関数は_単一の_値を返し、これは新たな `Initialize` でラッピングされる。
 明示的な型を書き下すと（Scala はこれを強要しない）、こんな感じ:
 
-    val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
-    val combined: Initialize[String] = tuple.apply({ (n, o, v) =>
-        "project " + n + " from " + o + " version " + v })
-    val setting: Setting[String] = name <<= combined
+```scala
+val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
+val combined: Initialize[String] = tuple.apply({ (n, o, v) =>
+  "project " + n + " from " + o + " version " + v })
+val setting: Setting[String] = name <<= combined
+```
 
 それぞれのキーは既に `Initialize` 型だけど、（キーのような）単純な `Initialize` をタプルに入れて、`appy` メソッドを呼び出すことで最大九つまで一つの `Initialize` として合成できる。
 
@@ -173,17 +200,21 @@ Scala では、タプルを `(1, "a")` のように書く（これは、`(Int, S
 
 Scala では関数の呼び出し構文が `apply` メソッドを呼び出すため、明示的な `.apply` を省いて、`tupple` を関数として扱い、以下のように書きなおすことができる:
 
-    val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
-    val combined: Initialize[String] = tuple({ (n, o, v) =>
-        "project " + n + " from " + o + " version " + v })
-    val setting: Setting[String] = name <<= combined
+```scala
+val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
+val combined: Initialize[String] = tuple({ (n, o, v) =>
+  "project " + n + " from " + o + " version " + v })
+val setting: Setting[String] = name <<= combined
+```
 
 `.sbt` ファイルに書くことが許されているのは単一の式だけであり、複数の文は書けないため、
 `build.sbt` では、このような `val` を中間値として使ったコードは動作しない。
 
 そこで、`build.sbt` では、以下のような、より簡略化した構文が用いられる:
 
-    name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " + o + " version " + v }
+```scala
+name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " + o + " version " + v }
+```
 
 ここでは、`Initialize` のタプル（`SettingKey` のタプルでもある）が関数のようにはたらき、
 `{}` で囲まれた匿名関数を受け取り、`Initialize[T]`（`T` は匿名関数の戻り値の型）を返している。
@@ -193,19 +224,19 @@ Scala では関数の呼び出し構文が `apply` メソッドを呼び出す�
 は、`Initialize[(A, B)]` 型の値を返す。
 `identity` は、二つの `Initialize` を値を変更したり失うこと無く一つに合成する。
 
-### セッティングが未定義の場合
+#### セッティングが未定義の場合
 
 セッティングが `~=` や `<<=` を使って自分自身や他のキーへの依存性を作る場合、
 依存されたキーには値が存在しなくてはならない。
 存在しなければ、sbt に怒られる。
 例えば、_"Reference to undefined setting"_ なんて言われるかもしれない。
-これが起こった場合は、キーが定義されている正しい[スコープ](../scope)で使っているか確認しよう。
+これが起こった場合は、キーが定義されている正しい[スコープ][Scopes]で使っているか確認しよう。
 
 環状の依存性を作ってしまうことも可能で、これもまたエラーになり、sbt に怒られる。
 
-### 依存性を持ったタスク
+#### 依存性を持ったタスク
 
-[.sbt ビルド定義](../basic-def)でみた通り、タスクキーは `:=`、`<<=`、その他でセッティングを作ると
+[.sbt ビルド定義][Basic-Def]でみた通り、タスクキーは `:=`、`<<=`、その他でセッティングを作ると
 `Setting[T]` ではなく、`Setting[Task[T]]`を作る。
 同様に、タスクキーは `Initialize[T]` ではなく、`Initialize[Task[T]]` のインスタンスで、
 タスクキーの `<<=` は `Initialize[Task[T]]` をパラメータとして受け取る。
@@ -214,18 +245,20 @@ Scala では関数の呼び出し構文が `apply` メソッドを呼び出す�
 
 （[Keys] より）以下の二つのキーを例に説明する:
 
-    val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
-    val checksums = SettingKey[Seq[String]]("checksums", "The list of checksums to generate and to verify for dependencies.")
+```scala
+val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
+val checksums = SettingKey[Seq[String]]("checksums", "The list of checksums to generate and to verify for dependencies.")
+```
 
 （`scalacOptions` と `checksums` は、同じ値の型を持つ二つのキーで、片方がタスクというだけで、お互い全く関係のないキーだ。）
 
 どちらか一方をもう片方のエイリアスにしようとしても、`build.sbt` をコンパイルすることができない:
 
-<pre>
+```scala
 scalacOptions <<= checksums
 
 checksums <<= scalacOptions
-</pre>
+```
 
 問題は、`scalacOptions.<<=` は、`Initialize[Task[Seq[String]]]` を受け取り、
 `checksums.<<=` は、`Initialize[Seq[String]]` を受け取るということだ。
@@ -242,13 +275,15 @@ checksums <<= scalacOptions
 `apply` のかわりに `map` を使うことで、`Initialize[T]` のかわりに `Initialize[Task[T]]` を作る。
 非タスクセッティングでの `apply` の用法は以下のようだ:
 
-    name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " + o + " version " + v }
+```scala
+name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " + o + " version " + v }
+```
 
 (`(name, organization, version)` には apply メソッドがあるため、これは中括弧 `{}` で囲まれた匿名関数をパラメータとして受け取る関数だ。)
 
 `Initialize[Task[T]]` を作るには、`apply` のかわりに `map` を使う:
 
-<pre>
+```scala
 // （<<= の左辺値の）name はタスクではなく、かつ map を使っているため、でコンパイルが通らない
 name <<= (name, organization, version) map { (n, o, v) => "project " + n + " from " + o + " version " + v }
 
@@ -260,7 +295,7 @@ name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " 
 
 // packageBin はタスクであり、かつ apply を使っているため、コンパイルは通らない
 packageBin in Compile <<= (name, organization, version) { (n, o, v) => file(o + "-" + n + "-" + v + ".jar") }
-</pre>
+```
 
 _まとめると:_ キーのタプルを `Initialize[Task[T]]` に変換したいときは `map` を使う。
 キーのタプルを `Initialize[T]` に変換したいときは `apply` を使う。
@@ -270,8 +305,10 @@ _まとめると:_ キーのタプルを `Initialize[Task[T]]` に変換した�
 
 あるキーが別のキーのエイリアスになって欲しいとき、つい `:=` を使って以下のような間違ったエイリアスを作ってしまうかもしれない:
 
-    // 動作しないし、役に立たない
-    packageBin in Compile := packageDoc in Compile
+```scala
+// 動作しないし、役に立たない
+packageBin in Compile := packageDoc in Compile
+```
 
 問題は `:=` の引数は値（タスクの場合は値を返す関数）でなくちゃいけないことだ。
 `TaskKey[File]` である `packageBin` の場合は、`File` もしくは `=> File` 関数でなければいけない。
@@ -279,8 +316,10 @@ _まとめると:_ キーのタプルを `Initialize[Task[T]]` に変換した�
 
 正しい方法は、キーを受け取る `<<=` を使うことだ（実際に受け取っているのは `Initialize` だけど、全てのキーは `Initialize` のインスタンスでもある）:
 
-    // 動作するけど、やっぱり役に立たない
-    packageBin in Compile <<= packageDoc in Compile
+```scala
+// 動作するけど、やっぱり役に立たない
+packageBin in Compile <<= packageDoc in Compile
+```
 
 ここで、`<<=` は、後で（sbt がタスクを実行したとき）ファイルを返す計算である `Initialize[Task[File]]` を期待する。
 これが思った通りの振る舞いだ。つまり、タスクのエイリアスを作ったときに期待されるのは、そのをタスクを実行することであって、
@@ -300,9 +339,6 @@ sbt がプロジェクトを読み込んだ時に一回だけ値を読み込む�
 
 例えば、プロジェクト名を使って名付けたカバレッジレポートがあるとして、それを `clean` が削除するファイルのリストに追加したいとする:
 
-    cleanFiles <+= (name) { n => file("coverage-report-" + n + ".txt") }
-
-## 続いては
-
-これでセッティングを使って色々できるようになったから、よく使われる、ある特定のキーの説明をしよう: `libraryDependencies`。
-続きは、[ライブラリ依存性の説明](../library-dependencies)で。
+```scala
+cleanFiles <+= (name) { n => file("coverage-report-" + n + ".txt") }
+```

@@ -1,17 +1,19 @@
 ---
-title: .scala ビルド定義
-layout: default
+out: Full-Def.html
 ---
 
-# `.scala` ビルド定義
+  [Basic-Def]: Basic-Def.html
+  [More-About-Settings]: More-About-Settings.html
+  [Using-Plugins]: Using-Plugins.html
 
-[前](../library-dependencies) _始める sbt 10/14 ページ_ [次](../using-plugins)
+.scala ビルド定義
+----------------
 
+このページは、このガイドのこれまでのページ、特に 
+[.sbt ビルド定義][Basic-Def] と
+[他の種類のセッティング][More-About-Settings]を読んでいることを前提とする。
 
-このページは、このガイドのこれまでのページ、特に [.sbt ビルド定義](../basic-def) と
-[他の種類のセッティング](../more-about-settings)を読んでいることを前提とする。
-
-## sbt は再帰的だ
+### sbt は再帰的だ
 
 `build.sbt` は単純化しすぎていて、sbt の実際の動作を隠蔽している。
 sbt のビルドは、Scala コードにより定義されている。そのコード自身もビルドされなければいけない。
@@ -26,29 +28,28 @@ sbt のビルドは、Scala コードにより定義されている。そのコ�
 
 以下に具体例で説明する:
 
-<pre>
+```
+hello/                  # プロジェクトのベースディレクトリ
 
-   hello/                  # プロジェクトのベースディレクトリ
+    Hello.scala         # プロジェクトのソースファイル  
+                        # （src/main/scala に入れることもできる）
 
-       Hello.scala         # プロジェクトのソースファイル
-                           # （src/main/scala に入れることもできる）
+    build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
+                        # 一部となる
 
-       build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
-                           # 一部となる
-
-       project/            # ビルド定義プロジェクトのベースディレクトリ
+    project/            # ビルド定義プロジェクトのベースディレクトリ
 	   
-           Build.scala     # project/ プロジェクトのソースファイル、
-                           # つまり、ビルド定義のソースファイル
+        Build.scala     # project/ プロジェクトのソースファイル、
+                        # つまり、ビルド定義のソースファイル
 
-           build.sbt       # これは、project/project 内のビルド定義プロジェクトの
-		                   # 一部となり、ビルド定義のビルド定義となる
+        build.sbt       # これは、project/project 内のビルド定義プロジェクトの
+		                    # 一部となり、ビルド定義のビルド定義となる
 						   
-           project/        # ビルド定義プロジェクトのためのビルド定義プロジェクトの
-                           # ベースディレクトリ
+        project/        # ビルド定義プロジェクトのためのビルド定義プロジェクトの
+                        # ベースディレクトリ
 
-               Build.scala # project/project/ プロジェクトのソースファイル
-</pre>
+            Build.scala # project/project/ プロジェクトのソースファイル
+```
 
 普通はこういうことをする必要は全く無いので、_安心してほしい！_ 
 だけど、原理を理解すると役立つことがある。
@@ -57,22 +58,22 @@ sbt のビルドは、Scala コードにより定義されている。そのコ�
 `build.sbt` や `Build.scala` と命名するのは慣例にすぎない。
 これは複数のファイルを使っていいということも意味する。
 
-## ビルド定義プロジェクトにおける `.scala` ソースファイル
+### ビルド定義プロジェクトにおける `.scala` ソースファイル
 
 `.sbt` ファイルは、その兄弟の `project` ディレクトリにマージされる。
 プロジェクトの構造をもう一度見てみる:
 
-<pre>
-   hello/                  # プロジェクトのベースディレクトリ
+```
+hello/                  # プロジェクトのベースディレクトリ
 
-       build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
-                           # 一部となる
+    build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
+                        # 一部となる
 
-       project/            # ビルド定義プロジェクトのベースディレクトリ
+    project/            # ビルド定義プロジェクトのベースディレクトリ
 
-           Build.scala     # project/ プロジェクトのソースファイル、
-                           # つまり、ビルド定義のソースファイル
-</pre>
+        Build.scala     # project/ プロジェクトのソースファイル、
+                        # つまり、ビルド定義のソースファイル
+```
 
 `build.sbt` 内の Scala 式は別々にコンパイルされ、
 `Build.scala`（もしくは、`project/` ディレクトリ内の他の `.scala` ファイル）
@@ -84,56 +85,60 @@ _ベースディレクトリの `.sbt` ファイルは、
 つまり、`.sbt` ファイルは、ビルド定義プロジェクトにセッティングを追加するための、
 便利な略記法ということだ。
 
-## `build.sbt` と `Build.scala` の関係
+### `build.sbt` と `Build.scala` の関係
 
 ビルド定義の中で、`.sbt` と `.scala` を混ぜて使うには、両者の関係を理解する必要がある。
 
 以下に、具体例で説明する。プロジェクトが `hello` にあるとすると、
 `hello/project/Build.scala` を以下のように作る:
 
-<pre>
+```scala
 import sbt._
 import Keys._
 
 object HelloBuild extends Build {
+  val sampleKeyA = settingKey[String]("demo key A")
+  val sampleKeyB = settingKey[String]("demo key B")
+  val sampleKeyC = settingKey[String]("demo key C")
+  val sampleKeyD = settingKey[String]("demo key D")
 
-    val sampleKeyA = SettingKey[String]("sample-a", "demo key A")
-    val sampleKeyB = SettingKey[String]("sample-b", "demo key B")
-    val sampleKeyC = SettingKey[String]("sample-c", "demo key C")
-    val sampleKeyD = SettingKey[String]("sample-d", "demo key D")
+  override lazy val settings = super.settings ++
+    Seq(
+      sampleKeyA := "A: in Build.settings in Build.scala",
+      resolvers := Seq()
+    )
 
-    override lazy val settings = super.settings ++
-        Seq(sampleKeyA := "A: in Build.settings in Build.scala", resolvers := Seq())
-
-    lazy val root = Project(id = "hello",
-                            base = file("."),
-                            settings = Project.defaultSettings ++ Seq(sampleKeyB := "B: in the root project settings in Build.scala"))
+  lazy val root = Project(id = "hello",
+    base = file("."),
+    settings = Seq(
+      sampleKeyB := "B: in the root project settings in Build.scala"
+    ))
 }
-</pre>
+```
 
 次に、`hello/build.sbt` を以下のように書く:
 
-<pre>
+```scala
 sampleKeyC in ThisBuild := "C: in build.sbt scoped to ThisBuild"
 
 sampleKeyD := "D: in build.sbt"
-</pre>
+```
 
 sbt のインタラクティブプロンプトを起動する。`inspect sample-a` と打ち込むと、以下のように表示されるはず（一部抜粋）:
 
-<pre>
+```
 [info] Setting: java.lang.String = A: in Build.settings in Build.scala
 [info] Provided by:
-[info] 	{file:/home/hp/checkout/hello/}/*:sample-a
-</pre>
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
+```
 
 次に、`inspect sample-c` と打ち込むと、以下のように表示される:
 
-<pre>
+```
 [info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
 [info] Provided by:
-[info] 	{file:/home/hp/checkout/hello/}/*:sample-c
-</pre>
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
+```
 
 二つの値とも、"Provided by" は同じスコープを表示していることに注意してほしい。
 つまり、`.sbt` ファイルの `sampleKeyC in ThisBuild` は、
@@ -142,11 +147,11 @@ sbt は、ビルド全体にスコープ付けされたセッティングを両�
 
 次は、`inspect sample-b`:
 
-<pre>
+```
 [info] Setting: java.lang.String = B: in the root project settings in Build.scala
 [info] Provided by:
-[info] 	{file:/home/hp/checkout/hello/}hello/*:sample-b
-</pre>
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
+```
 
 `sample-b` は、
 ビルド全体（`{file:/home/hp/checkout/hello/}`）ではなく、
@@ -155,11 +160,11 @@ sbt は、ビルド全体にスコープ付けされたセッティングを両�
 
 もうお分かりだと思うが、`inspect sample-d` は `sample-b` に対応する:
 
-<pre>
+```
 [info] Setting: java.lang.String = D: in build.sbt
 [info] Provided by:
-[info] 	{file:/home/hp/checkout/hello/}hello/*:sample-d
-</pre>
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
+```
 
 sbt は `.sbt` ファイルからのセッティングを
 `Build.settings` と `Project.settings` に_追加する_ため、
@@ -184,7 +189,7 @@ sbt は `.sbt` ファイルからのセッティングを
  - `.sbt` ファイル内のセッティングは、明示的に指定されない限り
    プロジェクトにスコープ付けされる。
 
-## いつ `.scala` ファイルを使うか
+### いつ `.scala` ファイルを使うか
 
 `.scala` ファイルでは、セッティング式の羅列に限定されない。
 `val`、`object` やメソッド定義など、Scala コードを自由に書ける。
@@ -206,13 +211,13 @@ _推奨される方法の一つとしては、`.scala` ファイルは `val` や
 そのため、サブプロジェクトがある場合は、セッティングを `.scala` に置くことを好む人もいる。
 これは、[マルチプロジェクト](../multi-project)のふるまいを理解すると、すぐ分かるようになる。）
 
-## インタラクティブモードにおけるビルド定義
+### インタラクティブモードにおけるビルド定義
 
 sbt のインタラクティブプロンプトの現プロジェクトを
 `project/` 内のビルド定義プロジェクトに切り替えることができる。
 `reload plugins` と打ち込むことで切り替わる:
 
-<pre>
+```
 > reload plugins
 [info] Set current project to default-a0e8e4 (in build file:/home/hp/checkout/hello/project/)
 > show sources
@@ -223,11 +228,11 @@ sbt のインタラクティブプロンプトの現プロジェクトを
 > show sources
 [info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
 >
-</pre>
+```
 
 上記にあるとおり、`reload return` を使ってビルド定義プロジェクトから普通のプロジェクトに戻る。
 
-## 注意: 全て immutable だ
+### 注意: 全て immutable だ
 
 `build.sbt` 内のセッティングが、`Build` や `Project` オブジェクトの `settings` フィールドに
 追加されると考えるのは間違っている。
@@ -246,7 +251,3 @@ sbt のインタラクティブプロンプトの現プロジェクトを
    [プラグインの使用](../using-plugins)で詳細が説明される。
 
 後続のセッティングは古いものをオーバーライドする。このリスト全体でビルド定義が構成される。
-
-## 続いては
-
-[プラグインの使用](../using-plugins)に進む。

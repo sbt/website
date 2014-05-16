@@ -1,28 +1,41 @@
 ---
-title: Hello, World
-layout: default
+out: Hello.html
 ---
 
-# Hello, World
+  [Basic-Def]: Basic-Def.html
+  [Setup]: Setup.html
 
-[前](../setup) _始める sbt 3/14 ページ_ [次](../directories)
+Hello, World
+------------
 
-このページは、君が[sbt をインストール](../setup)したことを前提にする。
+このページは、君が[sbt をインストール][Setup]したことを前提にする。
 
-## ソースコードの入ったプロジェクトディレクトリを作る
+### ソースコードの入ったプロジェクトディレクトリを作る
 
-一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、作って実行してみよう:
+一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、`hello`
+ディレクトリを作って、以下の内容の `hw.scala` というファイルを作成する:
 
-<pre>
-  \$ mkdir hello
-  \$ cd hello
-  \$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
-  \$ sbt
-  ...
-  > run
-  ...
-  Hi!
-</pre>
+```scala
+object Hi {
+  def main(args: Array[String]) = println("Hi!")
+}
+```
+
+次に `hello` ディレクトリ内から sbt を起動して 
+sbt のインタラクティブコンソールに `run` と打ち込む。
+Linux か OS X を使っていならばコマンドは以下のようになる:
+
+
+```
+\$ mkdir hello
+\$ cd hello
+\$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
+\$ sbt
+...
+> run
+...
+Hi!
+```
 
 この例では、sbt は純粋に convention（デフォルトの慣例）だけを使って動作している。
 sbt は以下を自動的に検知する:
@@ -38,22 +51,22 @@ sbt は以下を自動的に検知する:
 `sbt run` を用いてプロジェクトを実行したり、`sbt console` を用いて [Scala REPL](http://www.scala-lang.org/node/2097) に入ることができる。`sbt console` は君のプロジェクトにクラスパスを通すから、
 君のプロジェクトのコードを使った Scala の例をライブで試すことができる。
 
-## ビルド定義
+### ビルド定義
 
 ほとんどのプロジェクトは何らかの手動設定が必要だ。基本的なビルド設定は `build.sbt` というファイルに書かれ、
 プロジェクトのベースディレクトリ (base directory) に置かれる。
 
 例えば、君のプロジェクトが `hello` ディレクトリにあるなら、`hello/build.sbt` をこんな感じで書く:
 
-<pre>
+```scala
 name := "hello"
 
 version := "1.0"
 
-scalaVersion := "2.9.1"
-</pre>
+scalaVersion := "2.10.3"
+```
 
-[.sbt ビルド定義](../basic-def)で、`build.sbt` の書き方をもっと詳しく説明する。
+[.sbt ビルド定義][Basic-Def]で、`build.sbt` の書き方をもっと詳しく説明する。
 
 君のプロジェクトを jar ファイルにパッケージ化する予定なら、最低でも `build.sbt` に name と version は書いておこう。
 
@@ -62,11 +75,9 @@ scalaVersion := "2.9.1"
 `hello/project/build.properties` というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:
 
-    sbt.version=0.13.2
+```
+sbt.version=$app_version$
+```
 
-0.10 以降は、sbt はリリース間で 99% ソースの互換性を持たせてある。
+sbt はリリース間で 99% ソースの互換性を持たせてある。
 だけど、sbt バージョンを `project/build.properties` に設定することで混乱を予防することできる。
-
-# 続いては
-
-sbt プロジェクトの[ファイルとディレクトリのレイアウト](../directories)についてみてみよう。

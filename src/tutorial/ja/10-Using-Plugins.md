@@ -1,24 +1,31 @@
 ---
-title: プラグインの使用
-layout: default
+out: Using-Plugins.html
 ---
 
-# プラグインの使用
+  [Basic-Def]: Basic-Def.html
+  [Library-Dependencies]: Library-Dependencies.html
+  [Multi-Project]: Multi-Project.html
+  [AutoPlugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html
+  [global-vs-local-plugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins
+  [Community-Plugins]: http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html
+  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
+  [Plugins-Best-Practices]: http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html
 
-[前](../full-def) _始める sbt 11/14 ページ_ [次](../multi-project)
+プラグインの使用
+--------------
 
 このガイドの前のページをまず読んでほしい。
-特に [build.sbt](../basic-def)、
-[ライブラリ依存性](../library-dependencies)、
-[.scala ビルド定義](../full-def)を理解していることが必要になる。
+特に [build.sbt][Basic-Def]
+と
+[ライブラリ依存性][Library-Dependencies]を理解していることが必要になる。
 
-## プラグインって何?
+### プラグインって何?
 
 プラグインは、新たなセッティングを追加するなどして、ビルド定義を拡張する。
 そのセッティングは、新しいタスクを加えることもでき、
 例えば、テストカバレッジレポートを生成する `code-coverage` というタスクをプラグインが提供することができる。
 
-## プラグインの追加
+### プラグインの追加
 
 ### 短い答
 
@@ -132,7 +139,7 @@ sbt が気にするのは、`.sbt` ファイルが_どこに置かれている�
 `hello/*.sbt` は、`hello` の依存性を含み、
 `hello/project/*.sbt` は、`hello` のビルド定義の依存性を含む。
 
-## プラグインはセッティングやインポートを自動追加できる
+### プラグインはセッティングやインポートを自動追加できる
 
 ある意味では、プラグインは、ビルド定義の `libraryDependencies` に追加される jar ファイルにすぎない。
 それにより、上での lift-json を使った例のようにビルド定義から jar を利用することができる。
@@ -168,7 +175,7 @@ sbt は、`sbt/sbt.plugins` に列挙されたオブジェクトを探す。
 `import com.typesafe.sbteclipse.SbtEclipsePlugin._` を実行して、
 プラグインが `.sbt` ファイルに対して値、オブジェクト、そしてメソッドを提供することを可能とする。
 
-## プラグインからのセッティングの手動追加
+### プラグインからのセッティングの手動追加
 
 プラグインが、`Plugin` オブジェクトの `settings` フィールドを用いて
 セッティングを定義する場合は、
@@ -191,7 +198,7 @@ object MyPlugin extends Plugin {
 myPluginSettings
 </pre>
 
-## プラグインの作成
+### プラグインの作成
 
 ここまで読めば、sbt プラグインの_作成_も知っているも同然だ。
 一つだけ覚えておく事があって、それは `build.sbt` 内で
@@ -204,7 +211,7 @@ myPluginSettings
 
 プラグインの作成に関する詳細は、[[Plugins]] と [[Plugins Best Practices]] を参照。
 
-## グローバル・プラグイン
+### グローバル・プラグイン
 
 `~/.sbt/plugins` で設定することで、全てのプロジェクトに対して一括してプラグインをインストールすることができる。
 `~/.sbt/plugins` は、sbt プロジェクトで、そのクラスパスは全ての sbt ビルド定義にエクスポートされる。
@@ -218,7 +225,7 @@ myPluginSettings
 
 (sbt 0.13.0 から、グローバルプラグイン設定のデフォルトディレクトリは `~/.sbt/0.13/plugins/` へ変更になっています)
 
-## 利用可能なプラグイン
+### 利用可能なプラグイン
 
 [プラグインのリスト](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)がある。
 
@@ -228,7 +235,3 @@ myPluginSettings
  - [xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin) などの、web フレームワークプラグイン
 
 [リストを見てほしい](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)。
-
-## 続いては
-
-[マルチプロジェクト・ビルド](../multi-project)に続く。
