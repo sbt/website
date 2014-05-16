@@ -62,13 +62,13 @@ $(function () {
     $('div.arc_windows').hide();  
   }
   if (os_name === 'Linux') {
-    if (distro !== 'Gentoo') {
+    if (packager !== 'ebuild' && packager !== 'Unknown') {
       $('div.distro_gentoo').hide();
     } // if
-    if (packager !== 'rpm') {
+    if (packager !== 'rpm' && packager !== 'Unknown') {
       $('div.distro_redhat').hide();
     } // if
-    if (packager !== 'deb') {
+    if (packager !== 'deb' && packager !== 'Unknown') {
       $('div.distro_debian').hide();
     } // if    
   } else {
