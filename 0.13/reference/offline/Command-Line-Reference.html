@@ -1,0 +1,278 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Command Line Reference</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Using-sbt.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Console-Project.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Command+Line+Reference">Command Line Reference<a href="#Command+Line+Reference" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page is a relatively complete list of command line options,
+commands, and tasks you can use from the sbt interactive prompt or in
+batch mode. See <code>Running &lt;/Getting-Started/Running&gt;</code> in the Getting
+Started Guide for an intro to the basics, while this page has a lot more
+detail.
+</p><h3 id="Notes+on+the+command+line">Notes on the command line<a href="#Notes+on+the+command+line" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>There is a technical distinction in sbt between <em>tasks</em>, which are
+“inside” the build definition, and <em>commands</em>, which manipulate the
+build definition itself. If you’re interested in creating a command,
+see /Extending/Commands. This specific sbt meaning of “command”
+means there’s no good general term for “thing you can type at the
+sbt prompt”, which may be a setting, task, or command.
+</li><li>Some tasks produce useful values. The <code>toString</code> representation of
+these values can be shown using show \<task\> to run the task
+instead of just \<task\>.
+</li><li>In a multi-project build, execution dependencies and the aggregate
+setting control which tasks from which projects are executed. See
+multi-project builds \&lt;/Getting-Started/Multi-Project&gt;.
+</li></ul><h3 id="Project-level+tasks">Project-level tasks<a href="#Project-level+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>clean</code> Deletes all generated files (the <code>target</code> directory).
+</li><li><code>publishLocal</code> Publishes artifacts (such as jars) to the local Ivy
+repository as described in Publishing.
+</li><li><code>publish</code> Publishes artifacts (such as jars) to the repository
+defined by the publishTo setting, described in Publishing.
+</li><li><code>update</code> Resolves and retrieves external dependencies as described
+in library dependencies \&lt;/Getting-Started/Library-Dependencies&gt;.
+</li></ul><h3 id="Configuration-level+tasks">Configuration-level tasks<a href="#Configuration-level+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Configuration-level tasks are tasks associated with a configuration. For
+example, <code>compile</code>, which is equivalent to <code>compile:compile</code>, compiles
+the main source code (the <code>compile</code> configuration). <code>test:compile</code>
+compiles the test source code (test <code>test</code> configuration). Most tasks
+for the <code>compile</code> configuration have an equivalent in the <code>test</code>
+configuration that can be run using a <code>test:</code> prefix.
+</p><ul><li><code>compile</code> Compiles the main sources (in the <code>src/main/scala</code>
+directory). test:compile compiles test sources (in the
+src/test/scala/ directory).
+</li><li><code>console</code> Starts the Scala interpreter with a classpath including
+the compiled sources, all jars in the lib directory, and managed
+libraries. To return to sbt, type :quit, Ctrl+D (Unix), or Ctrl+Z
+(Windows). Similarly, test:console starts the interpreter with the
+test classes and classpath.
+</li><li><code>consoleQuick</code> Starts the Scala interpreter with the project’s
+compile-time dependencies on the classpath. test:consoleQuick uses
+the test dependencies. This task differs from console in that it
+does not force compilation of the current project’s sources.
+</li><li><code>consoleProject</code> Enters an interactive session with sbt and the
+build definition on the classpath. The build definition and related
+values are bound to variables and common packages and values are
+imported. See the consoleProject documentation \<Console-Project\>
+for more information.
+</li><li><code>doc</code> Generates API documentation for Scala source files in
+src/main/scala using scaladoc. test:doc generates API documentation
+for source files in src/test/scala.
+</li><li><code>package</code> Creates a jar file containing the files in
+src/main/resources and the classes compiled from src/main/scala.
+test:package creates a jar containing the files in
+src/test/resources and the class compiled from src/test/scala.
+</li><li><code>packageDoc</code> Creates a jar file containing API documentation
+generated from Scala source files in src/main/scala. test:packageDoc
+creates a jar containing API documentation for test sources files in
+src/test/scala.
+</li><li><code>packageSrc</code>: Creates a jar file containing all main source files
+and resources. The packaged paths are relative to src/main/scala and
+src/main/resources. Similarly, test:packageSrc operates on test
+source files and resources.
+</li><li><code>run &lt;argument&gt;*</code> Runs the main class for the project in the same
+virtual machine as sbt. The main class is passed the arguments
+provided. Please see Running-Project-Code for details on the use of
+System.exit and multithreading (including GUIs) in code run by this
+action. test:run runs a main class in the test code.
+</li><li><code>runMain &lt;main-class&gt; &lt;argument&gt;*</code> Runs the specified main class for
+the project in the same virtual machine as sbt. The main class is
+passed the arguments provided. Please see Running-Project-Code for
+details on the use of System.exit and multithreading (including
+GUIs) in code run by this action. test:runMain runs the specified
+main class in the test code.
+</li><li><code>test</code> Runs all tests detected during test compilation. See Testing
+for details.
+</li><li><code>testOnly &lt;test&gt;*</code> Runs the tests provided as arguments. <code>*</code> (will
+be) interpreted as a wildcard in the test name. See Testing for
+details.
+</li><li><p><code>testQuick &lt;test&gt;*</code> Runs the tests specified as arguments (or all
+tests if no arguments are given) that:
+</p><ol><li>have not been run yet OR
+</li><li>failed the last time they were run OR
+</li><li>had any transitive dependencies recompiled since the last
+successful run * (will be) interpreted as a wildcard in the
+test name. See Testing for details.
+</li></ol></li></ul><h3 id="General+commands">General commands<a href="#General+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>exit</code> or <code>quit</code> End the current interactive session or build.
+Additionally, Ctrl+D (Unix) or Ctrl+Z (Windows) will exit the
+interactive prompt.
+</li><li><code>help &lt;command&gt;</code> Displays detailed help for the specified command.
+If the command does not exist, help lists detailed help for commands
+whose name or description match the argument, which is interpreted
+as a regular expression. If no command is provided, displays brief
+descriptions of the main commands. Related commands are tasks and
+settings.
+</li><li><code>projects [add|remove &lt;URI&gt;]</code> List all available projects if no
+arguments provided or adds/removes the build at the provided URI.
+(See /Getting-Started/Full-Def/ for details on multi-project
+builds.)
+</li><li><code>project &lt;project-id&gt;</code> Change the current project to the project
+with ID \<project-id\>. Further operations will be done in the
+context of the given project. (See /Getting-Started/Full-Def/ for
+details on multiple project builds.)
+</li><li><code>~ &lt;command&gt;</code> Executes the project specified action or method
+whenever source files change. See
+/Detailed-Topics/Triggered-Execution for details.
+</li><li><code>&lt; filename</code> Executes the commands in the given file. Each command
+should be on its own line. Empty lines and lines beginning with ’#’
+are ignored
+</li><li><code>+ &lt;command&gt;</code> Executes the project specified action or method for
+all versions of Scala defined in the crossScalaVersions setting.
+</li><li><code>++ &lt;version|home-directory&gt; &lt;command&gt;</code> Temporarily changes the
+version of Scala building the project and executes the provided
+command. \<command\> is optional. The specified version of Scala is
+used until the project is reloaded, settings are modified (such as
+by the set or session commands), or ++ is run again. \<version\>
+does not need to be listed in the build definition, but it must be
+available in a repository. Alternatively, specify the path to a
+Scala installation.
+</li><li><code>; A ; B</code> Execute A and if it succeeds, run B. Note that the leading
+semicolon is required.
+</li><li><p><code>eval &lt;Scala-expression&gt;</code> Evaluates the given Scala expression and
+returns the result and inferred type. This can be used to set system
+properties, as a calculator, to fork processes, etc … For example:
+</p><pre><code>&gt; eval System.setProperty(&quot;demo&quot;, &quot;true&quot;)
+&gt; eval 1+1
+&gt; eval &quot;ls -l&quot; !
+</code></pre></li></ul><h3 id="Commands+for+managing+the+build+definition">Commands for managing the build definition<a href="#Commands+for+managing+the+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>reload [plugins|return]</code> If no argument is specified, reloads the
+build, recompiling any build or plugin definitions as necessary.
+reload plugins changes the current project to the build definition
+project (in project/). This can be useful to directly manipulate the
+build definition. For example, running clean on the build definition
+project will force snapshots to be updated and the build definition
+to be recompiled. reload return changes back to the main project.
+</li><li><code>set &lt;setting-expression&gt;</code> Evaluates and applies the given setting
+definition. The setting applies until sbt is restarted, the build is
+reloaded, or the setting is overridden by another set command or
+removed by the session command. See
+.sbt build definition \&lt;/Getting-Started/Basic-Def&gt; and
+Inspecting-Settings for details.
+</li><li><code>session &lt;command&gt;</code> Manages session settings defined by the <code>set</code>
+command. It can persist settings configured at the prompt. See
+Inspecting-Settings for details.
+</li><li><code>inspect &lt;setting-key&gt;</code> Displays information about settings, such as
+the value, description, defining scope, dependencies, delegation
+chain, and related settings. See Inspecting-Settings for details.
+</li></ul><h3 id="Command+Line+Options">Command Line Options<a href="#Command+Line+Options" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>System properties can be provided either as JVM options, or as SBT
+arguments, in both cases as <code>-Dprop=value</code>. The following properties
+influence SBT execution. Also see <code>Launcher</code>.
+</p><hr/><p>  Property           Values  Default       Meaning
+  ————————— ———- ——————- ————————————————
+  <code>sbt.log.noformat</code> Boolean false         | If true, disable ANSI color
+                                           codes. Useful on build servers
+                                           or terminals that don’t support
+                                           color.
+</p><p>  <code>sbt.global.base</code>  Directo \~/.sbt       | The directory containing
+                     ry                    global settings and plugins
+</p><p>  <code>sbt.ivy.home</code>     Directo \~/.ivy2      | The directory containing the
+                     ry                    local Ivy repository and
+                                           artifact cache
+</p><p>  <code>sbt.boot.director Directo \~/.sbt/boot  Path to shared boot directory
+  y</code>                 ry                    
+<br/>
+  <code>sbt.main.class</code>   String  |             |
+</p><p>  <code>xsbt.inc.debug</code>   Boolean false         |
+</p><p>  <code>sbt.extraClasspat |       |             | A list of classpath entries
+  h</code>                 Classpa               (jar files or directories) that
+                     th                    are added to sbt’s classpath.
+                     Entries               Note that the entries are
+                                           deliminted by comma, e.g.:
+                                           <code>entry1, entry2,..</code>. See also
+                                           <code>resources</code> in the <code>Launcher</code>
+                                           documentation.
+</p><p>  <code>sbt.version</code>      Version 0.11.3        | sbt version to use, usually
+                                           taken from
+                                           project/build.properties
+</p><p>  <code>sbt.boot.properti File    |             | The path to find the SBT boot
+  es</code>                                      properties file. This can be a
+                                           relative path, relative to the
+                                           SBT base directory, the users
+                                           home directory or the location
+                                           of the sbt jar file, or it can
+                                           be an absolute path, or it can
+                                           be an absolute file URI.
+</p><p>  <code>sbt.override.buil Boolean false         | If true, repositories
+  d.repos</code>                                 configured in a build definition
+                                           are ignored and the repositories
+                                           configured for the launcher are
+                                           used instead. See
+                                           <code>sbt.repository.config</code> and the
+                                           <code>Launcher</code> documentation.
+</p><p>  <code>sbt.repository.co File    \~/.sbt/repos | A file containing the
+  nfig</code>                      itories       repositories to use for the
+                                           launcher. The format is the same
+                                           as a <code>[repositories]</code> section
+                                           for a <code>Launcher</code> configuration
+                                           file. This setting is typically
+                                           used in conjuction with setting
+                                           <code>sbt.override.build.repos</code> to
+                                           true (see previous row and the
+                                           <code>Launcher</code> documentation).
+  ————————————————————————————————————-
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Console-Project.html"> Console Project </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div class="current">Command Line Reference</div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

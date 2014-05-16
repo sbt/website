@@ -1,0 +1,202 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Guía de Inicio de sbt — Ejecución</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'es';
+        </script>
+        
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Directories.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Basic-Def.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Ejecuci%C3%B3n">Ejecución<a href="#Ejecuci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe cómo utilizar <code>sbt</code> una vez que usted a configurado
+su proyecto. Se asume que usted ha <a href="Setup.html">instalado sbt</a> y que ha
+creado un proyecto <a href="Hello.html">Hello, World</a> u otro proyecto.
+</p><h3 id="Modo+interactivo">Modo interactivo<a href="#Modo+interactivo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Ejecute sbt en el directorio de su proyecto sin argumentos:
+</p><pre><code class="">$ sbt
+</code></pre><p>Ejecutar sbt sin ningún argumento en la línea de comandos, inicia sbt en
+modo interactivo. El modo interactivo tiene una línea de comandos (¡con
+<em>tab completion</em> e historia!).
+</p><p>Por ejemplo, usted puede teclear <code>compile</code> en el prompt de sbt:
+</p><pre><code class="">&gt; compile
+</code></pre><p>Para key:<code>compile</code> de nuevo, presione la tecla “arriba” y entonces
+enter.
+</p><p>Para ejecutar su programa nuevamente, teclee <code>run</code>.
+</p><p>Para dejar el modo interactivo, teclee <code>exit</code> o utilice Ctrl+D (Unix) o
+Ctrl+Z (Windows).
+</p><h3 id="Modo+Batch+%28por+lotes%29">Modo Batch (por lotes)<a href="#Modo+Batch+%28por+lotes%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>También puede ejecutar sbt en modo batch, especificando una lista
+separada por espacios de comandos de sbt como argumentos. Para comandos
+de sbt que toman argumentos, pase el comando y los argumentos como uno
+solo a <code>sbt</code> mediante encerrarlos entre comillas. Por ejemplo:
+</p><pre><code class="">$ sbt clean compile &quot;testOnly TestA TestB&quot;
+</code></pre><p>En este ejemplo, la <em>key</em> <code>testOnly</code> tiene argumentos, <code>TestA</code> y
+<code>TestB</code>. Los comandos se ejecutarán en sequencia (<code>clean</code>, <code>compile</code>, y
+entonces <code>testOnly</code>).
+</p><h3 id="Construcci%C3%B3n+y+test+continuos">Construcción y test continuos<a href="#Construcci%C3%B3n+y+test+continuos" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Para acelerar el ciclo de edición-compilación-prueba, puede pedir a sbt
+que recompile automáticamente o que ejecute los tests siempre que se
+guarde un archivo de código fuente.
+</p><p>Puede conseguir que un comando se ejecute siempre que uno o más archivos
+de código fuente cambien al agregar como prefijo <code>~</code>. Por ejemplo, en
+modo interactivo, intente:
+</p><pre><code class="">&gt; ~ compile
+</code></pre><p>Presione enter para dejar de observar sus cambios.
+</p><p>Usted puede usar el prefijo <code>~</code> ya sea en modo interactivo o en modo
+<em>batch</em>.
+</p><p>Vea <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> para más detalles.
+</p><h3 id="Comandos+comunes">Comandos comunes<a href="#Comandos+comunes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Aquí encontrará algunos de los comandos de sbt más comunes. Para una
+lista más completa, vea <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a>.
+</p><table>
+  <tr>
+    <td><tt>clean</tt></td>
+    <td>Borra todos los archivos generados (en el directorio <tt>target</tt>).</td>
+  </tr>
+  <tr>
+    <td><tt>compile</tt></td>
+    <td>Compila los archivos de código fuente de main (en los
+    directorios <tt>src/main/scala</tt> y
+   <tt>src/main/java</tt>).</td>
+  </tr>
+  <tr>
+    <td><tt>test</tt></td>
+    <td>Compila y ejecuta todos los tests.</td>
+  </tr>
+  <tr>
+    <td><tt>console</tt></td>
+    <td>Inicia el interprete de Scala con un classpath que incluye
+    el código fuente compilado y todas las dependencias. Para regresar a
+    sbt, teclee :quit, Ctrl+D (Unix), o Ctrl+Z (Windows).</td>
+  </tr>
+  <tr>
+    <td><nobr><tt>run &lt;argument&gt;*</tt></nobr></td>
+    <td>Ejecuta la clase principal para el proyecto en la
+    misma máquina virtual que sbt.</td>
+  </tr>
+  <tr>
+    <td><tt>package</tt></td>
+    <td>crea un archivo jar que contiene los archivos en
+    <tt>src/main/resources</tt> y las clases compiladas de <tt>src/main/scala</tt> y
+    <tt>src/main/java</tt>.</td>
+  </tr>
+  <tr>
+    <td><tt>help &lt;command&gt;</tt></td>
+    <td>Despliega ayuda detallada para el comando
+    especificado. Si no se proporciona ningún comando, despliega una
+    breve descripción de todos los comandos.</td>
+  </tr>
+  <tr>
+    <td><tt>reload</tt></td>
+    <td>Recarga la definición de la construcción (los archivos
+    <tt>build.sbt</tt>, <tt>project/*.scala</tt>,
+    <tt>project/*.sbt</tt>). Este comando es
+    necario si cambia la definición de la construcción.</td>
+  </tr>
+</table><h3 id="Tab+completion">Tab completion<a href="#Tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>El modo interactivo tiene <em>tab completion</em>, incluyendo el caso cuando se
+tiene un prompt vacio. Una convención especial de sbt es que presionar
+tab una vez puede mostrar únicamente un subconjunto de <em>completions</em> más
+probables, mientras que presionarlo más veces muestra opciones más
+verbosas.
+</p><h3 id="Comandos+de+historia">Comandos de historia<a href="#Comandos+de+historia" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>El modo interactivo recuerda la historia, incluso si usted sale de sbt y
+lo reinicia. La manera más simple de acceder a la historia es con la
+tecla “arriba”. También se soportan los siguientes comandos:
+</p><table>
+  <tr>
+    <td><tt>!</tt></td>
+    <td>Muestra la ayuda para los comandos de historia.</td>
+  </tr>
+  <tr>
+    <td><tt>!!</tt></td>
+    <td>Ejecuta el comando previo de nuevo.</td>
+  </tr>
+  <tr>
+    <td><tt>!:</tt></td>
+    <td>Muestra todos los comandos previos.</td>
+  </tr>  
+  <tr>
+    <td><tt>!:n</tt></td>
+    <td>Muestra los <tt>n</tt> comandos previos.</td>
+  </tr>
+  <tr>
+    <td><tt>!n</tt></td>
+    <td>Ejecuta el comando con índice <tt>n</tt>, como se indica con el
+    comando <tt>!:</tt>.</td>
+  </tr>
+  <tr>
+    <td><tt>!-n</tt></td>
+    <td>Ejecuta el comando n-th previo a este.</td>
+  </tr>
+  <tr>
+    <td><tt>!cadena</tt></td>
+    <td>Ejecuta el comando más reciente que comienza con 'cadena'.</td>
+  </tr>
+  <tr>
+    <td><tt>!?cadena</tt></td>
+    <td>Ejecuta el comando más reciente que contenga 'cadena'.</td>
+  </tr>
+</table><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Basic-Def.html">  build definition </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Running.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Running.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="../es/Running.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Guía de Inicio de sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Instalando sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Estructura de directorios</a></div></li><li><div class="current">Ejecución</div></li><li><div><a href="Basic-Def.html"> build definition</a></div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Getting Started with sbt — Custom settings and tasks</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Using-Plugins.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Full-Def.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Custom+settings+and+tasks">Custom settings and tasks<a href="#Custom+settings+and+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page gets you started creating your own settings and tasks.
+</p><p>To understand this page, be sure you’ve read earlier pages in the
+Getting Started Guide, especially <a href="Basic-Def.html">.build.sbt</a> and
+<a href="More-About-Settings.html">more kinds of setting</a>.
+</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
+illustrating how to define keys. Most of the keys are implemented in
+<a href="../../sxr/sbt/Defaults.scala.html">Defaults</a>.
+</p><p>Keys have one of three types. <code>SettingKey</code> and <code>TaskKey</code> are described in
+<a href="Basic-Def.html">.sbt build definition</a>. Read about <code>InputKey</code> on the
+<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> page.
+</p><p>Some examples from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>:
+</p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
+val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
+</code></pre><p>The key constructors have two string parameters: the name of the key
+(<code>&quot;scalaVersion&quot;</code>) and a documentation string
+(<code>&quot;The version of scala used for building.&quot;</code>).
+</p><p>Remember from <a href="Basic-Def.html">.sbt build definition</a> that the type
+parameter <code>T</code> in <code>SettingKey[T]</code> indicates the type of value a setting has.
+<code>T</code> in <code>TaskKey[T]</code> indicates the type of the task’s result. Also remember
+from <a href="Basic-Def.html">.sbt build definition</a> that a setting has a fixed
+value until project reload, while a task is re-computed for every “task
+execution” (every time someone types a command at the sbt interactive
+prompt or in batch mode).
+</p><!-- TODO: FIX THIS -->
+<p>Keys may be defined in a <a href="Basic-Def.html">.sbt file</a>,
+[.scala file][Full-Def], or in [a plugin][Using-Plugins]. Any <code>val</code>
+found in a <code>Build</code> object in your <code>.scala</code> build definition files or any <code>val</code>
+found in a <code>Plugin</code> object from a plugin will be imported automatically
+into your <code>.sbt</code> files.
+</p><h3 id="Implementing+a+task">Implementing a task<a href="#Implementing+a+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once you’ve defined a key for your task, you’ll need to complete it with
+a task definition. You could be defining your own task, or you could be
+planning to redefine an existing task. Either way looks the same; use <code>:=</code>
+to associate some code with the task key:
+</p><pre><code class="prettyprint lang-scala">val sampleStringTask = taskKey[String](&quot;A sample string task.&quot;)
+
+val sampleIntTask = taskKey[Int](&quot;A sample int task.&quot;)
+
+sampleStringTask := System.getProperty(&quot;user.home&quot;)
+
+sampleIntTask := {
+  val sum = 1 + 2
+  println(&quot;sum: &quot; + sum)
+  sum
+}
+</code></pre><p>If the task has dependencies, you’d reference their value using <code>value</code>,
+as discussed in <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>The hardest part about implementing tasks is often not sbt-specific;
+tasks are just Scala code. The hard part could be writing the “meat” of
+your task that does whatever you’re trying to do. For example, maybe
+you’re trying to format HTML in which case you might want to use an HTML
+library (you would
+<a href="Using-Plugins.html">add a library dependency to your build definition</a> and
+write code based on the HTML library, perhaps).
+</p><p>sbt has some utility libraries and convenience functions, in particular
+you can often use the convenient APIs in
+<a href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
+</p><h3 id="Use+plugins%21">Use plugins!<a href="#Use+plugins%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you find you have a lot of custom code, consider moving it to a
+plugin for re-use across multiple builds.
+</p><p>It’s very easy to create a plugin, as <a href="Using-Plugins.html">teased earlier</a>
+and <a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">discussed at more length here</a>.
+</p><p>This page has been a quick taste; there’s much much more about custom
+tasks on the <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a> page.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Full-Def.html"> .scala build definition </a>                        
+                        <ul class="language-bar">
+        <li><a href="Custom-Settings.html"><span class="lang-item lang-en">English</span></a></li><li><a href="ja/Custom-Settings.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Getting Started with sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Installing sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Directory structure</a></div></li><li><div><a href="Running.html">Running</a></div></li><li><div><a href="Basic-Def.html">.sbt build definition</a></div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li><div><a href="More-About-Settings.html">More kinds of setting</a></div></li><li><div><a href="Library-Dependencies.html">Library dependencies</a></div></li><li><div><a href="Multi-Project.html">Multi-project builds</a></div></li><li><div><a href="Using-Plugins.html">Using plugins</a></div></li><li><div class="current">Custom settings and tasks</div></li><li><div><a href="Full-Def.html">.scala build definition</a></div></li><li><div><a href="Summary.html">Getting Started summary</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

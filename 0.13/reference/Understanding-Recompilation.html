@@ -1,0 +1,387 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Understanding Incremental Recompilation</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Scripts.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Configuration.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Understanding+Incremental+Recompilation">Understanding Incremental Recompilation<a href="#Understanding+Incremental+Recompilation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>Compiling Scala code is slow, and sbt makes it often faster. By
+understanding how, you can even understand how to make compilation even
+faster. Modifying source files with many dependencies might require
+recompiling only those source files—which might take, say, 5
+seconds—instead of all the dependencies—which might take, say, 2
+minutes. Often you can control which will be your case and make
+development much faster by some simple coding practices.
+</p><p>In fact, improving Scala compilation times is one major goal of sbt, and
+conversely the speedups it gives are one of the major motivations to use
+it. A significant portion of sbt sources and development efforts deals
+with strategies for speeding up compilation.
+</p><p>To reduce compile times, sbt uses two strategies:
+</p><ol><li>reduce the overhead for restarting Scalac;
+</li><li>implement smart and transparent strategies for incremental
+recompilation, so that only modified files and the needed
+dependencies are recompiled.
+</li><li>sbt runs Scalac always in the same virtual machine. If one compiles
+source code using sbt, keeps sbt alive, modifies source code and
+triggers a new compilation, this compilation will be faster because
+(part of) Scalac will have already been JIT-compiled. In the future,
+sbt will reintroduce support for reusing the same compiler instance,
+similarly to fsc.
+</li><li>When a source file <code>A.scala</code> is modified, sbt goes to great effort
+to recompile other source files depending on A.scala only if
+required - that is, only if the interface of A.scala was modified.
+With other build management tools (especially for Java, like ant),
+when a developer changes a source file in a non-binary-compatible
+way, he needs to manually ensure that dependencies are also
+recompiled - often by manually running the clean command to remove
+existing compilation output; otherwise compilation might succeed
+even when dependent class files might need to be recompiled. What is
+worse, the change to one source might make dependencies incorrect,
+but this is not discovered automatically: One might get a
+compilation success with incorrect source code. Since Scala compile
+times are so high, running clean is particularly undesirable.
+</li></ol><p>By organizing your source code appropriately, you can minimize the
+amount of code affected by a change. sbt cannot determine precisely
+which dependencies have to be recompiled; the goal is to compute a
+conservative approximation, so that whenever a file must be recompiled,
+it will, even though we might recompile extra files.
+</p><h2 id="sbt+heuristics">sbt heuristics<a href="#sbt+heuristics" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>sbt tracks source dependencies at the granularity of source files. For
+each source file, sbt tracks files which depend on it directly; if the
+<strong>interface</strong> of classes, objects or traits in a file changes, all files
+dependent on that source must be recompiled. At the moment sbt uses the
+following algorithm to calculate source files dependent on a given
+source file:
+</p><blockquote><ul><li><p>dependencies introduced through inheritance are included
+</p><p><em>transitively</em>; a dependency is introduced through inheritance if
+a class/trait in one file inherits from a trait/class in another
+file
+</p></li><li>all other direct dependencies are included; other dependencies are
+also called “meber reference” dependencies because they are
+introduced by referring to a member (class, method, type, etc.)
+defined in some other source file
+</li></ul></blockquote><p>Here’s an example illustrating the definition above:
+</p><pre><code>//A.scala
+class A {
+  def foo: Int = 123
+}
+
+//B.scala
+class B extends A
+
+//C.scala
+class C extends B
+
+//D.scala
+class D(a: A)
+
+//E.scala
+class E(d: D)
+</code></pre><p>There are the following dependencies through inheritance:
+</p><pre><code class="prettyprint lang-{.sourceCode .none}">B.scala -&gt; A.scala
+C.scala -&gt; B.scala
+</code></pre><p>There are also the following member reference dependencies:
+</p><pre><code class="prettyprint lang-{.sourceCode .none}">D.scala -&gt; A.scala
+E.scala -&gt; D.scala
+</code></pre><p>Now if the interface of <code>A.scala</code> is changed the following files will
+get invalidated: <code>B.scala</code>, <code>C.scala</code>, <code>D.scala</code>. Both <code>B.scala</code> and
+<code>C.scala</code> were included through transtive closure of inheritance
+dependencies. The <code>E.scala</code> was not included because <code>E.scala</code> doesn’t
+depend directly on <code>A.scala</code>.
+</p><p>The distinction between depdencies by inheritance or member reference is
+a new feature in sbt 0.13 and is responsible for improved recompilation
+times in many cases where deep inheritance chains are not used
+extensively.
+</p><p>sbt does not instead track dependencies to source code at the
+granularity of individual output <code>.class</code> files, as one might hope.
+Doing so would be incorrect, because of some problems with sealed
+classes (see below for discussion).
+</p><p>Dependencies on binary files are different - they are tracked both on
+the <code>.class</code> level and on the source file level. Adding a new
+implementation of a sealed trait to source file <code>A</code> affects all clients
+of that sealed trait, and such dependencies are tracked at the source
+file level.
+</p><p>Different sources are moreover recompiled together; hence a compile
+error in one source implies that no bytecode is generated for any of
+those. When a lot of files need to be recompiled and the compile fix is
+not clear, it might be best to comment out the offending location (if
+possible) to allow other sources to be compiled, and then try to figure
+out how to fix the offending location—this way, trying out a possible
+solution to the compile error will take less time, say 5 seconds instead
+of 2 minutes.
+</p><h2 id="What+is+included+in+the+interface+of+a+Scala+class">What is included in the interface of a Scala class<a href="#What+is+included+in+the+interface+of+a+Scala+class" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>It is surprisingly tricky to understand which changes to a class require
+recompiling its clients. The rules valid for Java are much simpler (even
+if they include some subtle points as well); trying to apply them to
+Scala will prove frustrating. Here is a list of a few surprising points,
+just to illustrate the ideas; this list is not intended to be complete.
+</p><ol><li>Since Scala supports named arguments in method invocations, the name
+of method arguments are part of its interface.
+</li><li>Adding a method to a trait requires recompiling all implementing
+classes. The same is true for most changes to a method signature in
+a trait.
+</li><li>Calls to <code>super.methodName</code> in traits are resolved to calls to an
+abstract method called <code>fullyQualifiedTraitName$$super$methodName</code>;
+such methods only exist if they are used. Hence, adding the first
+call to super.methodName for a specific methodName changes the
+interface. At present, this is not yet handled—see gh-466.
+</li><li><code>sealed</code> hierarchies of case classes allow to check exhaustiveness
+of pattern matching. Hence pattern matches using case classes must
+depend on the complete hierarchy - this is one reason why
+dependencies cannot be easily tracked at the class level (see Scala
+issue <a href="https://issues.scala-lang.org/browse/SI-2559">SI-2559</a> for an
+example.)
+</li></ol><h3 id="Debugging+an+interface+representation">Debugging an interface representation<a href="#Debugging+an+interface+representation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you see spurious incremental recompilations or you want understand
+what changes to an extracted interface cause incremental recompilation
+then sbt 0.13 has the right tools for that.
+</p><p>In order to debug the interface representation and its changes as you
+modify and recompile source code you need to do two things:
+</p><blockquote><ol><li>Enable incremental compiler’s apiDebug option.
+</li><li>Add <a href="https://code.google.com/p/java-diff-utils/">diff-utils
+library</a> to sbt’s
+classpath. Check documentation of sbt.extraClasspath system
+property in the Command-Line-Reference.
+</li></ol></blockquote><blockquote><p><strong>warning</strong>
+</p><p>Enabling the <code>apiDebug</code> option increases significantly
+:   memory consumption and degrades performance of the incremental
+    compiler. The underlying reason is that in order to produce
+    meaningful debugging information about interface differences
+    incremental compiler has to retain the full representation of the
+    interface instead of just hash sum as it does by default.
+</p><p>Keep this option enabled when you are debugging incremental compiler
+problem only.
+</p></blockquote><p>Below is complete transcript which shows how to enable interface
+debugging in your project. First, we download the <code>diffutils</code> jar and
+pass it to sbt:
+</p><pre><code class="prettyprint lang-{.sourceCode .none}">curl -O https://java-diff-utils.googlecode.com/files/diffutils-1.2.1.jar
+sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
+[info] Loading project definition from /Users/grek/tmp/sbt-013/project
+[info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
+&gt; set incOptions := incOptions.value.copy(apiDebug = true)
+[info] Defining *:incOptions
+[info] The new value will be used by compile:incCompileSetup, test:incCompileSetup
+[info] Reapplying settings...
+[info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
+</code></pre><p>Let’s suppose you have the following source code in <code>Test.scala</code>:
+</p><pre><code>class A {
+   def b: Int = 123
+}
+</code></pre><p>compile it and then change the <code>Test.scala</code> file so it looks like:
+</p><pre><code>class A {
+   def b: String = &quot;abc&quot;
+}
+</code></pre><p>and run <code>compile</code> task again. Now if you run <code>last compile</code> you should
+see the following lines in the debugging log
+</p><pre><code class="prettyprint lang-{.sourceCode .none}">&gt; last compile
+[...]
+[debug] Detected a change in a public API:
+[debug] --- /Users/grek/tmp/sbt-013/Test.scala
+[debug] +++ /Users/grek/tmp/sbt-013/Test.scala
+[debug] @@ -23,7 +23,7 @@
+[debug]  ^inherited^ final def ##(): scala.this#Int
+[debug]  ^inherited^ final def synchronized[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](x$1: &lt;java.lang.Object.T0&gt;): &lt;java.lang.Object.T0&gt;
+[debug]  ^inherited^ final def $isInstanceOf[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](): scala.this#Boolean
+[debug]  ^inherited^ final def $asInstanceOf[ java.lang.Object.T0 &gt;: scala.this#Nothing &lt;: scala.this#Any](): &lt;java.lang.Object.T0&gt;
+[debug]  def &lt;init&gt;(): this#A
+[debug] -def b: scala.this#Int
+[debug] +def b: java.lang.this#String
+[debug]  }
+</code></pre><p>You can see an unified diff of two interface textual represetantions. As
+you can see, the incremental compiler detected a change to the return
+type of <code>b</code> method.
+</p><h2 id="How+to+take+advantage+of+sbt+heuristics">How to take advantage of sbt heuristics<a href="#How+to+take+advantage+of+sbt+heuristics" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The heuristics used by sbt imply the following user-visible
+consequences, which determine whether a change to a class affects other
+classes.
+</p><p>XXX Please note that this part of the documentation is a first draft;
+part of the strategy might be unsound, part of it might be not yet
+implemented.
+</p><ol><li>Adding, removing, modifying <code>private</code> methods does not require
+recompilation of client classes. Therefore, suppose you add a method
+to a class with a lot of dependencies, and that this method is only
+used in the declaring class; marking it private will prevent
+recompilation of clients. However, this only applies to methods
+which are not accessible to other classes, hence methods marked with
+private or private[this]; methods which are private to a package,
+marked with private[name], are part of the API.
+</li><li>Modifying the interface of a non-private method requires recompiling
+all clients, even if the method is not used.
+</li><li>Modifying one class does require recompiling dependencies of other
+classes defined in the same file (unlike said in a previous version
+of this guide). Hence separating different classes in different
+source files might reduce recompilations.
+</li><li>Adding a method which did not exist requires recompiling all
+clients, counterintuitively, due to complex scenarios with implicit
+conversions. Hence in some cases you might want to start
+implementing a new method in a separate, new class, complete the
+implementation, and then cut-n-paste the complete implementation
+back into the original source.
+</li><li>Changing the implementation of a method should <em>not</em> affect its
+clients, unless the return type is inferred, and the new
+implementation leads to a slightly different type being inferred.
+Hence, annotating the return type of a non-private method
+explicitly, if it is more general than the type actually returned,
+can reduce the code to be recompiled when the implementation of such
+a method changes. (Explicitly annotating return types of a public
+API is a good practice in general.)
+</li></ol><p>All the above discussion about methods also applies to fields and
+members in general; similarly, references to classes also extend to
+objects and traits.
+</p><h3 id="Why+changing+the+implementation+of+a+method+might+affect+clients%2C+and+why+type+annotations+help">Why changing the implementation of a method might affect clients, and why type annotations help<a href="#Why+changing+the+implementation+of+a+method+might+affect+clients%2C+and+why+type+annotations+help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>This section explains why relying on type inference for return types of
+public methods is not always appropriate. However this is an important
+design issue, so we cannot give fixed rules. Moreover, this change is
+often invasive, and reducing compilation times is not often a good
+enough motivation. That is why we discuss also some of the implications
+from the point of view of binary compatibility and software engineering.
+</p><p>Consider the following source file <code>A.scala</code>:
+</p><pre><code class="prettyprint lang-scala">import java.io._
+object A {
+  def openFiles(list: List[File]) = 
+    list.map(name =&gt; new FileWriter(name))
+}
+</code></pre><p>Let us now consider the public interface of trait <code>A</code>. Note that the
+return type of method <code>openFiles</code> is not specified explicitly, but
+computed by type inference to be <code>List[FileWriter]</code>. Suppose that after
+writing this source code, we introduce client code and then modify
+<code>A.scala</code> as follows:
+</p><pre><code class="prettyprint lang-scala">import java.io._
+object A {
+  def openFiles(list: List[File]) =
+    Vector(list.map(name =&gt; new BufferedWriter(new FileWriter(name))): _*)
+}
+</code></pre><p>Type inference will now compute as result type <code>Vector[BufferedWriter]</code>;
+in other words, changing the implementation lead to a change of the
+public interface, with two undesirable consequences:
+</p><ol><li>Concerning our topic, client code needs to be recompiled, since
+changing the return type of a method, in the JVM, is a
+binary-incompatible interface change.
+</li><li>If our component is a released library, using our new version
+requires recompiling all client code, changing the version number,
+and so on. Often not good, if you distribute a library where binary
+compatibility becomes an issue.
+</li><li>More in general, client code might now even be invalid. The
+following code will for instance become invalid after the change:
+</li></ol><!-- -->
+<pre><code>val res: List[FileWriter] = A.openFiles(List(new File(&quot;foo.input&quot;)))
+</code></pre><p>Also the following code will break:
+</p><pre><code class="prettyprint lang-scala">val a: Seq[Writer] = new BufferedWriter(new FileWriter(&quot;bar.input&quot;))
+A.openFiles(List(new File(&quot;foo.input&quot;)))
+</code></pre><p>How can we avoid these problems?
+</p><p>Of course, we cannot solve them in general: if we want to alter the
+interface of a module, breakage might result. However, often we can
+remove <em>implementation details</em> from the interface of a module. In the
+example above, for instance, it might well be that the intended return
+type is more general - namely <code>Seq[Writer]</code>. It might also not be the
+case - this is a design choice to be decided on a case-by-case basis. In
+this example I will assume however that the designer chooses
+<code>Seq[Writer]</code>, since it is a reasonable choice both in the above
+simplified example and in a real-world extension of the above code.
+</p><p>The client snippets above will now become
+</p><pre><code>val res: Seq[Writer] =
+    A.openFiles(List(new File(&quot;foo.input&quot;)))
+
+val a: Seq[Writer] =
+    new BufferedWriter(new FileWriter(&quot;bar.input&quot;)) +:
+    A.openFiles(List(new File(&quot;foo.input&quot;)))
+</code></pre><p>XXX the rest of the section must be reintegrated or dropped: In general,
+changing the return type of a method might be source-compatible, for
+instance if the new type is more specific, or if it is less specific,
+but still more specific than the type required by clients (note however
+that making the type more specific might still invalidate clients in
+non-trivial scenarios involving for instance type inference or implicit
+conversions—for a more specific type, too many implicit conversions
+might be available, leading to ambiguity); however, the bytecode for a
+method call includes the return type of the invoked method, hence the
+client code needs to be recompiled.
+</p><p>Hence, adding explicit return types on classes with many dependencies
+might reduce the occasions where client code needs to be recompiled.
+Moreover, this is in general a good development practice when interface
+between different modules become important—specifying such interface
+documents the intended behavior and helps ensuring binary compatibility,
+which is especially important when the exposed interface is used by
+other software component.
+</p><h3 id="Why+adding+a+member+requires+recompiling+existing+clients">Why adding a member requires recompiling existing clients<a href="#Why+adding+a+member+requires+recompiling+existing+clients" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In Java adding a member does not require recompiling existing valid
+source code. The same should seemingly hold also in Scala, but this is
+not the case: implicit conversions might enrich class <code>Foo</code> with method
+<code>bar</code> without modifying class <code>Foo</code> itself (see discussion in issue
+gh-288 - XXX integrate more). However, if another method <code>bar</code> is
+introduced in class <code>Foo</code>, this method should be used in preference to
+the one added through implicit conversions. Therefore any class
+depending on <code>Foo</code> should be recompiled. One can imagine more
+fine-grained tracking of dependencies, but this is currently not
+implemented.
+</p><h2 id="Further+references">Further references<a href="#Further+references" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The incremental compilation logic is implemented in
+<a href="https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala">https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala</a>.
+Some related documentation for sbt 0.7 is available at:
+<a href="https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting">https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting</a>.
+Some discussion on the incremental recompilation policies is available
+in issue gh-322 and gh-288.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Configuration.html"> Configuration </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div class="current">Understanding Incremental Recompilation</div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

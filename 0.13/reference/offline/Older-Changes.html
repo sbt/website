@@ -1,0 +1,1134 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Older Changes</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="ChangeSummary_0.12.0.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Migrating+from+0.7+to+0.10%2B.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Older+Changes">Older Changes<a href="#Older+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="0.12.3+to+0.12.4">0.12.3 to 0.12.4<a href="#0.12.3+to+0.12.4" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Work around URI problems with encoding and resolving. (gh-725)
+</li><li>Allow -cp argument to <code>apply</code> command to be quoted. (gh-724)
+</li><li>Make <code>sbtBinaryVersion</code> use the new approach for 0.13 and later to
+support cross-building plugins.
+</li><li>Pull <code>sbtDependency</code> version from <code>sbtVersion</code> to facilitate
+cross-building plugins.
+</li><li>Proper support for stashing on-failure handlers. (gh-732)
+</li><li>Include files with zip extension in unmanaged jars. (gh-750)
+</li><li>Only add automatically detected plugins to options once. (gh-757)
+</li><li>Properly handle failure in a multi-command that includes <code>reload</code>.
+(gh-732)
+</li><li>Fix unsynchronized caching of Scala class loaders that could result
+in Scala classes being loaded in multiple class loaders.
+</li><li>Incremental compiler: remove resident compiler code (wasn’t used and
+was a compatibility liability)
+</li><li>Incremental compiler: properly track <code>abstract override</code> modifier.
+(gh-726)
+</li><li>Incremental compiler: do not normalize types in the api extraction
+phase. (gh-736)
+</li><li>Ivy cache: account for <code>localOnly</code> when cache subclass overrides
+<code>isChanging</code>
+</li><li>Ivy cache: fix corruption when developing sbt or sbt plugins.
+(gh-768)
+</li><li>Ivy cache: invalidate when artifact download fails to avoid locking
+into bad resolver. (gh-760)
+</li><li>Ivy cache: use publication date from metadata instead of original
+file’s last modified time when deleting out of date artifacts.
+(gh-764)
+</li></ul><h3 id="0.12.2+to+0.12.3">0.12.2 to 0.12.3<a href="#0.12.2+to+0.12.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Allow <code>cleanKeepFiles</code> to contain directories
+</li><li>Disable Ivy debug-level logging for performance. (gh-635)
+</li><li>Invalidate artifacts not recorded in the original metadata when a
+module marked as changing changes. (gh-637, gh-641)
+</li><li>Ivy Artifact needs wildcard configuration added if no explicit ones
+are defined. (gh-439)
+</li><li>Right precedence of sbt.boot.properties lookup, handle qualifier
+correctly. (gh-651)
+</li><li>Mark the tests failed exception as having already provided feedback.
+</li><li>Handle exceptions not caught by the test framework when forking.
+(gh-653)
+</li><li>Support <code>reload plugins</code> after ignoring a failure to load a project.
+</li><li>Workaround for os deadlock detection at the process level. (gh-650)
+</li><li>Fix for dependency on class file corresponding to a package.
+(Grzegorz K., gh-620)
+</li><li>Fix incremental compilation problem with package objects inheriting
+from invalidated sources in a subpackage.
+</li><li>Use Ivy’s default name for the resolution report so that links to
+other configurations work.
+</li><li>Include jars from java.ext.dirs in incremental classpath. (gh-678)
+</li><li>Multi-line prompt text offset issue (Jibbers42, gh-625)
+</li><li>Added <code>xml:space=&quot;preserve&quot;</code> attribute to extraDependencyAttributes
+XML Block for publishing poms for plugins dependent on other plugins
+(Brendan M., gh-645)
+</li><li>Tag the actual test task and not a later task. (gh-692)
+</li><li>Make exclude-classifiers per-user instead of per-build. (gh-634)
+</li><li>Load global plugins in their own class loader and replace the base
+loader with that. (gh-272)
+</li><li>Demote the default conflict warnings to the debug level. These will
+be removed completely in 0.13. (gh-709)
+</li><li>Fix Ivy cache issues when multiple resolvers are involved. (gh-704)
+</li></ul><h3 id="0.12.1+to+0.12.2">0.12.1 to 0.12.2<a href="#0.12.1+to+0.12.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Support -Yrangepos. (Lex S., gh-607)
+</li><li>Only make one call to test frameworks per test name. (gh-520)
+</li><li>Add <code>-cp</code> option to the <code>apply</code> method to make adding commands from
+an external program easier.
+</li><li>Stable representation of refinement typerefs. This fixes unnecessary
+recompilations in some cases. (Adriaan M., gh-610)
+</li><li>Disable aggregation for <code>run-main</code>. (gh-606)
+</li><li>Concurrent restrictions: Untagged should be set based on the task’s
+tags, not the tags of all tasks.
+</li><li>When preserving the last modified time of files, convert negative
+values to 0
+</li><li>Use <code>java.lang.Throwable.setStackTrace</code> when sending exceptions back
+from forked tests. (Eugene V., gh-543)
+</li><li>Don’t merge dependencies with mismatched transitive/force/changing
+values. (gh-582)
+</li><li>Filter out null parent files when deleting empty directories.
+(Eugene V., gh-589)
+</li><li>Work around File constructor not accepting URIs for UNC paths.
+(gh-564)
+</li><li>Split ForkTests react() out to workaround SI-6526 (avoids a
+stackoverflow in some forked test situations)
+</li><li>Maven-style ivy repo support in the launcher config (Eric B.,
+gh-585)
+</li><li>Compare external binaries with canonical files (nau, gh-584)
+</li><li>Call System.exit after the main thread is finished. (Eugene V.,
+gh-565)
+</li><li>Abort running tests on the first failure to communicate results back
+to the main process. (Eugene V., gh-557)
+</li><li>Don’t let the right side of the alias command fail the parse.
+(gh-572)
+</li><li>API extraction: handle any type that is annotated, not just the
+spec’d simple type. (gh-559)
+</li><li>Don’t try to look up the class file for a package. (gh-620)
+</li></ul><h3 id="0.12.0+to+0.12.1">0.12.0 to 0.12.1<a href="#0.12.0+to+0.12.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Dependency management fixes:
+</p><ul><li>Merge multiple dependency definitions for the same ID. Workaround
+for gh-468, gh-285, gh-419, gh-480.
+</li><li>Don’t write section of pom if scope is ‘compile’.
+</li><li>Ability to properly match on artifact type. Fixes gh-507 (Thomas).
+</li><li>Force <code>update</code> to run on changes to last modified time of artifacts
+or cached descriptor (part of fix for gh-532). It may also fix
+issues when working with multiple local projects via ‘publish-local’
+and binary dependencies.
+</li><li>Per-project resolution cache that deletes cached files before
+update. Notes:
+</li></ul><blockquote><ul><li>The resolution cache differs from the repository cache and does
+not contain dependency metadata or artifacts.
+</li><li>The resolution cache contains the generated ivy files, properties,
+and resolve reports for the project.
+</li><li>There will no longer be individual files directly in
+\~/.ivy2/cache/
+</li><li>Resolve reports are now in target/resolution-cache/reports/,
+viewable with a browser.
+</li><li>Cache location includes extra attributes so that cross builds of a
+plugin do not overwrite each other. Fixes gh-532.
+</li></ul></blockquote><p>Three stage incremental compilation:
+</p><ul><li>As before, the first step recompiles sources that were edited (or
+otherwise directly invalidated).
+</li><li>The second step recompiles sources from the first step whose API has
+changed, their direct dependencies, and sources forming a cycle with
+these sources.
+</li><li>The third step recompiles transitive dependencies of sources from
+the second step whose API changed.
+</li><li>Code relying mainly on composition should see decreased compilation
+times with this approach.
+</li><li>Code with deep inheritance hierarchies and large cycles between
+sources may take longer to compile.
+</li><li><code>last compile</code> will show cycles that were processed in step 2.
+Reducing large cycles of sources shown here may decrease compile
+times.
+</li></ul><p>Miscellaneous fixes and improvements:
+</p><ul><li>Various test forking fixes. Fixes gh-512, gh-515.
+</li><li>Proper isolation of build definition classes. Fixes gh-536, gh-511.
+</li><li><code>orbit</code> packaging should be handled like a standard jar. Fixes
+gh-499.
+</li><li>In <code>IO.copyFile</code>, limit maximum size transferred via NIO. Fixes
+gh-491.
+</li><li>Add OSX JNI library extension in <code>includeFilter</code> by default. Fixes
+gh-500. (Indrajit)
+</li><li>Translate <code>show x y</code> into <code>;show x ;show y</code> . Fixes gh-495.
+</li><li>Clean up temporary directory on exit. Fixes gh-502.
+</li><li><code>set</code> prints the scopes+keys it defines and affects.
+</li><li>Tab completion for <code>set</code> (experimental).
+</li><li>Report file name when an error occurs while opening a corrupt zip
+file in incremental compilation code. (James)
+</li><li>Defer opening logging output files until an actual write. Helps
+reduce number of open file descriptors.
+</li><li>Back all console loggers by a common console interface that merges
+(overwrites) consecutive Resolving xxxx … lines when ansi codes
+are enabled (as first done by Play).
+</li></ul><p>Forward-compatible-only change (not present in 0.12.0):
+</p><ul><li><code>sourcesInBase</code> setting controls whether sources in base directory
+are included. Fixes gh-494.
+</li></ul><h3 id="0.11.3+to+0.12.0">0.11.3 to 0.12.0<a href="#0.11.3+to+0.12.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The changes for 0.12.0 are listed on a separate page. See
+<code>ChangeSummary_0.12.0</code>.
+</p><h3 id="0.11.2+to+0.11.3">0.11.2 to 0.11.3<a href="#0.11.2+to+0.11.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Dropping scala-tools.org:
+</p><ul><li>The sbt group ID is changed to <code>org.scala-sbt</code> (from
+org.scala-tools.sbt). This means you must use a 0.11.3 launcher to
+launch 0.11.3.
+</li><li>The convenience objects <code>ScalaToolsReleases</code> and ScalaToolsSnapshots
+now point to https://oss.sonatype.org/content/repositories/releases
+and …/snapshots
+</li><li>The launcher no longer includes <code>scala-tools.org</code> repositories by
+default and instead uses the Sonatype OSS snapshots repository for
+Scala snapshots.
+</li><li><p>The <code>scala-tools.org</code> releases repository is no longer included as
+an application repository by default. The Sonatype OSS repository is
+</p><p><em>not</em> included by default in its place.
+</p></li></ul><p>Other fixes:
+</p><ul><li>Compiler interface works with 2.10
+</li><li><code>maxErrors</code> setting is no longer ignored
+</li><li>Correct test count. gh-372 (Eugene)
+</li><li>Fix file descriptor leak in process library (Daniel)
+</li><li>Buffer url input stream returned by Using. gh-437
+</li><li>Jsch version bumped to 0.1.46. gh-403
+</li><li>JUnit test detection handles ancestors properly (Indrajit)
+</li><li>Avoid unnecessarily re-resolving plugins. gh-368
+</li><li>Substitute variables in explicit version strings and custom
+repository definitions in launcher configuration
+</li><li>Support setting sbt.version from system property, which overrides
+setting in a properties file. gh-354
+</li><li>Minor improvements to command/key suggestions
+</li></ul><h3 id="0.11.1+to+0.11.2">0.11.1 to 0.11.2<a href="#0.11.1+to+0.11.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Notable behavior change:
+</p><ul><li>The local Maven repository has been removed from the launcher’s list
+of default repositories, which is used for obtaining sbt and Scala
+dependencies. This is motivated by the high probability that
+including this repository was causing the various problems some
+users have with the launcher not finding some dependencies (gh-217).
+</li></ul><p>Fixes:
+</p><ul><li>gh-257 Fix invalid classifiers in pom generation (Indrajit)
+</li><li>gh-255 Fix scripted plugin descriptor (Artyom)
+</li><li>Fix forking git on windows (Stefan, Josh)
+</li><li>gh-261 Fix whitespace handling for semicolon-separated commands
+</li><li>gh-263 Fix handling of dependencies with an explicit URL
+</li><li>gh-272 Show deprecation message for <code>project/plugins/</code>
+</li></ul><h3 id="0.11.0+to+0.11.1">0.11.0 to 0.11.1<a href="#0.11.0+to+0.11.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Breaking change:
+</p><ul><li>The scripted plugin is now in the <code>sbt</code> package so that it can be
+used from a named package
+</li></ul><p>Notable behavior change:
+</p><ul><li>By default, there is more logging during update: one line per
+dependency resolved and two lines per dependency downloaded. This is
+to address the appearance that sbt hangs on larger ‘update’s.
+</li></ul><p>Fixes and improvements:
+</p><ul><li>Show help for a key with <code>help &lt;key&gt;</code>
+</li><li>gh-21 Reduced memory and time overhead of incremental recompilation
+with signature hash based approach.
+</li><li>Rotate global log so that only output since last prompt is displayed
+for last
+</li><li>gh-169 Add support for exclusions with excludeAll and exclude
+methods on ModuleID. (Indrajit)
+</li><li>gh-235 Checksums configurable for launcher
+</li><li>gh-246 Invalidate <code>update</code> when <code>update</code> is invalidated for an
+internal project dependency
+</li><li>gh-138 Include plugin sources and docs in <code>update-sbt-classifiers</code>
+</li><li>gh-219 Add cleanupCommands setting to specify commands to run before
+interpreter exits
+</li><li>gh-46 Fix regression in caching missing classifiers for
+<code>update-classifiers</code> and <code>update-sbt-classifiers</code>.
+</li><li>gh-228 Set <code>connectInput</code> to true to connect standard input to
+forked run
+</li><li>gh-229 Limited task execution interruption using ctrl+c
+</li><li>gh-220 Properly record source dependencies from separate compilation
+runs in the same step.
+</li><li>gh-214 Better default behavior for classpathConfiguration for
+external Ivy files
+</li><li>gh-212 Fix transitive plugin dependencies.
+</li><li>gh-222 Generate section in make-pom. (Jan)
+</li><li>Build resolvers, loaders, and transformers.
+</li><li>Allow project dependencies to be modified by a setting
+(buildDependencies) but with the restriction that new builds cannot
+be introduced.
+</li><li>gh-174, gh-196, gh-201, gh-204, gh-207, gh-208, gh-226, gh-224,
+gh-253
+</li></ul><h3 id="0.10.1+to+0.11.0">0.10.1 to 0.11.0<a href="#0.10.1+to+0.11.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Major Improvements:
+</p><ul><li>Move to 2.9.1 for project definitions and plugins
+</li><li>Drop support for 2.7
+</li><li>Settings overhaul, mainly to make API documentation more usable
+</li><li>Support using native libraries in <code>run</code> and <code>test</code> (but not console,
+for example)
+</li><li><p>Automatic plugin cross-versioning. Use
+</p><pre><code>addSbtPlugin(&quot;group&quot; % &quot;name&quot; % &quot;version&quot;)
+</code></pre><p>in project/plugins.sbt instead of libraryDependencies += … See
+/Extending/Plugins for details
+</p></li></ul><p>Fixes and Improvements:
+</p><ul><li>Display all undefined settings at once, instead of only the first
+one
+</li><li>Deprecate separate <code>classpathFilter</code>, <code>defaultExcludes</code>, and
+sourceFilter keys in favor of includeFilter and excludeFilter
+explicitly scoped by unmanagedSources, unmanagedResources, or
+unmanagedJars as appropriate (Indrajit)
+</li><li>Default to using shared boot directory in <code>~/.sbt/boot/</code>
+</li><li>Can put contents of <code>project/plugins/</code> directly in <code>project/</code>
+instead. Will likely deprecate plugins/ directory
+</li><li>Key display is context sensitive. For example, in a single project,
+the build and project axes will not be displayed
+</li><li>gh-114, gh-118, gh-121, gh-132, gh-135, gh-157: Various settings and
+error message improvements
+</li><li>gh-115: Support configuring checksums separately for <code>publish</code> and
+<code>update</code>
+</li><li>gh-118: Add <code>about</code> command
+</li><li>gh-118, gh-131: Improve <code>last</code> command. Aggregate <code>last &lt;task&gt;</code> and
+display all recent output for <code>last</code>
+</li><li>gh-120: Support read-only external file projects (Fred)
+</li><li>gh-128: Add <code>skip</code> setting to override recompilation change
+detection
+</li><li>gh-139: Improvements to pom generation (Indrajit)
+</li><li>gh-140, gh-145: Add standard manifest attributes to binary and
+source jars (Indrajit)
+</li><li>Allow sources used for <code>doc</code> generation to be different from sources
+for <code>compile</code>
+</li><li>gh-156: Made <code>package</code> an alias for <code>package-bin</code>
+</li><li>gh-162: handling of optional dependencies in pom generation
+</li></ul><h3 id="0.10.0+to+0.10.1">0.10.0 to 0.10.1<a href="#0.10.0+to+0.10.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Some of the more visible changes:
+</p><ul><li>Support “provided” as a valid configuration for inter-project
+dependencies gh-53
+</li><li>Try out some better error messages for build.sbt in a few common
+situations gh-58
+</li><li>Drop “Incomplete tasks …” line from error messages. gh-32
+</li><li>Better handling of javac logging. gc-74
+</li><li>Warn when reload discards session settings
+</li><li>Cache failing classifiers, making ‘update-classifiers’ a practical
+replacement for withSources()
+</li><li>Global settings may be provided in \~/.sbt/build.sbt gh-52
+</li><li>No need to define “sbtPlugin := true” in project/plugins/ or
+\~/.sbt/plugins/
+</li><li>Provide statistics and list of evicted modules in UpdateReport
+</li><li>Scope use of ‘transitive-classifiers’ by ‘update-sbt-classifiers’
+and ‘update-classifiers’ for separate configuration.
+</li><li>Default project ID includes a hash of base directory to avoid
+collisions in simple cases.
+</li><li>’extra-loggers’ setting to make it easier to add loggers
+</li><li>Associate ModuleID, Artifact and Configuration with a classpath
+entry (moduleID, artifact, and configuration keys). gh-41
+</li><li>Put httpclient on Ivy’s classpath, which seems to speed up ‘update’.
+</li></ul><h3 id="0.7.7+to+0.10.0">0.7.7 to 0.10.0<a href="#0.7.7+to+0.10.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><strong>Major redesign, only prominent changes listed.</strong>
+</p><ul><li>Project definitions in Scala 2.8.1
+</li><li>New configuration system: <code>/Examples/Quick-Configuration-Examples/</code>,
+/Getting-Started/Full-Def, and /Getting-Started/Basic-Def/
+</li><li>New task engine: <code>/Detailed-Topics/Tasks</code>
+</li><li>New multiple project support: <code>/Getting-Started/Full-Def</code>
+</li><li>More aggressive incremental recompilation for both Java and Scala
+sources
+</li><li>Merged plugins and processors into improved plugins system:
+/Extending/Plugins
+</li><li><code>Web application &lt;https://github.com/JamesEarlDouglas/xsbt-web-plugin&gt;</code>_
+and webstart support moved to plugins instead of core features
+</li><li>Fixed all of the issues in (Google Code) issue #44
+</li><li>Managed dependencies automatically updated when configuration
+changes
+</li><li><code>update-sbt-classifiers</code> and <code>update-classifiers</code> tasks for
+retrieving sources and/or javadocs for dependencies, transitively
+</li><li>Improved artifact handling and configuration
+<code>/Detailed-Topics/Artifacts</code>
+</li><li>Tab completion parser combinators for commands and input tasks:
+/Extending/Commands
+</li><li>No project creation prompts anymore
+</li><li>Moved to GitHub: <a href="http://github.com/harrah/xsbt">http://github.com/harrah/xsbt</a>
+</li></ul><h3 id="0.7.5+to+0.7.7">0.7.5 to 0.7.7<a href="#0.7.5+to+0.7.7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Workaround for Scala issue
+<a href="http://lampsvn.epfl.ch/trac/scala/ticket/4426">#4426</a>
+</li><li>Fix issue 156
+</li></ul><h3 id="0.7.4+to+0.7.5">0.7.4 to 0.7.5<a href="#0.7.4+to+0.7.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Joonas’s update to work with Jetty 7.1 logging API changes.
+</li><li>Updated to work with Jetty 7.2 WebAppClassLoader binary
+incompatibility (issue 129).
+</li><li>Provide application and boot classpaths to tests and ‘run’ning code
+according to <a href="http://gist.github.com/404272">http://gist.github.com/404272</a>
+</li><li>Fix <code>provided</code> configuration. It is no longer included on the
+classpath of dependent projects.
+</li><li>Scala 2.8.1 is the default version used when starting a new project.
+</li><li>Updated to
+<code>Ivy 2.2.0 &lt;http://ant.apache.org/ivy/history/2.2.0/release-notes.html&gt;</code>_.
+</li><li>Trond’s patches that allow configuring
+<a href="http://github.com/sbt/sbt/commit/5e41a47f50e6">jetty-env.xml</a> and
+<a href="http://github.com/sbt/sbt/commit/030e2ee91bac0">webdefault.xml</a>
+</li><li>Doug’s <code>patch &lt;http://github.com/sbt/sbt/commit/aa75ecf7055db&gt;</code>_ to
+make ‘projects’ command show an asterisk next to current project
+</li><li>Fixed issue 122
+</li><li>Implemented issue 118
+</li><li>Patch from Viktor and Ross for issue 123
+</li><li>(RC1) Patch from Jorge for issue 100
+</li><li>(RC1) Fix <code>&lt;packaging&gt;</code> type
+</li></ul><h3 id="0.7.3+to+0.7.4">0.7.3 to 0.7.4<a href="#0.7.3+to+0.7.4" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>prefix continuous compilation with run number for better feedback
+when logging level is ‘warn’
+</li><li>Added <code>pomIncludeRepository(repo: MavenRepository): Boolean</code> that
+can be overridden to exclude local repositories by default
+</li><li>Added <code>pomPostProcess(pom: Node): Node</code> to make advanced
+manipulation of the default pom easier (pomExtra already covers
+basic cases)
+</li><li>Added <code>reset</code> command to reset JLine terminal. This needs to be run
+after suspending and then resuming sbt.
+</li><li>Installer plugin is now a proper subproject of sbt.
+</li><li>Plugins can now only be Scala sources. BND should be usable in a
+plugin now.
+</li><li>More accurate detection of invalid test names. Invalid test names
+now generate an error and prevent the test action from running
+instead of just logging a warning.
+</li><li>Fix issue with using 2.8.0.RC1 compiler in tests.
+</li><li>Precompile compiler interface against 2.8.0.RC2
+</li><li>Add <code>consoleOptions</code> for specifying options to the console. It
+defaults to compileOptions.
+</li><li>Properly support sftp/ssh repositories using key-based
+authentication. See the updated section of the
+/Detailed-Topics/Resolvers page.
+</li><li><code>def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet</code>.
+Default is DownloadOnly. Full will log metadata resolution and
+provide a final summary.
+</li><li><code>offline</code> property for disabling checking for newer dynamic
+revisions (like -SNAPSHOT). This allows working offline with remote
+snapshots. Not honored for plugins yet.
+</li><li>History commands: <code>!!, !?string, !-n, !n, !string, !:n, !:</code> Run ! to
+see help.
+</li><li>New section in launcher configuration <code>[ivy]</code> with a single label
+cache-directory. Specify this to change the cache location used by
+the launcher.
+</li><li>New label <code>classifiers</code> under <code>[app]</code> to specify classifiers of
+additional artifacts to retrieve for the application.
+</li><li>Honor <code>-Xfatal-warnings</code> option added to compiler in 2.8.0.RC2.
+</li><li>Make <code>scaladocTask</code> a <code>fileTask</code> so that it runs only when
+index.html is older than some input source.
+</li><li>Made it easier to create default <code>test-*</code> tasks with different
+options
+</li><li>Sort input source files for consistency, addressing scalac’s issues
+with source file ordering.
+</li><li><p>Derive Java source file from name of class file when no SourceFile
+attribute is present in the class file. Improves tracking when
+</p><ul><li>g:none option is used.
+</li></ul></li><li>Fix <code>FileUtilities.unzip</code> to be tail-recursive again.
+</li></ul><h3 id="0.7.2+to+0.7.3">0.7.2 to 0.7.3<a href="#0.7.2+to+0.7.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed issue with scala.library.jar not being on javac’s classpath
+</li><li>Fixed buffered logging for parallel execution
+</li><li>Fixed <code>test-*</code> tab completion being permanently set on first
+completion
+</li><li>Works with Scala 2.8 trunk again.
+</li><li>Launcher: Maven local repository excluded when the Scala version is
+a snapshot. This should fix issues with out of date Scala snapshots.
+</li><li>The compiler interface is precompiled against common Scala versions
+(for this release, 2.7.7 and 2.8.0.Beta1).
+</li><li>Added <code>PathFinder.distinct</code>
+</li><li>Running multiple commands at once at the interactive prompt is now
+supported. Prefix each command with ’;’.
+</li><li>Run and return the output of a process as a String with <code>!!</code> or as a
+(blocking) Stream[String] with lines.
+</li><li>Java tests + Annotation detection
+</li><li>Test frameworks can now specify annotation fingerprints. Specify the
+names of annotations and sbt discovers classes with the annotations
+on it or one of its methods. Use version 0.5 of the test-interface.
+</li><li>Detect subclasses and annotations in Java sources (really, their
+class files)
+</li><li>Discovered is new root of hierarchy representing discovered
+subclasses + annotations. TestDefinition no longer fulfills this
+role.
+</li><li><code>TestDefinition</code> is modified to be name+<code>Fingerprint</code> and represents
+a runnable test. It need not be Discovered, but could be file-based
+in the future, for example.
+</li><li>Replaced testDefinitionClassNames method with <code>fingerprints</code> in
+CompileConfiguration.
+</li><li>Added foundAnnotation to <code>AnalysisCallback</code>
+</li><li>Added <code>Runner2</code>, <code>Fingerprint</code>, <code>AnnotationFingerprint</code>, and
+SubclassFingerprint to the test-interface. Existing test frameworks
+should still work. Implement Runner2 to use fingerprints other than
+SubclassFingerprint.
+</li></ul><h3 id="0.7.1+to+0.7.2">0.7.1 to 0.7.2<a href="#0.7.1+to+0.7.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>Process.apply</code> no longer uses <code>CommandParser</code>. This should fix
+issues with the android-plugin.
+</li><li>Added <code>sbt.impl.Arguments</code> for parsing a command like a normal
+action (for Processors)
+</li><li>Arguments are passed to <code>javac</code> using an argument file (<code>@</code>)
+</li><li>Added <code>webappUnmanaged: PathFinder</code> method to DefaultWebProject.
+Paths selected by this PathFinder will not be pruned by
+prepare-webapp and will not be packaged by package. For example, to
+exclude the GAE datastore directory:
+scala   override def webappUnmanaged =     (temporaryWarPath / “WEB-INF” / “appengine-generated” ***)
+</li><li>Added some String generation methods to <code>PathFinder</code>: <code>toString</code> for
+debugging and absString and relativeString for joining the absolute
+(relative) paths by the platform separator.
+</li><li>Made tab completors lazier to reduce startup time.
+</li><li>Fixed <code>console-project</code> for custom subprojects
+</li><li><code>Processor</code> split into <code>Processor</code>/<code>BasicProcessor</code>. Processor
+provides high level of integration with command processing.
+BasicProcessor operates on a Project but does not affect command
+processing.
+</li><li>Can now use <code>Launcher</code> externally, including launching <code>sbt</code> outside
+of the official jar. This means a Project can now be created from
+tests.
+</li><li>Works with Scala 2.8 trunk
+</li><li>Fixed logging level behavior on subprojects.
+</li><li>All sbt code is now at <a href="http://github.com/harrah/xsbt">http://github.com/harrah/xsbt</a> in one
+project.
+</li></ul><h3 id="0.7.0+to+0.7.1">0.7.0 to 0.7.1<a href="#0.7.0+to+0.7.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed Jetty 7 support to work with JRebel
+</li><li>Fixed make-pom to generate valid dependencies section
+</li></ul><h3 id="0.5.6+to+0.7.0">0.5.6 to 0.7.0<a href="#0.5.6+to+0.7.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Unifed batch and interactive commands. All commands that can be
+executed at interactive prompt can be run from the command line. To
+run commands and then enter interactive prompt, make the last
+command ‘shell’.
+</li><li>Properly track certain types of synthetic classes, such as for
+comprehension with &gt;30 clauses, during compilation.
+</li><li>Jetty 7 support
+</li><li>Allow launcher in the project root directory or the <code>lib</code> directory.
+The jar name must have the form ‘sbt-launch.jar’ in order to be
+excluded from the classpath.
+</li><li>Stack trace detail can be controlled with <code>'on'</code>, <code>'off'</code>, ‘nosbt’,
+or an integer level. ‘nosbt’ means to show stack frames up to the
+first sbt method. An integer level denotes the number of frames to
+show for each cause. This feature is courtesty of Tony Sloane.
+</li><li>New action ‘test-run’ method that is analogous to ‘run’, but for
+test classes.
+</li><li>New action ‘clean-plugins’ task that clears built plugins (useful
+for plugin development).
+</li><li>Can provide commands from a file with new command: <code>&lt;filename</code>
+</li><li>Can provide commands over loopback interface with new command:
+\&lt;port
+</li><li>Scala version handling has been completely redone.
+</li><li>The version of Scala used to run sbt (currently 2.7.7) is decoupled
+from the version used to build the project.
+</li><li><p>Changing between Scala versions on the fly is done with the command:
+</p><ul><li>+\<version\>
+</li></ul></li><li>Cross-building is quicker. The project definition does not need to
+be recompiled against each version in the cross-build anymore.
+</li><li>Scala versions are specified in a space-delimited list in the
+build.scala.versions property.
+</li><li>Dependency management:
+</li><li><code>make-pom</code> task now uses custom pom generation code instead of Ivy’s
+pom writer.
+</li><li>Basic support for writing out Maven-style repositories to the pom
+</li><li>Override the ‘pomExtra’ method to provide XML (<code>scala.xml.NodeSeq</code>)
+to insert directly into the generated pom.
+</li><li>Complete control over repositories is now possible by overriding
+ivyRepositories.
+</li><li>The interface to Ivy can be used directly.
+</li><li>Test framework support is now done through a uniform test interface.
+Implications:
+</li><li>New versions of specs, ScalaCheck, and ScalaTest are supported as
+soon as they are released.
+</li><li>Support is better, since the test framework authors provide the
+implementation.
+</li><li>Arguments can be passed to the test framework. For example: {{{ &gt;
+test-only your.test — -a -b -c }}}
+</li><li>Can provide custom task start and end delimiters by defining the
+system properties sbt.start.delimiter and sbt.end.delimiter.
+</li><li>Revamped launcher that can launch Scala applications, not just sbt
+</li><li>Provide a configuration file to the launcher and it can download the
+application and its dependencies from a repository and run it.
+</li><li>sbt’s configuration can be customized. For example,
+</li><li>The <code>sbt</code> version to use in projects can be fixed, instead of read
+from project/build.properties.
+</li><li>The default values used to create a new project can be changed.
+</li><li>The repositories used to fetch <code>sbt</code> and its dependencies, including
+Scala, can be configured.
+</li><li>The location <code>sbt</code> is retrieved to is configurable. For example,
+/home/user/.ivy2/sbt/ could be used instead of project/boot/.
+</li></ul><h3 id="0.5.5+to+0.5.6">0.5.5 to 0.5.6<a href="#0.5.5+to+0.5.6" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Support specs specifications defined as classes
+</li><li>Fix specs support for 1.6
+</li><li>Support ScalaTest 1.0
+</li><li>Support ScalaCheck 1.6
+</li><li>Remove remaining uses of structural types
+</li></ul><h3 id="0.5.4+to+0.5.5">0.5.4 to 0.5.5<a href="#0.5.4+to+0.5.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed problem with classifier support and the corresponding test
+</li><li>No longer need <code>&quot;-&gt;default&quot;</code> in configurations (automatically
+mapped).
+</li><li><p>Can specify a specific nightly of Scala 2.8 to use (for example:
+</p><ol><li>8.0-20090910.003346-+)
+</li></ol></li><li>Experimental support for searching for project
+(-Dsbt.boot.search=none|only|root-first|nearest)
+</li><li>Fix issue where last path component of local repository was dropped
+if it did not exist.
+</li><li>Added support for configuring repositories on a per-module basis.
+</li><li>Unified batch-style and interactive-style commands. All commands
+that were previously interactive-only should be available
+batch-style. ‘reboot’ does not pick up changes to ‘scala.version’
+properly, however.
+</li></ul><h3 id="0.5.2+to+0.5.4">0.5.2 to 0.5.4<a href="#0.5.2+to+0.5.4" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Many logging related changes and fixes. Added <code>FilterLogger</code> and
+cleaned up interaction between Logger, scripted testing, and the
+builder projects. This included removing the recordingDepth hack
+from Logger. Logger buffering is now enabled/disabled per thread.
+</li><li>Fix <code>compileOptions</code> being fixed after the first compile
+</li><li>Minor fixes to output directory checking
+</li><li>Added <code>defaultLoggingLevel</code> method for setting the initial level of
+a project’s Logger
+</li><li>Cleaned up internal approach to adding extra default configurations
+like plugin
+</li><li>Added <code>syncPathsTask</code> for synchronizing paths to a target directory
+</li><li>Allow multiple instances of Jetty (new <code>jettyRunTasks</code> can be
+defined with different ports)
+</li><li><code>jettyRunTask</code> accepts configuration in a single configuration
+wrapper object instead of many parameters
+</li><li>Fix web application class loading (issue #35) by using
+jettyClasspath=testClasspath—-jettyRunClasspath for loading Jetty.
+A better way would be to have a jetty configuration and have
+jettyClasspath=managedClasspath(’jetty’), but this maintains
+compatibility.
+</li><li>Copy resources to <code>target/resources</code> and <code>target/test-resources</code>
+using copyResources and copyTestResources tasks. Properly include
+all resources in web applications and classpaths (issue #36).
+mainResources and testResources are now the definitive methods for
+getting resources.
+</li><li>Updated for 2.8 (<code>sbt</code> now compiles against September 11, 2009
+nightly build of Scala)
+</li><li>Fixed issue with position of <code>^</code> in compile errors
+</li><li>Changed order of repositories (local, shared, Maven Central, user,
+Scala Tools)
+</li><li>Added Maven Central to resolvers used to find Scala library/compiler
+in launcher
+</li><li>Fixed problem that prevented detecting user-specified subclasses
+</li><li>Fixed exit code returned when exception thrown in main thread for
+TrapExit
+</li><li><p>Added <code>javap</code> task to <code>DefaultProject</code>. It has tab completion on
+compiled project classes and the run classpath is passed to javap so
+that library classes are available. Examples: :
+</p><pre><code>&gt; javap your.Clazz
+&gt; javap -c scala.List
+</code></pre></li><li><p>Added <code>exec</code> task. Mixin <code>Exec</code> to project definition to use. This
+forks the command following exec. Examples: :
+</p><pre><code>&gt; exec echo Hi
+&gt; exec find src/main/scala -iname *.scala -exec wc -l {} ;
+</code></pre></li><li><p>Added <code>sh</code> task for users with a unix-style shell available (runs
+/bin/sh -c \<arguments\>). Mixin Exec to project definition to use.
+Example: :
+</p><pre><code>&gt; sh find src/main/scala -iname *.scala | xargs cat | wc -l
+</code></pre></li><li>Proper dependency graph actions (previously was an unsupported
+prototype): graph-src and graph-pkg for source dependency graph and
+quasi-package dependency graph (based on source directories and
+source dependencies)
+</li><li>Improved Ivy-related code to not load unnecessary default settings
+</li><li>Fixed issue #39 (sources were not relative in src package)
+</li><li>Implemented issue #38 (<code>InstallProject</code> with ‘install’ task)
+</li><li>Vesa’s patch for configuring the output of forked Scala/Java and
+processes
+</li><li>Don’t buffer logging of forked <code>run</code> by default
+</li><li>Check <code>Project.terminateWatch</code> to determine if triggered execution
+should stop for a given keypress.
+</li><li>Terminate triggered execution only on ‘enter’ by default
+(previously, any keypress stopped it)
+</li><li>Fixed issue #41 (parent project should not declare jar artifact)
+</li><li>Fixed issue #42 (search parent directories for <code>ivysettings.xml</code>)
+</li><li><p>Added support for extra attributes with Ivy. Use
+extra(key -&gt; value) on ModuleIDs and Artifacts. To define for a
+project’s ID: :
+</p><pre><code>override def projectID = super.projectID extra(key -&gt; value)
+</code></pre><p>To specify in a dependency: :
+</p><pre><code>val dep = normalID extra(key -&gt; value)
+</code></pre></li></ul><h3 id="0.5.1+to+0.5.2">0.5.1 to 0.5.2<a href="#0.5.1+to+0.5.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed problem where dependencies of <code>sbt</code> plugins were not on the
+compile classpath
+</li><li>Added <code>execTask</code> that runs an <code>sbt.ProcessBuilder</code> when invoked
+</li><li>Added implicit conversion from <code>scala.xml.Elem</code> to
+sbt.ProcessBuilder that takes the element’s text content, trims it,
+and splits it around whitespace to obtain the command.
+</li><li>Processes can now redirect standard input (see run with Boolean
+argument or !\&lt; operator on ProcessBuilder), off by default
+</li><li>Made scripted framework a plugin and scripted tests now go in
+src/sbt-test by default
+</li><li>Can define and use an sbt test framework extension in a project
+</li><li>Fixed <code>run</code> action swallowing exceptions
+</li><li>Fixed tab completion for method tasks for multi-project builds
+</li><li>Check that tasks in <code>compoundTask</code> do not reference static tasks
+</li><li>Make <code>toString</code> of <code>Path</code>s in subprojects relative to root project
+directory
+</li><li><code>crossScalaVersions</code> is now inherited from parent if not specified
+</li><li>Added <code>scala-library.jar</code> to the <code>javac</code> classpath
+</li><li>Project dependencies are added to published <code>ivy.xml</code>
+</li><li>Added dependency tracking for Java sources using classfile parsing
+(with the usual limitations)
+</li><li><p>Added <code>Process.cat</code> that will send contents of <code>URL</code>s and Files to
+standard output. Alternatively, cat can be used on a single URL or
+File. Example: :
+</p><pre><code>import java.net.URL
+import java.io.File
+val spde = new URL(&quot;http://technically.us/spde/About&quot;)
+val dispatch = new URL(&quot;http://databinder.net/dispatch/About&quot;)
+val build = new File(&quot;project/build.properties&quot;)
+cat(spde, dispatch, build) #| &quot;grep -i scala&quot; !
+</code></pre></li></ul><h3 id="0.4.6+to+0.5%2F0.5.1">0.4.6 to 0.5/0.5.1<a href="#0.4.6+to+0.5%2F0.5.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed <code>ScalaTest</code> framework dropping stack traces
+</li><li>Publish only public configurations by default
+</li><li>Loader now adds <code>.m2/repository</code> for downloading Scala jars
+</li><li>Can now fork the compiler and runner and the runner can use a
+different working directory.
+</li><li>Maximum compiler errors shown is now configurable
+</li><li>Fixed rebuilding and republishing released versions of <code>sbt</code> against
+new Scala versions (attempt #2)
+</li><li>Fixed snapshot reversion handling (Ivy needs changing pattern set on
+cache, apparently)
+</li><li>Fixed handling of default configuration when useMavenConfiguration
+is true
+</li><li>Cleanup on Environment, Analysis, Conditional, <code>MapUtilities</code>, and
+more…
+</li><li>Tests for Environment, source dependencies, library dependency
+management, and more…
+</li><li>Dependency management and multiple Scala versions
+</li><li>Experimental plugin for producing project bootstrapper in a
+self-extracting jar
+</li><li>Added ability to directly specify <code>URL</code> to use for dependency with
+the from(url: URL) method defined on ModuleID
+</li><li>Fixed issue #30
+</li><li>Support cross-building with <code>+</code> when running batch actions
+</li><li>Additional flattening for project definitions: sources can go either
+in project/build/src (recursively) or project/build (flat)
+</li><li>Fixed manual <code>reboot</code> not changing the version of Scala when it is
+manually set
+</li><li>Fixed tab completion for cross-building
+</li><li>Fixed a class loading issue with web applications
+</li></ul><h3 id="0.4.5+to+0.4.6">0.4.5 to 0.4.6<a href="#0.4.5+to+0.4.6" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Publishing to ssh/sftp/filesystem repository supported
+</li><li>Exception traces are printed by default
+</li><li>Fixed warning message about no <code>Class-Path</code> attribute from showing
+up for run
+</li><li>Fixed <code>package-project</code> operation
+</li><li>Fixed <code>Path.fromFile</code>
+</li><li>Fixed issue with external process output being lost when sent to a
+BufferedLogger with parallelExecution enabled.
+</li><li>Preserve history across <code>clean</code>
+</li><li>Fixed issue with making relative path in jar with wrong separator
+</li><li>Added cross-build functionality (prefix action with <code>+</code>).
+</li><li>Added methods <code>scalaLibraryJar</code> and <code>scalaCompilerJar</code> to
+FileUtilities
+</li><li>Include project dependencies for <code>deliver</code>/<code>publish</code>
+</li><li>Add Scala dependencies for <code>make-pom</code>/<code>deliver</code>/<code>publish</code>, which
+requires these to depend on package
+</li><li>Properly add compiler jar to run/test classpaths when main sources
+depend on it
+</li><li><code>TestFramework</code> root <code>ClassLoader</code> filters compiler classes used by
+sbt, which is required for projects using the compiler.
+</li><li>Better access to dependencies:
+</li><li><code>mainDependencies</code> and <code>testDependencies</code> provide an analysis of the
+dependencies of your code as determined during compilation
+</li><li><code>scalaJars</code> is deprecated, use <code>mainDependencies.scalaJars</code> instead
+(provides a PathFinder, which is generally more useful)
+</li><li>Added <code>jettyPort</code> method to <code>DefaultWebProject</code>.
+</li><li>Fixed <code>package-project</code> to exclude <code>project/boot</code> and
+project/build/target
+</li><li>Support specs 1.5.0 for Scala 2.7.4 version.
+</li><li>Parallelization at the subtask level
+</li><li>Parallel test execution at the suite/specification level.
+</li></ul><h3 id="0.4.3+to+0.4.5">0.4.3 to 0.4.5<a href="#0.4.3+to+0.4.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Sorted out repository situation in loader
+</li><li>Added support for <code>http_proxy</code> environment variable
+</li><li>Added <code>download</code> method from Nathan to <code>FileUtilities</code> to retrieve
+the contents of a URL.
+</li><li>Added special support for compiler plugins, see CompilerPlugins
+page.
+</li><li><code>reload</code> command in scripted tests will now properly handle
+success/failure
+</li><li>Very basic support for Java sources: Java sources under
+src/main/java and src/test/java will be compiled.
+</li><li><code>parallelExecution</code> defaults to value in parent project if there is
+one.
+</li><li>Added ‘console-project’ that enters the Scala interpreter with the
+current Project bound to the variable project.
+</li><li>The default Ivy cache manager is now configured with useOrigin=true
+so that it doesn’t cache artifacts from the local filesystem.
+</li><li>For users building from trunk, if a project specifies a version of
+sbt that ends in -SNAPSHOT, the loader will update sbt every time it
+starts up. The trunk version of sbt will always end in -SNAPSHOT
+now.
+</li><li>Added automatic detection of classes with main methods for use when
+mainClass is not explicitly specified in the project definition. If
+exactly one main class is detected, it is used for run and package.
+If multiple main classes are detected, the user is prompted for
+which one to use for run. For package, no Main-Class attribute is
+automatically added and a warning is printed.
+</li><li>Updated build to cross-compile against Scala 2.7.4.
+</li><li>Fixed <code>proguard</code> task in <code>sbt</code>’s project definition
+</li><li>Added <code>manifestClassPath</code> method that accepts the value for the
+Class-Path attribute
+</li><li>Added <code>PackageOption</code> called <code>ManifestAttributes</code> that accepts
+(java.util.jar.Attributes.Name, String) or (String, String) pairs
+and adds them to the main manifest attributes
+</li><li>Fixed some situations where characters would not be echoed at
+prompts other than main prompt.
+</li><li>Fixed issue #20 (use <code>http_proxy</code> environment variable)
+</li><li>Implemented issue #21 (native process wrapper)
+</li><li>Fixed issue #22 (rebuilding and republishing released versions of
+sbt against new Scala versions, specifically Scala 2.7.4)
+</li><li>Implemented issue #23 (inherit inline repositories declared in
+parent project)
+</li></ul><h3 id="0.4+to+0.4.3">0.4 to 0.4.3<a href="#0.4+to+0.4.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Direct dependencies on Scala libraries are checked for version
+equality with scala.version
+</li><li>Transitive dependencies on <code>scala-library</code> and <code>scala-compiler</code> are
+filtered
+</li><li>They are fixed by <code>scala.version</code> and provided on the classpath by
+sbt
+</li><li>To access them, use the <code>scalaJars</code> method,
+classOf[ScalaObject].getProtectionDomain.getCodeSource, or
+mainCompileConditional.analysis.allExternals
+</li><li>The configurations checked/filtered as described above are
+configurable. Nonstandard configurations are not checked by default.
+</li><li>Version of <code>sbt</code> and Scala printed on startup
+</li><li>Launcher asks if you want to try a different version if <code>sbt</code> or
+Scala could not be retrieved.
+</li><li>After changing <code>scala.version</code> or <code>sbt.version</code> with <code>set</code>, note is
+printed that reboot is required.
+</li><li>Moved managed dependency actions to <code>BasicManagedProject</code> (update is
+now available on ParentProject)
+</li><li>Cleaned up <code>sbt</code>’s build so that you just need to do <code>update</code> and
+full-build to build from source. The trunk version of sbt will be
+available for use from the loader.
+</li><li>The loader is now a subproject.
+</li><li>For development, you’ll still want the usual actions (such as
+package) for the main builder and proguard to build the loader.
+</li><li>Fixed analysis plugin improperly including traits/abstract classes
+in subclass search
+</li><li><code>ScalaProject</code>s already had everything required to be parent
+projects: flipped the switch to enable it
+</li><li>Proper method task support in scripted tests (<code>package</code> group tests
+rightly pass again)
+</li><li>Improved tests in loader that check that all necessary libraries
+were downloaded properly
+</li></ul><h3 id="0.3.7+to+0.4">0.3.7 to 0.4<a href="#0.3.7+to+0.4" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed issue with <code>build.properties</code> being unnecessarily updated in
+sub-projects when loading.
+</li><li>Added method to compute the SHA-1 hash of a <code>String</code>
+</li><li>Added pack200 methods
+</li><li>Added initial process interface
+</li><li>Added initial webstart support
+</li><li>Added gzip methods
+</li><li>Added <code>sleep</code> and <code>newer</code> commands to scripted testing.
+</li><li>Scripted tests now test the version of <code>sbt</code> being built instead of
+the version doing the building.
+</li><li><code>testResources</code> is put on the test classpath instead of
+testResourcesPath
+</li><li>Added <code>jetty-restart</code>, which does <code>jetty-stop</code> and then jetty-run
+</li><li>Added automatic reloading of default web application
+</li><li>Changed packaging behaviors (still likely to change)
+</li><li>Inline configurations now allowed (can be used with configurations
+in inline XML)
+</li><li>Split out some code related to managed dependencies from
+BasicScalaProject to new class BasicManagedProject
+</li><li>Can specify that maven-like configurations should be automatically
+declared
+</li><li>Fixed problem with nested modules being detected as tests
+</li><li><code>testResources</code>, <code>integrationTestResources</code>, and mainResources
+should now be added to appropriate classpaths
+</li><li>Added project organization as a property that defaults to inheriting
+from the parent project.
+</li><li>Project creation now prompts for the organization.
+</li><li>Added method tasks, which are top-level actions with parameters.
+</li><li>Made <code>help</code>, <code>actions</code>, and <code>methods</code> commands available to
+batch-style invocation.
+</li><li>Applied Mikko’s two fixes for webstart and fixed problem with
+pack200+sign. Also, fixed nonstandard behavior when gzip enabled.
+</li><li>Added <code>control</code> method to <code>Logger</code> for action lifecycle logging
+</li><li>Made standard logging level convenience methods final
+</li><li>Made <code>BufferedLogger</code> have a per-actor buffer instead of a global
+buffer
+</li><li>Added a <code>SynchronizedLogger</code> and a <code>MultiLogger</code> (intended to be
+used with the yet unwritten FileLogger)
+</li><li>Changed method of atomic logging to be a method <code>logAll</code> accepting
+List[LogEvent] instead of doSynchronized
+</li><li>Improved action lifecycle logging
+</li><li>Parallel logging now provides immediate feedback about starting an
+action
+</li><li>General cleanup, including removing unused classes and methods and
+reducing dependencies between classes
+</li><li><code>run</code> is now a method task that accepts options to pass to the main
+method (runOptions has been removed, runTask is no longer
+interactive, and run no longer starts a console if mainClass is
+undefined)
+</li><li>Major task execution changes:
+</li><li>Tasks automatically have implicit dependencies on tasks with the
+same name in dependent projects
+</li><li>Implicit dependencies on interactive tasks are ignored, explicit
+dependencies produce an error
+</li><li>Interactive tasks must be executed directly on the project on which
+they are defined
+</li><li>Method tasks accept input arguments (<code>Array[String]</code>) and
+dynamically create the task to run
+</li><li>Tasks can depend on tasks in other projects
+</li><li>Tasks are run in parallel breadth-first style
+</li><li>Added <code>test-only</code> method task, which restricts the tests to run to
+only those passed as arguments.
+</li><li>Added <code>test-failed</code> method task, which restricts the tests to run.
+First, only tests passed as arguments are run. If no tests are
+passed, no filtering is done. Then, only tests that failed the
+previous run are run.
+</li><li>Added <code>test-quick</code> method task, which restricts the tests to run.
+First, only tests passed as arguments are run. If no tests are
+passed, no filtering is done. Then, only tests that failed the
+previous run or had a dependency change are run.
+</li><li>Added launcher that allows declaring version of sbt/scala to build
+project with.
+</li><li>Added tab completion with \~
+</li><li>Added basic tab completion for method tasks, including <code>test-*</code>
+</li><li>Changed default pack options to be the default options of
+Pack200.Packer
+</li><li>Fixed \~ behavior when action doesn’t exist
+</li></ul><h3 id="0.3.6+to+0.3.7">0.3.6 to 0.3.7<a href="#0.3.6+to+0.3.7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Improved classpath methods
+</li><li>Refactored various features into separate project traits
+</li><li><code>ParentProject</code> can now specify dependencies
+</li><li>Support for <code>optional</code> scope
+</li><li>More API documentation
+</li><li>Test resource paths provided on classpath for testing
+</li><li>Added some missing read methods in <code>FileUtilities</code>
+</li><li>Added scripted test framework
+</li><li>Change detection using hashes of files
+</li><li>Fixed problem with manifests not being generated (bug #14)
+</li><li>Fixed issue with scala-tools repository not being included by
+default (again)
+</li><li>Added option to set ivy cache location (mainly for testing)
+</li><li>trace is no longer a logging level but a flag enabling/disabling
+stack traces
+</li><li>Project.loadProject and related methods now accept a Logger to use
+</li><li>Made hidden files and files that start with <code>'.'</code> excluded by
+default (’.*’ is required because subversion seems to not mark .svn
+directories hidden on Windows)
+</li><li>Implemented exit codes
+</li><li>Added continuous compilation command <code>cc</code>
+</li></ul><h3 id="0.3.5+to+0.3.6">0.3.5 to 0.3.6<a href="#0.3.5+to+0.3.6" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed bug #12.
+</li><li>Compiled with 2.7.2.
+</li></ul><h3 id="0.3.2+to+0.3.5">0.3.2 to 0.3.5<a href="#0.3.2+to+0.3.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed bug #11.
+</li><li>Fixed problem with dependencies where source jars would be used
+instead of binary jars.
+</li><li>Fixed scala-tools not being used by default for inline
+configurations.
+</li><li>Small dependency management error message correction
+</li><li>Slight refactoring for specifying whether scala-tools releases gets
+added to configured resolvers
+</li><li>Separated repository/dependency overriding so that repositories can
+be specified inline for use with ivy.xml or pom.xml files
+</li><li>Added ability to specify Ivy XML configuration in Scala.
+</li><li>Added <code>clean-cache</code> action for deleting Ivy’s cache
+</li><li>Some initial work towards accessing a resource directory from tests
+</li><li>Initial tests for <code>Path</code>
+</li><li>Some additional <code>FileUtilities</code> methods, some <code>FileUtilities</code> method
+adjustments and some initial tests for FileUtilities
+</li><li>A basic framework for testing <code>ReflectUtilities</code>, not run by default
+because of run time
+</li><li>Minor cleanup to <code>Path</code> and added non-empty check to path components
+</li><li>Catch additional exceptions in <code>TestFramework</code>
+</li><li>Added <code>copyTask</code> task creation method.
+</li><li>Added <code>jetty-run</code> action and added ability to package war files.
+</li><li>Added <code>jetty-stop</code> action.
+</li><li>Added <code>console-quick</code> action that is the same as <code>console</code> but
+doesn’t compile sources first.
+</li><li>Moved some custom <code>ClassLoader</code>s to <code>ClasspathUtilities</code> and
+improved a check.
+</li><li>Added ability to specify hooks to call before <code>sbt</code> shuts down.
+</li><li>Added <code>zip</code>, <code>unzip</code> methods to <code>FileUtilities</code>
+</li><li>Added <code>append</code> equivalents to <code>write*</code> methods in FileUtilites
+</li><li>Added first draft of integration testing
+</li><li>Added batch command <code>compile-stats</code>
+</li><li>Added methods to create tasks that have basic conditional execution
+based on declared sources/products of the task
+</li><li>Added <code>newerThan</code> and <code>olderThan</code> methods to <code>Path</code>
+</li><li>Added <code>reload</code> action to reread the project definition without
+losing the performance benefits of an already running jvm
+</li><li>Added <code>help</code> action to tab completion
+</li><li>Added handling of (effectively empty) scala source files that create
+no class files: they are always interpreted as modified.
+</li><li>Added prompt to retry project loading if compilation fails
+</li><li><code>package</code> action now uses <code>fileTask</code> so that it only executes if
+files are out of date
+</li><li>fixed <code>ScalaTest</code> framework wrapper so that it fails the <code>test</code>
+action if tests fail
+</li><li>Inline dependencies can now specify configurations
+</li></ul><h3 id="0.3.1+to+0.3.2">0.3.1 to 0.3.2<a href="#0.3.1+to+0.3.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Compiled jar with Java 1.5.
+</li></ul><h3 id="0.3+to+0.3.1">0.3 to 0.3.1<a href="#0.3+to+0.3.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed bugs #8, #9, and #10.
+</li></ul><h3 id="0.2.3+to+0.3">0.2.3 to 0.3<a href="#0.2.3+to+0.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Version change only for first release.
+</li></ul><h3 id="0.2.2+to+0.2.3">0.2.2 to 0.2.3<a href="#0.2.2+to+0.2.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Added tests for <code>Dag</code>, <code>NameFilter</code>, <code>Version</code>
+</li><li>Fixed handling of trailing <code>*</code>s in <code>GlobFilter</code> and added some
+error-checking for control characters, which Pattern doesn’t seem to
+like
+</li><li>Fixed <code>Analysis.allProducts</code> implementation
+</li><li>It previously returned the sources instead of the generated classes
+</li><li>Will only affect the count of classes (it should be correct now) and
+the debugging of missed classes (erroneously listed classes as
+missed)
+</li><li>Made some implied preconditions on <code>BasicVersion</code> and OpaqueVersion
+explicit
+</li><li>Made increment version behavior in <code>ScalaProject</code> easier to overload
+</li><li>Added <code>Seq[..Option]</code> alternative to <code>...Option*</code> for tasks
+</li><li>Documentation generation fixed to use latest value of version
+</li><li>Fixed <code>BasicVersion.incrementMicro</code>
+</li><li>Fixed test class loading so that <code>sbt</code> can test the version of sbt
+being developed (previously, the classes from the executing version
+of sbt were tested)
+</li></ul><h3 id="0.2.1+to+0.2.2">0.2.1 to 0.2.2<a href="#0.2.1+to+0.2.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Package name is now a call-by-name parameter for the package action
+</li><li>Fixed release action calling compile multiple times
+</li></ul><h3 id="0.2.0+to+0.2.1">0.2.0 to 0.2.1<a href="#0.2.0+to+0.2.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Added some action descriptions
+</li><li>jar name now comes from normalized name (lowercased and spaces to
+dashes)
+</li><li>Some cleanups related to creating filters
+</li><li>Path should only ‘get’ itself if the underlying file exists to be
+consistent with other PathFinders
+</li><li>Added <code>---</code> operator for <code>PathFinder</code> that excludes paths from the
+PathFinder argument
+</li><li>Removed <code>***</code> operator on <code>PathFinder</code>
+</li><li><code>**</code> operator on <code>PathFinder</code> matches all descendents or self that
+match the NameFilter argument
+</li><li>The above should fix bug <code>#6</code>
+</li><li>Added version increment and release actions.
+</li><li>Can now build sbt with sbt. Build scripts <code>build</code> and <code>clean</code> will
+still exist.
+</li></ul><h3 id="0.1.9+to+0.2.0">0.1.9 to 0.2.0<a href="#0.1.9+to+0.2.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Implemented typed properties and access to system properties
+</li><li>Renamed <code>metadata</code> directory to <code>project</code>
+</li><li>Information previously in <code>info</code> file now obtained by properties:
+</li><li><code>info.name --&gt; name</code>
+</li><li><code>info.currentVersion --&gt; version</code>
+</li><li>Concrete <code>Project</code> subclasses should have a constructor that accepts
+a single argument of type ProjectInfo (argument
+dependencies: Iterable[Project] has been merged into ProjectInfo)
+</li></ul><h3 id="0.1.8+to+0.1.9">0.1.8 to 0.1.9<a href="#0.1.8+to+0.1.9" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Better default implementation of <code>allSources</code>.
+</li><li>Generate warning if two jars on classpath have the same name.
+</li><li>Upgraded to specs 1.4.0
+</li><li>Upgraded to <code>ScalaCheck</code> 1.5
+</li><li>Changed some update options to be final vals instead of objects.
+</li><li>Added some more API documentation.
+</li><li>Removed release action.
+</li><li>Split compilation into separate main and test compilations.
+</li><li>A failure in a <code>ScalaTest</code> run now fails the test action.
+</li><li>Implemented reporters for <code>compile/scaladoc</code>, <code>ScalaTest</code>,
+ScalaCheck, and specs that delegate to the appropriate sbt.Logger.
+</li></ul><h3 id="0.1.7+to+0.1.8">0.1.7 to 0.1.8<a href="#0.1.7+to+0.1.8" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Improved configuring of tests to exclude.
+</li><li>Simplified version handling.
+</li><li>Task <code>&amp;&amp;</code> operator properly handles dependencies of tasks it
+combines.
+</li><li>Changed method of inline library dependency declarations to be
+simpler.
+</li><li>Better handling of errors in parallel execution.
+</li></ul><h3 id="0.1.6+to+0.1.7">0.1.6 to 0.1.7<a href="#0.1.6+to+0.1.7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Added graph action to generate dot files (for graphiz) from
+dependency information (work in progress).
+</li><li>Options are now passed to tasks as varargs.
+</li><li>Redesigned <code>Path</code> properly, including <code>PathFinder</code> returning a
+Set[Path] now instead of Iterable[Path].
+</li><li>Moved paths out of <code>ScalaProject</code> and into <code>BasicProjectPaths</code> to
+keep path definitions separate from task definitions.
+</li><li>Added initial support for managing third-party libraries through the
+update task, which must be explicitly called (it is not a dependency
+of compile or any other task). This is experimental, undocumented,
+and known to be incomplete.
+</li><li>Parallel execution implementation at the project level, disabled by
+default. To enable, add:
+scala  override def parallelExecution = true to your project
+definition. In order for logging to make sense, all project logging
+is buffered until the project is finished executing. Still to be
+done is some sort of notification of project execution (which ones
+are currently executing, how many remain)
+</li><li><code>run</code> and <code>console</code> are now specified as “interactive” actions,
+which means they are only executed on the project in which they are
+defined when called directly, and not on all dependencies. Their
+dependencies are still run on dependent projects.
+</li><li>Generalized conditional tasks a bit. Of note is that analysis is no
+longer required to be in metadata/analysis, but is now in
+target/analysis by default.
+</li><li>Message now displayed when project definition is recompiled on
+startup
+</li><li>Project no longer inherits from Logger, but now has a log member.
+</li><li>Dependencies passed to <code>project</code> are checked for null (may help with
+errors related to initialization/circular dependencies)
+</li><li>Task dependencies are checked for null
+</li><li>Projects in a multi-project configuration are checked to ensure that
+output paths are different (check can be disabled)
+</li><li>Made <code>update</code> task globally synchronized because Ivy is not
+thread-safe.
+</li><li>Generalized test framework, directly invoking frameworks now (used
+reflection before).
+</li><li>Moved license files to licenses/
+</li><li>Added support for <code>specs</code> and some support for <code>ScalaTest</code> (the test
+action doesn’t fail if ScalaTest tests fail).
+</li><li>Added <code>specs</code>, <code>ScalaCheck</code>, <code>ScalaTest</code> jars to lib/
+</li><li>These are now required for compilation, but are optional at runtime.
+</li><li>Added the appropriate licenses and notices.
+</li><li>Options for <code>update</code> action are now taken from updateOptions member.
+</li><li>Fixed <code>SbtManager</code> inline dependency manager to work properly.
+</li><li>Improved Ivy configuration handling (not compiled with test
+dependencies yet though).
+</li><li>Added case class implementation of <code>SbtManager</code> called
+SimpleManager.
+</li><li>Project definitions not specifying dependencies can now use just a
+single argument constructor.
+</li></ul><h3 id="0.1.5+to+0.1.6">0.1.5 to 0.1.6<a href="#0.1.5+to+0.1.6" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>run</code> and <code>console</code> handle <code>System.exit</code> and multiple threads in
+user code under certain circumstances (see RunningProjectCode).
+</li></ul><h3 id="0.1.4+to+0.1.5">0.1.4 to 0.1.5<a href="#0.1.4+to+0.1.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Generalized interface with plugin (see <code>AnalysisCallback</code>)
+</li><li>Split out task implementations and paths from <code>Project</code> to
+ScalaProject
+</li><li>Subproject support (changed required project constructor signature:
+see sbt/DefaultProject.scala)
+</li><li>Can specify dependencies between projects
+</li><li>Execute tasks across multiple projects
+</li><li>Classpath of all dependencies included when compiling
+</li><li>Proper inter-project source dependency handling
+</li><li>Can change to a project in an interactive session to work only on
+that project (and its dependencies)
+</li><li>External dependency handling
+</li><li>Tracks non-source dependencies (compiled classes and jars)
+</li><li>Requires each class to be provided by exactly one classpath element
+(This means you cannot have two versions of the same class on the
+classpath, e.g. from two versions of a library)
+</li><li>Changes in a project propagate the right source recompilations in
+dependent projects
+</li><li>Consequences:
+</li><li>Recompilation when changing java/scala version
+</li><li>Recompilation when upgrading libraries (again, as indicated in the
+second point, situations where you have library-1.0.jar and
+library-2.0.jar on the classpath at the same time are not handled
+predictably. Replacing library-1.0.jar with library-2.0.jar should
+work as expected.)
+</li><li>Changing sbt version will recompile project definitions
+</li></ul><h3 id="0.1.3+to+0.1.4">0.1.3 to 0.1.4<a href="#0.1.3+to+0.1.4" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Autodetection of Project definitions.
+</li><li>Simple tab completion/history in an interactive session with JLine
+</li><li>Added descriptions for most actions
+</li></ul><h3 id="0.1.2+to+0.1.3">0.1.2 to 0.1.3<a href="#0.1.2+to+0.1.3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Dependency management between tasks and auto-discovery tasks.
+</li><li>Should work on Windows.
+</li></ul><h3 id="0.1.1+to+0.1.2">0.1.1 to 0.1.2<a href="#0.1.1+to+0.1.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Should compile/build on Java 1.5
+</li><li>Fixed run action implementation to include scala library on
+classpath
+</li><li>Made project configuration easier
+</li></ul><h3 id="0.1+to+0.1.1">0.1 to 0.1.1<a href="#0.1+to+0.1.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed handling of source files without a package
+</li><li>Added easy project setup
+</li></ul><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Migrating+from+0.7+to+0.10%2B.html"> Migrating from 0.7 to 0.10+ </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div class="current">Older Changes</div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

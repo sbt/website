@@ -1,0 +1,194 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Configuring Scala</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Compiler-Plugins.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Forking.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Configuring+Scala">Configuring Scala<a href="#Configuring+Scala" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>sbt needs to obtain Scala for a project and it can do this automatically
+or you can configure it explicitly. The Scala version that is configured
+for a project will compile, run, document, and provide a REPL for the
+project code. When compiling a project, sbt needs to run the Scala
+compiler as well as provide the compiler with a classpath, which may
+include several Scala jars, like the reflection jar.
+</p><h2 id="Automatically+managed+Scala">Automatically managed Scala<a href="#Automatically+managed+Scala" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The most common case is when you want to use a version of Scala that is
+available in a repository. The only required configuration is the Scala
+version you want to use. For example,
+</p><pre><code>scalaVersion := &quot;2.10.0&quot;
+</code></pre><p>This will retrieve Scala from the repositories configured via the
+<code>resolvers</code> setting. It will use this version for building your project:
+compiling, running, scaladoc, and the REPL.
+</p><h3 id="Configuring+the+scala-library+dependency">Configuring the scala-library dependency<a href="#Configuring+the+scala-library+dependency" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, the standard Scala library is automatically added as a
+dependency. If you want to configure it differently than the default or
+you have a project with only Java sources, set:
+</p><pre><code>autoScalaLibrary := false
+</code></pre><p>In order to compile Scala sources, the Scala library needs to be on the
+classpath. When <code>autoScalaLibrary</code> is true, the Scala library will be on
+all classpaths: test, runtime, and compile. Otherwise, you need to add
+it like any other dependency. For example, the following dependency
+definition uses Scala only for tests:
+</p><pre><code>autoScalaLibrary := false
+
+libraryDependencies += &quot;org.scala-lang&quot; % &quot;scala-library&quot; % scalaVersion.value % &quot;test&quot;
+</code></pre><h3 id="Configuring+additional+Scala+dependencies">Configuring additional Scala dependencies<a href="#Configuring+additional+Scala+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When using a Scala dependency other than the standard library, add it as
+a normal managed dependency. For example, to depend on the Scala
+compiler,
+</p><pre><code>libraryDependencies += &quot;org.scala-lang&quot; % &quot;scala-compiler&quot; % scalaVersion.value
+</code></pre><p>Note that this is necessary regardless of the value of the
+<code>autoScalaLibrary</code> setting described in the previous section.
+</p><h3 id="Configuring+Scala+tool+dependencies">Configuring Scala tool dependencies<a href="#Configuring+Scala+tool+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In order to compile Scala code, run scaladoc, and provide a Scala REPL,
+sbt needs the <code>scala-compiler</code> jar. This should not be a normal
+dependency of the project, so sbt adds a dependency on <code>scala-compiler</code>
+in the special, private <code>scala-tool</code> configuration. It may be desirable
+to have more control over this in some situations. Disable this
+automatic behavior with the <code>managedScalaInstance</code> key:
+</p><pre><code>managedScalaInstance := false
+</code></pre><p>This will also disable the automatic dependency on <code>scala-library</code>. If
+you do not need the Scala compiler for anything (compiling, the REPL,
+scaladoc, etc…), you can stop here. sbt does not need an instance of
+Scala for your project in that case. Otherwise, sbt will still need
+access to the jars for the Scala compiler for compilation and other
+tasks. You can provide them by either declaring a dependency in the
+<code>scala-tool</code> configuration or by explicitly defining <code>scalaInstance</code>.
+</p><p>In the first case, add the <code>scala-tool</code> configuration and add a
+dependency on <code>scala-compiler</code> in this configuration. The organization
+is not important, but sbt needs the module name to be <code>scala-compiler</code>
+and <code>scala-library</code> in order to handle those jars appropriately. For
+example,
+</p><pre><code>managedScalaInstance := false
+
+// Add the configuration for the dependencies on Scala tool jars
+// You can also use a manually constructed configuration like:
+//   config(&quot;scala-tool&quot;).hide
+ivyConfigurations += Configurations.ScalaTool
+
+// Add the usual dependency on the library as well on the compiler in the
+//  'scala-tool' configuration
+libraryDependencies ++= Seq(
+   &quot;org.scala-lang&quot; % &quot;scala-library&quot; % scalaVersion.value,
+   &quot;org.scala-lang&quot; % &quot;scala-compiler&quot; % scalaVersion.value % &quot;scala-tool&quot;
+)
+</code></pre><p>In the second case, directly construct a value of type
+<code>ScalaInstance &lt;../../api/sbt/ScalaInstance.html&gt;</code>_, typically using a
+method in the <code>companion object &lt;../../api/sbt/ScalaInstance$.html&gt;</code>_,
+and assign it to <code>scalaInstance</code>. You will also need to add the
+<code>scala-library</code> jar to the classpath to compile and run Scala sources.
+For example,
+</p><pre><code>managedScalaInstance := false
+
+scalaInstance := ...
+
+unmanagedJars in Compile += scalaInstance.value.libraryJar
+</code></pre><h3 id="Switching+to+a+local+Scala+version">Switching to a local Scala version<a href="#Switching+to+a+local+Scala+version" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To use a locally built Scala version, configure Scala home as described
+in the following section. Scala will still be resolved as before, but
+the jars will come from the configured Scala home directory.
+</p><h2 id="Using+Scala+from+a+local+directory">Using Scala from a local directory<a href="#Using+Scala+from+a+local+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The result of building Scala from source is a Scala home directory
+<code>&lt;base&gt;/build/pack/</code> that contains a subdirectory <code>lib/</code> containing the
+Scala library, compiler, and other jars. The same directory layout is
+obtained by downloading and extracting a Scala distribution. Such a
+Scala home directory may be used as the source for jars by setting
+<code>scalaHome</code>. For example,
+</p><pre><code>scalaHome := Some(file(&quot;/home/user/scala-2.10/&quot;))
+</code></pre><p>By default, <code>lib/scala-library.jar</code> will be added to the unmanaged
+classpath and <code>lib/scala-compiler.jar</code> will be used to compile Scala
+sources and provide a Scala REPL. No managed dependency is recorded on
+<code>scala-library</code>. This means that Scala will only be resolved from a
+repository if you explicitly define a dependency on Scala or if Scala is
+depended on indirectly via a dependency. In these cases, the artifacts
+for the resolved dependencies will be substituted with jars in the Scala
+home <code>lib/</code> directory.
+</p><h3 id="Mixing+with+managed+dependencies">Mixing with managed dependencies<a href="#Mixing+with+managed+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>As an example, consider adding a dependency on <code>scala-reflect</code> when
+<code>scalaHome</code> is configured:
+</p><pre><code>scalaHome := Some(file(&quot;/home/user/scala-2.10/&quot;))
+
+libraryDependencies += &quot;org.scala-lang&quot; % &quot;scala-reflect&quot; % scalaVersion.value
+</code></pre><p>This will be resolved as normal, except that sbt will see if
+<code>/home/user/scala-2.10/lib/scala-reflect.jar</code> exists. If it does, that
+file will be used in place of the artifact from the managed dependency.
+</p><h3 id="Using+unmanaged+dependencies+only">Using unmanaged dependencies only<a href="#Using+unmanaged+dependencies+only" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Instead of adding managed dependencies on Scala jars, you can directly
+add them. The <code>scalaInstance</code> task provides structured access to the
+Scala distribution. For example, to add all jars in the Scala home
+<code>lib/</code> directory,
+</p><pre><code>scalaHome := Some(file(&quot;/home/user/scala-2.10/&quot;))
+
+unmanagedJars in Compile ++= scalaInstance.value.jars
+</code></pre><p>To add only some jars, filter the jars from <code>scalaInstance</code> before
+adding them.
+</p><h2 id="sbt%E2%80%99s+Scala+version">sbt’s Scala version<a href="#sbt%E2%80%99s+Scala+version" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>sbt needs Scala jars to run itself since it is written in Scala. sbt
+uses that same version of Scala to compile the build definitions that
+you write for your project because they use sbt APIs. This version of
+Scala is fixed for a specific sbt release and cannot be changed. For sbt
+|version|, this version is Scala |scalaVersion|. Because this Scala
+version is needed before sbt runs, the repositories used to retrieve
+this version are configured in the sbt
+<code>launcher &lt;/Detailed-Topics/Launcher&gt;</code>.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Forking.html"> Forking </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div class="current">Configuring Scala</div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

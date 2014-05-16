@@ -1,0 +1,190 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Customizing paths</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Howto-Classpaths.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Howto-Generating-Files.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Customizing+paths">Customizing paths<a href="#Customizing+paths" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes how to modify the default source, resource, and
+library directories and what files get included from them.
+</p><h3 id="Change+the+default+Scala+source+directory">Change the default Scala source directory<a href="#Change+the+default+Scala+source+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The directory that contains the main Scala sources is by default
+<code>src/main/scala</code>. For test Scala sources, it is <code>src/test/scala</code>. To
+change this, modify <code>scalaSource</code> in the <code>Compile</code> (for main sources) or
+<code>Test</code> (for test sources). For example,
+</p><pre><code class="prettyprint lang-scala">scalaSource in Compile := baseDirectory.value / &quot;src&quot;
+
+scalaSource in Test := baseDirectory.value / &quot;test-src&quot;
+</code></pre><blockquote><p><strong>Note</strong>: The Scala source directory can be the same as the Java source
+directory.
+</p></blockquote><h3 id="Change+the+default+Java+source+directory">Change the default Java source directory<a href="#Change+the+default+Java+source+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The directory that contains the main Java sources is by default
+<code>src/main/java</code>. For test Java sources, it is <code>src/test/java</code>. To change
+this, modify <code>javaSource</code> in the <code>Compile</code> (for main sources) or <code>Test</code>
+(for test sources).
+</p><p>For example,
+</p><pre><code class="prettyprint lang-scala">javaSource in Compile := baseDirectory.value / &quot;src&quot;
+
+javaSource in Test := baseDirectory.value / &quot;test-src&quot;
+</code></pre><blockquote><p><strong>Note</strong>: The Scala source directory can be the same as the Java source
+directory.
+</p></blockquote><h3 id="Change+the+default+resource+directory">Change the default resource directory<a href="#Change+the+default+resource+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The directory that contains the main resources is by default
+<code>src/main/resources</code>. For test resources, it is <code>src/test/resources</code>. To
+change this, modify <code>resourceDirectory</code> in either the <code>Compile</code> or
+<code>Test</code> configuration.
+</p><p>For example,
+</p><pre><code class="prettyprint lang-scala">resourceDirectory in Compile := baseDirectory.value / &quot;resources&quot;
+
+resourceDirectory in Test := baseDirectory.value / &quot;test-resources&quot;
+</code></pre><h3 id="Change+the+default+%28unmanaged%29+library+directory">Change the default (unmanaged) library directory<a href="#Change+the+default+%28unmanaged%29+library+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The directory that contains the unmanaged libraries is by default
+<code>lib/</code>. To change this, modify <code>unmanagedBase</code>. This setting can be
+changed at the project level or in the <code>Compile</code>, <code>Runtime</code>, or <code>Test</code>
+configurations.
+</p><p>When defined without a configuration, the directory is the default
+directory for all configurations. For example, the following declares
+<code>jars/</code> as containing libraries:
+</p><pre><code class="prettyprint lang-scala">unmanagedBase := baseDirectory.value / &quot;jars&quot;
+</code></pre><p>When set for <code>Compile</code>, <code>Runtime</code>, or <code>Test</code>, <code>unmanagedBase</code> is the
+directory containing libraries for that configuration, overriding the
+default. For example, the following declares <code>lib/main/</code> to contain jars
+only for <code>Compile</code> and not for running or testing: :
+</p><pre><code class="prettyprint lang-scala">unmanagedBase in Compile := baseDirectory.value / &quot;lib&quot; / &quot;main&quot;
+</code></pre><h3 id="Disable+using+the+project%E2%80%99s+base+directory+as+a+source+directory">Disable using the project’s base directory as a source directory<a href="#Disable+using+the+project%E2%80%99s+base+directory+as+a+source+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, sbt includes <code>.scala</code> files from the project’s base
+directory as main source files. To disable this, configure
+<code>sourcesInBase</code>:
+</p><pre><code class="prettyprint lang-scala">sourcesInBase := false
+</code></pre><h3 id="Add+an+additional+source+directory">Add an additional source directory<a href="#Add+an+additional+source+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt collects <code>sources</code> from <code>unmanagedSourceDirectories</code>, which by
+default consists of <code>scalaSource</code> and <code>javaSource</code>. Add a directory to
+<code>unmanagedSourceDirectories</code> in the appropriate configuration to add a
+source directory. For example, to add <code>extra-src</code> to be an additional
+directory containing main sources,
+</p><pre><code class="prettyprint lang-scala">unmanagedSourceDirectories in Compile += baseDirectory.value / &quot;extra-src&quot;
+</code></pre><blockquote><p><strong>Note</strong>: This directory should only contain unmanaged sources, which are
+sources that are manually created and managed. See
+/Howto/generatefiles for working with automatically generated sources.
+</p></blockquote><h3 id="Add+an+additional+resource+directory">Add an additional resource directory<a href="#Add+an+additional+resource+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt collects <code>resources</code> from <code>unmanagedResourceDirectories</code>, which by
+default consists of <code>resourceDirectory</code>. Add a directory to
+<code>unmanagedResourceDirectories</code> in the appropriate configuration to add
+another resource directory. For example, to add <code>extra-resources</code> to be
+an additional directory containing main resources,
+</p><pre><code class="prettyprint lang-scala">unmanagedResourceDirectories in Compile += baseDirectory.value / &quot;extra-resources&quot;
+</code></pre><blockquote><p><strong>Note</strong>: This directory should only contain unmanaged resources, which are
+resources that are manually created and managed. See
+/Howto/generatefiles for working with automatically generated
+resources.
+</p></blockquote><h3 id="Include%2Fexclude+files+in+the+source+directory">Include/exclude files in the source directory<a href="#Include%2Fexclude+files+in+the+source+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When sbt traverses <code>unmanagedSourceDirectories</code> for sources, it only
+includes directories and files that match <code>includeFilter</code> and do not
+match <code>excludeFilter</code>. <code>includeFilter</code> and <code>excludeFilter</code> have type
+<code>java.io.FileFilter</code> and sbt
+<code>provides some useful combinators &lt;file-filter&gt;</code> for constructing a
+<code>FileFilter</code>. For example, in addition to the default hidden files
+exclusion, the following also ignores files containing <code>impl</code> in their
+name,
+</p><pre><code class="prettyprint lang-scala">excludeFilter in unmanagedSources := HiddenFileFilter || &quot;*impl*&quot;
+</code></pre><p>To have different filters for main and test libraries, configure
+<code>Compile</code> and <code>Test</code> separately:
+</p><pre><code class="prettyprint lang-scala">includeFilter in (Compile, unmanagedSources) := &quot;*.scala&quot; || &quot;*.java&quot;
+
+includeFilter in (Test, unmanagedSources) := HiddenFileFilter || &quot;*impl*&quot;
+</code></pre><blockquote><p><strong>Note</strong>: By default, sbt includes <code>.scala</code> and <code>.java</code> sources, excluding hidden
+files.
+</p></blockquote><h3 id="Include%2Fexclude+files+in+the+resource+directory">Include/exclude files in the resource directory<a href="#Include%2Fexclude+files+in+the+resource+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When sbt traverses <code>unmanagedResourceDirectories</code> for resources, it only
+includes directories and files that match <code>includeFilter</code> and do not
+match <code>excludeFilter</code>. <code>includeFilter</code> and <code>excludeFilter</code> have type
+<code>java.io.FileFilter</code> and sbt
+<code>provides some useful combinators &lt;file-filter&gt;</code> for constructing a
+<code>FileFilter</code>. For example, in addition to the default hidden files
+exclusion, the following also ignores files containing <code>impl</code> in their
+name,
+</p><pre><code class="prettyprint lang-scala">excludeFilter in unmanagedSources := HiddenFileFilter || &quot;*impl*&quot;
+</code></pre><p>To have different filters for main and test libraries, configure
+<code>Compile</code> and <code>Test</code> separately:
+</p><pre><code class="prettyprint lang-scala">includeFilter in (Compile, unmanagedSources) := &quot;*.txt&quot;
+
+includeFilter in (Test, unmanagedSources) := &quot;*.html&quot;
+</code></pre><blockquote><p><strong>Note</strong>: By default, sbt includes all files that are not hidden.
+</p></blockquote><h3 id="Include+only+certain+%28unmanaged%29+libraries">Include only certain (unmanaged) libraries<a href="#Include+only+certain+%28unmanaged%29+libraries" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When sbt traverses <code>unmanagedBase</code> for resources, it only includes
+directories and files that match <code>includeFilter</code> and do not match
+<code>excludeFilter</code>. <code>includeFilter</code> and <code>excludeFilter</code> have type
+<code>java.io.FileFilter</code> and sbt
+<a href="Paths.html#file-filter">provides some useful combinators</a> for constructing a
+<code>FileFilter</code>. For example, in addition to the default hidden files
+exclusion, the following also ignores zips,
+</p><pre><code class="prettyprint lang-scala">excludeFilter in unmanagedJars := HiddenFileFilter || &quot;*.zip&quot;
+</code></pre><p>To have different filters for main and test libraries, configure
+<code>Compile</code> and <code>Test</code> separately:
+</p><pre><code class="prettyprint lang-scala">includeFilter in (Compile, unmanagedJars) := &quot;*.jar&quot;
+
+includeFilter in (Test, unmanagedJars) := &quot;*.jar&quot; || &quot;*.zip&quot;
+</code></pre><blockquote><p><strong>Note</strong>: By default, sbt includes jars, zips, and native dynamic libraries,
+excluding hidden files.
+</p></blockquote><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Howto-Generating-Files.html"> Generating files </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div class="current">Customizing paths</div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

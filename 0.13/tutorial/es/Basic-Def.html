@@ -1,0 +1,279 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Guía de Inicio de sbt —  build definition</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'es';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Running.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Scopes.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="build+definition"><code>.sbt</code> build definition<a href="#build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe las <em>build definitions</em>, incluyendo algo de
+“teoría” y la sintaxis de <code>build.sbt</code>. Se asume que usted sabe como
+<a href="Running.html">usar sbt</a> y que ha leído las páginas previas en la
+Guía de inicio.
+</p><h3 id="vs++Build+Definition"><code>.sbt</code> vs <code>.scala</code> Build Definition<a href="#vs++Build+Definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Una <em>build definition</em> para sbt puede contener archivos con terminación
+<code>.sbt</code>, localizados en el directorio base de un proyecto, y archivos con
+extensión <code>.scala</code>, localizados en el subdirectorio <code>project/</code> del
+directorio base.
+</p><p>Esta página trata sobre los archivos <code>.sbt</code>, que son apropiados para la
+mayoría de los casos. Los archivos <code>.scala</code> se usan típicamente para
+compartir código entre archivos <code>.sbt</code> y para <em>build definitions</em> más
+complicadas.
+</p><p>Vea <a href="Full-Def.html">.scala build definition</a> (más adelante en la <em>Guía de
+inicio</em>) para más información sobre los archivos <code>.scala</code>.
+</p><h3 id="%C2%BFQu%C3%A9+es+una+%3F">¿Qué es una <em>Build Definition</em>?<a href="#%C2%BFQu%C3%A9+es+una+%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Después de examinar un proyecto y procesar los archivos para la
+definición de la construcción del proyecto, sbt termina con un mapa
+inmutable (un conjunto de pares llave-valor) describiendo la
+construcción.
+</p><p>Por ejemplo, una llave es <code>name</code> y se mapea a un valor de tipo cadena
+(<code>String</code>), el nombre de su proyecto.
+</p><ul><li>Los archivos de definición de la construcción no afectan el mapa de sbt
+directamente.*
+</li></ul><p>En lugar de esto, la definición de la construcción crea una lista enorme
+de objectos con el tipo <code>Setting[T]</code> donde <code>T</code> es el tipo del valor en
+el mapa. Un <code>Setting</code> describe una <em>transformación del mapa</em>, tal como
+añadir un nuevo valor llave-valor o agregar a un valor existente. (En el
+espíritu de la programación funcional con estructuras de datos y valores
+inmutables, una transformación regresa un nuevo mapa — no se actualiza
+el viejo mapa en sí mismo).
+</p><p>En <code>build.sbt</code>, usted puede crear un <code>Setting[String]</code> para el nombre de
+su proyecto como se indica a continuación:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>Este <code>Setting[String]</code> transforma el mapa al añadir (o reemplazar) la
+llave <code>name</code>, dándole el valor
+</p><p><code>&quot;hello&quot;</code>. El mapa transformado se convierte en el nuevo mapa de sbt.
+</p><p>Para crear el mapa, sbt primero ordena la lista de <em>settings</em>
+(configuraciones) de modo que todos los cambios al mismo se realicen
+juntos, y los valores que dependen de otras llaves se procesan después
+de las llaves de las que dependen. Entonces sbt visita la lista ordenada
+de <code>Settings</code>s y aplica cada uno al mapa a la vez.
+</p><p>Resumen: Una definición de construcción define una lista de
+<code>Setting[T]</code>, donde un <code>Setting[T]</code> es una transformación que afecta el
+mapa de pares de llaves-valores de sbt y <code>T</code> es el tipo de cada valor.
+</p><h3 id="De+qu%C3%A9+manera++define+la+configuraci%C3%B3n">De qué manera <code>build.sbt</code> define la configuración<a href="#De+qu%C3%A9+manera++define+la+configuraci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> define una <code>Seq[Setting[_]]</code>; se trata de una lista de
+expresiones de Scala, separada por líneas en blanco, donde cada una se
+convierte en un elemento de la secuencia. Si usted colocara <code>Seq(</code> antes
+del contenido de un archivo <code>.sbt</code> y <code>)</code> al final y reemplazara las
+líneas blancas con comas, entonces estaría observando el código <code>.scala</code>
+equivalente.
+</p><p>A continuación se muestra un ejemplo:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+
+version := &quot;1.0&quot;
+
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>Cada <code>Setting</code> se define con una expresión de Scala. Las expresiones en
+<code>build.sbt</code> son independientes la una de la otra, y son expresiones, más
+bien que sentencias completas de Scala. Estas expresiones pueden estar
+entremezcladas con <code>val</code>s, <code>lazy val</code>s, y <code>def</code>s. No se permiten
+<code>object</code>s ni <code>class</code>es en <code>build.sbt</code>. Estos deben ir en el directorio
+<code>project/</code> como archivos de código fuente completos.
+</p><p>Por la izquierda, <code>name</code>, <code>version</code>, y <code>scalaVersion</code> son <em>keys</em>
+(llaves). Una <em>key</em> es una instancia de <code>SettingKey[T]</code>, <code>TaskKey[T]</code>, o
+<code>InputKey[T]</code> donde <code>T</code> es el valor esperado para el tipo. La clase de
+<em>keys</em> se explican abajo.
+</p><p>Las <em>keys</em> tienen un método llamado <code>:=</code>, que regresa un <code>Setting[T]</code>.
+Usted podría usar una sintáxis similar a la de Java para invocar al
+método:
+</p><pre><code class="prettyprint lang-scala">name.:=(&quot;hello&quot;)
+</code></pre><p>Pero Scala permite usar <code>name := &quot;hello&quot;</code> en lugar de lo anterior (en
+Scala, un método con un único parámetro puede utilizar cualquiera de las
+dos sintaxis).
+</p><p>El método <code>:=</code> en la <em>key</em> <code>name</code> regresa un <code>Setting</code>, específicamente
+un <code>Setting[String]</code>. <code>String</code> también aparece en el tipo de <code>name</code> en
+sí misma, el cuál es <code>SettingKey[String]</code>. En este caso, el valor
+<code>Setting[String]</code> regresado es una transformación para agregar o
+reemplazar la <em>key</em> <code>name</code> en el mapa de sbt, dándole el valor
+<code>&quot;hello&quot;</code>.
+</p><p>Si usted usa el tipo de valor equivocado, la definición de la
+construcción no compilará:
+</p><pre><code class="prettyprint lang-scala">name := 42  // no compila
+</code></pre><h3 id="Las++%28configuraciones%29+deben+estar+separadas+por+l%C3%ADneas+en+blanco">Las <em>settings</em> (configuraciones) deben estar separadas por líneas en blanco<a href="#Las++%28configuraciones%29+deben+estar+separadas+por+l%C3%ADneas+en+blanco" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>No es posible escribir un <code>build.sbt</code> como el siguiente:
+</p><pre><code class="prettyprint lang-scala">// NO compila, pues no hay líneas en blanco
+name := &quot;hello&quot;
+version := &quot;1.0&quot;
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>sbt necesita un tipo de delimitador para indicar donde termina una
+expresión y comienza la siguiente.
+</p><p>Los archivos <code>.sbt</code> contienen una lista de expresiones de Scala, no un
+único programa de Scala. Estas expresiones tienen que separarse y
+pasarse al compilador de manera individual.
+</p><h3 id="Keys">Keys<a href="#Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Tipos">Tipos<a href="#Tipos" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Existen tres tipos de llaves:
+</p><ul><li><code>SettingKey[T]</code>: una <em>key</em> para un valor que se calcula una sola vez
+(el valor es calculado cuando se carga el proyecto, y se mantiene).
+</li><li><code>TaskKey[T]</code>: una <em>key</em> para un valor, llamado una <em>task</em> (tarea),
+que tiene que ser recalculada cada vez, potencialmente con efectos
+laterales.
+</li><li><code>InputKey[T]</code>: una <em>key</em> para una <em>task</em> que tiene argumentos para
+la línea de comandos como entrada. Vea /Extending/Input-Tasks para
+más detalles.
+</li></ul><h4 id="Built-in+Keys+%28Llaves+ya+inclu%C3%ADdas%29">Built-in Keys (Llaves ya incluídas)<a href="#Built-in+Keys+%28Llaves+ya+inclu%C3%ADdas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Las llaves ya incluídas son simplemente campos de un objeto llamado
+<a href="../../sxr/sbt/Keys.scala.html">Keys</a>. Un archivo <code>build.sbt</code> tiene
+implícitamente un <code>import sbt.Keys._</code>, de modo que <code>sbt.Keys.name</code> puede
+ser referido como <code>name</code>.
+</p><h4 id="Custom+Keys+%28llaves+personalizadas%29">Custom Keys (llaves personalizadas)<a href="#Custom+Keys+%28llaves+personalizadas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Las llaves personalizadas pueden definirse con sus métodos de creación
+respectivos: <code>settingKey</code>, <code>taskKey</code>, e <code>inputKey</code>. Cada método espera
+el tipo del valor asociado con la llave así como una descripción. El
+nombre de la llave se toma del <code>val</code> al que se le asignó la llave. Por
+ejemplo, para definir una llave para una nueva tarea llamado <code>hello</code>, :
+</p><pre><code class="prettyprint lang-scala">lazy val hello = taskKey[Unit](&quot;An example task&quot;)
+</code></pre><p>Aquí se usó el hecho de que un archivo <code>.sbt</code> puede contener <code>val</code>s y
+<code>def</code>s además de <em>settings</em> (configuraciones). Todas estas definiciones
+son evaluadas antes que las configuraciones sin importar donde se
+definan en el archivo. <code>val</code>s y <code>def</code>s deben estar separadas de las
+<em>settings</em> mediante líneas blancas.
+</p><blockquote><p><strong>Note</strong>: Típicamente, se utilizan lazy vals en lugar de vals para evitar
+problemas de inicialización.
+</p></blockquote><h4 id="Task+vs.+Setting+keys+%28Llaves+para++vs.+Llaves+para+%29">Task vs. Setting keys (Llaves para <em>Tasks</em> vs. Llaves para <em>Settings</em>)<a href="#Task+vs.+Setting+keys+%28Llaves+para++vs.+Llaves+para+%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Se dice que una <code>TaskKey[T]</code> define una <em>task</em>. Las <em>tasks</em> son
+operaciones tales como <code>compile</code> o <code>package</code>. Pueden regresar <code>Unit</code>
+(<code>Unit</code> es el tipo de Scala análogo a <code>void</code>), o pueden regresar un
+valor relacionado con la tarea, por ejemplo, <code>package</code> es una
+<code>TaskKey[File]</code> y su valor es el archivo jar que este crea.
+</p><p>Cada vez que inicia una tarea de ejecución, por ejemplo mediante teclear
+<code>compile</code> en el prompt interactivo de sbt, sbt volverá a ejecutar
+cualquier <em>task</em> envuelta exactamente una vez.
+</p><p>El mapa de sbt que describe el proyecto puede mantener una cadena fija
+para un <em>setting</em> tal como <code>name</code>, pero tiene que haber algo de código
+ejecutable para una tarea como <code>compile</code> — incluso si dicho código
+ejecutable eventualmente regresa una cadena, tiene que ejecutarse cada
+vez.
+</p><p><em>Una key dada siempre se refiere ya sea a una task o a un setting</em>. Es
+decir, “taskiness” (si debe ejecutarse cada vez) es una propiedad de la
+<em>key</em>, no del valor.
+</p><h3 id="Definiendo+tasks+y+settings">Definiendo tasks y settings<a href="#Definiendo+tasks+y+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Usando <code>:=</code>, usted puede asignar un valor a un <em>setting</em> y un cómputo a
+una <em>task</em>. En el caso de un <em>setting</em>, el valor será calculado una sola
+vez al momento de cargar el proyecto. Para una tarea, el cómputo se
+realizará cada vez que se ejecute la tarea.
+</p><p>Por ejemplo, para implementar la tarea <code>hello</code> de la sección anterior, :
+</p><pre><code class="prettyprint lang-scala">hello := { println(&quot;Hello!&quot;) }
+</code></pre><p>Ya vimos un ejemplo de definición de un <em>setting</em> para el nombre del
+proyecto, :
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><h4 id="Tipos+para+las+tareas+y+los+settings">Tipos para las tareas y los settings<a href="#Tipos+para+las+tareas+y+los+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Desde la perspectiva del sistema de tipos, el <code>Setting</code> creado a partir
+de una <em>task key</em> es ligeramente distinta de la creada a partir de una
+<em>setting key</em>. <code>taskKey := 42</code> resulta en una <code>Setting[Task[T]]</code>
+mientras que <code>settingKey := 42</code> resulta en una <code>Setting[T]</code>. Para la
+mayoría de los propósitos no hay diferencia, la <em>task key</em> todavía crea
+un valor de tipo <code>T</code> cuando la tarea se ejecuta.
+</p><p>La diferencia entre los tipos <code>T</code> y <code>Task[T]</code> tiene la siguiente
+implicación: un <em>setting</em> no puede depender de una <em>task</em>, poque un
+<em>setting</em> es evaluado únicamente una vez al momento de cargar el
+proyecto y no se vuelve a ejecutar. Se escribirá más sobre este asunto
+pronto en <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><h3 id="Keys+en+modo+sbt+interactivo">Keys en modo sbt interactivo<a href="#Keys+en+modo+sbt+interactivo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>En el modo interactivo de sbt, usted puede teclear el nombre de
+cualquier tarea para ejecutar dicha tarea. Es por esto que al teclear
+<code>compile</code> se ejecuta la <em>task</em> de compilación. La <em>key</em> <code>compile</code> es una
+llave para una <em>task</em>.
+</p><p>Si usted teclea el nombre de una <em>key</em> para <em>setting</em> más bien que una
+para <em>task</em>, entonces el valor de la <em>key</em> para <em>setting</em> será mostrado.
+Al teclear el nombre de una <em>task</em> se ejecuta dicha <em>task</em>, pero no se
+despliega el valor resultante; para ver el resultado de la <em>task</em>, use
+<code>show &lt;nombre de la tarea&gt;</code> más bien que simplemente
+<code>&lt;nombre de la tarea</code>. La convención para los nombres de las llaves es
+usar <code>estiloDeCamello</code> de modo que el nombre utilizado en la línea de
+comandos y el identificador de Scala sean idénticos.
+</p><p>Para aprender más sobre cualquier <em>key</em>, teclee
+<code>inspect &lt;nombre de la key&gt;</code> en el prompt interactivo de sbt. Algo de la
+información que <code>inspect</code> despliega no tendrá sentido todavía, pero en
+la parte superior le mostrará el tipo del valor para el <em>setting</em> y una
+breve descripción del tal.
+</p><h3 id="Imports+en">Imports en <code>build.sbt</code><a href="#Imports+en" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Puede poner sentencias import en la parte superior de <code>build.sbt</code>; no
+necesitan estar separadas por líneas en blanco.
+</p><p>Hay algunos imports por default, como se indica a continuación:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Process._
+import Keys._
+</code></pre><p>(Además, si usted tiene <a href="Full-Def.html">archivos .scala</a>, el contenido de
+cualquier objeto <code>Build</code> o <code>Plugin</code> en estos archivos será importado.
+Más sobre este asunto cuando se llegue a
+<a href="Full-Def.html">definiciones de construccion .scala</a>.)
+</p><h3 id="A%C3%B1adiendo+dependencias+%28librer%C3%ADas%29">Añadiendo dependencias (librerías)<a href="#A%C3%B1adiendo+dependencias+%28librer%C3%ADas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Para agregar dependencias de librerías de terceros, hay dos opciones. La
+primera es añadir jars en el directorio <code>lib/</code> (para <em>unmanaged
+dependencies</em>) y la otra es agregar <em>managed dependencies</em>, que se verán
+como se muestra a continuación en <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+</code></pre><p>Así es como se agrega una <em>managed dependency</em> sobre la librería Apache
+Derby, versión 10.4.1.3.
+</p><p>La key <code>libraryDependencies</code> envuelve dos complejidades: <code>+=</code> más bien
+que <code>:=</code>, y el método <code>%</code>. <code>+=</code> agrega algo al valor anterior de la
+<em>key</em> más bien que reemplazarlo; esto se explica en
+<a href="More-About-Settings.html">más sobre los settings</a>. El
+método <code>%</code> se usa para construir un ID para un módulo de Ivy a partir de
+cadenas, como se explica en
+<a href="Library-Dependencies.html">library dependencies</a>.
+</p><p>Por lo pronto, omitiremos los detalles del manejo de las dependencias
+(librerías) hasta más tarde en la Guía de inicio. Hay una
+<a href="Library-Dependencies.html">página completa</a> que cubre el
+tema más tarde.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Scopes.html"> Scopes </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Basic-Def.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Basic-Def.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="../es/Basic-Def.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Guía de Inicio de sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Instalando sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Estructura de directorios</a></div></li><li><div><a href="Running.html">Ejecución</a></div></li><li><div class="current"> build definition</div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

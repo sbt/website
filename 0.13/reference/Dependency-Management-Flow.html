@@ -1,0 +1,160 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Dependency Management Flow</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Artifacts.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Library-Management.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Dependency+Management+Flow">Dependency Management Flow<a href="#Dependency+Management+Flow" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><ol><li>12.1 addresses several issues with dependency management. These fixes
+were made possible by specific, reproducible examples, such as a
+situation where the resolution cache got out of date (gh-532). A brief
+summary of the current work flow with dependency management in sbt
+follows.
+</li></ol><h2 id="Background">Background<a href="#Background" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><code>update</code> resolves dependencies according to the settings in a build
+file, such as <code>libraryDependencies</code> and <code>resolvers</code>. Other tasks use the
+output of <code>update</code> (an <code>UpdateReport</code>) to form various classpaths. Tasks
+that in turn use these classpaths, such as <code>compile</code> or <code>run</code>, thus
+indirectly depend on <code>update</code>. This means that before <code>compile</code> can run,
+the <code>update</code> task needs to run. However, resolving dependencies on every
+<code>compile</code> would be unnecessarily slow and so <code>update</code> must be particular
+about when it actually performs a resolution.
+</p><h2 id="Caching+and+Configuration">Caching and Configuration<a href="#Caching+and+Configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><ol><li>Normally, if no dependency management configuration has changed
+since the last successful resolution and the retrieved files are
+still present, sbt does not ask Ivy to perform resolution.
+</li><li>Changing the configuration, such as adding or removing dependencies
+or changing the version or other attributes of a dependency, will
+automatically cause resolution to be performed. Updates to locally
+published dependencies should be detected in sbt 0.12.1 and later
+and will force an update. Dependent tasks like compile and run will
+get updated classpaths.
+</li><li>Directly running the <code>update</code> task (as opposed to a task that
+depends on it) will force resolution to run, whether or not
+configuration changed. This should be done in order to refresh
+remote SNAPSHOT dependencies.
+</li><li>When <code>offline := true</code>, remote SNAPSHOTs will not be updated by a
+resolution, even an explicitly requested update. This should
+effectively support working without a connection to remote
+repositories. Reproducible examples demonstrating otherwise are
+appreciated. Obviously, update must have successfully run before
+going offline.
+</li><li>Overriding all of the above, <code>skip in update := true</code> will tell sbt
+to never perform resolution. Note that this can cause dependent
+tasks to fail. For example, compilation may fail if jars have been
+deleted from the cache (and so needed classes are missing) or a
+dependency has been added (but will not be resolved because skip is
+true). Also, update itself will immediately fail if resolution has
+not been allowed to run since the last clean.
+</li></ol><h2 id="General+troubleshooting+steps">General troubleshooting steps<a href="#General+troubleshooting+steps" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>A.  Run <code>update</code> explicitly. This will typically fix problems with out
+    of date SNAPSHOTs or locally published artifacts.
+B.  If a file cannot be found, look at the output of update to see where
+    Ivy is looking for the file. This may help diagnose an incorrectly
+    defined dependency or a dependency that is actually not present in a
+    repository.
+C.  <code>last update</code> contains more information about the most recent
+    resolution and download. The amount of debugging output from Ivy is
+    high, so you may want to use lastGrep (run help lastGrep for usage).
+D.  Run <code>clean</code> and then <code>update</code>. If this works, it could indicate a
+    bug in sbt, but the problem would need to be reproduced in order to
+    diagnose and fix it.
+E.  Before deleting all of the Ivy cache, first try deleting files in
+    \~/.ivy2/cache related to problematic dependencies. For example, if
+    there are problems with dependency “org.example” % “demo” % “1.0”,
+    delete \~/.ivy2/cache/org.example/demo/1.0/ and retry update. This
+    avoids needing to redownload all dependencies.
+F.  Normal sbt usage should not require deleting files from
+    \~/.ivy2/cache, especially if the first four steps have been
+    followed. If deleting the cache fixes a dependency management issue,
+    please try to reproduce the issue and submit a test case.
+</p><h2 id="Plugins">Plugins<a href="#Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>These troubleshooting steps can be run for plugins by changing to the
+build definition project, running the commands, and then returning to
+the main project. For example:
+</p><pre><code class="">&gt; reload plugins
+&gt; update
+&gt; reload return
+</code></pre><h2 id="Notes">Notes<a href="#Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>A.  Configure offline behavior for all projects on a machine by putting
+    offline := true in \~/.sbt/global.sbt. A command that does this for
+    the user would make a nice pull request. Perhaps the setting of
+    offline should go into the output of about or should it be a warning
+    in the output of update or both?
+B.  The cache improvements in 0.12.1 address issues in the change
+    detection for update so that it will correctly re-resolve
+    automatically in more situations. A problem with an out of date
+    cache can usually be attributed to a bug in that change detection if
+    explicitly running update fixes the problem.
+C.  A common solution to dependency management problems in sbt has been
+    to remove \~/.ivy2/cache. Before doing this with 0.12.1, be sure to
+    follow the steps in the troubleshooting section first. In
+    particular, verify that a clean and an explicit update do not solve
+    the issue.
+D.  There is no need to mark SNAPSHOT dependencies as <code>changing()</code>
+    because sbt configures Ivy to know this already.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Library-Management.html"> Library Management </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div class="current">Dependency Management Flow</div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

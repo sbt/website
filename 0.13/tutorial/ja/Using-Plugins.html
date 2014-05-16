@@ -1,0 +1,221 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>始める sbt — プラグインの使用</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'ja';
+        </script>
+        
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Multi-Project.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Custom-Settings.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%BF%E7%94%A8">プラグインの使用<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%BF%E7%94%A8" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このガイドの前のページをまず読んでほしい。
+特に <a href="Basic-Def.html">build.sbt</a>
+と
+<a href="Library-Dependencies.html">ライブラリ依存性</a>を理解していることが必要になる。
+</p><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%A3%E3%81%A6%E4%BD%95%3F">プラグインって何?<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%A3%E3%81%A6%E4%BD%95%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プラグインは、新たなセッティングを追加するなどして、ビルド定義を拡張する。
+そのセッティングは、新しいタスクを加えることもでき、
+例えば、テストカバレッジレポートを生成する <code>code-coverage</code> というタスクをプラグインが提供することができる。
+</p><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E8%BF%BD%E5%8A%A0">プラグインの追加<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E8%BF%BD%E5%8A%A0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h3 id="%E7%9F%AD%E3%81%84%E7%AD%94">短い答<a href="#%E7%9F%AD%E3%81%84%E7%AD%94" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プロジェクトが <code>hello</code> ディレクトリにあるなら、<code>hello/project/build.sbt</code> を編集して、
+プラグインの場所を resolver として追加して、次にプラグインの Ivy モジュール ID と共に <code>addSbtPlugin</code>
+を呼び出す:
+</p><pre>
+resolvers += Classpaths.typesafeResolver
+
+addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse" % "1.4.0")
+</pre><p>プラグインがデフォルトのリポジトリのどれかにあるならば、当然 resolver を追加する必要は無い。
+</p><p>と、まあこんな感じなんだけど、中で何が起こってるか理解するためには、続きを読んでほしい。
+</p><h3 id="%E4%BB%95%E7%B5%84%E3%81%BF">仕組み<a href="#%E4%BB%95%E7%B5%84%E3%81%BF" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>以前に説明した
+<a href="../full-def">sbt プロジェクトの再帰的な性質</a>と、
+<a href="../library-dependencies">マネージ依存性</a>を、まず理解してほしい。
+</p><h4 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%AE%E4%BE%9D%E5%AD%98%E6%80%A7">ビルド定義の依存性<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%AE%E4%BE%9D%E5%AD%98%E6%80%A7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>プラグインを追加することは、<em>ビルド定義にライブラリ依存性を追加する</em>ことを意味する。
+そのためには、ビルド定義のビルド定義を編集すればいい。
+</p><p><code>hello</code> プロジェクトがあるとき、そのビルド定義プロジェクトは
+<code>hello/*.sbt</code> と <code>hello/project/*.scala</code> から構成されることを思い出してほしい:
+</p><pre>
+
+   hello/                  # プロジェクトのベースディレクトリ
+
+       build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
+                           # 一部となる
+
+       project/            # ビルド定義プロジェクトのベースディレクトリ
+
+           Build.scala     # project/ プロジェクトのソースファイル、
+                           # つまり、ビルド定義のソースファイル
+</pre><p><code>hello</code> プロジェクトにマネージ依存性を追加する場合は、
+<code>libraryDependencies</code> セッティングを、<code>hello/*.sbt</code> か、<code>hellp/project/*.scala</code> かの
+どちらかで追加する。
+</p><p>具体例で、<code>hello/build.sbt</code> に追加してみよう:
+</p><pre>
+libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
+</pre><p>これを加えた後で sbt を起動して、インタラクティブモードから <code>show dependency-classpath</code>
+と打ち込むと、derby の jar ファイルがクラスパスに含まれているのが分かると思う。
+</p><p>プラグインを追加するには、再帰の一段深い段階で同じ事をすればいい。
+<em>ビルド定義プロジェクト</em>に新たな依存ライブラリを追加したい。
+これは、ビルド定義のビルド定義の <code>libraryDependencies</code> セッティングを変更することを意味する。
+</p><p><code>hello</code> プロジェクトがあるとき、ビルド定義のビルド定義は、
+<code>hello/project/*.sbt</code> と <code>hello/project/project/*.scala</code> にある。
+</p><p>最も単純な「プラグイン」は、sbt のための特殊なサポートを持たない、ただの jar ファイルだ。
+具体例で説明すると、<code>hello/project/build.sbt</code> を開いて、以下を追加してみよう:
+</p><pre>
+libraryDependencies += "net.liftweb" % "lift-json" % "2.0"
+</pre><p>次に、sbt のインタラクティブプロンプトから <code>reload plugins</code> と入力して、
+ビルド定義プロジェクトに入って、<code>show dependency-classpath</code> を試してみよう。
+lift-json の jar にクラスパスが通っていることが分かるはずだ。
+これは、<code>Build.scala</code> や <code>build.sbt</code> 内でタスクを実装するのに
+lift-json のクラスが利用できることを意味する。
+例えば、JSON ファイルをパーズしてそれに基づいて他のファイルを生成するといったことができる。
+<code>reload return</code> を使ってビルド定義プロジェクトから親プロジェクトに戻れるのを
+覚えておこう。
+</p><p>（つまらない sbt の遊びを一つ: <code>reload plugins</code> を繰り返し打ち込んでみよう。
+気づいたときには、<code>project/project/project/project/project/project/</code> 内のプロジェクトに
+迷いこむだろう。特に役に立たないから、あんまり気にしなくてもいい。
+これは、<code>target</code> ディレクトリをずっと下まで作りだすから、その掃除も後でしなくちゃいけない。）
+</p><h4 id=""><code>addSbtPlugin</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>addSbtPlugin</code> は、ただの便利メソッドだ。定義を見てみよう:
+</p><pre>
+def addSbtPlugin(dependency: ModuleID): Setting[Seq[ModuleID]] =
+                libraryDependencies <+= (sbtVersion in update,scalaVersion) { (sbtV, scalaV) => sbtPluginExtra(dependency, sbtV, scalaV) }
+</pre><p><a href="../more-about-settings">他の種類のセッティング</a>で説明したように、
+<code>&lt;+=</code> は、<code>&lt;&lt;=</code> と <code>+=</code> を組み合わせるということは覚えているかな。
+つまり、これは他のセッティングの基づいて値を作って、それを <code>libraryDependencies</code> に追加する。
+具体的には、値は、<code>sbtVersion in update</code>（<code>update</code> タスクにスコープ付けされた
+sbt のバージョン）
+と<code>scalaVersion</code>（プロジェクトのコンパイルに用いられる Scala のバージョン、
+つまり、ビルド定義のコンパイルに使われるもの）の二つに基づいている。
+<code>sbtPluginExtra</code> は、モジュールID に、sbt と Scala のバージョン情報を追加する。
+</p><h4 id=""><code>plugins.sbt</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>（プロジェクトが <code>hello</code> にあるとき）<code>hello/build.sbt</code> との混乱を避けるため、
+プラグインへの依存性は、<code>hello/project/plugins.sbt</code> に列挙する人もいる。
+sbt は <code>.sbt</code> ファイルが何と呼ばれようと気にしないため、
+<code>build.sbt</code> も <code>project/plugins.sbt</code> も慣習にすぎない。
+sbt が気にするのは、<code>.sbt</code> ファイルが<em>どこに置かれているのか</em>ということだ。
+<code>hello/*.sbt</code> は、<code>hello</code> の依存性を含み、
+<code>hello/project/*.sbt</code> は、<code>hello</code> のビルド定義の依存性を含む。
+</p><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AF%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%84%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%82%92%E8%87%AA%E5%8B%95%E8%BF%BD%E5%8A%A0%E3%81%A7%E3%81%8D%E3%82%8B">プラグインはセッティングやインポートを自動追加できる<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AF%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%82%84%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%82%92%E8%87%AA%E5%8B%95%E8%BF%BD%E5%8A%A0%E3%81%A7%E3%81%8D%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>ある意味では、プラグインは、ビルド定義の <code>libraryDependencies</code> に追加される jar ファイルにすぎない。
+それにより、上での lift-json を使った例のようにビルド定義から jar を利用することができる。
+</p><p>だけど、sbt プラグインとして意図された jar ファイルは、もう一歩進んだことができる。
+</p><p>適当なプラグインの jar ファイルをダンロードしてきて
+（<a href="http://repo.typesafe.com/typesafe/ivy-releases/com.typesafe.sbteclipse/sbteclipse/scala_2.9.1/sbt_0.11.0/1.4.0/jars/sbteclipse.jar">例えば、sbteclipse とか</a>）、
+<code>jar xf</code> で解凍すると、
+<code>sbt/sbt.plugins</code> というテキストファイルが含まれていることが分かる。
+<code>sbt/sbt.plugins</code> の各行には以下のようにオブジェクト名が書かれている:
+</p><pre>
+com.typesafe.sbteclipse.SbtEclipsePlugin
+</pre><p><code>com.typesafe.sbteclipse.SbtEclipsePlugin</code> は、
+<code>sbt.Plugin</code> を拡張するオブジェクトの名前だ。
+<code>sbt.Plugin</code> trait はとても単純なものだ:
+</p><pre>
+trait Plugin
+{
+        def settings: Seq[Setting[_]] = Nil
+}
+</pre><p>sbt は、<code>sbt/sbt.plugins</code> に列挙されたオブジェクトを探す。
+<code>com.typesafe.sbteclipse.SbtEclipsePlugin</code> を見つけると、
+プロジェクトのセッティングに <code>com.typesafe.sbteclipse.SbtEclipsePlugin.settings</code> を加える。
+また、ビルド定義の <code>.sbt</code> ファイルの評価時に
+<code>import com.typesafe.sbteclipse.SbtEclipsePlugin._</code> を実行して、
+プラグインが <code>.sbt</code> ファイルに対して値、オブジェクト、そしてメソッドを提供することを可能とする。
+</p><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E6%89%8B%E5%8B%95%E8%BF%BD%E5%8A%A0">プラグインからのセッティングの手動追加<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%AE%E6%89%8B%E5%8B%95%E8%BF%BD%E5%8A%A0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プラグインが、<code>Plugin</code> オブジェクトの <code>settings</code> フィールドを用いて
+セッティングを定義する場合は、
+何をしなくても自動的に追加される。
+</p><p>だけど、<a href="../multi-project">マルチプロジェクトビルド</a>内のどのプロジェクトがプラグインを
+使うかをコントロールできなくなってしまうため、通常プラグインはこの方法を避けることが多い。
+</p><p>sbt は、複数のセッティングをまとめて追加できる。
+</p><pre>
+object MyPlugin extends Plugin {
+   val myPluginSettings = Seq(settings in here)
+}
+</pre><p>このとき、以下のようにして <code>build.sbt</code> に全てのセッティングをまとめて追加できる:
+</p><pre>
+myPluginSettings
+</pre><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%9C%E6%88%90">プラグインの作成<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%9C%E6%88%90" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>ここまで読めば、sbt プラグインの<em>作成</em>も知っているも同然だ。
+一つだけ覚えておく事があって、それは <code>build.sbt</code> 内で
+<code>sbtPlugin := true</code> と設定することだ。
+プロジェクトの <code>sbtPlugin</code> が <code>true</code> の場合は、jar ファイルをパッケージ化するときに
+コンパイルされたクラスを検査して、
+検出された <code>Plugin</code> のインスタンスを <code>sbt/sbt.plugins</code> に書き出す。
+<code>sbtPlugin := true</code> は、また、sbt をプロジェクトのクラスパスに通すため、
+プラグインの実装に sbt の API を利用することができる。
+</p><p>プラグインの作成に関する詳細は、[[Plugins]] と [[Plugins Best Practices]] を参照。
+</p><h3 id="%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%AB%E3%83%BB%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3">グローバル・プラグイン<a href="#%E3%82%B0%E3%83%AD%E3%83%BC%E3%83%90%E3%83%AB%E3%83%BB%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>~/.sbt/plugins</code> で設定することで、全てのプロジェクトに対して一括してプラグインをインストールすることができる。
+<code>~/.sbt/plugins</code> は、sbt プロジェクトで、そのクラスパスは全ての sbt ビルド定義にエクスポートされる。
+大まかに言うと、<code>~/.sbt/plugins</code> 内の <code>.sbt</code> ファイルは、それが全てのプロジェクトの
+<code>project/</code> ディレクトリに入っているかのように振る舞い、
+<code>~/.sbt/plugins/project/</code> 内の <code>.scala</code> ファイルは、それが全てのプロジェクトの
+<code>project/project/</code> ディレクトリに入っているかのように振る舞う。
+</p><p><code>~/.sbt/plugins/build.sbt</code> を作って、そこに <code>addSbtPlugin()</code> 式を書くことで
+全プロジェクトにプラグインを追加することができる。
+</p><p>(sbt 0.13.0 から、グローバルプラグイン設定のデフォルトディレクトリは <code>~/.sbt/0.13/plugins/</code> へ変更になっています)
+</p><h3 id="%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3">利用可能なプラグイン<a href="#%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">プラグインのリスト</a>がある。
+</p><p>特に人気のプラグインは:
+</p><ul><li>IDE 専用プラグイン（sbt プロジェクトを IDE にインポートする）
+</li><li><a href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a> などの、web フレームワークプラグイン
+</li></ul><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">リストを見てほしい</a>。
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Custom-Settings.html"> カスタムセッティングとタスク </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Using-Plugins.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Using-Plugins.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">始める sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">sbt のインストール</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Mac への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Windows への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Linux への sbt のインストール</a></div></li><li><div><a href="Manual-Installation.html">手動インストール</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">ディレクトリ構造</a></div></li><li><div><a href="Running.html">実行</a></div></li><li><div><a href="Basic-Def.html">.sbt ビルド定義</a></div></li><li><div><a href="Scopes.html">スコープ</a></div></li><li><div><a href="More-About-Settings.html">他の種類のセッティング</a></div></li><li><div><a href="Library-Dependencies.html">ライブラリ依存性</a></div></li><li><div><a href="Multi-Project.html">マルチプロジェクト・ビルド</a></div></li><li><div class="current">プラグインの使用</div></li><li><div><a href="Custom-Settings.html">カスタムセッティングとタスク</a></div></li><li><div><a href="Full-Def.html">.scala ビルド定義</a></div></li><li><div><a href="Summary.html">まとめ</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

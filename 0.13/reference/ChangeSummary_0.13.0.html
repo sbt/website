@@ -1,0 +1,339 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — sbt 0.13.0 Changes</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Changes.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="ChangeSummary_0.12.0.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="sbt+0.13.0+Changes">sbt 0.13.0 Changes<a href="#sbt+0.13.0+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h2 id="Overview">Overview<a href="#Overview" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29">Features, fixes, changes with compatibility implications (incomplete, please help)<a href="#Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Moved to Scala 2.10 for sbt and build definitions.
+</li><li>Support for plugin configuration in <code>project/plugins/</code> has been
+removed. It was deprecated since 0.11.2.
+</li><li>Dropped support for tab completing the right side of a setting for
+the <code>set</code> command. The new task macros make this tab completion
+obsolete.
+</li><li>The convention for keys is now camelCase only. Details below.
+</li><li>Fixed the default classifier for tests to be <code>tests</code> for proper
+Maven compatibility.
+</li><li>The global settings and plugins directories are now versioned.
+Global settings go in <code>~/.sbt/0.13/</code> and global plugins in
+<code>~/.sbt/0.13/plugins/</code> by default. Explicit overrides, such as via
+the <code>sbt.global.base</code> system property, are still respected. (gh-735)
+</li><li>sbt no longer canonicalizes files passed to scalac. (gh-723)
+</li><li>sbt now enforces that each project must have a unique <code>target</code>
+directory.
+</li><li>sbt no longer overrides the Scala version in dependencies. This
+allows independent configurations to depend on different Scala
+versions and treats Scala dependencies other than scala-library as
+normal dependencies. However, it can result in resolved versions
+other than <code>scalaVersion</code> for those other Scala libraries.
+</li><li>JLine is now configured differently for Cygwin. See
+<code>/Getting-Started/Setup</code>.
+</li><li>Jline and Ansi codes work better on Windows now. CI servers might
+have to explictly disable Ansi codes via <code>-Dsbt.log.format=false</code>.
+</li><li>JLine now tries to respect <code>~/.inputrc</code>.
+</li><li>Forked tests and runs now use the project’s base directory as the
+current working directory.
+</li><li><code>compileInputs</code> is now defined in <code>(Compile,compile)</code> instead of
+just <code>Compile</code>
+</li><li>The result of running tests is now
+<code>Tests.Output &lt;../../api/#sbt.Tests$$Output&gt;</code>_.
+</li></ul><h3 id="Features">Features<a href="#Features" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Use the repositories in boot.properties as the default project
+resolvers. Add <code>bootOnly</code> to a repository in boot.properties to
+specify that it should not be used by projects by default. (Josh S.,
+gh-608)
+</li><li>Support vals and defs in .sbt files. Details below.
+</li><li>Support defining Projects in .sbt files: vals of type Project are
+added to the Build. Details below.
+</li><li>New syntax for settings, tasks, and input tasks. Details below.
+</li><li><p>Automatically link to external API scaladocs of dependencies by
+setting <code>autoAPIMappings := true</code>. This requires at least Scala
+</p><ol><li>10.1 and for dependencies to define <code>apiURL</code> for their scaladoc
+location. Mappings may be manually added to the <code>apiMappings</code> task
+as well.
+</li></ol></li><li>Support setting Scala home directory temporary using the switch
+command: <code>++ scala-version=/path/to/scala/home</code>. The scala-version
+part is optional, but is used as the version for any managed
+dependencies.
+</li><li>Add <code>publishM2</code> task for publishing to <code>~/.m2/repository</code>. (gh-485)
+</li><li>Use a default root project aggregating all projects if no root is
+defined. (gh-697)
+</li><li>New API for getting tasks and settings from multiple projects and
+configurations. See the new section
+<code>getting values from multiple scopes &lt;multiple-scopes&gt;</code>.
+</li><li>Enhanced test interface for better support of test framework
+features. (Details pending.)
+</li><li><p><code>export</code> command
+</p><blockquote><ul><li>For tasks, prints the contents of the ‘export’ stream. By
+convention, this should be the equivalent command line(s)
+representation. compile, doc, and console show the approximate
+command lines for their execution. Classpath tasks print the
+classpath string suitable for passing as an option.
+</li><li>For settings, directly prints the value of a setting instead
+of going through the logger
+</li></ul></blockquote></li></ul><h3 id="Fixes">Fixes<a href="#Fixes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>sbt no longer tries to warn on dependency conflicts. Configure a
+<code>conflict manager &lt;conflict-management&gt;</code> instead. (gh-709)
+</li><li>Run test Cleanup and Setup when forking. The test ClassLoader is not
+available because it is in another jvm.
+</li></ul><h3 id="Improvements">Improvements<a href="#Improvements" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Run the API extraction phase after the compiler’s <code>pickler</code> phase
+instead of <code>typer</code> to allow compiler plugins after <code>typer</code>. (Adriaan
+M., gh-609)
+</li><li>Record defining source position of settings. <code>inspect</code> shows the
+definition location of all settings contributing to a defined value.
+</li><li>Allow the root project to be specified explicitly in
+<code>Build.rootProject</code>.
+</li><li>Tasks that need a directory for storing cache information can now
+use the <code>cacheDirectory</code> method on <code>streams</code>. This supersedes the
+<code>cacheDirectory</code> setting.
+</li><li>The environment variables used when forking <code>run</code> and <code>test</code> may be
+set via <code>envVars</code>, which is a <code>Task[Map[String,String]]</code>. (gh-665)
+</li><li>Restore class files after an unsuccessful compilation. This is
+useful when an error occurs in a later incremental step that
+requires a fix in the originally changed files.
+</li><li>Better auto-generated IDs for default projects. (gh-554)
+</li><li>Fork run directly with ‘java’ to avoid additional class loader from
+‘scala’ command. (gh-702)
+</li><li>Make autoCompilerPlugins support compiler plugins defined in a
+internal dependency (only if <code>exportJars := true</code> due to scalac
+limitations)
+</li><li>Track ancestors of non-private templates and use this information to
+require fewer, smaller intermediate incremental compilation steps.
+</li><li><code>autoCompilerPlugins</code> now supports compiler plugins defined in a
+internal dependency. The plugin project must define
+<code>exportJars := true</code>. Depend on the plugin with
+<code>...dependsOn(... % Configurations.CompilerPlugin)</code>.
+</li><li>Add utilities for debugging API representation extracted by the
+incremental compiler. (Grzegorz K., gh-677, gh-793)
+</li><li><code>consoleProject</code> unifies the syntax for getting the value of a
+setting and executing a task. See
+<code>/Detailed-Topics/Console-Project</code>.
+</li></ul><h3 id="Other">Other<a href="#Other" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>The source layout for the sbt project itself follows the package
+name to accommodate to Eclipse users. (Grzegorz K., gh-613)
+</li></ul><h2 id="Details+of+major+changes">Details of major changes<a href="#Details+of+major+changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="camelCase+Key+names">camelCase Key names<a href="#camelCase+Key+names" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The convention for key names is now camelCase only instead of camelCase
+for Scala identifiers and hyphenated, lower-case on the command line.
+camelCase is accepted for existing hyphenated key names and the
+hyphenated form will still be accepted on the command line for those
+existing tasks and settings declared with hyphenated names. Only
+camelCase will be shown for tab completion, however.
+</p><h3 id="New+key+definition+methods">New key definition methods<a href="#New+key+definition+methods" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are new methods that help avoid duplicating key names by declaring
+keys as:
+</p><pre><code>val myTask = taskKey[Int](&quot;A (required) description of myTask.&quot;)
+</code></pre><p>The name will be picked up from the val identifier by the implementation
+of the taskKey macro so there is no reflection needed or runtime
+overhead. Note that a description is mandatory and the method <code>taskKey</code>
+begins with a lowercase <code>t</code>. Similar methods exist for keys for settings
+and input tasks: <code>settingKey</code> and <code>inputKey</code>.
+</p><h3 id="New+task%2Fsetting+syntax">New task/setting syntax<a href="#New+task%2Fsetting+syntax" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>First, the old syntax is still supported with the intention of allowing
+conversion to the new syntax at your leisure. There may be some
+incompatibilities and some may be unavoidable, but please report any
+issues you have with an existing build.
+</p><p>The new syntax is implemented by making <code>:=</code>, <code>+=</code>, and <code>++=</code> macros and
+making these the only required assignment methods. To refer to the value
+of other settings or tasks, use the <code>value</code> method on settings and
+tasks. This method is a stub that is removed at compile time by the
+macro, which will translate the implementation of the task/setting to
+the old syntax.
+</p><p>For example, the following declares a dependency on <code>scala-reflect</code>
+using the value of the <code>scalaVersion</code> setting:
+</p><pre><code>libraryDependencies += &quot;org.scala-lang&quot; % &quot;scala-reflect&quot; % scalaVersion.value
+</code></pre><p>The <code>value</code> method is only allowed within a call to <code>:=</code>, <code>+=</code>, or
+<code>++=</code>. To construct a setting or task outside of these methods, use
+<code>Def.task</code> or <code>Def.setting</code>. For example,
+</p><pre><code>val reflectDep = Def.setting { &quot;org.scala-lang&quot; % &quot;scala-reflect&quot; % scalaVersion.value }
+
+libraryDependencies += reflectDep.value   
+</code></pre><p>A similar method <code>parsed</code> is defined on <code>Parser[T]</code>,
+<code>Initialize[Parser[T]]</code> (a setting that provides a parser), and
+<code>Initialize[State =&gt; Parser[T]]</code> (a setting that uses the current
+<code>State</code> to provide a <code>Parser[T]</code>. This method can be used when defining
+an input task to get the result of user input.
+</p><pre><code>myInputTask := {
+     // Define the parser, which is the standard space-delimited arguments parser.
+   val args = Def.spaceDelimited(&quot;&lt;args&gt;&quot;).parsed
+     // Demonstrates using a setting value and a task result:
+   println(&quot;Project name: &quot; + name.value)
+   println(&quot;Classpath: &quot; + (fullClasspath in Compile).value.map(_.file))
+   println(&quot;Arguments:&quot;)
+   for(arg &lt;- args) println(&quot;  &quot; + arg)
+}
+</code></pre><p>For details, see <code>/Extending/Input-Tasks</code>.
+</p><p>To expect a task to fail and get the failing exception, use the
+<code>failure</code> method instead of <code>value</code>. This provides an <code>Incomplete</code>
+value, which wraps the exception. To get the result of a task whether or
+not it succeeds, use <code>result</code>, which provides a <code>Result[T]</code>.
+</p><p>Dynamic settings and tasks (<code>flatMap</code>) have been cleaned up. Use the
+<code>Def.taskDyn</code> and <code>Def.settingDyn</code> methods to define them (better name
+suggestions welcome). These methods expect the result to be a task and
+setting, respectively.
+</p><h3 id=".sbt+format+enhancements">.sbt format enhancements<a href="#.sbt+format+enhancements" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>vals and defs are now allowed in .sbt files. They must follow the same
+rules as settings concerning blank lines, although multiple definitions
+may be grouped together. For example,
+</p><pre><code>val n = &quot;widgets&quot;
+val o = &quot;org.example&quot;
+
+name := n
+
+organization := o
+</code></pre><p>All definitions are compiled before settings, but it will probably be
+best practice to put definitions together. Currently, the visibility of
+definitions is restricted to the .sbt file it is defined in. They are
+not visible in <code>consoleProject</code> or the <code>set</code> command at this time,
+either. Use Scala files in <code>project/</code> for visibility in all .sbt files.
+</p><p>vals of type <code>Project</code> are added to the <code>Build</code> so that multi-project
+builds can be defined entirely in .sbt files now. For example,
+</p><pre><code>lazy val a = Project(&quot;a&quot;, file(&quot;a&quot;)).dependsOn(b)
+
+lazy val b = Project(&quot;b&quot;, file(&quot;sub&quot;)).settings(
+   version := &quot;1.0&quot;
+)
+</code></pre><p>Currently, it only makes sense to defines these in the root project’s
+.sbt files.
+</p><p>A shorthand for defining Projects is provided by a new macro called
+<code>project</code>. This requires the constructed Project to be directly assigned
+to a <code>val</code>. The name of this val is used for the project ID and base
+directory. The base directory can be changed with the <code>in</code> method. The
+previous example can also be written as:
+</p><pre><code>lazy val a = project.dependsOn(b)
+
+lazy val b = project in file(&quot;sub&quot;) settings(
+  version := &quot;1.0&quot;
+)
+</code></pre><p>This macro is also available for use in Scala files.
+</p><h3 id="Control+over+automatically+added+settings">Control over automatically added settings<a href="#Control+over+automatically+added+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt loads settings from a few places in addition to the settings
+explicitly defined by the <code>Project.settings</code> field. These include
+plugins, global settings, and .sbt files. The new <code>Project.autoSettings</code>
+method configures these sources: whether to include them for the project
+and in what order.
+</p><p><code>Project.autoSettings</code> accepts a sequence of values of type
+<code>AddSettings</code>. Instances of <code>AddSettings</code> are constructed from methods
+in the <code>AddSettings</code> companion object. The configurable settings are
+per-user settings (from \~/.sbt, for example), settings from .sbt files,
+and plugin settings (project-level only). The order in which these
+instances are provided to <code>autoSettings</code> determines the order in which
+they are appended to the settings explicitly provided in
+<code>Project.settings</code>.
+</p><p>For .sbt files, <code>AddSettings.defaultSbtFiles</code> adds the settings from all
+.sbt files in the project’s base directory as usual. The alternative
+method <code>AddSettings.sbtFiles</code> accepts a sequence of <code>Files</code> that will be
+loaded according to the standard .sbt format. Relative files are
+resolved against the project’s base directory.
+</p><p>Plugin settings may be included on a per-Plugin basis by using the
+<code>AddSettings.plugins</code> method and passing a <code>Plugin =&gt; Boolean</code>. The
+settings controlled here are only the automatic per-project settings.
+Per-build and global settings will always be included. Settings that
+plugins require to be manually added still need to be added manually.
+</p><p>For example,
+</p><pre><code>import AddSettings._
+
+lazy val root = Project(&quot;root&quot;, file(&quot;.&quot;)) autoSettings(
+   userSettings, allPlugins, sbtFiles(file(&quot;explicit/a.txt&quot;))
+)
+
+lazy val sub = Project(&quot;sub&quot;, file(&quot;Sub&quot;)) autoSettings(
+   defaultSbtFiles, plugins(includePlugin)
+)
+
+def includePlugin(p: Plugin): Boolean =
+   p.getClass.getName.startsWith(&quot;org.example.&quot;)
+</code></pre><h3 id="Resolving+Scala+dependencies">Resolving Scala dependencies<a href="#Resolving+Scala+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Scala dependencies (like scala-library and scala-compiler) are now
+resolved via the normal <code>update</code> task. This means:
+</p><blockquote><ol><li>Scala jars won’t be copied to the boot directory, except for those
+needed to run sbt.
+</li><li>Scala SNAPSHOTs behave like normal SNAPSHOTs. In particular,
+running update will properly re-resolve the dynamic revision.
+</li><li>Scala jars are resolved using the same repositories and
+configuration as other dependencies.
+</li><li>Scala dependencies are not resolved via update when scalaHome is
+set, but are instead obtained from the configured directory.
+</li><li>The Scala version for sbt will still be resolved via the
+repositories configured for the launcher.
+</li></ol></blockquote><p>sbt still needs access to the compiler and its dependencies in order to
+run <code>compile</code>, <code>console</code>, and other Scala-based tasks. So, the Scala
+compiler jar and dependencies (like scala-reflect.jar and
+scala-library.jar) are defined and resolved in the <code>scala-tool</code>
+configuration (unless <code>scalaHome</code> is defined). By default, this
+configuration and the dependencies in it are automatically added by sbt.
+This occurs even when dependencies are configured in a <code>pom.xml</code> or
+<code>ivy.xml</code> and so it means that the version of Scala defined for your
+project must be resolvable by the resolvers configured for your project.
+</p><p>If you need to manually configure where sbt gets the Scala compiler and
+library used for compilation, the REPL, and other Scala tasks, do one of
+the following:
+</p><blockquote><ol><li>Set scalaHome to use the existing Scala jars in a specific
+directory. If autoScalaLibrary is true, the library jar found here
+will be added to the (unmanaged) classpath.
+</li><li>Set managedScalaInstance := false and explicitly define
+scalaInstance, which is of type ScalaInstance. This defines the
+compiler, library, and other jars comprising Scala. If
+autoScalaLibrary is true, the library jar from the defined
+ScalaInstance will be added to the (unmanaged) classpath.
+</li></ol></blockquote><p>The <code>/Detailed-Topics/Configuring-Scala</code> page provides full details.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="ChangeSummary_0.12.0.html"> sbt 0.12.0 Changes </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div class="current">sbt 0.13.0 Changes</div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Interacting with the Configuration System</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Cross-Building.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Triggered-Execution.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Interacting+with+the+Configuration+System">Interacting with the Configuration System<a href="#Interacting+with+the+Configuration+System" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>Central to sbt is the new configuration system, which is designed to
+enable extensive customization. The goal of this page is to explain the
+general model behind the configuration system and how to work with it.
+The Getting Started Guide (see
+<code>.sbt files &lt;/Getting-Started/Basic-Def&gt;</code>) describes how to define
+settings; this page describes interacting with them and exploring them
+at the command line.
+</p><h2 id="Selecting+commands%2C+tasks%2C+and+settings">Selecting commands, tasks, and settings<a href="#Selecting+commands%2C+tasks%2C+and+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>A fully-qualified reference to a setting or task looks like:
+</p><pre><code class="">{&lt;build-uri&gt;}&lt;project-id&gt;/config:inkey::key
+</code></pre><p>This “scoped key” reference is used by commands like <code>last</code> and
+<code>inspect</code> and when selecting a task to run. Only <code>key</code> is usually
+required by the parser; the remaining optional pieces select the scope.
+These optional pieces are individually referred to as scope axes. In the
+above description, <code>{&lt;build-uri&gt;}</code> and <code>&lt;project-id&gt;/</code> specify the
+project axis, <code>config:</code> is the configuration axis, and <code>inkey</code> is the
+task-specific axis. Unspecified components are taken to be the current
+project (project axis) or auto-detected (configuration and task axes).
+An asterisk (<code>*</code>) is used to explicitly refer to the <code>Global</code> context,
+as in <code>*/*:key</code>.
+</p><h3 id="Selecting+the+configuration">Selecting the configuration<a href="#Selecting+the+configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In the case of an unspecified configuration (that is, when the <code>config:</code>
+part is omitted), if the key is defined in <code>Global</code>, that is selected.
+Otherwise, the first configuration defining the key is selected, where
+order is determined by the project definition’s <code>configurations</code> member.
+By default, this ordering is <code>compile, test, ...</code>
+</p><p>For example, the following are equivalent when run in a project <code>root</code>
+in the build in <code>/home/user/sample/</code>:
+</p><pre><code class="">&gt; compile
+&gt; compile:compile
+&gt; root/compile
+&gt; root/compile:compile
+&gt; {file:/home/user/sample/}root/compile:compile
+</code></pre><p>As another example, <code>run</code> by itself refers to <code>compile:run</code> because
+there is no global <code>run</code> task and the first configuration searched,
+<code>compile</code>, defines a <code>run</code>. Therefore, to reference the <code>run</code> task for
+the <code>Test</code> configuration, the configuration axis must be specified like
+<code>test:run</code>. Some other examples that require the explicit <code>test:</code> axis:
+</p><pre><code class="">&gt; test:consoleQuick
+&gt; test:console
+&gt; test:doc
+&gt; test:package
+</code></pre><h3 id="Task-specific+Settings">Task-specific Settings<a href="#Task-specific+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Some settings are defined per-task. This is used when there are several
+related tasks, such as <code>package</code>, <code>packageSrc</code>, and <code>packageDoc</code>, in the
+same configuration (such as <code>compile</code> or <code>test</code>). For package tasks,
+their settings are the files to package, the options to use, and the
+output file to produce. Each package task should be able to have
+different values for these settings.
+</p><p>This is done with the task axis, which selects the task to apply a
+setting to. For example, the following prints the output jar for the
+different package tasks.
+</p><pre><code class="">&gt; package::artifactPath
+[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1.jar
+
+&gt; packageSrc::artifactPath
+[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-src.jar
+
+&gt; packageDoc::artifactPath
+[info] /home/user/sample/target/scala-2.8.1.final/demo_2.8.1-0.1-doc.jar
+
+&gt; test:package::artifactPath
+[info] /home/user/sample/target/scala-2.8.1.final/root_2.8.1-0.1-test.jar
+</code></pre><p>Note that a single colon <code>:</code> follows a configuration axis and a double
+colon <code>::</code> follows a task axis.
+</p><h2 id="Discovering+Settings+and+Tasks">Discovering Settings and Tasks<a href="#Discovering+Settings+and+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This section discusses the <code>inspect</code> command, which is useful for
+exploring relationships between settings. It can be used to determine
+which setting should be modified in order to affect another setting, for
+example.
+</p><h3 id="Value+and+Provided+By">Value and Provided By<a href="#Value+and+Provided+By" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The first piece of information provided by <code>inspect</code> is the type of a
+task or the value and type of a setting. The following section of output
+is labeled “Provided by”. This shows the actual scope where the setting
+is defined. For example,
+</p><pre><code class="">&gt; inspect libraryDependencies
+[info] Setting: scala.collection.Seq[sbt.ModuleID] = List(org.scalaz:scalaz-core:6.0-SNAPSHOT, org.scala-tools.testing:scalacheck:1.8:test)
+[info] Provided by:
+[info]  {file:/home/user/sample/}root/*:libraryDependencies
+...
+</code></pre><p>This shows that <code>libraryDependencies</code> has been defined on the current
+project (<code>{file:/home/user/sample/}root</code>) in the global configuration
+(<code>*:</code>). For a task like <code>update</code>, the output looks like:
+</p><pre><code class="">&gt; inspect update
+[info] Task: sbt.UpdateReport
+[info] Provided by:
+[info]  {file:/home/user/sample/}root/*:update
+...
+</code></pre><h3 id="Related+Settings">Related Settings<a href="#Related+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The “Related” section of <code>inspect</code> output lists all of the definitions
+of a key. For example,
+</p><pre><code class="">&gt; inspect compile
+...
+[info] Related:
+[info]  test:compile
+</code></pre><p>This shows that in addition to the requested <code>compile:compile</code> task,
+there is also a <code>test:compile</code> task.
+</p><h3 id="Dependencies">Dependencies<a href="#Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Forward dependencies show the other settings (or tasks) used to define a
+setting (or task). Reverse dependencies go the other direction, showing
+what uses a given setting. <code>inspect</code> provides this information based on
+either the requested dependencies or the actual dependencies. Requested
+dependencies are those that a setting directly specifies. Actual
+settings are what those dependencies get resolved to. This distinction
+is explained in more detail in the following sections.
+</p><h4 id="Requested+Dependencies">Requested Dependencies<a href="#Requested+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As an example, we’ll look at <code>console</code>:
+</p><pre><code class="">&gt; inspect console
+...
+[info] Dependencies:
+[info]  compile:console::fullClasspath
+[info]  compile:console::scalacOptions
+[info]  compile:console::initialCommands
+[info]  compile:console::cleanupCommands
+[info]  compile:console::compilers
+[info]  compile:console::taskTemporary-directory
+[info]  compile:console::scalaInstance
+[info]  compile:console::streams
+
+...
+</code></pre><p>This shows the inputs to the <code>console</code> task. We can see that it gets its
+classpath and options from <code>fullClasspath</code> and
+<code>scalacOptions(for console)</code>. The information provided by the <code>inspect</code>
+command can thus assist in finding the right setting to change. The
+convention for keys, like <code>console</code> and <code>fullClasspath</code>, is that the
+Scala identifier is camel case, while the String representation is
+lowercase and separated by dashes. The Scala identifier for a
+configuration is uppercase to distinguish it from tasks like <code>compile</code>
+and <code>test</code>. For example, we can infer from the previous example how to
+add code to be run when the Scala interpreter starts up:
+</p><pre><code class="">&gt; set initialCommands in Compile in console := &quot;import mypackage._&quot;
+&gt; console
+...
+import mypackage._
+...
+</code></pre><p><code>inspect</code> showed that <code>console</code> used the setting
+<code>compile:console::initialCommands</code>. Translating the <code>initialCommands</code>
+string to the Scala identifier gives us <code>initialCommands</code>. <code>compile</code>
+indicates that this is for the main sources. <code>console::</code> indicates that
+the setting is specific to <code>console</code>. Because of this, we can set the
+initial commands on the <code>console</code> task without affecting the
+<code>consoleQuick</code> task, for example.
+</p><h4 id="Actual+Dependencies">Actual Dependencies<a href="#Actual+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>inspect actual &lt;scoped-key&gt;</code> shows the actual dependency used. This is
+useful because delegation means that the dependency can come from a
+scope other than the requested one. Using <code>inspect actual</code>, we see
+exactly which scope is providing a value for a setting. Combining
+<code>inspect actual</code> with plain <code>inspect</code>, we can see the range of scopes
+that will affect a setting. Returning to the example in Requested
+Dependencies,
+</p><pre><code class="">&gt; inspect actual console
+...
+[info] Dependencies:
+[info]  compile:scalacOptions
+[info]  compile:fullClasspath
+[info]  *:scalaInstance
+[info]  */*:initialCommands
+[info]  */*:cleanupCommands
+[info]  */*:taskTemporaryDirectory
+[info]  *:console::compilers
+[info]  compile:console::streams
+...
+</code></pre><p>For <code>initialCommands</code>, we see that it comes from the global scope
+(<code>*/*:</code>). Combining this with the relevant output from
+<code>inspect console</code>:
+</p><pre><code class="">compile:console::initialCommands
+</code></pre><p>we know that we can set <code>initialCommands</code> as generally as the global
+scope, as specific as the current project’s <code>console</code> task scope, or
+anything in between. This means that we can, for example, set
+<code>initialCommands</code> for the whole project and will affect <code>console</code>:
+</p><pre><code class="">&gt; set initialCommands := &quot;import mypackage._&quot;
+...
+</code></pre><p>The reason we might want to set it here this is that other console tasks
+will use this value now. We can see which ones use our new setting by
+looking at the reverse dependencies output of <code>inspect actual</code>:
+</p><pre><code class="">&gt; inspect actual initialCommands
+...
+[info] Reverse dependencies:
+[info]  test:console
+[info]  compile:consoleQuick
+[info]  compile:console
+[info]  test:consoleQuick
+[info]  *:consoleProject
+...
+</code></pre><p>We now know that by setting <code>initialCommands</code> on the whole project, we
+affect all console tasks in all configurations in that project. If we
+didn’t want the initial commands to apply for <code>consoleProject</code>, which
+doesn’t have our project’s classpath available, we could use the more
+specific task axis:
+</p><pre><code class="">&gt; set initialCommands in console := &quot;import mypackage._&quot;
+&gt; set initialCommands in consoleQuick := &quot;import mypackage._&quot;`
+</code></pre><p>or configuration axis:
+</p><pre><code class="">&gt; set initialCommands in Compile := &quot;import mypackage._&quot;
+&gt; set initialCommands in Test := &quot;import mypackage._&quot;
+</code></pre><p>The next part describes the Delegates section, which shows the chain of
+delegation for scopes.
+</p><h3 id="Delegates">Delegates<a href="#Delegates" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A setting has a key and a scope. A request for a key in a scope A may be
+delegated to another scope if A doesn’t define a value for the key. The
+delegation chain is well-defined and is displayed in the Delegates
+section of the <code>inspect</code> command. The Delegates section shows the order
+in which scopes are searched when a value is not defined for the
+requested key.
+</p><p>As an example, consider the initial commands for <code>console</code> again:
+</p><pre><code class="">&gt; inspect console::initialCommands
+...
+[info] Delegates:
+[info]  *:console::initialCommands
+[info]  *:initialCommands
+[info]  {.}/*:console::initialCommands
+[info]  {.}/*:initialCommands
+[info]  */*:console::initialCommands
+[info]  */*:initialCommands
+...
+</code></pre><p>This means that if there is no value specifically for
+<code>*:console::initialCommands</code>, the scopes listed under Delegates will be
+searched in order until a defined value is found.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Triggered-Execution.html"> Triggered Execution </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div class="current">Interacting with the Configuration System</div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

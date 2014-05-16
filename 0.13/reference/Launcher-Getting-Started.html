@@ -1,0 +1,230 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Getting Started with the Sbt Launcher</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Sbt-Launcher.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Launcher-Architecture.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Getting+Started+with+the+Sbt+Launcher">Getting Started with the Sbt Launcher<a href="#Getting+Started+with+the+Sbt+Launcher" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>The sbt launcher component is a self-contained jar that boots a Scala
+application or server without Scala or the application already existing
+on the system. The only prerequisites are the launcher jar itself, an
+optional configuration file, and a java runtime version 1.6 or greater.
+</p><h2 id="Overview">Overview<a href="#Overview" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>A user downloads the launcher jar and creates a script to run it. In
+this documentation, the script will be assumed to be called <code>launch</code>.
+For unix, the script would look like: <code>java -jar sbt-launcher.jar &quot;$@&quot;</code>
+</p><p>The user can now launch servers and applications which provide sbt
+launcher configuration.
+</p><h3 id="Applications">Applications<a href="#Applications" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To launch an application, the user then downloads the configuration file
+for the application (call it <code>my.app.configuration</code>) and creates a
+script to launch it (call it <code>myapp</code>):
+<code>launch @my.app.configuration &quot;$@&quot;</code>
+</p><p>The user can then launch the application using <code>myapp arg1 arg2 ...</code>
+</p><p>More on launcher configuration can be found at
+<code>Launcher Configuration &lt;/Launcher/Configuration&gt;</code>
+</p><h3 id="Servers">Servers<a href="#Servers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The sbt launcher can be used to launch and discover running servers on
+the system. The launcher can be used to launch servers similarly to
+applications. However, if desired, the launcher can also be used to
+ensure that only one instance of a server is running at time. This is
+done by having clients always use the launcher as a <em>service locator</em>.
+</p><p>To discover where a server is running (or launch it if it is not
+running), the user downloads the configuration file for the server (call
+it <code>my.server.configuration</code>) and creates a script to discover the
+server (call it <code>find-myserver</code>):
+<code>launch --locate @my.server.properties</code>.
+</p><p>This command will print out one string, the URI at which to reach the
+server, e.g. <code>sbt://127.0.0.1:65501</code>. Clients should use the IP/port to
+connect to to the server and initiate their connection.
+</p><p>When using the <code>locate</code> feature, the sbt launcher makes these following
+restrictions to servers:
+</p><ul><li>The Server must have a starting class that extends the
+xsbti.ServerMain class
+</li><li>The Server must have an entry point (URI) that clients can use to
+detect the server
+</li><li>The server must have defined a lock file which the launcher can use
+to ensure that only one instance is running at a time
+</li><li>The filesystem on which the lock file resides must support locking.
+</li><li>The server must allow the launcher to open a socket against the port
+without sending any data. This is used to check if a previous server
+is still alive.
+</li></ul><h3 id="Resolving+Applications%2FServers">Resolving Applications/Servers<a href="#Resolving+Applications%2FServers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Like the launcher used to distribute <code>sbt</code>, the downloaded launcher jar
+will retrieve Scala and the application according to the provided
+configuration file. The versions may be fixed or read from a different
+configuration file (the location of which is also configurable). The
+location to which the Scala and application jars are downloaded is
+configurable as well. The repositories searched are configurable.
+Optional initialization of a properties file on launch is configurable.
+</p><p>Once the launcher has downloaded the necessary jars, it loads the
+application/server and calls its entry point. The application is passed
+information about how it was called: command line arguments, current
+working directory, Scala version, and application ID (organization,
+name, version). In addition, the application can ask the launcher to
+perform operations such as obtaining the Scala jars and a <code>ClassLoader</code>
+for any version of Scala retrievable from the repositories specified in
+the configuration file. It can request that other applications be
+downloaded and run. When the application completes, it can tell the
+launcher to exit with a specific exit code or to reload the application
+with a different version of Scala, a different version of the
+application, or different arguments.
+</p><p>There are some other options for setup, such as putting the
+configuration file inside the launcher jar and distributing that as a
+single download. The rest of this documentation describes the details of
+configuring, writing, distributing, and running the application.
+</p><h3 id="Creating+a+Launched+Application">Creating a Launched Application<a href="#Creating+a+Launched+Application" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>This section shows how to make an application that is launched by this
+launcher. First, declare a dependency on the launcher-interface. Do not
+declare a dependency on the launcher itself. The launcher interface
+consists strictly of Java interfaces in order to avoid binary
+incompatibility between the version of Scala used to compile the
+launcher and the version used to compile your application. The launcher
+interface class will be provided by the launcher, so it is only a
+compile-time dependency. If you are building with sbt, your dependency
+definition would be:
+</p><p>Make the entry point to your class implement ‘xsbti.AppMain’. An example
+that uses some of the information:
+</p><pre><code class="prettyprint lang-scala">package xsbt.test
+class Main extends xsbti.AppMain
+{
+    def run(configuration: xsbti.AppConfiguration) =
+    {
+        // get the version of Scala used to launch the application
+        val scalaVersion = configuration.provider.scalaProvider.version
+
+        // Print a message and the arguments to the application
+        println(&quot;Hello world!  Running Scala &quot; + scalaVersion)
+        configuration.arguments.foreach(println)
+
+        // demonstrate the ability to reboot the application into different versions of Scala
+        // and how to return the code to exit with
+        scalaVersion match
+        {
+            case &quot;2.9.3&quot; =&gt;
+                new xsbti.Reboot {
+                    def arguments = configuration.arguments
+                    def baseDirectory = configuration.baseDirectory
+                    def scalaVersion = &quot;2.10.2
+                    def app = configuration.provider.id
+                }
+            case &quot;2.10.2&quot; =&gt; new Exit(1)
+            case _ =&gt; new Exit(0)
+        }
+    }
+    class Exit(val code: Int) extends xsbti.Exit
+}
+</code></pre><p>Next, define a configuration file for the launcher. For the above class,
+it might look like:
+</p><p>Then, <code>publishLocal</code> or <code>+publishLocal</code> the application to make it
+available. For more information, please see
+<code>Launcher Configuration &lt;/Detailed-Topics/Launcher/Configuration&gt;</code>
+</p><h3 id="Running+an+Application">Running an Application<a href="#Running+an+Application" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>As mentioned above, there are a few options to actually run the
+application. The first involves providing a modified jar for download.
+The second two require providing a configuration file for download.
+</p><ul><li>Replace the /sbt/sbt.boot.properties file in the launcher jar and
+distribute the modified jar. The user would need a script to run
+java -jar your-launcher.jar arg1 arg2 ….
+</li><li><p>The user downloads the launcher jar and you provide the
+configuration file.
+</p><ul><li>The user needs to run
+java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar.
+</li><li>The user already has a script to run the launcher (call it
+‘launch’). The user needs to run
+launch @your.boot.properties your-arg-1 your-arg-2
+</li></ul></li></ul><h3 id="Execution">Execution<a href="#Execution" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Let’s review what’s happening when the launcher starts your application.
+</p><p>On startup, the launcher searches for its configuration and then parses
+it. Once the final configuration is resolved, the launcher proceeds to
+obtain the necessary jars to launch the application. The
+<code>boot.directory</code> property is used as a base directory to retrieve jars
+to. Locking is done on the directory, so it can be shared system-wide.
+The launcher retrieves the requested version of Scala to
+</p><pre><code class="">${boot.directory}/${scala.version}/lib/
+</code></pre><p>If this directory already exists, the launcher takes a shortcut for
+startup performance and assumes that the jars have already been
+downloaded. If the directory does not exist, the launcher uses Apache
+Ivy to resolve and retrieve the jars. A similar process occurs for the
+application itself. It and its dependencies are retrieved to
+</p><pre><code class="">${boot.directory}/${scala.version}/${app.org}/${app.name}/.
+</code></pre><p>Once all required code is downloaded, the class loaders are set up. The
+launcher creates a class loader for the requested version of Scala. It
+then creates a child class loader containing the jars for the requested
+‘app.components’ and with the paths specified in <code>app.resources</code>. An
+application that does not use components will have all of its jars in
+this class loader.
+</p><p>The main class for the application is then instantiated. It must be a
+public class with a public no-argument constructor and must conform to
+xsbti.AppMain. The <code>run</code> method is invoked and execution passes to the
+application. The argument to the ‘run’ method provides configuration
+information and a callback to obtain a class loader for any version of
+Scala that can be obtained from a repository in [repositories]. The
+return value of the run method determines what is done after the
+application executes. It can specify that the launcher should restart
+the application or that it should exit with the provided exit code.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Launcher-Architecture.html"> Sbt Launcher Architecture </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div class="current">Getting Started with the Sbt Launcher</div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

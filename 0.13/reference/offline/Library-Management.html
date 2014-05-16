@@ -1,0 +1,437 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Library Management</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Dependency-Management-Flow.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">❧</span>
+          </a><a class="page next nav" href="Proxy-Repositories.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">❧</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h1 id="Library+Management">Library Management<a href="#Library+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>There’s now a
+<code>getting started page &lt;/Getting-Started/Library-Dependencies&gt;</code> about
+library management, which you may want to read first.
+</p><p><em>Documentation Maintenance Note:</em> it would be nice to remove the overlap
+between this page and the getting started page, leaving this page with
+the more advanced topics such as checksums and external Ivy files.
+</p><h2 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>There are two ways for you to manage libraries with sbt: manually or
+automatically. These two ways can be mixed as well. This page discusses
+the two approaches. All configurations shown here are settings that go
+either directly in a <code>.sbt file &lt;/Getting-Started/Basic-Def&gt;</code> or are
+appended to the <code>settings</code> of a Project in a
+<code>.scala file &lt;/Getting-Started/Full-Def&gt;</code>.
+</p><h2 id="Manual+Dependency+Management">Manual Dependency Management<a href="#Manual+Dependency+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Manually managing dependencies involves copying any jars that you want
+to use to the <code>lib</code> directory. sbt will put these jars on the classpath
+during compilation, testing, running, and when using the interpreter.
+You are responsible for adding, removing, updating, and otherwise
+managing the jars in this directory. No modifications to your project
+definition are required to use this method unless you would like to
+change the location of the directory you store the jars in.
+</p><p>To change the directory jars are stored in, change the <code>unmanagedBase</code>
+setting in your project definition. For example, to use <code>custom_lib/</code>:
+</p><pre><code>unmanagedBase := baseDirectory.value / &quot;custom_lib&quot;
+</code></pre><p>If you want more control and flexibility, override the <code>unmanagedJars</code>
+task, which ultimately provides the manual dependencies to sbt. The
+default implementation is roughly:
+</p><pre><code>unmanagedJars in Compile := (baseDirectory.value ** &quot;*.jar&quot;).classpath
+</code></pre><p>If you want to add jars from multiple directories in addition to the
+default directory, you can do:
+</p><pre><code>unmanagedJars in Compile ++= {
+    val base = baseDirectory.value
+    val baseDirectories = (base / &quot;libA&quot;) +++ (base / &quot;b&quot; / &quot;lib&quot;) +++ (base / &quot;libC&quot;)
+    val customJars = (baseDirectories ** &quot;*.jar&quot;) +++ (base / &quot;d&quot; / &quot;my.jar&quot;)
+    customJars.classpath
+}
+</code></pre><p>See <code>Paths</code> for more information on building up paths.
+</p><h2 id="Automatic+Dependency+Management">Automatic Dependency Management<a href="#Automatic+Dependency+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This method of dependency management involves specifying the direct
+dependencies of your project and letting sbt handle retrieving and
+updating your dependencies. sbt supports three ways of specifying these
+dependencies:
+</p><ul><li>Declarations in your project definition
+</li><li>Maven POM files (dependency definitions only: no repositories)
+</li><li>Ivy configuration and settings files
+</li></ul><p>sbt uses <code>Apache Ivy &lt;http://ant.apache.org/ivy/&gt;</code>_ to implement
+dependency management in all three cases. The default is to use inline
+declarations, but external configuration can be explicitly selected. The
+following sections describe how to use each method of automatic
+dependency management.
+</p><h3 id="Inline+Declarations">Inline Declarations<a href="#Inline+Declarations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Inline declarations are a basic way of specifying the dependencies to be
+automatically retrieved. They are intended as a lightweight alternative
+to a full configuration using Ivy.
+</p><h4 id="Dependencies">Dependencies<a href="#Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Declaring a dependency looks like:
+</p><pre><code>libraryDependencies += groupID % artifactID % revision
+</code></pre><p>or
+</p><pre><code>libraryDependencies += groupID % artifactID % revision % configuration
+</code></pre><p>See <code>configurations &lt;ivy-configurations&gt;</code> for details on configuration
+mappings. Also, several dependencies can be declared together:
+</p><pre><code>libraryDependencies ++= Seq(
+    groupID %% artifactID % revision,
+    groupID %% otherID % otherRevision
+)
+</code></pre><p>If you are using a dependency that was built with sbt, double the first
+<code>%</code> to be <code>%%</code>:
+</p><pre><code>libraryDependencies += groupID %% artifactID % revision
+</code></pre><p>This will use the right jar for the dependency built with the version of
+Scala that you are currently using. If you get an error while resolving
+this kind of dependency, that dependency probably wasn’t published for
+the version of Scala you are using. See <code>Cross-Build</code> for details.
+</p><p>Ivy can select the latest revision of a module according to constraints
+you specify. Instead of a fixed revision like <code>&quot;1.6.1&quot;</code>, you specify
+<code>&quot;latest.integration&quot;</code>, <code>&quot;2.9.+&quot;</code>, or <code>&quot;[1.0,)&quot;</code>. See the
+<code>Ivy revisions &lt;http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision&gt;</code>_
+documentation for details.
+</p><h4 id="Resolvers">Resolvers<a href="#Resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt uses the standard Maven2 repository by default.
+</p><p>Declare additional repositories with the form:
+</p><pre><code>resolvers += name at location
+</code></pre><p>For example:
+</p><pre><code>libraryDependencies ++= Seq(
+    &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;,
+    &quot;org.specs&quot; % &quot;specs&quot; % &quot;1.6.1&quot;
+)
+
+resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
+</code></pre><p>sbt can search your local Maven repository if you add it as a
+repository:
+</p><pre><code>resolvers += &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome.absolutePath+&quot;/.m2/repository&quot;
+</code></pre><p>See <code>Resolvers</code> for details on defining other types of repositories.
+</p><h4 id="Override+default+resolvers">Override default resolvers<a href="#Override+default+resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>resolvers</code> configures additional, inline user resolvers. By default,
+<code>sbt</code> combines these resolvers with default repositories (Maven Central
+and the local Ivy repository) to form <code>externalResolvers</code>. To have more
+control over repositories, set <code>externalResolvers</code> directly. To only
+specify repositories in addition to the usual defaults, configure
+<code>resolvers</code>.
+</p><p>For example, to use the Sonatype OSS Snapshots repository in addition to
+the default repositories,
+</p><pre><code>resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
+</code></pre><p>To use the local repository, but not the Maven Central repository:
+</p><pre><code>externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+</code></pre><h4 id="Override+all+resolvers+for+all+builds">Override all resolvers for all builds<a href="#Override+all+resolvers+for+all+builds" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The repositories used to retrieve sbt, Scala, plugins, and application
+dependencies can be configured globally and declared to override the
+resolvers configured in a build or plugin definition. There are two
+parts:
+</p><ol><li>Define the repositories used by the launcher.
+</li><li>Specify that these repositories should override those in build
+definitions.
+</li></ol><p>The repositories used by the launcher can be overridden by defining
+<code>~/.sbt/repositories</code>, which must contain a <code>[repositories]</code> section
+with the same format as the <code>Launcher</code> configuration file. For example:
+</p><pre><code class="prettyprint lang-{.sourceCode .ini}">[repositories]
+local
+my-maven-repo: http://example.org/repo
+my-ivy-repo: http://example.org/ivy-repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+</code></pre><p>A different location for the repositories file may be specified by the
+<code>sbt.repository.config</code> system property in the sbt startup script. The
+final step is to set <code>sbt.override.build.repos</code> to true to use these
+repositories for dependency resolution and retrieval.
+</p><h4 id="Explicit+URL">Explicit URL<a href="#Explicit+URL" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If your project requires a dependency that is not present in a
+repository, a direct URL to its jar can be specified as follows:
+</p><pre><code>libraryDependencies += &quot;slinky&quot; % &quot;slinky&quot; % &quot;2.1&quot; from &quot;http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar&quot;
+</code></pre><p>The URL is only used as a fallback if the dependency cannot be found
+through the configured repositories. Also, the explicit URL is not
+included in published metadata (that is, the pom or ivy.xml).
+</p><h4 id="Disable+Transitivity">Disable Transitivity<a href="#Disable+Transitivity" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, these declarations fetch all project dependencies,
+transitively. In some instances, you may find that the dependencies
+listed for a project aren’t necessary for it to build. Projects using
+the Felix OSGI framework, for instance, only explicitly require its main
+jar to compile and run. Avoid fetching artifact dependencies with either
+<code>intransitive()</code> or <code>notTransitive()</code>, as in this example:
+</p><pre><code>libraryDependencies += &quot;org.apache.felix&quot; % &quot;org.apache.felix.framework&quot; % &quot;1.8.0&quot; intransitive()
+</code></pre><h4 id="Classifiers">Classifiers<a href="#Classifiers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>You can specify the classifier for a dependency using the <code>classifier</code>
+method. For example, to get the jdk15 version of TestNG:
+</p><pre><code>libraryDependencies += &quot;org.testng&quot; % &quot;testng&quot; % &quot;5.7&quot; classifier &quot;jdk15&quot;
+</code></pre><p>For multiple classifiers, use multiple <code>classifier</code> calls:
+</p><pre><code>libraryDependencies += 
+  &quot;org.lwjgl.lwjgl&quot; % &quot;lwjgl-platform&quot; % lwjglVersion classifier &quot;natives-windows&quot; classifier &quot;natives-linux&quot; classifier &quot;natives-osx&quot;
+</code></pre><p>To obtain particular classifiers for all dependencies transitively, run
+the <code>updateClassifiers</code> task. By default, this resolves all artifacts
+with the <code>sources</code> or <code>javadoc</code> classifier. Select the classifiers to
+obtain by configuring the <code>transitiveClassifiers</code> setting. For example,
+to only retrieve sources:
+</p><pre><code>transitiveClassifiers := Seq(&quot;sources&quot;)
+</code></pre><h4 id="Exclude+Transitive+Dependencies">Exclude Transitive Dependencies<a href="#Exclude+Transitive+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To exclude certain transitive dependencies of a dependency, use the
+<code>excludeAll</code> or <code>exclude</code> methods. The <code>exclude</code> method should be used
+when a pom will be published for the project. It requires the
+organization and module name to exclude. For example,
+</p><pre><code>libraryDependencies += 
+  &quot;log4j&quot; % &quot;log4j&quot; % &quot;1.2.15&quot; exclude(&quot;javax.jms&quot;, &quot;jms&quot;)
+</code></pre><p>The <code>excludeAll</code> method is more flexible, but because it cannot be
+represented in a pom.xml, it should only be used when a pom doesn’t need
+to be generated. For example,
+</p><pre><code>libraryDependencies +=
+  &quot;log4j&quot; % &quot;log4j&quot; % &quot;1.2.15&quot; excludeAll(
+    ExclusionRule(organization = &quot;com.sun.jdmk&quot;),
+    ExclusionRule(organization = &quot;com.sun.jmx&quot;),
+    ExclusionRule(organization = &quot;javax.jms&quot;)
+  )
+</code></pre><p>See <code>ModuleID &lt;../../api/sbt/ModuleID.html&gt;</code>_ for API details.
+</p><h4 id="Download+Sources">Download Sources<a href="#Download+Sources" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Downloading source and API documentation jars is usually handled by an
+IDE plugin. These plugins use the <code>updateClassifiers</code> and
+<code>updateSbtClassifiers</code> tasks, which produce an <code>Update-Report</code>
+referencing these jars.
+</p><p>To have sbt download the dependency’s sources without using an IDE
+plugin, add <code>withSources()</code> to the dependency definition. For API jars,
+add <code>withJavadoc()</code>. For example:
+</p><pre><code>libraryDependencies += 
+  &quot;org.apache.felix&quot; % &quot;org.apache.felix.framework&quot; % &quot;1.8.0&quot; withSources() withJavadoc()
+</code></pre><p>Note that this is not transitive. Use the <code>update-*classifiers</code> tasks
+for that.
+</p><h4 id="Extra+Attributes">Extra Attributes<a href="#Extra+Attributes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>Extra attributes &lt;http://ant.apache.org/ivy/history/2.3.0/concept.html#extra&gt;</code>_
+can be specified by passing key/value pairs to the <code>extra</code> method.
+</p><p>To select dependencies by extra attributes:
+</p><pre><code>libraryDependencies += &quot;org&quot; % &quot;name&quot; % &quot;rev&quot; extra(&quot;color&quot; -&gt; &quot;blue&quot;)
+</code></pre><p>To define extra attributes on the current project:
+</p><pre><code>projectID := {
+    val previous = projectID.value
+    previous.extra(&quot;color&quot; -&gt; &quot;blue&quot;, &quot;component&quot; -&gt; &quot;compiler-interface&quot;)
+}
+</code></pre><h4 id="Inline+Ivy+XML">Inline Ivy XML<a href="#Inline+Ivy+XML" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt additionally supports directly specifying the configurations or
+dependencies sections of an Ivy configuration file inline. You can mix
+this with inline Scala dependency and repository declarations.
+</p><p>For example:
+</p><pre><code>ivyXML :=
+  &lt;dependencies&gt;
+    &lt;dependency org=&quot;javax.mail&quot; name=&quot;mail&quot; rev=&quot;1.4.2&quot;&gt;
+      &lt;exclude module=&quot;activation&quot;/&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+</code></pre><h4 id="Ivy+Home+Directory">Ivy Home Directory<a href="#Ivy+Home+Directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt uses the standard Ivy home directory location
+<code>${user.home}/.ivy2/</code>. This can be configured machine-wide, for use by
+both the sbt launcher and by projects, by setting the system property
+<code>sbt.ivy.home</code> in the sbt startup script (described in
+<code>Setup &lt;/Getting-Started/Setup&gt;</code>).
+</p><p>For example:
+</p><pre><code class="prettyprint lang-{.sourceCode .text}">java -Dsbt.ivy.home=/tmp/.ivy2/ ...
+</code></pre><h4 id="Checksums">Checksums<a href="#Checksums" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt
+(<code>through Ivy &lt;http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum&gt;</code>_)
+verifies the checksums of downloaded files by default. It also publishes
+checksums of artifacts by default. The checksums to use are specified by
+the <em>checksums</em> setting.
+</p><p>To disable checksum checking during update:
+</p><pre><code>checksums in update := Nil
+</code></pre><p>To disable checksum creation during artifact publishing:
+</p><pre><code>checksums in publishLocal := Nil
+
+checksums in publish := Nil
+</code></pre><p>The default value is:
+</p><pre><code>checksums := Seq(&quot;sha1&quot;, &quot;md5&quot;)
+</code></pre><h4 id="Conflict+Management">Conflict Management<a href="#Conflict+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The conflict manager decides what to do when dependency resolution
+brings in different versions of the same library. By default, the latest
+revision is selected. This can be changed by setting <code>conflictManager</code>,
+which has type <code>ConflictManager &lt;../../api/sbt/ConflictManager.html&gt;</code>_.
+See the
+<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html&gt;</code>_
+for details on the different conflict managers. For example, to specify
+that no conflicts are allowed,
+</p><pre><code>conflictManager := ConflictManager.strict
+</code></pre><p>With this set, any conflicts will generate an error. To resolve a
+conflict,
+</p><blockquote><ul><li>configure a dependency override if the conflict is for a
+transitive dependency
+</li><li>force the revision if it is a direct dependency
+</li></ul></blockquote><p>Both are explained in the following sections.
+</p><h4 id="Forcing+a+revision">Forcing a revision<a href="#Forcing+a+revision" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The following direct dependencies will introduce a conflict on the log4j
+version because spark requires log4j 1.2.16.
+</p><pre><code>libraryDependencies ++= Seq(
+  &quot;org.spark-project&quot; %% &quot;spark-core&quot; % &quot;0.5.1&quot;,
+  &quot;log4j&quot; % &quot;log4j&quot; % &quot;1.2.14&quot;
+)
+</code></pre><p>The default conflict manager will select the newer version of log4j,
+1.2.16. This can be confirmed in the output of <code>show update</code>, which
+shows the newer version as being selected and the older version as not
+selected:
+</p><pre><code>&gt; show update
+[info] compile:
+[info]      log4j:log4j:1.2.16: ...
+...
+[info]      (EVICTED) log4j:log4j:1.2.14
+...
+</code></pre><p>To say that we prefer the version we’ve specified over the version from
+indirect dependencies, use <code>force()</code>:
+</p><pre><code>libraryDependencies ++= Seq(
+  &quot;org.spark-project&quot; %% &quot;spark-core&quot; % &quot;0.5.1&quot;,
+  &quot;log4j&quot; % &quot;log4j&quot; % &quot;1.2.14&quot; force()
+)
+</code></pre><p>The output of <code>show update</code> is now reversed:
+</p><pre><code>&gt; show update
+[info] compile:
+[info]      log4j:log4j:1.2.14: ...
+...
+[info]      (EVICTED) log4j:log4j:1.2.16
+...
+</code></pre><p><strong>Note:</strong> this is an Ivy-only feature and cannot be included in a
+published pom.xml.
+</p><h4 id="Forcing+a+revision+without+introducing+a+dependency">Forcing a revision without introducing a dependency<a href="#Forcing+a+revision+without+introducing+a+dependency" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Use of the <code>force()</code> method described in the previous section requires
+having a direct dependency. However, it may be desirable to force a
+revision without introducing that direct dependency. Ivy provides
+overrides for this and in sbt, overrides are configured in sbt with the
+<code>dependencyOverrides</code> setting, which is a set of <code>ModuleIDs</code>. For
+example, the following dependency definitions conflict because spark
+uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:
+</p><pre><code>libraryDependencies ++= Seq(
+   &quot;org.spark-project&quot; %% &quot;spark-core&quot; % &quot;0.5.1&quot;,
+   &quot;org.scalaxb&quot; %% &quot;scalaxb&quot; % &quot;1.0.0&quot;
+)
+</code></pre><p>The default conflict manager chooses the latest revision of log4j,
+1.2.17:
+</p><pre><code>&gt; show update
+[info] compile:
+[info]      log4j:log4j:1.2.17: ...
+...
+[info]      (EVICTED) log4j:log4j:1.2.16
+...
+</code></pre><p>To change the version selected, add an override:
+</p><pre><code>dependencyOverrides += &quot;log4j&quot; % &quot;log4j&quot; % &quot;1.2.16&quot;
+</code></pre><p>This will not add a direct dependency on log4j, but will force the
+revision to be 1.2.16. This is confirmed by the output of <code>show update</code>:
+</p><pre><code>&gt; show update
+[info] compile:
+[info]      log4j:log4j:1.2.16
+...
+</code></pre><p><strong>Note:</strong> this is an Ivy-only feature and will not be included in a
+published pom.xml.
+</p><h4 id="Publishing">Publishing<a href="#Publishing" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See <code>Publishing</code> for how to publish your project.
+</p><h4 id="Configurations">Configurations<a href="#Configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Ivy configurations are a useful feature for your build when you need
+custom groups of dependencies, such as for a plugin. Ivy configurations
+are essentially named sets of dependencies. You can read the
+<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html&gt;</code>_
+for details.
+</p><p>The built-in use of configurations in sbt is similar to scopes in Maven.
+sbt adds dependencies to different classpaths by the configuration that
+they are defined in. See the description of
+<code>Maven Scopes &lt;http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope&gt;</code>_
+for details.
+</p><p>You put a dependency in a configuration by selecting one or more of its
+configurations to map to one or more of your project’s configurations.
+The most common case is to have one of your configurations <code>A</code> use a
+dependency’s configuration <code>B</code>. The mapping for this looks like
+<code>&quot;A-&gt;B&quot;</code>. To apply this mapping to a dependency, add it to the end of
+your dependency definition:
+</p><pre><code>libraryDependencies += &quot;org.scalatest&quot; %% &quot;scalatest&quot; % &quot;2.1.3&quot; % &quot;test-&gt;compile&quot;
+</code></pre><p>This says that your project’s <code>&quot;test&quot;</code> configuration uses <code>ScalaTest</code>’s
+<code>&quot;compile&quot;</code> configuration. See the
+<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html&gt;</code>_
+for more advanced mappings. Most projects published to Maven
+repositories will use the <code>&quot;compile&quot;</code> configuration.
+</p><p>A useful application of configurations is to group dependencies that are
+not used on normal classpaths. For example, your project might use a
+<code>&quot;js&quot;</code> configuration to automatically download jQuery and then include
+it in your jar by modifying <code>resources</code>. For example:
+</p><pre><code>ivyConfigurations += config(&quot;js&quot;) hide
+
+libraryDependencies += &quot;jquery&quot; % &quot;jquery&quot; % &quot;1.3.2&quot; % &quot;js-&gt;default&quot; from &quot;http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js&quot;
+
+resources ++= update.value.select(configurationFilter(&quot;js&quot;))
+</code></pre><p>The <code>config</code> method defines a new configuration with name <code>&quot;js&quot;</code> and
+makes it private to the project so that it is not used for publishing.
+See <code>/Detailed-Topics/Update-Report</code> for more information on selecting
+managed artifacts.
+</p><p>A configuration without a mapping (no <code>&quot;-&gt;&quot;</code>) is mapped to <code>&quot;default&quot;</code>
+or <code>&quot;compile&quot;</code>. The <code>-&gt;</code> is only needed when mapping to a different
+configuration than those. The ScalaTest dependency above can then be
+shortened to:
+</p><pre><code>libraryDependencies += &quot;org.scalatest&quot; %% &quot;scalatest&quot; % &quot;2.1.3&quot; % &quot;test&quot;
+</code></pre><h3 id="Maven%2FIvy">Maven/Ivy<a href="#Maven%2FIvy" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>For this method, create the configuration files as you would for Maven
+(<code>pom.xml</code>) or Ivy (<code>ivy.xml</code> and optionally <code>ivysettings.xml</code>).
+External configuration is selected by using one of the following
+expressions.
+</p><h4 id="Ivy+settings+%28resolver+configuration%29">Ivy settings (resolver configuration)<a href="#Ivy+settings+%28resolver+configuration%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>externalIvySettings()
+</code></pre><p>or
+</p><pre><code>externalIvySettings(baseDirectory.value / &quot;custom-settings-name.xml&quot;)
+</code></pre><p>or
+</p><pre><code>externalIvySettingsURL(url(&quot;your_url_here&quot;))
+</code></pre><h4 id="Ivy+file+%28dependency+configuration%29">Ivy file (dependency configuration)<a href="#Ivy+file+%28dependency+configuration%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>externalIvyFile()
+</code></pre><p>or
+</p><pre><code>externalIvyFile(Def.setting(baseDirectory.value / &quot;custom-name.xml&quot;))
+</code></pre><p>Because Ivy files specify their own configurations, sbt needs to know
+which configurations to use for the compile, runtime, and test
+classpaths. For example, to specify that the Compile classpath should
+use the ‘default’ configuration:
+</p><pre><code>classpathConfiguration in Compile := config(&quot;default&quot;)
+</code></pre><h4 id="Maven+pom+%28dependencies+only%29">Maven pom (dependencies only)<a href="#Maven+pom+%28dependencies+only%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>externalPom()
+</code></pre><p>or
+</p><pre><code>externalPom(Def.setting(baseDirectory.value / &quot;custom-name.xml&quot;))
+</code></pre><h4 id="Full+Ivy+Example">Full Ivy Example<a href="#Full+Ivy+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For example, a <code>build.sbt</code> using external Ivy files might look like:
+</p><pre><code>externalIvySettings()
+
+externalIvyFile(Def.setting(baseDirectory.value / &quot;ivyA.xml&quot;))
+
+classpathConfiguration in Compile := Compile
+
+classpathConfiguration in Test := Test
+
+classpathConfiguration in Runtime := Runtime
+</code></pre><h4 id="Known+limitations">Known limitations<a href="#Known+limitations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Maven support is dependent on Ivy’s support for Maven POMs. Known issues
+with this support:
+</p><ul><li>Specifying <code>relativePath</code> in the <code>parent</code> section of a POM will
+produce an error.
+</li><li>Ivy ignores repositories specified in the POM. A workaround is to
+specify repositories inline or in an Ivy ivysettings.xml file.
+</li></ul><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">❧</span>
+                        <a href="Proxy-Repositories.html"> Proxy Repositories </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div class="current">Library Management</div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>
