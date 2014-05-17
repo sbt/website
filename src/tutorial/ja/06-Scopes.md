@@ -190,7 +190,7 @@ sbt のインタラクティブモード内で `inspect` コマンドを使っ�
 
 より詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
 
-## ビルド定義からスコープを参照する
+### ビルド定義からスコープを参照する
 
 `build.sbt` で裸のキーを使ってセッティングを作った場合は、現プロジェクト、`Global` コンフィグレーション、`Global` タスクにスコープ付けされる:
 

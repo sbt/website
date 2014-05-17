@@ -70,7 +70,7 @@ scalaVersion := "2.10.3"
 
 君のプロジェクトを jar ファイルにパッケージ化する予定なら、最低でも `build.sbt` に name と version は書いておこう。
 
-## sbt バージョンの設定
+### sbt バージョンの設定
 
 `hello/project/build.properties` というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:
