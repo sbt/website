@@ -2,33 +2,35 @@
 out: Community-Plugins.html
 ---
 
+  [Bintray-For-Plugins]: Bintray-For-Plugins.html
+
 Community Plugins
 -----------------
 
 ### sbt Organization
 
-The `sbt organization <http://github.com/sbt>`\_ is available for use by
+The [sbt organization](http://github.com/sbt) is available for use by
 any sbt plugin. Developers who contribute their plugins into the
 community organization will still retain control over their repository
 and its access. The goal of the sbt organization is to organize sbt
 software into one central location.
 
 A side benefit to using the sbt organization for projects is that you
-can use gh-pages to host websites in the <http://scala-sbt.org> domain.
+can use gh-pages to host websites in the http://scala-sbt.org domain.
 
 ### Community Ivy Repository
 
-`Typesafe <http://www.typesafe.com>`\_ has provided a freely available
-`Ivy Repository <http://repo.scala-sbt.org/scalasbt>`\_ for sbt projects
+[Typesafe](http://www.typesafe.com) has provided a freely available
+[Ivy Repository](http://repo.scala-sbt.org/scalasbt) for sbt projects
 to use. This ivy repository is mirrored from the freely available
-`Bintray service <http://bintray.com>`\_. If you'd like to submit your
-plugin, please follow these instructions:
-`Bintray For Plugins <Bintray-For-Plugins.html>`\_.
+[Bintray service](http://bintray.com).
+If you'd like to submit your plugin, please follow these instructions:
+[Bintray For Plugins][Bintray-For-Plugins].
 
 ### Available Plugins
 
 Please feel free to
-`submit a pull request <https://github.com/sbt/sbt/pulls>`\_ that adds
+[submit a pull request](https://github.com/sbt/website/pulls) that adds
 your plugin to the list.
 
 #### Plugins for IDEs
@@ -167,7 +169,7 @@ your plugin to the list.
     <https://github.com/sbt/sbt-protobuf>
 -   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
 -   sbt-xjc (XSD binding, using
-    `JAXB XJC <http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html>`\_):
+    [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
     <https://github.com/sbt/sbt-xjc>
 -   xsbt-scalate-generate (Generate/Precompile Scalate Templates):
     <https://github.com/backchatio/xsbt-scalate-generate>
@@ -184,7 +186,7 @@ your plugin to the list.
     <https://github.com/bigtoast/sbt-thrift>
 -   xsbt-hginfo (Generate Scala source code for Mercurial repository
     information):
-    [https://bitbucket.org/lukas\\\_pustina/xsbt-hginfo](https://bitbucket.org/lukas\_pustina/xsbt-hginfo)
+    <https://bitbucket.org/lukas_pustina/xsbt-hginfo>
 -   sbt-scalashim (Generate Scala shim like `sys.error`):
     <https://github.com/sbt/sbt-scalashim>
 -   sbtend (Generate Java source code from
@@ -282,7 +284,5 @@ your plugin to the list.
 
 #### Plugin bundles
 
--   tl-os-sbt-plugins (Version, Release, and Package Management, Play
-    2.0 and Git utilities) :
+-   tl-os-sbt-plugins (Version, Release, and Package Management, Play 2.0 and Git utilities) :
     <https://github.com/trafficland/tl-os-sbt-plugins>
-

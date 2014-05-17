@@ -1,3 +1,7 @@
+---
+out: Repository-Roles.html
+---
+
 Community Repository Policy
 ---------------------------
 
