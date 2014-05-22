@@ -3,14 +3,13 @@ out: Classpaths.html
 ---
 
 Classpaths, sources, and resources
-==================================
+----------------------------------
 
 This page discusses how sbt builds up classpaths for different actions,
 like `compile`, `run`, and `test` and how to override or augment these
 classpaths.
 
-Basics
-------
+### Basics
 
 In sbt 0.10 and later, classpaths now include the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
@@ -37,7 +36,7 @@ create an `Attributed[File]` from a `File`, use `Attributed.blank`:
     val rawFile: File = ..
     val af: Attributed[File] = Attributed.blank(rawFile)
 
-### Unmanaged v. managed
+#### Unmanaged v. managed
 
 Classpaths, sources, and resources are separated into two main
 categories: unmanaged and managed. Unmanaged files are manually created
@@ -71,7 +70,7 @@ result of the task.
 For resources, there are similar keys `resourceGenerators` and
 `resourceManaged`.
 
-#### Excluding source files by name
+##### Excluding source files by name
 
 The project base directory is by default a source directory in addition
 to `src/main/scala`. You can exclude source files by name
@@ -82,7 +81,7 @@ to `src/main/scala`. You can exclude source files by name
 Read more on
 `How to exclude .scala source file in project folder - Google Groups <http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en>`\_
 
-### External v. internal
+#### External v. internal
 
 Classpaths are also divided into internal and external dependencies. The
 internal dependencies are inter-project dependencies. These effectively
@@ -91,7 +90,7 @@ put the outputs of one project on the classpath of another project.
 External classpaths are the union of the unmanaged and managed
 classpaths.
 
-### Keys
+#### Keys
 
 For classpaths, the relevant keys are:
 
@@ -128,7 +127,7 @@ more details.
 See also a related
 `StackOverflow answer <http://stackoverflow.com/a/7862872/850196>`\_.
 
-### Example
+#### Example
 
 You have a standalone project which uses a library that loads
 xxx.properties from classpath at run time. You put xxx.properties inside

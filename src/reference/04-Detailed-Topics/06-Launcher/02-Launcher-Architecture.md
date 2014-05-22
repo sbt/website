@@ -3,7 +3,7 @@ out: Launcher-Architecture.html
 ---
 
 Sbt Launcher Architecture
-=========================
+-------------------------
 
 The sbt launcher is a mechanism whereby modules can be loaded from ivy
 and executed within a jvm. It abstracts the mechanism of grabbing and
@@ -26,8 +26,7 @@ The sbt launcher provides these core functions:
 -   File Locking
 -   Service Discovery and Isolation
 
-Module Resolution
------------------
+### Module Resolution
 
 The primary purpose of the sbt launcher is to resolve applications and
 run them. This is done through the `[app]` configuration section. See
@@ -38,8 +37,7 @@ Module resolution is performed using the Ivy dependency managemnet
 library. This library supports loading artifacts from Maven repositories
 as well.
 
-Classloader Caching and Isolation
----------------------------------
+### Classloader Caching and Isolation
 
 The sbt launcher's classloading structure is different than just
 starting an application in the standard java mechanism. Every
@@ -58,16 +56,14 @@ same classloader for these applications. This has the benefit that any
 JIT optimisations performed on scala classes can be re-used between
 applications thanks to the shared classloader.
 
-Caching
--------
+### Caching
 
 The sbt launcher creates a secondary cache on top of Ivy's own cache.
 This helps isolate applications from errors resulting from unstable
 revisions, like `-SNAPSHOT`. For any launched application, the launcher
 creates a directory to store all its jars. Here's an example layout.
 
-Locking
--------
+### Locking
 
 In addition to providing a secondary cache, the launcher also provides a
 mechanism of safely doing file-based locks. This is used in two places
@@ -83,8 +79,7 @@ via the `xsbti.GlobalLock` interface.
 access to a single process, but also a single thread within that
 process.*
 
-Service Discovery and Isolation
--------------------------------
+### Service Discovery and Isolation
 
 The launcher also provides a mechanism to ensure that only one instance
 of a server is running, while dynamically starting it when a client

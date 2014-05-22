@@ -3,10 +3,9 @@ out: Commands.html
 ---
 
 Commands
-========
+--------
 
-What is a "command"?
---------------------
+### What is a "command"?
 
 A "command" looks similar to a task: it's a named operation that can be
 executed from the sbt console.
@@ -18,8 +17,7 @@ look at or modify other sbt settings, for example. Typically, you would
 resort to a command when you need to do something that's impossible in a
 regular task.
 
-Introduction
-------------
+### Introduction
 
 There are three main aspects to commands:
 
@@ -46,8 +44,7 @@ State.
 Finally, basic help information may be provided that is used by the
 `help` command to display command help.
 
-Defining a Command
-------------------
+### Defining a Command
 
 A command combines a function `State => Parser[T]` with an action
 `(State, T) => State`. The reason for `State => Parser[T]` and not
@@ -59,7 +56,7 @@ for the general and specific cases are shown in the following sections.
 See `Command.scala <../../sxr/sbt/Command.scala.html>`\_ for the source
 API details for constructing commands.
 
-### General commands
+#### General commands
 
 General command construction looks like:
 
@@ -67,7 +64,7 @@ General command construction looks like:
     val parser: State => Parser[T] = ...
     val command: Command = Command("name")(parser)(action)
 
-### No-argument commands
+#### No-argument commands
 
 There is a convenience method for constructing commands that do not
 accept any arguments.
@@ -75,7 +72,7 @@ accept any arguments.
     val action: State => State = ...
     val command: Command = Command.command("name")(action)
 
-### Single-argument command
+#### Single-argument command
 
 There is a convenience method for constructing commands that accept a
 single argument with arbitrary content.
@@ -84,7 +81,7 @@ single argument with arbitrary content.
     val action: (State, String) => State = ...
     val command: Command = Command.single("name")(action)
 
-### Multi-argument command
+#### Multi-argument command
 
 There is a convenience method for constructing commands that accept
 multiple arguments separated by spaces.
@@ -94,8 +91,7 @@ multiple arguments separated by spaces.
     // <arg> is the suggestion printed for tab completion on an argument
     val command: Command = Command.args("name", "<arg>")(action)
 
-Full Example
-------------
+### Full Example
 
 The following example is a valid `project/Build.scala` that adds
 commands to a project. To try it out:

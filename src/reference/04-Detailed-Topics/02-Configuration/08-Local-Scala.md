@@ -3,7 +3,7 @@ out: Local-Scala.html
 ---
 
 Local Scala
-===========
+-----------
 
 To use a locally built Scala version, define the `scalaHome` setting,
 which is of type `Option[File]`. This Scala version will only be used

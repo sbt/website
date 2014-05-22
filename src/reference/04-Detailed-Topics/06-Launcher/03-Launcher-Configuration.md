@@ -3,7 +3,7 @@ out: Launcher-Configuration.html
 ---
 
 Sbt Launcher Configuration
-==========================
+--------------------------
 
 The launcher may be configured in one of the following ways in
 increasing order of precedence:
@@ -22,14 +22,13 @@ increasing order of precedence:
 
 An error is generated if none of these attempts succeed.
 
-Example
--------
+### Example
 
 The default configuration file for sbt as an application looks like:
 
 Let's look at all the launcher configuration sections in detail:
 
-### 1. Scala Configuration
+#### 1. Scala Configuration
 
 The `[scala]` section is used to configure the version of Scala. It has
 one property:
@@ -39,7 +38,7 @@ one property:
 -   `classifiers` - The (optional) list of additional scala artifacts to
     resolve, e.g. sources.
 
-### 2. Applicaiton Identification
+#### 2. Applicaiton Identification
 
 The `[app]` section configures how the launcher will look for your
 application using the Ivy dependency manager. It consists of the
@@ -73,7 +72,7 @@ following properties:
 -   `classifiers` - An optional list of additional classifiers that
     should be resolved with this application, e.g. sources.
 
-### 3. Repositories Section
+#### 3. Repositories Section
 
 The `[repositories]` section configures where and how Ivy will look for
 your application. Each line denotes a repository where Ivy will look.
@@ -106,7 +105,7 @@ the maven style format.
 The `skipConsistencyCheck` string is used to tell ivy not to validate
 checksums and signatures of files it resolves.
 
-### 4. The Boot section
+#### 4. The Boot section
 
 The `[boot]` section is used to configure where the sbt launcher will
 store its cache and configuration information. It consists of the
@@ -117,7 +116,7 @@ following properties:
 -   `properties` - (optional) A properties file to use for any `read`
     variables.
 
-### 5. The Ivy section
+#### 5. The Ivy section
 
 The `[ivy]` section is used to configure the Ivy dependency manager for
 resolving applications. It consists of the following properties:
@@ -141,7 +140,7 @@ resolving applications. It consists of the following properties:
     ivy repositories can also be configured. If this file exists, then
     its contents override the [repositories] section.
 
-### 6. The Server Section
+#### 6. The Server Section
 
 When using the `--locate` feature of the launcher, this section
 configures how a server is started. It consists of the following
@@ -157,8 +156,7 @@ properties:
     override properties in the server. All properties defined in this
     file will be set as -D java properties.
 
-Variable Substitution
----------------------
+### Variable Substitution
 
 Property values may include variable substitutions. A variable
 substitution has one of these forms:
@@ -181,8 +179,7 @@ This will look in the file configured by `boot.properties` for a value.
 If there is no `boot.properties` file configured, or the property does
 not existt, then the default value is chosen.
 
-Syntax
-------
+### Syntax
 
 The configuration file is line-based, read as UTF-8 encoded, and defined
 by the following grammar. `'nl'` is a newline or end of file and

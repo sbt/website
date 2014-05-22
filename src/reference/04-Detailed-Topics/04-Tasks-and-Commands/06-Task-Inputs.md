@@ -3,7 +3,7 @@ out: Task-Inputs.html
 ---
 
 Tasks/Settings: Motivation
-==========================
+--------------------------
 
 This page motivates the task and settings system. You should already
 know how to use tasks and settings, which are described in the
@@ -86,8 +86,7 @@ see the `sbt Tasks </Detailed-Topics/Tasks>` page for details on usage.)
 Here, `aTask` is assumed to produce a result of type `A` and `bTask` is
 assumed to produce a result of type `B`.
 
-Application
------------
+### Application
 
 As an example, consider generating a zip file containing the binary jar,
 source jar, and documentation jar for your project. First, determine

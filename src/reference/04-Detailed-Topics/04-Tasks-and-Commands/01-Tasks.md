@@ -3,15 +3,14 @@ out: Tasks.html
 ---
 
 Tasks
-=====
+-----
 
 Tasks and settings are introduced in the
 `getting started guide </Getting-Started/Basic-Def>`, which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
 
-Introduction
-------------
+### Introduction
 
 Both settings and tasks produce values, but there are two major
 differences between them:
@@ -21,8 +20,7 @@ differences between them:
 2.  At the beginning of project loading, settings and their dependencies
     are fixed. Tasks can introduce new tasks during execution, however.
 
-Features
---------
+### Features
 
 There are several features of the task system:
 
@@ -45,10 +43,9 @@ There are several features of the task system:
 
 These features are discussed in detail in the following sections.
 
-Defining a Task
----------------
+### Defining a Task
 
-### Hello World example (sbt)
+#### Hello World example (sbt)
 
 build.sbt
 
@@ -59,7 +56,7 @@ build.sbt
 Run "sbt hello" from command line to invoke the task. Run "sbt tasks" to
 see this task listed.
 
-### Define the key
+#### Define the key
 
 To declare a new task, define a lazy val of type `TaskKey`:
 
@@ -79,7 +76,7 @@ The examples themselves are valid entries in a `build.sbt` or can be
 provided as part of a sequence to `Project.settings` (see
 `Full Configuration </Getting-Started/Full-Def>`).
 
-### Implement the task
+#### Implement the task
 
 There are three main parts to implementing a task once its key is
 defined:
@@ -92,7 +89,7 @@ defined:
 These parts are then combined just like the parts of a setting are
 combined.
 
-#### Defining a basic task
+##### Defining a basic task
 
 A task is defined using `:=`
 
@@ -113,7 +110,7 @@ in those separate runs. (Within a run, each task is evaluated at most
 once.) In contrast, settings are evaluated once on project load and are
 fixed until the next reload.
 
-#### Tasks with inputs
+##### Tasks with inputs
 
 Tasks with other tasks or settings as inputs are also defined using
 `:=`. The values of the inputs are referenced by the `value` method.
@@ -127,7 +124,7 @@ Multiple settings are handled similarly:
 
     stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
 
-#### Task Scope
+##### Task Scope
 
 As with settings, tasks can be defined in a specific scope. For example,
 there are separate `compile` tasks for the `compile` and `test` scopes.
@@ -137,7 +134,7 @@ following example, `test:sampleTask` uses the result of
 
     sampleTask in Test := (intTask in Compile).value * 3
 
-#### On precedence
+##### On precedence
 
 As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
@@ -163,7 +160,7 @@ Without them, Scala interprets the line as
 `( helloTask.:=("echo Hello") ).!` instead of the desired
 `helloTask.:=( "echo Hello".! )`.
 
-### Separating implementations
+#### Separating implementations
 
 The implementation of a task can be separated from the binding. For
 example, a basic separate definition looks like:
@@ -178,7 +175,7 @@ example, a basic separate definition looks like:
 Note that whenever `.value` is used, it must be within a task
 definition, such as within `Def.task` above or as an argument to `:=`.
 
-### Modifying an Existing Task
+#### Modifying an Existing Task
 
 In the general case, modify a task by declaring the previous task as an
 input.
@@ -211,10 +208,9 @@ print `#3`.
 
 <a name="multiple-scopes"></a>
 
-Getting values from multiple scopes
------------------------------------
+### Getting values from multiple scopes
 
-### Introduction
+#### Introduction
 
 The general form of an expression that gets values from multiple scopes
 is:
@@ -225,7 +221,7 @@ The `all` method is implicitly added to tasks and settings. It accepts a
 `ScopeFilter` that will select the `Scopes`. The result has type
 `Seq[T]`, where `T` is the key's underlying type.
 
-### Example
+#### Example
 
 A common scenario is getting the sources for all subprojects for
 processing all at once, such as passing them to scaladoc. The task that
@@ -249,7 +245,7 @@ like:
 
 The next section describes various ways to construct a ScopeFilter.
 
-### ScopeFilter
+#### ScopeFilter
 
 A basic `ScopeFilter` is constructed by the `ScopeFilter.apply` method.
 This method makes a `ScopeFilter` from filters on the parts of a
@@ -262,7 +258,7 @@ simplest case is explicitly specifying the values for the parts:
           inConfigurations( Compile, Test )
        )
 
-#### Unspecified filters
+##### Unspecified filters
 
 If the task filter is not specified, as in the example above, the
 default is to select scopes without a specific task (global). Similarly,
@@ -270,7 +266,7 @@ an unspecified configuration filter will select scopes in the global
 configuration. The project filter should usually be explicit, but if
 left unspecified, the current project context will be used.
 
-#### More on filter construction
+##### More on filter construction
 
 The example showed the basic methods `inProjects` and
 `inConfigurations`. This section describes all methods for constructing
@@ -286,7 +282,7 @@ can be organized into four groups:
 See the `API documentation <../../api/sbt/ScopeFilter\$\$Make.html>`\_ for
 details.
 
-#### Combining ScopeFilters
+##### Combining ScopeFilters
 
 `ScopeFilters` may be combined with the `&&`, `||`, `--`, and `-`
 methods:
@@ -311,7 +307,7 @@ of the `util` project:
        ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
        ScopeFilter( inProjects(util), inGlobalConfiguration )
 
-### More operations
+#### More operations
 
 The `all` method applies to both settings (values of type
 `Initialize[T]`) and tasks (values of type `Initialize[Task[T]]`). It
@@ -326,7 +322,7 @@ table:
 This means that the `all` method can be combined with methods that
 construct tasks and settings.
 
-#### Missing values
+##### Missing values
 
 Some scopes might not define a setting or task. The `?` and `??` methods
 can help in this case. They are both defined on settings and tasks and
@@ -357,7 +353,7 @@ maximum of all aggregates of the current project.
        allVersions.max
     }
 
-#### Multiple values from multiple scopes
+##### Multiple values from multiple scopes
 
 The target of `all` is any task or setting, including anonymous ones.
 This means it is possible to get multiple values at once without
@@ -402,13 +398,12 @@ checkPluginsTask := {
 }
 ```
 
-Advanced Task Operations
-------------------------
+### Advanced Task Operations
 
 The examples in this section use the task keys defined in the previous
 section.
 
-### Streams: Per-task logging
+#### Streams: Per-task logging
 
 Per-task loggers are part of a more general system for task-specific
 data called Streams. This allows controlling the verbosity of stack
@@ -449,8 +444,7 @@ The verbosity with which logging is persisted is controlled using the
 displays what was logged according to these levels. The levels do not
 affect already logged information.
 
-Dynamic Computations with `Def.taskDyn`
----------------------------------------
+### Dynamic Computations with `Def.taskDyn`
 
 It can be useful to use the result of a task to determine the next tasks
 to evaluate. This is done using `Def.taskDyn`. The result of `taskDyn`
@@ -491,7 +485,7 @@ on `intTask` is only introduced in non-dev mode.
 > result. In the example above, there would be a circular dependency if
 > the code passed to taskDyn referenced myTask.
 
-### Handling Failure
+#### Handling Failure
 
 This section discusses the `failure`, `result`, and `andFinally`
 methods, which are used to handle failure of other tasks.
@@ -579,7 +573,7 @@ This overrides the original `intTask` definition so that if the original
 task fails, the exception is printed and the constant `3` is returned.
 If it succeeds, the value is printed and returned.
 
-#### andFinally
+##### andFinally
 
 The `andFinally` method defines a new task that runs the original task
 and evaluates a side effect regardless of whether the original task

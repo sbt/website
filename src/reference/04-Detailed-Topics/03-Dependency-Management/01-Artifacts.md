@@ -3,10 +3,9 @@ out: Artifacts.html
 ---
 
 Artifacts
-=========
+---------
 
-Selecting default artifacts
----------------------------
+### Selecting default artifacts
 
 By default, the published artifacts are the main binary jar, a jar
 containing the main sources and resources, and a jar containing the API
@@ -39,8 +38,7 @@ To disable main artifacts individually:
     // disable publishing the main sources jar
     publishArtifact in (Compile, packageSrc) := false
 
-Modifying default artifacts
----------------------------
+### Modifying default artifacts
 
 Each built-in artifact has several configurable settings in addition to
 `publishArtifact`. The basic ones are `artifact` (of type
@@ -91,8 +89,7 @@ For example:
       println("Packaged file: " + file.getAbsolutePath)
     }
 
-Defining custom artifacts
--------------------------
+### Defining custom artifacts
 
 In addition to configuring the built-in artifacts, you can declare other
 artifacts to publish. Multiple artifacts are allowed when using Ivy
@@ -139,8 +136,7 @@ full build configuration, usage looks like:
       .settings( addArtifact(...).settings : _* )
     ...
 
-Publishing .war files
----------------------
+### Publishing .war files
 
 A common use case for web applications is to publish the `.war` file
 instead of the `.jar` file.
@@ -157,8 +153,7 @@ instead of the `.jar` file.
     // add the .war file to what gets published 
     addArtifact(artifact in (Compile, packageWar), packageWar) 
 
-Using dependencies with artifacts
----------------------------------
+### Using dependencies with artifacts
 
 To specify the artifacts to use from a dependency that has custom or
 multiple artifacts, use the `artifacts` method on your dependencies. For

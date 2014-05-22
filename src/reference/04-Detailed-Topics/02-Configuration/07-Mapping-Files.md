@@ -3,7 +3,7 @@ out: Mapping-Files.html
 ---
 
 Mapping Files
-=============
+-------------
 
 Tasks like `package`, `packageSrc`, and `packageDoc` accept mappings of
 type `Seq[(File, String)]` from an input file to the path to use in the
@@ -21,8 +21,7 @@ call the `pair` method. See the
 essentially this method accepts a function `File => Option[String]` or
 `File => Option[File]` that is used to generate mappings.
 
-Relative to a directory
------------------------
+### Relative to a directory
 
 The `Path.relativeTo` method is used to map a `File` to its path
 `String` relative to a base directory or directories. The `relativeTo`
@@ -42,8 +41,7 @@ For example:
 > val expected = (file("/a/b/C.scala") -\> "b/C.scala") :: Nil assert(
 > mappings == expected )
 
-Rebase
-------
+### Rebase
 
 The `Path.rebase` method relativizes an input file against one or more
 base directories (the first argument) and then prepends a base String or
@@ -73,8 +71,7 @@ Or, to build a `Seq[(File, File)]`:
     val expected = (file("/a/b/C.scala") -> file("/new/base/b/C.scala") ) :: Nil
     assert( mappings == expected )
 
-Flatten
--------
+### Flatten
 
 The `Path.flat` method provides a function that maps a file to the last
 component of the path (its name). For a File to File mapping, the input
@@ -98,8 +95,7 @@ To build a `Seq[(File, File)]` using `flat`:
     val expected = (file("/a/b/C.scala") -> file("/new/base/C.scala") ) :: Nil
     assert( mappings == expected )
 
-Alternatives
-------------
+### Alternatives
 
 To try to apply several alternative mappings for a file, use `|`, which
 is implicitly added to a function of type `A => Option[B]`. For example,

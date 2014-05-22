@@ -3,7 +3,7 @@ out: Core-Principles.html
 ---
 
 Core Principles
-===============
+---------------
 
 This document details the core principles overarching sbt's design and
 code style. Sbt's core principles can be stated quite simply:
@@ -16,8 +16,7 @@ code style. Sbt's core principles can be stated quite simply:
 With these principles in mind, let's walk through the core design of
 sbt.
 
-Introduction to build state
----------------------------
+### Introduction to build state
 
 This is the first piece you hit when starting sbt. Sbt's command engine
 is the means by which it processes user requests using the build state.
@@ -73,8 +72,7 @@ Now that there's a definition of what build state is, there needs to be
 a way to dynamically construct it. In sbt, this is done through the
 `Setting[_]` sequence.
 
-Settings Architecture
----------------------
+### Settings Architecture
 
 A Setting represents the means of constructing the value of one
 particular `AttributeKey[_]` in the `AttributeMap` of build state. A
@@ -119,8 +117,7 @@ initialization functions which we can use to construct the first build
 state. Once this is completed, we can then start to process user
 requests.
 
-Task Architecture
------------------
+### Task Architecture
 
 The next layer in sbt is around these user request, or tasks. When a
 user configures a build, they are defining a set of repeatable tasks

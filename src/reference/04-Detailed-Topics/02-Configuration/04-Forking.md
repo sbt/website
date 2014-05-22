@@ -3,7 +3,7 @@ out: Forking.html
 ---
 
 Forking
-=======
+-------
 
 By default, the `run` task runs in the same JVM as sbt. Forking is
 required under `certain circumstances <Running-Project-Code>`, however.
@@ -15,8 +15,7 @@ current process. This page discusses how to enable and configure forking
 for both `run` and `test` tasks. Each kind of task may be configured
 separately by scoping the relevant keys as explained below.
 
-Enable forking
---------------
+### Enable forking
 
 The `fork` setting controls whether forking is enabled (true) or not
 (false). It can be set in the `run` scope to only fork `run` commands or
@@ -48,8 +47,7 @@ To enable forking all `test` tasks only, set `fork` to `true` in the
 See `Testing` for more control over how tests are assigned to JVMs and
 what options to pass to each group.
 
-Change working directory
-------------------------
+### Change working directory
 
 To change the working directory when forked, set `baseDirectory in run`
 or `baseDirectory in test`:
@@ -66,8 +64,7 @@ or `baseDirectory in test`:
     // sets the working directory for `test`, `testQuick`, and `testOnly`
     baseDirectory in test := file("/path/to/working/directory/")
 
-Forked JVM options
-------------------
+### Forked JVM options
 
 To specify options to be provided to the forked JVM, set `javaOptions`:
 
@@ -82,8 +79,7 @@ or only affect the `test` tasks:
 
     javaOptions in test += "-Xmx8G"
 
-Java Home
----------
+### Java Home
 
 Select the Java installation to use by setting the `javaHome` directory:
 
@@ -98,8 +94,7 @@ setting it in the `run` scope:
 As with the other settings, you can specify the configuration to affect
 only the main or test `run` tasks or just the `test` tasks.
 
-Configuring output
-------------------
+### Configuring output
 
 By default, forked output is sent to the Logger, with standard output
 logged at the `Info` level and standard error at the `Error` level. This
@@ -121,8 +116,7 @@ can be configured with the `outputStrategy` setting, which is of type
 As with other settings, this can be configured individually for main or
 test `run` tasks or for `test` tasks.
 
-Configuring Input
------------------
+### Configuring Input
 
 By default, the standard input of the sbt process is not forwarded to
 the forked process. To enable this, configure the `connectInput`
@@ -130,8 +124,7 @@ setting:
 
     connectInput in run := true
 
-Direct Usage
-------------
+### Direct Usage
 
 To fork a new Java process, use the
 `Fork API <../../api/sbt/Fork\$.html>`\_. The values of interest are

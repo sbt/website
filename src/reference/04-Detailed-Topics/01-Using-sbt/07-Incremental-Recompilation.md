@@ -3,7 +3,7 @@ out: Understanding-Recompilation.html
 ---
 
 Understanding Incremental Recompilation
-=======================================
+---------------------------------------
 
 Compiling Scala code is slow, and sbt makes it often faster. By
 understanding how, you can even understand how to make compilation even
@@ -50,8 +50,7 @@ which dependencies have to be recompiled; the goal is to compute a
 conservative approximation, so that whenever a file must be recompiled,
 it will, even though we might recompile extra files.
 
-sbt heuristics
---------------
+### sbt heuristics
 
 sbt tracks source dependencies at the granularity of source files. For
 each source file, sbt tracks files which depend on it directly; if the
@@ -133,8 +132,7 @@ out how to fix the offending location—this way, trying out a possible
 solution to the compile error will take less time, say 5 seconds instead
 of 2 minutes.
 
-What is included in the interface of a Scala class
---------------------------------------------------
+### What is included in the interface of a Scala class
 
 It is surprisingly tricky to understand which changes to a class require
 recompiling its clients. The rules valid for Java are much simpler (even
@@ -159,7 +157,7 @@ just to illustrate the ideas; this list is not intended to be complete.
     issue [SI-2559](https://issues.scala-lang.org/browse/SI-2559) for an
     example.)
 
-### Debugging an interface representation
+#### Debugging an interface representation
 
 If you see spurious incremental recompilations or you want understand
 what changes to an extracted interface cause incremental recompilation
@@ -238,8 +236,7 @@ You can see an unified diff of two interface textual represetantions. As
 you can see, the incremental compiler detected a change to the return
 type of `b` method.
 
-How to take advantage of sbt heuristics
----------------------------------------
+### How to take advantage of sbt heuristics
 
 The heuristics used by sbt imply the following user-visible
 consequences, which determine whether a change to a class affects other
@@ -282,7 +279,7 @@ All the above discussion about methods also applies to fields and
 members in general; similarly, references to classes also extend to
 objects and traits.
 
-### Why changing the implementation of a method might affect clients, and why type annotations help
+#### Why changing the implementation of a method might affect clients, and why type annotations help
 
 This section explains why relying on type inference for return types of
 public methods is not always appropriate. However this is an important
@@ -380,7 +377,7 @@ documents the intended behavior and helps ensuring binary compatibility,
 which is especially important when the exposed interface is used by
 other software component.
 
-### Why adding a member requires recompiling existing clients
+#### Why adding a member requires recompiling existing clients
 
 In Java adding a member does not require recompiling existing valid
 source code. The same should seemingly hold also in Scala, but this is
@@ -393,8 +390,7 @@ depending on `Foo` should be recompiled. One can imagine more
 fine-grained tracking of dependencies, but this is currently not
 implemented.
 
-Further references
-------------------
+### Further references
 
 The incremental compilation logic is implemented in
 <https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala>.

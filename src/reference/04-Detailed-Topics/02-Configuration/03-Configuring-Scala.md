@@ -3,7 +3,7 @@ out: Configuring-Scala.html
 ---
 
 Configuring Scala
-=================
+-----------------
 
 sbt needs to obtain Scala for a project and it can do this automatically
 or you can configure it explicitly. The Scala version that is configured
@@ -12,8 +12,7 @@ project code. When compiling a project, sbt needs to run the Scala
 compiler as well as provide the compiler with a classpath, which may
 include several Scala jars, like the reflection jar.
 
-Automatically managed Scala
----------------------------
+### Automatically managed Scala
 
 The most common case is when you want to use a version of Scala that is
 available in a repository. The only required configuration is the Scala
@@ -25,7 +24,7 @@ This will retrieve Scala from the repositories configured via the
 `resolvers` setting. It will use this version for building your project:
 compiling, running, scaladoc, and the REPL.
 
-### Configuring the scala-library dependency
+#### Configuring the scala-library dependency
 
 By default, the standard Scala library is automatically added as a
 dependency. If you want to configure it differently than the default or
@@ -43,7 +42,7 @@ definition uses Scala only for tests:
 
     libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
 
-### Configuring additional Scala dependencies
+#### Configuring additional Scala dependencies
 
 When using a Scala dependency other than the standard library, add it as
 a normal managed dependency. For example, to depend on the Scala
@@ -54,7 +53,7 @@ compiler,
 Note that this is necessary regardless of the value of the
 `autoScalaLibrary` setting described in the previous section.
 
-### Configuring Scala tool dependencies
+#### Configuring Scala tool dependencies
 
 In order to compile Scala code, run scaladoc, and provide a Scala REPL,
 sbt needs the `scala-compiler` jar. This should not be a normal
@@ -106,14 +105,13 @@ For example,
 
     unmanagedJars in Compile += scalaInstance.value.libraryJar
 
-### Switching to a local Scala version
+#### Switching to a local Scala version
 
 To use a locally built Scala version, configure Scala home as described
 in the following section. Scala will still be resolved as before, but
 the jars will come from the configured Scala home directory.
 
-Using Scala from a local directory
-----------------------------------
+### Using Scala from a local directory
 
 The result of building Scala from source is a Scala home directory
 `<base>/build/pack/` that contains a subdirectory `lib/` containing the
@@ -133,7 +131,7 @@ depended on indirectly via a dependency. In these cases, the artifacts
 for the resolved dependencies will be substituted with jars in the Scala
 home `lib/` directory.
 
-### Mixing with managed dependencies
+#### Mixing with managed dependencies
 
 As an example, consider adding a dependency on `scala-reflect` when
 `scalaHome` is configured:
@@ -146,7 +144,7 @@ This will be resolved as normal, except that sbt will see if
 `/home/user/scala-2.10/lib/scala-reflect.jar` exists. If it does, that
 file will be used in place of the artifact from the managed dependency.
 
-### Using unmanaged dependencies only
+#### Using unmanaged dependencies only
 
 Instead of adding managed dependencies on Scala jars, you can directly
 add them. The `scalaInstance` task provides structured access to the
@@ -160,8 +158,7 @@ Scala distribution. For example, to add all jars in the Scala home
 To add only some jars, filter the jars from `scalaInstance` before
 adding them.
 
-sbt's Scala version
--------------------
+### sbt's Scala version
 
 sbt needs Scala jars to run itself since it is written in Scala. sbt
 uses that same version of Scala to compile the build definitions that

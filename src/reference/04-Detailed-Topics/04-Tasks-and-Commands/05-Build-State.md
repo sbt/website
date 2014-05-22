@@ -3,7 +3,7 @@ out: Build-State.html
 ---
 
 State and actions
-=================
+-----------------
 
 `State <../../api/sbt/State\$.html>`\_ is the entry point to all
 available information in sbt. The key methods are:
@@ -19,8 +19,7 @@ following sections discuss `State => State` transformations. As
 mentioned previously, a command will typically handle a parsed value as
 well: `(State, T) => State`.
 
-Command-related data
---------------------
+### Command-related data
 
 A Command can modify the currently registered commands or the commands
 to be executed. This is done in the action part by transforming the
@@ -64,8 +63,7 @@ return `state.fail`.
       if(success) state else state.fail
     }
 
-Project-related data
---------------------
+### Project-related data
 
 Project-related information is stored in `attributes`. Typically,
 commands won't access this directly but will instead use a convenience
@@ -85,8 +83,7 @@ method to extract the most useful information:
 -   Access to the current `Eval <../../api/sbt/compiler/Eval.html>`\_
     instance for evaluating Scala expressions in the build context.
 
-Project data
-------------
+### Project data
 
 All project data is stored in `structure.data`, which is of type
 `sbt.Settings[Scope]`. Typically, one gets information of type `T` in
@@ -137,8 +134,7 @@ information as the `Project` used in a `project/Build.scala` except that
 `ProjectReferences <../../api/sbt/ProjectReference.html>`\_ are resolved
 to `ProjectRef`s.
 
-Classpaths
-----------
+### Classpaths
 
 Classpaths in sbt 0.10+ are of type `Seq[Attributed[File]]`. This allows
 tagging arbitrary information to classpath entries. sbt currently uses
@@ -151,8 +147,7 @@ obtained by dependency management). When you only want the underlying
     val attributedClasspath: Seq[Attribute[File]] = ...
     val classpath: Seq[File] = attributedClasspath.files
 
-Running tasks
--------------
+### Running tasks
 
 It can be useful to run a specific project task from a
 `command <Commands>` (*not from another task*) and get its result. For
@@ -193,8 +188,7 @@ For getting the test classpath of a specific project, use this key:
     val taskKey: Task[Seq[Attributed[File]]] =
       Keys.fullClasspath in (projectRef, Test)
 
-Using State in a task
----------------------
+### Using State in a task
 
 To access the current State from a task, use the `state` task as an
 input. For example,

@@ -3,10 +3,9 @@ out: Testing.html
 ---
 
 Testing
-=======
+-------
 
-Basics
-------
+### Basics
 
 The standard source locations for testing are:
 
@@ -41,7 +40,7 @@ command line arguments and runs all tests:
 > test
 ```
 
-### testOnly
+#### testOnly
 
 The `testOnly` task accepts a whitespace separated list of test names to
 run. For example:
@@ -56,7 +55,7 @@ It supports wildcards as well:
 > testOnly org.example.*Slow org.example.MyTest1
 ```
 
-### testQuick
+#### testQuick
 
 The `testQuick` task, like `testOnly`, allows to filter the tests to run
 to specific tests or wildcards using the same syntax to indicate the
@@ -68,7 +67,7 @@ one of the following conditions are run:
 -   The tests that have one or more transitive dependencies, maybe in a
     different project, recompiled.
 
-#### Tab completion
+##### Tab completion
 
 Tab completion is provided for test names based on the results of the
 last `test:compile`. This means that a new sources aren't available for
@@ -76,7 +75,7 @@ tab completion until they are compiled and deleted sources won't be
 removed from tab completion until a recompile. A new test source can
 still be manually written out and run using `testOnly`.
 
-### Other tasks
+#### Other tasks
 
 Tasks that are available for main sources are generally available for
 test sources, but are prefixed with `test:` on the command line and are
@@ -90,8 +89,7 @@ referenced in Scala code with `in Test`. These tasks include:
 
 See `Running </Getting-Started/Running>` for details on these tasks.
 
-Output
-------
+### Output
 
 By default, logging is buffered for each test source file until all
 tests for that file complete. This can be disabled by setting
@@ -99,7 +97,7 @@ tests for that file complete. This can be disabled by setting
 
     logBuffered in Test := false
 
-### Test Reports
+#### Test Reports
 
 By default, sbt will generate JUnit XML test reports for all tests in
 the build, located in the `target/test-reports` directory for a project.
@@ -107,10 +105,9 @@ This can be disabled by disabling the `JUnitXmlReportPlugin`
 
     val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
 
-Options
--------
+### Options
 
-### Test Framework Arguments
+#### Test Framework Arguments
 
 Arguments to the test framework may be provided on the command line to
 the `testOnly` tasks following a `--` separator. For example:
@@ -128,7 +125,7 @@ To specify them for a specific test framework only:
 
     testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
 
-### Setup and Cleanup
+#### Setup and Cleanup
 
 Specify setup and cleanup actions using `Tests.Setup` and
 `Tests.Cleanup`. These accept either a function of type `() => Unit` or
@@ -153,7 +150,7 @@ Examples:
 
     testOptions in Test += Tests.Cleanup( loader => ... )
 
-### Disable Parallel Execution of Tests
+#### Disable Parallel Execution of Tests
 
 By default, sbt runs all tasks in parallel. Because each test is mapped
 to a task, tests are also run in parallel by default. To make tests
@@ -165,14 +162,14 @@ within a given project execute serially: :
 integration tests serially. Note that tests from different projects may
 still execute concurrently.
 
-### Filter classes
+#### Filter classes
 
 If you want to only run test classes whose name ends with "Test", use
 `Tests.Filter`:
 
     testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
 
-### Forking tests
+#### Forking tests
 
 The setting:
 
@@ -200,8 +197,7 @@ forked JVMs allowed to run at the same time by setting the limit on
 actions cannot be provided with the actual test class loader when a
 group is forked.
 
-Additional test configurations
-------------------------------
+### Additional test configurations
 
 You can add an additional test configuration to have a separate set of
 test sources and associated compilation, packaging, and testing tasks
@@ -218,7 +214,7 @@ to enable integration tests. The second shows how to define a customized
 test configuration. This allows you to define multiple types of tests
 per project.
 
-### Integration Tests
+#### Integration Tests
 
 The following full build configuration demonstrates integration tests.
 
@@ -276,7 +272,7 @@ the definitive integration test options:
 
     testOptions in IntegrationTest := Seq(...)
 
-### Custom test configuration
+#### Custom test configuration
 
 The previous example may be generalized to a custom test configuration.
 
@@ -321,7 +317,7 @@ Test tasks are run by prefixing them with `fun:`
 > fun:test
 ```
 
-### Additional test configurations with shared sources
+#### Additional test configurations with shared sources
 
 An alternative to adding separate sets of test sources (and
 compilations) is to share sources. In this approach, the sources are
@@ -370,7 +366,7 @@ the configuration name as before:
 > fun:testOnly org.example.AFunTest
 ```
 
-#### Application to parallel execution
+##### Application to parallel execution
 
 One use for this shared-source approach is to separate tests that can
 run in parallel from those that must execute serially. Apply the
@@ -387,8 +383,7 @@ using:
 The tests to run in parallel would be run with `test` and the ones to
 run in serial would be run with `serial:test`.
 
-JUnit
------
+### JUnit
 
 Support for JUnit is provided by
 `junit-interface <https://github.com/szeiger/junit-interface>`\_. To add
@@ -397,8 +392,7 @@ your project's main build.sbt file.
 
     libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
 
-Extensions
-----------
+### Extensions
 
 This page describes adding support for additional testing libraries and
 defining additional test reporters. You do this by implementing `sbt`
@@ -408,20 +402,20 @@ dependency. Alternatively, anyone can provide support for a test
 framework by implementing the interfaces in a separate project and
 packaging the project as an sbt `Plugin </Extending/Plugins>`.
 
-### Custom Test Framework
+#### Custom Test Framework
 
 The main Scala testing libraries have built-in support for sbt. To add
 support for a different framework, implement the
 `uniform test interface <http://github.com/sbt/test-interface>`\_.
 
-### Custom Test Reporters
+#### Custom Test Reporters
 
 Test frameworks report status and results to test reporters. You can
 create a new test reporter by implementing either
 `TestReportListener <../../api/sbt/TestReportListener.html>`\_ or
 `TestsListener <../../api/sbt/TestsListener.html>`\_.
 
-### Using Extensions
+#### Using Extensions
 
 To use your extensions in a project definition:
 

@@ -3,7 +3,7 @@ out: Build-Loaders.html
 ---
 
 Build Loaders
-=============
+-------------
 
 Build loaders are the means by which sbt resolves, builds, and
 transforms build definitions. Each aspect of loading may be customized
@@ -14,8 +14,7 @@ the (already loaded) Build in which they are defined. Also documented on
 this page is how to manipulate inter-project dependencies from a
 setting.
 
-Custom Resolver
----------------
+### Custom Resolver
 
 The first type of customization introduces a new resolver. A resolver
 provides support for taking a build URI and retrieving it to a local
@@ -45,14 +44,14 @@ result:
 
     }
 
-### API Documentation
+#### API Documentation
 
 Relevant API documentation for custom resolvers:
 
 -   `ResolveInfo <../../api/index.html#sbt.BuildLoader\$\$ResolveInfo>`\_
 -   `BuildLoader <../../api/sbt/BuildLoader\$.html>`\_
 
-### Full Example
+#### Full Example
 
     import sbt._
     import Keys._
@@ -103,8 +102,7 @@ Relevant API documentation for custom resolvers:
     """
     }
 
-Custom Builder
---------------
+### Custom Builder
 
 Once a project is resolved, it needs to be built and then presented to
 sbt as an instance of `sbt.BuildUnit`. A custom builder has type:
@@ -127,7 +125,7 @@ will load the build when evaluated. Register a builder by passing it to
 
     }
 
-### API Documentation
+#### API Documentation
 
 Relevant API documentation for custom builders:
 
@@ -135,7 +133,7 @@ Relevant API documentation for custom builders:
 -   `BuildLoader <../../api/sbt/BuildLoader\$.html>`\_
 -   `BuildUnit <../../api/index.html#sbt.Load\$\$BuildUnit>`\_
 
-### Example
+#### Example
 
 This example demonstrates the structure of how a custom builder could
 read configuration from a pom.xml instead of the standard .sbt files and
@@ -174,8 +172,7 @@ project/ directory.
 > > Seq[Setting[\_]] = ... def pomFile(info: BuildInfo): File =
 > > info.base / "pom.xml"
 
-Custom Transformer
-------------------
+### Custom Transformer
 
 Once a project has been loaded into an `sbt.BuildUnit`, it is
 transformed by all registered transformers. A custom transformer has
@@ -197,7 +194,7 @@ overriding *Build.buildLoaders* with the result:
 
     }
 
-### API Documentation
+#### API Documentation
 
 Relevant API documentation for custom transformers:
 
@@ -205,7 +202,7 @@ Relevant API documentation for custom transformers:
 -   `BuildLoader <../../api/sbt/BuildLoader\$.html>`\_
 -   `BuildUnit <../../api/index.html#sbt.Load\$\$BuildUnit>`\_
 
-#### Manipulating Project Dependencies in Settings
+##### Manipulating Project Dependencies in Settings
 
 The `buildDependencies` setting, in the Global scope, defines the
 aggregation and classpath dependencies between projects. By default,
@@ -220,8 +217,7 @@ evaluated. That is, all Projects must have been declared directly in a
 Build or referenced as the argument to `Project.aggregate` or
 `Project.dependsOn`.
 
-The BuildDependencies type
---------------------------
+### The BuildDependencies type
 
 The type of the `buildDependencies` setting is
 `BuildDependencies <../../api/sbt/BuildDependencies.html>`\_.
@@ -238,7 +234,7 @@ internal, unpolished feel. Most manipulations consist of modifying the
 relevant map (classpath or aggregate) manually and creating a new
 `BuildDependencies` instance.
 
-### Example
+#### Example
 
 As an example, the following replaces a reference to a specific build
 URI with a new URI. This could be used to translate all references to a

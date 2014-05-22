@@ -3,7 +3,7 @@ out: Compiler-Plugins.html
 ---
 
 Compiler Plugin Support
-=======================
+-----------------------
 
 There is some special support for using compiler plugins. You can set
 `autoCompilerPlugins` to `true` to enable this functionality.
@@ -30,8 +30,7 @@ You can still specify compiler plugins manually. For example:
 
     scalacOptions += "-Xplugin:<path-to-sxr>/sxr-0.3.0.jar"
 
-Continuations Plugin Example
-----------------------------
+### Continuations Plugin Example
 
 Support for continuations in Scala 2.8 is implemented as a compiler
 plugin. You can use the compiler plugin support for this, as shown here.
@@ -42,8 +41,7 @@ plugin. You can use the compiler plugin support for this, as shown here.
 
     scalacOptions += "-P:continuations:enable"
 
-Version-specific Compiler Plugin Example
-----------------------------------------
+### Version-specific Compiler Plugin Example
 
 Adding a version-specific compiler plugin can be done as follows:
 

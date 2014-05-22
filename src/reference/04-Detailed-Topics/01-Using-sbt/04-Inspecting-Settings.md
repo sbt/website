@@ -3,7 +3,7 @@ out: Inspecting-Settings.html
 ---
 
 Interacting with the Configuration System
-=========================================
+-----------------------------------------
 
 Central to sbt is the new configuration system, which is designed to
 enable extensive customization. The goal of this page is to explain the
@@ -13,8 +13,7 @@ The Getting Started Guide (see
 settings; this page describes interacting with them and exploring them
 at the command line.
 
-Selecting commands, tasks, and settings
----------------------------------------
+### Selecting commands, tasks, and settings
 
 A fully-qualified reference to a setting or task looks like:
 
@@ -33,7 +32,7 @@ project (project axis) or auto-detected (configuration and task axes).
 An asterisk (`*`) is used to explicitly refer to the `Global` context,
 as in `*/*:key`.
 
-### Selecting the configuration
+#### Selecting the configuration
 
 In the case of an unspecified configuration (that is, when the `config:`
 part is omitted), if the key is defined in `Global`, that is selected.
@@ -65,7 +64,7 @@ the `Test` configuration, the configuration axis must be specified like
 > test:package
 ```
 
-### Task-specific Settings
+#### Task-specific Settings
 
 Some settings are defined per-task. This is used when there are several
 related tasks, such as `package`, `packageSrc`, and `packageDoc`, in the
@@ -95,15 +94,14 @@ different package tasks.
 Note that a single colon `:` follows a configuration axis and a double
 colon `::` follows a task axis.
 
-Discovering Settings and Tasks
-------------------------------
+### Discovering Settings and Tasks
 
 This section discusses the `inspect` command, which is useful for
 exploring relationships between settings. It can be used to determine
 which setting should be modified in order to affect another setting, for
 example.
 
-### Value and Provided By
+#### Value and Provided By
 
 The first piece of information provided by `inspect` is the type of a
 task or the value and type of a setting. The following section of output
@@ -130,7 +128,7 @@ project (`{file:/home/user/sample/}root`) in the global configuration
 ...
 ```
 
-### Related Settings
+#### Related Settings
 
 The "Related" section of `inspect` output lists all of the definitions
 of a key. For example,
@@ -145,7 +143,7 @@ of a key. For example,
 This shows that in addition to the requested `compile:compile` task,
 there is also a `test:compile` task.
 
-### Dependencies
+#### Dependencies
 
 Forward dependencies show the other settings (or tasks) used to define a
 setting (or task). Reverse dependencies go the other direction, showing
@@ -155,7 +153,7 @@ dependencies are those that a setting directly specifies. Actual
 settings are what those dependencies get resolved to. This distinction
 is explained in more detail in the following sections.
 
-#### Requested Dependencies
+##### Requested Dependencies
 
 As an example, we'll look at `console`:
 
@@ -202,7 +200,7 @@ the setting is specific to `console`. Because of this, we can set the
 initial commands on the `console` task without affecting the
 `consoleQuick` task, for example.
 
-#### Actual Dependencies
+##### Actual Dependencies
 
 `inspect actual <scoped-key>` shows the actual dependency used. This is
 useful because delegation means that the dependency can come from a
@@ -282,7 +280,7 @@ or configuration axis:
 The next part describes the Delegates section, which shows the chain of
 delegation for scopes.
 
-### Delegates
+#### Delegates
 
 A setting has a key and a scope. A request for a key in a scope A may be
 delegated to another scope if A doesn't define a value for the key. The

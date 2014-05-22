@@ -3,15 +3,14 @@ out: Launcher-Getting-Started.html
 ---
 
 Getting Started with the Sbt Launcher
-=====================================
+-------------------------------------
 
 The sbt launcher component is a self-contained jar that boots a Scala
 application or server without Scala or the application already existing
 on the system. The only prerequisites are the launcher jar itself, an
 optional configuration file, and a java runtime version 1.6 or greater.
 
-Overview
---------
+### Overview
 
 A user downloads the launcher jar and creates a script to run it. In
 this documentation, the script will be assumed to be called `launch`.
@@ -20,7 +19,7 @@ For unix, the script would look like: `java -jar sbt-launcher.jar "\$@"`
 The user can now launch servers and applications which provide sbt
 launcher configuration.
 
-### Applications
+#### Applications
 
 To launch an application, the user then downloads the configuration file
 for the application (call it `my.app.configuration`) and creates a
@@ -32,7 +31,7 @@ The user can then launch the application using `myapp arg1 arg2 ...`
 More on launcher configuration can be found at
 `Launcher Configuration </Launcher/Configuration>`
 
-### Servers
+#### Servers
 
 The sbt launcher can be used to launch and discover running servers on
 the system. The launcher can be used to launch servers similarly to
@@ -64,7 +63,7 @@ restrictions to servers:
     without sending any data. This is used to check if a previous server
     is still alive.
 
-### Resolving Applications/Servers
+#### Resolving Applications/Servers
 
 Like the launcher used to distribute `sbt`, the downloaded launcher jar
 will retrieve Scala and the application according to the provided
@@ -92,7 +91,7 @@ configuration file inside the launcher jar and distributing that as a
 single download. The rest of this documentation describes the details of
 configuring, writing, distributing, and running the application.
 
-### Creating a Launched Application
+#### Creating a Launched Application
 
 This section shows how to make an application that is launched by this
 launcher. First, declare a dependency on the launcher-interface. Do not
@@ -146,7 +145,7 @@ Then, `publishLocal` or `+publishLocal` the application to make it
 available. For more information, please see
 `Launcher Configuration </Detailed-Topics/Launcher/Configuration>`
 
-### Running an Application
+#### Running an Application
 
 As mentioned above, there are a few options to actually run the
 application. The first involves providing a modified jar for download.
@@ -163,7 +162,7 @@ The second two require providing a configuration file for download.
         'launch'). The user needs to run
         launch @your.boot.properties your-arg-1 your-arg-2
 
-### Execution
+#### Execution
 
 Let's review what's happening when the launcher starts your application.
 

@@ -3,18 +3,16 @@ out: Cross-Building.html
 ---
 
 Cross-building
-==============
+--------------
 
-Introduction
-------------
+### Introduction
 
 Different versions of Scala can be binary incompatible, despite
 maintaining source compatibility. This page describes how to use `sbt`
 to build and publish your project against multiple versions of Scala and
 how to use libraries that have done the same.
 
-Publishing Conventions
-----------------------
+### Publishing Conventions
 
 The underlying mechanism used to indicate which version of Scala a
 library was compiled against is to append `_<scala-version>` to the
@@ -27,8 +25,7 @@ allows interoperability with users of Maven, Ant and other build tools.
 The rest of this page describes how `sbt` handles this for you as part
 of cross-building.
 
-Using Cross-Built Libraries
----------------------------
+### Using Cross-Built Libraries
 
 To use a library built against multiple versions of Scala, double the
 first `%` in an inline dependency to be `%%`. This tells `sbt` that it
@@ -45,8 +42,7 @@ or for Scala versions before 2.10:
 
     libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
 
-Cross-Building a Project
-------------------------
+### Cross-Building a Project
 
 Define the versions of Scala to build against in the
 `crossScalaVersions` setting. Versions of Scala 2.8.0 or later are

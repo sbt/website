@@ -3,7 +3,7 @@ out: Setting-Initialization.html
 ---
 
 Setting Initialization
-======================
+----------------------
 
 This page outlines the mechanisms by which sbt loads settings for a
 particular build, including the hooks where users can control the
@@ -75,8 +75,7 @@ default inclusion order for sbt is:
     (`~/.sbt/<verison>/*.sbt`)
 4.  All local configurations (`build.sbt`)
 
-Controlling Initialization
---------------------------
+### Controlling Initialization
 
 The order which sbt uses to load settings is configurable at a *project*
 level. This means that we can't control the order of settings added to

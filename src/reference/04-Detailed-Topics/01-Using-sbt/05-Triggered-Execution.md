@@ -3,7 +3,7 @@ out: Triggered-Execution.html
 ---
 
 Triggered Execution
-===================
+-------------------
 
 You can make a command run when certain files change by prefixing the
 command with `~`. Monitoring is terminated when `enter` is pressed. This
@@ -22,8 +22,7 @@ the basic settings `watchSources` and `pollInterval` are modified.
 
 Some example usages are described below.
 
-Compile
--------
+### Compile
 
 The original use-case was continuous compilation:
 
@@ -33,8 +32,7 @@ The original use-case was continuous compilation:
 > ~ compile
 ```
 
-Testing
--------
+### Testing
 
 You can use the triggered execution feature to run any command or task.
 One use is for test driven development, as suggested by Erick on the
@@ -47,8 +45,7 @@ and run `testOnly` for the specified test.
 > ~ testOnly example.TestA
 ```
 
-Running Multiple Commands
--------------------------
+### Running Multiple Commands
 
 Occasionally, you may need to trigger the execution of multiple
 commands. You can use semicolons to separate the commands to be

@@ -3,7 +3,7 @@ out: Dependency-Management-Flow.html
 ---
 
 Dependency Management Flow
-==========================
+--------------------------
 
 0.12.1 addresses several issues with dependency management. These fixes
 were made possible by specific, reproducible examples, such as a
@@ -11,8 +11,7 @@ situation where the resolution cache got out of date (gh-532). A brief
 summary of the current work flow with dependency management in sbt
 follows.
 
-Background
-----------
+### Background
 
 `update` resolves dependencies according to the settings in a build
 file, such as `libraryDependencies` and `resolvers`. Other tasks use the
@@ -23,8 +22,7 @@ the `update` task needs to run. However, resolving dependencies on every
 `compile` would be unnecessarily slow and so `update` must be particular
 about when it actually performs a resolution.
 
-Caching and Configuration
--------------------------
+### Caching and Configuration
 
 1.  Normally, if no dependency management configuration has changed
     since the last successful resolution and the retrieved files are
@@ -53,8 +51,7 @@ Caching and Configuration
     true). Also, update itself will immediately fail if resolution has
     not been allowed to run since the last clean.
 
-General troubleshooting steps
------------------------------
+### General troubleshooting steps
 
 A.  Run `update` explicitly. This will typically fix problems with out
     of date SNAPSHOTs or locally published artifacts.
@@ -78,8 +75,7 @@ F.  Normal sbt usage should not require deleting files from
     followed. If deleting the cache fixes a dependency management issue,
     please try to reproduce the issue and submit a test case.
 
-Plugins
--------
+### Plugins
 
 These troubleshooting steps can be run for plugins by changing to the
 build definition project, running the commands, and then returning to
@@ -91,8 +87,7 @@ the main project. For example:
 > reload return
 ```
 
-Notes
------
+### Notes
 
 A.  Configure offline behavior for all projects on a machine by putting
     offline := true in \~/.sbt/global.sbt. A command that does this for

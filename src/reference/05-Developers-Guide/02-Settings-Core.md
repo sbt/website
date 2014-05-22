@@ -3,7 +3,7 @@ out: Settings-Core.html
 ---
 
 Settings Core
-=============
+-------------
 
 This page describes the core settings engine a bit. This may be useful
 for using it outside of sbt. It may also be useful for understanding how
@@ -16,10 +16,9 @@ settings engine. This may help illuminate what exactly the core settings
 engine provides and what is needed to build something like the sbt
 settings system.
 
-Example
--------
+### Example
 
-### Setting up
+#### Setting up
 
 To run this example, first create a new project with the following
 build.sbt file:
@@ -32,7 +31,7 @@ Then, put the following examples in source files `SettingsExample.scala`
 and `SettingsUsage.scala`. Finally, run sbt and enter the REPL using
 `console`. To see the output described below, enter `SettingsUsage`.
 
-### Example Settings System
+#### Example Settings System
 
 The first part of the example defines the custom settings system. There
 are three main parts:
@@ -78,7 +77,7 @@ this time. The example uses a trivial implementation for this part.
 >
 > }
 
-### Example Usage
+#### Example Usage
 
 This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
@@ -152,10 +151,9 @@ This produces the following output when run: :
 -   b5 isn't defined explicitly, so it delegates to b4 and is therefore
     equal to 9 as well
 
-sbt Settings Discussion
------------------------
+### sbt Settings Discussion
 
-### Scopes
+#### Scopes
 
 sbt defines a more complicated scope than the one shown here for the
 standard usage of settings in a build. This scope has four components:
@@ -179,7 +177,7 @@ requires is a delegates function `Scope => Seq[Scope]` and a `display`
 function. You can choose a scope type that makes sense for your
 situation.
 
-### Constructing settings
+#### Constructing settings
 
 The *app*, *value*, *update*, and related methods are the core methods
 for constructing settings. This example obviously looks rather different
@@ -206,7 +204,7 @@ to `setting(a, value(3))`. For a TaskKey *a*, it will roughly translate
 to `setting(a, value( task { 3 } ) )`. See
 `main/Structure.scala <../../sxr/sbt/Structure.scala>`\_ for details.
 
-### Settings definitions
+#### Settings definitions
 
 sbt also provides a way to define these settings in a file (build.sbt
 and Build.scala). This is done for build.sbt using basic parsing and

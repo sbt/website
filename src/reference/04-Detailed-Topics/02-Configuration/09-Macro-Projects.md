@@ -3,10 +3,9 @@ out: Macro-Projects.html
 ---
 
 Macro Projects
-==============
+--------------
 
-Introduction
-------------
+### Introduction
 
 Some common problems arise when working with macros.
 
@@ -20,8 +19,7 @@ Some common problems arise when working with macros.
 
 The rest of the page shows example solutions to these problems.
 
-Defining the Project Relationships
-----------------------------------
+### Defining the Project Relationships
 
 The macro implementation will go in a subproject in the `macro/`
 directory. The main project in the project's base directory will depend
@@ -97,8 +95,7 @@ For example,
        }
     }
 
-Common Interface
-----------------
+### Common Interface
 
 Sometimes, the macro implementation and the macro usage should share
 some common code. In this case, declare another subproject for the
@@ -115,8 +112,7 @@ would look like:
 Code in `common/src/main/scala/` is available for both the `macro` and
 `main` projects to use.
 
-Distribution
-------------
+### Distribution
 
 To include the macro code with the main code, add the binary and source
 mappings from the macro subproject to the main project. For example, the

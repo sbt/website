@@ -3,14 +3,13 @@ out: Java-Sources.html
 ---
 
 Java Sources
-============
+------------
 
 sbt has support for compiling Java sources with the limitation that
 dependency tracking is limited to the dependencies present in compiled
 class files.
 
-Usage
------
+### Usage
 
 -   `compile` will compile the sources under `src/main/java` by default.
 -   `testCompile` will compile the sources under `src/test/java` by

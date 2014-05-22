@@ -3,7 +3,7 @@ out: Update-Report.html
 ---
 
 Update Report
-=============
+-------------
 
 `update` and related tasks produce a value of type
 `sbt.UpdateReport <../../api/sbt/UpdateReport.html>`\_ This data
@@ -18,8 +18,7 @@ This missing `Arifact` list is always empty for `update`, which will
 fail if it is non-empty. However, it may be non-empty for
 `updateClassifiers` and `updateSbtClassifers`.
 
-Filtering a Report and Getting Artifacts
-----------------------------------------
+### Filtering a Report and Getting Artifacts
 
 A typical use of `UpdateReport` is to retrieve a list of files matching
 a filter. A conversion of type `UpdateReport => RichUpdateReport`
@@ -44,7 +43,7 @@ allowed for the corresponding component. For example, if the
 `ConfigurationFilter` is not specified, all configurations are accepted.
 The individual filter types are discussed below.
 
-### Filter Basics
+#### Filter Basics
 
 Configuration, module, and artifact filters are typically built by
 applying a `NameFilter` to each component of a `Configuration`,
@@ -81,7 +80,7 @@ returning a Boolean).
 
     val af: ArtifactFilter = (a: Artifact) => a.classifier.isEmpty
 
-### ConfigurationFilter
+#### ConfigurationFilter
 
 A configuration filter essentially wraps a `NameFilter` and is
 explicitly constructed by the `configurationFilter` method:
@@ -101,7 +100,7 @@ Functions of type `String => Boolean` are implicitly convertible to a
 
 (The explicit types are optional here.)
 
-### ModuleFilter
+#### ModuleFilter
 
 A module filter is defined by three `NameFilter`s: one for the
 organization, one for the module name, and one for the revision. Each
@@ -123,7 +122,7 @@ with `ConfigurationFilter`, `ArtifactFilter`, and `NameFilter`, the `&`,
 
 (The explicit types are optional here.)
 
-### ArtifactFilter
+#### ArtifactFilter
 
 An artifact filter is defined by four `NameFilter`s: one for the name,
 one for the type, one for the extension, and one for the classifier.
@@ -145,7 +144,7 @@ Functions of type `Artifact => Boolean` are implicitly convertible to an
 
 (The explicit types are optional here.)
 
-### DependencyFilter
+#### DependencyFilter
 
 A `DependencyFilter` is typically constructed by combining other
 `DependencyFilter`s together using `&&`, `||`, and `--`. Configuration,

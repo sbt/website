@@ -3,7 +3,7 @@ out: Library-Management.html
 ---
 
 Library Management
-==================
+------------------
 
 There's now a
 `getting started page </Getting-Started/Library-Dependencies>` about
@@ -13,8 +13,7 @@ library management, which you may want to read first.
 between this page and the getting started page, leaving this page with
 the more advanced topics such as checksums and external Ivy files.
 
-Introduction
-------------
+### Introduction
 
 There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
@@ -23,8 +22,7 @@ either directly in a `.sbt file </Getting-Started/Basic-Def>` or are
 appended to the `settings` of a Project in a
 `.scala file </Getting-Started/Full-Def>`.
 
-Manual Dependency Management
-----------------------------
+### Manual Dependency Management
 
 Manually managing dependencies involves copying any jars that you want
 to use to the `lib` directory. sbt will put these jars on the classpath
@@ -57,8 +55,7 @@ default directory, you can do:
 
 See `Paths` for more information on building up paths.
 
-Automatic Dependency Management
--------------------------------
+### Automatic Dependency Management
 
 This method of dependency management involves specifying the direct
 dependencies of your project and letting sbt handle retrieving and
@@ -75,13 +72,13 @@ declarations, but external configuration can be explicitly selected. The
 following sections describe how to use each method of automatic
 dependency management.
 
-### Inline Declarations
+#### Inline Declarations
 
 Inline declarations are a basic way of specifying the dependencies to be
 automatically retrieved. They are intended as a lightweight alternative
 to a full configuration using Ivy.
 
-#### Dependencies
+##### Dependencies
 
 Declaring a dependency looks like:
 
@@ -115,7 +112,7 @@ you specify. Instead of a fixed revision like `"1.6.1"`, you specify
 `Ivy revisions <http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision>`\_
 documentation for details.
 
-#### Resolvers
+##### Resolvers
 
 sbt uses the standard Maven2 repository by default.
 
@@ -139,7 +136,7 @@ repository:
 
 See `Resolvers` for details on defining other types of repositories.
 
-#### Override default resolvers
+##### Override default resolvers
 
 `resolvers` configures additional, inline user resolvers. By default,
 `sbt` combines these resolvers with default repositories (Maven Central
@@ -157,7 +154,7 @@ To use the local repository, but not the Maven Central repository:
 
     externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
 
-#### Override all resolvers for all builds
+##### Override all resolvers for all builds
 
 The repositories used to retrieve sbt, Scala, plugins, and application
 dependencies can be configured globally and declared to override the
@@ -184,7 +181,7 @@ A different location for the repositories file may be specified by the
 final step is to set `sbt.override.build.repos` to true to use these
 repositories for dependency resolution and retrieval.
 
-#### Explicit URL
+##### Explicit URL
 
 If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified as follows:
@@ -195,7 +192,7 @@ The URL is only used as a fallback if the dependency cannot be found
 through the configured repositories. Also, the explicit URL is not
 included in published metadata (that is, the pom or ivy.xml).
 
-#### Disable Transitivity
+##### Disable Transitivity
 
 By default, these declarations fetch all project dependencies,
 transitively. In some instances, you may find that the dependencies
@@ -206,7 +203,7 @@ jar to compile and run. Avoid fetching artifact dependencies with either
 
     libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
 
-#### Classifiers
+##### Classifiers
 
 You can specify the classifier for a dependency using the `classifier`
 method. For example, to get the jdk15 version of TestNG:
@@ -226,7 +223,7 @@ to only retrieve sources:
 
     transitiveClassifiers := Seq("sources")
 
-#### Exclude Transitive Dependencies
+##### Exclude Transitive Dependencies
 
 To exclude certain transitive dependencies of a dependency, use the
 `excludeAll` or `exclude` methods. The `exclude` method should be used
@@ -249,7 +246,7 @@ to be generated. For example,
 
 See `ModuleID <../../api/sbt/ModuleID.html>`\_ for API details.
 
-#### Download Sources
+##### Download Sources
 
 Downloading source and API documentation jars is usually handled by an
 IDE plugin. These plugins use the `updateClassifiers` and
@@ -266,7 +263,7 @@ add `withJavadoc()`. For example:
 Note that this is not transitive. Use the `update-*classifiers` tasks
 for that.
 
-#### Extra Attributes
+##### Extra Attributes
 
 `Extra attributes <http://ant.apache.org/ivy/history/2.3.0/concept.html#extra>`\_
 can be specified by passing key/value pairs to the `extra` method.
@@ -282,7 +279,7 @@ To define extra attributes on the current project:
         previous.extra("color" -> "blue", "component" -> "compiler-interface")
     }
 
-#### Inline Ivy XML
+##### Inline Ivy XML
 
 sbt additionally supports directly specifying the configurations or
 dependencies sections of an Ivy configuration file inline. You can mix
@@ -297,7 +294,7 @@ For example:
         </dependency>
       </dependencies>
 
-#### Ivy Home Directory
+##### Ivy Home Directory
 
 By default, sbt uses the standard Ivy home directory location
 `\${user.home}/.ivy2/`. This can be configured machine-wide, for use by
@@ -307,11 +304,11 @@ both the sbt launcher and by projects, by setting the system property
 
 For example:
 
-``` {.sourceCode .text}
+```
 java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 ```
 
-#### Checksums
+##### Checksums
 
 sbt
 (`through Ivy <http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum>`\_)
@@ -335,7 +332,7 @@ The default value is:
 
 <a name="conflict-management"></a>
 
-#### Conflict Management
+##### Conflict Management
 
 The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
@@ -357,7 +354,7 @@ conflict,
 
 Both are explained in the following sections.
 
-#### Forcing a revision
+##### Forcing a revision
 
 The following direct dependencies will introduce a conflict on the log4j
 version because spark requires log4j 1.2.16.
@@ -399,7 +396,7 @@ The output of `show update` is now reversed:
 **Note:** this is an Ivy-only feature and cannot be included in a
 published pom.xml.
 
-#### Forcing a revision without introducing a dependency
+##### Forcing a revision without introducing a dependency
 
 Use of the `force()` method described in the previous section requires
 having a direct dependency. However, it may be desirable to force a
@@ -439,11 +436,11 @@ revision to be 1.2.16. This is confirmed by the output of `show update`:
 **Note:** this is an Ivy-only feature and will not be included in a
 published pom.xml.
 
-#### Publishing
+##### Publishing
 
 See `Publishing` for how to publish your project.
 
-#### Configurations
+##### Configurations
 
 Ivy configurations are a useful feature for your build when you need
 custom groups of dependencies, such as for a plugin. Ivy configurations
@@ -495,14 +492,14 @@ shortened to:
 
     libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
 
-### Maven/Ivy
+#### Maven/Ivy
 
 For this method, create the configuration files as you would for Maven
 (`pom.xml`) or Ivy (`ivy.xml` and optionally `ivysettings.xml`).
 External configuration is selected by using one of the following
 expressions.
 
-#### Ivy settings (resolver configuration)
+##### Ivy settings (resolver configuration)
 
     externalIvySettings()
 
@@ -514,7 +511,7 @@ or
 
     externalIvySettingsURL(url("your_url_here"))
 
-#### Ivy file (dependency configuration)
+##### Ivy file (dependency configuration)
 
     externalIvyFile()
 
@@ -529,7 +526,7 @@ use the 'default' configuration:
 
     classpathConfiguration in Compile := config("default")
 
-#### Maven pom (dependencies only)
+##### Maven pom (dependencies only)
 
     externalPom()
 
@@ -537,7 +534,7 @@ or
 
     externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
 
-#### Full Ivy Example
+##### Full Ivy Example
 
 For example, a `build.sbt` using external Ivy files might look like:
 
@@ -551,7 +548,7 @@ For example, a `build.sbt` using external Ivy files might look like:
 
     classpathConfiguration in Runtime := Runtime
 
-#### Known limitations
+##### Known limitations
 
 Maven support is dependent on Ivy's support for Maven POMs. Known issues
 with this support:

@@ -3,7 +3,7 @@ out: Scripts.html
 ---
 
 Scripts, REPL, and Dependencies
-===============================
+-------------------------------
 
 sbt has two alternative entry points that may be used to:
 
@@ -15,8 +15,7 @@ sbt has two alternative entry points that may be used to:
 These entry points should be considered experimental. A notable
 disadvantage of these approaches is the startup time involved.
 
-Setup
------
+### Setup
 
 To set up these entry points, you can either use
 `conscript <https://github.com/n8han/conscript>`\_ or manually construct
@@ -24,7 +23,7 @@ the startup scripts. In addition, there is a
 `setup script <https://github.com/paulp/xsbtscript>`\_ for the script
 mode that only requires a JRE installed.
 
-### Setup with Conscript
+#### Setup with Conscript
 
 Install `conscript <https://github.com/n8han/conscript>`\_.
 
@@ -34,7 +33,7 @@ cs sbt/sbt --branch 0.12.0
 
 This will create two scripts: `screpl` and `scalas`.
 
-### Manual Setup
+#### Manual Setup
 
 Duplicate your standard `sbt` script, which was set up according to
 `Setup </Getting-Started/Setup>`, as `scalas` and `screpl` (or whatever
@@ -59,16 +58,15 @@ you want sbt's boot directory to be; you might also need to give more
 memory to the JVM via `-Xms512M -Xmx1536M` or similar options, just like
 shown in `Setup </Getting-Started/Setup>`.
 
-Usage
------
+### Usage
 
-### sbt Script runner
+#### sbt Script runner
 
 The script runner can run a standard Scala script, but with the
 additional ability to configure sbt. sbt settings may be embedded in the
 script in a comment block that opens with `/***`.
 
-#### Example
+##### Example
 
 Copy the following script and make it executable. You may need to adjust
 the first line depending on your script name and operating system. When
@@ -107,7 +105,7 @@ chmod u+x dispatch_example.scala
 
     Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
 
-### sbt REPL with dependencies
+#### sbt REPL with dependencies
 
 The arguments to the REPL mode configure the dependencies to use when
 starting up the REPL. An argument may be either a jar to include on the
@@ -126,7 +124,7 @@ A repository argument looks like:
 
     "id at url"
 
-#### Example:
+##### Example:
 
 To add the Sonatype snapshots repository and add Scalaz 7.0-SNAPSHOT to
 REPL classpath:

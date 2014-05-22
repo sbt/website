@@ -3,7 +3,7 @@ out: Running-Project-Code.html
 ---
 
 Running Project Code
-====================
+--------------------
 
 The `run` and `console` actions provide a means for running user code in
 the same virtual machine as sbt. This page describes the problems with
@@ -12,16 +12,15 @@ this feature, and what types of code must use a `forked jvm <Forking>`.
 Skip to User Code if you just want to see when you should use a
 `forked jvm <Forking>`.
 
-Problems
---------
+### Problems
 
-### System.exit
+#### System.exit
 
 User code can call `System.exit`, which normally shuts down the JVM.
 Because the `run` and `console` actions run inside the same JVM as sbt,
 this also ends the build and requires restarting sbt.
 
-### Threads
+#### Threads
 
 User code can also start other threads. Threads can be left running
 after the main method returns. In particular, creating a GUI creates
@@ -29,7 +28,7 @@ several threads, some of which may not terminate until the JVM
 terminates. The program is not completed until either `System.exit` is
 called or all non-daemon threads terminate.
 
-### Deserialization and class loading
+#### Deserialization and class loading
 
 During deserialization, the wrong class loader might be used for various
 complex reasons. This can happen in many scenarios, and running under
@@ -39,10 +38,9 @@ explained
 here \<http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900\#comment-85900\>\_.
 
 sbt's Solutions
-===============
+---------------
 
-System.exit
------------
+### System.exit
 
 User code is run with a custom SecurityManager\` that throws a custom
 `SecurityException` when `System.exit` is called. This exception is
@@ -51,7 +49,7 @@ caught by sbt. sbt then disposes of all top-level windows, interrupts
 exit code is nonzero, `run` and `console` complete unsuccessfully. If
 the exit code is zero, they complete normally.
 
-### Threads
+#### Threads
 
 sbt makes a list of all threads running before executing user code.
 After the user code returns, sbt can then determine the threads created
@@ -67,8 +65,7 @@ and is not an `AWT` implementation thread (e.g. `AWT-XAWT`,
 `AWT-Windows`). User-created threads include the `AWT-EventQueue-*`
 thread(s).
 
-User Code
----------
+### User Code
 
 Given the above, when can user code be run with the `run` and `console`
 actions?

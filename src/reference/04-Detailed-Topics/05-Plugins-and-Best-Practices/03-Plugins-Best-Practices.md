@@ -3,7 +3,7 @@ out: Plugins-Best-Practices.html
 ---
 
 Plugins Best Practices
-======================
+----------------------
 
 *This page is intended primarily for sbt plugin authors.*
 
@@ -19,22 +19,19 @@ Specifically:
 Here are some current plugin best practices. **NOTE:** Best practices
 are evolving, so check back frequently.
 
-Don't use default package
--------------------------
+### Don't use default package
 
 Users who have their build files in some package will not be able to use
 your plugin if it's defined in default (no-name) package.
 
-Avoid older `sbt.Plugin` mechanism
-----------------------------------
+### Avoid older `sbt.Plugin` mechanism
 
 sbt has deprecated the old `sbt.Plugin` mechanism in favor of
 `sbt.AutoPlugin`. The new mechanism features a set of user-level
 controls and dependency declarations that cleans up a lot of
 long-standing issues with plugins.
 
-Reuse existing keys
--------------------
+### Reuse existing keys
 
 sbt has a number of `predefined keys <../../api/sbt/Keys%24.html>`\_.
 Where possible, reuse them in your plugin. For instance, don't define:
@@ -43,15 +40,14 @@ Where possible, reuse them in your plugin. For instance, don't define:
 
 Instead, simply reuse sbt's existing `sources` key.
 
-Avoid namespace clashes
------------------------
+### Avoid namespace clashes
 
 Sometimes, you need a new key, because there is no existing sbt key. In
 this case, use a plugin-specific prefix, both in the (string) key name
 used in the sbt namespace and in the Scala `val`. There are two
 acceptable ways to accomplish this goal.
 
-### Just use a `val` prefix
+#### Just use a `val` prefix
 
     package sbtobfuscate
     object Plugin extends sbt.Plugin {
@@ -63,7 +59,7 @@ plugin would refer to the settings like this:
 
     obfuscateStylesheet := ...
 
-### Use a nested object
+#### Use a nested object
 
     package sbtobfuscate
     object Plugin extends sbt.Plugin {
@@ -79,8 +75,7 @@ of the plugin would refer to the settings like this:
 
     stylesheet := ...
 
-Configuration Advice
---------------------
+### Configuration Advice
 
 Due to usability concerns from the shell, you could opt out of
 task-scoping described in this section, if your plugin makes heavy use
@@ -94,7 +89,7 @@ coffee:[tab]
 This method no longer works with per-task keys, but there's a pending
 case, so hopefully it will be addressed in the future.
 
-### When to define your own configuration
+#### When to define your own configuration
 
 If your plugin introduces a new concept (even if that concept reuses an
 existing key), you want your own configuration. For instance, suppose
@@ -114,7 +109,7 @@ In the PDF plugin, this is achieved with an `inConfig` definition:
       target := baseDirectory.value / "target" / "docs" # the default value
     ))
 
-### When *not* to define your own configuration.
+#### When *not* to define your own configuration.
 
 If you're merely adding to existing definitions, don't define your own
 configuration. Instead, reuse an existing one *or* scope by the main
@@ -126,7 +121,7 @@ task (see below).
     target in akkaStartCluster := ... // This is ok.
     akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
 
-### Configuration Cat says "Configuration is for configuration"
+#### Configuration Cat says "Configuration is for configuration"
 
 When defining a new type of configuration, e.g.
 
@@ -148,7 +143,7 @@ Configurations should *not* be used to namespace keys for a plugin. e.g.
     val pluginKey = settingKey[String]("A plugin specific key")
     val settings = pluginKey in Config  // DON'T DO THIS!
 
-### Playing nice with configurations
+#### Playing nice with configurations
 
 Whether you ship with a configuration or not, a plugin should strive to
 support multiple configurations, including those created by the build
@@ -157,7 +152,7 @@ re-used in other configurations. While you may not see the need
 immediately in your plugin, some project may and will ask you for the
 flexibility.
 
-#### Provide raw settings and configured settings
+##### Provide raw settings and configured settings
 
 Split your settings by the configuration axis like so:
 
@@ -187,7 +182,7 @@ This could be used as follows:
 
     seq(obfuscateSettingsIn(Test): _*) 
 
-#### Using a 'main' task scope for settings
+##### Using a 'main' task scope for settings
 
 Sometimes you want to define some settings for a particular 'main' task
 in your plugin. In this instance, you can scope your settings using the
@@ -203,8 +198,7 @@ task itself.
 In the above example, `sources in obfuscate` is scoped under the main
 task, `obfuscate`.
 
-Mucking with Global build state
--------------------------------
+### Mucking with Global build state
 
 There may be times when you need to muck with global build state. The
 general rule is *be careful what you touch*.

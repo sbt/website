@@ -3,7 +3,7 @@ out: Paths.html
 ---
 
 Paths
-=====
+-----
 
 This page describes files, sequences of files, and file filters. The
 base type used is
@@ -16,8 +16,7 @@ but several methods are augmented through implicits:
 -   `Path <../../api/sbt/Path\$.html>`\_ and [IO](../../api/sbt/IO\$.html)
     provide general methods related to files and I/O.
 
-Constructing a File
--------------------
+### Constructing a File
 
 sbt 0.10+ uses
 `java.io.File <http://download.oracle.com/javase/6/docs/api/java/io/File.html>`\_
@@ -58,22 +57,21 @@ defined in:
 
     historyPath := Some( (baseDirectory in ThisBuild).value / ".history"),
 
-Path Finders
-------------
+### Path Finders
 
 A `PathFinder` computes a `Seq[File]` on demand. It is a way to build a
 sequence of files. There are several methods that augment `File` and
 `Seq[File]` to construct a `PathFinder`. Ultimately, call `get` on the
 resulting `PathFinder` to evaluate it and get back a `Seq[File]`.
 
-### Selecting descendants
+#### Selecting descendants
 
 The `**` method accepts a `java.io.FileFilter` and selects all files
 matching that filter.
 
     def scalaSources(base: File): PathFinder = (base / "src") ** "*.scala"
 
-### get
+#### get
 
 This selects all files that end in `.scala` that are in `src` or a
 descendent directory. The list of files is not actually evaluated until
@@ -89,7 +87,7 @@ If the filesystem changes, a second call to `get` on the same
 reconstructs the list of files each time. Also, `get` only returns
 `File`s that existed at the time it was called.
 
-### Selecting children
+#### Selecting children
 
 Selecting files that are immediate children of a subdirectory is done
 with a single `*`:
@@ -99,21 +97,21 @@ with a single `*`:
 This selects all files that end in `.scala` that are in the `src`
 directory.
 
-### Existing files only
+#### Existing files only
 
 If a selector, such as `/`, `**`, or `*`, is used on a path that does
 not represent a directory, the path list will be empty:
 
     def emptyFinder(base: File) = (base / "lib" / "ivy.jar") * "not_possible"
 
-### Name Filter
+#### Name Filter
 
 The argument to the child and descendent selectors `*` and `**` is
 actually a `NameFilter`. An implicit is used to convert a `String` to a
 `NameFilter` that interprets `*` to represent zero or more characters of
 any value. See the Name Filters section below for more information.
 
-### Combining PathFinders
+#### Combining PathFinders
 
 Another operation is concatenation of `PathFinder`s:
 
@@ -142,7 +140,7 @@ sources that are a descendent of a `.svn` directory. The `---` method
 removes all files returned by the second selector from the sequence of
 files returned by the first selector.
 
-### Filtering
+#### Filtering
 
 There is a `filter` method that accepts a predicate of type
 `File => Boolean` and is non-strict:
@@ -158,14 +156,14 @@ There is a `filter` method that accepts a predicate of type
 > def archivesOnly(base: PathFinder) = base filter
 > ClasspathUtilities.isArchive
 
-### Empty PathFinder
+#### Empty PathFinder
 
 `PathFinder.empty` is a `PathFinder` that returns the empty sequence
 when `get` is called:
 
     assert( PathFinder.empty.get == Seq[File]() )
 
-### PathFinder to String conversions
+#### PathFinder to String conversions
 
 Convert a `PathFinder` to a String using one of the following methods:
 
@@ -176,7 +174,7 @@ Convert a `PathFinder` to a String using one of the following methods:
 -   `getPaths` produces a `Seq[String]` containing the absolute paths of
     each component
 
-### Mappings
+#### Mappings
 
 The packaging and file copying methods in sbt expect values of type
 `Seq[(File,String)]` and `Seq[(File,File)]`, respectively. These are
@@ -186,8 +184,7 @@ mappings from the input file to its (String) path in the jar or its
 
 Mappings are discussed in detail on the `Mapping-Files` page.
 
-File Filters
-------------
+### File Filters
 
 The argument to `*` and `**` is of type
 `java.io.FileFilter <http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html>`\_.

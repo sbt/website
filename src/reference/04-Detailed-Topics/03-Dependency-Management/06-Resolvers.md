@@ -3,10 +3,9 @@ out: Resolvers.html
 ---
 
 Resolvers
-=========
+---------
 
-Maven
------
+### Maven
 
 Resolvers for Maven2 repositories are added as follows:
 
@@ -18,8 +17,7 @@ resolvers +=
 This is the most common kind of user-defined resolvers. The rest of this
 page describes how to define other types of repositories.
 
-Predefined
-----------
+### Predefined
 
 A few predefined repositories are available and are listed below
 
@@ -38,8 +36,7 @@ in one place:
 
     Resolver.sonatypeRepo("releases")  // Or "snapshots"
 
-Custom
-------
+### Custom
 
 sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
@@ -61,12 +58,12 @@ configured identically except for the name of the factory. Use
   SSH          `Resolver.ssh`    `Ivy ssh`\_          `ssh factory`\_        `SshRepository API`\_
   URL          `Resolver.url`    `Ivy url`\_          `url factory`\_        `URLRepository API`\_
 
-### Basic Examples
+#### Basic Examples
 
 These are basic examples that use the default Maven-style repository
 layout.
 
-#### Filesystem
+##### Filesystem
 
 Define a filesystem repository in the `test` directory of the current
 working directory and declare that publishing to this repository must be
@@ -74,7 +71,7 @@ atomic.
 
     resolvers += Resolver.file("my-test-repo", file("test")) transactional()
 
-#### URL
+##### URL
 
 Define a URL repository at `"http://example.org/repo-releases/"`.
 
@@ -87,7 +84,7 @@ To specify an Ivy repository, use:
 or customize the layout pattern described in the Custom Layout section
 below.
 
-#### SFTP and SSH Repositories
+##### SFTP and SSH Repositories
 
 The following defines a repository that is served by SFTP from host
 `"example.org"`:
@@ -131,7 +128,7 @@ To specify the permissions used when publishing to the server:
 
 This is a chmod-like mode specification.
 
-### Custom Layout
+#### Custom Layout
 
 These examples specify custom repository layouts using patterns. The
 factory methods accept an `Patterns` instance that defines the patterns

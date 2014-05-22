@@ -3,10 +3,9 @@ out: Parallel-Execution.html
 ---
 
 Parallel Execution
-==================
+------------------
 
-Task ordering
--------------
+### Task ordering
 
 Task ordering is specified by declaring a task's inputs. Correctness of
 execution requires correct input declarations. For example, the
@@ -33,13 +32,12 @@ This establishes an ordering: `read` must run after `write`. We've also
 guaranteed that `read` will read from the same file that `write`
 created.
 
-Practical constraints
----------------------
+### Practical constraints
 
 Note: The feature described in this section is experimental. The default
 configuration of the feature is subject to change in particular.
 
-### Background
+#### Background
 
 Declaring inputs and dependencies of a task ensures the task is properly
 ordered and that code executes correctly. In practice, tasks share
@@ -66,7 +64,7 @@ tasks in separate projects could still run in parallel if overall
 execution was parallel. There was no way to restriction execution such
 that only a single test out of all projects executed.
 
-### Configuration
+#### Configuration
 
 sbt 0.12.0 introduces a general infrastructure for restricting task
 concurrency beyond the usual ordering declarations. There are two parts
@@ -82,7 +80,7 @@ to these restrictions.
 The system is thus dependent on proper tagging of tasks and then on a
 good set of rules.
 
-#### Tagging Tasks
+##### Tagging Tasks
 
 In general, a tag is associated with a weight that represents the task's
 relative utilization of the resource represented by the tag. Currently,
@@ -105,7 +103,7 @@ Different weights may be specified by passing tag/weight pairs to
 
     download := downloadImpl.value
 
-#### Defining Restrictions
+##### Defining Restrictions
 
 Once tasks are tagged, the `concurrentRestrictions` setting sets
 restrictions on the tasks that may be concurrently executed based on the
@@ -181,7 +179,7 @@ it must be allowed to execute. sbt will generate a warning if the user
 defines restrictions that prevent a task from executing at all and will
 then execute the task anyway.
 
-#### Built-in Tags and Rules
+##### Built-in Tags and Rules
 
 Built-in tags are defined in the `Tags` object. All tags listed below
 must be qualified by this object. For example, `CPU` refers to the
@@ -226,7 +224,7 @@ tests in all projects, use:
 
     concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
 
-### Custom Tags
+#### Custom Tags
 
 To define a new tag, pass a String to the `Tags.Tag` method. For
 example:
@@ -242,12 +240,12 @@ Then, use this tag as any other tag. For example:
     concurrentRestrictions in Global += 
       Tags.limit(Custom, 1)
 
-### Future work
+#### Future work
 
 This is an experimental feature and there are several aspects that may
 change or require further work.
 
-#### Tagging Tasks
+##### Tagging Tasks
 
 Currently, a tag applies only to the immediate computation it is defined
 on. For example, in the following, the second compile definition has no
@@ -265,19 +263,19 @@ tags applied to it. Only the first computation is labeled.
 Is this desirable? expected? If not, what is a better, alternative
 behavior?
 
-#### Fractional weighting
+##### Fractional weighting
 
 Weights are currently `int`s, but could be changed to be `double`s if
 fractional weights would be useful. It is important to preserve a
 consistent notion of what a weight of 1 means so that built-in and
 custom tasks share this definition and useful rules can be written.
 
-#### Default Behavior
+##### Default Behavior
 
 User feedback on what custom rules work for what workloads will help
 determine a good set of default tags and rules.
 
-#### Adjustments to Defaults
+##### Adjustments to Defaults
 
 Rules should be easier to remove or redefine, perhaps by giving them
 names. As it is, rules must be appended or all rules must be completely
@@ -287,7 +285,7 @@ definition site when using the `:=` syntax.
 For removing tags, an implementation of `removeTag` should follow from
 the implementation of `tag` in a straightforward manner.
 
-#### Other characteristics
+##### Other characteristics
 
 The system of a tag with a weight was selected as being reasonably
 powerful and flexible without being too complicated. This selection is

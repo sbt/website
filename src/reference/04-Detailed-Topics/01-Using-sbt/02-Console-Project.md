@@ -3,10 +3,9 @@ out: Console-Project.html
 ---
 
 Console Project
-===============
+---------------
 
-Description
------------
+### Description
 
 The `consoleProject` task starts the Scala interpreter with access to
 your project definition and to `sbt`. Specifically, the interpreter is
@@ -38,8 +37,7 @@ the same way that the Scala interpreter is normally used to explore
 writing code. Note that this gives you raw access to your build. Think
 about what you pass to `IO.delete`, for example.
 
-Accessing settings
-------------------
+### Accessing settings
 
 To get a particular setting, use the form:
 
@@ -47,7 +45,7 @@ To get a particular setting, use the form:
 > val value = (<key> in <scope>).eval
 ```
 
-### Examples
+#### Examples
 
 ```scala
 > IO.delete( (classesDirectory in Compile).eval )
@@ -65,8 +63,7 @@ Show additionally configured repositories.
 > resolvers.eval foreach println
 ```
 
-Evaluating tasks
-----------------
+### Evaluating tasks
 
 To evaluate a task (and its dependencies), use the same form:
 
@@ -74,7 +71,7 @@ To evaluate a task (and its dependencies), use the same form:
 > val value = (<key> in <scope>).eval
 ```
 
-### Examples
+#### Examples
 
 Show all repositories, including defaults.
 
@@ -89,14 +86,13 @@ Show the classpaths used for compilation and testing:
 > (fullClasspath in Test).eval.files foreach println
 ```
 
-State
------
+### State
 
 The current `build State </Extending/Build-State>` is available as
 `currentState`. The contents of `currentState` are imported by default
 and can be used without qualification.
 
-### Examples
+#### Examples
 
 Show the remaining commands to be executed in the build (more
 interesting if you invoke `consoleProject` like

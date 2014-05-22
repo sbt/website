@@ -3,10 +3,9 @@ out: Process.html
 ---
 
 External Processes
-==================
+------------------
 
-Usage
------
+### Usage
 
 `sbt` includes a process library to simplify working with external
 processes. The library is available without import in build definitions
@@ -81,7 +80,7 @@ are some examples, but see the
 Finally, there is a `cat` method to send the contents of `File`s and
 `URL`s to standard output.
 
-### Examples
+#### Examples
 
 Download a `URL` to a `File`:
 

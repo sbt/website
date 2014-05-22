@@ -3,15 +3,14 @@ out: Proxy-Repositories.html
 ---
 
 Proxy Repositories
-==================
+------------------
 
 It's often the case that users wish to set up a maven/ivy proxy
 repository inside their corporate firewall, and have developer sbt
 instances resolve artifacts through such a proxy. Let's detail what
 exact changes must be made for this to work.
 
-Overview
---------
+### Overview
 
 The situation arises when many developers inside an organization are
 attempting to resolve artifacts. Each developer's machine will hit the
@@ -34,8 +33,7 @@ Once you have a proxy repository installed and configured, then it's
 time to configure sbt for your needs. Read the note at the bottom about
 proxy issues with ivy repositories.
 
-sbt Configuration
------------------
+### sbt Configuration
 
 sbt requires configuration in two places to make use of a proxy
 repository. The first is the `~/.sbt/repositories` file, and the second
@@ -70,7 +68,7 @@ be able to resolve sbt plugins.
 The final resolver is `my-maven-proxy-releases`. This repository is a
 proxy for all standard maven repositories, including maven central.
 
-### Launcher Script
+#### Launcher Script
 
 The sbt launcher supports two configuration options that allow the usage
 of proxy repositories. The first is the `sbt.override.build.repos`
@@ -103,8 +101,7 @@ sbt start script directly with the following:
 This is only necessary if users do not already have their own default
 repository file.
 
-Proxying Ivy Repositories
--------------------------
+### Proxying Ivy Repositories
 
 The most common mistake made when setting up a proxy repository for sbt
 is the attempting to *merge* both *maven* and *ivy* repositories into

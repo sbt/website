@@ -3,7 +3,7 @@ out: Parsing-Input.html
 ---
 
 Parsing and tab completion
-==========================
+--------------------------
 
 This page describes the parser combinators in sbt. These parser
 combinators are typically used to parse user input and provide tab
@@ -25,8 +25,7 @@ The following examples assume the imports: :
     import sbt._
     import complete.DefaultParsers._
 
-Basic parsers
--------------
+### Basic parsers
 
 The simplest parser combinators match exact inputs:
 
@@ -53,8 +52,7 @@ a `Char` or `String`. Other basic parser constructors are the
     //  The argument is the error message.
     val alwaysFail: Parser[Nothing] = failure("Invalid input.")
 
-Built-in parsers
-----------------
+### Built-in parsers
 
 sbt comes with several built-in parsers defined in
 `sbt.complete.DefaultParsers <../../api/sbt/complete/DefaultParsers\$.html>`\_.
@@ -72,8 +70,7 @@ See the
 `DefaultParsers API <../../api/sbt/complete/DefaultParsers\$.html>`\_ for
 details.
 
-Combining parsers
------------------
+### Combining parsers
 
 We build on these basic parsers to construct more interesting parsers.
 We can combine parsers in a sequence, choose between parsers, or repeat
@@ -105,8 +102,7 @@ a parser.
     // Optionally match a digit
     val optDigit: Parser[Option[Char]]  =  charClass(_.isDigit, "digit").?
 
-Transforming results
---------------------
+### Transforming results
 
 A key aspect of parser combinators is transforming results along the way
 into more useful data structures. The fundamental methods for this are
@@ -130,8 +126,7 @@ methods implemented on top of `map`.
     // The above is equivalent to:
     val blueM = "blue" map { (s: String) => 4 }
 
-Controlling tab completion
---------------------------
+### Controlling tab completion
 
 Most parsers have reasonable default tab completion behavior. For
 example, the string and character literal parsers will suggest the

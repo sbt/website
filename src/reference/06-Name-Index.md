@@ -3,17 +3,16 @@ out: Name-Index.html
 ---
 
 Index
-=====
+-----
 
 This is an index of common methods, types, and values you might find in
 an sbt build definition. For command names, see
 `Running </Getting-Started/Running>`. For available plugins, see
 `the plugins list </Community/Community-Plugins>`.
 
-Values and Types
-----------------
+### Values and Types
 
-### Dependency Management
+#### Dependency Management
 
 -   `ModuleID <../api/sbt/ModuleID.html>`\_ is the type of a dependency
     definition. See /Detailed-Topics/Library-Management.
@@ -34,7 +33,7 @@ Values and Types
 -   `Compile`, `Test`, `Runtime`, `Provided`, and `Optional` are
     predefined `configurations <ivy-configurations>`.
 
-### Settings and Tasks
+#### Settings and Tasks
 
 -   A `Setting <../api/sbt/Init\$Setting.html>`\_ describes how to
     initialize a specific setting in the build. It can use the values of
@@ -67,7 +66,7 @@ Values and Types
     action that runs on demand. This is in contrast to a setting, which
     is run once at project initialization.
 
-### Process
+#### Process
 
 -   A `ProcessBuilder <../api/sbt/ProcessBuilder.html>`\_ is the type
     used to define a process. It provides combinators for building up
@@ -77,7 +76,7 @@ Values and Types
 -   The `Process companion object <../api/sbt/Process\$.html>`\_ provides
     methods for constructing primitive processes.
 
-### Build Structure
+#### Build Structure
 
 -   `Build <../api/sbt/Build.html>`\_ is the trait implemented for a
     full definition \</Getting-Started/Full-Def\>, which defines project
@@ -93,10 +92,9 @@ Values and Types
     build. It is mainly used by /Extending/Commands and sometimes
     /Extending/Input-Tasks. See also /Extending/Build-State.
 
-Methods
--------
+### Methods
 
-### Settings and Tasks
+#### Settings and Tasks
 
 See the `Getting Started Guide </Getting-Started/Basic-Def>` for
 details.
@@ -115,7 +113,7 @@ details.
     [Scope](../api/sbt/Scope.html) of a setting being referenced. See
     scopes \</Getting-Started/Scopes\>.
 
-### File and IO
+#### File and IO
 
 See `RichFile <../api/sbt/RichFile.html>`\_,
 `PathFinder <../api/sbt/PathFinder.html>`\_, and
@@ -138,7 +136,7 @@ See `RichFile <../api/sbt/RichFile.html>`\_,
     call-by-name data structure) to a strict Seq[File] representation.
     This is a common name in Scala, used by types like Option.
 
-### Dependency Management
+#### Dependency Management
 
 See `/Detailed-Topics/Library-Management` for full documentation.
 
@@ -154,7 +152,7 @@ See `/Detailed-Topics/Library-Management` for full documentation.
 -   `hide` Marks a [Configuration](../api/sbt/Configuration.html) as
     internal and not to be included in the published metadata.
 
-### Parsing
+#### Parsing
 
 These methods are used to build up
 `Parser <../api/sbt/complete/Parser.html>`\_s from smaller
@@ -181,7 +179,7 @@ used for `/Extending/Input-Tasks` and `/Extending/Commands`.
 -   `!!!` Provides an error message to use when the original parser
     doesn't match the input.
 
-### Processes
+#### Processes
 
 These methods are used to
 `fork external processes </Detailed-Topics/Process>`. Note that this API

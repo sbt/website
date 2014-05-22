@@ -3,7 +3,7 @@ out: Input-Tasks.html
 ---
 
 Input Tasks
-===========
+-----------
 
 Input Tasks parse user input and produce a task to run.
 `/Detailed-Topics/Parsing-Input/` describes how to use the parser
@@ -11,8 +11,7 @@ combinators that define the input syntax and tab completion. This page
 describes how to hook those parser combinators into the input task
 system.
 
-Input Keys
-----------
+### Input Keys
 
 A key for an input task is of type `InputKey` and represents the input
 task like a `SettingKey` represents a setting or a `TaskKey` represents
@@ -28,8 +27,7 @@ it can also use the result of a
 the special `value` method gets the value of a setting or task, the
 special `parsed` method gets the result of a `Parser`.
 
-Basic Input Task Definition
----------------------------
+### Basic Input Task Definition
 
 The simplest input task accepts a space-delimited sequence of arguments.
 It does not provide useful tab completion and parsing is basic. The
@@ -49,15 +47,14 @@ then echoes the arguments passed to it on their own line.
       args foreach println
     }
 
-Input Task using Parsers
-------------------------
+### Input Task using Parsers
 
 The Parser provided by the `spaceDelimited` method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
 a matter of defining your own `Parser` as described on the
 `/Detailed-Topics/Parsing-Input` page.
 
-### Constructing the Parser
+#### Constructing the Parser
 
 The first step is to construct the actual `Parser` by defining a value
 of one of the following types:
@@ -98,7 +95,7 @@ Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
 parser.
 
-### Constructing the Task
+#### Constructing the Task
 
 Next, we construct the actual task to execute from the result of the
 `Parser`. For this, we define a task as usual, but we can access the
@@ -115,8 +112,7 @@ some information to the screen.
         println("Packaged: " + packageBin.value.getAbsolutePath)
     }
 
-The InputTask type
-------------------
+### The InputTask type
 
 It helps to look at the `InputTask` type to understand more advanced
 usage of input tasks. The core input task type is:
@@ -139,8 +135,7 @@ an input task's command line syntax. This was described in the previous
 section. You can then use settings, `State`, or user input to construct
 the task to run. This is implicit in the input task syntax.
 
-Using other input tasks
------------------------
+### Using other input tasks
 
 The types involved in an input task are composable, so it is possible to
 reuse input tasks. The `.parsed` and `.evaluated` methods are defined on
@@ -183,8 +178,7 @@ For a main class Demo that echoes its arguments, this looks like:
     a
     b
 
-Preapplying input
------------------
+### Preapplying input
 
 Because `InputTasks` are built from `Parsers`, it is possible to
 generate a new `InputTask` by applying some input programmatically. (It
@@ -241,8 +235,7 @@ For a main class Demo that echoes its arguments, this looks like:
     blue
     green
 
-Get a Task from an InputTask
-----------------------------
+### Get a Task from an InputTask
 
 The previous section showed how to derive a new `InputTask` by applying
 input. In this section, applying input produces a `Task`. The `toTask`

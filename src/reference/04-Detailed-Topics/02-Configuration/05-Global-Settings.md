@@ -3,10 +3,9 @@ out: Global-Settings.html
 ---
 
 Global Settings
-===============
+---------------
 
-Basic global configuration file
--------------------------------
+### Basic global configuration file
 
 Settings that should be applied to all projects can go in
 \`|globalSbtFile|\` (or any file in \`|globalBase|\` with a `.sbt`
@@ -20,8 +19,7 @@ are available to these settings. For example, to change the default
      "sbt (%s)> ".format(Project.extract(state).currentProject.id)
     }
 
-Global Settings using a Global Plugin
--------------------------------------
+### Global Settings using a Global Plugin
 
 The \`|globalPluginsBase|\` directory is a global plugin project. This
 can be used to provide global commands, plugins, or other code.

@@ -3,10 +3,9 @@ out: Plugins.html
 ---
 
 Plugins
-=======
+-------
 
-Introduction
-------------
+### Introduction
 
 A plugin is essentially a way to use external code in a build
 definition. A plugin can be a library used to implement a task. For
@@ -22,8 +21,7 @@ The `Plugins-Best-Practices` page describes the currently evolving
 guidelines to writing sbt plugins. See also the general
 `/Detailed-Topics/Best-Practices`.
 
-Using a binary sbt plugin
--------------------------
+### Using a binary sbt plugin
 
 A common situation is using a binary plugin published to a repository.
 Create `project/plugins.sbt` with the desired sbt plugins, any general
@@ -41,8 +39,7 @@ dependencies, and any necessary repositories:
 See the rest of the page for more information on creating and using
 plugins.
 
-By Description
---------------
+### By Description
 
 A plugin definition is a project in `<main-project>/project/`. This
 project's classpath is the classpath used for build definitions in
@@ -83,29 +80,28 @@ project that have not been saved are dropped.
 parent class loader of the class loaders for builds. This means that
 plugins will not see classes or resources from build definitions.
 
-### Global plugins
+#### Global plugins
 
 The \`|globalPluginsBase|\` directory is treated as a global plugin
 definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.
 
-By Example
-----------
+### By Example
 
-### Using a library in a build definition
+#### Using a library in a build definition
 
 As an example, we'll add the Grizzled Scala library as a plugin.
 Although this does not provide sbt-specific functionality, it
 demonstrates how to declare plugins.
 
-#### 1a) Manually managed
+##### 1a) Manually managed
 
 1.  Download the jar manually from
     [https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar](https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar)
 2.  Put it in `project/lib/`
 
-#### 1b) Automatically managed: direct editing approach
+##### 1b) Automatically managed: direct editing approach
 
 Edit `project/plugins.sbt` to contain:
 
@@ -113,7 +109,7 @@ Edit `project/plugins.sbt` to contain:
 
 If sbt is running, do `reload`.
 
-#### 1c) Automatically managed: command line approach
+##### 1c) Automatically managed: command line approach
 
 We can change to the plugins project in `project/` using
 `reload plugins`.
@@ -145,7 +141,7 @@ To switch back to the main project:
 [info] Set current project to root (in build file:/Users/harrah/demo2/)
 ```
 
-#### 1d) Project dependency
+##### 1d) Project dependency
 
 This variant shows how to use sbt's external project support to declare
 a source dependency on a plugin. This means that the plugin will be
@@ -175,7 +171,7 @@ build uses a different sbt version, as many plugins cross-publish for
 several sbt versions. As such, it is recommended to stick with binary
 artifacts when possible.
 
-#### 2) Use the library
+##### 2) Use the library
 
 Grizzled Scala is ready to be used in build definitions. This includes
 the `eval` and `set` commands and `.sbt` and `project/*.scala` files.
@@ -195,10 +191,9 @@ In a `build.sbt` file:
         else
             Nil
 
-Creating a plugin
------------------
+### Creating a plugin
 
-### Introduction
+#### Introduction
 
 A minimal plugin is a Scala library that is built against the version of
 Scala that sbt runs (currently, |scalaRelease|) or a Java library.
@@ -208,7 +203,7 @@ commands, or settings. This kind of plugin may provide these settings
 automatically or make them available for the user to explicitly
 integrate.
 
-### Description
+#### Description
 
 To make a plugin, create a project and configure `sbtPlugin` to `true`.
 Then, write the plugin code and publish your project to a repository.
@@ -237,7 +232,7 @@ to automatically provide new functionality or new defaults. One main use
 of this feature is to globally add commands, such as for IDE plugins.
 Use `globalSettings` to define the default value of a setting.
 
-### Example Plugin
+#### Example Plugin
 
 An example of a typical plugin:
 
@@ -290,7 +285,7 @@ An example of a typical plugin:
         def apply(sources: Seq[File]): Seq[File] := sources
     }
 
-### Usage example
+#### Usage example
 
 A build definition that uses the plugin might look like:
 
@@ -298,7 +293,7 @@ A build definition that uses the plugin might look like:
 
     obfuscateLiterals in obfuscate := true
 
-### Root Plugins
+#### Root Plugins
 
 Some plugins should always be explicitly enabled on projects. Sbt calls
 these root plugins, i.e. plugins that are "root" nodes in the plugin
@@ -356,7 +351,7 @@ method. For example, if we wish to remove the JvmModule settings
 
     val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
 
-### Global plugins example
+#### Global plugins example
 
 The simplest global plugin definition is declaring a library or plugin
 in `|globalPluginsBase|` build.sbt:
@@ -392,8 +387,7 @@ These are all consequences of |globalPluginsBase| being a standard
 project whose classpath is added to every sbt project's build
 definition.
 
-Best Practices
---------------
+### Best Practices
 
 If you're a plugin writer, please consult the `Plugins-Best-Practices`
 page; it contains a set of guidelines to help you ensure that your

@@ -3,7 +3,7 @@ out: Command-Line-Applications.html
 ---
 
 Creating Command Line Applications Using sbt
-============================================
+--------------------------------------------
 
 There are several components of sbt that may be used to create a command
 line application. The `launcher </Detailed-Topics/Launcher>` and the
@@ -17,8 +17,7 @@ application. To use the command system, an application sets up a
 `command implementations <Commands>` and the initial commands to run. A
 minimal hello world example is given below.
 
-Hello World Example
--------------------
+### Hello World Example
 
 There are three files in this example:
 
@@ -35,7 +34,7 @@ To try out this example:
 Like for sbt itself, you can specify commands from the command line
 (batch mode) or run them at an prompt (interactive mode).
 
-### Build Definition: build.sbt
+#### Build Definition: build.sbt
 
 The build.sbt file should define the standard settings: name, version,
 and organization. To use the sbt command system, a dependency on the
@@ -50,7 +49,7 @@ the `task-system` module as well.
 
     libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
 
-### Application: Main.scala
+#### Application: Main.scala
 
 The application itself is defined by implementing
 `xsbti.AppMain <../../api/xsbti/AppMain.html>`\_. The basic steps are
@@ -105,7 +104,7 @@ The application itself is defined by implementing
           GlobalLogging.initial(MainLogging.globalDefault _, File.createTempFile("hello", "log"))
     }
 
-### Launcher configuration file: hello.build.properties
+#### Launcher configuration file: hello.build.properties
 
 The launcher needs a configuration file in order to retrieve and run an
 application.
