@@ -110,7 +110,7 @@ The key is to initialize the Settings for the interpreter using
 Here, MyType is a representative class that should be included on the
 interpreter's classpath and in its application class loader. For more
 background, see the
-`original proposal <https://gist.github.com/404272>`\_ that resulted in
+[original proposal](https://gist.github.com/404272) that resulted in
 *embeddedDefaults* being added.
 
 Similarly, use a representative class as the type argument when using

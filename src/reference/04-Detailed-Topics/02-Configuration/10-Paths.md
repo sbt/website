@@ -7,7 +7,7 @@ Paths
 
 This page describes files, sequences of files, and file filters. The
 base type used is
-`java.io.File <http://download.oracle.com/javase/6/docs/api/java/io/File.html>`\_,
+[java.io.File](http://download.oracle.com/javase/6/docs/api/java/io/File.html),
 but several methods are augmented through implicits:
 
 -   `RichFile <../../api/sbt/RichFile.html>`\_ adds methods to File
@@ -19,7 +19,7 @@ but several methods are augmented through implicits:
 ### Constructing a File
 
 sbt 0.10+ uses
-`java.io.File <http://download.oracle.com/javase/6/docs/api/java/io/File.html>`\_
+[java.io.File](http://download.oracle.com/javase/6/docs/api/java/io/File.html)
 to represent a file instead of the custom `sbt.Path` class that was in
 sbt 0.7 and earlier. sbt defines the alias `File` for `java.io.File` so
 that an extra import is not necessary. The `file` method is an alias for
@@ -184,7 +184,7 @@ Mappings are discussed in detail on the `Mapping-Files` page.
 ### File Filters
 
 The argument to `*` and `**` is of type
-`java.io.FileFilter <http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html>`\_.
+[java.io.FileFilter](http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html).
 sbt provides combinators for constructing `FileFilter`s.
 
 First, a String may be implicitly converted to a `FileFilter`. The

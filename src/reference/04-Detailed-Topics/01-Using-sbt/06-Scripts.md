@@ -18,14 +18,14 @@ disadvantage of these approaches is the startup time involved.
 ### Setup
 
 To set up these entry points, you can either use
-`conscript <https://github.com/n8han/conscript>`\_ or manually construct
+[conscript](https://github.com/n8han/conscript) or manually construct
 the startup scripts. In addition, there is a
-`setup script <https://github.com/paulp/xsbtscript>`\_ for the script
+[setup script](https://github.com/paulp/xsbtscript) for the script
 mode that only requires a JRE installed.
 
 #### Setup with Conscript
 
-Install `conscript <https://github.com/n8han/conscript>`\_.
+Install [conscript](https://github.com/n8han/conscript).
 
 ```
 cs sbt/sbt --branch 0.12.0

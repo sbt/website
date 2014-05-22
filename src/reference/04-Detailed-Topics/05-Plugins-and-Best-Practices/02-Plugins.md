@@ -10,7 +10,7 @@ Plugins
 A plugin is essentially a way to use external code in a build
 definition. A plugin can be a library used to implement a task. For
 example, you might use
-`Knockoff <https://github.com/tristanjuricek/knockoff/>`\_ to write a
+[Knockoff](https://github.com/tristanjuricek/knockoff/) to write a
 markdown processing task. A plugin can define a sequence of sbt Settings
 that are automatically added to all projects or that are explicitly
 declared for selected projects. For example, a plugin might add a

@@ -16,9 +16,9 @@ The standard source locations for testing are:
 The resources may be accessed from tests by using the `getResource`
 methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
-The main Scala testing frameworks (`specs2 <http://specs2.org/>`\_,
-`ScalaCheck <http://scalacheck.org/>`\_, and
-`ScalaTest <http://scalatest.org/>`\_) provide an implementation of the
+The main Scala testing frameworks ([specs2](http://specs2.org/),
+[ScalaCheck](http://scalacheck.org/), and
+[ScalaTest](http://scalatest.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
 `managed dependency <Library-Management>`:
@@ -393,7 +393,7 @@ run in serial would be run with `serial:test`.
 ### JUnit
 
 Support for JUnit is provided by
-`junit-interface <https://github.com/szeiger/junit-interface>`\_. To add
+[junit-interface](https://github.com/szeiger/junit-interface). To add
 JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
@@ -413,7 +413,7 @@ packaging the project as an sbt `Plugin </Extending/Plugins>`.
 
 The main Scala testing libraries have built-in support for sbt. To add
 support for a different framework, implement the
-`uniform test interface <http://github.com/sbt/test-interface>`\_.
+[uniform test interface](http://github.com/sbt/test-interface).
 
 #### Custom Test Reporters
 

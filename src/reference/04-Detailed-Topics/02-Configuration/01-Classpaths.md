@@ -79,7 +79,7 @@ to `src/main/scala`. You can exclude source files by name
     excludeFilter in unmanagedSources := "butler.scala" 
 
 Read more on
-`How to exclude .scala source file in project folder - Google Groups <http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en>`\_
+[How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
 
 #### External v. internal
 
@@ -125,7 +125,7 @@ Use the `inspect command </Detailed-Topics/Inspecting-Settings>` for
 more details.
 
 See also a related
-`StackOverflow answer <http://stackoverflow.com/a/7862872/850196>`\_.
+[StackOverflow answer](http://stackoverflow.com/a/7862872/850196).
 
 #### Example
 

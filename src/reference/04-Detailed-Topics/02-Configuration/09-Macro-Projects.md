@@ -42,7 +42,7 @@ This specifies that the macro implementation goes in
 `macro/src/main/scala/` and tests go in `macro/src/test/scala/`. It also
 shows that we need a dependency on the compiler for the macro
 implementation. As an example macro, we'll use `desugar` from
-`macrocosm <https://github.com/retronym/macrocosm>`\_.
+[macrocosm](https://github.com/retronym/macrocosm).
 
 `macro/src/main/scala/demo/Demo.scala`
 

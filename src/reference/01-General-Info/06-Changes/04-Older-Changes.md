@@ -365,7 +365,7 @@ Some of the more visible changes:
     sources
 -   Merged plugins and processors into improved plugins system:
     /Extending/Plugins
--   `Web application <https://github.com/JamesEarlDouglas/xsbt-web-plugin>`\_
+-   [Web application](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
     and webstart support moved to plugins instead of core features
 -   Fixed all of the issues in (Google Code) issue #44
 -   Managed dependencies automatically updated when configuration
@@ -396,11 +396,11 @@ Some of the more visible changes:
     classpath of dependent projects.
 -   Scala 2.8.1 is the default version used when starting a new project.
 -   Updated to
-    `Ivy 2.2.0 <http://ant.apache.org/ivy/history/2.2.0/release-notes.html>`\_.
+    [Ivy 2.2.0](http://ant.apache.org/ivy/history/2.2.0/release-notes.html).
 -   Trond's patches that allow configuring
     [jetty-env.xml](http://github.com/sbt/sbt/commit/5e41a47f50e6) and
     [webdefault.xml](http://github.com/sbt/sbt/commit/030e2ee91bac0)
--   Doug's `patch <http://github.com/sbt/sbt/commit/aa75ecf7055db>`\_ to
+-   Doug's [patch](http://github.com/sbt/sbt/commit/aa75ecf7055db) to
     make 'projects' command show an asterisk next to current project
 -   Fixed issue 122
 -   Implemented issue 118

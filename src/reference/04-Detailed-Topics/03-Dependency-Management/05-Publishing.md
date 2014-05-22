@@ -139,5 +139,5 @@ change the version number each time you publish. Ivy maintains a cache,
 and it stores even local projects in that cache. If Ivy already has a
 version cached, it will not check the local repository for updates,
 unless the version number matches a
-`changing pattern <http://ant.apache.org/ivy/history/2.3.0/concept.html#change>`\_,
+[changing pattern](http://ant.apache.org/ivy/history/2.3.0/concept.html#change),
 and `SNAPSHOT` is one such pattern.

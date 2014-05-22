@@ -40,7 +40,7 @@ in one place:
 
 sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
-`patterns <http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns>`\_
+[patterns](http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns)
 to configure repositories.
 
 Construct a repository definition using the factory in `sbt.Resolver`

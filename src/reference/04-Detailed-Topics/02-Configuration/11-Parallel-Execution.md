@@ -298,5 +298,5 @@ execution service (`java.util.concurrent.CompletionService`). This
 intermediate queue restricts new tasks from being forwarded to the
 `j.u.c.CompletionService` according to the `sbt.ConcurrentRestrictions`
 implementation. See the
-`sbt.ConcurrentRestrictions <https://github.com/sbt/sbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala>`\_
+[sbt.ConcurrentRestrictions](https://github.com/sbt/sbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala)
 API documentation for details.
