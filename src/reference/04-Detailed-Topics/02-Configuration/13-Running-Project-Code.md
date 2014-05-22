@@ -37,10 +37,9 @@ SBT is just one of them. This is discussed for instance in issues
 explained
 here \<http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900\#comment-85900\>\_.
 
-sbt's Solutions
----------------
+### sbt's Solutions
 
-### System.exit
+#### System.exit
 
 User code is run with a custom SecurityManager\` that throws a custom
 `SecurityException` when `System.exit` is called. This exception is
@@ -65,7 +64,7 @@ and is not an `AWT` implementation thread (e.g. `AWT-XAWT`,
 `AWT-Windows`). User-created threads include the `AWT-EventQueue-*`
 thread(s).
 
-### User Code
+#### User Code
 
 Given the above, when can user code be run with the `run` and `console`
 actions?
