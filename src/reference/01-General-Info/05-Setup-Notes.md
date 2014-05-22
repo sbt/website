@@ -3,19 +3,17 @@ out: Setup-Notes.html
 ---
 
 Setup Notes
-===========
+-----------
 
 Some notes on how to set up your `sbt` script.
 
-Do not put `sbt-launch.jar` on your classpath.
-----------------------------------------------
+### Do not put `sbt-launch.jar` on your classpath.
 
 Do *not* put `sbt-launch.jar` in your `\$SCALA_HOME/lib` directory, your
 project's `lib` directory, or anywhere it will be put on a classpath. It
 isn't a library.
 
-Terminal encoding
------------------
+### Terminal encoding
 
 The character encoding used by your terminal may differ from Java's
 default encoding for your platform. In this case, you will need to add
@@ -26,19 +24,17 @@ encoding, which might look like:
 java -Dfile.encoding=UTF8
 ```
 
-JVM heap, permgen, and stack sizes
-----------------------------------
+### JVM heap, permgen, and stack sizes
 
 If you find yourself running out of permgen space or your workstation is
 low on memory, adjust the JVM configuration as you would for any
 application. For example a common set of memory-related options is:
 
 ```
-java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m`
+java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m
 ```
 
-Boot directory
---------------
+### Boot directory
 
 `sbt-launch.jar` is just a bootstrap; the actual meat of sbt, and the
 Scala compiler and standard library, are downloaded to the shared
@@ -55,8 +51,7 @@ following uses the pre-0.11 style of putting the boot directory in
 java -Dsbt.boot.directory=project/boot/
 ```
 
-HTTP/HTTPS/FTP Proxy
---------------------
+### HTTP/HTTPS/FTP Proxy
 
 On Unix, sbt will pick up any HTTP, HTTPS, or FTP proxy settings from
 the standard `http_proxy`, `https_proxy`, and `ftp_proxy` environment

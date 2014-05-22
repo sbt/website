@@ -333,6 +333,8 @@ The default value is:
 
     checksums := Seq("sha1", "md5")
 
+<a name="conflict-management"></a>
+
 #### Conflict Management
 
 The conflict manager decides what to do when dependency resolution

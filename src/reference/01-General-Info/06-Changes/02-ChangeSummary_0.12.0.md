@@ -5,7 +5,7 @@ out: ChangeSummary_0.12.0.html
 sbt 0.12.0 Changes
 ------------------
 
-### Features, fixes, changes with compatibility implications (incomplete, please help)
+#### Features, fixes, changes with compatibility implications (incomplete, please help)
 
 -   The cross versioning convention has changed for Scala versions 2.10
     and later as well as for sbt plugins.
@@ -33,7 +33,7 @@ sbt 0.12.0 Changes
     compile Scala code. See the scala-library.jar section at the bottom
     of the page for details.
 
-### Features
+#### Features
 
 -   Support for forking tests (gh-415)
 -   `test-quick` (see details section below)
@@ -48,7 +48,7 @@ sbt 0.12.0 Changes
 -   `inspect tree <key>` for calling `inspect` command recursively
     (gh-274)
 
-### Fixes
+#### Fixes
 
 -   Delete a symlink and not its contents when recursively deleting a
     directory.
@@ -59,7 +59,7 @@ sbt 0.12.0 Changes
 -   Properly reset JLine after being stopped by Ctrl+z (unix only).
     gh-394
 
-### Improvements
+#### Improvements
 
 -   The launcher can launch all released sbt versions back to 0.7.0.
 -   A more refined hint to run 'last' is given when a stack trace is
@@ -77,7 +77,7 @@ sbt 0.12.0 Changes
 -   Other fixes/improvements: gh-368, gh-377, gh-378, gh-386, gh-387,
     gh-388, gh-389
 
-### Experimental or In-progress
+#### Experimental or In-progress
 
 -   API for embedding incremental compilation. This interface is subject
     to change, but already being used in [a branch of the
@@ -85,17 +85,15 @@ sbt 0.12.0 Changes
 -   Experimental support for keeping the Scala compiler resident. Enable
     by passing -Dsbt.resident.limit=n to sbt, where n is an integer
     indicating the maximum number of compilers to keep around.
--   The `Howto pages <http://www.scala-sbt.org/howto.html>`\_ on the
-    \`new
-    site \<http://www.scala-sbt.org\>\_ are at least readable now. There
+-   The [Howto pages](Howto.html) on the
+    [new site](http://www.scala-sbt.org) are at least readable now. There
     is more content to write and more formatting improvements are
     needed, so [pull requests are
     welcome](https://github.com/sbt/sbt.github.com).
 
-Details of major changes from 0.11.2 to 0.12.0
-----------------------------------------------
+### Details of major changes from 0.11.2 to 0.12.0
 
-### Plugin configuration directory
+#### Plugin configuration directory
 
 In 0.11.0, plugin configuration moved from `project/plugins/` to just
 `project/`, with `project/plugins/` being deprecated. Only 0.11.2 had a
@@ -115,19 +113,19 @@ be removed until 0.13.0.
     improvement for projects transitioning to the new style and isn't
     noticed by other projects.
 
-### Parsing task axis
+#### Parsing task axis
 
 There is an important change related to parsing the task axis for
 settings and tasks that fixes gh-202
 
-1.  The syntax before 0.12 has been {build}project/config:key(for task)
+1.  The syntax before 0.12 has been `{build}project/config:key(for task)`
 2.  The proposed (and implemented) change for 0.12 is
-    {build}project/config:task::key
+    `{build}project/config:task::key`
 3.  By moving the task axis before the key, it allows for easier
     discovery (via tab completion) of keys in plugins.
 4.  It is not planned to support the old syntax.
 
-### Aggregation
+#### Aggregation
 
 Aggregation has been made more flexible. This is along the direction
 that has been previously discussed on the mailing list.
@@ -139,23 +137,22 @@ that has been previously discussed on the mailing list.
     project, parsing failed even if an aggregated project contained the
     setting/task.
 4.  Additionally, if compile:package existed for the current project,
-    \*:package existed for an aggregated project, and the user requested
-    'package' to run (without specifying the configuration), \*:package
+    `*:package` existed for an aggregated project, and the user requested
+    'package' to run (without specifying the configuration), `*:package`
     wouldn't be run on the aggregated project (because it isn't the same
-    as the compile:package key that existed on the current project).
+    as the `compile:package` key that existed on the current project).
 5.  In 0.12, both of these situations result in the aggregated settings
     being selected. For example,
-    1.  Consider a project root that aggregates a subproject sub.
-    2.  root defines \*:package.
-    3.  sub defines compile:package and compile:compile.
-    4.  Running root/package will run root/\*:package and
-        sub/compile:package
-    5.  Running root/compile will run sub/compile:compile
-
+    1.  Consider a project `root` that aggregates a subproject `sub`.
+    2.  `root` defines `*:package`.
+    3.  `sub` defines `compile:package` and `compile:compile`.
+    4.  Running `root/package` will run `root/*:package` and
+        `sub/compile:package`
+    5.  Running `root/compile` will run `sub/compile:compile`
 6.  This change was made possible in part by the change to task axis
     parsing.
 
-### Parallel Execution
+#### Parallel Execution
 
 Fine control over parallel execution is supported as described here:
 `/Detailed-Topics/Parallel-Execution`
@@ -166,7 +163,7 @@ Fine control over parallel execution is supported as described here:
     experimental.
 3.  Therefore, `parallelExecution` won't be deprecated at this time.
 
-### Source dependencies
+#### Source dependencies
 
 A fix for issue gh-329 is included in 0.12.0. This fix ensures that only
 one version of a plugin is loaded across all projects. There are two
@@ -189,7 +186,7 @@ included.
     as a mercurial repository.
 3.  Also, URIs that end with `.git` are now handled properly.
 
-### Cross building
+#### Cross building
 
 The cross version suffix is shortened to only include the major and
 minor version for Scala versions starting with the 2.10 series and for
@@ -209,7 +206,7 @@ releases for both Scala and sbt.
     is, equal binary versions implies binary compatibility. All Scala
     versions prior to 2.10 use the full version for the binary version
     to reflect previous sbt behavior. For 2.10 and later, the binary
-    version is \<major\>.\<minor\>.
+    version is `<major>.<minor>`.
 4.  The cross version behavior for published artifacts is configured by
     the crossVersion setting. It can be configured for dependencies by
     using the cross method on ModuleID or by the traditional %%
@@ -218,7 +215,7 @@ releases for both Scala and sbt.
     binary Scala version when constructed with %%.
 5.  The artifactName function now accepts a type ScalaVersion as its
     first argument instead of a String. The full type is now
-    (ScalaVersion, ModuleID, Artifact) =\> String. ScalaVersion contains
+    (ScalaVersion, ModuleID, Artifact) => String. ScalaVersion contains
     both the full Scala version (such as 2.10.0) as well as the binary
     Scala version (such as 2.10).
 6.  The flexible version mapping added by Indrajit has been merged into
@@ -226,7 +223,7 @@ releases for both Scala and sbt.
     argument have been deprecated. See /Detailed-Topics/Cross-Build for
     details.
 
-### Global repository setting
+#### Global repository setting
 
 Define the repositories to use by putting a standalone `[repositories]`
 section (see the `/Detailed-Topics/Launcher` page) in
@@ -235,7 +232,7 @@ Only the repositories in that file will be used by the launcher for
 retrieving sbt and Scala and by sbt when retrieving project
 dependencies. (@jsuereth)
 
-### test-quick
+#### test-quick
 
 `test-quick` (gh-393) runs the tests specified as arguments (or all
 tests if no arguments are given) that:
@@ -245,7 +242,7 @@ tests if no arguments are given) that:
 3.  had any transitive dependencies recompiled since the last successful
     run
 
-### Argument quoting
+#### Argument quoting
 
 Argument quoting (gh-396) from the intereactive mode works like Scala
 string literals.
@@ -266,8 +263,10 @@ allowed compiling Scala code without scala-library as a dependency, for
 example, but this was a misfeature. Instead, the Scala library should be
 declared as `provided`:
 
-    // Don't automatically add the scala-library dependency
-    // in the 'compile' configuration
-    autoScalaLibrary := false
+```scala
+// Don't automatically add the scala-library dependency
+// in the 'compile' configuration
+autoScalaLibrary := false
 
-    libraryDependencies += "org.scala-lang" % "scala-library" % "2.9.2" % "provided"
+libraryDependencies += "org.scala-lang" % "scala-library" % "2.9.2" % "provided"
+```

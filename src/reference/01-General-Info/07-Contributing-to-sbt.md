@@ -2,12 +2,15 @@
 out: Contibuting-to-sbt.html
 ---
 
+  [sbt-dev]: https://groups.google.com/d/forum/sbt-dev
+  [adept]: https://github.com/adept-dm/adept
+
 Contributing to sbt
 -------------------
 
 Below is a running list of potential areas of contribution. This list
 may become out of date quickly, so you may want to check on the
-`sbt-dev mailing list`\_ if you are interested in a specific topic.
+[sbt-dev mailing list][sbt-dev] if you are interested in a specific topic.
 
 1.  There are plenty of possible visualization and analysis
     opportunities.
@@ -39,7 +42,7 @@ may become out of date quickly, so you may want to check on the
     the dependencies. It is also easy to extend this to other ways of
     retrieving projects. Support for svn and hg was a recent
     contribution, for example.
-3.  Dependency management: see `adept`\_
+3.  Dependency management: see [adept][adept]
 4.  If you like parsers, sbt commands and input tasks are written using
     custom parser combinators that provide tab completion and error
     handling. Among other things, the efficiency could be improved.
@@ -74,7 +77,7 @@ find the cause.
 1.  There's a lot to do with this documentation. If you check it out
     from git, there's a directory called Dormant with some content that
     needs going through.
-2.  the `main </index>` page mentions external project references (e.g.
+2.  the main page mentions external project references (e.g.
     to a git repo) but doesn't have anything to link to that explains
     how to use those.
 3.  API docs are much needed.
@@ -85,4 +88,3 @@ find the cause.
     to the docs.
 5.  A lot of the pages could probably have better names, and/or little
     2-4 word blurbs to the right of them in the sidebar.
-
