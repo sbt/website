@@ -28,9 +28,9 @@ beginning of the resolvers list:
 1.  Put settings specific to a user in a global `.sbt` file, such as
     \~/.sbt/local.sbt. These settings will be applied to all projects.
 2.  Put settings in a `.sbt` file in a project that isn't checked into
-    version control, such as \<project>/local.sbt. sbt combines the
+    version control, such as `<project>/local.sbt`. sbt combines the
     settings from multiple .sbt files, so you can still have the
-    standard \<project>/build.sbt and check that into version control.
+    standard `<project>/build.sbt` and check that into version control.
 
 ### .sbtrc
 

@@ -2,6 +2,8 @@
 out: Command-Line-Reference.html
 ---
 
+  [Console-Project]: Console-Project.html
+
 Command Line Reference
 ----------------------
 
@@ -20,11 +22,11 @@ detail.
     means there's no good general term for "thing you can type at the
     sbt prompt", which may be a setting, task, or command.
 -   Some tasks produce useful values. The `toString` representation of
-    these values can be shown using show \<task> to run the task
-    instead of just \<task>.
+    these values can be shown using `show <task>` to run the task
+    instead of just `<task>`.
 -   In a multi-project build, execution dependencies and the aggregate
     setting control which tasks from which projects are executed. See
-    multi-project builds \</Getting-Started/Multi-Project>.
+    multi-project builds </Getting-Started/Multi-Project>.
 
 ### Project-level tasks
 
@@ -34,7 +36,7 @@ detail.
 -   `publish` Publishes artifacts (such as jars) to the repository
     defined by the publishTo setting, described in Publishing.
 -   `update` Resolves and retrieves external dependencies as described
-    in library dependencies \</Getting-Started/Library-Dependencies>.
+    in library dependencies </Getting-Started/Library-Dependencies>.
 
 ### Configuration-level tasks
 
@@ -60,7 +62,7 @@ configuration that can be run using a `test:` prefix.
 -   `consoleProject` Enters an interactive session with sbt and the
     build definition on the classpath. The build definition and related
     values are bound to variables and common packages and values are
-    imported. See the consoleProject documentation \<Console-Project>
+    imported. See the [consoleProject documentation][Console-Project]
     for more information.
 -   `doc` Generates API documentation for Scala source files in
     src/main/scala using scaladoc. test:doc generates API documentation
@@ -117,7 +119,7 @@ configuration that can be run using a `test:` prefix.
     (See /Getting-Started/Full-Def/ for details on multi-project
     builds.)
 -   `project <project-id>` Change the current project to the project
-    with ID \<project-id>. Further operations will be done in the
+    with ID `<project-id>`. Further operations will be done in the
     context of the given project. (See /Getting-Started/Full-Def/ for
     details on multiple project builds.)
 -   `~ <command>` Executes the project specified action or method
@@ -130,9 +132,9 @@ configuration that can be run using a `test:` prefix.
     all versions of Scala defined in the crossScalaVersions setting.
 -   `++ <version|home-directory> <command>` Temporarily changes the
     version of Scala building the project and executes the provided
-    command. \<command> is optional. The specified version of Scala is
+    command. `<command>` is optional. The specified version of Scala is
     used until the project is reloaded, settings are modified (such as
-    by the set or session commands), or ++ is run again. \<version>
+    by the set or session commands), or ++ is run again. `<version>`
     does not need to be listed in the build definition, but it must be
     available in a repository. Alternatively, specify the path to a
     Scala installation.
@@ -159,7 +161,7 @@ configuration that can be run using a `test:` prefix.
     definition. The setting applies until sbt is restarted, the build is
     reloaded, or the setting is overridden by another set command or
     removed by the session command. See
-    .sbt build definition \</Getting-Started/Basic-Def> and
+    .sbt build definition </Getting-Started/Basic-Def> and
     Inspecting-Settings for details.
 -   `session <command>` Manages session settings defined by the `set`
     command. It can persist settings configured at the prompt. See

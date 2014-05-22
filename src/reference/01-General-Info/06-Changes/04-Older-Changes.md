@@ -548,13 +548,12 @@ Some of the more visible changes:
 -   New action 'clean-plugins' task that clears built plugins (useful
     for plugin development).
 -   Can provide commands from a file with new command: `<filename`
--   Can provide commands over loopback interface with new command:
-    \<port
+-   Can provide commands over loopback interface with new command: `<port`
 -   Scala version handling has been completely redone.
 -   The version of Scala used to run sbt (currently 2.7.7) is decoupled
     from the version used to build the project.
 -   Changing between Scala versions on the fly is done with the command:
-    ++\<version>
+    `++<version>`
 -   Cross-building is quicker. The project definition does not need to
     be recompiled against each version in the cross-build anymore.
 -   Scala versions are specified in a space-delimited list in the
@@ -666,10 +665,12 @@ Some of the more visible changes:
         > exec find src/main/scala -iname *.scala -exec wc -l {} ;
 
 -   Added `sh` task for users with a unix-style shell available (runs
-    /bin/sh -c \<arguments>). Mixin Exec to project definition to use.
+    `/bin/sh -c <arguments>`). Mixin Exec to project definition to use.
     Example: :
 
-        > sh find src/main/scala -iname *.scala | xargs cat | wc -l
+    ```
+    > sh find src/main/scala -iname *.scala | xargs cat | wc -l
+    ```
 
 -   Proper dependency graph actions (previously was an unsupported
     prototype): graph-src and graph-pkg for source dependency graph and
@@ -691,11 +692,15 @@ Some of the more visible changes:
     extra(key -> value) on ModuleIDs and Artifacts. To define for a
     project's ID: :
 
-        override def projectID = super.projectID extra(key -> value)
+    ```scala
+    override def projectID = super.projectID extra(key -> value)
+    ```
 
     To specify in a dependency: :
 
-        val dep = normalID extra(key -> value)
+    ```scala
+    val dep = normalID extra(key -> value)
+    ```
 
 ### 0.5.1 to 0.5.2
 
@@ -706,7 +711,7 @@ Some of the more visible changes:
     sbt.ProcessBuilder that takes the element's text content, trims it,
     and splits it around whitespace to obtain the command.
 -   Processes can now redirect standard input (see run with Boolean
-    argument or !\< operator on ProcessBuilder), off by default
+    argument or `!<` operator on ProcessBuilder), off by default
 -   Made scripted framework a plugin and scripted tests now go in
     src/sbt-test by default
 -   Can define and use an sbt test framework extension in a project
@@ -724,13 +729,15 @@ Some of the more visible changes:
     standard output. Alternatively, cat can be used on a single URL or
     File. Example: :
 
-        import java.net.URL
-        import java.io.File
-        val spde = new URL("http://technically.us/spde/About")
-        val dispatch = new URL("http://databinder.net/dispatch/About")
-        val build = new File("project/build.properties")
-        cat(spde, dispatch, build) #| "grep -i scala" !
-
+    ```scala
+    import java.net.URL
+    import java.io.File
+    val spde = new URL("http://technically.us/spde/About")
+    val dispatch = new URL("http://databinder.net/dispatch/About")
+    val build = new File("project/build.properties")
+    cat(spde, dispatch, build) #| "grep -i scala" !
+    ```
+    
 ### 0.4.6 to 0.5/0.5.1
 
 -   Fixed `ScalaTest` framework dropping stack traces

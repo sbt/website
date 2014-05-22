@@ -72,18 +72,19 @@ Scala and sbt version settings as well as the state. To use these
 settings, we need to wrap the Parser construction in `Def.setting` and
 get the setting values with the special `value` method:
 
-    import complete.DefaultParsers._
+```scala
+import complete.DefaultParsers._
 
-> val parser: Initialize[State => Parser[(String,String)]] =
-> :   Def.setting {
->     :   (state: State) =>
->         :   ( token("scala" \<\~ Space) \~ token(scalaVersion.value) )
->             | ( token("sbt" \<\~ Space) \~ token(sbtVersion.value) ) |
->             ( token("commands" \<\~ Space) \~
->             token(state.remainingCommands.size.toString) )
->
->     }
->
+val parser: Initialize[State => Parser[(String,String)]] =
+ Def.setting {
+  (state: State) =>
+    ( token("scala" <~ Space) ~ token(scalaVersion.value) ) |
+    ( token("sbt" <~ Space) ~ token(sbtVersion.value) ) |
+    ( token("commands" <~ Space) ~
+        token(state.remainingCommands.size.toString) )
+ }
+ ```
+
 This Parser definition will produce a value of type `(String,String)`.
 The input syntax defined isn't very flexible; it is just a
 demonstration. It will produce one of the following values for a
