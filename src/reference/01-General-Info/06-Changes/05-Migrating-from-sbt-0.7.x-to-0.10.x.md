@@ -2,16 +2,18 @@
 out: Migrating-from-sbt-07x.html
 ---
 
+  [Setup]: ../tutorial/Setup.html
+
 Migrating from 0.7 to 0.10+
 ---------------------------
 
 The assumption here is that you are familiar with sbt 0.7 but new to sbt
-|version|.
+$app_version$.
 
-sbt |version|'s many new capabilities can be a bit overwhelming, but
-this page should help you migrate to |version| with a minimum of fuss.
+sbt $app_version$'s many new capabilities can be a bit overwhelming, but
+this page should help you migrate to $app_version$ with a minimum of fuss.
 
-### Why move to |version|?
+### Why move to $app_version$?
 
 1.  Faster builds (because it is smarter at re-compiling only what it
     must)
@@ -24,17 +26,17 @@ this page should help you migrate to |version| with a minimum of fuss.
 5.  Terser output. (Yet you can ask for more details if something goes
     wrong.)
 
-#### Step 1: Read the Getting Started Guide for sbt |version|
+#### Step 1: Read the Getting Started Guide for sbt $app_version$
 
 Reading the `Getting Started Guide </Getting-Started/Welcome>` will
 probably save you a lot of confusion.
 
-#### Step 2: Install sbt |release|
+#### Step 2: Install sbt $app_version$
 
-Download sbt |version| as described on
-`the setup page </Getting-Started/Setup>`.
+Download sbt $app_version$ as described on
+[the setup page][Setup].
 
-You can run |version| the same way that you run 0.7.x, either simply:
+You can run $app_version$ the same way that you run 0.7.x, either simply:
 
 ```
 java -jar sbt-launch.jar
@@ -47,7 +49,7 @@ For more details see `the setup page </Getting-Started/Setup>`.
 
 #### Step 3: A technique for switching an existing project
 
-Here is a technique for switching an existing project to |version| while
+Here is a technique for switching an existing project to $app_version$ while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
@@ -56,10 +58,10 @@ complex one next.
 ### Preserve `project/` for 0.7.x project
 
 Rename your `project/` directory to something like `project-old`. This
-will hide it from sbt |version| but keep it in case you want to switch
+will hide it from sbt $app_version$ but keep it in case you want to switch
 back to 0.7.x.
 
-### Create `build.sbt` for |version|
+### Create `build.sbt` for $app_version$
 
 Create a `build.sbt` file in the root directory of your project. See
 `.sbt build definition </Getting-Started/Basic-Def>` in the Getting
@@ -89,18 +91,20 @@ project.initialize=false
 
 Now becomes part of your `build.sbt` file with lines like:
 
-    name := "My Project"
+```scala
+name := "My Project"
 
-    version := "1.0"
+version := "1.0"
 
-    organization := "org.myproject"
+organization := "org.myproject"
 
-    scalaVersion := "2.9.2"
+scalaVersion := "2.9.2"
+```
 
 Currently, a `project/build.properties` is still needed to explicitly
 select the sbt version. For example:
 
-### Run sbt |version|
+### Run sbt $app_version$
 
 Now launch sbt. If you're lucky it works and you're done. For help
 debugging, see below.
@@ -109,7 +113,7 @@ debugging, see below.
 
 If you get stuck and want to switch back, you can leave your `build.sbt`
 file alone. sbt 0.7.x will not understand or notice it. Just rename your
-|version| `project` directory to something like `project10` and rename
+$app_version$ `project` directory to something like `project10` and rename
 the backup of your old project from `project-old` to `project` again.
 
 #### FAQs
