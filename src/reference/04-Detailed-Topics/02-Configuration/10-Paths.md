@@ -145,16 +145,13 @@ files returned by the first selector.
 There is a `filter` method that accepts a predicate of type
 `File => Boolean` and is non-strict:
 
-    // selects all directories under "src"
+```scala
+// selects all directories under "src"
+def srcDirs(base: File) = ( (base / "src") ** "*") filter { _.isDirectory }
 
-> def srcDirs(base: File) = ( (base / "src") *\* "*") filter {
-> \_.isDirectory }
->
-> > // selects archives (.zip or .jar) that are selected by
-> > 'somePathFinder'
->
-> def archivesOnly(base: PathFinder) = base filter
-> ClasspathUtilities.isArchive
+// selects archives (.zip or .jar) that are selected by 'somePathFinder'
+def archivesOnly(base: PathFinder) = base filter ClasspathUtilities.isArchive
+```
 
 #### Empty PathFinder
 

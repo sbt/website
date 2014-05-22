@@ -126,7 +126,7 @@ Dependency management fixes:
 > -   The resolution cache contains the generated ivy files, properties,
 >     and resolve reports for the project.
 > -   There will no longer be individual files directly in
->     \~/.ivy2/cache/
+>     `~/.ivy2/cache/`
 > -   Resolve reports are now in target/resolution-cache/reports/,
 >     viewable with a browser.
 > -   Cache location includes extra attributes so that cross builds of a
@@ -339,9 +339,9 @@ Some of the more visible changes:
 -   Warn when reload discards session settings
 -   Cache failing classifiers, making 'update-classifiers' a practical
     replacement for withSources()
--   Global settings may be provided in \~/.sbt/build.sbt gh-52
--   No need to define "sbtPlugin := true" in project/plugins/ or
-    \~/.sbt/plugins/
+-   Global settings may be provided in `~/.sbt/build.sbt` gh-52
+-   No need to define `"sbtPlugin := true"` in `project/plugins/` or
+    `~/.sbt/plugins/`
 -   Provide statistics and list of evicted modules in UpdateReport
 -   Scope use of 'transitive-classifiers' by 'update-sbt-classifiers'
     and 'update-classifiers' for separate configuration.
@@ -504,7 +504,10 @@ Some of the more visible changes:
     Paths selected by this PathFinder will not be pruned by
     prepare-webapp and will not be packaged by package. For example, to
     exclude the GAE datastore directory:
-    scala   override def webappUnmanaged =     (temporaryWarPath / "WEB-INF" / "appengine-generated" \*\*\*)
+
+    ```scala
+    override def webappUnmanaged =     (temporaryWarPath / "WEB-INF" / "appengine-generated" ***)
+    ```
 -   Added some String generation methods to `PathFinder`: `toString` for
     debugging and absString and relativeString for joining the absolute
     (relative) paths by the platform separator.
@@ -957,11 +960,11 @@ Some of the more visible changes:
     previous run or had a dependency change are run.
 -   Added launcher that allows declaring version of sbt/scala to build
     project with.
--   Added tab completion with \~
+-   Added tab completion with `~`
 -   Added basic tab completion for method tasks, including `test-*`
 -   Changed default pack options to be the default options of
     Pack200.Packer
--   Fixed \~ behavior when action doesn't exist
+-   Fixed `~` behavior when action doesn't exist
 
 ### 0.3.6 to 0.3.7
 
@@ -982,7 +985,7 @@ Some of the more visible changes:
     stack traces
 -   Project.loadProject and related methods now accept a Logger to use
 -   Made hidden files and files that start with `'.'` excluded by
-    default ('.\*' is required because subversion seems to not mark .svn
+    default (`'.*'` is required because subversion seems to not mark `.svn`
     directories hidden on Windows)
 -   Implemented exit codes
 -   Added continuous compilation command `cc`

@@ -100,7 +100,7 @@ configuration that can be run using a `test:` prefix.
     1.  have not been run yet OR
     2.  failed the last time they were run OR
     3.  had any transitive dependencies recompiled since the last
-        successful run \* (will be) interpreted as a wildcard in the
+        successful run `*` (will be) interpreted as a wildcard in the
         test name. See Testing for details.
 
 ### General commands
@@ -184,14 +184,14 @@ influence SBT execution. Also see `Launcher`.
                                            or terminals that don't support
                                            color.
 
-  `sbt.global.base`  Directo \~/.sbt       | The directory containing
+  `sbt.global.base`  Directo `~/.sbt`       | The directory containing
                      ry                    global settings and plugins
 
-  `sbt.ivy.home`     Directo \~/.ivy2      | The directory containing the
+  `sbt.ivy.home`     Directo `~/.ivy2`      | The directory containing the
                      ry                    local Ivy repository and
                                            artifact cache
 
-  `sbt.boot.director Directo \~/.sbt/boot  Path to shared boot directory
+  `sbt.boot.director Directo `~/.sbt/boot`  Path to shared boot directory
   y`                 ry                    
 
   `sbt.main.class`   String  |             |
@@ -228,8 +228,8 @@ influence SBT execution. Also see `Launcher`.
                                            `sbt.repository.config` and the
                                            `Launcher` documentation.
 
-  `sbt.repository.co File    \~/.sbt/repos | A file containing the
-  nfig`                      itories       repositories to use for the
+  `sbt.repository.co File    `~/.sbt/repos | A file containing the
+  nfig`                      itories`       repositories to use for the
                                            launcher. The format is the same
                                            as a `[repositories]` section
                                            for a `Launcher` configuration

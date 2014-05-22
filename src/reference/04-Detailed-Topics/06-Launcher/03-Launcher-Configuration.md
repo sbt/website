@@ -123,7 +123,7 @@ resolving applications. It consists of the following properties:
 
 -   `ivy-home` - The home directory for Ivy. This determines where the
     ivy-local repository is located, and also where the ivy cache is
-    stored. Defaults to \~/.ivy2
+    stored. Defaults to `~/.ivy2`
 -   `ivy.cache-directory` - provides an alternative location for the Ivy
     cache used by the launcher. This does not automatically set the Ivy
     cache for the application, but the application is provided this

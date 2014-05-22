@@ -38,7 +38,7 @@ We can see that sbt performs the following actions in load:
         `project/project/*.scala`)
 
     b. Load/Compile the project (`project/*.scala`)
-3.  Load project \*.sbt files (`build.sbt` and friends).
+3.  Load project `*.sbt` files (`build.sbt` and friends).
 
 Each of these loads defines several sequences of settings. The diagram
 shows the two most important:

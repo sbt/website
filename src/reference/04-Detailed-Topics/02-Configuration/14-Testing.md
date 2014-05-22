@@ -218,16 +218,20 @@ per project.
 
 The following full build configuration demonstrates integration tests.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-> object B extends Build { lazy val root = Project("root", file("."))
-> .configs( IntegrationTest ) .settings( Defaults.itSettings : \_\*)
-> .settings( libraryDependencies += specs )
->
-> > lazy val specs = "org.specs2" %% "specs2" % "2.0" % "it,test"
->
-> }
+object B extends Build {
+  lazy val root =
+    Project("root", file(".")).
+      configs( IntegrationTest ).
+      settings( Defaults.itSettings : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "it,test"
+}
+```
 
 -   `configs(IntegrationTest)` adds the predefined integration test
     configuration. This configuration is referred to by the name it.
@@ -276,18 +280,21 @@ the definitive integration test options:
 
 The previous example may be generalized to a custom test configuration.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-> object B extends Build { lazy val root = Project("root", file("."))
-> .configs( FunTest ) .settings(
-> inConfig(FunTest)(Defaults.testSettings) : \_\*) .settings(
-> libraryDependencies += specs )
->
-> > lazy val FunTest = config("fun") extend(Test) lazy val specs =
-> > "org.specs2" %% "specs2" % "2.0" % "fun"
->
-> }
+object B extends Build {
+  lazy val root =
+    Project("root", file(".")).
+      configs( FunTest ).
+      settings( inConfig(FunTest)(Defaults.testSettings) : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val FunTest = config("fun") extend(Test)
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "fun"
+}
+```
 
 Instead of using the built-in configuration, we defined a new one:
 

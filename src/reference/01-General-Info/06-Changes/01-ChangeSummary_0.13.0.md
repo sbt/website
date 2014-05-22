@@ -278,7 +278,7 @@ and in what order.
 `Project.autoSettings` accepts a sequence of values of type
 `AddSettings`. Instances of `AddSettings` are constructed from methods
 in the `AddSettings` companion object. The configurable settings are
-per-user settings (from \~/.sbt, for example), settings from .sbt files,
+per-user settings (from `~/.sbt`, for example), settings from .sbt files,
 and plugin settings (project-level only). The order in which these
 instances are provided to `autoSettings` determines the order in which
 they are appended to the settings explicitly provided in

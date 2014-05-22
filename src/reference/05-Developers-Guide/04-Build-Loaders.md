@@ -53,54 +53,56 @@ Relevant API documentation for custom resolvers:
 
 #### Full Example
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object Demo extends Build
+object Demo extends Build
+{
+  // Define a project that depends on an external project with a custom URI
+  lazy val root = Project("root", file(".")).dependsOn(
+    uri("demo:a")
+  )
+
+  // Register the custom resolver
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
+
+  // Define the custom resolver, which handles the 'demo' scheme.
+  // The resolver's job is to produce a directory containing the project to load.
+  // A subdirectory of info.staging can be used to create new local
+  //   directories, such as when doing 'git clone ...'
+  def demoResolver(info: BuildLoader.ResolveInfo): Option[() => File] =
+    if(info.uri.getScheme != "demo")
+      None
+    else
     {
-      // Define a project that depends on an external project with a custom URI
-      lazy val root = Project("root", file(".")).dependsOn(
-        uri("demo:a")
-      )
+      // Use a subdirectory of the staging directory for the new local build.
+      // The subdirectory name is derived from a hash of the URI,
+      //   and so identical URIs will resolve to the same directory (as desired).
+      val base = RetrieveUnit.temporary(info.staging, info.uri)
 
-      // Register the custom resolver
-      override def buildLoaders = 
-        BuildLoader.resolve(demoResolver) ::
-        Nil
-
-      // Define the custom resolver, which handles the 'demo' scheme.
-      // The resolver's job is to produce a directory containing the project to load.
-      // A subdirectory of info.staging can be used to create new local
-      //   directories, such as when doing 'git clone ...'
-      def demoResolver(info: BuildLoader.ResolveInfo): Option[() => File] =
-        if(info.uri.getScheme != "demo") 
-          None
-        else
-        {
-          // Use a subdirectory of the staging directory for the new local build.
-          // The subdirectory name is derived from a hash of the URI,
-          //   and so identical URIs will resolve to the same directory (as desired).
-          val base = RetrieveUnit.temporary(info.staging, info.uri)
-
-          // Return a closure that will do the actual resolution when requested.
-          Some(() => resolveDemo(base, info.uri.getSchemeSpecificPart))
-        }
-
-      // Construct a sample project on the fly with the name specified in the URI.
-      def resolveDemo(base: File, ssp: String): File =
-      {
-        // Only create the project if it hasn't already been created.
-        if(!base.exists)
-          IO.write(base / "build.sbt", template.format(ssp))
-        base
-      }
-
-      def template =  """
-    name := "%s"
-
-    version := "1.0"
-    """
+      // Return a closure that will do the actual resolution when requested.
+      Some(() => resolveDemo(base, info.uri.getSchemeSpecificPart))
     }
+
+  // Construct a sample project on the fly with the name specified in the URI.
+  def resolveDemo(base: File, ssp: String): File =
+  {
+    // Only create the project if it hasn't already been created.
+    if(!base.exists)
+      IO.write(base / "build.sbt", template.format(ssp))
+    base
+  }
+
+  def template =  """
+name := "%s"
+
+version := "1.0"
+"""
+}
+```
 
 ### Custom Builder
 
@@ -139,38 +141,42 @@ This example demonstrates the structure of how a custom builder could
 read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
 
+```scala
     ... imports ...
 
-> object Demo extends Build { lazy val root = Project("root", file("."))
-> dependsOn( file("basic-pom-project") )
->
-> > override def buildLoaders =
-> > :   BuildLoader.build(demoBuilder) :: Nil
-> >
-> > def demoBuilder: BuildInfo => Option[() => BuildUnit] = info =>
-> > :   if(pomFile(info).exists)
-> >     :   Some(() => pomBuild(info))
-> >
-> >     else
-> >     :   None
-> >
-> > def pomBuild(info: BuildInfo): BuildUnit = { val pom = pomFile(info)
-> > val model = readPom(pom)
-> >
-> > > val n = Project.normalizeProjectID(model.getName) val base =
-> > > Option(model.getProjectDirectory) getOrElse info.base val root =
-> > > Project(n, base) settings( pomSettings(model) : \_\*) val build =
-> > > new Build { override def projects = Seq(root) } val loader =
-> > > this.getClass.getClassLoader val definitions = new
-> > > LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil) val
-> > > plugins = new LoadedPlugins(info.base / "project", Nil, loader,
-> > > Nil, Nil) new BuildUnit(info.uri, info.base, definitions, plugins)
-> >
-> > }
-> >
-> > def readPom(file: File): Model = ... def pomSettings(m: Model):
-> > Seq[Setting[\_]] = ... def pomFile(info: BuildInfo): File =
-> > info.base / "pom.xml"
+object Demo extends Build
+{
+  lazy val root = Project("root", file(".")) dependsOn( file("basic-pom-project") )
+
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
+
+  def demoBuilder: BuildInfo => Option[() => BuildUnit] = info =>
+    if(pomFile(info).exists)
+      Some(() => pomBuild(info))
+    else
+      None
+
+  def pomBuild(info: BuildInfo): BuildUnit =
+  {
+    val pom = pomFile(info)
+    val model = readPom(pom)
+
+    val n = Project.normalizeProjectID(model.getName)
+    val base = Option(model.getProjectDirectory) getOrElse info.base
+    val root = Project(n, base) settings( pomSettings(model) : _*)
+    val build = new Build { override def projects = Seq(root) }
+    val loader = this.getClass.getClassLoader
+    val definitions = new LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil)
+    val plugins = new LoadedPlugins(info.base / "project", Nil, loader, Nil, Nil)
+    new BuildUnit(info.uri, info.base, definitions, plugins)
+  }
+
+  def readPom(file: File): Model = ...
+  def pomSettings(m: Model): Seq[Setting[_]] = ...
+  def pomFile(info: BuildInfo): File = info.base / "pom.xml"
+```
 
 ### Custom Transformer
 
