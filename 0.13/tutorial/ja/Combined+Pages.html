@@ -34,7 +34,7 @@
       <body class="color_scheme-github">
         <a class="page prev nav" href="Contents+in+Depth.html">
             <span class="space">&nbsp;</span>
-            <span class="flip arrow">❧</span>
+            <span class="flip arrow">&gt;</span>
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
@@ -176,7 +176,7 @@ version := &quot;1.0&quot;
 scalaVersion := &quot;2.10.3&quot;
 </code></pre><p><a href="Basic-Def.html">.sbt ビルド定義</a>で、<code>build.sbt</code> の書き方をもっと詳しく説明する。
 </p><p>君のプロジェクトを jar ファイルにパッケージ化する予定なら、最低でも <code>build.sbt</code> に name と version は書いておこう。
-</p><h2 id="sbt+%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A">sbt バージョンの設定<a href="#sbt+%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><code>hello/project/build.properties</code> というファイルを作ることで、特定のバージョンの sbt を強制することができる。
+</p><h3 id="sbt+%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A">sbt バージョンの設定<a href="#sbt+%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E8%A8%AD%E5%AE%9A" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>hello/project/build.properties</code> というファイルを作ることで、特定のバージョンの sbt を強制することができる。
 このファイルに、以下のように書く:
 </p><pre><code class="">sbt.version=0.13.2
 </code></pre><p>sbt はリリース間で 99% ソースの互換性を持たせてある。
@@ -552,7 +552,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 </p><p>次に、<code>inspect *:full-classpath</code> も実行して違いを比べてみよう。
 <code>full-classpath</code> はデフォルトでは、<code>Global</code> コンフィギュレーションには定義されていない。
 </p><p>より詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
-</p><h2 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B">ビルド定義からスコープを参照する<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><code>build.sbt</code> で裸のキーを使ってセッティングを作った場合は、現プロジェクト、<code>Global</code> コンフィグレーション、<code>Global</code> タスクにスコープ付けされる:
+</p><h3 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B">ビルド定義からスコープを参照する<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> で裸のキーを使ってセッティングを作った場合は、現プロジェクト、<code>Global</code> コンフィグレーション、<code>Global</code> タスクにスコープ付けされる:
 </p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
 </code></pre><p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィギュレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。
 </p><!-- TODO: Fix this. -->
@@ -756,7 +756,7 @@ packageBin in Compile &lt;&lt;= packageDoc in Compile
 これが思った通りの振る舞いだ。つまり、タスクのエイリアスを作ったときに期待されるのは、そのをタスクを実行することであって、
 sbt がプロジェクトを読み込んだ時に一回だけ値を読み込むことではない。
 </p><p>（ちなみに、<code>packageBin</code> のようなパッケージ化タスクは、グローバルではなく、コンフィギュレーションごとに定義されているので、<code>in Compile</code> スコープが無ければ「未定義」エラーが発生する。）
-</p><h2 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and">依存性を持った追加: <code>&lt;+=</code> and <code>&lt;++=</code><a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>リストに追加するためのメソッドにはもう二つあり、それらは <code>+=</code> や <code>++=</code> を <code>&lt;&lt;=</code> と組み合わせたものだ。
+</p><h3 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and">依存性を持った追加: <code>&lt;+=</code> and <code>&lt;++=</code><a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>リストに追加するためのメソッドにはもう二つあり、それらは <code>+=</code> や <code>++=</code> を <code>&lt;&lt;=</code> と組み合わせたものだ。
 つまり、他のキーへの依存性を使いながらリストの新しい値や連結するための別のリストを計算できる。
 </p><p>これらのメソッドは、依存性から得られた値を変換するのに書く関数が <code>T</code> のかわりに <code>Seq[T]</code> を返さなくてはいけないこと以外の点では
 <code>&lt;&lt;=</code> と全く同じように動作する。
@@ -936,7 +936,7 @@ object HelloBuild extends Build {
 </code></pre><p><code>aggregate in update</code> は、<code>update</code> タスクにスコープ付けされた <code>aggregate</code> キーだ
 （<a href="../scope">スコープ</a>参照）。
 </p><p>注意: 集約は、集約されるタスクを順不同に並列実行する。
-</p><h2 id="%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7">クラスパス依存性<a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>プロジェクトは、他のプロジェクトのコードに依存することができる。
+</p><h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7">クラスパス依存性<a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プロジェクトは、他のプロジェクトのコードに依存することができる。
 これは、<code>dependsOn</code> メソッドを呼び出すことで実現する。
 例えば、<code>hello-foo</code> が <code>hello-bar</code> のクラスパスが必要な場合は、
 <code>Build.scala</code> 内に以下のように書く:

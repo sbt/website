@@ -34,24 +34,24 @@
       <body class="color_scheme-github">
         <a class="page prev nav" href="Tasks-and-Commands.html">
             <span class="space">&nbsp;</span>
-            <span class="flip arrow">❧</span>
+            <span class="flip arrow">&gt;</span>
           </a><a class="page next nav" href="Input-Tasks.html">
             <span class="space">&nbsp;</span>
-            <span class="arrow">❧</span>
+            <span class="arrow">&gt;</span>
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h1 id="Tasks">Tasks<a href="#Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>Tasks and settings are introduced in the
+            <h2 id="Tasks">Tasks<a href="#Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Tasks and settings are introduced in the
 <code>getting started guide &lt;/Getting-Started/Basic-Def&gt;</code>, which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
-</p><h2 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Both settings and tasks produce values, but there are two major
+</p><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Both settings and tasks produce values, but there are two major
 differences between them:
 </p><ol><li>Settings are evaluated at project load time. Tasks are executed on
 demand, often in response to a command from the user.
 </li><li>At the beginning of project loading, settings and their dependencies
 are fixed. Tasks can introduce new tasks during execution, however.
-</li></ol><h2 id="Features">Features<a href="#Features" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>There are several features of the task system:
+</li></ol><h3 id="Features">Features<a href="#Features" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are several features of the task system:
 </p><ol><li>By integrating with the settings system, tasks can be added,
 removed, and modified as easily and flexibly as settings.
 </li><li><code>Input Tasks &lt;/Extending/Input-Tasks&gt;</code> use
@@ -69,13 +69,13 @@ of another task.
 logging for that task at a more verbose level than is initially
 printed to the screen.
 </li></ol><p>These features are discussed in detail in the following sections.
-</p><h2 id="Defining+a+Task">Defining a Task<a href="#Defining+a+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Hello+World+example+%28sbt%29">Hello World example (sbt)<a href="#Hello+World+example+%28sbt%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>build.sbt
+</p><h3 id="Defining+a+Task">Defining a Task<a href="#Defining+a+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Hello+World+example+%28sbt%29">Hello World example (sbt)<a href="#Hello+World+example+%28sbt%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>build.sbt
 </p><pre><code>lazy val hello = taskKey[Unit](&quot;Prints 'Hello World'&quot;)
 
 hello := println(&quot;hello world!&quot;)
 </code></pre><p>Run “sbt hello” from command line to invoke the task. Run “sbt tasks” to
 see this task listed.
-</p><h3 id="Define+the+key">Define the key<a href="#Define+the+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To declare a new task, define a lazy val of type <code>TaskKey</code>:
+</p><h4 id="Define+the+key">Define the key<a href="#Define+the+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To declare a new task, define a lazy val of type <code>TaskKey</code>:
 </p><pre><code>lazy val sampleTask = taskKey[Int](&quot;A sample task.&quot;)
 </code></pre><p>The name of the <code>val</code> is used when referring to the task in Scala code
 and at the command line. The string passed to the <code>taskKey</code> method is a
@@ -87,7 +87,7 @@ lazy val stringTask = taskKey[String](&quot;A string task&quot;)
 </code></pre><p>The examples themselves are valid entries in a <code>build.sbt</code> or can be
 provided as part of a sequence to <code>Project.settings</code> (see
 <code>Full Configuration &lt;/Getting-Started/Full-Def&gt;</code>).
-</p><h3 id="Implement+the+task">Implement the task<a href="#Implement+the+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are three main parts to implementing a task once its key is
+</p><h4 id="Implement+the+task">Implement the task<a href="#Implement+the+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There are three main parts to implementing a task once its key is
 defined:
 </p><ol><li>Determine the settings and other tasks needed by the task. They are
 the task’s inputs.
@@ -95,7 +95,7 @@ the task’s inputs.
 </li><li>Determine the scope the task will go in.
 </li></ol><p>These parts are then combined just like the parts of a setting are
 combined.
-</p><h4 id="Defining+a+basic+task">Defining a basic task<a href="#Defining+a+basic+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A task is defined using <code>:=</code>
+</p><h5 id="Defining+a+basic+task">Defining a basic task<a href="#Defining+a+basic+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>A task is defined using <code>:=</code>
 </p><pre><code>intTask := 1 + 2
 
 stringTask := System.getProperty(&quot;user.name&quot;)
@@ -111,7 +111,7 @@ username changes between runs, <code>stringTask</code> will take different value
 in those separate runs. (Within a run, each task is evaluated at most
 once.) In contrast, settings are evaluated once on project load and are
 fixed until the next reload.
-</p><h4 id="Tasks+with+inputs">Tasks with inputs<a href="#Tasks+with+inputs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Tasks with other tasks or settings as inputs are also defined using
+</p><h5 id="Tasks+with+inputs">Tasks with inputs<a href="#Tasks+with+inputs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Tasks with other tasks or settings as inputs are also defined using
 <code>:=</code>. The values of the inputs are referenced by the <code>value</code> method.
 This method is special syntax and can only be called when defining a
 task, such as in the argument to <code>:=</code>. The following defines a task that
@@ -119,13 +119,13 @@ adds one to the value produced by <code>intTask</code> and returns the result.
 </p><pre><code>sampleTask := intTask.value + 1
 </code></pre><p>Multiple settings are handled similarly:
 </p><pre><code>stringTask := &quot;Sample: &quot; + sampleTask.value + &quot;, int: &quot; + intTask.value
-</code></pre><h4 id="Task+Scope">Task Scope<a href="#Task+Scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As with settings, tasks can be defined in a specific scope. For example,
+</code></pre><h5 id="Task+Scope">Task Scope<a href="#Task+Scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>As with settings, tasks can be defined in a specific scope. For example,
 there are separate <code>compile</code> tasks for the <code>compile</code> and <code>test</code> scopes.
 The scope of a task is defined the same as for a setting. In the
 following example, <code>test:sampleTask</code> uses the result of
 <code>compile:intTask</code>.
 </p><pre><code>sampleTask in Test := (intTask in Compile).value * 3
-</code></pre><h4 id="On+precedence">On precedence<a href="#On+precedence" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As a reminder, infix method precedence is by the name of the method and
+</code></pre><h5 id="On+precedence">On precedence<a href="#On+precedence" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
 </p><ol><li>Assignment methods have the lowest precedence. These are methods
 with names ending in =, except for !=, \&lt;=, &gt;=, and names that
@@ -142,7 +142,7 @@ specification for details.)
 </code></pre><p>Without them, Scala interprets the line as
 <code>( helloTask.:=(&quot;echo Hello&quot;) ).!</code> instead of the desired
 <code>helloTask.:=( &quot;echo Hello&quot;.! )</code>.
-</p><h3 id="Separating+implementations">Separating implementations<a href="#Separating+implementations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The implementation of a task can be separated from the binding. For
+</p><h4 id="Separating+implementations">Separating implementations<a href="#Separating+implementations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The implementation of a task can be separated from the binding. For
 example, a basic separate definition looks like:
 </p><pre><code>// Define a new, standalone task implemention
 lazy val intTaskImpl: Initialize[Task[Int]] =
@@ -152,7 +152,7 @@ lazy val intTaskImpl: Initialize[Task[Int]] =
 intTask := intTaskImpl.value
 </code></pre><p>Note that whenever <code>.value</code> is used, it must be within a task
 definition, such as within <code>Def.task</code> above or as an argument to <code>:=</code>.
-</p><h3 id="Modifying+an+Existing+Task">Modifying an Existing Task<a href="#Modifying+an+Existing+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In the general case, modify a task by declaring the previous task as an
+</p><h4 id="Modifying+an+Existing+Task">Modifying an Existing Task<a href="#Modifying+an+Existing+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In the general case, modify a task by declaring the previous task as an
 input.
 </p><pre><code>// initial definition
 intTask := 3
@@ -177,13 +177,13 @@ intTask :=  {
     println(&quot;#3&quot;)
     sampleTask.value - 3
 }
-</code></pre><h2 id="Getting+values+from+multiple+scopes">Getting values from multiple scopes<a href="#Getting+values+from+multiple+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The general form of an expression that gets values from multiple scopes
+</code></pre><a name="multiple-scopes"></a><h3 id="Getting+values+from+multiple+scopes">Getting values from multiple scopes<a href="#Getting+values+from+multiple+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The general form of an expression that gets values from multiple scopes
 is:
 </p><pre><code>&lt;setting-or-task&gt;.all(&lt;scope-filter&gt;).value
 </code></pre><p>The <code>all</code> method is implicitly added to tasks and settings. It accepts a
 <code>ScopeFilter</code> that will select the <code>Scopes</code>. The result has type
 <code>Seq[T]</code>, where <code>T</code> is the key’s underlying type.
-</p><h3 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A common scenario is getting the sources for all subprojects for
+</p><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A common scenario is getting the sources for all subprojects for
 processing all at once, such as passing them to scaladoc. The task that
 we want to obtain values for is <code>sources</code> and we want to get the values
 in all non-root projects and in the <code>Compile</code> configuration. This looks
@@ -202,7 +202,7 @@ lazy val root = project.settings(
    }
 )
 </code></pre><p>The next section describes various ways to construct a ScopeFilter.
-</p><h3 id="ScopeFilter">ScopeFilter<a href="#ScopeFilter" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A basic <code>ScopeFilter</code> is constructed by the <code>ScopeFilter.apply</code> method.
+</p><h4 id="ScopeFilter">ScopeFilter<a href="#ScopeFilter" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A basic <code>ScopeFilter</code> is constructed by the <code>ScopeFilter.apply</code> method.
 This method makes a <code>ScopeFilter</code> from filters on the parts of a
 <code>Scope</code>: a <code>ProjectFilter</code>, <code>ConfigurationFilter</code>, and <code>TaskFilter</code>. The
 simplest case is explicitly specifying the values for the parts:
@@ -211,12 +211,12 @@ simplest case is explicitly specifying the values for the parts:
       inProjects( core, util ),
       inConfigurations( Compile, Test )
    )
-</code></pre><h4 id="Unspecified+filters">Unspecified filters<a href="#Unspecified+filters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If the task filter is not specified, as in the example above, the
+</code></pre><h5 id="Unspecified+filters">Unspecified filters<a href="#Unspecified+filters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>If the task filter is not specified, as in the example above, the
 default is to select scopes without a specific task (global). Similarly,
 an unspecified configuration filter will select scopes in the global
 configuration. The project filter should usually be explicit, but if
 left unspecified, the current project context will be used.
-</p><h4 id="More+on+filter+construction">More on filter construction<a href="#More+on+filter+construction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The example showed the basic methods <code>inProjects</code> and
+</p><h5 id="More+on+filter+construction">More on filter construction<a href="#More+on+filter+construction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The example showed the basic methods <code>inProjects</code> and
 <code>inConfigurations</code>. This section describes all methods for constructing
 a <code>ProjectFilter</code>, <code>ConfigurationFilter</code>, or <code>TaskFilter</code>. These methods
 can be organized into four groups:
@@ -227,7 +227,7 @@ can be organized into four groups:
 </li><li>Project relationships (<code>inAggregates</code>, <code>inDependencies</code>)
 </li></ul><p>See the <code>API documentation &lt;../../api/sbt/ScopeFilter$$Make.html&gt;</code>_ for
 details.
-</p><h4 id="Combining+ScopeFilters">Combining ScopeFilters<a href="#Combining+ScopeFilters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>ScopeFilters</code> may be combined with the <code>&amp;&amp;</code>, <code>||</code>, <code>--</code>, and <code>-</code>
+</p><h5 id="Combining+ScopeFilters">Combining ScopeFilters<a href="#Combining+ScopeFilters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>ScopeFilters</code> may be combined with the <code>&amp;&amp;</code>, <code>||</code>, <code>--</code>, and <code>-</code>
 methods:
 </p><p>a &amp;&amp; b
 :   Selects scopes that match both a and b
@@ -243,7 +243,7 @@ of the <code>util</code> project:
 </p><pre><code>val filter: ScopeFilter =
    ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
    ScopeFilter( inProjects(util), inGlobalConfiguration )
-</code></pre><h3 id="More+operations">More operations<a href="#More+operations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The <code>all</code> method applies to both settings (values of type
+</code></pre><h4 id="More+operations">More operations<a href="#More+operations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>all</code> method applies to both settings (values of type
 <code>Initialize[T]</code>) and tasks (values of type <code>Initialize[Task[T]]</code>). It
 returns a setting or task that provides a <code>Seq[T]</code>, as shown in this
 table:
@@ -253,7 +253,7 @@ table:
   Initialize[Task[T]]   Initialize[Task[Seq[T]]]
 </p><p>This means that the <code>all</code> method can be combined with methods that
 construct tasks and settings.
-</p><h4 id="Missing+values">Missing values<a href="#Missing+values" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Some scopes might not define a setting or task. The <code>?</code> and <code>??</code> methods
+</p><h5 id="Missing+values">Missing values<a href="#Missing+values" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Some scopes might not define a setting or task. The <code>?</code> and <code>??</code> methods
 can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
 </p><p><code>?</code>
@@ -277,7 +277,7 @@ maximum of all aggregates of the current project.
       (maxErrors ?? 0).all(filter).value
    allVersions.max
 }
-</code></pre><h4 id="Multiple+values+from+multiple+scopes">Multiple values from multiple scopes<a href="#Multiple+values+from+multiple+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The target of <code>all</code> is any task or setting, including anonymous ones.
+</code></pre><h5 id="Multiple+values+from+multiple+scopes">Multiple values from multiple scopes<a href="#Multiple+values+from+multiple+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The target of <code>all</code> is any task or setting, including anonymous ones.
 This means it is possible to get multiple values at once without
 defining a new task or setting in each scope. A common use case is to
 pair each value obtained with the project, configuration, or full scope
@@ -314,9 +314,9 @@ checkPluginsTask := {
    for( (config, plugins) &lt;- oddPlugins if plugins.nonEmpty )
       println(s&quot;$config defines sbt plugins: ${plugins.mkString(&quot;, &quot;)}&quot;)
 }
-</code></pre><h2 id="Advanced+Task+Operations">Advanced Task Operations<a href="#Advanced+Task+Operations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The examples in this section use the task keys defined in the previous
+</code></pre><h3 id="Advanced+Task+Operations">Advanced Task Operations<a href="#Advanced+Task+Operations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The examples in this section use the task keys defined in the previous
 section.
-</p><h3 id="Streams%3A+Per-task+logging">Streams: Per-task logging<a href="#Streams%3A+Per-task+logging" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Per-task loggers are part of a more general system for task-specific
+</p><h4 id="Streams%3A+Per-task+logging">Streams: Per-task logging<a href="#Streams%3A+Per-task+logging" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Per-task loggers are part of a more general system for task-specific
 data called Streams. This allows controlling the verbosity of stack
 traces and logging individually for tasks as well as recalling the last
 logging for a task. Tasks also have access to their own persisted binary
@@ -345,7 +345,7 @@ traceLevel in myTask := 5
 <code>persistLogLevel</code> and <code>persistTraceLevel</code> settings. The <code>last</code> command
 displays what was logged according to these levels. The levels do not
 affect already logged information.
-</p><h2 id="Dynamic+Computations+with">Dynamic Computations with <code>Def.taskDyn</code><a href="#Dynamic+Computations+with" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>It can be useful to use the result of a task to determine the next tasks
+</p><h3 id="Dynamic+Computations+with">Dynamic Computations with <code>Def.taskDyn</code><a href="#Dynamic+Computations+with" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>It can be useful to use the result of a task to determine the next tasks
 to evaluate. This is done using <code>Def.taskDyn</code>. The result of <code>taskDyn</code>
 is called a dynamic task because it introduces dependencies at runtime.
 The <code>taskDyn</code> method supports the same syntax as <code>Def.task</code> and <code>:=</code>
@@ -377,7 +377,7 @@ on <code>intTask</code> is only introduced in non-dev mode.
 </p><p>A dynamic task cannot refer to itself or a circular dependency will
 result. In the example above, there would be a circular dependency if
 the code passed to taskDyn referenced myTask.
-</p></blockquote><h3 id="Handling+Failure">Handling Failure<a href="#Handling+Failure" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>This section discusses the <code>failure</code>, <code>result</code>, and <code>andFinally</code>
+</p></blockquote><h4 id="Handling+Failure">Handling Failure<a href="#Handling+Failure" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This section discusses the <code>failure</code>, <code>result</code>, and <code>andFinally</code>
 methods, which are used to handle failure of other tasks.
 </p><h4 id=""><code>failure</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>failure</code> method creates a new task that returns the <code>Incomplete</code>
 value when the original task fails to complete normally. If the original
@@ -443,7 +443,7 @@ intTask := intTask.result.value match {
 </code></pre><p>This overrides the original <code>intTask</code> definition so that if the original
 task fails, the exception is printed and the constant <code>3</code> is returned.
 If it succeeds, the value is printed and returned.
-</p><h4 id="andFinally">andFinally<a href="#andFinally" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>andFinally</code> method defines a new task that runs the original task
+</p><h5 id="andFinally">andFinally<a href="#andFinally" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The <code>andFinally</code> method defines a new task that runs the original task
 and evaluates a side effect regardless of whether the original task
 succeeded. The result of the task is the result of the original task.
 For example:
@@ -477,7 +477,7 @@ intTask()
 being printed.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>
-                        <span class="arrow">❧</span>
+                        <span class="arrow">&gt;</span>
                         <a href="Input-Tasks.html"> Input Tasks </a>                        
                         
                       </div><div class="tocwrapper show">
@@ -485,7 +485,7 @@ being printed.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Community+Repository+Policy.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Deploying+to+Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating+from+0.7+to+0.10%2B.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div class="current">Tasks</div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div class="current">Tasks</div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

@@ -34,10 +34,10 @@
       <body class="color_scheme-github">
         <a class="page prev nav" href="Scopes.html">
             <span class="space">&nbsp;</span>
-            <span class="flip arrow">❧</span>
+            <span class="flip arrow">&gt;</span>
           </a><a class="page next nav" href="Library-Dependencies.html">
             <span class="space">&nbsp;</span>
-            <span class="arrow">❧</span>
+            <span class="arrow">&gt;</span>
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
@@ -210,7 +210,7 @@ packageBin in Compile &lt;&lt;= packageDoc in Compile
 これが思った通りの振る舞いだ。つまり、タスクのエイリアスを作ったときに期待されるのは、そのをタスクを実行することであって、
 sbt がプロジェクトを読み込んだ時に一回だけ値を読み込むことではない。
 </p><p>（ちなみに、<code>packageBin</code> のようなパッケージ化タスクは、グローバルではなく、コンフィギュレーションごとに定義されているので、<code>in Compile</code> スコープが無ければ「未定義」エラーが発生する。）
-</p><h2 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and">依存性を持った追加: <code>&lt;+=</code> and <code>&lt;++=</code><a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>リストに追加するためのメソッドにはもう二つあり、それらは <code>+=</code> や <code>++=</code> を <code>&lt;&lt;=</code> と組み合わせたものだ。
+</p><h3 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and">依存性を持った追加: <code>&lt;+=</code> and <code>&lt;++=</code><a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>リストに追加するためのメソッドにはもう二つあり、それらは <code>+=</code> や <code>++=</code> を <code>&lt;&lt;=</code> と組み合わせたものだ。
 つまり、他のキーへの依存性を使いながらリストの新しい値や連結するための別のリストを計算できる。
 </p><p>これらのメソッドは、依存性から得られた値を変換するのに書く関数が <code>T</code> のかわりに <code>Seq[T]</code> を返さなくてはいけないこと以外の点では
 <code>&lt;&lt;=</code> と全く同じように動作する。
@@ -219,7 +219,7 @@ sbt がプロジェクトを読み込んだ時に一回だけ値を読み込む�
 </p><pre><code class="prettyprint lang-scala">cleanFiles &lt;+= (name) { n =&gt; file(&quot;coverage-report-&quot; + n + &quot;.txt&quot;) }
 </code></pre><div class="bottom nav span-16">
                         <em>Next Page</em>
-                        <span class="arrow">❧</span>
+                        <span class="arrow">&gt;</span>
                         <a href="Library-Dependencies.html"> ライブラリ依存性 </a>                        
                         <ul class="language-bar">
         <li><a href="../More-About-Settings.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/More-About-Settings.html"><span class="lang-item lang-ja">日本語</span></a></li>
