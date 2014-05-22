@@ -112,7 +112,7 @@ For example:
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
 for more details on artifacts. See the
-`Artifact API <../../api/sbt/Artifact\$.html>`\_ for combining the
+[Artifact API](../../api/sbt/Artifact\$.html) for combining the
 parameters above and specifying [Configurations] and extra attributes.
 
 To declare these artifacts for publishing, map them to the task that

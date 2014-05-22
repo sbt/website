@@ -244,7 +244,7 @@ to be generated. For example,
         ExclusionRule(organization = "javax.jms")
       )
 
-See `ModuleID <../../api/sbt/ModuleID.html>`\_ for API details.
+See [ModuleID](../../api/sbt/ModuleID.html) for API details.
 
 ##### Download Sources
 
@@ -337,7 +337,7 @@ The default value is:
 The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting `conflictManager`,
-which has type `ConflictManager <../../api/sbt/ConflictManager.html>`\_.
+which has type [ConflictManager](../../api/sbt/ConflictManager.html).
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
 for details on the different conflict managers. For example, to specify

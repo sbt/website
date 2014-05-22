@@ -134,4 +134,4 @@ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snaps
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant
-class is `IvyConsole <../../sxr/sbt/IvyConsole.scala.html>`\_.
+class is [IvyConsole](../../sxr/sbt/IvyConsole.scala.html).

@@ -279,7 +279,7 @@ can be organized into four groups:
 -   Default filter (`inAnyProject`, `inAnyConfiguration`, `inAnyTask`)
 -   Project relationships (`inAggregates`, `inDependencies`)
 
-See the `API documentation <../../api/sbt/ScopeFilter\$\$Make.html>`\_ for
+See the [API documentation](../../api/sbt/ScopeFilter\$\$Make.html) for
 details.
 
 ##### Combining ScopeFilters
@@ -413,10 +413,10 @@ or text data.
 
 To use Streams, get the value of the `streams` task. This is a special
 task that provides an instance of
-`TaskStreams <../../api/sbt/std/TaskStreams.html>`\_ for the defining
+[TaskStreams](../../api/sbt/std/TaskStreams.html) for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-`Logger <../../api/sbt/Logger.html>`\_, which is the most commonly used
+[Logger](../../api/sbt/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
     myTask := {
@@ -495,7 +495,7 @@ methods, which are used to handle failure of other tasks.
 The `failure` method creates a new task that returns the `Incomplete`
 value when the original task fails to complete normally. If the original
 task succeeds, the new task fails.
-`Incomplete <../../api/sbt/Incomplete.html>`\_ is an exception with
+[Incomplete](../../api/sbt/Incomplete.html) is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 
@@ -546,7 +546,7 @@ inputs fail and computes its value otherwise.
 #### `result`
 
 The `result` method creates a new task that returns the full `Result[T]`
-value for the original task. `Result <../../api/sbt/Result.html>`\_ has
+value for the original task. [Result](../../api/sbt/Result.html) has
 the same structure as `Either[Incomplete, T]` for a task result of type
 `T`. That is, it has two subtypes:
 

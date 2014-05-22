@@ -5,7 +5,7 @@ out: Build-State.html
 State and actions
 -----------------
 
-`State <../../api/sbt/State\$.html>`\_ is the entry point to all
+[State](../../api/sbt/State\$.html) is the entry point to all
 available information in sbt. The key methods are:
 
 -   `definedCommands: Seq[Command]` returns all registered Command
@@ -73,14 +73,14 @@ method to extract the most useful information:
     val extracted: Extracted = Project.extract(state)
     import extracted._
 
-`Extracted <../../api/sbt/Extracted.html>`\_ provides:
+[Extracted](../../api/sbt/Extracted.html) provides:
 
 -   Access to the current build and project (`currentRef`)
 -   Access to initialized project setting data (`structure.data`)
 -   Access to session `Setting`s and the original, permanent settings
     from .sbt and .scala files (session.append and session.original,
     respectively)
--   Access to the current `Eval <../../api/sbt/compiler/Eval.html>`\_
+-   Access to the current [Eval](../../api/sbt/compiler/Eval.html)
     instance for evaluating Scala expressions in the build context.
 
 ### Project data
@@ -94,12 +94,12 @@ the following way:
     val value: Option[T] = key in scope get structure.data
 
 Here, a `SettingKey[T]` is typically obtained from
-`Keys <../../api/sbt/Keys\$.html>`\_ and is the same type that is used to
+[Keys](../../api/sbt/Keys\$.html) and is the same type that is used to
 define settings in `.sbt` files, for example.
-`Scope <../../api/sbt/Scope.html>`\_ selects the scope the key is
+[Scope](../../api/sbt/Scope.html) selects the scope the key is
 obtained for. There are convenience overloads of `in` that can be used
 to specify only the required scope axes. See
-`Structure.scala <../../sxr/sbt/Structure.scala.html>`\_ for where `in`
+[Structure.scala](../../sxr/sbt/Structure.scala.html) for where `in`
 and other parts of the settings interface are defined. Some examples:
 
     import Keys._
@@ -112,14 +112,14 @@ and other parts of the settings interface are defined. Some examples:
     // get the package options for the `test:packageSrc` task or Nil if none are defined
     val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 
-`BuildStructure <../../api/sbt/Load\$\$BuildStructure.html>`\_ contains
+[BuildStructure](../../api/sbt/Load\$\$BuildStructure.html) contains
 information about build and project relationships. Key members are:
 
     units: Map[URI, LoadedBuildUnit]
     root: URI
 
 A `URI` identifies a build and `root` identifies the initial build
-loaded. `LoadedBuildUnit <../../api/sbt/Load\$\$LoadedBuildUnit.html>`\_
+loaded. [LoadedBuildUnit](../../api/sbt/Load\$\$LoadedBuildUnit.html)
 provides information about a single build. The key members of
 `LoadedBuildUnit` are:
 
@@ -129,9 +129,9 @@ provides information about a single build. The key members of
     // maps the project ID to the Project definition
     defined: Map[String, ResolvedProject]
 
-`ResolvedProject <../../api/sbt/ResolvedProject.html>`\_ has the same
+[ResolvedProject](../../api/sbt/ResolvedProject.html) has the same
 information as the `Project` used in a `project/Build.scala` except that
-`ProjectReferences <../../api/sbt/ProjectReference.html>`\_ are resolved
+[ProjectReferences](../../api/sbt/ProjectReference.html) are resolved
 to `ProjectRef`s.
 
 ### Classpaths

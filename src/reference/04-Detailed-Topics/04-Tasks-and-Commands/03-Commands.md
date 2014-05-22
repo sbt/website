@@ -36,7 +36,7 @@ function `(State, T) => State`, where `T` is the data structure produced
 by the parser. See the `/Detailed-Topics/Parsing-Input` page for how to
 use the parser combinators.
 
-`State <../../api/sbt/State.html>`\_ provides access to the build state,
+[State](../../api/sbt/State.html) provides access to the build state,
 such as all registered `Command`s, the remaining commands to execute,
 and all project-related information. See `Build-State` for details on
 State.
@@ -53,7 +53,7 @@ the parser. For example, the currently loaded projects (provided by
 `State`) determine valid completions for the `project` command. Examples
 for the general and specific cases are shown in the following sections.
 
-See `Command.scala <../../sxr/sbt/Command.scala.html>`\_ for the source
+See [Command.scala](../../sxr/sbt/Command.scala.html) for the source
 API details for constructing commands.
 
 #### General commands

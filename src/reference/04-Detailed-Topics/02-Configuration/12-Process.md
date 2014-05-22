@@ -72,7 +72,7 @@ instance of `URL` and `file` is an instance of `File`.
 There are some additional methods to get the output from a forked
 process into a `String` or the output lines as a `Stream[String]`. Here
 are some examples, but see the
-`ProcessBuilder API <../../api/sbt/ProcessBuilder.html>`\_ for details.
+[ProcessBuilder API](../../api/sbt/ProcessBuilder.html) for details.
 
     val listed: String = "ls" !!
     val lines2: Stream[String] = "ls" lines_!

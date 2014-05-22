@@ -18,7 +18,7 @@ into the a task graph. This task graph is then used to execute your
 build.
 
 All of sbt's loading semantics are contained within the
-`Load.scala <../../sxr/sbt/Load.scala.html>` file. It is approximately
+[Load.scala](../../sxr/sbt/Load.scala.html) file. It is approximately
 the following:
 
 ![image](settings-initialization-load-ordering.png)

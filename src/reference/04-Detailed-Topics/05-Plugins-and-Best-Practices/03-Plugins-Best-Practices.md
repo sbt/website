@@ -33,7 +33,7 @@ long-standing issues with plugins.
 
 ### Reuse existing keys
 
-sbt has a number of `predefined keys <../../api/sbt/Keys%24.html>`\_.
+sbt has a number of [predefined keys](../../api/sbt/Keys%24.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
     val sourceFiles = settingKey[Seq[File]]("Some source files")

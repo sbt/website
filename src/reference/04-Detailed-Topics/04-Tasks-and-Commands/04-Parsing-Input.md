@@ -55,7 +55,7 @@ a `Char` or `String`. Other basic parser constructors are the
 ### Built-in parsers
 
 sbt comes with several built-in parsers defined in
-`sbt.complete.DefaultParsers <../../api/sbt/complete/DefaultParsers\$.html>`\_.
+[sbt.complete.DefaultParsers](../../api/sbt/complete/DefaultParsers\$.html).
 Some commonly used built-in parsers are:
 
 > -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
@@ -67,7 +67,7 @@ Some commonly used built-in parsers are:
 > -   `Bool` for parsing a `Boolean` value
 
 See the
-`DefaultParsers API <../../api/sbt/complete/DefaultParsers\$.html>`\_ for
+[DefaultParsers API](../../api/sbt/complete/DefaultParsers\$.html) for
 details.
 
 ### Combining parsers

@@ -176,7 +176,7 @@ different Patterns object to use a different layout. For example:
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
 be Maven compatible (as defined by Ivy). See the
-`patterns API <../../api/sbt/Patterns\$.html>`\_ for the methods to use.
+[patterns API](../../api/sbt/Patterns\$.html) for the methods to use.
 
 For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and

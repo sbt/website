@@ -52,7 +52,7 @@ the `task-system` module as well.
 #### Application: Main.scala
 
 The application itself is defined by implementing
-`xsbti.AppMain <../../api/xsbti/AppMain.html>`\_. The basic steps are
+[xsbti.AppMain](../../api/xsbti/AppMain.html). The basic steps are
 
 1.  Provide command definitions. These are the commands that are
     available for users to run.
