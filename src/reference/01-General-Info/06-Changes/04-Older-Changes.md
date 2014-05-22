@@ -367,7 +367,7 @@ Some of the more visible changes:
     /Extending/Plugins
 -   `Web application <https://github.com/JamesEarlDouglas/xsbt-web-plugin>`\_
     and webstart support moved to plugins instead of core features
--   Fixed all of the issues in (Google Code) issue \#44
+-   Fixed all of the issues in (Google Code) issue #44
 -   Managed dependencies automatically updated when configuration
     changes
 -   `update-sbt-classifiers` and `update-classifiers` tasks for
@@ -382,7 +382,7 @@ Some of the more visible changes:
 ### 0.7.5 to 0.7.7
 
 -   Workaround for Scala issue
-    [\#4426](http://lampsvn.epfl.ch/trac/scala/ticket/4426)
+    [#4426](http://lampsvn.epfl.ch/trac/scala/ticket/4426)
 -   Fix issue 156
 
 ### 0.7.4 to 0.7.5
@@ -632,14 +632,14 @@ Some of the more visible changes:
     defined with different ports)
 -   `jettyRunTask` accepts configuration in a single configuration
     wrapper object instead of many parameters
--   Fix web application class loading (issue \#35) by using
+-   Fix web application class loading (issue #35) by using
     jettyClasspath=testClasspath---jettyRunClasspath for loading Jetty.
     A better way would be to have a jetty configuration and have
     jettyClasspath=managedClasspath('jetty'), but this maintains
     compatibility.
 -   Copy resources to `target/resources` and `target/test-resources`
     using copyResources and copyTestResources tasks. Properly include
-    all resources in web applications and classpaths (issue \#36).
+    all resources in web applications and classpaths (issue #36).
     mainResources and testResources are now the definitive methods for
     getting resources.
 -   Updated for 2.8 (`sbt` now compiles against September 11, 2009
@@ -676,8 +676,8 @@ Some of the more visible changes:
     quasi-package dependency graph (based on source directories and
     source dependencies)
 -   Improved Ivy-related code to not load unnecessary default settings
--   Fixed issue \#39 (sources were not relative in src package)
--   Implemented issue \#38 (`InstallProject` with 'install' task)
+-   Fixed issue #39 (sources were not relative in src package)
+-   Implemented issue #38 (`InstallProject` with 'install' task)
 -   Vesa's patch for configuring the output of forked Scala/Java and
     processes
 -   Don't buffer logging of forked `run` by default
@@ -685,8 +685,8 @@ Some of the more visible changes:
     should stop for a given keypress.
 -   Terminate triggered execution only on 'enter' by default
     (previously, any keypress stopped it)
--   Fixed issue \#41 (parent project should not declare jar artifact)
--   Fixed issue \#42 (search parent directories for `ivysettings.xml`)
+-   Fixed issue #41 (parent project should not declare jar artifact)
+-   Fixed issue #42 (search parent directories for `ivysettings.xml`)
 -   Added support for extra attributes with Ivy. Use
     extra(key -\> value) on ModuleIDs and Artifacts. To define for a
     project's ID: :
@@ -740,7 +740,7 @@ Some of the more visible changes:
     different working directory.
 -   Maximum compiler errors shown is now configurable
 -   Fixed rebuilding and republishing released versions of `sbt` against
-    new Scala versions (attempt \#2)
+    new Scala versions (attempt #2)
 -   Fixed snapshot reversion handling (Ivy needs changing pattern set on
     cache, apparently)
 -   Fixed handling of default configuration when useMavenConfiguration
@@ -754,7 +754,7 @@ Some of the more visible changes:
     self-extracting jar
 -   Added ability to directly specify `URL` to use for dependency with
     the from(url: URL) method defined on ModuleID
--   Fixed issue \#30
+-   Fixed issue #30
 -   Support cross-building with `+` when running batch actions
 -   Additional flattening for project definitions: sources can go either
     in project/build/src (recursively) or project/build (flat)
@@ -834,11 +834,11 @@ Some of the more visible changes:
     and adds them to the main manifest attributes
 -   Fixed some situations where characters would not be echoed at
     prompts other than main prompt.
--   Fixed issue \#20 (use `http_proxy` environment variable)
--   Implemented issue \#21 (native process wrapper)
--   Fixed issue \#22 (rebuilding and republishing released versions of
+-   Fixed issue #20 (use `http_proxy` environment variable)
+-   Implemented issue #21 (native process wrapper)
+-   Fixed issue #22 (rebuilding and republishing released versions of
     sbt against new Scala versions, specifically Scala 2.7.4)
--   Implemented issue \#23 (inherit inline repositories declared in
+-   Implemented issue #23 (inherit inline repositories declared in
     parent project)
 
 ### 0.4 to 0.4.3
@@ -967,7 +967,7 @@ Some of the more visible changes:
 -   Added some missing read methods in `FileUtilities`
 -   Added scripted test framework
 -   Change detection using hashes of files
--   Fixed problem with manifests not being generated (bug \#14)
+-   Fixed problem with manifests not being generated (bug #14)
 -   Fixed issue with scala-tools repository not being included by
     default (again)
 -   Added option to set ivy cache location (mainly for testing)
@@ -982,12 +982,12 @@ Some of the more visible changes:
 
 ### 0.3.5 to 0.3.6
 
--   Fixed bug \#12.
+-   Fixed bug #12.
 -   Compiled with 2.7.2.
 
 ### 0.3.2 to 0.3.5
 
--   Fixed bug \#11.
+-   Fixed bug #11.
 -   Fixed problem with dependencies where source jars would be used
     instead of binary jars.
 -   Fixed scala-tools not being used by default for inline
@@ -1040,7 +1040,7 @@ Some of the more visible changes:
 
 ### 0.3 to 0.3.1
 
--   Fixed bugs \#8, \#9, and \#10.
+-   Fixed bugs #8, #9, and #10.
 
 ### 0.2.3 to 0.3
 

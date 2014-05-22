@@ -124,7 +124,7 @@ configuration that can be run using a `test:` prefix.
     whenever source files change. See
     /Detailed-Topics/Triggered-Execution for details.
 -   `< filename` Executes the commands in the given file. Each command
-    should be on its own line. Empty lines and lines beginning with '\#'
+    should be on its own line. Empty lines and lines beginning with '#'
     are ignored
 -   `+ <command>` Executes the project specified action or method for
     all versions of Scala defined in the crossScalaVersions setting.

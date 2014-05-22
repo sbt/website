@@ -8,45 +8,49 @@ Global Settings
 ### Basic global configuration file
 
 Settings that should be applied to all projects can go in
-\`|globalSbtFile|\` (or any file in \`|globalBase|\` with a `.sbt`
-extension). Plugins that are defined globally in \`|globalPluginsBase|\`
+`$global_sbt_file$` (or any file in `$global_base$` with a `.sbt`
+extension). Plugins that are defined globally in `$global_plugins_base$`
 are available to these settings. For example, to change the default
 `shellPrompt` for your projects:
 
-\`|globalSbtFile|\`
+`$global_sbt_file$`
 
-    shellPrompt := { state =>
-     "sbt (%s)> ".format(Project.extract(state).currentProject.id)
-    }
+```scala
+shellPrompt := { state =>
+  "sbt (%s)> ".format(Project.extract(state).currentProject.id)
+}
+```
 
 ### Global Settings using a Global Plugin
 
-The \`|globalPluginsBase|\` directory is a global plugin project. This
+The `$global_plugins_base$` directory is a global plugin project. This
 can be used to provide global commands, plugins, or other code.
 
-To add a plugin globally, create \`|globalPluginSbtFile|\` containing
+To add a plugin globally, create `$global_plugin_sbt_file$` containing
 the dependency definitions. For example:
 
-    addSbtPlugin("org.example" % "plugin" % "1.0")
+```scala
+addSbtPlugin("org.example" % "plugin" % "1.0")
+```
 
 To change the default `shellPrompt` for every project using this
-approach, create a local plugin \`|globalShellPromptScala|:
+approach, create a local plugin `$global_shellprompt_scala$`:
 
-::
+```scala
+import sbt._
+import Keys._
 
-    import sbt.\_
-    import Keys.\_
+object ShellPrompt extends Plugin {
+  override def settings = Seq(
+    shellPrompt := { state =>
+      "sbt (%s)> ".format(Project.extract(state).currentProject.id) }
+  )
+}
+```
 
-    object ShellPrompt extends Plugin {
-      override def settings = Seq(
-        shellPrompt := { state =\>
-          "sbt (%s)\> ".format(Project.extract(state).currentProject.id) }
-      )
-    }
-
-The :sublit:|globalPluginsBase|\` directory is a full project that is
+The `$global_plugins_base$` directory is a full project that is
 included as an external dependency of every plugin project. In practice,
 settings and code defined here effectively work as if they were defined
 in a project's `project/` directory. This means that
-\`|globalPluginsBase|\` can be used to try out ideas for plugins such as
+`$global_plugins_base$` can be used to try out ideas for plugins such as
 shown in the `shellPrompt` example.

@@ -38,7 +38,7 @@ needs a mechanism to store the state from any potential client. In
 dynamic languages, this can be done directly on objects.
 
 A naive approach in Scala is to use a `Map<String,Any>`. However, this
-vioaltes tennant \#1: Everythign should have a `Type`. So, sbt defines a
+vioaltes tennant #1: Everythign should have a `Type`. So, sbt defines a
 new type of map called an `AttributeMap`. An `AttributeMap` is a
 key-value storage mechanism where keys are both strings *and* expected
 `Type`s for their value.

@@ -135,7 +135,7 @@ Sonatype's staging process.
 ### Fourth - Adding credentials
 
 The credentials for your Sonatype OSSRH account need to be added
-somewhere. Common convention is a \`|globalBase|/sonatype.sbt\` file
+somewhere. Common convention is a `$global_base$/sonatype.sbt` file
 with the following:
 
 ```scala

@@ -33,7 +33,7 @@ called or all non-daemon threads terminate.
 During deserialization, the wrong class loader might be used for various
 complex reasons. This can happen in many scenarios, and running under
 SBT is just one of them. This is discussed for instance in issues
-\`163\` and \`136. The reason is
+#163 and #136. The reason is
 explained
 here \<http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900\#comment-85900\>\_.
 
@@ -41,7 +41,7 @@ here \<http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900\#comme
 
 #### System.exit
 
-User code is run with a custom SecurityManager\` that throws a custom
+User code is run with a custom `SecurityManager` that throws a custom
 `SecurityException` when `System.exit` is called. This exception is
 caught by sbt. sbt then disposes of all top-level windows, interrupts
 (not stops) all user-created threads, and handles the exit code. If the

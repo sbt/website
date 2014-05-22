@@ -51,12 +51,47 @@ factory and repository class. The SSH and SFTP repositories are
 configured identically except for the name of the factory. Use
 `Resolver.ssh` for SSH and `Resolver.sftp` for SFTP.
 
-  Type         Factory           Ivy Docs             Factory API            Repository Class API
-  ------------ ----------------- -------------------- ---------------------- ------------------------------
-  Filesystem   `Resolver.file`   \`\`Ivy filesystem   `_`filesystem factor   y`_`FileRepository API\`\`\_
-  SFTP         `Resolver.sftp`   `Ivy sftp`\_         `sftp factory`\_       `SftpRepository API`\_
-  SSH          `Resolver.ssh`    `Ivy ssh`\_          `ssh factory`\_        `SshRepository API`\_
-  URL          `Resolver.url`    `Ivy url`\_          `url factory`\_        `URLRepository API`\_
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Factory</th>
+    <th>Ivy Docs</th>
+    <th>Factory API</th>
+    <th>Repository Class API</th>
+  </tr>
+
+  <tr>
+    <td>Filesystem</td>
+    <td><tt>Resolver.file</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+    <td><a href="../api/sbt/Resolver\$\$file\$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SFTP</td>
+    <td><tt>Resolver.sftp</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+    <td><a href="../api/sbt/Resolver\$\$Define\$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SSH</td>
+    <td><tt>Resolver.ssh</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+    <td><a href="../api/sbt/Resolver\$\$Define\$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>URL</td>
+    <td><tt>Resolver.url</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+    <td><a href="../api/sbt/Resolver\$\$url\$.html">url factory</a></td>
+    <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
+  </tr>
+</table>
 
 #### Basic Examples
 

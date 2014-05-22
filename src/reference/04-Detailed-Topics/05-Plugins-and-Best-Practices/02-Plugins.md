@@ -82,7 +82,7 @@ plugins will not see classes or resources from build definitions.
 
 #### Global plugins
 
-The \`|globalPluginsBase|\` directory is treated as a global plugin
+The `$global_plugins_base$` directory is treated as a global plugin
 definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.
