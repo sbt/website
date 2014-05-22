@@ -534,7 +534,7 @@ Some of the more visible changes:
     run commands and then enter interactive prompt, make the last
     command 'shell'.
 -   Properly track certain types of synthetic classes, such as for
-    comprehension with \>30 clauses, during compilation.
+    comprehension with >30 clauses, during compilation.
 -   Jetty 7 support
 -   Allow launcher in the project root directory or the `lib` directory.
     The jar name must have the form 'sbt-launch.jar' in order to be
@@ -554,7 +554,7 @@ Some of the more visible changes:
 -   The version of Scala used to run sbt (currently 2.7.7) is decoupled
     from the version used to build the project.
 -   Changing between Scala versions on the fly is done with the command:
-    ++\<version\>
+    ++\<version>
 -   Cross-building is quicker. The project definition does not need to
     be recompiled against each version in the cross-build anymore.
 -   Scala versions are specified in a space-delimited list in the
@@ -574,7 +574,7 @@ Some of the more visible changes:
     soon as they are released.
 -   Support is better, since the test framework authors provide the
     implementation.
--   Arguments can be passed to the test framework. For example: {{{ \>
+-   Arguments can be passed to the test framework. For example: {{{ >
     test-only your.test -- -a -b -c }}}
 -   Can provide custom task start and end delimiters by defining the
     system properties sbt.start.delimiter and sbt.end.delimiter.
@@ -666,7 +666,7 @@ Some of the more visible changes:
         > exec find src/main/scala -iname *.scala -exec wc -l {} ;
 
 -   Added `sh` task for users with a unix-style shell available (runs
-    /bin/sh -c \<arguments\>). Mixin Exec to project definition to use.
+    /bin/sh -c \<arguments>). Mixin Exec to project definition to use.
     Example: :
 
         > sh find src/main/scala -iname *.scala | xargs cat | wc -l
@@ -688,7 +688,7 @@ Some of the more visible changes:
 -   Fixed issue #41 (parent project should not declare jar artifact)
 -   Fixed issue #42 (search parent directories for `ivysettings.xml`)
 -   Added support for extra attributes with Ivy. Use
-    extra(key -\> value) on ModuleIDs and Artifacts. To define for a
+    extra(key -> value) on ModuleIDs and Artifacts. To define for a
     project's ID: :
 
         override def projectID = super.projectID extra(key -> value)

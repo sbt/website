@@ -25,7 +25,7 @@ sbt 0.12.0 Changes
     org.scala-tools.sbt). This affects users of the scripted plugin in
     particular.
 -   `artifactName` type has changed to
-    (ScalaVersion, Artifact, ModuleID) =\> String
+    (ScalaVersion, Artifact, ModuleID) => String
 -   `javacOptions` is now a task
 -   `session save` overwrites settings in `build.sbt` (when
     appropriate). gh-369

@@ -137,7 +137,7 @@ framework classes.
 > **note**
 >
 > When forking, the ClassLoader containing the test classes cannot be
-> provided because it is in another JVM. Only use the () =\> Unit
+> provided because it is in another JVM. Only use the () => Unit
 > variants in this case.
 
 Examples:

@@ -140,7 +140,7 @@ As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
 
 1.  Assignment methods have the lowest precedence. These are methods
-    with names ending in =, except for !=, \<=, \>=, and names that
+    with names ending in =, except for !=, \<=, >=, and names that
     start with =.
 2.  Methods starting with a letter have the next highest precedence.
 3.  Methods with names that start with a symbol and aren't included in

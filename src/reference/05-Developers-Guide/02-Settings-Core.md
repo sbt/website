@@ -65,12 +65,12 @@ this time. The example uses a trivial implementation for this part.
 > + "/" + key.key.label }
 >
 > > // A sample delegation function that delegates to a Scope with a
-> > lower index. val delegates: Scope =\> Seq[Scope] = { case s @
-> > Scope(index) =\> s +: (if(index \<= 0) Nil else
+> > lower index. val delegates: Scope => Seq[Scope] = { case s @
+> > Scope(index) => s +: (if(index \<= 0) Nil else
 > > delegates(Scope(index-1)) ) }
 > >
 > > // Not using this feature in this example. val scopeLocal:
-> > ScopeLocal = \_ =\> Nil
+> > ScopeLocal = \_ => Nil
 > >
 > > // These three functions + a scope (here, Scope) are sufficient for
 > > defining our settings system.

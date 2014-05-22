@@ -147,9 +147,9 @@ project/ directory.
 > > override def buildLoaders =
 > > :   BuildLoader.build(demoBuilder) :: Nil
 > >
-> > def demoBuilder: BuildInfo =\> Option[() =\> BuildUnit] = info =\>
+> > def demoBuilder: BuildInfo => Option[() => BuildUnit] = info =>
 > > :   if(pomFile(info).exists)
-> >     :   Some(() =\> pomBuild(info))
+> >     :   Some(() => pomBuild(info))
 > >
 > >     else
 > >     :   None

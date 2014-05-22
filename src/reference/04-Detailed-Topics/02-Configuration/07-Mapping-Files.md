@@ -38,7 +38,7 @@ For example:
 > baseDirectories: Seq[File] = file("/a") :: Nil val mappings:
 > Seq[(File,String)] = files pair relativeTo(baseDirectories)
 >
-> val expected = (file("/a/b/C.scala") -\> "b/C.scala") :: Nil assert(
+> val expected = (file("/a/b/C.scala") -> "b/C.scala") :: Nil assert(
 > mappings == expected )
 
 ### Rebase

@@ -74,9 +74,9 @@ get the setting values with the special `value` method:
 
     import complete.DefaultParsers._
 
-> val parser: Initialize[State =\> Parser[(String,String)]] =
+> val parser: Initialize[State => Parser[(String,String)]] =
 > :   Def.setting {
->     :   (state: State) =\>
+>     :   (state: State) =>
 >         :   ( token("scala" \<\~ Space) \~ token(scalaVersion.value) )
 >             | ( token("sbt" \<\~ Space) \~ token(sbtVersion.value) ) |
 >             ( token("commands" \<\~ Space) \~
