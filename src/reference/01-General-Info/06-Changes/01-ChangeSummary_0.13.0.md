@@ -10,7 +10,7 @@ sbt 0.13.0 Changes
 
 ### Overview
 
-#### Features, fixes, changes with compatibility implications (incomplete, please help)
+#### Features, fixes, changes with compatibility implications
 
 -   Moved to Scala 2.10 for sbt and build definitions.
 -   Support for plugin configuration in `project/plugins/` has been

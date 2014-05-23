@@ -5,7 +5,7 @@ out: ChangeSummary_0.12.0.html
 sbt 0.12.0 Changes
 ------------------
 
-#### Features, fixes, changes with compatibility implications (incomplete, please help)
+#### Features, fixes, changes with compatibility implications
 
 -   The cross versioning convention has changed for Scala versions 2.10
     and later as well as for sbt plugins.
