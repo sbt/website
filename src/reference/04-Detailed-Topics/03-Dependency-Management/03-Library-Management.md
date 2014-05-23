@@ -176,7 +176,7 @@ The repositories used by the launcher can be overridden by defining
 `~/.sbt/repositories`, which must contain a `[repositories]` section
 with the same format as the `Launcher` configuration file. For example:
 
-``` {.sourceCode .ini}
+```
 [repositories]
 local
 my-maven-repo: http://example.org/repo

@@ -113,7 +113,7 @@ application.
 
 `hello.build.properties`
 
-``` {.sourceCode .ini}
+```
 [scala]
   version: 2.9.1
 
