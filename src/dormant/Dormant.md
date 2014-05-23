@@ -1,5 +1,5 @@
 Dormant Pages
-=============
+-------------
 
 If you check out the documentation as a git repository, there's a
 `Dormant` directory (this one) which contains:

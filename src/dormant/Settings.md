@@ -15,7 +15,7 @@ After doing so, this page could simply be a redirect (delete the
 content, link to the new pages about build definition).
 
 Introduction
-============
+------------
 
 A build definition is written in Scala. There are two types of
 definitions: light and full. A light definition is a quick way of
@@ -26,8 +26,7 @@ between projects and introduce new configurations and settings. This
 page introduces the `Setting` type, which is used by light and full
 definitions for general configuration.
 
-Introductory Examples
----------------------
+### Introductory Examples
 
 Basic examples of each type of definition are shown below for the
 purpose of getting an idea of what they look like, not for full
@@ -56,7 +55,7 @@ comprehension of details, which are described at
     }
 
 Important Settings Background
-=============================
+-----------------------------
 
 The fundamental type of a configurable in sbt is a `Setting[T]`. Each
 line in the `build.sbt` example above is of this type. The arguments to
@@ -101,7 +100,7 @@ values to get Unit, which is why there is no compile error.)
     }
 
 Declaring a Setting
-===================
+-------------------
 
 There is fundamentally one type of initialization, represented by the
 `<<=` method. The other initialization methods `:=`, `+=`, `++=`, `<+=`,
@@ -129,8 +128,7 @@ settings Seq as described in the previous section. Information about the
 types of the left and right hand sides of the methods follows this
 section.
 
-:=
---
+### :=
 
 `:=` is used to define a setting that overwrites any previous value
 without referring to other settings. For example, the following defines
@@ -141,8 +139,7 @@ a setting that will set *name* to "My Project" regardless of whether
 
 No other settings are used. The value assigned is just a constant.
 
-+= and ++=
-----------
+### += and ++=
 
 `+=` is used to define a setting that will append a single value to the
 current sequence without referring to other settings. For example, the
@@ -170,8 +167,7 @@ being appended and A is the type of the setting that the value is being
 appended to. See `Append <../../api/sbt/Append\$.html>`\_ for the
 provided instances.
 
-\~=
----
+### \~=
 
 `~=` is used to transform the current value of a setting. For example,
 the following defines a setting that will remove `-Y` compiler options
@@ -188,8 +184,7 @@ could also be written as:
       deps :+ ("junit" % "junit" % "4.8" % "test")
     }
 
-\<\<=
------
+### \<\<=
 
 The most general method is \<\<=. All other methods can be implemented
 in terms of \<\<=. \<\<= defines a setting using other settings,
@@ -205,8 +200,7 @@ This defines a setting that will apply the provided function to the
 previous value of *libraryDependencies*. `apply` and `Seq[ModuleID]` are
 explicit for demonstration only and may be omitted.
 
-\<+= and \<++=
---------------
+### \<+= and \<++=
 
 The \<+= method is a hybrid of the += and \<\<= methods. Similarly,
 \<++= is a hybrid of the ++= and \<\<= methods. These methods are
@@ -237,14 +231,13 @@ that the value is being appended to. See
 `Append <../../api/sbt/Append\$.html>`\_ for the provided instances.
 
 Setting types
-=============
+-------------
 
 This section provides information about the types of the left and
 right-hand sides of the initialization methods. It is currently
 incomplete.
 
-Setting Keys
-------------
+### Setting Keys
 
 The left hand side of a setting definition is of type
 `ScopedSetting <../../api/sbt/ScopedSetting.html>`\_. This type has two
@@ -293,8 +286,7 @@ explicitly and the key is assigned to a value to emphasize that it is a
 normal (immutable) Scala value and can be manipulated and passed around
 as such.
 
-Computing the value for a setting
----------------------------------
+### Computing the value for a setting
 
 The right hand side of a setting definition varies by the initialization
 method used. In the case of :=, +=, ++=, and \~=, the type of the
@@ -335,8 +327,7 @@ with all other built-in keys. The argument to the `apply` method is a
 function that takes the values of those settings and computes a new
 value. In this case, that value is the path of a jar.
 
-Initialize[Task[T]]
--------------------
+### Initialize[Task[T]]
 
 To initialize tasks, the procedure is similar. There are a few
 differences. First, the inputs are of type [ScopedTaskable]. The means

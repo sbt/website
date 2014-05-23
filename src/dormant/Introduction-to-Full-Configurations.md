@@ -11,14 +11,14 @@ in you project root directory, or a `Build.scala` file in your
 "full" configuration. This page is about "full" configuration.
 
 Naming the Scala build file
-===========================
+---------------------------
 
 `Build.scala` is the typical name for this build file but in reality it
 can be called anything that ends with `.scala` as it is a standard Scala
 source file and sbt will detect and use it regardless of its name.
 
 Overview of what goes in the file
-=================================
+---------------------------------
 
 The most basic form of this file defines one object which extends
 `sbt.Build` e.g.:
@@ -59,7 +59,7 @@ significance to sbt. sbt simply sees that the dependency object exists
 and uses it when it needs it.
 
 Combining "light" and "full" configuration files
-================================================
+------------------------------------------------
 
 It is worth noting at this stage that you can have both a `build.sbt`
 file and a `Build.scala` file for the same project. If you do this, sbt
@@ -68,7 +68,7 @@ will append the configurations in `build.sbt` to those in the
 your root directory and they are all appended together.
 
 A simple example comparing a "light" and "full" configuration of the same project
-=================================================================================
+---------------------------------------------------------------------------------
 
 Here is a short "light" `build.sbt` file which defines a build project
 with a single test dependency on "scalacheck":

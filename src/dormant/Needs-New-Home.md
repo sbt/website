@@ -3,7 +3,7 @@ of text, examples, and information that needs to find a new home
 somewhere else on the wiki.
 
 Snippets of docs that need to move to another page
-==================================================
+--------------------------------------------------
 
 Temporarily change the logging level and configure how stack traces are
 displayed by modifying the `log-level` or `trace-level` settings:
@@ -36,7 +36,7 @@ scala>
 ```
 
 Manual Dependency Management
-============================
+----------------------------
 
 Manually managing dependencies involves copying any jars that you want
 to use to the `lib` directory. sbt will put these jars on the classpath
@@ -69,8 +69,7 @@ default directory, you can do:
 
 See [[Paths]] for more information on building up paths.
 
-Resolver.withDefaultResolvers method
-------------------------------------
+### Resolver.withDefaultResolvers method
 
 To use the local and Maven Central repositories, but not the Scala Tools
 releases repository:
@@ -78,8 +77,7 @@ releases repository:
     externalResolvers :=
       Resolver.withDefaultResolvers(resolvers.value, mavenCentral = true, scalaTools = false)
 
-Explicit URL
-------------
+### Explicit URL
 
 If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified with the `from`
@@ -92,8 +90,7 @@ through the configured repositories. Also, when you publish a project, a
 pom or ivy.xml is created listing your dependencies; the explicit URL is
 not included in this published metadata.
 
-Disable Transitivity
---------------------
+### Disable Transitivity
 
 By default, sbt fetches all dependencies, transitively. (That is, it
 downloads the dependencies of the dependencies you list.)
@@ -104,8 +101,7 @@ dependencies with `intransitive()`, as in this example:
 
     libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
 
-Classifiers
------------
+### Classifiers
 
 You can specify the classifer for a dependency using the `classifier`
 method. For example, to get the jdk15 version of TestNG:
@@ -120,8 +116,7 @@ to only retrieve sources:
 
     transitiveClassifiers := Seq("sources")
 
-Extra Attributes
-----------------
+### Extra Attributes
 
 [Extra attributes] can be specified by passing key/value pairs to the
 `extra` method.
@@ -136,8 +131,7 @@ To define extra attributes on the current project:
         id extra("color" -> "blue", "component" -> "compiler-interface")
     }
 
-Inline Ivy XML
---------------
+### Inline Ivy XML
 
 sbt additionally supports directly specifying the configurations or
 dependencies sections of an Ivy configuration file inline. You can mix
@@ -152,8 +146,7 @@ For example:
         </dependency>
       </dependencies>
 
-Ivy Home Directory
-------------------
+### Ivy Home Directory
 
 By default, sbt uses the standard Ivy home directory location
 `\${user.home}/.ivy2/`. This can be configured machine-wide, for use by
@@ -167,8 +160,7 @@ For example:
 java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 ```
 
-Checksums
----------
+### Checksums
 
 sbt ([through Ivy]) verifies the checksums of downloaded files by
 default. It also publishes checksums of artifacts by default. The
@@ -188,20 +180,18 @@ The default value is:
 
     checksums := Seq("sha1", "md5")
 
-Publishing
-----------
+### Publishing
 
 Finally, see [[Publishing]] for how to publish your project.
 
-### Maven/Ivy
+#### Maven/Ivy
 
 For this method, create the configuration files as you would for Maven
 (`pom.xml`) or Ivy (`ivy.xml` and optionally `ivysettings.xml`).
 External configuration is selected by using one of the following
 expressions.
 
-Ivy settings (resolver configuration)
--------------------------------------
+### Ivy settings (resolver configuration)
 
     externalIvySettings()
 
@@ -209,8 +199,7 @@ or
 
     externalIvySettings(baseDirectory(_ / "custom-settings-name.xml"))
 
-Ivy file (dependency configuration)
------------------------------------
+### Ivy file (dependency configuration)
 
     externalIvyFile()
 
@@ -225,8 +214,7 @@ use the 'default' configuration:
 
     classpathConfiguration in Compile := config("default")
 
-Maven pom (dependencies only)
------------------------------
+### Maven pom (dependencies only)
 
     externalPom()
 
@@ -234,8 +222,7 @@ or
 
     externalPom(baseDirectory(_ / "custom-name.xml"))
 
-Full Ivy Example
-----------------
+### Full Ivy Example
 
 For example, a `build.sbt` using external Ivy files might look like:
 
@@ -249,8 +236,7 @@ For example, a `build.sbt` using external Ivy files might look like:
 
     classpathConfiguration in Runtime := Runtime
 
-Known limitations
------------------
+### Known limitations
 
 Maven support is dependent on Ivy's support for Maven POMs. Known issues
 with this support:
@@ -260,16 +246,14 @@ with this support:
 -   Ivy ignores repositories specified in the POM. A workaround is to
     specify repositories inline or in an Ivy ivysettings.xml file.
 
-Configuration dependencies
---------------------------
+### Configuration dependencies
 
 The GSG on multi-project builds doesn't describe delegation among
 configurations. The FAQ entry about porting multi-project build from 0.7
 mentions "configuration dependencies" but there's nothing really to link
 to that explains them.
 
-These should be FAQs (maybe just pointing to topic pages)
----------------------------------------------------------
+### These should be FAQs (maybe just pointing to topic pages)
 
 -   Run your program in its own VM
 -   Run your program with a particular version of Scala

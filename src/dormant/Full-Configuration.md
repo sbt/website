@@ -25,14 +25,13 @@ There is a related page [[Introduction to Full Configurations]] which
 could benefit from cleanup at the same time.
 
 Full Configuration (Draft)
-==========================
+--------------------------
 
 A full configuration consists of one or more Scala source files that
 define concrete Builds. A Build defines project relationships and
 configurations.
 
-By Example
-----------
+### By Example
 
 Create a file with extension `.scala` in your `project/` directory (such
 as `<your-project>/project/Build.scala`).
@@ -55,7 +54,7 @@ A sample `project/Build.scala`:
       lazy val sub2 = Project("sub2", file("b"), delegates = root :: Nil)
     }
 
-### Cycles
+#### Cycles
 
 (It is probably best to skip this section and come back after reading
 about project relationships. It is near the example for easier
@@ -73,8 +72,7 @@ example, there is a *configuration* dependency `sub2 -> root`, a
 `root -> sub1`. This causes cycles at the Scala-level, but not within a
 particular dependency type, which is not allowed.
 
-Defining Projects
------------------
+### Defining Projects
 
 An internal project is defined by constructing an instance of `Project`.
 The minimum information for a new project is its ID string and base
@@ -93,8 +91,7 @@ There are additional optional parameters to the Project constructor.
 These parameters configure the project and declare project
 relationships, as discussed in the next sections.
 
-Project Settings
-----------------
+### Project Settings
 
 A full build definition can configure settings for a project, just like
 a light configuration. Unlike a light configuration, the default
@@ -104,7 +101,7 @@ defined. A full definition needs to import these explicitly. In
 particular, all keys (like `name` and `version`) need to be imported
 from `sbt.Keys`.
 
-### No defaults
+#### No defaults
 
 For example, to define a build from scratch (with no default settings or
 tasks):
@@ -116,7 +113,7 @@ tasks):
       lazy val projectA = Project("a", file("subA"), settings = Seq(name := "From Scratch"))
     }
 
-### Augment Defaults
+#### Augment Defaults
 
 To augment the default settings, the following Project definitions are
 equivalent:
@@ -127,7 +124,7 @@ equivalent:
       settings = Defaults.defaultSettings ++ Seq(name := "Additional", version := "1.0")
     )
 
-### Select Defaults
+#### Select Defaults
 
 Web support is now split out into a plugin. With the plugin declared,
 its settings can be selected like:
@@ -142,7 +139,7 @@ its settings can be selected like:
 Settings defined in `.sbt` files are appended to the settings for each
 `Project` definition.
 
-### Build-level Settings
+#### Build-level Settings
 
 Lastly, settings can be defined for the entire build. In general, these
 are used when a setting is not defined for a project. These settings are
@@ -166,13 +163,12 @@ setting can be defined in `Build.settings`:
       ...
     }
 
-Project Relationships
----------------------
+### Project Relationships
 
 There are three kinds of project relationships in sbt. These are
 described by execution, classpath, and configuration dependencies.
 
-### Project References
+#### Project References
 
 When defining a dependency on another project, you provide a
 `ProjectReference`. In the simplest case, this is a `Project` object.
@@ -211,7 +207,7 @@ When using external projects, the `sbt.boot.directory` should be set
 (see [[Setup|Getting Started Setup]]) so that unnecessary recompilations
 do not occur (see gh-35).
 
-### Execution Dependency
+#### Execution Dependency
 
 If project A has an execution dependency on project B, then when you
 execute a task on project A, it will also be run on project B. No
@@ -264,7 +260,7 @@ aggregates it):
 > set aggregate in clean := Aggregation(Seq(sub1, sub2), transitive = false)
 ```
 
-### Classpath Dependencies
+#### Classpath Dependencies
 
 A classpath dependency declares that a project needs the full classpath
 of another project on its classpath. Typically, this implies that the
@@ -283,7 +279,7 @@ an optional configuration mapping. For example, to use project b's
     lazy val a = Project(...) dependsOn(b % "compile;test->test")
     lazy val b = Project(...)
 
-### Configuration Dependencies
+#### Configuration Dependencies
 
 Suppose project A has a configuration dependency on project B. If a
 setting is not found on project A, it will be looked up in project B.
