@@ -5,6 +5,7 @@ out: Migrating-from-sbt-07x.html
   [Getting-Started]: ../tutorial/index.html
   [Setup]: ../tutorial/Setup.html
   [Basic-Def]: ../tutorial/Basic-Def.html
+  [Basic-Def-Examples]: Basic-Def-Examples.html
 
 Migrating from 0.7 to 0.10+
 ---------------------------
@@ -68,8 +69,8 @@ back to 0.7.x.
 
 Create a `build.sbt` file in the root directory of your project. See
 [.sbt build definition][Basic-Def] in the Getting
-Started Guide, and for simple examples
-`/Examples/Quick-Configuration-Examples`. If you have a simple project
+Started Guide, and for [simple examples][Basic-Def-Examples].
+If you have a simple project
 then converting your existing project file to this format is largely a
 matter of re-writing your dependencies and maven archive declarations in
 a modified yet familiar syntax.

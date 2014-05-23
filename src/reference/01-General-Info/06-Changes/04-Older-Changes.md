@@ -9,6 +9,7 @@ out: Older-Changes.html
   [Resolvers]: Resolvers.html
   [Commands]: Commands.html
   [Plugins]: Plugins.html
+  [Basic-Def-Examples]: Basic-Def-Examples.html
 
 Older Changes
 -------------
@@ -365,7 +366,7 @@ Some of the more visible changes:
 **Major redesign, only prominent changes listed.**
 
 -   Project definitions in Scala 2.8.1
--   New configuration system: `/Examples/Quick-Configuration-Examples/`,
+-   New configuration system: See [.sbt build example][Basic-Def-Examples],
     [.scala build defnition][Full-Def] and [.sbt build definition][Basic-Def].
 -   New task engine: [Tasks][Tasks]
 -   New multiple project support: [.scala build defnition][Full-Def]
