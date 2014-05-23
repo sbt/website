@@ -17,6 +17,9 @@ out: Name-Index.html
   [Cross-Build]: Cross-Build.html
   [Parsing-Input]: Parsing-Input.html
   [Process]: Process.html
+  [Commands]: Commands.html
+  [Input-Tasks]: Input-Tasks.html
+  [Build-State]: Build-State.html
 
 Index
 -----
@@ -106,8 +109,8 @@ an sbt build definition. For command names, see
 -   [Keys](../api/sbt/Keys\$.html) is an object that provides all of
     the built-in keys for settings and tasks.
 -   [State](../api/sbt/State.html) contains the full state for a
-    build. It is mainly used by /Extending/Commands and sometimes
-    /Extending/Input-Tasks. See also /Extending/Build-State.
+    build. It is mainly used by [Commands][Commands] and sometimes
+    [Input Tasks][Input-Tasks]. See also [State and Actions][Build-State].
 
 ### Methods
 
@@ -176,7 +179,9 @@ These methods are used to build up
 [Parser](../api/sbt/complete/Parser.html)s. They closely follow the
 names of the standard library's parser combinators. See
 [Parsing Input][Parsing-Input] for the full documentation. These are
-used for `/Extending/Input-Tasks` and `/Extending/Commands`.
+used for
+[Input Tasks][Input-Tasks] and
+[Commands][Commands].
 
 -   `~`, `~>`, `<~` Sequencing methods.
 -   `??`, `?` Methods for making a Parser optional. `?` is postfix.

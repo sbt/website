@@ -7,6 +7,8 @@ out: Older-Changes.html
   [Tasks]: Tasks.html
   [Artifacts]: Artifacts.html
   [Resolvers]: Resolvers.html
+  [Commands]: Commands.html
+  [Plugins]: Plugins.html
 
 Older Changes
 -------------
@@ -298,8 +300,8 @@ Major Improvements:
 
         addSbtPlugin("group" % "name" % "version")
 
-    in project/plugins.sbt instead of libraryDependencies += ... See
-    /Extending/Plugins for details
+    in project/plugins.sbt instead of `libraryDependencies += ...` See
+    [Plugins][Plugins] for details
 
 Fixes and Improvements:
 
@@ -370,7 +372,7 @@ Some of the more visible changes:
 -   More aggressive incremental recompilation for both Java and Scala
     sources
 -   Merged plugins and processors into improved plugins system:
-    /Extending/Plugins
+    [Plugins][Plugins]
 -   [Web application](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
     and webstart support moved to plugins instead of core features
 -   Fixed all of the issues in (Google Code) issue #44
@@ -380,7 +382,7 @@ Some of the more visible changes:
     retrieving sources and/or javadocs for dependencies, transitively
 -   Improved [artifact handling and configuration][Attifacts]
 -   Tab completion parser combinators for commands and input tasks:
-    /Extending/Commands
+    [Commands][Commands]
 -   No project creation prompts anymore
 -   Moved to GitHub: <http://github.com/harrah/xsbt>
 

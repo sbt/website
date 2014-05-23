@@ -2,12 +2,15 @@
 out: Parsing-Input.html
 ---
 
+  [Commands]: Commands.html
+  [Input-Tasks]: Input-Tasks.html
+
 Parsing and tab completion
 --------------------------
 
 This page describes the parser combinators in sbt. These parser
 combinators are typically used to parse user input and provide tab
-completion for `/Extending/Input-Tasks` and `/Extending/Commands`. If
+completion for [Input Tasks][Input-Tasks] and [Commands][Commands]. If
 you are already familiar with Scala's parser combinators, the methods
 are mostly the same except that their arguments are strict. There are
 two additional methods for controlling tab completion that are discussed

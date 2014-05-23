@@ -2,6 +2,8 @@
 out: Console-Project.html
 ---
 
+  [Build-State]: Build-State.html
+
 Console Project
 ---------------
 
@@ -88,7 +90,7 @@ Show the classpaths used for compilation and testing:
 
 ### State
 
-The current `build State </Extending/Build-State>` is available as
+The current [build State][Build-State] is available as
 `currentState`. The contents of `currentState` are imported by default
 and can be used without qualification.
 

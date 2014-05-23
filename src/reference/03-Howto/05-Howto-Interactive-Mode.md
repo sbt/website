@@ -2,6 +2,8 @@
 out: Howto-Interactive-Mode.html
 ---
 
+  [Build-State]: Build-State.html
+
 Interactive mode
 ----------------
 
@@ -81,7 +83,7 @@ customization.
 
 By default, sbt only displays `>` to prompt for a command. This can be
 changed through the `shellPrompt` setting, which has type
-`State => String`. `State </Extending/Build-State>` contains all state
+`State => String`. [State][Build-State] contains all state
 for sbt and thus provides access to all build information for use in the
 prompt string.
 

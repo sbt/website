@@ -3,6 +3,7 @@ out: Testing.html
 ---
 
   [Running]: ../tutorial/Running.html
+  [Plugins]: Plugins.html
 
 Testing
 -------
@@ -18,7 +19,8 @@ The standard source locations for testing are:
 The resources may be accessed from tests by using the `getResource`
 methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
-The main Scala testing frameworks ([specs2](http://specs2.org/),
+The main Scala testing frameworks (
+[specs2](http://specs2.org/),
 [ScalaCheck](http://scalacheck.org/), and
 [ScalaTest](http://scalatest.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
@@ -411,7 +413,7 @@ interfaces (described below). If you are the author of the testing
 framework, you can depend on the test interface as a provided
 dependency. Alternatively, anyone can provide support for a test
 framework by implementing the interfaces in a separate project and
-packaging the project as an sbt `Plugin </Extending/Plugins>`.
+packaging the project as an sbt [Plugin][Plugins].
 
 #### Custom Test Framework
 

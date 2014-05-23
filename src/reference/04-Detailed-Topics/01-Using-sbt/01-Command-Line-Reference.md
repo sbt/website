@@ -9,6 +9,7 @@ out: Command-Line-Reference.html
   [Running]: ../tutorial/Running.html
   [Inspecting-Settings]: Inspecting-Settings.html
   [Triggered-Execution]: Triggered-Execution.html
+  [Commands]: Commands.html
 
 Command Line Reference
 ----------------------
@@ -24,7 +25,7 @@ detail.
 -   There is a technical distinction in sbt between *tasks*, which are
     "inside" the build definition, and *commands*, which manipulate the
     build definition itself. If you're interested in creating a command,
-    see /Extending/Commands. This specific sbt meaning of "command"
+    see [Commands][Commands]. This specific sbt meaning of "command"
     means there's no good general term for "thing you can type at the
     sbt prompt", which may be a setting, task, or command.
 -   Some tasks produce useful values. The `toString` representation of

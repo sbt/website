@@ -4,6 +4,9 @@ out: Tasks.html
 
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Full-Def]: ../tutorial/Full-Def.html
+  [Input-Tasks]: Input-Tasks.html
+  [Commands]: Commands.html
+  [Parsing-Input]: Parsing-Input.html
 
 Tasks
 -----
@@ -29,10 +32,10 @@ There are several features of the task system:
 
 1.  By integrating with the settings system, tasks can be added,
     removed, and modified as easily and flexibly as settings.
-2.  `Input Tasks </Extending/Input-Tasks>` use
-    `parser combinators <Parsing-Input>` to define the syntax for their
+2.  [Input Tasks][Input-Tasks] use
+    [parser combinators][Parsing-Input] to define the syntax for their
     arguments. This allows flexible syntax and tab-completions in the
-    same way as /Extending/Commands.
+    same way as [Commands][Commands].
 3.  Tasks produce values. Other tasks can access a task's value by
     calling `value` on it within a task definition.
 4.  Dynamically changing the structure of the task graph is possible.

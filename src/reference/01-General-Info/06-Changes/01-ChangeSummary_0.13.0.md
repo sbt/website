@@ -5,6 +5,7 @@ out: ChangeSummary_0.13.0.html
   [multiple-scopes]: Tasks.html#multiple-scopes
   [conflict-management]: Library-Management.html#conflict-management
   [Setup]: ../tutorial/Setup.html
+  [Input-Tasks]: Input-Tasks.html
 
 sbt 0.13.0 Changes
 ------------------
@@ -205,7 +206,7 @@ myInputTask := {
 }
 ```
 
-For details, see `/Extending/Input-Tasks`.
+For details, see [Input Tasks][Input-Tasks].
 
 To expect a task to fail and get the failing exception, use the
 `failure` method instead of `value`. This provides an `Incomplete`
