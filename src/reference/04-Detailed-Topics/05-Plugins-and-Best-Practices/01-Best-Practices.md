@@ -2,6 +2,8 @@
 out: Best-Practices.html
 ---
 
+  [Howto-Generating-Files]: Howto-Generating-Files.html
+
 General Best Practices
 ----------------------
 
@@ -50,7 +52,7 @@ up after a build and provides a single location to organize generated
 files. Any generated files that are specific to a Scala version should
 go in `crossTarget` for efficient cross-building.
 
-For generating sources and resources, see `/Howto/generatefiles`.
+For generating sources and resources, see [Generating Files][Howto-Generating-Files].
 
 ### Don't hard code
 

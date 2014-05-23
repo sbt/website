@@ -3,6 +3,7 @@ out: Howto-Customizing-Paths.html
 ---
 
   [file-filter]: Paths.html#file-filter
+  [Howto-Generating-Files]: Howto-Generating-Files.html
 
 Customizing paths
 -----------------
@@ -107,7 +108,7 @@ unmanagedSourceDirectories in Compile += baseDirectory.value / "extra-src"
 
 > **Note**: This directory should only contain unmanaged sources, which are
 > sources that are manually created and managed. See
-> /Howto/generatefiles for working with automatically generated sources.
+> [Generating Files][Howto-Generating-Files] for working with automatically generated sources.
 
 ### Add an additional resource directory
 
@@ -123,7 +124,7 @@ unmanagedResourceDirectories in Compile += baseDirectory.value / "extra-resource
 
 > **Note**: This directory should only contain unmanaged resources, which are
 > resources that are manually created and managed. See
-> /Howto/generatefiles for working with automatically generated
+> [Generating Files][Howto-Generating-Files] for working with automatically generated
 > resources.
 
 ### Include/exclude files in the source directory
