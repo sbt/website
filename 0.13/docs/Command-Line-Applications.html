@@ -24,9 +24,7 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        <script type="text/javascript" src="js/prettify/prettify.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
-        window.onload=function() { prettyPrint(); };
-      --></script>
+        
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -42,9 +40,9 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Creating+Command+Line+Applications+Using+sbt">Creating Command Line Applications Using sbt<a href="#Creating+Command+Line+Applications+Using+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>There are several components of sbt that may be used to create a command
-line application. The <code>launcher &lt;/Detailed-Topics/Launcher&gt;</code> and the
+line application. The <a href="Sbt-Launcher.html">launcher</a> and the
 <code>command system &lt;Commands&gt;</code> are the two main ones illustrated here.
-</p><p>As described on the <code>launcher page &lt;/Detailed-Topics/Launcher&gt;</code>, a
+</p><p>As described on the <a href="Sbt-Launcher.html">launcher page</a>, a
 launched application implements the xsbti.AppMain interface and defines
 a brief configuration file that users pass to the launcher to run the
 application. To use the command system, an application sets up a
@@ -73,7 +71,7 @@ version := &quot;0.1-SNAPSHOT&quot;
 
 libraryDependencies += &quot;org.scala-sbt&quot; % &quot;command&quot; % &quot;0.12.0&quot;
 </code></pre><h4 id="Application%3A+Main.scala">Application: Main.scala<a href="#Application%3A+Main.scala" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The application itself is defined by implementing
-<code>xsbti.AppMain &lt;../../api/xsbti/AppMain.html&gt;</code>_. The basic steps are
+<a href="../../api/xsbti/AppMain.html">xsbti.AppMain</a>. The basic steps are
 </p><ol><li>Provide command definitions. These are the commands that are
 available for users to run.
 </li><li>Define initial commands. These are the commands that are initially
@@ -124,7 +122,7 @@ final class Main extends xsbti.AppMain
 </code></pre><h4 id="Launcher+configuration+file%3A+hello.build.properties">Launcher configuration file: hello.build.properties<a href="#Launcher+configuration+file%3A+hello.build.properties" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The launcher needs a configuration file in order to retrieve and run an
 application.
 </p><p><code>hello.build.properties</code>
-</p><pre><code class="prettyprint lang-{.sourceCode .ini}">[scala]
+</p><pre><code class="">[scala]
   version: 2.9.1
 
 [app]

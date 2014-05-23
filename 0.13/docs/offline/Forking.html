@@ -97,7 +97,7 @@ only the main or test <code>run</code> tasks or just the <code>test</code> tasks
 </p><h3 id="Configuring+output">Configuring output<a href="#Configuring+output" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, forked output is sent to the Logger, with standard output
 logged at the <code>Info</code> level and standard error at the <code>Error</code> level. This
 can be configured with the <code>outputStrategy</code> setting, which is of type
-<code>OutputStrategy &lt;../../api/sbt/OutputStrategy.html&gt;</code>_.
+<a href="../../api/sbt/OutputStrategy.html">OutputStrategy</a>.
 </p><pre><code>// send output to the build's standard output and error
 outputStrategy := Some(StdoutOutput)
 
@@ -116,15 +116,15 @@ the forked process. To enable this, configure the <code>connectInput</code>
 setting:
 </p><pre><code>connectInput in run := true
 </code></pre><h3 id="Direct+Usage">Direct Usage<a href="#Direct+Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To fork a new Java process, use the
-<code>Fork API &lt;../../api/sbt/Fork$.html&gt;</code>_. The values of interest are
+<a href="../../api/sbt/Fork$.html">Fork API</a>. The values of interest are
 <code>Fork.java</code>, <code>Fork.javac</code>, <code>Fork.scala</code>, and <code>Fork.scalac</code>. These are of
-type <code>Fork &lt;../../api/sbt/Fork.html&gt;</code>_ and provide <code>apply</code> and <code>fork</code>
+type <a href="../../api/sbt/Fork.html">Fork</a> and provide <code>apply</code> and <code>fork</code>
 methods. For example, to fork a new Java process, :
 </p><pre><code>val options = ForkOptions(...)
 val arguments: Seq[String] = ...
 val mainClass: String = ...
 val exitCode: Int = Fork.java(options, mainClass +: arguments)
-</code></pre><p><code>ForkOptions &lt;../../api/sbt/ForkOptions.html&gt;</code>_ defines the Java
+</code></pre><p><a href="../../api/sbt/ForkOptions.html">ForkOptions</a> defines the Java
 installation to use, the working directory, environment variables, and
 more. For example, :
 </p><pre><code>val cwd: File = ...

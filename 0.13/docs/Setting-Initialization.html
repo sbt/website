@@ -50,7 +50,7 @@ value for a particular build key. Sbt converts all registered
 into the a task graph. This task graph is then used to execute your
 build.
 </p><p>All of sbt’s loading semantics are contained within the
-<code>Load.scala &lt;../../sxr/sbt/Load.scala.html&gt;</code> file. It is approximately
+<a href="../../sxr/sbt/Load.scala.html">Load.scala</a> file. It is approximately
 the following:
 </p><p><img src="settings-initialization-load-ordering.png" alt="image"/>
 </p><p>The blue circles represent actions happening when sbt loads a project.
@@ -65,7 +65,7 @@ a.  Load any plugins defined by this project
 a.  Load all defined plugins (<code>project/plugins.sbt</code> and
 </p><pre><code>`project/project/*.scala`)
 </code></pre><p>b. Load/Compile the project (<code>project/*.scala</code>)
-</p></li><li>Load project *.sbt files (<code>build.sbt</code> and friends).
+</p></li><li>Load project <code>*.sbt</code> files (<code>build.sbt</code> and friends).
 </li></ol><p>Each of these loads defines several sequences of settings. The diagram
 shows the two most important:
 </p><ul><li><p><code>buildSettings</code> - These are settings defined to be <code>in ThisBuild</code> or
@@ -85,7 +85,7 @@ specific settings, eg. in <code>project/build.scala</code> :
   val test = project.in(file(&quot;.&quot;)).settings(...)
 }
 </code></pre></li></ul><p>After loading/compiling all the build definitions, sbt has a series of
-Seq[Setting[_]] that it must order. As shown in the diagram, the
+<code>Seq[Setting[_]]</code> that it must order. As shown in the diagram, the
 default inclusion order for sbt is:
 </p><ol><li>All AutoPlugin settings
 </li><li>All settings defined in <code>project/Build.scala</code>

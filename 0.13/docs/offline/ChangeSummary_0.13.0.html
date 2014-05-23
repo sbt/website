@@ -41,7 +41,7 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="sbt+0.13.0+Changes">sbt 0.13.0 Changes<a href="#sbt+0.13.0+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Overview">Overview<a href="#Overview" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29">Features, fixes, changes with compatibility implications (incomplete, please help)<a href="#Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><ul><li>Moved to Scala 2.10 for sbt and build definitions.
+            <h2 id="sbt+0.13.0+Changes">sbt 0.13.0 Changes<a href="#sbt+0.13.0+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Overview">Overview<a href="#Overview" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Features%2C+fixes%2C+changes+with+compatibility+implications">Features, fixes, changes with compatibility implications<a href="#Features%2C+fixes%2C+changes+with+compatibility+implications" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><ul><li>Moved to Scala 2.10 for sbt and build definitions.
 </li><li>Support for plugin configuration in <code>project/plugins/</code> has been
 removed. It was deprecated since 0.11.2.
 </li><li>Dropped support for tab completing the right side of a setting for
@@ -63,7 +63,7 @@ versions and treats Scala dependencies other than scala-library as
 normal dependencies. However, it can result in resolved versions
 other than <code>scalaVersion</code> for those other Scala libraries.
 </li><li>JLine is now configured differently for Cygwin. See
-<code>/Getting-Started/Setup</code>.
+<a href="../tutorial/Setup.html">Installing sbt</a>.
 </li><li>Jline and Ansi codes work better on Windows now. CI servers might
 have to explictly disable Ansi codes via <code>-Dsbt.log.format=false</code>.
 </li><li>JLine now tries to respect <code>~/.inputrc</code>.
@@ -191,7 +191,7 @@ an input task to get the result of user input.
    println(&quot;Arguments:&quot;)
    for(arg &lt;- args) println(&quot;  &quot; + arg)
 }
-</code></pre><p>For details, see <code>/Extending/Input-Tasks</code>.
+</code></pre><p>For details, see <a href="Input-Tasks.html">Input Tasks</a>.
 </p><p>To expect a task to fail and get the failing exception, use the
 <code>failure</code> method instead of <code>value</code>. This provides an <code>Incomplete</code>
 value, which wraps the exception. To get the result of a task whether or
@@ -242,7 +242,7 @@ and in what order.
 </p><p><code>Project.autoSettings</code> accepts a sequence of values of type
 <code>AddSettings</code>. Instances of <code>AddSettings</code> are constructed from methods
 in the <code>AddSettings</code> companion object. The configurable settings are
-per-user settings (from \~/.sbt, for example), settings from .sbt files,
+per-user settings (from <code>~/.sbt</code>, for example), settings from .sbt files,
 and plugin settings (project-level only). The order in which these
 instances are provided to <code>autoSettings</code> determines the order in which
 they are appended to the settings explicitly provided in

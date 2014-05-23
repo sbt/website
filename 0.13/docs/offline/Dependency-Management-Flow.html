@@ -91,12 +91,12 @@ D.  Run <code>clean</code> and then <code>update</code>. If this works, it could
     bug in sbt, but the problem would need to be reproduced in order to
     diagnose and fix it.
 E.  Before deleting all of the Ivy cache, first try deleting files in
-    \~/.ivy2/cache related to problematic dependencies. For example, if
-    there are problems with dependency “org.example” % “demo” % “1.0”,
-    delete \~/.ivy2/cache/org.example/demo/1.0/ and retry update. This
+    <code>~/.ivy2/cache</code> related to problematic dependencies. For example, if
+    there are problems with dependency <code>&quot;org.example&quot; % &quot;demo&quot; % &quot;1.0&quot;</code>,
+    delete <code>~/.ivy2/cache/org.example/demo/1.0/</code> and retry update. This
     avoids needing to redownload all dependencies.
 F.  Normal sbt usage should not require deleting files from
-    \~/.ivy2/cache, especially if the first four steps have been
+    <code>~/.ivy2/cache</code>, especially if the first four steps have been
     followed. If deleting the cache fixes a dependency management issue,
     please try to reproduce the issue and submit a test case.
 </p><h3 id="Plugins">Plugins<a href="#Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>These troubleshooting steps can be run for plugins by changing to the
@@ -106,7 +106,7 @@ the main project. For example:
 &gt; update
 &gt; reload return
 </code></pre><h3 id="Notes">Notes<a href="#Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A.  Configure offline behavior for all projects on a machine by putting
-    offline := true in \~/.sbt/global.sbt. A command that does this for
+    <code>offline := true</code> in <code>~/.sbt/0.13/global.sbt</code>. A command that does this for
     the user would make a nice pull request. Perhaps the setting of
     offline should go into the output of about or should it be a warning
     in the output of update or both?
@@ -116,7 +116,7 @@ B.  The cache improvements in 0.12.1 address issues in the change
     cache can usually be attributed to a bug in that change detection if
     explicitly running update fixes the problem.
 C.  A common solution to dependency management problems in sbt has been
-    to remove \~/.ivy2/cache. Before doing this with 0.12.1, be sure to
+    to remove <code>~/.ivy2/cache</code>. Before doing this with 0.12.1, be sure to
     follow the steps in the troubleshooting section first. In
     particular, verify that a clean and an explicit update do not solve
     the issue.

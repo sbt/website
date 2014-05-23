@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -40,37 +42,36 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Global+Settings">Global Settings<a href="#Global+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Basic+global+configuration+file">Basic global configuration file<a href="#Basic+global+configuration+file" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Settings that should be applied to all projects can go in
-\<code>|globalSbtFile|\</code> (or any file in \<code>|globalBase|\</code> with a <code>.sbt</code>
-extension). Plugins that are defined globally in \<code>|globalPluginsBase|\</code>
+<code>~/.sbt/0.13/global.sbt</code> (or any file in <code>~/.sbt/0.13</code> with a <code>.sbt</code>
+extension). Plugins that are defined globally in <code>~/.sbt/0.13/plugins/</code>
 are available to these settings. For example, to change the default
 <code>shellPrompt</code> for your projects:
-</p><p>\<code>|globalSbtFile|\</code>
-</p><pre><code>shellPrompt := { state =&gt;
- &quot;sbt (%s)&gt; &quot;.format(Project.extract(state).currentProject.id)
+</p><p><code>~/.sbt/0.13/global.sbt</code>
+</p><pre><code class="prettyprint lang-scala">shellPrompt := { state =&gt;
+  &quot;sbt (%s)&gt; &quot;.format(Project.extract(state).currentProject.id)
 }
-</code></pre><h3 id="Global+Settings+using+a+Global+Plugin">Global Settings using a Global Plugin<a href="#Global+Settings+using+a+Global+Plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The \<code>|globalPluginsBase|\</code> directory is a global plugin project. This
+</code></pre><h3 id="Global+Settings+using+a+Global+Plugin">Global Settings using a Global Plugin<a href="#Global+Settings+using+a+Global+Plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The <code>~/.sbt/0.13/plugins/</code> directory is a global plugin project. This
 can be used to provide global commands, plugins, or other code.
-</p><p>To add a plugin globally, create \<code>|globalPluginSbtFile|\</code> containing
+</p><p>To add a plugin globally, create <code>~/.sbt/0.13/plugins/build.sbt</code> containing
 the dependency definitions. For example:
-</p><pre><code>addSbtPlugin(&quot;org.example&quot; % &quot;plugin&quot; % &quot;1.0&quot;)
+</p><pre><code class="prettyprint lang-scala">addSbtPlugin(&quot;org.example&quot; % &quot;plugin&quot; % &quot;1.0&quot;)
 </code></pre><p>To change the default <code>shellPrompt</code> for every project using this
-approach, create a local plugin `|globalShellPromptScala|:
-</p><p>::
-</p><pre><code>import sbt.\_
-import Keys.\_
+approach, create a local plugin <code>~/.sbt/0.13/plugins/ShellPrompt.scala</code>:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
 
 object ShellPrompt extends Plugin {
   override def settings = Seq(
-    shellPrompt := { state =\&gt;
-      &quot;sbt (%s)\&gt; &quot;.format(Project.extract(state).currentProject.id) }
+    shellPrompt := { state =&gt;
+      &quot;sbt (%s)&gt; &quot;.format(Project.extract(state).currentProject.id) }
   )
 }
-</code></pre><p>The :sublit:|globalPluginsBase|\<code> directory is a full project that is
+</code></pre><p>The <code>~/.sbt/0.13/plugins/</code> directory is a full project that is
 included as an external dependency of every plugin project. In practice,
 settings and code defined here effectively work as if they were defined
-in a project's </code>project/<code> directory. This means that
-\</code>|globalPluginsBase|\<code> can be used to try out ideas for plugins such as
-shown in the </code>shellPrompt` example.
+in a project’s <code>project/</code> directory. This means that
+<code>~/.sbt/0.13/plugins/</code> can be used to try out ideas for plugins such as
+shown in the <code>shellPrompt</code> example.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>
                         <span class="arrow">&gt;</span>

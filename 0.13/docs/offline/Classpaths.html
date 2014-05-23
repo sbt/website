@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -46,7 +48,7 @@ classpaths.
 (when declared as a dependency) the Scala compiler. Classpath-related
 settings and tasks typically provide a value of type <code>Classpath</code>. This
 is an alias for <code>Seq[Attributed[File]]</code>.
-<code>Attributed &lt;../../api/sbt/Attributed.html&gt;</code>_ is a type that associates
+<a href="../../api/sbt/Attributed.html">Attributed</a> is a type that associates
 a heterogeneous map with each classpath entry. Currently, this allows
 sbt to associate the <code>Analysis</code> resulting from compilation with the
 corresponding classpath entry and for managed entries, the <code>ModuleID</code>
@@ -75,10 +77,10 @@ retrieved dependencies and compiled classes.
 that actually does the work. So, we are appending a new task to the list
 of main source generators (<code>sourceGenerators in Compile</code>).
 </p><p>To insert a named task, which is the better approach for plugins:
-</p><p>::
-:   val mySourceGenerator = taskKey<a href="...">Seq[File]</a>
-</p><pre><code>mySourceGenerator in Compile :=
-:   generate( (sourceManaged in Compile).value / &quot;some\_directory&quot;)
+</p><pre><code class="prettyprint lang-scala">val mySourceGenerator = taskKey[Seq[File]](...)
+
+mySourceGenerator in Compile :=
+  generate( (sourceManaged in Compile).value / &quot;some_directory&quot;)
 
 sourceGenerators in Compile += (mySourceGenerator in Compile).task
 </code></pre><p>The <code>task</code> method is used to refer to the actual task instead of the
@@ -90,7 +92,7 @@ to <code>src/main/scala</code>. You can exclude source files by name
 (<code>butler.scala</code> in the example below) like:
 </p><pre><code>excludeFilter in unmanagedSources := &quot;butler.scala&quot; 
 </code></pre><p>Read more on
-<code>How to exclude .scala source file in project folder - Google Groups &lt;http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en&gt;</code>_
+<a href="http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en">How to exclude .scala source file in project folder - Google Groups</a>
 </p><h4 id="External+v.+internal">External v. internal<a href="#External+v.+internal" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Classpaths are also divided into internal and external dependencies. The
 internal dependencies are inter-project dependencies. These effectively
 put the outputs of one project on the classpath of another project.
@@ -119,10 +121,10 @@ sbt plugins will have a generated descriptor file here.
 </li><li><code>resourceGenerators</code> These are tasks that generate resource files.
 Typically, these tasks will put resources in the directory provided
 by resourceManaged.
-</li></ul><p>Use the <code>inspect command &lt;/Detailed-Topics/Inspecting-Settings&gt;</code> for
+</li></ul><p>Use the <a href="Inspecting-Settings.html">inspect command</a> for
 more details.
 </p><p>See also a related
-<code>StackOverflow answer &lt;http://stackoverflow.com/a/7862872/850196&gt;</code>_.
+<a href="http://stackoverflow.com/a/7862872/850196">StackOverflow answer</a>.
 </p><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>You have a standalone project which uses a library that loads
 xxx.properties from classpath at run time. You put xxx.properties inside
 directory “config”. When you run “sbt run”, you want the directory to be

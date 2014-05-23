@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -39,7 +41,7 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="Configure+and+use+logging">Configure and use logging<a href="#Configure+and+use+logging" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>When a command is run, more detailed logging output is sent to a file
+            <h2 id="Configure+and+use+logging">Configure and use logging<a href="#Configure+and+use+logging" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><a name="last"></a><h3 id="View+the+logging+output+of+the+previously+executed+command">View the logging output of the previously executed command<a href="#View+the+logging+output+of+the+previously+executed+command" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When a command is run, more detailed logging output is sent to a file
 than to the screen (by default). This output can be recalled for the
 command just executed by running <code>last</code>.
 </p><p>For example, the output of <code>run</code> when the sources are uptodate is:
@@ -111,10 +113,10 @@ individually. For example,
 [debug]     refresh = false
 [debug] resolving dependencies for configuration 'compile'
 ...
-</code></pre><p>The Scala compiler does not print the full details of warnings by
+</code></pre><a name="printwarnings"></a><h3 id="Show+warnings+from+the+previous+compilation">Show warnings from the previous compilation<a href="#Show+warnings+from+the+previous+compilation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The Scala compiler does not print the full details of warnings by
 default. Compiling code that uses the deprecated <code>error</code> method from
 Predef might generate the following output:
-</p><pre><code class="">&gt; compile
+</p><pre><code class="prettyprint lang-scala">&gt; compile
 [info] Compiling 1 Scala source to &lt;...&gt;/classes...
 [warn] there were 1 deprecation warnings; re-run with -deprecation for details
 [warn] one warning found
@@ -123,7 +125,7 @@ the options passed to the compiler (<code>scalacOptions</code>) and recompile. A
 alternative when using Scala 2.10 and later is to run <code>printWarnings</code>.
 This task will display all warnings from the previous compilation. For
 example,
-</p><pre><code class="">&gt; printWarnings
+</p><pre><code class="prettyprint lang-scala">&gt; printWarnings
 [warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead
 [warn]  def x = error(&quot;Failed.&quot;)
 [warn]          ^
@@ -167,8 +169,8 @@ from a previous compilation may be displayed using <code>printWarnings</code> fo
 the main sources or <code>test:printWarnings</code> for test sources. Second,
 output from the previous execution is available either for a single task
 or for in its entirety. See the section on
-<code>printWarnings &lt;#printwarnings&gt;</code>_ and the sections on
-<code>previous output &lt;#last&gt;</code>_.
+<a href="#printwarnings">printWarnings</a> and the sections on
+<a href="#last">previous output</a>.
 </p><p>By default, sbt hides the stack trace of most exceptions thrown during
 execution. It prints a message that indicates how to display the
 exception. However, you may want to show more of stack traces by
@@ -206,7 +208,7 @@ different logging based on the task that requests the logger.
 provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
 </p><p>The special task <code>streams</code> provides per-task logging and I/O via a
-<code>Streams &lt;../../api/#sbt.std.Streams&gt;</code>_ instance. To log, a task uses
+<a href="../../api/#sbt.std.Streams">Streams</a> instance. To log, a task uses
 the <code>log</code> member from the <code>streams</code> task:
 </p><pre><code>myTask := {
    val log = streams.value.log

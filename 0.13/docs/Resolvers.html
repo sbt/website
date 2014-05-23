@@ -59,7 +59,7 @@ in one place:
 </p><pre><code>Resolver.sonatypeRepo(&quot;releases&quot;)  // Or &quot;snapshots&quot;
 </code></pre><h3 id="Custom">Custom<a href="#Custom" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
-<code>patterns &lt;http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns&gt;</code>_
+<a href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns">patterns</a>
 to configure repositories.
 </p><p>Construct a repository definition using the factory in <code>sbt.Resolver</code>
 for the desired type. This factory creates a <code>Repository</code> object that
@@ -68,13 +68,47 @@ documentation for the repository type and the API documentation for the
 factory and repository class. The SSH and SFTP repositories are
 configured identically except for the name of the factory. Use
 <code>Resolver.ssh</code> for SSH and <code>Resolver.sftp</code> for SFTP.
-</p><p>  Type         Factory           Ivy Docs             Factory API            Repository Class API
-  —————— ————————- —————————— ——————————— ———————————————
-  Filesystem   <code>Resolver.file</code>   \<code>\</code>Ivy filesystem   <code>_</code>filesystem factor   y<code>_</code>FileRepository API\<code>\</code>_
-  SFTP         <code>Resolver.sftp</code>   <code>Ivy sftp</code>_         <code>sftp factory</code>_       <code>SftpRepository API</code>_
-  SSH          <code>Resolver.ssh</code>    <code>Ivy ssh</code>_          <code>ssh factory</code>_        <code>SshRepository API</code>_
-  URL          <code>Resolver.url</code>    <code>Ivy url</code>_          <code>url factory</code>_        <code>URLRepository API</code>_
-</p><h4 id="Basic+Examples">Basic Examples<a href="#Basic+Examples" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>These are basic examples that use the default Maven-style repository
+</p><table>
+  <tr>
+    <th>Type</th>
+    <th>Factory</th>
+    <th>Ivy Docs</th>
+    <th>Factory API</th>
+    <th>Repository Class API</th>
+  </tr>
+
+  <tr>
+    <td>Filesystem</td>
+    <td><tt>Resolver.file</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+    <td><a href="../api/sbt/Resolver$$file$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SFTP</td>
+    <td><tt>Resolver.sftp</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SSH</td>
+    <td><tt>Resolver.ssh</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>URL</td>
+    <td><tt>Resolver.url</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+    <td><a href="../api/sbt/Resolver$$url$.html">url factory</a></td>
+    <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
+  </tr>
+</table><h4 id="Basic+Examples">Basic Examples<a href="#Basic+Examples" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>These are basic examples that use the default Maven-style repository
 layout.
 </p><h5 id="Filesystem">Filesystem<a href="#Filesystem" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Define a filesystem repository in the <code>test</code> directory of the current
 working directory and declare that publishing to this repository must be
@@ -119,7 +153,7 @@ different Patterns object to use a different layout. For example:
 </code></pre><p>You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
 be Maven compatible (as defined by Ivy). See the
-<code>patterns API &lt;../../api/sbt/Patterns$.html&gt;</code>_ for the methods to use.
+<a href="../../api/sbt/Patterns$.html">patterns API</a> for the methods to use.
 </p><p>For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty <code>Patterns</code> instance, and
 using <code>ivys</code> and <code>artifacts</code>:

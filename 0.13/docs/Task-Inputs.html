@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -41,8 +43,8 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Tasks%2FSettings%3A+Motivation">Tasks/Settings: Motivation<a href="#Tasks%2FSettings%3A+Motivation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page motivates the task and settings system. You should already
 know how to use tasks and settings, which are described in the
-<code>getting started guide &lt;/Getting-Started/More-About-Settings&gt;</code> and on
-the <code>Tasks</code> page.
+<a href="../tutorial/More-About-Settings.html">getting started guide</a> and on
+the <a href="Tasks.html">Tasks</a> page.
 </p><p>An important aspect of the task system is to combine two common, related
 steps in a build:
 </p><ol><li>Ensure some other task is performed.
@@ -53,12 +55,13 @@ steps in a build:
 </li></ol><p>To see why it is advantageous to combine them, compare the situation to
 that of deferring initialization of a variable in Scala. This Scala code
 is a bad way to expose a value whose initialization is deferred:
-</p><pre><code>// Define a variable that will be initialized at some point
+</p><pre><code class="prettyprint lang-scala">// Define a variable that will be initialized at some point
 // We don't want to do it right away, because it might be expensive
-</code></pre><blockquote><p>var foo: Foo = _
-</p><blockquote><p>// Define a function to initialize the variable
-</p></blockquote><p>def makeFoo(): Unit = … initialize foo …
-</p></blockquote><p>Typical usage would be:
+var foo: Foo = _
+
+// Define a function to initialize the variable
+def makeFoo(): Unit = ... initialize foo ...
+</code></pre><p>Typical usage would be:
 </p><pre><code>makeFoo()
 doSomething( foo )
 </code></pre><p>This example is rather exaggerated in its badness, but I claim it is
@@ -93,7 +96,7 @@ process.
   ... do something with a, b and generate a result ...
 }
 </code></pre><p>(This is only intended to be a discussion of the ideas behind tasks, so
-see the <code>sbt Tasks &lt;/Detailed-Topics/Tasks&gt;</code> page for details on usage.)
+see the <a href="Tasks.html">sbt Tasks</a> page for details on usage.)
 Here, <code>aTask</code> is assumed to produce a result of type <code>A</code> and <code>bTask</code> is
 assumed to produce a result of type <code>B</code>.
 </p><h3 id="Application">Application<a href="#Application" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>As an example, consider generating a zip file containing the binary jar,
@@ -115,7 +118,7 @@ task.
     out
 }
 </code></pre><p>The <code>val inputs</code> line defines how the input files are mapped to paths in
-the zip. See <code>/Detailed-Topics/Mapping-Files</code> for details. The explicit
+the zip. See <a href="Mapping-Files.html">Mapping Files</a> for details. The explicit
 types are not required, but are included for clarity.
 </p><p>The <code>zipPath</code> input would be a custom task to define the location of the
 zip file. For example:

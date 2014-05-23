@@ -40,7 +40,7 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Input+Tasks">Input Tasks<a href="#Input+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Input Tasks parse user input and produce a task to run.
-<code>/Detailed-Topics/Parsing-Input/</code> describes how to use the parser
+<a href="Parsing-Input.html">Parsing Input</a> describes how to use the parser
 combinators that define the input syntax and tab completion. This page
 describes how to hook those parser combinators into the input task
 system.
@@ -52,7 +52,7 @@ method:
 val demo = inputKey[Unit](&quot;A demo input task.&quot;)
 </code></pre><p>The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
-<code>Parser &lt;/Detailed-Topics/Parsing-Input&gt;</code> applied to user input. Just as
+</p><p><a href="Parsing-Input.html">Parser</a> applied to user input. Just as
 the special <code>value</code> method gets the value of a setting or task, the
 special <code>parsed</code> method gets the result of a <code>Parser</code>.
 </p><h3 id="Basic+Input+Task+Definition">Basic Input Task Definition<a href="#Basic+Input+Task+Definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The simplest input task accepts a space-delimited sequence of arguments.
@@ -73,7 +73,7 @@ then echoes the arguments passed to it on their own line.
 </code></pre><h3 id="Input+Task+using+Parsers">Input Task using Parsers<a href="#Input+Task+using+Parsers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The Parser provided by the <code>spaceDelimited</code> method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
 a matter of defining your own <code>Parser</code> as described on the
-<code>/Detailed-Topics/Parsing-Input</code> page.
+<a href="Parsing-Input.html">Parsing Input</a> page.
 </p><h4 id="Constructing+the+Parser">Constructing the Parser<a href="#Constructing+the+Parser" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The first step is to construct the actual <code>Parser</code> by defining a value
 of one of the following types:
 </p><ul><li><code>Parser[I]</code>: a basic parser that does not use any settings
@@ -87,22 +87,24 @@ case, the following defines a contrived <code>Parser</code> that uses the projec
 Scala and sbt version settings as well as the state. To use these
 settings, we need to wrap the Parser construction in <code>Def.setting</code> and
 get the setting values with the special <code>value</code> method:
-</p><pre><code>import complete.DefaultParsers._
-</code></pre><blockquote><p>val parser: Initialize[State =&gt; Parser[(String,String)]] =
-:   Def.setting {
-    :   (state: State) =&gt;
-        :   ( token(“scala” \&lt;\~ Space) \~ token(scalaVersion.value) )
-            | ( token(“sbt” \&lt;\~ Space) \~ token(sbtVersion.value) ) |
-            ( token(“commands” \&lt;\~ Space) \~
-            token(state.remainingCommands.size.toString) )
-</p><pre><code>}
-</code></pre><p>This Parser definition will produce a value of type <code>(String,String)</code>.
+</p><p>```scala
+import complete.DefaultParsers._
+</p><p>val parser: Initialize[State =&gt; Parser[(String,String)]] =
+ Def.setting {
+  (state: State) =&gt;
+    ( token(“scala” &lt;~ Space) ~ token(scalaVersion.value) ) |
+    ( token(“sbt” &lt;~ Space) ~ token(sbtVersion.value) ) |
+    ( token(“commands” &lt;~ Space) ~
+        token(state.remainingCommands.size.toString) )
+ }
+ ```
+</p><p>This Parser definition will produce a value of type <code>(String,String)</code>.
 The input syntax defined isn’t very flexible; it is just a
 demonstration. It will produce one of the following values for a
 successful parse (assuming the current Scala version is |scalaRelease|,
 the current sbt version is |release|, and there are 3 commands left to
 run):
-</p></blockquote><p>Again, we were able to access the current Scala and sbt version for the
+</p><p>Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
 parser.
 </p><h4 id="Constructing+the+Task">Constructing the Task<a href="#Constructing+the+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Next, we construct the actual task to execute from the result of the

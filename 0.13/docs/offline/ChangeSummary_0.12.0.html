@@ -41,7 +41,7 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="sbt+0.12.0+Changes">sbt 0.12.0 Changes<a href="#sbt+0.12.0+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h4 id="Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29">Features, fixes, changes with compatibility implications (incomplete, please help)<a href="#Features%2C+fixes%2C+changes+with+compatibility+implications+%28incomplete%2C+please+help%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><ul><li>The cross versioning convention has changed for Scala versions 2.10
+            <h2 id="sbt+0.12.0+Changes">sbt 0.12.0 Changes<a href="#sbt+0.12.0+Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h4 id="Features%2C+fixes%2C+changes+with+compatibility+implications">Features, fixes, changes with compatibility implications<a href="#Features%2C+fixes%2C+changes+with+compatibility+implications" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><ul><li>The cross versioning convention has changed for Scala versions 2.10
 and later as well as for sbt plugins.
 </li><li>When invoked directly, ‘update’ will always perform an update
 (gh-335)
@@ -59,7 +59,7 @@ details section below)
 org.scala-tools.sbt). This affects users of the scripted plugin in
 particular.
 </li><li><code>artifactName</code> type has changed to
-(ScalaVersion, Artifact, ModuleID) =&gt; String
+<code>(ScalaVersion, Artifact, ModuleID) =&gt; String</code>
 </li><li><code>javacOptions</code> is now a task
 </li><li><code>session save</code> overwrites settings in <code>build.sbt</code> (when
 appropriate). gh-369
@@ -160,7 +160,7 @@ being selected. For example,
 </li></ol></li><li>This change was made possible in part by the change to task axis
 parsing.
 </li></ol><h4 id="Parallel+Execution">Parallel Execution<a href="#Parallel+Execution" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Fine control over parallel execution is supported as described here:
-<code>/Detailed-Topics/Parallel-Execution</code>
+<a href="Parallel-Execution.html">Parallel Execution</a>.
 </p><ol><li>The default behavior should be the same as before, including the
 parallelExecution settings.
 </li><li>The new capabilities of the system should otherwise be considered
@@ -214,10 +214,10 @@ both the full Scala version (such as 2.10.0) as well as the binary
 Scala version (such as 2.10).
 </li><li>The flexible version mapping added by Indrajit has been merged into
 the cross method and the %% variants accepting more than one
-argument have been deprecated. See /Detailed-Topics/Cross-Build for
+argument have been deprecated. See <a href="Cross-Build.html">Cross Build</a> for
 details.
 </li></ol><h4 id="Global+repository+setting">Global repository setting<a href="#Global+repository+setting" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Define the repositories to use by putting a standalone <code>[repositories]</code>
-section (see the <code>/Detailed-Topics/Launcher</code> page) in
+section (see the <a href="Sbt-Launcher.html">sbt Launcher</a> page) in
 <code>~/.sbt/repositories</code> and pass <code>-Dsbt.override.build.repos=true</code> to sbt.
 Only the repositories in that file will be used by the launcher for
 retrieving sbt and Scala and by sbt when retrieving project

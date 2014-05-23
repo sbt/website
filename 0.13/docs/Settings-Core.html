@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -50,7 +52,7 @@ engine provides and what is needed to build something like the sbt
 settings system.
 </p><h3 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Setting+up">Setting up<a href="#Setting+up" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To run this example, first create a new project with the following
 build.sbt file:
-</p><pre><code>libraryDependencies += &quot;org.scala-sbt&quot; %% &quot;collections&quot; % sbtVersion.value
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scala-sbt&quot; %% &quot;collections&quot; % sbtVersion.value
 
 resolvers += sbtResolver.value
 </code></pre><p>Then, put the following examples in source files <code>SettingsExample.scala</code>
@@ -66,42 +68,48 @@ which to look up a value.
 </li></ol><p>There is also a fourth, but its usage is likely to be specific to sbt at
 this time. The example uses a trivial implementation for this part.
 </p><p><code>SettingsExample.scala</code>
-</p><pre><code>import sbt._
-</code></pre><blockquote><p>/<em>* Define our settings system</em>/
-</p><p>// A basic scope indexed by an integer. final case class Scope(index:
-Int)
-</p><p>// Extend the Init trait. // (It is done this way because the Scope
-type parameter is used everywhere in Init. // Lots of type
-constructors would become binary, which as you may know requires lots
-of type lambdas // when you want a type function with only one
-parameter. // That would be a general pain.) object SettingsExample
-extends Init[Scope] { // Provides a way of showing a
-Scope+AttributeKey[_] val showFullKey: Show[ScopedKey[_]] = new
-Show[ScopedKey[_]] { def apply(key: ScopedKey[_]) = key.scope.index
-+ ”/” + key.key.label }
-</p><blockquote><p>// A sample delegation function that delegates to a Scope with a
-lower index. val delegates: Scope =&gt; Seq[Scope] = { case s @
-Scope(index) =&gt; s +: (if(index \&lt;= 0) Nil else
-delegates(Scope(index-1)) ) }
-</p><p>// Not using this feature in this example. val scopeLocal:
-ScopeLocal = _ =&gt; Nil
-</p><p>// These three functions + a scope (here, Scope) are sufficient for
-defining our settings system.
-</p></blockquote><p>}
-</p></blockquote><h4 id="Example+Usage">Example Usage<a href="#Example+Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This part shows how to use the system we just defined. The end result is
+</p><pre><code class="prettyprint lang-scala">  import sbt._
+
+/** Define our settings system */
+
+// A basic scope indexed by an integer.
+final case class Scope(index: Int)
+
+// Extend the Init trait.
+//  (It is done this way because the Scope type parameter is used everywhere in Init.
+//  Lots of type constructors would become binary, which as you may know requires lots of type lambdas
+//  when you want a type function with only one parameter.
+//  That would be a general pain.)
+object SettingsExample extends Init[Scope]
+{
+    // Provides a way of showing a Scope+AttributeKey[_]
+    val showFullKey: Show[ScopedKey[_]] = new Show[ScopedKey[_]] {
+        def apply(key: ScopedKey[_]) = key.scope.index + &quot;/&quot; + key.key.label
+    }
+
+    // A sample delegation function that delegates to a Scope with a lower index.
+    val delegates: Scope =&gt; Seq[Scope] = { case s @ Scope(index) =&gt;
+        s +: (if(index &lt;= 0) Nil else delegates(Scope(index-1)) )
+    }
+
+    // Not using this feature in this example.
+    val scopeLocal: ScopeLocal = _ =&gt; Nil
+
+    // These three functions + a scope (here, Scope) are sufficient for defining our settings system.
+}
+</code></pre><h4 id="Example+Usage">Example Usage<a href="#Example+Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This part shows how to use the system we just defined. The end result is
 a <code>Settings[Scope]</code> value. This type is basically a mapping
 <code>Scope -&gt; AttributeKey[T] -&gt; Option[T]</code>. See the
-<code>Settings API documentation &lt;../../api/sbt/Settings.html&gt;</code>_ for
+<a href="../../api/sbt/Settings.html">Settings API documentation</a> for
 details.
 </p><p><code>SettingsUsage.scala</code>
-</p><pre><code>/** Usage Example **/
+</p><pre><code class="prettyprint lang-scala">/** Usage Example **/
 
    import sbt._
    import SettingsExample._
    import Types._
 
-object SettingsUsage
-{
+object SettingsUsage {
 
       // Define some keys
    val a = AttributeKey[Int](&quot;a&quot;)
@@ -130,6 +138,7 @@ object SettingsUsage
    for(i &lt;- 0 to 5; k &lt;- Seq(a, b)) {
       println( k.label + i + &quot; = &quot; + applied.get( Scope(i), k) )
    }
+}
 </code></pre><p>This produces the following output when run: :
 </p><pre><code>a0 = None
 b0 = None
@@ -157,17 +166,27 @@ equal to 9 as well
 </li></ul><h3 id="sbt+Settings+Discussion">sbt Settings Discussion<a href="#sbt+Settings+Discussion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Scopes">Scopes<a href="#Scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt defines a more complicated scope than the one shown here for the
 standard usage of settings in a build. This scope has four components:
 the project axis, the configuration axis, the task axis, and the extra
-axis. Each component may be <code>Global</code>_ (no specific value), <code>This</code>_
-(current context), or <code>Select</code>_ (containing a specific value). sbt
-resolves <code>This_</code> to either <code>Global</code>_ or <code>Select</code>_ depending on the
-context.
-</p><p>For example, in a project, a <code>This</code>_ project axis becomes a <code>Select</code>_
-referring to the defining project. All other axes that are <code>This</code>_ are
-translated to <code>Global</code>_. Functions like inConfig and inTask transform
-This into a <code>Select</code>_ for a specific value. For example,
+axis. Each component may be 
+<a href="../api/sbt/Global$.html">Global</a> (no specific value),
+<a href="../api/sbt/This$.html">This</a>
+(current context), or
+<a href="../api/sbt/Select.html">Select</a> (containing a specific value). sbt
+resolves <code>This_</code> to either
+<a href="../api/sbt/Global$.html">Global</a> or
+<a href="../api/sbt/Select.html">Select</a>
+depending on the context.
+</p><p>For example, in a project, a
+<a href="../api/sbt/This$.html">This</a> project axis becomes a
+<a href="../api/sbt/Select.html">Select</a> referring to the defining project. All other axes that are
+<a href="../api/sbt/This$.html">This</a> are
+translated to
+<a href="../api/sbt/Global$.html">Global</a>. Functions like inConfig and inTask transform
+This into a
+<a href="../api/sbt/Select.html">Select</a> for a specific value. For example,
 <code>inConfig(Compile)(someSettings)</code> translates the configuration axis for
 all settings in <em>someSettings</em> to be <code>Select(Compile)</code> if the axis value
-is <code>This</code>_.
+is
+<a href="../api/sbt/This$.html">This</a>.
 </p><p>So, from the example and from sbt’s scopes, you can see that the core
 settings engine does not impose much on the structure of a scope. All it
 requires is a delegates function <code>Scope =&gt; Seq[Scope]</code> and a <code>display</code>
@@ -193,7 +212,7 @@ underlying <code>SettingKey[Task[T]]</code> (and they both wrap an underlying
 </p><p>For example, <code>a := 3</code> for a SettingKey <em>a</em> will very roughly translate
 to <code>setting(a, value(3))</code>. For a TaskKey <em>a</em>, it will roughly translate
 to <code>setting(a, value( task { 3 } ) )</code>. See
-<code>main/Structure.scala &lt;../../sxr/sbt/Structure.scala&gt;</code>_ for details.
+<a href="../../sxr/sbt/Structure.scala">main/Structure.scala</a> for details.
 </p><h4 id="Settings+definitions">Settings definitions<a href="#Settings+definitions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt also provides a way to define these settings in a file (build.sbt
 and Build.scala). This is done for build.sbt using basic parsing and
 then passing the resulting chunks of code to <code>compile/Eval.scala</code>. For

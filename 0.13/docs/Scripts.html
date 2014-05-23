@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -47,15 +49,15 @@ the classpath
 </li></ul><p>These entry points should be considered experimental. A notable
 disadvantage of these approaches is the startup time involved.
 </p><h3 id="Setup">Setup<a href="#Setup" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To set up these entry points, you can either use
-<code>conscript &lt;https://github.com/n8han/conscript&gt;</code>_ or manually construct
+<a href="https://github.com/n8han/conscript">conscript</a> or manually construct
 the startup scripts. In addition, there is a
-<code>setup script &lt;https://github.com/paulp/xsbtscript&gt;</code>_ for the script
+<a href="https://github.com/paulp/xsbtscript">setup script</a> for the script
 mode that only requires a JRE installed.
-</p><h4 id="Setup+with+Conscript">Setup with Conscript<a href="#Setup+with+Conscript" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Install <code>conscript &lt;https://github.com/n8han/conscript&gt;</code>_.
+</p><h4 id="Setup+with+Conscript">Setup with Conscript<a href="#Setup+with+Conscript" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Install <a href="https://github.com/n8han/conscript">conscript</a>.
 </p><pre><code class="">cs sbt/sbt --branch 0.12.0
 </code></pre><p>This will create two scripts: <code>screpl</code> and <code>scalas</code>.
 </p><h4 id="Manual+Setup">Manual Setup<a href="#Manual+Setup" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Duplicate your standard <code>sbt</code> script, which was set up according to
-<code>Setup &lt;/Getting-Started/Setup&gt;</code>, as <code>scalas</code> and <code>screpl</code> (or whatever
+<a href="../tutorial/Setup.html">Setup</a>, as <code>scalas</code> and <code>screpl</code> (or whatever
 names you like).
 </p><p><code>scalas</code> is the script runner and should use <code>sbt.ScriptMain</code> as the
 main class, by adding the <code>-Dsbt.main.class=sbt.ScriptMain</code> parameter to
@@ -66,7 +68,7 @@ the <code>java</code> command. Its command line should look like:
 </code></pre><p>In each case, <code>/home/user/.sbt/boot</code> should be replaced with wherever
 you want sbt’s boot directory to be; you might also need to give more
 memory to the JVM via <code>-Xms512M -Xmx1536M</code> or similar options, just like
-shown in <code>Setup &lt;/Getting-Started/Setup&gt;</code>.
+shown in <a href="../tutorial/Setup.html">Setup</a>.
 </p><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="sbt+Script+runner">sbt Script runner<a href="#sbt+Script+runner" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The script runner can run a standard Scala script, but with the
 additional ability to configure sbt. sbt settings may be embedded in the
 script in a comment block that opens with <code>/***</code>.
@@ -77,7 +79,8 @@ compile the script, and run it directly. For example, if you name it
 <code>dispatch_example.scala</code>, you would do on Unix:
 </p><pre><code class="">chmod u+x dispatch_example.scala
 ./dispatch_example.scala
-</code></pre><pre><code>#!/usr/bin/env scalas
+</code></pre><nbsp>
+<pre><code class="prettyprint lang-scala">#!/usr/bin/env scalas
 !#
 
 /***
@@ -116,7 +119,7 @@ or a resolver to use when retrieving dependencies.
 REPL classpath:
 </p><pre><code class="">screpl &quot;sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/&quot; &quot;org.scalaz%%scalaz-core%7.0-SNAPSHOT&quot;
 </code></pre><p>This syntax was a quick hack. Feel free to improve it. The relevant
-class is <code>IvyConsole &lt;../../sxr/sbt/IvyConsole.scala.html&gt;</code>_.
+class is <a href="../../sxr/sbt/IvyConsole.scala.html">IvyConsole</a>.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>
                         <span class="arrow">&gt;</span>

@@ -42,8 +42,8 @@
             <h2 id="Commands">Commands<a href="#Commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="What+is+a+%E2%80%9Ccommand%E2%80%9D%3F">What is a “command”?<a href="#What+is+a+%E2%80%9Ccommand%E2%80%9D%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A “command” looks similar to a task: it’s a named operation that can be
 executed from the sbt console.
 </p><p>However, a command’s implementation takes as its parameter the entire
-state of the build (represented by <code>/Extending/Build-State</code>) and
-computes a new <code>/Extending/Build-State</code>. This means that a command can
+state of the build (represented by <a href="Build-State.html">State</a>) and
+computes a new <a href="Build-State.html">State</a>. This means that a command can
 look at or modify other sbt settings, for example. Typically, you would
 resort to a command when you need to do something that’s impossible in a
 regular task.
@@ -58,9 +58,10 @@ transforms the build <a href="../../api/sbt/State.html">State</a>.
 parser combinators. If you are familiar with the parser combinators in
 Scala’s standard library, these are very similar. The action part is a
 function <code>(State, T) =&gt; State</code>, where <code>T</code> is the data structure produced
-by the parser. See the <code>/Detailed-Topics/Parsing-Input</code> page for how to
+by the parser. See the
+<a href="Parsing-Input.html">Parsing Input</a> page for how to
 use the parser combinators.
-</p><p><code>State &lt;../../api/sbt/State.html&gt;</code>_ provides access to the build state,
+</p><p><a href="../../api/sbt/State.html">State</a> provides access to the build state,
 such as all registered <code>Command</code>s, the remaining commands to execute,
 and all project-related information. See <code>Build-State</code> for details on
 State.
@@ -72,7 +73,7 @@ simply <code>Parser[T]</code> is that often the current <code>State</code> is us
 the parser. For example, the currently loaded projects (provided by
 <code>State</code>) determine valid completions for the <code>project</code> command. Examples
 for the general and specific cases are shown in the following sections.
-</p><p>See <code>Command.scala &lt;../../sxr/sbt/Command.scala.html&gt;</code>_ for the source
+</p><p>See <a href="../../sxr/sbt/Command.scala.html">Command.scala</a> for the source
 API details for constructing commands.
 </p><h4 id="General+commands">General commands<a href="#General+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>General command construction looks like:
 </p><pre><code>val action: (State, T) =&gt; State = ...

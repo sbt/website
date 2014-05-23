@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -41,15 +43,15 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Paths">Paths<a href="#Paths" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes files, sequences of files, and file filters. The
 base type used is
-<code>java.io.File &lt;http://download.oracle.com/javase/6/docs/api/java/io/File.html&gt;</code>_,
+<a href="http://download.oracle.com/javase/6/docs/api/java/io/File.html">java.io.File</a>,
 but several methods are augmented through implicits:
-</p><ul><li><code>RichFile &lt;../../api/sbt/RichFile.html&gt;</code>_ adds methods to File
-</li><li><code>PathFinder &lt;../../api/sbt/PathFinder.html&gt;</code>_ adds methods to File
+</p><ul><li><a href="../../api/sbt/RichFile.html">RichFile</a> adds methods to File
+</li><li><a href="../../api/sbt/PathFinder.html">PathFinder</a> adds methods to File
 and Seq[File]
-</li><li><code>Path &lt;../../api/sbt/Path$.html&gt;</code>_ and <a href="../../api/sbt/IO$.html">IO</a>
+</li><li><a href="../../api/sbt/Path$.html">Path</a> and <a href="../../api/sbt/IO$.html">IO</a>
 provide general methods related to files and I/O.
 </li></ul><h3 id="Constructing+a+File">Constructing a File<a href="#Constructing+a+File" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt 0.10+ uses
-<code>java.io.File &lt;http://download.oracle.com/javase/6/docs/api/java/io/File.html&gt;</code>_
+<a href="http://download.oracle.com/javase/6/docs/api/java/io/File.html">java.io.File</a>
 to represent a file instead of the custom <code>sbt.Path</code> class that was in
 sbt 0.7 and earlier. sbt defines the alias <code>File</code> for <code>java.io.File</code> so
 that an extra import is not necessary. The <code>file</code> method is an alias for
@@ -125,14 +127,12 @@ removes all files returned by the second selector from the sequence of
 files returned by the first selector.
 </p><h4 id="Filtering">Filtering<a href="#Filtering" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There is a <code>filter</code> method that accepts a predicate of type
 <code>File =&gt; Boolean</code> and is non-strict:
-</p><pre><code>// selects all directories under &quot;src&quot;
-</code></pre><blockquote><p>def srcDirs(base: File) = ( (base / “src”) <em>* “</em>“) filter {
-_.isDirectory }
-</p><blockquote><p>// selects archives (.zip or .jar) that are selected by
-‘somePathFinder’
-</p></blockquote><p>def archivesOnly(base: PathFinder) = base filter
-ClasspathUtilities.isArchive
-</p></blockquote><h4 id="Empty+PathFinder">Empty PathFinder<a href="#Empty+PathFinder" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>PathFinder.empty</code> is a <code>PathFinder</code> that returns the empty sequence
+</p><pre><code class="prettyprint lang-scala">// selects all directories under &quot;src&quot;
+def srcDirs(base: File) = ( (base / &quot;src&quot;) ** &quot;*&quot;) filter { _.isDirectory }
+
+// selects archives (.zip or .jar) that are selected by 'somePathFinder'
+def archivesOnly(base: PathFinder) = base filter ClasspathUtilities.isArchive
+</code></pre><h4 id="Empty+PathFinder">Empty PathFinder<a href="#Empty+PathFinder" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>PathFinder.empty</code> is a <code>PathFinder</code> that returns the empty sequence
 when <code>get</code> is called:
 </p><pre><code>assert( PathFinder.empty.get == Seq[File]() )
 </code></pre><h4 id="PathFinder+to+String+conversions">PathFinder to String conversions<a href="#PathFinder+to+String+conversions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Convert a <code>PathFinder</code> to a String using one of the following methods:
@@ -149,7 +149,7 @@ mappings from the input file to its (String) path in the jar or its
 (using the <code>##</code> method) from earlier versions of sbt.
 </p><p>Mappings are discussed in detail on the <code>Mapping-Files</code> page.
 </p><h3 id="File+Filters">File Filters<a href="#File+Filters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The argument to <code>*</code> and <code>**</code> is of type
-<code>java.io.FileFilter &lt;http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html&gt;</code>_.
+<a href="http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html">java.io.FileFilter</a>.
 sbt provides combinators for constructing <code>FileFilter</code>s.
 </p><p>First, a String may be implicitly converted to a <code>FileFilter</code>. The
 resulting filter selects files with a name matching the string, with a

@@ -24,9 +24,7 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        <script type="text/javascript" src="js/prettify/prettify.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
-        window.onload=function() { prettyPrint(); };
-      --></script>
+        
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -42,7 +40,7 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Library+Management">Library Management<a href="#Library+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>There’s now a
-<code>getting started page &lt;/Getting-Started/Library-Dependencies&gt;</code> about
+<a href="../tutorial/Library-Dependencies.html">getting started page</a> about
 library management, which you may want to read first.
 </p><p><em>Documentation Maintenance Note:</em> it would be nice to remove the overlap
 between this page and the getting started page, leaving this page with
@@ -50,9 +48,10 @@ the more advanced topics such as checksums and external Ivy files.
 </p><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
 the two approaches. All configurations shown here are settings that go
-either directly in a <code>.sbt file &lt;/Getting-Started/Basic-Def&gt;</code> or are
+either directly in a
+<a href="../tutorial/Basic-Def.html">.sbt file</a> or are
 appended to the <code>settings</code> of a Project in a
-<code>.scala file &lt;/Getting-Started/Full-Def&gt;</code>.
+<a href="../tutorial/Full-Def.html">.scala file</a>.
 </p><h3 id="Manual+Dependency+Management">Manual Dependency Management<a href="#Manual+Dependency+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Manually managing dependencies involves copying any jars that you want
 to use to the <code>lib</code> directory. sbt will put these jars on the classpath
 during compilation, testing, running, and when using the interpreter.
@@ -83,7 +82,7 @@ dependencies:
 </p><ul><li>Declarations in your project definition
 </li><li>Maven POM files (dependency definitions only: no repositories)
 </li><li>Ivy configuration and settings files
-</li></ul><p>sbt uses <code>Apache Ivy &lt;http://ant.apache.org/ivy/&gt;</code>_ to implement
+</li></ul><p>sbt uses <a href="http://ant.apache.org/ivy/">Apache Ivy</a> to implement
 dependency management in all three cases. The default is to use inline
 declarations, but external configuration can be explicitly selected. The
 following sections describe how to use each method of automatic
@@ -111,7 +110,7 @@ the version of Scala you are using. See <code>Cross-Build</code> for details.
 </p><p>Ivy can select the latest revision of a module according to constraints
 you specify. Instead of a fixed revision like <code>&quot;1.6.1&quot;</code>, you specify
 <code>&quot;latest.integration&quot;</code>, <code>&quot;2.9.+&quot;</code>, or <code>&quot;[1.0,)&quot;</code>. See the
-<code>Ivy revisions &lt;http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision&gt;</code>_
+<a href="http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision">Ivy revisions</a>
 documentation for details.
 </p><h5 id="Resolvers">Resolvers<a href="#Resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>sbt uses the standard Maven2 repository by default.
 </p><p>Declare additional repositories with the form:
@@ -148,7 +147,7 @@ definitions.
 </li></ol><p>The repositories used by the launcher can be overridden by defining
 <code>~/.sbt/repositories</code>, which must contain a <code>[repositories]</code> section
 with the same format as the <code>Launcher</code> configuration file. For example:
-</p><pre><code class="prettyprint lang-{.sourceCode .ini}">[repositories]
+</p><pre><code class="">[repositories]
 local
 my-maven-repo: http://example.org/repo
 my-ivy-repo: http://example.org/ivy-repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
@@ -196,7 +195,7 @@ to be generated. For example,
     ExclusionRule(organization = &quot;com.sun.jmx&quot;),
     ExclusionRule(organization = &quot;javax.jms&quot;)
   )
-</code></pre><p>See <code>ModuleID &lt;../../api/sbt/ModuleID.html&gt;</code>_ for API details.
+</code></pre><p>See <a href="../../api/sbt/ModuleID.html">ModuleID</a> for API details.
 </p><h5 id="Download+Sources">Download Sources<a href="#Download+Sources" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Downloading source and API documentation jars is usually handled by an
 IDE plugin. These plugins use the <code>updateClassifiers</code> and
 <code>updateSbtClassifiers</code> tasks, which produce an <code>Update-Report</code>
@@ -208,7 +207,7 @@ add <code>withJavadoc()</code>. For example:
   &quot;org.apache.felix&quot; % &quot;org.apache.felix.framework&quot; % &quot;1.8.0&quot; withSources() withJavadoc()
 </code></pre><p>Note that this is not transitive. Use the <code>update-*classifiers</code> tasks
 for that.
-</p><h5 id="Extra+Attributes">Extra Attributes<a href="#Extra+Attributes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>Extra attributes &lt;http://ant.apache.org/ivy/history/2.3.0/concept.html#extra&gt;</code>_
+</p><h5 id="Extra+Attributes">Extra Attributes<a href="#Extra+Attributes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><a href="http://ant.apache.org/ivy/history/2.3.0/concept.html#extra">Extra attributes</a>
 can be specified by passing key/value pairs to the <code>extra</code> method.
 </p><p>To select dependencies by extra attributes:
 </p><pre><code>libraryDependencies += &quot;org&quot; % &quot;name&quot; % &quot;rev&quot; extra(&quot;color&quot; -&gt; &quot;blue&quot;)
@@ -231,11 +230,11 @@ this with inline Scala dependency and repository declarations.
 <code>${user.home}/.ivy2/</code>. This can be configured machine-wide, for use by
 both the sbt launcher and by projects, by setting the system property
 <code>sbt.ivy.home</code> in the sbt startup script (described in
-<code>Setup &lt;/Getting-Started/Setup&gt;</code>).
+<a href="../tutorial/Setup.html">Setup</a>).
 </p><p>For example:
 </p><pre><code class="">java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 </code></pre><h5 id="Checksums">Checksums<a href="#Checksums" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>sbt
-(<code>through Ivy &lt;http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum&gt;</code>_)
+(<a href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum">through Ivy</a>)
 verifies the checksums of downloaded files by default. It also publishes
 checksums of artifacts by default. The checksums to use are specified by
 the <em>checksums</em> setting.
@@ -250,9 +249,9 @@ checksums in publish := Nil
 </code></pre><a name="conflict-management"></a><h5 id="Conflict+Management">Conflict Management<a href="#Conflict+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting <code>conflictManager</code>,
-which has type <code>ConflictManager &lt;../../api/sbt/ConflictManager.html&gt;</code>_.
+which has type <a href="../../api/sbt/ConflictManager.html">ConflictManager</a>.
 See the
-<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html&gt;</code>_
+<a href="http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html">Ivy documentation</a>
 for details on the different conflict managers. For example, to specify
 that no conflicts are allowed,
 </p><pre><code>conflictManager := ConflictManager.strict
@@ -326,12 +325,12 @@ published pom.xml.
 </p><h5 id="Configurations">Configurations<a href="#Configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Ivy configurations are a useful feature for your build when you need
 custom groups of dependencies, such as for a plugin. Ivy configurations
 are essentially named sets of dependencies. You can read the
-<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html&gt;</code>_
+<a href="http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html">Ivy documentation</a>
 for details.
 </p><p>The built-in use of configurations in sbt is similar to scopes in Maven.
 sbt adds dependencies to different classpaths by the configuration that
 they are defined in. See the description of
-<code>Maven Scopes &lt;http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope&gt;</code>_
+<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">Maven Scopes</a>
 for details.
 </p><p>You put a dependency in a configuration by selecting one or more of its
 configurations to map to one or more of your project’s configurations.
@@ -342,7 +341,7 @@ your dependency definition:
 </p><pre><code>libraryDependencies += &quot;org.scalatest&quot; %% &quot;scalatest&quot; % &quot;2.1.3&quot; % &quot;test-&gt;compile&quot;
 </code></pre><p>This says that your project’s <code>&quot;test&quot;</code> configuration uses <code>ScalaTest</code>’s
 <code>&quot;compile&quot;</code> configuration. See the
-<code>Ivy documentation &lt;http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html&gt;</code>_
+<a href="http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html">Ivy documentation</a>
 for more advanced mappings. Most projects published to Maven
 repositories will use the <code>&quot;compile&quot;</code> configuration.
 </p><p>A useful application of configurations is to group dependencies that are
@@ -356,7 +355,7 @@ libraryDependencies += &quot;jquery&quot; % &quot;jquery&quot; % &quot;1.3.2&quo
 resources ++= update.value.select(configurationFilter(&quot;js&quot;))
 </code></pre><p>The <code>config</code> method defines a new configuration with name <code>&quot;js&quot;</code> and
 makes it private to the project so that it is not used for publishing.
-See <code>/Detailed-Topics/Update-Report</code> for more information on selecting
+See <a href="Update-Report.html">Update Report</a> for more information on selecting
 managed artifacts.
 </p><p>A configuration without a mapping (no <code>&quot;-&gt;&quot;</code>) is mapped to <code>&quot;default&quot;</code>
 or <code>&quot;compile&quot;</code>. The <code>-&gt;</code> is only needed when mapping to a different

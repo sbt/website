@@ -148,21 +148,21 @@ class Main extends xsbti.AppMain
 </code></pre><p>Next, define a configuration file for the launcher. For the above class,
 it might look like:
 </p><p>Then, <code>publishLocal</code> or <code>+publishLocal</code> the application to make it
-available. For more information, please see
-<code>Launcher Configuration &lt;/Detailed-Topics/Launcher/Configuration&gt;</code>
+available. For more information, see
+<a href="Launcher-Configuration.html">Launcher Configuration</a>.
 </p><h4 id="Running+an+Application">Running an Application<a href="#Running+an+Application" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As mentioned above, there are a few options to actually run the
 application. The first involves providing a modified jar for download.
 The second two require providing a configuration file for download.
-</p><ul><li>Replace the /sbt/sbt.boot.properties file in the launcher jar and
+</p><ul><li>Replace the <code>/sbt/sbt.boot.properties</code> file in the launcher jar and
 distribute the modified jar. The user would need a script to run
-java -jar your-launcher.jar arg1 arg2 ….
+<code>java -jar your-launcher.jar arg1 arg2 ....</code>
 </li><li><p>The user downloads the launcher jar and you provide the
 configuration file.
 </p><ul><li>The user needs to run
-java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar.
+<code>java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar</code>.
 </li><li>The user already has a script to run the launcher (call it
 ‘launch’). The user needs to run
-launch @your.boot.properties your-arg-1 your-arg-2
+<code>launch @your.boot.properties your-arg-1 your-arg-2</code>
 </li></ul></li></ul><h4 id="Execution">Execution<a href="#Execution" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Let’s review what’s happening when the launcher starts your application.
 </p><p>On startup, the launcher searches for its configuration and then parses
 it. Once the final configuration is resolved, the launcher proceeds to

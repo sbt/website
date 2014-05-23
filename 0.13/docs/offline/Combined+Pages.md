@@ -1,13 +1,14 @@
 
   [Getting-Started]: ../tutorial/index.html
-  [Name-Index]: Name-Index.html
+  [Setup]: ../tutorial/Setup.html
   [Basic-Def]: ../tutorial/Basic-Def.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Multi-Project]: ../tutorial/Multi-Project.html  
+  [Name-Index]: Name-Index.html
   [Triggered-Execution]: Triggered-Execution.html
   [Java-Sources]: Java-Sources.html
   [Testing]: Testing.html
-  [Multi-Project]: ../tutorial/Multi-Project.html
   [Parallel-Execution]: Parallel-Execution.html
-  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
 
 sbt Reference Manual
 ====================
@@ -18,7 +19,7 @@ later.
 
 ### Install
 
-See [Installing sbt](../tutorial/Setup.html) for the setup instructions.
+See [Installing sbt][Setup] for the setup instructions.
 
 ### Getting Started
 
@@ -788,7 +789,7 @@ Sonatype's staging process.
 ### Fourth - Adding credentials
 
 The credentials for your Sonatype OSSRH account need to be added
-somewhere. Common convention is a \`|globalBase|/sonatype.sbt\` file
+somewhere. Common convention is a `~/.sbt/0.13/sonatype.sbt` file
 with the following:
 
 ```scala
@@ -1040,7 +1041,7 @@ Changes
 -   Docs: link to page source now at the bottom of the page
 -   Docs: sitemap now automatically generated
 -   Docs: custom
-    `role enables links from a key name in the docs to the val in`sxr/sbt/Keys.scala`
+    role enables links from a key name in the docs to the val in [Keys](../sxr/sbt/Keys.scala)
 -   Docs: restore sxr support and fix links to sxr'd sources. (gh-863)
 
 ### 0.12.4 to 0.13.0
@@ -1052,13 +1053,15 @@ The changes for 0.13.0 are listed on a separate page. See
 
   [multiple-scopes]: Tasks.html#multiple-scopes
   [conflict-management]: Library-Management.html#conflict-management
+  [Setup]: ../tutorial/Setup.html
+  [Input-Tasks]: Input-Tasks.html
 
 sbt 0.13.0 Changes
 ------------------
 
 ### Overview
 
-#### Features, fixes, changes with compatibility implications (incomplete, please help)
+#### Features, fixes, changes with compatibility implications
 
 -   Moved to Scala 2.10 for sbt and build definitions.
 -   Support for plugin configuration in `project/plugins/` has been
@@ -1082,7 +1085,7 @@ sbt 0.13.0 Changes
     normal dependencies. However, it can result in resolved versions
     other than `scalaVersion` for those other Scala libraries.
 -   JLine is now configured differently for Cygwin. See
-    `/Getting-Started/Setup`.
+    [Installing sbt][Setup].
 -   Jline and Ansi codes work better on Windows now. CI servers might
     have to explictly disable Ansi codes via `-Dsbt.log.format=false`.
 -   JLine now tries to respect `~/.inputrc`.
@@ -1252,7 +1255,7 @@ myInputTask := {
 }
 ```
 
-For details, see `/Extending/Input-Tasks`.
+For details, see [Input Tasks][Input-Tasks].
 
 To expect a task to fail and get the failing exception, use the
 `failure` method instead of `value`. This provides an `Incomplete`
@@ -1326,7 +1329,7 @@ and in what order.
 `Project.autoSettings` accepts a sequence of values of type
 `AddSettings`. Instances of `AddSettings` are constructed from methods
 in the `AddSettings` companion object. The configurable settings are
-per-user settings (from \~/.sbt, for example), settings from .sbt files,
+per-user settings (from `~/.sbt`, for example), settings from .sbt files,
 and plugin settings (project-level only). The order in which these
 instances are provided to `autoSettings` determines the order in which
 they are appended to the settings explicitly provided in
@@ -1403,10 +1406,14 @@ the following:
 The [Configuring Scala](Configuring-Scala.html) page provides full details.
 
 
+  [Cross-Build]: Cross-Build.html
+  [Parallel-Execution]: Parallel-Execution.html
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 sbt 0.12.0 Changes
 ------------------
 
-#### Features, fixes, changes with compatibility implications (incomplete, please help)
+#### Features, fixes, changes with compatibility implications
 
 -   The cross versioning convention has changed for Scala versions 2.10
     and later as well as for sbt plugins.
@@ -1426,7 +1433,7 @@ sbt 0.12.0 Changes
     org.scala-tools.sbt). This affects users of the scripted plugin in
     particular.
 -   `artifactName` type has changed to
-    (ScalaVersion, Artifact, ModuleID) =\> String
+    `(ScalaVersion, Artifact, ModuleID) => String`
 -   `javacOptions` is now a task
 -   `session save` overwrites settings in `build.sbt` (when
     appropriate). gh-369
@@ -1556,7 +1563,7 @@ that has been previously discussed on the mailing list.
 #### Parallel Execution
 
 Fine control over parallel execution is supported as described here:
-`/Detailed-Topics/Parallel-Execution`
+[Parallel Execution][Parallel-Execution].
 
 1.  The default behavior should be the same as before, including the
     parallelExecution settings.
@@ -1621,13 +1628,13 @@ releases for both Scala and sbt.
     Scala version (such as 2.10).
 6.  The flexible version mapping added by Indrajit has been merged into
     the cross method and the %% variants accepting more than one
-    argument have been deprecated. See /Detailed-Topics/Cross-Build for
+    argument have been deprecated. See [Cross Build][Cross-Build] for
     details.
 
 #### Global repository setting
 
 Define the repositories to use by putting a standalone `[repositories]`
-section (see the `/Detailed-Topics/Launcher` page) in
+section (see the [sbt Launcher][Sbt-Launcher] page) in
 `~/.sbt/repositories` and pass `-Dsbt.override.build.repos=true` to sbt.
 Only the repositories in that file will be used by the launcher for
 retrieving sbt and Scala and by sbt when retrieving project
@@ -1672,6 +1679,15 @@ autoScalaLibrary := false
 libraryDependencies += "org.scala-lang" % "scala-library" % "2.9.2" % "provided"
 ```
 
+
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Tasks]: Tasks.html
+  [Artifacts]: Artifacts.html
+  [Resolvers]: Resolvers.html
+  [Commands]: Commands.html
+  [Plugins]: Plugins.html
+  [Basic-Def-Examples]: Basic-Def-Examples.html
 
 Older Changes
 -------------
@@ -1797,7 +1813,7 @@ Dependency management fixes:
 > -   The resolution cache contains the generated ivy files, properties,
 >     and resolve reports for the project.
 > -   There will no longer be individual files directly in
->     \~/.ivy2/cache/
+>     `~/.ivy2/cache/`
 > -   Resolve reports are now in target/resolution-cache/reports/,
 >     viewable with a browser.
 > -   Cache location includes extra attributes so that cross builds of a
@@ -1963,8 +1979,8 @@ Major Improvements:
 
         addSbtPlugin("group" % "name" % "version")
 
-    in project/plugins.sbt instead of libraryDependencies += ... See
-    /Extending/Plugins for details
+    in project/plugins.sbt instead of `libraryDependencies += ...` See
+    [Plugins][Plugins] for details
 
 Fixes and Improvements:
 
@@ -2010,9 +2026,9 @@ Some of the more visible changes:
 -   Warn when reload discards session settings
 -   Cache failing classifiers, making 'update-classifiers' a practical
     replacement for withSources()
--   Global settings may be provided in \~/.sbt/build.sbt gh-52
--   No need to define "sbtPlugin := true" in project/plugins/ or
-    \~/.sbt/plugins/
+-   Global settings may be provided in `~/.sbt/build.sbt` gh-52
+-   No need to define `"sbtPlugin := true"` in `project/plugins/` or
+    `~/.sbt/plugins/`
 -   Provide statistics and list of evicted modules in UpdateReport
 -   Scope use of 'transitive-classifiers' by 'update-sbt-classifiers'
     and 'update-classifiers' for separate configuration.
@@ -2028,32 +2044,31 @@ Some of the more visible changes:
 **Major redesign, only prominent changes listed.**
 
 -   Project definitions in Scala 2.8.1
--   New configuration system: `/Examples/Quick-Configuration-Examples/`,
-    /Getting-Started/Full-Def, and /Getting-Started/Basic-Def/
--   New task engine: `/Detailed-Topics/Tasks`
--   New multiple project support: `/Getting-Started/Full-Def`
+-   New configuration system: See [.sbt build example][Basic-Def-Examples],
+    [.scala build defnition][Full-Def] and [.sbt build definition][Basic-Def].
+-   New task engine: [Tasks][Tasks]
+-   New multiple project support: [.scala build defnition][Full-Def]
 -   More aggressive incremental recompilation for both Java and Scala
     sources
 -   Merged plugins and processors into improved plugins system:
-    /Extending/Plugins
--   `Web application <https://github.com/JamesEarlDouglas/xsbt-web-plugin>`\_
+    [Plugins][Plugins]
+-   [Web application](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
     and webstart support moved to plugins instead of core features
--   Fixed all of the issues in (Google Code) issue \#44
+-   Fixed all of the issues in (Google Code) issue #44
 -   Managed dependencies automatically updated when configuration
     changes
 -   `update-sbt-classifiers` and `update-classifiers` tasks for
     retrieving sources and/or javadocs for dependencies, transitively
--   Improved artifact handling and configuration
-    `/Detailed-Topics/Artifacts`
+-   Improved [artifact handling and configuration][Attifacts]
 -   Tab completion parser combinators for commands and input tasks:
-    /Extending/Commands
+    [Commands][Commands]
 -   No project creation prompts anymore
 -   Moved to GitHub: <http://github.com/harrah/xsbt>
 
 ### 0.7.5 to 0.7.7
 
 -   Workaround for Scala issue
-    [\#4426](http://lampsvn.epfl.ch/trac/scala/ticket/4426)
+    [#4426](http://lampsvn.epfl.ch/trac/scala/ticket/4426)
 -   Fix issue 156
 
 ### 0.7.4 to 0.7.5
@@ -2067,11 +2082,11 @@ Some of the more visible changes:
     classpath of dependent projects.
 -   Scala 2.8.1 is the default version used when starting a new project.
 -   Updated to
-    `Ivy 2.2.0 <http://ant.apache.org/ivy/history/2.2.0/release-notes.html>`\_.
+    [Ivy 2.2.0](http://ant.apache.org/ivy/history/2.2.0/release-notes.html).
 -   Trond's patches that allow configuring
     [jetty-env.xml](http://github.com/sbt/sbt/commit/5e41a47f50e6) and
     [webdefault.xml](http://github.com/sbt/sbt/commit/030e2ee91bac0)
--   Doug's `patch <http://github.com/sbt/sbt/commit/aa75ecf7055db>`\_ to
+-   Doug's [patch](http://github.com/sbt/sbt/commit/aa75ecf7055db) to
     make 'projects' command show an asterisk next to current project
 -   Fixed issue 122
 -   Implemented issue 118
@@ -2102,7 +2117,7 @@ Some of the more visible changes:
     defaults to compileOptions.
 -   Properly support sftp/ssh repositories using key-based
     authentication. See the updated section of the
-    /Detailed-Topics/Resolvers page.
+    [Resolvers][Resolvers] page.
 -   `def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet`.
     Default is DownloadOnly. Full will log metadata resolution and
     provide a final summary.
@@ -2175,7 +2190,10 @@ Some of the more visible changes:
     Paths selected by this PathFinder will not be pruned by
     prepare-webapp and will not be packaged by package. For example, to
     exclude the GAE datastore directory:
-    scala   override def webappUnmanaged =     (temporaryWarPath / "WEB-INF" / "appengine-generated" \*\*\*)
+
+    ```scala
+    override def webappUnmanaged =     (temporaryWarPath / "WEB-INF" / "appengine-generated" ***)
+    ```
 -   Added some String generation methods to `PathFinder`: `toString` for
     debugging and absString and relativeString for joining the absolute
     (relative) paths by the platform separator.
@@ -2205,7 +2223,7 @@ Some of the more visible changes:
     run commands and then enter interactive prompt, make the last
     command 'shell'.
 -   Properly track certain types of synthetic classes, such as for
-    comprehension with \>30 clauses, during compilation.
+    comprehension with >30 clauses, during compilation.
 -   Jetty 7 support
 -   Allow launcher in the project root directory or the `lib` directory.
     The jar name must have the form 'sbt-launch.jar' in order to be
@@ -2219,13 +2237,12 @@ Some of the more visible changes:
 -   New action 'clean-plugins' task that clears built plugins (useful
     for plugin development).
 -   Can provide commands from a file with new command: `<filename`
--   Can provide commands over loopback interface with new command:
-    \<port
+-   Can provide commands over loopback interface with new command: `<port`
 -   Scala version handling has been completely redone.
 -   The version of Scala used to run sbt (currently 2.7.7) is decoupled
     from the version used to build the project.
 -   Changing between Scala versions on the fly is done with the command:
-    ++\<version\>
+    `++<version>`
 -   Cross-building is quicker. The project definition does not need to
     be recompiled against each version in the cross-build anymore.
 -   Scala versions are specified in a space-delimited list in the
@@ -2245,7 +2262,7 @@ Some of the more visible changes:
     soon as they are released.
 -   Support is better, since the test framework authors provide the
     implementation.
--   Arguments can be passed to the test framework. For example: {{{ \>
+-   Arguments can be passed to the test framework. For example: {{{ >
     test-only your.test -- -a -b -c }}}
 -   Can provide custom task start and end delimiters by defining the
     system properties sbt.start.delimiter and sbt.end.delimiter.
@@ -2303,14 +2320,14 @@ Some of the more visible changes:
     defined with different ports)
 -   `jettyRunTask` accepts configuration in a single configuration
     wrapper object instead of many parameters
--   Fix web application class loading (issue \#35) by using
+-   Fix web application class loading (issue #35) by using
     jettyClasspath=testClasspath---jettyRunClasspath for loading Jetty.
     A better way would be to have a jetty configuration and have
     jettyClasspath=managedClasspath('jetty'), but this maintains
     compatibility.
 -   Copy resources to `target/resources` and `target/test-resources`
     using copyResources and copyTestResources tasks. Properly include
-    all resources in web applications and classpaths (issue \#36).
+    all resources in web applications and classpaths (issue #36).
     mainResources and testResources are now the definitive methods for
     getting resources.
 -   Updated for 2.8 (`sbt` now compiles against September 11, 2009
@@ -2337,18 +2354,20 @@ Some of the more visible changes:
         > exec find src/main/scala -iname *.scala -exec wc -l {} ;
 
 -   Added `sh` task for users with a unix-style shell available (runs
-    /bin/sh -c \<arguments\>). Mixin Exec to project definition to use.
+    `/bin/sh -c <arguments>`). Mixin Exec to project definition to use.
     Example: :
 
-        > sh find src/main/scala -iname *.scala | xargs cat | wc -l
+    ```
+    > sh find src/main/scala -iname *.scala | xargs cat | wc -l
+    ```
 
 -   Proper dependency graph actions (previously was an unsupported
     prototype): graph-src and graph-pkg for source dependency graph and
     quasi-package dependency graph (based on source directories and
     source dependencies)
 -   Improved Ivy-related code to not load unnecessary default settings
--   Fixed issue \#39 (sources were not relative in src package)
--   Implemented issue \#38 (`InstallProject` with 'install' task)
+-   Fixed issue #39 (sources were not relative in src package)
+-   Implemented issue #38 (`InstallProject` with 'install' task)
 -   Vesa's patch for configuring the output of forked Scala/Java and
     processes
 -   Don't buffer logging of forked `run` by default
@@ -2356,17 +2375,21 @@ Some of the more visible changes:
     should stop for a given keypress.
 -   Terminate triggered execution only on 'enter' by default
     (previously, any keypress stopped it)
--   Fixed issue \#41 (parent project should not declare jar artifact)
--   Fixed issue \#42 (search parent directories for `ivysettings.xml`)
+-   Fixed issue #41 (parent project should not declare jar artifact)
+-   Fixed issue #42 (search parent directories for `ivysettings.xml`)
 -   Added support for extra attributes with Ivy. Use
-    extra(key -\> value) on ModuleIDs and Artifacts. To define for a
+    extra(key -> value) on ModuleIDs and Artifacts. To define for a
     project's ID: :
 
-        override def projectID = super.projectID extra(key -> value)
+    ```scala
+    override def projectID = super.projectID extra(key -> value)
+    ```
 
     To specify in a dependency: :
 
-        val dep = normalID extra(key -> value)
+    ```scala
+    val dep = normalID extra(key -> value)
+    ```
 
 ### 0.5.1 to 0.5.2
 
@@ -2377,7 +2400,7 @@ Some of the more visible changes:
     sbt.ProcessBuilder that takes the element's text content, trims it,
     and splits it around whitespace to obtain the command.
 -   Processes can now redirect standard input (see run with Boolean
-    argument or !\< operator on ProcessBuilder), off by default
+    argument or `!<` operator on ProcessBuilder), off by default
 -   Made scripted framework a plugin and scripted tests now go in
     src/sbt-test by default
 -   Can define and use an sbt test framework extension in a project
@@ -2395,13 +2418,15 @@ Some of the more visible changes:
     standard output. Alternatively, cat can be used on a single URL or
     File. Example: :
 
-        import java.net.URL
-        import java.io.File
-        val spde = new URL("http://technically.us/spde/About")
-        val dispatch = new URL("http://databinder.net/dispatch/About")
-        val build = new File("project/build.properties")
-        cat(spde, dispatch, build) #| "grep -i scala" !
-
+    ```scala
+    import java.net.URL
+    import java.io.File
+    val spde = new URL("http://technically.us/spde/About")
+    val dispatch = new URL("http://databinder.net/dispatch/About")
+    val build = new File("project/build.properties")
+    cat(spde, dispatch, build) #| "grep -i scala" !
+    ```
+    
 ### 0.4.6 to 0.5/0.5.1
 
 -   Fixed `ScalaTest` framework dropping stack traces
@@ -2411,7 +2436,7 @@ Some of the more visible changes:
     different working directory.
 -   Maximum compiler errors shown is now configurable
 -   Fixed rebuilding and republishing released versions of `sbt` against
-    new Scala versions (attempt \#2)
+    new Scala versions (attempt #2)
 -   Fixed snapshot reversion handling (Ivy needs changing pattern set on
     cache, apparently)
 -   Fixed handling of default configuration when useMavenConfiguration
@@ -2425,7 +2450,7 @@ Some of the more visible changes:
     self-extracting jar
 -   Added ability to directly specify `URL` to use for dependency with
     the from(url: URL) method defined on ModuleID
--   Fixed issue \#30
+-   Fixed issue #30
 -   Support cross-building with `+` when running batch actions
 -   Additional flattening for project definitions: sources can go either
     in project/build/src (recursively) or project/build (flat)
@@ -2505,11 +2530,11 @@ Some of the more visible changes:
     and adds them to the main manifest attributes
 -   Fixed some situations where characters would not be echoed at
     prompts other than main prompt.
--   Fixed issue \#20 (use `http_proxy` environment variable)
--   Implemented issue \#21 (native process wrapper)
--   Fixed issue \#22 (rebuilding and republishing released versions of
+-   Fixed issue #20 (use `http_proxy` environment variable)
+-   Implemented issue #21 (native process wrapper)
+-   Fixed issue #22 (rebuilding and republishing released versions of
     sbt against new Scala versions, specifically Scala 2.7.4)
--   Implemented issue \#23 (inherit inline repositories declared in
+-   Implemented issue #23 (inherit inline repositories declared in
     parent project)
 
 ### 0.4 to 0.4.3
@@ -2621,11 +2646,11 @@ Some of the more visible changes:
     previous run or had a dependency change are run.
 -   Added launcher that allows declaring version of sbt/scala to build
     project with.
--   Added tab completion with \~
+-   Added tab completion with `~`
 -   Added basic tab completion for method tasks, including `test-*`
 -   Changed default pack options to be the default options of
     Pack200.Packer
--   Fixed \~ behavior when action doesn't exist
+-   Fixed `~` behavior when action doesn't exist
 
 ### 0.3.6 to 0.3.7
 
@@ -2638,7 +2663,7 @@ Some of the more visible changes:
 -   Added some missing read methods in `FileUtilities`
 -   Added scripted test framework
 -   Change detection using hashes of files
--   Fixed problem with manifests not being generated (bug \#14)
+-   Fixed problem with manifests not being generated (bug #14)
 -   Fixed issue with scala-tools repository not being included by
     default (again)
 -   Added option to set ivy cache location (mainly for testing)
@@ -2646,19 +2671,19 @@ Some of the more visible changes:
     stack traces
 -   Project.loadProject and related methods now accept a Logger to use
 -   Made hidden files and files that start with `'.'` excluded by
-    default ('.\*' is required because subversion seems to not mark .svn
+    default (`'.*'` is required because subversion seems to not mark `.svn`
     directories hidden on Windows)
 -   Implemented exit codes
 -   Added continuous compilation command `cc`
 
 ### 0.3.5 to 0.3.6
 
--   Fixed bug \#12.
+-   Fixed bug #12.
 -   Compiled with 2.7.2.
 
 ### 0.3.2 to 0.3.5
 
--   Fixed bug \#11.
+-   Fixed bug #11.
 -   Fixed problem with dependencies where source jars would be used
     instead of binary jars.
 -   Fixed scala-tools not being used by default for inline
@@ -2711,7 +2736,7 @@ Some of the more visible changes:
 
 ### 0.3 to 0.3.1
 
--   Fixed bugs \#8, \#9, and \#10.
+-   Fixed bugs #8, #9, and #10.
 
 ### 0.2.3 to 0.3
 
@@ -2909,16 +2934,21 @@ Some of the more visible changes:
 
 
 
+  [Getting-Started]: ../tutorial/index.html
+  [Setup]: ../tutorial/Setup.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Basic-Def-Examples]: Basic-Def-Examples.html
+
 Migrating from 0.7 to 0.10+
 ---------------------------
 
 The assumption here is that you are familiar with sbt 0.7 but new to sbt
-|version|.
+0.13.2.
 
-sbt |version|'s many new capabilities can be a bit overwhelming, but
-this page should help you migrate to |version| with a minimum of fuss.
+sbt 0.13.2's many new capabilities can be a bit overwhelming, but
+this page should help you migrate to 0.13.2 with a minimum of fuss.
 
-### Why move to |version|?
+### Why move to 0.13.2?
 
 1.  Faster builds (because it is smarter at re-compiling only what it
     must)
@@ -2931,30 +2961,31 @@ this page should help you migrate to |version| with a minimum of fuss.
 5.  Terser output. (Yet you can ask for more details if something goes
     wrong.)
 
-#### Step 1: Read the Getting Started Guide for sbt |version|
+#### Step 1: Read the Getting Started Guide for sbt 0.13.2
 
-Reading the `Getting Started Guide </Getting-Started/Welcome>` will
+Reading the [Getting Started Guide][Getting-Started] will
 probably save you a lot of confusion.
 
-#### Step 2: Install sbt |release|
+#### Step 2: Install sbt 0.13.2
 
-Download sbt |version| as described on
-`the setup page </Getting-Started/Setup>`.
+Download sbt 0.13.2 as described on
+[the setup page][Setup].
 
-You can run |version| the same way that you run 0.7.x, either simply:
+You can run 0.13.2 the same way that you run 0.7.x, either simply:
 
 ```
 java -jar sbt-launch.jar
 ```
 
 Or (as most users do) with a shell script, as described on
-`the setup page </Getting-Started/Setup>`.
+[the setup page][Setup].
 
-For more details see `the setup page </Getting-Started/Setup>`.
+For more details see
+[the setup page][Setup].
 
 #### Step 3: A technique for switching an existing project
 
-Here is a technique for switching an existing project to |version| while
+Here is a technique for switching an existing project to 0.13.2 while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
@@ -2963,15 +2994,15 @@ complex one next.
 ### Preserve `project/` for 0.7.x project
 
 Rename your `project/` directory to something like `project-old`. This
-will hide it from sbt |version| but keep it in case you want to switch
+will hide it from sbt 0.13.2 but keep it in case you want to switch
 back to 0.7.x.
 
-### Create `build.sbt` for |version|
+### Create `build.sbt` for 0.13.2
 
 Create a `build.sbt` file in the root directory of your project. See
-`.sbt build definition </Getting-Started/Basic-Def>` in the Getting
-Started Guide, and for simple examples
-`/Examples/Quick-Configuration-Examples`. If you have a simple project
+[.sbt build definition][Basic-Def] in the Getting
+Started Guide, and for [simple examples][Basic-Def-Examples].
+If you have a simple project
 then converting your existing project file to this format is largely a
 matter of re-writing your dependencies and maven archive declarations in
 a modified yet familiar syntax.
@@ -2996,18 +3027,20 @@ project.initialize=false
 
 Now becomes part of your `build.sbt` file with lines like:
 
-    name := "My Project"
+```scala
+name := "My Project"
 
-    version := "1.0"
+version := "1.0"
 
-    organization := "org.myproject"
+organization := "org.myproject"
 
-    scalaVersion := "2.9.2"
+scalaVersion := "2.9.2"
+```
 
 Currently, a `project/build.properties` is still needed to explicitly
 select the sbt version. For example:
 
-### Run sbt |version|
+### Run sbt 0.13.2
 
 Now launch sbt. If you're lucky it works and you're done. For help
 debugging, see below.
@@ -3016,7 +3049,7 @@ debugging, see below.
 
 If you get stuck and want to switch back, you can leave your `build.sbt`
 file alone. sbt 0.7.x will not understand or notice it. Just rename your
-|version| `project` directory to something like `project10` and rename
+0.13.2 `project` directory to something like `project10` and rename
 the backup of your old project from `project-old` to `project` again.
 
 #### FAQs
@@ -3027,6 +3060,7 @@ covers several other important points.
 
   [sbt-dev]: https://groups.google.com/d/forum/sbt-dev
   [adept]: https://github.com/adept-dm/adept
+  [Update-Report]: Update-Report.html
 
 Contributing to sbt
 -------------------
@@ -3046,13 +3080,13 @@ may become out of date quickly, so you may want to check on the
             source code There is some code already for generating dot
             files that isn't hooked up, but graphing dependencies and
             inheritance relationships is a general area of work.
-    -   'update' produces an /Detailed-Topics/Update-Report mapping
+    -   'update' produces an [Update Report][Update-Report] mapping
         Configuration/ModuleID/Artifact to the retrieved File
     -   Ivy produces more detailed XML reports on dependencies. These
         come with an XSL stylesheet to view them, but this does not
         scale to large numbers of dependencies. Working on this is
-        pretty straightforward: the XML files are created in \~/.ivy2
-        and the .xsl and .css are there as well, so you don't even need
+        pretty straightforward: the XML files are created in `~/.ivy2`
+        and the `.xsl` and `.css` are there as well, so you don't even need
         to work with sbt. Other approaches described in [the email
         thread](https://groups.google.com/group/simple-build-tool/browse_thread/thread/7761f8b2ce51f02c/129064ea836c9baf)
     -   Tasks are a combination of static and dynamic graphs and it
@@ -3113,6 +3147,26 @@ find the cause.
     2-4 word blurbs to the right of them in the sidebar.
 
 
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Running]: ../tutorial/Running.html
+  [Scopes]: ../tutorial/Scopes.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Custom-Settings]: ../tutorial/Custom-Settings.html
+  [Multi-Project]: ../tutorial/Multi-Project.html
+  [Name-Index]: Name-Index.html
+  [Mapping-Files]: Mapping-Files.html
+  [Testing]: Testing.html
+  [additional-test-configurations]: Testing.html#additional-test-configurations
+  [Library-Management]: Library-Management.html
+  [Migrating-from-sbt-07x]: Migrating-from-sbt-07x.html
+  [Update-Report]: Update-Report.html
+  [Commands]: Commands.html
+  [Build-State]: Build-State.html
+  [Howto-Generating-Files]: Howto-Generating-Files.html
+  [Contributing-to-sbt]: Contributing-to-sbt.html
+  [Community-Plugins]: Community-Plugins.html
+
 Frequently Asked Questions
 --------------------------
 
@@ -3120,8 +3174,8 @@ Frequently Asked Questions
 
 #### How do I get help?
 
-Please use `Stack Overflow`\_ for questions. Use the
-`sbt-dev mailing list`\_ for comments and discussions about sbt
+Please use [Stack Overflow](http://stackoverflow.com/tags/sbt) for questions. Use the
+[sbt-dev mailing list](https://groups.google.com/d/forum/sbt-dev) for comments and discussions about sbt
 development.
 
 -   Please state the problem or question clearly and provide enough
@@ -3134,28 +3188,26 @@ development.
 
 #### How do I report a bug?
 
-Please use the `issue tracker <https://github.com/sbt/sbt/issues>`\_ to
+Please use the [issue tracker](https://github.com/sbt/sbt/issues) to
 report confirmed bugs. Do not use it to ask questions or to determine if
 something is a bug. See `getting-help`.
 
 #### How can I help?
 
+-   Answer questions on [Stack Overflow](http://stackoverflow.com/tags/sbt).
 -   Fix mistakes that you notice on the wiki.
--   Make `bug reports <https://github.com/sbt/sbt/issues>`\_ that are
+-   Make [bug reports](https://github.com/sbt/sbt/issues) that are
     clear and reproducible.
--   Answer questions on `Stack Overflow`\_.
--   Discuss development on the `sbt-dev mailing list`\_.
--   Fix issues that affect you. \`Fork, fix, and submit a pull
-    request \<http://help.github.com/fork-a-repo/\>\_.
--   Implement features that are important to you. There is an
-    /Community/Opportunities page for some ideas, but the most useful
-    contributions are usually ones you want yourself.
+-   Discuss development on the [sbt-dev mailing list](https://groups.google.com/d/forum/sbt-dev).
+-   Fix issues that affect you. [Fork, fix, and submit a pull request](http://help.github.com/fork-a-repo/).
+-   Implement features that are important to you.
+    See [Contributing to sbt][Contributing-to-sbt] for more details.
 
 ### Usage
 
 #### My last command didn't work but I can't see an explanation. Why?
 
-sbt |version| by default suppresses most stack traces and debugging
+sbt 0.13.2 by default suppresses most stack traces and debugging
 information. It has the nice side effect of giving you less noise on
 screen, but as a newcomer it can leave you lost for explanation. To see
 the previous output of a command at a higher verbosity, type
@@ -3193,23 +3245,23 @@ You may run `sbt console`.
 
 These are methods on keys used to construct a `Setting` or a `Task`. The
 Getting Started Guide covers all these methods, see
-`.sbt build definition </Getting-Started/Basic-Def>` and
-`more about settings </Getting-Started/More-About-Settings>` for
+[.sbt build definition][Basic-Def] and
+[more kinds of setting][More-About-Settings] for
 example.
 
 #### What is the `%` method?
 
 It's used to create a `ModuleID` from strings, when specifying managed
 dependencies. Read the Getting Started Guide about
-`library dependencies </Getting-Started/Library-Dependencies>`.
+[library dependencies][Library-Dependencies].
 
 #### What is `ModuleID`, `Project`, ...?
 
 To figure out an unknown type or method, have a look at the
-`Getting Started Guide </Getting-Started/Welcome>` if you have not. Also
-try the `index </Name-Index>` of commonly used methods, values, and
-types, the `API Documentation <../api/>`\_ and the
-`hyperlinked sources <../sxr/>`\_.
+[Getting Started Guide][Getting-Started] if you have not. Also
+try the [index][Name-Index] of commonly used methods, values, and
+types, the [API Documentation](../api/) and the
+[hyperlinked sources](../sxr/).
 
 #### How do I add files to a jar package?
 
@@ -3217,7 +3269,7 @@ The files included in an artifact are configured by default by a task
 `mappings` that is scoped by the relevant package task. The `mappings`
 task returns a sequence `Seq[(File,String)]` of mappings from the file
 to include to the path within the jar. See
-`/Detailed-Topics/Mapping-Files` for details on creating these mappings.
+[mapping files][Mapping-Files] for details on creating these mappings.
 
 For example, to add generated sources to the packaged source artifact:
 
@@ -3239,7 +3291,7 @@ more appropriate for the generator.
 
 #### How can I generate source code or resources?
 
-See `/Howto/generatefiles`.
+See [Generating Files][Howto-Generating-Files].
 
 #### How can a task avoid redoing work if the input files are unchanged?
 
@@ -3248,7 +3300,7 @@ or when the outputs haven't been generated yet. This support is
 primitive and subject to change.
 
 The relevant methods are two overloaded methods called
-`FileFunction.cached <../api/sbt/FileFunction$.html>`\_. Each requires a
+[FileFunction.cached](../api/sbt/FileFunction$.html). Each requires a
 directory in which to store cached data. Sample usage is:
 
 ```scala
@@ -3272,10 +3324,10 @@ the input tracking style is `FilesInfo.lastModified`, based on a file's
 last modified time, and the output tracking style is `FilesInfo.exists`,
 based only on whether the file exists. The other available style is
 `FilesInfo.hash`, which tracks a file based on a hash of its contents.
-See the `FilesInfo API <../api/sbt/FilesInfo$.html>`\_ for details.
+See the [FilesInfo API](../api/sbt/FilesInfo$.html) for details.
 
 A more advanced version of `FileFunction.cached` passes a data structure
-of type `ChangeReport <../api/sbt/ChangeReport.html>`\_ describing the
+of type [ChangeReport](../api/sbt/ChangeReport.html) describing the
 changes to input and output files since the last evaluation. This
 version of `cached` also expects the set of files generated as output to
 be the result of the evaluated function.
@@ -3320,24 +3372,26 @@ to `samples`:
 
 #### How do I add a test configuration?
 
-See the `Additional test configurations` section of
-:doc`/Detailed-Topics/Testing`.
+See the [Additional test configurations][additional-test-configurations] section of
+[Testing][Testing].
 
 #### How can I create a custom run task, in addition to `run`?
 
 This answer is extracted from a
-`mailing list discussion <http://groups.google.com/group/simple-build-tool/browse_thread/thread/4c28ee5b7e18b46a/>`\_.
+[mailing list discussion](http://groups.google.com/group/simple-build-tool/browse_thread/thread/4c28ee5b7e18b46a/).
 
 Read the Getting Started Guide up to
-`custom settings </Getting-Started/Custom-Settings>` for background.
+[custom settings][Custom-Settings] for background.
 
 A basic run task is created by:
 
-    lazy val myRunTask = taskKey[Unit]("A custom run task.")
+```scala
+lazy val myRunTask = taskKey[Unit]("A custom run task.")
 
-    // this can go either in a `build.sbt` or the settings member
-    //   of a Project in a full configuration
-    fullRunTask(myRunTask, Test, "foo.Foo", "arg1", "arg2")
+// this can go either in a `build.sbt` or the settings member
+//   of a Project in a full configuration
+fullRunTask(myRunTask, Test, "foo.Foo", "arg1", "arg2")
+```
 
 If you want to be able to supply arguments on the command line, replace
 `TaskKey` with `InputKey` and `fullRunTask` with `fullRunInputTask`. The
@@ -3357,12 +3411,14 @@ Tool dependencies are used to implement a task and are not needed by
 project source code. These dependencies can be declared in their own
 configuration and classpaths. These are the steps:
 
+<!-- TODO -->
+
 1.  Define a new `configuration <ivy-configurations>`.
 2.  Declare the tool
-    `dependencies </Detailed-Topics/Library-Management>` in that
+    [dependencies][Library-Management] in that
     configuration.
 3.  Define a classpath that pulls the dependencies from the
-    `/Detailed-Topics/Update-Report` produced by `update`.
+    [Update Report][Update-Report] produced by `update`.
 4.  Use the classpath to implement the task.
 
 As an example, consider a `proguard` task. This task needs the ProGuard
@@ -3411,8 +3467,8 @@ task would look like:
 
 It is possible to register additional jars that will be placed on sbt's
 classpath (since version 0.10.1). Through
-`State <../api/sbt/State$.html>`\_, it is possible to obtain a
-`xsbti.ComponentProvider <../api/xsbti/ComponentProvider.html>`\_, which
+[State](../api/sbt/State$.html), it is possible to obtain a
+[xsbti.ComponentProvider](../api/xsbti/ComponentProvider.html), which
 manages application components. Components are groups of files in the
 `~/.sbt/boot/` directory and, in this case, the application is sbt. In
 addition to the base classpath, components in the "extra" component are
@@ -3432,7 +3488,7 @@ situation.)
 
 The following code can be used where a `State => State` is required,
 such as in the `onLoad` setting (described below) or in a
-`command </Extending/Commands>`. It adds some files to the "extra"
+[command][Commands]. It adds some files to the "extra"
 component and reloads sbt if they were not already added. Note that
 reloading will drop the user's session state.
 
@@ -3454,7 +3510,7 @@ reloading will drop the user's session state.
 #### How can I take action when the project is loaded or unloaded?
 
 The single, global setting `onLoad` is of type `State => State` (see
-`/Extending/Build-State`) and is executed once, after all projects are
+[State and Actions][Build-State]) and is executed once, after all projects are
 built and loaded. There is a similar hook `onUnload` for when a project
 is unloaded. Project unloading typically occurs as a result of a
 `reload` command or a `set` command. Because the `onLoad` and `onUnload`
@@ -3522,7 +3578,7 @@ To correct this, include the IvyModule plugin settings, which includes
     }
 
 A more subtle variation of this error occurs when using
-`scoped settings </Getting-Started/Scopes>`.
+[scoped settings][Scopes].
 
     // error: Reference to uninitialized setting
     settings = Seq(
@@ -3550,13 +3606,13 @@ as a jar or pom.xml. An example of such an error is:
 
 The invalid checksum should generally be reported to the repository
 owner (as
-`was done <https://issues.sonatype.org/browse/MVNCENTRAL-46>`\_ for the
+[was done](https://issues.sonatype.org/browse/MVNCENTRAL-46) for the
 above error). In the meantime, you can temporarily disable checking with
 the following setting:
 
     checksums in update := Nil
 
-See `/Detailed-Topics/Library-Management` for details.
+See [library management][Library-Management] for details.
 
 #### I've added a plugin, and now my cross-compilations fail!
 
@@ -3606,7 +3662,7 @@ The key is to initialize the Settings for the interpreter using
 Here, MyType is a representative class that should be included on the
 interpreter's classpath and in its application class loader. For more
 background, see the
-`original proposal <https://gist.github.com/404272>`\_ that resulted in
+[original proposal](https://gist.github.com/404272) that resulted in
 *embeddedDefaults* being added.
 
 Similarly, use a representative class as the type argument when using
@@ -3623,12 +3679,12 @@ example:
 #### How do I migrate from 0.7 to 0.10+?
 
 See the
-`migration page </Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x>`
+[migration page][Migrating-from-sbt-07x]
 first and then the following questions.
 
 #### Where has 0.7's `lib_managed` gone?
 
-By default, sbt |version| loads managed libraries from your ivy cache
+By default, sbt 0.13.2 loads managed libraries from your ivy cache
 without copying them to a `lib_managed` directory. This fixes some bugs
 with the previous solution and keeps your project directory small. If
 you want to insulate your builds from the ivy cache being cleared, set
@@ -3637,19 +3693,19 @@ you want to insulate your builds from the ivy cache being cleared, set
 `lib_managed` in 0.7.x).
 
 This does mean that existing solutions for sharing libraries with your
-favoured IDE may not work. There are |version| plugins for IDEs being
+favoured IDE may not work. There are 0.13.2 plugins for IDEs being
 developed:
 
--   IntelliJ IDEA: `<https://github.com/mpeltonen/sbt-idea>`\_
--   Netbeans: `<https://github.com/remeniuk/sbt-netbeans-plugin>`\_
--   Eclipse: `<https://github.com/typesafehub/sbteclipse>`\_
+- [IntelliJ IDEA](https://github.com/mpeltonen/sbt-idea)
+- [Netbeans](https://github.com/remeniuk/sbt-netbeans-plugin)
+- [Eclipse](https://github.com/typesafehub/sbteclipse)
 
-#### What are the commands I can use in |version| vs. 0.7?
+#### What are the commands I can use in 0.13.2 vs. 0.7?
 
 For a list of commands, run `help`. For details on a specific command,
 run `help <command>`. To view a list of tasks defined on the current
 project, run `tasks`. Alternatively, see the
-`Running </Getting-Started/Running>` page in the Getting Started Guide
+[Running][Running] page in the Getting Started Guide
 for descriptions of common commands and tasks.
 
 If in doubt start by just trying the old command as it may just work.
@@ -3681,7 +3737,7 @@ classpaths.
 ### My tests all run really fast but some are broken that weren't in 0.7!
 
 Be aware that compilation and tests run in parallel by default in sbt
-|version|. If your test code isn't thread-safe then you may want to
+0.13.2. If your test code isn't thread-safe then you may want to
 change this behaviour by adding one of the following to your
 `build.sbt`:
 
@@ -3695,20 +3751,22 @@ change this behaviour by adding one of the following to your
 #### What happened to the web development and Web Start support since 0.7?
 
 Web application support was split out into a plugin. See the
-`xsbt-web-plugin <https://github.com/JamesEarlDouglas/xsbt-web-plugin>`\_
+[xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
 project.
 
 For an early version of an xsbt Web Start plugin, visit the
-`xsbt-webstart <https://github.com/ritschwumm/xsbt-webstart>`\_ project.
+[xsbt-webstart](https://github.com/ritschwumm/xsbt-webstart) project.
 
-#### How are inter-project dependencies different in |version| vs. 0.7?
+#### How are inter-project dependencies different in 0.13.2 vs. 0.7?
 
-In |version|, there are three types of project dependencies (classpath,
+In 0.13.2, there are three types of project dependencies (classpath,
 execution, and configuration) and they are independently defined. These
 were combined in a single dependency type in 0.7.x. A declaration like:
 
-    lazy val a = project("a", "A")
-    lazy val b = project("b", "B", a)
+```scala
+lazy val a = project("a", "A")
+lazy val b = project("b", "B", a)
+```
 
 meant that the `B` project had a classpath and execution dependency on
 `A` and `A` had a configuration dependency on `B`. Specifically, in
@@ -3720,31 +3778,53 @@ meant that the `B` project had a classpath and execution dependency on
 3.  Configuration: For some settings, if they were not overridden in A,
     they would default to the value provided in B.
 
-In |version|, declare the specific type of dependency you want. Read
-about `multi-project builds </Getting-Started/Multi-Project>` in the
+In 0.13.2, declare the specific type of dependency you want. Read
+about [multi-project builds][Multi-Project] in the
 Getting Started Guide for details.
 
 #### Where did class/object X go since 0.7?
 
-  0.7                                                                                                                                                                                              |version|
-  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ ---------------------------------------------------------------------------------------------------------------------
-  | `FileUtilities <http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileUtilities$object.html>`\_                                                                             `IO <../api/sbt/IO$.html>`\_
-  `Path class <http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path.html>`\_ and `object <http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path$.html>`   \_ `Path object <../api/sbt/Path$.html>`\_, `File`, `RichFile <../api/sbt/RichFile.html>`\_
-  `PathFinder class <http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/PathFinder.html>`\_                                                                                      `Seq[File]`, `PathFinder class <../api/sbt/PathFinder.html>`\_, `PathFinder object <../api/sbt/PathFinder$.html>`\_
+<table>
+  <tr>
+    <th>0.7</th>
+    <th>0.13.2</th>
+  </tr>
 
-#### Where can I find plugins for |version|?
+  <tr>
+    <td><a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/FileUtilities$object.html">FileUtilities</a></td>
+    <td><a href="../api/sbt/IO$.html)">IO</a></td>
+  </tr>
 
-See `/Community/Community-Plugins` for a list of currently available
+  <tr>
+    <td><a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path.html">Path class</a> and
+    <a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/Path$.html">object</a></td>
+    <td>
+      <a href="../api/sbt/Path$.html">Path object</a>, <tt>File</tt>,
+      <a href="../api/sbt/RichFile.html">RichFile</a>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td><a href="http://simple-build-tool.googlecode.com/svn/artifacts/latest/api/sbt/PathFinder.html">PathFinder class</a></td>
+    <td>
+      <tt>Seq[File]</tt>, 
+      <a href="../api/sbt/PathFinder.html)">PathFinder class</a>,
+      <a href="../api/sbt/PathFinder$.html">PathFinder object</a>
+    </td>
+  </tr>
+</table>
+
+#### Where can I find plugins for 0.13.2?
+
+See [Community Plugins][Community-Plugins] for a list of currently available
 plugins.
 
 
 How to...
 ---------
 
-This page presents an index of the how-to topics with short examples for
-many of them. Click `(details)` to jump to the full explanation. See
-also the `Basic Index <index>`, which omits the examples and just lists
-the topics.
+See [Detailed Table of Contents](Contents+in+Depth.html) for the list of all the how-tos.
 
 
   [Update-Report]: Update-Report.html
@@ -3914,6 +3994,7 @@ for(entry <- classpath) yield {
 
 
   [file-filter]: Paths.html#file-filter
+  [Howto-Generating-Files]: Howto-Generating-Files.html
 
 Customizing paths
 -----------------
@@ -4018,7 +4099,7 @@ unmanagedSourceDirectories in Compile += baseDirectory.value / "extra-src"
 
 > **Note**: This directory should only contain unmanaged sources, which are
 > sources that are manually created and managed. See
-> /Howto/generatefiles for working with automatically generated sources.
+> [Generating Files][Howto-Generating-Files] for working with automatically generated sources.
 
 ### Add an additional resource directory
 
@@ -4034,7 +4115,7 @@ unmanagedResourceDirectories in Compile += baseDirectory.value / "extra-resource
 
 > **Note**: This directory should only contain unmanaged resources, which are
 > resources that are manually created and managed. See
-> /Howto/generatefiles for working with automatically generated
+> [Generating Files][Howto-Generating-Files] for working with automatically generated
 > resources.
 
 ### Include/exclude files in the source directory
@@ -4237,6 +4318,8 @@ artifact. To do so, add them as you would other mappings. See
 [Adding files to a package][modify-package-contents].
 
 
+  [Inspecting-Settings]: Inspecting-Settings.html
+
 Inspect the build
 -----------------
 
@@ -4295,7 +4378,7 @@ well as the tasks/settings that depend on the it. For example,
 ...
 ```
 
-See the `/Detailed-Topics/Inspecting-Settings` page for details.
+See the [Inspecting Settings][Inspecting-Settings] page for details.
 
 In addition to displaying immediate forward and reverse dependencies as
 described in the previous section, the `inspect` command can display the
@@ -4317,7 +4400,7 @@ full dependency tree for a task or setting. For example,
 
 For each task, `inspect tree` show the type of the value generated by
 the task. For a setting, the `toString` of the setting is displayed. See
-the `/Detailed-Topics/Inspecting-Settings` page for details on the
+the [Inspecting Settings][Inspecting-Settings] page for details on the
 `inspect` command.
 
 While the `help`, `settings`, and `tasks` commands display a description
@@ -4340,9 +4423,9 @@ task and the value of a setting. For example:
 ...
 ```
 
-See the `/Detailed-Topics/Inspecting-Settings` page for details.
+See the [Inspecting Settings][Inspecting-Settings] page for details.
 
-See the `/Detailed-Topics/Inspecting-Settings` page for details.
+See the [Inspecting Settings][Inspecting-Settings] page for details.
 
 The `inspect` command can help find scopes where a setting or task is
 defined. The following example shows that different options may be
@@ -4358,7 +4441,7 @@ specified to the Scala for testing and API documentation generation.
 [info]  test:doc::scalacOptions
 ```
 
-See the `/Detailed-Topics/Inspecting-Settings` page for details.
+See the [Inspecting Settings][Inspecting-Settings] page for details.
 
 The `projects` command displays the currently loaded projects. The
 projects are grouped by their enclosing build and the current project is
@@ -4457,6 +4540,8 @@ names detected in this way. For example,
 ```
 
 
+  [Build-State]: Build-State.html
+
 Interactive mode
 ----------------
 
@@ -4536,7 +4621,7 @@ customization.
 
 By default, sbt only displays `>` to prompt for a command. This can be
 changed through the `shellPrompt` setting, which has type
-`State => String`. `State </Extending/Build-State>` contains all state
+`State => String`. [State][Build-State] contains all state
 for sbt and thus provides access to all build information for use in the
 prompt string.
 
@@ -4615,6 +4700,10 @@ $ sbt -shell clean compile shell
 
 Configure and use logging
 -------------------------
+
+<a name="last"></a>
+
+### View the logging output of the previously executed command
 
 When a command is run, more detailed logging output is sent to a file
 than to the screen (by default). This output can be recalled for the
@@ -4710,11 +4799,15 @@ and:
 ...
 ```
 
+<a name="printwarnings"></a>
+
+### Show warnings from the previous compilation
+
 The Scala compiler does not print the full details of warnings by
 default. Compiling code that uses the deprecated `error` method from
 Predef might generate the following output:
 
-```
+``` scala
 > compile
 [info] Compiling 1 Scala source to <...>/classes...
 [warn] there were 1 deprecation warnings; re-run with -deprecation for details
@@ -4727,7 +4820,7 @@ alternative when using Scala 2.10 and later is to run `printWarnings`.
 This task will display all warnings from the previous compilation. For
 example,
 
-```
+```scala
 > printWarnings
 [warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead
 [warn]  def x = error("Failed.")
@@ -4794,8 +4887,8 @@ from a previous compilation may be displayed using `printWarnings` for
 the main sources or `test:printWarnings` for test sources. Second,
 output from the previous execution is available either for a single task
 or for in its entirety. See the section on
-`printWarnings <#printwarnings>`\_ and the sections on
-`previous output <#last>`\_.
+[printWarnings](#printwarnings) and the sections on
+[previous output](#last).
 
 By default, sbt hides the stack trace of most exceptions thrown during
 execution. It prints a message that indicates how to display the
@@ -4849,7 +4942,7 @@ provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
 
 The special task `streams` provides per-task logging and I/O via a
-`Streams <../../api/#sbt.std.Streams>`\_ instance. To log, a task uses
+[Streams](../../api/#sbt.std.Streams) instance. To log, a task uses
 the `log` member from the `streams` task:
 
     myTask := {
@@ -4903,6 +4996,7 @@ licenses += "GPLv2" -> url("http://www.gnu.org/licenses/gpl-2.0.html")
 
 
   [Artifacts]: Artifacts.html
+  [Mapping-Files]: Mapping-Files.html
 
 Configure packaging
 -------------------
@@ -4962,7 +5056,7 @@ the [Artifacts][Artifacts] page for details.
 The contents of a package are defined by the `mappings` task, of type
 `Seq[(File,String)]`. The `mappings` task is a sequence of mappings from
 a file to include in the package to the path in the package. See
-`/Detailed-Topics/Mapping-Files` for convenience functions for
+[Mapping Files][Mapping-Files] for convenience functions for
 generating these mappings. For example, to add the file `in/example.txt`
 to the main binary jar with the path "out/example.txt",
 
@@ -5034,6 +5128,9 @@ running sbt. Use the Scala REPL (`console` and related commands) for
 full support for evaluating Scala code interactively.
 
 
+  [Cross-Build]: Cross-Build.html
+  [Console-Project]: Console-Project.html
+
 Configure and use Scala
 -----------------------
 
@@ -5069,7 +5166,7 @@ example,
 
     scalaHome := Some(file("/path/to/scala/home/"))
 
-See `cross building </Detailed-Topics/Cross-Build>`.
+See [cross building][Cross-Build].
 
 The `consoleQuick` action retrieves dependencies and puts them on the
 classpath of the Scala REPL. The project's sources are not compiled, but
@@ -5086,7 +5183,7 @@ test dependencies and compiled test sources on the classpath, run
 > consoleProject
 ```
 
-For details, see the `consoleProject </Detailed-Topics/Console-Project>`
+For details, see the [consoleProject][Console-Project]
 page.
 
 Set `initialCommands in console` to set the initial statements to
@@ -5142,7 +5239,7 @@ The key is to initialize the Settings for the interpreter using
 Here, MyType is a representative class that should be included on the
 interpreter's classpath and in its application class loader. For more
 background, see the
-`original proposal <https://gist.github.com/404272>`\_ that resulted in
+[original proposal](https://gist.github.com/404272) that resulted in
 *embeddedDefaults* being added.
 
 Similarly, use a representative class as the type argument when using
@@ -5288,6 +5385,8 @@ pollInterval := 1000 // in ms
 ```
 
 
+  [Getting-Started]: ../tutorial/index.html
+
 Examples
 --------
 
@@ -5295,7 +5394,7 @@ This section of the documentation has example sbt build definitions and
 code. Contributions are welcome!
 
 You may want to read the
-`Getting Started Guide </Getting-Started/Welcome>` as a foundation for
+[Getting Started Guide][Getting-Started] as a foundation for
 understanding the examples.
 
 
@@ -5798,17 +5897,24 @@ object Canon extends Plugin {
 ```
 
 
+  [Getting-Started]: ../tutorial/index.html
+  [Howto]: Howto.html
+  [Developers-Guide]: Developers-Guide.html
+
 Detailed Topics
 ---------------
 
 This part of the documentation has pages documenting particular sbt
 topics in detail. Before reading anything in here, you will need the
-information in the `Getting Started Guide </Getting-Started/Welcome>` as
+information in the
+[Getting Started Guide][Getting-Started] as
 a foundation.
 
-Other resources include the `Examples </Examples/index>` and
-`extending sbt </Extending/index>` areas on the wiki, and the
-`API Documentation <../../api/index.html>`\_
+Other resources include the
+[How to][Howto] and
+[Developer’s Guide][Developers-Guide]
+sections in this reference, and the
+[API Documentation](../../api/index.html)
 
 
   [Getting-Started]: ../tutorial/index.html
@@ -5823,12 +5929,21 @@ information in the
 a foundation.
 
 
+  [Console-Project]: Console-Project.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Multi-Project]: ../tutorial/Multi-Project.html
+  [Running]: ../tutorial/Running.html
+  [Inspecting-Settings]: Inspecting-Settings.html
+  [Triggered-Execution]: Triggered-Execution.html
+  [Commands]: Commands.html
+
 Command Line Reference
 ----------------------
 
 This page is a relatively complete list of command line options,
 commands, and tasks you can use from the sbt interactive prompt or in
-batch mode. See `Running </Getting-Started/Running>` in the Getting
+batch mode. See [Running][Running] in the Getting
 Started Guide for an intro to the basics, while this page has a lot more
 detail.
 
@@ -5837,15 +5952,15 @@ detail.
 -   There is a technical distinction in sbt between *tasks*, which are
     "inside" the build definition, and *commands*, which manipulate the
     build definition itself. If you're interested in creating a command,
-    see /Extending/Commands. This specific sbt meaning of "command"
+    see [Commands][Commands]. This specific sbt meaning of "command"
     means there's no good general term for "thing you can type at the
     sbt prompt", which may be a setting, task, or command.
 -   Some tasks produce useful values. The `toString` representation of
-    these values can be shown using show \<task\> to run the task
-    instead of just \<task\>.
+    these values can be shown using `show <task>` to run the task
+    instead of just `<task>`.
 -   In a multi-project build, execution dependencies and the aggregate
     setting control which tasks from which projects are executed. See
-    multi-project builds \</Getting-Started/Multi-Project\>.
+    [multi-project builds][Multi-Project].
 
 ### Project-level tasks
 
@@ -5855,7 +5970,7 @@ detail.
 -   `publish` Publishes artifacts (such as jars) to the repository
     defined by the publishTo setting, described in Publishing.
 -   `update` Resolves and retrieves external dependencies as described
-    in library dependencies \</Getting-Started/Library-Dependencies\>.
+    in [library dependencies][Library-Dependencies].
 
 ### Configuration-level tasks
 
@@ -5881,7 +5996,7 @@ configuration that can be run using a `test:` prefix.
 -   `consoleProject` Enters an interactive session with sbt and the
     build definition on the classpath. The build definition and related
     values are bound to variables and common packages and values are
-    imported. See the consoleProject documentation \<Console-Project\>
+    imported. See the [consoleProject documentation][Console-Project]
     for more information.
 -   `doc` Generates API documentation for Scala source files in
     src/main/scala using scaladoc. test:doc generates API documentation
@@ -5919,7 +6034,7 @@ configuration that can be run using a `test:` prefix.
     1.  have not been run yet OR
     2.  failed the last time they were run OR
     3.  had any transitive dependencies recompiled since the last
-        successful run \* (will be) interpreted as a wildcard in the
+        successful run `*` (will be) interpreted as a wildcard in the
         test name. See Testing for details.
 
 ### General commands
@@ -5935,25 +6050,25 @@ configuration that can be run using a `test:` prefix.
     settings.
 -   `projects [add|remove <URI>]` List all available projects if no
     arguments provided or adds/removes the build at the provided URI.
-    (See /Getting-Started/Full-Def/ for details on multi-project
+    (See [multi-project builds][Multi-Project] for details on multi-project
     builds.)
 -   `project <project-id>` Change the current project to the project
-    with ID \<project-id\>. Further operations will be done in the
-    context of the given project. (See /Getting-Started/Full-Def/ for
+    with ID `<project-id>`. Further operations will be done in the
+    context of the given project. (See [multi-project builds][Multi-Project] for
     details on multiple project builds.)
 -   `~ <command>` Executes the project specified action or method
     whenever source files change. See
-    /Detailed-Topics/Triggered-Execution for details.
+    [Triggered Execution][Triggered-Execution] for details.
 -   `< filename` Executes the commands in the given file. Each command
-    should be on its own line. Empty lines and lines beginning with '\#'
+    should be on its own line. Empty lines and lines beginning with '#'
     are ignored
 -   `+ <command>` Executes the project specified action or method for
     all versions of Scala defined in the crossScalaVersions setting.
 -   `++ <version|home-directory> <command>` Temporarily changes the
     version of Scala building the project and executes the provided
-    command. \<command\> is optional. The specified version of Scala is
+    command. `<command>` is optional. The specified version of Scala is
     used until the project is reloaded, settings are modified (such as
-    by the set or session commands), or ++ is run again. \<version\>
+    by the set or session commands), or ++ is run again. `<version>`
     does not need to be listed in the build definition, but it must be
     available in a repository. Alternatively, specify the path to a
     Scala installation.
@@ -5980,8 +6095,8 @@ configuration that can be run using a `test:` prefix.
     definition. The setting applies until sbt is restarted, the build is
     reloaded, or the setting is overridden by another set command or
     removed by the session command. See
-    .sbt build definition \</Getting-Started/Basic-Def\> and
-    Inspecting-Settings for details.
+    [.sbt build definition][Basic-Def] and
+    [inspecting settings][Inspecting-Settings] for details.
 -   `session <command>` Manages session settings defined by the `set`
     command. It can persist settings configured at the prompt. See
     Inspecting-Settings for details.
@@ -5995,6 +6110,8 @@ System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as `-Dprop=value`. The following properties
 influence SBT execution. Also see `Launcher`.
 
+<!-- TODO -->
+
   -------------------------------------------------------------------------
   Property           Values  Default       Meaning
   ------------------ ------- ------------- --------------------------------
@@ -6003,14 +6120,14 @@ influence SBT execution. Also see `Launcher`.
                                            or terminals that don't support
                                            color.
 
-  `sbt.global.base`  Directo \~/.sbt       | The directory containing
+  `sbt.global.base`  Directo `~/.sbt`       | The directory containing
                      ry                    global settings and plugins
 
-  `sbt.ivy.home`     Directo \~/.ivy2      | The directory containing the
+  `sbt.ivy.home`     Directo `~/.ivy2`      | The directory containing the
                      ry                    local Ivy repository and
                                            artifact cache
 
-  `sbt.boot.director Directo \~/.sbt/boot  Path to shared boot directory
+  `sbt.boot.director Directo `~/.sbt/boot`  Path to shared boot directory
   y`                 ry                    
 
   `sbt.main.class`   String  |             |
@@ -6047,8 +6164,8 @@ influence SBT execution. Also see `Launcher`.
                                            `sbt.repository.config` and the
                                            `Launcher` documentation.
 
-  `sbt.repository.co File    \~/.sbt/repos | A file containing the
-  nfig`                      itories       repositories to use for the
+  `sbt.repository.co File    `~/.sbt/repos | A file containing the
+  nfig`                      itories`       repositories to use for the
                                            launcher. The format is the same
                                            as a `[repositories]` section
                                            for a `Launcher` configuration
@@ -6061,6 +6178,8 @@ influence SBT execution. Also see `Launcher`.
 
 
 
+
+  [Build-State]: Build-State.html
 
 Console Project
 ---------------
@@ -6148,7 +6267,7 @@ Show the classpaths used for compilation and testing:
 
 ### State
 
-The current `build State </Extending/Build-State>` is available as
+The current [build State][Build-State] is available as
 `currentState`. The contents of `currentState` are imported by default
 and can be used without qualification.
 
@@ -6168,6 +6287,8 @@ Show the number of currently registered commands:
 > definedCommands.size
 ```
 
+
+  [Command-Line-Reference]: Command-Line-Reference.html
 
 Cross-building
 --------------
@@ -6291,8 +6412,10 @@ As a final note, you can use `++ <version>` to temporarily switch the
 Scala version currently being used to build. `<version>` should be
 either a version for Scala published to a repository, as in `++ 2.10.0`
 or the path to a Scala home directory, as in `++ /path/to/scala/home`.
-See `/Detailed-Topics/Command-Line-Reference` for details.
+See [Command Line Reference][Command-Line-Reference] for details.
 
+
+  [Basic-Def]: ../tutorial/Basic-Def.html
 
 Interacting with the Configuration System
 -----------------------------------------
@@ -6301,7 +6424,7 @@ Central to sbt is the new configuration system, which is designed to
 enable extensive customization. The goal of this page is to explain the
 general model behind the configuration system and how to work with it.
 The Getting Started Guide (see
-`.sbt files </Getting-Started/Basic-Def>`) describes how to define
+[.sbt files][Basic-Def]) describes how to define
 settings; this page describes interacting with them and exploring them
 at the command line.
 
@@ -6601,6 +6724,8 @@ This means that if there is no value specifically for
 searched in order until a defined value is found.
 
 
+  [Full-Def]: ../tutorial/Full-Def.html
+
 Triggered Execution
 -------------------
 
@@ -6614,7 +6739,7 @@ the basic settings `watchSources` and `pollInterval` are modified.
     Scala and Java sources.
 -   `watchTransitiveSources` then combines the `watchSources` for the
     current project and all execution and classpath dependencies (see
-    Full Configuration \</Getting-Started/Full-Def\> for details on
+    [.scala build definition][Full-Def] for details on
     interProject dependencies).
 -   `pollInterval` selects the interval between polling for changes in
     milliseconds. The default value is 500 ms.
@@ -6657,6 +6782,8 @@ The following will poll for source changes and run `clean` and `test`.
 ```
 
 
+  [Setup]: ../tutorial/Setup.html
+
 Scripts, REPL, and Dependencies
 -------------------------------
 
@@ -6673,14 +6800,14 @@ disadvantage of these approaches is the startup time involved.
 ### Setup
 
 To set up these entry points, you can either use
-`conscript <https://github.com/n8han/conscript>`\_ or manually construct
+[conscript](https://github.com/n8han/conscript) or manually construct
 the startup scripts. In addition, there is a
-`setup script <https://github.com/paulp/xsbtscript>`\_ for the script
+[setup script](https://github.com/paulp/xsbtscript) for the script
 mode that only requires a JRE installed.
 
 #### Setup with Conscript
 
-Install `conscript <https://github.com/n8han/conscript>`\_.
+Install [conscript](https://github.com/n8han/conscript).
 
 ```
 cs sbt/sbt --branch 0.12.0
@@ -6691,7 +6818,7 @@ This will create two scripts: `screpl` and `scalas`.
 #### Manual Setup
 
 Duplicate your standard `sbt` script, which was set up according to
-`Setup </Getting-Started/Setup>`, as `scalas` and `screpl` (or whatever
+[Setup][Setup], as `scalas` and `screpl` (or whatever
 names you like).
 
 `scalas` is the script runner and should use `sbt.ScriptMain` as the
@@ -6711,7 +6838,7 @@ java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot 
 In each case, `/home/user/.sbt/boot` should be replaced with wherever
 you want sbt's boot directory to be; you might also need to give more
 memory to the JVM via `-Xms512M -Xmx1536M` or similar options, just like
-shown in `Setup </Getting-Started/Setup>`.
+shown in [Setup][Setup].
 
 ### Usage
 
@@ -6734,31 +6861,35 @@ chmod u+x dispatch_example.scala
 ./dispatch_example.scala
 ```
 
-    #!/usr/bin/env scalas
-    !#
+<nbsp>
 
-    /***
-    scalaVersion := "2.9.0-1"
+```scala
+#!/usr/bin/env scalas
+!#
 
-    libraryDependencies ++= Seq(
-      "net.databinder" %% "dispatch-twitter" % "0.8.3",
-      "net.databinder" %% "dispatch-http" % "0.8.3"
-    )
-    */
+/***
+scalaVersion := "2.9.0-1"
 
-    import dispatch.{ json, Http, Request }
-    import dispatch.twitter.Search
-    import json.{ Js, JsObject }
+libraryDependencies ++= Seq(
+  "net.databinder" %% "dispatch-twitter" % "0.8.3",
+  "net.databinder" %% "dispatch-http" % "0.8.3"
+)
+*/
 
-    def process(param: JsObject) = {
-      val Search.text(txt)        = param
-      val Search.from_user(usr)   = param
-      val Search.created_at(time) = param
+import dispatch.{ json, Http, Request }
+import dispatch.twitter.Search
+import json.{ Js, JsObject }
 
-      "(" + time + ")" + usr + ": " + txt
-    }
+def process(param: JsObject) = {
+  val Search.text(txt)        = param
+  val Search.from_user(usr)   = param
+  val Search.created_at(time) = param
 
-    Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
+  "(" + time + ")" + usr + ": " + txt
+}
+
+Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
+```
 
 #### sbt REPL with dependencies
 
@@ -6789,7 +6920,7 @@ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snaps
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant
-class is `IvyConsole <../../sxr/sbt/IvyConsole.scala.html>`\_.
+class is [IvyConsole](../../sxr/sbt/IvyConsole.scala.html).
 
 
 Understanding Incremental Recompilation
@@ -7202,6 +7333,8 @@ information in the
 a foundation.
 
 
+  [Inspecting-Settings]: Inspecting-Settings.html
+
 Classpaths, sources, and resources
 ----------------------------------
 
@@ -7215,7 +7348,7 @@ In sbt 0.10 and later, classpaths now include the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
 settings and tasks typically provide a value of type `Classpath`. This
 is an alias for `Seq[Attributed[File]]`.
-`Attributed <../../api/sbt/Attributed.html>`\_ is a type that associates
+[Attributed](../../api/sbt/Attributed.html) is a type that associates
 a heterogeneous map with each classpath entry. Currently, this allows
 sbt to associate the `Analysis` resulting from compilation with the
 corresponding classpath entry and for managed entries, the `ModuleID`
@@ -7256,13 +7389,14 @@ of main source generators (`sourceGenerators in Compile`).
 
 To insert a named task, which is the better approach for plugins:
 
-::
-:   val mySourceGenerator = taskKey[Seq[File]](...)
+```scala
+val mySourceGenerator = taskKey[Seq[File]](...)
 
-    mySourceGenerator in Compile :=
-    :   generate( (sourceManaged in Compile).value / "some\_directory")
+mySourceGenerator in Compile :=
+  generate( (sourceManaged in Compile).value / "some_directory")
 
-    sourceGenerators in Compile += (mySourceGenerator in Compile).task
+sourceGenerators in Compile += (mySourceGenerator in Compile).task
+```
 
 The `task` method is used to refer to the actual task instead of the
 result of the task.
@@ -7279,7 +7413,7 @@ to `src/main/scala`. You can exclude source files by name
     excludeFilter in unmanagedSources := "butler.scala" 
 
 Read more on
-`How to exclude .scala source file in project folder - Google Groups <http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en>`\_
+[How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
 
 #### External v. internal
 
@@ -7321,11 +7455,11 @@ For resources
     Typically, these tasks will put resources in the directory provided
     by resourceManaged.
 
-Use the `inspect command </Detailed-Topics/Inspecting-Settings>` for
+Use the [inspect command][Inspecting-Settings] for
 more details.
 
 See also a related
-`StackOverflow answer <http://stackoverflow.com/a/7862872/850196>`\_.
+[StackOverflow answer](http://stackoverflow.com/a/7862872/850196).
 
 #### Example
 
@@ -7387,6 +7521,8 @@ Adding a version-specific compiler plugin can be done as follows:
 
     scalacOptions += "-P:continuations:enable"
 
+
+  [Sbt-Launcher]: Sbt-Launcher.html
 
 Configuring Scala
 -----------------
@@ -7479,8 +7615,8 @@ example,
     )
 
 In the second case, directly construct a value of type
-`ScalaInstance <../../api/sbt/ScalaInstance.html>`\_, typically using a
-method in the `companion object <../../api/sbt/ScalaInstance$.html>`\_,
+[ScalaInstance](../../api/sbt/ScalaInstance.html), typically using a
+method in the [companion object](../../api/sbt/ScalaInstance$.html),
 and assign it to `scalaInstance`. You will also need to add the
 `scala-library` jar to the classpath to compile and run Scala sources.
 For example,
@@ -7550,10 +7686,10 @@ sbt needs Scala jars to run itself since it is written in Scala. sbt
 uses that same version of Scala to compile the build definitions that
 you write for your project because they use sbt APIs. This version of
 Scala is fixed for a specific sbt release and cannot be changed. For sbt
-|version|, this version is Scala |scalaVersion|. Because this Scala
+0.13.2, this version is Scala |scalaVersion|. Because this Scala
 version is needed before sbt runs, the repositories used to retrieve
 this version are configured in the sbt
-`launcher </Detailed-Topics/Launcher>`.
+[launcher][Sbt-Launcher].
 
 
 Forking
@@ -7653,7 +7789,7 @@ only the main or test `run` tasks or just the `test` tasks.
 By default, forked output is sent to the Logger, with standard output
 logged at the `Info` level and standard error at the `Error` level. This
 can be configured with the `outputStrategy` setting, which is of type
-`OutputStrategy <../../api/sbt/OutputStrategy.html>`\_.
+[OutputStrategy](../../api/sbt/OutputStrategy.html).
 
     // send output to the build's standard output and error
     outputStrategy := Some(StdoutOutput)
@@ -7681,9 +7817,9 @@ setting:
 ### Direct Usage
 
 To fork a new Java process, use the
-`Fork API <../../api/sbt/Fork$.html>`\_. The values of interest are
+[Fork API](../../api/sbt/Fork$.html). The values of interest are
 `Fork.java`, `Fork.javac`, `Fork.scala`, and `Fork.scalac`. These are of
-type `Fork <../../api/sbt/Fork.html>`\_ and provide `apply` and `fork`
+type [Fork](../../api/sbt/Fork.html) and provide `apply` and `fork`
 methods. For example, to fork a new Java process, :
 
     val options = ForkOptions(...)
@@ -7691,7 +7827,7 @@ methods. For example, to fork a new Java process, :
     val mainClass: String = ...
     val exitCode: Int = Fork.java(options, mainClass +: arguments)
 
-`ForkOptions <../../api/sbt/ForkOptions.html>`\_ defines the Java
+[ForkOptions](../../api/sbt/ForkOptions.html) defines the Java
 installation to use, the working directory, environment variables, and
 more. For example, :
 
@@ -7710,47 +7846,51 @@ Global Settings
 ### Basic global configuration file
 
 Settings that should be applied to all projects can go in
-\`|globalSbtFile|\` (or any file in \`|globalBase|\` with a `.sbt`
-extension). Plugins that are defined globally in \`|globalPluginsBase|\`
+`~/.sbt/0.13/global.sbt` (or any file in `~/.sbt/0.13` with a `.sbt`
+extension). Plugins that are defined globally in `~/.sbt/0.13/plugins/`
 are available to these settings. For example, to change the default
 `shellPrompt` for your projects:
 
-\`|globalSbtFile|\`
+`~/.sbt/0.13/global.sbt`
 
-    shellPrompt := { state =>
-     "sbt (%s)> ".format(Project.extract(state).currentProject.id)
-    }
+```scala
+shellPrompt := { state =>
+  "sbt (%s)> ".format(Project.extract(state).currentProject.id)
+}
+```
 
 ### Global Settings using a Global Plugin
 
-The \`|globalPluginsBase|\` directory is a global plugin project. This
+The `~/.sbt/0.13/plugins/` directory is a global plugin project. This
 can be used to provide global commands, plugins, or other code.
 
-To add a plugin globally, create \`|globalPluginSbtFile|\` containing
+To add a plugin globally, create `~/.sbt/0.13/plugins/build.sbt` containing
 the dependency definitions. For example:
 
-    addSbtPlugin("org.example" % "plugin" % "1.0")
+```scala
+addSbtPlugin("org.example" % "plugin" % "1.0")
+```
 
 To change the default `shellPrompt` for every project using this
-approach, create a local plugin \`|globalShellPromptScala|:
+approach, create a local plugin `~/.sbt/0.13/plugins/ShellPrompt.scala`:
 
-::
+```scala
+import sbt._
+import Keys._
 
-    import sbt.\_
-    import Keys.\_
+object ShellPrompt extends Plugin {
+  override def settings = Seq(
+    shellPrompt := { state =>
+      "sbt (%s)> ".format(Project.extract(state).currentProject.id) }
+  )
+}
+```
 
-    object ShellPrompt extends Plugin {
-      override def settings = Seq(
-        shellPrompt := { state =\>
-          "sbt (%s)\> ".format(Project.extract(state).currentProject.id) }
-      )
-    }
-
-The :sublit:|globalPluginsBase|\` directory is a full project that is
+The `~/.sbt/0.13/plugins/` directory is a full project that is
 included as an external dependency of every plugin project. In practice,
 settings and code defined here effectively work as if they were defined
 in a project's `project/` directory. This means that
-\`|globalPluginsBase|\` can be used to try out ideas for plugins such as
+`~/.sbt/0.13/plugins/` can be used to try out ideas for plugins such as
 shown in the `shellPrompt` example.
 
 
@@ -7827,14 +7967,14 @@ type `Seq[(File, String)]` from an input file to the path to use in the
 resulting artifact (jar). Similarly, tasks that copy files accept
 mappings of type `Seq[(File, File)]` from an input file to the
 destination file. There are some methods on
-`PathFinder <../../api/sbt/PathFinder.html>`\_ and
-`Path <../../api/sbt/Path$.html>`\_ that can be useful for constructing
+[PathFinder](../../api/sbt/PathFinder.html) and
+[Path](../../api/sbt/Path$.html) that can be useful for constructing
 the `Seq[(File, String)]` or `Seq[(File, File)]` sequences.
 
 A common way of making this sequence is to start with a `PathFinder` or
 `Seq[File]` (which is implicitly convertible to `PathFinder`) and then
 call the `pair` method. See the
-`PathFinder <../../api/sbt/PathFinder.html>`\_ API for details, but
+[PathFinder](../../api/sbt/PathFinder.html) API for details, but
 essentially this method accepts a function `File => Option[String]` or
 `File => Option[File]` that is used to generate mappings.
 
@@ -7855,7 +7995,7 @@ For example:
 > baseDirectories: Seq[File] = file("/a") :: Nil val mappings:
 > Seq[(File,String)] = files pair relativeTo(baseDirectories)
 >
-> val expected = (file("/a/b/C.scala") -\> "b/C.scala") :: Nil assert(
+> val expected = (file("/a/b/C.scala") -> "b/C.scala") :: Nil assert(
 > mappings == expected )
 
 ### Rebase
@@ -7992,7 +8132,7 @@ This specifies that the macro implementation goes in
 `macro/src/main/scala/` and tests go in `macro/src/test/scala/`. It also
 shows that we need a dependency on the compiler for the macro
 implementation. As an example macro, we'll use `desugar` from
-`macrocosm <https://github.com/retronym/macrocosm>`\_.
+[macrocosm](https://github.com/retronym/macrocosm).
 
 `macro/src/main/scala/demo/Demo.scala`
 
@@ -8092,19 +8232,19 @@ Paths
 
 This page describes files, sequences of files, and file filters. The
 base type used is
-`java.io.File <http://download.oracle.com/javase/6/docs/api/java/io/File.html>`\_,
+[java.io.File](http://download.oracle.com/javase/6/docs/api/java/io/File.html),
 but several methods are augmented through implicits:
 
--   `RichFile <../../api/sbt/RichFile.html>`\_ adds methods to File
--   `PathFinder <../../api/sbt/PathFinder.html>`\_ adds methods to File
+-   [RichFile](../../api/sbt/RichFile.html) adds methods to File
+-   [PathFinder](../../api/sbt/PathFinder.html) adds methods to File
     and Seq[File]
--   `Path <../../api/sbt/Path$.html>`\_ and [IO](../../api/sbt/IO$.html)
+-   [Path](../../api/sbt/Path$.html) and [IO](../../api/sbt/IO$.html)
     provide general methods related to files and I/O.
 
 ### Constructing a File
 
 sbt 0.10+ uses
-`java.io.File <http://download.oracle.com/javase/6/docs/api/java/io/File.html>`\_
+[java.io.File](http://download.oracle.com/javase/6/docs/api/java/io/File.html)
 to represent a file instead of the custom `sbt.Path` class that was in
 sbt 0.7 and earlier. sbt defines the alias `File` for `java.io.File` so
 that an extra import is not necessary. The `file` method is an alias for
@@ -8128,7 +8268,7 @@ Elsewhere, files should be absolute or be built up from an absolute base
 build or project depending on the scope.
 
 For example, the following setting sets the unmanaged library directory
-to be the "custom\_lib" directory in a project's base directory:
+to be the "custom_lib" directory in a project's base directory:
 
     unmanagedBase := baseDirectory.value /"custom_lib"
 
@@ -8230,16 +8370,13 @@ files returned by the first selector.
 There is a `filter` method that accepts a predicate of type
 `File => Boolean` and is non-strict:
 
-    // selects all directories under "src"
+```scala
+// selects all directories under "src"
+def srcDirs(base: File) = ( (base / "src") ** "*") filter { _.isDirectory }
 
-> def srcDirs(base: File) = ( (base / "src") *\* "*") filter {
-> \_.isDirectory }
->
-> > // selects archives (.zip or .jar) that are selected by
-> > 'somePathFinder'
->
-> def archivesOnly(base: PathFinder) = base filter
-> ClasspathUtilities.isArchive
+// selects archives (.zip or .jar) that are selected by 'somePathFinder'
+def archivesOnly(base: PathFinder) = base filter ClasspathUtilities.isArchive
+```
 
 #### Empty PathFinder
 
@@ -8272,7 +8409,7 @@ Mappings are discussed in detail on the `Mapping-Files` page.
 ### File Filters
 
 The argument to `*` and `**` is of type
-`java.io.FileFilter <http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html>`\_.
+[java.io.FileFilter](http://download.oracle.com/javase/6/docs/api/java/io/FileFilter.html).
 sbt provides combinators for constructing `FileFilter`s.
 
 First, a String may be implicitly converted to a `FileFilter`. The
@@ -8594,7 +8731,7 @@ execution service (`java.util.concurrent.CompletionService`). This
 intermediate queue restricts new tasks from being forwarded to the
 `j.u.c.CompletionService` according to the `sbt.ConcurrentRestrictions`
 implementation. See the
-`sbt.ConcurrentRestrictions <https://github.com/sbt/sbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala>`\_
+[sbt.ConcurrentRestrictions](https://github.com/sbt/sbt/blob/v0.12.0/tasks/ConcurrentRestrictions.scala)
 API documentation for details.
 
 
@@ -8668,7 +8805,7 @@ instance of `URL` and `file` is an instance of `File`.
 There are some additional methods to get the output from a forked
 process into a `String` or the output lines as a `Stream[String]`. Here
 are some examples, but see the
-`ProcessBuilder API <../../api/sbt/ProcessBuilder.html>`\_ for details.
+[ProcessBuilder API](../../api/sbt/ProcessBuilder.html) for details.
 
     val listed: String = "ls" !!
     val lines2: Stream[String] = "ls" lines_!
@@ -8740,15 +8877,15 @@ called or all non-daemon threads terminate.
 During deserialization, the wrong class loader might be used for various
 complex reasons. This can happen in many scenarios, and running under
 SBT is just one of them. This is discussed for instance in issues
-\`163\` and \`136. The reason is
+#163 and #136. The reason is
 explained
-here \<http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900\#comment-85900\>\_.
+[here](http://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900#comment-85900).
 
 ### sbt's Solutions
 
 #### System.exit
 
-User code is run with a custom SecurityManager\` that throws a custom
+User code is run with a custom `SecurityManager` that throws a custom
 `SecurityException` when `System.exit` is called. This exception is
 caught by sbt. sbt then disposes of all top-level windows, interrupts
 (not stops) all user-created threads, and handles the exit code. If the
@@ -8805,6 +8942,9 @@ As of sbt 0.13.1, multiple `run` instances can be managed. There can
 only be one application that uses AWT at a time, however.
 
 
+  [Running]: ../tutorial/Running.html
+  [Plugins]: Plugins.html
+
 Testing
 -------
 
@@ -8819,9 +8959,10 @@ The standard source locations for testing are:
 The resources may be accessed from tests by using the `getResource`
 methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
-The main Scala testing frameworks (`specs2 <http://specs2.org/>`\_,
-`ScalaCheck <http://scalacheck.org/>`\_, and
-`ScalaTest <http://scalatest.org/>`\_) provide an implementation of the
+The main Scala testing frameworks (
+[specs2](http://specs2.org/),
+[ScalaCheck](http://scalacheck.org/), and
+[ScalaTest](http://scalatest.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
 `managed dependency <Library-Management>`:
@@ -8890,7 +9031,7 @@ referenced in Scala code with `in Test`. These tasks include:
 -   `test:run`
 -   `test:runMain`
 
-See `Running </Getting-Started/Running>` for details on these tasks.
+See [Running][Running] for details on these tasks.
 
 ### Output
 
@@ -8940,7 +9081,7 @@ framework classes.
 > **note**
 >
 > When forking, the ClassLoader containing the test classes cannot be
-> provided because it is in another JVM. Only use the () =\> Unit
+> provided because it is in another JVM. Only use the () => Unit
 > variants in this case.
 
 Examples:
@@ -9000,6 +9141,8 @@ forked JVMs allowed to run at the same time by setting the limit on
 actions cannot be provided with the actual test class loader when a
 group is forked.
 
+<a name="additional-test-configurations"></a>
+
 ### Additional test configurations
 
 You can add an additional test configuration to have a separate set of
@@ -9021,16 +9164,20 @@ per project.
 
 The following full build configuration demonstrates integration tests.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-> object B extends Build { lazy val root = Project("root", file("."))
-> .configs( IntegrationTest ) .settings( Defaults.itSettings : \_\*)
-> .settings( libraryDependencies += specs )
->
-> > lazy val specs = "org.specs2" %% "specs2" % "2.0" % "it,test"
->
-> }
+object B extends Build {
+  lazy val root =
+    Project("root", file(".")).
+      configs( IntegrationTest ).
+      settings( Defaults.itSettings : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "it,test"
+}
+```
 
 -   `configs(IntegrationTest)` adds the predefined integration test
     configuration. This configuration is referred to by the name it.
@@ -9079,18 +9226,21 @@ the definitive integration test options:
 
 The previous example may be generalized to a custom test configuration.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-> object B extends Build { lazy val root = Project("root", file("."))
-> .configs( FunTest ) .settings(
-> inConfig(FunTest)(Defaults.testSettings) : \_\*) .settings(
-> libraryDependencies += specs )
->
-> > lazy val FunTest = config("fun") extend(Test) lazy val specs =
-> > "org.specs2" %% "specs2" % "2.0" % "fun"
->
-> }
+object B extends Build {
+  lazy val root =
+    Project("root", file(".")).
+      configs( FunTest ).
+      settings( inConfig(FunTest)(Defaults.testSettings) : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val FunTest = config("fun") extend(Test)
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "fun"
+}
+```
 
 Instead of using the built-in configuration, we defined a new one:
 
@@ -9189,7 +9339,7 @@ run in serial would be run with `serial:test`.
 ### JUnit
 
 Support for JUnit is provided by
-`junit-interface <https://github.com/szeiger/junit-interface>`\_. To add
+[junit-interface](https://github.com/szeiger/junit-interface). To add
 JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
@@ -9203,20 +9353,20 @@ interfaces (described below). If you are the author of the testing
 framework, you can depend on the test interface as a provided
 dependency. Alternatively, anyone can provide support for a test
 framework by implementing the interfaces in a separate project and
-packaging the project as an sbt `Plugin </Extending/Plugins>`.
+packaging the project as an sbt [Plugin][Plugins].
 
 #### Custom Test Framework
 
 The main Scala testing libraries have built-in support for sbt. To add
 support for a different framework, implement the
-`uniform test interface <http://github.com/sbt/test-interface>`\_.
+[uniform test interface](http://github.com/sbt/test-interface).
 
 #### Custom Test Reporters
 
 Test frameworks report status and results to test reporters. You can
 create a new test reporter by implementing either
-`TestReportListener <../../api/sbt/TestReportListener.html>`\_ or
-`TestsListener <../../api/sbt/TestsListener.html>`\_.
+[TestReportListener](../../api/sbt/TestReportListener.html) or
+[TestsListener](../../api/sbt/TestsListener.html).
 
 #### Using Extensions
 
@@ -9354,9 +9504,9 @@ For example:
     Artifact("myproject", "jdk15")
 
 See the
-`Ivy documentation <http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html>`\_
+[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
 for more details on artifacts. See the
-`Artifact API <../../api/sbt/Artifact$.html>`\_ for combining the
+[Artifact API](../../api/sbt/Artifact$.html) for combining the
 parameters above and specifying [Configurations] and extra attributes.
 
 To declare these artifacts for publishing, map them to the task that
@@ -9372,7 +9522,7 @@ generates the artifact:
     addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 
 `addArtifact` returns a sequence of settings (wrapped in a
-`SettingsDefinition <../../api/#sbt.Init$SettingsDefinition>`\_). In a
+[SettingsDefinition](../../api/#sbt.Init$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
     ...
@@ -9483,12 +9633,12 @@ D.  Run `clean` and then `update`. If this works, it could indicate a
     bug in sbt, but the problem would need to be reproduced in order to
     diagnose and fix it.
 E.  Before deleting all of the Ivy cache, first try deleting files in
-    \~/.ivy2/cache related to problematic dependencies. For example, if
-    there are problems with dependency "org.example" % "demo" % "1.0",
-    delete \~/.ivy2/cache/org.example/demo/1.0/ and retry update. This
+    `~/.ivy2/cache` related to problematic dependencies. For example, if
+    there are problems with dependency `"org.example" % "demo" % "1.0"`,
+    delete `~/.ivy2/cache/org.example/demo/1.0/` and retry update. This
     avoids needing to redownload all dependencies.
 F.  Normal sbt usage should not require deleting files from
-    \~/.ivy2/cache, especially if the first four steps have been
+    `~/.ivy2/cache`, especially if the first four steps have been
     followed. If deleting the cache fixes a dependency management issue,
     please try to reproduce the issue and submit a test case.
 
@@ -9507,7 +9657,7 @@ the main project. For example:
 ### Notes
 
 A.  Configure offline behavior for all projects on a machine by putting
-    offline := true in \~/.sbt/global.sbt. A command that does this for
+    `offline := true` in `~/.sbt/0.13/global.sbt`. A command that does this for
     the user would make a nice pull request. Perhaps the setting of
     offline should go into the output of about or should it be a warning
     in the output of update or both?
@@ -9517,7 +9667,7 @@ B.  The cache improvements in 0.12.1 address issues in the change
     cache can usually be attributed to a bug in that change detection if
     explicitly running update fixes the problem.
 C.  A common solution to dependency management problems in sbt has been
-    to remove \~/.ivy2/cache. Before doing this with 0.12.1, be sure to
+    to remove `~/.ivy2/cache`. Before doing this with 0.12.1, be sure to
     follow the steps in the troubleshooting section first. In
     particular, verify that a clean and an explicit update do not solve
     the issue.
@@ -9526,11 +9676,17 @@ D.  There is no need to mark SNAPSHOT dependencies as `changing()`
 
 
 
+  [Setup]: ../tutorial/Setup.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Update-Report]: Update-Report.html
+
 Library Management
 ------------------
 
 There's now a
-`getting started page </Getting-Started/Library-Dependencies>` about
+[getting started page][Library-Dependencies] about
 library management, which you may want to read first.
 
 *Documentation Maintenance Note:* it would be nice to remove the overlap
@@ -9542,9 +9698,10 @@ the more advanced topics such as checksums and external Ivy files.
 There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
 the two approaches. All configurations shown here are settings that go
-either directly in a `.sbt file </Getting-Started/Basic-Def>` or are
+either directly in a
+[.sbt file][Basic-Def] or are
 appended to the `settings` of a Project in a
-`.scala file </Getting-Started/Full-Def>`.
+[.scala file][Full-Def].
 
 ### Manual Dependency Management
 
@@ -9590,7 +9747,7 @@ dependencies:
 -   Maven POM files (dependency definitions only: no repositories)
 -   Ivy configuration and settings files
 
-sbt uses `Apache Ivy <http://ant.apache.org/ivy/>`\_ to implement
+sbt uses [Apache Ivy](http://ant.apache.org/ivy/) to implement
 dependency management in all three cases. The default is to use inline
 declarations, but external configuration can be explicitly selected. The
 following sections describe how to use each method of automatic
@@ -9633,7 +9790,7 @@ the version of Scala you are using. See `Cross-Build` for details.
 Ivy can select the latest revision of a module according to constraints
 you specify. Instead of a fixed revision like `"1.6.1"`, you specify
 `"latest.integration"`, `"2.9.+"`, or `"[1.0,)"`. See the
-`Ivy revisions <http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision>`\_
+[Ivy revisions](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
 documentation for details.
 
 ##### Resolvers
@@ -9693,7 +9850,7 @@ The repositories used by the launcher can be overridden by defining
 `~/.sbt/repositories`, which must contain a `[repositories]` section
 with the same format as the `Launcher` configuration file. For example:
 
-``` {.sourceCode .ini}
+```
 [repositories]
 local
 my-maven-repo: http://example.org/repo
@@ -9768,7 +9925,7 @@ to be generated. For example,
         ExclusionRule(organization = "javax.jms")
       )
 
-See `ModuleID <../../api/sbt/ModuleID.html>`\_ for API details.
+See [ModuleID](../../api/sbt/ModuleID.html) for API details.
 
 ##### Download Sources
 
@@ -9789,7 +9946,7 @@ for that.
 
 ##### Extra Attributes
 
-`Extra attributes <http://ant.apache.org/ivy/history/2.3.0/concept.html#extra>`\_
+[Extra attributes](http://ant.apache.org/ivy/history/2.3.0/concept.html#extra)
 can be specified by passing key/value pairs to the `extra` method.
 
 To select dependencies by extra attributes:
@@ -9824,7 +9981,7 @@ By default, sbt uses the standard Ivy home directory location
 `${user.home}/.ivy2/`. This can be configured machine-wide, for use by
 both the sbt launcher and by projects, by setting the system property
 `sbt.ivy.home` in the sbt startup script (described in
-`Setup </Getting-Started/Setup>`).
+[Setup][Setup]).
 
 For example:
 
@@ -9835,7 +9992,7 @@ java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 ##### Checksums
 
 sbt
-(`through Ivy <http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum>`\_)
+([through Ivy](http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum))
 verifies the checksums of downloaded files by default. It also publishes
 checksums of artifacts by default. The checksums to use are specified by
 the *checksums* setting.
@@ -9861,9 +10018,9 @@ The default value is:
 The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting `conflictManager`,
-which has type `ConflictManager <../../api/sbt/ConflictManager.html>`\_.
+which has type [ConflictManager](../../api/sbt/ConflictManager.html).
 See the
-`Ivy documentation <http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html>`\_
+[Ivy documentation](http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
 for details on the different conflict managers. For example, to specify
 that no conflicts are allowed,
 
@@ -9969,13 +10126,13 @@ See `Publishing` for how to publish your project.
 Ivy configurations are a useful feature for your build when you need
 custom groups of dependencies, such as for a plugin. Ivy configurations
 are essentially named sets of dependencies. You can read the
-`Ivy documentation <http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html>`\_
+[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
 for details.
 
 The built-in use of configurations in sbt is similar to scopes in Maven.
 sbt adds dependencies to different classpaths by the configuration that
 they are defined in. See the description of
-`Maven Scopes <http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope>`\_
+[Maven Scopes](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope)
 for details.
 
 You put a dependency in a configuration by selecting one or more of its
@@ -9989,7 +10146,7 @@ your dependency definition:
 
 This says that your project's `"test"` configuration uses `ScalaTest`'s
 `"compile"` configuration. See the
-`Ivy documentation <http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html>`\_
+[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
 for more advanced mappings. Most projects published to Maven
 repositories will use the `"compile"` configuration.
 
@@ -10006,7 +10163,7 @@ it in your jar by modifying `resources`. For example:
 
 The `config` method defines a new configuration with name `"js"` and
 makes it private to the project so that it is not used for publishing.
-See `/Detailed-Topics/Update-Report` for more information on selecting
+See [Update Report][Update-Report] for more information on selecting
 managed artifacts.
 
 A configuration without a mapping (no `"->"`) is mapped to `"default"`
@@ -10084,6 +10241,8 @@ with this support:
 
 
 
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 Proxy Repositories
 ------------------
 
@@ -10125,11 +10284,11 @@ is the launcher script.
 
 The repositories file is an external configuration for the Launcher. The
 exact syntax for the configuration file is detailed in the
-`/Detailed-Topics/Launcher`.
+[sbt Launcher][Sbt-Launcher].
 
 Here's an example config:
 
-``` {.sourceCode .ini}
+```
 [repositories]
   local
   my-ivy-proxy-releases: http://repo.company.com/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
@@ -10337,7 +10496,7 @@ change the version number each time you publish. Ivy maintains a cache,
 and it stores even local projects in that cache. If Ivy already has a
 version cached, it will not check the local repository for updates,
 unless the version number matches a
-`changing pattern <http://ant.apache.org/ivy/history/2.3.0/concept.html#change>`\_,
+[changing pattern](http://ant.apache.org/ivy/history/2.3.0/concept.html#change),
 and `SNAPSHOT` is one such pattern.
 
 
@@ -10379,7 +10538,7 @@ in one place:
 
 sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
-`patterns <http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns>`\_
+[patterns](http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns)
 to configure repositories.
 
 Construct a repository definition using the factory in `sbt.Resolver`
@@ -10390,12 +10549,47 @@ factory and repository class. The SSH and SFTP repositories are
 configured identically except for the name of the factory. Use
 `Resolver.ssh` for SSH and `Resolver.sftp` for SFTP.
 
-  Type         Factory           Ivy Docs             Factory API            Repository Class API
-  ------------ ----------------- -------------------- ---------------------- ------------------------------
-  Filesystem   `Resolver.file`   \`\`Ivy filesystem   `_`filesystem factor   y`_`FileRepository API\`\`\_
-  SFTP         `Resolver.sftp`   `Ivy sftp`\_         `sftp factory`\_       `SftpRepository API`\_
-  SSH          `Resolver.ssh`    `Ivy ssh`\_          `ssh factory`\_        `SshRepository API`\_
-  URL          `Resolver.url`    `Ivy url`\_          `url factory`\_        `URLRepository API`\_
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Factory</th>
+    <th>Ivy Docs</th>
+    <th>Factory API</th>
+    <th>Repository Class API</th>
+  </tr>
+
+  <tr>
+    <td>Filesystem</td>
+    <td><tt>Resolver.file</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+    <td><a href="../api/sbt/Resolver$$file$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SFTP</td>
+    <td><tt>Resolver.sftp</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SSH</td>
+    <td><tt>Resolver.ssh</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>URL</td>
+    <td><tt>Resolver.url</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+    <td><a href="../api/sbt/Resolver$$url$.html">url factory</a></td>
+    <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
+  </tr>
+</table>
 
 #### Basic Examples
 
@@ -10480,7 +10674,7 @@ different Patterns object to use a different layout. For example:
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
 be Maven compatible (as defined by Ivy). See the
-`patterns API <../../api/sbt/Patterns$.html>`\_ for the methods to use.
+[patterns API](../../api/sbt/Patterns$.html) for the methods to use.
 
 For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and
@@ -10494,7 +10688,7 @@ Update Report
 -------------
 
 `update` and related tasks produce a value of type
-`sbt.UpdateReport <../../api/sbt/UpdateReport.html>`\_ This data
+[sbt.UpdateReport](../../api/sbt/UpdateReport.html) This data
 structure provides information about the resolved configurations,
 modules, and artifacts. At the top level, `UpdateReport` provides
 reports of type `ConfigurationReport` for each resolved configuration. A
@@ -10512,10 +10706,10 @@ A typical use of `UpdateReport` is to retrieve a list of files matching
 a filter. A conversion of type `UpdateReport => RichUpdateReport`
 implicitly provides these methods for `UpdateReport`. The filters are
 defined by the
-`DependencyFilter <../../api/sbt/DependencyFilter.html>`\_,
-`ConfigurationFilter <../../api/sbt/ConfigurationFilter.html>`\_,
-`ModuleFilter <../../api/sbt/ModuleFilter.html>`\_, and
-`ArtifactFilter <../../api/sbt/ArtifactFilter.html>`\_ types. Using
+[DependencyFilter](../../api/sbt/DependencyFilter.html),
+[ConfigurationFilter](../../api/sbt/ConfigurationFilter.html),
+[ModuleFilter](../../api/sbt/ModuleFilter.html), and
+[ArtifactFilter](../../api/sbt/ArtifactFilter.html) types. Using
 these filter types, you can filter by the configuration name, the module
 organization, name, or revision, and the artifact name, type, extension,
 or classifier.
@@ -10669,11 +10863,17 @@ information in the
 a foundation.
 
 
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Input-Tasks]: Input-Tasks.html
+  [Commands]: Commands.html
+  [Parsing-Input]: Parsing-Input.html
+
 Tasks
 -----
 
 Tasks and settings are introduced in the
-`getting started guide </Getting-Started/Basic-Def>`, which you may wish
+[getting started guide][Basic-Def], which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
 
@@ -10693,10 +10893,10 @@ There are several features of the task system:
 
 1.  By integrating with the settings system, tasks can be added,
     removed, and modified as easily and flexibly as settings.
-2.  `Input Tasks </Extending/Input-Tasks>` use
-    `parser combinators <Parsing-Input>` to define the syntax for their
+2.  [Input Tasks][Input-Tasks] use
+    [parser combinators][Parsing-Input] to define the syntax for their
     arguments. This allows flexible syntax and tab-completions in the
-    same way as /Extending/Commands.
+    same way as [Commands][Commands].
 3.  Tasks produce values. Other tasks can access a task's value by
     calling `value` on it within a task definition.
 4.  Dynamically changing the structure of the task graph is possible.
@@ -10741,7 +10941,7 @@ We'll define a couple of other keys for the examples:
 
 The examples themselves are valid entries in a `build.sbt` or can be
 provided as part of a sequence to `Project.settings` (see
-`Full Configuration </Getting-Started/Full-Def>`).
+[.scala build definition][Full-Def]).
 
 #### Implement the task
 
@@ -10807,8 +11007,8 @@ As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
 
 1.  Assignment methods have the lowest precedence. These are methods
-    with names ending in =, except for !=, \<=, \>=, and names that
-    start with =.
+    with names ending in `=`, except for `!=`, `<=`, `>=`, and names that
+    start with `=`.
 2.  Methods starting with a letter have the next highest precedence.
 3.  Methods with names that start with a symbol and aren't included in
     1. have the highest precedence. (This category is divided further
@@ -10946,7 +11146,7 @@ can be organized into four groups:
 -   Default filter (`inAnyProject`, `inAnyConfiguration`, `inAnyTask`)
 -   Project relationships (`inAggregates`, `inDependencies`)
 
-See the `API documentation <../../api/sbt/ScopeFilter$$Make.html>`\_ for
+See the [API documentation](../../api/sbt/ScopeFilter$$Make.html) for
 details.
 
 ##### Combining ScopeFilters
@@ -11080,10 +11280,10 @@ or text data.
 
 To use Streams, get the value of the `streams` task. This is a special
 task that provides an instance of
-`TaskStreams <../../api/sbt/std/TaskStreams.html>`\_ for the defining
+[TaskStreams](../../api/sbt/std/TaskStreams.html) for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-`Logger <../../api/sbt/Logger.html>`\_, which is the most commonly used
+[Logger](../../api/sbt/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
     myTask := {
@@ -11162,7 +11362,7 @@ methods, which are used to handle failure of other tasks.
 The `failure` method creates a new task that returns the `Incomplete`
 value when the original task fails to complete normally. If the original
 task succeeds, the new task fails.
-`Incomplete <../../api/sbt/Incomplete.html>`\_ is an exception with
+[Incomplete](../../api/sbt/Incomplete.html) is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 
@@ -11213,7 +11413,7 @@ inputs fail and computes its value otherwise.
 #### `result`
 
 The `result` method creates a new task that returns the full `Result[T]`
-value for the original task. `Result <../../api/sbt/Result.html>`\_ has
+value for the original task. [Result](../../api/sbt/Result.html) has
 the same structure as `Either[Incomplete, T]` for a task result of type
 `T`. That is, it has two subtypes:
 
@@ -11283,11 +11483,13 @@ It is obvious here that calling intTask() will never result in "finally"
 being printed.
 
 
+  [Parsing-Input]: Parsing-Input.html
+
 Input Tasks
 -----------
 
 Input Tasks parse user input and produce a task to run.
-`/Detailed-Topics/Parsing-Input/` describes how to use the parser
+[Parsing Input][Parsing-Input] describes how to use the parser
 combinators that define the input syntax and tab completion. This page
 describes how to hook those parser combinators into the input task
 system.
@@ -11304,7 +11506,8 @@ method:
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
-`Parser </Detailed-Topics/Parsing-Input>` applied to user input. Just as
+
+[Parser][Parsing-Input] applied to user input. Just as
 the special `value` method gets the value of a setting or task, the
 special `parsed` method gets the result of a `Parser`.
 
@@ -11333,7 +11536,7 @@ then echoes the arguments passed to it on their own line.
 The Parser provided by the `spaceDelimited` method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
 a matter of defining your own `Parser` as described on the
-`/Detailed-Topics/Parsing-Input` page.
+[Parsing Input][Parsing-Input] page.
 
 #### Constructing the Parser
 
@@ -11353,18 +11556,19 @@ Scala and sbt version settings as well as the state. To use these
 settings, we need to wrap the Parser construction in `Def.setting` and
 get the setting values with the special `value` method:
 
-    import complete.DefaultParsers._
+```scala
+import complete.DefaultParsers._
 
-> val parser: Initialize[State =\> Parser[(String,String)]] =
-> :   Def.setting {
->     :   (state: State) =\>
->         :   ( token("scala" \<\~ Space) \~ token(scalaVersion.value) )
->             | ( token("sbt" \<\~ Space) \~ token(sbtVersion.value) ) |
->             ( token("commands" \<\~ Space) \~
->             token(state.remainingCommands.size.toString) )
->
->     }
->
+val parser: Initialize[State => Parser[(String,String)]] =
+ Def.setting {
+  (state: State) =>
+    ( token("scala" <~ Space) ~ token(scalaVersion.value) ) |
+    ( token("sbt" <~ Space) ~ token(sbtVersion.value) ) |
+    ( token("commands" <~ Space) ~
+        token(state.remainingCommands.size.toString) )
+ }
+ ```
+
 This Parser definition will produce a value of type `(String,String)`.
 The input syntax defined isn't very flexible; it is just a
 demonstration. It will produce one of the following values for a
@@ -11574,6 +11778,9 @@ For a main class Demo that echoes its arguments, the output of running
     Done!
 
 
+  [Parsing-Input]: Parsing-Input.html
+  [Build-State]: Build-State.html
+
 Commands
 --------
 
@@ -11583,8 +11790,8 @@ A "command" looks similar to a task: it's a named operation that can be
 executed from the sbt console.
 
 However, a command's implementation takes as its parameter the entire
-state of the build (represented by `/Extending/Build-State`) and
-computes a new `/Extending/Build-State`. This means that a command can
+state of the build (represented by [State][Build-State]) and
+computes a new [State][Build-State]. This means that a command can
 look at or modify other sbt settings, for example. Typically, you would
 resort to a command when you need to do something that's impossible in a
 regular task.
@@ -11605,10 +11812,11 @@ In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
 Scala's standard library, these are very similar. The action part is a
 function `(State, T) => State`, where `T` is the data structure produced
-by the parser. See the `/Detailed-Topics/Parsing-Input` page for how to
+by the parser. See the
+[Parsing Input][Parsing-Input] page for how to
 use the parser combinators.
 
-`State <../../api/sbt/State.html>`\_ provides access to the build state,
+[State](../../api/sbt/State.html) provides access to the build state,
 such as all registered `Command`s, the remaining commands to execute,
 and all project-related information. See `Build-State` for details on
 State.
@@ -11625,7 +11833,7 @@ the parser. For example, the currently loaded projects (provided by
 `State`) determine valid completions for the `project` command. Examples
 for the general and specific cases are shown in the following sections.
 
-See `Command.scala <../../sxr/sbt/Command.scala.html>`\_ for the source
+See [Command.scala](../../sxr/sbt/Command.scala.html) for the source
 API details for constructing commands.
 
 #### General commands
@@ -11759,12 +11967,15 @@ commands to a project. To try it out:
     }
 
 
+  [Commands]: Commands.html
+  [Input-Tasks]: Input-Tasks.html
+
 Parsing and tab completion
 --------------------------
 
 This page describes the parser combinators in sbt. These parser
 combinators are typically used to parse user input and provide tab
-completion for `/Extending/Input-Tasks` and `/Extending/Commands`. If
+completion for [Input Tasks][Input-Tasks] and [Commands][Commands]. If
 you are already familiar with Scala's parser combinators, the methods
 are mostly the same except that their arguments are strict. There are
 two additional methods for controlling tab completion that are discussed
@@ -11812,7 +12023,7 @@ a `Char` or `String`. Other basic parser constructors are the
 ### Built-in parsers
 
 sbt comes with several built-in parsers defined in
-`sbt.complete.DefaultParsers <../../api/sbt/complete/DefaultParsers$.html>`\_.
+[sbt.complete.DefaultParsers](../../api/sbt/complete/DefaultParsers$.html).
 Some commonly used built-in parsers are:
 
 > -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
@@ -11824,7 +12035,7 @@ Some commonly used built-in parsers are:
 > -   `Bool` for parsing a `Boolean` value
 
 See the
-`DefaultParsers API <../../api/sbt/complete/DefaultParsers$.html>`\_ for
+[DefaultParsers API](../../api/sbt/complete/DefaultParsers$.html) for
 details.
 
 ### Combining parsers
@@ -11909,7 +12120,7 @@ suggestions becomes unmanageable. A better parser is:
 
     token( ("fg" | "bg") ~ ' ') ~ token("green" | "blue")
 
-Now, the initial suggestions would be (with \_ representing a space):
+Now, the initial suggestions would be (with `_` representing a space):
 `console fg_ bg_`
 
 Be careful not to overlap or nest tokens, as in
@@ -11921,7 +12132,7 @@ token definition will be used.
 State and actions
 -----------------
 
-`State <../../api/sbt/State$.html>`\_ is the entry point to all
+[State](../../api/sbt/State$.html) is the entry point to all
 available information in sbt. The key methods are:
 
 -   `definedCommands: Seq[Command]` returns all registered Command
@@ -11989,14 +12200,14 @@ method to extract the most useful information:
     val extracted: Extracted = Project.extract(state)
     import extracted._
 
-`Extracted <../../api/sbt/Extracted.html>`\_ provides:
+[Extracted](../../api/sbt/Extracted.html) provides:
 
 -   Access to the current build and project (`currentRef`)
 -   Access to initialized project setting data (`structure.data`)
 -   Access to session `Setting`s and the original, permanent settings
     from .sbt and .scala files (session.append and session.original,
     respectively)
--   Access to the current `Eval <../../api/sbt/compiler/Eval.html>`\_
+-   Access to the current [Eval](../../api/sbt/compiler/Eval.html)
     instance for evaluating Scala expressions in the build context.
 
 ### Project data
@@ -12010,12 +12221,12 @@ the following way:
     val value: Option[T] = key in scope get structure.data
 
 Here, a `SettingKey[T]` is typically obtained from
-`Keys <../../api/sbt/Keys$.html>`\_ and is the same type that is used to
+[Keys](../../api/sbt/Keys$.html) and is the same type that is used to
 define settings in `.sbt` files, for example.
-`Scope <../../api/sbt/Scope.html>`\_ selects the scope the key is
+[Scope](../../api/sbt/Scope.html) selects the scope the key is
 obtained for. There are convenience overloads of `in` that can be used
 to specify only the required scope axes. See
-`Structure.scala <../../sxr/sbt/Structure.scala.html>`\_ for where `in`
+[Structure.scala](../../sxr/sbt/Structure.scala.html) for where `in`
 and other parts of the settings interface are defined. Some examples:
 
     import Keys._
@@ -12028,14 +12239,14 @@ and other parts of the settings interface are defined. Some examples:
     // get the package options for the `test:packageSrc` task or Nil if none are defined
     val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 
-`BuildStructure <../../api/sbt/Load$$BuildStructure.html>`\_ contains
+[BuildStructure](../../api/sbt/Load$$BuildStructure.html) contains
 information about build and project relationships. Key members are:
 
     units: Map[URI, LoadedBuildUnit]
     root: URI
 
 A `URI` identifies a build and `root` identifies the initial build
-loaded. `LoadedBuildUnit <../../api/sbt/Load$$LoadedBuildUnit.html>`\_
+loaded. [LoadedBuildUnit](../../api/sbt/Load$$LoadedBuildUnit.html)
 provides information about a single build. The key members of
 `LoadedBuildUnit` are:
 
@@ -12045,9 +12256,9 @@ provides information about a single build. The key members of
     // maps the project ID to the Project definition
     defined: Map[String, ResolvedProject]
 
-`ResolvedProject <../../api/sbt/ResolvedProject.html>`\_ has the same
+[ResolvedProject](../../api/sbt/ResolvedProject.html) has the same
 information as the `Project` used in a `project/Build.scala` except that
-`ProjectReferences <../../api/sbt/ProjectReference.html>`\_ are resolved
+[ProjectReferences](../../api/sbt/ProjectReference.html) are resolved
 to `ProjectRef`s.
 
 ### Classpaths
@@ -12112,13 +12323,17 @@ input. For example,
     myTask := ... state.value ...
 
 
+  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Tasks]: Tasks.html
+  [Mapping-Files]: Mapping-Files.html
+
 Tasks/Settings: Motivation
 --------------------------
 
 This page motivates the task and settings system. You should already
 know how to use tasks and settings, which are described in the
-`getting started guide </Getting-Started/More-About-Settings>` and on
-the `Tasks` page.
+[getting started guide][More-About-Settings] and on
+the [Tasks][Tasks] page.
 
 An important aspect of the task system is to combine two common, related
 steps in a build:
@@ -12135,14 +12350,14 @@ To see why it is advantageous to combine them, compare the situation to
 that of deferring initialization of a variable in Scala. This Scala code
 is a bad way to expose a value whose initialization is deferred:
 
-    // Define a variable that will be initialized at some point
-    // We don't want to do it right away, because it might be expensive
+```scala
+// Define a variable that will be initialized at some point
+// We don't want to do it right away, because it might be expensive
+var foo: Foo = _
 
-> var foo: Foo = \_
->
-> > // Define a function to initialize the variable
->
-> def makeFoo(): Unit = ... initialize foo ...
+// Define a function to initialize the variable
+def makeFoo(): Unit = ... initialize foo ...
+```
 
 Typical usage would be:
 
@@ -12192,7 +12407,7 @@ The general form of a task definition looks like:
     }
 
 (This is only intended to be a discussion of the ideas behind tasks, so
-see the `sbt Tasks </Detailed-Topics/Tasks>` page for details on usage.)
+see the [sbt Tasks][Tasks] page for details on usage.)
 Here, `aTask` is assumed to produce a result of type `A` and `bTask` is
 assumed to produce a result of type `B`.
 
@@ -12219,7 +12434,7 @@ task.
     }
 
 The `val inputs` line defines how the input files are mapped to paths in
-the zip. See `/Detailed-Topics/Mapping-Files` for details. The explicit
+the zip. See [Mapping Files][Mapping-Files] for details. The explicit
 types are not required, but are included for clarity.
 
 The `zipPath` input would be a custom task to define the location of the
@@ -12241,6 +12456,8 @@ information in the
 a foundation.
 
 
+  [Howto-Generating-Files]: Howto-Generating-Files.html
+
 General Best Practices
 ----------------------
 
@@ -12259,17 +12476,19 @@ There are two options for settings that are specific to a user. An
 example of such a setting is inserting the local Maven repository at the
 beginning of the resolvers list:
 
-    resolvers := {
-      val localMaven = "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-      localMaven +: resolvers.value
-    }
+```scala
+resolvers := {
+  val localMaven = "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+  localMaven +: resolvers.value
+}
+```
 
 1.  Put settings specific to a user in a global `.sbt` file, such as
-    \~/.sbt/local.sbt. These settings will be applied to all projects.
+    `~/.sbt/0.13/global.sbt`. These settings will be applied to all projects.
 2.  Put settings in a `.sbt` file in a project that isn't checked into
-    version control, such as \<project\>/local.sbt. sbt combines the
+    version control, such as `<project>/local.sbt`. sbt combines the
     settings from multiple .sbt files, so you can still have the
-    standard \<project\>/build.sbt and check that into version control.
+    standard `<project>/build.sbt` and check that into version control.
 
 ### .sbtrc
 
@@ -12287,7 +12506,7 @@ up after a build and provides a single location to organize generated
 files. Any generated files that are specific to a Scala version should
 go in `crossTarget` for efficient cross-building.
 
-For generating sources and resources, see `/Howto/generatefiles`.
+For generating sources and resources, see [Generating Files][Howto-Generating-Files].
 
 ### Don't hard code
 
@@ -12384,6 +12603,9 @@ lazy val parser: Parser[Int] =
 > number.
 
 
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Best-Practices]: Best-Practices.html
+
 Plugins
 -------
 
@@ -12392,7 +12614,7 @@ Plugins
 A plugin is essentially a way to use external code in a build
 definition. A plugin can be a library used to implement a task. For
 example, you might use
-`Knockoff <https://github.com/tristanjuricek/knockoff/>`\_ to write a
+[Knockoff](https://github.com/tristanjuricek/knockoff/) to write a
 markdown processing task. A plugin can define a sequence of sbt Settings
 that are automatically added to all projects or that are explicitly
 declared for selected projects. For example, a plugin might add a
@@ -12401,7 +12623,7 @@ can be added with the `commands` setting
 
 The `Plugins-Best-Practices` page describes the currently evolving
 guidelines to writing sbt plugins. See also the general
-`/Detailed-Topics/Best-Practices`.
+[best practices][Best-Practices].
 
 ### Using a binary sbt plugin
 
@@ -12464,7 +12686,7 @@ plugins will not see classes or resources from build definitions.
 
 #### Global plugins
 
-The \`|globalPluginsBase|\` directory is treated as a global plugin
+The `~/.sbt/0.13/plugins/` directory is treated as a global plugin
 definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.
@@ -12738,8 +12960,6 @@ method. For example, if we wish to remove the JvmModule settings
 The simplest global plugin definition is declaring a library or plugin
 in `|globalPluginsBase|` build.sbt:
 
-::
-
     libraryDependencies += "org.example" %% "example-plugin" % "0.1"
 
 This plugin will be available for every sbt project for the current
@@ -12747,23 +12967,24 @@ user.
 
 In addition:
 
-1. Jars may be placed directly in :sublit:|globalPluginsBase| `lib/`
-and will be available to every build definition for the current user.
-2. Dependencies on plugins built from source may be declared in
-|globalPluginsBase| project/Build.scala as described at
-/Getting-Started/Full-Def. 3. A Plugin may be directly defined in Scala
-source files in |globalPluginsBase|, such as
-|globalPluginsBase| MyPlugin.scala. |globalPluginsBase|/build.sbt
-should contain sbtPlugin := true. This can be used for quicker
-turnaround when developing a plugin initially:
-
-> 1.  Edit the global plugin code
-> 2.  reload the project you want to use the modified plugin in
-> 3.  sbt will rebuild the plugin and use it for the project.
->     Additionally, the plugin will be available in other projects on
->     the machine without recompiling again. This approach skips the
->     overhead of publishLocal and cleaning the plugins directory of the
->     project using the plugin.
+- Jars may be placed directly in :sublit:|globalPluginsBase| `lib/`
+   and will be available to every build definition for the current user.
+- Dependencies on plugins built from source may be declared in
+   |globalPluginsBase| project/Build.scala as described at
+   [.scala build definition][Full-Deff].
+- A Plugin may be directly defined in Scala
+   source files in |globalPluginsBase|, such as
+   |globalPluginsBase| MyPlugin.scala. |globalPluginsBase|/build.sbt
+   should contain sbtPlugin := true. This can be used for quicker
+   turnaround when developing a plugin initially:
+   
+   1.  Edit the global plugin code
+   2.  reload the project you want to use the modified plugin in
+   3.  sbt will rebuild the plugin and use it for the project.
+       Additionally, the plugin will be available in other projects on
+       the machine without recompiling again. This approach skips the
+       overhead of publishLocal and cleaning the plugins directory of the
+       project using the plugin.
 
 These are all consequences of |globalPluginsBase| being a standard
 project whose classpath is added to every sbt project's build
@@ -12807,7 +13028,7 @@ long-standing issues with plugins.
 
 ### Reuse existing keys
 
-sbt has a number of `predefined keys <../../api/sbt/Keys%24.html>`\_.
+sbt has a number of [predefined keys](../../api/sbt/Keys%24.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
     val sourceFiles = settingKey[Seq[File]]("Some source files")
@@ -13009,6 +13230,8 @@ programs resolved using the Ivy dependency manager. Sbt uses this as its
 own deployment mechanism.
 
 
+  [Launcher-Configuration]: Launcher-Configuration.html
+
 Getting Started with the Sbt Launcher
 -------------------------------------
 
@@ -13149,8 +13372,8 @@ Next, define a configuration file for the launcher. For the above class,
 it might look like:
 
 Then, `publishLocal` or `+publishLocal` the application to make it
-available. For more information, please see
-`Launcher Configuration </Detailed-Topics/Launcher/Configuration>`
+available. For more information, see
+[Launcher Configuration][Launcher-Configuration].
 
 #### Running an Application
 
@@ -13158,16 +13381,16 @@ As mentioned above, there are a few options to actually run the
 application. The first involves providing a modified jar for download.
 The second two require providing a configuration file for download.
 
--   Replace the /sbt/sbt.boot.properties file in the launcher jar and
+-   Replace the `/sbt/sbt.boot.properties` file in the launcher jar and
     distribute the modified jar. The user would need a script to run
-    java -jar your-launcher.jar arg1 arg2 ....
+    `java -jar your-launcher.jar arg1 arg2 ....`
 -   The user downloads the launcher jar and you provide the
     configuration file.
     -   The user needs to run
-        java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar.
+        `java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar`.
     -   The user already has a script to run the launcher (call it
         'launch'). The user needs to run
-        launch @your.boot.properties your-arg-1 your-arg-2
+        `launch @your.boot.properties your-arg-1 your-arg-2`
 
 #### Execution
 
@@ -13372,9 +13595,9 @@ following properties:
 -   `cross-versioned` - An optional string denoting how this application
     is published. If app.cross-versioned is binary, the resolved module
     ID is
-    {app.name+'\_'+CrossVersion.binaryScalaVersion(scala.version)}. If
+    `{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}`. If
     app.cross-versioned is true or full, the resolved module ID is
-    {app.name+'\_'+scala.version}. The scala.version property must be
+    `{app.name+'_'+scala.version}`. The scala.version property must be
     specified and cannot be auto when cross-versioned.
 -   `resources` - An optional list of jar files that should be added to
     the application's classpath.
@@ -13432,7 +13655,7 @@ resolving applications. It consists of the following properties:
 
 -   `ivy-home` - The home directory for Ivy. This determines where the
     ivy-local repository is located, and also where the ivy cache is
-    stored. Defaults to \~/.ivy2
+    stored. Defaults to `~/.ivy2`
 -   `ivy.cache-directory` - provides an alternative location for the Ivy
     cache used by the launcher. This does not automatically set the Ivy
     cache for the application, but the application is provided this
@@ -13543,7 +13766,7 @@ needs a mechanism to store the state from any potential client. In
 dynamic languages, this can be done directly on objects.
 
 A naive approach in Scala is to use a `Map<String,Any>`. However, this
-vioaltes tennant \#1: Everythign should have a `Type`. So, sbt defines a
+vioaltes tennant #1: Everythign should have a `Type`. So, sbt defines a
 new type of map called an `AttributeMap`. An `AttributeMap` is a
 key-value storage mechanism where keys are both strings *and* expected
 `Type`s for their value.
@@ -13653,6 +13876,10 @@ TODO - Transition into `InputTask[_]`, rehash Command
 TODO - Tansition into Scope.
 
 
+  [Sdocs-Global]: ../api/sbt/Global$.html
+  [Sdocs-This]: ../api/sbt/This$.html
+  [Sdocs-Select]: ../api/sbt/Select.html
+
 Settings Core
 -------------
 
@@ -13674,9 +13901,11 @@ settings system.
 To run this example, first create a new project with the following
 build.sbt file:
 
-    libraryDependencies += "org.scala-sbt" %% "collections" % sbtVersion.value
+```scala
+libraryDependencies += "org.scala-sbt" %% "collections" % sbtVersion.value
 
-    resolvers += sbtResolver.value
+resolvers += sbtResolver.value
+```
 
 Then, put the following examples in source files `SettingsExample.scala`
 and `SettingsUsage.scala`. Finally, run sbt and enter the REPL using
@@ -13698,82 +13927,86 @@ this time. The example uses a trivial implementation for this part.
 
 `SettingsExample.scala`
 
-    import sbt._
+```scala
+  import sbt._
 
-> /*\* Define our settings system*/
->
-> // A basic scope indexed by an integer. final case class Scope(index:
-> Int)
->
-> // Extend the Init trait. // (It is done this way because the Scope
-> type parameter is used everywhere in Init. // Lots of type
-> constructors would become binary, which as you may know requires lots
-> of type lambdas // when you want a type function with only one
-> parameter. // That would be a general pain.) object SettingsExample
-> extends Init[Scope] { // Provides a way of showing a
-> Scope+AttributeKey[\_] val showFullKey: Show[ScopedKey[\_]] = new
-> Show[ScopedKey[\_]] { def apply(key: ScopedKey[\_]) = key.scope.index
-> + "/" + key.key.label }
->
-> > // A sample delegation function that delegates to a Scope with a
-> > lower index. val delegates: Scope =\> Seq[Scope] = { case s @
-> > Scope(index) =\> s +: (if(index \<= 0) Nil else
-> > delegates(Scope(index-1)) ) }
-> >
-> > // Not using this feature in this example. val scopeLocal:
-> > ScopeLocal = \_ =\> Nil
-> >
-> > // These three functions + a scope (here, Scope) are sufficient for
-> > defining our settings system.
->
-> }
+/** Define our settings system */
+
+// A basic scope indexed by an integer.
+final case class Scope(index: Int)
+
+// Extend the Init trait.
+//  (It is done this way because the Scope type parameter is used everywhere in Init.
+//  Lots of type constructors would become binary, which as you may know requires lots of type lambdas
+//  when you want a type function with only one parameter.
+//  That would be a general pain.)
+object SettingsExample extends Init[Scope]
+{
+    // Provides a way of showing a Scope+AttributeKey[_]
+    val showFullKey: Show[ScopedKey[_]] = new Show[ScopedKey[_]] {
+        def apply(key: ScopedKey[_]) = key.scope.index + "/" + key.key.label
+    }
+
+    // A sample delegation function that delegates to a Scope with a lower index.
+    val delegates: Scope => Seq[Scope] = { case s @ Scope(index) =>
+        s +: (if(index <= 0) Nil else delegates(Scope(index-1)) )
+    }
+
+    // Not using this feature in this example.
+    val scopeLocal: ScopeLocal = _ => Nil
+
+    // These three functions + a scope (here, Scope) are sufficient for defining our settings system.
+}
+```
 
 #### Example Usage
 
 This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
-`Settings API documentation <../../api/sbt/Settings.html>`\_ for
+[Settings API documentation](../../api/sbt/Settings.html) for
 details.
 
 `SettingsUsage.scala`
 
-    /** Usage Example **/
+```scala
+/** Usage Example **/
 
-       import sbt._
-       import SettingsExample._
-       import Types._
+   import sbt._
+   import SettingsExample._
+   import Types._
 
-    object SettingsUsage
-    {
+object SettingsUsage {
 
-          // Define some keys
-       val a = AttributeKey[Int]("a")
-       val b = AttributeKey[Int]("b")
+      // Define some keys
+   val a = AttributeKey[Int]("a")
+   val b = AttributeKey[Int]("b")
 
-          // Scope these keys
-       val a3 = ScopedKey(Scope(3), a)
-       val a4 = ScopedKey(Scope(4), a)
-       val a5 = ScopedKey(Scope(5), a)
+      // Scope these keys
+   val a3 = ScopedKey(Scope(3), a)
+   val a4 = ScopedKey(Scope(4), a)
+   val a5 = ScopedKey(Scope(5), a)
 
-       val b4 = ScopedKey(Scope(4), b)
+   val b4 = ScopedKey(Scope(4), b)
 
-          // Define some settings
-       val mySettings: Seq[Setting[_]] = Seq(
-          setting( a3, value( 3 ) ),
-          setting( b4, map(a4)(_ * 3)),
-          update(a5)(_ + 1)
-       )
+      // Define some settings
+   val mySettings: Seq[Setting[_]] = Seq(
+      setting( a3, value( 3 ) ),
+      setting( b4, map(a4)(_ * 3)),
+      update(a5)(_ + 1)
+   )
 
-          // "compiles" and applies the settings.
-          //  This can be split into multiple steps to access intermediate results if desired.
-          //  The 'inspect' command operates on the output of 'compile', for example.
-       val applied: Settings[Scope] = make(mySettings)(delegates, scopeLocal, showFullKey)
+      // "compiles" and applies the settings.
+      //  This can be split into multiple steps to access intermediate results if desired.
+      //  The 'inspect' command operates on the output of 'compile', for example.
+   val applied: Settings[Scope] = make(mySettings)(delegates, scopeLocal, showFullKey)
 
-       // Show results.
-       for(i <- 0 to 5; k <- Seq(a, b)) {
-          println( k.label + i + " = " + applied.get( Scope(i), k) )
-       }
+   // Show results.
+   for(i <- 0 to 5; k <- Seq(a, b)) {
+      println( k.label + i + " = " + applied.get( Scope(i), k) )
+   }
+}
+```
 
 This produces the following output when run: :
 
@@ -13809,18 +14042,28 @@ This produces the following output when run: :
 sbt defines a more complicated scope than the one shown here for the
 standard usage of settings in a build. This scope has four components:
 the project axis, the configuration axis, the task axis, and the extra
-axis. Each component may be `Global`\_ (no specific value), `This`\_
-(current context), or `Select`\_ (containing a specific value). sbt
-resolves `This_` to either `Global`\_ or `Select`\_ depending on the
-context.
+axis. Each component may be 
+[Global][Sdocs-Global] (no specific value),
+[This][Sdocs-This]
+(current context), or
+[Select][Sdocs-Select] (containing a specific value). sbt
+resolves `This_` to either
+[Global][Sdocs-Global] or
+[Select][Sdocs-Select]
+depending on the context.
 
-For example, in a project, a `This`\_ project axis becomes a `Select`\_
-referring to the defining project. All other axes that are `This`\_ are
-translated to `Global`\_. Functions like inConfig and inTask transform
-This into a `Select`\_ for a specific value. For example,
+For example, in a project, a
+[This][Sdocs-This] project axis becomes a
+[Select][Sdocs-Select] referring to the defining project. All other axes that are
+[This][Sdocs-This] are
+translated to
+[Global][Sdocs-Global]. Functions like inConfig and inTask transform
+This into a
+[Select][Sdocs-Select] for a specific value. For example,
 `inConfig(Compile)(someSettings)` translates the configuration axis for
 all settings in *someSettings* to be `Select(Compile)` if the axis value
-is `This`\_.
+is
+[This][Sdocs-This].
 
 So, from the example and from sbt's scopes, you can see that the core
 settings engine does not impose much on the structure of a scope. All it
@@ -13853,7 +14096,7 @@ underlying `SettingKey[Task[T]]` (and they both wrap an underlying
 For example, `a := 3` for a SettingKey *a* will very roughly translate
 to `setting(a, value(3))`. For a TaskKey *a*, it will roughly translate
 to `setting(a, value( task { 3 } ) )`. See
-`main/Structure.scala <../../sxr/sbt/Structure.scala>`\_ for details.
+[main/Structure.scala](../../sxr/sbt/Structure.scala) for details.
 
 #### Settings definitions
 
@@ -13882,7 +14125,7 @@ into the a task graph. This task graph is then used to execute your
 build.
 
 All of sbt's loading semantics are contained within the
-`Load.scala <../../sxr/sbt/Load.scala.html>` file. It is approximately
+[Load.scala](../../sxr/sbt/Load.scala.html) file. It is approximately
 the following:
 
 ![image](settings-initialization-load-ordering.png)
@@ -13902,7 +14145,7 @@ We can see that sbt performs the following actions in load:
         `project/project/*.scala`)
 
     b. Load/Compile the project (`project/*.scala`)
-3.  Load project \*.sbt files (`build.sbt` and friends).
+3.  Load project `*.sbt` files (`build.sbt` and friends).
 
 Each of these loads defines several sequences of settings. The diagram
 shows the two most important:
@@ -13930,7 +14173,7 @@ shows the two most important:
         }
 
 After loading/compiling all the build definitions, sbt has a series of
-Seq[Setting[\_]] that it must order. As shown in the diagram, the
+`Seq[Setting[_]]` that it must order. As shown in the diagram, the
 default inclusion order for sbt is:
 
 1.  All AutoPlugin settings
@@ -14070,59 +14313,61 @@ result:
 
 Relevant API documentation for custom resolvers:
 
--   `ResolveInfo <../../api/index.html#sbt.BuildLoader$$ResolveInfo>`\_
--   `BuildLoader <../../api/sbt/BuildLoader$.html>`\_
+-   [ResolveInfo](../../api/index.html#sbt.BuildLoader$$ResolveInfo)
+-   [BuildLoader](../../api/sbt/BuildLoader$.html)
 
 #### Full Example
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object Demo extends Build
+object Demo extends Build
+{
+  // Define a project that depends on an external project with a custom URI
+  lazy val root = Project("root", file(".")).dependsOn(
+    uri("demo:a")
+  )
+
+  // Register the custom resolver
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
+
+  // Define the custom resolver, which handles the 'demo' scheme.
+  // The resolver's job is to produce a directory containing the project to load.
+  // A subdirectory of info.staging can be used to create new local
+  //   directories, such as when doing 'git clone ...'
+  def demoResolver(info: BuildLoader.ResolveInfo): Option[() => File] =
+    if(info.uri.getScheme != "demo")
+      None
+    else
     {
-      // Define a project that depends on an external project with a custom URI
-      lazy val root = Project("root", file(".")).dependsOn(
-        uri("demo:a")
-      )
+      // Use a subdirectory of the staging directory for the new local build.
+      // The subdirectory name is derived from a hash of the URI,
+      //   and so identical URIs will resolve to the same directory (as desired).
+      val base = RetrieveUnit.temporary(info.staging, info.uri)
 
-      // Register the custom resolver
-      override def buildLoaders = 
-        BuildLoader.resolve(demoResolver) ::
-        Nil
-
-      // Define the custom resolver, which handles the 'demo' scheme.
-      // The resolver's job is to produce a directory containing the project to load.
-      // A subdirectory of info.staging can be used to create new local
-      //   directories, such as when doing 'git clone ...'
-      def demoResolver(info: BuildLoader.ResolveInfo): Option[() => File] =
-        if(info.uri.getScheme != "demo") 
-          None
-        else
-        {
-          // Use a subdirectory of the staging directory for the new local build.
-          // The subdirectory name is derived from a hash of the URI,
-          //   and so identical URIs will resolve to the same directory (as desired).
-          val base = RetrieveUnit.temporary(info.staging, info.uri)
-
-          // Return a closure that will do the actual resolution when requested.
-          Some(() => resolveDemo(base, info.uri.getSchemeSpecificPart))
-        }
-
-      // Construct a sample project on the fly with the name specified in the URI.
-      def resolveDemo(base: File, ssp: String): File =
-      {
-        // Only create the project if it hasn't already been created.
-        if(!base.exists)
-          IO.write(base / "build.sbt", template.format(ssp))
-        base
-      }
-
-      def template =  """
-    name := "%s"
-
-    version := "1.0"
-    """
+      // Return a closure that will do the actual resolution when requested.
+      Some(() => resolveDemo(base, info.uri.getSchemeSpecificPart))
     }
+
+  // Construct a sample project on the fly with the name specified in the URI.
+  def resolveDemo(base: File, ssp: String): File =
+  {
+    // Only create the project if it hasn't already been created.
+    if(!base.exists)
+      IO.write(base / "build.sbt", template.format(ssp))
+    base
+  }
+
+  def template =  """
+name := "%s"
+
+version := "1.0"
+"""
+}
+```
 
 ### Custom Builder
 
@@ -14151,9 +14396,9 @@ will load the build when evaluated. Register a builder by passing it to
 
 Relevant API documentation for custom builders:
 
--   `BuildInfo <../../api/sbt/BuildLoader$$BuildInfo.html>`\_
--   `BuildLoader <../../api/sbt/BuildLoader$.html>`\_
--   `BuildUnit <../../api/index.html#sbt.Load$$BuildUnit>`\_
+-   [BuildInfo](../../api/sbt/BuildLoader$$BuildInfo.html)
+-   [BuildLoader](../../api/sbt/BuildLoader$.html)
+-   [BuildUnit](../../api/index.html#sbt.Load$$BuildUnit)
 
 #### Example
 
@@ -14161,38 +14406,42 @@ This example demonstrates the structure of how a custom builder could
 read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
 
+```scala
     ... imports ...
 
-> object Demo extends Build { lazy val root = Project("root", file("."))
-> dependsOn( file("basic-pom-project") )
->
-> > override def buildLoaders =
-> > :   BuildLoader.build(demoBuilder) :: Nil
-> >
-> > def demoBuilder: BuildInfo =\> Option[() =\> BuildUnit] = info =\>
-> > :   if(pomFile(info).exists)
-> >     :   Some(() =\> pomBuild(info))
-> >
-> >     else
-> >     :   None
-> >
-> > def pomBuild(info: BuildInfo): BuildUnit = { val pom = pomFile(info)
-> > val model = readPom(pom)
-> >
-> > > val n = Project.normalizeProjectID(model.getName) val base =
-> > > Option(model.getProjectDirectory) getOrElse info.base val root =
-> > > Project(n, base) settings( pomSettings(model) : \_\*) val build =
-> > > new Build { override def projects = Seq(root) } val loader =
-> > > this.getClass.getClassLoader val definitions = new
-> > > LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil) val
-> > > plugins = new LoadedPlugins(info.base / "project", Nil, loader,
-> > > Nil, Nil) new BuildUnit(info.uri, info.base, definitions, plugins)
-> >
-> > }
-> >
-> > def readPom(file: File): Model = ... def pomSettings(m: Model):
-> > Seq[Setting[\_]] = ... def pomFile(info: BuildInfo): File =
-> > info.base / "pom.xml"
+object Demo extends Build
+{
+  lazy val root = Project("root", file(".")) dependsOn( file("basic-pom-project") )
+
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
+
+  def demoBuilder: BuildInfo => Option[() => BuildUnit] = info =>
+    if(pomFile(info).exists)
+      Some(() => pomBuild(info))
+    else
+      None
+
+  def pomBuild(info: BuildInfo): BuildUnit =
+  {
+    val pom = pomFile(info)
+    val model = readPom(pom)
+
+    val n = Project.normalizeProjectID(model.getName)
+    val base = Option(model.getProjectDirectory) getOrElse info.base
+    val root = Project(n, base) settings( pomSettings(model) : _*)
+    val build = new Build { override def projects = Seq(root) }
+    val loader = this.getClass.getClassLoader
+    val definitions = new LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil)
+    val plugins = new LoadedPlugins(info.base / "project", Nil, loader, Nil, Nil)
+    new BuildUnit(info.uri, info.base, definitions, plugins)
+  }
+
+  def readPom(file: File): Model = ...
+  def pomSettings(m: Model): Seq[Setting[_]] = ...
+  def pomFile(info: BuildInfo): File = info.base / "pom.xml"
+```
 
 ### Custom Transformer
 
@@ -14220,9 +14469,9 @@ overriding *Build.buildLoaders* with the result:
 
 Relevant API documentation for custom transformers:
 
--   `TransformInfo <../../api/index.html#sbt.BuildLoader$$TransformInfo>`\_
--   `BuildLoader <../../api/sbt/BuildLoader$.html>`\_
--   `BuildUnit <../../api/index.html#sbt.Load$$BuildUnit>`\_
+-   [TransformInfo](../../api/index.html#sbt.BuildLoader$$TransformInfo)
+-   [BuildLoader](../../api/sbt/BuildLoader$.html)
+-   [BuildUnit](../../api/index.html#sbt.Load$$BuildUnit)
 
 ##### Manipulating Project Dependencies in Settings
 
@@ -14242,12 +14491,12 @@ Build or referenced as the argument to `Project.aggregate` or
 ### The BuildDependencies type
 
 The type of the `buildDependencies` setting is
-`BuildDependencies <../../api/sbt/BuildDependencies.html>`\_.
+[BuildDependencies](../../api/sbt/BuildDependencies.html).
 `BuildDependencies` provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type `ClasspathDep[ProjectRef]`, which combines a `ProjectRef` with a
-configuration (see `ClasspathDep <../../api/sbt/ClasspathDep.html>`\_
-and `ProjectRef <../../api/sbt/ProjectRef.html>`\_). For aggregate
+configuration (see [ClasspathDep](../../api/sbt/ClasspathDep.html)
+and [ProjectRef](../../api/sbt/ProjectRef.html)). For aggregate
 dependencies, the type of a dependency is just `ProjectRef`.
 
 The API for `BuildDependencies` is not extensive, covering only a little
@@ -14285,14 +14534,16 @@ or removed. Modifying `buildDependencies` can be combined with modifying
 dependencies, for example.
 
 
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 Creating Command Line Applications Using sbt
 --------------------------------------------
 
 There are several components of sbt that may be used to create a command
-line application. The `launcher </Detailed-Topics/Launcher>` and the
+line application. The [launcher][Sbt-Launcher] and the
 `command system <Commands>` are the two main ones illustrated here.
 
-As described on the `launcher page </Detailed-Topics/Launcher>`, a
+As described on the [launcher page][Sbt-Launcher], a
 launched application implements the xsbti.AppMain interface and defines
 a brief configuration file that users pass to the launcher to run the
 application. To use the command system, an application sets up a
@@ -14335,7 +14586,7 @@ the `task-system` module as well.
 #### Application: Main.scala
 
 The application itself is defined by implementing
-`xsbti.AppMain <../../api/xsbti/AppMain.html>`\_. The basic steps are
+[xsbti.AppMain](../../api/xsbti/AppMain.html). The basic steps are
 
 1.  Provide command definitions. These are the commands that are
     available for users to run.
@@ -14394,7 +14645,7 @@ application.
 
 `hello.build.properties`
 
-``` {.sourceCode .ini}
+```
 [scala]
   version: 2.9.1
 
@@ -14412,21 +14663,23 @@ application.
   typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
 ```
 
+  
+  [Manual-Installation]: ../tutorial/Manual-Installation.html
 
 Nightly Builds
 --------------
 
-The latest development versions of |version| are available as nightly
-builds on |typesafe-snapshots|\_.
+The latest development versions of 0.13.2 are available as nightly
+builds on [Typesafe Snapshots](http://repo.typesafe.com/typesafe/ivy-snapshots/).
 
 To use a nightly build, the instructions are the same for
-`normal manual setup </Getting-Started/Setup>` except:
+[normal manual setup][Manual-Installation] except:
 
 1.  Download the launcher jar from one of the subdirectories of
     |nightly-launcher|. They should be listed in chronological order, so
     the most recent one will be last.
 2.  The version number is the name of the subdirectory and is of the
-    form |version|.x-yyyyMMdd-HHmmss. Use this in a build.properties
+    form `0.13.2.x-yyyyMMdd-HHmmss`. Use this in a build.properties
     file.
 3.  Call your script something like `sbt-nightly` to retain access to a
     stable sbt launcher. The documentation will refer to the script as
@@ -14444,23 +14697,43 @@ To reduce problems, it is recommended to not use a launcher jar for one
 nightly version to launch a different nightly version of sbt.
 
 
+  [Running]: ../tutorial/Running.html
+  [Scopes]: ../tutorial/Scopes.html
+  [Community-Plugins]: Communitiy-Plugins.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Using-Plugins]: ../tutorial/Using-Plugins.html
+  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Library-Management]: Library-Management.html
+  [Artifacts]: Artifacts.html
+  [Paths]: Paths.html
+  [Parsing-Input]: Parsing-Input.html
+  [Mapping-Files]: Mapping-Files.html
+  [Cross-Build]: Cross-Build.html
+  [Parsing-Input]: Parsing-Input.html
+  [Process]: Process.html
+  [Commands]: Commands.html
+  [Input-Tasks]: Input-Tasks.html
+  [Build-State]: Build-State.html
+
 Index
 -----
 
 This is an index of common methods, types, and values you might find in
 an sbt build definition. For command names, see
-`Running </Getting-Started/Running>`. For available plugins, see
-`the plugins list </Community/Community-Plugins>`.
+[Running][Running]. For available plugins, see
+[the plugins list][Community-Plugins].
 
 ### Values and Types
 
 #### Dependency Management
 
--   `ModuleID <../api/sbt/ModuleID.html>`\_ is the type of a dependency
-    definition. See /Detailed-Topics/Library-Management.
--   `Artifact <../api/sbt/Artifact.html>`\_ represents a single artifact
+-   [ModuleID](../api/sbt/ModuleID.html) is the type of a dependency
+    definition. See
+    [Library Management][Library-Management].
+-   [Artifact](../api/sbt/Artifact.html) represents a single artifact
     (such as a jar or a pom) to be built and published. See
-    /Detailed-Topics/Library-Management and /Detailed-Topics/Artifacts.
+    [Library Management][Library-Management] and [Artifacts][Artifacts].
 -   A [Resolver](../api/sbt/Resolver.html) can resolve and retrieve
     dependencies. Many types of Resolvers can publish dependencies as
     well. A repository is a closely linked idea that typically refers to
@@ -14471,29 +14744,29 @@ an sbt build definition. For command names, see
     group of dependencies.
 -   A [Configuration](../api/sbt/Configuration.html) is a useful Ivy
     construct for grouping dependencies. See ivy-configurations. It is
-    also used for scoping settings \</Getting-Started/Scopes\>.
+    also used for [scoping settings][Scopes].
 -   `Compile`, `Test`, `Runtime`, `Provided`, and `Optional` are
     predefined `configurations <ivy-configurations>`.
 
 #### Settings and Tasks
 
--   A `Setting <../api/sbt/Init$Setting.html>`\_ describes how to
+-   A [Setting](../api/sbt/Init$Setting.html) describes how to
     initialize a specific setting in the build. It can use the values of
     other settings or the previous value of the setting being
     initialized.
--   A `SettingsDefinition <../api/sbt/Init$SettingsDefinition.html>`\_
+-   A [SettingsDefinition](../api/sbt/Init$SettingsDefinition.html)
     is the actual type of an expression in a build.sbt. This allows
     either a single [Setting](../api/sbt/Init$Setting.html) or a
     sequence of settings
     ([SettingList](../api/sbt/Init$SettingList.html)) to be defined at
-    once. The types in a /Getting-Started/Full-Def always use just a
+    once. The types in a [.scala build definition][Full-Def] always use just a
     plain [Setting](../api/sbt/Init$Setting.html).
--   `Initialize <../api/sbt/Init$Initialize.html>`\_ describes how to
+-   [Initialize](../api/sbt/Init$Initialize.html) describes how to
     initialize a setting using other settings, but isn't bound to a
     particular setting yet. Combined with an initialization method and a
     setting to initialize, it produces a full
     [Setting](../api/sbt/Init$Setting.html).
--   `TaskKey <../api/sbt/TaskKey.html>`\_,
+-   [TaskKey](../api/sbt/TaskKey.html),
     [SettingKey](../api/sbt/SettingKey.html), and
     [InputKey](../api/sbt/InputKey.html) are keys that represent a task
     or setting. These are not the actual tasks, but keys that are used
@@ -14502,93 +14775,93 @@ an sbt build definition. For command names, see
     [ScopedSetting](../api/sbt/ScopedSetting.html), and
     [ScopedInput](../api/sbt/ScopedInput.html). These form the base
     types that provide the Settings methods.
--   `InputTask <../api/sbt/InputTask.html>`\_ parses and tab completes
+-   [InputTask](../api/sbt/InputTask.html) parses and tab completes
     user input, producing a task to run.
--   `Task <../api/sbt/Task.html>`\_ is the type of a task. A task is an
+-   [Task](../api/sbt/Task.html) is the type of a task. A task is an
     action that runs on demand. This is in contrast to a setting, which
     is run once at project initialization.
 
 #### Process
 
--   A `ProcessBuilder <../api/sbt/ProcessBuilder.html>`\_ is the type
+-   A [ProcessBuilder](../api/sbt/ProcessBuilder.html) is the type
     used to define a process. It provides combinators for building up
     processes from smaller processes.
--   A `Process <../api/sbt/Process.html>`\_ represents the actual forked
+-   A [Process](../api/sbt/Process.html) represents the actual forked
     process.
--   The `Process companion object <../api/sbt/Process$.html>`\_ provides
+-   The [Process companion object](../api/sbt/Process$.html) provides
     methods for constructing primitive processes.
 
 #### Build Structure
 
--   `Build <../api/sbt/Build.html>`\_ is the trait implemented for a
-    full definition \</Getting-Started/Full-Def\>, which defines project
+-   [Build](../api/sbt/Build.html) is the trait implemented for a
+    [.scala build definition][Full-Def], which defines project
     relationships and settings.
--   `Plugin <../api/sbt/Plugin.html>`\_ is the trait implemented for sbt
-    `/Getting-Started/Using-Plugins`.
--   `Project <../api/sbt/Project.html>`\_ is both a trait and a
+-   [Plugin](../api/sbt/Plugin.html) is the trait implemented for sbt
+    [plugins][Using-Plugins].
+-   [Project](../api/sbt/Project.html) is both a trait and a
     companion object that declares a single module in a build. See
-    full definition \</Getting-Started/Full-Def\>.
--   `Keys <../api/sbt/Keys$.html>`\_ is an object that provides all of
+    [.scala build definition][Full-Def].
+-   [Keys](../api/sbt/Keys$.html) is an object that provides all of
     the built-in keys for settings and tasks.
--   `State <../api/sbt/State.html>`\_ contains the full state for a
-    build. It is mainly used by /Extending/Commands and sometimes
-    /Extending/Input-Tasks. See also /Extending/Build-State.
+-   [State](../api/sbt/State.html) contains the full state for a
+    build. It is mainly used by [Commands][Commands] and sometimes
+    [Input Tasks][Input-Tasks]. See also [State and Actions][Build-State].
 
 ### Methods
 
 #### Settings and Tasks
 
-See the `Getting Started Guide </Getting-Started/Basic-Def>` for
+See the [Getting Started Guide][Basic-Def] for
 details.
 
 -   `:=`, `+=`, `++=` These construct a
     [Setting](../api/sbt/Init$Setting.html), which is the fundamental
-    type in the settings \</Getting-Started/Basic-Def\> system.
+    type in the [settings][Basic-Def] system.
 -   `value` This uses the value of another setting or task in the
     definition of a new setting or task. This method is special (it is a
     macro) and cannot be used except in the argument of one of the
     setting definition methods above (:=, ...) or in the standalone
     construction methods Def.setting and Def.task. See
-    more about settings \</Getting-Started/More-About-Settings\> for
+    [more about settings][More-About-Settings] for
     details.
--   `in` specifies the `Scope <../api/sbt/Scope.html>`\_ or part of the
+-   `in` specifies the [Scope](../api/sbt/Scope.html) or part of the
     [Scope](../api/sbt/Scope.html) of a setting being referenced. See
-    scopes \</Getting-Started/Scopes\>.
+    [scopes][Scopes].
 
 #### File and IO
 
-See `RichFile <../api/sbt/RichFile.html>`\_,
-`PathFinder <../api/sbt/PathFinder.html>`\_, and
-`/Detailed-Topics/Paths` for the full documentation.
+See [RichFile](../api/sbt/RichFile.html),
+[PathFinder](../api/sbt/PathFinder.html), and
+[Paths][Paths] for the full documentation.
 
 -   `/` When called on a single File, this is `new File(x,y)`. For
     Seq[File], this is applied for each member of the sequence..
 -   `*` and `**` are methods for selecting children (`*`) or descendants
-    (\*\*) of a File or Seq[File] that match a filter.
+    (`**`) of a File or Seq[File] that match a filter.
 -   `|`, `||`, `&&`, `&`, `-`, and `--` are methods for combining
     filters, which are often used for selecting Files. See
     [NameFilter](../api/sbt/NameFilter.html) and
     [FileFilter](../api/sbt/FileFilter.html). Note that methods with
     these names also exist for other types, such as collections (like
     Seq) and [Parser](../api/sbt/complete/Parser.html) (see
-    /Detailed-Topics/Parsing-Input).
+    [Parsing Input][Parsing-Input]).
 -   `pair` Used to construct mappings from a `File` to another `File` or
-    to a String. See /Detailed-Topics/Mapping-Files.
--   `get` forces a `PathFinder <../api/sbt/PathFinder.html>`\_ (a
-    call-by-name data structure) to a strict Seq[File] representation.
+    to a String. See [Mapping Files][Mapping-Files].
+-   `get` forces a [PathFinder](../api/sbt/PathFinder.html) (a
+    call-by-name data structure) to a strict `Seq[File]` representation.
     This is a common name in Scala, used by types like Option.
 
 #### Dependency Management
 
-See `/Detailed-Topics/Library-Management` for full documentation.
+See [Library Management][Library-Management] for full documentation.
 
 -   `%` This is used to build up a [ModuleID](../api/sbt/ModuleID.html).
 -   `%%` This is similar to `%` except that it identifies a dependency
-    that has been cross built \</Detailed-Topics/Cross-Build\>.
+    that has been [cross built][Cross-Build].
 -   `from` Used to specify the fallback URL for a dependency
 -   `classifier` Used to specify the classifier for a dependency.
 -   `at` Used to define a Maven-style resolver.
--   `intransitive` Marks a `dependency <../api/sbt/ModuleID.html>`\_ or
+-   `intransitive` Marks a [dependency](../api/sbt/ModuleID.html) or
     [Configuration](../api/sbt/Configuration.html) as being
     intransitive.
 -   `hide` Marks a [Configuration](../api/sbt/Configuration.html) as
@@ -14597,11 +14870,13 @@ See `/Detailed-Topics/Library-Management` for full documentation.
 #### Parsing
 
 These methods are used to build up
-`Parser <../api/sbt/complete/Parser.html>`\_s from smaller
-`Parser <../api/sbt/complete/Parser.html>`\_s. They closely follow the
+[Parser](../api/sbt/complete/Parser.html)s from smaller
+[Parser](../api/sbt/complete/Parser.html)s. They closely follow the
 names of the standard library's parser combinators. See
-`/Detailed-Topics/Parsing-Input` for the full documentation. These are
-used for `/Extending/Input-Tasks` and `/Extending/Commands`.
+[Parsing Input][Parsing-Input] for the full documentation. These are
+used for
+[Input Tasks][Input-Tasks] and
+[Commands][Commands].
 
 -   `~`, `~>`, `<~` Sequencing methods.
 -   `??`, `?` Methods for making a Parser optional. `?` is postfix.
@@ -14624,10 +14899,10 @@ used for `/Extending/Input-Tasks` and `/Extending/Commands`.
 #### Processes
 
 These methods are used to
-`fork external processes </Detailed-Topics/Process>`. Note that this API
+[fork external processes][Process]. Note that this API
 has been included in the Scala standard library for version 2.9.
-`ProcessBuilder <../api/sbt/ProcessBuilder.html>`\_ is the builder type
-and `Process <../api/sbt/Process.html>`\_ is the type representing the
+[ProcessBuilder](../api/sbt/ProcessBuilder.html) is the builder type
+and [Process](../api/sbt/Process.html) is the type representing the
 actual forked process. The methods to combine processes start with `#`
 so that they share the same precedence.
 

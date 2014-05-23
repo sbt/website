@@ -41,7 +41,7 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Parsing+and+tab+completion">Parsing and tab completion<a href="#Parsing+and+tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes the parser combinators in sbt. These parser
 combinators are typically used to parse user input and provide tab
-completion for <code>/Extending/Input-Tasks</code> and <code>/Extending/Commands</code>. If
+completion for <a href="Input-Tasks.html">Input Tasks</a> and <a href="Commands.html">Commands</a>. If
 you are already familiar with Scala’s parser combinators, the methods
 are mostly the same except that their arguments are strict. There are
 two additional methods for controlling tab completion that are discussed
@@ -77,7 +77,7 @@ val alwaysSucceed: Parser[Int] = success( 3 )
 //  The argument is the error message.
 val alwaysFail: Parser[Nothing] = failure(&quot;Invalid input.&quot;)
 </code></pre><h3 id="Built-in+parsers">Built-in parsers<a href="#Built-in+parsers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt comes with several built-in parsers defined in
-<code>sbt.complete.DefaultParsers &lt;../../api/sbt/complete/DefaultParsers$.html&gt;</code>_.
+<a href="../../api/sbt/complete/DefaultParsers$.html">sbt.complete.DefaultParsers</a>.
 Some commonly used built-in parsers are:
 </p><blockquote><ul><li><code>Space</code>, <code>NotSpace</code>, <code>OptSpace</code>, and <code>OptNotSpace</code> for parsing
 spaces or non-spaces, required or not.
@@ -87,7 +87,7 @@ spaces or non-spaces, required or not.
 digit.
 </li><li><code>Bool</code> for parsing a <code>Boolean</code> value
 </li></ul></blockquote><p>See the
-<code>DefaultParsers API &lt;../../api/sbt/complete/DefaultParsers$.html&gt;</code>_ for
+<a href="../../api/sbt/complete/DefaultParsers$.html">DefaultParsers API</a> for
 details.
 </p><h3 id="Combining+parsers">Combining parsers<a href="#Combining+parsers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>We build on these basic parsers to construct more interesting parsers.
 We can combine parsers in a sequence, choose between parsers, or repeat
@@ -154,7 +154,7 @@ is:
 </p><p>Typically, you want to suggest smaller segments or the number of
 suggestions becomes unmanageable. A better parser is:
 </p><pre><code>token( (&quot;fg&quot; | &quot;bg&quot;) ~ ' ') ~ token(&quot;green&quot; | &quot;blue&quot;)
-</code></pre><p>Now, the initial suggestions would be (with _ representing a space):
+</code></pre><p>Now, the initial suggestions would be (with <code>_</code> representing a space):
 <code>console fg_ bg_</code>
 </p><p>Be careful not to overlap or nest tokens, as in
 <code>token(&quot;green&quot; ~ token(&quot;blue&quot;))</code>. The behavior is unspecified (and

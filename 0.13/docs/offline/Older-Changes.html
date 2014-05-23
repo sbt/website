@@ -147,7 +147,7 @@ not contain dependency metadata or artifacts.
 </li><li>The resolution cache contains the generated ivy files, properties,
 and resolve reports for the project.
 </li><li>There will no longer be individual files directly in
-\~/.ivy2/cache/
+<code>~/.ivy2/cache/</code>
 </li><li>Resolve reports are now in target/resolution-cache/reports/,
 viewable with a browser.
 </li><li>Cache location includes extra attributes so that cross builds of a
@@ -278,8 +278,8 @@ gh-253
 for example)
 </li><li><p>Automatic plugin cross-versioning. Use
 </p><pre><code>addSbtPlugin(&quot;group&quot; % &quot;name&quot; % &quot;version&quot;)
-</code></pre><p>in project/plugins.sbt instead of libraryDependencies += … See
-/Extending/Plugins for details
+</code></pre><p>in project/plugins.sbt instead of <code>libraryDependencies += ...</code> See
+[Plugins][Plugins] for details
 </p></li></ul><p>Fixes and Improvements:
 </p><ul><li>Display all undefined settings at once, instead of only the first
 one
@@ -319,9 +319,9 @@ situations gh-58
 </li><li>Warn when reload discards session settings
 </li><li>Cache failing classifiers, making ‘update-classifiers’ a practical
 replacement for withSources()
-</li><li>Global settings may be provided in \~/.sbt/build.sbt gh-52
-</li><li>No need to define “sbtPlugin := true” in project/plugins/ or
-\~/.sbt/plugins/
+</li><li>Global settings may be provided in <code>~/.sbt/build.sbt</code> gh-52
+</li><li>No need to define <code>&quot;sbtPlugin := true&quot;</code> in <code>project/plugins/</code> or
+<code>~/.sbt/plugins/</code>
 </li><li>Provide statistics and list of evicted modules in UpdateReport
 </li><li>Scope use of ‘transitive-classifiers’ by ‘update-sbt-classifiers’
 and ‘update-classifiers’ for separate configuration.
@@ -333,25 +333,24 @@ entry (moduleID, artifact, and configuration keys). gh-41
 </li><li>Put httpclient on Ivy’s classpath, which seems to speed up ‘update’.
 </li></ul><h3 id="0.7.7+to+0.10.0">0.7.7 to 0.10.0<a href="#0.7.7+to+0.10.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><strong>Major redesign, only prominent changes listed.</strong>
 </p><ul><li>Project definitions in Scala 2.8.1
-</li><li>New configuration system: <code>/Examples/Quick-Configuration-Examples/</code>,
-/Getting-Started/Full-Def, and /Getting-Started/Basic-Def/
-</li><li>New task engine: <code>/Detailed-Topics/Tasks</code>
-</li><li>New multiple project support: <code>/Getting-Started/Full-Def</code>
+</li><li>New configuration system: See <a href="Basic-Def-Examples.html">.sbt build example</a>,
+<a href="../tutorial/Full-Def.html">.scala build defnition</a> and <a href="../tutorial/Basic-Def.html">.sbt build definition</a>.
+</li><li>New task engine: <a href="Tasks.html">Tasks</a>
+</li><li>New multiple project support: <a href="../tutorial/Full-Def.html">.scala build defnition</a>
 </li><li>More aggressive incremental recompilation for both Java and Scala
 sources
 </li><li>Merged plugins and processors into improved plugins system:
-/Extending/Plugins
-</li><li><code>Web application &lt;https://github.com/JamesEarlDouglas/xsbt-web-plugin&gt;</code>_
+<a href="Plugins.html">Plugins</a>
+</li><li><a href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">Web application</a>
 and webstart support moved to plugins instead of core features
 </li><li>Fixed all of the issues in (Google Code) issue #44
 </li><li>Managed dependencies automatically updated when configuration
 changes
 </li><li><code>update-sbt-classifiers</code> and <code>update-classifiers</code> tasks for
 retrieving sources and/or javadocs for dependencies, transitively
-</li><li>Improved artifact handling and configuration
-<code>/Detailed-Topics/Artifacts</code>
+</li><li>Improved [artifact handling and configuration][Attifacts]
 </li><li>Tab completion parser combinators for commands and input tasks:
-/Extending/Commands
+<a href="Commands.html">Commands</a>
 </li><li>No project creation prompts anymore
 </li><li>Moved to GitHub: <a href="http://github.com/harrah/xsbt">http://github.com/harrah/xsbt</a>
 </li></ul><h3 id="0.7.5+to+0.7.7">0.7.5 to 0.7.7<a href="#0.7.5+to+0.7.7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Workaround for Scala issue
@@ -366,11 +365,11 @@ according to <a href="http://gist.github.com/404272">http://gist.github.com/4042
 classpath of dependent projects.
 </li><li>Scala 2.8.1 is the default version used when starting a new project.
 </li><li>Updated to
-<code>Ivy 2.2.0 &lt;http://ant.apache.org/ivy/history/2.2.0/release-notes.html&gt;</code>_.
+<a href="http://ant.apache.org/ivy/history/2.2.0/release-notes.html">Ivy 2.2.0</a>.
 </li><li>Trond’s patches that allow configuring
 <a href="http://github.com/sbt/sbt/commit/5e41a47f50e6">jetty-env.xml</a> and
 <a href="http://github.com/sbt/sbt/commit/030e2ee91bac0">webdefault.xml</a>
-</li><li>Doug’s <code>patch &lt;http://github.com/sbt/sbt/commit/aa75ecf7055db&gt;</code>_ to
+</li><li>Doug’s <a href="http://github.com/sbt/sbt/commit/aa75ecf7055db">patch</a> to
 make ‘projects’ command show an asterisk next to current project
 </li><li>Fixed issue 122
 </li><li>Implemented issue 118
@@ -398,7 +397,7 @@ instead of just logging a warning.
 defaults to compileOptions.
 </li><li>Properly support sftp/ssh repositories using key-based
 authentication. See the updated section of the
-/Detailed-Topics/Resolvers page.
+<a href="Resolvers.html">Resolvers</a> page.
 </li><li><code>def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet</code>.
 Default is DownloadOnly. Full will log metadata resolution and
 provide a final summary.
@@ -461,12 +460,12 @@ issues with the android-plugin.
 </li><li>Added <code>sbt.impl.Arguments</code> for parsing a command like a normal
 action (for Processors)
 </li><li>Arguments are passed to <code>javac</code> using an argument file (<code>@</code>)
-</li><li>Added <code>webappUnmanaged: PathFinder</code> method to DefaultWebProject.
+</li><li><p>Added <code>webappUnmanaged: PathFinder</code> method to DefaultWebProject.
 Paths selected by this PathFinder will not be pruned by
 prepare-webapp and will not be packaged by package. For example, to
 exclude the GAE datastore directory:
-scala   override def webappUnmanaged =     (temporaryWarPath / “WEB-INF” / “appengine-generated” ***)
-</li><li>Added some String generation methods to <code>PathFinder</code>: <code>toString</code> for
+</p><pre><code class="prettyprint lang-scala">override def webappUnmanaged =     (temporaryWarPath / &quot;WEB-INF&quot; / &quot;appengine-generated&quot; ***)
+</code></pre></li><li>Added some String generation methods to <code>PathFinder</code>: <code>toString</code> for
 debugging and absString and relativeString for joining the absolute
 (relative) paths by the platform separator.
 </li><li>Made tab completors lazier to reduce startup time.
@@ -503,14 +502,13 @@ test classes.
 </li><li>New action ‘clean-plugins’ task that clears built plugins (useful
 for plugin development).
 </li><li>Can provide commands from a file with new command: <code>&lt;filename</code>
-</li><li>Can provide commands over loopback interface with new command:
-\&lt;port
+</li><li>Can provide commands over loopback interface with new command: <code>&lt;port</code>
 </li><li>Scala version handling has been completely redone.
 </li><li>The version of Scala used to run sbt (currently 2.7.7) is decoupled
 from the version used to build the project.
-</li><li><p>Changing between Scala versions on the fly is done with the command:
-</p><ul><li>+\<version\>
-</li></ul></li><li>Cross-building is quicker. The project definition does not need to
+</li><li>Changing between Scala versions on the fly is done with the command:
+<code>++&lt;version&gt;</code>
+</li><li>Cross-building is quicker. The project definition does not need to
 be recompiled against each version in the cross-build anymore.
 </li><li>Scala versions are specified in a space-delimited list in the
 build.scala.versions property.
@@ -608,9 +606,9 @@ forks the command following exec. Examples: :
 </p><pre><code>&gt; exec echo Hi
 &gt; exec find src/main/scala -iname *.scala -exec wc -l {} ;
 </code></pre></li><li><p>Added <code>sh</code> task for users with a unix-style shell available (runs
-/bin/sh -c \<arguments\>). Mixin Exec to project definition to use.
+<code>/bin/sh -c &lt;arguments&gt;</code>). Mixin Exec to project definition to use.
 Example: :
-</p><pre><code>&gt; sh find src/main/scala -iname *.scala | xargs cat | wc -l
+</p><pre><code class="">&gt; sh find src/main/scala -iname *.scala | xargs cat | wc -l
 </code></pre></li><li>Proper dependency graph actions (previously was an unsupported
 prototype): graph-src and graph-pkg for source dependency graph and
 quasi-package dependency graph (based on source directories and
@@ -630,9 +628,9 @@ should stop for a given keypress.
 </li><li><p>Added support for extra attributes with Ivy. Use
 extra(key -&gt; value) on ModuleIDs and Artifacts. To define for a
 project’s ID: :
-</p><pre><code>override def projectID = super.projectID extra(key -&gt; value)
+</p><pre><code class="prettyprint lang-scala">override def projectID = super.projectID extra(key -&gt; value)
 </code></pre><p>To specify in a dependency: :
-</p><pre><code>val dep = normalID extra(key -&gt; value)
+</p><pre><code class="prettyprint lang-scala">val dep = normalID extra(key -&gt; value)
 </code></pre></li></ul><h3 id="0.5.1+to+0.5.2">0.5.1 to 0.5.2<a href="#0.5.1+to+0.5.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed problem where dependencies of <code>sbt</code> plugins were not on the
 compile classpath
 </li><li>Added <code>execTask</code> that runs an <code>sbt.ProcessBuilder</code> when invoked
@@ -640,7 +638,7 @@ compile classpath
 sbt.ProcessBuilder that takes the element’s text content, trims it,
 and splits it around whitespace to obtain the command.
 </li><li>Processes can now redirect standard input (see run with Boolean
-argument or !\&lt; operator on ProcessBuilder), off by default
+argument or <code>!&lt;</code> operator on ProcessBuilder), off by default
 </li><li>Made scripted framework a plugin and scripted tests now go in
 src/sbt-test by default
 </li><li>Can define and use an sbt test framework extension in a project
@@ -657,7 +655,7 @@ directory
 </li><li><p>Added <code>Process.cat</code> that will send contents of <code>URL</code>s and Files to
 standard output. Alternatively, cat can be used on a single URL or
 File. Example: :
-</p><pre><code>import java.net.URL
+</p><pre><code class="prettyprint lang-scala">import java.net.URL
 import java.io.File
 val spde = new URL(&quot;http://technically.us/spde/About&quot;)
 val dispatch = new URL(&quot;http://databinder.net/dispatch/About&quot;)
@@ -868,11 +866,11 @@ passed, no filtering is done. Then, only tests that failed the
 previous run or had a dependency change are run.
 </li><li>Added launcher that allows declaring version of sbt/scala to build
 project with.
-</li><li>Added tab completion with \~
+</li><li>Added tab completion with <code>~</code>
 </li><li>Added basic tab completion for method tasks, including <code>test-*</code>
 </li><li>Changed default pack options to be the default options of
 Pack200.Packer
-</li><li>Fixed \~ behavior when action doesn’t exist
+</li><li>Fixed <code>~</code> behavior when action doesn’t exist
 </li></ul><h3 id="0.3.6+to+0.3.7">0.3.6 to 0.3.7<a href="#0.3.6+to+0.3.7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Improved classpath methods
 </li><li>Refactored various features into separate project traits
 </li><li><code>ParentProject</code> can now specify dependencies
@@ -890,7 +888,7 @@ default (again)
 stack traces
 </li><li>Project.loadProject and related methods now accept a Logger to use
 </li><li>Made hidden files and files that start with <code>'.'</code> excluded by
-default (’.*’ is required because subversion seems to not mark .svn
+default (<code>'.*'</code> is required because subversion seems to not mark <code>.svn</code>
 directories hidden on Windows)
 </li><li>Implemented exit codes
 </li><li>Added continuous compilation command <code>cc</code>

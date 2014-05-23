@@ -42,7 +42,7 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Tasks">Tasks<a href="#Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Tasks and settings are introduced in the
-<code>getting started guide &lt;/Getting-Started/Basic-Def&gt;</code>, which you may wish
+<a href="../tutorial/Basic-Def.html">getting started guide</a>, which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
 </p><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Both settings and tasks produce values, but there are two major
@@ -54,10 +54,10 @@ are fixed. Tasks can introduce new tasks during execution, however.
 </li></ol><h3 id="Features">Features<a href="#Features" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are several features of the task system:
 </p><ol><li>By integrating with the settings system, tasks can be added,
 removed, and modified as easily and flexibly as settings.
-</li><li><code>Input Tasks &lt;/Extending/Input-Tasks&gt;</code> use
-<code>parser combinators &lt;Parsing-Input&gt;</code> to define the syntax for their
+</li><li><a href="Input-Tasks.html">Input Tasks</a> use
+<a href="Parsing-Input.html">parser combinators</a> to define the syntax for their
 arguments. This allows flexible syntax and tab-completions in the
-same way as /Extending/Commands.
+same way as <a href="Commands.html">Commands</a>.
 </li><li>Tasks produce values. Other tasks can access a task’s value by
 calling <code>value</code> on it within a task definition.
 </li><li>Dynamically changing the structure of the task graph is possible.
@@ -86,7 +86,7 @@ description of the task. The type parameter passed to <code>taskKey</code> (here
 lazy val stringTask = taskKey[String](&quot;A string task&quot;)
 </code></pre><p>The examples themselves are valid entries in a <code>build.sbt</code> or can be
 provided as part of a sequence to <code>Project.settings</code> (see
-<code>Full Configuration &lt;/Getting-Started/Full-Def&gt;</code>).
+<a href="../tutorial/Full-Def.html">.scala build definition</a>).
 </p><h4 id="Implement+the+task">Implement the task<a href="#Implement+the+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There are three main parts to implementing a task once its key is
 defined:
 </p><ol><li>Determine the settings and other tasks needed by the task. They are
@@ -128,8 +128,8 @@ following example, <code>test:sampleTask</code> uses the result of
 </code></pre><h5 id="On+precedence">On precedence<a href="#On+precedence" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
 </p><ol><li>Assignment methods have the lowest precedence. These are methods
-with names ending in =, except for !=, \&lt;=, &gt;=, and names that
-start with =.
+with names ending in <code>=</code>, except for <code>!=</code>, <code>&lt;=</code>, <code>&gt;=</code>, and names that
+start with <code>=</code>.
 </li><li>Methods starting with a letter have the next highest precedence.
 </li><li><p>Methods with names that start with a symbol and aren’t included in
 </p><ol><li>have the highest precedence. (This category is divided further
@@ -225,7 +225,7 @@ can be organized into four groups:
 <code>inGlobalTask</code>)
 </li><li>Default filter (<code>inAnyProject</code>, <code>inAnyConfiguration</code>, <code>inAnyTask</code>)
 </li><li>Project relationships (<code>inAggregates</code>, <code>inDependencies</code>)
-</li></ul><p>See the <code>API documentation &lt;../../api/sbt/ScopeFilter$$Make.html&gt;</code>_ for
+</li></ul><p>See the <a href="../../api/sbt/ScopeFilter$$Make.html">API documentation</a> for
 details.
 </p><h5 id="Combining+ScopeFilters">Combining ScopeFilters<a href="#Combining+ScopeFilters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>ScopeFilters</code> may be combined with the <code>&amp;&amp;</code>, <code>||</code>, <code>--</code>, and <code>-</code>
 methods:
@@ -323,10 +323,10 @@ logging for a task. Tasks also have access to their own persisted binary
 or text data.
 </p><p>To use Streams, get the value of the <code>streams</code> task. This is a special
 task that provides an instance of
-<code>TaskStreams &lt;../../api/sbt/std/TaskStreams.html&gt;</code>_ for the defining
+<a href="../../api/sbt/std/TaskStreams.html">TaskStreams</a> for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-<code>Logger &lt;../../api/sbt/Logger.html&gt;</code>_, which is the most commonly used
+<a href="../../api/sbt/Logger.html">Logger</a>, which is the most commonly used
 aspect, is obtained by the <code>log</code> method:
 </p><pre><code>myTask := {
   val s: TaskStreams = streams.value
@@ -382,7 +382,7 @@ methods, which are used to handle failure of other tasks.
 </p><h4 id=""><code>failure</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>failure</code> method creates a new task that returns the <code>Incomplete</code>
 value when the original task fails to complete normally. If the original
 task succeeds, the new task fails.
-<code>Incomplete &lt;../../api/sbt/Incomplete.html&gt;</code>_ is an exception with
+<a href="../../api/sbt/Incomplete.html">Incomplete</a> is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 </p><p>For example:
@@ -422,7 +422,7 @@ invoked task). A <code>failure</code> turns a success into a failure, and a fail
 into an <code>Incomplete</code>. A normal task definition fails when any of its
 inputs fail and computes its value otherwise.
 </p><h4 id=""><code>result</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>result</code> method creates a new task that returns the full <code>Result[T]</code>
-value for the original task. <code>Result &lt;../../api/sbt/Result.html&gt;</code>_ has
+value for the original task. <a href="../../api/sbt/Result.html">Result</a> has
 the same structure as <code>Either[Incomplete, T]</code> for a task result of type
 <code>T</code>. That is, it has two subtypes:
 </p><ul><li><code>Inc</code>, which wraps <code>Incomplete</code> in case of failure

@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -45,9 +47,10 @@
 </li><li>Resources for the test classpath in <code>src/test/resources/</code>
 </li></ul><p>The resources may be accessed from tests by using the <code>getResource</code>
 methods of <code>java.lang.Class</code> or <code>java.lang.ClassLoader</code>.
-</p><p>The main Scala testing frameworks (<code>specs2 &lt;http://specs2.org/&gt;</code>_,
-<code>ScalaCheck &lt;http://scalacheck.org/&gt;</code>_, and
-<code>ScalaTest &lt;http://scalatest.org/&gt;</code>_) provide an implementation of the
+</p><p>The main Scala testing frameworks (
+<a href="http://specs2.org/">specs2</a>,
+<a href="http://scalacheck.org/">ScalaCheck</a>, and
+<a href="http://scalatest.org/">ScalaTest</a>) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
 <code>managed dependency &lt;Library-Management&gt;</code>:
@@ -88,7 +91,7 @@ referenced in Scala code with <code>in Test</code>. These tasks include:
 </li><li><code>test:consoleQuick</code>
 </li><li><code>test:run</code>
 </li><li><code>test:runMain</code>
-</li></ul><p>See <code>Running &lt;/Getting-Started/Running&gt;</code> for details on these tasks.
+</li></ul><p>See <a href="../tutorial/Running.html">Running</a> for details on these tasks.
 </p><h3 id="Output">Output<a href="#Output" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, logging is buffered for each test source file until all
 tests for that file complete. This can be disabled by setting
 <code>logBuffered</code>:
@@ -154,7 +157,7 @@ forked JVMs allowed to run at the same time by setting the limit on
 <code>Tags.ForkedTestGroup</code> tag, which is 1 by default. <code>Setup</code> and <code>Cleanup</code>
 actions cannot be provided with the actual test class loader when a
 group is forked.
-</p><h3 id="Additional+test+configurations">Additional test configurations<a href="#Additional+test+configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can add an additional test configuration to have a separate set of
+</p><a name="additional-test-configurations"></a><h3 id="Additional+test+configurations">Additional test configurations<a href="#Additional+test+configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can add an additional test configuration to have a separate set of
 test sources and associated compilation, packaging, and testing tasks
 and settings. The steps are:
 </p><ul><li>Define the configuration
@@ -167,14 +170,19 @@ to enable integration tests. The second shows how to define a customized
 test configuration. This allows you to define multiple types of tests
 per project.
 </p><h4 id="Integration+Tests">Integration Tests<a href="#Integration+Tests" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The following full build configuration demonstrates integration tests.
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 import Keys._
-</code></pre><blockquote><p>object B extends Build { lazy val root = Project(“root”, file(”.”))
-.configs( IntegrationTest ) .settings( Defaults.itSettings : _*)
-.settings( libraryDependencies += specs )
-</p><blockquote><p>lazy val specs = “org.specs2” %% “specs2” % “2.0” % “it,test”
-</p></blockquote><p>}
-</p></blockquote><ul><li><code>configs(IntegrationTest)</code> adds the predefined integration test
+
+object B extends Build {
+  lazy val root =
+    Project(&quot;root&quot;, file(&quot;.&quot;)).
+      configs( IntegrationTest ).
+      settings( Defaults.itSettings : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val specs = &quot;org.specs2&quot; %% &quot;specs2&quot; % &quot;2.0&quot; % &quot;it,test&quot;
+}
+</code></pre><ul><li><code>configs(IntegrationTest)</code> adds the predefined integration test
 configuration. This configuration is referred to by the name it.
 </li><li><code>settings( Defaults.itSettings : _* )</code> adds compilation, packaging,
 and testing actions and settings in the IntegrationTest
@@ -205,16 +213,20 @@ configuration:
 the definitive integration test options:
 </p><pre><code>testOptions in IntegrationTest := Seq(...)
 </code></pre><h4 id="Custom+test+configuration">Custom test configuration<a href="#Custom+test+configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The previous example may be generalized to a custom test configuration.
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 import Keys._
-</code></pre><blockquote><p>object B extends Build { lazy val root = Project(“root”, file(”.”))
-.configs( FunTest ) .settings(
-inConfig(FunTest)(Defaults.testSettings) : _*) .settings(
-libraryDependencies += specs )
-</p><blockquote><p>lazy val FunTest = config(“fun”) extend(Test) lazy val specs =
-“org.specs2” %% “specs2” % “2.0” % “fun”
-</p></blockquote><p>}
-</p></blockquote><p>Instead of using the built-in configuration, we defined a new one:
+
+object B extends Build {
+  lazy val root =
+    Project(&quot;root&quot;, file(&quot;.&quot;)).
+      configs( FunTest ).
+      settings( inConfig(FunTest)(Defaults.testSettings) : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val FunTest = config(&quot;fun&quot;) extend(Test)
+  lazy val specs = &quot;org.specs2&quot; %% &quot;specs2&quot; % &quot;2.0&quot; % &quot;fun&quot;
+}
+</code></pre><p>Instead of using the built-in configuration, we defined a new one:
 </p><pre><code>lazy val FunTest = config(&quot;fun&quot;) extend(Test)
 </code></pre><p>The <code>extend(Test)</code> part means to delegate to <code>Test</code> for undefined
 <code>CustomTest</code> settings. The line that adds the tasks and settings for the
@@ -277,7 +289,7 @@ using:
 </code></pre><p>The tests to run in parallel would be run with <code>test</code> and the ones to
 run in serial would be run with <code>serial:test</code>.
 </p><h3 id="JUnit">JUnit<a href="#JUnit" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Support for JUnit is provided by
-<code>junit-interface &lt;https://github.com/szeiger/junit-interface&gt;</code>_. To add
+<a href="https://github.com/szeiger/junit-interface">junit-interface</a>. To add
 JUnit support into your project, add the junit-interface dependency in
 your project’s main build.sbt file.
 </p><pre><code>libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.9&quot; % &quot;test&quot;
@@ -287,14 +299,14 @@ interfaces (described below). If you are the author of the testing
 framework, you can depend on the test interface as a provided
 dependency. Alternatively, anyone can provide support for a test
 framework by implementing the interfaces in a separate project and
-packaging the project as an sbt <code>Plugin &lt;/Extending/Plugins&gt;</code>.
+packaging the project as an sbt <a href="Plugins.html">Plugin</a>.
 </p><h4 id="Custom+Test+Framework">Custom Test Framework<a href="#Custom+Test+Framework" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The main Scala testing libraries have built-in support for sbt. To add
 support for a different framework, implement the
-<code>uniform test interface &lt;http://github.com/sbt/test-interface&gt;</code>_.
+<a href="http://github.com/sbt/test-interface">uniform test interface</a>.
 </p><h4 id="Custom+Test+Reporters">Custom Test Reporters<a href="#Custom+Test+Reporters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Test frameworks report status and results to test reporters. You can
 create a new test reporter by implementing either
-<code>TestReportListener &lt;../../api/sbt/TestReportListener.html&gt;</code>_ or
-<code>TestsListener &lt;../../api/sbt/TestsListener.html&gt;</code>_.
+<a href="../../api/sbt/TestReportListener.html">TestReportListener</a> or
+<a href="../../api/sbt/TestsListener.html">TestsListener</a>.
 </p><h4 id="Using+Extensions">Using Extensions<a href="#Using+Extensions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To use your extensions in a project definition:
 </p><p>Modify the <code>testFrameworks</code> setting to reference your test framework:
 </p><pre><code>testFrameworks += new TestFramework(&quot;custom.framework.ClassName&quot;)

@@ -41,28 +41,28 @@
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Command+Line+Reference">Command Line Reference<a href="#Command+Line+Reference" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page is a relatively complete list of command line options,
 commands, and tasks you can use from the sbt interactive prompt or in
-batch mode. See <code>Running &lt;/Getting-Started/Running&gt;</code> in the Getting
+batch mode. See <a href="../tutorial/Running.html">Running</a> in the Getting
 Started Guide for an intro to the basics, while this page has a lot more
 detail.
 </p><h3 id="Notes+on+the+command+line">Notes on the command line<a href="#Notes+on+the+command+line" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>There is a technical distinction in sbt between <em>tasks</em>, which are
 “inside” the build definition, and <em>commands</em>, which manipulate the
 build definition itself. If you’re interested in creating a command,
-see /Extending/Commands. This specific sbt meaning of “command”
+see <a href="Commands.html">Commands</a>. This specific sbt meaning of “command”
 means there’s no good general term for “thing you can type at the
 sbt prompt”, which may be a setting, task, or command.
 </li><li>Some tasks produce useful values. The <code>toString</code> representation of
-these values can be shown using show \<task\> to run the task
-instead of just \<task\>.
+these values can be shown using <code>show &lt;task&gt;</code> to run the task
+instead of just <code>&lt;task&gt;</code>.
 </li><li>In a multi-project build, execution dependencies and the aggregate
 setting control which tasks from which projects are executed. See
-multi-project builds \&lt;/Getting-Started/Multi-Project&gt;.
+<a href="../tutorial/Multi-Project.html">multi-project builds</a>.
 </li></ul><h3 id="Project-level+tasks">Project-level tasks<a href="#Project-level+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>clean</code> Deletes all generated files (the <code>target</code> directory).
 </li><li><code>publishLocal</code> Publishes artifacts (such as jars) to the local Ivy
 repository as described in Publishing.
 </li><li><code>publish</code> Publishes artifacts (such as jars) to the repository
 defined by the publishTo setting, described in Publishing.
 </li><li><code>update</code> Resolves and retrieves external dependencies as described
-in library dependencies \&lt;/Getting-Started/Library-Dependencies&gt;.
+in <a href="../tutorial/Library-Dependencies.html">library dependencies</a>.
 </li></ul><h3 id="Configuration-level+tasks">Configuration-level tasks<a href="#Configuration-level+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Configuration-level tasks are tasks associated with a configuration. For
 example, <code>compile</code>, which is equivalent to <code>compile:compile</code>, compiles
 the main source code (the <code>compile</code> configuration). <code>test:compile</code>
@@ -84,7 +84,7 @@ does not force compilation of the current project’s sources.
 </li><li><code>consoleProject</code> Enters an interactive session with sbt and the
 build definition on the classpath. The build definition and related
 values are bound to variables and common packages and values are
-imported. See the consoleProject documentation \<Console-Project\>
+imported. See the <a href="Console-Project.html">consoleProject documentation</a>
 for more information.
 </li><li><code>doc</code> Generates API documentation for Scala source files in
 src/main/scala using scaladoc. test:doc generates API documentation
@@ -122,7 +122,7 @@ tests if no arguments are given) that:
 </p><ol><li>have not been run yet OR
 </li><li>failed the last time they were run OR
 </li><li>had any transitive dependencies recompiled since the last
-successful run * (will be) interpreted as a wildcard in the
+successful run <code>*</code> (will be) interpreted as a wildcard in the
 test name. See Testing for details.
 </li></ol></li></ul><h3 id="General+commands">General commands<a href="#General+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>exit</code> or <code>quit</code> End the current interactive session or build.
 Additionally, Ctrl+D (Unix) or Ctrl+Z (Windows) will exit the
@@ -135,15 +135,15 @@ descriptions of the main commands. Related commands are tasks and
 settings.
 </li><li><code>projects [add|remove &lt;URI&gt;]</code> List all available projects if no
 arguments provided or adds/removes the build at the provided URI.
-(See /Getting-Started/Full-Def/ for details on multi-project
+(See <a href="../tutorial/Multi-Project.html">multi-project builds</a> for details on multi-project
 builds.)
 </li><li><code>project &lt;project-id&gt;</code> Change the current project to the project
-with ID \<project-id\>. Further operations will be done in the
-context of the given project. (See /Getting-Started/Full-Def/ for
+with ID <code>&lt;project-id&gt;</code>. Further operations will be done in the
+context of the given project. (See <a href="../tutorial/Multi-Project.html">multi-project builds</a> for
 details on multiple project builds.)
 </li><li><code>~ &lt;command&gt;</code> Executes the project specified action or method
 whenever source files change. See
-/Detailed-Topics/Triggered-Execution for details.
+<a href="Triggered-Execution.html">Triggered Execution</a> for details.
 </li><li><code>&lt; filename</code> Executes the commands in the given file. Each command
 should be on its own line. Empty lines and lines beginning with ’#’
 are ignored
@@ -151,9 +151,9 @@ are ignored
 all versions of Scala defined in the crossScalaVersions setting.
 </li><li><code>++ &lt;version|home-directory&gt; &lt;command&gt;</code> Temporarily changes the
 version of Scala building the project and executes the provided
-command. \<command\> is optional. The specified version of Scala is
+command. <code>&lt;command&gt;</code> is optional. The specified version of Scala is
 used until the project is reloaded, settings are modified (such as
-by the set or session commands), or ++ is run again. \<version\>
+by the set or session commands), or ++ is run again. <code>&lt;version&gt;</code>
 does not need to be listed in the build definition, but it must be
 available in a repository. Alternatively, specify the path to a
 Scala installation.
@@ -176,8 +176,8 @@ to be recompiled. reload return changes back to the main project.
 definition. The setting applies until sbt is restarted, the build is
 reloaded, or the setting is overridden by another set command or
 removed by the session command. See
-.sbt build definition \&lt;/Getting-Started/Basic-Def&gt; and
-Inspecting-Settings for details.
+[.sbt build definition][Basic-Def] and
+[inspecting settings][Inspecting-Settings] for details.
 </li><li><code>session &lt;command&gt;</code> Manages session settings defined by the <code>set</code>
 command. It can persist settings configured at the prompt. See
 Inspecting-Settings for details.
@@ -187,18 +187,19 @@ chain, and related settings. See Inspecting-Settings for details.
 </li></ul><h3 id="Command+Line+Options">Command Line Options<a href="#Command+Line+Options" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as <code>-Dprop=value</code>. The following properties
 influence SBT execution. Also see <code>Launcher</code>.
-</p><hr/><p>  Property           Values  Default       Meaning
+</p><!-- TODO -->
+<hr/><p>  Property           Values  Default       Meaning
   ————————— ———- ——————- ————————————————
   <code>sbt.log.noformat</code> Boolean false         | If true, disable ANSI color
                                            codes. Useful on build servers
                                            or terminals that don’t support
                                            color.
-</p><p>  <code>sbt.global.base</code>  Directo \~/.sbt       | The directory containing
+</p><p>  <code>sbt.global.base</code>  Directo <code>~/.sbt</code>       | The directory containing
                      ry                    global settings and plugins
-</p><p>  <code>sbt.ivy.home</code>     Directo \~/.ivy2      | The directory containing the
+</p><p>  <code>sbt.ivy.home</code>     Directo <code>~/.ivy2</code>      | The directory containing the
                      ry                    local Ivy repository and
                                            artifact cache
-</p><p>  <code>sbt.boot.director Directo \~/.sbt/boot  Path to shared boot directory
+</p><p>  <code>sbt.boot.director Directo </code>~/.sbt/boot<code>  Path to shared boot directory
   y</code>                 ry                    
 <br/>
   <code>sbt.main.class</code>   String  |             |
@@ -229,8 +230,8 @@ influence SBT execution. Also see <code>Launcher</code>.
                                            used instead. See
                                            <code>sbt.repository.config</code> and the
                                            <code>Launcher</code> documentation.
-</p><p>  <code>sbt.repository.co File    \~/.sbt/repos | A file containing the
-  nfig</code>                      itories       repositories to use for the
+</p><p>  <code>sbt.repository.co File    </code>~/.sbt/repos | A file containing the
+  nfig<code>                      itories</code>       repositories to use for the
                                            launcher. The format is the same
                                            as a <code>[repositories]</code> section
                                            for a <code>Launcher</code> configuration

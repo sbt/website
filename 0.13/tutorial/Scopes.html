@@ -121,7 +121,7 @@ allowing multiple more-specific scopes to inherit the value.
 </p><h3 id="Referring+to+scoped+keys+when+running+sbt">Referring to scoped keys when running sbt<a href="#Referring+to+scoped+keys+when+running+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>On the command line and in interactive mode, sbt displays (and parses)
 scoped keys like this:
 </p><pre><code class="">{&lt;build-uri&gt;}&lt;project-id&gt;/config:intask::key
-</code></pre><ul><li><code>{&lt;build-uri&gt;}\&lt;project-id&gt;</code> identifies the project axis. The
+</code></pre><ul><li><code>{&lt;build-uri&gt;}/&lt;project-id&gt;</code> identifies the project axis. The
 <code>&lt;project-id&gt;</code> part will be missing if the project axis has “entire build” scope.
 </li><li><code>config</code> identifies the configuration axis.
 </li><li><code>intask</code> identifies the task axis.
@@ -231,7 +231,7 @@ defined in the <code>Global</code> configuration by default.
 to the current project, configuration <code>Global</code> and task <code>Global</code>:
 </p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
 </code></pre><p>Run sbt and <code>inspect name</code> to see that it’s provided by
-<code>{file:/home/hp/checkout/hello/}default-aea33a/\*:name</code>, that is, the
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>, that is, the
 project is <code>{file:/home/hp/checkout/hello/}default-aea33a</code>, the
 configuration is <code>*</code> (meaning global), and the task is not shown (which
 also means global).

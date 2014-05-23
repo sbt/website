@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -72,9 +74,9 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom resolvers:
-</p><ul><li><code>ResolveInfo &lt;../../api/index.html#sbt.BuildLoader$$ResolveInfo&gt;</code>_
-</li><li><code>BuildLoader &lt;../../api/sbt/BuildLoader$.html&gt;</code>_
-</li></ul><h4 id="Full+Example">Full Example<a href="#Full+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>import sbt._
+</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$ResolveInfo">ResolveInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li></ul><h4 id="Full+Example">Full Example<a href="#Full+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="prettyprint lang-scala">import sbt._
 import Keys._
 
 object Demo extends Build
@@ -85,7 +87,7 @@ object Demo extends Build
   )
 
   // Register the custom resolver
-  override def buildLoaders = 
+  override def buildLoaders =
     BuildLoader.resolve(demoResolver) ::
     Nil
 
@@ -94,7 +96,7 @@ object Demo extends Build
   // A subdirectory of info.staging can be used to create new local
   //   directories, such as when doing 'git clone ...'
   def demoResolver(info: BuildLoader.ResolveInfo): Option[() =&gt; File] =
-    if(info.uri.getScheme != &quot;demo&quot;) 
+    if(info.uri.getScheme != &quot;demo&quot;)
       None
     else
     {
@@ -140,37 +142,47 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom builders:
-</p><ul><li><code>BuildInfo &lt;../../api/sbt/BuildLoader$$BuildInfo.html&gt;</code>_
-</li><li><code>BuildLoader &lt;../../api/sbt/BuildLoader$.html&gt;</code>_
-</li><li><code>BuildUnit &lt;../../api/index.html#sbt.Load$$BuildUnit&gt;</code>_
+</p><ul><li><a href="../../api/sbt/BuildLoader$$BuildInfo.html">BuildInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
 </li></ul><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This example demonstrates the structure of how a custom builder could
 read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
-</p><pre><code>... imports ...
-</code></pre><blockquote><p>object Demo extends Build { lazy val root = Project(“root”, file(”.”))
-dependsOn( file(“basic-pom-project”) )
-</p><blockquote><p>override def buildLoaders =
-:   BuildLoader.build(demoBuilder) :: Nil
-</p><p>def demoBuilder: BuildInfo =&gt; Option[() =&gt; BuildUnit] = info =&gt;
-:   if(pomFile(info).exists)
-    :   Some(() =&gt; pomBuild(info))
-</p><pre><code>else
-:   None
-</code></pre><p>def pomBuild(info: BuildInfo): BuildUnit = { val pom = pomFile(info)
-val model = readPom(pom)
-</p><blockquote><p>val n = Project.normalizeProjectID(model.getName) val base =
-Option(model.getProjectDirectory) getOrElse info.base val root =
-Project(n, base) settings( pomSettings(model) : _*) val build =
-new Build { override def projects = Seq(root) } val loader =
-this.getClass.getClassLoader val definitions = new
-LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil) val
-plugins = new LoadedPlugins(info.base / “project”, Nil, loader,
-Nil, Nil) new BuildUnit(info.uri, info.base, definitions, plugins)
-</p></blockquote><p>}
-</p><p>def readPom(file: File): Model = … def pomSettings(m: Model):
-Seq[Setting[_]] = … def pomFile(info: BuildInfo): File =
-info.base / “pom.xml”
-</p></blockquote></blockquote><h3 id="Custom+Transformer">Custom Transformer<a href="#Custom+Transformer" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once a project has been loaded into an <code>sbt.BuildUnit</code>, it is
+</p><pre><code class="prettyprint lang-scala">    ... imports ...
+
+object Demo extends Build
+{
+  lazy val root = Project(&quot;root&quot;, file(&quot;.&quot;)) dependsOn( file(&quot;basic-pom-project&quot;) )
+
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
+
+  def demoBuilder: BuildInfo =&gt; Option[() =&gt; BuildUnit] = info =&gt;
+    if(pomFile(info).exists)
+      Some(() =&gt; pomBuild(info))
+    else
+      None
+
+  def pomBuild(info: BuildInfo): BuildUnit =
+  {
+    val pom = pomFile(info)
+    val model = readPom(pom)
+
+    val n = Project.normalizeProjectID(model.getName)
+    val base = Option(model.getProjectDirectory) getOrElse info.base
+    val root = Project(n, base) settings( pomSettings(model) : _*)
+    val build = new Build { override def projects = Seq(root) }
+    val loader = this.getClass.getClassLoader
+    val definitions = new LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil)
+    val plugins = new LoadedPlugins(info.base / &quot;project&quot;, Nil, loader, Nil, Nil)
+    new BuildUnit(info.uri, info.base, definitions, plugins)
+  }
+
+  def readPom(file: File): Model = ...
+  def pomSettings(m: Model): Seq[Setting[_]] = ...
+  def pomFile(info: BuildInfo): File = info.base / &quot;pom.xml&quot;
+</code></pre><h3 id="Custom+Transformer">Custom Transformer<a href="#Custom+Transformer" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once a project has been loaded into an <code>sbt.BuildUnit</code>, it is
 transformed by all registered transformers. A custom transformer has
 type:
 </p><pre><code>TransformInfo =&gt; BuildUnit
@@ -187,9 +199,9 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom transformers:
-</p><ul><li><code>TransformInfo &lt;../../api/index.html#sbt.BuildLoader$$TransformInfo&gt;</code>_
-</li><li><code>BuildLoader &lt;../../api/sbt/BuildLoader$.html&gt;</code>_
-</li><li><code>BuildUnit &lt;../../api/index.html#sbt.Load$$BuildUnit&gt;</code>_
+</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$TransformInfo">TransformInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
 </li></ul><h5 id="Manipulating+Project+Dependencies+in+Settings">Manipulating Project Dependencies in Settings<a href="#Manipulating+Project+Dependencies+in+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The <code>buildDependencies</code> setting, in the Global scope, defines the
 aggregation and classpath dependencies between projects. By default,
 this information comes from the dependencies defined by <code>Project</code>
@@ -203,12 +215,12 @@ evaluated. That is, all Projects must have been declared directly in a
 Build or referenced as the argument to <code>Project.aggregate</code> or
 <code>Project.dependsOn</code>.
 </p><h3 id="The+BuildDependencies+type">The BuildDependencies type<a href="#The+BuildDependencies+type" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The type of the <code>buildDependencies</code> setting is
-<code>BuildDependencies &lt;../../api/sbt/BuildDependencies.html&gt;</code>_.
+<a href="../../api/sbt/BuildDependencies.html">BuildDependencies</a>.
 <code>BuildDependencies</code> provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type <code>ClasspathDep[ProjectRef]</code>, which combines a <code>ProjectRef</code> with a
-configuration (see <code>ClasspathDep &lt;../../api/sbt/ClasspathDep.html&gt;</code>_
-and <code>ProjectRef &lt;../../api/sbt/ProjectRef.html&gt;</code>_). For aggregate
+configuration (see <a href="../../api/sbt/ClasspathDep.html">ClasspathDep</a>
+and <a href="../../api/sbt/ProjectRef.html">ProjectRef</a>). For aggregate
 dependencies, the type of a dependency is just <code>ProjectRef</code>.
 </p><p>The API for <code>BuildDependencies</code> is not extensive, covering only a little
 more than the minimum required, and related APIs have more of an

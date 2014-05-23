@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -40,10 +42,10 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Migrating+from+0.7+to+0.10%2B">Migrating from 0.7 to 0.10+<a href="#Migrating+from+0.7+to+0.10%2B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The assumption here is that you are familiar with sbt 0.7 but new to sbt
-|version|.
-</p><p>sbt |version|’s many new capabilities can be a bit overwhelming, but
-this page should help you migrate to |version| with a minimum of fuss.
-</p><h3 id="Why+move+to+%7Cversion%7C%3F">Why move to |version|?<a href="#Why+move+to+%7Cversion%7C%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
+0.13.2.
+</p><p>sbt 0.13.2’s many new capabilities can be a bit overwhelming, but
+this page should help you migrate to 0.13.2 with a minimum of fuss.
+</p><h3 id="Why+move+to+0.13.2%3F">Why move to 0.13.2?<a href="#Why+move+to+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
 must)
 </li><li>Easier configuration. For simple projects a single <code>build.sbt</code> file
 in your root directory is easier to create than
@@ -53,27 +55,28 @@ backup and version control hassles.
 </li><li><code>update</code> is now much faster and it’s invoked automatically by sbt.
 </li><li>Terser output. (Yet you can ask for more details if something goes
 wrong.)
-</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+%7Cversion%7C">Step 1: Read the Getting Started Guide for sbt |version|<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+%7Cversion%7C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <code>Getting Started Guide &lt;/Getting-Started/Welcome&gt;</code> will
+</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2">Step 1: Read the Getting Started Guide for sbt 0.13.2<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
 probably save you a lot of confusion.
-</p><h4 id="Step+2%3A+Install+sbt+%7Crelease%7C">Step 2: Install sbt |release|<a href="#Step+2%3A+Install+sbt+%7Crelease%7C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt |version| as described on
-<code>the setup page &lt;/Getting-Started/Setup&gt;</code>.
-</p><p>You can run |version| the same way that you run 0.7.x, either simply:
+</p><h4 id="Step+2%3A+Install+sbt+0.13.2">Step 2: Install sbt 0.13.2<a href="#Step+2%3A+Install+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.2 as described on
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><p>You can run 0.13.2 the same way that you run 0.7.x, either simply:
 </p><pre><code class="">java -jar sbt-launch.jar
 </code></pre><p>Or (as most users do) with a shell script, as described on
-<code>the setup page &lt;/Getting-Started/Setup&gt;</code>.
-</p><p>For more details see <code>the setup page &lt;/Getting-Started/Setup&gt;</code>.
-</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to |version| while
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><p>For more details see
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.2 while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
 complex one next.
 </p><h3 id="Preserve++for+0.7.x+project">Preserve <code>project/</code> for 0.7.x project<a href="#Preserve++for+0.7.x+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Rename your <code>project/</code> directory to something like <code>project-old</code>. This
-will hide it from sbt |version| but keep it in case you want to switch
+will hide it from sbt 0.13.2 but keep it in case you want to switch
 back to 0.7.x.
-</p><h3 id="Create++for+%7Cversion%7C">Create <code>build.sbt</code> for |version|<a href="#Create++for+%7Cversion%7C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
-<code>.sbt build definition &lt;/Getting-Started/Basic-Def&gt;</code> in the Getting
-Started Guide, and for simple examples
-<code>/Examples/Quick-Configuration-Examples</code>. If you have a simple project
+</p><h3 id="Create++for+0.13.2">Create <code>build.sbt</code> for 0.13.2<a href="#Create++for+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
+<a href="../tutorial/Basic-Def.html">.sbt build definition</a> in the Getting
+Started Guide, and for <a href="Basic-Def-Examples.html">simple examples</a>.
+If you have a simple project
 then converting your existing project file to this format is largely a
 matter of re-writing your dependencies and maven archive declarations in
 a modified yet familiar syntax.
@@ -91,7 +94,7 @@ def.scala.version=2.7.7
 build.scala.versions=2.8.1
 project.initialize=false
 </code></pre><p>Now becomes part of your <code>build.sbt</code> file with lines like:
-</p><pre><code>name := &quot;My Project&quot;
+</p><pre><code class="prettyprint lang-scala">name := &quot;My Project&quot;
 
 version := &quot;1.0&quot;
 
@@ -100,11 +103,11 @@ organization := &quot;org.myproject&quot;
 scalaVersion := &quot;2.9.2&quot;
 </code></pre><p>Currently, a <code>project/build.properties</code> is still needed to explicitly
 select the sbt version. For example:
-</p><h3 id="Run+sbt+%7Cversion%7C">Run sbt |version|<a href="#Run+sbt+%7Cversion%7C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
+</p><h3 id="Run+sbt+0.13.2">Run sbt 0.13.2<a href="#Run+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
 debugging, see below.
 </p><h3 id="Switching+back+to+sbt+0.7.x">Switching back to sbt 0.7.x<a href="#Switching+back+to+sbt+0.7.x" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you get stuck and want to switch back, you can leave your <code>build.sbt</code>
 file alone. sbt 0.7.x will not understand or notice it. Just rename your
-|version| <code>project</code> directory to something like <code>project10</code> and rename
+0.13.2 <code>project</code> directory to something like <code>project10</code> and rename
 the backup of your old project from <code>project-old</code> to <code>project</code> again.
 </p><h4 id="FAQs">FAQs<a href="#FAQs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There’s a section in the <code>FAQ &lt;/faq&gt;</code> about migration from 0.7 that
 covers several other important points.
