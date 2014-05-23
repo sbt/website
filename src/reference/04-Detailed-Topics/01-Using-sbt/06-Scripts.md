@@ -2,6 +2,8 @@
 out: Scripts.html
 ---
 
+  [Setup]: ../tutorial/Setup.html
+
 Scripts, REPL, and Dependencies
 -------------------------------
 
@@ -36,7 +38,7 @@ This will create two scripts: `screpl` and `scalas`.
 #### Manual Setup
 
 Duplicate your standard `sbt` script, which was set up according to
-`Setup </Getting-Started/Setup>`, as `scalas` and `screpl` (or whatever
+[Setup][Setup], as `scalas` and `screpl` (or whatever
 names you like).
 
 `scalas` is the script runner and should use `sbt.ScriptMain` as the
@@ -56,7 +58,7 @@ java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot 
 In each case, `/home/user/.sbt/boot` should be replaced with wherever
 you want sbt's boot directory to be; you might also need to give more
 memory to the JVM via `-Xms512M -Xmx1536M` or similar options, just like
-shown in `Setup </Getting-Started/Setup>`.
+shown in [Setup][Setup].
 
 ### Usage
 
@@ -79,31 +81,35 @@ chmod u+x dispatch_example.scala
 ./dispatch_example.scala
 ```
 
-    #!/usr/bin/env scalas
-    !#
+<nbsp>
 
-    /***
-    scalaVersion := "2.9.0-1"
+```scala
+#!/usr/bin/env scalas
+!#
 
-    libraryDependencies ++= Seq(
-      "net.databinder" %% "dispatch-twitter" % "0.8.3",
-      "net.databinder" %% "dispatch-http" % "0.8.3"
-    )
-    */
+/***
+scalaVersion := "2.9.0-1"
 
-    import dispatch.{ json, Http, Request }
-    import dispatch.twitter.Search
-    import json.{ Js, JsObject }
+libraryDependencies ++= Seq(
+  "net.databinder" %% "dispatch-twitter" % "0.8.3",
+  "net.databinder" %% "dispatch-http" % "0.8.3"
+)
+*/
 
-    def process(param: JsObject) = {
-      val Search.text(txt)        = param
-      val Search.from_user(usr)   = param
-      val Search.created_at(time) = param
+import dispatch.{ json, Http, Request }
+import dispatch.twitter.Search
+import json.{ Js, JsObject }
 
-      "(" + time + ")" + usr + ": " + txt
-    }
+def process(param: JsObject) = {
+  val Search.text(txt)        = param
+  val Search.from_user(usr)   = param
+  val Search.created_at(time) = param
 
-    Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
+  "(" + time + ")" + usr + ": " + txt
+}
+
+Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
+```
 
 #### sbt REPL with dependencies
 

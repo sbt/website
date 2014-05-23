@@ -2,7 +2,9 @@
 out: Migrating-from-sbt-07x.html
 ---
 
+  [Getting-Started]: ../tutorial/index.html
   [Setup]: ../tutorial/Setup.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
 
 Migrating from 0.7 to 0.10+
 ---------------------------
@@ -28,7 +30,7 @@ this page should help you migrate to $app_version$ with a minimum of fuss.
 
 #### Step 1: Read the Getting Started Guide for sbt $app_version$
 
-Reading the `Getting Started Guide </Getting-Started/Welcome>` will
+Reading the [Getting Started Guide][Getting-Started] will
 probably save you a lot of confusion.
 
 #### Step 2: Install sbt $app_version$
@@ -43,9 +45,10 @@ java -jar sbt-launch.jar
 ```
 
 Or (as most users do) with a shell script, as described on
-`the setup page </Getting-Started/Setup>`.
+[the setup page][Setup].
 
-For more details see `the setup page </Getting-Started/Setup>`.
+For more details see
+[the setup page][Setup].
 
 #### Step 3: A technique for switching an existing project
 
@@ -64,7 +67,7 @@ back to 0.7.x.
 ### Create `build.sbt` for $app_version$
 
 Create a `build.sbt` file in the root directory of your project. See
-`.sbt build definition </Getting-Started/Basic-Def>` in the Getting
+[.sbt build definition][Basic-Def] in the Getting
 Started Guide, and for simple examples
 `/Examples/Quick-Configuration-Examples`. If you have a simple project
 then converting your existing project file to this format is largely a

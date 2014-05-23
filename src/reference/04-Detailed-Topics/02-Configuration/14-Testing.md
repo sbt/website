@@ -2,6 +2,8 @@
 out: Testing.html
 ---
 
+  [Running]: ../tutorial/Running.html
+
 Testing
 -------
 
@@ -87,7 +89,7 @@ referenced in Scala code with `in Test`. These tasks include:
 -   `test:run`
 -   `test:runMain`
 
-See `Running </Getting-Started/Running>` for details on these tasks.
+See [Running][Running] for details on these tasks.
 
 ### Output
 

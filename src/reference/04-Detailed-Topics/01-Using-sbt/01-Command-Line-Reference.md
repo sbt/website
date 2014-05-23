@@ -3,13 +3,18 @@ out: Command-Line-Reference.html
 ---
 
   [Console-Project]: Console-Project.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Multi-Project]: ../tutorial/Multi-Project.html
+  [Running]: ../tutorial/Running.html
+  [Inspecting-Settings]: Inspecting-Settings.html
 
 Command Line Reference
 ----------------------
 
 This page is a relatively complete list of command line options,
 commands, and tasks you can use from the sbt interactive prompt or in
-batch mode. See `Running </Getting-Started/Running>` in the Getting
+batch mode. See [Running][Running] in the Getting
 Started Guide for an intro to the basics, while this page has a lot more
 detail.
 
@@ -26,7 +31,7 @@ detail.
     instead of just `<task>`.
 -   In a multi-project build, execution dependencies and the aggregate
     setting control which tasks from which projects are executed. See
-    multi-project builds </Getting-Started/Multi-Project>.
+    [multi-project builds][Multi-Project].
 
 ### Project-level tasks
 
@@ -36,7 +41,7 @@ detail.
 -   `publish` Publishes artifacts (such as jars) to the repository
     defined by the publishTo setting, described in Publishing.
 -   `update` Resolves and retrieves external dependencies as described
-    in library dependencies </Getting-Started/Library-Dependencies>.
+    in [library dependencies][Library-Dependencies].
 
 ### Configuration-level tasks
 
@@ -116,11 +121,11 @@ configuration that can be run using a `test:` prefix.
     settings.
 -   `projects [add|remove <URI>]` List all available projects if no
     arguments provided or adds/removes the build at the provided URI.
-    (See /Getting-Started/Full-Def/ for details on multi-project
+    (See [multi-project builds][Multi-Project] for details on multi-project
     builds.)
 -   `project <project-id>` Change the current project to the project
     with ID `<project-id>`. Further operations will be done in the
-    context of the given project. (See /Getting-Started/Full-Def/ for
+    context of the given project. (See [multi-project builds][Multi-Project] for
     details on multiple project builds.)
 -   `~ <command>` Executes the project specified action or method
     whenever source files change. See
@@ -161,8 +166,8 @@ configuration that can be run using a `test:` prefix.
     definition. The setting applies until sbt is restarted, the build is
     reloaded, or the setting is overridden by another set command or
     removed by the session command. See
-    .sbt build definition </Getting-Started/Basic-Def> and
-    Inspecting-Settings for details.
+    [.sbt build definition][Basic-Def] and
+    [inspecting settings][Inspecting-Settings] for details.
 -   `session <command>` Manages session settings defined by the `set`
     command. It can persist settings configured at the prompt. See
     Inspecting-Settings for details.
@@ -175,6 +180,8 @@ configuration that can be run using a `test:` prefix.
 System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as `-Dprop=value`. The following properties
 influence SBT execution. Also see `Launcher`.
+
+<!-- TODO -->
 
   -------------------------------------------------------------------------
   Property           Values  Default       Meaning

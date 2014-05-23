@@ -2,11 +2,14 @@
 out: Tasks.html
 ---
 
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+
 Tasks
 -----
 
 Tasks and settings are introduced in the
-`getting started guide </Getting-Started/Basic-Def>`, which you may wish
+[getting started guide][Basic-Def], which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
 
@@ -74,7 +77,7 @@ We'll define a couple of other keys for the examples:
 
 The examples themselves are valid entries in a `build.sbt` or can be
 provided as part of a sequence to `Project.settings` (see
-`Full Configuration </Getting-Started/Full-Def>`).
+[.scala build definition][Full-Def]).
 
 #### Implement the task
 

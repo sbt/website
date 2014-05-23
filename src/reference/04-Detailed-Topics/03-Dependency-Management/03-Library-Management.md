@@ -2,11 +2,16 @@
 out: Library-Management.html
 ---
 
+  [Setup]: ../tutorial/Setup.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+
 Library Management
 ------------------
 
 There's now a
-`getting started page </Getting-Started/Library-Dependencies>` about
+[getting started page][Library-Dependencies] about
 library management, which you may want to read first.
 
 *Documentation Maintenance Note:* it would be nice to remove the overlap
@@ -18,9 +23,9 @@ the more advanced topics such as checksums and external Ivy files.
 There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
 the two approaches. All configurations shown here are settings that go
-either directly in a `.sbt file </Getting-Started/Basic-Def>` or are
+either directly in a [.sbt file][Basic-Def] or are
 appended to the `settings` of a Project in a
-`.scala file </Getting-Started/Full-Def>`.
+[.scala file][Full-Def].
 
 ### Manual Dependency Management
 
@@ -300,7 +305,7 @@ By default, sbt uses the standard Ivy home directory location
 `\${user.home}/.ivy2/`. This can be configured machine-wide, for use by
 both the sbt launcher and by projects, by setting the system property
 `sbt.ivy.home` in the sbt startup script (described in
-`Setup </Getting-Started/Setup>`).
+[Setup][Setup]).
 
 For example:
 

@@ -4,6 +4,7 @@ out: ChangeSummary_0.13.0.html
 
   [multiple-scopes]: Tasks.html#multiple-scopes
   [conflict-management]: Library-Management.html#conflict-management
+  [Setup]: ../tutorial/Setup.html
 
 sbt 0.13.0 Changes
 ------------------
@@ -34,7 +35,7 @@ sbt 0.13.0 Changes
     normal dependencies. However, it can result in resolved versions
     other than `scalaVersion` for those other Scala libraries.
 -   JLine is now configured differently for Cygwin. See
-    `/Getting-Started/Setup`.
+    [Installing sbt][Setup].
 -   Jline and Ansi codes work better on Windows now. CI servers might
     have to explictly disable Ansi codes via `-Dsbt.log.format=false`.
 -   JLine now tries to respect `~/.inputrc`.

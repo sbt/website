@@ -1,6 +1,8 @@
 ---
 out: Nightly-Builds.html
 ---
+  
+  [Manual-Installation]: ../tutorial/Manual-Installation.html
 
 Nightly Builds
 --------------
@@ -9,7 +11,7 @@ The latest development versions of $app_version$ are available as nightly
 builds on [Typesafe Snapshots]($typesafe_ivy_snapshots$).
 
 To use a nightly build, the instructions are the same for
-`normal manual setup </Getting-Started/Setup>` except:
+[normal manual setup][Manual-Installation] except:
 
 1.  Download the launcher jar from one of the subdirectories of
     |nightly-launcher|. They should be listed in chronological order, so

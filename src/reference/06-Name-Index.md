@@ -2,13 +2,21 @@
 out: Name-Index.html
 ---
 
+  [Running]: ../tutorial/Running.html
+  [Scopes]: ../tutorial/Scopes.html
+  [Community-Plugins]: Communitiy-Plugins.html
+  [Full-Def]: ../tutorial/Full-Def.html
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Using-Plugins]: ../tutorial/Using-Plugins.html
+  [More-About-Settings]: ../tutorial/More-About-Settings.html
+
 Index
 -----
 
 This is an index of common methods, types, and values you might find in
 an sbt build definition. For command names, see
-`Running </Getting-Started/Running>`. For available plugins, see
-`the plugins list </Community/Community-Plugins>`.
+[Running][Running]. For available plugins, see
+[the plugins list][Community-Plugins].
 
 ### Values and Types
 
@@ -29,7 +37,7 @@ an sbt build definition. For command names, see
     group of dependencies.
 -   A [Configuration](../api/sbt/Configuration.html) is a useful Ivy
     construct for grouping dependencies. See ivy-configurations. It is
-    also used for scoping settings </Getting-Started/Scopes>.
+    also used for [scoping settings][Scopes].
 -   `Compile`, `Test`, `Runtime`, `Provided`, and `Optional` are
     predefined `configurations <ivy-configurations>`.
 
@@ -44,7 +52,7 @@ an sbt build definition. For command names, see
     either a single [Setting](../api/sbt/Init\$Setting.html) or a
     sequence of settings
     ([SettingList](../api/sbt/Init\$SettingList.html)) to be defined at
-    once. The types in a /Getting-Started/Full-Def always use just a
+    once. The types in a [.scala build definition][Full-Def] always use just a
     plain [Setting](../api/sbt/Init\$Setting.html).
 -   [Initialize](../api/sbt/Init\$Initialize.html) describes how to
     initialize a setting using other settings, but isn't bound to a
@@ -79,13 +87,13 @@ an sbt build definition. For command names, see
 #### Build Structure
 
 -   [Build](../api/sbt/Build.html) is the trait implemented for a
-    full definition </Getting-Started/Full-Def>, which defines project
+    [.scala build definition][Full-Def], which defines project
     relationships and settings.
 -   [Plugin](../api/sbt/Plugin.html) is the trait implemented for sbt
-    `/Getting-Started/Using-Plugins`.
+    [plugins][Using-Plugins].
 -   [Project](../api/sbt/Project.html) is both a trait and a
     companion object that declares a single module in a build. See
-    full definition </Getting-Started/Full-Def>.
+    [.scala build definition][Full-Def].
 -   [Keys](../api/sbt/Keys\$.html) is an object that provides all of
     the built-in keys for settings and tasks.
 -   [State](../api/sbt/State.html) contains the full state for a
@@ -96,22 +104,22 @@ an sbt build definition. For command names, see
 
 #### Settings and Tasks
 
-See the `Getting Started Guide </Getting-Started/Basic-Def>` for
+See the [Getting Started Guide][Basic-Def] for
 details.
 
 -   `:=`, `+=`, `++=` These construct a
     [Setting](../api/sbt/Init\$Setting.html), which is the fundamental
-    type in the settings </Getting-Started/Basic-Def> system.
+    type in the [settings][Basic-Def] system.
 -   `value` This uses the value of another setting or task in the
     definition of a new setting or task. This method is special (it is a
     macro) and cannot be used except in the argument of one of the
     setting definition methods above (:=, ...) or in the standalone
     construction methods Def.setting and Def.task. See
-    more about settings </Getting-Started/More-About-Settings> for
+    [more about settings][More-About-Settings] for
     details.
 -   `in` specifies the [Scope](../api/sbt/Scope.html) or part of the
     [Scope](../api/sbt/Scope.html) of a setting being referenced. See
-    scopes </Getting-Started/Scopes>.
+    [scopes][Scopes].
 
 #### File and IO
 

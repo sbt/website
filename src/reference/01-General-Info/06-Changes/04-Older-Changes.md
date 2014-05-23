@@ -2,6 +2,9 @@
 out: Older-Changes.html
 ---
 
+  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Full-Def]: ../tutorial/Full-Def.html
+
 Older Changes
 -------------
 
@@ -358,9 +361,9 @@ Some of the more visible changes:
 
 -   Project definitions in Scala 2.8.1
 -   New configuration system: `/Examples/Quick-Configuration-Examples/`,
-    /Getting-Started/Full-Def, and /Getting-Started/Basic-Def/
+    [.scala build defnition][Full-Def] and [.sbt build definition][Basic-Def].
 -   New task engine: `/Detailed-Topics/Tasks`
--   New multiple project support: `/Getting-Started/Full-Def`
+-   New multiple project support: [.scala build defnition][Full-Def]
 -   More aggressive incremental recompilation for both Java and Scala
     sources
 -   Merged plugins and processors into improved plugins system:

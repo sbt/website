@@ -2,13 +2,16 @@
 out: Task-Inputs.html
 ---
 
+  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Tasks]: Tasks.html
+
 Tasks/Settings: Motivation
 --------------------------
 
 This page motivates the task and settings system. You should already
 know how to use tasks and settings, which are described in the
-`getting started guide </Getting-Started/More-About-Settings>` and on
-the `Tasks` page.
+[getting started guide][More-About-Settings] and on
+the [Tasks][Tasks] page.
 
 An important aspect of the task system is to combine two common, related
 steps in a build:

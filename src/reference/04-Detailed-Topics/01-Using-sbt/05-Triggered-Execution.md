@@ -2,6 +2,8 @@
 out: Triggered-Execution.html
 ---
 
+  [Full-Def]: ../tutorial/Full-Def.html
+
 Triggered Execution
 -------------------
 
@@ -15,7 +17,7 @@ the basic settings `watchSources` and `pollInterval` are modified.
     Scala and Java sources.
 -   `watchTransitiveSources` then combines the `watchSources` for the
     current project and all execution and classpath dependencies (see
-    Full Configuration </Getting-Started/Full-Def> for details on
+    [.scala build definition][Full-Def] for details on
     interProject dependencies).
 -   `pollInterval` selects the interval between polling for changes in
     milliseconds. The default value is 500 ms.

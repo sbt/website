@@ -2,6 +2,8 @@
 out: Plugins.html
 ---
 
+  [Full-Def]: ../tutorial/Full-Def.html
+
 Plugins
 -------
 
@@ -356,8 +358,6 @@ method. For example, if we wish to remove the JvmModule settings
 The simplest global plugin definition is declaring a library or plugin
 in `|globalPluginsBase|` build.sbt:
 
-::
-
     libraryDependencies += "org.example" %% "example-plugin" % "0.1"
 
 This plugin will be available for every sbt project for the current
@@ -365,23 +365,24 @@ user.
 
 In addition:
 
-1. Jars may be placed directly in :sublit:|globalPluginsBase| `lib/`
-and will be available to every build definition for the current user.
-2. Dependencies on plugins built from source may be declared in
-|globalPluginsBase| project/Build.scala as described at
-/Getting-Started/Full-Def. 3. A Plugin may be directly defined in Scala
-source files in |globalPluginsBase|, such as
-|globalPluginsBase| MyPlugin.scala. |globalPluginsBase|/build.sbt
-should contain sbtPlugin := true. This can be used for quicker
-turnaround when developing a plugin initially:
-
-> 1.  Edit the global plugin code
-> 2.  reload the project you want to use the modified plugin in
-> 3.  sbt will rebuild the plugin and use it for the project.
->     Additionally, the plugin will be available in other projects on
->     the machine without recompiling again. This approach skips the
->     overhead of publishLocal and cleaning the plugins directory of the
->     project using the plugin.
+- Jars may be placed directly in :sublit:|globalPluginsBase| `lib/`
+   and will be available to every build definition for the current user.
+- Dependencies on plugins built from source may be declared in
+   |globalPluginsBase| project/Build.scala as described at
+   [.scala build definition][Full-Deff].
+- A Plugin may be directly defined in Scala
+   source files in |globalPluginsBase|, such as
+   |globalPluginsBase| MyPlugin.scala. |globalPluginsBase|/build.sbt
+   should contain sbtPlugin := true. This can be used for quicker
+   turnaround when developing a plugin initially:
+   
+   1.  Edit the global plugin code
+   2.  reload the project you want to use the modified plugin in
+   3.  sbt will rebuild the plugin and use it for the project.
+       Additionally, the plugin will be available in other projects on
+       the machine without recompiling again. This approach skips the
+       overhead of publishLocal and cleaning the plugins directory of the
+       project using the plugin.
 
 These are all consequences of |globalPluginsBase| being a standard
 project whose classpath is added to every sbt project's build

@@ -2,6 +2,8 @@
 out: Inspecting-Settings.html
 ---
 
+  [Basic-Def]: ../tutorial/Basic-Def.html
+
 Interacting with the Configuration System
 -----------------------------------------
 
@@ -9,7 +11,7 @@ Central to sbt is the new configuration system, which is designed to
 enable extensive customization. The goal of this page is to explain the
 general model behind the configuration system and how to work with it.
 The Getting Started Guide (see
-`.sbt files </Getting-Started/Basic-Def>`) describes how to define
+[.sbt files][Basic-Def]) describes how to define
 settings; this page describes interacting with them and exploring them
 at the command line.
 
