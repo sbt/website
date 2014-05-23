@@ -274,7 +274,7 @@ an optional configuration mapping. For example, to use project b's
     lazy val a = Project(...) dependsOn(b % "test->compile")
     lazy val b = Project(...) 
 
-"test-\>compile"`may be shortened to`"test"`in this case. The`%`call may be omitted, in which case the mapping is`"compile-\>compile"`by default.  A useful configuration declaration is`test-\>test`. This means to use a dependency's test classes on the dependent's test classpath.  Multiple declarations may be separated by a semicolon. For example, the following says to use the main classes of`b`for the compile classpath of`a`as well as the test classes of`b`for the test classpath of`a\`\`:
+"test->compile"`may be shortened to`"test"`in this case. The`%`call may be omitted, in which case the mapping is`"compile->compile"`by default.  A useful configuration declaration is`test->test`. This means to use a dependency's test classes on the dependent's test classpath.  Multiple declarations may be separated by a semicolon. For example, the following says to use the main classes of`b`for the compile classpath of `a` as well as the test classes of `b` for the test classpath of `a`:
 
     lazy val a = Project(...) dependsOn(b % "compile;test->test")
     lazy val b = Project(...)

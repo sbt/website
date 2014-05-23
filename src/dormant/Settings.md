@@ -164,10 +164,10 @@ The types involved in += and ++= are constrained by the existence of an
 implicit parameter of type Append.Value[A,B] in the case of += or
 Append.Values[A,B] in the case of ++=. Here, B is the type of the value
 being appended and A is the type of the setting that the value is being
-appended to. See `Append <../../api/sbt/Append\$.html>`\_ for the
+appended to. See [Append](../../api/sbt/Append\$.html) for the
 provided instances.
 
-### \~=
+### ~=
 
 `~=` is used to transform the current value of a setting. For example,
 the following defines a setting that will remove `-Y` compiler options
@@ -184,12 +184,12 @@ could also be written as:
       deps :+ ("junit" % "junit" % "4.8" % "test")
     }
 
-### \<\<=
+### <<=
 
-The most general method is \<\<=. All other methods can be implemented
-in terms of \<\<=. \<\<= defines a setting using other settings,
+The most general method is <<=. All other methods can be implemented
+in terms of <<=. <<= defines a setting using other settings,
 possibly including the previous value of the setting being defined. For
-example, declaring JUnit as a dependency using \<\<= would look like:
+example, declaring JUnit as a dependency using <<= would look like:
 
     libraryDependencies <<= libraryDependencies apply { (deps: Seq[ModuleID]) =>
        // Note that :+ is a method on Seq that appends a single value
@@ -200,22 +200,22 @@ This defines a setting that will apply the provided function to the
 previous value of *libraryDependencies*. `apply` and `Seq[ModuleID]` are
 explicit for demonstration only and may be omitted.
 
-### \<+= and \<++=
+### <+= and <++=
 
-The \<+= method is a hybrid of the += and \<\<= methods. Similarly,
-\<++= is a hybrid of the ++= and \<\<= methods. These methods are
+The <+= method is a hybrid of the += and <<= methods. Similarly,
+<++= is a hybrid of the ++= and <<= methods. These methods are
 convenience methods for using other settings to append to the current
 value of a setting.
 
 For example, the following will add a dependency on the Scala compiler
 to the current list of dependencies. Because the *scalaVersion* setting
-is used, the method is \<+= instead of +=.
+is used, the method is <+= instead of +=.
 
     libraryDependencies <+= scalaVersion( "org.scala-lang" % "scala-compiler" % _ )
 
 This next example adds a dependency on the Scala compiler to the current
 list of dependencies. Because another setting (*scalaVersion*) is used
-and a Seq is appended, the method is \<++=.
+and a Seq is appended, the method is <++=.
 
     libraryDependencies <++= scalaVersion { sv =>
       ("org.scala-lang" % "scala-compiler" % sv) ::
@@ -223,12 +223,12 @@ and a Seq is appended, the method is \<++=.
       Nil
     }
 
-The types involved in \<+= and \<++=, like += and ++=, are constrained
+The types involved in <+= and <++=, like += and ++=, are constrained
 by the existence of an implicit parameter of type Append.Value[A,B] in
-the case of \<+= or Append.Values[A,B] in the case of \<++=. Here, B is
+the case of <+= or Append.Values[A,B] in the case of <++=. Here, B is
 the type of the value being appended and A is the type of the setting
 that the value is being appended to. See
-`Append <../../api/sbt/Append\$.html>`\_ for the provided instances.
+[Append](../../api/sbt/Append\$.html) for the provided instances.
 
 Setting types
 -------------
@@ -240,9 +240,9 @@ incomplete.
 ### Setting Keys
 
 The left hand side of a setting definition is of type
-`ScopedSetting <../../api/sbt/ScopedSetting.html>`\_. This type has two
-parts: a key (of type `SettingKey <../../api/sbt/SettingKey.html>`\_)
-and a scope (of type `Scope <../../api/sbt/Scope\$.html>`\_). An
+[ScopedSetting](../../api/sbt/ScopedSetting.html). This type has two
+parts: a key (of type [SettingKey](../../api/sbt/SettingKey.html))
+and a scope (of type [Scope](../../api/sbt/Scope\$.html)). An
 unspecified scope is like using `this` to refer to the current context.
 The previous examples on this page have not defined an explicit scope.
 See [[Inspecting Settings]] for details on the axes that make up scopes.
@@ -257,16 +257,16 @@ sbt 0.7 and earlier, accepts an input string and produces a task to be
 run. (The renaming is because it can accept arbitrary input in 0.10+ and
 not just a space-delimited sequence of arguments like in 0.7.)
 
-A setting key has type `SettingKey <../../api/sbt/SettingKey.html>`\_, a
-task key has type `TaskKey <../../api/sbt/TaskKey.html>`\_, and an input
-task has type `InputKey <../../api/sbt/InputKey.html>`\_. The remainder
+A setting key has type [SettingKey](../../api/sbt/SettingKey.html), a
+task key has type [TaskKey](../../api/sbt/TaskKey.html), and an input
+task has type [InputKey](../../api/sbt/InputKey.html). The remainder
 of this section only discusses settings. See [[Tasks]] and [[Input
 Tasks]] for details on the other types (those pages assume an
 understanding of this page).
 
-To construct a `ScopedSetting <../../api/sbt/ScopedSetting.html>`\_,
+To construct a [ScopedSetting](../../api/sbt/ScopedSetting.html),
 select the key and then scope it using the `in` method (see the
-`ScopedSetting <../../api/sbt/ScopedSetting.html>`\_ for API details).
+[ScopedSetting](../../api/sbt/ScopedSetting.html) for API details).
 For example, the setting for compiler options for the test sources is
 referenced using the *scalacOptions* key and the `Test` configuration in
 the current project.
@@ -289,16 +289,16 @@ as such.
 ### Computing the value for a setting
 
 The right hand side of a setting definition varies by the initialization
-method used. In the case of :=, +=, ++=, and \~=, the type of the
+method used. In the case of `:=`, `+=`, `++=`, and `~=`, the type of the
 argument is straightforward (see the
-`ScopedSetting <../../api/sbt/ScopedSetting.html>`\_ API). For \<\<=,
-\<+=, and \<++=, the type is `Initialize[T]` (for \<\<= and \<+=) or
-`Initialize[Seq[T]]` (for \<++=). This section discusses the
-`Initialize <../../api/sbt/Init\$Initialize.html>`\_ type.
+[ScopedSetting](../../api/sbt/ScopedSetting.html) API). For `<<=`,
+<+=, and <++=, the type is `Initialize[T]` (for `<<=` and `<+=`) or
+`Initialize[Seq[T]]` (for <++=). This section discusses the
+[Initialize](../../api/sbt/Init\$Initialize.html) type.
 
 A value of type `Initialize[T]` represents a computation that takes the
 values of other settings as inputs. For example, in the following
-setting, the argument to \<\<= is of type `Initialize[File]`:
+setting, the argument to <<= is of type `Initialize[File]`:
 
     scalaSource in Compile <<= baseDirectory {
        (base: File) => base / "src"
@@ -332,7 +332,7 @@ value. In this case, that value is the path of a jar.
 To initialize tasks, the procedure is similar. There are a few
 differences. First, the inputs are of type [ScopedTaskable]. The means
 that either settings
-(`ScopedSetting <../../api/sbt/ScopedSetting.html>`\_) or tasks
+([ScopedSetting](../../api/sbt/ScopedSetting.html)) or tasks
 ([ScopedTask]) may be used as the input to a task. Second, the name of
 the method used is `map` instead of `apply` and the resulting value is
 of type `Initialize[Task[T]]`. In the following example, the inputs are
@@ -346,6 +346,6 @@ for that configuration.
       )
 
 As before, *update* and *configuration* are defined in
-`Keys <../../sxr/sbt/Keys.scala.html>`\_. *update* is of type
+[Keys](../../sxr/sbt/Keys.scala.html). *update* is of type
 `TaskKey[UpdateReport]` and *configuration* is of type
 `SettingKey[Configuration]`.
