@@ -109,7 +109,7 @@ As a specific example, the following generates a properties file
 ```scala
 resourceGenerators in Compile += Def.task {
   val file = (resourceManaged in Compile).value / "demo" / "myapp.properties"
-  val contents = "name=%s\nversion=%s".format(name.value,version.value)
+  val contents = "name=%s\\nversion=%s".format(name.value,version.value)
   IO.write(file, contents)
   Seq(file)
 }.taskValue

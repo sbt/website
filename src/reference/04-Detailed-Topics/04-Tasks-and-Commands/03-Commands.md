@@ -146,10 +146,10 @@ commands to a project. To try it out:
         // The command changes the foreground or background terminal color
         //  according to the input.
         lazy val change = Space ~> (reset | setColor)
-        lazy val reset = token("reset" ^^^ "\033[0m")
+        lazy val reset = token("reset" ^^^ "\\033[0m")
         lazy val color = token( Space ~> ("blue" ^^^ "4" | "green" ^^^ "2") )
         lazy val select = token( "fg" ^^^ "3" | "bg" ^^^ "4" )
-        lazy val setColor = (select ~ color) map { case (g, c) => "\033[" + g + c + "m" }
+        lazy val setColor = (select ~ color) map { case (g, c) => "\\033[" + g + c + "m" }
 
         def changeColor = Command("color")(_ => change) { (state, ansicode) =>
             print(ansicode)

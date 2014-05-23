@@ -138,7 +138,7 @@ scoped keys like this:
 {<build-uri>}<project-id>/config:intask::key
 ```
 
-- `{<build-uri>}\<project-id>` identifies the project axis. The
+- `{<build-uri>}/<project-id>` identifies the project axis. The
   `<project-id>` part will be missing if the project axis has "entire build" scope.
 - `config` identifies the configuration axis.
 - `intask` identifies the task axis.
@@ -276,7 +276,7 @@ name := "hello"
 ```
 
 Run sbt and `inspect name` to see that it's provided by
-`{file:/home/hp/checkout/hello/}default-aea33a/\*:name`, that is, the
+`{file:/home/hp/checkout/hello/}default-aea33a/*:name`, that is, the
 project is `{file:/home/hp/checkout/hello/}default-aea33a`, the
 configuration is `*` (meaning global), and the task is not shown (which
 also means global).
