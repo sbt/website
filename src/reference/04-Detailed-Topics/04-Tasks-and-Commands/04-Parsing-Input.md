@@ -152,7 +152,7 @@ suggestions becomes unmanageable. A better parser is:
 
     token( ("fg" | "bg") ~ ' ') ~ token("green" | "blue")
 
-Now, the initial suggestions would be (with \_ representing a space):
+Now, the initial suggestions would be (with `_` representing a space):
 `console fg_ bg_`
 
 Be careful not to overlap or nest tokens, as in

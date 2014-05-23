@@ -56,13 +56,14 @@ of main source generators (`sourceGenerators in Compile`).
 
 To insert a named task, which is the better approach for plugins:
 
-::
-:   val mySourceGenerator = taskKey[Seq[File]](...)
+```scala
+val mySourceGenerator = taskKey[Seq[File]](...)
 
-    mySourceGenerator in Compile :=
-    :   generate( (sourceManaged in Compile).value / "some\_directory")
+mySourceGenerator in Compile :=
+  generate( (sourceManaged in Compile).value / "some_directory")
 
-    sourceGenerators in Compile += (mySourceGenerator in Compile).task
+sourceGenerators in Compile += (mySourceGenerator in Compile).task
+```
 
 The `task` method is used to refer to the actual task instead of the
 result of the task.

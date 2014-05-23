@@ -128,7 +128,7 @@ generates the artifact:
     addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 
 `addArtifact` returns a sequence of settings (wrapped in a
-`SettingsDefinition <../../api/#sbt.Init\$SettingsDefinition>`\_). In a
+[SettingsDefinition](../../api/#sbt.Init\$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
     ...

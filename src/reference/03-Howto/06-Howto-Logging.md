@@ -5,6 +5,10 @@ out: Howto-Logging.html
 Configure and use logging
 -------------------------
 
+<a name="last"></a>
+
+### View the logging output of the previously executed command
+
 When a command is run, more detailed logging output is sent to a file
 than to the screen (by default). This output can be recalled for the
 command just executed by running `last`.
@@ -99,11 +103,15 @@ and:
 ...
 ```
 
+<a name="printwarnings"></a>
+
+### Show warnings from the previous compilation
+
 The Scala compiler does not print the full details of warnings by
 default. Compiling code that uses the deprecated `error` method from
 Predef might generate the following output:
 
-```
+``` scala
 > compile
 [info] Compiling 1 Scala source to <...>/classes...
 [warn] there were 1 deprecation warnings; re-run with -deprecation for details
@@ -116,7 +124,7 @@ alternative when using Scala 2.10 and later is to run `printWarnings`.
 This task will display all warnings from the previous compilation. For
 example,
 
-```
+```scala
 > printWarnings
 [warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead
 [warn]  def x = error("Failed.")
@@ -183,8 +191,8 @@ from a previous compilation may be displayed using `printWarnings` for
 the main sources or `test:printWarnings` for test sources. Second,
 output from the previous execution is available either for a single task
 or for in its entirety. See the section on
-`printWarnings <#printwarnings>`\_ and the sections on
-`previous output <#last>`\_.
+[printWarnings](#printwarnings) and the sections on
+[previous output](#last).
 
 By default, sbt hides the stack trace of most exceptions thrown during
 execution. It prints a message that indicates how to display the
@@ -238,7 +246,7 @@ provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
 
 The special task `streams` provides per-task logging and I/O via a
-`Streams <../../api/#sbt.std.Streams>`\_ instance. To log, a task uses
+[Streams](../../api/#sbt.std.Streams) instance. To log, a task uses
 the `log` member from the `streams` task:
 
     myTask := {

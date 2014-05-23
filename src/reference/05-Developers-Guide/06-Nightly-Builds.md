@@ -6,7 +6,7 @@ Nightly Builds
 --------------
 
 The latest development versions of $app_version$ are available as nightly
-builds on |typesafe-snapshots|\_.
+builds on [Typesafe Snapshots]($typesafe_ivy_snapshots$).
 
 To use a nightly build, the instructions are the same for
 `normal manual setup </Getting-Started/Setup>` except:
@@ -15,7 +15,7 @@ To use a nightly build, the instructions are the same for
     |nightly-launcher|. They should be listed in chronological order, so
     the most recent one will be last.
 2.  The version number is the name of the subdirectory and is of the
-    form $app_version$.x-yyyyMMdd-HHmmss. Use this in a build.properties
+    form `$app_version$.x-yyyyMMdd-HHmmss`. Use this in a build.properties
     file.
 3.  Call your script something like `sbt-nightly` to retain access to a
     stable sbt launcher. The documentation will refer to the script as

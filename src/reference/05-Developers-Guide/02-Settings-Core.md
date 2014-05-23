@@ -2,6 +2,10 @@
 out: Settings-Core.html
 ---
 
+  [Sdocs-Global]: ../api/sbt/Global\$.html
+  [Sdocs-This]: ../api/sbt/This\$.html
+  [Sdocs-Select]: ../api/sbt/Select.html
+
 Settings Core
 -------------
 
@@ -164,18 +168,28 @@ This produces the following output when run: :
 sbt defines a more complicated scope than the one shown here for the
 standard usage of settings in a build. This scope has four components:
 the project axis, the configuration axis, the task axis, and the extra
-axis. Each component may be `Global`\_ (no specific value), `This`\_
-(current context), or `Select`\_ (containing a specific value). sbt
-resolves `This_` to either `Global`\_ or `Select`\_ depending on the
-context.
+axis. Each component may be 
+[Global][Sdocs-Global] (no specific value),
+[This][Sdocs-This]
+(current context), or
+[Select][Sdocs-Select] (containing a specific value). sbt
+resolves `This_` to either
+[Global][Sdocs-Global] or
+[Select][Sdocs-Select]
+depending on the context.
 
-For example, in a project, a `This`\_ project axis becomes a `Select`\_
-referring to the defining project. All other axes that are `This`\_ are
-translated to `Global`\_. Functions like inConfig and inTask transform
-This into a `Select`\_ for a specific value. For example,
+For example, in a project, a
+[This][Sdocs-This] project axis becomes a
+[Select][Sdocs-Select] referring to the defining project. All other axes that are
+[This][Sdocs-This] are
+translated to
+[Global][Sdocs-Global]. Functions like inConfig and inTask transform
+This into a
+[Select][Sdocs-Select] for a specific value. For example,
 `inConfig(Compile)(someSettings)` translates the configuration axis for
 all settings in *someSettings* to be `Select(Compile)` if the axis value
-is `This`\_.
+is
+[This][Sdocs-This].
 
 So, from the example and from sbt's scopes, you can see that the core
 settings engine does not impose much on the structure of a scope. All it
@@ -208,7 +222,7 @@ underlying `SettingKey[Task[T]]` (and they both wrap an underlying
 For example, `a := 3` for a SettingKey *a* will very roughly translate
 to `setting(a, value(3))`. For a TaskKey *a*, it will roughly translate
 to `setting(a, value( task { 3 } ) )`. See
-`main/Structure.scala <../../sxr/sbt/Structure.scala>`\_ for details.
+[main/Structure.scala](../../sxr/sbt/Structure.scala) for details.
 
 #### Settings definitions
 

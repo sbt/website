@@ -43,7 +43,7 @@ Elsewhere, files should be absolute or be built up from an absolute base
 build or project depending on the scope.
 
 For example, the following setting sets the unmanaged library directory
-to be the "custom\_lib" directory in a project's base directory:
+to be the "custom_lib" directory in a project's base directory:
 
     unmanagedBase := baseDirectory.value /"custom_lib"
 

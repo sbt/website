@@ -66,7 +66,7 @@ shows the two most important:
         }
 
 After loading/compiling all the build definitions, sbt has a series of
-Seq[Setting[\_]] that it must order. As shown in the diagram, the
+`Seq[Setting[_]]` that it must order. As shown in the diagram, the
 default inclusion order for sbt is:
 
 1.  All AutoPlugin settings

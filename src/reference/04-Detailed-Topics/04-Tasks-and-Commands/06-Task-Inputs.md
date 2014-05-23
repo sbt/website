@@ -25,14 +25,14 @@ To see why it is advantageous to combine them, compare the situation to
 that of deferring initialization of a variable in Scala. This Scala code
 is a bad way to expose a value whose initialization is deferred:
 
-    // Define a variable that will be initialized at some point
-    // We don't want to do it right away, because it might be expensive
+```scala
+// Define a variable that will be initialized at some point
+// We don't want to do it right away, because it might be expensive
+var foo: Foo = _
 
-> var foo: Foo = \_
->
-> > // Define a function to initialize the variable
->
-> def makeFoo(): Unit = ... initialize foo ...
+// Define a function to initialize the variable
+def makeFoo(): Unit = ... initialize foo ...
+```
 
 Typical usage would be:
 

@@ -63,9 +63,9 @@ following properties:
 -   `cross-versioned` - An optional string denoting how this application
     is published. If app.cross-versioned is binary, the resolved module
     ID is
-    {app.name+'\_'+CrossVersion.binaryScalaVersion(scala.version)}. If
+    `{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}`. If
     app.cross-versioned is true or full, the resolved module ID is
-    {app.name+'\_'+scala.version}. The scala.version property must be
+    `{app.name+'_'+scala.version}`. The scala.version property must be
     specified and cannot be auto when cross-versioned.
 -   `resources` - An optional list of jar files that should be added to
     the application's classpath.
