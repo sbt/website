@@ -2,6 +2,8 @@
 out: Process.html
 ---
 
+  [Console-Project]: Console-Project.html
+
 External Processes
 ------------------
 
@@ -9,7 +11,7 @@ External Processes
 
 `sbt` includes a process library to simplify working with external
 processes. The library is available without import in build definitions
-and at the interpreter started by the `consoleProject <Console-Project>`
+and at the interpreter started by the [consoleProject][Console-Project]
 task.
 
 To run an external command, follow it with an exclamation mark `!`:

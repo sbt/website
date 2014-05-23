@@ -2,11 +2,13 @@
 out: Forking.html
 ---
 
+  [Running-Project-Code]: Running-Project-Code.html
+
 Forking
 -------
 
 By default, the `run` task runs in the same JVM as sbt. Forking is
-required under `certain circumstances <Running-Project-Code>`, however.
+required under [certain circumstances][Running-Project-Code], however.
 Or, you might want to fork Java processes when implementing new tasks.
 
 By default, a forked process uses the same Java and Scala versions being

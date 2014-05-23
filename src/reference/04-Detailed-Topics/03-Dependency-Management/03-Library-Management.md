@@ -95,7 +95,7 @@ or
 
     libraryDependencies += groupID % artifactID % revision % configuration
 
-See `configurations <ivy-configurations>` for details on configuration
+See [configurations](#ivy-configurations) for details on configuration
 mappings. Also, several dependencies can be declared together:
 
     libraryDependencies ++= Seq(
@@ -446,6 +446,8 @@ published pom.xml.
 ##### Publishing
 
 See `Publishing` for how to publish your project.
+
+<a name="ivy-configurations"></a>
 
 ##### Configurations
 

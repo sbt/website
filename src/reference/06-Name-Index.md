@@ -20,6 +20,7 @@ out: Name-Index.html
   [Commands]: Commands.html
   [Input-Tasks]: Input-Tasks.html
   [Build-State]: Build-State.html
+  [ivy-configurations]: Library-Management.html#ivy-configurations
 
 Index
 -----
@@ -51,7 +52,7 @@ an sbt build definition. For command names, see
     construct for grouping dependencies. See ivy-configurations. It is
     also used for [scoping settings][Scopes].
 -   `Compile`, `Test`, `Runtime`, `Provided`, and `Optional` are
-    predefined `configurations <ivy-configurations>`.
+    predefined [configurations][ivy-configurations].
 
 #### Settings and Tasks
 

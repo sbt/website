@@ -2,6 +2,8 @@
 out: Artifacts.html
 ---
 
+  [Library-Management]: Library-Management.html
+
 Artifacts
 ---------
 
@@ -162,7 +164,7 @@ example:
     libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
 
 The `from` and `classifer` methods (described on the
-`Library Management <Library-Management>` page) are actually convenience
+[Library Management][Library-Management] page) are actually convenience
 methods that translate to `artifacts`:
 
     def from(url: String) = artifacts( Artifact(name, new URL(url)) )

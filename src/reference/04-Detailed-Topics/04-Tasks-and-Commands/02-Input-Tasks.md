@@ -3,6 +3,7 @@ out: Input-Tasks.html
 ---
 
   [Parsing-Input]: Parsing-Input.html
+  [Build-State]: Build-State.html
 
 Input Tasks
 -----------
@@ -66,7 +67,7 @@ of one of the following types:
 -   `Initialize[Parser[I]]`: a parser whose definition depends on one or
     more settings
 -   `Initialize[State => Parser[I]]`: a parser that is defined using
-    both settings and the current `state <Build-State>`
+    both settings and the current [state][Build-State]
 
 We already saw an example of the first case with `spaceDelimited`, which
 doesn't use any settings in its definition. As an example of the third

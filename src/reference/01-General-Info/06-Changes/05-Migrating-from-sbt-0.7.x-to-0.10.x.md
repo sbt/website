@@ -6,6 +6,7 @@ out: Migrating-from-sbt-07x.html
   [Setup]: ../tutorial/Setup.html
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Basic-Def-Examples]: Basic-Def-Examples.html
+  [Faq]: Faq.html
 
 Migrating from 0.7 to 0.10+
 ---------------------------
@@ -122,5 +123,5 @@ the backup of your old project from `project-old` to `project` again.
 
 #### FAQs
 
-There's a section in the `FAQ </faq>` about migration from 0.7 that
+There's a section in the [FAQ][Faq] about migration from 0.7 that
 covers several other important points.

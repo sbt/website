@@ -31,7 +31,7 @@ script to launch it (call it `myapp`):
 The user can then launch the application using `myapp arg1 arg2 ...`
 
 More on launcher configuration can be found at
-`Launcher Configuration </Launcher/Configuration>`
+[Launcher Configuration][Launcher-Configuration]
 
 #### Servers
 

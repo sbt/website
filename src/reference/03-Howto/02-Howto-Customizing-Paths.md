@@ -133,7 +133,7 @@ When sbt traverses `unmanagedSourceDirectories` for sources, it only
 includes directories and files that match `includeFilter` and do not
 match `excludeFilter`. `includeFilter` and `excludeFilter` have type
 `java.io.FileFilter` and sbt
-`provides some useful combinators <file-filter>` for constructing a
+[provides some useful combinators][file-filter] for constructing a
 `FileFilter`. For example, in addition to the default hidden files
 exclusion, the following also ignores files containing `impl` in their
 name,
@@ -160,7 +160,7 @@ When sbt traverses `unmanagedResourceDirectories` for resources, it only
 includes directories and files that match `includeFilter` and do not
 match `excludeFilter`. `includeFilter` and `excludeFilter` have type
 `java.io.FileFilter` and sbt
-`provides some useful combinators <file-filter>` for constructing a
+[provides some useful combinators][file-filter] for constructing a
 `FileFilter`. For example, in addition to the default hidden files
 exclusion, the following also ignores files containing `impl` in their
 name,

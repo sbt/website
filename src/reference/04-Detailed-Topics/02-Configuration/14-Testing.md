@@ -4,6 +4,8 @@ out: Testing.html
 
   [Running]: ../tutorial/Running.html
   [Plugins]: Plugins.html
+  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [ivy-configurations]: Library-Management.html#ivy-configurations
 
 Testing
 -------
@@ -25,12 +27,14 @@ The main Scala testing frameworks (
 [ScalaTest](http://scalatest.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
-`managed dependency <Library-Management>`:
+[managed dependency][Library-Dependencies]:
 
-    libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.10.1" % "test"
+```scala
+libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.10.1" % "test"
+```
 
 The fourth component `"test"` is the
-`configuration <gsg-ivy-configurations>` and means that ScalaCheck will
+[configuration][ivy-configurations] and means that ScalaCheck will
 only be on the test classpath and it isn't needed by the main sources.
 This is generally good practice for libraries because your users don't
 typically need your test dependencies to use your library.

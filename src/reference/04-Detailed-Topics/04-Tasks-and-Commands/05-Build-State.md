@@ -2,6 +2,8 @@
 out: Build-State.html
 ---
 
+  [Commands]: Commands.html
+
 State and actions
 -----------------
 
@@ -150,7 +152,7 @@ obtained by dependency management). When you only want the underlying
 ### Running tasks
 
 It can be useful to run a specific project task from a
-`command <Commands>` (*not from another task*) and get its result. For
+[command][Commands] (*not from another task*) and get its result. For
 example, an IDE-related command might want to get the classpath from a
 project or a task might analyze the results of a compilation. The
 relevant method is `Project.evaluateTask`, which has the following

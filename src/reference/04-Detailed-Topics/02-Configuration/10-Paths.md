@@ -140,6 +140,8 @@ sources that are a descendent of a `.svn` directory. The `---` method
 removes all files returned by the second selector from the sequence of
 files returned by the first selector.
 
+<a name="file-filter"></a>
+
 #### Filtering
 
 There is a `filter` method that accepts a predicate of type

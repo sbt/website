@@ -29,9 +29,6 @@ essentially functions of `sbt.State => sbt.State`. However, in reality,
 Commands are actually string processors which take some string input and
 act on it, returning the next build state.
 
-The details of the command engine are covered in
-`the command engine section <Command-Engine>`.
-
 So, the entirety of sbt is driven off the `sbt.State` class. Since this
 class needs to be resilient in the face of custom code and plugins, it
 needs a mechanism to store the state from any potential client. In
