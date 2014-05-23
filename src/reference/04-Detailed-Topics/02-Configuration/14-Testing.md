@@ -199,6 +199,8 @@ forked JVMs allowed to run at the same time by setting the limit on
 actions cannot be provided with the actual test class loader when a
 group is forked.
 
+<a name="additional-test-configurations"></a>
+
 ### Additional test configurations
 
 You can add an additional test configuration to have a separate set of

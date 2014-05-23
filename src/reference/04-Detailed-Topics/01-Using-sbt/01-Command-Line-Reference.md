@@ -8,6 +8,7 @@ out: Command-Line-Reference.html
   [Multi-Project]: ../tutorial/Multi-Project.html
   [Running]: ../tutorial/Running.html
   [Inspecting-Settings]: Inspecting-Settings.html
+  [Triggered-Execution]: Triggered-Execution.html
 
 Command Line Reference
 ----------------------
@@ -129,7 +130,7 @@ configuration that can be run using a `test:` prefix.
     details on multiple project builds.)
 -   `~ <command>` Executes the project specified action or method
     whenever source files change. See
-    /Detailed-Topics/Triggered-Execution for details.
+    [Triggered Execution][Triggered-Execution] for details.
 -   `< filename` Executes the commands in the given file. Each command
     should be on its own line. Empty lines and lines beginning with '#'
     are ignored

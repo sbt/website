@@ -6,6 +6,7 @@ out: Library-Management.html
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Full-Def]: ../tutorial/Full-Def.html
   [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Update-Report]: Update-Report.html
 
 Library Management
 ------------------
@@ -23,7 +24,8 @@ the more advanced topics such as checksums and external Ivy files.
 There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
 the two approaches. All configurations shown here are settings that go
-either directly in a [.sbt file][Basic-Def] or are
+either directly in a
+[.sbt file][Basic-Def] or are
 appended to the `settings` of a Project in a
 [.scala file][Full-Def].
 
@@ -487,7 +489,7 @@ it in your jar by modifying `resources`. For example:
 
 The `config` method defines a new configuration with name `"js"` and
 makes it private to the project so that it is not used for publishing.
-See `/Detailed-Topics/Update-Report` for more information on selecting
+See [Update Report][Update-Report] for more information on selecting
 managed artifacts.
 
 A configuration without a mapping (no `"->"`) is mapped to `"default"`

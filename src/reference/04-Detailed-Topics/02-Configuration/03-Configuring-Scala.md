@@ -2,6 +2,8 @@
 out: Configuring-Scala.html
 ---
 
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 Configuring Scala
 -----------------
 
@@ -167,4 +169,4 @@ Scala is fixed for a specific sbt release and cannot be changed. For sbt
 $app_version$, this version is Scala |scalaVersion|. Because this Scala
 version is needed before sbt runs, the repositories used to retrieve
 this version are configured in the sbt
-`launcher </Detailed-Topics/Launcher>`.
+[launcher][Sbt-Launcher].

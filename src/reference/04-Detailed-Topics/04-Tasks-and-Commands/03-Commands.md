@@ -2,6 +2,8 @@
 out: Commands.html
 ---
 
+  [Parsing-Input]: Parsing-Input.html
+
 Commands
 --------
 
@@ -33,7 +35,8 @@ In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
 Scala's standard library, these are very similar. The action part is a
 function `(State, T) => State`, where `T` is the data structure produced
-by the parser. See the `/Detailed-Topics/Parsing-Input` page for how to
+by the parser. See the
+[Parsing Input][Parsing-Input] page for how to
 use the parser combinators.
 
 [State](../../api/sbt/State.html) provides access to the build state,

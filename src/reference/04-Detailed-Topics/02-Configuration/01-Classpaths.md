@@ -2,6 +2,8 @@
 out: Classpaths.html
 ---
 
+  [Inspecting-Settings]: Inspecting-Settings.html
+
 Classpaths, sources, and resources
 ----------------------------------
 
@@ -122,7 +124,7 @@ For resources
     Typically, these tasks will put resources in the directory provided
     by resourceManaged.
 
-Use the `inspect command </Detailed-Topics/Inspecting-Settings>` for
+Use the [inspect command][Inspecting-Settings] for
 more details.
 
 See also a related

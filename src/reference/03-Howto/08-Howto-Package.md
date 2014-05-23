@@ -3,6 +3,7 @@ out: Howto-Package.html
 ---
 
   [Artifacts]: Artifacts.html
+  [Mapping-Files]: Mapping-Files.html
 
 Configure packaging
 -------------------
@@ -62,7 +63,7 @@ the [Artifacts][Artifacts] page for details.
 The contents of a package are defined by the `mappings` task, of type
 `Seq[(File,String)]`. The `mappings` task is a sequence of mappings from
 a file to include in the package to the path in the package. See
-`/Detailed-Topics/Mapping-Files` for convenience functions for
+[Mapping Files][Mapping-Files] for convenience functions for
 generating these mappings. For example, to add the file `in/example.txt`
 to the main binary jar with the path "out/example.txt",
 

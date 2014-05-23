@@ -2,6 +2,8 @@
 out: Cross-Building.html
 ---
 
+  [Command-Line-Reference]: Command-Line-Reference.html
+
 Cross-building
 --------------
 
@@ -124,4 +126,4 @@ As a final note, you can use `++ <version>` to temporarily switch the
 Scala version currently being used to build. `<version>` should be
 either a version for Scala published to a repository, as in `++ 2.10.0`
 or the path to a Scala home directory, as in `++ /path/to/scala/home`.
-See `/Detailed-Topics/Command-Line-Reference` for details.
+See [Command Line Reference][Command-Line-Reference] for details.

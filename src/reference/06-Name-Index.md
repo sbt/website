@@ -9,6 +9,14 @@ out: Name-Index.html
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Using-Plugins]: ../tutorial/Using-Plugins.html
   [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Library-Management]: Library-Management.html
+  [Artifacts]: Artifacts.html
+  [Paths]: Paths.html
+  [Parsing-Input]: Parsing-Input.html
+  [Mapping-Files]: Mapping-Files.html
+  [Cross-Build]: Cross-Build.html
+  [Parsing-Input]: Parsing-Input.html
+  [Process]: Process.html
 
 Index
 -----
@@ -23,10 +31,11 @@ an sbt build definition. For command names, see
 #### Dependency Management
 
 -   [ModuleID](../api/sbt/ModuleID.html) is the type of a dependency
-    definition. See /Detailed-Topics/Library-Management.
+    definition. See
+    [Library Management][Library-Management].
 -   [Artifact](../api/sbt/Artifact.html) represents a single artifact
     (such as a jar or a pom) to be built and published. See
-    /Detailed-Topics/Library-Management and /Detailed-Topics/Artifacts.
+    [Library Management][Library-Management] and [Artifacts][Artifacts].
 -   A [Resolver](../api/sbt/Resolver.html) can resolve and retrieve
     dependencies. Many types of Resolvers can publish dependencies as
     well. A repository is a closely linked idea that typically refers to
@@ -125,7 +134,7 @@ details.
 
 See [RichFile](../api/sbt/RichFile.html),
 [PathFinder](../api/sbt/PathFinder.html), and
-`/Detailed-Topics/Paths` for the full documentation.
+[Paths][Paths] for the full documentation.
 
 -   `/` When called on a single File, this is `new File(x,y)`. For
     Seq[File], this is applied for each member of the sequence..
@@ -137,20 +146,20 @@ See [RichFile](../api/sbt/RichFile.html),
     [FileFilter](../api/sbt/FileFilter.html). Note that methods with
     these names also exist for other types, such as collections (like
     Seq) and [Parser](../api/sbt/complete/Parser.html) (see
-    /Detailed-Topics/Parsing-Input).
+    [Parsing Input][Parsing-Input]).
 -   `pair` Used to construct mappings from a `File` to another `File` or
-    to a String. See /Detailed-Topics/Mapping-Files.
+    to a String. See [Mapping Files][Mapping-Files].
 -   `get` forces a [PathFinder](../api/sbt/PathFinder.html) (a
-    call-by-name data structure) to a strict Seq[File] representation.
+    call-by-name data structure) to a strict `Seq[File]` representation.
     This is a common name in Scala, used by types like Option.
 
 #### Dependency Management
 
-See `/Detailed-Topics/Library-Management` for full documentation.
+See [Library Management][Library-Management] for full documentation.
 
 -   `%` This is used to build up a [ModuleID](../api/sbt/ModuleID.html).
 -   `%%` This is similar to `%` except that it identifies a dependency
-    that has been cross built </Detailed-Topics/Cross-Build>.
+    that has been [cross built][Cross-Build].
 -   `from` Used to specify the fallback URL for a dependency
 -   `classifier` Used to specify the classifier for a dependency.
 -   `at` Used to define a Maven-style resolver.
@@ -166,7 +175,7 @@ These methods are used to build up
 [Parser](../api/sbt/complete/Parser.html)s from smaller
 [Parser](../api/sbt/complete/Parser.html)s. They closely follow the
 names of the standard library's parser combinators. See
-`/Detailed-Topics/Parsing-Input` for the full documentation. These are
+[Parsing Input][Parsing-Input] for the full documentation. These are
 used for `/Extending/Input-Tasks` and `/Extending/Commands`.
 
 -   `~`, `~>`, `<~` Sequencing methods.
@@ -190,7 +199,7 @@ used for `/Extending/Input-Tasks` and `/Extending/Commands`.
 #### Processes
 
 These methods are used to
-`fork external processes </Detailed-Topics/Process>`. Note that this API
+[fork external processes][Process]. Note that this API
 has been included in the Scala standard library for version 2.9.
 [ProcessBuilder](../api/sbt/ProcessBuilder.html) is the builder type
 and [Process](../api/sbt/Process.html) is the type representing the

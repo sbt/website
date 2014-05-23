@@ -3,6 +3,7 @@ out: Plugins.html
 ---
 
   [Full-Def]: ../tutorial/Full-Def.html
+  [Best-Practices]: Best-Practices.html
 
 Plugins
 -------
@@ -21,7 +22,7 @@ can be added with the `commands` setting
 
 The `Plugins-Best-Practices` page describes the currently evolving
 guidelines to writing sbt plugins. See also the general
-`/Detailed-Topics/Best-Practices`.
+[best practices][Best-Practices].
 
 ### Using a binary sbt plugin
 

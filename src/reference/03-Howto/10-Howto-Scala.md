@@ -2,6 +2,9 @@
 out: Howto-Scala.html
 ---
 
+  [Cross-Build]: Cross-Build.html
+  [Console-Project]: Console-Project.html
+
 Configure and use Scala
 -----------------------
 
@@ -37,7 +40,7 @@ example,
 
     scalaHome := Some(file("/path/to/scala/home/"))
 
-See `cross building </Detailed-Topics/Cross-Build>`.
+See [cross building][Cross-Build].
 
 The `consoleQuick` action retrieves dependencies and puts them on the
 classpath of the Scala REPL. The project's sources are not compiled, but
@@ -54,7 +57,7 @@ test dependencies and compiled test sources on the classpath, run
 > consoleProject
 ```
 
-For details, see the `consoleProject </Detailed-Topics/Console-Project>`
+For details, see the [consoleProject][Console-Project]
 page.
 
 Set `initialCommands in console` to set the initial statements to

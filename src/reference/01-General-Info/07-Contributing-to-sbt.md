@@ -4,6 +4,7 @@ out: Contibuting-to-sbt.html
 
   [sbt-dev]: https://groups.google.com/d/forum/sbt-dev
   [adept]: https://github.com/adept-dm/adept
+  [Update-Report]: Update-Report.html
 
 Contributing to sbt
 -------------------
@@ -23,7 +24,7 @@ may become out of date quickly, so you may want to check on the
             source code There is some code already for generating dot
             files that isn't hooked up, but graphing dependencies and
             inheritance relationships is a general area of work.
-    -   'update' produces an /Detailed-Topics/Update-Report mapping
+    -   'update' produces an [Update Report][Update-Report] mapping
         Configuration/ModuleID/Artifact to the retrieved File
     -   Ivy produces more detailed XML reports on dependencies. These
         come with an XSL stylesheet to view them, but this does not

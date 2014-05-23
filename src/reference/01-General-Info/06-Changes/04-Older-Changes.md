@@ -4,6 +4,9 @@ out: Older-Changes.html
 
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Full-Def]: ../tutorial/Full-Def.html
+  [Tasks]: Tasks.html
+  [Artifacts]: Artifacts.html
+  [Resolvers]: Resolvers.html
 
 Older Changes
 -------------
@@ -362,7 +365,7 @@ Some of the more visible changes:
 -   Project definitions in Scala 2.8.1
 -   New configuration system: `/Examples/Quick-Configuration-Examples/`,
     [.scala build defnition][Full-Def] and [.sbt build definition][Basic-Def].
--   New task engine: `/Detailed-Topics/Tasks`
+-   New task engine: [Tasks][Tasks]
 -   New multiple project support: [.scala build defnition][Full-Def]
 -   More aggressive incremental recompilation for both Java and Scala
     sources
@@ -375,8 +378,7 @@ Some of the more visible changes:
     changes
 -   `update-sbt-classifiers` and `update-classifiers` tasks for
     retrieving sources and/or javadocs for dependencies, transitively
--   Improved artifact handling and configuration
-    `/Detailed-Topics/Artifacts`
+-   Improved [artifact handling and configuration][Attifacts]
 -   Tab completion parser combinators for commands and input tasks:
     /Extending/Commands
 -   No project creation prompts anymore
@@ -434,7 +436,7 @@ Some of the more visible changes:
     defaults to compileOptions.
 -   Properly support sftp/ssh repositories using key-based
     authentication. See the updated section of the
-    /Detailed-Topics/Resolvers page.
+    [Resolvers][Resolvers] page.
 -   `def ivyUpdateLogging = UpdateLogging.DownloadOnly | Full | Quiet`.
     Default is DownloadOnly. Full will log metadata resolution and
     provide a final summary.

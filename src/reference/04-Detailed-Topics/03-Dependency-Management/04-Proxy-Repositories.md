@@ -2,6 +2,8 @@
 out: Proxy-Repositories.html
 ---
 
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 Proxy Repositories
 ------------------
 
@@ -43,11 +45,11 @@ is the launcher script.
 
 The repositories file is an external configuration for the Launcher. The
 exact syntax for the configuration file is detailed in the
-`/Detailed-Topics/Launcher`.
+[sbt Launcher][Sbt-Launcher].
 
 Here's an example config:
 
-``` {.sourceCode .ini}
+```
 [repositories]
   local
   my-ivy-proxy-releases: http://repo.company.com/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]

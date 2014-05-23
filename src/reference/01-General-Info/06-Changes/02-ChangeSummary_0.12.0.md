@@ -2,6 +2,10 @@
 out: ChangeSummary_0.12.0.html
 ---
 
+  [Cross-Build]: Cross-Build.html
+  [Parallel-Execution]: Parallel-Execution.html
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 sbt 0.12.0 Changes
 ------------------
 
@@ -25,7 +29,7 @@ sbt 0.12.0 Changes
     org.scala-tools.sbt). This affects users of the scripted plugin in
     particular.
 -   `artifactName` type has changed to
-    (ScalaVersion, Artifact, ModuleID) => String
+    `(ScalaVersion, Artifact, ModuleID) => String`
 -   `javacOptions` is now a task
 -   `session save` overwrites settings in `build.sbt` (when
     appropriate). gh-369
@@ -155,7 +159,7 @@ that has been previously discussed on the mailing list.
 #### Parallel Execution
 
 Fine control over parallel execution is supported as described here:
-`/Detailed-Topics/Parallel-Execution`
+[Parallel Execution][Parallel-Execution].
 
 1.  The default behavior should be the same as before, including the
     parallelExecution settings.
@@ -220,13 +224,13 @@ releases for both Scala and sbt.
     Scala version (such as 2.10).
 6.  The flexible version mapping added by Indrajit has been merged into
     the cross method and the %% variants accepting more than one
-    argument have been deprecated. See /Detailed-Topics/Cross-Build for
+    argument have been deprecated. See [Cross Build][Cross-Build] for
     details.
 
 #### Global repository setting
 
 Define the repositories to use by putting a standalone `[repositories]`
-section (see the `/Detailed-Topics/Launcher` page) in
+section (see the [sbt Launcher][Sbt-Launcher] page) in
 `~/.sbt/repositories` and pass `-Dsbt.override.build.repos=true` to sbt.
 Only the repositories in that file will be used by the launcher for
 retrieving sbt and Scala and by sbt when retrieving project

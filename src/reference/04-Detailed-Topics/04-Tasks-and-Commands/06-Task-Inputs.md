@@ -4,6 +4,7 @@ out: Task-Inputs.html
 
   [More-About-Settings]: ../tutorial/More-About-Settings.html
   [Tasks]: Tasks.html
+  [Mapping-Files]: Mapping-Files.html
 
 Tasks/Settings: Motivation
 --------------------------
@@ -85,7 +86,7 @@ The general form of a task definition looks like:
     }
 
 (This is only intended to be a discussion of the ideas behind tasks, so
-see the `sbt Tasks </Detailed-Topics/Tasks>` page for details on usage.)
+see the [sbt Tasks][Tasks] page for details on usage.)
 Here, `aTask` is assumed to produce a result of type `A` and `bTask` is
 assumed to produce a result of type `B`.
 
@@ -112,7 +113,7 @@ task.
     }
 
 The `val inputs` line defines how the input files are mapped to paths in
-the zip. See `/Detailed-Topics/Mapping-Files` for details. The explicit
+the zip. See [Mapping Files][Mapping-Files] for details. The explicit
 types are not required, but are included for clarity.
 
 The `zipPath` input would be a custom task to define the location of the

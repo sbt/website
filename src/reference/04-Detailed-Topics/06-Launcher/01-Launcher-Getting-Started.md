@@ -2,6 +2,8 @@
 out: Launcher-Getting-Started.html
 ---
 
+  [Launcher-Configuration]: Launcher-Configuration.html
+
 Getting Started with the Sbt Launcher
 -------------------------------------
 
@@ -142,8 +144,8 @@ Next, define a configuration file for the launcher. For the above class,
 it might look like:
 
 Then, `publishLocal` or `+publishLocal` the application to make it
-available. For more information, please see
-`Launcher Configuration </Detailed-Topics/Launcher/Configuration>`
+available. For more information, see
+[Launcher Configuration][Launcher-Configuration].
 
 #### Running an Application
 
@@ -151,16 +153,16 @@ As mentioned above, there are a few options to actually run the
 application. The first involves providing a modified jar for download.
 The second two require providing a configuration file for download.
 
--   Replace the /sbt/sbt.boot.properties file in the launcher jar and
+-   Replace the `/sbt/sbt.boot.properties` file in the launcher jar and
     distribute the modified jar. The user would need a script to run
-    java -jar your-launcher.jar arg1 arg2 ....
+    `java -jar your-launcher.jar arg1 arg2 ....`
 -   The user downloads the launcher jar and you provide the
     configuration file.
     -   The user needs to run
-        java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar.
+        `java -Dsbt.boot.properties=your.boot.properties -jar launcher.jar`.
     -   The user already has a script to run the launcher (call it
         'launch'). The user needs to run
-        launch @your.boot.properties your-arg-1 your-arg-2
+        `launch @your.boot.properties your-arg-1 your-arg-2`
 
 #### Execution
 

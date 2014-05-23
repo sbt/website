@@ -2,11 +2,13 @@
 out: Input-Tasks.html
 ---
 
+  [Parsing-Input]: Parsing-Input.html
+
 Input Tasks
 -----------
 
 Input Tasks parse user input and produce a task to run.
-`/Detailed-Topics/Parsing-Input/` describes how to use the parser
+[Parsing Input][Parsing-Input] describes how to use the parser
 combinators that define the input syntax and tab completion. This page
 describes how to hook those parser combinators into the input task
 system.
@@ -23,7 +25,8 @@ method:
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
-`Parser </Detailed-Topics/Parsing-Input>` applied to user input. Just as
+
+[Parser][Parsing-Input] applied to user input. Just as
 the special `value` method gets the value of a setting or task, the
 special `parsed` method gets the result of a `Parser`.
 
@@ -52,7 +55,7 @@ then echoes the arguments passed to it on their own line.
 The Parser provided by the `spaceDelimited` method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
 a matter of defining your own `Parser` as described on the
-`/Detailed-Topics/Parsing-Input` page.
+[Parsing Input][Parsing-Input] page.
 
 #### Constructing the Parser
 

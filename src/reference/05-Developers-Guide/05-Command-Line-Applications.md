@@ -2,14 +2,16 @@
 out: Command-Line-Applications.html
 ---
 
+  [Sbt-Launcher]: Sbt-Launcher.html
+
 Creating Command Line Applications Using sbt
 --------------------------------------------
 
 There are several components of sbt that may be used to create a command
-line application. The `launcher </Detailed-Topics/Launcher>` and the
+line application. The [launcher][Sbt-Launcher] and the
 `command system <Commands>` are the two main ones illustrated here.
 
-As described on the `launcher page </Detailed-Topics/Launcher>`, a
+As described on the [launcher page][Sbt-Launcher], a
 launched application implements the xsbti.AppMain interface and defines
 a brief configuration file that users pass to the launcher to run the
 application. To use the command system, an application sets up a
