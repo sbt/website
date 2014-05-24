@@ -6,8 +6,6 @@ scalaVersion := "2.10.4"
 resolvers += Resolver.url("typesafe-ivy-repo", url("http://typesafe.artifactoryonline.com/typesafe/releases"))(Resolver.ivyStylePatterns)
  
 libraryDependencies += "org.scala-sbt" % "io" % "0.13.5-RC2"
-
-mainClass := Some("Main")
 */
  
 import sbt._, Path._

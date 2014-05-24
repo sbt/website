@@ -11,6 +11,8 @@ Customizing paths
 This page describes how to modify the default source, resource, and
 library directories and what files get included from them.
 
+<a name="scala-source-directory"></a>
+
 ### Change the default Scala source directory
 
 The directory that contains the main Scala sources is by default
@@ -26,6 +28,8 @@ scalaSource in Test := baseDirectory.value / "test-src"
 
 > **Note**: The Scala source directory can be the same as the Java source
 > directory.
+
+<a name="java-source-directory"></a>
 
 ### Change the default Java source directory
 
@@ -45,6 +49,8 @@ javaSource in Test := baseDirectory.value / "test-src"
 > **Note**: The Scala source directory can be the same as the Java source
 > directory.
 
+<a name="resource-directory"></a>
+
 ### Change the default resource directory
 
 The directory that contains the main resources is by default
@@ -59,6 +65,8 @@ resourceDirectory in Compile := baseDirectory.value / "resources"
 
 resourceDirectory in Test := baseDirectory.value / "test-resources"
 ```
+
+<a name="unmanaged-base-directory"></a>
 
 ### Change the default (unmanaged) library directory
 
@@ -84,6 +92,8 @@ only for `Compile` and not for running or testing: :
 unmanagedBase in Compile := baseDirectory.value / "lib" / "main"
 ```
 
+<a name="disable-base-sources"></a>
+
 ### Disable using the project's base directory as a source directory
 
 By default, sbt includes `.scala` files from the project's base
@@ -93,6 +103,8 @@ directory as main source files. To disable this, configure
 ```scala
 sourcesInBase := false
 ```
+
+<a name="add-source-directory"></a>
 
 ### Add an additional source directory
 
@@ -110,6 +122,8 @@ unmanagedSourceDirectories in Compile += baseDirectory.value / "extra-src"
 > sources that are manually created and managed. See
 > [Generating Files][Howto-Generating-Files] for working with automatically generated sources.
 
+<a name="add-resource-directory"></a>
+
 ### Add an additional resource directory
 
 sbt collects `resources` from `unmanagedResourceDirectories`, which by
@@ -126,6 +140,8 @@ unmanagedResourceDirectories in Compile += baseDirectory.value / "extra-resource
 > resources that are manually created and managed. See
 > [Generating Files][Howto-Generating-Files] for working with automatically generated
 > resources.
+
+<a name="source-include-filter"></a>
 
 ### Include/exclude files in the source directory
 
@@ -154,6 +170,8 @@ includeFilter in (Test, unmanagedSources) := HiddenFileFilter || "*impl*"
 > **Note**: By default, sbt includes `.scala` and `.java` sources, excluding hidden
 > files.
 
+<a name="resource-include-filter"></a>
+
 ### Include/exclude files in the resource directory
 
 When sbt traverses `unmanagedResourceDirectories` for resources, it only
@@ -179,6 +197,8 @@ includeFilter in (Test, unmanagedSources) := "*.html"
 ```
 
 > **Note**: By default, sbt includes all files that are not hidden.
+
+<a name="lib-include-filter"></a>
 
 ### Include only certain (unmanaged) libraries
 

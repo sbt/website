@@ -5,6 +5,10 @@ out: Howto-Running-Commands.html
 Running commands
 ----------------
 
+<a name="batch"></a>
+
+### Pass arguments to a command or task in batch mode
+
 sbt interprets each command line argument provided to it as a command
 together with the command's arguments. Therefore, to run a command that
 takes arguments in batch mode, quote the command and its arguments. For
@@ -13,6 +17,10 @@ example,
 ```
 \$ sbt 'project X' clean '~ compile'
 ```
+
+<a name="multi"></a>
+
+### Provide multiple commands to run consecutively
 
 Multiple commands can be scheduled at once by prefixing each command
 with a semicolon. This is useful for specifying multiple commands where
@@ -25,8 +33,16 @@ for each triggering, use semicolons. For example, the following runs
 > ~ ;clean;compile
 ```
 
+<a name="read"></a>
+
+### Read commands from a file
+
 The `<` command reads commands from the files provided to it as
 arguments. Run `help <` at the sbt prompt for details.
+
+<a name="alias"></a>
+
+### Define an alias for a command or task
 
 The `alias` command defines, removes, and displays aliases for commands.
 Run `help alias` at the sbt prompt for details.
@@ -44,6 +60,10 @@ Example usage:
 > a
 [error] Not a valid command: a ...
 ```
+
+<a name="eval"></a>
+
+### Quickly evaluate a Scala expression
 
 The `eval` command compiles and runs the Scala expression passed to it
 as an argument. The result is printed along with its type. For example,

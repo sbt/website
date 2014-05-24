@@ -7,6 +7,10 @@ out: Howto-Interactive-Mode.html
 Interactive mode
 ----------------
 
+<a name="basic_completion"></a>
+
+### Use tab completion
+
 By default, sbt's interactive mode is started when no commands are
 provided on the command line or when the `shell` command is invoked.
 
@@ -52,9 +56,17 @@ name suggestions require tests to be compiled first. If tests have been
 added, renamed, or removed since the last test compilation, the
 completions will be out of date until another successful compile.
 
+<a name="verbose_completion"></a>
+
+### Show more tab completion suggestions
+
 Some commands have different levels of completion. Hitting tab multiple
 times increases the verbosity of completions. (Presently, this feature
 is only used by the `set` command.)
+
+<a name="show_keybindings"></a>
+
+### Show JLine keybindings
 
 Both the Scala and sbt command prompts use JLine for interaction. The
 Scala REPL contains a `:keybindings` command to show many of the
@@ -75,11 +87,19 @@ Accuracy not guaranteed: treat this as a guideline only.
 ...
 ```
 
+<a name="change_keybindings"></a>
+
+### Modify the default JLine keybindings
+
 JLine, used by both Scala and sbt, uses a configuration file for many of
 its keybindings. The location of this file can be changed with the
 system property `jline.keybindings`. The default keybindings file is
 included in the sbt launcher and may be used as a starting point for
 customization.
+
+<a name="prompt"></a>
+
+### Configure the prompt string
 
 By default, sbt only displays `>` to prompt for a command. This can be
 changed through the `shellPrompt` setting, which has type
@@ -89,11 +109,17 @@ prompt string.
 
 Examples:
 
-    // set the prompt (for this build) to include the project id.
-    shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
+```scala
+// set the prompt (for this build) to include the project id.
+shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
-    // set the prompt (for the current project) to include the username
-    shellPrompt := { state => System.getProperty("user.name") + "> " }
+// set the prompt (for the current project) to include the username
+shellPrompt := { state => System.getProperty("user.name") + "> " }
+```
+
+<a name="history"></a>
+
+### Use history
 
 Interactive mode remembers history even if you exit sbt and restart it.
 The simplest way to access history is to press the up arrow key to cycle
@@ -110,6 +136,10 @@ search history backwards. The following commands are supported:
 -   `!string` Execute the most recent command starting with 'string'
 -   `!?string` Execute the most recent command containing 'string'
 
+<a name="history_file"></a>
+
+### Change the location of the interactive history file
+
 By default, interactive history is stored in the `target/` directory for
 the current project (but is not removed by a `clean`). History is thus
 separate for each subproject. The location can be changed with the
@@ -117,11 +147,17 @@ separate for each subproject. The location can be changed with the
 history can be stored in the root directory for the project instead of
 the output directory:
 
-    historyPath := Some(baseDirectory.value / ".history")
+```scala
+historyPath := Some(baseDirectory.value / ".history")
+```
 
 The history path needs to be set for each project, since sbt will use
 the value of `historyPath` for the current project (as selected by the
 `project` command).
+
+<a name="share_history"></a>
+
+### Use the same history for all projects
 
 The previous section describes how to configure the location of the
 history file. This setting can be used to share the interactive history
@@ -129,16 +165,24 @@ among all projects in a build instead of using a different history for
 each project. The way this is done is to set `historyPath` to be the
 same file, such as a file in the root project's `target/` directory:
 
-    historyPath :=
-        Some( (target in LocalRootProject).value / ".history")
+```scala
+historyPath :=
+  Some( (target in LocalRootProject).value / ".history")
+```
 
 The `in LocalRootProject` part means to get the output directory for the
 root project for the build.
 
+<a name="disable_history"></a>
+
+### Disable interactive history
+
 If, for whatever reason, you want to disable history, set `historyPath`
 to `None` in each project it should be disabled in:
 
+```
 > historyPath := None
+```
 
 Interactive mode is implemented by the `shell` command. By default, the
 `shell` command is run if no commands are provided to sbt on the command

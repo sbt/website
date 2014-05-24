@@ -5,6 +5,10 @@ out: Howto-Project-Metadata.html
 Project metadata
 ----------------
 
+<a name="name"></a>
+
+### Set the project name
+
 A project should define `name` and `version`. These will be used in
 various parts of the build, such as the names of generated artifacts.
 Projects that are published to a repository should also override
@@ -18,9 +22,19 @@ For published projects, this name is normalized to be suitable for use
 as an artifact name and dependency ID. This normalized name is stored in
 `normalizedName`.
 
+<a name="version"></a>
+
+### Set the project version
+
 ```scala
 version := "1.0"
+```
 
+<a name="organization"></a>
+
+### Set the project organization
+
+```scala
 organization := "org.example"
 ```
 
@@ -35,7 +49,13 @@ site, it may be set in the `organizationHomepage` setting. For example:
 organizationName := "Example, Inc."
 
 organizationHomepage := Some(url("http://example.org"))
+```
 
+<a name="other"></a>
+
+### Set the project's homepage and other metadata
+
+```scala
 homepage := Some(url("http://scala-sbt.org"))
 
 startYear := Some(2008)

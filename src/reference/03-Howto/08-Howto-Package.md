@@ -8,6 +8,10 @@ out: Howto-Package.html
 Configure packaging
 -------------------
 
+<a name="export"></a>
+
+### Use the packaged jar on classpaths instead of class directory
+
 By default, a project exports a directory containing its resources and
 compiled class files. Set `exportJars` to true to export the packaged
 jar instead. For example,
@@ -18,6 +22,10 @@ exportJars := true
 
 The jar will be used by `run`, `test`, `console`, and other tasks that
 use the full classpath.
+
+<a name="manifest"></a>
+
+### Add manifest attributes
 
 By default, sbt constructs a manifest for the binary package from
 settings such as `organization` and `mainClass`. Additional attributes
@@ -57,8 +65,16 @@ packageOptions in (Compile, packageBin) +=  {
 }
 ```
 
+<a name="name"></a>
+
+### Change the file name of a package
+
 The `artifactName` setting controls the name of generated packages. See
 the [Artifacts][Artifacts] page for details.
+
+<a name="contents"></a>
+
+### Modify the contents of the package
 
 The contents of a package are defined by the `mappings` task, of type
 `Seq[(File,String)]`. The `mappings` task is a sequence of mappings from

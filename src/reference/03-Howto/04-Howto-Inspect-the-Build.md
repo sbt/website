@@ -7,19 +7,25 @@ out: Howto-Inspect-the-Build.html
 Inspect the build
 -----------------
 
+<a name="taskhelp"></a>
+
+### Show or search help for a command, task, or setting
+
 The `help` command is used to show available commands and search the
 help for commands, tasks, or settings. If run without arguments, `help`
 lists the available commands.
 
-    > help
+```
+> help
 
-      help                         Displays this help message or prints detailed help on 
-                                      requested commands (run 'help <command>').
-      about                        Displays basic information about sbt and the build.
-      reload                       (Re)loads the project in the current directory
-      ...
+  help                         Displays this help message or prints detailed help on 
+                                  requested commands (run 'help <command>').
+  about                        Displays basic information about sbt and the build.
+  reload                       (Re)loads the project in the current directory
+  ...
 
-    > help compile
+> help compile
+```
 
 If the argument passed to `help` is the name of an existing command,
 setting or task, the help for that entity is displayed. Otherwise, the
@@ -31,6 +37,10 @@ Similarly, the `settings` command only operates on settings.
 
 See also `help help`, `help tasks`, and `help settings`.
 
+<a name="listtasks"></a>
+
+### List available tasks
+
 The `tasks` command, without arguments, lists the most commonly used
 tasks. It can take a regular expression to search task names and
 descriptions. The verbosity can be increased to show or search less
@@ -40,6 +50,10 @@ The `settings` command, without arguments, lists the most commonly used
 settings. It can take a regular expression to search setting names and
 descriptions. The verbosity can be increased to show or search less
 commonly used settings. See `help settings` for details.
+
+<a name="listsettings"></a>
+
+### List available settings
 
 The `inspect` command displays several pieces of information about a
 given setting or task, including the dependencies of a task/setting as
@@ -64,6 +78,9 @@ well as the tasks/settings that depend on the it. For example,
 
 See the [Inspecting Settings][Inspecting-Settings] page for details.
 
+<a name="taskdependencytree"></a>
+### Display tree of setting/task dependencies
+
 In addition to displaying immediate forward and reverse dependencies as
 described in the previous section, the `inspect` command can display the
 full dependency tree for a task or setting. For example,
@@ -87,6 +104,10 @@ the task. For a setting, the `toString` of the setting is displayed. See
 the [Inspecting Settings][Inspecting-Settings] page for details on the
 `inspect` command.
 
+<a name="description"></a>
+
+### Display the description and type of a setting or task
+
 While the `help`, `settings`, and `tasks` commands display a description
 of a task, the `inspect` command also shows the type of a setting or
 task and the value of a setting. For example:
@@ -109,7 +130,14 @@ task and the value of a setting. For example:
 
 See the [Inspecting Settings][Inspecting-Settings] page for details.
 
+<a name="delegates"></a>
+
+### Display the delegation chain of a setting or task
+
 See the [Inspecting Settings][Inspecting-Settings] page for details.
+
+<a name="related"></a>
+### Display related settings or tasks
 
 The `inspect` command can help find scopes where a setting or task is
 defined. The following example shows that different options may be
@@ -127,6 +155,10 @@ specified to the Scala for testing and API documentation generation.
 
 See the [Inspecting Settings][Inspecting-Settings] page for details.
 
+<a name="projects"></a>
+
+### Show the list of projects and builds
+
 The `projects` command displays the currently loaded projects. The
 projects are grouped by their enclosing build and the current project is
 indicated by an asterisk. For example,
@@ -140,6 +172,10 @@ indicated by an asterisk. For example,
 [info]     sample
 ```
 
+<a name="session"></a>
+
+### Show the current session (temporary) settings
+
 `session list` displays the settings that have been added at the command
 line for the current project. For example,
 
@@ -152,6 +188,10 @@ line for the current project. For example,
 `session list-all` displays the settings added for all projects. For
 details, see `help session`.
 
+<a name="about"></a>
+
+### Show basic information about sbt and the current build
+
 ```
 > about
 [info] This is sbt 0.12.0
@@ -160,6 +200,10 @@ details, see `help session`.
 [info] Available Plugins: com.jsuereth.ghpages.GhPages, com.jsuereth.git.GitPlugin, com.jsuereth.sbtsite.SitePlugin
 [info] sbt, sbt plugins, and build definitions are using Scala 2.9.2
 ```
+
+<a name="value"></a>
+
+### Show the value of a setting
 
 The `inspect` command shows the value of a setting as part of its
 output, but the `show` command is dedicated to this job. It shows the
@@ -171,6 +215,10 @@ output of the setting provided as an argument. For example,
 ```
 
 The `show` command also works for tasks, described next.
+
+<a name="result"></a>
+
+### Show the result of executing a task
 
 ```
 > show update
@@ -193,6 +241,10 @@ value.
 [info] ArrayBuffer(Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar))
 ```
 
+<a name="classpath"></a>
+
+### Show the classpath used for compilation or testing
+
 For the test classpath,
 
 ```
@@ -200,6 +252,10 @@ For the test classpath,
 ...
 [info] ArrayBuffer(Attributed(~/code/sbt.github.com/target/scala-2.9.2/classes), Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar), Attributed(~/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
 ```
+
+<a name="applications"></a>
+
+### Show the main classes detected in a project
 
 sbt detects the classes with public, static main methods for use by the
 `run` method and to tab-complete the `runMain` method. The
@@ -212,6 +268,10 @@ main classes discovered in the main sources:
 ... <runs compile if out of date> ...
 [info] List(org.example.Main)
 ```
+
+<a name="tests"></a>
+
+### Show the test classes detected in a project
 
 sbt detects tests according to fingerprints provided by test frameworks.
 The `definedTestNames` task provides as its result the list of test

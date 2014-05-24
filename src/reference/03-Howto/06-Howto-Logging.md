@@ -61,6 +61,10 @@ The details of this execution can be recalled by running `last`:
 Configuration of the logging level for the console and for the backing
 file are described in following sections.
 
+<a name="tasklast"></a>
+
+### View the previous logging output of a specific task
+
 When a task is run, more detailed logging output is sent to a file than
 to the screen (by default). This output can be recalled for a specific
 task by running `last <task>`. For example, the first time `compile` is
@@ -131,6 +135,10 @@ example,
 [warn]          ^
 ```
 
+<a name="level"></a>
+
+### Change the logging level globally
+
 The quickest way to change logging levels is by using the `error`,
 `warn`, `info`, or `debug` commands. These set the default logging level
 for commands and tasks. For example,
@@ -155,15 +163,9 @@ level. For example,
 The logging level can be overridden at a finer granularity, which is
 described next.
 
-> id
-> :   tasklevel
->
-> title
-> :   Change the logging level for a specific task, configuration, or
->     project
->
-> type
-> :   setting
+<a name="tasklevel"></a>
+
+### Change the logging level for a specific task, configuration, or project
 
 The amount of logging is controlled by the `logLevel` setting, which
 takes values from the `Level` enumeration. Valid values are `Error`,
@@ -194,6 +196,10 @@ or for in its entirety. See the section on
 [printWarnings](#printwarnings) and the sections on
 [previous output](#last).
 
+<a name="trace"></a>
+
+### Configure printing of stack traces
+
 By default, sbt hides the stack trace of most exceptions thrown during
 execution. It prints a message that indicates how to display the
 exception. However, you may want to show more of stack traces by
@@ -222,34 +228,53 @@ task, scope `traceLevel` appropriately:
 > set traceLevel in ThisProject := -1
 ```
 
+<a name="nobuffer"></a>
+
+### Print the output of tests immediately instead of buffering
+
 By default, sbt buffers the logging output of a test until the whole
 class finishes. This is so that output does not get mixed up when
 executing in parallel. To disable buffering, set the `logBuffered`
 setting to false:
 
-    logBuffered := false
+```scala
+logBuffered := false
+```
+
+<a name="custom"></a>
+
+### Add a custom logger
+
 
 The setting `extraLoggers` can be used to add custom loggers. A custom
 logger should implement [AbstractLogger]. `extraLoggers` is a function
 `ScopedKey[_] => Seq[AbstractLogger]`. This means that it can provide
 different logging based on the task that requests the logger.
 
-    extraLoggers := {
-      val currentFunction = extraLoggers.value
-        (key: ScopedKey[_]) => {
-            myCustomLogger(key) +: currentFunction(key)
-        }
+```scala
+extraLoggers := {
+  val currentFunction = extraLoggers.value
+    (key: ScopedKey[_]) => {
+        myCustomLogger(key) +: currentFunction(key)
     }
+}
+```
 
 Here, we take the current function `currentFunction` for the setting and
 provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
 
+<a name="log"></a>
+
+### Log messages in a task
+
 The special task `streams` provides per-task logging and I/O via a
 [Streams](../../api/#sbt.std.Streams) instance. To log, a task uses
 the `log` member from the `streams` task:
 
-    myTask := {
-       val log = streams.value.log
-        log.warn("A warning.")
-    }
+```scala
+myTask := {
+  val log = streams.value.log
+  log.warn("A warning.")
+}
+```
