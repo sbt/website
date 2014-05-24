@@ -183,70 +183,108 @@ System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as `-Dprop=value`. The following properties
 influence SBT execution. Also see `Launcher`.
 
-<!-- TODO -->
+<table>
+  <tr>
+    <th>Property</th>
+    <th>Values</th>
+    <th>Default</th>
+    <th>Meaning</th>    
+  </tr>
 
-  -------------------------------------------------------------------------
-  Property           Values  Default       Meaning
-  ------------------ ------- ------------- --------------------------------
-  `sbt.log.noformat` Boolean false         | If true, disable ANSI color
-                                           codes. Useful on build servers
-                                           or terminals that don't support
-                                           color.
+  <tr>
+    <td><tt>sbt.log.noformat</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>If true, disable ANSI color
+        codes. Useful on build servers
+        or terminals that do not support
+        color.</td>
+  </tr>                
 
-  `sbt.global.base`  Directo `~/.sbt`       | The directory containing
-                     ry                    global settings and plugins
+  <tr>
+    <td><tt>sbt.global.base`</tt></td>
+    <td>Directory</td>
+    <td><tt>$global_base$</tt></td>
+    <td>The directory containing global settings and plugins</td>
+  </tr>
 
-  `sbt.ivy.home`     Directo `~/.ivy2`      | The directory containing the
-                     ry                    local Ivy repository and
-                                           artifact cache
+  <tr>
+    <td><tt>sbt.ivy.home</tt></td>
+    <td>Directory</td>
+    <td><tt>~/.ivy2</tt></td>
+    <td>The directory containing the local Ivy repository and artifact cache</td>
+  </tr>
 
-  `sbt.boot.director Directo `~/.sbt/boot`  Path to shared boot directory
-  y`                 ry                    
+  <tr>
+    <td><tt>sbt.boot.directory</tt></td>
+    <td>Directory</td>
+    <td><tt>~/.sbt/boot</tt></td>
+    <td>Path to shared boot directory</td>
+  </tr>
 
-  `sbt.main.class`   String  |             |
+  <tr>
+    <td><tt>sbt.main.class</tt></td>
+    <td>String</td>
+    <td><tt></tt></td>
+    <td></td>
+  </tr>
 
-  `xsbt.inc.debug`   Boolean false         |
+  <tr>
+    <td><tt>xsbt.inc.debug</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td></td>
+  </tr>
 
-  `sbt.extraClasspat |       |             | A list of classpath entries
-  h`                 Classpa               (jar files or directories) that
-                     th                    are added to sbt's classpath.
-                     Entries               Note that the entries are
-                                           deliminted by comma, e.g.:
-                                           `entry1, entry2,..`. See also
-                                           `resources` in the `Launcher`
-                                           documentation.
+  <tr>
+    <td><tt>sbt.extraClasspath</tt></td>
+    <td>Classpath Entries</td>
+    <td><tt></tt></td>
+    <td>(jar files or directories) that are added to sbt's classpath.
+        Note that the entries are deliminted by comma, e.g.:
+        <tt>entry1, entry2,..</tt>. See also <tt>resource</tt> in the
+        <a href="Launcher.html">sbt launcher</a> documentation.
+        </td>
+  </tr>
 
-  `sbt.version`      Version 0.11.3        | sbt version to use, usually
-                                           taken from
-                                           project/build.properties
+  <tr>
+    <td><tt>sbt.version</tt></td>
+    <td>Version</td>
+    <td><tt>$app_version$</tt></td>
+    <td>sbt version to use, usually taken from <tt>project/build.properties</tt>.</td>
+  </tr>
 
-  `sbt.boot.properti File    |             | The path to find the SBT boot
-  es`                                      properties file. This can be a
-                                           relative path, relative to the
-                                           SBT base directory, the users
-                                           home directory or the location
-                                           of the sbt jar file, or it can
-                                           be an absolute path, or it can
-                                           be an absolute file URI.
+  <tr>
+    <td><tt>sbt.boot.properties</tt></td>
+    <td>File</td>
+    <td><tt></tt></td>
+    <td>The path to find the sbt  boot properties file. This can be a
+        relative path, relative to the sbt base directory, the users
+        home directory or the location of the sbt jar file, or it can
+        be an absolute path or an absolute file URI.</td>
+  </tr>
 
-  `sbt.override.buil Boolean false         | If true, repositories
-  d.repos`                                 configured in a build definition
-                                           are ignored and the repositories
-                                           configured for the launcher are
-                                           used instead. See
-                                           `sbt.repository.config` and the
-                                           `Launcher` documentation.
+  <tr>
+    <td><tt>sbt.override.build.repos</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>If true, repositories configured in a build definition
+        are ignored and the repositories configured for the launcher are
+        used instead. See <tt>sbt.repository.config</tt> and the
+        <a href="Launcher.html">sbt launcher</a> documentation.</td>
+  </tr>
 
-  `sbt.repository.co File    `~/.sbt/repos | A file containing the
-  nfig`                      itories`       repositories to use for the
-                                           launcher. The format is the same
-                                           as a `[repositories]` section
-                                           for a `Launcher` configuration
-                                           file. This setting is typically
-                                           used in conjuction with setting
-                                           `sbt.override.build.repos` to
-                                           true (see previous row and the
-                                           `Launcher` documentation).
-  -------------------------------------------------------------------------
-
-
+  <tr>
+    <td><tt>sbt.repository.config</tt></td>
+    <td>File</td>
+    <td><tt>~/.sbt/repositories</tt></td>
+    <td>A file containing the repositories to use for the
+        launcher. The format is the same as a
+        <tt>[repositories]</tt> section for a
+        <a href="Launcher.html">sbt launcher</a> configuration file.
+        This setting is typically used in conjuction with setting
+        <tt>sbt.override.build.repos</tt> to
+        <tt>true</tt> (see previous row and the
+        <a href="Launcher.html">sbt launcher</a> documentation).</td>
+  </tr>
+</table>

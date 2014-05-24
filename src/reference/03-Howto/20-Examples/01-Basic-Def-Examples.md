@@ -45,7 +45,8 @@ libraryDependencies ++= Seq(
 // Set a dependency based partially on a val.
 {
   val libosmVersion = "2.5.2-RC1"
-  libraryDependencies += "net.sf.travelingsales" % "osmlib" % libosmVersion from "http://downloads.sourceforge.net/project/travelingsales/libosm/"+libosmVersion+"/libosm-"+libosmVersion+".jar"
+  libraryDependencies += ("net.sf.travelingsales" % "osmlib" % libosmVersion from
+    "http://downloads.sourceforge.net/project/travelingsales/libosm/"+libosmVersion+"/libosm-"+libosmVersion+".jar")
 }
 
 // reduce the maximum number of errors shown by the Scala compiler
