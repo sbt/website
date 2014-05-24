@@ -59,14 +59,13 @@ dependent on that source must be recompiled. At the moment sbt uses the
 following algorithm to calculate source files dependent on a given
 source file:
 
-> -   dependencies introduced through inheritance are included
->     *transitively*; a dependency is introduced through inheritance if
->     a class/trait in one file inherits from a trait/class in another
->     file
-> -   all other direct dependencies are included; other dependencies are
->     also called "meber reference" dependencies because they are
->     introduced by referring to a member (class, method, type, etc.)
->     defined in some other source file
+-  dependencies introduced through inheritance are included
+   *transitively*; a dependency is introduced through inheritance if
+   a class/trait in one file inherits from a trait/class in another file
+-  all other direct dependencies are included; other dependencies are
+   also called "meber reference" dependencies because they are
+   introduced by referring to a member (class, method, type, etc.)
+   defined in some other source file
 
 Here's an example illustrating the definition above:
 
@@ -89,14 +88,14 @@ Here's an example illustrating the definition above:
 
 There are the following dependencies through inheritance:
 
-``` {.sourceCode .none}
+```
 B.scala -> A.scala
 C.scala -> B.scala
 ```
 
 There are also the following member reference dependencies:
 
-``` {.sourceCode .none}
+```
 D.scala -> A.scala
 E.scala -> D.scala
 ```
@@ -188,7 +187,7 @@ Below is complete transcript which shows how to enable interface
 debugging in your project. First, we download the `diffutils` jar and
 pass it to sbt:
 
-``` {.sourceCode .none}
+``` 
 curl -O https://java-diff-utils.googlecode.com/files/diffutils-1.2.1.jar
 sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
 [info] Loading project definition from /Users/grek/tmp/sbt-013/project
@@ -215,7 +214,7 @@ compile it and then change the `Test.scala` file so it looks like:
 and run `compile` task again. Now if you run `last compile` you should
 see the following lines in the debugging log
 
-``` {.sourceCode .none}
+``` 
 > last compile
 [...]
 [debug] Detected a change in a public API:

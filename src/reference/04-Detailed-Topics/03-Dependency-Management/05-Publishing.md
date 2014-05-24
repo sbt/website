@@ -2,6 +2,10 @@
 out: Publishing.html
 ---
 
+  [Artifacts]: Artifacts.html
+  [Resolvers]: Resolvers.html
+  [Cross-Build]: Cross-Build.html
+
 Publishing
 ----------
 
@@ -76,14 +80,14 @@ password=admin123
 ### Cross-publishing
 
 To support multiple incompatible Scala versions, enable cross building
-and do `+ publish` (see `Cross-Build`). See `Resolvers` for other
+and do `+ publish` (see [Cross Build][Cross-Build]). See [Resolvers] for other
 supported repository types.
 
 ### Published artifacts
 
 By default, the main binary jar, a sources jar, and a API documentation
 jar are published. You can declare other types of artifacts to publish
-and disable or modify the default artifacts. See the `Artifacts` page
+and disable or modify the default artifacts. See the [Artifacts][Artifacts] page
 for details.
 
 ### Modifying the generated POM

@@ -3,6 +3,7 @@ out: Cross-Building.html
 ---
 
   [Command-Line-Reference]: Command-Line-Reference.html
+  [Publishing]: Publishing.html
 
 Cross-building
 --------------
@@ -67,7 +68,7 @@ project. That is, by doing:
 ```
 
 you make your project available to users for different versions of
-Scala. See `Publishing` for more details on publishing your project.
+Scala. See [Publishing][Publishing] for more details on publishing your project.
 
 In order to make this process as quick as possible, different output and
 managed dependency directories are used for different versions of Scala.

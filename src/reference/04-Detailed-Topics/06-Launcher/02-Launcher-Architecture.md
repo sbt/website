@@ -30,7 +30,7 @@ The sbt launcher provides these core functions:
 
 The primary purpose of the sbt launcher is to resolve applications and
 run them. This is done through the `[app]` configuration section. See
-:doc:Configuration for more information on how to configure module
+[launcher configuration][Launcher-Configuration] for more information on how to configure module
 resolution.
 
 Module resolution is performed using the Ivy dependency managemnet
@@ -48,7 +48,7 @@ launcher itself.
 
 Here's an example classloader layout from an sbt launched application.
 
-![image](classloaders.png)
+![image](files/classloaders.png)
 
 In this diagram, three different applications were loaded. Two of these
 use the same version of Scala (2.9.2). In this case, sbt can share the

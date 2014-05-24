@@ -184,6 +184,10 @@ to `None` in each project it should be disabled in:
 > historyPath := None
 ```
 
+<a name="pre_commands"></a>
+
+### Run commands before entering interactive mode
+
 Interactive mode is implemented by the `shell` command. By default, the
 `shell` command is run if no commands are provided to sbt on the command
 line. To run commands before entering interactive mode, specify them on

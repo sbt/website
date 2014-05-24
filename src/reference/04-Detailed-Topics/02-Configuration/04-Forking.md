@@ -3,6 +3,7 @@ out: Forking.html
 ---
 
   [Running-Project-Code]: Running-Project-Code.html
+  [Testing]: Testing.html
 
 Forking
 -------
@@ -46,7 +47,7 @@ To enable forking all `test` tasks only, set `fork` to `true` in the
 
     fork in test := true
 
-See `Testing` for more control over how tests are assigned to JVMs and
+See [Testing][Testing] for more control over how tests are assigned to JVMs and
 what options to pass to each group.
 
 ### Change working directory

@@ -21,7 +21,7 @@ All of sbt's loading semantics are contained within the
 [Load.scala](../../sxr/sbt/Load.scala.html) file. It is approximately
 the following:
 
-![image](settings-initialization-load-ordering.png)
+![image](files/settings-initialization-load-ordering.png)
 
 The blue circles represent actions happening when sbt loads a project.
 We can see that sbt performs the following actions in load:

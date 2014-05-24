@@ -10,6 +10,9 @@ out: Older-Changes.html
   [Commands]: Commands.html
   [Plugins]: Plugins.html
   [Basic-Def-Examples]: Basic-Def-Examples.html
+  [Compiler-Plugins]: Compiler-Plugins.html
+  [Running-Project-Code]: Running-Project-Code.html
+  [ChangeSummary_0.12.0]: ChangeSummary_0.12.0.html
 
 Older Changes
 -------------
@@ -188,7 +191,7 @@ Forward-compatible-only change (not present in 0.12.0):
 ### 0.11.3 to 0.12.0
 
 The changes for 0.12.0 are listed on a separate page. See
-`ChangeSummary_0.12.0`.
+[sbt 0.12.0 changes][ChangeSummary_0.12.0].
 
 ### 0.11.2 to 0.11.3
 
@@ -821,8 +824,8 @@ Some of the more visible changes:
 -   Added support for `http_proxy` environment variable
 -   Added `download` method from Nathan to `FileUtilities` to retrieve
     the contents of a URL.
--   Added special support for compiler plugins, see CompilerPlugins
-    page.
+-   Added special support for compiler plugins, see
+    [compiler plugins support][Compiler-Plugins] page.
 -   `reload` command in scripted tests will now properly handle
     success/failure
 -   Very basic support for Java sources: Java sources under
@@ -1200,11 +1203,12 @@ Some of the more visible changes:
 ### 0.1.5 to 0.1.6
 
 -   `run` and `console` handle `System.exit` and multiple threads in
-    user code under certain circumstances (see RunningProjectCode).
+    user code under certain circumstances (see
+    [running project code][Running-Project-Code]).
 
 ### 0.1.4 to 0.1.5
 
--   Generalized interface with plugin (see `AnalysisCallback`)
+-   Generalized interface with plugin (see Analysis Callback)
 -   Split out task implementations and paths from `Project` to
     ScalaProject
 -   Subproject support (changed required project constructor signature:

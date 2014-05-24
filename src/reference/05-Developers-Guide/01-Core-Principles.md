@@ -101,7 +101,7 @@ Let's look at what gets stored for the setting :
 
     normalizedName := normalize(name.value)
 
-![image](overview-setting-example.png)
+![image](files/overview-setting-example.png)
 
 Here, a `Setting[_]` is constructed that understands it depends on the
 value in the `name` AttributeKey. Its initialize block first grabs the

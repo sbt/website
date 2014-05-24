@@ -42,7 +42,7 @@ use the parser combinators.
 
 [State](../../api/sbt/State.html) provides access to the build state,
 such as all registered `Command`s, the remaining commands to execute,
-and all project-related information. See `Build-State` for details on
+and all project-related information. See [States and Actions][Build-State] for details on
 State.
 
 Finally, basic help information may be provided that is used by the

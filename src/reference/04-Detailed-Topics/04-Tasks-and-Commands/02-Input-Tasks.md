@@ -80,14 +80,14 @@ get the setting values with the special `value` method:
 import complete.DefaultParsers._
 
 val parser: Initialize[State => Parser[(String,String)]] =
- Def.setting {
+Def.setting {
   (state: State) =>
     ( token("scala" <~ Space) ~ token(scalaVersion.value) ) |
     ( token("sbt" <~ Space) ~ token(sbtVersion.value) ) |
     ( token("commands" <~ Space) ~
         token(state.remainingCommands.size.toString) )
- }
- ```
+}
+```
 
 This Parser definition will produce a value of type `(String,String)`.
 The input syntax defined isn't very flexible; it is just a
@@ -129,11 +129,11 @@ Normally, an input task is assigned to a setting and you work with
 
 Breaking this down,
 
-> 1.  You can use other settings (via Initialize) to construct an input
->     task.
-> 2.  You can use the current State to construct the parser.
-> 3.  The parser accepts user input and provides tab completion.
-> 4.  The parser produces the task to run.
+1.  You can use other settings (via Initialize) to construct an input
+    task.
+2.  You can use the current State to construct the parser.
+3.  The parser accepts user input and provides tab completion.
+4.  The parser produces the task to run.
 
 So, you can use settings or `State` to construct the parser that defines
 an input task's command line syntax. This was described in the previous
@@ -146,11 +146,11 @@ The types involved in an input task are composable, so it is possible to
 reuse input tasks. The `.parsed` and `.evaluated` methods are defined on
 InputTasks to make this more convenient in common situations:
 
-> -   Call `.parsed` on an `InputTask[T]` or `Initialize[InputTask[T]]`
->     to get the `Task[T]` created after parsing the command line
-> -   Call `.evaluated` on an `InputTask[T]` or
->     `Initialize[InputTask[T]]` to get the value of type `T` from
->     evaluating that task
+-   Call `.parsed` on an `InputTask[T]` or `Initialize[InputTask[T]]`
+    to get the `Task[T]` created after parsing the command line
+-   Call `.evaluated` on an `InputTask[T]` or
+    `Initialize[InputTask[T]]` to get the value of type `T` from
+    evaluating that task
 
 In both situations, the underlying `Parser` is sequenced with other
 parsers in the input task definition. In the case of `.evaluated`, the
@@ -191,10 +191,10 @@ is also possible to generate a `Task`, which is covered in the next
 section.) Two convenience methods are provided on `InputTask[T]` and
 `Initialize[InputTask[T]]` that accept the String to apply.
 
-> -   `partialInput` applies the input and allows further input, such as
->     from the command line
-> -   `fullInput` applies the input and terminates parsing, so that
->     further input is not accepted
+-   `partialInput` applies the input and allows further input, such as
+    from the command line
+-   `fullInput` applies the input and terminates parsing, so that
+    further input is not accepted
 
 In each case, the input is applied to the input task's parser. Because
 input tasks handle all input after the task name, they usually require
@@ -203,13 +203,13 @@ initial whitespace to be provided in the input.
 Consider the example in the previous section. We can modify it so that
 we:
 
-> -   Explicitly specify all of the arguments to the first `run`. We use
->     `name` and `version` to show that settings can be used to define
->     and modify parsers.
-> -   Define the initial arguments passed to the second `run`, but allow
->     further input on the command line.
+-   Explicitly specify all of the arguments to the first `run`. We use
+    `name` and `version` to show that settings can be used to define
+    and modify parsers.
+-   Define the initial arguments passed to the second `run`, but allow
+    further input on the command line.
 
-NOTE: the current implementation of `:=` doesn't actually support
+> **Note**: the current implementation of `:=` doesn't actually support
 applying input derived from settings yet.
 
     lazy val run2 = inputKey[Unit]("Runs the main class twice: " +

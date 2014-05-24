@@ -5,6 +5,7 @@ out: Plugins.html
   [Full-Def]: ../tutorial/Full-Def.html
   [Best-Practices]: Best-Practices.html
   [Plugins-Best-Practices]: Plugins-Best-Practices.html
+  [Commands]: Commands.html
 
 Plugins
 -------
@@ -334,7 +335,8 @@ A basic plugin that adds commands looks like:
 
 This example demonstrates how to take a Command (here, `myCommand`) and
 distribute it in a plugin. Note that multiple commands can be included
-in one plugin (for example, use `commands ++= Seq(a,b)`). See `Commands`
+in one plugin (for example, use `commands ++= Seq(a,b)`). See
+[Commands][Commands]
 for defining more useful commands, including ones that accept arguments
 and affect the execution state.
 

@@ -6,6 +6,7 @@ out: Testing.html
   [Plugins]: Plugins.html
   [Library-Dependencies]: ../tutorial/Library-Dependencies.html
   [ivy-configurations]: Library-Management.html#ivy-configurations
+  [Forking]: Forking.html
 
 Testing
 -------
@@ -184,7 +185,7 @@ The setting:
     fork in Test := true
 
 specifies that all tests will be executed in a single external JVM. See
-`Forking` for configuring standard options for forking. More control
+[Forking][Forking] for configuring standard options for forking. More control
 over how tests are assigned to JVMs and what options to pass to those is
 available with `testGrouping` key. For example in build.sbt:
 

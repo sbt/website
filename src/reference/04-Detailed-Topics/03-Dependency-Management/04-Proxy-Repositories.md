@@ -22,7 +22,7 @@ point of remote download for an organization. In addition to control and
 security concerns, Proxy repositories are primarily important for
 increased speed across a team.
 
-![image](proxy-cloud-setup.png)
+![image](files/proxy-cloud-setup.png)
 
 There are many good proxy repository solutions out there, with the big
 three being (in alphabetical order):
@@ -117,4 +117,4 @@ repositories, one for maven and one for ivy.
 
 Here's an example setup:
 
-![image](proxy-ivy-mvn-setup.png)
+![image](files/proxy-ivy-mvn-setup.png)

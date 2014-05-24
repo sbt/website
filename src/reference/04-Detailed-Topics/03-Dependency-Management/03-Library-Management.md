@@ -7,6 +7,10 @@ out: Library-Management.html
   [Full-Def]: ../tutorial/Full-Def.html
   [Library-Dependencies]: ../tutorial/Library-Dependencies.html
   [Update-Report]: Update-Report.html
+  [Paths]: Paths.html
+  [Resolvers]: Resolvers.html
+  [Publishing]: Publishing.html
+  [Cross-Build]: Cross-Build.html
 
 Library Management
 ------------------
@@ -60,7 +64,7 @@ default directory, you can do:
         customJars.classpath
     }
 
-See `Paths` for more information on building up paths.
+See [Paths][Paths] for more information on building up paths.
 
 ### Automatic Dependency Management
 
@@ -111,7 +115,7 @@ If you are using a dependency that was built with sbt, double the first
 This will use the right jar for the dependency built with the version of
 Scala that you are currently using. If you get an error while resolving
 this kind of dependency, that dependency probably wasn't published for
-the version of Scala you are using. See `Cross-Build` for details.
+the version of Scala you are using. See [Cross Build][Cross-Build] for details.
 
 Ivy can select the latest revision of a module according to constraints
 you specify. Instead of a fixed revision like `"1.6.1"`, you specify
@@ -141,7 +145,7 @@ repository:
 
     resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 
-See `Resolvers` for details on defining other types of repositories.
+See [Resolvers][Resolvers] for details on defining other types of repositories.
 
 ##### Override default resolvers
 
@@ -445,7 +449,7 @@ published pom.xml.
 
 ##### Publishing
 
-See `Publishing` for how to publish your project.
+See [Publishing][Publishing] for how to publish your project.
 
 <a name="ivy-configurations"></a>
 

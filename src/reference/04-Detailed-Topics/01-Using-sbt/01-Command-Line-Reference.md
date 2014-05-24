@@ -10,6 +10,9 @@ out: Command-Line-Reference.html
   [Inspecting-Settings]: Inspecting-Settings.html
   [Triggered-Execution]: Triggered-Execution.html
   [Commands]: Commands.html
+  [Running-Project-Code]: Running-Project-Code.html
+  [Testing]: Testing.html
+  [Sbt-Launcher]: Sbt-Launcher.html
 
 Command Line Reference
 ----------------------
@@ -55,7 +58,7 @@ for the `compile` configuration have an equivalent in the `test`
 configuration that can be run using a `test:` prefix.
 
 -   `compile` Compiles the main sources (in the `src/main/scala`
-    directory). test:compile compiles test sources (in the
+    directory). `test:compile` compiles test sources (in the
     src/test/scala/ directory).
 -   `console` Starts the Scala interpreter with a classpath including
     the compiled sources, all jars in the lib directory, and managed
@@ -72,12 +75,12 @@ configuration that can be run using a `test:` prefix.
     imported. See the [consoleProject documentation][Console-Project]
     for more information.
 -   `doc` Generates API documentation for Scala source files in
-    src/main/scala using scaladoc. test:doc generates API documentation
-    for source files in src/test/scala.
+    `src/main/scala` using scaladoc. `test:doc` generates API documentation
+    for source files in `src/test/scala`.
 -   `package` Creates a jar file containing the files in
-    src/main/resources and the classes compiled from src/main/scala.
-    test:package creates a jar containing the files in
-    src/test/resources and the class compiled from src/test/scala.
+    `src/main/resources` and the classes compiled from `src/main/scala`.
+    `test:package` creates a jar containing the files in
+    `src/test/resources` and the class compiled from `src/test/scala`.
 -   `packageDoc` Creates a jar file containing API documentation
     generated from Scala source files in src/main/scala. test:packageDoc
     creates a jar containing API documentation for test sources files in
@@ -88,19 +91,21 @@ configuration that can be run using a `test:` prefix.
     source files and resources.
 -   `run <argument>*` Runs the main class for the project in the same
     virtual machine as sbt. The main class is passed the arguments
-    provided. Please see Running-Project-Code for details on the use of
+    provided. Please see
+    [Running Project Code][Running-Project-Code] for details on the use of
     System.exit and multithreading (including GUIs) in code run by this
-    action. test:run runs a main class in the test code.
+    action. `test:run` runs a main class in the test code.
 -   `runMain <main-class> <argument>*` Runs the specified main class for
     the project in the same virtual machine as sbt. The main class is
-    passed the arguments provided. Please see Running-Project-Code for
+    passed the arguments provided. Please see
+    [Running Project Code][Running-Project-Code] for
     details on the use of System.exit and multithreading (including
-    GUIs) in code run by this action. test:runMain runs the specified
+    GUIs) in code run by this action. `test:runMain` runs the specified
     main class in the test code.
--   `test` Runs all tests detected during test compilation. See Testing
+-   `test` Runs all tests detected during test compilation. See [Testing][Testing]
     for details.
 -   `testOnly <test>*` Runs the tests provided as arguments. `*` (will
-    be) interpreted as a wildcard in the test name. See Testing for
+    be) interpreted as a wildcard in the test name. See [Testing][Testing] for
     details.
 -   `testQuick <test>*` Runs the tests specified as arguments (or all
     tests if no arguments are given) that:
@@ -108,7 +113,7 @@ configuration that can be run using a `test:` prefix.
     2.  failed the last time they were run OR
     3.  had any transitive dependencies recompiled since the last
         successful run `*` (will be) interpreted as a wildcard in the
-        test name. See Testing for details.
+        test name. See [Testing][Testing] for details.
 
 ### General commands
 
@@ -175,13 +180,14 @@ configuration that can be run using a `test:` prefix.
     Inspecting-Settings for details.
 -   `inspect <setting-key>` Displays information about settings, such as
     the value, description, defining scope, dependencies, delegation
-    chain, and related settings. See Inspecting-Settings for details.
+    chain, and related settings. See
+    [Inspecting Settings][Inspecting-Settings] for details.
 
 ### Command Line Options
 
 System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as `-Dprop=value`. The following properties
-influence SBT execution. Also see `Launcher`.
+influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
 
 <table>
   <tr>

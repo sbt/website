@@ -5,7 +5,7 @@ out: Dependency-Management-Flow.html
 Dependency Management Flow
 --------------------------
 
-0.12.1 addresses several issues with dependency management. These fixes
+sbt 0.12.1 addresses several issues with dependency management. These fixes
 were made possible by specific, reproducible examples, such as a
 situation where the resolution cache got out of date (gh-532). A brief
 summary of the current work flow with dependency management in sbt
