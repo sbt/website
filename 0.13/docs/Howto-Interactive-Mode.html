@@ -1,0 +1,185 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Interactive mode</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Howto-Inspect-the-Build.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Howto-Logging.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Interactive+mode">Interactive mode<a href="#Interactive+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><a name="basic_completion"></a><h3 id="Use+tab+completion">Use tab completion<a href="#Use+tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, sbt’s interactive mode is started when no commands are
+provided on the command line or when the <code>shell</code> command is invoked.
+</p><p>As the name suggests, tab completion is invoked by hitting the tab key.
+Suggestions are provided that can complete the text entered to the left
+of the current cursor position. Any part of the suggestion that is
+unambiguous is automatically appended to the current text. Commands
+typically support tab completion for most of their syntax.
+</p><p>As an example, entering <code>tes</code> and hitting tab:
+</p><pre><code class="">&gt; tes&lt;TAB&gt;
+</code></pre><p>results in sbt appending a <code>t</code>:
+</p><pre><code class="">&gt; test
+</code></pre><p>To get further completions, hit tab again:
+</p><pre><code class="">&gt; test&lt;TAB&gt;
+testFrameworks   testListeners    testLoader       testOnly         testOptions      test:
+</code></pre><p>Now, there is more than one possibility for the next character, so sbt
+prints the available options. We will select <code>testOnly</code> and get more
+suggestions by entering the rest of the command and hitting tab twice:
+</p><pre><code class="">&gt; testOnly&lt;TAB&gt;&lt;TAB&gt;
+--                      sbt.DagSpecification    sbt.EmptyRelationTest   sbt.KeyTest             sbt.RelationTest        sbt.SettingsTest
+</code></pre><p>The first tab inserts an unambiguous space and the second suggests names
+of tests to run. The suggestion of <code>--</code> is for the separator between
+test names and options provided to the test framework. The other
+suggestions are names of test classes for one of sbt’s modules. Test
+name suggestions require tests to be compiled first. If tests have been
+added, renamed, or removed since the last test compilation, the
+completions will be out of date until another successful compile.
+</p><a name="verbose_completion"></a><h3 id="Show+more+tab+completion+suggestions">Show more tab completion suggestions<a href="#Show+more+tab+completion+suggestions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Some commands have different levels of completion. Hitting tab multiple
+times increases the verbosity of completions. (Presently, this feature
+is only used by the <code>set</code> command.)
+</p><a name="show_keybindings"></a><h3 id="Show+JLine+keybindings">Show JLine keybindings<a href="#Show+JLine+keybindings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Both the Scala and sbt command prompts use JLine for interaction. The
+Scala REPL contains a <code>:keybindings</code> command to show many of the
+keybindings used for JLine. For sbt, this can be used by running one of
+the <code>console</code> commands (<code>console</code>, <code>consoleQuick</code>, or <code>consoleProject</code>)
+and then running <code>:keybindings</code>. For example:
+</p><pre><code class="">&gt; consoleProject
+[info] Starting scala interpreter...
+...
+scala&gt; :keybindings
+Reading jline properties for default key bindings.
+Accuracy not guaranteed: treat this as a guideline only.
+
+1 CTRL-A: move to the beginning of the line
+2 CTRL-B: move to the previous character
+...
+</code></pre><a name="change_keybindings"></a><h3 id="Modify+the+default+JLine+keybindings">Modify the default JLine keybindings<a href="#Modify+the+default+JLine+keybindings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>JLine, used by both Scala and sbt, uses a configuration file for many of
+its keybindings. The location of this file can be changed with the
+system property <code>jline.keybindings</code>. The default keybindings file is
+included in the sbt launcher and may be used as a starting point for
+customization.
+</p><a name="prompt"></a><h3 id="Configure+the+prompt+string">Configure the prompt string<a href="#Configure+the+prompt+string" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, sbt only displays <code>&gt;</code> to prompt for a command. This can be
+changed through the <code>shellPrompt</code> setting, which has type
+<code>State =&gt; String</code>. <a href="Build-State.html">State</a> contains all state
+for sbt and thus provides access to all build information for use in the
+prompt string.
+</p><p>Examples:
+</p><pre><code class="prettyprint lang-scala">// set the prompt (for this build) to include the project id.
+shellPrompt in ThisBuild := { state =&gt; Project.extract(state).currentRef.project + &quot;&gt; &quot; }
+
+// set the prompt (for the current project) to include the username
+shellPrompt := { state =&gt; System.getProperty(&quot;user.name&quot;) + &quot;&gt; &quot; }
+</code></pre><a name="history"></a><h3 id="Use+history">Use history<a href="#Use+history" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Interactive mode remembers history even if you exit sbt and restart it.
+The simplest way to access history is to press the up arrow key to cycle
+through previously entered commands. Use <code>Ctrl+r</code> to incrementally
+search history backwards. The following commands are supported:
+</p><ul><li><code>!</code> Show history command help.
+</li><li><code>!!</code> Execute the previous command again.
+</li><li><code>!:</code> Show all previous commands.
+</li><li><code>!:n</code> Show the last n commands.
+</li><li><code>!n</code> Execute the command with index <code>n</code>, as shown by the <code>!:</code>
+command.
+</li><li><code>!-n</code> Execute the nth command before this one.
+</li><li><code>!string</code> Execute the most recent command starting with ‘string’
+</li><li><code>!?string</code> Execute the most recent command containing ‘string’
+</li></ul><a name="history_file"></a><h3 id="Change+the+location+of+the+interactive+history+file">Change the location of the interactive history file<a href="#Change+the+location+of+the+interactive+history+file" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, interactive history is stored in the <code>target/</code> directory for
+the current project (but is not removed by a <code>clean</code>). History is thus
+separate for each subproject. The location can be changed with the
+<code>historyPath</code> setting, which has type <code>Option[File]</code>. For example,
+history can be stored in the root directory for the project instead of
+the output directory:
+</p><pre><code class="prettyprint lang-scala">historyPath := Some(baseDirectory.value / &quot;.history&quot;)
+</code></pre><p>The history path needs to be set for each project, since sbt will use
+the value of <code>historyPath</code> for the current project (as selected by the
+<code>project</code> command).
+</p><a name="share_history"></a><h3 id="Use+the+same+history+for+all+projects">Use the same history for all projects<a href="#Use+the+same+history+for+all+projects" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The previous section describes how to configure the location of the
+history file. This setting can be used to share the interactive history
+among all projects in a build instead of using a different history for
+each project. The way this is done is to set <code>historyPath</code> to be the
+same file, such as a file in the root project’s <code>target/</code> directory:
+</p><pre><code class="prettyprint lang-scala">historyPath :=
+  Some( (target in LocalRootProject).value / &quot;.history&quot;)
+</code></pre><p>The <code>in LocalRootProject</code> part means to get the output directory for the
+root project for the build.
+</p><a name="disable_history"></a><h3 id="Disable+interactive+history">Disable interactive history<a href="#Disable+interactive+history" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If, for whatever reason, you want to disable history, set <code>historyPath</code>
+to <code>None</code> in each project it should be disabled in:
+</p><pre><code class="">&gt; historyPath := None
+</code></pre><a name="pre_commands"></a><h3 id="Run+commands+before+entering+interactive+mode">Run commands before entering interactive mode<a href="#Run+commands+before+entering+interactive+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Interactive mode is implemented by the <code>shell</code> command. By default, the
+<code>shell</code> command is run if no commands are provided to sbt on the command
+line. To run commands before entering interactive mode, specify them on
+the command line followed by <code>shell</code>. For example,
+</p><pre><code class="">$ sbt clean compile shell
+</code></pre><p>This runs <code>clean</code> and then <code>compile</code> before entering the interactive
+prompt. If either <code>clean</code> or <code>compile</code> fails, sbt will exit without
+going to the prompt. To enter the prompt whether or not these initial
+commands succeed, prepend <code>-shell</code>, which means to run <code>shell</code> if any
+command fails. For example,
+</p><pre><code class="">$ sbt -shell clean compile shell
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Howto-Logging.html"> Configure and use logging </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div class="current">Interactive mode</div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

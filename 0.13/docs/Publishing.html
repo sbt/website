@@ -1,0 +1,168 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Publishing</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Proxy-Repositories.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Resolvers.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Publishing">Publishing<a href="#Publishing" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes how to publish your project. Publishing consists of
+uploading a descriptor, such as an Ivy file or Maven POM, and artifacts,
+such as a jar or war, to a repository so that other projects can specify
+your project as a dependency.
+</p><p>The <code>publish</code> action is used to publish your project to a remote
+repository. To use publishing, you need to specify the repository to
+publish to and the credentials to use. Once these are set up, you can
+run <code>publish</code>.
+</p><p>The <code>publishLocal</code> action is used to publish your project to a local Ivy
+repository. You can then use this project from other projects on the
+same machine.
+</p><h3 id="Define+the+repository">Define the repository<a href="#Define+the+repository" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To specify the repository, assign a repository to <code>publishTo</code> and
+optionally set the publishing style. For example, to upload to Nexus:
+</p><pre><code>publishTo := Some(&quot;Sonatype Snapshots Nexus&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;)
+</code></pre><p>To publish to a local repository:
+</p><p>:
+</p><pre><code>publishTo := Some(Resolver.file(&quot;file&quot;,  new File( &quot;path/to/my/maven-repo/releases&quot; )) )
+</code></pre><p>Publishing to the users local maven repository:
+</p><p>:
+</p><pre><code>publishTo := Some(Resolver.file(&quot;file&quot;,  new File(Path.userHome.absolutePath+&quot;/.m2/repository&quot;)))
+</code></pre><p>If you’re using Maven repositories you will also have to select the
+right repository depending on your artifacts: SNAPSHOT versions go to
+the /snapshot repository while other versions go to the /releases
+repository. Doing this selection can be done by using the value of the
+<code>version</code> SettingKey:
+</p><pre><code>publishTo := {
+  val nexus = &quot;https://oss.sonatype.org/&quot;
+  if (version.value.trim.endsWith(&quot;SNAPSHOT&quot;)) 
+    Some(&quot;snapshots&quot; at nexus + &quot;content/repositories/snapshots&quot;) 
+  else
+    Some(&quot;releases&quot;  at nexus + &quot;service/local/staging/deploy/maven2&quot;)
+}
+</code></pre><h3 id="Credentials">Credentials<a href="#Credentials" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are two ways to specify credentials for such a repository. The
+first is to specify them inline:
+</p><pre><code>credentials += Credentials(&quot;Sonatype Nexus Repository Manager&quot;, &quot;nexus.scala-tools.org&quot;, &quot;admin&quot;, &quot;admin123&quot;)
+</code></pre><p>The second and better way is to load them from a file, for example:
+</p><pre><code>credentials += Credentials(Path.userHome / &quot;.ivy2&quot; / &quot;.credentials&quot;)
+</code></pre><p>The credentials file is a properties file with keys <code>realm</code>, <code>host</code>,
+<code>user</code>, and <code>password</code>. For example:
+</p><pre><code class="">realm=Sonatype Nexus Repository Manager
+host=nexus.scala-tools.org
+user=admin
+password=admin123
+</code></pre><h3 id="Cross-publishing">Cross-publishing<a href="#Cross-publishing" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To support multiple incompatible Scala versions, enable cross building
+and do <code>+ publish</code> (see <a href="Cross-Build.html">Cross Build</a>). See [Resolvers] for other
+supported repository types.
+</p><h3 id="Published+artifacts">Published artifacts<a href="#Published+artifacts" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, the main binary jar, a sources jar, and a API documentation
+jar are published. You can declare other types of artifacts to publish
+and disable or modify the default artifacts. See the <a href="Artifacts.html">Artifacts</a> page
+for details.
+</p><h3 id="Modifying+the+generated+POM">Modifying the generated POM<a href="#Modifying+the+generated+POM" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>When <code>publishMavenStyle</code> is <code>true</code>, a POM is generated by the <code>makePom</code>
+action and published to the repository instead of an Ivy file. This POM
+file may be altered by changing a few settings. Set <code>pomExtra</code> to
+provide XML (<code>scala.xml.NodeSeq</code>) to insert directly into the generated
+pom. For example:
+</p><pre><code>pomExtra :=
+&lt;licenses&gt;
+  &lt;license&gt;
+    &lt;name&gt;Apache 2&lt;/name&gt;
+    &lt;url&gt;http://www.apache.org/licenses/LICENSE-2.0.txt&lt;/url&gt;
+    &lt;distribution&gt;repo&lt;/distribution&gt;
+  &lt;/license&gt;
+&lt;/licenses&gt;
+</code></pre><p><code>makePom</code> adds to the POM any Maven-style repositories you have
+declared. You can filter these by modifying <code>pomRepositoryFilter</code>, which
+by default excludes local repositories. To instead only include local
+repositories:
+</p><pre><code>pomIncludeRepository := { (repo: MavenRepository) =&gt; 
+  repo.root.startsWith(&quot;file:&quot;)
+}
+</code></pre><p>There is also a <code>pomPostProcess</code> setting that can be used to manipulate
+the final XML before it is written. It’s type is <code>Node =&gt; Node</code>.
+</p><pre><code>pomPostProcess := { (node: Node) =&gt;
+    ...
+}
+</code></pre><h3 id="Publishing+Locally">Publishing Locally<a href="#Publishing+Locally" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The <code>publishLocal</code> command will publish to the local Ivy repository. By
+default, this is in <code>${user.home}/.ivy2/local</code>. Other projects on the
+same machine can then list the project as a dependency. For example, if
+the SBT project you are publishing has configuration parameters like:
+</p><pre><code>name := 'My Project'
+organization := 'org.me'
+version := '0.1-SNAPSHOT'
+</code></pre><p>Then another project can depend on it:
+</p><pre><code>libraryDependencies += &quot;org.me&quot; %% &quot;my-project&quot; % &quot;0.1-SNAPSHOT&quot;
+</code></pre><p>The version number you select must end with <code>SNAPSHOT</code>, or you must
+change the version number each time you publish. Ivy maintains a cache,
+and it stores even local projects in that cache. If Ivy already has a
+version cached, it will not check the local repository for updates,
+unless the version number matches a
+<a href="http://ant.apache.org/ivy/history/2.3.0/concept.html#change">changing pattern</a>,
+and <code>SNAPSHOT</code> is one such pattern.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Resolvers.html"> Resolvers </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div class="current">Publishing</div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

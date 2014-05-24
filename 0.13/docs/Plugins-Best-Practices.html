@@ -1,0 +1,219 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Plugins Best Practices</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Plugins.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Sbt-Launcher.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Plugins+Best+Practices">Plugins Best Practices<a href="#Plugins+Best+Practices" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><em>This page is intended primarily for sbt plugin authors.</em>
+</p><p>A plugin developer should strive for consistency and ease of use.
+Specifically:
+</p><ul><li>Plugins should play well with other plugins. Avoiding namespace
+clashes (in both sbt and Scala) is paramount.
+</li><li>Plugins should follow consistent conventions. The experiences of an
+sbt <em>user</em> should be consistent, no matter what plugins are pulled
+in.
+</li></ul><p>Here are some current plugin best practices. <strong>NOTE:</strong> Best practices
+are evolving, so check back frequently.
+</p><h3 id="Don%E2%80%99t+use+default+package">Don’t use default package<a href="#Don%E2%80%99t+use+default+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Users who have their build files in some package will not be able to use
+your plugin if it’s defined in default (no-name) package.
+</p><h3 id="Avoid+older++mechanism">Avoid older <code>sbt.Plugin</code> mechanism<a href="#Avoid+older++mechanism" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt has deprecated the old <code>sbt.Plugin</code> mechanism in favor of
+<code>sbt.AutoPlugin</code>. The new mechanism features a set of user-level
+controls and dependency declarations that cleans up a lot of
+long-standing issues with plugins.
+</p><h3 id="Reuse+existing+keys">Reuse existing keys<a href="#Reuse+existing+keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt has a number of <a href="../../api/sbt/Keys%24.html">predefined keys</a>.
+Where possible, reuse them in your plugin. For instance, don’t define:
+</p><pre><code>val sourceFiles = settingKey[Seq[File]](&quot;Some source files&quot;)
+</code></pre><p>Instead, simply reuse sbt’s existing <code>sources</code> key.
+</p><h3 id="Avoid+namespace+clashes">Avoid namespace clashes<a href="#Avoid+namespace+clashes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Sometimes, you need a new key, because there is no existing sbt key. In
+this case, use a plugin-specific prefix, both in the (string) key name
+used in the sbt namespace and in the Scala <code>val</code>. There are two
+acceptable ways to accomplish this goal.
+</p><h4 id="Just+use+a++prefix">Just use a <code>val</code> prefix<a href="#Just+use+a++prefix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  val obfuscateStylesheet = settingKey[File](&quot;Obfuscate stylesheet&quot;)
+}
+</code></pre><p>In this approach, every <code>val</code> starts with <code>obfuscate</code>. A user of the
+plugin would refer to the settings like this:
+</p><pre><code>obfuscateStylesheet := ...
+</code></pre><h4 id="Use+a+nested+object">Use a nested object<a href="#Use+a+nested+object" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code>package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  object ObfuscateKeys {
+    val stylesheet = SettingKey[File](&quot;obfuscateStylesheet&quot;)
+  }
+}
+</code></pre><p>In this approach, all non-common settings are in a nested object. A user
+of the plugin would refer to the settings like this:
+</p><pre><code>import ObfuscateKeys._ // place this at the top of build.sbt
+
+stylesheet := ...
+</code></pre><h3 id="Configuration+Advice">Configuration Advice<a href="#Configuration+Advice" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Due to usability concerns from the shell, you could opt out of
+task-scoping described in this section, if your plugin makes heavy use
+of the shell. Using configuration-scoping the user could discover your
+tasks using tab completion:
+</p><pre><code class="">coffee:[tab]
+</code></pre><p>This method no longer works with per-task keys, but there’s a pending
+case, so hopefully it will be addressed in the future.
+</p><h4 id="When+to+define+your+own+configuration">When to define your own configuration<a href="#When+to+define+your+own+configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If your plugin introduces a new concept (even if that concept reuses an
+existing key), you want your own configuration. For instance, suppose
+you’ve built a plugin that produces PDF files from some kind of markup,
+and your plugin defines a target directory to receive the resulting
+PDFs. That target directory is scoped in its own configuration, so it is
+distinct from other target directories. Thus, these two definitions use
+the same <em>key</em>, but they represent distinct <em>values</em>. So, in a user’s
+<code>build.sbt</code>, we might see:
+</p><pre><code>target in PDFPlugin := baseDirectory.value / &quot;mytarget&quot; / &quot;pdf&quot;
+target in Compile := baseDirectory.value / &quot;mytarget&quot;
+</code></pre><p>In the PDF plugin, this is achieved with an <code>inConfig</code> definition:
+</p><pre><code>val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
+  target := baseDirectory.value / &quot;target&quot; / &quot;docs&quot; # the default value
+))
+</code></pre><h4 id="When++to+define+your+own+configuration.">When <em>not</em> to define your own configuration.<a href="#When++to+define+your+own+configuration." class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If you’re merely adding to existing definitions, don’t define your own
+configuration. Instead, reuse an existing one <em>or</em> scope by the main
+task (see below).
+</p><pre><code>val akka = config(&quot;akka&quot;)  // This isn't needed.
+val akkaStartCluster = TaskKey[Unit](&quot;akkaStartCluster&quot;)
+
+target in akkaStartCluster := ... // This is ok.
+akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+</code></pre><h4 id="Configuration+Cat+says+%E2%80%9CConfiguration+is+for+configuration%E2%80%9C">Configuration Cat says “Configuration is for configuration“<a href="#Configuration+Cat+says+%E2%80%9CConfiguration+is+for+configuration%E2%80%9C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>When defining a new type of configuration, e.g.
+</p><pre><code>val Config = config(&quot;profile&quot;)
+</code></pre><p>should be used to create a “cross-task” configuration. The task
+definitions don’t change in this case, but the default configuration
+does. For example, the <code>profile</code> configuration can extend the test
+configuration with additional settings and changes to allow profiling in
+sbt. Plugins should not create arbitrary Configurations, but utilize
+them for specific purposes and builds.
+</p><p>Configurations actually tie into dependency resolution (with Ivy) and
+can alter generated pom files.
+</p><p>Configurations should <em>not</em> be used to namespace keys for a plugin. e.g.
+</p><pre><code>val Config = config(&quot;my-plugin&quot;)
+val pluginKey = settingKey[String](&quot;A plugin specific key&quot;)
+val settings = pluginKey in Config  // DON'T DO THIS!
+</code></pre><h4 id="Playing+nice+with+configurations">Playing nice with configurations<a href="#Playing+nice+with+configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Whether you ship with a configuration or not, a plugin should strive to
+support multiple configurations, including those created by the build
+user. Some tasks that are tied to a particular configuration can be
+re-used in other configurations. While you may not see the need
+immediately in your plugin, some project may and will ask you for the
+flexibility.
+</p><h5 id="Provide+raw+settings+and+configured+settings">Provide raw settings and configured settings<a href="#Provide+raw+settings+and+configured+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Split your settings by the configuration axis like so:
+</p><pre><code>val obfuscate = TaskKey[Seq[File]](&quot;obfuscate&quot;)
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+</code></pre><p>The <code>baseObfuscateSettings</code> value provides base configuration for the
+plugin’s tasks. This can be re-used in other configurations if projects
+require it. The <code>obfuscateSettings</code> value provides the default <code>Compile</code>
+scoped settings for projects to use directly. This gives the greatest
+flexibility in using features provided by a plugin. Here’s how the raw
+settings may be reused:
+</p><pre><code>Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+</code></pre><p>Alternatively, one could provide a utility method to load settings in a
+given configuration:
+</p><pre><code>def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
+  inConfig(c)(baseObfuscateSettings)
+</code></pre><p>This could be used as follows:
+</p><pre><code>seq(obfuscateSettingsIn(Test): _*) 
+</code></pre><h5 id="Using+a+%E2%80%98main%E2%80%99+task+scope+for+settings">Using a ‘main’ task scope for settings<a href="#Using+a+%E2%80%98main%E2%80%99+task+scope+for+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Sometimes you want to define some settings for a particular ‘main’ task
+in your plugin. In this instance, you can scope your settings using the
+task itself.
+</p><pre><code>val obfuscate = TaskKey[Seq[File]](&quot;obfuscate&quot;)
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+</code></pre><p>In the above example, <code>sources in obfuscate</code> is scoped under the main
+task, <code>obfuscate</code>.
+</p><h3 id="Mucking+with+Global+build+state">Mucking with Global build state<a href="#Mucking+with+Global+build+state" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There may be times when you need to muck with global build state. The
+general rule is <em>be careful what you touch</em>.
+</p><p>First, make sure your user does not include global build configuration
+in <em>every</em> project but rather in the build itself. e.g.
+</p><pre><code>object MyBuild extends Build {
+  override lazy val settings = super.settings ++ MyPlugin.globalSettings
+  val main = project(file(&quot;.&quot;), &quot;root&quot;) settings(MyPlugin.globalSettings:_*) // BAD!
+}
+</code></pre><p>Global settings should <em>not</em> be placed into a <code>build.sbt</code> file.
+</p><p>When overriding global settings, care should be taken to ensure previous
+settings from other plugins are not ignored. e.g. when creating a new
+<code>onLoad</code> handler, ensure that the previous <code>onLoad</code> handler is not
+removed.
+</p><pre><code>object MyPlugin extends Plugin {
+   val globalSettigns: Seq[Setting[_]] = Seq(
+     onLoad in Global := (onLoad in Global).value andThen { state =&gt;
+         ... return new state ...
+     }
+   )
+ }
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Sbt-Launcher.html"> Sbt Launcher </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div class="current">Plugins Best Practices</div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

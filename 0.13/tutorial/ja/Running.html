@@ -1,0 +1,185 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>始める sbt — 実行</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'ja';
+        </script>
+        
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Directories.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Basic-Def.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="%E5%AE%9F%E8%A1%8C">実行<a href="#%E5%AE%9F%E8%A1%8C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページではプロジェクトをセットアップした後の <code>sbt</code> の使い方を説明する。
+君が<a href="../setup">sbt をインストール</a>して、<a href="../hello">Hello, World</a>か他のプロジェクトを作ったことを前提にする。
+</p><h3 id="%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96%E3%83%A2%E3%83%BC%E3%83%89">インタラクティブモード<a href="#%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96%E3%83%A2%E3%83%BC%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プロジェクトのディレクトリで、sbt を引数なしで実行する:
+</p><pre><code class="">$ sbt
+</code></pre><p>sbt をコマンドライン引数なしで実行するとインタラクティブモードが開始する。
+インタラクティブモードにはコマンドプロンプト（とタブ補完と履歴も！）がある。
+</p><p>例えば、<code>compile</code> と sbt プロンプトに打ち込む:
+</p><pre><code class="">&gt; compile
+</code></pre><p>もう一度 <code>compile</code> するには、上矢印を押して、エンターを押す。
+</p><p>君のプログラムを実行するには、<code>run</code> と打ち込む。
+</p><p>インタラクティブモードを終了するには、<code>exit</code> と打ち込むか、Ctrl+D (Unix) か Ctrl+Z (Windows) を用いる。
+</p><h3 id="%E3%83%90%E3%83%83%E3%83%81%E3%83%A2%E3%83%BC%E3%83%89">バッチモード<a href="#%E3%83%90%E3%83%83%E3%83%81%E3%83%A2%E3%83%BC%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt アクションを空白で区切られたリストとして引数に渡すことで、sbt をバッチモードで実行することができる。
+引数を取る sbt コマンドに関しては、コマンドと引数の両方を引用符で囲むことで一つの引数として <code>sbt</code> に渡す。
+例えば、
+</p><pre><code class="">$ sbt clean compile &quot;testOnly TestA TestB&quot;
+</code></pre><p>この例では、<code>testOnly</code> は <code>TestA</code> と <code>TestB</code> の二つの引数を取る。
+アクションは順に実行される（<code>clean</code>、<code>compile</code>、そして <code>testOnly</code>）。
+</p><h3 id="%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%93%E3%83%AB%E3%83%89%E3%81%A8%E3%83%86%E3%82%B9%E3%83%88">継続的ビルドとテスト<a href="#%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%93%E3%83%AB%E3%83%89%E3%81%A8%E3%83%86%E3%82%B9%E3%83%88" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>編集-コンパイル-テストのサイクルを速めるために、ソースファイルを保存するたびに
+sbt を使って自動的に再コンパイルすることができる。
+</p><p>ソースファイルが変更されたことを検知してアクションを実行するには、
+アクションの先頭に <code>~</code> を書く。例えば、インタラクティブモードで、これを試してみよう:
+</p><pre><code class="">&gt; ~ compile
+</code></pre><p>エンターを押すと、変更の監視を中止できる。
+</p><p>先頭の <code>~</code> はインタラクティブモードでもバッチモードでも使うことができる。
+</p><p>詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> 参照。
+</p><h3 id="%E3%82%88%E3%81%8F%E4%BD%BF%E3%82%8F%E3%82%8C%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">よく使われるコマンド<a href="#%E3%82%88%E3%81%8F%E4%BD%BF%E3%82%8F%E3%82%8C%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>以下に、最もよく使われる sbt コマンドを紹介する。より完全な一覧は
+<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a> にある。
+</p><table>
+  <tr>
+    <td><tt>clean</tt></td>
+    <td>全ての生成されたファイル（<tt>target</tt> ディレクトリ）を削除する。</td>
+  </tr>
+  <tr>
+    <td><tt>compile</tt></td>
+    <td>メインのソース
+    (<tt>src/main/scala</tt> と <tt>src/main/java</tt> ディレクトリにある
+    をコンパイルする。</td>
+  </tr>
+  <tr>
+    <td><tt>test</tt></td>
+    <td>全てのテストをコンパイルし実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>console</tt></td>
+    <td>コンパイル済みソースと依存ライブラリにクラスパスを通して、Scala インタプリタを開始する。
+  sbt に戻るには、<tt>:quit</tt> と打ち込むか、Ctrl+D (Unix) か Ctrl+Z (Windows) を使う。</td>
+  </tr>
+  <tr>
+    <td><nobr><tt>run &lt;argument&gt;*</tt></nobr></td>
+    <td><tt>sbt</tt> と同じ仮想マシン上で、プロジェクトのメインクラスを実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>package</tt></td>
+    <td><tt>src/main/resources</tt> 内のファイルと <tt>src/main/scala</tt> と
+    <tt>src/main/java</tt>
+    からコンパイルされたクラスを含む jar を作る。</td>
+  </tr>
+  <tr>
+    <td><tt>help &lt;command&gt;</tt></td>
+    <td>指定されたコマンドの詳しい説明を表示する。コマンドが指定されていない場合は、
+  全てのコマンドの簡単な説明を表示する。</td>
+  </tr>
+  <tr>
+    <td><tt>reload</tt></td>
+    <td>ビルド定義（<tt>build.sbt</tt>、 <tt>project/*.scala</tt>、
+    <tt>project/*.sbt</tt> ファイル）を再読み込みする。
+  ビルド定義を変更した場合に必要。</td>
+  </tr>
+</table><h3 id="%E3%82%BF%E3%83%96%E8%A3%9C%E5%AE%8C">タブ補完<a href="#%E3%82%BF%E3%83%96%E8%A3%9C%E5%AE%8C" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>インタラクティブモードには、空のプロンプトの状態を含め、タブ補完がある。
+sbt の特殊な慣例として、タブを一度押すとよく使われる候補だけが表示され、
+複数回押すと、より回りくどい候補が表示される。
+</p><h3 id="%E5%B1%A5%E6%AD%B4%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">履歴コマンド<a href="#%E5%B1%A5%E6%AD%B4%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>インタラクティブモードは、たとえ sbt を終了して再起動した後でも履歴を覚えている。
+履歴にアクセスする最も簡単な方法は矢印キーを使うことだ。以下のコマンドも使うことができる:
+</p><table>
+  <tr>
+    <td><tt>!</tt></td>
+    <td>履歴コマンドのヘルプを表示する。</td>
+  </tr>
+  <tr>
+    <td><tt>!!</tt></td>
+    <td>直前のコマンドを再実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>!:</tt></td>
+    <td>全てのコマンド履歴を表示する。</td>
+  </tr>  
+  <tr>
+    <td><tt>!:n</tt></td>
+    <td>最後の <tt>n</tt> コマンドを表示する。</td>
+  </tr>
+  <tr>
+    <td><tt>!n</tt></td>
+    <td><tt>!:</tt> で表示されたインデックス <tt>n</tt> のコマンドを実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>!-n</tt></td>
+    <td><tt>n</tt>個前のコマンドを実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>!string</tt></td>
+    <td>'string' から始まる最近のコマンドを実行する。</td>
+  </tr>
+  <tr>
+    <td><tt>!?string</tt></td>
+    <td>'string' を含む最近のコマンドを実行する。</td>
+  </tr>
+</table><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Basic-Def.html"> .sbt ビルド定義 </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Running.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Running.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="../es/Running.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">始める sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">sbt のインストール</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Mac への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Windows への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Linux への sbt のインストール</a></div></li><li><div><a href="Manual-Installation.html">手動インストール</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">ディレクトリ構造</a></div></li><li><div class="current">実行</div></li><li><div><a href="Basic-Def.html">.sbt ビルド定義</a></div></li><li><div><a href="Scopes.html">スコープ</a></div></li><li><div><a href="More-About-Settings.html">他の種類のセッティング</a></div></li><li><div><a href="Library-Dependencies.html">ライブラリ依存性</a></div></li><li><div><a href="Multi-Project.html">マルチプロジェクト・ビルド</a></div></li><li><div><a href="Using-Plugins.html">プラグインの使用</a></div></li><li><div><a href="Custom-Settings.html">カスタムセッティングとタスク</a></div></li><li><div><a href="Full-Def.html">.scala ビルド定義</a></div></li><li><div><a href="Summary.html">まとめ</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

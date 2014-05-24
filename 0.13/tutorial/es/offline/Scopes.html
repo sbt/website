@@ -1,0 +1,335 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Guía de Inicio de sbt — Scopes</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'es';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Basic-Def.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Contents+in+Depth.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Scopes">Scopes<a href="#Scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe los <em>scopes</em>. Se asume que usted ha leído y
+comprendido la página previa, <a href="Basic-Def.html">.sbt build definition</a>.
+</p><h3 id="La+historia+completa+sobre+las">La historia completa sobre las <em>keys</em><a href="#La+historia+completa+sobre+las" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="Basic-Def.html">Previamente</a> supusimos que una <em>key</em> como <code>name</code>
+correspondía a una entrada en el mapa de sbt de pares llave-valor
+(key-value). Esto fue una simplificación.
+</p><p>En verdad, cada llave puede tener un valor asociado en más de un
+contexto, llamado un “scope”.
+</p><p>Algunos ejemplos concretos:
+</p><ul><li>Si usted tiene múltiples proyectos en la definición de la
+construcción, una <em>key</em> puede tener un valor diferente en cada
+proyecto.
+</li><li>La <em>key</em> <code>compile</code> puede tener un valor diferente para sus archivos
+de código fuente de main comparado con el correspondiente valor para
+el código fuente de test, si usted desea que se compilen de manera
+distinta.
+</li><li>La <em>key</em> <code>packageOpitons</code> (que contiene opciones para crear paquetes
+jar) puede tener diferentes valores para el empaquetado de archivos
+class (packageBin) o para el empaquetado de código fuente
+(packageSrc).
+</li></ul><p><em>No hay un único valor para una key dada</em>, porque el valor puede variar
+de acuerdo con el <em>scope</em>.
+</p><p>Sin embargo, existe un único valor para una <em>scoped key</em> (llaves con un
+contexto).
+</p><p>Si usted se imagina que sbt está procesando una lista de <em>settings</em> para
+generar un mapa de llave-valor (<em>key-value</em>) que describe al proyecto,
+como <a href="Basic-Def.html">se discutió anteriormente</a>, las <em>keys</em> en dicho mapa
+son <em>scoped keys</em>. Cada <em>setting</em> definido en la definición de la
+construcción del proyecto (por ejemplo en <code>build.sbt</code>) aplica a una
+<em>scoped key</em> también.
+</p><p>Con frecuencia el <em>scope</em> es implícito o tiene un valor por default,
+pero si dichos valores son incorrectos, entonces tendrá que indicar el
+<em>scope</em> deseado en <code>build.sbt</code>.
+</p><h3 id="Ejes+del+Scope">Ejes del Scope<a href="#Ejes+del+Scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Un <em>eje del scope</em> es un tipo, donde cada instancia del tipo puede
+definir su propio <em>scope</em> (esto es, cada instancia puede tener sus
+propios valores únicos para las <em>keys</em>).
+</p><p>Hay tres ejes del scope:
+</p><ul><li>Projects
+</li><li>Configurations
+</li><li>Tasks
+</li></ul><h3 id="Scoping+mediante+del+eje+del+proyecto">Scoping mediante del eje del proyecto<a href="#Scoping+mediante+del+eje+del+proyecto" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Si usted
+<a href="Multi-Project.html">coloca múltiples proyectos en una construcción única</a>,
+cada proyecto necesita sus propios <em>settings</em>. Es decir, las <em>keys</em>
+pueden estar en <em>scope</em> de acuerdo al proyecto.
+</p><p>Los ejes del proyecto también pueden configurarse para la “entera
+construcción”, de modo que un <em>setting</em> aplique a la construcción
+completa más bien que a un solo proyecto. Los <em>settings</em> de <em>nivel de
+construcción</em> con frecuencia se usan como un plan de reserva cuando un
+proyecto no define un <em>setting</em> específico para un proyecto.
+</p><h4 id="Scoping+mendiante+el+eje+de+configuraci%C3%B3n">Scoping mendiante el eje de configuración<a href="#Scoping+mendiante+el+eje+de+configuraci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Una configuración define el tipo de construcción, potencialmente con su
+propio classpath, código fuente, paquetes generados, etc. El concepto de
+configuración viene de Iviy, que sbt usa para
+<a href="Library-Dependencies.html">managed dependencies</a>, y para
+<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a>.
+</p><p>Algunas configuraciones que verá en sbt:
+</p><ul><li><code>Compile</code> que define la construcción principal (<em>main</em>)
+(<code>src/main/scala</code>).
+</li><li><code>Test</code> que define cómo construir tests (<code>src/test/scala</code>).
+</li><li><code>Runtime</code> que define el classpath para la <em>task</em> <code>run</code>.
+</li></ul><p>Por default, todas las llaves asociadas con la compilación,
+empaquetamiento y la ejecución tienen un scope de configuración y por lo
+tanto pueden funcionar de manera diferente en cada configuración. Los
+ejemplos más obvios son las <em>keys</em> para <em>tasks</em> <code>compile</code>, <code>package</code>, y
+<code>run</code>; pero todas las llaves que <em>afectan</em> dichas <em>keys</em> (tales como
+<code>sourceDirectories</code> o <code>scalacOptions</code> o <code>fullClasspath</code>) también tienen
+scope de configuración.
+</p><h4 id="Scoping+mediante+el+eje+task">Scoping mediante el eje task<a href="#Scoping+mediante+el+eje+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Los <em>settings</em> pueden afectar cómo funcionan las <em>tasks</em>. Por ejemplo,
+la <em>key</em> de <em>setting</em> <code>packageOptions</code> afecta a la <em>key</em> <code>packageSrc</code> de
+<em>task</em>.
+</p><p>Para soportar esto, una <em>key de task</em> (tal como <code>packageSrc</code>) puede ser
+el scopde para otra <em>key</em> (tal como <code>packageOptions</code>).
+</p><p>Las diferentes <em>tasks</em> que construyen un paquete (<code>packageSrc</code>,
+<code>packageBin</code>, <code>packageDoc</code>) pueden compartir <em>keys</em> relacionadas al
+empaquetamiento, tales como <code>artifactName</code> y <code>packageOptions</code>. Dichas
+<em>keys</em> pueden tener distintos valores para cada <em>task</em> de
+empaquetamiento.
+</p><h3 id="Scope+global">Scope global<a href="#Scope+global" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Cada eje de scope puede llenarse con una instancia del tipo de eje (por
+ejemplo el eje de <em>task</em> puede llevarse con una <em>task</em>), o el eje puede
+llenarse con el valor especial <code>Global</code>.
+</p><p><code>Global</code> significa lo que usted espera: el valor del <em>setting</em> aplica a
+todas las instancias de ese eje. Por ejemplo, si el eje de la <em>task</em> es
+<code>Global</code>, entonces dicho <em>setting</em> aplicaría a todas las <em>tasks</em>.
+</p><!-- TODO: Translate to Spanish -->
+<h3 id="Delegation">Delegation<a href="#Delegation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A scoped key may be undefined, if it has no value associated with it in
+its scope.
+</p><p>For each scope, sbt has a fallback search path made up of other scopes.
+Typically, if a key has no associated value in a more-specific scope,
+sbt will try to get a value from a more general scope, such as the
+<code>Global</code> scope or the entire-build scope.
+</p><p>This feature allows you to set a value once in a more general scope,
+allowing multiple more-specific scopes to inherit the value.
+</p><p>You can see the fallback search path or “delegates” for a key using the
+<code>inspect</code> command, as described below. Read on.
+</p><h3 id="Referring+to+scoped+keys+when+running+sbt">Referring to scoped keys when running sbt<a href="#Referring+to+scoped+keys+when+running+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>On the command line and in interactive mode, sbt displays (and parses)
+scoped keys like this:
+</p><pre><code class="">{&lt;build-uri&gt;}&lt;project-id&gt;/config:intask::key
+</code></pre><ul><li><code>{&lt;build-uri&gt;}/&lt;project-id&gt;</code> identifies the project axis. The
+<code>&lt;project-id&gt;</code> part will be missing if the project axis has “entire build” scope.
+</li><li><code>config</code> identifies the configuration axis.
+</li><li><code>intask</code> identifies the task axis.
+</li><li><code>key</code> identifies the key being scoped.
+</li></ul><p><code>*</code> can appear for each axis, referring to the <code>Global</code> scope.
+</p><p>If you omit part of the scoped key, it will be inferred as follows:
+</p><ul><li>the current project will be used if you omit the project.
+</li><li>a key-dependent configuration will be auto-detected if you omit the
+configuration or task.
+</li></ul><p>For more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Examples+of+scoped+key+notation">Examples of scoped key notation<a href="#Examples+of+scoped+key+notation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>fullClasspath</code> specifies just a key, so the default scopes are used:
+current project, a key-dependent configuration, and global task
+scope.
+</li><li><code>test:fullClasspath</code> specifies the configuration, so this is
+<code>fullClasspath</code> in the <code>test</code> configuration, with defaults for the other
+two scope axes.
+</li><li><code>*:fullClasspath</code> specifies <code>Global</code> for the configuration, rather than
+the default configuration.
+</li><li><code>doc::fullClasspath</code> specifies the <code>fullClasspath</code> key scoped to the <code>doc</code>
+task, with the defaults for the project and configuration axes.
+</li><li><code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code>
+specifies a project, <code>{file:/home/hp/checkout/hello/}default-aea33a</code>,
+where the project is identified with the build
+<code>{file:/home/hp/checkout/hello/}</code> and then a project id inside that
+build <code>default-aea33a</code>. Also specifies configuration <code>test</code>, but leaves
+the default task axis.
+</li><li><code>{file:/home/hp/checkout/hello/}/test:fullClasspath</code> sets the project
+axis to “entire build” where the build is
+<code>{file:/home/hp/checkout/hello/}</code>.
+</li><li><code>{.}/test:fullClasspath</code> sets the project axis to “entire build” where
+the build is <code>{.}</code>. <code>{.}</code> can be written <code>ThisBuild</code> in Scala code.
+</li><li><code>{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</code> sets all
+three scope axes.
+</li></ul><h3 id="Inspecting+scopes">Inspecting scopes<a href="#Inspecting+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s interactive mode, you can use the inspect command to understand
+keys and their scopes. Try <code>inspect test:fullClasspath</code>:
+</p><pre><code class="">$ sbt
+&gt; inspect test:fullClasspath
+[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+[info] Description:
+[info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info] Dependencies:
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
+[info] Reverse dependencies:
+[info]  test:runMain
+[info]  test:run
+[info]  test:testLoader
+[info]  test:console
+[info] Delegates:
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
+[info] Related:
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
+</code></pre><p>On the first line, you can see this is a task (as opposed to a setting,
+as explained in <a href="Basic-Def.html">.sbt build definition</a>). The value
+resulting from the task will have type
+<code>scala.collection.Seq[sbt.Attributed[java.io.File]]</code>.
+</p><p>“Provided by” points you to the scoped key that defines the value, in
+this case
+<code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code> (which
+is the <code>fullClasspath</code> key scoped to the <code>test</code> configuration and the
+<code>{file:/home/hp/checkout/hello/}default-aea33a</code> project).
+</p><p>“Dependencies” may not make sense yet; stay tuned for the
+<a href="More-About-Settings.html">next page</a>.
+</p><p>You can also see the delegates; if the value were not defined, sbt would
+search through:
+</p><ul><li>two other configurations (<code>runtime:fullClasspath</code>,
+<code>compile:fullClasspath</code>). In these scoped keys, the project is
+unspecified meaning “current project” and the task is unspecified
+meaning <code>Global</code>
+</li><li>configuration set to <code>Global</code> (<code>*:fullClasspath</code>), since project is
+still unspecified it’s “current project” and task is still
+unspecified so <code>Global</code>
+</li><li>project set to <code>{.}</code> or <code>ThisBuild</code> (meaning the entire build, no
+specific project)
+</li><li>project axis set to <code>Global</code> (<code>*/test:fullClasspath</code>) (remember, an
+unspecified project means current, so searching <code>Global</code> here is new;
+i.e. <code>*</code> and “no project shown” are different for the project axis;
+i.e. <code>*/test:fullClasspath</code> is not the same as <code>test:fullClasspath</code>)
+</li><li>both project and configuration set to <code>Global</code> (<code>*/*:fullClasspath</code>)
+(remember that unspecified task means <code>Global</code> already, so
+<code>*/*:fullClasspath</code> uses <code>Global</code> for all three axes)
+</li></ul><p>Try <code>inspect fullClasspath</code> (as opposed to the above example,
+inspect <code>test:fullClasspath</code>) to get a sense of the difference. Because
+the configuration is omitted, it is autodetected as <code>compile</code>.
+<code>inspect compile:fullClasspath</code> should therefore look the same as
+<code>inspect fullClasspath</code>.
+</p><p>Try <code>inspect *:fullClasspath</code> for another contrast. <code>fullClasspath</code> is not
+defined in the <code>Global</code> configuration by default.
+</p><p>Again, for more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Referring+to+scopes+in+a+build+definition">Referring to scopes in a build definition<a href="#Referring+to+scopes+in+a+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you create a setting in <code>build.sbt</code> with a bare key, it will be scoped
+to the current project, configuration <code>Global</code> and task <code>Global</code>:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>Run sbt and <code>inspect name</code> to see that it’s provided by
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>, that is, the
+project is <code>{file:/home/hp/checkout/hello/}default-aea33a</code>, the
+configuration is <code>*</code> (meaning global), and the task is not shown (which
+also means global).
+</p><!-- TODO: Fix this. -->
+<p><code>build.sbt</code> always defines settings for a single project, so the “current
+project” is the project you’re defining in that particular <code>build.sbt</code>.
+(For <a href="Multi-Project.html">multi-project builds</a>, each project has its own
+<code>build.sbt</code>.)
+</p><p>Keys have an overloaded method called in used to set the scope. The
+argument to in can be an instance of any of the scope axes. So for
+example, though there’s no real reason to do this, you could set the
+<code>name</code> scoped to the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in Compile := &quot;hello&quot;
+</code></pre><p>or you could set the name scoped to the <code>packageBin</code> task (pointless! just
+an example):
+</p><pre><code class="prettyprint lang-scala">name in packageBin := &quot;hello&quot;
+</code></pre><p>or you could set the <code>name</code> with multiple scope axes, for example in the
+<code>packageBin</code> task in the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in (Compile, packageBin) := &quot;hello&quot;
+</code></pre><p>or you could use <code>Global</code> for all axes:
+</p><pre><code class="prettyprint lang-scala">name in Global := &quot;hello&quot;
+</code></pre><p>(<code>name in Global</code> implicitly converts the scope axis <code>Global</code> to a scope
+with all axes set to <code>Global</code>; the task and configuration are already
+<code>Global</code> by default, so here the effect is to make the project <code>Global</code>,
+that is, define <code>*/*:name</code> rather than
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>)
+</p><p>If you aren’t used to Scala, a reminder: it’s important to understand
+that in and <code>:=</code> are just methods, not magic. Scala lets you write them in
+a nicer way, but you could also use the Java style:
+</p><pre><code class="prettyprint lang-scala">name.in(Compile).:=(&quot;hello&quot;)
+</code></pre><p>There’s no reason to use this ugly syntax, but it illustrates that these
+are in fact methods.
+</p><h3 id="When+to+specify+a+scope">When to specify a scope<a href="#When+to+specify+a+scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You need to specify the scope if the key in question is normally scoped.
+For example, the <code>compile</code> task, by default, is scoped to <code>Compile</code> and <code>Test</code>
+configurations, and does not exist outside of those scopes.
+</p><p>To change the value associated with the <code>compile</code> key, you need to write
+<code>compile in Compile</code> or <code>compile in Test</code>. Using plain <code>compile</code> would define
+a new compile task scoped to the current project, rather than overriding
+the standard compile tasks which are scoped to a configuration.
+</p><p>If you get an error like <em>“Reference to undefined setting“</em>, often
+you’ve failed to specify a scope, or you’ve specified the wrong scope.
+The key you’re using may be defined in some other scope. sbt will try to
+suggest what you meant as part of the error message; look for “Did you
+mean compile:compile?”
+</p><p>One way to think of it is that a name is only <em>part</em> of a key. In
+reality, all keys consist of both a name, and a scope (where the scope
+has three axes). The entire expression
+<code>packageOptions in (Compile, packageBin)</code> is a key name, in other words.
+Simply <code>packageOptions</code> is also a key name, but a different one (for keys
+with no in, a scope is implicitly assumed: current project, global
+config, global task).
+</p><div class="bottom nav end span-16">
+                        <ul class="language-bar">
+        <li><a href="../Scopes.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Scopes.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="../es/Scopes.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Guía de Inicio de sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Instalando sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Estructura de directorios</a></div></li><li><div><a href="Running.html">Ejecución</a></div></li><li><div><a href="Basic-Def.html"> build definition</a></div></li><li><div class="current">Scopes</div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Migrating from 0.7 to 0.10+</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Older-Changes.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Contibuting-to-sbt.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Migrating+from+0.7+to+0.10%2B">Migrating from 0.7 to 0.10+<a href="#Migrating+from+0.7+to+0.10%2B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The assumption here is that you are familiar with sbt 0.7 but new to sbt
+0.13.2.
+</p><p>sbt 0.13.2’s many new capabilities can be a bit overwhelming, but
+this page should help you migrate to 0.13.2 with a minimum of fuss.
+</p><h3 id="Why+move+to+0.13.2%3F">Why move to 0.13.2?<a href="#Why+move+to+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
+must)
+</li><li>Easier configuration. For simple projects a single <code>build.sbt</code> file
+in your root directory is easier to create than
+project/build/MyProject.scala was.
+</li><li>No more <code>lib_managed</code> directory, reducing disk usage and avoiding
+backup and version control hassles.
+</li><li><code>update</code> is now much faster and it’s invoked automatically by sbt.
+</li><li>Terser output. (Yet you can ask for more details if something goes
+wrong.)
+</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2">Step 1: Read the Getting Started Guide for sbt 0.13.2<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
+probably save you a lot of confusion.
+</p><h4 id="Step+2%3A+Install+sbt+0.13.2">Step 2: Install sbt 0.13.2<a href="#Step+2%3A+Install+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.2 as described on
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><p>You can run 0.13.2 the same way that you run 0.7.x, either simply:
+</p><pre><code class="">java -jar sbt-launch.jar
+</code></pre><p>Or (as most users do) with a shell script, as described on
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><p>For more details see
+<a href="../tutorial/Setup.html">the setup page</a>.
+</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.2 while
+retaining the ability to switch back again at will. Some builds, such as
+those with subprojects, are not suited for this technique, but if you
+learn how to transition a simple project it will help you do a more
+complex one next.
+</p><h3 id="Preserve++for+0.7.x+project">Preserve <code>project/</code> for 0.7.x project<a href="#Preserve++for+0.7.x+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Rename your <code>project/</code> directory to something like <code>project-old</code>. This
+will hide it from sbt 0.13.2 but keep it in case you want to switch
+back to 0.7.x.
+</p><h3 id="Create++for+0.13.2">Create <code>build.sbt</code> for 0.13.2<a href="#Create++for+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
+<a href="../tutorial/Basic-Def.html">.sbt build definition</a> in the Getting
+Started Guide, and for <a href="Basic-Def-Examples.html">simple examples</a>.
+If you have a simple project
+then converting your existing project file to this format is largely a
+matter of re-writing your dependencies and maven archive declarations in
+a modified yet familiar syntax.
+</p><p>This <code>build.sbt</code> file combines aspects of the old
+<code>project/build/ProjectName.scala</code> and <code>build.properties</code> files. It looks
+like a property file, yet contains Scala code in a special format.
+</p><p>A <code>build.properties</code> file like:
+</p><pre><code class="">#Project properties
+#Fri Jan 07 15:34:00 GMT 2011
+project.organization=org.myproject
+project.name=My Project
+sbt.version=0.7.7
+project.version=1.0
+def.scala.version=2.7.7
+build.scala.versions=2.8.1
+project.initialize=false
+</code></pre><p>Now becomes part of your <code>build.sbt</code> file with lines like:
+</p><pre><code class="prettyprint lang-scala">name := &quot;My Project&quot;
+
+version := &quot;1.0&quot;
+
+organization := &quot;org.myproject&quot;
+
+scalaVersion := &quot;2.9.2&quot;
+</code></pre><p>Currently, a <code>project/build.properties</code> is still needed to explicitly
+select the sbt version. For example:
+</p><h3 id="Run+sbt+0.13.2">Run sbt 0.13.2<a href="#Run+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
+debugging, see below.
+</p><h3 id="Switching+back+to+sbt+0.7.x">Switching back to sbt 0.7.x<a href="#Switching+back+to+sbt+0.7.x" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you get stuck and want to switch back, you can leave your <code>build.sbt</code>
+file alone. sbt 0.7.x will not understand or notice it. Just rename your
+0.13.2 <code>project</code> directory to something like <code>project10</code> and rename
+the backup of your old project from <code>project-old</code> to <code>project</code> again.
+</p><h4 id="FAQs">FAQs<a href="#FAQs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There’s a section in the <a href="Faq.html">FAQ</a> about migration from 0.7 that
+covers several other important points.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Contibuting-to-sbt.html"> Contributing to sbt </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div class="current">Migrating from 0.7 to 0.10+</div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

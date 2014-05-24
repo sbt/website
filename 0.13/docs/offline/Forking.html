@@ -1,0 +1,172 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Forking</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Configuring-Scala.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Global-Settings.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Forking">Forking<a href="#Forking" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>By default, the <code>run</code> task runs in the same JVM as sbt. Forking is
+required under <a href="Running-Project-Code.html">certain circumstances</a>, however.
+Or, you might want to fork Java processes when implementing new tasks.
+</p><p>By default, a forked process uses the same Java and Scala versions being
+used for the build and the working directory and JVM options of the
+current process. This page discusses how to enable and configure forking
+for both <code>run</code> and <code>test</code> tasks. Each kind of task may be configured
+separately by scoping the relevant keys as explained below.
+</p><h3 id="Enable+forking">Enable forking<a href="#Enable+forking" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The <code>fork</code> setting controls whether forking is enabled (true) or not
+(false). It can be set in the <code>run</code> scope to only fork <code>run</code> commands or
+in the <code>test</code> scope to only fork <code>test</code> commands.
+</p><p>To fork all test tasks (<code>test</code>, <code>testOnly</code>, and <code>testQuick</code>) and run
+tasks (<code>run</code>, <code>runMain</code>, <code>test:run</code>, and <code>test:runMain</code>),
+</p><pre><code>fork := true
+</code></pre><p>To enable forking <code>run</code> tasks only, set <code>fork</code> to <code>true</code> in the <code>run</code>
+scope.
+</p><pre><code>fork in run := true
+</code></pre><p>To only fork <code>test:run</code> and <code>test:runMain</code>:
+</p><pre><code>fork in (Test,run) := true
+</code></pre><p>Similarly, set <code>fork in (Compile,run) := true</code> to only fork the main
+<code>run</code> tasks. <code>run</code> and <code>runMain</code> share the same configuration and cannot
+be configured separately.
+</p><p>To enable forking all <code>test</code> tasks only, set <code>fork</code> to <code>true</code> in the
+<code>test</code> scope:
+</p><pre><code>fork in test := true
+</code></pre><p>See <a href="Testing.html">Testing</a> for more control over how tests are assigned to JVMs and
+what options to pass to each group.
+</p><h3 id="Change+working+directory">Change working directory<a href="#Change+working+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To change the working directory when forked, set <code>baseDirectory in run</code>
+or <code>baseDirectory in test</code>:
+</p><pre><code>// sets the working directory for all `run`-like tasks
+baseDirectory in run := file(&quot;/path/to/working/directory/&quot;)
+
+// sets the working directory for `run` and `runMain` only
+baseDirectory in (Compile,run) := file(&quot;/path/to/working/directory/&quot;)
+
+// sets the working directory for `test:run` and `test:runMain` only
+baseDirectory in (Test,run) := file(&quot;/path/to/working/directory/&quot;)
+
+// sets the working directory for `test`, `testQuick`, and `testOnly`
+baseDirectory in test := file(&quot;/path/to/working/directory/&quot;)
+</code></pre><h3 id="Forked+JVM+options">Forked JVM options<a href="#Forked+JVM+options" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To specify options to be provided to the forked JVM, set <code>javaOptions</code>:
+</p><pre><code>javaOptions in run += &quot;-Xmx8G&quot;
+</code></pre><p>or specify the configuration to affect only the main or test <code>run</code>
+tasks:
+</p><pre><code>javaOptions in (Test,run) += &quot;-Xmx8G&quot;
+</code></pre><p>or only affect the <code>test</code> tasks:
+</p><pre><code>javaOptions in test += &quot;-Xmx8G&quot;
+</code></pre><h3 id="Java+Home">Java Home<a href="#Java+Home" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Select the Java installation to use by setting the <code>javaHome</code> directory:
+</p><pre><code>javaHome := Some(file(&quot;/path/to/jre/&quot;))
+</code></pre><p>Note that if this is set globally, it also sets the Java installation
+used to compile Java sources. You can restrict it to running only by
+setting it in the <code>run</code> scope:
+</p><pre><code>javaHome in run := Some(file(&quot;/path/to/jre/&quot;))
+</code></pre><p>As with the other settings, you can specify the configuration to affect
+only the main or test <code>run</code> tasks or just the <code>test</code> tasks.
+</p><h3 id="Configuring+output">Configuring output<a href="#Configuring+output" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, forked output is sent to the Logger, with standard output
+logged at the <code>Info</code> level and standard error at the <code>Error</code> level. This
+can be configured with the <code>outputStrategy</code> setting, which is of type
+<a href="../../api/sbt/OutputStrategy.html">OutputStrategy</a>.
+</p><pre><code>// send output to the build's standard output and error
+outputStrategy := Some(StdoutOutput)
+
+// send output to the provided OutputStream `someStream`
+outputStrategy := Some(CustomOutput(someStream: OutputStream))
+
+// send output to the provided Logger `log` (unbuffered)
+outputStrategy := Some(LoggedOutput(log: Logger))
+
+// send output to the provided Logger `log` after the process terminates
+outputStrategy := Some(BufferedOutput(log: Logger))
+</code></pre><p>As with other settings, this can be configured individually for main or
+test <code>run</code> tasks or for <code>test</code> tasks.
+</p><h3 id="Configuring+Input">Configuring Input<a href="#Configuring+Input" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, the standard input of the sbt process is not forwarded to
+the forked process. To enable this, configure the <code>connectInput</code>
+setting:
+</p><pre><code>connectInput in run := true
+</code></pre><h3 id="Direct+Usage">Direct Usage<a href="#Direct+Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To fork a new Java process, use the
+<a href="../../api/sbt/Fork$.html">Fork API</a>. The values of interest are
+<code>Fork.java</code>, <code>Fork.javac</code>, <code>Fork.scala</code>, and <code>Fork.scalac</code>. These are of
+type <a href="../../api/sbt/Fork.html">Fork</a> and provide <code>apply</code> and <code>fork</code>
+methods. For example, to fork a new Java process, :
+</p><pre><code>val options = ForkOptions(...)
+val arguments: Seq[String] = ...
+val mainClass: String = ...
+val exitCode: Int = Fork.java(options, mainClass +: arguments)
+</code></pre><p><a href="../../api/sbt/ForkOptions.html">ForkOptions</a> defines the Java
+installation to use, the working directory, environment variables, and
+more. For example, :
+</p><pre><code>val cwd: File = ...
+val javaDir: File = ...
+val options = ForkOptions(
+   envVars = Map(&quot;KEY&quot; -&gt; &quot;value&quot;),
+   workingDirectory = Some(cwd),
+   javaHome = Some(javaDir)
+)
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Global-Settings.html"> Global Settings </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div class="current">Forking</div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

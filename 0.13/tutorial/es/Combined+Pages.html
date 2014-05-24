@@ -1,0 +1,860 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Guía de Inicio de sbt — Combined Pages</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'es';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Contents+in+Depth.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="#Gu%C3%ADa+de+Inicio+de+sbt">Guía de Inicio de sbt</a></div><ol class="toc"> <li><div><a href="#Instalando+sbt">Instalando sbt</a></div><ol class="toc"> <li><div><a href="#Installing+sbt+on+Mac">Installing sbt on Mac</a></div></li><li><div><a href="#Installing+sbt+on+Windows">Installing sbt on Windows</a></div></li><li><div><a href="#Installing+sbt+on+Linux">Installing sbt on Linux</a></div></li><li><div><a href="#Installing+sbt+manually">Installing sbt manually</a></div></li> </ol></li><li><div><a href="#Hello%2C+World">Hello, World</a></div></li><li><div><a href="#Estructura+de+directorios">Estructura de directorios</a></div></li><li><div><a href="#Ejecuci%C3%B3n">Ejecución</a></div></li><li><div><a href="#build+definition"> build definition</a></div></li><li><div><a href="#Scopes">Scopes</a></div></li> </ol></div></div><h1 id="Gu%C3%ADa+de+Inicio+de+sbt">Guía de Inicio de sbt<a href="#Gu%C3%ADa+de+Inicio+de+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>sbt usa un número pequeño de conceptos para soportar <em>build definitions</em>
+(definiciones de construcción de software) flexibles y poderosas. No hay
+tantos conceptos, pero sbt no es exactamente como cualquier otro sistema
+de construcción de sofware y hay detalles con los que <em>usted tropezará</em>
+si no ha leído la documentación.
+</p><p>La Guía de inicio cubre los conceptos que usted necesita para crear y
+mantnere una <em>build definition</em>.
+</p><p>¡Es <em>altamente recomendable</em> leer la Guía de inicio!
+</p><p>Si usted tiene mucha prisa, los conceptos más importantes pueden
+encontrarse en <a href="Basic-Def.html">sbt build definition</a>, <a href="Scopes.html">scopes</a>, y
+<a href="More-About-Settings.html">más sobre settings</a>. Pero no prometemos que sea
+una buena idea dejar de leer las otras páginas de la guía.
+</p><p>Es mejor leer en orden, ya que las páginas posteriores de la Guía de
+inicio utilizan conceptos introducidos con anterioridad.
+</p><p>Gracias por utilizar sbt <em>¡Diviértase!</em>
+</p><h2 id="Instalando+sbt">Instalando sbt<a href="#Instalando+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Para crear un proyecto de sbt, necesitará dar los siguientes pasos:
+</p><ul><li>Instalar sbt y crear un script para iniciarlo.
+</li><li>Configurar un proyecto simple <a href="Hello.html">hola mundo</a>.
+</li><li>Crear un directorio llamado project con archivos de código fuente en él.
+</li><li>Crear su <em>build definition</em> (definición de construcción del proyecto).
+</li><li>Continuar con <a href="Running.html">ejecución</a> para aprender a ejecutar sbt.
+</li><li>Enseguida continuar con <a href="Basic-Def.html">.sbt build definition</a> para
+aprender más sobre las <em>build definitions</em>.
+</li></ul><!-- TODO: Translate to Spanish. -->
+<p>Ultimately, the installation of sbt boils down to a launcher JAR and a shell script,
+but depending on your platform, we provide several ways to make the process less tedious.
+Head over to the installation steps for <a href="Installing-sbt-on-Mac.html">Mac</a>, <a href="Installing-sbt-on-Windows.html">Windows</a>, <a href="Installing-sbt-on-Linux.html">Linux</a>, or <a href="Manual-Installation.html">manual installation</a>.
+</p><h3 id="Tips+y+notas">Tips y notas<a href="#Tips+y+notas" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Si tiene algún problema ejecutando sbt, vea
+<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html">Setup Notes</a> en las codificaciones de la terminal,
+HTTP proxies, y opciones de la JVM.
+</p><!-- TODO: Translate to Spanish -->
+<h2 id="Installing+sbt+on+Mac">Installing sbt on Mac<a href="#Installing+sbt+on+Mac" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Installing+from+a+third-party+package">Installing from a third-party package<a href="#Installing+from+a+third-party+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><blockquote><p><strong>Note:</strong> Los paquetes de terceros pueden no proporcionar la última versión
+disponible. Por favor asegúrese de reportar cualquier problema con
+estos paquetes a los mantenedores respectivos.
+</p></blockquote><h4 id=""><a href="http://macports.org/">Macports</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ port install sbt
+</code></pre><h4 id=""><a href="http://mxcl.github.com/homebrew/">Homebrew</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ brew install sbt
+</code></pre><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package, and expand it.
+</p><h3 id="Installaing+manually">Installaing manually<a href="#Installaing+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><h2 id="Installing+sbt+on+Windows">Installing sbt on Windows<a href="#Installing+sbt+on+Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Windows+installer">Windows installer<a href="#Windows+installer" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi">msi installer</a> and install it.
+</p><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package and expand it.
+</p><h3 id="Installaing+manually">Installaing manually<a href="#Installaing+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><!-- TODO: Translate to Spanish -->
+<h2 id="Installing+sbt+on+Linux">Installing sbt on Linux<a href="#Installing+sbt+on+Linux" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package and expand it.
+</p><h3 id="RPM+and+DEB">RPM and DEB<a href="#RPM+and+DEB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The following packages are also officially supported:
+</p><ul><li><a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.rpm">RPM</a> package
+</li><li><a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.deb">DEB</a> package
+</li></ul><blockquote><p><strong>Note:</strong> Por favor reporte cualquier problema que se tenga con los paquetes
+arriba mencionados al projecto
+<a href="https://github.com/sbt/sbt-launcher-package">sbt-launcher-package</a>.
+</p></blockquote><h3 id="Gentoo">Gentoo<a href="#Gentoo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>En el árbol oficial no hay ebuild para sbt. Pero existen <a href="https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin">ebuilds</a> para
+hacer un <em>merge</em> de sbt a partir de los binarios.
+Para hacer un merge de sbt a partir de estos ebuilds, puede hacer lo
+siguiente:
+</p><pre><code>$ mkdir -p /usr/local/portage &amp;&amp; cd /usr/local/portage
+$ git clone git://github.com/whiter4bbit/overlays.git
+$ echo &quot;PORTDIR_OVERLAY=$PORTDIR_OVERLAY /usr/local/portage/overlays&quot; &gt;&gt; /etc/make.conf
+$ emerge sbt-bin
+</code></pre><blockquote><p><strong>Note:</strong> Por favor reporte cualquier problema con el ebuild
+<a href="https://github.com/whiter4bbit/overlays/issues">aquí</a>.
+</p></blockquote><h3 id="Instalaci%C3%B3n+manual">Instalación manual<a href="#Instalaci%C3%B3n+manual" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><h2 id="Installing+sbt+manually">Installing sbt manually<a href="#Installing+sbt+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>La instalación manual requiere la descarga de <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> y la
+creación de un script para ejecutarlo.
+</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Ponga <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> en <code>~/bin</code>.
+</p><p>Cree un script para ejecutar el jar, mediante la creación de <code>~/bin/sbt</code>
+con el siguiente contenido:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Haga el script ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h3 id="Windows">Windows<a href="#Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>La instalación manual para Windows varía según el tipo de terminal y
+dependiendo de si Cygwin es usado o no. En todos los casos, ponga el
+archivo batch o el script en el <em>path</em> de modo que pueda iniciar <code>sbt</code>
+en cualquier directorio mediante teclear <code>sbt</code> en la línea de comandos.
+También, ajuste los settings de la JVM de acuerdo con su máquina si es
+necesario.
+</p><h4 id="Non-Cygwin">Non-Cygwin<a href="#Non-Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Para usuarios que no utilizan Cygwin, pero que usan la terminal
+standard de Windows, cree un archivo batch <code>sbt.bat</code>:
+</p><pre><code class="">set SCRIPT_DIR=%~dp0
+java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
+</code></pre><p>y ponga el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que descargó en el mismo directorio que
+archivo batch.
+</p><h4 id="Cygwin+con+la+terminal+standard+de+Windows">Cygwin con la terminal standard de Windows<a href="#Cygwin+con+la+terminal+standard+de+Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Si utiliza Cygwin con la terminal standard de Windows, cree un
+script de bash <code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Reemplace <code>sbt-launch.jar</code> con la ruta hasta el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que
+descargó y recuerde utilizar <code>cygpath</code> si es necesario. Haga el scrip
+ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h4 id="Cygwin+con+una+terminal+Ansi">Cygwin con una terminal Ansi<a href="#Cygwin+con+una+terminal+Ansi" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Si utiliza Cygwin con una terminal Ansi (que soporte secuentas de
+escape Ansi y que sea configurable mediante <code>stty</code>), cree un script
+<code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
+java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+stty icanon echo &gt; /dev/null 2&gt;&amp;1
+</code></pre><p>Reemplace <code>sbt-launch.jar</code> con la ruta hasta el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que
+descargó y recuerde utilizar <code>cygpath</code> si es necesario. Entonces, haga
+que el script sea ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><p>Para que la tecla <em>backspace</em> funcione correctamente en la consola de
+scala, necesita asegurarse de que dicha tecla esté enviando el caracter
+de borrado, de acuerdo a la configuración de <code>stty</code>. Para la terminal por
+default de cygwin (mintty) puede encontrar una configuración en Options
+-&gt; Keys “Backspace sends ^H” que necesitará estar palomeada si su
+tecla de borrado envía el caracter por default de cygwin <code>^H</code>.
+</p><blockquote><p><strong>Note:</strong> Otras configuraciones no están actualmente soportadas. Por favor envíe
+<a href="https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md">pull requests</a>
+implementando o describiendo dicho soporte.
+</p></blockquote><h2 id="Hello%2C+World">Hello, World<a href="#Hello%2C+World" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página asume que usted ha <a href="Setup.html">instalado sbt</a>.
+</p><h3 id="Cree+un+directorio+project+con+c%C3%B3digo+fuente">Cree un directorio project con código fuente<a href="#Cree+un+directorio+project+con+c%C3%B3digo+fuente" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Un proyecto válido de sbt puede ser un directorio que contenga un único
+archivo de código fuente. Intente crear un directorio <code>hello</code> con un
+archivo <code>hw.scala</code>, que contenga lo siguiente:
+</p><pre><code class="prettyprint lang-scala">object Hola {
+  def main(args: Array[String]) = println(&quot;¡Hola!&quot;)
+}
+</code></pre><p>Después, desde el directorio <code>hello</code>, inicie sbt y teclee <code>run</code> en la
+consola interactiva de sbt. En Linux u OS X los comandos tal vez se vean
+de la siguiente manera:
+</p><pre><code class="">$ mkdir hello
+$ cd hello
+$ echo 'object Hola { def main(args: Array[String]) = println(&quot;¡Hola!&quot;) }' &gt; hw.scala
+$ sbt
+...
+&gt; run
+...
+Hola!
+</code></pre><p>En este caso, sbt funciona simplemente por convención. sbt encontrará lo
+siguiente de manera automática:
+</p><ul><li>Código fuente en el directorio base.
+</li><li>Código fuente en <code>src/main/scala</code> o <code>src/main/java</code>.
+</li><li>Pruebas en <code>src/test/scala</code> o <code>src/test/java</code>
+</li><li>Archivos de datos en <code>src/main/resources</code> o <code>src/test/resources</code>
+</li><li>jars en <code>lib</code>
+</li></ul><p>Por default, sbt construirá proyectos con la misma versión de Scala
+utilizada para ejecutar sbt en sí mismo.
+</p><p>Usted puede ejecutar el proyecto con <code>sbt run</code> o ingresar a la
+<a href="http://www.scala-lang.org/node/2097">REPL de Scala</a> con
+<code>sbt console</code>. <code>sbt console</code> configura el classpath de su proyecto para
+que pueda probar ejemplos de Scala basados en el código de su proyecto.
+</p><h3 id="Build+definition+%28Definici%C3%B3n+de+la+construcci%C3%B3n%29">Build definition (Definición de la construcción)<a href="#Build+definition+%28Definici%C3%B3n+de+la+construcci%C3%B3n%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>La mayoría de los proyectos necesitarán algo de configuración manual. La
+configuración básica de la construcción va en un archivo llamado
+<code>build.sbt</code>, localizado en el directorio base del proyecto.
+</p><p>Por ejemplo, si su proyecto está en el directorio <code>hello</code>, en
+<code>hello/build.sbt</code> usted puede escribir:
+</p><p>Note la línea en blanco entre cada ítem. Esto no es simplemente porque
+sí; se requieren las líneas en blanco para separar cada ítem. En
+<a href="Basic-Def.html">.sbt build definition</a>  usted aprenderá más sobre cómo
+escribir un archivo <code>build.sbt</code>.
+</p><p>Si usted planea empaquetar su proyecto en un jar, tal vez desee
+configurar al menos el nombre y la versión en un archivo <code>build.sbt</code>.
+</p><h3 id="Configurando+la+versi%C3%B3n+de+sbt">Configurando la versión de sbt<a href="#Configurando+la+versi%C3%B3n+de+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Usted puede forzar una versión partivular de sbt al crear un archivo
+<code>hello/project/build.properties</code>. En este archivo, escriba:
+</p><pre><code class="">sbt.version=0.13.2
+</code></pre><p>para forzar el uso de sbt 0.13.2. sbt es 99% compatible (con respecto
+al código fuente) de una <em>release</em> a otra. Sin embargo, configurar la versión
+de sbt en <code>project/build.properties</code>
+evita cualquier confusión potencial.
+</p><h2 id="Estructura+de+directorios">Estructura de directorios<a href="#Estructura+de+directorios" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página asume que usted ha <a href="Setup.html">instalado sbt</a> y ha visto el
+ejemplo <a href="Hello.html">Hello, World</a>.
+</p><h3 id="Directorio+base">Directorio base<a href="#Directorio+base" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>En la terminología de sbt, el “directorio base” es el directorio que
+contiene al proyecto. De modo que si usted creó el proyecto <code>hello</code> que
+contiene <code>hello/build.sbt</code> y <code>hello/hw.scala</code> como se indicó en el
+ejemplo <a href="Hello.html">Hello, World</a>, <code>hello</code> es su directorio base.
+</p><h3 id="C%C3%B3digo+fuente">Código fuente<a href="#C%C3%B3digo+fuente" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>El código fu8ente puede ponerse en el directorio base del proyecto como
+en el caso de <code>hello/hw.scala</code>. Sin embargo, la mayoría de las personas
+no hacen esto para proyectos reales; se traduce en mucho desorden.
+</p><p>sbt utiliza la misma estructura de directorios que
+<a href="http://maven.apache.org/">Maven</a> para el código fuente por default
+(todos las rutas son relativas al directorio base):
+</p><pre><code class="">src/
+  main/
+    resources/
+       &lt;archivos que se incluyen en el jar principal van aquí&gt;
+    scala/
+       &lt;código fuente de Scala de main&gt;
+    java/
+       &lt;código fuente de Java de main&gt;
+  test/
+    resources
+       &lt;archivos que se incluyen en el jar de test van aquí&gt;
+    scala/
+       &lt;código fuente de Scala para test&gt;
+    java/
+       &lt;código fuente de Java para test&gt;
+</code></pre><p>Otros directorios en <code>src/</code> serán ignorados. Adicionalmente, todos los
+directorios ocultos serán ignorados.
+</p><h3 id="Archivos+de+definici%C3%B3n+de+la+construcci%C3%B3n+de+sbt+%28sbt+build+definition+files%29">Archivos de definición de la construcción de sbt (sbt build definition files)<a href="#Archivos+de+definici%C3%B3n+de+la+construcci%C3%B3n+de+sbt+%28sbt+build+definition+files%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Ya ha visto <code>build.sbt</code> en el directorio base del proyecto. Otros
+archivos sbt aparecen en el subdirectorio <code>project</code>.
+</p><p>El subdirectorio <code>project</code> puede contener archivos <code>.scala</code>, que se
+combinan con los archivos <code>.sbt</code> para formar la definición completa de
+la construcción.
+</p><p>Vea <a href="Full-Def.html">.scala build definition</a> para más información.
+</p><pre><code class="">build.sbt
+project/
+  Build.scala
+</code></pre><p>Tal vez pueda ver archivos <code>.sbt</code> dentro de <code>project/</code> pero no son
+equivalentes a archivos <code>.sbt</code> en el directorio base del proyecto. La
+explicación de esto <a href="Full-Def.html">viene después</a>, dado que necesitará algo
+de antecedentes primero.
+</p><h3 id="Productos+de+la+construcci%C3%B3n">Productos de la construcción<a href="#Productos+de+la+construcci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Los archivos generados (clases compiladas, paquetes en jars, archivos
+gestionados (<em>managed files</em>), caches, y documentación) será escrita al
+directorio <code>target</code> por default.
+</p><h3 id="Configurando+el+sistema+de+control+de+versiones">Configurando el sistema de control de versiones<a href="#Configurando+el+sistema+de+control+de+versiones" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Su archivo <code>.gitignore</code> (o el equivalente para otro sistema de control
+de versiones) debe contener:
+</p><pre><code class="">target/
+</code></pre><p>Note que el texto anterior tiene una <code>/</code> de forma deliberada (para que
+únicamente los directorios sean seleccionados) y de manera deliberada no
+tiene una <code>/</code> al inicio (para que el directorio <code>project/target/</code>
+también sea seleccionado, además de simplemente el directorio
+<code>target/</code>).
+</p><h2 id="Ejecuci%C3%B3n">Ejecución<a href="#Ejecuci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe cómo utilizar <code>sbt</code> una vez que usted a configurado
+su proyecto. Se asume que usted ha <a href="Setup.html">instalado sbt</a> y que ha
+creado un proyecto <a href="Hello.html">Hello, World</a> u otro proyecto.
+</p><h3 id="Modo+interactivo">Modo interactivo<a href="#Modo+interactivo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Ejecute sbt en el directorio de su proyecto sin argumentos:
+</p><pre><code class="">$ sbt
+</code></pre><p>Ejecutar sbt sin ningún argumento en la línea de comandos, inicia sbt en
+modo interactivo. El modo interactivo tiene una línea de comandos (¡con
+<em>tab completion</em> e historia!).
+</p><p>Por ejemplo, usted puede teclear <code>compile</code> en el prompt de sbt:
+</p><pre><code class="">&gt; compile
+</code></pre><p>Para key:<code>compile</code> de nuevo, presione la tecla “arriba” y entonces
+enter.
+</p><p>Para ejecutar su programa nuevamente, teclee <code>run</code>.
+</p><p>Para dejar el modo interactivo, teclee <code>exit</code> o utilice Ctrl+D (Unix) o
+Ctrl+Z (Windows).
+</p><h3 id="Modo+Batch+%28por+lotes%29">Modo Batch (por lotes)<a href="#Modo+Batch+%28por+lotes%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>También puede ejecutar sbt en modo batch, especificando una lista
+separada por espacios de comandos de sbt como argumentos. Para comandos
+de sbt que toman argumentos, pase el comando y los argumentos como uno
+solo a <code>sbt</code> mediante encerrarlos entre comillas. Por ejemplo:
+</p><pre><code class="">$ sbt clean compile &quot;testOnly TestA TestB&quot;
+</code></pre><p>En este ejemplo, la <em>key</em> <code>testOnly</code> tiene argumentos, <code>TestA</code> y
+<code>TestB</code>. Los comandos se ejecutarán en sequencia (<code>clean</code>, <code>compile</code>, y
+entonces <code>testOnly</code>).
+</p><h3 id="Construcci%C3%B3n+y+test+continuos">Construcción y test continuos<a href="#Construcci%C3%B3n+y+test+continuos" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Para acelerar el ciclo de edición-compilación-prueba, puede pedir a sbt
+que recompile automáticamente o que ejecute los tests siempre que se
+guarde un archivo de código fuente.
+</p><p>Puede conseguir que un comando se ejecute siempre que uno o más archivos
+de código fuente cambien al agregar como prefijo <code>~</code>. Por ejemplo, en
+modo interactivo, intente:
+</p><pre><code class="">&gt; ~ compile
+</code></pre><p>Presione enter para dejar de observar sus cambios.
+</p><p>Usted puede usar el prefijo <code>~</code> ya sea en modo interactivo o en modo
+<em>batch</em>.
+</p><p>Vea <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> para más detalles.
+</p><h3 id="Comandos+comunes">Comandos comunes<a href="#Comandos+comunes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Aquí encontrará algunos de los comandos de sbt más comunes. Para una
+lista más completa, vea <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a>.
+</p><table>
+  <tr>
+    <td><tt>clean</tt></td>
+    <td>Borra todos los archivos generados (en el directorio <tt>target</tt>).</td>
+  </tr>
+  <tr>
+    <td><tt>compile</tt></td>
+    <td>Compila los archivos de código fuente de main (en los
+    directorios <tt>src/main/scala</tt> y
+   <tt>src/main/java</tt>).</td>
+  </tr>
+  <tr>
+    <td><tt>test</tt></td>
+    <td>Compila y ejecuta todos los tests.</td>
+  </tr>
+  <tr>
+    <td><tt>console</tt></td>
+    <td>Inicia el interprete de Scala con un classpath que incluye
+    el código fuente compilado y todas las dependencias. Para regresar a
+    sbt, teclee :quit, Ctrl+D (Unix), o Ctrl+Z (Windows).</td>
+  </tr>
+  <tr>
+    <td><nobr><tt>run &lt;argument&gt;*</tt></nobr></td>
+    <td>Ejecuta la clase principal para el proyecto en la
+    misma máquina virtual que sbt.</td>
+  </tr>
+  <tr>
+    <td><tt>package</tt></td>
+    <td>crea un archivo jar que contiene los archivos en
+    <tt>src/main/resources</tt> y las clases compiladas de <tt>src/main/scala</tt> y
+    <tt>src/main/java</tt>.</td>
+  </tr>
+  <tr>
+    <td><tt>help &lt;command&gt;</tt></td>
+    <td>Despliega ayuda detallada para el comando
+    especificado. Si no se proporciona ningún comando, despliega una
+    breve descripción de todos los comandos.</td>
+  </tr>
+  <tr>
+    <td><tt>reload</tt></td>
+    <td>Recarga la definición de la construcción (los archivos
+    <tt>build.sbt</tt>, <tt>project/*.scala</tt>,
+    <tt>project/*.sbt</tt>). Este comando es
+    necario si cambia la definición de la construcción.</td>
+  </tr>
+</table><h3 id="Tab+completion">Tab completion<a href="#Tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>El modo interactivo tiene <em>tab completion</em>, incluyendo el caso cuando se
+tiene un prompt vacio. Una convención especial de sbt es que presionar
+tab una vez puede mostrar únicamente un subconjunto de <em>completions</em> más
+probables, mientras que presionarlo más veces muestra opciones más
+verbosas.
+</p><h3 id="Comandos+de+historia">Comandos de historia<a href="#Comandos+de+historia" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>El modo interactivo recuerda la historia, incluso si usted sale de sbt y
+lo reinicia. La manera más simple de acceder a la historia es con la
+tecla “arriba”. También se soportan los siguientes comandos:
+</p><table>
+  <tr>
+    <td><tt>!</tt></td>
+    <td>Muestra la ayuda para los comandos de historia.</td>
+  </tr>
+  <tr>
+    <td><tt>!!</tt></td>
+    <td>Ejecuta el comando previo de nuevo.</td>
+  </tr>
+  <tr>
+    <td><tt>!:</tt></td>
+    <td>Muestra todos los comandos previos.</td>
+  </tr>  
+  <tr>
+    <td><tt>!:n</tt></td>
+    <td>Muestra los <tt>n</tt> comandos previos.</td>
+  </tr>
+  <tr>
+    <td><tt>!n</tt></td>
+    <td>Ejecuta el comando con índice <tt>n</tt>, como se indica con el
+    comando <tt>!:</tt>.</td>
+  </tr>
+  <tr>
+    <td><tt>!-n</tt></td>
+    <td>Ejecuta el comando n-th previo a este.</td>
+  </tr>
+  <tr>
+    <td><tt>!cadena</tt></td>
+    <td>Ejecuta el comando más reciente que comienza con 'cadena'.</td>
+  </tr>
+  <tr>
+    <td><tt>!?cadena</tt></td>
+    <td>Ejecuta el comando más reciente que contenga 'cadena'.</td>
+  </tr>
+</table><h2 id="build+definition"><code>.sbt</code> build definition<a href="#build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe las <em>build definitions</em>, incluyendo algo de
+“teoría” y la sintaxis de <code>build.sbt</code>. Se asume que usted sabe como
+<a href="Running.html">usar sbt</a> y que ha leído las páginas previas en la
+Guía de inicio.
+</p><h3 id="vs++Build+Definition"><code>.sbt</code> vs <code>.scala</code> Build Definition<a href="#vs++Build+Definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Una <em>build definition</em> para sbt puede contener archivos con terminación
+<code>.sbt</code>, localizados en el directorio base de un proyecto, y archivos con
+extensión <code>.scala</code>, localizados en el subdirectorio <code>project/</code> del
+directorio base.
+</p><p>Esta página trata sobre los archivos <code>.sbt</code>, que son apropiados para la
+mayoría de los casos. Los archivos <code>.scala</code> se usan típicamente para
+compartir código entre archivos <code>.sbt</code> y para <em>build definitions</em> más
+complicadas.
+</p><p>Vea <a href="Full-Def.html">.scala build definition</a> (más adelante en la <em>Guía de
+inicio</em>) para más información sobre los archivos <code>.scala</code>.
+</p><h3 id="%C2%BFQu%C3%A9+es+una+%3F">¿Qué es una <em>Build Definition</em>?<a href="#%C2%BFQu%C3%A9+es+una+%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Después de examinar un proyecto y procesar los archivos para la
+definición de la construcción del proyecto, sbt termina con un mapa
+inmutable (un conjunto de pares llave-valor) describiendo la
+construcción.
+</p><p>Por ejemplo, una llave es <code>name</code> y se mapea a un valor de tipo cadena
+(<code>String</code>), el nombre de su proyecto.
+</p><ul><li>Los archivos de definición de la construcción no afectan el mapa de sbt
+directamente.*
+</li></ul><p>En lugar de esto, la definición de la construcción crea una lista enorme
+de objectos con el tipo <code>Setting[T]</code> donde <code>T</code> es el tipo del valor en
+el mapa. Un <code>Setting</code> describe una <em>transformación del mapa</em>, tal como
+añadir un nuevo valor llave-valor o agregar a un valor existente. (En el
+espíritu de la programación funcional con estructuras de datos y valores
+inmutables, una transformación regresa un nuevo mapa — no se actualiza
+el viejo mapa en sí mismo).
+</p><p>En <code>build.sbt</code>, usted puede crear un <code>Setting[String]</code> para el nombre de
+su proyecto como se indica a continuación:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>Este <code>Setting[String]</code> transforma el mapa al añadir (o reemplazar) la
+llave <code>name</code>, dándole el valor
+</p><p><code>&quot;hello&quot;</code>. El mapa transformado se convierte en el nuevo mapa de sbt.
+</p><p>Para crear el mapa, sbt primero ordena la lista de <em>settings</em>
+(configuraciones) de modo que todos los cambios al mismo se realicen
+juntos, y los valores que dependen de otras llaves se procesan después
+de las llaves de las que dependen. Entonces sbt visita la lista ordenada
+de <code>Settings</code>s y aplica cada uno al mapa a la vez.
+</p><p>Resumen: Una definición de construcción define una lista de
+<code>Setting[T]</code>, donde un <code>Setting[T]</code> es una transformación que afecta el
+mapa de pares de llaves-valores de sbt y <code>T</code> es el tipo de cada valor.
+</p><h3 id="De+qu%C3%A9+manera++define+la+configuraci%C3%B3n">De qué manera <code>build.sbt</code> define la configuración<a href="#De+qu%C3%A9+manera++define+la+configuraci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> define una <code>Seq[Setting[_]]</code>; se trata de una lista de
+expresiones de Scala, separada por líneas en blanco, donde cada una se
+convierte en un elemento de la secuencia. Si usted colocara <code>Seq(</code> antes
+del contenido de un archivo <code>.sbt</code> y <code>)</code> al final y reemplazara las
+líneas blancas con comas, entonces estaría observando el código <code>.scala</code>
+equivalente.
+</p><p>A continuación se muestra un ejemplo:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+
+version := &quot;1.0&quot;
+
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>Cada <code>Setting</code> se define con una expresión de Scala. Las expresiones en
+<code>build.sbt</code> son independientes la una de la otra, y son expresiones, más
+bien que sentencias completas de Scala. Estas expresiones pueden estar
+entremezcladas con <code>val</code>s, <code>lazy val</code>s, y <code>def</code>s. No se permiten
+<code>object</code>s ni <code>class</code>es en <code>build.sbt</code>. Estos deben ir en el directorio
+<code>project/</code> como archivos de código fuente completos.
+</p><p>Por la izquierda, <code>name</code>, <code>version</code>, y <code>scalaVersion</code> son <em>keys</em>
+(llaves). Una <em>key</em> es una instancia de <code>SettingKey[T]</code>, <code>TaskKey[T]</code>, o
+<code>InputKey[T]</code> donde <code>T</code> es el valor esperado para el tipo. La clase de
+<em>keys</em> se explican abajo.
+</p><p>Las <em>keys</em> tienen un método llamado <code>:=</code>, que regresa un <code>Setting[T]</code>.
+Usted podría usar una sintáxis similar a la de Java para invocar al
+método:
+</p><pre><code class="prettyprint lang-scala">name.:=(&quot;hello&quot;)
+</code></pre><p>Pero Scala permite usar <code>name := &quot;hello&quot;</code> en lugar de lo anterior (en
+Scala, un método con un único parámetro puede utilizar cualquiera de las
+dos sintaxis).
+</p><p>El método <code>:=</code> en la <em>key</em> <code>name</code> regresa un <code>Setting</code>, específicamente
+un <code>Setting[String]</code>. <code>String</code> también aparece en el tipo de <code>name</code> en
+sí misma, el cuál es <code>SettingKey[String]</code>. En este caso, el valor
+<code>Setting[String]</code> regresado es una transformación para agregar o
+reemplazar la <em>key</em> <code>name</code> en el mapa de sbt, dándole el valor
+<code>&quot;hello&quot;</code>.
+</p><p>Si usted usa el tipo de valor equivocado, la definición de la
+construcción no compilará:
+</p><pre><code class="prettyprint lang-scala">name := 42  // no compila
+</code></pre><h3 id="Las++%28configuraciones%29+deben+estar+separadas+por+l%C3%ADneas+en+blanco">Las <em>settings</em> (configuraciones) deben estar separadas por líneas en blanco<a href="#Las++%28configuraciones%29+deben+estar+separadas+por+l%C3%ADneas+en+blanco" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>No es posible escribir un <code>build.sbt</code> como el siguiente:
+</p><pre><code class="prettyprint lang-scala">// NO compila, pues no hay líneas en blanco
+name := &quot;hello&quot;
+version := &quot;1.0&quot;
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>sbt necesita un tipo de delimitador para indicar donde termina una
+expresión y comienza la siguiente.
+</p><p>Los archivos <code>.sbt</code> contienen una lista de expresiones de Scala, no un
+único programa de Scala. Estas expresiones tienen que separarse y
+pasarse al compilador de manera individual.
+</p><h3 id="Keys">Keys<a href="#Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Tipos">Tipos<a href="#Tipos" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Existen tres tipos de llaves:
+</p><ul><li><code>SettingKey[T]</code>: una <em>key</em> para un valor que se calcula una sola vez
+(el valor es calculado cuando se carga el proyecto, y se mantiene).
+</li><li><code>TaskKey[T]</code>: una <em>key</em> para un valor, llamado una <em>task</em> (tarea),
+que tiene que ser recalculada cada vez, potencialmente con efectos
+laterales.
+</li><li><code>InputKey[T]</code>: una <em>key</em> para una <em>task</em> que tiene argumentos para
+la línea de comandos como entrada. Vea /Extending/Input-Tasks para
+más detalles.
+</li></ul><h4 id="Built-in+Keys+%28Llaves+ya+inclu%C3%ADdas%29">Built-in Keys (Llaves ya incluídas)<a href="#Built-in+Keys+%28Llaves+ya+inclu%C3%ADdas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Las llaves ya incluídas son simplemente campos de un objeto llamado
+<a href="../../sxr/sbt/Keys.scala.html">Keys</a>. Un archivo <code>build.sbt</code> tiene
+implícitamente un <code>import sbt.Keys._</code>, de modo que <code>sbt.Keys.name</code> puede
+ser referido como <code>name</code>.
+</p><h4 id="Custom+Keys+%28llaves+personalizadas%29">Custom Keys (llaves personalizadas)<a href="#Custom+Keys+%28llaves+personalizadas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Las llaves personalizadas pueden definirse con sus métodos de creación
+respectivos: <code>settingKey</code>, <code>taskKey</code>, e <code>inputKey</code>. Cada método espera
+el tipo del valor asociado con la llave así como una descripción. El
+nombre de la llave se toma del <code>val</code> al que se le asignó la llave. Por
+ejemplo, para definir una llave para una nueva tarea llamado <code>hello</code>, :
+</p><pre><code class="prettyprint lang-scala">lazy val hello = taskKey[Unit](&quot;An example task&quot;)
+</code></pre><p>Aquí se usó el hecho de que un archivo <code>.sbt</code> puede contener <code>val</code>s y
+<code>def</code>s además de <em>settings</em> (configuraciones). Todas estas definiciones
+son evaluadas antes que las configuraciones sin importar donde se
+definan en el archivo. <code>val</code>s y <code>def</code>s deben estar separadas de las
+<em>settings</em> mediante líneas blancas.
+</p><blockquote><p><strong>Note</strong>: Típicamente, se utilizan lazy vals en lugar de vals para evitar
+problemas de inicialización.
+</p></blockquote><h4 id="Task+vs.+Setting+keys+%28Llaves+para++vs.+Llaves+para+%29">Task vs. Setting keys (Llaves para <em>Tasks</em> vs. Llaves para <em>Settings</em>)<a href="#Task+vs.+Setting+keys+%28Llaves+para++vs.+Llaves+para+%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Se dice que una <code>TaskKey[T]</code> define una <em>task</em>. Las <em>tasks</em> son
+operaciones tales como <code>compile</code> o <code>package</code>. Pueden regresar <code>Unit</code>
+(<code>Unit</code> es el tipo de Scala análogo a <code>void</code>), o pueden regresar un
+valor relacionado con la tarea, por ejemplo, <code>package</code> es una
+<code>TaskKey[File]</code> y su valor es el archivo jar que este crea.
+</p><p>Cada vez que inicia una tarea de ejecución, por ejemplo mediante teclear
+<code>compile</code> en el prompt interactivo de sbt, sbt volverá a ejecutar
+cualquier <em>task</em> envuelta exactamente una vez.
+</p><p>El mapa de sbt que describe el proyecto puede mantener una cadena fija
+para un <em>setting</em> tal como <code>name</code>, pero tiene que haber algo de código
+ejecutable para una tarea como <code>compile</code> — incluso si dicho código
+ejecutable eventualmente regresa una cadena, tiene que ejecutarse cada
+vez.
+</p><p><em>Una key dada siempre se refiere ya sea a una task o a un setting</em>. Es
+decir, “taskiness” (si debe ejecutarse cada vez) es una propiedad de la
+<em>key</em>, no del valor.
+</p><h3 id="Definiendo+tasks+y+settings">Definiendo tasks y settings<a href="#Definiendo+tasks+y+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Usando <code>:=</code>, usted puede asignar un valor a un <em>setting</em> y un cómputo a
+una <em>task</em>. En el caso de un <em>setting</em>, el valor será calculado una sola
+vez al momento de cargar el proyecto. Para una tarea, el cómputo se
+realizará cada vez que se ejecute la tarea.
+</p><p>Por ejemplo, para implementar la tarea <code>hello</code> de la sección anterior, :
+</p><pre><code class="prettyprint lang-scala">hello := { println(&quot;Hello!&quot;) }
+</code></pre><p>Ya vimos un ejemplo de definición de un <em>setting</em> para el nombre del
+proyecto, :
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><h4 id="Tipos+para+las+tareas+y+los+settings">Tipos para las tareas y los settings<a href="#Tipos+para+las+tareas+y+los+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Desde la perspectiva del sistema de tipos, el <code>Setting</code> creado a partir
+de una <em>task key</em> es ligeramente distinta de la creada a partir de una
+<em>setting key</em>. <code>taskKey := 42</code> resulta en una <code>Setting[Task[T]]</code>
+mientras que <code>settingKey := 42</code> resulta en una <code>Setting[T]</code>. Para la
+mayoría de los propósitos no hay diferencia, la <em>task key</em> todavía crea
+un valor de tipo <code>T</code> cuando la tarea se ejecuta.
+</p><p>La diferencia entre los tipos <code>T</code> y <code>Task[T]</code> tiene la siguiente
+implicación: un <em>setting</em> no puede depender de una <em>task</em>, poque un
+<em>setting</em> es evaluado únicamente una vez al momento de cargar el
+proyecto y no se vuelve a ejecutar. Se escribirá más sobre este asunto
+pronto en <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><h3 id="Keys+en+modo+sbt+interactivo">Keys en modo sbt interactivo<a href="#Keys+en+modo+sbt+interactivo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>En el modo interactivo de sbt, usted puede teclear el nombre de
+cualquier tarea para ejecutar dicha tarea. Es por esto que al teclear
+<code>compile</code> se ejecuta la <em>task</em> de compilación. La <em>key</em> <code>compile</code> es una
+llave para una <em>task</em>.
+</p><p>Si usted teclea el nombre de una <em>key</em> para <em>setting</em> más bien que una
+para <em>task</em>, entonces el valor de la <em>key</em> para <em>setting</em> será mostrado.
+Al teclear el nombre de una <em>task</em> se ejecuta dicha <em>task</em>, pero no se
+despliega el valor resultante; para ver el resultado de la <em>task</em>, use
+<code>show &lt;nombre de la tarea&gt;</code> más bien que simplemente
+<code>&lt;nombre de la tarea</code>. La convención para los nombres de las llaves es
+usar <code>estiloDeCamello</code> de modo que el nombre utilizado en la línea de
+comandos y el identificador de Scala sean idénticos.
+</p><p>Para aprender más sobre cualquier <em>key</em>, teclee
+<code>inspect &lt;nombre de la key&gt;</code> en el prompt interactivo de sbt. Algo de la
+información que <code>inspect</code> despliega no tendrá sentido todavía, pero en
+la parte superior le mostrará el tipo del valor para el <em>setting</em> y una
+breve descripción del tal.
+</p><h3 id="Imports+en">Imports en <code>build.sbt</code><a href="#Imports+en" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Puede poner sentencias import en la parte superior de <code>build.sbt</code>; no
+necesitan estar separadas por líneas en blanco.
+</p><p>Hay algunos imports por default, como se indica a continuación:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Process._
+import Keys._
+</code></pre><p>(Además, si usted tiene <a href="Full-Def.html">archivos .scala</a>, el contenido de
+cualquier objeto <code>Build</code> o <code>Plugin</code> en estos archivos será importado.
+Más sobre este asunto cuando se llegue a
+<a href="Full-Def.html">definiciones de construccion .scala</a>.)
+</p><h3 id="A%C3%B1adiendo+dependencias+%28librer%C3%ADas%29">Añadiendo dependencias (librerías)<a href="#A%C3%B1adiendo+dependencias+%28librer%C3%ADas%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Para agregar dependencias de librerías de terceros, hay dos opciones. La
+primera es añadir jars en el directorio <code>lib/</code> (para <em>unmanaged
+dependencies</em>) y la otra es agregar <em>managed dependencies</em>, que se verán
+como se muestra a continuación en <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+</code></pre><p>Así es como se agrega una <em>managed dependency</em> sobre la librería Apache
+Derby, versión 10.4.1.3.
+</p><p>La key <code>libraryDependencies</code> envuelve dos complejidades: <code>+=</code> más bien
+que <code>:=</code>, y el método <code>%</code>. <code>+=</code> agrega algo al valor anterior de la
+<em>key</em> más bien que reemplazarlo; esto se explica en
+<a href="More-About-Settings.html">más sobre los settings</a>. El
+método <code>%</code> se usa para construir un ID para un módulo de Ivy a partir de
+cadenas, como se explica en
+<a href="Library-Dependencies.html">library dependencies</a>.
+</p><p>Por lo pronto, omitiremos los detalles del manejo de las dependencias
+(librerías) hasta más tarde en la Guía de inicio. Hay una
+<a href="Library-Dependencies.html">página completa</a> que cubre el
+tema más tarde.
+</p><h2 id="Scopes">Scopes<a href="#Scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Esta página describe los <em>scopes</em>. Se asume que usted ha leído y
+comprendido la página previa, <a href="Basic-Def.html">.sbt build definition</a>.
+</p><h3 id="La+historia+completa+sobre+las">La historia completa sobre las <em>keys</em><a href="#La+historia+completa+sobre+las" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="Basic-Def.html">Previamente</a> supusimos que una <em>key</em> como <code>name</code>
+correspondía a una entrada en el mapa de sbt de pares llave-valor
+(key-value). Esto fue una simplificación.
+</p><p>En verdad, cada llave puede tener un valor asociado en más de un
+contexto, llamado un “scope”.
+</p><p>Algunos ejemplos concretos:
+</p><ul><li>Si usted tiene múltiples proyectos en la definición de la
+construcción, una <em>key</em> puede tener un valor diferente en cada
+proyecto.
+</li><li>La <em>key</em> <code>compile</code> puede tener un valor diferente para sus archivos
+de código fuente de main comparado con el correspondiente valor para
+el código fuente de test, si usted desea que se compilen de manera
+distinta.
+</li><li>La <em>key</em> <code>packageOpitons</code> (que contiene opciones para crear paquetes
+jar) puede tener diferentes valores para el empaquetado de archivos
+class (packageBin) o para el empaquetado de código fuente
+(packageSrc).
+</li></ul><p><em>No hay un único valor para una key dada</em>, porque el valor puede variar
+de acuerdo con el <em>scope</em>.
+</p><p>Sin embargo, existe un único valor para una <em>scoped key</em> (llaves con un
+contexto).
+</p><p>Si usted se imagina que sbt está procesando una lista de <em>settings</em> para
+generar un mapa de llave-valor (<em>key-value</em>) que describe al proyecto,
+como <a href="Basic-Def.html">se discutió anteriormente</a>, las <em>keys</em> en dicho mapa
+son <em>scoped keys</em>. Cada <em>setting</em> definido en la definición de la
+construcción del proyecto (por ejemplo en <code>build.sbt</code>) aplica a una
+<em>scoped key</em> también.
+</p><p>Con frecuencia el <em>scope</em> es implícito o tiene un valor por default,
+pero si dichos valores son incorrectos, entonces tendrá que indicar el
+<em>scope</em> deseado en <code>build.sbt</code>.
+</p><h3 id="Ejes+del+Scope">Ejes del Scope<a href="#Ejes+del+Scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Un <em>eje del scope</em> es un tipo, donde cada instancia del tipo puede
+definir su propio <em>scope</em> (esto es, cada instancia puede tener sus
+propios valores únicos para las <em>keys</em>).
+</p><p>Hay tres ejes del scope:
+</p><ul><li>Projects
+</li><li>Configurations
+</li><li>Tasks
+</li></ul><h3 id="Scoping+mediante+del+eje+del+proyecto">Scoping mediante del eje del proyecto<a href="#Scoping+mediante+del+eje+del+proyecto" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Si usted
+<a href="Multi-Project.html">coloca múltiples proyectos en una construcción única</a>,
+cada proyecto necesita sus propios <em>settings</em>. Es decir, las <em>keys</em>
+pueden estar en <em>scope</em> de acuerdo al proyecto.
+</p><p>Los ejes del proyecto también pueden configurarse para la “entera
+construcción”, de modo que un <em>setting</em> aplique a la construcción
+completa más bien que a un solo proyecto. Los <em>settings</em> de <em>nivel de
+construcción</em> con frecuencia se usan como un plan de reserva cuando un
+proyecto no define un <em>setting</em> específico para un proyecto.
+</p><h4 id="Scoping+mendiante+el+eje+de+configuraci%C3%B3n">Scoping mendiante el eje de configuración<a href="#Scoping+mendiante+el+eje+de+configuraci%C3%B3n" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Una configuración define el tipo de construcción, potencialmente con su
+propio classpath, código fuente, paquetes generados, etc. El concepto de
+configuración viene de Iviy, que sbt usa para
+<a href="Library-Dependencies.html">managed dependencies</a>, y para
+<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a>.
+</p><p>Algunas configuraciones que verá en sbt:
+</p><ul><li><code>Compile</code> que define la construcción principal (<em>main</em>)
+(<code>src/main/scala</code>).
+</li><li><code>Test</code> que define cómo construir tests (<code>src/test/scala</code>).
+</li><li><code>Runtime</code> que define el classpath para la <em>task</em> <code>run</code>.
+</li></ul><p>Por default, todas las llaves asociadas con la compilación,
+empaquetamiento y la ejecución tienen un scope de configuración y por lo
+tanto pueden funcionar de manera diferente en cada configuración. Los
+ejemplos más obvios son las <em>keys</em> para <em>tasks</em> <code>compile</code>, <code>package</code>, y
+<code>run</code>; pero todas las llaves que <em>afectan</em> dichas <em>keys</em> (tales como
+<code>sourceDirectories</code> o <code>scalacOptions</code> o <code>fullClasspath</code>) también tienen
+scope de configuración.
+</p><h4 id="Scoping+mediante+el+eje+task">Scoping mediante el eje task<a href="#Scoping+mediante+el+eje+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Los <em>settings</em> pueden afectar cómo funcionan las <em>tasks</em>. Por ejemplo,
+la <em>key</em> de <em>setting</em> <code>packageOptions</code> afecta a la <em>key</em> <code>packageSrc</code> de
+<em>task</em>.
+</p><p>Para soportar esto, una <em>key de task</em> (tal como <code>packageSrc</code>) puede ser
+el scopde para otra <em>key</em> (tal como <code>packageOptions</code>).
+</p><p>Las diferentes <em>tasks</em> que construyen un paquete (<code>packageSrc</code>,
+<code>packageBin</code>, <code>packageDoc</code>) pueden compartir <em>keys</em> relacionadas al
+empaquetamiento, tales como <code>artifactName</code> y <code>packageOptions</code>. Dichas
+<em>keys</em> pueden tener distintos valores para cada <em>task</em> de
+empaquetamiento.
+</p><h3 id="Scope+global">Scope global<a href="#Scope+global" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Cada eje de scope puede llenarse con una instancia del tipo de eje (por
+ejemplo el eje de <em>task</em> puede llevarse con una <em>task</em>), o el eje puede
+llenarse con el valor especial <code>Global</code>.
+</p><p><code>Global</code> significa lo que usted espera: el valor del <em>setting</em> aplica a
+todas las instancias de ese eje. Por ejemplo, si el eje de la <em>task</em> es
+<code>Global</code>, entonces dicho <em>setting</em> aplicaría a todas las <em>tasks</em>.
+</p><!-- TODO: Translate to Spanish -->
+<h3 id="Delegation">Delegation<a href="#Delegation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A scoped key may be undefined, if it has no value associated with it in
+its scope.
+</p><p>For each scope, sbt has a fallback search path made up of other scopes.
+Typically, if a key has no associated value in a more-specific scope,
+sbt will try to get a value from a more general scope, such as the
+<code>Global</code> scope or the entire-build scope.
+</p><p>This feature allows you to set a value once in a more general scope,
+allowing multiple more-specific scopes to inherit the value.
+</p><p>You can see the fallback search path or “delegates” for a key using the
+<code>inspect</code> command, as described below. Read on.
+</p><h3 id="Referring+to+scoped+keys+when+running+sbt">Referring to scoped keys when running sbt<a href="#Referring+to+scoped+keys+when+running+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>On the command line and in interactive mode, sbt displays (and parses)
+scoped keys like this:
+</p><pre><code class="">{&lt;build-uri&gt;}&lt;project-id&gt;/config:intask::key
+</code></pre><ul><li><code>{&lt;build-uri&gt;}/&lt;project-id&gt;</code> identifies the project axis. The
+<code>&lt;project-id&gt;</code> part will be missing if the project axis has “entire build” scope.
+</li><li><code>config</code> identifies the configuration axis.
+</li><li><code>intask</code> identifies the task axis.
+</li><li><code>key</code> identifies the key being scoped.
+</li></ul><p><code>*</code> can appear for each axis, referring to the <code>Global</code> scope.
+</p><p>If you omit part of the scoped key, it will be inferred as follows:
+</p><ul><li>the current project will be used if you omit the project.
+</li><li>a key-dependent configuration will be auto-detected if you omit the
+configuration or task.
+</li></ul><p>For more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Examples+of+scoped+key+notation">Examples of scoped key notation<a href="#Examples+of+scoped+key+notation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>fullClasspath</code> specifies just a key, so the default scopes are used:
+current project, a key-dependent configuration, and global task
+scope.
+</li><li><code>test:fullClasspath</code> specifies the configuration, so this is
+<code>fullClasspath</code> in the <code>test</code> configuration, with defaults for the other
+two scope axes.
+</li><li><code>*:fullClasspath</code> specifies <code>Global</code> for the configuration, rather than
+the default configuration.
+</li><li><code>doc::fullClasspath</code> specifies the <code>fullClasspath</code> key scoped to the <code>doc</code>
+task, with the defaults for the project and configuration axes.
+</li><li><code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code>
+specifies a project, <code>{file:/home/hp/checkout/hello/}default-aea33a</code>,
+where the project is identified with the build
+<code>{file:/home/hp/checkout/hello/}</code> and then a project id inside that
+build <code>default-aea33a</code>. Also specifies configuration <code>test</code>, but leaves
+the default task axis.
+</li><li><code>{file:/home/hp/checkout/hello/}/test:fullClasspath</code> sets the project
+axis to “entire build” where the build is
+<code>{file:/home/hp/checkout/hello/}</code>.
+</li><li><code>{.}/test:fullClasspath</code> sets the project axis to “entire build” where
+the build is <code>{.}</code>. <code>{.}</code> can be written <code>ThisBuild</code> in Scala code.
+</li><li><code>{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</code> sets all
+three scope axes.
+</li></ul><h3 id="Inspecting+scopes">Inspecting scopes<a href="#Inspecting+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s interactive mode, you can use the inspect command to understand
+keys and their scopes. Try <code>inspect test:fullClasspath</code>:
+</p><pre><code class="">$ sbt
+&gt; inspect test:fullClasspath
+[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+[info] Description:
+[info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info] Dependencies:
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
+[info] Reverse dependencies:
+[info]  test:runMain
+[info]  test:run
+[info]  test:testLoader
+[info]  test:console
+[info] Delegates:
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
+[info] Related:
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
+</code></pre><p>On the first line, you can see this is a task (as opposed to a setting,
+as explained in <a href="Basic-Def.html">.sbt build definition</a>). The value
+resulting from the task will have type
+<code>scala.collection.Seq[sbt.Attributed[java.io.File]]</code>.
+</p><p>“Provided by” points you to the scoped key that defines the value, in
+this case
+<code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code> (which
+is the <code>fullClasspath</code> key scoped to the <code>test</code> configuration and the
+<code>{file:/home/hp/checkout/hello/}default-aea33a</code> project).
+</p><p>“Dependencies” may not make sense yet; stay tuned for the
+<a href="More-About-Settings.html">next page</a>.
+</p><p>You can also see the delegates; if the value were not defined, sbt would
+search through:
+</p><ul><li>two other configurations (<code>runtime:fullClasspath</code>,
+<code>compile:fullClasspath</code>). In these scoped keys, the project is
+unspecified meaning “current project” and the task is unspecified
+meaning <code>Global</code>
+</li><li>configuration set to <code>Global</code> (<code>*:fullClasspath</code>), since project is
+still unspecified it’s “current project” and task is still
+unspecified so <code>Global</code>
+</li><li>project set to <code>{.}</code> or <code>ThisBuild</code> (meaning the entire build, no
+specific project)
+</li><li>project axis set to <code>Global</code> (<code>*/test:fullClasspath</code>) (remember, an
+unspecified project means current, so searching <code>Global</code> here is new;
+i.e. <code>*</code> and “no project shown” are different for the project axis;
+i.e. <code>*/test:fullClasspath</code> is not the same as <code>test:fullClasspath</code>)
+</li><li>both project and configuration set to <code>Global</code> (<code>*/*:fullClasspath</code>)
+(remember that unspecified task means <code>Global</code> already, so
+<code>*/*:fullClasspath</code> uses <code>Global</code> for all three axes)
+</li></ul><p>Try <code>inspect fullClasspath</code> (as opposed to the above example,
+inspect <code>test:fullClasspath</code>) to get a sense of the difference. Because
+the configuration is omitted, it is autodetected as <code>compile</code>.
+<code>inspect compile:fullClasspath</code> should therefore look the same as
+<code>inspect fullClasspath</code>.
+</p><p>Try <code>inspect *:fullClasspath</code> for another contrast. <code>fullClasspath</code> is not
+defined in the <code>Global</code> configuration by default.
+</p><p>Again, for more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Referring+to+scopes+in+a+build+definition">Referring to scopes in a build definition<a href="#Referring+to+scopes+in+a+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you create a setting in <code>build.sbt</code> with a bare key, it will be scoped
+to the current project, configuration <code>Global</code> and task <code>Global</code>:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>Run sbt and <code>inspect name</code> to see that it’s provided by
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>, that is, the
+project is <code>{file:/home/hp/checkout/hello/}default-aea33a</code>, the
+configuration is <code>*</code> (meaning global), and the task is not shown (which
+also means global).
+</p><!-- TODO: Fix this. -->
+<p><code>build.sbt</code> always defines settings for a single project, so the “current
+project” is the project you’re defining in that particular <code>build.sbt</code>.
+(For <a href="Multi-Project.html">multi-project builds</a>, each project has its own
+<code>build.sbt</code>.)
+</p><p>Keys have an overloaded method called in used to set the scope. The
+argument to in can be an instance of any of the scope axes. So for
+example, though there’s no real reason to do this, you could set the
+<code>name</code> scoped to the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in Compile := &quot;hello&quot;
+</code></pre><p>or you could set the name scoped to the <code>packageBin</code> task (pointless! just
+an example):
+</p><pre><code class="prettyprint lang-scala">name in packageBin := &quot;hello&quot;
+</code></pre><p>or you could set the <code>name</code> with multiple scope axes, for example in the
+<code>packageBin</code> task in the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in (Compile, packageBin) := &quot;hello&quot;
+</code></pre><p>or you could use <code>Global</code> for all axes:
+</p><pre><code class="prettyprint lang-scala">name in Global := &quot;hello&quot;
+</code></pre><p>(<code>name in Global</code> implicitly converts the scope axis <code>Global</code> to a scope
+with all axes set to <code>Global</code>; the task and configuration are already
+<code>Global</code> by default, so here the effect is to make the project <code>Global</code>,
+that is, define <code>*/*:name</code> rather than
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>)
+</p><p>If you aren’t used to Scala, a reminder: it’s important to understand
+that in and <code>:=</code> are just methods, not magic. Scala lets you write them in
+a nicer way, but you could also use the Java style:
+</p><pre><code class="prettyprint lang-scala">name.in(Compile).:=(&quot;hello&quot;)
+</code></pre><p>There’s no reason to use this ugly syntax, but it illustrates that these
+are in fact methods.
+</p><h3 id="When+to+specify+a+scope">When to specify a scope<a href="#When+to+specify+a+scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You need to specify the scope if the key in question is normally scoped.
+For example, the <code>compile</code> task, by default, is scoped to <code>Compile</code> and <code>Test</code>
+configurations, and does not exist outside of those scopes.
+</p><p>To change the value associated with the <code>compile</code> key, you need to write
+<code>compile in Compile</code> or <code>compile in Test</code>. Using plain <code>compile</code> would define
+a new compile task scoped to the current project, rather than overriding
+the standard compile tasks which are scoped to a configuration.
+</p><p>If you get an error like <em>“Reference to undefined setting“</em>, often
+you’ve failed to specify a scope, or you’ve specified the wrong scope.
+The key you’re using may be defined in some other scope. sbt will try to
+suggest what you meant as part of the error message; look for “Did you
+mean compile:compile?”
+</p><p>One way to think of it is that a name is only <em>part</em> of a key. In
+reality, all keys consist of both a name, and a scope (where the scope
+has three axes). The entire expression
+<code>packageOptions in (Compile, packageBin)</code> is a key name, in other words.
+Simply <code>packageOptions</code> is also a key name, but a different one (for keys
+with no in, a scope is implicitly assumed: current project, global
+config, global task).
+</p>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

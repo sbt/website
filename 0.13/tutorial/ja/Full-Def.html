@@ -1,0 +1,249 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>始める sbt — .scala ビルド定義</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'ja';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Custom-Settings.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Summary.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id=".scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.scala ビルド定義<a href="#.scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページは、このガイドのこれまでのページ、特に 
+<a href="Basic-Def.html">.sbt ビルド定義</a> と
+<a href="More-About-Settings.html">他の種類のセッティング</a>を読んでいることを前提とする。
+</p><h3 id="sbt+%E3%81%AF%E5%86%8D%E5%B8%B0%E7%9A%84%E3%81%A0">sbt は再帰的だ<a href="#sbt+%E3%81%AF%E5%86%8D%E5%B8%B0%E7%9A%84%E3%81%A0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> は単純化しすぎていて、sbt の実際の動作を隠蔽している。
+sbt のビルドは、Scala コードにより定義されている。そのコード自身もビルドされなければいけない。
+当然これも sbt でビルドされる。
+</p><p><code>project</code> ディレクトリは君のプロジェクトのビルド方法を記述した<em>プロジェクトの中のプロジェクトだ</em>。
+<code>project</code> 内のプロジェクトは、他のプロジェクトができる全てのことを（理論的には）こなすことができる。
+つまり、<em>ビルド定義は sbt プロジェクトである</em>ということだ_。
+</p><p>この入れ子構造は永遠に続く。<code>project/project</code> ディレクトリを作ることで
+ビルド定義のビルド定義プロジェクトをカスタム化することができる。
+</p><p>以下に具体例で説明する:
+</p><pre><code class="">hello/                  # プロジェクトのベースディレクトリ
+
+    Hello.scala         # プロジェクトのソースファイル  
+                        # （src/main/scala に入れることもできる）
+
+    build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
+                        # 一部となる
+
+    project/            # ビルド定義プロジェクトのベースディレクトリ
+	   
+        Build.scala     # project/ プロジェクトのソースファイル、
+                        # つまり、ビルド定義のソースファイル
+
+        build.sbt       # これは、project/project 内のビルド定義プロジェクトの
+		                    # 一部となり、ビルド定義のビルド定義となる
+						   
+        project/        # ビルド定義プロジェクトのためのビルド定義プロジェクトの
+                        # ベースディレクトリ
+
+            Build.scala # project/project/ プロジェクトのソースファイル
+</code></pre><p>普通はこういうことをする必要は全く無いので、<em>安心してほしい！</em> 
+だけど、原理を理解すると役立つことがある。
+</p><p>ちなみに、<code>.scala</code> や <code>.sbt</code> で終わる全てのファイルが用いられ、
+<code>build.sbt</code> や <code>Build.scala</code> と命名するのは慣例にすぎない。
+これは複数のファイルを使っていいということも意味する。
+</p><h3 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B++%E3%82%BD%E3%83%BC%E3%82%B9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB">ビルド定義プロジェクトにおける <code>.scala</code> ソースファイル<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B++%E3%82%BD%E3%83%BC%E3%82%B9%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>.sbt</code> ファイルは、その兄弟の <code>project</code> ディレクトリにマージされる。
+プロジェクトの構造をもう一度見てみる:
+</p><pre><code class="">hello/                  # プロジェクトのベースディレクトリ
+
+    build.sbt           # build.sbt は、project/ 内のビルド定義プロジェクトの
+                        # 一部となる
+
+    project/            # ビルド定義プロジェクトのベースディレクトリ
+
+        Build.scala     # project/ プロジェクトのソースファイル、
+                        # つまり、ビルド定義のソースファイル
+</code></pre><p><code>build.sbt</code> 内の Scala 式は別々にコンパイルされ、
+<code>Build.scala</code>（もしくは、<code>project/</code> ディレクトリ内の他の <code>.scala</code> ファイル）
+に編入される。
+</p><p><em>ベースディレクトリの <code>.sbt</code> ファイルは、
+ベースディレクトリ直下の <code>project</code> 内のビルド定義プロジェクトの一部となる。</em>
+</p><p>つまり、<code>.sbt</code> ファイルは、ビルド定義プロジェクトにセッティングを追加するための、
+便利な略記法ということだ。
+</p><h3 id="%E3%81%A8++%E3%81%AE%E9%96%A2%E4%BF%82"><code>build.sbt</code> と <code>Build.scala</code> の関係<a href="#%E3%81%A8++%E3%81%AE%E9%96%A2%E4%BF%82" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>ビルド定義の中で、<code>.sbt</code> と <code>.scala</code> を混ぜて使うには、両者の関係を理解する必要がある。
+</p><p>以下に、具体例で説明する。プロジェクトが <code>hello</code> にあるとすると、
+<code>hello/project/Build.scala</code> を以下のように作る:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+  val sampleKeyA = settingKey[String](&quot;demo key A&quot;)
+  val sampleKeyB = settingKey[String](&quot;demo key B&quot;)
+  val sampleKeyC = settingKey[String](&quot;demo key C&quot;)
+  val sampleKeyD = settingKey[String](&quot;demo key D&quot;)
+
+  override lazy val settings = super.settings ++
+    Seq(
+      sampleKeyA := &quot;A: in Build.settings in Build.scala&quot;,
+      resolvers := Seq()
+    )
+
+  lazy val root = Project(id = &quot;hello&quot;,
+    base = file(&quot;.&quot;),
+    settings = Seq(
+      sampleKeyB := &quot;B: in the root project settings in Build.scala&quot;
+    ))
+}
+</code></pre><p>次に、<code>hello/build.sbt</code> を以下のように書く:
+</p><pre><code class="prettyprint lang-scala">sampleKeyC in ThisBuild := &quot;C: in build.sbt scoped to ThisBuild&quot;
+
+sampleKeyD := &quot;D: in build.sbt&quot;
+</code></pre><p>sbt のインタラクティブプロンプトを起動する。<code>inspect sample-a</code> と打ち込むと、以下のように表示されるはず（一部抜粋）:
+</p><pre><code class="">[info] Setting: java.lang.String = A: in Build.settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
+</code></pre><p>次に、<code>inspect sample-c</code> と打ち込むと、以下のように表示される:
+</p><pre><code class="">[info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
+</code></pre><p>二つの値とも、“Provided by” は同じスコープを表示していることに注意してほしい。
+つまり、<code>.sbt</code> ファイルの <code>sampleKeyC in ThisBuild</code> は、
+<code>.scala</code> ファイルの <code>Build.settings</code> リストにセッティングを追加するのと等価とういうことだ。
+sbt は、ビルド全体にスコープ付けされたセッティングを両者から取り込んでビルド定義を作成する。
+</p><p>次は、<code>inspect sample-b</code>:
+</p><pre><code class="">[info] Setting: java.lang.String = B: in the root project settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
+</code></pre><p><code>sample-b</code> は、
+ビルド全体（<code>{file:/home/hp/checkout/hello/}</code>）ではなく、
+特定のプロジェクト（<code>{file:/home/hp/checkout/hello/}hello</code>）
+にスコープ付けされいることに注意してほしい。
+</p><p>もうお分かりだと思うが、<code>inspect sample-d</code> は <code>sample-b</code> に対応する:
+</p><pre><code class="">[info] Setting: java.lang.String = D: in build.sbt
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
+</code></pre><p>sbt は <code>.sbt</code> ファイルからのセッティングを
+<code>Build.settings</code> と <code>Project.settings</code> に<em>追加する</em>ため、
+これは <code>.sbt</code> 内のセッティングの優先順位が高いことを意味する。
+<code>Build.scala</code> を変更して、<code>build.sbt</code> でも設定されている
+<code>sample-c</code> か <code>sample-d</code> キーを設定してみよう。
+<code>build.sbt</code> 内のセッティングが、<code>Build.scala</code> 内のそれに「勝つ」はずだ。
+</p><p>もう一つ気づいたかもしれないが、<code>sampleC</code> と <code>sampleD</code> は <code>build.sbt</code> でそのまま使うことができる。
+これは、sbt が <code>Build</code> オブジェクトのコンテンツを自動的に <code>.sbt</code> ファイルにインポートすることにより実現されている。
+具体的には、<code>build.sbt</code> ファイル内で <code>import HelloBuild._</code> が暗黙に呼ばれている。
+</p><p>まとめてみると:
+</p><ul><li><code>.scala</code> ファイル内で、<code>Build.settings</code> にセッティングを追加すると、
+自動的にビルド全体にスコープ付けされる。
+</li><li><code>.scala</code> ファイル内で、<code>Project.settings</code> にセッティングを追加すると、
+自動的にプロジェクトにスコープ付けされる。
+</li><li><code>.scala</code> ファイルに書いた全ての <code>Build</code> オブジェクトのコンテンツは
+<code>.sbt</code> ファイルにインポートされる。
+</li><li><code>.sbt</code> ファイル内のセッティングは <code>.scala</code> ファイルのセッティングに<em>追加</em>される。
+</li><li><code>.sbt</code> ファイル内のセッティングは、明示的に指定されない限り
+プロジェクトにスコープ付けされる。
+</li></ul><h3 id="%E3%81%84%E3%81%A4++%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%86%E3%81%8B">いつ <code>.scala</code> ファイルを使うか<a href="#%E3%81%84%E3%81%A4++%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%86%E3%81%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>.scala</code> ファイルでは、セッティング式の羅列に限定されない。
+<code>val</code>、<code>object</code> やメソッド定義など、Scala コードを自由に書ける。
+</p><p><em>推奨される方法の一つとしては、<code>.scala</code> ファイルは <code>val</code> や <code>object</code> やメソッド定義を
+くくり出すのに使用して、セッティングの定義は <code>.sbt</code> で行うことだ。</em>
+</p><p><code>.sbt</code> 形式は、単一の式のみが許されているので、式の間でコードを共有する方法を持たない。
+コードを共有したければ、共通の変数やメソッドの定義ができるように <code>.scala</code> ファイルが必要になる。
+(sbt 0.13.0 からbuild.sbtでも、val、lazy val、メソッド定義は可能になりました。classやobjectが必要な場合は引き続きbuild.scalaが必要です)
+</p><p><code>.sbt</code> ファイルと <code>.scala</code> ファイルの両方がコンパイルされ、一つのビルド定義が作られる。
+</p><p><code>.scala</code> ファイルは、単一のビルド内で複数のプロジェクトを定義する場合にも必須だ。
+これに関しては、<a href="../multi-project">マルチプロジェクト</a>で後ほど説明する。
+</p><p>（<a href="../multi-project">マルチプロジェクト</a>で <code>.sbt</code> ファイルを使うことの欠点は、
+<code>.sbt</code> ファイルが異なるディレクトリに散らばってしまうことだ。
+そのため、サブプロジェクトがある場合は、セッティングを <code>.scala</code> に置くことを好む人もいる。
+これは、<a href="../multi-project">マルチプロジェクト</a>のふるまいを理解すると、すぐ分かるようになる。）
+</p><h3 id="%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">インタラクティブモードにおけるビルド定義<a href="#%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96%E3%83%A2%E3%83%BC%E3%83%89%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt のインタラクティブプロンプトの現プロジェクトを
+<code>project/</code> 内のビルド定義プロジェクトに切り替えることができる。
+<code>reload plugins</code> と打ち込むことで切り替わる:
+</p><pre><code class="">&gt; reload plugins
+[info] Set current project to default-a0e8e4 (in build file:/home/hp/checkout/hello/project/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/project/Build.scala)
+&gt; reload return
+[info] Loading project definition from /home/hp/checkout/hello/project
+[info] Set current project to hello (in build file:/home/hp/checkout/hello/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
+&gt;
+</code></pre><p>上記にあるとおり、<code>reload return</code> を使ってビルド定義プロジェクトから普通のプロジェクトに戻る。
+</p><h3 id="%E6%B3%A8%E6%84%8F%3A+%E5%85%A8%E3%81%A6+immutable+%E3%81%A0">注意: 全て immutable だ<a href="#%E6%B3%A8%E6%84%8F%3A+%E5%85%A8%E3%81%A6+immutable+%E3%81%A0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> 内のセッティングが、<code>Build</code> や <code>Project</code> オブジェクトの <code>settings</code> フィールドに
+追加されると考えるのは間違っている。
+そうじゃなくて、<code>Build</code> や <code>Project</code> のセッティングリストと <code>build.sbt</code> のセッティングが
+連結されて別の不変リストになって、それが sbt に使われるというのが正しい。
+<code>Build</code> と <code>Project</code> オブジェクトは、immutable なコンフィギュレーションであり、
+ビルド定義の全体からすると、たった一部にすぎない。
+</p><p>事実、セッティングには他にも出どころがある。具体的には、以下の順で追加される:
+</p><ul><li><code>.scala</code> ファイル内の <code>Build.settings</code> と <code>Project.settings</code> 。
+</li><li>ユーザ定義のグローバルセッティング。例えば、<code>~/.sbt/build.sbt</code> に<em>全て</em>のプロジェクトに影響するセッティングを定義できる。
+</li><li>プラグインによって注入されるセッティング、次の<a href="../using-plugins">プラグインの使用</a>参照。
+</li><li>プロジェクトの <code>.sbt</code> ファイル内のセッティング。
+</li><li>（<code>project</code> 内のプロジェクトである）ビルド定義プロジェクトの場合は、グローバルプラグイン（~/.sbt/plugins）が追加される。
+<a href="../using-plugins">プラグインの使用</a>で詳細が説明される。
+</li></ul><p>後続のセッティングは古いものをオーバーライドする。このリスト全体でビルド定義が構成される。
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Summary.html"> まとめ </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Full-Def.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Full-Def.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">始める sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">sbt のインストール</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Mac への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Windows への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Linux への sbt のインストール</a></div></li><li><div><a href="Manual-Installation.html">手動インストール</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">ディレクトリ構造</a></div></li><li><div><a href="Running.html">実行</a></div></li><li><div><a href="Basic-Def.html">.sbt ビルド定義</a></div></li><li><div><a href="Scopes.html">スコープ</a></div></li><li><div><a href="More-About-Settings.html">他の種類のセッティング</a></div></li><li><div><a href="Library-Dependencies.html">ライブラリ依存性</a></div></li><li><div><a href="Multi-Project.html">マルチプロジェクト・ビルド</a></div></li><li><div><a href="Using-Plugins.html">プラグインの使用</a></div></li><li><div><a href="Custom-Settings.html">カスタムセッティングとタスク</a></div></li><li><div class="current">.scala ビルド定義</div></li><li><div><a href="Summary.html">まとめ</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Testing</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Running-Project-Code.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Dependency-Management.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Testing">Testing<a href="#Testing" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Basics">Basics<a href="#Basics" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The standard source locations for testing are:
+</p><ul><li>Scala sources in <code>src/test/scala/</code>
+</li><li>Java sources in <code>src/test/java/</code>
+</li><li>Resources for the test classpath in <code>src/test/resources/</code>
+</li></ul><p>The resources may be accessed from tests by using the <code>getResource</code>
+methods of <code>java.lang.Class</code> or <code>java.lang.ClassLoader</code>.
+</p><p>The main Scala testing frameworks (
+<a href="http://specs2.org/">specs2</a>,
+<a href="http://scalacheck.org/">ScalaCheck</a>, and
+<a href="http://scalatest.org/">ScalaTest</a>) provide an implementation of the
+common test interface and only need to be added to the classpath to work
+with sbt. For example, ScalaCheck may be used by declaring it as a
+<a href="../tutorial/Library-Dependencies.html">managed dependency</a>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scalacheck&quot; %% &quot;scalacheck&quot; % &quot;1.10.1&quot; % &quot;test&quot;
+</code></pre><p>The fourth component <code>&quot;test&quot;</code> is the
+<a href="Library-Management.html#ivy-configurations">configuration</a> and means that ScalaCheck will
+only be on the test classpath and it isn’t needed by the main sources.
+This is generally good practice for libraries because your users don’t
+typically need your test dependencies to use your library.
+</p><p>With the library dependency defined, you can then add test sources in
+the locations listed above and compile and run tests. The tasks for
+running tests are <code>test</code> and <code>testOnly</code>. The <code>test</code> task accepts no
+command line arguments and runs all tests:
+</p><pre><code class="">&gt; test
+</code></pre><h4 id="testOnly">testOnly<a href="#testOnly" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>testOnly</code> task accepts a whitespace separated list of test names to
+run. For example:
+</p><pre><code class="">&gt; testOnly org.example.MyTest1 org.example.MyTest2
+</code></pre><p>It supports wildcards as well:
+</p><pre><code class="">&gt; testOnly org.example.*Slow org.example.MyTest1
+</code></pre><h4 id="testQuick">testQuick<a href="#testQuick" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>testQuick</code> task, like <code>testOnly</code>, allows to filter the tests to run
+to specific tests or wildcards using the same syntax to indicate the
+filters. In addition to the explicit filter, only the tests that satisfy
+one of the following conditions are run:
+</p><ul><li>The tests that failed in the previous run
+</li><li>The tests that were not run before
+</li><li>The tests that have one or more transitive dependencies, maybe in a
+different project, recompiled.
+</li></ul><h5 id="Tab+completion">Tab completion<a href="#Tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Tab completion is provided for test names based on the results of the
+last <code>test:compile</code>. This means that a new sources aren’t available for
+tab completion until they are compiled and deleted sources won’t be
+removed from tab completion until a recompile. A new test source can
+still be manually written out and run using <code>testOnly</code>.
+</p><h4 id="Other+tasks">Other tasks<a href="#Other+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Tasks that are available for main sources are generally available for
+test sources, but are prefixed with <code>test:</code> on the command line and are
+referenced in Scala code with <code>in Test</code>. These tasks include:
+</p><ul><li><code>test:compile</code>
+</li><li><code>test:console</code>
+</li><li><code>test:consoleQuick</code>
+</li><li><code>test:run</code>
+</li><li><code>test:runMain</code>
+</li></ul><p>See <a href="../tutorial/Running.html">Running</a> for details on these tasks.
+</p><h3 id="Output">Output<a href="#Output" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>By default, logging is buffered for each test source file until all
+tests for that file complete. This can be disabled by setting
+<code>logBuffered</code>:
+</p><pre><code>logBuffered in Test := false
+</code></pre><h4 id="Test+Reports">Test Reports<a href="#Test+Reports" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt will generate JUnit XML test reports for all tests in
+the build, located in the <code>target/test-reports</code> directory for a project.
+This can be disabled by disabling the <code>JUnitXmlReportPlugin</code>
+</p><pre><code>val myProject = project in file(&quot;.&quot;) disablePlugins (plugins.JUnitXmlReportPlugin)  
+</code></pre><h3 id="Options">Options<a href="#Options" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Test+Framework+Arguments">Test Framework Arguments<a href="#Test+Framework+Arguments" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Arguments to the test framework may be provided on the command line to
+the <code>testOnly</code> tasks following a <code>--</code> separator. For example:
+</p><pre><code class="">&gt; testOnly org.example.MyTest -- -d -S
+</code></pre><p>To specify test framework arguments as part of the build, add options
+constructed by <code>Tests.Argument</code>:
+</p><pre><code>testOptions in Test += Tests.Argument(&quot;-d&quot;, &quot;-g&quot;)
+</code></pre><p>To specify them for a specific test framework only:
+</p><pre><code>testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, &quot;-d&quot;, &quot;-g&quot;)
+</code></pre><h4 id="Setup+and+Cleanup">Setup and Cleanup<a href="#Setup+and+Cleanup" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Specify setup and cleanup actions using <code>Tests.Setup</code> and
+<code>Tests.Cleanup</code>. These accept either a function of type <code>() =&gt; Unit</code> or
+a function of type <code>ClassLoader =&gt; Unit</code>. The variant that accepts a
+ClassLoader is passed the class loader that is (or was) used for running
+the tests. It provides access to the test classes as well as the test
+framework classes.
+</p><blockquote><p><strong>note</strong>
+</p><p>When forking, the ClassLoader containing the test classes cannot be
+provided because it is in another JVM. Only use the () =&gt; Unit
+variants in this case.
+</p></blockquote><p>Examples:
+</p><pre><code>testOptions in Test += Tests.Setup( () =&gt; println(&quot;Setup&quot;) )
+
+testOptions in Test += Tests.Cleanup( () =&gt; println(&quot;Cleanup&quot;) )
+
+testOptions in Test += Tests.Setup( loader =&gt; ... )
+
+testOptions in Test += Tests.Cleanup( loader =&gt; ... )
+</code></pre><h4 id="Disable+Parallel+Execution+of+Tests">Disable Parallel Execution of Tests<a href="#Disable+Parallel+Execution+of+Tests" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt runs all tasks in parallel. Because each test is mapped
+to a task, tests are also run in parallel by default. To make tests
+within a given project execute serially: :
+</p><pre><code>parallelExecution in Test := false
+</code></pre><p><code>Test</code> can be replaced with <code>IntegrationTest</code> to only execute
+integration tests serially. Note that tests from different projects may
+still execute concurrently.
+</p><h4 id="Filter+classes">Filter classes<a href="#Filter+classes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If you want to only run test classes whose name ends with “Test”, use
+<code>Tests.Filter</code>:
+</p><pre><code>testOptions in Test := Seq(Tests.Filter(s =&gt; s.endsWith(&quot;Test&quot;)))
+</code></pre><h4 id="Forking+tests">Forking tests<a href="#Forking+tests" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The setting:
+</p><pre><code>fork in Test := true
+</code></pre><p>specifies that all tests will be executed in a single external JVM. See
+<a href="Forking.html">Forking</a> for configuring standard options for forking. More control
+over how tests are assigned to JVMs and what options to pass to those is
+available with <code>testGrouping</code> key. For example in build.sbt:
+</p><pre><code>import Tests._
+
+{
+  def groupByFirst(tests: Seq[TestDefinition]) =
+    tests groupBy (_.name(0)) map {
+      case (letter, tests) =&gt; new Group(letter.toString, tests, SubProcess(Seq(&quot;-Dfirst.letter&quot;+letter)))
+    } toSeq
+
+    testGrouping in Test &lt;&lt;= groupByFirst( (definedTests in Test).value )
+}
+</code></pre><p>The tests in a single group are run sequentially. Control the number of
+forked JVMs allowed to run at the same time by setting the limit on
+<code>Tags.ForkedTestGroup</code> tag, which is 1 by default. <code>Setup</code> and <code>Cleanup</code>
+actions cannot be provided with the actual test class loader when a
+group is forked.
+</p><a name="additional-test-configurations"></a><h3 id="Additional+test+configurations">Additional test configurations<a href="#Additional+test+configurations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can add an additional test configuration to have a separate set of
+test sources and associated compilation, packaging, and testing tasks
+and settings. The steps are:
+</p><ul><li>Define the configuration
+</li><li>Add the tasks and settings
+</li><li>Declare library dependencies
+</li><li>Create sources
+</li><li>Run tasks
+</li></ul><p>The following two examples demonstrate this. The first example shows how
+to enable integration tests. The second shows how to define a customized
+test configuration. This allows you to define multiple types of tests
+per project.
+</p><h4 id="Integration+Tests">Integration Tests<a href="#Integration+Tests" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The following full build configuration demonstrates integration tests.
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object B extends Build {
+  lazy val root =
+    Project(&quot;root&quot;, file(&quot;.&quot;)).
+      configs( IntegrationTest ).
+      settings( Defaults.itSettings : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val specs = &quot;org.specs2&quot; %% &quot;specs2&quot; % &quot;2.0&quot; % &quot;it,test&quot;
+}
+</code></pre><ul><li><code>configs(IntegrationTest)</code> adds the predefined integration test
+configuration. This configuration is referred to by the name it.
+</li><li><code>settings( Defaults.itSettings : _* )</code> adds compilation, packaging,
+and testing actions and settings in the IntegrationTest
+configuration.
+</li><li><code>settings( libraryDependencies += specs )</code> adds specs to both the
+standard test configuration and the integration test configuration
+it. To define a dependency only for integration tests, use “it” as
+the configuration instead of “it,test”.
+</li></ul><p>The standard source hierarchy is used:
+</p><ul><li><code>src/it/scala</code> for Scala sources
+</li><li><code>src/it/java</code> for Java sources
+</li><li><code>src/it/resources</code> for resources that should go on the integration
+test classpath
+</li></ul><p>The standard testing tasks are available, but must be prefixed with
+<code>it:</code>. For example,
+</p><pre><code class="">&gt; it:testOnly org.example.AnIntegrationTest
+</code></pre><p>Similarly the standard settings may be configured for the
+<code>IntegrationTest</code> configuration. If not specified directly, most
+<code>IntegrationTest</code> settings delegate to <code>Test</code> settings by default. For
+example, if test options are specified as:
+</p><pre><code>testOptions in Test += ...
+</code></pre><p>then these will be picked up by the <code>Test</code> configuration and in turn by
+the <code>IntegrationTest</code> configuration. Options can be added specifically
+for integration tests by putting them in the <code>IntegrationTest</code>
+configuration:
+</p><pre><code>testOptions in IntegrationTest += ...
+</code></pre><p>Or, use <code>:=</code> to overwrite any existing options, declaring these to be
+the definitive integration test options:
+</p><pre><code>testOptions in IntegrationTest := Seq(...)
+</code></pre><h4 id="Custom+test+configuration">Custom test configuration<a href="#Custom+test+configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The previous example may be generalized to a custom test configuration.
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object B extends Build {
+  lazy val root =
+    Project(&quot;root&quot;, file(&quot;.&quot;)).
+      configs( FunTest ).
+      settings( inConfig(FunTest)(Defaults.testSettings) : _*).
+      settings( libraryDependencies += specs )
+
+  lazy val FunTest = config(&quot;fun&quot;) extend(Test)
+  lazy val specs = &quot;org.specs2&quot; %% &quot;specs2&quot; % &quot;2.0&quot; % &quot;fun&quot;
+}
+</code></pre><p>Instead of using the built-in configuration, we defined a new one:
+</p><pre><code>lazy val FunTest = config(&quot;fun&quot;) extend(Test)
+</code></pre><p>The <code>extend(Test)</code> part means to delegate to <code>Test</code> for undefined
+<code>CustomTest</code> settings. The line that adds the tasks and settings for the
+new test configuration is:
+</p><pre><code>settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+</code></pre><p>This says to add test and settings tasks in the <code>FunTest</code> configuration.
+We could have done it this way for integration tests as well. In fact,
+<code>Defaults.itSettings</code> is a convenience definition:
+<code>val itSettings = inConfig(IntegrationTest)(Defaults.testSettings)</code>.
+</p><p>The comments in the integration test section hold, except with
+<code>IntegrationTest</code> replaced with <code>FunTest</code> and <code>&quot;it&quot;</code> replaced with
+<code>&quot;fun&quot;</code>. For example, test options can be configured specifically for
+<code>FunTest</code>:
+</p><pre><code>testOptions in FunTest += ...
+</code></pre><p>Test tasks are run by prefixing them with <code>fun:</code>
+</p><pre><code class="">&gt; fun:test
+</code></pre><h4 id="Additional+test+configurations+with+shared+sources">Additional test configurations with shared sources<a href="#Additional+test+configurations+with+shared+sources" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>An alternative to adding separate sets of test sources (and
+compilations) is to share sources. In this approach, the sources are
+compiled together using the same classpath and are packaged together.
+However, different tests are run depending on the configuration.
+</p><pre><code>import sbt._
+import Keys._
+
+object B extends Build {
+  lazy val root =
+    Project(&quot;root&quot;, file(&quot;.&quot;))
+      .configs( FunTest )
+      .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
+      .settings(
+        libraryDependencies += specs,
+        testOptions in Test := Seq(Tests.Filter(unitFilter)),
+        testOptions in FunTest := Seq(Tests.Filter(itFilter))
+      )
+
+  def itFilter(name: String): Boolean = name endsWith &quot;ITest&quot;
+  def unitFilter(name: String): Boolean = (name endsWith &quot;Test&quot;) &amp;&amp; !itFilter(name)
+
+  lazy val FunTest = config(&quot;fun&quot;) extend(Test)
+  lazy val specs = &quot;org.specs2&quot; %% &quot;specs2&quot; % &quot;2.0&quot; % &quot;test&quot;
+}
+</code></pre><p>The key differences are:
+</p><ul><li>We are now only adding the test tasks
+(inConfig(FunTest)(Defaults.testTasks)) and not compilation and
+packaging tasks and settings.
+</li><li>We filter the tests to be run for each configuration.
+</li></ul><p>To run standard unit tests, run <code>test</code> (or equivalently, <code>test:test</code>):
+</p><pre><code class="">&gt; test
+</code></pre><p>To run tests for the added configuration (here, <code>&quot;fun&quot;</code>), prefix it with
+the configuration name as before:
+</p><pre><code class="">&gt; fun:test
+&gt; fun:testOnly org.example.AFunTest
+</code></pre><h5 id="Application+to+parallel+execution">Application to parallel execution<a href="#Application+to+parallel+execution" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>One use for this shared-source approach is to separate tests that can
+run in parallel from those that must execute serially. Apply the
+procedure described in this section for an additional configuration.
+Let’s call the configuration <code>serial</code>:
+</p><pre><code>lazy val Serial = config(&quot;serial&quot;) extend(Test)
+</code></pre><p>Then, we can disable parallel execution in just that configuration
+using:
+</p><pre><code>parallelExecution in Serial := false
+</code></pre><p>The tests to run in parallel would be run with <code>test</code> and the ones to
+run in serial would be run with <code>serial:test</code>.
+</p><h3 id="JUnit">JUnit<a href="#JUnit" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Support for JUnit is provided by
+<a href="https://github.com/szeiger/junit-interface">junit-interface</a>. To add
+JUnit support into your project, add the junit-interface dependency in
+your project’s main build.sbt file.
+</p><pre><code>libraryDependencies += &quot;com.novocode&quot; % &quot;junit-interface&quot; % &quot;0.9&quot; % &quot;test&quot;
+</code></pre><h3 id="Extensions">Extensions<a href="#Extensions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>This page describes adding support for additional testing libraries and
+defining additional test reporters. You do this by implementing <code>sbt</code>
+interfaces (described below). If you are the author of the testing
+framework, you can depend on the test interface as a provided
+dependency. Alternatively, anyone can provide support for a test
+framework by implementing the interfaces in a separate project and
+packaging the project as an sbt <a href="Plugins.html">Plugin</a>.
+</p><h4 id="Custom+Test+Framework">Custom Test Framework<a href="#Custom+Test+Framework" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The main Scala testing libraries have built-in support for sbt. To add
+support for a different framework, implement the
+<a href="http://github.com/sbt/test-interface">uniform test interface</a>.
+</p><h4 id="Custom+Test+Reporters">Custom Test Reporters<a href="#Custom+Test+Reporters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Test frameworks report status and results to test reporters. You can
+create a new test reporter by implementing either
+<a href="../../api/sbt/TestReportListener.html">TestReportListener</a> or
+<a href="../../api/sbt/TestsListener.html">TestsListener</a>.
+</p><h4 id="Using+Extensions">Using Extensions<a href="#Using+Extensions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To use your extensions in a project definition:
+</p><p>Modify the <code>testFrameworks</code> setting to reference your test framework:
+</p><pre><code>testFrameworks += new TestFramework(&quot;custom.framework.ClassName&quot;)
+</code></pre><p>Specify the test reporters you want to use by overriding the
+<code>testListeners</code> setting in your project definition.
+</p><pre><code>testListeners += customTestListener
+</code></pre><p>where <code>customTestListener</code> is of type <code>sbt.TestReportListener</code>.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Dependency-Management.html"> Dependency Management </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div class="current">Testing</div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

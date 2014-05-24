@@ -1,0 +1,187 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>始める sbt — マルチプロジェクト・ビルド</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'ja';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Library-Dependencies.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Using-Plugins.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89">マルチプロジェクト・ビルド<a href="#%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページでは、一つのプロジェクトで複数のプロジェクトを管理する方法を紹介する。
+</p><p>このガイドの前のページ、特に
+<a href="Basic-Def.html">build.sbt</a> を理解していることが必要になる。
+</p><h3 id="%E8%A4%87%E6%95%B0%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88">複数のプロジェクト<a href="#%E8%A4%87%E6%95%B0%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>単一のビルドに複数のプロジェクトを入れておくと、
+プロジェクト間に依存性がある場合や、
+プロジェクトが同時に変更されることが多い場合などで便利だ。
+</p><p>ビルド内のサブプロジェクトは、それぞれに独自の <code>src/main/scala</code> を持ち、
+<code>package</code> を実行すると独自の jar ファイルを生成するなど、
+普通のプロジェクト同様に振る舞う。
+</p><h3 id="%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%86%85%E3%81%A7%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E5%AE%9A%E7%BE%A9"><code>.scala</code> ファイル内でのプロジェクトの定義<a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E5%86%85%E3%81%A7%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E5%AE%9A%E7%BE%A9" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>複数のプロジェクトを持つには、全てのプロジェクトとその関係を <code>.scala</code> ファイルで宣言する必要があり、
+<code>.sbt</code> ファイルからは不可能だ。
+だけど、それぞれのプロジェクトのセッティングは <code>.sbt</code> ファイルからでも定義することができる。
+以下に、ルートプロジェクト <code>hello</code> が、二つのサブプロジェクト <code>hello-foo</code> と <code>hello-bar</code> を
+集約（aggregate）する <code>.scala</code> ビルド定義を例に説明する:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+    lazy val root = Project(id = &quot;hello&quot;,
+                            base = file(&quot;.&quot;)) aggregate(foo, bar)
+
+    lazy val foo = Project(id = &quot;hello-foo&quot;,
+                           base = file(&quot;foo&quot;))
+
+    lazy val bar = Project(id = &quot;hello-bar&quot;,
+                           base = file(&quot;bar&quot;))
+}
+</code></pre><p>sbt は、リフレクションを用いて <code>Build</code> オブジェクト内の
+<code>Project</code> 型を持ったフィールドを検索することで、<code>Project</code> オブジェクトの全リストを作成する。
+</p><p>プロジェクト <code>hello-foo</code> は、<code>base = file(&quot;foo&quot;)</code> と共に定義されているため、
+サブディレクトリ <code>foo</code> に置かれる。
+そのソースは、<code>foo/Foo.scala</code> のように <code>foo</code> の直下に置かれるか、
+<code>foo/src/main/scala</code> 内に置かれる。
+ビルド定義ファイルを除いては、通常の sbt <a href="../directories">ディレクトリ構造</a>が <code>foo</code> 以下に適用される。
+</p><p><code>foo</code> 内の全ての <code>.sbt</code> ファイル、例えば <code>foo/build.sbt</code> は、
+<code>hello-foo</code> プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
+</p><p>ルートプロジェクトが <code>hello</code> にあるとき、<code>hello/build.sbt</code>、<code>hello/foo/build.sbt</code>、
+<code>hello/bar/build.sbt</code> においてそれぞれ別々のバージョンを定義してみよう（例: <code>version := &quot;0.6&quot;</code>）。
+次に、インタラクティブプロンプトで <code>show version</code> と打ち込んでみる。
+以下のように表示されるはずだ（定義したバージョンによるが）:
+</p><pre><code class="">&gt; show version
+[info] hello-foo/*:version
+[info] 	0.7
+[info] hello-bar/*:version
+[info] 	0.9
+[info] hello/*:version
+[info] 	0.5
+</code></pre><p><code>hello-foo/*:version</code> は、<code>hello/foo/build.sbt</code> 内で定義され、
+<code>hello-bar/*:version</code> は、<code>hello/bar/build.sbt</code> 内で定義され、
+<code>hello/*:version</code> は、<code>hello/build.sbt</code> 内で定義される。
+<a href="../scope">スコープ付けされたキーの構文</a>を復習しておこう。
+それぞれの <code>version</code> キーは、<code>build.sbt</code> の場所により、
+特定のプロジェクトにスコープ付けされている。
+だけど、三つの <code>build.sbt</code> とも同じビルド定義の一部だ。
+</p><p><code>.scala</code> ファイルは、上に示したように、単にプロジェクトとそのベースディレクトリを列挙するだけの簡単なものにして、
+<em>それぞれのプロジェクトのセッティングは、そのプロジェクトのベースディレクトリ直下の
+<code>.sbt</code> ファイル内で宣言することができる</em>。
+<em>全てのセッティングを <code>.scala</code> ファイル内で宣言することは義務付けられいるわけではない。</em>
+</p><p>ビルド定義の全てを単一の <code>project</code> ディレクトリ内の場所にまとめるために、
+<code>.scala</code> ファイル内にセッティングも含めてしまうほうが洗練されていると思うかもしれない。
+ただし、これは好みの問題だから、好きにやっていい。
+</p><p>サブプロジェクトは、<code>project</code> サブディレクトリや、<code>project/*.scala</code> ファイルを持つことができない。
+<code>foo/project/Build.scala</code> は無視される。
+</p><h3 id="%E9%9B%86%E7%B4%84">集約<a href="#%E9%9B%86%E7%B4%84" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>もし望むなら、ビルド内のプロジェクトは、お互いに対して完全に独立であることができる。
+</p><p>だけど、上の例では、<code>aggregate(foo, bar)</code> というメソッドが呼び出されていることが分かる。
+これは、<code>hello-foo</code> と <code>hello-bar</code> を、ルートプロジェクト下に集約する。
+</p><p>集約とは、集約プロジェクトで実行されたタスクが部分プロジェクトでも実行されることを意味する。
+例のような、二つのサブプロジェクトがある状態で sbt を起動して、<code>compile</code> を実行してみよう。
+三つのプロジェクト全てがコンパイルされたことが分かると思う。
+</p><p><em>集約プロジェクト内で</em>（この場合は、ルートの <code>hello</code> プロジェクトで）、
+タスクごとに集約をコントロールすることができる。
+例えば <code>hello/build.sbt</code> 内で、<code>update</code> タスクの集約を以下のようにして回避できる:
+</p><pre><code class="prettyprint lang-scala">aggregate in update := false
+</code></pre><p><code>aggregate in update</code> は、<code>update</code> タスクにスコープ付けされた <code>aggregate</code> キーだ
+（<a href="../scope">スコープ</a>参照）。
+</p><p>注意: 集約は、集約されるタスクを順不同に並列実行する。
+</p><h3 id="%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7">クラスパス依存性<a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>プロジェクトは、他のプロジェクトのコードに依存することができる。
+これは、<code>dependsOn</code> メソッドを呼び出すことで実現する。
+例えば、<code>hello-foo</code> が <code>hello-bar</code> のクラスパスが必要な場合は、
+<code>Build.scala</code> 内に以下のように書く:
+</p><pre><code class="prettyprint lang-scala">    lazy val foo = Project(id = &quot;hello-foo&quot;,
+                           base = file(&quot;foo&quot;)) dependsOn(bar)
+</code></pre><p>これで <code>hello-foo</code> 内のコードから <code>hello-bar</code> のクラスを利用することができる。
+これは、プロジェクトをコンパイルするときの順序も作り出す。
+この場合、<code>hello-foo</code> がコンパイルされる前に、<code>hello-bar</code> が更新（update）され、
+コンパイルされる必要がある。
+</p><p>複数のプロジェクトに依存するには、<code>dependsOn(bar, baz)</code> というふうに、
+<code>dependsOn</code> に複数の引数を渡せばいい。
+</p><h4 id="%E3%82%B3%E3%83%B3%E3%83%95%E3%82%A3%E3%82%AE%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%94%E3%81%A8%E3%81%AE%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7">コンフィギュレーションごとのクラスパス依存性<a href="#%E3%82%B3%E3%83%B3%E3%83%95%E3%82%A3%E3%82%AE%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%81%94%E3%81%A8%E3%81%AE%E3%82%AF%E3%83%A9%E3%82%B9%E3%83%91%E3%82%B9%E4%BE%9D%E5%AD%98%E6%80%A7" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>foo dependsOn(bar)</code> は、<code>foo</code> の <code>Compile</code> コンフィギュレーションが
+<code>bar</code> の <code>Compile</code> コンフィギュレーションに依存することを意味する。
+これを明示的に書くと、<code>dependsOn(bar % &quot;compile-&gt;compile&quot;)</code> となる。
+</p><p>この <code>&quot;compile-&gt;compile&quot;</code> 内の <code>-&gt;</code> は、「依存する」という意味だから、
+<code>&quot;test-&gt;compile&quot;</code> は、<code>foo</code> の <code>Test</code> コンフィギュレーションが
+<code>bar</code> の <code>Compile</code> コンフィギュレーションに依存することを意味する。
+</p><p><code>-&gt;config</code> の部分を省くと、<code>-&gt;compile</code> だと解釈されるため、
+<code>dependsOn(bar % &quot;test&quot;)</code> は、<code>foo</code> の <code>Test</code> コンフィギュレーションが
+<code>bar</code> の <code>Compile</code> コンフィギュレーションに依存することを意味する。
+</p><p>特に、<code>Test</code> が <code>Test</code> に依存することを意味する <code>&quot;test-&gt;test&quot;</code> は役に立つ宣言だ。
+これにより、例えば、<code>bar/src/test/scala</code> にテストのためのユーティリティコードを
+置いておき、それを <code>foo/src/test/scala</code> 内のコードから利用することができる。
+</p><p>複数のコンフィギュレーション依存性を宣言する場合は、セミコロンで区切る。
+例えば、<code>dependsOn(bar % &quot;test-&gt;test;compile-&gt;compile&quot;)</code> と書ける。
+</p><h3 id="%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88">プロジェクトの切り替え<a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%AE%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt インタラクティブプロンプトから、<code>projects</code> と打ち込むことでプロジェクトの全リストが表示され、
+<code>project &lt;プロジェクト名&gt;</code> で、現在プロジェクトを選択できる。
+<code>compile</code> のようなタスクを実行すると、それは現在プロジェクトに対して実行される。
+これにより、ルートプロジェクトをコンパイルせずに、サブプロジェクトのみをコンパイルすることができる。
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Using-Plugins.html"> プラグインの使用 </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Multi-Project.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Multi-Project.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">始める sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">sbt のインストール</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Mac への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Windows への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Linux への sbt のインストール</a></div></li><li><div><a href="Manual-Installation.html">手動インストール</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">ディレクトリ構造</a></div></li><li><div><a href="Running.html">実行</a></div></li><li><div><a href="Basic-Def.html">.sbt ビルド定義</a></div></li><li><div><a href="Scopes.html">スコープ</a></div></li><li><div><a href="More-About-Settings.html">他の種類のセッティング</a></div></li><li><div><a href="Library-Dependencies.html">ライブラリ依存性</a></div></li><li><div class="current">マルチプロジェクト・ビルド</div></li><li><div><a href="Using-Plugins.html">プラグインの使用</a></div></li><li><div><a href="Custom-Settings.html">カスタムセッティングとタスク</a></div></li><li><div><a href="Full-Def.html">.scala ビルド定義</a></div></li><li><div><a href="Summary.html">まとめ</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

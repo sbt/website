@@ -1,0 +1,128 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Guía de Inicio de sbt — Installing sbt manually</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'es';
+        </script>
+        
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Installing-sbt-on-Linux.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Hello.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Installing+sbt+manually">Installing sbt manually<a href="#Installing+sbt+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>La instalación manual requiere la descarga de <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> y la
+creación de un script para ejecutarlo.
+</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Ponga <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> en <code>~/bin</code>.
+</p><p>Cree un script para ejecutar el jar, mediante la creación de <code>~/bin/sbt</code>
+con el siguiente contenido:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Haga el script ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h3 id="Windows">Windows<a href="#Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>La instalación manual para Windows varía según el tipo de terminal y
+dependiendo de si Cygwin es usado o no. En todos los casos, ponga el
+archivo batch o el script en el <em>path</em> de modo que pueda iniciar <code>sbt</code>
+en cualquier directorio mediante teclear <code>sbt</code> en la línea de comandos.
+También, ajuste los settings de la JVM de acuerdo con su máquina si es
+necesario.
+</p><h4 id="Non-Cygwin">Non-Cygwin<a href="#Non-Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Para usuarios que no utilizan Cygwin, pero que usan la terminal
+standard de Windows, cree un archivo batch <code>sbt.bat</code>:
+</p><pre><code class="">set SCRIPT_DIR=%~dp0
+java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
+</code></pre><p>y ponga el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que descargó en el mismo directorio que
+archivo batch.
+</p><h4 id="Cygwin+con+la+terminal+standard+de+Windows">Cygwin con la terminal standard de Windows<a href="#Cygwin+con+la+terminal+standard+de+Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Si utiliza Cygwin con la terminal standard de Windows, cree un
+script de bash <code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Reemplace <code>sbt-launch.jar</code> con la ruta hasta el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que
+descargó y recuerde utilizar <code>cygpath</code> si es necesario. Haga el scrip
+ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h4 id="Cygwin+con+una+terminal+Ansi">Cygwin con una terminal Ansi<a href="#Cygwin+con+una+terminal+Ansi" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Si utiliza Cygwin con una terminal Ansi (que soporte secuentas de
+escape Ansi y que sea configurable mediante <code>stty</code>), cree un script
+<code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
+java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+stty icanon echo &gt; /dev/null 2&gt;&amp;1
+</code></pre><p>Reemplace <code>sbt-launch.jar</code> con la ruta hasta el <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> que
+descargó y recuerde utilizar <code>cygpath</code> si es necesario. Entonces, haga
+que el script sea ejecutable con:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><p>Para que la tecla <em>backspace</em> funcione correctamente en la consola de
+scala, necesita asegurarse de que dicha tecla esté enviando el caracter
+de borrado, de acuerdo a la configuración de <code>stty</code>. Para la terminal por
+default de cygwin (mintty) puede encontrar una configuración en Options
+-&gt; Keys “Backspace sends ^H” que necesitará estar palomeada si su
+tecla de borrado envía el caracter por default de cygwin <code>^H</code>.
+</p><blockquote><p><strong>Note:</strong> Otras configuraciones no están actualmente soportadas. Por favor envíe
+<a href="https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md">pull requests</a>
+implementando o describiendo dicho soporte.
+</p></blockquote><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Hello.html"> Hello, World </a>                        
+                        <ul class="language-bar">
+        <li><a href="../Manual-Installation.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/Manual-Installation.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="../es/Manual-Installation.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Guía de Inicio de sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Instalando sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div class="current">Installing sbt manually</div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Estructura de directorios</a></div></li><li><div><a href="Running.html">Ejecución</a></div></li><li><div><a href="Basic-Def.html"> build definition</a></div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

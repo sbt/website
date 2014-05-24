@@ -1,0 +1,126 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Getting Started with sbt — Directory structure</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Hello.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Running.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Directory+structure">Directory structure<a href="#Directory+structure" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve <a href="Setup.html">installed sbt</a> and seen the
+<a href="Hello.html">Hello, World</a> example.
+</p><h3 id="Base+directory">Base directory<a href="#Base+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s terminology, the “base directory” is the directory containing
+the project. So if you created a project <code>hello</code> containing
+<code>hello/build.sbt</code> and <code>hello/hw.scala</code> as in the <a href="Hello.html">Hello, World</a>
+example, <code>hello</code> is your base directory.
+</p><h3 id="Source+code">Source code<a href="#Source+code" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Source code can be placed in the project’s base directory as with
+<code>hello/hw.scala</code>. However, most people don’t do this for real projects;
+too much clutter.
+</p><p>sbt uses the same directory structure as
+<a href="http://maven.apache.org/">Maven</a> for source files by default (all paths
+are relative to the base directory):
+</p><pre><code class="">src/
+  main/
+    resources/
+       &lt;files to include in main jar here&gt;
+    scala/
+       &lt;main Scala sources&gt;
+    java/
+       &lt;main Java sources&gt;
+  test/
+    resources
+       &lt;files to include in test jar here&gt;
+    scala/
+       &lt;test Scala sources&gt;
+    java/
+       &lt;test Java sources&gt;
+</code></pre><p>Other directories in <code>src/</code> will be ignored. Additionally, all hidden
+directories will be ignored.
+</p><h3 id="sbt+build+definition+files">sbt build definition files<a href="#sbt+build+definition+files" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You’ve already seen <code>build.sbt</code> in the project’s base directory. Other sbt
+files appear in a <code>project</code> subdirectory.
+</p><p><code>project</code> can contain <code>.scala</code> files, which are combined with <code>.sbt</code> files to
+form the complete build definition. See <a href="Full-Def.html">.scala build definition</a> for more.
+</p><pre><code class="">build.sbt
+project/
+  Build.scala
+</code></pre><p>You may see <code>.sbt</code> files inside <code>project/</code> but they are not equivalent to
+<code>.sbt</code> files in the project’s base directory. Explaining this will
+come <a href="Full-Def.html">later</a>, since you’ll need some background information first.
+</p><h3 id="Build+products">Build products<a href="#Build+products" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Generated files (compiled classes, packaged jars, managed files, caches,
+and documentation) will be written to the <code>target</code> directory by default.
+</p><h3 id="Configuring+version+control">Configuring version control<a href="#Configuring+version+control" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Your <code>.gitignore</code> (or equivalent for other version control systems) should
+contain:
+</p><pre><code class="">target/
+</code></pre><p>Note that this deliberately has a trailing <code>/</code> (to match only directories)
+and it deliberately has no leading <code>/</code> (to match <code>project/target/</code> in
+addition to plain <code>target/</code>).
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Running.html"> Running </a>                        
+                        <ul class="language-bar">
+        <li><a href="Directories.html"><span class="lang-item lang-en">English</span></a></li><li><a href="ja/Directories.html"><span class="lang-item lang-ja">日本語</span></a></li><li><a href="es/Directories.html"><span class="lang-item lang-es">Español</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Getting Started with sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Installing sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div class="current">Directory structure</div></li><li><div><a href="Running.html">Running</a></div></li><li><div><a href="Basic-Def.html">.sbt build definition</a></div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li><div><a href="More-About-Settings.html">More kinds of setting</a></div></li><li><div><a href="Library-Dependencies.html">Library dependencies</a></div></li><li><div><a href="Multi-Project.html">Multi-project builds</a></div></li><li><div><a href="Using-Plugins.html">Using plugins</a></div></li><li><div><a href="Custom-Settings.html">Custom settings and tasks</a></div></li><li><div><a href="Full-Def.html">.scala build definition</a></div></li><li><div><a href="Summary.html">Getting Started summary</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

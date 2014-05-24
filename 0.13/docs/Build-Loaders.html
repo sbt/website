@@ -1,0 +1,288 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Build Loaders</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Setting-Initialization.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Command-Line-Applications.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Build+Loaders">Build Loaders<a href="#Build+Loaders" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Build loaders are the means by which sbt resolves, builds, and
+transforms build definitions. Each aspect of loading may be customized
+for special applications. Customizations are specified by overriding the
+<em>buildLoaders</em> methods of your build definition’s Build object. These
+customizations apply to external projects loaded by the build, but not
+the (already loaded) Build in which they are defined. Also documented on
+this page is how to manipulate inter-project dependencies from a
+setting.
+</p><h3 id="Custom+Resolver">Custom Resolver<a href="#Custom+Resolver" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The first type of customization introduces a new resolver. A resolver
+provides support for taking a build URI and retrieving it to a local
+directory on the filesystem. For example, the built-in resolver can
+checkout a build using git based on a git URI, use a build in an
+existing local directory, or download and extract a build packaged in a
+jar file. A resolver has type:
+</p><pre><code>ResolveInfo =&gt; Option[() =&gt; File]
+</code></pre><p>The resolver should return None if it cannot handle the URI or Some
+containing a function that will retrieve the build. The ResolveInfo
+provides a staging directory that can be used or the resolver can
+determine its own target directory. Whichever is used, it should be
+returned by the loading function. A resolver is registered by passing it
+to <em>BuildLoader.resolve</em> and overriding <em>Build.buildLoaders</em> with the
+result:
+</p><pre><code>...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
+
+  def demoResolver: BuildLoader.ResolveInfo =&gt; Option[() =&gt; File] = ...
+
+}
+</code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom resolvers:
+</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$ResolveInfo">ResolveInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li></ul><h4 id="Full+Example">Full Example<a href="#Full+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object Demo extends Build
+{
+  // Define a project that depends on an external project with a custom URI
+  lazy val root = Project(&quot;root&quot;, file(&quot;.&quot;)).dependsOn(
+    uri(&quot;demo:a&quot;)
+  )
+
+  // Register the custom resolver
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
+
+  // Define the custom resolver, which handles the 'demo' scheme.
+  // The resolver's job is to produce a directory containing the project to load.
+  // A subdirectory of info.staging can be used to create new local
+  //   directories, such as when doing 'git clone ...'
+  def demoResolver(info: BuildLoader.ResolveInfo): Option[() =&gt; File] =
+    if(info.uri.getScheme != &quot;demo&quot;)
+      None
+    else
+    {
+      // Use a subdirectory of the staging directory for the new local build.
+      // The subdirectory name is derived from a hash of the URI,
+      //   and so identical URIs will resolve to the same directory (as desired).
+      val base = RetrieveUnit.temporary(info.staging, info.uri)
+
+      // Return a closure that will do the actual resolution when requested.
+      Some(() =&gt; resolveDemo(base, info.uri.getSchemeSpecificPart))
+    }
+
+  // Construct a sample project on the fly with the name specified in the URI.
+  def resolveDemo(base: File, ssp: String): File =
+  {
+    // Only create the project if it hasn't already been created.
+    if(!base.exists)
+      IO.write(base / &quot;build.sbt&quot;, template.format(ssp))
+    base
+  }
+
+  def template =  &quot;&quot;&quot;
+name := &quot;%s&quot;
+
+version := &quot;1.0&quot;
+&quot;&quot;&quot;
+}
+</code></pre><h3 id="Custom+Builder">Custom Builder<a href="#Custom+Builder" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once a project is resolved, it needs to be built and then presented to
+sbt as an instance of <code>sbt.BuildUnit</code>. A custom builder has type:
+</p><pre><code>BuildInfo =&gt; Option[() =&gt; BuildUnit] 
+</code></pre><p>A builder returns None if it does not want to handle the build
+identified by the <code>BuildInfo</code>. Otherwise, it provides a function that
+will load the build when evaluated. Register a builder by passing it to
+<em>BuildLoader.build</em> and overriding <em>Build.buildLoaders</em> with the result:
+</p><pre><code>...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
+
+  def demoBuilder: BuildLoader.BuildInfo =&gt; Option[() =&gt; BuildUnit] = ...
+
+}
+</code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom builders:
+</p><ul><li><a href="../../api/sbt/BuildLoader$$BuildInfo.html">BuildInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
+</li></ul><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This example demonstrates the structure of how a custom builder could
+read configuration from a pom.xml instead of the standard .sbt files and
+project/ directory.
+</p><pre><code class="prettyprint lang-scala">    ... imports ...
+
+object Demo extends Build
+{
+  lazy val root = Project(&quot;root&quot;, file(&quot;.&quot;)) dependsOn( file(&quot;basic-pom-project&quot;) )
+
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
+
+  def demoBuilder: BuildInfo =&gt; Option[() =&gt; BuildUnit] = info =&gt;
+    if(pomFile(info).exists)
+      Some(() =&gt; pomBuild(info))
+    else
+      None
+
+  def pomBuild(info: BuildInfo): BuildUnit =
+  {
+    val pom = pomFile(info)
+    val model = readPom(pom)
+
+    val n = Project.normalizeProjectID(model.getName)
+    val base = Option(model.getProjectDirectory) getOrElse info.base
+    val root = Project(n, base) settings( pomSettings(model) : _*)
+    val build = new Build { override def projects = Seq(root) }
+    val loader = this.getClass.getClassLoader
+    val definitions = new LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil)
+    val plugins = new LoadedPlugins(info.base / &quot;project&quot;, Nil, loader, Nil, Nil)
+    new BuildUnit(info.uri, info.base, definitions, plugins)
+  }
+
+  def readPom(file: File): Model = ...
+  def pomSettings(m: Model): Seq[Setting[_]] = ...
+  def pomFile(info: BuildInfo): File = info.base / &quot;pom.xml&quot;
+</code></pre><h3 id="Custom+Transformer">Custom Transformer<a href="#Custom+Transformer" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once a project has been loaded into an <code>sbt.BuildUnit</code>, it is
+transformed by all registered transformers. A custom transformer has
+type:
+</p><pre><code>TransformInfo =&gt; BuildUnit
+</code></pre><p>A transformer is registered by passing it to <em>BuildLoader.transform</em> and
+overriding <em>Build.buildLoaders</em> with the result:
+</p><pre><code>...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.transform(demoTransformer) ::
+    Nil
+
+  def demoBuilder: BuildLoader.TransformInfo =&gt; BuildUnit = ...
+
+}
+</code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom transformers:
+</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$TransformInfo">TransformInfo</a>
+</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
+</li></ul><h5 id="Manipulating+Project+Dependencies+in+Settings">Manipulating Project Dependencies in Settings<a href="#Manipulating+Project+Dependencies+in+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The <code>buildDependencies</code> setting, in the Global scope, defines the
+aggregation and classpath dependencies between projects. By default,
+this information comes from the dependencies defined by <code>Project</code>
+instances by the <code>aggregate</code> and <code>dependsOn</code> methods. Because
+<code>buildDependencies</code> is a setting and is used everywhere dependencies
+need to be known (once all projects are loaded), plugins and build
+definitions can transform it to manipulate inter-project dependencies at
+setting evaluation time. The only requirement is that no new projects
+are introduced because all projects are loaded before settings get
+evaluated. That is, all Projects must have been declared directly in a
+Build or referenced as the argument to <code>Project.aggregate</code> or
+<code>Project.dependsOn</code>.
+</p><h3 id="The+BuildDependencies+type">The BuildDependencies type<a href="#The+BuildDependencies+type" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The type of the <code>buildDependencies</code> setting is
+<a href="../../api/sbt/BuildDependencies.html">BuildDependencies</a>.
+<code>BuildDependencies</code> provides mappings from a project to its aggregate or
+classpath dependencies. For classpath dependencies, a dependency has
+type <code>ClasspathDep[ProjectRef]</code>, which combines a <code>ProjectRef</code> with a
+configuration (see <a href="../../api/sbt/ClasspathDep.html">ClasspathDep</a>
+and <a href="../../api/sbt/ProjectRef.html">ProjectRef</a>). For aggregate
+dependencies, the type of a dependency is just <code>ProjectRef</code>.
+</p><p>The API for <code>BuildDependencies</code> is not extensive, covering only a little
+more than the minimum required, and related APIs have more of an
+internal, unpolished feel. Most manipulations consist of modifying the
+relevant map (classpath or aggregate) manually and creating a new
+<code>BuildDependencies</code> instance.
+</p><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As an example, the following replaces a reference to a specific build
+URI with a new URI. This could be used to translate all references to a
+certain git repository to a different one or to a different mechanism,
+like a local directory.
+</p><pre><code>buildDependencies in Global := {
+  val deps = (buildDependencies in Global).value
+  val oldURI = uri(&quot;...&quot;) // the URI to replace
+  val newURI = uri(&quot;...&quot;) // the URI replacing oldURI
+  def substitute(dep: ClasspathDep[ProjectRef]): ClasspathDep[ProjectRef] =
+    if(dep.project.build == oldURI)
+      ResolvedClasspathDependency(ProjectRef(newURI, dep.project.project), dep.configuration)
+    else
+      dep
+  val newcp = 
+    for( (proj, deps) &lt;- deps.cp) yield
+      (proj, deps map substitute)
+  new BuildDependencies(newcp, deps.aggregate)
+}
+</code></pre><p>It is not limited to such basic translations, however. The configuration
+a dependency is defined in may be modified and dependencies may be added
+or removed. Modifying <code>buildDependencies</code> can be combined with modifying
+<code>libraryDependencies</code> to convert binary dependencies to and from source
+dependencies, for example.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Command-Line-Applications.html"> Creating Command Line Applications Using sbt </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div class="current">Build Loaders</div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

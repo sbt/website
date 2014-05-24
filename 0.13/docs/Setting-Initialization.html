@@ -1,0 +1,191 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Setting Initialization</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Settings-Core.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Build-Loaders.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Setting+Initialization">Setting Initialization<a href="#Setting+Initialization" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page outlines the mechanisms by which sbt loads settings for a
+particular build, including the hooks where users can control the
+ordering of everything.
+</p><p>As stated elsewhere, sbt constructs its initialization graph and task
+graph via <code>Setting[_]</code> objects. A setting is something which can take
+the values stored at other Keys in the build state, and generates a new
+value for a particular build key. Sbt converts all registered
+<code>Setting[_]</code> objects into a giant linear sequence and <em>compiles</em> them
+into the a task graph. This task graph is then used to execute your
+build.
+</p><p>All of sbt’s loading semantics are contained within the
+<a href="../../sxr/sbt/Load.scala.html">Load.scala</a> file. It is approximately
+the following:
+</p><p><img src="files/settings-initialization-load-ordering.png" alt="image"/>
+</p><p>The blue circles represent actions happening when sbt loads a project.
+We can see that sbt performs the following actions in load:
+</p><ol><li><p>Compile the user-level project (<code>~/.sbt/&lt;version&gt;/</code>)
+a.  Load any plugins defined by this project
+</p><pre><code>(`~/.sbt/&lt;version&gt;/plugins/*.sbt` and
+`~/.sbt/&lt;version&gt;/plugins/project/*.scala`)
+</code></pre><p>b. Load all settings defined (<code>~/.sbt/&lt;version&gt;/*.sbt</code> and
+<code>~/.sbt/&lt;version&gt;/plugins/*.scala</code>)
+</p></li><li><p>Compile the current project (<code>&lt;working-directory/project</code>)
+a.  Load all defined plugins (<code>project/plugins.sbt</code> and
+</p><pre><code>`project/project/*.scala`)
+</code></pre><p>b. Load/Compile the project (<code>project/*.scala</code>)
+</p></li><li>Load project <code>*.sbt</code> files (<code>build.sbt</code> and friends).
+</li></ol><p>Each of these loads defines several sequences of settings. The diagram
+shows the two most important:
+</p><ul><li><p><code>buildSettings</code> - These are settings defined to be <code>in ThisBuild</code> or
+directly against the <code>Build</code> object. They are initialized <em>once</em> for
+the build. You can add these, e.g. in <code>project/build.scala</code> :
+</p><pre><code>object MyBuild extends Build {
+  override val settings = Seq(foo := &quot;hi&quot;)
+}
+</code></pre><p>or in a <code>build.sbt</code> file :
+</p><pre><code>foo in ThisBuild := &quot;hi&quot;
+</code></pre></li><li><p><code>projectSettings</code> - These are settings specific to a project. They
+are specific to a <em>particular sub project</em> in the build. A plugin
+may be contributing its settings to more than on project, in which
+case the values are duplicated for each project. You add project
+specific settings, eg. in <code>project/build.scala</code> :
+</p><pre><code>object MyBuild extends Build {
+  val test = project.in(file(&quot;.&quot;)).settings(...)
+}
+</code></pre></li></ul><p>After loading/compiling all the build definitions, sbt has a series of
+<code>Seq[Setting[_]]</code> that it must order. As shown in the diagram, the
+default inclusion order for sbt is:
+</p><ol><li>All AutoPlugin settings
+</li><li>All settings defined in <code>project/Build.scala</code>
+</li><li>All settings defined in the user directory
+(<code>~/.sbt/&lt;verison&gt;/*.sbt</code>)
+</li><li>All local configurations (<code>build.sbt</code>)
+</li></ol><h3 id="Controlling+Initialization">Controlling Initialization<a href="#Controlling+Initialization" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The order which sbt uses to load settings is configurable at a <em>project</em>
+level. This means that we can’t control the order of settings added to
+Build/Global namespace, but we can control how each project loads, e.g.
+plugins and <code>.sbt</code> files. To do so, use the <code>AddSettings</code> class :
+</p><pre><code>import sbt._
+import Keys._
+
+import AddSettings._
+
+object MyOwnOrder extends Build {
+  // here we load config from a txt file.
+  lazy val root = project.in(file(&quot;.&quot;)).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file(&quot;silly.txt&quot;)) )
+}
+</code></pre><p>In the above project, we’ve modified the order of settings to be:
+</p><ol><li>All AutoPlugin settings.
+</li><li>All settings defined in the <code>project/Build.scala</code> file (shown
+above).
+</li><li>All settings found in the <code>silly.txt</code> file.
+</li></ol><p>What we’ve excluded:
+</p><ul><li>All settings from the user directory (<code>~/.sbt/&lt;verison&gt;</code>)
+</li><li>All <code>*.sbt</code> settings.
+</li></ul><p>The AddSettings object provides the following “groups” of settings you
+can use for ordering:
+</p><p><code>autoPlugins</code>
+:   All the ordered settings of plugins after they’ve gone through
+    dependency resolution
+</p><p><code>buildScalaFiles</code>
+:   The full sequence of settings defined directly in <code>project/*.scala</code>
+    builds.
+</p><p><code>sbtFiles(*)</code>
+:   Specifies the exact setting DSL files to include (files must use the
+    <code>.sbt</code> file format)
+</p><p><code>userSettings</code>
+:   All the settings defined in the user directory <code>~/.sbt/&lt;version&gt;/</code>.
+</p><p><code>defaultSbtFiles</code>
+:   Include all local <code>*.sbt</code> file settings.
+</p><ul><li>Note: Be very careful when reordering settings. It’s easy to
+accidentally remove core functionality.*
+</li></ul><p>For example, let’s see what happens if we move the <code>build.sbt</code> files
+<em>before</em> the <code>buildScalaFile</code>.
+</p><p>Let’s create an example project the following defintiion:
+</p><p><code>project/build.scala</code> :
+</p><pre><code>object MyTestBuild extends Build {
+
+  val testProject = project.in(file(&quot;.&quot;)).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
+    version := scalaBinaryVersion.value match {
+      case &quot;2.10&quot; =&gt; &quot;1.0-SNAPSHOT&quot;
+      case v =&gt; &quot;1.0-for-${v}-SNAPSHOT&quot;
+    }
+  )
+}
+</code></pre><p>This build defines a version string which appends the scala version if
+the current scala version is not the in the <code>2.10.x</code> series. Now, when
+issuing a release we want to lock down the version. Most tools assume
+this can happen by writing a <code>version.sbt</code> file:
+</p><p><code>version.sbt</code> :
+</p><pre><code>version := &quot;1.0.0&quot;
+</code></pre><p>However, when we load this new build, we find that the <code>version</code> in
+<code>version.sbt</code> has been <strong>overriden</strong> by the one defined in
+<code>project/Build.scala</code> because of the order we defined for settings, so
+the new <code>version.sbt</code> file has no effect.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Build-Loaders.html"> Build Loaders </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div class="current">Setting Initialization</div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

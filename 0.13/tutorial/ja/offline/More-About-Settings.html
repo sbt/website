@@ -1,0 +1,257 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>始める sbt — 他の種類のセッティング</title>
+        
+        <link rel="stylesheet" href="../css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="../css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="../css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="../js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'ja';
+        </script>
+        <script type="text/javascript" src="../js/prettify/prettify.js"></script><script type="text/javascript" src="../js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="../css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Scopes.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Library-Dependencies.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="%E4%BB%96%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">他の種類のセッティング<a href="#%E4%BB%96%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページでは、基本的な <code>:=</code> メソッドを超えた、より高度な <code>Settings</code> の作り方を説明する。
+君が、<a href="Basic-Def.html">.sbt ビルド定義</a>と<a href="Scopes.html">スコープ</a>を読んだことを前提とする。
+</p><h3 id="%E5%BE%A9%E7%BF%92%3A+%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">復習: セッティング<a href="#%E5%BE%A9%E7%BF%92%3A+%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>ビルド定義は <code>Setting</code> のリストを作り、それが sbt の（キーと値のペアのマップで表現される）ビルドの記述を変換するのに使われるということは<a href="Basic-Def.html">覚えている</a>と思う。
+<code>Setting</code> は、は古いマップをインプットにとり、新たなマップをアウトプットに出す変換だ。新たなマップが sbt の新しい内部状態となる。
+</p><p>セッティングは種類により異なる方法でマップを変換する。<a href="Basic-Def.html">これまでは</a>、<code>:=</code> メソッドをみてきた。
+</p><p><code>:=</code> が作る <code>Setting</code> は、不変の固定値を新たに変換されたマップに代入する。
+例えば、マップを <code>name := &quot;hello&quot;</code> というセッティングで変換すると、新しいマップは <code>name</code> キーの中に <code>&quot;hello&quot;</code> を格納する。
+</p><p>セッティングがその効果を発揮するにはセッティングのマスターリストに入らなくてはいけない
+（<code>build.sbt</code> の全ての行は自動的にそのリストに入るけど、
+<a href="Full-Def.html">.scala ファイル</a>の場合は、sbt が検知しない場所に <code>Setting</code> を作ってしまうことができる）。
+</p><h3 id="%E6%97%A2%E5%AD%98%E3%81%AE%E5%80%A4%E3%81%AB%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B%3A++%E3%81%A8">既存の値に追加する: <code>+=</code> と <code>++=</code><a href="#%E6%97%A2%E5%AD%98%E3%81%AE%E5%80%A4%E3%81%AB%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B%3A++%E3%81%A8" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>:=</code> による置換が最も単純な変換だけど、キーには他のメソッドもある。
+<code>SettingKey[T]</code> の <code>T</code> が列の場合、つまりキーの値の型が列の場合は、置換のかわりに列に追加することができる。
+</p><ul><li><code>+=</code> は、列に単一要素を追加する。
+</li><li><code>++=</code> は、別の列を連結する。
+</li></ul><p>例えば、<code>sourceDirectories in Compile</code> というキーの値の型は <code>Seq[File]</code> だ。
+デフォルトで、このキーの値は <code>src/main/scala</code> を含む。
+（君がどうしても非標準じゃないと気が済まないので）<code>source</code> という名前のディレクトリに入ったソースもコンパイルしたいとすると、
+以下のようにして設定できる:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile += new File(&quot;source&quot;)
+</code></pre><p>もしくは、sbt パッケージに入っている <code>file()</code> 関数を使って:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile += file(&quot;source&quot;)
+</code></pre><p>（<code>file()</code> は、単に新しい <code>File</code> 作る）
+</p><p><code>++=</code> を使って複数のディレクトリを一度に加える事もできる:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile ++= Seq(file(&quot;sources1&quot;), file(&quot;sources2&quot;))
+</code></pre><p>このでの <code>Seq(a, b, c, ...)</code> は、列を構築する標準的な Scala の構文だ。
+</p><p>デフォルトのソースディレクトリを完全に置き換えてしまいたい場合は、当然 <code>:=</code> を使えばいい:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile := Seq(file(&quot;sources1&quot;), file(&quot;sources2&quot;))
+</code></pre><h3 id="%E5%80%A4%E3%81%AE%E5%A4%89%E6%8F%9B%3A">値の変換: <code>~=</code><a href="#%E5%80%A4%E3%81%AE%E5%A4%89%E6%8F%9B%3A" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>sourceDirectories in Compile</code> の<em>先頭に</em>要素を追加したり、デフォルトのディレクトリを filter したい場合はどうすればいいだろう？
+</p><p>既存の値に依存する <code>Setting</code> を作ることができる。
+</p><ul><li><code>~=</code> は、セッティングの既存の値に関数を適用して、同じ型の新たな値を作る
+</li></ul><p><code>sourceDirectories in Compile</code> を変更するには、以下のように <code>~=</code> を用いる:
+</p><pre><code class="prettyprint lang-scala">// src/main/scala を filter out する
+sourceDirectories in Compile ~= { srcDirs =&gt; srcDirs filter(!_.getAbsolutePath.endsWith(&quot;src/main/scala&quot;)) }
+</code></pre><p>ここでは、<code>srcDirs</code> は匿名関数のパラメータで、<code>sourceDirectories in Compile</code> の古い値が匿名関数に渡される。
+この関数の戻り値が <code>sourceDirectories in Compile</code> の新たな値となる。
+</p><p>もっと簡単な例だと:
+</p><pre><code class="prettyprint lang-scala">// プロジェクト名を大文字にする
+name ~= { _.toUpperCase }
+</code></pre><p>関数は、キーの値を同じ型の別の値に変換するため、キーの型が <code>SettingKey[T]</code> か <code>TaskKey[T]</code> のとき、<code>~=</code> に渡す関数は常に <code>T =&gt; T</code> 型でなければいけない。
+</p><h3 id="%E5%88%A5%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%AE%E5%80%A4%E3%81%8B%E3%82%89%E5%80%A4%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B%3A">別のキーの値から値を計算する: <code>&lt;&lt;=</code><a href="#%E5%88%A5%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%AE%E5%80%A4%E3%81%8B%E3%82%89%E5%80%A4%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B%3A" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>~=</code> は、キーの古い値に基づいて新たな値を定義する。
+だけど、<em>他の</em>キーの値に基づいて値を定義したいとしたらどうだろう？
+</p><ul><li><code>&lt;&lt;=</code> は、任意の他のキー（複数のキーも可）を使って新たな値を計算する
+</li></ul><p><code>&lt;&lt;=</code> は、型 <code>Initialize[T]</code> の引数を一つ取る。
+<code>Initialize[T]</code> のインスタンスは、あるキーの集合に関連付けられた値をインプットに取り、その値に基づいて型<code>T</code>の値を返す。
+つまり、型<code>T</code> の値を初期化する。
+</p><p>（<code>:=</code>、<code>+=</code>、<code>~=</code> その他同様）<code>Initialize[T]</code> を受け取った <code>&lt;&lt;=</code> は、<code>Setting[T]</code> を返す。
+</p><h4 id="%E5%8D%98%E7%B4%94%E3%81%AA+%3A+%E5%8D%98%E4%B8%80%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%AB%E4%BE%9D%E5%AD%98%E3%81%97%E3%81%9F">単純な <code>Initialize[T]</code>: 単一のキーに依存した <code>&lt;&lt;=</code><a href="#%E5%8D%98%E7%B4%94%E3%81%AA+%3A+%E5%8D%98%E4%B8%80%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%AB%E4%BE%9D%E5%AD%98%E3%81%97%E3%81%9F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>全てのキーは <code>Initilize</code> trait を拡張するため、最も単純な <code>Initialize</code> は、ただのキーだ:
+</p><pre><code class="prettyprint lang-scala">// 意味はないけど、妥当だ
+name &lt;&lt;= name
+</code></pre><p><code>Initialize[T]</code> として取り扱った場合、<code>SettingKey[T]</code> はその現在値を計算する。
+そのため、<code>name &lt;&lt;= name</code> は <code>name</code> の値を <code>name</code> の値に代入する。
+</p><p><em>別の</em>キーをキーに代入することで、少しは役に立つようになる。キーは同じ値の型を持たなくてはいけない。
+</p><pre><code class="prettyprint lang-scala">// プロジェクト名を使って組織名を命名する（両者とも SettingKey[String]）
+organization &lt;&lt;= name
+</code></pre><p>（注意: これが別のキーへのエイリアスの作り方だ）
+</p><p>値の型が同一じゃない場合は、<code>Initialize[T]</code> から例えば <code>Initialize[S]</code> みたいな感じで別の型にしてやる必要がある。
+これには、以下のように <code>Initialize</code> の <code>apply</code> メソッドを使う:
+</p><pre><code class="prettyprint lang-scala">// name は Key[String] で、baseDirectory は Key[File] だ。
+// プロジェクトの現在ディレクトリに基づいて名前を付ける。
+name &lt;&lt;= baseDirectory.apply(_.getName)
+</code></pre><p><code>apply</code> は Scala の特殊なメソッドで、関数の呼び出し構文を使ってオブジェクトを叩くことができるため、このように書ける:
+</p><pre><code class="prettyprint lang-scala">name &lt;&lt;= baseDirectory(_.getName)
+</code></pre><p>これは、<code>baseDirectory</code> の値を、<code>File</code> を受け取り <code>String</code> を返す <code>_.getName</code> という関数を使って変換する。
+<code>getName</code> は、普通の <code>java.io.File</code> オブジェクトにあるメソッドだ。
+</p><h4 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">依存性を持ったセッティング<a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>name &lt;&lt;= baseDirectory(_.getName)</code> というセッティングにおいて、<code>name</code> は、<code>baseDirectory</code> に<em>依存性</em>（dependency）を持つ。上記を <code>build.sbt</code> に書いて、sbt のインタラクティブモードで走らせ、<code>inspect name</code> と打ち込むと、以下のように表示される（一部抜粋）:
+</p><pre><code class="">[info] Dependencies:
+[info] 	*:base-directory
+</code></pre><p>このようにして、sbt はどのセッティングが別のセッティングに依存するかを知っている。
+タスクを記述するセッティングもあるため、この方法でタスク間の依存性も作ることができる。
+</p><p>例えば、<code>inspect compile</code> すると、<code>compile-inputs</code> に依存することが分かり、
+<code>compile-input</code> を inspect すると、それがまた別のキーに依存していることが分かる。
+依存性の連鎖をたどっていくと、魔法に出会う。
+例えば、<code>compile</code> と打ち込むと、sbt は自動的に <code>update</code> を実行する。
+これが「とにかくちゃんと動く」理由は、<code>compile</code> の計算にインプットとして必要な値が、<code>update</code> の計算を先に行うことを強制しているからだ。
+</p><p>このようにして、sbt の全てのビルドの依存性は、明示的には宣言されず、<em>自動化</em>されている。
+あるキーの値を別の計算で使うと、その計算はキーに依存する。とにかくちゃんと動く！
+</p><h4 id="%E8%A4%87%E9%9B%91%E3%81%AA+%3A+%E8%A4%87%E6%95%B0%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%B8%E4%BE%9D%E5%AD%98%E3%81%99%E3%82%8B">複雑な <code>Initialize[T]</code>: 複数のキーへ依存する <code>&lt;&lt;=</code><a href="#%E8%A4%87%E9%9B%91%E3%81%AA+%3A+%E8%A4%87%E6%95%B0%E3%81%AE%E3%82%AD%E3%83%BC%E3%81%B8%E4%BE%9D%E5%AD%98%E3%81%99%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>複数のキーへの依存性をサポートするために、sbt は、<code>Initialize</code> オブジェクトのタプルに <code>apply</code> メソッドと <code>identity</code> メソッドを追加する。
+Scala では、タプルを <code>(1, &quot;a&quot;)</code> のように書く（これは、<code>(Int, String)</code> の型を持つ）。
+</p><p>例えば、ここに三つの <code>Initialize</code> オブジェクトから成るタプルがあるとするとき、
+その型は <code>(Initialize[A], Initialize[B], Initialize[C])</code> だ。
+全ての <code>SettingKey[T]</code> は、<code>Initialize[T]</code> のインスタンスでもあるため、この <code>Initialize</code> オブジェクトはキーでもよい。
+</p><p>以下に、全てのキーが文字列の場合の単純な例を示す:
+</p><pre><code class="prettyprint lang-scala">// 三つの SettingKey[String] のタプル。三つの Initialize[String] のタプルでもある。
+(name, organization, version)
+</code></pre><p><code>Initialize</code> のタプルの <code>apply</code> メソッドは、関数を引数として受け取る。
+タプル中のそれぞれの <code>Initialize</code> を使って、sbt は対応する値を計算する（キーの現在値）。
+これらの値は関数に渡され、その関数は<em>単一の</em>値を返し、これは新たな <code>Initialize</code> でラッピングされる。
+明示的な型を書き下すと（Scala はこれを強要しない）、こんな感じ:
+</p><pre><code class="prettyprint lang-scala">val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
+val combined: Initialize[String] = tuple.apply({ (n, o, v) =&gt;
+  &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v })
+val setting: Setting[String] = name &lt;&lt;= combined
+</code></pre><p>それぞれのキーは既に <code>Initialize</code> 型だけど、（キーのような）単純な <code>Initialize</code> をタプルに入れて、<code>appy</code> メソッドを呼び出すことで最大九つまで一つの <code>Initialize</code> として合成できる。
+</p><p><code>SettingKey[T]</code> の <code>&lt;&lt;=</code> メソッドは、<code>Initialize[T]</code> を受け取るため、このテクニックを使って複数の任意のキーへの依存性を作ることができる。
+</p><p>Scala では関数の呼び出し構文が <code>apply</code> メソッドを呼び出すため、明示的な <code>.apply</code> を省いて、<code>tupple</code> を関数として扱い、以下のように書きなおすことができる:
+</p><pre><code class="prettyprint lang-scala">val tuple: (Initialize[String], Initialize[String], Initialize[String]) = (name, organization, version)
+val combined: Initialize[String] = tuple({ (n, o, v) =&gt;
+  &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v })
+val setting: Setting[String] = name &lt;&lt;= combined
+</code></pre><p><code>.sbt</code> ファイルに書くことが許されているのは単一の式だけであり、複数の文は書けないため、
+<code>build.sbt</code> では、このような <code>val</code> を中間値として使ったコードは動作しない。
+</p><p>そこで、<code>build.sbt</code> では、以下のような、より簡略化した構文が用いられる:
+</p><pre><code class="prettyprint lang-scala">name &lt;&lt;= (name, organization, version) { (n, o, v) =&gt; &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v }
+</code></pre><p>ここでは、<code>Initialize</code> のタプル（<code>SettingKey</code> のタプルでもある）が関数のようにはたらき、
+<code>{}</code> で囲まれた匿名関数を受け取り、<code>Initialize[T]</code>（<code>T</code> は匿名関数の戻り値の型）を返している。
+</p><p><code>Initialize</code> のタプルは、<code>identity</code> というメソッドも持ち、これは単にタプル値を <code>Initialize</code> に入れて返す。
+<code>(a: Initialize[A], b: Initialize[B]).identity</code>
+は、<code>Initialize[(A, B)]</code> 型の値を返す。
+<code>identity</code> は、二つの <code>Initialize</code> を値を変更したり失うこと無く一つに合成する。
+</p><h4 id="%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%8C%E6%9C%AA%E5%AE%9A%E7%BE%A9%E3%81%AE%E5%A0%B4%E5%90%88">セッティングが未定義の場合<a href="#%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%8C%E6%9C%AA%E5%AE%9A%E7%BE%A9%E3%81%AE%E5%A0%B4%E5%90%88" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>セッティングが <code>~=</code> や <code>&lt;&lt;=</code> を使って自分自身や他のキーへの依存性を作る場合、
+依存されたキーには値が存在しなくてはならない。
+存在しなければ、sbt に怒られる。
+例えば、<em>“Reference to undefined setting“</em> なんて言われるかもしれない。
+これが起こった場合は、キーが定義されている正しい<a href="Scopes.html">スコープ</a>で使っているか確認しよう。
+</p><p>環状の依存性を作ってしまうことも可能で、これもまたエラーになり、sbt に怒られる。
+</p><h4 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E3%82%BF%E3%82%B9%E3%82%AF">依存性を持ったタスク<a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E3%82%BF%E3%82%B9%E3%82%AF" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><a href="Basic-Def.html">.sbt ビルド定義</a>でみた通り、タスクキーは <code>:=</code>、<code>&lt;&lt;=</code>、その他でセッティングを作ると
+<code>Setting[T]</code> ではなく、<code>Setting[Task[T]]</code>を作る。
+同様に、タスクキーは <code>Initialize[T]</code> ではなく、<code>Initialize[Task[T]]</code> のインスタンスで、
+タスクキーの <code>&lt;&lt;=</code> は <code>Initialize[Task[T]]</code> をパラメータとして受け取る。
+</p><p>この実践上の大切さは、非タスクのセッティングはタスクを依存性としてもつことができないということだ。
+</p><p>（[Keys] より）以下の二つのキーを例に説明する:
+</p><pre><code class="prettyprint lang-scala">val scalacOptions = TaskKey[Seq[String]](&quot;scalac-options&quot;, &quot;Options for the Scala compiler.&quot;)
+val checksums = SettingKey[Seq[String]](&quot;checksums&quot;, &quot;The list of checksums to generate and to verify for dependencies.&quot;)
+</code></pre><p>（<code>scalacOptions</code> と <code>checksums</code> は、同じ値の型を持つ二つのキーで、片方がタスクというだけで、お互い全く関係のないキーだ。）
+</p><p>どちらか一方をもう片方のエイリアスにしようとしても、<code>build.sbt</code> をコンパイルすることができない:
+</p><pre><code class="prettyprint lang-scala">scalacOptions &lt;&lt;= checksums
+
+checksums &lt;&lt;= scalacOptions
+</code></pre><p>問題は、<code>scalacOptions.&lt;&lt;=</code> は、<code>Initialize[Task[Seq[String]]]</code> を受け取り、
+<code>checksums.&lt;&lt;=</code> は、<code>Initialize[Seq[String]]</code> を受け取るということだ。
+だけど、<code>Initialize[T]</code> から <code>Initialize[Task[T]]</code> に変換する方法があり、<code>map</code> と呼ばれる。
+</p><p>（<code>identity</code> は標準の Scala 関数で、与えられたインプットを返す）
+</p><p>これを<em>逆方向</em>、つまりセッティングキーをタスクキーに依存されることは不可能だ。
+これは、セッティングキーがプロジェクトの読み込み時に一度だけ計算されるため、
+タスクが再実行されなくなってしまうが、
+タスクは毎回再実行されることが期待されているからだ。
+</p><p>タスクはセッティングと他のタスクとの両方に依存することができる。
+<code>apply</code> のかわりに <code>map</code> を使うことで、<code>Initialize[T]</code> のかわりに <code>Initialize[Task[T]]</code> を作る。
+非タスクセッティングでの <code>apply</code> の用法は以下のようだ:
+</p><pre><code class="prettyprint lang-scala">name &lt;&lt;= (name, organization, version) { (n, o, v) =&gt; &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v }
+</code></pre><p>(<code>(name, organization, version)</code> には apply メソッドがあるため、これは中括弧 <code>{}</code> で囲まれた匿名関数をパラメータとして受け取る関数だ。)
+</p><p><code>Initialize[Task[T]]</code> を作るには、<code>apply</code> のかわりに <code>map</code> を使う:
+</p><pre><code class="prettyprint lang-scala">// （&lt;&lt;= の左辺値の）name はタスクではなく、かつ map を使っているため、でコンパイルが通らない
+name &lt;&lt;= (name, organization, version) map { (n, o, v) =&gt; &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v }
+
+// packageBin はタスクであり、かつ map を使っているため、コンパイルは通る
+packageBin in Compile &lt;&lt;= (name, organization, version) map { (n, o, v) =&gt; file(o + &quot;-&quot; + n + &quot;-&quot; + v + &quot;.jar&quot;) }
+
+// name がタスクではなく、かつ apply を使っているため、コンパイルは通る
+name &lt;&lt;= (name, organization, version) { (n, o, v) =&gt; &quot;project &quot; + n + &quot; from &quot; + o + &quot; version &quot; + v }
+
+// packageBin はタスクであり、かつ apply を使っているため、コンパイルは通らない
+packageBin in Compile &lt;&lt;= (name, organization, version) { (n, o, v) =&gt; file(o + &quot;-&quot; + n + &quot;-&quot; + v + &quot;.jar&quot;) }
+</code></pre><p><em>まとめると:</em> キーのタプルを <code>Initialize[Task[T]]</code> に変換したいときは <code>map</code> を使う。
+キーのタプルを <code>Initialize[T]</code> に変換したいときは <code>apply</code> を使う。
+<code>&lt;&lt;=</code> の左辺のキーが <code>SettingKey[T]</code> ではなくて、<code>TaskKey[T]</code> であるときに、<code>Initialize[Task[T]]</code> が必要となる。
+</p><h3 id="%E3%82%A8%E3%82%A4%E3%83%AA%E3%82%A2%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%81%AE%E3%81%AF++%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F%E3%80%81">エイリアスに必要なのは <code>:=</code> ではなく、<code>&lt;&lt;=</code><a href="#%E3%82%A8%E3%82%A4%E3%83%AA%E3%82%A2%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E3%81%AE%E3%81%AF++%E3%81%A7%E3%81%AF%E3%81%AA%E3%81%8F%E3%80%81" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>あるキーが別のキーのエイリアスになって欲しいとき、つい <code>:=</code> を使って以下のような間違ったエイリアスを作ってしまうかもしれない:
+</p><pre><code class="prettyprint lang-scala">// 動作しないし、役に立たない
+packageBin in Compile := packageDoc in Compile
+</code></pre><p>問題は <code>:=</code> の引数は値（タスクの場合は値を返す関数）でなくちゃいけないことだ。
+<code>TaskKey[File]</code> である <code>packageBin</code> の場合は、<code>File</code> もしくは <code>=&gt; File</code> 関数でなければいけない。
+<code>packageDoc</code> は、キーであり、<code>File</code> ではない。
+</p><p>正しい方法は、キーを受け取る <code>&lt;&lt;=</code> を使うことだ（実際に受け取っているのは <code>Initialize</code> だけど、全てのキーは <code>Initialize</code> のインスタンスでもある）:
+</p><pre><code class="prettyprint lang-scala">// 動作するけど、やっぱり役に立たない
+packageBin in Compile &lt;&lt;= packageDoc in Compile
+</code></pre><p>ここで、<code>&lt;&lt;=</code> は、後で（sbt がタスクを実行したとき）ファイルを返す計算である <code>Initialize[Task[File]]</code> を期待する。
+これが思った通りの振る舞いだ。つまり、タスクのエイリアスを作ったときに期待されるのは、そのをタスクを実行することであって、
+sbt がプロジェクトを読み込んだ時に一回だけ値を読み込むことではない。
+</p><p>（ちなみに、<code>packageBin</code> のようなパッケージ化タスクは、グローバルではなく、コンフィギュレーションごとに定義されているので、<code>in Compile</code> スコープが無ければ「未定義」エラーが発生する。）
+</p><h3 id="%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and">依存性を持った追加: <code>&lt;+=</code> and <code>&lt;++=</code><a href="#%E4%BE%9D%E5%AD%98%E6%80%A7%E3%82%92%E6%8C%81%E3%81%A3%E3%81%9F%E8%BF%BD%E5%8A%A0%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>リストに追加するためのメソッドにはもう二つあり、それらは <code>+=</code> や <code>++=</code> を <code>&lt;&lt;=</code> と組み合わせたものだ。
+つまり、他のキーへの依存性を使いながらリストの新しい値や連結するための別のリストを計算できる。
+</p><p>これらのメソッドは、依存性から得られた値を変換するのに書く関数が <code>T</code> のかわりに <code>Seq[T]</code> を返さなくてはいけないこと以外の点では
+<code>&lt;&lt;=</code> と全く同じように動作する。
+</p><p>当然、<code>&lt;&lt;=</code> のように既存の値を置き換えるのではなく、<code>&lt;+=</code> と <code>&lt;++=</code> は既存の値に追加するわけだけど。
+</p><p>例えば、プロジェクト名を使って名付けたカバレッジレポートがあるとして、それを <code>clean</code> が削除するファイルのリストに追加したいとする:
+</p><pre><code class="prettyprint lang-scala">cleanFiles &lt;+= (name) { n =&gt; file(&quot;coverage-report-&quot; + n + &quot;.txt&quot;) }
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Library-Dependencies.html"> ライブラリ依存性 </a>                        
+                        <ul class="language-bar">
+        <li><a href="../More-About-Settings.html"><span class="lang-item lang-en">English</span></a></li><li><a href="../ja/More-About-Settings.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">始める sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">sbt のインストール</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Mac への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Windows への sbt のインストール</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Linux への sbt のインストール</a></div></li><li><div><a href="Manual-Installation.html">手動インストール</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">ディレクトリ構造</a></div></li><li><div><a href="Running.html">実行</a></div></li><li><div><a href="Basic-Def.html">.sbt ビルド定義</a></div></li><li><div><a href="Scopes.html">スコープ</a></div></li><li><div class="current">他の種類のセッティング</div></li><li><div><a href="Library-Dependencies.html">ライブラリ依存性</a></div></li><li><div><a href="Multi-Project.html">マルチプロジェクト・ビルド</a></div></li><li><div><a href="Using-Plugins.html">プラグインの使用</a></div></li><li><div><a href="Custom-Settings.html">カスタムセッティングとタスク</a></div></li><li><div><a href="Full-Def.html">.scala ビルド定義</a></div></li><li><div><a href="Summary.html">まとめ</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../../index.html"><img src="../files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../../documentation.html">Documentation</a></li>
+      <li><a href="../../../download.html">Download</a></li>
+      <li><a href="../../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="../files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

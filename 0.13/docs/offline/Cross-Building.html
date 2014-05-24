@@ -1,0 +1,157 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Cross-building</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Console-Project.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Inspecting-Settings.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Cross-building">Cross-building<a href="#Cross-building" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Different versions of Scala can be binary incompatible, despite
+maintaining source compatibility. This page describes how to use <code>sbt</code>
+to build and publish your project against multiple versions of Scala and
+how to use libraries that have done the same.
+</p><h3 id="Publishing+Conventions">Publishing Conventions<a href="#Publishing+Conventions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The underlying mechanism used to indicate which version of Scala a
+library was compiled against is to append <code>_&lt;scala-version&gt;</code> to the
+library’s name. For Scala 2.10.0 and later, the binary version is used.
+For example, <code>dispatch</code> becomes <code>dispatch_2.8.1</code> for the variant
+compiled against Scala 2.8.1 and <code>dispatch_2.10</code> when compiled against
+2.10.0, 2.10.0-M1 or any 2.10.x version. This fairly simple approach
+allows interoperability with users of Maven, Ant and other build tools.
+</p><p>The rest of this page describes how <code>sbt</code> handles this for you as part
+of cross-building.
+</p><h3 id="Using+Cross-Built+Libraries">Using Cross-Built Libraries<a href="#Using+Cross-Built+Libraries" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To use a library built against multiple versions of Scala, double the
+first <code>%</code> in an inline dependency to be <code>%%</code>. This tells <code>sbt</code> that it
+should append the current version of Scala being used to build the
+library to the dependency’s name. For example:
+</p><pre><code>libraryDependencies += &quot;net.databinder&quot; %% &quot;dispatch&quot; % &quot;0.8.0&quot;
+</code></pre><p>A nearly equivalent, manual alternative for a fixed version of Scala is:
+</p><pre><code>libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.10&quot; % &quot;0.8.0&quot;
+</code></pre><p>or for Scala versions before 2.10:
+</p><pre><code>libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.8.1&quot; % &quot;0.8.0&quot;
+</code></pre><h3 id="Cross-Building+a+Project">Cross-Building a Project<a href="#Cross-Building+a+Project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Define the versions of Scala to build against in the
+<code>crossScalaVersions</code> setting. Versions of Scala 2.8.0 or later are
+allowed. For example, in a <code>.sbt</code> build definition:
+</p><pre><code>crossScalaVersions := Seq(&quot;2.8.2&quot;, &quot;2.9.2&quot;, &quot;2.10.0&quot;)
+</code></pre><p>To build against all versions listed in <code>build.scala.versions</code>, prefix
+the action to run with <code>+</code>. For example:
+</p><pre><code>&gt; + package
+</code></pre><p>A typical way to use this feature is to do development on a single Scala
+version (no <code>+</code> prefix) and then cross-build (using <code>+</code>) occasionally
+and when releasing. The ultimate purpose of <code>+</code> is to cross-publish your
+project. That is, by doing:
+</p><pre><code class="">&gt; + publish
+</code></pre><p>you make your project available to users for different versions of
+Scala. See <a href="Publishing.html">Publishing</a> for more details on publishing your project.
+</p><p>In order to make this process as quick as possible, different output and
+managed dependency directories are used for different versions of Scala.
+For example, when building against Scala 2.10.0,
+</p><ul><li><code>./target/</code> becomes <code>./target/scala_2.1.0/</code>
+</li><li><code>./lib_managed/</code> becomes <code>./lib_managed/scala_2.10/</code>
+</li></ul><p>Packaged jars, wars, and other artifacts have <code>_&lt;scala-version&gt;</code>
+appended to the normal artifact ID as mentioned in the Publishing
+Conventions section above.
+</p><p>This means that the outputs of each build against each version of Scala
+are independent of the others. <code>sbt</code> will resolve your dependencies for
+each version separately. This way, for example, you get the version of
+Dispatch compiled against 2.8.1 for your 2.8.1 build, the version
+compiled against 2.10 for your 2.10.x builds, and so on. You can have
+fine-grained control over the behavior for for different Scala versions
+by using the <code>cross</code> method on <code>ModuleID</code> These are equivalent:
+</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot;
+&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.Disabled
+</code></pre><p>These are equivalent:
+</p><pre><code>&quot;a&quot; %% &quot;b&quot; % &quot;1.0&quot;
+&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.binary
+</code></pre><p>This overrides the defaults to always use the full Scala version instead
+of the binary Scala version:
+</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.full
+</code></pre><p>This uses a custom function to determine the Scala version to use based
+on the binary Scala version:
+</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.binaryMapped {
+  case &quot;2.9.1&quot; =&gt; &quot;2.9.0&quot; // remember that pre-2.10, binary=full
+  case &quot;2.10&quot; =&gt; &quot;2.10.0&quot; // useful if a%b was released with the old style
+  case x =&gt; x
+}
+</code></pre><p>This uses a custom function to determine the Scala version to use based
+on the full Scala version:
+</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.fullMapped {
+  case &quot;2.9.1&quot; =&gt; &quot;2.9.0&quot;
+  case x =&gt; x
+}
+</code></pre><p>A custom function is mainly used when cross-building and a dependency
+isn’t available for all Scala versions or it uses a different convention
+than the default.
+</p><p>As a final note, you can use <code>++ &lt;version&gt;</code> to temporarily switch the
+Scala version currently being used to build. <code>&lt;version&gt;</code> should be
+either a version for Scala published to a repository, as in <code>++ 2.10.0</code>
+or the path to a Scala home directory, as in <code>++ /path/to/scala/home</code>.
+See <a href="Command-Line-Reference.html">Command Line Reference</a> for details.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Inspecting-Settings.html"> Interacting with the Configuration System </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div class="current">Cross-building</div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

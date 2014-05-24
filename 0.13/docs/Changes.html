@@ -1,0 +1,180 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Changes</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Using-Sonatype.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="ChangeSummary_0.13.0.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Changes">Changes<a href="#Changes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="0.13.5-RC1+to+0.13.5-RC2">0.13.5-RC1 to 0.13.5-RC2<a href="#0.13.5-RC1+to+0.13.5-RC2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixes auto plugins not detecting <code>object autoImport</code>. (gh-1314)
+</li></ul><h3 id="0.13.2+to+0.13.5">0.13.2 to 0.13.5<a href="#0.13.2+to+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>The Scala version for sbt and sbt plugins is now 2.10.4. This is a
+compatible version bump.
+</li><li>Added a new setting <code>testResultLogger</code> to allow customisation of
+logging of test results. (gh-1225)
+</li><li>When <code>test</code> is run and there are no tests available, omit logging
+output. Especially useful for aggregate modules. <code>test-only</code> et al
+unaffected. (gh-1185)
+</li><li>sbt now uses minor-patch version of ivy 2.4
+(org.scala-sbt.ivy:ivy:2.4.0-sbt-<git sha>)
+</li><li><code>sbt.Plugin</code> deprecated in favor of <code>sbt.AutoPlugin</code>
+</li><li>name-hashing incremental compiler now supports scala macros.
+</li><li><code>testResultLogger</code> is now configured.
+</li><li>sbt-server hooks for task cancellation.
+</li><li>Add <code>JUnitXmlReportPlugin</code> which generates junit-xml-reports for all
+tests.
+</li></ul><h3 id="0.13.1+to+0.13.2">0.13.1 to 0.13.2<a href="#0.13.1+to+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Adding new name-hashing feature to incremental compiler. Alters how
+scala dependencies are tracked, reducing number of recompiles
+necessary.
+</li><li>Added the ability to launch servers via the sbt-launcher.
+</li><li>Added <code>.previous</code> feature on tasks which can load the pervious
+value.
+</li><li>Added an <code>all</code> command which can run more than tasks in parallel.
+</li><li>Exposed the ‘overwrite’ flags from ivy. Added warning if overwriting
+a release version.
+</li><li>Improve the error message when credentials are not found in Ivy.
+</li><li>Improve task macros to handle more scala constructs.
+</li><li>Fix <code>last</code> and <code>export</code> tasks to read from the correct stream.
+</li><li>Fix issue where ivy’s <code>.+</code> dependency ranges were not correctly
+translated to maven.
+</li><li>Override security manager to ignore file permissions (performance
+issue)
+</li><li>2.11 compatibility fixes
+</li><li>Launcher can now handle ivy’s <code>.+</code> revisions.
+</li><li>SessionSettings now correctly overwrite existing settings.
+</li><li>Adding a simple Logic system for inclusionary/dependency logic of
+plugins.
+</li><li>Improve build hooks for <code>LoggerReporter</code> and <code>TaskProgress</code>.
+</li><li>Serialize incremental compiler analysis into text-file format.
+</li><li>Issue a warning when generating Paths and separate already exists in
+the path.
+</li><li>Migrate to Ivy 2.3.0-final.
+</li><li>Docs: Use bintray as default repository host
+</li><li>Docs: improved docs on test groups.
+</li><li>Docs: updated documentation on the Launcher.
+</li><li>Docs: started architecture document.
+</li></ul><h3 id="0.13.0+to+0.13.1">0.13.0 to 0.13.1<a href="#0.13.0+to+0.13.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>The Scala version for sbt and sbt plugins is now 2.10.3. This is a
+compatible version bump.
+</li><li>New method <code>toTask</code> on <code>Initialize[InputTask[T]]</code> to apply the full
+input and get a plain task out.
+</li><li>Improved performance of <code>inspect tree</code>
+</li><li>Work around various issues with Maven local repositories, including
+resolving -SNAPSHOTs from them. (gh-321)
+</li><li>Better representation of no cross-version suffix in suffix conflict
+error message: now shows <code>&lt;none&gt;</code> instead of just <code>_</code>
+</li><li><code>TrapExit</code> support for multiple, concurrent managed applications.
+Now enabled by default for all <code>run</code>-like tasks. (gh-831)
+</li><li>Add minimal support for class file formats 51.0, 52.0 in incremental
+compiler. (gh-842)
+</li><li>Allow main class to be non-public. (gh-883)
+</li><li>Convert <code>-classpath</code> to <code>CLASSPATH</code> when forking on Windows and
+length exceeds a heuristic maximum. (gh-755)
+</li><li><code>scalacOptions</code> for <code>.scala</code> build definitions are now also used for
+<code>.sbt</code> files
+</li><li><code>error</code>, <code>warn</code>, <code>info</code>, <code>debug</code> commands to set log level and
+<code>--error</code>, … to set the level before the project is loaded.
+(gh-806)
+</li><li><code>sLog</code> settings that provides a <code>Logger</code> for use by settings.
+(gh-806)
+</li><li>Early commands: any command prefixed with <code>--</code> gets moved before
+other commands on startup and doesn’t force sbt into batch mode.
+</li><li>Deprecate internal <code>-</code>, <code>--</code>, and <code>---</code> commands in favor of <code>onFailure</code>,
+<code>sbtClearOnFailure</code>, and <code>resumeFromFailure</code>.
+</li><li><code>makePom</code> no longer generates <code>&lt;type&gt;</code> elements for standard
+classifiers. (gh-728)
+</li><li>Fix many instances of the Turkish i bug.
+</li><li>Read https+ftp proxy environment variables into system properties
+where Java will use them. (gh-886)
+</li><li>The <code>Process</code> methods that are redirection-like no longer discard
+the exit code of the input. This addresses an inconsistency with
+<code>Fork</code>, where using the <code>CustomOutput</code> <code>OutputStrategy</code> makes the
+exit code always zero.
+</li><li>Recover from failed <code>reload</code> command in the scripted sbt handler.
+</li><li>Parse external <code>pom.xml</code> with <code>CustomPomParser</code> to handle multiple
+definitions. (gh-758)
+</li><li>Improve key collision error message (gh-877)
+</li><li>Display the source position of an undefined setting.
+</li><li>Respect the <code>-nowarn</code> option when compiling Scala sources.
+</li><li>Improve forked test debugging by listing tests run by sbt in debug
+output. (gh-868)
+</li><li>Fix scaladoc cache to track changes to <code>-doc-root-content</code> (gh-837)
+</li><li>Incremental compiler: Internal refactoring in preparation for
+name-hashing (gh-936)
+</li><li>Incremental compiler: improved cache loading/saving speed by
+internal file names (gh-931)
+</li><li>Docs: many contributed miscellaneous fixes and additions
+</li><li>Docs: link to page source now at the bottom of the page
+</li><li>Docs: sitemap now automatically generated
+</li><li>Docs: custom
+role enables links from a key name in the docs to the val in <a href="../sxr/sbt/Keys.scala">Keys</a>
+</li><li>Docs: restore sxr support and fix links to sxr’d sources. (gh-863)
+</li></ul><h3 id="0.12.4+to+0.13.0">0.12.4 to 0.13.0<a href="#0.12.4+to+0.13.0" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The changes for 0.13.0 are listed on a separate page. See
+<a href="ChangeSummary_0.13.0.html">sbt 0.13.0 changes</a>.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="ChangeSummary_0.13.0.html"> sbt 0.13.0 Changes </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div class="current">Changes</div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

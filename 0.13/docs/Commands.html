@@ -1,0 +1,217 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Commands</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Input-Tasks.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Parsing-Input.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Commands">Commands<a href="#Commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="What+is+a+%E2%80%9Ccommand%E2%80%9D%3F">What is a “command”?<a href="#What+is+a+%E2%80%9Ccommand%E2%80%9D%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A “command” looks similar to a task: it’s a named operation that can be
+executed from the sbt console.
+</p><p>However, a command’s implementation takes as its parameter the entire
+state of the build (represented by <a href="Build-State.html">State</a>) and
+computes a new <a href="Build-State.html">State</a>. This means that a command can
+look at or modify other sbt settings, for example. Typically, you would
+resort to a command when you need to do something that’s impossible in a
+regular task.
+</p><h3 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There are three main aspects to commands:
+</p><ol><li><p>The syntax used by the user to invoke the command, including:
+</p><ul><li>Tab completion for the syntax
+</li><li>The parser to turn input into an appropriate data structure
+</li></ul></li><li>The action to perform using the parsed data structure. This action
+transforms the build <a href="../../api/sbt/State.html">State</a>.
+</li><li>Help provided to the user
+</li></ol><p>In sbt, the syntax part, including tab completion, is specified with
+parser combinators. If you are familiar with the parser combinators in
+Scala’s standard library, these are very similar. The action part is a
+function <code>(State, T) =&gt; State</code>, where <code>T</code> is the data structure produced
+by the parser. See the
+<a href="Parsing-Input.html">Parsing Input</a> page for how to
+use the parser combinators.
+</p><p><a href="../../api/sbt/State.html">State</a> provides access to the build state,
+such as all registered <code>Command</code>s, the remaining commands to execute,
+and all project-related information. See <a href="Build-State.html">States and Actions</a> for details on
+State.
+</p><p>Finally, basic help information may be provided that is used by the
+<code>help</code> command to display command help.
+</p><h3 id="Defining+a+Command">Defining a Command<a href="#Defining+a+Command" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A command combines a function <code>State =&gt; Parser[T]</code> with an action
+<code>(State, T) =&gt; State</code>. The reason for <code>State =&gt; Parser[T]</code> and not
+simply <code>Parser[T]</code> is that often the current <code>State</code> is used to build
+the parser. For example, the currently loaded projects (provided by
+<code>State</code>) determine valid completions for the <code>project</code> command. Examples
+for the general and specific cases are shown in the following sections.
+</p><p>See <a href="../../sxr/sbt/Command.scala.html">Command.scala</a> for the source
+API details for constructing commands.
+</p><h4 id="General+commands">General commands<a href="#General+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>General command construction looks like:
+</p><pre><code>val action: (State, T) =&gt; State = ...
+val parser: State =&gt; Parser[T] = ...
+val command: Command = Command(&quot;name&quot;)(parser)(action)
+</code></pre><h4 id="No-argument+commands">No-argument commands<a href="#No-argument+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There is a convenience method for constructing commands that do not
+accept any arguments.
+</p><pre><code>val action: State =&gt; State = ...
+val command: Command = Command.command(&quot;name&quot;)(action)
+</code></pre><h4 id="Single-argument+command">Single-argument command<a href="#Single-argument+command" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There is a convenience method for constructing commands that accept a
+single argument with arbitrary content.
+</p><pre><code>// accepts the state and the single argument
+val action: (State, String) =&gt; State = ...
+val command: Command = Command.single(&quot;name&quot;)(action)
+</code></pre><h4 id="Multi-argument+command">Multi-argument command<a href="#Multi-argument+command" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There is a convenience method for constructing commands that accept
+multiple arguments separated by spaces.
+</p><pre><code>val action: (State, Seq[String]) =&gt; State = ...
+
+// &lt;arg&gt; is the suggestion printed for tab completion on an argument
+val command: Command = Command.args(&quot;name&quot;, &quot;&lt;arg&gt;&quot;)(action)
+</code></pre><h3 id="Full+Example">Full Example<a href="#Full+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The following example is a valid <code>project/Build.scala</code> that adds
+commands to a project. To try it out:
+</p><ol><li>Copy the following build definition into <code>project/Build.scala</code> for a
+new project.
+</li><li>Run sbt on the project.
+</li><li>Try out the <code>hello</code>, <code>helloAll</code>, <code>failIfTrue</code>, <code>color</code>, and
+printState commands.
+</li><li>Use tab-completion and the code below as guidance.
+</li></ol><!-- -->
+<pre><code>import sbt._
+import Keys._
+
+// imports standard command parsing functionality
+import complete.DefaultParsers._
+
+object CommandExample extends Build
+{
+    // Declare a single project, adding several new commands, which are discussed below.
+    lazy override val projects = Seq(root)
+    lazy val root = Project(&quot;root&quot;, file(&quot;.&quot;)) settings(
+        commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
+    )
+
+    // A simple, no-argument command that prints &quot;Hi&quot;,
+    //  leaving the current state unchanged.
+    def hello = Command.command(&quot;hello&quot;) { state =&gt;
+        println(&quot;Hi!&quot;)
+        state
+    }
+
+    // A simple, multiple-argument command that prints &quot;Hi&quot; followed by the arguments.
+    //   Again, it leaves the current state unchanged.
+    def helloAll = Command.args(&quot;helloAll&quot;, &quot;&lt;name&gt;&quot;) { (state, args) =&gt;
+        println(&quot;Hi &quot; + args.mkString(&quot; &quot;))
+        state
+    }
+
+    // A command that demonstrates failing or succeeding based on the input
+    def failIfTrue = Command.single(&quot;failIfTrue&quot;) {
+        case (state, &quot;true&quot;) =&gt; state.fail
+        case (state, _) =&gt; state
+    }
+
+    // Demonstration of a custom parser.
+    // The command changes the foreground or background terminal color
+    //  according to the input.
+    lazy val change = Space ~&gt; (reset | setColor)
+    lazy val reset = token(&quot;reset&quot; ^^^ &quot;\033[0m&quot;)
+    lazy val color = token( Space ~&gt; (&quot;blue&quot; ^^^ &quot;4&quot; | &quot;green&quot; ^^^ &quot;2&quot;) )
+    lazy val select = token( &quot;fg&quot; ^^^ &quot;3&quot; | &quot;bg&quot; ^^^ &quot;4&quot; )
+    lazy val setColor = (select ~ color) map { case (g, c) =&gt; &quot;\033[&quot; + g + c + &quot;m&quot; }
+
+    def changeColor = Command(&quot;color&quot;)(_ =&gt; change) { (state, ansicode) =&gt;
+        print(ansicode)
+        state
+    }
+
+    // A command that demonstrates getting information out of State.
+    def printState = Command.command(&quot;printState&quot;) { state =&gt;
+        import state._
+        println(definedCommands.size + &quot; registered commands&quot;)
+        println(&quot;commands to run: &quot; + show(remainingCommands))
+        println()
+
+        println(&quot;original arguments: &quot; + show(configuration.arguments))
+        println(&quot;base directory: &quot; + configuration.baseDirectory)
+        println()
+
+        println(&quot;sbt version: &quot; + configuration.provider.id.version)
+        println(&quot;Scala version (for sbt): &quot; + configuration.provider.scalaProvider.version)
+        println()
+
+        val extracted = Project.extract(state)
+        import extracted._
+        println(&quot;Current build: &quot; + currentRef.build)
+        println(&quot;Current project: &quot; + currentRef.project)
+        println(&quot;Original setting count: &quot; + session.original.size)
+        println(&quot;Session setting count: &quot; + session.append.size)
+
+        state
+    }
+
+    def show[T](s: Seq[T]) =
+        s.map(&quot;'&quot; + _ + &quot;'&quot;).mkString(&quot;[&quot;, &quot;, &quot;, &quot;]&quot;)
+}
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Parsing-Input.html"> Parsing and tab completion </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div class="current">Commands</div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

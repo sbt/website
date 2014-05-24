@@ -1,0 +1,1544 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html manifest="pamflet.manifest">
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Getting Started with sbt — Combined Pages</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Contents+in+Depth.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="#Getting+Started+with+sbt">Getting Started with sbt</a></div><ol class="toc"> <li><div><a href="#Installing+sbt">Installing sbt</a></div><ol class="toc"> <li><div><a href="#Installing+sbt+on+Mac">Installing sbt on Mac</a></div></li><li><div><a href="#Installing+sbt+on+Windows">Installing sbt on Windows</a></div></li><li><div><a href="#Installing+sbt+on+Linux">Installing sbt on Linux</a></div></li><li><div><a href="#Installing+sbt+manually">Installing sbt manually</a></div></li> </ol></li><li><div><a href="#Hello%2C+World">Hello, World</a></div></li><li><div><a href="#Directory+structure">Directory structure</a></div></li><li><div><a href="#Running">Running</a></div></li><li><div><a href="#.sbt+build+definition">.sbt build definition</a></div></li><li><div><a href="#Scopes">Scopes</a></div></li><li><div><a href="#More+kinds+of+setting">More kinds of setting</a></div></li><li><div><a href="#Library+dependencies">Library dependencies</a></div></li><li><div><a href="#Multi-project+builds">Multi-project builds</a></div></li><li><div><a href="#Using+plugins">Using plugins</a></div></li><li><div><a href="#Custom+settings+and+tasks">Custom settings and tasks</a></div></li><li><div><a href="#.scala+build+definition">.scala build definition</a></div></li><li><div><a href="#Getting+Started+summary">Getting Started summary</a></div></li> </ol></div></div><h1 id="Getting+Started+with+sbt">Getting Started with sbt<a href="#Getting+Started+with+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><p>sbt uses a small number of concepts to support flexible and powerful
+build definitions. There are not that many concepts, but sbt is not
+exactly like other build systems and there are details you <em>will</em>
+stumble on if you haven’t read the documentation.
+</p><p>The Getting Started Guide covers the concepts you need to know to create
+and maintain an sbt build definition.
+</p><p>It is <em>highly recommended</em> to read the Getting Started Guide!
+</p><p>If you are in a huge hurry, the most important conceptual background can
+be found in <a href="Basic-Def.html">.sbt build definition</a>, <a href="Scopes.html">scopes</a>, and
+<a href="More-About-Settings.html">more kinds of setting</a>. But we don’t promise that
+it’s a good idea to skip the other pages in the guide.
+</p><p>It’s best to read in order, as later pages in the Getting Started Guide
+build on concepts introduced earlier.
+</p><p>Thanks for trying out sbt and <em>have fun</em>!
+</p><h2 id="Installing+sbt">Installing sbt<a href="#Installing+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>To create an sbt project, you’ll need to take these steps:
+</p><ul><li>Install sbt and create a script to launch it.
+</li><li><p>Setup a simple <a href="Hello.html">hello world</a> project
+</p><ul><li>Create a project directory with source files in it.
+</li><li>Create your build definition.
+</li></ul></li><li>Move on to <a href="Running.html">running</a> to learn how to run sbt.
+</li><li>Then move on to <a href="Basic-Def.html">.sbt build definition</a> to learn more
+about build definitions.
+</li></ul><p>Ultimately, the installation of sbt boils down to a launcher JAR and a shell script,
+but depending on your platform, we provide several ways to make the process less tedious.
+Head over to the installation steps for <a href="Installing-sbt-on-Mac.html">Mac</a>, <a href="Installing-sbt-on-Windows.html">Windows</a>, <a href="Installing-sbt-on-Linux.html">Linux</a>, or <a href="Manual-Installation.html">manual installation</a>.
+</p><h3 id="Tips+and+Notes">Tips and Notes<a href="#Tips+and+Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you have any trouble running sbt, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html">Setup Notes</a> on
+terminal encodings, HTTP proxies, and JVM options.
+</p><h2 id="Installing+sbt+on+Mac">Installing sbt on Mac<a href="#Installing+sbt+on+Mac" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Installing+from+a+third-party+package">Installing from a third-party package<a href="#Installing+from+a+third-party+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><blockquote><p><strong>Note:</strong> Third-party packages may not provide the latest version. Please make
+sure to report any issues with these packages to the relevant
+maintainers.
+</p></blockquote><h4 id=""><a href="http://macports.org/">Macports</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ port install sbt
+</code></pre><h4 id=""><a href="http://mxcl.github.com/homebrew/">Homebrew</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ brew install sbt
+</code></pre><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package, and expand it.
+</p><h3 id="Installaing+manually">Installaing manually<a href="#Installaing+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><h2 id="Installing+sbt+on+Windows">Installing sbt on Windows<a href="#Installing+sbt+on+Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Windows+installer">Windows installer<a href="#Windows+installer" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi">msi installer</a> and install it.
+</p><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package and expand it.
+</p><h3 id="Installaing+manually">Installaing manually<a href="#Installaing+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><h2 id="Installing+sbt+on+Linux">Installing sbt on Linux<a href="#Installing+sbt+on+Linux" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Installing+from+a+universal+package">Installing from a universal package<a href="#Installing+from+a+universal+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Download <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip">ZIP</a> or <a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz">TGZ</a> package and expand it.
+</p><h3 id="RPM+and+DEB">RPM and DEB<a href="#RPM+and+DEB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The following packages are also officially supported:
+</p><ul><li><a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.rpm">RPM</a> package
+</li><li><a href="http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.deb">DEB</a> package
+</li></ul><blockquote><p><strong>Note:</strong> Please report any issues with these to the
+<a href="https://github.com/sbt/sbt-launcher-package">sbt-launcher-package</a>
+project.
+</p></blockquote><h3 id="Gentoo">Gentoo<a href="#Gentoo" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In the official tree there is no ebuild for sbt. But there are
+<a href="https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin">ebuilds</a> to merge sbt from binaries.
+To merge sbt from this ebuilds you can do:
+</p><pre><code>$ mkdir -p /usr/local/portage &amp;&amp; cd /usr/local/portage
+$ git clone git://github.com/whiter4bbit/overlays.git
+$ echo &quot;PORTDIR_OVERLAY=$PORTDIR_OVERLAY /usr/local/portage/overlays&quot; &gt;&gt; /etc/make.conf
+$ emerge sbt-bin
+</code></pre><blockquote><p><strong>Note:</strong> Please report any issues with the ebuild
+<a href="https://github.com/whiter4bbit/overlays/issues">here</a>.
+</p></blockquote><h3 id="Installaing+manually">Installaing manually<a href="#Installaing+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>See instruction to install manually.
+</p><h2 id="Installing+sbt+manually">Installing sbt manually<a href="#Installing+sbt+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Manual installation requires downloading <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> and creating a
+script to start it.
+</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Put <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> in <code>~/bin</code>.
+</p><p>Create a script to run the jar, by creating <code>~/bin/sbt</code> with these
+contents:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Make the script executable:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h3 id="Windows">Windows<a href="#Windows" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Manual installation for Windows varies by terminal type and whether
+Cygwin is used. In all cases, put the batch file or script on the path
+so that you can launch sbt in any directory by typing <code>sbt</code> at the command
+prompt. Also, adjust JVM settings according to your machine if
+necessary.
+</p><h4 id="Non-Cygwin">Non-Cygwin<a href="#Non-Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For non-Cygwin users using the standard Windows terminal, create a batch file <code>sbt.bat</code>:
+</p><pre><code class="">set SCRIPT_DIR=%~dp0
+java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
+</code></pre><p>and put the downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the
+batch file.
+</p><h4 id="Cygwin+with+the+standard+Windows+termnial">Cygwin with the standard Windows termnial<a href="#Cygwin+with+the+standard+Windows+termnial" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If using Cygwin with the standard Windows terminal, create a bash
+script <code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a>
+and remember to use cygpath if necessary. Make the script executable:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><h4 id="Cygwin+with+an+Ansi+terminal">Cygwin with an Ansi terminal<a href="#Cygwin+with+an+Ansi+terminal" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Cygwin with an Ansi terminal (supports Ansi escape sequences and is configurable via stty), create a bash script
+<code>~/bin/sbt</code>:
+</p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
+stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
+java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
+stty icanon echo &gt; /dev/null 2&gt;&amp;1
+</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a>
+and remember to use cygpath if necessary. Then, make the script
+executable:
+</p><pre><code class="">$ chmod u+x ~/bin/sbt
+</code></pre><p>In order for backspace to work correctly in the scala console, you need
+to make sure your backspace key is sending the erase character as
+configured by stty. For the default cygwin terminal (mintty) you can
+find a setting under Options -&gt; Keys “Backspace sends ^H” which will
+need to be checked if your erase key is the cygwin default of ^H.
+</p><blockquote><p><strong>Note:</strong> Other configurations are currently unsupported. Please <a href="https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md">submit a pull
+request</a>
+implementing or describing that support.
+</p></blockquote><h2 id="Hello%2C+World">Hello, World<a href="#Hello%2C+World" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve <a href="Setup.html">installed sbt</a>.
+</p><h3 id="Create+a+project+directory+with+source+code">Create a project directory with source code<a href="#Create+a+project+directory+with+source+code" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A valid sbt project can be a directory containing a single source file.
+Try creating a directory <code>hello</code> with a file <code>hw.scala</code>, containing the
+following:
+</p><pre><code class="prettyprint lang-scala">object Hi {
+  def main(args: Array[String]) = println(&quot;Hi!&quot;)
+}
+</code></pre><p>Now from inside the <code>hello</code> directory, start sbt and type <code>run</code> at the sbt
+interactive console. On Linux or OS X the commands might look like this:
+</p><pre><code class="">$ mkdir hello
+$ cd hello
+$ echo 'object Hi { def main(args: Array[String]) = println(&quot;Hi!&quot;) }' &gt; hw.scala
+$ sbt
+...
+&gt; run
+...
+Hi!
+</code></pre><p>In this case, sbt works purely by convention. sbt will find the
+following automatically:
+</p><ul><li>Sources in the base directory
+</li><li>Sources in <code>src/main/scala</code> or <code>src/main/java</code>
+</li><li>Tests in <code>src/test/scala</code> or <code>src/test/java</code>
+</li><li>Data files in <code>src/main/resources</code> or <code>src/test/resources</code>
+</li><li>jars in <code>lib</code>
+</li></ul><p>By default, sbt will build projects with the same version of Scala used
+to run sbt itself.
+</p><p>You can run the project with <code>sbt run</code> or enter the <a href="http://www.scala-lang.org/node/2097">Scala
+REPL</a> with <code>sbt console</code>. <code>sbt console</code>
+sets up your project’s classpath so you can try out live Scala examples
+based on your project’s code.
+</p><h3 id="Build+definition">Build definition<a href="#Build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Most projects will need some manual setup. Basic build settings go in a
+file called <code>build.sbt</code>, located in the project’s base directory.
+</p><p>For example, if your project is in the directory <code>hello</code>, in
+<code>hello/build.sbt</code> you might write:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+
+version := &quot;1.0&quot;
+
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>Notice the blank line between every item. This isn’t just for show;
+they’re actually required in order to separate each item. In
+<a href="Basic-Def.html">.sbt build definition</a> you’ll learn more about how to write
+a <code>build.sbt</code> file.
+</p><p>If you plan to package your project in a jar, you will want to set at
+least the name and version in a <code>build.sbt</code>.
+</p><h3 id="Setting+the+sbt+version">Setting the sbt version<a href="#Setting+the+sbt+version" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can force a particular version of sbt by creating a file
+<code>hello/project/build.properties</code>. In this file, write:
+</p><pre><code class="">sbt.version=0.13.2
+</code></pre><p>to force the use of sbt 0.13.2. sbt is 99% source compatible from
+release to release. Still, setting the sbt version in
+<code>project/build.properties</code> avoids any potential confusion.
+</p><h2 id="Directory+structure">Directory structure<a href="#Directory+structure" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve <a href="Setup.html">installed sbt</a> and seen the
+<a href="Hello.html">Hello, World</a> example.
+</p><h3 id="Base+directory">Base directory<a href="#Base+directory" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s terminology, the “base directory” is the directory containing
+the project. So if you created a project <code>hello</code> containing
+<code>hello/build.sbt</code> and <code>hello/hw.scala</code> as in the <a href="Hello.html">Hello, World</a>
+example, <code>hello</code> is your base directory.
+</p><h3 id="Source+code">Source code<a href="#Source+code" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Source code can be placed in the project’s base directory as with
+<code>hello/hw.scala</code>. However, most people don’t do this for real projects;
+too much clutter.
+</p><p>sbt uses the same directory structure as
+<a href="http://maven.apache.org/">Maven</a> for source files by default (all paths
+are relative to the base directory):
+</p><pre><code class="">src/
+  main/
+    resources/
+       &lt;files to include in main jar here&gt;
+    scala/
+       &lt;main Scala sources&gt;
+    java/
+       &lt;main Java sources&gt;
+  test/
+    resources
+       &lt;files to include in test jar here&gt;
+    scala/
+       &lt;test Scala sources&gt;
+    java/
+       &lt;test Java sources&gt;
+</code></pre><p>Other directories in <code>src/</code> will be ignored. Additionally, all hidden
+directories will be ignored.
+</p><h3 id="sbt+build+definition+files">sbt build definition files<a href="#sbt+build+definition+files" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You’ve already seen <code>build.sbt</code> in the project’s base directory. Other sbt
+files appear in a <code>project</code> subdirectory.
+</p><p><code>project</code> can contain <code>.scala</code> files, which are combined with <code>.sbt</code> files to
+form the complete build definition. See <a href="Full-Def.html">.scala build definition</a> for more.
+</p><pre><code class="">build.sbt
+project/
+  Build.scala
+</code></pre><p>You may see <code>.sbt</code> files inside <code>project/</code> but they are not equivalent to
+<code>.sbt</code> files in the project’s base directory. Explaining this will
+come <a href="Full-Def.html">later</a>, since you’ll need some background information first.
+</p><h3 id="Build+products">Build products<a href="#Build+products" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Generated files (compiled classes, packaged jars, managed files, caches,
+and documentation) will be written to the <code>target</code> directory by default.
+</p><h3 id="Configuring+version+control">Configuring version control<a href="#Configuring+version+control" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Your <code>.gitignore</code> (or equivalent for other version control systems) should
+contain:
+</p><pre><code class="">target/
+</code></pre><p>Note that this deliberately has a trailing <code>/</code> (to match only directories)
+and it deliberately has no leading <code>/</code> (to match <code>project/target/</code> in
+addition to plain <code>target/</code>).
+</p><h2 id="Running">Running<a href="#Running" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes how to use sbt once you have set up your project. It
+assumes you’ve <a href="Setup.html">installed sbt</a> and created a
+<a href="Hello.html">Hello, World</a> or other project.
+</p><h3 id="Interactive+mode">Interactive mode<a href="#Interactive+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Run sbt in your project directory with no arguments:
+</p><pre><code class="">$ sbt
+</code></pre><p>Running sbt with no command line arguments starts it in interactive
+mode. Interactive mode has a command prompt (with tab completion and
+history!).
+</p><p>For example, you could type <code>compile</code> at the sbt prompt:
+</p><pre><code class="">&gt; compile
+</code></pre><p>To <code>compile</code> again, press up arrow and then enter.
+</p><p>To run your program, type <code>run</code>.
+</p><p>To leave interactive mode, type <code>exit</code> or use Ctrl+D (Unix) or Ctrl+Z
+(Windows).
+</p><h3 id="Batch+mode">Batch mode<a href="#Batch+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can also run sbt in batch mode, specifying a space-separated list of
+sbt commands as arguments. For sbt commands that take arguments, pass
+the command and arguments as one argument to sbt by enclosing them in
+quotes. For example,
+</p><pre><code class="">$ sbt clean compile &quot;testOnly TestA TestB&quot;
+</code></pre><p>In this example, <code>testOnly</code> has arguments, <code>TestA</code> and <code>TestB</code>. The commands
+will be run in sequence (<code>clean</code>, <code>compile</code>, then <code>testOnly</code>).
+</p><h3 id="Continuous+build+and+test">Continuous build and test<a href="#Continuous+build+and+test" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To speed up your edit-compile-test cycle, you can ask sbt to
+automatically recompile or run tests whenever you save a source file.
+</p><p>Make a command run when one or more source files change by prefixing the
+command with <code>~</code>. For example, in interactive mode try:
+</p><pre><code class="">&gt; ~ compile
+</code></pre><p>Press enter to stop watching for changes.
+</p><p>You can use the <code>~</code> prefix with either interactive mode or batch mode.
+</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> for more details.
+</p><h3 id="Common+commands">Common commands<a href="#Common+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Here are some of the most common sbt commands. For a more complete list,
+see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a>.
+</p><table>
+  <tr>
+    <td><tt>clean</tt></td>
+    <td>Deletes all generated files (in the <tt>target</tt> directory).</td>
+  </tr>
+  <tr>
+    <td><tt>compile</tt></td>
+    <td>Compiles the main sources (in <tt>src/main/scala</tt> and
+   <tt>src/main/java</tt> directories).</td>
+  </tr>
+  <tr>
+    <td><tt>test</tt></td>
+    <td>Compiles and runs all tests.</td>
+  </tr>
+  <tr>
+    <td><tt>console</tt></td>
+    <td>Starts the Scala interpreter with a classpath including the
+   compiled sources and all dependencies. To return to sbt, type <tt>:quit</tt>,
+   Ctrl+D (Unix), or Ctrl+Z (Windows).</td>
+  </tr>
+  <tr>
+    <td><nobr><tt>run &lt;argument&gt;*</tt></nobr></td>
+    <td>Runs the main class for the project in the same
+   virtual machine as sbt.</td>
+  </tr>
+  <tr>
+    <td><tt>package</tt></td>
+    <td>Creates a jar file containing the files in
+    <tt>src/main/resources</tt> and the classes compiled from <tt>src/main/scala</tt> and
+    <tt>src/main/java</tt>.</td>
+  </tr>
+  <tr>
+    <td><tt>help &lt;command&gt;</tt></td>
+    <td>Displays detailed help for the specified command.
+    If no command is provided, displays brief descriptions of all
+    commands.</td>
+  </tr>
+  <tr>
+    <td><tt>reload</tt></td>
+    <td>Reloads the build definition (<tt>build.sbt</tt>, <tt>project/*.scala</tt>,
+    <tt>project/*.sbt</tt> files). Needed if you change the build definition.</td>
+  </tr>
+</table><h3 id="Tab+completion">Tab completion<a href="#Tab+completion" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Interactive mode has tab completion, including at an empty prompt. A
+special sbt convention is that pressing tab once may show only a subset
+of most likely completions, while pressing it more times shows more
+verbose choices.
+</p><h3 id="History+Commands">History Commands<a href="#History+Commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Interactive mode remembers history, even if you exit sbt and restart it.
+The simplest way to access history is with the up arrow key. The
+following commands are also supported:
+</p><table>
+  <tr>
+    <td><tt>!</tt></td>
+    <td>Show history command help.</td>
+  </tr>
+  <tr>
+    <td><tt>!!</tt></td>
+    <td>Execute the previous command again.</td>
+  </tr>
+  <tr>
+    <td><tt>!:</tt></td>
+    <td>Show all previous commands.</td>
+  </tr>  
+  <tr>
+    <td><tt>!:n</tt></td>
+    <td>Show the last <tt>n</tt> commands.</td>
+  </tr>
+  <tr>
+    <td><tt>!n</tt></td>
+    <td>Execute the command with index <tt>n</tt>, as shown by the <tt>!:</tt> command.</td>
+  </tr>
+  <tr>
+    <td><tt>!-n</tt></td>
+    <td>Execute the nth command before this one.</td>
+  </tr>
+  <tr>
+    <td><tt>!string</tt></td>
+    <td>Execute the most recent command starting with 'string.'</td>
+  </tr>
+  <tr>
+    <td><tt>!?string</tt></td>
+    <td>Execute the most recent command containing 'string.'</td>
+  </tr>
+</table><h2 id=".sbt+build+definition">.sbt build definition<a href="#.sbt+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes sbt build definitions, including some “theory” and
+the syntax of <code>build.sbt</code>. It assumes you know how to <a href="Running.html">use sbt</a>
+and have read the previous pages in the Getting Started Guide.
+</p><h3 id="vs++Build+Definition"><code>.sbt</code> vs <code>.scala</code> Build Definition<a href="#vs++Build+Definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>An sbt build definition can contain files ending in <code>.sbt</code>, located in the
+base directory of a project, and files ending in <code>.scala</code>, located in the
+<code>project/</code> subdirectory of the base directory.
+</p><p>This page discusses <code>.sbt</code> files, which are suitable for most cases. The
+<code>.scala</code> files are typically used for sharing code across <code>.sbt</code> files and
+for more complex build definitions. See
+<a href="Full-Def.html">.scala build definition</a> (later in Getting Started) for more
+on <code>.scala</code> files.
+</p><h3 id="What+is+a+Build+Definition%3F">What is a Build Definition?<a href="#What+is+a+Build+Definition%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>After examining a project and processing build definition files, sbt
+ends up with an immutable map (set of key-value pairs) describing the
+build.
+</p><p>For example, one key is <code>name</code> and it maps to a string value, the name of
+your project.
+</p><p><em>Build definition files do not affect sbt’s map directly.</em>
+</p><p>Instead, the build definition creates a huge list of objects with type
+<code>Setting[T]</code> where <code>T</code> is the type of the value in the map. A <code>Setting</code>
+describes a <em>transformation to the map</em>, such as adding a new key-value
+pair or appending to an existing value. (In the spirit of functional
+programming with immutable data structures and values, a transformation
+returns a new map — it does not update the old map in-place.)
+</p><p>In <code>build.sbt</code>, you might create a <code>Setting[String]</code> for the name of your
+project like this:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>This <code>Setting[String]</code> transforms the map by adding (or replacing) the
+name key, giving it the value <code>&quot;hello&quot;</code>. The transformed map becomes sbt’s
+new map.
+</p><p>To create the map, sbt first sorts the list of settings so that all
+changes to the same key are made together, and values that depend on
+other keys are processed after the keys they depend on. Then sbt walks
+over the sorted list of <code>Settings</code> and applies each one to the map in
+turn.
+</p><p>Summary: A build definition defines a list of <code>Setting[T]</code>, where a
+<code>Setting[T]</code> is a transformation affecting sbt’s map of key-value pairs
+and <code>T</code> is the type of each value.
+</p><h3 id="How+build.sbt+defines+settings">How build.sbt defines settings<a href="#How+build.sbt+defines+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> defines a <code>Seq[Setting[_]]</code>; it’s a list of Scala expressions,
+separated by blank lines, where each one becomes one element in the
+sequence. If you put <code>Seq(</code> in front of the <code>.sbt</code> file and <code>)</code> at the end and
+replace the blank lines with commas, you’d be looking at the equivalent
+<code>.scala</code> code.
+</p><p>Here’s an example:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+
+version := &quot;1.0&quot;
+
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>Each <code>Setting</code> is defined with a Scala expression. The expressions in
+<code>build.sbt</code> are independent of one another, and they are expressions,
+rather than complete Scala statements. These expressions may be
+interspersed with <code>val</code>s, <code>lazy val</code>s, and <code>def</code>s. Top-level <code>object</code>s and
+<code>class</code>es are not allowed in <code>build.sbt</code>. Those should go in the <code>project/</code>
+directory as full Scala source files.
+</p><p>On the left, <code>name</code>, <code>version</code>, and <code>scalaVersion</code> are <em>keys</em>. A key is an
+instance of <code>SettingKey[T]</code>, <code>TaskKey[T]</code>, or <code>InputKey[T]</code> where <code>T</code> is the
+expected value type. The kinds of key are explained below.
+</p><p>Keys have a method called <code>:=</code>, which returns a <code>Setting[T]</code>. You could use
+a Java-like syntax to call the method:
+</p><pre><code class="prettyprint lang-scala">name.:=(&quot;hello&quot;)
+</code></pre><p>But Scala allows <code>name := &quot;hello&quot;</code> instead (in Scala, a single-parameter
+method can use either syntax).
+</p><p>The <code>:=</code> method on key <code>name</code> returns a <code>Setting</code>, specifically a
+<code>Setting[String]</code>. <code>String</code> also appears in the type of <code>name</code> itself, which
+is <code>SettingKey[String]</code>. In this case, the returned Setting[String] is a
+transformation to add or replace the <code>name</code> key in sbt’s map, giving it
+the value <code>&quot;hello&quot;</code>.
+</p><p>If you use the wrong value type, the build definition will not compile:
+</p><pre><code class="prettyprint lang-scala">name := 42  // will not compile
+</code></pre><h3 id="Settings+must+be+separated+by+blank+lines">Settings must be separated by blank lines<a href="#Settings+must+be+separated+by+blank+lines" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can’t write a build.sbt like this:
+</p><pre><code class="prettyprint lang-scala">// will NOT compile, no blank lines
+name := &quot;hello&quot;
+version := &quot;1.0&quot;
+scalaVersion := &quot;2.10.3&quot;
+</code></pre><p>sbt needs some kind of delimiter to tell where one expression stops and
+the next begins.
+</p><p><code>.sbt</code> files contain a list of Scala expressions, not a single Scala
+program. These expressions have to be split up and passed to the
+compiler individually.
+</p><h3 id="Keys">Keys<a href="#Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Types">Types<a href="#Types" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There are three flavors of key:
+</p><ul><li><code>SettingKey[T]</code>: a key for a value computed once (the value is
+computed when loading the project, and kept around).
+</li><li><code>TaskKey[T]</code>: a key for a value, called a <em>task</em>, that has to be
+recomputed each time, potentially with side effects.
+</li><li><code>InputKey[T]</code>: a key for a task that has command line arguments as
+input. Check out <a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> for more details.
+</li></ul><h4 id="Built-in+Keys">Built-in Keys<a href="#Built-in+Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The built-in keys are just fields in an object called
+<a href="../../sxr/sbt/Keys.scala.html">Keys</a>. A <code>build.sbt</code> implicitly has an
+<code>import sbt.Keys._</code>, so <code>sbt.Keys.name</code> can be referred to as <code>name</code>.
+</p><h4 id="Custom+Keys">Custom Keys<a href="#Custom+Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Custom keys may be defined with their respective creation methods:
+<code>settingKey</code>, <code>taskKey</code>, and <code>inputKey</code>. Each method expects the type of the
+value associated with the key as well as a description. The name of the
+key is taken from the <code>val</code> the key is assigned to. For example, to define
+a key for a new task called <code>hello</code>,
+</p><pre><code class="prettyprint lang-scala">lazy val hello = taskKey[Unit](&quot;An example task&quot;)
+</code></pre><p>Here we have used the fact that an <code>.sbt</code> file can contain <code>val</code>s and <code>def</code>s
+in addition to settings. All such definitions are evaluated before
+settings regardless of where they are defined in the file. <code>val</code>s and <code>def</code>s
+must be separated from settings by blank lines.
+</p><blockquote><p><strong>Note:</strong> Typically, lazy vals are used instead of vals to avoid initialization
+order problems.
+</p></blockquote><h4 id="Task+v.+Setting+keys">Task v. Setting keys<a href="#Task+v.+Setting+keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A <code>TaskKey[T]</code> is said to define a <em>task</em>. Tasks are operations such as
+<code>compile</code> or <code>package</code>. They may return <code>Unit</code> (<code>Unit</code> is Scala for <code>void</code>), or
+they may return a value related to the task, for example <code>package</code> is a
+<code>TaskKey[File]</code> and its value is the jar file it creates.
+</p><p>Each time you start a task execution, for example by typing <code>compile</code> at
+the interactive sbt prompt, sbt will re-run any tasks involved exactly
+once.
+</p><p>sbt’s map describing the project can keep around a fixed string value
+for a setting such as name, but it has to keep around some executable
+code for a task such as <code>compile</code> — even if that executable code
+eventually returns a string, it has to be re-run every time.
+</p><p><em>A given key always refers to either a task or a plain setting.</em> That
+is, “taskiness” (whether to re-run each time) is a property of the key,
+not the value.
+</p><h3 id="Defining+tasks+and+settings">Defining tasks and settings<a href="#Defining+tasks+and+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Using <code>:=</code>, you can assign a value to a setting and a computation to a
+task. For a setting, the value will be computed once at project load
+time. For a task, the computation will be re-run each time the task is
+executed.
+</p><p>For example, to implement the <code>hello</code> task from the previous section, :
+</p><pre><code class="prettyprint lang-scala">hello := { println(&quot;Hello!&quot;) }
+</code></pre><p>We already saw an example of defining settings when we defined the
+project’s name,
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><h4 id="Types+for+tasks+and+settings">Types for tasks and settings<a href="#Types+for+tasks+and+settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>From a type-system perspective, the <code>Setting</code> created from a task key is
+slightly different from the one created from a setting key.
+<code>taskKey := 42</code> results in a <code>Setting[Task[T]]</code> while <code>settingKey := 42</code>
+results in a <code>Setting[T]</code>. For most purposes this makes no difference; the
+task key still creates a value of type <code>T</code> when the task executes.
+</p><p>The <code>T</code> vs. <code>Task[T]</code> type difference has this implication: a setting can’t
+depend on a task, because a setting is evaluated only once on project
+load and is not re-run. More on this in
+<a href="More-About-Settings.html">more kinds of setting</a>, coming up soon.
+</p><h3 id="Keys+in+sbt+interactive+mode">Keys in sbt interactive mode<a href="#Keys+in+sbt+interactive+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s interactive mode, you can type the name of any task to execute
+that task. This is why typing <code>compile</code> runs the <code>compile</code> task. <code>compile</code> is
+a task key.
+</p><p>If you type the name of a setting key rather than a task key, the value
+of the setting key will be displayed. Typing a task key name executes
+the task but doesn’t display the resulting value; to see a task’s
+result, use <code>show &lt;task name&gt;</code> rather than plain <code>&lt;task name&gt;</code>. The
+convention for keys names is to use <code>camelCase</code> so that the command line
+name and the Scala identifiers are the same.
+</p><p>To learn more about any key, type <code>inspect &lt;keyname&gt;</code> at the sbt
+interactive prompt. Some of the information <code>inspect</code> displays won’t make
+sense yet, but at the top it shows you the setting’s value type and a
+brief description of the setting.
+</p><h3 id="Imports+in+build.sbt">Imports in build.sbt<a href="#Imports+in+build.sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can place import statements at the top of <code>build.sbt</code>; they need not
+be separated by blank lines.
+</p><p>There are some implied default imports, as follows:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Process._
+import Keys._
+</code></pre><p>(In addition, if you have <a href="Full-Def.html">.scala files</a>, the contents of any
+<code>Build</code> or <code>Plugin</code> objects in those files will be imported. More on that
+when we get to <a href="Full-Def.html">.scala build definition</a>.)
+</p><h3 id="Adding+library+dependencies">Adding library dependencies<a href="#Adding+library+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To depend on third-party libraries, there are two options. The first is
+to drop jars in <code>lib/</code> (unmanaged dependencies) and the other is to add
+managed dependencies, which will look like this in <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+</code></pre><p>This is how you add a managed dependency on the Apache Derby library,
+version 10.4.1.3.
+</p><p>The <code>libraryDependencies</code> key involves two complexities: <code>+=</code> rather than
+<code>:=</code>, and the <code>%</code> method. <code>+=</code> appends to the key’s old value rather than
+replacing it, this is explained in
+<a href="More-About-Settings.html">more kinds of setting</a>. The <code>%</code>
+method is used to construct an Ivy module ID from strings, explained in
+<a href="Library-Dependencies.html">Library dependencies</a>.
+</p><p>We’ll skip over the details of library dependencies until later in the
+Getting Started Guide. There’s a
+<a href="Library-Dependencies.html">whole page</a> covering it later on.
+</p><h2 id="Scopes">Scopes<a href="#Scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page describes scopes. It assumes you’ve read and understood the
+previous page, <a href="Basic-Def.html">.sbt build definition</a>.
+</p><h3 id="The+whole+story+about+keys">The whole story about keys<a href="#The+whole+story+about+keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="Basic-Def.html">Previously</a> we pretended that a key like <code>name</code> corresponded
+to one entry in sbt’s map of key-value pairs. This was a simplification.
+</p><p>In truth, each key can have an associated value in more than one
+context, called a “scope.”
+</p><p>Some concrete examples:
+</p><ul><li>if you have multiple projects in your build definition, a key can
+have a different value in each project.
+</li><li>the <code>compile</code> key may have a different value for your main sources and
+your test sources, if you want to compile them differently.
+</li><li>the <code>packageOptions</code> key (which contains options for creating jar
+packages) may have different values when packaging class files
+(<code>packageBin</code>) or packaging source code (<code>packageSrc</code>).
+</li></ul><p><em>There is no single value for a given key <code>name</code></em>, because the value may
+differ according to scope.
+</p><p>However, there is a single value for a given <em>scoped</em> key.
+</p><p>If you think about sbt processing a list of settings to generate a
+key-value map describing the project, as
+<a href="Basic-Def.html">discussed earlier</a>, the keys in that key-value map are
+<em>scoped</em> keys. Each setting defined in the build definition (for example
+in <code>build.sbt</code>) applies to a scoped key as well.
+</p><p>Often the scope is implied or has a default, but if the defaults are
+wrong, you’ll need to mention the desired scope in <code>build.sbt</code>.
+</p><h3 id="Scope+axes">Scope axes<a href="#Scope+axes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A <em>scope axis</em> is a type, where each instance of the type can define its
+own scope (that is, each instance can have its own unique values for
+keys).
+</p><p>There are three scope axes:
+</p><ul><li>Projects
+</li><li>Configurations
+</li><li>Tasks
+</li></ul><h4 id="Scoping+by+project+axis">Scoping by project axis<a href="#Scoping+by+project+axis" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If you <a href="Multi-Project.html">put multiple projects in a single build</a>, each
+project needs its own settings. That is, keys can be scoped according to
+the project.
+</p><p>The project axis can also be set to “entire build”, so a setting applies
+to the entire build rather than a single project. Build-level settings
+are often used as a fallback when a project doesn’t define a
+project-specific setting.
+</p><h4 id="Scoping+by+configuration+axis">Scoping by configuration axis<a href="#Scoping+by+configuration+axis" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A <em>configuration</em> defines a flavor of build, potentially with its own
+classpath, sources, generated packages, etc. The configuration concept
+comes from Ivy, which sbt uses for
+managed dependencies <a href="Library-Dependencies.html">Library Dependencies</a>, and from
+<a href="http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope">MavenScopes</a>.
+</p><p>Some configurations you’ll see in sbt:
+</p><ul><li><code>Compile</code> which defines the main build (<code>src/main/scala</code>).
+</li><li><code>Test</code> which defines how to build tests (<code>src/test/scala</code>).
+</li><li><code>Runtime</code> which defines the classpath for the <code>run</code> task.
+</li></ul><p>By default, all the keys associated with compiling, packaging, and
+running are scoped to a configuration and therefore may work differently
+in each configuration. The most obvious examples are the task keys
+<code>compile</code>, <code>package</code>, and <code>run</code>; but all the keys which <em>affect</em> those keys
+(such as <code>sourceDirectories</code> or <code>scalacOptions</code> or <code>fullClasspath</code>) are also
+scoped to the configuration.
+</p><h4 id="Scoping+by+task+axis">Scoping by task axis<a href="#Scoping+by+task+axis" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Settings can affect how a task works. For example, the <code>packageSrc</code> task
+is affected by the <code>packageOptions</code> setting.
+</p><p>To support this, a task key (such as <code>packageSrc</code>) can be a scope for
+another key (such as <code>packageOptions</code>).
+</p><p>The various tasks that build a package (<code>packageSrc</code>, <code>packageBin</code>,
+<code>packageDoc</code>) can share keys related to packaging, such as <code>artifactName</code>
+and <code>packageOptions</code>. Those keys can have distinct values for each
+packaging task.
+</p><h3 id="Global+scope">Global scope<a href="#Global+scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Each scope axis can be filled in with an instance of the axis type (for
+example the task axis can be filled in with a task), or the axis can be
+filled in with the special value <code>Global</code>.
+</p><p><code>Global</code> means what you would expect: the setting’s value applies to all
+instances of that axis. For example if the task axis is Global, then the
+setting would apply to all tasks.
+</p><h3 id="Delegation">Delegation<a href="#Delegation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A scoped key may be undefined, if it has no value associated with it in
+its scope.
+</p><p>For each scope, sbt has a fallback search path made up of other scopes.
+Typically, if a key has no associated value in a more-specific scope,
+sbt will try to get a value from a more general scope, such as the
+<code>Global</code> scope or the entire-build scope.
+</p><p>This feature allows you to set a value once in a more general scope,
+allowing multiple more-specific scopes to inherit the value.
+</p><p>You can see the fallback search path or “delegates” for a key using the
+<code>inspect</code> command, as described below. Read on.
+</p><h3 id="Referring+to+scoped+keys+when+running+sbt">Referring to scoped keys when running sbt<a href="#Referring+to+scoped+keys+when+running+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>On the command line and in interactive mode, sbt displays (and parses)
+scoped keys like this:
+</p><pre><code class="">{&lt;build-uri&gt;}&lt;project-id&gt;/config:intask::key
+</code></pre><ul><li><code>{&lt;build-uri&gt;}/&lt;project-id&gt;</code> identifies the project axis. The
+<code>&lt;project-id&gt;</code> part will be missing if the project axis has “entire build” scope.
+</li><li><code>config</code> identifies the configuration axis.
+</li><li><code>intask</code> identifies the task axis.
+</li><li><code>key</code> identifies the key being scoped.
+</li></ul><p><code>*</code> can appear for each axis, referring to the <code>Global</code> scope.
+</p><p>If you omit part of the scoped key, it will be inferred as follows:
+</p><ul><li>the current project will be used if you omit the project.
+</li><li>a key-dependent configuration will be auto-detected if you omit the
+configuration or task.
+</li></ul><p>For more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Examples+of+scoped+key+notation">Examples of scoped key notation<a href="#Examples+of+scoped+key+notation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>fullClasspath</code> specifies just a key, so the default scopes are used:
+current project, a key-dependent configuration, and global task
+scope.
+</li><li><code>test:fullClasspath</code> specifies the configuration, so this is
+<code>fullClasspath</code> in the <code>test</code> configuration, with defaults for the other
+two scope axes.
+</li><li><code>*:fullClasspath</code> specifies <code>Global</code> for the configuration, rather than
+the default configuration.
+</li><li><code>doc::fullClasspath</code> specifies the <code>fullClasspath</code> key scoped to the <code>doc</code>
+task, with the defaults for the project and configuration axes.
+</li><li><code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code>
+specifies a project, <code>{file:/home/hp/checkout/hello/}default-aea33a</code>,
+where the project is identified with the build
+<code>{file:/home/hp/checkout/hello/}</code> and then a project id inside that
+build <code>default-aea33a</code>. Also specifies configuration <code>test</code>, but leaves
+the default task axis.
+</li><li><code>{file:/home/hp/checkout/hello/}/test:fullClasspath</code> sets the project
+axis to “entire build” where the build is
+<code>{file:/home/hp/checkout/hello/}</code>.
+</li><li><code>{.}/test:fullClasspath</code> sets the project axis to “entire build” where
+the build is <code>{.}</code>. <code>{.}</code> can be written <code>ThisBuild</code> in Scala code.
+</li><li><code>{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath</code> sets all
+three scope axes.
+</li></ul><h3 id="Inspecting+scopes">Inspecting scopes<a href="#Inspecting+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In sbt’s interactive mode, you can use the inspect command to understand
+keys and their scopes. Try <code>inspect test:fullClasspath</code>:
+</p><pre><code class="">$ sbt
+&gt; inspect test:fullClasspath
+[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+[info] Description:
+[info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info] Dependencies:
+[info]  test:exportedProducts
+[info]  test:dependencyClasspath
+[info] Reverse dependencies:
+[info]  test:runMain
+[info]  test:run
+[info]  test:testLoader
+[info]  test:console
+[info] Delegates:
+[info]  test:fullClasspath
+[info]  runtime:fullClasspath
+[info]  compile:fullClasspath
+[info]  *:fullClasspath
+[info]  {.}/test:fullClasspath
+[info]  {.}/runtime:fullClasspath
+[info]  {.}/compile:fullClasspath
+[info]  {.}/*:fullClasspath
+[info]  */test:fullClasspath
+[info]  */runtime:fullClasspath
+[info]  */compile:fullClasspath
+[info]  */*:fullClasspath
+[info] Related:
+[info]  compile:fullClasspath
+[info]  compile:fullClasspath(for doc)
+[info]  test:fullClasspath(for doc)
+[info]  runtime:fullClasspath
+</code></pre><p>On the first line, you can see this is a task (as opposed to a setting,
+as explained in <a href="Basic-Def.html">.sbt build definition</a>). The value
+resulting from the task will have type
+<code>scala.collection.Seq[sbt.Attributed[java.io.File]]</code>.
+</p><p>“Provided by” points you to the scoped key that defines the value, in
+this case
+<code>{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath</code> (which
+is the <code>fullClasspath</code> key scoped to the <code>test</code> configuration and the
+<code>{file:/home/hp/checkout/hello/}default-aea33a</code> project).
+</p><p>“Dependencies” may not make sense yet; stay tuned for the
+<a href="More-About-Settings.html">next page</a>.
+</p><p>You can also see the delegates; if the value were not defined, sbt would
+search through:
+</p><ul><li>two other configurations (<code>runtime:fullClasspath</code>,
+<code>compile:fullClasspath</code>). In these scoped keys, the project is
+unspecified meaning “current project” and the task is unspecified
+meaning <code>Global</code>
+</li><li>configuration set to <code>Global</code> (<code>*:fullClasspath</code>), since project is
+still unspecified it’s “current project” and task is still
+unspecified so <code>Global</code>
+</li><li>project set to <code>{.}</code> or <code>ThisBuild</code> (meaning the entire build, no
+specific project)
+</li><li>project axis set to <code>Global</code> (<code>*/test:fullClasspath</code>) (remember, an
+unspecified project means current, so searching <code>Global</code> here is new;
+i.e. <code>*</code> and “no project shown” are different for the project axis;
+i.e. <code>*/test:fullClasspath</code> is not the same as <code>test:fullClasspath</code>)
+</li><li>both project and configuration set to <code>Global</code> (<code>*/*:fullClasspath</code>)
+(remember that unspecified task means <code>Global</code> already, so
+<code>*/*:fullClasspath</code> uses <code>Global</code> for all three axes)
+</li></ul><p>Try <code>inspect fullClasspath</code> (as opposed to the above example,
+inspect <code>test:fullClasspath</code>) to get a sense of the difference. Because
+the configuration is omitted, it is autodetected as <code>compile</code>.
+<code>inspect compile:fullClasspath</code> should therefore look the same as
+<code>inspect fullClasspath</code>.
+</p><p>Try <code>inspect *:fullClasspath</code> for another contrast. <code>fullClasspath</code> is not
+defined in the <code>Global</code> configuration by default.
+</p><p>Again, for more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><h3 id="Referring+to+scopes+in+a+build+definition">Referring to scopes in a build definition<a href="#Referring+to+scopes+in+a+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you create a setting in <code>build.sbt</code> with a bare key, it will be scoped
+to the current project, configuration <code>Global</code> and task <code>Global</code>:
+</p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
+</code></pre><p>Run sbt and <code>inspect name</code> to see that it’s provided by
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>, that is, the
+project is <code>{file:/home/hp/checkout/hello/}default-aea33a</code>, the
+configuration is <code>*</code> (meaning global), and the task is not shown (which
+also means global).
+</p><!-- TODO: Fix this. -->
+<p><code>build.sbt</code> always defines settings for a single project, so the “current
+project” is the project you’re defining in that particular <code>build.sbt</code>.
+(For <a href="Multi-Project.html">multi-project builds</a>, each project has its own
+<code>build.sbt</code>.)
+</p><p>Keys have an overloaded method called in used to set the scope. The
+argument to in can be an instance of any of the scope axes. So for
+example, though there’s no real reason to do this, you could set the
+<code>name</code> scoped to the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in Compile := &quot;hello&quot;
+</code></pre><p>or you could set the name scoped to the <code>packageBin</code> task (pointless! just
+an example):
+</p><pre><code class="prettyprint lang-scala">name in packageBin := &quot;hello&quot;
+</code></pre><p>or you could set the <code>name</code> with multiple scope axes, for example in the
+<code>packageBin</code> task in the <code>Compile</code> configuration:
+</p><pre><code class="prettyprint lang-scala">name in (Compile, packageBin) := &quot;hello&quot;
+</code></pre><p>or you could use <code>Global</code> for all axes:
+</p><pre><code class="prettyprint lang-scala">name in Global := &quot;hello&quot;
+</code></pre><p>(<code>name in Global</code> implicitly converts the scope axis <code>Global</code> to a scope
+with all axes set to <code>Global</code>; the task and configuration are already
+<code>Global</code> by default, so here the effect is to make the project <code>Global</code>,
+that is, define <code>*/*:name</code> rather than
+<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code>)
+</p><p>If you aren’t used to Scala, a reminder: it’s important to understand
+that in and <code>:=</code> are just methods, not magic. Scala lets you write them in
+a nicer way, but you could also use the Java style:
+</p><pre><code class="prettyprint lang-scala">name.in(Compile).:=(&quot;hello&quot;)
+</code></pre><p>There’s no reason to use this ugly syntax, but it illustrates that these
+are in fact methods.
+</p><h3 id="When+to+specify+a+scope">When to specify a scope<a href="#When+to+specify+a+scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You need to specify the scope if the key in question is normally scoped.
+For example, the <code>compile</code> task, by default, is scoped to <code>Compile</code> and <code>Test</code>
+configurations, and does not exist outside of those scopes.
+</p><p>To change the value associated with the <code>compile</code> key, you need to write
+<code>compile in Compile</code> or <code>compile in Test</code>. Using plain <code>compile</code> would define
+a new compile task scoped to the current project, rather than overriding
+the standard compile tasks which are scoped to a configuration.
+</p><p>If you get an error like <em>“Reference to undefined setting“</em>, often
+you’ve failed to specify a scope, or you’ve specified the wrong scope.
+The key you’re using may be defined in some other scope. sbt will try to
+suggest what you meant as part of the error message; look for “Did you
+mean compile:compile?”
+</p><p>One way to think of it is that a name is only <em>part</em> of a key. In
+reality, all keys consist of both a name, and a scope (where the scope
+has three axes). The entire expression
+<code>packageOptions in (Compile, packageBin)</code> is a key name, in other words.
+Simply <code>packageOptions</code> is also a key name, but a different one (for keys
+with no in, a scope is implicitly assumed: current project, global
+config, global task).
+</p><h2 id="More+kinds+of+setting">More kinds of setting<a href="#More+kinds+of+setting" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page explains other ways to create a Setting, beyond the basic <code>:=</code>
+method. It assumes you’ve read <a href="Basic-Def.html">.sbt build definition</a> and
+<a href="Scopes.html">scopes</a>.
+</p><h3 id="Refresher%3A+Settings">Refresher: Settings<a href="#Refresher%3A+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="Basic-Def.html">Remember</a>, a build definition creates a list of <code>Setting</code>,
+which is then used to transform sbt’s description of the build (which is
+a map of key-value pairs). A Setting is a transformation with sbt’s
+earlier map as input and a new map as output. The new map becomes sbt’s
+new state.
+</p><p>Different settings transform the map in different ways.
+<a href="Basic-Def.html">Earlier</a>, you read about the <code>:=</code> method.
+</p><p>The <code>Setting</code> which <code>:=</code> creates puts a fixed, constant value in the new,
+transformed map. For example, if you transform a map with the setting
+<code>name := &quot;hello&quot;</code> the new map has the string <code>&quot;hello&quot;</code> stored under the key
+name.
+</p><p>Settings must end up in the master list of settings to do any good (all
+lines in a <code>build.sbt</code> automatically end up in the list, but in a
+<a href="Full-Def.html">.scala file</a> you can get it wrong by creating a <code>Setting</code>
+without putting it where sbt will find it).
+</p><h3 id="Appending+to+previous+values%3A++and">Appending to previous values: <code>+=</code> and <code>++=</code><a href="#Appending+to+previous+values%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Assignment with <code>:=</code> is the simplest transformation, but keys have other
+methods as well. If the <code>T</code> in <code>SettingKey[T]</code> is a sequence, i.e. the key’s
+value type is a sequence, you can append to the sequence rather than
+replacing it.
+</p><ul><li><code>+=</code> will append a single element to the sequence.
+</li><li><code>++=</code> will concatenate another sequence.
+</li></ul><p>For example, the key <code>sourceDirectories in Compile</code> has a <code>Seq[File]</code> as its
+value. By default this key’s value would include <code>src/main/scala</code>. If you
+wanted to also compile source code in a directory called source (since
+you just have to be nonstandard), you could add that directory:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile += new File(&quot;source&quot;)
+</code></pre><p>Or, using the <code>file()</code> function from the sbt package for convenience:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile += file(&quot;source&quot;)
+</code></pre><p>(<code>file()</code> just creates a new <code>File</code>.)
+</p><p>You could use <code>++=</code> to add more than one directory at a time:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile ++= Seq(file(&quot;sources1&quot;), file(&quot;sources2&quot;))
+</code></pre><p>Where <code>Seq(a, b, c, ...)</code> is standard Scala syntax to construct a
+sequence.
+</p><p>To replace the default source directories entirely, you use <code>:=</code> of
+course:
+</p><pre><code class="prettyprint lang-scala">sourceDirectories in Compile := Seq(file(&quot;sources1&quot;), file(&quot;sources2&quot;))
+</code></pre><h3 id="Computing+a+value+based+on+other+keys%E2%80%99+values">Computing a value based on other keys’ values<a href="#Computing+a+value+based+on+other+keys%E2%80%99+values" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Reference the value of another task or setting by calling value on the
+key for the task or setting. The value method is special and may only be
+called in the argument to <code>:=</code>, <code>+=</code>, or <code>++=</code>.
+</p><p>As a first example, consider defining the project organization to be the
+same as the project name.
+</p><pre><code class="prettyprint lang-scala">// name our organization after our project (both are SettingKey[String])
+organization := name.value
+</code></pre><p>Or, set the name to the name of the project’s directory:
+</p><pre><code class="prettyprint lang-scala">// name is a Key[String], baseDirectory is a Key[File]
+// name the project after the directory it's inside
+name := baseDirectory.value.getName
+</code></pre><p>This transforms the value of <code>baseDirectory</code> using the standard <code>getName</code>
+method of <code>java.io.File</code>.
+</p><p>Using multiple inputs is similar. For example,
+</p><pre><code class="prettyprint lang-scala">name := &quot;project &quot; + name.value + &quot; from &quot; + organization.value + &quot; version &quot; + version.value
+</code></pre><p>This sets the name in terms of its previous value as well as the
+organization and version settings.
+</p><h4 id="Settings+with+dependencies">Settings with dependencies<a href="#Settings+with+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In the setting <code>name := baseDirectory.value.getName</code>, <code>name</code> will have a
+<em>dependency</em> on <code>baseDirectory</code>. If you place the above in <code>build.sbt</code> and
+run the sbt interactive console, then type <code>inspect name</code>, you should see
+(in part):
+</p><pre><code class="">[info] Dependencies:
+[info]  *:baseDirectory
+</code></pre><p>This is how sbt knows which settings depend on which other settings.
+Remember that some settings describe tasks, so this approach also
+creates dependencies between tasks.
+</p><p>For example, if you <code>inspect compile</code> you’ll see it depends on another key
+<code>compileInputs</code>, and if you <code>inspect compileInputs</code> it in turn depends on
+other keys. Keep following the dependency chains and magic happens. When
+you type <code>compile</code> sbt automatically performs an <code>update</code>, for example. It
+Just Works because the values required as inputs to the <code>compile</code>
+computation require sbt to do the <code>update</code> computation first.
+</p><p>In this way, all build dependencies in sbt are <em>automatic</em> rather than
+explicitly declared. If you use a key’s value in another computation,
+then the computation depends on that key. It just works!
+</p><h4 id="When+settings+are+undefined">When settings are undefined<a href="#When+settings+are+undefined" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Whenever a setting uses <code>:=</code>, <code>+=</code>, or <code>++=</code> to create a dependency on itself
+or another key’s value, the value it depends on must exist. If it does
+not, sbt will complain. It might say <em>“Reference to undefined setting“</em>,
+for example. When this happens, be sure you’re using the key in the
+<a href="Scopes.html">scope</a> that defines it.
+</p><p>It’s possible to create cycles, which is an error; sbt will tell you if
+you do this.
+</p><h4 id="Tasks+with+dependencies">Tasks with dependencies<a href="#Tasks+with+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>As noted in <a href="Basic-Def.html">.sbt build definition</a>, task keys create a
+<code>Setting[Task[T]]</code> rather than a <code>Setting[T]</code> when you build a setting with
+<code>:=</code>, etc. Tasks can use settings as inputs, but settings cannot use tasks
+as inputs.
+</p><p>Take these two keys (from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>):
+</p><pre><code class="prettyprint lang-scala">val scalacOptions = taskKey[Seq[String]](&quot;Options for the Scala compiler.&quot;)
+val checksums = settingKey[Seq[String]](&quot;The list of checksums to generate and to verify for dependencies.&quot;)
+</code></pre><p>(<code>scalacOptions</code> and <code>checksums</code> have nothing to do with each other, they
+are just two keys with the same value type, where one is a task.)
+</p><p>It is possible to compile a <code>build.sbt</code> that aliases <code>scalacOptions</code> to
+<code>checksums</code>, but not the other way. For example, this is allowed:
+</p><pre><code class="prettyprint lang-scala">// The scalacOptions task may be defined in terms of the checksums setting
+scalacOptions := checksums.value
+</code></pre><p>There is no way to go the <em>other</em> direction. That is, a setting key
+can’t depend on a task key. That’s because a setting key is only
+computed once on project load, so the task would not be re-run every
+time, and tasks expect to re-run every time.
+</p><pre><code class="prettyprint lang-scala">// The checksums setting may not be defined in terms of the scalacOptions task
+checksums := scalacOptions.value
+</code></pre><h3 id="Appending+with+dependencies%3A++and">Appending with dependencies: <code>+=</code> and <code>++=</code><a href="#Appending+with+dependencies%3A++and" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Other keys can be used when appending to an existing setting or task,
+just like they can for assigning with <code>:=</code>.
+</p><p>For example, say you have a coverage report named after the project, and
+you want to add it to the files removed by clean:
+</p><pre><code class="prettyprint lang-scala">cleanFiles += file(&quot;coverage-report-&quot; + name.value + &quot;.txt&quot;)
+</code></pre><h2 id="Library+dependencies">Library dependencies<a href="#Library+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve read the earlier Getting Started pages, in
+particular <a href="Basic-Def.html">.sbt build definition</a>, <a href="Scopes.html">scopes</a>, and
+<a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>Library dependencies can be added in two ways:
+</p><ul><li><em>unmanaged dependencies</em> are jars dropped into the <code>lib</code> directory
+</li><li><em>managed dependencies</em> are configured in the build definition and
+downloaded automatically from repositories
+</li></ul><h3 id="Unmanaged+dependencies">Unmanaged dependencies<a href="#Unmanaged+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Most people use managed dependencies instead of unmanaged. But unmanaged
+can be simpler when starting out.
+</p><p>Unmanaged dependencies work like this: add jars to <code>lib</code> and they will be
+placed on the project classpath. Not much else to it!
+</p><p>You can place test jars such as
+<a href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a href="http://code.google.com/p/specs/">specs</a>, and
+<a href="http://www.scalatest.org/">ScalaTest</a> in <code>lib</code> as well.
+</p><p>Dependencies in <code>lib</code> go on all the classpaths (for <code>compile</code>, <code>test</code>, <code>run</code>,
+and <code>console</code>). If you wanted to change the classpath for just one of
+those, you would adjust <code>dependencyClasspath in Compile</code> or
+<code>dependencyClasspath in Runtime</code> for example.
+</p><p>There’s nothing to add to <code>build.sbt</code> to use unmanaged dependencies,
+though you could change the <code>unmanagedBase</code> key if you’d like to use a
+different directory rather than <code>lib</code>.
+</p><p>To use <code>custom_lib</code> instead of <code>lib</code>:
+</p><pre><code class="prettyprint lang-scala">unmanagedBase := baseDirectory.value / &quot;custom_lib&quot;
+</code></pre><p><code>baseDirectory</code> is the project’s root directory, so here you’re changing
+<code>unmanagedBase</code> depending on <code>baseDirectory</code> using the special value method
+as explained in <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>There’s also an <code>unmanagedJars</code> task which lists the jars from the
+<code>unmanagedBase</code> directory. If you wanted to use multiple directories or do
+something else complex, you might need to replace the whole
+<code>unmanagedJars</code> task with one that does something else.
+</p><h3 id="Managed+Dependencies">Managed Dependencies<a href="#Managed+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt uses <a href="http://ant.apache.org/ivy/">Apache Ivy</a> to implement managed
+dependencies, so if you’re familiar with Maven or Ivy, you won’t have
+much trouble.
+</p><h4 id="The++key">The <code>libraryDependencies</code> key<a href="#The++key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Most of the time, you can simply list your dependencies in the setting
+<code>libraryDependencies</code>. It’s also possible to write a Maven POM file or Ivy
+configuration file to externally configure your dependencies, and have
+sbt use those external configuration files. You can learn more about
+that <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy">here</a>.
+</p><p>Declaring a dependency looks like this, where <code>groupId</code>, <code>artifactId</code>, and
+<code>revision</code> are strings:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision
+</code></pre><p>or like this, where <code>configuration</code> is also a string:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision % configuration
+</code></pre><p><code>libraryDependencies </code>is declared in
+<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
+this:
+</p><pre><code class="prettyprint lang-scala">val libraryDependencies = settingKey[Seq[ModuleID]](&quot;Declares managed dependencies.&quot;)
+</code></pre><p>The <code>%</code> methods create<code>ModuleID</code> objects from strings, then you add those
+<code>ModuleID</code> to <code>libraryDependencies</code>.
+</p><p>Of course, sbt (via Ivy) has to know where to download the module. If
+your module is in one of the default repositories sbt comes with, this
+will just work. For example, Apache Derby is in a default repository:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+</code></pre><p>If you type that in <code>build.sbt</code> and then <code>update</code>, sbt should download Derby
+to <code>~/.ivy2/cache/org.apache.derby/</code>. (By the way, <code>updat</code>e is a dependency
+of <code>compile</code> so there’s no need to manually type <code>update</code> most of the time.)
+</p><p>Of course, you can also use <code>++=</code> to add a list of dependencies all at
+once:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies ++= Seq(
+  groupID % artifactID % revision,
+  groupID % otherID % otherRevision
+)
+</code></pre><p>In rare cases you might find reasons to use <code>:=</code> with <code>libraryDependencies</code>
+as well.
+</p><h4 id="Getting+the+right+Scala+version+with">Getting the right Scala version with <code>%%</code><a href="#Getting+the+right+Scala+version+with" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If you use <code>groupID %% artifactID % revision</code> rather than
+<code>groupID % artifactID % revision</code> (the difference is the double <code>%%</code> after
+the <code>groupID</code>), sbt will add your project’s Scala version to the artifact
+name. This is just a shortcut. You could write this without the <code>%%</code>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scala-tools&quot; % &quot;scala-stm_2.9.1&quot; % &quot;0.3&quot;
+</code></pre><p>Assuming the <code>scalaVersion</code> for your build is <code>2.9.1</code>, the following is
+identical:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scala-tools&quot; %% &quot;scala-stm&quot; % &quot;0.3&quot;
+</code></pre><p>The idea is that many dependencies are compiled for multiple Scala
+versions, and you’d like to get the one that matches your project.
+</p><p>The complexity in practice is that often a dependency will work with a
+slightly different Scala version; but <code>%%</code> is not smart about that. So if
+the dependency is available for <code>2.9.0</code> but you’re using
+<code>scalaVersion := &quot;2.9.1&quot;</code>, you won’t be able to use <code>%%</code> even though the
+<code>2.9.0</code> dependency likely works. If <code>%%</code> stops working just go see which
+versions the dependency is really built for, and hardcode the one you
+think will work (assuming there is one).
+</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html">Cross Building</a> for some more detail on this.
+</p><h4 id="Ivy+revisions">Ivy revisions<a href="#Ivy+revisions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>revision</code> in <code>groupID % artifactID % revision</code> does not have to be a
+single fixed version. Ivy can select the latest revision of a module
+according to constraints you specify. Instead of a fixed revision like
+<code>&quot;1.6.1&quot;</code>, you specify <code>&quot;latest.integration&quot;</code>, <code>&quot;2.9.+&quot;</code>, or <code>&quot;[1.0,)&quot;</code>. See the
+<a href="http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision">Ivy
+revisions</a>
+documentation for details.
+</p><!-- TODO: Add aliases -->
+<h4 id="Resolvers">Resolvers<a href="#Resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Not all packages live on the same server; sbt uses the standard Maven2
+repository by default. If your dependency isn’t on one of the default
+repositories, you’ll have to add a <em>resolver</em> to help Ivy find it.
+</p><p>To add an additional repository, use
+</p><pre><code class="prettyprint lang-scala">resolvers += name at location
+</code></pre><p>For example:
+</p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
+</code></pre><p>The <code>resolvers</code> key is defined in
+<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
+</p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
+</code></pre><p>The <code>at</code> method creates a <code>Resolver</code> object from two strings.
+</p><p>sbt can search your local Maven repository if you add it as a
+repository:
+</p><pre><code class="prettyprint lang-scala">resolvers += &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome.absolutePath+&quot;/.m2/repository&quot;
+</code></pre><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html">Resolvers</a> for details on defining other types of
+repositories.
+</p><h4 id="Overriding+default+resolvers">Overriding default resolvers<a href="#Overriding+default+resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>resolvers</code> does not contain the default resolvers; only additional ones
+added by your build definition.
+</p><p>sbt combines <code>resolvers</code> with some default repositories to form
+<code>externalResolvers</code>.
+</p><p>Therefore, to change or remove the default resolvers, you would need to
+override <code>externalResolvers</code> instead of <code>resolvers</code>.
+</p><h4 id="Per-configuration+dependencies">Per-configuration dependencies<a href="#Per-configuration+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Often a dependency is used by your test code (in <code>src/test/scala</code>, which
+is compiled by the <code>Test</code> configuration) but not your main code.
+</p><p>If you want a dependency to show up in the classpath only for the <code>Test</code>
+configuration and not the <code>Compile</code> configuration, add <code>% &quot;test&quot;</code> like this:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot; % &quot;test&quot;
+</code></pre><p>Now, if you type <code>show compile:dependencyClasspath</code> at the sbt interactive
+prompt, you should not see derby. But if you type
+<code>show test:dependencyClasspath</code>, you should see the derby jar in the list.
+</p><p>Typically, test-related dependencies such as
+<a href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a href="http://code.google.com/p/specs/">specs</a>, and
+<a href="http://www.scalatest.org/">ScalaTest</a> would be defined with <code>% &quot;test&quot;</code>.
+</p><p>There are some more details and tips-and-tricks related to library
+dependencies on <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">this page</a>, if
+you didn’t find an answer on this introductory page.
+</p><h2 id="Multi-project+builds">Multi-project builds<a href="#Multi-project+builds" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page introduces multiple projects in a single build.
+</p><p>Please read the earlier pages in the Getting Started Guide first, in
+particular you need to understand <a href="Basic-Def.html">build.sbt</a> before reading
+this page.
+</p><h3 id="Multiple+projects">Multiple projects<a href="#Multiple+projects" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>It can be useful to keep multiple related projects in a single build,
+especially if they depend on one another and you tend to modify them
+together.
+</p><p>Each sub-project in a build has its own source directories, generates
+its own jar file when you run package, and in general works like any
+other project.
+</p><p>A project is defined by declaring a lazy val of type
+<a href="../../api/sbt/Project.html">Project</a>. For example, :
+</p><pre><code class="prettyprint lang-scala">lazy val util = project
+
+lazy val core = project
+</code></pre><p>The name of the val is used as the project’s ID and base directory name.
+The ID is used to refer to the project at the command line. The base
+directory may be changed from the default using the in method. For
+example, the following is a more explicit way to write the previous
+example:
+</p><pre><code class="prettyprint lang-scala">lazy val util = project.in(file(&quot;util&quot;))
+
+lazy val core = project in file(&quot;core&quot;)
+</code></pre><h3 id="Dependencies">Dependencies<a href="#Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Projects in the build can be completely independent of one another, but
+usually they will be related to one another by some kind of dependency.
+There are two types of dependencies: aggregate and classpath.
+</p><h4 id="Aggregation">Aggregation<a href="#Aggregation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Aggregation means that running a task on the aggregate project will also
+run it on the aggregated projects. For example,
+</p><pre><code class="prettyprint lang-scala">lazy val root = (project in file(&quot;.&quot;)).
+  aggregate(util, core)
+
+lazy val util = project
+
+lazy val core = project
+</code></pre><p>In the above example, the root project aggregates <code>util</code> and <code>core</code>. Start
+up sbt with two subprojects as in the example, and try compile. You
+should see that all three projects are compiled.
+</p><p><em>In the project doing the aggregating</em>, the root project in this case,
+you can control aggregation per-task. For example, to avoid aggregating
+the <code>update</code> task:
+</p><pre><code class="prettyprint lang-scala">lazy val root = (project in file(&quot;.&quot;)).
+  aggregate(util, core).
+  settings(
+    aggregate in update := false
+  )
+
+[...]
+</code></pre><p><code>aggregate in update</code> is the aggregate key scoped to the <code>update</code> task. (See
+<a href="Scopes.html">scopes</a>.)
+</p><p>Note: aggregation will run the aggregated tasks in parallel and with no
+defined ordering between them.
+</p><h4 id="Classpath+dependencies">Classpath dependencies<a href="#Classpath+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A project may depend on code in another project. This is done by adding
+a <code>dependsOn</code> method call. For example, if core needed util on its
+classpath, you would define core as:
+</p><pre><code class="prettyprint lang-scala">lazy val core = project.dependsOn(util)
+</code></pre><p>Now code in <code>core</code> can use classes from <code>util</code>. This also creates an
+ordering between the projects when compiling them; <code>util</code> must be updated
+and compiled before core can be compiled.
+</p><p>To depend on multiple projects, use multiple arguments to <code>dependsOn</code>,
+like <code>dependsOn(bar, baz)</code>.
+</p><h5 id="Per-configuration+classpath+dependencies">Per-configuration classpath dependencies<a href="#Per-configuration+classpath+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>foo dependsOn(bar)</code> means that the <code>compile</code> configuration in <code>foo</code> depends
+on the <code>compile</code> configuration in <code>bar</code>. You could write this explicitly as
+<code>dependsOn(bar % &quot;compile-&gt;compile&quot;)</code>.
+</p><p>The <code>-&gt;</code> in <code>&quot;compile-&gt;compile&quot;</code> means “depends on” so <code>&quot;test-&gt;compile&quot;</code>
+means the <code>test</code> configuration in <code>foo</code> would depend on the <code>compile</code>
+configuration in <code>bar</code>.
+</p><p>Omitting the <code>-&gt;config</code> part implies <code>-&gt;compile</code>, so
+<code>dependsOn(bar % &quot;test&quot;)</code> means that the <code>test</code> configuration in <code>foo</code> depends
+on the <code>Compile</code> configuration in <code>bar</code>.
+</p><p>A useful declaration is <code>&quot;test-&gt;test&quot;</code> which means <code>test</code> depends on <code>test</code>.
+This allows you to put utility code for testing in <code>bar/src/test/scala</code>
+and then use that code in <code>foo/src/test/scala</code>, for example.
+</p><p>You can have multiple configurations for a dependency, separated by
+semicolons. For example,
+<code>dependsOn(bar % &quot;test-&gt;test;compile-&gt;compile&quot;)</code>.
+</p><h3 id="Default+root+project">Default root project<a href="#Default+root+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If a project is not defined for the root directory in the build, sbt
+creates a default one that aggregates all other projects in the build.
+</p><p>Because project <code>hello-foo</code> is defined with <code>base = file(&quot;foo&quot;)</code>, it will be
+contained in the subdirectory foo. Its sources could be directly under
+<code>foo</code>, like <code>foo/Foo.scala</code>, or in <code>foo/src/main/scala</code>. The usual sbt
+<a href="Directories.html">directory structure</a> applies underneath <code>foo</code> with the
+exception of build definition files.
+</p><p>Any <code>.sbt</code> files in <code>foo</code>, say <code>foo/build.sbt</code>, will be merged with the build
+definition for the entire build, but scoped to the <code>hello-foo</code> project.
+</p><p>If your whole project is in hello, try defining a different version
+(<code>version := &quot;0.6&quot;</code>) in <code>hello/build.sbt</code>, <code>hello/foo/build.sbt</code>, and
+<code>hello/bar/build.sbt</code>. Now <code>show version</code> at the sbt interactive prompt. You
+should get something like this (with whatever versions you defined):
+</p><pre><code class="">&gt; show version
+[info] hello-foo/*:version
+[info]  0.7
+[info] hello-bar/*:version
+[info]  0.9
+[info] hello/*:version
+[info]  0.5
+</code></pre><p><code>hello-foo/*:version</code> was defined in <code>hello/foo/build.sbt</code>,
+<code>hello-bar/*:version</code> was defined in <code>hello/bar/build.sbt</code>, and
+<code>hello/*:version</code> was defined in <code>hello/build.sbt</code>. Remember the
+<a href="Scopes.html">syntax for scoped keys</a>. Each <code>version</code> key is scoped to a
+project, based on the location of the <code>build.sbt</code>. But all three <code>build.sbt</code>
+are part of the same build definition.
+</p><ul><li>Each project’s settings can go in <code>.sbt</code> files in the base directory of
+that project<em>, while the <code>.scala</code> file can be as simple as the one shown
+above, listing the projects and base directories. </em>There is no need to
+put settings in the <code>.scala</code> file.*
+</li></ul><p>You may find it cleaner to put everything including settings in <code>.scala</code>
+files in order to keep all build definition under a single project
+directory, however. It’s up to you.
+</p><p>You cannot have a project subdirectory or <code>project/*.scala</code> files in the
+sub-projects. <code>foo/project/Build.scala</code> would be ignored.
+</p><h3 id="Navigating+projects+interactively">Navigating projects interactively<a href="#Navigating+projects+interactively" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>At the sbt interactive prompt, type <code>projects</code> to list your projects and
+<code>project &lt;projectname&gt;</code> to select a current project. When you run a task
+like <code>compile</code>, it runs on the current project. So you don’t necessarily
+have to compile the root project, you could compile only a subproject.
+</p><p>You can run a task in another project by explicitly specifying the
+project ID, such as <code>subProjectID/compile</code>.
+</p><h3 id="Common+code">Common code<a href="#Common+code" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The definitions in <code>.sbt</code> files are not visible in other <code>.sbt</code> files. In
+order to share code between <code>.sbt</code> files, define one or more Scala files
+in the <code>project/</code> directory of the build root. This directory is also an
+sbt project, but for your build.
+</p><p>For example:
+</p><p><code>&lt;root&gt;/project/Common.scala</code>:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object Common {
+  def text = &quot;org.example&quot;
+}
+</code></pre><p><code>&lt;root&gt;/build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">organization := Common.text
+</code></pre><p>See <a href="Full-Def.html">.scala Build Definition</a> for details.
+</p><h2 id="Using+plugins">Using plugins<a href="#Using+plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Please read the earlier pages in the Getting Started Guide first, in
+particular you need to understand <a href="Basic-Def.html">build.sbt</a> and
+<a href="Library-Dependencies.html">library dependencies</a>, before reading this page.
+</p><h3 id="What+is+a+plugin%3F">What is a plugin?<a href="#What+is+a+plugin%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A plugin extends the build definition, most commonly by adding new
+settings. The new settings could be new tasks. For example, a plugin
+could add a <code>codeCoverage</code> task which would generate a test coverage
+report.
+</p><h3 id="Declaring+a+plugin">Declaring a plugin<a href="#Declaring+a+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If your project is in directory <code>hello</code>, edit <code>hello/project/plugins.sbt</code>
+and declare the plugin dependency by passing the plugin’s Ivy module ID
+to <code>addSbtPlugin</code>:
+</p><pre><code class="prettyprint lang-scala">addSbtPlugin(&quot;com.typesafe.sbt&quot; % &quot;sbt-site&quot; % &quot;0.7.0&quot;)
+</code></pre><p>Not every plugin is located on one of the default repositories and a
+plugin’s documentation may instruct you to also add the repository where
+it can be found: :
+</p><pre><code class="prettyprint lang-scala">resolvers += ...
+</code></pre><p>Plugins usually provide settings that get added to a project to enable
+the plugin’s functionality. This is described in the next section.
+</p><h3 id="Adding+settings+for+a+plugin">Adding settings for a plugin<a href="#Adding+settings+for+a+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A plugin can declare that its settings be automatically added, in which
+case you don’t have to do anything to add them.
+</p><p>As of sbt 0.13.5, there is a new
+<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html">auto-plugins</a> feature that enables
+plugins to automatically, and safely, ensure their settings and
+dependencies are on a project. Most plugins should have their default
+settings automatically, however some may require explicit enablement.
+</p><p>If you’re using a plugin that requires explicit enablement, then you you
+have to add the following to your <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">lazy val util = project.enablePlugins(ThePluginIWant)
+</code></pre><p>Most plugins document whether they need to explicitly enabled. If you’re
+curious which plugins are enabled for a given project, just run the
+plugins command on the sbt console.
+</p><p>For example:
+</p><pre><code class="">&gt; plugins
+In file:/home/jsuereth/projects/sbt/test-ivy-issues/
+  sbt.plugins.IvyPlugin: enabled in test-ivy-issues
+  sbt.plugins.JvmPlugin: enabled in test-ivy-issues
+  sbt.plugins.CorePlugin: enabled in test-ivy-issues
+</code></pre><p>Here, the plugins output is showing that the sbt default plugins are all
+enabled. Sbt’s default settings are provided via three plugins:
+</p><ol><li>CorePlugin: Provides the core parallelism controls for tasks
+</li><li>IvyPlugin: Provides the mechanisms to publish/resolve modules.
+</li><li>JvmPlugin: Provides the mechanisms to compile/test/run/package
+Java/Scala projects.
+</li></ol><p>However, older plugins often required settings to be added explictly, so
+that <a href="Multi-Project.html">multi-project build</a> could have different types of
+projects. The plugin documentation will indicate how to configure it,
+but typically for older plugins this involves adding the base settings
+for the plugin and customizing as necessary.
+</p><p>For example, for the sbt-site plugin, add :
+</p><pre><code class="prettyprint lang-scala">site.settings
+</code></pre><p>to a <code>build.sbt</code> to enable it for that project.
+</p><p>If the build defines multiple projects, instead add it directly to the
+project: :
+</p><pre><code class="prettyprint lang-scala">// don't use the site plugin for the `util` project
+lazy val util = project
+
+// enable the site plugin for the `core` project
+lazy val core = project.settings(site.settings : _*)
+</code></pre><h3 id="Global+plugins">Global plugins<a href="#Global+plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Plugins can be installed for all your projects at once by dropping them
+in <code>~/.sbt/0.13/plugins/</code>. <code>~/.sbt/0.13/plugins/</code> is an sbt project whose
+classpath is exported to all sbt build definition projects. Roughly
+speaking, any <code>.sbt</code> or <code>.scala</code> files in <code>~/.sbt/0.13/plugins/</code> behave as if
+they were in the <code>project/</code> directory for all projects.
+</p><p>You can create <code>~/.sbt/0.13/plugins//build.sbt</code> and put <code>addSbtPlugin()</code>
+expressions in there to add plugins to all your projects at once. This
+feature should be used sparingly, however. See
+<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins">Best Practices</a>.
+</p><h3 id="Available+Plugins">Available Plugins<a href="#Available+Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There’s <a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">a list of available plugins</a>.
+</p><p>Some especially popular plugins are:
+</p><ul><li>those for IDEs (to import an sbt project into your IDE)
+</li><li>those supporting web frameworks, such as
+<a href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a>.
+</li></ul><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">Check out the list</a>.
+</p><h3 id="Creating+an+auto+plugin">Creating an auto plugin<a href="#Creating+an+auto+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A minimal plugin is a Scala library that is built against the version of
+Scala for sbt itself, which is currently 2.10. Nothing special
+needs to be done for this type of plugin. It can be published as a
+normal project and declared in <code>project/plugins.sbt</code> like a normal
+dependency (without <code>addSbtPlugin</code>).
+</p><p>A more typical plugin will provide sbt tasks, commands, or settings.
+This kind of plugin may provide these settings automatically or make
+them available for the user to explicitly integrate. To create an sbt
+auto plugin,
+</p><ol><li>Create a new project for the plugin.
+</li><li>Set <code>sbtPlugin := true</code> for the project in <code>build.sbt</code>. This adds a
+dependency on sbt and will detect and record auto plugins that you
+define.
+</li><li>Define an object <code>HelloPlugin</code> that extends <code>AutoPlugin</code>.
+</li><li>Define an inner object named <code>autoImport</code>. The contents of
+this object will be automatically imported in <code>.sbt</code> files, so
+ensure it only contains important API definitions and types.
+</li><li>Declare dependencies on other plugins by overrideing the <code>requires</code>
+method.
+</li><li>Define any custom tasks or settings (see the next section
+Custom-Settings) inside <code>autoImport</code>.
+</li><li><p>Collect the default settings to apply to a project in a list for
+</p><p> the user to add. Optionally override one or more of <code>AutoPlugin</code>’s
+methods to have settings automatically added to user projects.
+</p></li><li>Publish the project. There is a
+<a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">community repository</a> available
+for open source plugins.
+</li></ol><p>For more details, including ways of developing plugins, see
+<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">Plugins</a>.
+For best practices, see
+<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html">Plugins-Best-Practices</a>.
+</p><h2 id="Custom+settings+and+tasks">Custom settings and tasks<a href="#Custom+settings+and+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page gets you started creating your own settings and tasks.
+</p><p>To understand this page, be sure you’ve read earlier pages in the
+Getting Started Guide, especially <a href="Basic-Def.html">.build.sbt</a> and
+<a href="More-About-Settings.html">more kinds of setting</a>.
+</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
+illustrating how to define keys. Most of the keys are implemented in
+<a href="../../sxr/sbt/Defaults.scala.html">Defaults</a>.
+</p><p>Keys have one of three types. <code>SettingKey</code> and <code>TaskKey</code> are described in
+<a href="Basic-Def.html">.sbt build definition</a>. Read about <code>InputKey</code> on the
+<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> page.
+</p><p>Some examples from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>:
+</p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
+val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
+</code></pre><p>The key constructors have two string parameters: the name of the key
+(<code>&quot;scalaVersion&quot;</code>) and a documentation string
+(<code>&quot;The version of scala used for building.&quot;</code>).
+</p><p>Remember from <a href="Basic-Def.html">.sbt build definition</a> that the type
+parameter <code>T</code> in <code>SettingKey[T]</code> indicates the type of value a setting has.
+<code>T</code> in <code>TaskKey[T]</code> indicates the type of the task’s result. Also remember
+from <a href="Basic-Def.html">.sbt build definition</a> that a setting has a fixed
+value until project reload, while a task is re-computed for every “task
+execution” (every time someone types a command at the sbt interactive
+prompt or in batch mode).
+</p><!-- TODO: FIX THIS -->
+<p>Keys may be defined in a <a href="Basic-Def.html">.sbt file</a>,
+[.scala file][Full-Def], or in [a plugin][Using-Plugins]. Any <code>val</code>
+found in a <code>Build</code> object in your <code>.scala</code> build definition files or any <code>val</code>
+found in a <code>Plugin</code> object from a plugin will be imported automatically
+into your <code>.sbt</code> files.
+</p><h3 id="Implementing+a+task">Implementing a task<a href="#Implementing+a+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Once you’ve defined a key for your task, you’ll need to complete it with
+a task definition. You could be defining your own task, or you could be
+planning to redefine an existing task. Either way looks the same; use <code>:=</code>
+to associate some code with the task key:
+</p><pre><code class="prettyprint lang-scala">val sampleStringTask = taskKey[String](&quot;A sample string task.&quot;)
+
+val sampleIntTask = taskKey[Int](&quot;A sample int task.&quot;)
+
+sampleStringTask := System.getProperty(&quot;user.home&quot;)
+
+sampleIntTask := {
+  val sum = 1 + 2
+  println(&quot;sum: &quot; + sum)
+  sum
+}
+</code></pre><p>If the task has dependencies, you’d reference their value using <code>value</code>,
+as discussed in <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>The hardest part about implementing tasks is often not sbt-specific;
+tasks are just Scala code. The hard part could be writing the “meat” of
+your task that does whatever you’re trying to do. For example, maybe
+you’re trying to format HTML in which case you might want to use an HTML
+library (you would
+<a href="Using-Plugins.html">add a library dependency to your build definition</a> and
+write code based on the HTML library, perhaps).
+</p><p>sbt has some utility libraries and convenience functions, in particular
+you can often use the convenient APIs in
+<a href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
+</p><h3 id="Use+plugins%21">Use plugins!<a href="#Use+plugins%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you find you have a lot of custom code, consider moving it to a
+plugin for re-use across multiple builds.
+</p><p>It’s very easy to create a plugin, as <a href="Using-Plugins.html">teased earlier</a>
+and <a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">discussed at more length here</a>.
+</p><p>This page has been a quick taste; there’s much much more about custom
+tasks on the <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a> page.
+</p><h2 id=".scala+build+definition">.scala build definition<a href="#.scala+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve read previous pages in the Getting Started
+Guide, <em>especially</em> <a href="Basic-Def.html">.sbt build definition</a> and
+<a href="More-About-Settings.html">more kinds of setting</a>.
+</p><h3 id="sbt+is+recursive">sbt is recursive<a href="#sbt+is+recursive" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> is so simple, it conceals how sbt really works. sbt builds are
+defined with Scala code. That code, itself, has to be built. What better
+way than with sbt?
+</p><p>The <code>project</code> directory <em>is another project inside your project</em> which
+knows how to build your project. The project inside <code>project</code> can (in
+theory) do anything any other project can do. <em>Your build definition is
+an sbt project.</em>
+</p><p>And the turtles go all the way down. If you like, you can tweak the
+build definition of the build definition project, by creating a
+<code>project/project/</code> directory.
+</p><p>Here’s an illustration.
+</p><pre><code class="">hello/                  # your project's base directory
+
+    Hello.scala         # a source file in your project (could be in
+                        #   src/main/scala too)
+
+    build.sbt           # build.sbt is part of the source code for the
+                        #   build definition project inside project/
+
+    project/            # base directory of the build definition project
+
+        Build.scala     # a source file in the project/ project,
+                        #   that is, a source file in the build definition
+
+        build.sbt       # this is part of a build definition for a project
+                        #   in project/project ; build definition's build
+                        #   definition
+
+
+        project/        # base directory of the build definition project
+                        #   for the build definition
+
+            Build.scala # source file in the project/project/ project
+</code></pre><p><em>Don’t worry!</em> Most of the time you are not going to need all that. But
+understanding the principle can be helpful.
+</p><p>By the way: any time files ending in <code>.scala</code> or <code>.sbt</code> are used, naming
+them <code>build.sbt</code> and <code>Build.scala</code> are conventions only. This also means
+that multiple files are allowed.
+</p><h3 id="source+files+in+the+build+definition+project"><code>.scala</code> source files in the build definition project<a href="#source+files+in+the+build+definition+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>.sbt</code> files are merged into their sibling project directory. Looking back
+at the project layout:
+</p><pre><code class="">hello/                  # your project's base directory
+
+    build.sbt           # build.sbt is part of the source code for the
+                        #   build definition project inside project/
+
+    project/            # base directory of the build definition project
+
+        Build.scala     # a source file in the project/ project,
+                        #   that is, a source file in the build definition
+</code></pre><p>The Scala expressions in build.sbt are compiled alongside and merged
+with <code>Build.scala</code> (or any other <code>.scala</code> files in the <code>project/</code> directory).
+</p><p><code>*.sbt</code> files in the base directory for a project become part of the
+project build definition project also located in that base directory.
+</p><p>The <code>.sbt</code> file format is a convenient shorthand for adding settings to
+the build definition project.
+</p><h3 id="Relating+build.sbt+to+Build.scala">Relating build.sbt to Build.scala<a href="#Relating+build.sbt+to+Build.scala" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To mix <code>.sbt</code> and <code>.scala</code> files in your build definition, you need to
+understand how they relate.
+</p><p>The following two files illustrate. First, if your project is in hello,
+create <code>hello/project/Build.scala</code> as follows:
+</p><pre><code class="prettyprint lang-scala">import sbt._
+import Keys._
+
+object HelloBuild extends Build {
+  val sampleKeyA = settingKey[String](&quot;demo key A&quot;)
+  val sampleKeyB = settingKey[String](&quot;demo key B&quot;)
+  val sampleKeyC = settingKey[String](&quot;demo key C&quot;)
+  val sampleKeyD = settingKey[String](&quot;demo key D&quot;)
+
+  override lazy val settings = super.settings ++
+    Seq(
+      sampleKeyA := &quot;A: in Build.settings in Build.scala&quot;,
+      resolvers := Seq()
+    )
+
+  lazy val root = Project(id = &quot;hello&quot;,
+    base = file(&quot;.&quot;),
+    settings = Seq(
+      sampleKeyB := &quot;B: in the root project settings in Build.scala&quot;
+    ))
+}
+</code></pre><p>Now, create <code>hello/build.sbt</code> as follows:
+</p><pre><code class="prettyprint lang-scala">sampleKeyC in ThisBuild := &quot;C: in build.sbt scoped to ThisBuild&quot;
+
+sampleKeyD := &quot;D: in build.sbt&quot;
+</code></pre><p>Start up the sbt interactive prompt. Type <code>inspect sampleKeyA</code> and you
+should see (among other things):
+</p><pre><code class="">[info] Setting: java.lang.String = A: in Build.settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
+</code></pre><p>and then <code>inspect sampleKeyC</code> and you should see:
+</p><pre><code class="">[info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
+</code></pre><p>Note that the “Provided by” shows the same scope for the two values.
+That is, <code>sampleKeyC in ThisBuild</code> in a <code>.sbt</code> file is equivalent to placing
+a setting in the <code>Build.settings</code> list in a <code>.scala</code> file. sbt takes
+build-scoped settings from both places to create the build definition.
+</p><p>Now, <code>inspect sampleKeyB</code>:
+</p><pre><code class="">[info] Setting: java.lang.String = B: in the root project settings in Build.scala
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
+</code></pre><p>Note that <code>sampleKeyB</code> is scoped to the project
+<code>({file:/home/hp/checkout/hello/}hello)</code> rather than the entire build
+<code>({file:/home/hp/checkout/hello/})</code>.
+</p><p>As you’ve probably guessed, <code>inspect sampleKeyD</code> matches <code>sampleKeyB</code>:
+</p><pre><code class="">[info] Setting: java.lang.String = D: in build.sbt
+[info] Provided by:
+[info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
+</code></pre><p>sbt <em>appends</em> the settings from <code>.sbt</code> files to the settings from
+<code>Build.settings</code> and <code>Project.settings</code> which means <code>.sbt</code> settings take
+precedence. Try changing <code>Build.scala</code> so it sets key <code>sampleC</code> or <code>sampleD</code>,
+which are also set in <code>build.sbt</code>. The setting in <code>build.sbt</code> should “win”
+over the one in <code>Build.scala</code>.
+</p><p>One other thing you may have noticed: <code>sampleKeyC</code> and <code>sampleKeyD</code> were
+available inside <code>build.sbt</code>. That’s because sbt imports the contents of
+your <code>Build</code> object into your <code>.sbt</code> files. In this case
+<code>import HelloBuild._</code> was implicitly done for the <code>build.sbt</code> file.
+</p><p>In summary:
+</p><ul><li>In <code>.scala</code> files, you can add settings to <code>Build.settings</code> for sbt to
+find, and they are automatically build-scoped.
+</li><li>In <code>.scala</code> files, you can add settings to <code>Project.settings</code> for sbt to
+find, and they are automatically project-scoped.
+</li><li>Any <code>Build</code> object you write in a <code>.scala</code> file will have its contents
+imported and available to <code>.sbt</code> files.
+</li><li>The settings in <code>.sbt</code> files are <em>appended</em> to the settings in <code>.scala</code>
+files.
+</li><li>The settings in <code>.sbt</code> files are project-scoped unless you explicitly
+specify another scope.
+</li></ul><h3 id="When+to+use++files">When to use <code>.scala</code> files<a href="#When+to+use++files" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>In <code>.scala</code> files, you can write any Scala code, including top-level
+classes and objects. Also, there are no restrictions on blank lines,
+since they are standard <code>.scala</code> files.
+</p><p>The recommended approach is to define most configuration in <code>.sbt</code> files,
+using <code>.scala</code> files for task implementations or to share values, such as
+keys, across <code>.sbt</code> files.
+</p><h3 id="The+build+definition+project+in+interactive+mode">The build definition project in interactive mode<a href="#The+build+definition+project+in+interactive+mode" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>You can switch the sbt interactive prompt to have the build definition
+project in <code>project/</code> as the current project. To do so, type
+reload <code>plugins</code>.
+</p><pre><code class="">&gt; reload plugins
+[info] Set current project to default-a0e8e4 (in build file:/home/hp/checkout/hello/project/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/project/Build.scala)
+&gt; reload return
+[info] Loading project definition from /home/hp/checkout/hello/project
+[info] Set current project to hello (in build file:/home/hp/checkout/hello/)
+&gt; show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
+&gt;
+</code></pre><p>As shown above, you use <code>reload return</code> to leave the build definition
+project and return to your regular project.
+</p><h3 id="Reminder%3A+it%E2%80%99s+all+immutable">Reminder: it’s all immutable<a href="#Reminder%3A+it%E2%80%99s+all+immutable" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>It would be wrong to think that the settings in <code>build.sbt</code> are added to
+the <code>settings</code> fields in <code>Build</code> and <code>Project</code> objects. Instead, the <code>settings</code>
+list from <code>Build</code> and <code>Project</code>, and the settings from <code>build.sbt</code>, are
+concatenated into another immutable list which is then used by sbt. The
+<code>Build</code> and <code>Project</code> objects are “immutable configuration” forming only
+part of the complete build definition.
+</p><p>In fact, there are other sources of settings as well. They are appended
+in this order:
+</p><ul><li>Settings from <code>Build.settings</code> and <code>Project.settings</code> in your <code>.scala</code>
+files.
+</li><li>Your user-global settings; for example in <code>~/.sbt/0.13/global.sbt</code> you can
+define settings affecting <em>all</em> your projects.
+</li><li>Settings injected by plugins, see <a href="Using-Plugins.html">using plugins</a>
+coming up next.
+</li><li>Settings from <code>.sbt</code> files in the project.
+</li><li>Build definition projects (i.e. projects inside <code>project</code>) have
+settings from global plugins (<code>~/.sbt/0.13/plugins/</code>) added.
+<a href="Using-Plugins.html">Using plugins</a> explains this more.
+</li></ul><p>Later settings override earlier ones. The entire list of settings forms
+the build definition.
+</p><h2 id="Getting+Started+summary">Getting Started summary<a href="#Getting+Started+summary" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page wraps up the Getting Started Guide.
+</p><p>To use sbt, there are a small number of concepts you must understand.
+These have some learning curve, but on the positive side, there isn’t
+much to sbt <em>except</em> these concepts. sbt uses a small core of powerful
+concepts to do everything it does.
+</p><p>If you’ve read the whole Getting Started series, now you know what you
+need to know.
+</p><h3 id="sbt%3A+The+Core+Concepts">sbt: The Core Concepts<a href="#sbt%3A+The+Core+Concepts" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>the basics of Scala. It’s undeniably helpful to be familiar with
+Scala syntax. <a href="http://www.artima.com/shop/programming_in_scala_2ed">Programming in
+Scala</a> written
+by the creator of Scala is a great introduction.
+</li><li><a href="Basic-Def.html">.sbt build definition</a>
+</li><li>your build definition is one big list of <code>Setting</code> objects, where a
+<code>Setting</code> transforms the set of key-value pairs sbt uses to perform
+tasks.
+</li><li>to create a <code>Setting</code>, call one of a few methods on a key: <code>:=</code>, <code>+=</code>, or
+<code>++=</code>.
+</li><li>there is no mutable state, only transformation; for example, a
+<code>Setting</code> transforms sbt’s collection of key-value pairs into a new
+collection. It doesn’t change anything in-place.
+</li><li>each setting has a value of a particular type, determined by the
+key.
+</li><li><em>tasks</em> are special settings where the computation to produce the
+key’s value will be re-run each time you kick off a task. Non-tasks
+compute the value once, when first loading the build definition.
+</li><li><a href="Scopes.html">Scopes</a>
+</li><li>each key may have multiple values, in distinct scopes.
+</li><li>scoping may use three axes: configuration, project, and task.
+</li><li>scoping allows you to have different behaviors per-project,
+per-task, or per-configuration.
+</li><li>a configuration is a kind of build, such as the main one (<code>Compile</code>)
+or the test one (<code>Test</code>).
+</li><li>the per-project axis also supports “entire build” scope.
+</li><li>scopes fall back to or <em>delegate</em> to more general scopes.
+</li><li><a href="Basic-Def.html">.sbt</a> vs. <a href="Full-Def.html">.scala</a> build definition
+</li><li>put most of your configuration in <code>build.sbt</code>, but use <code>.scala</code> build
+definition files for defining classes and larger task
+implementations.
+</li><li>the build definition is an sbt project in its own right, rooted in
+the project directory.
+</li><li><a href="Using-Plugins.html">Plugins</a> are extensions to the build definition
+</li><li>add plugins with the <code>addSbtPlugin</code> method in <code>project/plugins.sbt</code> (NOT
+<code>build.sbt</code> in the project’s base directory).
+</li></ul><p>If any of this leaves you wondering rather than nodding, please
+<a href="http://www.scala-sbt.org/release/docs/faq.html#getting-help">ask for help</a>, go back and re-read, or try some
+experiments in sbt’s interactive mode.
+</p><p>Good luck!
+</p><h3 id="Advanced+Notes">Advanced Notes<a href="#Advanced+Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><!-- TODO: Link to reference. The rest of this wiki consists of deeper dives and less-commonly-needed
+information. -->
+<p>Since sbt is open source, don’t forget you can check out the
+<a href="https://github.com/sbt/sbt">source code</a> too!
+</p>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

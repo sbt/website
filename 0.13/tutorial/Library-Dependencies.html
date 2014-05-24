@@ -1,0 +1,209 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>Getting Started with sbt — Library dependencies</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="More-About-Settings.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Multi-Project.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Library+dependencies">Library dependencies<a href="#Library+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve read the earlier Getting Started pages, in
+particular <a href="Basic-Def.html">.sbt build definition</a>, <a href="Scopes.html">scopes</a>, and
+<a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>Library dependencies can be added in two ways:
+</p><ul><li><em>unmanaged dependencies</em> are jars dropped into the <code>lib</code> directory
+</li><li><em>managed dependencies</em> are configured in the build definition and
+downloaded automatically from repositories
+</li></ul><h3 id="Unmanaged+dependencies">Unmanaged dependencies<a href="#Unmanaged+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Most people use managed dependencies instead of unmanaged. But unmanaged
+can be simpler when starting out.
+</p><p>Unmanaged dependencies work like this: add jars to <code>lib</code> and they will be
+placed on the project classpath. Not much else to it!
+</p><p>You can place test jars such as
+<a href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a href="http://code.google.com/p/specs/">specs</a>, and
+<a href="http://www.scalatest.org/">ScalaTest</a> in <code>lib</code> as well.
+</p><p>Dependencies in <code>lib</code> go on all the classpaths (for <code>compile</code>, <code>test</code>, <code>run</code>,
+and <code>console</code>). If you wanted to change the classpath for just one of
+those, you would adjust <code>dependencyClasspath in Compile</code> or
+<code>dependencyClasspath in Runtime</code> for example.
+</p><p>There’s nothing to add to <code>build.sbt</code> to use unmanaged dependencies,
+though you could change the <code>unmanagedBase</code> key if you’d like to use a
+different directory rather than <code>lib</code>.
+</p><p>To use <code>custom_lib</code> instead of <code>lib</code>:
+</p><pre><code class="prettyprint lang-scala">unmanagedBase := baseDirectory.value / &quot;custom_lib&quot;
+</code></pre><p><code>baseDirectory</code> is the project’s root directory, so here you’re changing
+<code>unmanagedBase</code> depending on <code>baseDirectory</code> using the special value method
+as explained in <a href="More-About-Settings.html">more kinds of setting</a>.
+</p><p>There’s also an <code>unmanagedJars</code> task which lists the jars from the
+<code>unmanagedBase</code> directory. If you wanted to use multiple directories or do
+something else complex, you might need to replace the whole
+<code>unmanagedJars</code> task with one that does something else.
+</p><h3 id="Managed+Dependencies">Managed Dependencies<a href="#Managed+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt uses <a href="http://ant.apache.org/ivy/">Apache Ivy</a> to implement managed
+dependencies, so if you’re familiar with Maven or Ivy, you won’t have
+much trouble.
+</p><h4 id="The++key">The <code>libraryDependencies</code> key<a href="#The++key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Most of the time, you can simply list your dependencies in the setting
+<code>libraryDependencies</code>. It’s also possible to write a Maven POM file or Ivy
+configuration file to externally configure your dependencies, and have
+sbt use those external configuration files. You can learn more about
+that <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy">here</a>.
+</p><p>Declaring a dependency looks like this, where <code>groupId</code>, <code>artifactId</code>, and
+<code>revision</code> are strings:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision
+</code></pre><p>or like this, where <code>configuration</code> is also a string:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision % configuration
+</code></pre><p><code>libraryDependencies </code>is declared in
+<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
+this:
+</p><pre><code class="prettyprint lang-scala">val libraryDependencies = settingKey[Seq[ModuleID]](&quot;Declares managed dependencies.&quot;)
+</code></pre><p>The <code>%</code> methods create<code>ModuleID</code> objects from strings, then you add those
+<code>ModuleID</code> to <code>libraryDependencies</code>.
+</p><p>Of course, sbt (via Ivy) has to know where to download the module. If
+your module is in one of the default repositories sbt comes with, this
+will just work. For example, Apache Derby is in a default repository:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot;
+</code></pre><p>If you type that in <code>build.sbt</code> and then <code>update</code>, sbt should download Derby
+to <code>~/.ivy2/cache/org.apache.derby/</code>. (By the way, <code>updat</code>e is a dependency
+of <code>compile</code> so there’s no need to manually type <code>update</code> most of the time.)
+</p><p>Of course, you can also use <code>++=</code> to add a list of dependencies all at
+once:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies ++= Seq(
+  groupID % artifactID % revision,
+  groupID % otherID % otherRevision
+)
+</code></pre><p>In rare cases you might find reasons to use <code>:=</code> with <code>libraryDependencies</code>
+as well.
+</p><h4 id="Getting+the+right+Scala+version+with">Getting the right Scala version with <code>%%</code><a href="#Getting+the+right+Scala+version+with" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If you use <code>groupID %% artifactID % revision</code> rather than
+<code>groupID % artifactID % revision</code> (the difference is the double <code>%%</code> after
+the <code>groupID</code>), sbt will add your project’s Scala version to the artifact
+name. This is just a shortcut. You could write this without the <code>%%</code>:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scala-tools&quot; % &quot;scala-stm_2.9.1&quot; % &quot;0.3&quot;
+</code></pre><p>Assuming the <code>scalaVersion</code> for your build is <code>2.9.1</code>, the following is
+identical:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.scala-tools&quot; %% &quot;scala-stm&quot; % &quot;0.3&quot;
+</code></pre><p>The idea is that many dependencies are compiled for multiple Scala
+versions, and you’d like to get the one that matches your project.
+</p><p>The complexity in practice is that often a dependency will work with a
+slightly different Scala version; but <code>%%</code> is not smart about that. So if
+the dependency is available for <code>2.9.0</code> but you’re using
+<code>scalaVersion := &quot;2.9.1&quot;</code>, you won’t be able to use <code>%%</code> even though the
+<code>2.9.0</code> dependency likely works. If <code>%%</code> stops working just go see which
+versions the dependency is really built for, and hardcode the one you
+think will work (assuming there is one).
+</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html">Cross Building</a> for some more detail on this.
+</p><h4 id="Ivy+revisions">Ivy revisions<a href="#Ivy+revisions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>revision</code> in <code>groupID % artifactID % revision</code> does not have to be a
+single fixed version. Ivy can select the latest revision of a module
+according to constraints you specify. Instead of a fixed revision like
+<code>&quot;1.6.1&quot;</code>, you specify <code>&quot;latest.integration&quot;</code>, <code>&quot;2.9.+&quot;</code>, or <code>&quot;[1.0,)&quot;</code>. See the
+<a href="http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision">Ivy
+revisions</a>
+documentation for details.
+</p><!-- TODO: Add aliases -->
+<h4 id="Resolvers">Resolvers<a href="#Resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Not all packages live on the same server; sbt uses the standard Maven2
+repository by default. If your dependency isn’t on one of the default
+repositories, you’ll have to add a <em>resolver</em> to help Ivy find it.
+</p><p>To add an additional repository, use
+</p><pre><code class="prettyprint lang-scala">resolvers += name at location
+</code></pre><p>For example:
+</p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
+</code></pre><p>The <code>resolvers</code> key is defined in
+<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
+</p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
+</code></pre><p>The <code>at</code> method creates a <code>Resolver</code> object from two strings.
+</p><p>sbt can search your local Maven repository if you add it as a
+repository:
+</p><pre><code class="prettyprint lang-scala">resolvers += &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome.absolutePath+&quot;/.m2/repository&quot;
+</code></pre><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html">Resolvers</a> for details on defining other types of
+repositories.
+</p><h4 id="Overriding+default+resolvers">Overriding default resolvers<a href="#Overriding+default+resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>resolvers</code> does not contain the default resolvers; only additional ones
+added by your build definition.
+</p><p>sbt combines <code>resolvers</code> with some default repositories to form
+<code>externalResolvers</code>.
+</p><p>Therefore, to change or remove the default resolvers, you would need to
+override <code>externalResolvers</code> instead of <code>resolvers</code>.
+</p><h4 id="Per-configuration+dependencies">Per-configuration dependencies<a href="#Per-configuration+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Often a dependency is used by your test code (in <code>src/test/scala</code>, which
+is compiled by the <code>Test</code> configuration) but not your main code.
+</p><p>If you want a dependency to show up in the classpath only for the <code>Test</code>
+configuration and not the <code>Compile</code> configuration, add <code>% &quot;test&quot;</code> like this:
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.apache.derby&quot; % &quot;derby&quot; % &quot;10.4.1.3&quot; % &quot;test&quot;
+</code></pre><p>Now, if you type <code>show compile:dependencyClasspath</code> at the sbt interactive
+prompt, you should not see derby. But if you type
+<code>show test:dependencyClasspath</code>, you should see the derby jar in the list.
+</p><p>Typically, test-related dependencies such as
+<a href="https://github.com/rickynils/scalacheck">ScalaCheck</a>,
+<a href="http://code.google.com/p/specs/">specs</a>, and
+<a href="http://www.scalatest.org/">ScalaTest</a> would be defined with <code>% &quot;test&quot;</code>.
+</p><p>There are some more details and tips-and-tricks related to library
+dependencies on <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">this page</a>, if
+you didn’t find an answer on this introductory page.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Multi-Project.html"> Multi-project builds </a>                        
+                        <ul class="language-bar">
+        <li><a href="Library-Dependencies.html"><span class="lang-item lang-en">English</span></a></li><li><a href="ja/Library-Dependencies.html"><span class="lang-item lang-ja">日本語</span></a></li>
+      </ul>
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">Getting Started with sbt</a></div><ol class="toc"> <li><div><a href="Setup.html">Installing sbt</a></div><ol class="toc"> <li><div><a href="Installing-sbt-on-Mac.html">Installing sbt on Mac</a></div></li><li><div><a href="Installing-sbt-on-Windows.html">Installing sbt on Windows</a></div></li><li><div><a href="Installing-sbt-on-Linux.html">Installing sbt on Linux</a></div></li><li><div><a href="Manual-Installation.html">Installing sbt manually</a></div></li> </ol></li><li><div><a href="Hello.html">Hello, World</a></div></li><li><div><a href="Directories.html">Directory structure</a></div></li><li><div><a href="Running.html">Running</a></div></li><li><div><a href="Basic-Def.html">.sbt build definition</a></div></li><li><div><a href="Scopes.html">Scopes</a></div></li><li><div><a href="More-About-Settings.html">More kinds of setting</a></div></li><li><div class="current">Library dependencies</div></li><li><div><a href="Multi-Project.html">Multi-project builds</a></div></li><li><div><a href="Using-Plugins.html">Using plugins</a></div></li><li><div><a href="Custom-Settings.html">Custom settings and tasks</a></div></li><li><div><a href="Full-Def.html">.scala build definition</a></div></li><li><div><a href="Summary.html">Getting Started summary</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

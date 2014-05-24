@@ -1,0 +1,197 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Resolvers</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Publishing.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Update-Report.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Resolvers">Resolvers<a href="#Resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Maven">Maven<a href="#Maven" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Resolvers for Maven2 repositories are added as follows:
+</p><pre><code class="prettyprint lang-scala">resolvers += 
+  &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
+</code></pre><p>This is the most common kind of user-defined resolvers. The rest of this
+page describes how to define other types of repositories.
+</p><h3 id="Predefined">Predefined<a href="#Predefined" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A few predefined repositories are available and are listed below
+</p><ul><li><code>DefaultMavenRepository</code> This is the main Maven repository at
+<a href="http://repo1.maven.org/maven2/">http://repo1.maven.org/maven2/</a> and is included by default
+</li><li><code>JavaNet1Repository</code> This is the Maven 1 repository at
+<a href="http://download.java.net/maven/1/">http://download.java.net/maven/1/</a>
+</li></ul><p>For example, to use the <code>java.net</code> repository, use the following setting
+in your build definition:
+</p><pre><code>resolvers += JavaNet1Repository
+</code></pre><p>Predefined repositories will go under Resolver going forward so they are
+in one place:
+</p><pre><code>Resolver.sonatypeRepo(&quot;releases&quot;)  // Or &quot;snapshots&quot;
+</code></pre><h3 id="Custom">Custom<a href="#Custom" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt provides an interface to the repository types available in Ivy:
+file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
+<a href="http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns">patterns</a>
+to configure repositories.
+</p><p>Construct a repository definition using the factory in <code>sbt.Resolver</code>
+for the desired type. This factory creates a <code>Repository</code> object that
+can be further configured. The following table contains links to the Ivy
+documentation for the repository type and the API documentation for the
+factory and repository class. The SSH and SFTP repositories are
+configured identically except for the name of the factory. Use
+<code>Resolver.ssh</code> for SSH and <code>Resolver.sftp</code> for SFTP.
+</p><table>
+  <tr>
+    <th>Type</th>
+    <th>Factory</th>
+    <th>Ivy Docs</th>
+    <th>Factory API</th>
+    <th>Repository Class API</th>
+  </tr>
+
+  <tr>
+    <td>Filesystem</td>
+    <td><tt>Resolver.file</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+    <td><a href="../api/sbt/Resolver$$file$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SFTP</td>
+    <td><tt>Resolver.sftp</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>SSH</td>
+    <td><tt>Resolver.ssh</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+    <td><a href="../api/sbt/Resolver$$Define$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
+  </tr>
+
+  <tr>
+    <td>URL</td>
+    <td><tt>Resolver.url</tt></td>
+    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+    <td><a href="../api/sbt/Resolver$$url$.html">url factory</a></td>
+    <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
+  </tr>
+</table><h4 id="Basic+Examples">Basic Examples<a href="#Basic+Examples" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>These are basic examples that use the default Maven-style repository
+layout.
+</p><h5 id="Filesystem">Filesystem<a href="#Filesystem" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Define a filesystem repository in the <code>test</code> directory of the current
+working directory and declare that publishing to this repository must be
+atomic.
+</p><pre><code>resolvers += Resolver.file(&quot;my-test-repo&quot;, file(&quot;test&quot;)) transactional()
+</code></pre><h5 id="URL">URL<a href="#URL" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Define a URL repository at <code>&quot;http://example.org/repo-releases/&quot;</code>.
+</p><pre><code>resolvers += Resolver.url(&quot;my-test-repo&quot;, url(&quot;http://example.org/repo-releases/&quot;))
+</code></pre><p>To specify an Ivy repository, use:
+</p><pre><code>resolvers += Resolver.url(&quot;my-test-repo&quot;, url)(Resolver.ivyStylePatterns)
+</code></pre><p>or customize the layout pattern described in the Custom Layout section
+below.
+</p><h5 id="SFTP+and+SSH+Repositories">SFTP and SSH Repositories<a href="#SFTP+and+SSH+Repositories" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The following defines a repository that is served by SFTP from host
+<code>&quot;example.org&quot;</code>:
+</p><pre><code>resolvers += Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;)
+</code></pre><p>To explicitly specify the port:
+</p><pre><code>resolvers += Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;, 22)
+</code></pre><p>To specify a base path:
+</p><pre><code>resolvers += Resolver.sftp(&quot;my-sftp-repo&quot;, &quot;example.org&quot;, &quot;maven2/repo-releases/&quot;)
+</code></pre><p>Authentication for the repositories returned by <code>sftp</code> and <code>ssh</code> can be
+configured by the <code>as</code> methods.
+</p><p>To use password authentication:
+</p><pre><code>resolvers += Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, &quot;password&quot;)
+</code></pre><p>or to be prompted for the password:
+</p><pre><code>resolvers += Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;)
+</code></pre><p>To use key authentication:
+</p><pre><code>resolvers += {
+  val keyFile: File = ...
+  Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, keyFile, &quot;keyFilePassword&quot;)
+}
+</code></pre><p>or if no keyfile password is required or if you want to be prompted for
+it:
+</p><pre><code>resolvers += Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) as(&quot;user&quot;, keyFile)
+</code></pre><p>To specify the permissions used when publishing to the server:
+</p><pre><code>resolvers += Resolver.ssh(&quot;my-ssh-repo&quot;, &quot;example.org&quot;) withPermissions(&quot;0644&quot;)
+</code></pre><p>This is a chmod-like mode specification.
+</p><h4 id="Custom+Layout">Custom Layout<a href="#Custom+Layout" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>These examples specify custom repository layouts using patterns. The
+factory methods accept an <code>Patterns</code> instance that defines the patterns
+to use. The patterns are first resolved against the base file or URL.
+The default patterns give the default Maven-style layout. Provide a
+different Patterns object to use a different layout. For example:
+</p><pre><code>resolvers += Resolver.url(&quot;my-test-repo&quot;, url)( Patterns(&quot;[organisation]/[module]/[revision]/[artifact].[ext]&quot;) )
+</code></pre><p>You can specify multiple patterns or patterns for the metadata and
+artifacts separately. You can also specify whether the repository should
+be Maven compatible (as defined by Ivy). See the
+<a href="../../api/sbt/Patterns$.html">patterns API</a> for the methods to use.
+</p><p>For filesystem and URL repositories, you can specify absolute patterns
+by omitting the base URL, passing an empty <code>Patterns</code> instance, and
+using <code>ivys</code> and <code>artifacts</code>:
+</p><pre><code>resolvers += Resolver.url(&quot;my-test-repo&quot;) artifacts
+        &quot;http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]&quot;
+</code></pre><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Update-Report.html"> Update Report </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div class="current">Resolvers</div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>

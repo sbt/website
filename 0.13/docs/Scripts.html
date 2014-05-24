@@ -1,0 +1,158 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <title>sbt Reference Manual — Scripts, REPL, and Dependencies</title>
+        
+        <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/blueprint/grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"/> 
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" href={ relativeBase + "css/blueprint/ie.css" } type="text/css" media="screen, projection"/>
+        <![endif]-->
+        <link rel="stylesheet" href="css/pamflet.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamflet-print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="css/pamflet-grid.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <link rel="stylesheet" href="css/color_scheme-redmond.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-github.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/color_scheme-monokai.css" type="text/css" media="screen, projection"/>
+        <link rel="stylesheet" href="css/pamfletheight_80px_2em.css" type="text/css" media="screen and (min-device-width: 800px), projection"/>
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery.collapse.js"></script>
+        <script type="text/javascript" src="js/pamflet.js"></script>
+        <script type="text/javascript">
+          Pamflet.page.language = 'en';
+        </script>
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+        <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
+        
+        
+      </head>
+      <body class="color_scheme-github">
+        <a class="page prev nav" href="Triggered-Execution.html">
+            <span class="space">&nbsp;</span>
+            <span class="flip arrow">&gt;</span>
+          </a><a class="page next nav" href="Understanding-Recompilation.html">
+            <span class="space">&nbsp;</span>
+            <span class="arrow">&gt;</span>
+          </a>
+        <div class="container contentswrapper">
+          <div class="span-16 prepend-1 append-1 contents">
+            <h2 id="Scripts%2C+REPL%2C+and+Dependencies">Scripts, REPL, and Dependencies<a href="#Scripts%2C+REPL%2C+and+Dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>sbt has two alternative entry points that may be used to:
+</p><ul><li>Compile and execute a Scala script containing dependency
+declarations or other sbt settings
+</li><li>Start up the Scala REPL, defining the dependencies that should be on
+the classpath
+</li></ul><p>These entry points should be considered experimental. A notable
+disadvantage of these approaches is the startup time involved.
+</p><h3 id="Setup">Setup<a href="#Setup" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To set up these entry points, you can either use
+<a href="https://github.com/n8han/conscript">conscript</a> or manually construct
+the startup scripts. In addition, there is a
+<a href="https://github.com/paulp/xsbtscript">setup script</a> for the script
+mode that only requires a JRE installed.
+</p><h4 id="Setup+with+Conscript">Setup with Conscript<a href="#Setup+with+Conscript" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Install <a href="https://github.com/n8han/conscript">conscript</a>.
+</p><pre><code class="">cs sbt/sbt --branch 0.12.0
+</code></pre><p>This will create two scripts: <code>screpl</code> and <code>scalas</code>.
+</p><h4 id="Manual+Setup">Manual Setup<a href="#Manual+Setup" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Duplicate your standard <code>sbt</code> script, which was set up according to
+<a href="../tutorial/Setup.html">Setup</a>, as <code>scalas</code> and <code>screpl</code> (or whatever
+names you like).
+</p><p><code>scalas</code> is the script runner and should use <code>sbt.ScriptMain</code> as the
+main class, by adding the <code>-Dsbt.main.class=sbt.ScriptMain</code> parameter to
+the <code>java</code> command. Its command line should look like:
+</p><pre><code class="">java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar &quot;$@&quot;
+</code></pre><p>For the REPL runner <code>screpl</code>, use <code>sbt.ConsoleMain</code> as the main class:
+</p><pre><code class="">java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar &quot;$@&quot;
+</code></pre><p>In each case, <code>/home/user/.sbt/boot</code> should be replaced with wherever
+you want sbt’s boot directory to be; you might also need to give more
+memory to the JVM via <code>-Xms512M -Xmx1536M</code> or similar options, just like
+shown in <a href="../tutorial/Setup.html">Setup</a>.
+</p><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="sbt+Script+runner">sbt Script runner<a href="#sbt+Script+runner" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The script runner can run a standard Scala script, but with the
+additional ability to configure sbt. sbt settings may be embedded in the
+script in a comment block that opens with <code>/***</code>.
+</p><h5 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Copy the following script and make it executable. You may need to adjust
+the first line depending on your script name and operating system. When
+run, the example should retrieve Scala, the required dependencies,
+compile the script, and run it directly. For example, if you name it
+<code>dispatch_example.scala</code>, you would do on Unix:
+</p><pre><code class="">chmod u+x dispatch_example.scala
+./dispatch_example.scala
+</code></pre><nbsp>
+<pre><code class="prettyprint lang-scala">#!/usr/bin/env scalas
+!#
+
+/***
+scalaVersion := &quot;2.9.0-1&quot;
+
+libraryDependencies ++= Seq(
+  &quot;net.databinder&quot; %% &quot;dispatch-twitter&quot; % &quot;0.8.3&quot;,
+  &quot;net.databinder&quot; %% &quot;dispatch-http&quot; % &quot;0.8.3&quot;
+)
+*/
+
+import dispatch.{ json, Http, Request }
+import dispatch.twitter.Search
+import json.{ Js, JsObject }
+
+def process(param: JsObject) = {
+  val Search.text(txt)        = param
+  val Search.from_user(usr)   = param
+  val Search.created_at(time) = param
+
+  &quot;(&quot; + time + &quot;)&quot; + usr + &quot;: &quot; + txt
+}
+
+Http.x((Search(&quot;#scala&quot;) lang &quot;en&quot;) ~&gt; (_ map process foreach println))
+</code></pre><h4 id="sbt+REPL+with+dependencies">sbt REPL with dependencies<a href="#sbt+REPL+with+dependencies" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The arguments to the REPL mode configure the dependencies to use when
+starting up the REPL. An argument may be either a jar to include on the
+classpath, a dependency definition to retrieve and put on the classpath,
+or a resolver to use when retrieving dependencies.
+</p><p>A dependency definition looks like:
+</p><pre><code>organization%module%revision
+</code></pre><p>Or, for a cross-built dependency:
+</p><pre><code>organization%%module%revision
+</code></pre><p>A repository argument looks like:
+</p><pre><code>&quot;id at url&quot;
+</code></pre><h5 id="Example%3A">Example:<a href="#Example%3A" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>To add the Sonatype snapshots repository and add Scalaz 7.0-SNAPSHOT to
+REPL classpath:
+</p><pre><code class="">screpl &quot;sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/&quot; &quot;org.scalaz%%scalaz-core%7.0-SNAPSHOT&quot;
+</code></pre><p>This syntax was a quick hack. Feel free to improve it. The relevant
+class is <a href="../../sxr/sbt/IvyConsole.scala.html">IvyConsole</a>.
+</p><div class="bottom nav span-16">
+                        <em>Next Page</em>
+                        <span class="arrow">&gt;</span>
+                        <a href="Understanding-Recompilation.html"> Understanding Incremental Recompilation </a>                        
+                        
+                      </div><div class="tocwrapper show">
+      <a class="tochead nav" style="display: none" href="#toc">❦</a>
+      <a name="toc"></a>
+      <h4 class="toctitle">Contents</h4>
+      <div class="tocbody">
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div class="current">Scripts, REPL, and Dependencies</div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+          </div>
+        </div>
+        <div class="header">
+          <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+<div class="container navbar-static-top nav">
+    <div class="logo">
+      <a href="../../index.html"><img src="files/sbt-logo-white-72x50.png" alt="sbt"></a>
+    </div>
+    <ul class="navlist">
+      <li><a href="../../documentation.html">Documentation</a></li>
+      <li><a href="../../download.html">Download</a></li>
+      <li><a href="../../community.html">Community</a></li>
+      <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="files/github-logo.png" alt="Source code"></a></li>
+      <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-white.png" alt="sbt on Twitter"></a></li>
+    </ul>
+</div>
+
+        </div>
+        <div class="footer">
+          
+        </div>
+        
+        
+      </body>
+    </html>
