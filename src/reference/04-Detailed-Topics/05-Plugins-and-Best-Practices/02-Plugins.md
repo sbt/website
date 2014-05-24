@@ -4,6 +4,7 @@ out: Plugins.html
 
   [Full-Def]: ../tutorial/Full-Def.html
   [Best-Practices]: Best-Practices.html
+  [Plugins-Best-Practices]: Plugins-Best-Practices.html
 
 Plugins
 -------
@@ -199,7 +200,7 @@ In a `build.sbt` file:
 #### Introduction
 
 A minimal plugin is a Scala library that is built against the version of
-Scala that sbt runs (currently, |scalaRelease|) or a Java library.
+Scala that sbt runs (currently, $scala_version$) or a Java library.
 Nothing special needs to be done for this type of library, as shown in
 the previous section. A more typical plugin will provide sbt tasks,
 commands, or settings. This kind of plugin may provide these settings
@@ -357,24 +358,27 @@ method. For example, if we wish to remove the JvmModule settings
 #### Global plugins example
 
 The simplest global plugin definition is declaring a library or plugin
-in `|globalPluginsBase|` build.sbt:
+in `$global_plugin_sbt_file$`:
 
-    libraryDependencies += "org.example" %% "example-plugin" % "0.1"
+```scala
+libraryDependencies += "org.example" %% "example-plugin" % "0.1"
+```
 
 This plugin will be available for every sbt project for the current
 user.
 
 In addition:
 
-- Jars may be placed directly in :sublit:|globalPluginsBase| `lib/`
+- Jars may be placed directly in `$global_plugins_base$lib/`
    and will be available to every build definition for the current user.
 - Dependencies on plugins built from source may be declared in
-   |globalPluginsBase| project/Build.scala as described at
+   `$global_plugins_base$project/Build.scala` as described at
    [.scala build definition][Full-Deff].
 - A Plugin may be directly defined in Scala
-   source files in |globalPluginsBase|, such as
-   |globalPluginsBase| MyPlugin.scala. |globalPluginsBase|/build.sbt
-   should contain sbtPlugin := true. This can be used for quicker
+   source files in `$global_plugins_base$`, such as
+   `$global_plugins_base$MyPlugin.scala`.
+   `$global_plugins_base$/build.sbt`
+   should contain `sbtPlugin := true`. This can be used for quicker
    turnaround when developing a plugin initially:
    
    1.  Edit the global plugin code
@@ -385,12 +389,12 @@ In addition:
        overhead of publishLocal and cleaning the plugins directory of the
        project using the plugin.
 
-These are all consequences of |globalPluginsBase| being a standard
+These are all consequences of `$global_plugins_base$` being a standard
 project whose classpath is added to every sbt project's build
 definition.
 
 ### Best Practices
 
-If you're a plugin writer, please consult the `Plugins-Best-Practices`
+If you're a plugin writer, please consult the [plugins best practices][Plugins-Best-Practices]
 page; it contains a set of guidelines to help you ensure that your
 plugin is consistent with and plays well with other plugins.

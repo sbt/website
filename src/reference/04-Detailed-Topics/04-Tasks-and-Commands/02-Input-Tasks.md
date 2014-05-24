@@ -92,8 +92,8 @@ val parser: Initialize[State => Parser[(String,String)]] =
 This Parser definition will produce a value of type `(String,String)`.
 The input syntax defined isn't very flexible; it is just a
 demonstration. It will produce one of the following values for a
-successful parse (assuming the current Scala version is |scalaRelease|,
-the current sbt version is |release|, and there are 3 commands left to
+successful parse (assuming the current Scala version is $scala_version$,
+the current sbt version is $app_version$, and there are 3 commands left to
 run):
 
 Again, we were able to access the current Scala and sbt version for the

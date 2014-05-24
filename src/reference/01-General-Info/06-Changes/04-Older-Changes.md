@@ -614,9 +614,9 @@ Some of the more visible changes:
 -   No longer need `"->default"` in configurations (automatically
     mapped).
 -   Can specify a specific nightly of Scala 2.8 to use (for example:
-    2.8.0-20090910.003346-+)
+    `2.8.0-20090910.003346-+`)
 -   Experimental support for searching for project
-    (-Dsbt.boot.search=none|only|root-first|nearest)
+    (`-Dsbt.boot.search=none | only | root-first | nearest`)
 -   Fix issue where last path component of local repository was dropped
     if it did not exist.
 -   Added support for configuring repositories on a per-module basis.
