@@ -318,7 +318,7 @@ Some plugins should always be explicitly enabled on projects. Sbt calls
 these root plugins, i.e. plugins that are "root" nodes in the plugin
 depdendency graph. `AutoPlugin` by default defines a root plugin.
 
-Example command root plugin ----------------------
+#### Example command root plugin
 
 A basic plugin that adds commands looks like. `build.sbt`:
 

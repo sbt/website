@@ -185,3 +185,55 @@ The configuration file is line-based, read as UTF-8 encoded, and defined
 by the following grammar. `'nl'` is a newline or end of file and
 `'text'` is plain text without newlines or the surrounding delimiters
 (such as parentheses or square brackets):
+
+```scala
+configuration: scala app repositories boot log appProperties
+scala: "[" "scala" "]" nl version nl classifiers nl
+app: "[" "app" "]" nl org nl name nl version nl components nl class nl crossVersioned nl resources nl classifiers nl
+repositories: "[" "repositories" "]" nl (repository nl)*
+boot: "[" "boot" "]" nl directory nl bootProperties nl search nl promptCreate nl promptFill nl quickOption nl
+log: "["' "log" "]" nl logLevel nl
+appProperties: "[" "app-properties" "]" nl (property nl)*
+ivy: "[" "ivy" "]" nl homeDirectory nl checksums nl overrideRepos nl repoConfig nl
+directory: "directory" ":" path
+bootProperties: "properties" ":" path
+search: "search" ":" ("none" | "nearest" | "root-first" | "only" ) ("," path)*
+logLevel: "level" ":" ("debug" | "info" | "warn" | "error")
+promptCreate: "prompt-create"  ":"  label
+promptFill: "prompt-fill" ":" boolean
+quickOption: "quick-option" ":" boolean
+version: "version" ":" versionSpecification
+versionSpecification: readProperty | fixedVersion
+readProperty: "read"  "(" propertyName ")"  "[" default "]"
+fixedVersion: text
+classifiers: "classifiers" ":" text ("," text)*
+homeDirectory: "ivy-home" ":" path
+checksums: "checksums" ":" checksum ("," checksum)*
+overrideRepos: "override-build-repos" ":" boolean
+repoConfig: "repository-config" ":" path
+org: "org" ":" text
+name: "name" ":" text
+class: "class" ":" text
+components: "components" ":" component ("," component)*
+crossVersioned: "cross-versioned" ":"  ("true" | "false" | "none" | "binary" | "full")
+resources: "resources" ":" path ("," path)*
+repository: ( predefinedRepository | customRepository ) nl
+predefinedRepository: "local" | "maven-local" | "maven-central"
+customRepository: label ":" url [ ["," ivyPattern] ["," artifactPattern] [", mavenCompatible"] [", bootOnly"]]
+property: label ":" propertyDefinition ("," propertyDefinition)*
+propertyDefinition: mode "=" (set | prompt)
+mode: "quick" | "new" | "fill"
+set: "set" "(" value ")"
+prompt: "prompt"  "(" label ")" ("[" default "]")?
+boolean: "true" | "false"
+nl: "\\r\\n" | "\\n" | "\\r"
+path: text
+propertyName: text
+label: text
+default: text
+checksum: text
+ivyPattern: text
+artifactPattern: text
+url: text
+component: text
+```

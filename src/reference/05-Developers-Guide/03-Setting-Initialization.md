@@ -26,18 +26,16 @@ the following:
 The blue circles represent actions happening when sbt loads a project.
 We can see that sbt performs the following actions in load:
 
-1.  Compile the user-level project (`~/.sbt/<version>/`)
-    a.  Load any plugins defined by this project
-        (`~/.sbt/<version>/plugins/*.sbt` and
-        `~/.sbt/<version>/plugins/project/*.scala`)
+1. Compile the user-level project (`~/.sbt/<version>/`)
 
-    b. Load all settings defined (`~/.sbt/<version>/*.sbt` and
-    `~/.sbt/<version>/plugins/*.scala`)
+    a. Load any plugins defined by this project (`~/.sbt/<version>/plugins/*.sbt` and `~/.sbt/<version>/plugins/project/*.scala`)
+    b. Load all settings defined (`~/.sbt/<version>/*.sbt` and `~/.sbt/<version>/plugins/*.scala`)
+
 2.  Compile the current project (`<working-directory/project`)
-    a.  Load all defined plugins (`project/plugins.sbt` and
-        `project/project/*.scala`)
 
+    a. Load all defined plugins (`project/plugins.sbt` and `project/project/*.scala`)
     b. Load/Compile the project (`project/*.scala`)
+
 3.  Load project `*.sbt` files (`build.sbt` and friends).
 
 Each of these loads defines several sequences of settings. The diagram
@@ -47,13 +45,17 @@ shows the two most important:
     directly against the `Build` object. They are initialized *once* for
     the build. You can add these, e.g. in `project/build.scala` :
 
-        object MyBuild extends Build {
-          override val settings = Seq(foo := "hi")
-        }
+    ```scala
+    object MyBuild extends Build {
+      override val settings = Seq(foo := "hi")
+    }
+    ```
 
     or in a `build.sbt` file :
 
-        foo in ThisBuild := "hi"
+    ```scala
+    foo in ThisBuild := "hi"
+    ```
 
 -   `projectSettings` - These are settings specific to a project. They
     are specific to a *particular sub project* in the build. A plugin
@@ -61,9 +63,11 @@ shows the two most important:
     case the values are duplicated for each project. You add project
     specific settings, eg. in `project/build.scala` :
 
-        object MyBuild extends Build {
-          val test = project.in(file(".")).settings(...)
-        }
+    ```scala
+    object MyBuild extends Build {
+      val test = project.in(file(".")).settings(...)
+    }
+    ```
 
 After loading/compiling all the build definitions, sbt has a series of
 `Seq[Setting[_]]` that it must order. As shown in the diagram, the
@@ -82,15 +86,17 @@ level. This means that we can't control the order of settings added to
 Build/Global namespace, but we can control how each project loads, e.g.
 plugins and `.sbt` files. To do so, use the `AddSettings` class :
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    import AddSettings._
+import AddSettings._
 
-    object MyOwnOrder extends Build {
-      // here we load config from a txt file.
-      lazy val root = project.in(file(".")).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file("silly.txt")) )
-    }
+object MyOwnOrder extends Build {
+  // here we load config from a txt file.
+  lazy val root = project.in(file(".")).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file("silly.txt")) )
+}
+```
 
 In the above project, we've modified the order of settings to be:
 
@@ -107,52 +113,42 @@ What we've excluded:
 The AddSettings object provides the following "groups" of settings you
 can use for ordering:
 
-`autoPlugins`
-:   All the ordered settings of plugins after they've gone through
-    dependency resolution
-
-`buildScalaFiles`
-:   The full sequence of settings defined directly in `project/*.scala`
+- `autoPlugins` All the ordered settings of plugins after they've gone through
+   dependency resolution
+- `buildScalaFiles` The full sequence of settings defined directly in `project/*.scala`
     builds.
-
-`sbtFiles(*)`
-:   Specifies the exact setting DSL files to include (files must use the
+- `sbtFiles(*)` Specifies the exact setting DSL files to include (files must use the
     `.sbt` file format)
+- `userSettings` All the settings defined in the user directory `~/.sbt/<version>/`.
+- `defaultSbtFiles` Include all local `*.sbt` file settings.
 
-`userSettings`
-:   All the settings defined in the user directory `~/.sbt/<version>/`.
-
-`defaultSbtFiles`
-:   Include all local `*.sbt` file settings.
-
-*Note: Be very careful when reordering settings. It's easy to
-accidentally remove core functionality.*
+> *Note: Be very careful when reordering settings. It's easy to
+> accidentally remove core functionality.*
 
 For example, let's see what happens if we move the `build.sbt` files
 *before* the `buildScalaFile`.
 
-Let's create an example project the following defintiion:
+Let's create an example project the following defintiion. `project/build.scala` :
 
-`project/build.scala` :
-
-    object MyTestBuild extends Build {
-
-      val testProject = project.in(file(".")).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
-        version := scalaBinaryVersion.value match {
-          case "2.10" => "1.0-SNAPSHOT"
-          case v => "1.0-for-\${v}-SNAPSHOT"
-        }
-      )
+```scala
+object MyTestBuild extends Build {
+  val testProject = project.in(file(".")).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
+    version := scalaBinaryVersion.value match {
+      case "2.10" => "1.0-SNAPSHOT"
+      case v => "1.0-for-\${v}-SNAPSHOT"
     }
+  )
+}
+```
 
 This build defines a version string which appends the scala version if
 the current scala version is not the in the `2.10.x` series. Now, when
 issuing a release we want to lock down the version. Most tools assume
-this can happen by writing a `version.sbt` file:
+this can happen by writing a `version.sbt` file. `version.sbt` :
 
-`version.sbt` :
-
-    version := "1.0.0"
+```scala
+version := "1.0.0"
+```
 
 However, when we load this new build, we find that the `version` in
 `version.sbt` has been **overriden** by the one defined in
