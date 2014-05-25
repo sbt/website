@@ -382,6 +382,6 @@ val mainDeps: Initialize[Task[File]] =
 ```
 
 As before, *update* and *configuration* are defined in
-[Keys](../../sxr/sbt/Keys.scala.html). *update* is of type
+[Keys](../sxr/sbt/Keys.scala.html). *update* is of type
 `TaskKey[UpdateReport]` and *configuration* is of type
 `SettingKey[Configuration]`.

@@ -156,7 +156,7 @@ As noted in [.sbt build definition][Basic-Def], task keys create a
 `:=`, etc. Tasks can use settings as inputs, but settings cannot use tasks
 as inputs.
 
-Take these two keys (from [Keys](../../sxr/sbt/Keys.scala.html)):
+Take these two keys (from [Keys](../sxr/sbt/Keys.scala.html)):
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")

@@ -21,15 +21,15 @@ Getting Started Guide, especially [.build.sbt][Basic-Def] and
 
 ### Defining a key
 
-[Keys](../../sxr/sbt/Keys.scala.html) is packed with examples
+[Keys](../sxr/sbt/Keys.scala.html) is packed with examples
 illustrating how to define keys. Most of the keys are implemented in
-[Defaults](../../sxr/sbt/Defaults.scala.html).
+[Defaults](../sxr/sbt/Defaults.scala.html).
 
 Keys have one of three types. `SettingKey` and `TaskKey` are described in
 [.sbt build definition][Basic-Def]. Read about `InputKey` on the
 [Input Tasks][Input-Tasks] page.
 
-Some examples from [Keys](../../sxr/sbt/Keys.scala.html):
+Some examples from [Keys](../sxr/sbt/Keys.scala.html):
 
 ```scala
 val scalaVersion = settingKey[String]("The version of Scala used for building.")

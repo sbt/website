@@ -146,4 +146,4 @@ REPL classpath:
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant
-class is [IvyConsole](../../sxr/sbt/IvyConsole.scala.html).
+class is [IvyConsole](../sxr/sbt/IvyConsole.scala.html).

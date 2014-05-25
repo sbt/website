@@ -113,7 +113,7 @@ define settings in `.sbt` files, for example.
 [Scope](../api/sbt/Scope.html) selects the scope the key is
 obtained for. There are convenience overloads of `in` that can be used
 to specify only the required scope axes. See
-[Structure.scala](../../sxr/sbt/Structure.scala.html) for where `in`
+[Structure.scala](../sxr/sbt/Structure.scala.html) for where `in`
 and other parts of the settings interface are defined. Some examples:
 
 ```scala

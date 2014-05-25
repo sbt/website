@@ -57,7 +57,7 @@ the parser. For example, the currently loaded projects (provided by
 `State`) determine valid completions for the `project` command. Examples
 for the general and specific cases are shown in the following sections.
 
-See [Command.scala](../../sxr/sbt/Command.scala.html) for the source
+See [Command.scala](../sxr/sbt/Command.scala.html) for the source
 API details for constructing commands.
 
 #### General commands

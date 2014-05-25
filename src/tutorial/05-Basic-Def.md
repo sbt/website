@@ -151,7 +151,7 @@ There are three flavors of key:
 #### Built-in Keys
 
 The built-in keys are just fields in an object called
-[Keys](../../sxr/sbt/Keys.scala.html). A `build.sbt` implicitly has an
+[Keys](../sxr/sbt/Keys.scala.html). A `build.sbt` implicitly has an
 `import sbt.Keys._`, so `sbt.Keys.name` can be referred to as `name`.
 
 #### Custom Keys

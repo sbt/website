@@ -168,7 +168,7 @@ Existen tres tipos de llaves:
 #### Built-in Keys (Llaves ya incluídas)
 
 Las llaves ya incluídas son simplemente campos de un objeto llamado
-[Keys](../../sxr/sbt/Keys.scala.html). Un archivo `build.sbt` tiene
+[Keys](../sxr/sbt/Keys.scala.html). Un archivo `build.sbt` tiene
 implícitamente un `import sbt.Keys._`, de modo que `sbt.Keys.name` puede
 ser referido como `name`.
 
