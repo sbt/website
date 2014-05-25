@@ -43,8 +43,8 @@ object Docs {
     IO.copy(mappings)
 
     // symlink API and SXR
-    symlink((versioned / "api").getAbsolutePath, fullVersioned / "api", s.log)
-    symlink((versioned / "sxr").getAbsolutePath, fullVersioned / "sxr", s.log)
+    symlink((fullVersioned / "api").getAbsolutePath, versioned / "api", s.log)
+    symlink((fullVersioned / "sxr").getAbsolutePath, versioned / "sxr", s.log)
 
     repo
   }
@@ -58,9 +58,9 @@ object Docs {
   def siteInclude(f: File) = true
 
   // TODO: platform independence/use symlink from Java 7
-  def symlink(path: String, file: File, log: Logger): Unit =
-    "ln" :: "-s" :: path :: file.getAbsolutePath :: Nil ! log match {
+  def symlink(path: String, linkFile: File, log: Logger): Unit =
+    "ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil ! log match {
       case 0 => ()
-      case code => sys.error("Could not create symbolic link '" + file.getAbsolutePath + "' with path " + path)
+      case code => sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
     }
 }
