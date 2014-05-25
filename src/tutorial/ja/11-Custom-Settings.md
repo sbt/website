@@ -5,12 +5,12 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Tasks]: http://www.scala-sbt.org/release/docs/Extending/Tasks.html
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
-  [Defaults]: http://www.scala-sbt.org/release/sxr/sbt/Defaults.scala.html
-  [IO]: http://www.scala-sbt.org/release/api/index.html#sbt.IO\$
+  [Input-Tasks]: ../docs/Input-Tasks.html
+  [Plugins]: ../docs/Plugins.html
+  [Tasks]: ../docs/Tasks.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
+  [Defaults]: ../sxr/sbt/Defaults.scala.html
+  [Scaladocs-IO]: ../api/index.html#sbt.IO\$
 
 カスタムセッティングとタスク
 ------------------------
@@ -82,7 +82,7 @@ sampleIntTask := {
 （その場合は、[ビルド定義にライブラリ依存性を追加して][Using-Plugins]、その HTML ライブラリに基づいたコードを書く）。
 
 sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [IO] にある API を重宝する。
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
 
 ### 置換しない場合のタスクの拡張
 

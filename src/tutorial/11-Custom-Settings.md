@@ -5,9 +5,9 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Tasks]: http://www.scala-sbt.org/release/docs/Extending/Tasks.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
+  [Plugins]: ../docs/Plugins.html
+  [Tasks]: ../docs/Tasks.html
 
 Custom settings and tasks
 -------------------------

@@ -5,11 +5,10 @@ out: Using-Plugins.html
   [Basic-Def]: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [AutoPlugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html
-  [global-vs-local-plugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins
-  [Community-Plugins]: http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Plugins-Best-Practices]: http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html
+  [global-vs-local-plugins]: ../docs/Best-Practices.html#global-vs-local-plugins
+  [Community-Plugins]: ../docs/Community-Plugins.html
+  [Plugins]: ../docs/Plugins.html
+  [Plugins-Best-Practices]: ../docs/Plugins-Best-Practices.html
 
 Using plugins
 -------------
@@ -52,7 +51,7 @@ A plugin can declare that its settings be automatically added, in which
 case you don't have to do anything to add them.
 
 As of sbt 0.13.5, there is a new
-[auto-plugins][AutoPlugins] feature that enables
+[auto plugins][Plugins] feature that enables
 plugins to automatically, and safely, ensure their settings and
 dependencies are on a project. Most plugins should have their default
 settings automatically, however some may require explicit enablement.

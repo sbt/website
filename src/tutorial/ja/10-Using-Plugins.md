@@ -5,11 +5,10 @@ out: Using-Plugins.html
   [Basic-Def]: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [AutoPlugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html
-  [global-vs-local-plugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins
-  [Community-Plugins]: http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Plugins-Best-Practices]: http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html
+  [global-vs-local-plugins]: ../docs/Best-Practices.html#global-vs-local-plugins
+  [Community-Plugins]: ../docs/Community-Plugins.html
+  [Plugins]: ../docs/Plugins.html
+  [Plugins-Best-Practices]: ../docs/Plugins-Best-Practices.html
 
 プラグインの使用
 --------------
@@ -227,11 +226,11 @@ myPluginSettings
 
 ### 利用可能なプラグイン
 
-[プラグインのリスト](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)がある。
+[プラグインのリスト](../docs/Community-Plugins.html)がある。
 
 特に人気のプラグインは:
 
  - IDE 専用プラグイン（sbt プロジェクトを IDE にインポートする）
  - [xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin) などの、web フレームワークプラグイン
 
-[リストを見てほしい](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)。
+[リストを見てほしい](../docs/Community-Plugins.html)。

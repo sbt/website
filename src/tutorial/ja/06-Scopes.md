@@ -7,7 +7,7 @@ out: Scopes.html
   [More-About-Settings]: More-About-Settings.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [Inspecting-Settings]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html
+  [Inspecting-Settings]: ../docs/Inspecting-Settings.html
 
 スコープ
 -------

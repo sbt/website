@@ -5,10 +5,10 @@ out: Library-Dependencies.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [More-About-Settings]: More-About-Settings.html
-  [external-maven-ivy]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy
-  [Cross-Build]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html
-  [Resolvers]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html
-  [Library-Management]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html
+  [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
+  [Cross-Build]: ../docs/Cross-Build.html
+  [Resolvers]: ../docs/Resolvers.html
+  [Library-Management]: ../docs/Library-Management.html
 
 Library dependencies
 --------------------

@@ -88,3 +88,8 @@ Options -> Keys "Backspace sends ^H"  の設定をチェックする必要があ
 > **注意:** 他の設定は現在サポートしていない。
 > 何か良い方法があれば [pull request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md)
 > を送ってほしい。
+
+訳注:
+
+ - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
+ - sbt0.13.0以降、windows の場合は、 `-Dinput.encoding=Cp1252` を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 [詳しい議論などはここを参照](https://github.com/sbt/sbt/issues/871)

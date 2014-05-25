@@ -2,12 +2,12 @@
 out: Basic-Def.html
 ---
 
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
   [More-About-Settings]: More-About-Settings.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
   [Using-Plugins]: Using-Plugins.html
   [Scopes]: Scopes.html
 

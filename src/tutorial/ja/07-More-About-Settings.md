@@ -5,7 +5,7 @@ out: More-About-Settings.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
 
 他の種類のセッティング
 -------------------

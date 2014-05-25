@@ -4,8 +4,8 @@ out: Running.html
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Triggered-Execution]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html
-  [Command-Line-Reference]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html
+  [Triggered-Execution]: ../docs/Triggered-Execution.html
+  [Command-Line-Reference]: ../docs/Command-Line-Reference.html
 
 Running
 -------

@@ -2,7 +2,7 @@
 out: Library-Dependencies.html
 ---
 
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
   [Apache Ivy]: http://ant.apache.org/ivy/
   [Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
   [Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
@@ -13,10 +13,10 @@ out: Library-Dependencies.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [More-About-Settings]: More-About-Settings.html
-  [external-maven-ivy]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy
-  [Cross-Build]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html
-  [Resolvers]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html
-  [Library-Management]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html
+  [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
+  [Cross-Build]: ../docs/Cross-Build.html
+  [Resolvers]: ../docs/Resolvers.html
+  [Library-Management]: ../docs/Library-Management.html
 
 ライブラリ依存性
 --------------
