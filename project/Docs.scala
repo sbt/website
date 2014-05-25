@@ -41,10 +41,10 @@ object Docs {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(mappings)
-    
+
     // symlink API and SXR
-    symlink(s"$fullVersioned/api", versioned / "api", s.log)
-    symlink(s"$fullVersioned/sxr", versioned / "sxr", s.log)
+    symlink(s"../$targetSbtFullVersion/api/", versioned / "api", s.log)
+    symlink(s"../$targetSbtFullVersion/sxr/", versioned / "sxr", s.log)
 
     repo
   }
@@ -61,6 +61,6 @@ object Docs {
   def symlink(path: String, linkFile: File, log: Logger): Unit =
     "ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil ! log match {
       case 0 => ()
-      case code => sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
+      case code => println(code) // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
     }
 }
