@@ -5,6 +5,7 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
+  [Full-Def]: Full-Def.html
   [Input-Tasks]: ../docs/Input-Tasks.html
   [Plugins]: ../docs/Plugins.html
   [Tasks]: ../docs/Tasks.html
@@ -47,8 +48,8 @@ val clean = taskKey[Unit]("Deletes files produced by the build, such as generate
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
 
-（[.scala ビルド定義](../full-def)でみたように、）`.scala` ファイル内、
-もしくは（[プラグインの使用](../using-plugins)でみたように、）プラグイン内でキーを定義することができる。
+（[.scala ビルド定義][Full-Def] でみたように、）`.scala` ファイル内、
+もしくは（[プラグインの使用][Using-Plugins] でみたように、）プラグイン内でキーを定義することができる。
 `.scala` ビルド定義ファイル内の `Build` オブジェクト内の `val`、
 もしくはプラグイン内の `Plugin` オブジェクト内の `val` は全て `.sbt` ファイルに自動的にインポートされる。
 
