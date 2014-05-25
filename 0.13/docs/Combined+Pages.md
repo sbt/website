@@ -1096,7 +1096,7 @@ sbt 0.13.0 Changes
 -   `compileInputs` is now defined in `(Compile,compile)` instead of
     just `Compile`
 -   The result of running tests is now
-    [Tests.Output](../../api/#sbt.Tests$$Output).
+    [Tests.Output](../api/#sbt.Tests$$Output).
 
 #### Features
 
@@ -4013,7 +4013,7 @@ val files: Seq[File] = cp.files
 
 A classpath has type `Seq[Attributed[File]]`, which means that each
 entry carries additional metadata. This metadata is in the form of an
-[AttributeMap](../../api/sbt/AttributeMap.html). Useful keys for
+[AttributeMap](../api/sbt/AttributeMap.html). Useful keys for
 entries in the map are `artifact.key`, `module.key`, and `analysis`. For
 example,
 
@@ -4029,10 +4029,10 @@ for(entry <- classpath) yield {
 
 > **Note**: Entries may not have some or all metadata. Only entries from source
 > dependencies, such as internal projects, have an incremental
-> compilation [Analysis](../../api/sbt/inc/Analysis.html). Only entries
+> compilation [Analysis](../api/sbt/inc/Analysis.html). Only entries
 > for managed dependencies have an
-> [Artifact](../../api/sbt/Artifact.html) and
-> [ModuleID](../../api/sbt/ModuleID.html).
+> [Artifact](../api/sbt/Artifact.html) and
+> [ModuleID](../api/sbt/ModuleID.html).
 
 
   [file-filter]: Paths.html#file-filter
@@ -5136,7 +5136,7 @@ the ones provided by the old function.
 ### Log messages in a task
 
 The special task `streams` provides per-task logging and I/O via a
-[Streams](../../api/#sbt.std.Streams) instance. To log, a task uses
+[Streams](../api/#sbt.std.Streams) instance. To log, a task uses
 the `log` member from the `streams` task:
 
 ```scala
@@ -5773,7 +5773,7 @@ See [.sbt build definition][Basic-Def] for details.
 Avoid using blank lines within a single multiline expression. As
 explained in [.sbt build definition][Basic-Def], each
 setting is otherwise a normal Scala expression with expected type
-[sbt.SettingDefinition](../../api/sbt/Init$SettingsDefinition.html).
+[sbt.SettingDefinition](../api/sbt/Init$SettingsDefinition.html).
 
 ```scala
 // set the name of the project
@@ -6278,7 +6278,7 @@ Other resources include the
 [How to][Howto] and
 [Developer’s Guide][Developers-Guide]
 sections in this reference, and the
-[API Documentation](../../api/index.html)
+[API Documentation](../api/index.html)
 
 
   [Getting-Started]: ../tutorial/index.html
@@ -7354,7 +7354,7 @@ $ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/sna
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant
-class is [IvyConsole](../../sxr/sbt/IvyConsole.scala.html).
+class is [IvyConsole](../sxr/sbt/IvyConsole.scala.html).
 
 
 Understanding Incremental Recompilation
@@ -7789,7 +7789,7 @@ In sbt 0.10 and later, classpaths now include the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
 settings and tasks typically provide a value of type `Classpath`. This
 is an alias for `Seq[Attributed[File]]`.
-[Attributed](../../api/sbt/Attributed.html) is a type that associates
+[Attributed](../api/sbt/Attributed.html) is a type that associates
 a heterogeneous map with each classpath entry. Currently, this allows
 sbt to associate the `Analysis` resulting from compilation with the
 corresponding classpath entry and for managed entries, the `ModuleID`
@@ -8090,8 +8090,8 @@ libraryDependencies ++= Seq(
 ```
 
 In the second case, directly construct a value of type
-[ScalaInstance](../../api/sbt/ScalaInstance.html), typically using a
-method in the [companion object](../../api/sbt/ScalaInstance$.html),
+[ScalaInstance](../api/sbt/ScalaInstance.html), typically using a
+method in the [companion object](../api/sbt/ScalaInstance$.html),
 and assign it to `scalaInstance`. You will also need to add the
 `scala-library` jar to the classpath to compile and run Scala sources.
 For example,
@@ -8295,7 +8295,7 @@ only the main or test `run` tasks or just the `test` tasks.
 By default, forked output is sent to the Logger, with standard output
 logged at the `Info` level and standard error at the `Error` level. This
 can be configured with the `outputStrategy` setting, which is of type
-[OutputStrategy](../../api/sbt/OutputStrategy.html).
+[OutputStrategy](../api/sbt/OutputStrategy.html).
 
 ```scala
 // send output to the build's standard output and error
@@ -8327,9 +8327,9 @@ connectInput in run := true
 ### Direct Usage
 
 To fork a new Java process, use the
-[Fork API](../../api/sbt/Fork$.html). The values of interest are
+[Fork API](../api/sbt/Fork$.html). The values of interest are
 `Fork.java`, `Fork.javac`, `Fork.scala`, and `Fork.scalac`. These are of
-type [Fork](../../api/sbt/Fork.html) and provide `apply` and `fork`
+type [Fork](../api/sbt/Fork.html) and provide `apply` and `fork`
 methods. For example, to fork a new Java process, :
 
 ```scala
@@ -8339,7 +8339,7 @@ val mainClass: String = ...
 val exitCode: Int = Fork.java(options, mainClass +: arguments)
 ```
 
-[ForkOptions](../../api/sbt/ForkOptions.html) defines the Java
+[ForkOptions](../api/sbt/ForkOptions.html) defines the Java
 installation to use, the working directory, environment variables, and
 more. For example, :
 
@@ -8491,14 +8491,14 @@ type `Seq[(File, String)]` from an input file to the path to use in the
 resulting artifact (jar). Similarly, tasks that copy files accept
 mappings of type `Seq[(File, File)]` from an input file to the
 destination file. There are some methods on
-[PathFinder](../../api/sbt/PathFinder.html) and
-[Path](../../api/sbt/Path$.html) that can be useful for constructing
+[PathFinder](../api/sbt/PathFinder.html) and
+[Path](../api/sbt/Path$.html) that can be useful for constructing
 the `Seq[(File, String)]` or `Seq[(File, File)]` sequences.
 
 A common way of making this sequence is to start with a `PathFinder` or
 `Seq[File]` (which is implicitly convertible to `PathFinder`) and then
 call the `pair` method. See the
-[PathFinder](../../api/sbt/PathFinder.html) API for details, but
+[PathFinder](../api/sbt/PathFinder.html) API for details, but
 essentially this method accepts a function `File => Option[String]` or
 `File => Option[File]` that is used to generate mappings.
 
@@ -8786,10 +8786,10 @@ base type used is
 [java.io.File](http://download.oracle.com/javase/6/docs/api/java/io/File.html),
 but several methods are augmented through implicits:
 
--   [RichFile](../../api/sbt/RichFile.html) adds methods to File
--   [PathFinder](../../api/sbt/PathFinder.html) adds methods to File
+-   [RichFile](../api/sbt/RichFile.html) adds methods to File
+-   [PathFinder](../api/sbt/PathFinder.html) adds methods to File
     and Seq[File]
--   [Path](../../api/sbt/Path$.html) and [IO](../../api/sbt/IO$.html)
+-   [Path](../api/sbt/Path$.html) and [IO](../api/sbt/IO$.html)
     provide general methods related to files and I/O.
 
 ### Constructing a File
@@ -9428,7 +9428,7 @@ instance of `URL` and `file` is an instance of `File`.
 There are some additional methods to get the output from a forked
 process into a `String` or the output lines as a `Stream[String]`. Here
 are some examples, but see the
-[ProcessBuilder API](../../api/sbt/ProcessBuilder.html) for details.
+[ProcessBuilder API](../api/sbt/ProcessBuilder.html) for details.
 
 ```scala
 val listed: String = "ls" !!
@@ -10043,8 +10043,8 @@ support for a different framework, implement the
 
 Test frameworks report status and results to test reporters. You can
 create a new test reporter by implementing either
-[TestReportListener](../../api/sbt/TestReportListener.html) or
-[TestsListener](../../api/sbt/TestsListener.html).
+[TestReportListener](../api/sbt/TestReportListener.html) or
+[TestsListener](../api/sbt/TestsListener.html).
 
 #### Using Extensions
 
@@ -10206,7 +10206,7 @@ Artifact("myproject", "jdk15")
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
 for more details on artifacts. See the
-[Artifact API](../../api/sbt/Artifact$.html) for combining the
+[Artifact API](../api/sbt/Artifact$.html) for combining the
 parameters above and specifying [Configurations] and extra attributes.
 
 To declare these artifacts for publishing, map them to the task that
@@ -10224,7 +10224,7 @@ addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 ```
 
 `addArtifact` returns a sequence of settings (wrapped in a
-[SettingsDefinition](../../api/#sbt.Init$SettingsDefinition)). In a
+[SettingsDefinition](../api/#sbt.Init$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
 ```scala
@@ -10679,7 +10679,7 @@ libraryDependencies +=
   )
 ```
 
-See [ModuleID](../../api/sbt/ModuleID.html) for API details.
+See [ModuleID](../api/sbt/ModuleID.html) for API details.
 
 ##### Download Sources
 
@@ -10786,7 +10786,7 @@ checksums := Seq("sha1", "md5")
 The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting `conflictManager`,
-which has type [ConflictManager](../../api/sbt/ConflictManager.html).
+which has type [ConflictManager](../api/sbt/ConflictManager.html).
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
 for details on the different conflict managers. For example, to specify
@@ -11538,7 +11538,7 @@ resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
 be Maven compatible (as defined by Ivy). See the
-[patterns API](../../api/sbt/Patterns$.html) for the methods to use.
+[patterns API](../api/sbt/Patterns$.html) for the methods to use.
 
 For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and
@@ -11554,7 +11554,7 @@ Update Report
 -------------
 
 `update` and related tasks produce a value of type
-[sbt.UpdateReport](../../api/sbt/UpdateReport.html) This data
+[sbt.UpdateReport](../api/sbt/UpdateReport.html) This data
 structure provides information about the resolved configurations,
 modules, and artifacts. At the top level, `UpdateReport` provides
 reports of type `ConfigurationReport` for each resolved configuration. A
@@ -11572,10 +11572,10 @@ A typical use of `UpdateReport` is to retrieve a list of files matching
 a filter. A conversion of type `UpdateReport => RichUpdateReport`
 implicitly provides these methods for `UpdateReport`. The filters are
 defined by the
-[DependencyFilter](../../api/sbt/DependencyFilter.html),
-[ConfigurationFilter](../../api/sbt/ConfigurationFilter.html),
-[ModuleFilter](../../api/sbt/ModuleFilter.html), and
-[ArtifactFilter](../../api/sbt/ArtifactFilter.html) types. Using
+[DependencyFilter](../api/sbt/DependencyFilter.html),
+[ConfigurationFilter](../api/sbt/ConfigurationFilter.html),
+[ModuleFilter](../api/sbt/ModuleFilter.html), and
+[ArtifactFilter](../api/sbt/ArtifactFilter.html) types. Using
 these filter types, you can filter by the configuration name, the module
 organization, name, or revision, and the artifact name, type, extension,
 or classifier.
@@ -12072,7 +12072,7 @@ can be organized into four groups:
 -   Default filter (`inAnyProject`, `inAnyConfiguration`, `inAnyTask`)
 -   Project relationships (`inAggregates`, `inDependencies`)
 
-See the [API documentation](../../api/sbt/ScopeFilter$$Make.html) for
+See the [API documentation](../api/sbt/ScopeFilter$$Make.html) for
 details.
 
 ##### Combining ScopeFilters
@@ -12221,10 +12221,10 @@ or text data.
 
 To use Streams, get the value of the `streams` task. This is a special
 task that provides an instance of
-[TaskStreams](../../api/sbt/std/TaskStreams.html) for the defining
+[TaskStreams](../api/sbt/std/TaskStreams.html) for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-[Logger](../../api/sbt/Logger.html), which is the most commonly used
+[Logger](../api/sbt/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
 ```scala
@@ -12306,7 +12306,7 @@ methods, which are used to handle failure of other tasks.
 The `failure` method creates a new task that returns the `Incomplete`
 value when the original task fails to complete normally. If the original
 task succeeds, the new task fails.
-[Incomplete](../../api/sbt/Incomplete.html) is an exception with
+[Incomplete](../api/sbt/Incomplete.html) is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 
@@ -12429,7 +12429,7 @@ inputs fail and computes its value otherwise.
 #### `result`
 
 The `result` method creates a new task that returns the full `Result[T]`
-value for the original task. [Result](../../api/sbt/Result.html) has
+value for the original task. [Result](../api/sbt/Result.html) has
 the same structure as `Either[Incomplete, T]` for a task result of type
 `T`. That is, it has two subtypes:
 
@@ -12854,7 +12854,7 @@ There are three main aspects to commands:
     -   The parser to turn input into an appropriate data structure
 
 2.  The action to perform using the parsed data structure. This action
-    transforms the build [State](../../api/sbt/State.html).
+    transforms the build [State](../api/sbt/State.html).
 3.  Help provided to the user
 
 In sbt, the syntax part, including tab completion, is specified with
@@ -12865,7 +12865,7 @@ by the parser. See the
 [Parsing Input][Parsing-Input] page for how to
 use the parser combinators.
 
-[State](../../api/sbt/State.html) provides access to the build state,
+[State](../api/sbt/State.html) provides access to the build state,
 such as all registered `Command`s, the remaining commands to execute,
 and all project-related information. See [States and Actions][Build-State] for details on
 State.
@@ -12882,7 +12882,7 @@ the parser. For example, the currently loaded projects (provided by
 `State`) determine valid completions for the `project` command. Examples
 for the general and specific cases are shown in the following sections.
 
-See [Command.scala](../../sxr/sbt/Command.scala.html) for the source
+See [Command.scala](../sxr/sbt/Command.scala.html) for the source
 API details for constructing commands.
 
 #### General commands
@@ -13085,7 +13085,7 @@ val alwaysFail: Parser[Nothing] = failure("Invalid input.")
 ### Built-in parsers
 
 sbt comes with several built-in parsers defined in
-[sbt.complete.DefaultParsers](../../api/sbt/complete/DefaultParsers$.html).
+[sbt.complete.DefaultParsers](../api/sbt/complete/DefaultParsers$.html).
 Some commonly used built-in parsers are:
 
 > -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
@@ -13097,7 +13097,7 @@ Some commonly used built-in parsers are:
 > -   `Bool` for parsing a `Boolean` value
 
 See the
-[DefaultParsers API](../../api/sbt/complete/DefaultParsers$.html) for
+[DefaultParsers API](../api/sbt/complete/DefaultParsers$.html) for
 details.
 
 ### Combining parsers
@@ -13206,7 +13206,7 @@ token definition will be used.
 State and actions
 -----------------
 
-[State](../../api/sbt/State$.html) is the entry point to all
+[State](../api/sbt/State$.html) is the entry point to all
 available information in sbt. The key methods are:
 
 -   `definedCommands: Seq[Command]` returns all registered Command
@@ -13284,14 +13284,14 @@ val extracted: Extracted = Project.extract(state)
 import extracted._
 ```
 
-[Extracted](../../api/sbt/Extracted.html) provides:
+[Extracted](../api/sbt/Extracted.html) provides:
 
 -   Access to the current build and project (`currentRef`)
 -   Access to initialized project setting data (`structure.data`)
 -   Access to session `Setting`s and the original, permanent settings
     from .sbt and .scala files (session.append and session.original,
     respectively)
--   Access to the current [Eval](../../api/sbt/compiler/Eval.html)
+-   Access to the current [Eval](../api/sbt/compiler/Eval.html)
     instance for evaluating Scala expressions in the build context.
 
 ### Project data
@@ -13307,12 +13307,12 @@ val value: Option[T] = key in scope get structure.data
 ```
 
 Here, a `SettingKey[T]` is typically obtained from
-[Keys](../../api/sbt/Keys$.html) and is the same type that is used to
+[Keys](../api/sbt/Keys$.html) and is the same type that is used to
 define settings in `.sbt` files, for example.
-[Scope](../../api/sbt/Scope.html) selects the scope the key is
+[Scope](../api/sbt/Scope.html) selects the scope the key is
 obtained for. There are convenience overloads of `in` that can be used
 to specify only the required scope axes. See
-[Structure.scala](../../sxr/sbt/Structure.scala.html) for where `in`
+[Structure.scala](../sxr/sbt/Structure.scala.html) for where `in`
 and other parts of the settings interface are defined. Some examples:
 
 ```scala
@@ -13327,7 +13327,7 @@ val nameOpt: Option[String] = name in currentRef get structure.data
 val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 ```
 
-[BuildStructure](../../api/sbt/Load$$BuildStructure.html) contains
+[BuildStructure](../api/sbt/Load$$BuildStructure.html) contains
 information about build and project relationships. Key members are:
 
 ```scala
@@ -13336,7 +13336,7 @@ root: URI
 ```
 
 A `URI` identifies a build and `root` identifies the initial build
-loaded. [LoadedBuildUnit](../../api/sbt/Load$$LoadedBuildUnit.html)
+loaded. [LoadedBuildUnit](../api/sbt/Load$$LoadedBuildUnit.html)
 provides information about a single build. The key members of
 `LoadedBuildUnit` are:
 
@@ -13348,9 +13348,9 @@ localBase: File
 defined: Map[String, ResolvedProject]
 ```
 
-[ResolvedProject](../../api/sbt/ResolvedProject.html) has the same
+[ResolvedProject](../api/sbt/ResolvedProject.html) has the same
 information as the `Project` used in a `project/Build.scala` except that
-[ProjectReferences](../../api/sbt/ProjectReference.html) are resolved
+[ProjectReferences](../api/sbt/ProjectReference.html) are resolved
 to `ProjectRef`s.
 
 ### Classpaths
@@ -14175,7 +14175,7 @@ long-standing issues with plugins.
 
 ### Reuse existing keys
 
-sbt has a number of [predefined keys](../../api/sbt/Keys%24.html).
+sbt has a number of [predefined keys](../api/sbt/Keys%24.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
 ```scala
@@ -15195,7 +15195,7 @@ object SettingsExample extends Init[Scope]
 This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
-[Settings API documentation](../../api/sbt/Settings.html) for
+[Settings API documentation](../api/sbt/Settings.html) for
 details. `SettingsUsage.scala`:
 
 ```scala
@@ -15327,7 +15327,7 @@ underlying `SettingKey[Task[T]]` (and they both wrap an underlying
 For example, `a := 3` for a SettingKey *a* will very roughly translate
 to `setting(a, value(3))`. For a TaskKey *a*, it will roughly translate
 to `setting(a, value( task { 3 } ) )`. See
-[main/Structure.scala](../../sxr/sbt/Structure.scala) for details.
+[main/Structure.scala](../sxr/sbt/Structure.scala) for details.
 
 #### Settings definitions
 
@@ -15356,7 +15356,7 @@ into the a task graph. This task graph is then used to execute your
 build.
 
 All of sbt's loading semantics are contained within the
-[Load.scala](../../sxr/sbt/Load.scala.html) file. It is approximately
+[Load.scala](../sxr/sbt/Load.scala.html) file. It is approximately
 the following:
 
 ![image](files/settings-initialization-load-ordering.png)
@@ -15544,8 +15544,8 @@ object Demo extends Build {
 
 Relevant API documentation for custom resolvers:
 
--   [ResolveInfo](../../api/index.html#sbt.BuildLoader$$ResolveInfo)
--   [BuildLoader](../../api/sbt/BuildLoader$.html)
+-   [ResolveInfo](../api/index.html#sbt.BuildLoader$$ResolveInfo)
+-   [BuildLoader](../api/sbt/BuildLoader$.html)
 
 #### Full Example
 
@@ -15631,9 +15631,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom builders:
 
--   [BuildInfo](../../api/sbt/BuildLoader$$BuildInfo.html)
--   [BuildLoader](../../api/sbt/BuildLoader$.html)
--   [BuildUnit](../../api/index.html#sbt.Load$$BuildUnit)
+-   [BuildInfo](../api/sbt/BuildLoader$$BuildInfo.html)
+-   [BuildLoader](../api/sbt/BuildLoader$.html)
+-   [BuildUnit](../api/index.html#sbt.Load$$BuildUnit)
 
 #### Example
 
@@ -15708,9 +15708,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom transformers:
 
--   [TransformInfo](../../api/index.html#sbt.BuildLoader$$TransformInfo)
--   [BuildLoader](../../api/sbt/BuildLoader$.html)
--   [BuildUnit](../../api/index.html#sbt.Load$$BuildUnit)
+-   [TransformInfo](../api/index.html#sbt.BuildLoader$$TransformInfo)
+-   [BuildLoader](../api/sbt/BuildLoader$.html)
+-   [BuildUnit](../api/index.html#sbt.Load$$BuildUnit)
 
 ##### Manipulating Project Dependencies in Settings
 
@@ -15730,12 +15730,12 @@ Build or referenced as the argument to `Project.aggregate` or
 ### The BuildDependencies type
 
 The type of the `buildDependencies` setting is
-[BuildDependencies](../../api/sbt/BuildDependencies.html).
+[BuildDependencies](../api/sbt/BuildDependencies.html).
 `BuildDependencies` provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type `ClasspathDep[ProjectRef]`, which combines a `ProjectRef` with a
-configuration (see [ClasspathDep](../../api/sbt/ClasspathDep.html)
-and [ProjectRef](../../api/sbt/ProjectRef.html)). For aggregate
+configuration (see [ClasspathDep](../api/sbt/ClasspathDep.html)
+and [ProjectRef](../api/sbt/ProjectRef.html)). For aggregate
 dependencies, the type of a dependency is just `ProjectRef`.
 
 The API for `BuildDependencies` is not extensive, covering only a little
@@ -15831,7 +15831,7 @@ libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
 #### Application: Main.scala
 
 The application itself is defined by implementing
-[xsbti.AppMain](../../api/xsbti/AppMain.html). The basic steps are
+[xsbti.AppMain](../api/xsbti/AppMain.html). The basic steps are
 
 1.  Provide command definitions. These are the commands that are
     available for users to run.

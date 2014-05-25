@@ -114,7 +114,7 @@ raw <code>Seq[File]</code> for the classpath. For example, :
 val files: Seq[File] = cp.files
 </code></pre><a name="classpath-entry-module"></a><h3 id="Get+the+module+and+artifact+that+produced+a+classpath+entry">Get the module and artifact that produced a classpath entry<a href="#Get+the+module+and+artifact+that+produced+a+classpath+entry" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A classpath has type <code>Seq[Attributed[File]]</code>, which means that each
 entry carries additional metadata. This metadata is in the form of an
-<a href="../../api/sbt/AttributeMap.html">AttributeMap</a>. Useful keys for
+<a href="../api/sbt/AttributeMap.html">AttributeMap</a>. Useful keys for
 entries in the map are <code>artifact.key</code>, <code>module.key</code>, and <code>analysis</code>. For
 example,
 </p><pre><code class="prettyprint lang-scala">val classpath: Seq[Attributed[File]] = ???
@@ -126,10 +126,10 @@ for(entry &lt;- classpath) yield {
 }
 </code></pre><blockquote><p><strong>Note</strong>: Entries may not have some or all metadata. Only entries from source
 dependencies, such as internal projects, have an incremental
-compilation <a href="../../api/sbt/inc/Analysis.html">Analysis</a>. Only entries
+compilation <a href="../api/sbt/inc/Analysis.html">Analysis</a>. Only entries
 for managed dependencies have an
-<a href="../../api/sbt/Artifact.html">Artifact</a> and
-<a href="../../api/sbt/ModuleID.html">ModuleID</a>.
+<a href="../api/sbt/Artifact.html">Artifact</a> and
+<a href="../api/sbt/ModuleID.html">ModuleID</a>.
 </p></blockquote><div class="bottom nav span-16">
                         <em>Next Page</em>
                         <span class="arrow">&gt;</span>

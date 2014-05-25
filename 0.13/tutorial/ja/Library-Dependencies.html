@@ -119,7 +119,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 </p><pre><code class="prettyprint lang-scala">resolvers += name at location
 </code></pre><p>例えば:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
-</code></pre><p><a href="http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:
+</code></pre><p><a href="../sxr/sbt/Keys.scala.html">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:
 </p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
 </code></pre><p><code>at</code> メソッドは、二つの文字列から <code>Resolver</code> オブジェクトを作る。
 </p><p>sbt は、リポジトリとして追加すれば、ローカル Maven リポジトリも検索することができる:
@@ -136,7 +136,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 </code></pre><p>sbt のインタラクティブモードで <code>show compile:dependency-classpath</code> と打ち込んでも、Derby は出てこないはずだ。
 だけど、<code>show test:dependency-classpath</code> と打ち込むと、Derby の jar がリストにあるのが確認できる。
 </p><p>普通は、<a href="http://scalacheck.org">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://scalatest.org">ScalaTest</a> などのテスト関連の依存ライブラリは <code>% &quot;test&quot;</code> と共に定義される。
-</p><p>ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">このページ</a>に
+</p><p>ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、<a href="../docs/Library-Management.html">このページ</a>に
 もう少し詳細やコツが書いてある。
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>

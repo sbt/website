@@ -43,7 +43,7 @@
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="#%E5%A7%8B%E3%82%81%E3%82%8B+sbt">始める sbt</a></div><ol class="toc"> <li><div><a href="#sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">sbt のインストール</a></div><ol class="toc"> <li><div><a href="#Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Mac への sbt のインストール</a></div></li><li><div><a href="#Windows+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Windows への sbt のインストール</a></div></li><li><div><a href="#Linux+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Linux への sbt のインストール</a></div></li><li><div><a href="#%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">手動インストール</a></div></li> </ol></li><li><div><a href="#Hello%2C+World">Hello, World</a></div></li><li><div><a href="#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E9%80%A0">ディレクトリ構造</a></div></li><li><div><a href="#%E5%AE%9F%E8%A1%8C">実行</a></div></li><li><div><a href="#.sbt+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.sbt ビルド定義</a></div></li><li><div><a href="#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97">スコープ</a></div></li><li><div><a href="#%E4%BB%96%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">他の種類のセッティング</a></div></li><li><div><a href="#%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E4%BE%9D%E5%AD%98%E6%80%A7">ライブラリ依存性</a></div></li><li><div><a href="#%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89">マルチプロジェクト・ビルド</a></div></li><li><div><a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%BF%E7%94%A8">プラグインの使用</a></div></li><li><div><a href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%A8%E3%82%BF%E3%82%B9%E3%82%AF">カスタムセッティングとタスク</a></div></li><li><div><a href="#.scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.scala ビルド定義</a></div></li><li><div><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></div></li> </ol></div></div><h1 id="%E5%A7%8B%E3%82%81%E3%82%8B+sbt">始める sbt<a href="#%E5%A7%8B%E3%82%81%E3%82%8B+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><blockquote><p>原文: <a href="http://www.scala-sbt.org/release/docs/Getting-Started/Welcome.html">Getting Started Guide</a><br>
+      <div><a href="#%E5%A7%8B%E3%82%81%E3%82%8B+sbt">始める sbt</a></div><ol class="toc"> <li><div><a href="#sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">sbt のインストール</a></div><ol class="toc"> <li><div><a href="#Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Mac への sbt のインストール</a></div></li><li><div><a href="#Windows+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Windows への sbt のインストール</a></div></li><li><div><a href="#Linux+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Linux への sbt のインストール</a></div></li><li><div><a href="#%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">手動インストール</a></div></li> </ol></li><li><div><a href="#Hello%2C+World">Hello, World</a></div></li><li><div><a href="#%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E6%A7%8B%E9%80%A0">ディレクトリ構造</a></div></li><li><div><a href="#%E5%AE%9F%E8%A1%8C">実行</a></div></li><li><div><a href="#.sbt+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.sbt ビルド定義</a></div></li><li><div><a href="#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97">スコープ</a></div></li><li><div><a href="#%E4%BB%96%E3%81%AE%E7%A8%AE%E9%A1%9E%E3%81%AE%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0">他の種類のセッティング</a></div></li><li><div><a href="#%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E4%BE%9D%E5%AD%98%E6%80%A7">ライブラリ依存性</a></div></li><li><div><a href="#%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89">マルチプロジェクト・ビルド</a></div></li><li><div><a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%AE%E4%BD%BF%E7%94%A8">プラグインの使用</a></div></li><li><div><a href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%A8%E3%82%BF%E3%82%B9%E3%82%AF">カスタムセッティングとタスク</a></div></li><li><div><a href="#.scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.scala ビルド定義</a></div></li><li><div><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></div></li> </ol></div></div><h1 id="%E5%A7%8B%E3%82%81%E3%82%8B+sbt">始める sbt<a href="#%E5%A7%8B%E3%82%81%E3%82%8B+sbt" class="header-link"><span class="header-link-content">&nbsp;</span></a></h1><blockquote><p>原文: <a href="../index.html">Getting Started Guide</a><br>
 <a href="https://github.com/scalajp/sbt-getting-started-guide-ja/issues">誤訳の報告をする</a>。<br>
 このスタートガイドは、sbt 0.11 〜 0.12 の頃に書かれたものです。書いてある内容はまだ十分有用ですが、sbt0.13ではある程度の機能追加などもされています。
 sbt0.13での変更点や新機能に興味がある人は、こちら<a href="http://eed3si9n.com/ja/node/142">sbt 0.13.0 の変更点</a> も一緒に読むといいでしょう。
@@ -70,11 +70,7 @@ sbt0.13での変更点や新機能に興味がある人は、こちら<a href="h
 プラットフォームによってもう少し簡単なインストール方法をいくつか提供する。
 <a href="Installing-sbt-on-Mac.html">Mac</a>、<a href="Installing-sbt-on-Windows.html">Windows</a>、<a href="Installing-sbt-on-Linux.html">Linux</a> もしくは<a href="Manual-Installation.html">手動インストール</a>の手順に進んでほしい。
 </p><h3 id="%E3%82%B3%E3%83%84%E3%81%A8%E6%B3%A8%E6%84%8F">コツと注意<a href="#%E3%82%B3%E3%83%84%E3%81%A8%E6%B3%A8%E6%84%8F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>sbt</code> の実行に上手くいかない場合は、[[Setup Notes]] のターミナルの文字エンコーディング、HTTP プロキシ、JVM のオプションにかんする説明を参照する。
-</p><p>訳注:
-</p><ul><li>32bitOSの場合 <code>-Xmx1536M</code> だとJVMのメモリの制限によりうまくいかないので、<code>-Xmx1024M</code> などに減らす必要がある。
-</li><li><a href="http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html">原文のページ</a>には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
-</li><li>sbt0.13.0以降、windows の場合は、 <code>-Dinput.encoding=Cp1252</code> を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 <a href="https://github.com/sbt/sbt/issues/871">詳しい議論などはここを参照</a>
-</li></ul><h2 id="Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Mac への sbt のインストール<a href="#Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="%E3%82%B5%E3%83%BC%E3%83%89%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%81%8B%E3%82%89%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">サードパーティからのパッケージを使ってのインストール<a href="#%E3%82%B5%E3%83%BC%E3%83%89%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%81%8B%E3%82%89%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><blockquote><p><strong>注意:</strong> サードパーティからのパッケージは最新版を使っているとは限らない。
+</p><h2 id="Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">Mac への sbt のインストール<a href="#Mac+%E3%81%B8%E3%81%AE+sbt+%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="%E3%82%B5%E3%83%BC%E3%83%89%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%81%8B%E3%82%89%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">サードパーティからのパッケージを使ってのインストール<a href="#%E3%82%B5%E3%83%BC%E3%83%89%E3%83%91%E3%83%BC%E3%83%86%E3%82%A3%E3%81%8B%E3%82%89%E3%81%AE%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><blockquote><p><strong>注意:</strong> サードパーティからのパッケージは最新版を使っているとは限らない。
 何か問題があれば、パッケージメンテナに連絡してほしい。
 </p></blockquote><h4 id=""><a href="http://macports.org/">Macports</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ port install sbt
 </code></pre><h4 id=""><a href="http://mxcl.github.com/homebrew/">Homebrew</a><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="">$ brew install sbt
@@ -139,7 +135,10 @@ Options -&gt; Keys “Backspace sends ^H”  の設定をチェックする必�
 </p><blockquote><p><strong>注意:</strong> 他の設定は現在サポートしていない。
 何か良い方法があれば <a href="https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md">pull request</a>
 を送ってほしい。
-</p></blockquote><h2 id="Hello%2C+World">Hello, World<a href="#Hello%2C+World" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページは、君が<a href="Setup.html">sbt をインストール</a>したことを前提にする。
+</p></blockquote><p>訳注:
+</p><ul><li>32bitOSの場合 <code>-Xmx1536M</code> だとJVMのメモリの制限によりうまくいかないので、<code>-Xmx1024M</code> などに減らす必要がある。
+</li><li>sbt0.13.0以降、windows の場合は、 <code>-Dinput.encoding=Cp1252</code> を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 <a href="https://github.com/sbt/sbt/issues/871">詳しい議論などはここを参照</a>
+</li></ul><h2 id="Hello%2C+World">Hello, World<a href="#Hello%2C+World" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページは、君が<a href="Setup.html">sbt をインストール</a>したことを前提にする。
 </p><h3 id="%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E5%85%A5%E3%81%A3%E3%81%9F%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%92%E4%BD%9C%E3%82%8B">ソースコードの入ったプロジェクトディレクトリを作る<a href="#%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E5%85%A5%E3%81%A3%E3%81%9F%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%82%92%E4%BD%9C%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、<code>hello</code>
 ディレクトリを作って、以下の内容の <code>hw.scala</code> というファイルを作成する:
 </p><pre><code class="prettyprint lang-scala">object Hi {
@@ -246,9 +245,9 @@ sbt を使って自動的に再コンパイルすることができる。
 </p><pre><code class="">&gt; ~ compile
 </code></pre><p>エンターを押すと、変更の監視を中止できる。
 </p><p>先頭の <code>~</code> はインタラクティブモードでもバッチモードでも使うことができる。
-</p><p>詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> 参照。
+</p><p>詳しくは、<a href="../docs/Triggered-Execution.html">Triggered Execution</a> 参照。
 </p><h3 id="%E3%82%88%E3%81%8F%E4%BD%BF%E3%82%8F%E3%82%8C%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89">よく使われるコマンド<a href="#%E3%82%88%E3%81%8F%E4%BD%BF%E3%82%8F%E3%82%8C%E3%82%8B%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>以下に、最もよく使われる sbt コマンドを紹介する。より完全な一覧は
-<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a> にある。
+<a href="../docs/Command-Line-Reference.html">Command Line Reference</a> にある。
 </p><table>
   <tr>
     <td><tt>clean</tt></td>
@@ -497,7 +496,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 </p><ul><li>プロジェクトを省略した場合は、現在のプロジェクトが使われる。
 </li><li>コンフィグレーションを省略した場合は、キーに依存したコンフィギュレーションが自動検知される。
 </li><li>タスクを省略した場合は、<code>Global</code> タスクが使われる。
-</li></ul><p>さらに詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
+</li></ul><p>さらに詳しくは、<a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
 </p><h3 id="%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%81%AE%E6%A4%9C%E6%9F%BB">スコープの検査<a href="#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%81%AE%E6%A4%9C%E6%9F%BB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt のインタラクティブモード内で <code>inspect</code> コマンドを使ってキーとそのスコープを理解することができる。
 例えば、<code>inspect test:full-classpath</code> と試してみよう:
 </p><pre><code class="">$ sbt
@@ -551,7 +550,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 そのため、<code>inspect compile:full-classpath</code> は <code>inspect full-classpath</code> と同じになるはずだ。
 </p><p>次に、<code>inspect *:full-classpath</code> も実行して違いを比べてみよう。
 <code>full-classpath</code> はデフォルトでは、<code>Global</code> コンフィギュレーションには定義されていない。
-</p><p>より詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
+</p><p>より詳しくは、<a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
 </p><h3 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B">ビルド定義からスコープを参照する<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> で裸のキーを使ってセッティングを作った場合は、現プロジェクト、<code>Global</code> コンフィグレーション、<code>Global</code> タスクにスコープ付けされる:
 </p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
 </code></pre><p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィギュレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。
@@ -841,7 +840,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 </p><pre><code class="prettyprint lang-scala">resolvers += name at location
 </code></pre><p>例えば:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
-</code></pre><p><a href="http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:
+</code></pre><p><a href="../sxr/sbt/Keys.scala.html">Keys</a> で定義されいる <code>resolvers</code> キーは以下のようになっている:
 </p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
 </code></pre><p><code>at</code> メソッドは、二つの文字列から <code>Resolver</code> オブジェクトを作る。
 </p><p>sbt は、リポジトリとして追加すれば、ローカル Maven リポジトリも検索することができる:
@@ -858,7 +857,7 @@ sbt は、デフォルトで standard Maven2 repository のリポジトリを使
 </code></pre><p>sbt のインタラクティブモードで <code>show compile:dependency-classpath</code> と打ち込んでも、Derby は出てこないはずだ。
 だけど、<code>show test:dependency-classpath</code> と打ち込むと、Derby の jar がリストにあるのが確認できる。
 </p><p>普通は、<a href="http://scalacheck.org">ScalaCheck</a>、<a href="http://code.google.com/p/specs/">specs</a>、<a href="http://scalatest.org">ScalaTest</a> などのテスト関連の依存ライブラリは <code>% &quot;test&quot;</code> と共に定義される。
-</p><p>ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">このページ</a>に
+</p><p>ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、<a href="../docs/Library-Management.html">このページ</a>に
 もう少し詳細やコツが書いてある。
 </p><h2 id="%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89">マルチプロジェクト・ビルド<a href="#%E3%83%9E%E3%83%AB%E3%83%81%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%83%BB%E3%83%93%E3%83%AB%E3%83%89" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページでは、一つのプロジェクトで複数のプロジェクトを管理する方法を紹介する。
 </p><p>このガイドの前のページ、特に
@@ -1103,11 +1102,11 @@ myPluginSettings
 </p><p><code>~/.sbt/plugins/build.sbt</code> を作って、そこに <code>addSbtPlugin()</code> 式を書くことで
 全プロジェクトにプラグインを追加することができる。
 </p><p>(sbt 0.13.0 から、グローバルプラグイン設定のデフォルトディレクトリは <code>~/.sbt/0.13/plugins/</code> へ変更になっています)
-</p><h3 id="%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3">利用可能なプラグイン<a href="#%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">プラグインのリスト</a>がある。
+</p><h3 id="%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3">利用可能なプラグイン<a href="#%E5%88%A9%E7%94%A8%E5%8F%AF%E8%83%BD%E3%81%AA%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../docs/Community-Plugins.html">プラグインのリスト</a>がある。
 </p><p>特に人気のプラグインは:
 </p><ul><li>IDE 専用プラグイン（sbt プロジェクトを IDE にインポートする）
 </li><li><a href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a> などの、web フレームワークプラグイン
-</li></ul><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">リストを見てほしい</a>。
+</li></ul><p><a href="../docs/Community-Plugins.html">リストを見てほしい</a>。
 </p><h2 id="%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%A8%E3%82%BF%E3%82%B9%E3%82%AF">カスタムセッティングとタスク<a href="#%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%82%BB%E3%83%83%E3%83%86%E3%82%A3%E3%83%B3%E3%82%B0%E3%81%A8%E3%82%BF%E3%82%B9%E3%82%AF" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページでは、独自のセッティングやタスクの作成を紹介する。
 </p><p>このページを理解するには、このガイドの前のページ、
 特に <a href="Basic-Def.html">build.sbt</a> と
@@ -1117,8 +1116,8 @@ myPluginSettings
 多くのキーは、[Defaults] で実装されている。
 </p><p>キーは三つの型のうちどれかを持つ。<code>SettingKey</code> と <code>TaskKey</code> は、
 <a href="Basic-Def.html">.sbt ビルド定義</a>で説明した。<code>InputKey</code> に関しては、
-<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> を見てほしい。
-</p><p>以下に <a href="http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html">Keys</a> からの具体例を示す:
+<a href="../docs/Input-Tasks.html">Input Tasks</a> を見てほしい。
+</p><p>以下に <a href="../sxr/sbt/Keys.scala.html">Keys</a> からの具体例を示す:
 </p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
 val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
 </code></pre><p>キーのコンストラクタは、二つの文字列のパラメータを取る。
@@ -1128,8 +1127,8 @@ val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as gen
 また、<a href="Basic-Def.html">.sbt ビルド定義</a>でみたとおり、
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
-</p><p>（<a href="../full-def">.scala ビルド定義</a>でみたように、）<code>.scala</code> ファイル内、
-もしくは（<a href="../using-plugins">プラグインの使用</a>でみたように、）プラグイン内でキーを定義することができる。
+</p><p>（<a href="Full-Def.html">.scala ビルド定義</a> でみたように、）<code>.scala</code> ファイル内、
+もしくは（<a href="Using-Plugins.html">プラグインの使用</a> でみたように、）プラグイン内でキーを定義することができる。
 <code>.scala</code> ビルド定義ファイル内の <code>Build</code> オブジェクト内の <code>val</code>、
 もしくはプラグイン内の <code>Plugin</code> オブジェクト内の <code>val</code> は全て <code>.sbt</code> ファイルに自動的にインポートされる。
 </p><h3 id="%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E5%AE%9F%E8%A3%85">タスクの実装<a href="#%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E5%AE%9F%E8%A3%85" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>キーを定義したら、次はなんらかのタスクからそのキーを使ってみよう。
@@ -1154,7 +1153,7 @@ sampleIntTask := {
 今度は HTML のライブラリを利用する必要があるかもしれない
 （その場合は、<a href="Using-Plugins.html">ビルド定義にライブラリ依存性を追加して</a>、その HTML ライブラリに基づいたコードを書く）。
 </p><p>sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [IO] にある API を重宝する。
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
 </p><h3 id="%E7%BD%AE%E6%8F%9B%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%8B%A1%E5%BC%B5">置換しない場合のタスクの拡張<a href="#%E7%BD%AE%E6%8F%9B%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%8B%A1%E5%BC%B5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>既存のタスクを実行して、他の別のアクションも実行したい場合は、
 <code>~=</code> か <code>&lt;&lt;=</code> を用いて、既存のタスクをインプットとして取り（これはそのタスクを実行することを意味する）、
 既存の実装が完了した後で、別に好きな事をできる。
@@ -1165,10 +1164,10 @@ intTask ~= { (value: Int) => value + 1 }
 </pre><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%8A%E3%81%86%EF%BC%81">プラグインを使おう！<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%8A%E3%81%86%EF%BC%81" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>.scala</code> ファイルに大量のカスタムコードがあることに気づいたら、
 プラグインを作って複数のプロジェクト間で再利用できないか考えてみよう。
 </p><p><a href="Using-Plugins.html">以前にちょっと触れた</a>し、
-<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">詳しい解説はここにあるけど</a>、
+<a href="../docs/Plugins.html">詳しい解説はここにあるけど</a>、
 プラグインを作るのはすごく簡単だ。
 </p><p>このページは簡単な味見だけで、
-カスタムタスクに関しては <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a>
+カスタムタスクに関しては <a href="../docs/Tasks.html">Tasks</a>
 ページで詳細に解説されている。
 </p><h2 id=".scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9">.scala ビルド定義<a href="#.scala+%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>このページは、このガイドのこれまでのページ、特に 
 <a href="Basic-Def.html">.sbt ビルド定義</a> と
@@ -1372,7 +1371,7 @@ Scala の設計者自身による <a href="http://www.impressjapan.jp/books/3084
 </li><li><a href="Using-Plugins.html">プラグイン</a>はビルド定義の拡張だ。
 </li><li><p>プラグインは、<code>addSbtPlugin</code> メソッドを用いて <code>project/build.sbt</code> に追加する。
 </p><p> （プロジェクトのベースディレクトリにある <code>build.sbt</code> ではないことに注意）
-</p></li></ul><p>以上のうち、一つでも分からないことがあれば、<a href="http://www.scala-sbt.org/release/docs/faq.html#getting-help">質問してみるか</a>、
+</p></li></ul><p>以上のうち、一つでも分からないことがあれば、<a href="../docs/Faq.html#getting-help">質問してみるか</a>、
 もう一度再読してみるか、
 sbt のインタラクティブモードで実験してみよう。
 </p><p>じゃ、頑張って！

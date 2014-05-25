@@ -226,7 +226,7 @@ can be organized into four groups:
 <code>inGlobalTask</code>)
 </li><li>Default filter (<code>inAnyProject</code>, <code>inAnyConfiguration</code>, <code>inAnyTask</code>)
 </li><li>Project relationships (<code>inAggregates</code>, <code>inDependencies</code>)
-</li></ul><p>See the <a href="../../api/sbt/ScopeFilter$$Make.html">API documentation</a> for
+</li></ul><p>See the <a href="../api/sbt/ScopeFilter$$Make.html">API documentation</a> for
 details.
 </p><h5 id="Combining+ScopeFilters">Combining ScopeFilters<a href="#Combining+ScopeFilters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>ScopeFilters</code> may be combined with the <code>&amp;&amp;</code>, <code>||</code>, <code>--</code>, and <code>-</code>
 methods:
@@ -337,10 +337,10 @@ logging for a task. Tasks also have access to their own persisted binary
 or text data.
 </p><p>To use Streams, get the value of the <code>streams</code> task. This is a special
 task that provides an instance of
-<a href="../../api/sbt/std/TaskStreams.html">TaskStreams</a> for the defining
+<a href="../api/sbt/std/TaskStreams.html">TaskStreams</a> for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-<a href="../../api/sbt/Logger.html">Logger</a>, which is the most commonly used
+<a href="../api/sbt/Logger.html">Logger</a>, which is the most commonly used
 aspect, is obtained by the <code>log</code> method:
 </p><pre><code class="prettyprint lang-scala">myTask := {
   val s: TaskStreams = streams.value
@@ -395,7 +395,7 @@ methods, which are used to handle failure of other tasks.
 </p><h4 id=""><code>failure</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>failure</code> method creates a new task that returns the <code>Incomplete</code>
 value when the original task fails to complete normally. If the original
 task succeeds, the new task fails.
-<a href="../../api/sbt/Incomplete.html">Incomplete</a> is an exception with
+<a href="../api/sbt/Incomplete.html">Incomplete</a> is an exception with
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 </p><p>For example:
@@ -502,7 +502,7 @@ invoked task). A <code>failure</code> turns a success into a failure, and a fail
 into an <code>Incomplete</code>. A normal task definition fails when any of its
 inputs fail and computes its value otherwise.
 </p><h4 id=""><code>result</code><a href="#" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>result</code> method creates a new task that returns the full <code>Result[T]</code>
-value for the original task. <a href="../../api/sbt/Result.html">Result</a> has
+value for the original task. <a href="../api/sbt/Result.html">Result</a> has
 the same structure as <code>Either[Incomplete, T]</code> for a task result of type
 <code>T</code>. That is, it has two subtypes:
 </p><ul><li><code>Inc</code>, which wraps <code>Incomplete</code> in case of failure

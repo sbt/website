@@ -32,7 +32,7 @@ Gracias por utilizar sbt *¡Diviértase!*
   [Hello]: Hello.html
   [Running]: Running.html
   [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi
-  [Setup-Notes]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html
+  [Setup-Notes]: ../docs/Setup-Notes.html
   [Mac]: Installing-sbt-on-Mac.html
   [Windows]: Installing-sbt-on-Windows.html
   [Linux]: Installing-sbt-on-Linux.html
@@ -443,8 +443,8 @@ también sea seleccionado, además de simplemente el directorio
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Triggered-Execution]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html
-  [Command-Line-Reference]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html
+  [Triggered-Execution]: ../docs/Triggered-Execution.html
+  [Command-Line-Reference]: ../docs/Command-Line-Reference.html
 
 Ejecución
 ---------
@@ -622,7 +622,7 @@ tecla "arriba". También se soportan los siguientes comandos:
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
 
 `.sbt` build definition
 -----------------------
@@ -784,7 +784,7 @@ Existen tres tipos de llaves:
 #### Built-in Keys (Llaves ya incluídas)
 
 Las llaves ya incluídas son simplemente campos de un objeto llamado
-[Keys](../../sxr/sbt/Keys.scala.html). Un archivo `build.sbt` tiene
+[Keys](../sxr/sbt/Keys.scala.html). Un archivo `build.sbt` tiene
 implícitamente un `import sbt.Keys._`, de modo que `sbt.Keys.name` puede
 ser referido como `name`.
 

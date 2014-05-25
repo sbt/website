@@ -100,7 +100,7 @@ object SettingsExample extends Init[Scope]
 </code></pre><h4 id="Example+Usage">Example Usage<a href="#Example+Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This part shows how to use the system we just defined. The end result is
 a <code>Settings[Scope]</code> value. This type is basically a mapping
 <code>Scope -&gt; AttributeKey[T] -&gt; Option[T]</code>. See the
-<a href="../../api/sbt/Settings.html">Settings API documentation</a> for
+<a href="../api/sbt/Settings.html">Settings API documentation</a> for
 details. <code>SettingsUsage.scala</code>:
 </p><pre><code class="prettyprint lang-scala">/** Usage Example **/
 
@@ -211,7 +211,7 @@ underlying <code>SettingKey[Task[T]]</code> (and they both wrap an underlying
 </p><p>For example, <code>a := 3</code> for a SettingKey <em>a</em> will very roughly translate
 to <code>setting(a, value(3))</code>. For a TaskKey <em>a</em>, it will roughly translate
 to <code>setting(a, value( task { 3 } ) )</code>. See
-<a href="../../sxr/sbt/Structure.scala">main/Structure.scala</a> for details.
+<a href="../sxr/sbt/Structure.scala">main/Structure.scala</a> for details.
 </p><h4 id="Settings+definitions">Settings definitions<a href="#Settings+definitions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt also provides a way to define these settings in a file (build.sbt
 and Build.scala). This is done for build.sbt using basic parsing and
 then passing the resulting chunks of code to <code>compile/Eval.scala</code>. For

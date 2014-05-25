@@ -41,7 +41,7 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="State+and+actions">State and actions<a href="#State+and+actions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><a href="../../api/sbt/State$.html">State</a> is the entry point to all
+            <h2 id="State+and+actions">State and actions<a href="#State+and+actions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><a href="../api/sbt/State$.html">State</a> is the entry point to all
 available information in sbt. The key methods are:
 </p><ul><li><code>definedCommands: Seq[Command]</code> returns all registered Command
 definitions
@@ -91,13 +91,13 @@ method to extract the most useful information:
 </p><pre><code class="prettyprint lang-scala">val state: State
 val extracted: Extracted = Project.extract(state)
 import extracted._
-</code></pre><p><a href="../../api/sbt/Extracted.html">Extracted</a> provides:
+</code></pre><p><a href="../api/sbt/Extracted.html">Extracted</a> provides:
 </p><ul><li>Access to the current build and project (<code>currentRef</code>)
 </li><li>Access to initialized project setting data (<code>structure.data</code>)
 </li><li>Access to session <code>Setting</code>s and the original, permanent settings
 from .sbt and .scala files (session.append and session.original,
 respectively)
-</li><li>Access to the current <a href="../../api/sbt/compiler/Eval.html">Eval</a>
+</li><li>Access to the current <a href="../api/sbt/compiler/Eval.html">Eval</a>
 instance for evaluating Scala expressions in the build context.
 </li></ul><h3 id="Project+data">Project data<a href="#Project+data" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>All project data is stored in <code>structure.data</code>, which is of type
 <code>sbt.Settings[Scope]</code>. Typically, one gets information of type <code>T</code> in
@@ -106,12 +106,12 @@ the following way:
 val scope: Scope
 val value: Option[T] = key in scope get structure.data
 </code></pre><p>Here, a <code>SettingKey[T]</code> is typically obtained from
-<a href="../../api/sbt/Keys$.html">Keys</a> and is the same type that is used to
+<a href="../api/sbt/Keys$.html">Keys</a> and is the same type that is used to
 define settings in <code>.sbt</code> files, for example.
-<a href="../../api/sbt/Scope.html">Scope</a> selects the scope the key is
+<a href="../api/sbt/Scope.html">Scope</a> selects the scope the key is
 obtained for. There are convenience overloads of <code>in</code> that can be used
 to specify only the required scope axes. See
-<a href="../../sxr/sbt/Structure.scala.html">Structure.scala</a> for where <code>in</code>
+<a href="../sxr/sbt/Structure.scala.html">Structure.scala</a> for where <code>in</code>
 and other parts of the settings interface are defined. Some examples:
 </p><pre><code class="prettyprint lang-scala">import Keys._
 val extracted: Extracted
@@ -122,12 +122,12 @@ val nameOpt: Option[String] = name in currentRef get structure.data
 
 // get the package options for the `test:packageSrc` task or Nil if none are defined
 val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
-</code></pre><p><a href="../../api/sbt/Load$$BuildStructure.html">BuildStructure</a> contains
+</code></pre><p><a href="../api/sbt/Load$$BuildStructure.html">BuildStructure</a> contains
 information about build and project relationships. Key members are:
 </p><pre><code class="prettyprint lang-scala">units: Map[URI, LoadedBuildUnit]
 root: URI
 </code></pre><p>A <code>URI</code> identifies a build and <code>root</code> identifies the initial build
-loaded. <a href="../../api/sbt/Load$$LoadedBuildUnit.html">LoadedBuildUnit</a>
+loaded. <a href="../api/sbt/Load$$LoadedBuildUnit.html">LoadedBuildUnit</a>
 provides information about a single build. The key members of
 <code>LoadedBuildUnit</code> are:
 </p><pre><code class="prettyprint lang-scala">// Defines the base directory for the build
@@ -135,9 +135,9 @@ localBase: File
 
 // maps the project ID to the Project definition
 defined: Map[String, ResolvedProject]
-</code></pre><p><a href="../../api/sbt/ResolvedProject.html">ResolvedProject</a> has the same
+</code></pre><p><a href="../api/sbt/ResolvedProject.html">ResolvedProject</a> has the same
 information as the <code>Project</code> used in a <code>project/Build.scala</code> except that
-<a href="../../api/sbt/ProjectReference.html">ProjectReferences</a> are resolved
+<a href="../api/sbt/ProjectReference.html">ProjectReferences</a> are resolved
 to <code>ProjectRef</code>s.
 </p><h3 id="Classpaths">Classpaths<a href="#Classpaths" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Classpaths in sbt 0.10+ are of type <code>Seq[Attributed[File]]</code>. This allows
 tagging arbitrary information to classpath entries. sbt currently uses

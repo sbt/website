@@ -74,8 +74,8 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom resolvers:
-</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$ResolveInfo">ResolveInfo</a>
-</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
+</p><ul><li><a href="../api/index.html#sbt.BuildLoader$$ResolveInfo">ResolveInfo</a>
+</li><li><a href="../api/sbt/BuildLoader$.html">BuildLoader</a>
 </li></ul><h4 id="Full+Example">Full Example<a href="#Full+Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><pre><code class="prettyprint lang-scala">import sbt._
 import Keys._
 
@@ -142,9 +142,9 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom builders:
-</p><ul><li><a href="../../api/sbt/BuildLoader$$BuildInfo.html">BuildInfo</a>
-</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
-</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
+</p><ul><li><a href="../api/sbt/BuildLoader$$BuildInfo.html">BuildInfo</a>
+</li><li><a href="../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
 </li></ul><h4 id="Example">Example<a href="#Example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This example demonstrates the structure of how a custom builder could
 read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
@@ -199,9 +199,9 @@ object Demo extends Build {
 
 }
 </code></pre><h4 id="API+Documentation">API Documentation<a href="#API+Documentation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Relevant API documentation for custom transformers:
-</p><ul><li><a href="../../api/index.html#sbt.BuildLoader$$TransformInfo">TransformInfo</a>
-</li><li><a href="../../api/sbt/BuildLoader$.html">BuildLoader</a>
-</li><li><a href="../../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
+</p><ul><li><a href="../api/index.html#sbt.BuildLoader$$TransformInfo">TransformInfo</a>
+</li><li><a href="../api/sbt/BuildLoader$.html">BuildLoader</a>
+</li><li><a href="../api/index.html#sbt.Load$$BuildUnit">BuildUnit</a>
 </li></ul><h5 id="Manipulating+Project+Dependencies+in+Settings">Manipulating Project Dependencies in Settings<a href="#Manipulating+Project+Dependencies+in+Settings" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The <code>buildDependencies</code> setting, in the Global scope, defines the
 aggregation and classpath dependencies between projects. By default,
 this information comes from the dependencies defined by <code>Project</code>
@@ -215,12 +215,12 @@ evaluated. That is, all Projects must have been declared directly in a
 Build or referenced as the argument to <code>Project.aggregate</code> or
 <code>Project.dependsOn</code>.
 </p><h3 id="The+BuildDependencies+type">The BuildDependencies type<a href="#The+BuildDependencies+type" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The type of the <code>buildDependencies</code> setting is
-<a href="../../api/sbt/BuildDependencies.html">BuildDependencies</a>.
+<a href="../api/sbt/BuildDependencies.html">BuildDependencies</a>.
 <code>BuildDependencies</code> provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type <code>ClasspathDep[ProjectRef]</code>, which combines a <code>ProjectRef</code> with a
-configuration (see <a href="../../api/sbt/ClasspathDep.html">ClasspathDep</a>
-and <a href="../../api/sbt/ProjectRef.html">ProjectRef</a>). For aggregate
+configuration (see <a href="../api/sbt/ClasspathDep.html">ClasspathDep</a>
+and <a href="../api/sbt/ProjectRef.html">ProjectRef</a>). For aggregate
 dependencies, the type of a dependency is just <code>ProjectRef</code>.
 </p><p>The API for <code>BuildDependencies</code> is not extensive, covering only a little
 more than the minimum required, and related APIs have more of an

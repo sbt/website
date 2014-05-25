@@ -50,8 +50,8 @@
 多くのキーは、[Defaults] で実装されている。
 </p><p>キーは三つの型のうちどれかを持つ。<code>SettingKey</code> と <code>TaskKey</code> は、
 <a href="Basic-Def.html">.sbt ビルド定義</a>で説明した。<code>InputKey</code> に関しては、
-<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> を見てほしい。
-</p><p>以下に <a href="http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html">Keys</a> からの具体例を示す:
+<a href="../docs/Input-Tasks.html">Input Tasks</a> を見てほしい。
+</p><p>以下に <a href="../sxr/sbt/Keys.scala.html">Keys</a> からの具体例を示す:
 </p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
 val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
 </code></pre><p>キーのコンストラクタは、二つの文字列のパラメータを取る。
@@ -61,8 +61,8 @@ val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as gen
 また、<a href="Basic-Def.html">.sbt ビルド定義</a>でみたとおり、
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
-</p><p>（<a href="../full-def">.scala ビルド定義</a>でみたように、）<code>.scala</code> ファイル内、
-もしくは（<a href="../using-plugins">プラグインの使用</a>でみたように、）プラグイン内でキーを定義することができる。
+</p><p>（<a href="Full-Def.html">.scala ビルド定義</a> でみたように、）<code>.scala</code> ファイル内、
+もしくは（<a href="Using-Plugins.html">プラグインの使用</a> でみたように、）プラグイン内でキーを定義することができる。
 <code>.scala</code> ビルド定義ファイル内の <code>Build</code> オブジェクト内の <code>val</code>、
 もしくはプラグイン内の <code>Plugin</code> オブジェクト内の <code>val</code> は全て <code>.sbt</code> ファイルに自動的にインポートされる。
 </p><h3 id="%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E5%AE%9F%E8%A3%85">タスクの実装<a href="#%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E5%AE%9F%E8%A3%85" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>キーを定義したら、次はなんらかのタスクからそのキーを使ってみよう。
@@ -87,7 +87,7 @@ sampleIntTask := {
 今度は HTML のライブラリを利用する必要があるかもしれない
 （その場合は、<a href="Using-Plugins.html">ビルド定義にライブラリ依存性を追加して</a>、その HTML ライブラリに基づいたコードを書く）。
 </p><p>sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [IO] にある API を重宝する。
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
 </p><h3 id="%E7%BD%AE%E6%8F%9B%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%8B%A1%E5%BC%B5">置換しない場合のタスクの拡張<a href="#%E7%BD%AE%E6%8F%9B%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%AE%E6%8B%A1%E5%BC%B5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>既存のタスクを実行して、他の別のアクションも実行したい場合は、
 <code>~=</code> か <code>&lt;&lt;=</code> を用いて、既存のタスクをインプットとして取り（これはそのタスクを実行することを意味する）、
 既存の実装が完了した後で、別に好きな事をできる。
@@ -98,10 +98,10 @@ intTask ~= { (value: Int) => value + 1 }
 </pre><h3 id="%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%8A%E3%81%86%EF%BC%81">プラグインを使おう！<a href="#%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%8A%E3%81%86%EF%BC%81" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>.scala</code> ファイルに大量のカスタムコードがあることに気づいたら、
 プラグインを作って複数のプロジェクト間で再利用できないか考えてみよう。
 </p><p><a href="Using-Plugins.html">以前にちょっと触れた</a>し、
-<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">詳しい解説はここにあるけど</a>、
+<a href="../docs/Plugins.html">詳しい解説はここにあるけど</a>、
 プラグインを作るのはすごく簡単だ。
 </p><p>このページは簡単な味見だけで、
-カスタムタスクに関しては <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a>
+カスタムタスクに関しては <a href="../docs/Tasks.html">Tasks</a>
 ページで詳細に解説されている。
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>

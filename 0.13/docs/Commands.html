@@ -54,7 +54,7 @@ regular task.
 </p><ul><li>Tab completion for the syntax
 </li><li>The parser to turn input into an appropriate data structure
 </li></ul></li><li>The action to perform using the parsed data structure. This action
-transforms the build <a href="../../api/sbt/State.html">State</a>.
+transforms the build <a href="../api/sbt/State.html">State</a>.
 </li><li>Help provided to the user
 </li></ol><p>In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
@@ -63,7 +63,7 @@ function <code>(State, T) =&gt; State</code>, where <code>T</code> is the data s
 by the parser. See the
 <a href="Parsing-Input.html">Parsing Input</a> page for how to
 use the parser combinators.
-</p><p><a href="../../api/sbt/State.html">State</a> provides access to the build state,
+</p><p><a href="../api/sbt/State.html">State</a> provides access to the build state,
 such as all registered <code>Command</code>s, the remaining commands to execute,
 and all project-related information. See <a href="Build-State.html">States and Actions</a> for details on
 State.
@@ -75,7 +75,7 @@ simply <code>Parser[T]</code> is that often the current <code>State</code> is us
 the parser. For example, the currently loaded projects (provided by
 <code>State</code>) determine valid completions for the <code>project</code> command. Examples
 for the general and specific cases are shown in the following sections.
-</p><p>See <a href="../../sxr/sbt/Command.scala.html">Command.scala</a> for the source
+</p><p>See <a href="../sxr/sbt/Command.scala.html">Command.scala</a> for the source
 API details for constructing commands.
 </p><h4 id="General+commands">General commands<a href="#General+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>General command construction looks like:
 </p><pre><code class="prettyprint lang-scala">val action: (State, T) =&gt; State = ...

@@ -79,14 +79,14 @@ much trouble.
 <code>libraryDependencies</code>. It’s also possible to write a Maven POM file or Ivy
 configuration file to externally configure your dependencies, and have
 sbt use those external configuration files. You can learn more about
-that <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy">here</a>.
+that <a href="../docs/Library-Management.html#external-maven-ivy">here</a>.
 </p><p>Declaring a dependency looks like this, where <code>groupId</code>, <code>artifactId</code>, and
 <code>revision</code> are strings:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision
 </code></pre><p>or like this, where <code>configuration</code> is also a string:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision % configuration
 </code></pre><p><code>libraryDependencies</code> is declared in
-<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
+<a href="../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
 this:
 </p><pre><code class="prettyprint lang-scala">val libraryDependencies = settingKey[Seq[ModuleID]](&quot;Declares managed dependencies.&quot;)
 </code></pre><p>The <code>%</code> methods create<code>ModuleID</code> objects from strings, then you add those
@@ -123,7 +123,7 @@ the dependency is available for <code>2.9.0</code> but you’re using
 <code>2.9.0</code> dependency likely works. If <code>%%</code> stops working just go see which
 versions the dependency is really built for, and hardcode the one you
 think will work (assuming there is one).
-</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html">Cross Building</a> for some more detail on this.
+</p><p>See <a href="../docs/Cross-Build.html">Cross Building</a> for some more detail on this.
 </p><h4 id="Ivy+revisions">Ivy revisions<a href="#Ivy+revisions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>revision</code> in <code>groupID % artifactID % revision</code> does not have to be a
 single fixed version. Ivy can select the latest revision of a module
 according to constraints you specify. Instead of a fixed revision like
@@ -140,13 +140,13 @@ repositories, you’ll have to add a <em>resolver</em> to help Ivy find it.
 </code></pre><p>For example:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
 </code></pre><p>The <code>resolvers</code> key is defined in
-<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
+<a href="../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
 </p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
 </code></pre><p>The <code>at</code> method creates a <code>Resolver</code> object from two strings.
 </p><p>sbt can search your local Maven repository if you add it as a
 repository:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome.absolutePath+&quot;/.m2/repository&quot;
-</code></pre><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html">Resolvers</a> for details on defining other types of
+</code></pre><p>See <a href="../docs/Resolvers.html">Resolvers</a> for details on defining other types of
 repositories.
 </p><h4 id="Overriding+default+resolvers">Overriding default resolvers<a href="#Overriding+default+resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>resolvers</code> does not contain the default resolvers; only additional ones
 added by your build definition.
@@ -167,7 +167,7 @@ prompt, you should not see derby. But if you type
 <a href="http://code.google.com/p/specs/">specs</a>, and
 <a href="http://www.scalatest.org/">ScalaTest</a> would be defined with <code>% &quot;test&quot;</code>.
 </p><p>There are some more details and tips-and-tricks related to library
-dependencies on <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">this page</a>, if
+dependencies on <a href="../docs/Library-Management.html">this page</a>, if
 you didn’t find an answer on this introductory page.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>

@@ -31,7 +31,7 @@ Thanks for trying out sbt and *have fun*!
   [Hello]: Hello.html
   [Running]: Running.html
   [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi
-  [Setup-Notes]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html
+  [Setup-Notes]: ../docs/Setup-Notes.html
   [Mac]: Installing-sbt-on-Mac.html
   [Windows]: Installing-sbt-on-Windows.html
   [Linux]: Installing-sbt-on-Linux.html
@@ -427,8 +427,8 @@ addition to plain `target/`).
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Triggered-Execution]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html
-  [Command-Line-Reference]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html
+  [Triggered-Execution]: ../docs/Triggered-Execution.html
+  [Command-Line-Reference]: ../docs/Command-Line-Reference.html
 
 Running
 -------
@@ -596,7 +596,7 @@ following commands are also supported:
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
 
 .sbt build definition
 ---------------------
@@ -741,7 +741,7 @@ There are three flavors of key:
 #### Built-in Keys
 
 The built-in keys are just fields in an object called
-[Keys](../../sxr/sbt/Keys.scala.html). A `build.sbt` implicitly has an
+[Keys](../sxr/sbt/Keys.scala.html). A `build.sbt` implicitly has an
 `import sbt.Keys._`, so `sbt.Keys.name` can be referred to as `name`.
 
 #### Custom Keys
@@ -881,7 +881,7 @@ Getting Started Guide. There's a
   [More-About-Settings]: More-About-Settings.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [Inspecting-Settings]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html
+  [Inspecting-Settings]: ../docs/Inspecting-Settings.html
 
 Scopes
 ------
@@ -1389,7 +1389,7 @@ As noted in [.sbt build definition][Basic-Def], task keys create a
 `:=`, etc. Tasks can use settings as inputs, but settings cannot use tasks
 as inputs.
 
-Take these two keys (from [Keys](../../sxr/sbt/Keys.scala.html)):
+Take these two keys (from [Keys](../sxr/sbt/Keys.scala.html)):
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
@@ -1433,10 +1433,10 @@ cleanFiles += file("coverage-report-" + name.value + ".txt")
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [More-About-Settings]: More-About-Settings.html
-  [external-maven-ivy]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy
-  [Cross-Build]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html
-  [Resolvers]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html
-  [Library-Management]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html
+  [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
+  [Cross-Build]: ../docs/Cross-Build.html
+  [Resolvers]: ../docs/Resolvers.html
+  [Library-Management]: ../docs/Library-Management.html
 
 Library dependencies
 --------------------
@@ -1516,7 +1516,7 @@ libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
 `libraryDependencies` is declared in
-[Keys](../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) like
+[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) like
 this:
 
 ```scala
@@ -1613,7 +1613,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 ```
 
 The `resolvers` key is defined in
-[Keys](../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) like this:
+[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) like this:
 
 ```scala
 val resolvers = settingKey[Seq[Resolver]]("The user-defined additional resolvers for automatically managed dependencies.")
@@ -1693,7 +1693,7 @@ its own jar file when you run package, and in general works like any
 other project.
 
 A project is defined by declaring a lazy val of type
-[Project](../../api/sbt/Project.html). For example, :
+[Project](../api/sbt/Project.html). For example, :
 
 ```scala
 lazy val util = project
@@ -1886,11 +1886,10 @@ See [.scala Build Definition][Full-Def] for details.
   [Basic-Def]: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [AutoPlugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html
-  [global-vs-local-plugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins
-  [Community-Plugins]: http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Plugins-Best-Practices]: http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html
+  [global-vs-local-plugins]: ../docs/Best-Practices.html#global-vs-local-plugins
+  [Community-Plugins]: ../docs/Community-Plugins.html
+  [Plugins]: ../docs/Plugins.html
+  [Plugins-Best-Practices]: ../docs/Plugins-Best-Practices.html
 
 Using plugins
 -------------
@@ -1933,7 +1932,7 @@ A plugin can declare that its settings be automatically added, in which
 case you don't have to do anything to add them.
 
 As of sbt 0.13.5, there is a new
-[auto-plugins][AutoPlugins] feature that enables
+[auto plugins][Plugins] feature that enables
 plugins to automatically, and safely, ensure their settings and
 dependencies are on a project. Most plugins should have their default
 settings automatically, however some may require explicit enablement.
@@ -2058,9 +2057,10 @@ For best practices, see
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Tasks]: http://www.scala-sbt.org/release/docs/Extending/Tasks.html
+  [Full-Def]: Full-Def.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
+  [Plugins]: ../docs/Plugins.html
+  [Tasks]: ../docs/Tasks.html
 
 Custom settings and tasks
 -------------------------
@@ -2073,15 +2073,15 @@ Getting Started Guide, especially [.build.sbt][Basic-Def] and
 
 ### Defining a key
 
-[Keys](../../sxr/sbt/Keys.scala.html) is packed with examples
+[Keys](../sxr/sbt/Keys.scala.html) is packed with examples
 illustrating how to define keys. Most of the keys are implemented in
-[Defaults](../../sxr/sbt/Defaults.scala.html).
+[Defaults](../sxr/sbt/Defaults.scala.html).
 
 Keys have one of three types. `SettingKey` and `TaskKey` are described in
 [.sbt build definition][Basic-Def]. Read about `InputKey` on the
 [Input Tasks][Input-Tasks] page.
 
-Some examples from [Keys](../../sxr/sbt/Keys.scala.html):
+Some examples from [Keys](../sxr/sbt/Keys.scala.html):
 
 ```scala
 val scalaVersion = settingKey[String]("The version of Scala used for building.")
@@ -2142,7 +2142,7 @@ write code based on the HTML library, perhaps).
 
 sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-[IO](../../api/index.html#sbt.IO$) to manipulate files and directories.
+[IO](../api/index.html#sbt.IO$) to manipulate files and directories.
 
 ### Use plugins!
 
@@ -2411,7 +2411,7 @@ the build definition.
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
-  [getting-help]: http://www.scala-sbt.org/release/docs/faq.html#getting-help
+  [getting-help]: ../docs/faq.html#getting-help
 
 Getting Started summary
 -----------------------

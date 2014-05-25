@@ -68,7 +68,7 @@ about build definitions.
 </li></ul><p>Ultimately, the installation of sbt boils down to a launcher JAR and a shell script,
 but depending on your platform, we provide several ways to make the process less tedious.
 Head over to the installation steps for <a href="Installing-sbt-on-Mac.html">Mac</a>, <a href="Installing-sbt-on-Windows.html">Windows</a>, <a href="Installing-sbt-on-Linux.html">Linux</a>, or <a href="Manual-Installation.html">manual installation</a>.
-</p><h3 id="Tips+and+Notes">Tips and Notes<a href="#Tips+and+Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you have any trouble running sbt, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html">Setup Notes</a> on
+</p><h3 id="Tips+and+Notes">Tips and Notes<a href="#Tips+and+Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you have any trouble running sbt, see <a href="../docs/Setup-Notes.html">Setup Notes</a> on
 terminal encodings, HTTP proxies, and JVM options.
 </p><h2 id="Installing+sbt+on+Mac">Installing sbt on Mac<a href="#Installing+sbt+on+Mac" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Installing+from+a+third-party+package">Installing from a third-party package<a href="#Installing+from+a+third-party+package" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><blockquote><p><strong>Note:</strong> Third-party packages may not provide the latest version. Please make
 sure to report any issues with these packages to the relevant
@@ -267,9 +267,9 @@ command with <code>~</code>. For example, in interactive mode try:
 </p><pre><code class="">&gt; ~ compile
 </code></pre><p>Press enter to stop watching for changes.
 </p><p>You can use the <code>~</code> prefix with either interactive mode or batch mode.
-</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html">Triggered Execution</a> for more details.
+</p><p>See <a href="../docs/Triggered-Execution.html">Triggered Execution</a> for more details.
 </p><h3 id="Common+commands">Common commands<a href="#Common+commands" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Here are some of the most common sbt commands. For a more complete list,
-see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html">Command Line Reference</a>.
+see <a href="../docs/Command-Line-Reference.html">Command Line Reference</a>.
 </p><table>
   <tr>
     <td><tt>clean</tt></td>
@@ -437,9 +437,9 @@ computed when loading the project, and kept around).
 </li><li><code>TaskKey[T]</code>: a key for a value, called a <em>task</em>, that has to be
 recomputed each time, potentially with side effects.
 </li><li><code>InputKey[T]</code>: a key for a task that has command line arguments as
-input. Check out <a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> for more details.
+input. Check out <a href="../docs/Input-Tasks.html">Input Tasks</a> for more details.
 </li></ul><h4 id="Built-in+Keys">Built-in Keys<a href="#Built-in+Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The built-in keys are just fields in an object called
-<a href="../../sxr/sbt/Keys.scala.html">Keys</a>. A <code>build.sbt</code> implicitly has an
+<a href="../sxr/sbt/Keys.scala.html">Keys</a>. A <code>build.sbt</code> implicitly has an
 <code>import sbt.Keys._</code>, so <code>sbt.Keys.name</code> can be referred to as <code>name</code>.
 </p><h4 id="Custom+Keys">Custom Keys<a href="#Custom+Keys" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Custom keys may be defined with their respective creation methods:
 <code>settingKey</code>, <code>taskKey</code>, and <code>inputKey</code>. Each method expects the type of the
@@ -612,7 +612,7 @@ scoped keys like this:
 </p><ul><li>the current project will be used if you omit the project.
 </li><li>a key-dependent configuration will be auto-detected if you omit the
 configuration or task.
-</li></ul><p>For more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</li></ul><p>For more details, see <a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a>.
 </p><h3 id="Examples+of+scoped+key+notation">Examples of scoped key notation<a href="#Examples+of+scoped+key+notation" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li><code>fullClasspath</code> specifies just a key, so the default scopes are used:
 current project, a key-dependent configuration, and global task
 scope.
@@ -707,7 +707,7 @@ the configuration is omitted, it is autodetected as <code>compile</code>.
 <code>inspect fullClasspath</code>.
 </p><p>Try <code>inspect *:fullClasspath</code> for another contrast. <code>fullClasspath</code> is not
 defined in the <code>Global</code> configuration by default.
-</p><p>Again, for more details, see <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a>.
+</p><p>Again, for more details, see <a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a>.
 </p><h3 id="Referring+to+scopes+in+a+build+definition">Referring to scopes in a build definition<a href="#Referring+to+scopes+in+a+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you create a setting in <code>build.sbt</code> with a bare key, it will be scoped
 to the current project, configuration <code>Global</code> and task <code>Global</code>:
 </p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
@@ -849,7 +849,7 @@ you do this.
 <code>Setting[Task[T]]</code> rather than a <code>Setting[T]</code> when you build a setting with
 <code>:=</code>, etc. Tasks can use settings as inputs, but settings cannot use tasks
 as inputs.
-</p><p>Take these two keys (from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>):
+</p><p>Take these two keys (from <a href="../sxr/sbt/Keys.scala.html">Keys</a>):
 </p><pre><code class="prettyprint lang-scala">val scalacOptions = taskKey[Seq[String]](&quot;Options for the Scala compiler.&quot;)
 val checksums = settingKey[Seq[String]](&quot;The list of checksums to generate and to verify for dependencies.&quot;)
 </code></pre><p>(<code>scalacOptions</code> and <code>checksums</code> have nothing to do with each other, they
@@ -907,14 +907,14 @@ much trouble.
 <code>libraryDependencies</code>. It’s also possible to write a Maven POM file or Ivy
 configuration file to externally configure your dependencies, and have
 sbt use those external configuration files. You can learn more about
-that <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy">here</a>.
+that <a href="../docs/Library-Management.html#external-maven-ivy">here</a>.
 </p><p>Declaring a dependency looks like this, where <code>groupId</code>, <code>artifactId</code>, and
 <code>revision</code> are strings:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision
 </code></pre><p>or like this, where <code>configuration</code> is also a string:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += groupID % artifactID % revision % configuration
 </code></pre><p><code>libraryDependencies</code> is declared in
-<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
+<a href="../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">Keys</a> like
 this:
 </p><pre><code class="prettyprint lang-scala">val libraryDependencies = settingKey[Seq[ModuleID]](&quot;Declares managed dependencies.&quot;)
 </code></pre><p>The <code>%</code> methods create<code>ModuleID</code> objects from strings, then you add those
@@ -951,7 +951,7 @@ the dependency is available for <code>2.9.0</code> but you’re using
 <code>2.9.0</code> dependency likely works. If <code>%%</code> stops working just go see which
 versions the dependency is really built for, and hardcode the one you
 think will work (assuming there is one).
-</p><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html">Cross Building</a> for some more detail on this.
+</p><p>See <a href="../docs/Cross-Build.html">Cross Building</a> for some more detail on this.
 </p><h4 id="Ivy+revisions">Ivy revisions<a href="#Ivy+revisions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>revision</code> in <code>groupID % artifactID % revision</code> does not have to be a
 single fixed version. Ivy can select the latest revision of a module
 according to constraints you specify. Instead of a fixed revision like
@@ -968,13 +968,13 @@ repositories, you’ll have to add a <em>resolver</em> to help Ivy find it.
 </code></pre><p>For example:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Sonatype OSS Snapshots&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots&quot;
 </code></pre><p>The <code>resolvers</code> key is defined in
-<a href="../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
+<a href="../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers">Keys</a> like this:
 </p><pre><code class="prettyprint lang-scala">val resolvers = settingKey[Seq[Resolver]](&quot;The user-defined additional resolvers for automatically managed dependencies.&quot;)
 </code></pre><p>The <code>at</code> method creates a <code>Resolver</code> object from two strings.
 </p><p>sbt can search your local Maven repository if you add it as a
 repository:
 </p><pre><code class="prettyprint lang-scala">resolvers += &quot;Local Maven Repository&quot; at &quot;file://&quot;+Path.userHome.absolutePath+&quot;/.m2/repository&quot;
-</code></pre><p>See <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html">Resolvers</a> for details on defining other types of
+</code></pre><p>See <a href="../docs/Resolvers.html">Resolvers</a> for details on defining other types of
 repositories.
 </p><h4 id="Overriding+default+resolvers">Overriding default resolvers<a href="#Overriding+default+resolvers" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>resolvers</code> does not contain the default resolvers; only additional ones
 added by your build definition.
@@ -995,7 +995,7 @@ prompt, you should not see derby. But if you type
 <a href="http://code.google.com/p/specs/">specs</a>, and
 <a href="http://www.scalatest.org/">ScalaTest</a> would be defined with <code>% &quot;test&quot;</code>.
 </p><p>There are some more details and tips-and-tricks related to library
-dependencies on <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html">this page</a>, if
+dependencies on <a href="../docs/Library-Management.html">this page</a>, if
 you didn’t find an answer on this introductory page.
 </p><h2 id="Multi-project+builds">Multi-project builds<a href="#Multi-project+builds" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page introduces multiple projects in a single build.
 </p><p>Please read the earlier pages in the Getting Started Guide first, in
@@ -1008,7 +1008,7 @@ together.
 its own jar file when you run package, and in general works like any
 other project.
 </p><p>A project is defined by declaring a lazy val of type
-<a href="../../api/sbt/Project.html">Project</a>. For example, :
+<a href="../api/sbt/Project.html">Project</a>. For example, :
 </p><pre><code class="prettyprint lang-scala">lazy val util = project
 
 lazy val core = project
@@ -1148,7 +1148,7 @@ the plugin’s functionality. This is described in the next section.
 </p><h3 id="Adding+settings+for+a+plugin">Adding settings for a plugin<a href="#Adding+settings+for+a+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A plugin can declare that its settings be automatically added, in which
 case you don’t have to do anything to add them.
 </p><p>As of sbt 0.13.5, there is a new
-<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html">auto-plugins</a> feature that enables
+<a href="../docs/Plugins.html">auto plugins</a> feature that enables
 plugins to automatically, and safely, ensure their settings and
 dependencies are on a project. Most plugins should have their default
 settings automatically, however some may require explicit enablement.
@@ -1193,13 +1193,13 @@ they were in the <code>project/</code> directory for all projects.
 </p><p>You can create <code>~/.sbt/0.13/plugins//build.sbt</code> and put <code>addSbtPlugin()</code>
 expressions in there to add plugins to all your projects at once. This
 feature should be used sparingly, however. See
-<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins">Best Practices</a>.
-</p><h3 id="Available+Plugins">Available Plugins<a href="#Available+Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There’s <a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">a list of available plugins</a>.
+<a href="../docs/Best-Practices.html#global-vs-local-plugins">Best Practices</a>.
+</p><h3 id="Available+Plugins">Available Plugins<a href="#Available+Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>There’s <a href="../docs/Community-Plugins.html">a list of available plugins</a>.
 </p><p>Some especially popular plugins are:
 </p><ul><li>those for IDEs (to import an sbt project into your IDE)
 </li><li>those supporting web frameworks, such as
 <a href="https://github.com/JamesEarlDouglas/xsbt-web-plugin">xsbt-web-plugin</a>.
-</li></ul><p><a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">Check out the list</a>.
+</li></ul><p><a href="../docs/Community-Plugins.html">Check out the list</a>.
 </p><h3 id="Creating+an+auto+plugin">Creating an auto plugin<a href="#Creating+an+auto+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A minimal plugin is a Scala library that is built against the version of
 Scala for sbt itself, which is currently 2.10. Nothing special
 needs to be done for this type of plugin. It can be published as a
@@ -1225,23 +1225,23 @@ Custom-Settings) inside <code>autoImport</code>.
 </p><p> the user to add. Optionally override one or more of <code>AutoPlugin</code>’s
 methods to have settings automatically added to user projects.
 </p></li><li>Publish the project. There is a
-<a href="http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html">community repository</a> available
+<a href="../docs/Community-Plugins.html">community repository</a> available
 for open source plugins.
 </li></ol><p>For more details, including ways of developing plugins, see
-<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">Plugins</a>.
+<a href="../docs/Plugins.html">Plugins</a>.
 For best practices, see
-<a href="http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html">Plugins-Best-Practices</a>.
+<a href="../docs/Plugins-Best-Practices.html">Plugins-Best-Practices</a>.
 </p><h2 id="Custom+settings+and+tasks">Custom settings and tasks<a href="#Custom+settings+and+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page gets you started creating your own settings and tasks.
 </p><p>To understand this page, be sure you’ve read earlier pages in the
 Getting Started Guide, especially <a href="Basic-Def.html">.build.sbt</a> and
 <a href="More-About-Settings.html">more kinds of setting</a>.
-</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
+</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
 illustrating how to define keys. Most of the keys are implemented in
-<a href="../../sxr/sbt/Defaults.scala.html">Defaults</a>.
+<a href="../sxr/sbt/Defaults.scala.html">Defaults</a>.
 </p><p>Keys have one of three types. <code>SettingKey</code> and <code>TaskKey</code> are described in
 <a href="Basic-Def.html">.sbt build definition</a>. Read about <code>InputKey</code> on the
-<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> page.
-</p><p>Some examples from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>:
+<a href="../docs/Input-Tasks.html">Input Tasks</a> page.
+</p><p>Some examples from <a href="../sxr/sbt/Keys.scala.html">Keys</a>:
 </p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
 val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
 </code></pre><p>The key constructors have two string parameters: the name of the key
@@ -1256,7 +1256,7 @@ execution” (every time someone types a command at the sbt interactive
 prompt or in batch mode).
 </p><!-- TODO: FIX THIS -->
 <p>Keys may be defined in a <a href="Basic-Def.html">.sbt file</a>,
-[.scala file][Full-Def], or in [a plugin][Using-Plugins]. Any <code>val</code>
+<a href="Full-Def.html">.scala file</a>, or in <a href="Using-Plugins.html">a plugin</a>. Any <code>val</code>
 found in a <code>Build</code> object in your <code>.scala</code> build definition files or any <code>val</code>
 found in a <code>Plugin</code> object from a plugin will be imported automatically
 into your <code>.sbt</code> files.
@@ -1286,13 +1286,13 @@ library (you would
 write code based on the HTML library, perhaps).
 </p><p>sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-<a href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
+<a href="../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
 </p><h3 id="Use+plugins%21">Use plugins!<a href="#Use+plugins%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you find you have a lot of custom code, consider moving it to a
 plugin for re-use across multiple builds.
 </p><p>It’s very easy to create a plugin, as <a href="Using-Plugins.html">teased earlier</a>
-and <a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">discussed at more length here</a>.
+and <a href="../docs/Plugins.html">discussed at more length here</a>.
 </p><p>This page has been a quick taste; there’s much much more about custom
-tasks on the <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a> page.
+tasks on the <a href="../docs/Tasks.html">Tasks</a> page.
 </p><h2 id=".scala+build+definition">.scala build definition<a href="#.scala+build+definition" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>This page assumes you’ve read previous pages in the Getting Started
 Guide, <em>especially</em> <a href="Basic-Def.html">.sbt build definition</a> and
 <a href="More-About-Settings.html">more kinds of setting</a>.
@@ -1509,7 +1509,7 @@ the project directory.
 </li><li>add plugins with the <code>addSbtPlugin</code> method in <code>project/plugins.sbt</code> (NOT
 <code>build.sbt</code> in the project’s base directory).
 </li></ul><p>If any of this leaves you wondering rather than nodding, please
-<a href="http://www.scala-sbt.org/release/docs/faq.html#getting-help">ask for help</a>, go back and re-read, or try some
+<a href="../docs/faq.html#getting-help">ask for help</a>, go back and re-read, or try some
 experiments in sbt’s interactive mode.
 </p><p>Good luck!
 </p><h3 id="Advanced+Notes">Advanced Notes<a href="#Advanced+Notes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><!-- TODO: Link to reference. The rest of this wiki consists of deeper dives and less-commonly-needed

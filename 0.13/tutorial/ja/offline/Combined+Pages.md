@@ -6,7 +6,7 @@
 始める sbt
 =========
 
-> 原文: [Getting Started Guide](http://www.scala-sbt.org/release/docs/Getting-Started/Welcome.html)<br>
+> 原文: [Getting Started Guide](../index.html)<br>
 > [誤訳の報告をする](https://github.com/scalajp/sbt-getting-started-guide-ja/issues)。<br>
 > このスタートガイドは、sbt 0.11 〜 0.12 の頃に書かれたものです。書いてある内容はまだ十分有用ですが、sbt0.13ではある程度の機能追加などもされています。
 > sbt0.13での変更点や新機能に興味がある人は、こちら[sbt 0.13.0 の変更点](http://eed3si9n.com/ja/node/142) も一緒に読むといいでしょう。
@@ -35,7 +35,7 @@ sbt を試してくれて、ありがとう。_楽しもう！_
   [Hello]: Hello.html
   [Running]: Running.html
   [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi
-  [Setup-Notes]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Setup-Notes.html
+  [Setup-Notes]: ../docs/Setup-Notes.html
   [Mac]: Installing-sbt-on-Mac.html
   [Windows]: Installing-sbt-on-Windows.html
   [Linux]: Installing-sbt-on-Linux.html
@@ -60,12 +60,6 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 ### コツと注意
 
 `sbt` の実行に上手くいかない場合は、[[Setup Notes]] のターミナルの文字エンコーディング、HTTP プロキシ、JVM のオプションにかんする説明を参照する。
-
-訳注:
-
- - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
- - [原文のページ](http://www.scala-sbt.org/release/docs/Getting-Started/Setup.html)には、macports、homebrew、gentoo、apt、windows用のmsiのインストーラなどの方法も載っていて、ここに書いてある以外の方法でもインストールすることが可能です。
- - sbt0.13.0以降、windows の場合は、 `-Dinput.encoding=Cp1252` を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 [詳しい議論などはここを参照](https://github.com/sbt/sbt/issues/871)
 
 
   [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip
@@ -252,6 +246,11 @@ Options -> Keys "Backspace sends ^H"  の設定をチェックする必要があ
 > 何か良い方法があれば [pull request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md)
 > を送ってほしい。
 
+訳注:
+
+ - 32bitOSの場合 `-Xmx1536M` だとJVMのメモリの制限によりうまくいかないので、`-Xmx1024M` などに減らす必要がある。
+ - sbt0.13.0以降、windows の場合は、 `-Dinput.encoding=Cp1252` を指定しないと矢印キーでの履歴参照などが文字化けするようなので、設定してください。 [詳しい議論などはここを参照](https://github.com/sbt/sbt/issues/871)
+
 
   [Basic-Def]: Basic-Def.html
   [Setup]: Setup.html
@@ -416,8 +415,8 @@ target/
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Triggered-Execution]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Triggered-Execution.html
-  [Command-Line-Reference]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Command-Line-Reference.html
+  [Triggered-Execution]: ../docs/Triggered-Execution.html
+  [Command-Line-Reference]: ../docs/Command-Line-Reference.html
 
 実行
 ----
@@ -574,12 +573,12 @@ sbt の特殊な慣例として、タブを一度押すとよく使われる候�
 </table>
 
 
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
   [More-About-Settings]: More-About-Settings.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
   [Using-Plugins]: Using-Plugins.html
   [Scopes]: Scopes.html
 
@@ -794,7 +793,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
   [More-About-Settings]: More-About-Settings.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [Inspecting-Settings]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html
+  [Inspecting-Settings]: ../docs/Inspecting-Settings.html
 
 スコープ
 -------
@@ -1053,7 +1052,7 @@ _"Reference to undefined setting"_ のようなエラーに遭遇した場合は
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
 
 他の種類のセッティング
 -------------------
@@ -1392,7 +1391,7 @@ cleanFiles <+= (name) { n => file("coverage-report-" + n + ".txt") }
 ```
 
 
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
   [Apache Ivy]: http://ant.apache.org/ivy/
   [Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
   [Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
@@ -1403,10 +1402,10 @@ cleanFiles <+= (name) { n => file("coverage-report-" + n + ".txt") }
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [More-About-Settings]: More-About-Settings.html
-  [external-maven-ivy]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html#external-maven-ivy
-  [Cross-Build]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Cross-Build.html
-  [Resolvers]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Resolvers.html
-  [Library-Management]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Library-Management.html
+  [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
+  [Cross-Build]: ../docs/Cross-Build.html
+  [Resolvers]: ../docs/Resolvers.html
+  [Library-Management]: ../docs/Library-Management.html
 
 ライブラリ依存性
 --------------
@@ -1778,11 +1777,10 @@ sbt インタラクティブプロンプトから、`projects` と打ち込む�
   [Basic-Def]: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [AutoPlugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/AutoPlugins.html
-  [global-vs-local-plugins]: http://www.scala-sbt.org/release/docs/Detailed-Topics/Best-Practices.html#global-vs-local-plugins
-  [Community-Plugins]: http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Plugins-Best-Practices]: http://www.scala-sbt.org/release/docs/Extending/Plugins-Best-Practices.html
+  [global-vs-local-plugins]: ../docs/Best-Practices.html#global-vs-local-plugins
+  [Community-Plugins]: ../docs/Community-Plugins.html
+  [Plugins]: ../docs/Plugins.html
+  [Plugins-Best-Practices]: ../docs/Plugins-Best-Practices.html
 
 プラグインの使用
 --------------
@@ -2000,25 +1998,26 @@ myPluginSettings
 
 ### 利用可能なプラグイン
 
-[プラグインのリスト](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)がある。
+[プラグインのリスト](../docs/Community-Plugins.html)がある。
 
 特に人気のプラグインは:
 
  - IDE 専用プラグイン（sbt プロジェクトを IDE にインポートする）
  - [xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin) などの、web フレームワークプラグイン
 
-[リストを見てほしい](http://www.scala-sbt.org/release/docs/Community/Community-Plugins.html)。
+[リストを見てほしい](../docs/Community-Plugins.html)。
 
 
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Input-Tasks]: http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html
-  [Plugins]: http://www.scala-sbt.org/release/docs/Extending/Plugins.html
-  [Tasks]: http://www.scala-sbt.org/release/docs/Extending/Tasks.html
-  [Keys]: http://www.scala-sbt.org/release/sxr/sbt/Keys.scala.html
-  [Defaults]: http://www.scala-sbt.org/release/sxr/sbt/Defaults.scala.html
-  [IO]: http://www.scala-sbt.org/release/api/index.html#sbt.IO$
+  [Full-Def]: Full-Def.html
+  [Input-Tasks]: ../docs/Input-Tasks.html
+  [Plugins]: ../docs/Plugins.html
+  [Tasks]: ../docs/Tasks.html
+  [Keys]: ../sxr/sbt/Keys.scala.html
+  [Defaults]: ../sxr/sbt/Defaults.scala.html
+  [Scaladocs-IO]: ../api/index.html#sbt.IO$
 
 カスタムセッティングとタスク
 ------------------------
@@ -2055,8 +2054,8 @@ val clean = taskKey[Unit]("Deletes files produced by the build, such as generate
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
 
-（[.scala ビルド定義](../full-def)でみたように、）`.scala` ファイル内、
-もしくは（[プラグインの使用](../using-plugins)でみたように、）プラグイン内でキーを定義することができる。
+（[.scala ビルド定義][Full-Def] でみたように、）`.scala` ファイル内、
+もしくは（[プラグインの使用][Using-Plugins] でみたように、）プラグイン内でキーを定義することができる。
 `.scala` ビルド定義ファイル内の `Build` オブジェクト内の `val`、
 もしくはプラグイン内の `Plugin` オブジェクト内の `val` は全て `.sbt` ファイルに自動的にインポートされる。
 
@@ -2090,7 +2089,7 @@ sampleIntTask := {
 （その場合は、[ビルド定義にライブラリ依存性を追加して][Using-Plugins]、その HTML ライブラリに基づいたコードを書く）。
 
 sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [IO] にある API を重宝する。
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
 
 ### 置換しない場合のタスクの拡張
 
@@ -2373,7 +2372,7 @@ sbt のインタラクティブプロンプトの現プロジェクトを
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
-  [getting-help]: http://www.scala-sbt.org/release/docs/faq.html#getting-help
+  [getting-help]: ../docs/Faq.html#getting-help
 
 まとめ
 -----

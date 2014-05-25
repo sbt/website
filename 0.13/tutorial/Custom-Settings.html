@@ -45,13 +45,13 @@
 </p><p>To understand this page, be sure you’ve read earlier pages in the
 Getting Started Guide, especially <a href="Basic-Def.html">.build.sbt</a> and
 <a href="More-About-Settings.html">more kinds of setting</a>.
-</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
+</p><h3 id="Defining+a+key">Defining a key<a href="#Defining+a+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="../sxr/sbt/Keys.scala.html">Keys</a> is packed with examples
 illustrating how to define keys. Most of the keys are implemented in
-<a href="../../sxr/sbt/Defaults.scala.html">Defaults</a>.
+<a href="../sxr/sbt/Defaults.scala.html">Defaults</a>.
 </p><p>Keys have one of three types. <code>SettingKey</code> and <code>TaskKey</code> are described in
 <a href="Basic-Def.html">.sbt build definition</a>. Read about <code>InputKey</code> on the
-<a href="http://www.scala-sbt.org/release/docs/Extending/Input-Tasks.html">Input Tasks</a> page.
-</p><p>Some examples from <a href="../../sxr/sbt/Keys.scala.html">Keys</a>:
+<a href="../docs/Input-Tasks.html">Input Tasks</a> page.
+</p><p>Some examples from <a href="../sxr/sbt/Keys.scala.html">Keys</a>:
 </p><pre><code class="prettyprint lang-scala">val scalaVersion = settingKey[String](&quot;The version of Scala used for building.&quot;)
 val clean = taskKey[Unit](&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;)
 </code></pre><p>The key constructors have two string parameters: the name of the key
@@ -66,7 +66,7 @@ execution” (every time someone types a command at the sbt interactive
 prompt or in batch mode).
 </p><!-- TODO: FIX THIS -->
 <p>Keys may be defined in a <a href="Basic-Def.html">.sbt file</a>,
-[.scala file][Full-Def], or in [a plugin][Using-Plugins]. Any <code>val</code>
+<a href="Full-Def.html">.scala file</a>, or in <a href="Using-Plugins.html">a plugin</a>. Any <code>val</code>
 found in a <code>Build</code> object in your <code>.scala</code> build definition files or any <code>val</code>
 found in a <code>Plugin</code> object from a plugin will be imported automatically
 into your <code>.sbt</code> files.
@@ -96,13 +96,13 @@ library (you would
 write code based on the HTML library, perhaps).
 </p><p>sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-<a href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
+<a href="../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.
 </p><h3 id="Use+plugins%21">Use plugins!<a href="#Use+plugins%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you find you have a lot of custom code, consider moving it to a
 plugin for re-use across multiple builds.
 </p><p>It’s very easy to create a plugin, as <a href="Using-Plugins.html">teased earlier</a>
-and <a href="http://www.scala-sbt.org/release/docs/Extending/Plugins.html">discussed at more length here</a>.
+and <a href="../docs/Plugins.html">discussed at more length here</a>.
 </p><p>This page has been a quick taste; there’s much much more about custom
-tasks on the <a href="http://www.scala-sbt.org/release/docs/Extending/Tasks.html">Tasks</a> page.
+tasks on the <a href="../docs/Tasks.html">Tasks</a> page.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>
                         <span class="arrow">&gt;</span>

@@ -98,7 +98,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 </p><ul><li>プロジェクトを省略した場合は、現在のプロジェクトが使われる。
 </li><li>コンフィグレーションを省略した場合は、キーに依存したコンフィギュレーションが自動検知される。
 </li><li>タスクを省略した場合は、<code>Global</code> タスクが使われる。
-</li></ul><p>さらに詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
+</li></ul><p>さらに詳しくは、<a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
 </p><h3 id="%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%81%AE%E6%A4%9C%E6%9F%BB">スコープの検査<a href="#%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%81%AE%E6%A4%9C%E6%9F%BB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt のインタラクティブモード内で <code>inspect</code> コマンドを使ってキーとそのスコープを理解することができる。
 例えば、<code>inspect test:full-classpath</code> と試してみよう:
 </p><pre><code class="">$ sbt
@@ -152,7 +152,7 @@ sbt は、<code>Global</code> や、ビルド全体スコープなど、より�
 そのため、<code>inspect compile:full-classpath</code> は <code>inspect full-classpath</code> と同じになるはずだ。
 </p><p>次に、<code>inspect *:full-classpath</code> も実行して違いを比べてみよう。
 <code>full-classpath</code> はデフォルトでは、<code>Global</code> コンフィギュレーションには定義されていない。
-</p><p>より詳しくは、<a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
+</p><p>より詳しくは、<a href="../docs/Inspecting-Settings.html">Interacting with the Configuration System</a> 参照。
 </p><h3 id="%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B">ビルド定義からスコープを参照する<a href="#%E3%83%93%E3%83%AB%E3%83%89%E5%AE%9A%E7%BE%A9%E3%81%8B%E3%82%89%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%82%92%E5%8F%82%E7%85%A7%E3%81%99%E3%82%8B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><code>build.sbt</code> で裸のキーを使ってセッティングを作った場合は、現プロジェクト、<code>Global</code> コンフィグレーション、<code>Global</code> タスクにスコープ付けされる:
 </p><pre><code class="prettyprint lang-scala">name := &quot;hello&quot;
 </code></pre><p>sbt を実行して、<code>inspect name</code> と入力して、キーが　<code>{file:/home/hp/checkout/hello/}default-aea33a/*:name</code> により提供されていることを確認しよう。つまり、プロジェクトは、<code>{file:/home/hp/checkout/hello/}default-aea33a</code> で、コンフィギュレーションは <code>*</code> で、タスクは表示されていない（グローバルを指す）ということだ。
