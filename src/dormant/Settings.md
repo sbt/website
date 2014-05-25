@@ -178,7 +178,7 @@ The types involved in += and ++= are constrained by the existence of an
 implicit parameter of type Append.Value[A,B] in the case of += or
 Append.Values[A,B] in the case of ++=. Here, B is the type of the value
 being appended and A is the type of the setting that the value is being
-appended to. See [Append](../../api/sbt/Append\$.html) for the
+appended to. See [Append](../api/sbt/Append\$.html) for the
 provided instances.
 
 ### ~=
@@ -252,7 +252,7 @@ by the existence of an implicit parameter of type Append.Value[A,B] in
 the case of <+= or Append.Values[A,B] in the case of <++=. Here, B is
 the type of the value being appended and A is the type of the setting
 that the value is being appended to. See
-[Append](../../api/sbt/Append\$.html) for the provided instances.
+[Append](../api/sbt/Append\$.html) for the provided instances.
 
 Setting types
 -------------
@@ -264,9 +264,9 @@ incomplete.
 ### Setting Keys
 
 The left hand side of a setting definition is of type
-[ScopedSetting](../../api/sbt/ScopedSetting.html). This type has two
-parts: a key (of type [SettingKey](../../api/sbt/SettingKey.html))
-and a scope (of type [Scope](../../api/sbt/Scope\$.html)). An
+[ScopedSetting](../api/sbt/ScopedSetting.html). This type has two
+parts: a key (of type [SettingKey](../api/sbt/SettingKey.html))
+and a scope (of type [Scope](../api/sbt/Scope\$.html)). An
 unspecified scope is like using `this` to refer to the current context.
 The previous examples on this page have not defined an explicit scope.
 See [[Inspecting Settings]] for details on the axes that make up scopes.
@@ -281,16 +281,16 @@ sbt 0.7 and earlier, accepts an input string and produces a task to be
 run. (The renaming is because it can accept arbitrary input in 0.10+ and
 not just a space-delimited sequence of arguments like in 0.7.)
 
-A setting key has type [SettingKey](../../api/sbt/SettingKey.html), a
-task key has type [TaskKey](../../api/sbt/TaskKey.html), and an input
-task has type [InputKey](../../api/sbt/InputKey.html). The remainder
+A setting key has type [SettingKey](../api/sbt/SettingKey.html), a
+task key has type [TaskKey](../api/sbt/TaskKey.html), and an input
+task has type [InputKey](../api/sbt/InputKey.html). The remainder
 of this section only discusses settings. See [[Tasks]] and [[Input
 Tasks]] for details on the other types (those pages assume an
 understanding of this page).
 
-To construct a [ScopedSetting](../../api/sbt/ScopedSetting.html),
+To construct a [ScopedSetting](../api/sbt/ScopedSetting.html),
 select the key and then scope it using the `in` method (see the
-[ScopedSetting](../../api/sbt/ScopedSetting.html) for API details).
+[ScopedSetting](../api/sbt/ScopedSetting.html) for API details).
 For example, the setting for compiler options for the test sources is
 referenced using the *scalacOptions* key and the `Test` configuration in
 the current project.
@@ -319,10 +319,10 @@ as such.
 The right hand side of a setting definition varies by the initialization
 method used. In the case of `:=`, `+=`, `++=`, and `~=`, the type of the
 argument is straightforward (see the
-[ScopedSetting](../../api/sbt/ScopedSetting.html) API). For `<<=`,
+[ScopedSetting](../api/sbt/ScopedSetting.html) API). For `<<=`,
 <+=, and <++=, the type is `Initialize[T]` (for `<<=` and `<+=`) or
 `Initialize[Seq[T]]` (for <++=). This section discusses the
-[Initialize](../../api/sbt/Init\$Initialize.html) type.
+[Initialize](../api/sbt/Init\$Initialize.html) type.
 
 A value of type `Initialize[T]` represents a computation that takes the
 values of other settings as inputs. For example, in the following
@@ -366,7 +366,7 @@ value. In this case, that value is the path of a jar.
 To initialize tasks, the procedure is similar. There are a few
 differences. First, the inputs are of type [ScopedTaskable]. The means
 that either settings
-([ScopedSetting](../../api/sbt/ScopedSetting.html)) or tasks
+([ScopedSetting](../api/sbt/ScopedSetting.html)) or tasks
 ([ScopedTask]) may be used as the input to a task. Second, the name of
 the method used is `map` instead of `apply` and the resulting value is
 of type `Initialize[Task[T]]`. In the following example, the inputs are

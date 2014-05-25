@@ -107,8 +107,8 @@ libraryDependencies ++= Seq(
 ```
 
 In the second case, directly construct a value of type
-[ScalaInstance](../../api/sbt/ScalaInstance.html), typically using a
-method in the [companion object](../../api/sbt/ScalaInstance\$.html),
+[ScalaInstance](../api/sbt/ScalaInstance.html), typically using a
+method in the [companion object](../api/sbt/ScalaInstance\$.html),
 and assign it to `scalaInstance`. You will also need to add the
 `scala-library` jar to the classpath to compile and run Scala sources.
 For example,

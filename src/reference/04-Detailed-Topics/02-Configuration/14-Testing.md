@@ -466,8 +466,8 @@ support for a different framework, implement the
 
 Test frameworks report status and results to test reporters. You can
 create a new test reporter by implementing either
-[TestReportListener](../../api/sbt/TestReportListener.html) or
-[TestsListener](../../api/sbt/TestsListener.html).
+[TestReportListener](../api/sbt/TestReportListener.html) or
+[TestsListener](../api/sbt/TestsListener.html).
 
 #### Using Extensions
 

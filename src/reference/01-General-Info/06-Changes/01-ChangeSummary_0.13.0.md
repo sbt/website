@@ -45,7 +45,7 @@ sbt 0.13.0 Changes
 -   `compileInputs` is now defined in `(Compile,compile)` instead of
     just `Compile`
 -   The result of running tests is now
-    [Tests.Output](../../api/#sbt.Tests\$\$Output).
+    [Tests.Output](../api/#sbt.Tests\$\$Output).
 
 #### Features
 

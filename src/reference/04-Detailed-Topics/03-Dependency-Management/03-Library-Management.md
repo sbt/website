@@ -293,7 +293,7 @@ libraryDependencies +=
   )
 ```
 
-See [ModuleID](../../api/sbt/ModuleID.html) for API details.
+See [ModuleID](../api/sbt/ModuleID.html) for API details.
 
 ##### Download Sources
 
@@ -400,7 +400,7 @@ checksums := Seq("sha1", "md5")
 The conflict manager decides what to do when dependency resolution
 brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting `conflictManager`,
-which has type [ConflictManager](../../api/sbt/ConflictManager.html).
+which has type [ConflictManager](../api/sbt/ConflictManager.html).
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
 for details on the different conflict managers. For example, to specify

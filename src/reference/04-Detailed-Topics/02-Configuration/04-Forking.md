@@ -122,7 +122,7 @@ only the main or test `run` tasks or just the `test` tasks.
 By default, forked output is sent to the Logger, with standard output
 logged at the `Info` level and standard error at the `Error` level. This
 can be configured with the `outputStrategy` setting, which is of type
-[OutputStrategy](../../api/sbt/OutputStrategy.html).
+[OutputStrategy](../api/sbt/OutputStrategy.html).
 
 ```scala
 // send output to the build's standard output and error
@@ -154,9 +154,9 @@ connectInput in run := true
 ### Direct Usage
 
 To fork a new Java process, use the
-[Fork API](../../api/sbt/Fork\$.html). The values of interest are
+[Fork API](../api/sbt/Fork\$.html). The values of interest are
 `Fork.java`, `Fork.javac`, `Fork.scala`, and `Fork.scalac`. These are of
-type [Fork](../../api/sbt/Fork.html) and provide `apply` and `fork`
+type [Fork](../api/sbt/Fork.html) and provide `apply` and `fork`
 methods. For example, to fork a new Java process, :
 
 ```scala
@@ -166,7 +166,7 @@ val mainClass: String = ...
 val exitCode: Int = Fork.java(options, mainClass +: arguments)
 ```
 
-[ForkOptions](../../api/sbt/ForkOptions.html) defines the Java
+[ForkOptions](../api/sbt/ForkOptions.html) defines the Java
 installation to use, the working directory, environment variables, and
 more. For example, :
 

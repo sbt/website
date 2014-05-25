@@ -52,8 +52,8 @@ object Demo extends Build {
 
 Relevant API documentation for custom resolvers:
 
--   [ResolveInfo](../../api/index.html#sbt.BuildLoader\$\$ResolveInfo)
--   [BuildLoader](../../api/sbt/BuildLoader\$.html)
+-   [ResolveInfo](../api/index.html#sbt.BuildLoader\$\$ResolveInfo)
+-   [BuildLoader](../api/sbt/BuildLoader\$.html)
 
 #### Full Example
 
@@ -139,9 +139,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom builders:
 
--   [BuildInfo](../../api/sbt/BuildLoader\$\$BuildInfo.html)
--   [BuildLoader](../../api/sbt/BuildLoader\$.html)
--   [BuildUnit](../../api/index.html#sbt.Load\$\$BuildUnit)
+-   [BuildInfo](../api/sbt/BuildLoader\$\$BuildInfo.html)
+-   [BuildLoader](../api/sbt/BuildLoader\$.html)
+-   [BuildUnit](../api/index.html#sbt.Load\$\$BuildUnit)
 
 #### Example
 
@@ -216,9 +216,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom transformers:
 
--   [TransformInfo](../../api/index.html#sbt.BuildLoader\$\$TransformInfo)
--   [BuildLoader](../../api/sbt/BuildLoader\$.html)
--   [BuildUnit](../../api/index.html#sbt.Load\$\$BuildUnit)
+-   [TransformInfo](../api/index.html#sbt.BuildLoader\$\$TransformInfo)
+-   [BuildLoader](../api/sbt/BuildLoader\$.html)
+-   [BuildUnit](../api/index.html#sbt.Load\$\$BuildUnit)
 
 ##### Manipulating Project Dependencies in Settings
 
@@ -238,12 +238,12 @@ Build or referenced as the argument to `Project.aggregate` or
 ### The BuildDependencies type
 
 The type of the `buildDependencies` setting is
-[BuildDependencies](../../api/sbt/BuildDependencies.html).
+[BuildDependencies](../api/sbt/BuildDependencies.html).
 `BuildDependencies` provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type `ClasspathDep[ProjectRef]`, which combines a `ProjectRef` with a
-configuration (see [ClasspathDep](../../api/sbt/ClasspathDep.html)
-and [ProjectRef](../../api/sbt/ProjectRef.html)). For aggregate
+configuration (see [ClasspathDep](../api/sbt/ClasspathDep.html)
+and [ProjectRef](../api/sbt/ProjectRef.html)). For aggregate
 dependencies, the type of a dependency is just `ProjectRef`.
 
 The API for `BuildDependencies` is not extensive, covering only a little

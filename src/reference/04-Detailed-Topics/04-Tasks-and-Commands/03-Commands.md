@@ -29,7 +29,7 @@ There are three main aspects to commands:
     -   The parser to turn input into an appropriate data structure
 
 2.  The action to perform using the parsed data structure. This action
-    transforms the build [State](../../api/sbt/State.html).
+    transforms the build [State](../api/sbt/State.html).
 3.  Help provided to the user
 
 In sbt, the syntax part, including tab completion, is specified with
@@ -40,7 +40,7 @@ by the parser. See the
 [Parsing Input][Parsing-Input] page for how to
 use the parser combinators.
 
-[State](../../api/sbt/State.html) provides access to the build state,
+[State](../api/sbt/State.html) provides access to the build state,
 such as all registered `Command`s, the remaining commands to execute,
 and all project-related information. See [States and Actions][Build-State] for details on
 State.

@@ -130,7 +130,7 @@ Artifact("myproject", "jdk15")
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
 for more details on artifacts. See the
-[Artifact API](../../api/sbt/Artifact\$.html) for combining the
+[Artifact API](../api/sbt/Artifact\$.html) for combining the
 parameters above and specifying [Configurations] and extra attributes.
 
 To declare these artifacts for publishing, map them to the task that
@@ -148,7 +148,7 @@ addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 ```
 
 `addArtifact` returns a sequence of settings (wrapped in a
-[SettingsDefinition](../../api/#sbt.Init\$SettingsDefinition)). In a
+[SettingsDefinition](../api/#sbt.Init\$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
 ```scala

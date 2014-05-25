@@ -5,6 +5,7 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
+  [Full-Def]: Full-Def.html
   [Input-Tasks]: ../docs/Input-Tasks.html
   [Plugins]: ../docs/Plugins.html
   [Tasks]: ../docs/Tasks.html
@@ -89,7 +90,7 @@ write code based on the HTML library, perhaps).
 
 sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-[IO](../../api/index.html#sbt.IO\$) to manipulate files and directories.
+[IO](../api/index.html#sbt.IO\$) to manipulate files and directories.
 
 ### Use plugins!
 

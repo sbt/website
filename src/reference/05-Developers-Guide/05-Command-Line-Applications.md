@@ -58,7 +58,7 @@ libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
 #### Application: Main.scala
 
 The application itself is defined by implementing
-[xsbti.AppMain](../../api/xsbti/AppMain.html). The basic steps are
+[xsbti.AppMain](../api/xsbti/AppMain.html). The basic steps are
 
 1.  Provide command definitions. These are the commands that are
     available for users to run.

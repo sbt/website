@@ -90,7 +90,7 @@ object SettingsExample extends Init[Scope]
 This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
-[Settings API documentation](../../api/sbt/Settings.html) for
+[Settings API documentation](../api/sbt/Settings.html) for
 details. `SettingsUsage.scala`:
 
 ```scala

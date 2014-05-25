@@ -27,7 +27,7 @@ its own jar file when you run package, and in general works like any
 other project.
 
 A project is defined by declaring a lazy val of type
-[Project](../../api/sbt/Project.html). For example, :
+[Project](../api/sbt/Project.html). For example, :
 
 ```scala
 lazy val util = project

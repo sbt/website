@@ -14,7 +14,7 @@ See [.sbt build definition][Basic-Def] for details.
 Avoid using blank lines within a single multiline expression. As
 explained in [.sbt build definition][Basic-Def], each
 setting is otherwise a normal Scala expression with expected type
-[sbt.SettingDefinition](../../api/sbt/Init\$SettingsDefinition.html).
+[sbt.SettingDefinition](../api/sbt/Init\$SettingsDefinition.html).
 
 ```scala
 // set the name of the project

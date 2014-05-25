@@ -146,7 +146,7 @@ val files: Seq[File] = cp.files
 
 A classpath has type `Seq[Attributed[File]]`, which means that each
 entry carries additional metadata. This metadata is in the form of an
-[AttributeMap](../../api/sbt/AttributeMap.html). Useful keys for
+[AttributeMap](../api/sbt/AttributeMap.html). Useful keys for
 entries in the map are `artifact.key`, `module.key`, and `analysis`. For
 example,
 
@@ -162,7 +162,7 @@ for(entry <- classpath) yield {
 
 > **Note**: Entries may not have some or all metadata. Only entries from source
 > dependencies, such as internal projects, have an incremental
-> compilation [Analysis](../../api/sbt/inc/Analysis.html). Only entries
+> compilation [Analysis](../api/sbt/inc/Analysis.html). Only entries
 > for managed dependencies have an
-> [Artifact](../../api/sbt/Artifact.html) and
-> [ModuleID](../../api/sbt/ModuleID.html).
+> [Artifact](../api/sbt/Artifact.html) and
+> [ModuleID](../api/sbt/ModuleID.html).

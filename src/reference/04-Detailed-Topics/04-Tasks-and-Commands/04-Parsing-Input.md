@@ -64,7 +64,7 @@ val alwaysFail: Parser[Nothing] = failure("Invalid input.")
 ### Built-in parsers
 
 sbt comes with several built-in parsers defined in
-[sbt.complete.DefaultParsers](../../api/sbt/complete/DefaultParsers\$.html).
+[sbt.complete.DefaultParsers](../api/sbt/complete/DefaultParsers\$.html).
 Some commonly used built-in parsers are:
 
 > -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
@@ -76,7 +76,7 @@ Some commonly used built-in parsers are:
 > -   `Bool` for parsing a `Boolean` value
 
 See the
-[DefaultParsers API](../../api/sbt/complete/DefaultParsers\$.html) for
+[DefaultParsers API](../api/sbt/complete/DefaultParsers\$.html) for
 details.
 
 ### Combining parsers

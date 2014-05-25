@@ -10,14 +10,14 @@ type `Seq[(File, String)]` from an input file to the path to use in the
 resulting artifact (jar). Similarly, tasks that copy files accept
 mappings of type `Seq[(File, File)]` from an input file to the
 destination file. There are some methods on
-[PathFinder](../../api/sbt/PathFinder.html) and
-[Path](../../api/sbt/Path\$.html) that can be useful for constructing
+[PathFinder](../api/sbt/PathFinder.html) and
+[Path](../api/sbt/Path\$.html) that can be useful for constructing
 the `Seq[(File, String)]` or `Seq[(File, File)]` sequences.
 
 A common way of making this sequence is to start with a `PathFinder` or
 `Seq[File]` (which is implicitly convertible to `PathFinder`) and then
 call the `pair` method. See the
-[PathFinder](../../api/sbt/PathFinder.html) API for details, but
+[PathFinder](../api/sbt/PathFinder.html) API for details, but
 essentially this method accepts a function `File => Option[String]` or
 `File => Option[File]` that is used to generate mappings.
 
