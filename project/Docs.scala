@@ -41,10 +41,10 @@ object Docs {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(mappings)
-
+    
     // symlink API and SXR
-    symlink((fullVersioned / "api").getAbsolutePath, versioned / "api", s.log)
-    symlink((fullVersioned / "sxr").getAbsolutePath, versioned / "sxr", s.log)
+    symlink(s"$fullVersioned/api", versioned / "api", s.log)
+    symlink(s"$fullVersioned/sxr", versioned / "sxr", s.log)
 
     repo
   }
