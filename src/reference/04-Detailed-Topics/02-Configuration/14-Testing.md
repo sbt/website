@@ -104,7 +104,9 @@ By default, logging is buffered for each test source file until all
 tests for that file complete. This can be disabled by setting
 `logBuffered`:
 
-    logBuffered in Test := false
+```scala
+logBuffered in Test := false
+```
 
 #### Test Reports
 
@@ -112,7 +114,9 @@ By default, sbt will generate JUnit XML test reports for all tests in
 the build, located in the `target/test-reports` directory for a project.
 This can be disabled by disabling the `JUnitXmlReportPlugin`
 
-    val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
+```scala
+val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
+```
 
 ### Options
 
@@ -128,11 +132,15 @@ the `testOnly` tasks following a `--` separator. For example:
 To specify test framework arguments as part of the build, add options
 constructed by `Tests.Argument`:
 
-    testOptions in Test += Tests.Argument("-d", "-g")
+```scala
+testOptions in Test += Tests.Argument("-d", "-g")
+```
 
 To specify them for a specific test framework only:
 
-    testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
+```scala
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
+```
 
 #### Setup and Cleanup
 
@@ -143,21 +151,21 @@ ClassLoader is passed the class loader that is (or was) used for running
 the tests. It provides access to the test classes as well as the test
 framework classes.
 
-> **note**
->
-> When forking, the ClassLoader containing the test classes cannot be
+> **Note**: When forking, the ClassLoader containing the test classes cannot be
 > provided because it is in another JVM. Only use the () => Unit
 > variants in this case.
 
 Examples:
 
-    testOptions in Test += Tests.Setup( () => println("Setup") )
+```scala
+testOptions in Test += Tests.Setup( () => println("Setup") )
 
-    testOptions in Test += Tests.Cleanup( () => println("Cleanup") )
+testOptions in Test += Tests.Cleanup( () => println("Cleanup") )
 
-    testOptions in Test += Tests.Setup( loader => ... )
+testOptions in Test += Tests.Setup( loader => ... )
 
-    testOptions in Test += Tests.Cleanup( loader => ... )
+testOptions in Test += Tests.Cleanup( loader => ... )
+```
 
 #### Disable Parallel Execution of Tests
 
@@ -165,7 +173,9 @@ By default, sbt runs all tasks in parallel. Because each test is mapped
 to a task, tests are also run in parallel by default. To make tests
 within a given project execute serially: :
 
-    parallelExecution in Test := false
+```scala
+parallelExecution in Test := false
+```
 
 `Test` can be replaced with `IntegrationTest` to only execute
 integration tests serially. Note that tests from different projects may
@@ -176,29 +186,35 @@ still execute concurrently.
 If you want to only run test classes whose name ends with "Test", use
 `Tests.Filter`:
 
-    testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
+```scala
+testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
+```
 
 #### Forking tests
 
 The setting:
 
-    fork in Test := true
+```scala
+fork in Test := true
+```
 
 specifies that all tests will be executed in a single external JVM. See
 [Forking][Forking] for configuring standard options for forking. More control
 over how tests are assigned to JVMs and what options to pass to those is
 available with `testGrouping` key. For example in build.sbt:
 
-    import Tests._
+```scala
+import Tests._
 
-    {
-      def groupByFirst(tests: Seq[TestDefinition]) =
-        tests groupBy (_.name(0)) map {
-          case (letter, tests) => new Group(letter.toString, tests, SubProcess(Seq("-Dfirst.letter"+letter)))
-        } toSeq
+{
+  def groupByFirst(tests: Seq[TestDefinition]) =
+    tests groupBy (_.name(0)) map {
+      case (letter, tests) => new Group(letter.toString, tests, SubProcess(Seq("-Dfirst.letter"+letter)))
+    } toSeq
 
-        testGrouping in Test <<= groupByFirst( (definedTests in Test).value )
-    }
+    testGrouping in Test <<= groupByFirst( (definedTests in Test).value )
+}
+```
 
 The tests in a single group are run sequentially. Control the number of
 forked JVMs allowed to run at the same time by setting the limit on
@@ -273,19 +289,25 @@ Similarly the standard settings may be configured for the
 `IntegrationTest` settings delegate to `Test` settings by default. For
 example, if test options are specified as:
 
-    testOptions in Test += ...
+```scala
+testOptions in Test += ...
+```
 
 then these will be picked up by the `Test` configuration and in turn by
 the `IntegrationTest` configuration. Options can be added specifically
 for integration tests by putting them in the `IntegrationTest`
 configuration:
 
-    testOptions in IntegrationTest += ...
+```scala
+testOptions in IntegrationTest += ...
+```
 
 Or, use `:=` to overwrite any existing options, declaring these to be
 the definitive integration test options:
 
-    testOptions in IntegrationTest := Seq(...)
+```scala
+testOptions in IntegrationTest := Seq(...)
+```
 
 #### Custom test configuration
 
@@ -309,13 +331,17 @@ object B extends Build {
 
 Instead of using the built-in configuration, we defined a new one:
 
-    lazy val FunTest = config("fun") extend(Test)
+```scala
+lazy val FunTest = config("fun") extend(Test)
+```
 
 The `extend(Test)` part means to delegate to `Test` for undefined
 `CustomTest` settings. The line that adds the tasks and settings for the
 new test configuration is:
 
-    settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+```scala
+settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+```
 
 This says to add test and settings tasks in the `FunTest` configuration.
 We could have done it this way for integration tests as well. In fact,
@@ -327,7 +353,9 @@ The comments in the integration test section hold, except with
 `"fun"`. For example, test options can be configured specifically for
 `FunTest`:
 
-    testOptions in FunTest += ...
+```scala
+testOptions in FunTest += ...
+```
 
 Test tasks are run by prefixing them with `fun:`
 
@@ -342,26 +370,28 @@ compilations) is to share sources. In this approach, the sources are
 compiled together using the same classpath and are packaged together.
 However, different tests are run depending on the configuration.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object B extends Build {
-      lazy val root =
-        Project("root", file("."))
-          .configs( FunTest )
-          .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
-          .settings(
-            libraryDependencies += specs,
-            testOptions in Test := Seq(Tests.Filter(unitFilter)),
-            testOptions in FunTest := Seq(Tests.Filter(itFilter))
-          )
+object B extends Build {
+  lazy val root =
+    Project("root", file("."))
+      .configs( FunTest )
+      .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
+      .settings(
+        libraryDependencies += specs,
+        testOptions in Test := Seq(Tests.Filter(unitFilter)),
+        testOptions in FunTest := Seq(Tests.Filter(itFilter))
+      )
 
-      def itFilter(name: String): Boolean = name endsWith "ITest"
-      def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
+  def itFilter(name: String): Boolean = name endsWith "ITest"
+  def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
 
-      lazy val FunTest = config("fun") extend(Test)
-      lazy val specs = "org.specs2" %% "specs2" % "2.0" % "test"
-    }
+  lazy val FunTest = config("fun") extend(Test)
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "test"
+}
+```
 
 The key differences are:
 
@@ -391,12 +421,16 @@ run in parallel from those that must execute serially. Apply the
 procedure described in this section for an additional configuration.
 Let's call the configuration `serial`:
 
-    lazy val Serial = config("serial") extend(Test)
+```scala
+lazy val Serial = config("serial") extend(Test)
+```
 
 Then, we can disable parallel execution in just that configuration
 using:
 
-    parallelExecution in Serial := false
+```scala
+parallelExecution in Serial := false
+```
 
 The tests to run in parallel would be run with `test` and the ones to
 run in serial would be run with `serial:test`.
@@ -408,7 +442,9 @@ Support for JUnit is provided by
 JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
-    libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+```scala
+libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+```
 
 ### Extensions
 
@@ -439,11 +475,15 @@ To use your extensions in a project definition:
 
 Modify the `testFrameworks` setting to reference your test framework:
 
-    testFrameworks += new TestFramework("custom.framework.ClassName")
+```scala
+testFrameworks += new TestFramework("custom.framework.ClassName")
+```
 
 Specify the test reporters you want to use by overriding the
 `testListeners` setting in your project definition.
 
-    testListeners += customTestListener
+```scala
+testListeners += customTestListener
+```
 
 where `customTestListener` is of type `sbt.TestReportListener`.

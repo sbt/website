@@ -16,29 +16,35 @@ API or you can disable some of the main artifacts.
 
 To add all test artifacts:
 
-    publishArtifact in Test := true
+```scala
+publishArtifact in Test := true
+```
 
 To add them individually:
 
-    // enable publishing the jar produced by `test:package`
-    publishArtifact in (Test, packageBin) := true
+```scala
+// enable publishing the jar produced by `test:package`
+publishArtifact in (Test, packageBin) := true
 
-    // enable publishing the test API jar
-    publishArtifact in (Test, packageDoc) := true
+// enable publishing the test API jar
+publishArtifact in (Test, packageDoc) := true
 
-    // enable publishing the test sources jar
-    publishArtifact in (Test, packageSrc) := true
+// enable publishing the test sources jar
+publishArtifact in (Test, packageSrc) := true
+```
 
 To disable main artifacts individually:
 
-    // disable publishing the main jar produced by `package`
-    publishArtifact in (Compile, packageBin) := false
+```scala
+// disable publishing the main jar produced by `package`
+publishArtifact in (Compile, packageBin) := false
 
-    // disable publishing the main API jar
-    publishArtifact in (Compile, packageDoc) := false
+// disable publishing the main API jar
+publishArtifact in (Compile, packageDoc) := false
 
-    // disable publishing the main sources jar
-    publishArtifact in (Compile, packageSrc) := false
+// disable publishing the main sources jar
+publishArtifact in (Compile, packageSrc) := false
+```
 
 ### Modifying default artifacts
 
@@ -50,10 +56,12 @@ and `artifactPath` (of type `SettingKey[File]`). They are scoped by
 
 To modify the type of the main artifact, for example:
 
-    artifact in (Compile, packageBin) := {
-      val previous: Artifact = (artifact in (Compile, packageBin)).value
-      previous.copy(`type` = "bundle")
-    }
+```scala
+artifact in (Compile, packageBin) := {
+  val previous: Artifact = (artifact in (Compile, packageBin)).value
+  previous.copy(`type` = "bundle")
+}
+```
 
 The generated artifact name is determined by the `artifactName` setting.
 This setting is of type `(ScalaVersion, ModuleID, Artifact) => String`.
@@ -68,9 +76,11 @@ repository pattern.
 For example, to produce a minimal name without a classifier or cross
 path:
 
-    artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-      artifact.name + "-" + module.revision + "." + artifact.extension
-    }
+```scala
+artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+  artifact.name + "-" + module.revision + "." + artifact.extension
+}
+```
 
 (Note that in practice you rarely want to drop the classifier.)
 
@@ -83,13 +93,15 @@ guaranteed to be up-to-date.
 
 For example:
 
-    val myTask = taskKey[Unit]("My task.")
+```scala
+val myTask = taskKey[Unit]("My task.")
 
-    myTask :=  {
-      val (art, file) = packagedArtifact.in(Compile, packageBin).value
-      println("Artifact definition: " + art)
-      println("Packaged file: " + file.getAbsolutePath)
-    }
+myTask :=  {
+  val (art, file) = packagedArtifact.in(Compile, packageBin).value
+  println("Artifact definition: " + art)
+  println("Packaged file: " + file.getAbsolutePath)
+}
+```
 
 ### Defining custom artifacts
 
@@ -100,16 +112,20 @@ based on classifiers and these are not recorded in the POM.
 
 Basic `Artifact` construction look like:
 
-    Artifact("name", "type", "extension")
-    Artifact("name", "classifier")
-    Artifact("name", url: URL)
-    Artifact("name", Map("extra1" -> "value1", "extra2" -> "value2"))
+```scala
+Artifact("name", "type", "extension")
+Artifact("name", "classifier")
+Artifact("name", url: URL)
+Artifact("name", Map("extra1" -> "value1", "extra2" -> "value2"))
+```
 
 For example:
 
-    Artifact("myproject", "zip", "zip")
-    Artifact("myproject", "image", "jpg")
-    Artifact("myproject", "jdk15")
+```scala
+Artifact("myproject", "zip", "zip")
+Artifact("myproject", "image", "jpg")
+Artifact("myproject", "jdk15")
+```
 
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
@@ -120,40 +136,46 @@ parameters above and specifying [Configurations] and extra attributes.
 To declare these artifacts for publishing, map them to the task that
 generates the artifact:
 
-    val myImageTask = taskKey[File](...)
+```scala
+val myImageTask = taskKey[File](...)
 
-    myImageTask := {
-      val artifact: File = makeArtifact(...)
-      artifact
-    }
+myImageTask := {
+  val artifact: File = makeArtifact(...)
+  artifact
+}
 
-    addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
+addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
+```
 
 `addArtifact` returns a sequence of settings (wrapped in a
 [SettingsDefinition](../../api/#sbt.Init\$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
-    ...
-    lazy val proj = Project(...)
-      .settings( addArtifact(...).settings : _* )
-    ...
+```scala
+...
+lazy val proj = Project(...).
+  settings( addArtifact(...).settings : _* )
+...
+```
 
 ### Publishing .war files
 
 A common use case for web applications is to publish the `.war` file
 instead of the `.jar` file.
 
-    // disable .jar publishing 
-    publishArtifact in (Compile, packageBin) := false 
+```scala
+// disable .jar publishing 
+publishArtifact in (Compile, packageBin) := false 
 
-    // create an Artifact for publishing the .war file 
-    artifact in (Compile, packageWar) := {
-      val previous: Artifact = (artifact in (Compile, packageWar)).value
-      previous.copy(`type` = "war", extension = "war") 
-    } 
+// create an Artifact for publishing the .war file 
+artifact in (Compile, packageWar) := {
+  val previous: Artifact = (artifact in (Compile, packageWar)).value
+  previous.copy(`type` = "war", extension = "war") 
+} 
 
-    // add the .war file to what gets published 
-    addArtifact(artifact in (Compile, packageWar), packageWar) 
+// add the .war file to what gets published 
+addArtifact(artifact in (Compile, packageWar), packageWar) 
+``` 
 
 ### Using dependencies with artifacts
 
@@ -161,17 +183,23 @@ To specify the artifacts to use from a dependency that has custom or
 multiple artifacts, use the `artifacts` method on your dependencies. For
 example:
 
-    libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
+```scala
+libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
+```
 
 The `from` and `classifer` methods (described on the
 [Library Management][Library-Management] page) are actually convenience
 methods that translate to `artifacts`:
 
-    def from(url: String) = artifacts( Artifact(name, new URL(url)) )
-    def classifier(c: String) = artifacts( Artifact(name, c) )
+```scala
+def from(url: String) = artifacts( Artifact(name, new URL(url)) )
+def classifier(c: String) = artifacts( Artifact(name, c) )
+```
 
 That is, the following two dependency declarations are equivalent:
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```scala
+libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" artifacts(Artifact("testng", "jdk15") )
+libraryDependencies += "org.testng" % "testng" % "5.7" artifacts(Artifact("testng", "jdk15") )
+```

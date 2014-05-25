@@ -23,14 +23,16 @@ Overview of what goes in the file
 The most basic form of this file defines one object which extends
 `sbt.Build` e.g.:
 
-    import sbt._
+```scala
+import sbt._
 
-    object AnyName extends Build {
+object AnyName extends Build {
 
-        val anyName = Project("anyname", file("."))
+    val anyName = Project("anyname", file("."))
 
-        // Declarations go here
-    }
+    // Declarations go here
+}
+```
 
 There needs to be at least one `sbt.Project` defined and in this case we
 are giving it an arbitrary name and saying that it can be found in the
@@ -51,7 +53,9 @@ often irrelevant. By defining it and making it part of an object, sbt
 can then interrogate it and extract the information it requires. So, for
 example, the line:
 
-    val apachenet = "commons-net" % "commons-net" % "2.0"
+```scala
+val apachenet = "commons-net" % "commons-net" % "2.0"
+```
 
 defines a dependency and assigns it to the val `apachenet` but, unless
 you refer to that val again in the build file, the name of it is of no
@@ -73,35 +77,39 @@ A simple example comparing a "light" and "full" configuration of the same projec
 Here is a short "light" `build.sbt` file which defines a build project
 with a single test dependency on "scalacheck":
 
-    name := "My Project"
+```scala
+name := "My Project"
 
-    version := "1.0"
+version := "1.0"
 
-    organization := "org.myproject"
+organization := "org.myproject"
 
-    scalaVersion := "2.9.0-1"
+scalaVersion := "2.9.0-1"
 
-    libraryDependencies += "org.scalatest" % "scalatest_2.9.0" % "1.4.1" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.9.0" % "1.4.1" % "test"
+```
 
 Here is an equivalent "full" `Build.scala` file which defines exactly
 the same thing:
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object MyProjectBuild extends Build {
+object MyProjectBuild extends Build {
 
-      val mySettings = Defaults.defaultSettings ++ Seq(
-          name := "My Project",
-          version := "1.0",
-          organization := "org.myproject",
-          scalaVersion := "2.9.0-1",
-          libraryDependencies += "org.scalatest" % "scalatest_2.9.0" % "1.4.1" % "test"
-      )
+  val mySettings = Defaults.defaultSettings ++ Seq(
+      name := "My Project",
+      version := "1.0",
+      organization := "org.myproject",
+      scalaVersion := "2.9.0-1",
+      libraryDependencies += "org.scalatest" % "scalatest_2.9.0" % "1.4.1" % "test"
+  )
 
-      val myProject = Project("MyProject", file("."), settings = mySettings)
+  val myProject = Project("MyProject", file("."), settings = mySettings)
 
-    }
+}
+```
 
 Note that we have to explicitly declare the build and project and we
 have to explicitly append our settings to the default settings. All of
@@ -111,16 +119,18 @@ To understand what is really going on you may find it helpful to see
 this `Build.scala` without the imports and associated implicit
 conversions:
 
-    object MyProjectBuild extends sbt.Build {
+```scala
+object MyProjectBuild extends sbt.Build {
 
-      val mySettings = sbt.Defaults.defaultSettings ++ scala.Seq(
-          sbt.Keys.name := "My Project",
-          sbt.Keys.version := "1.0",
-          sbt.Keys.organization := "org.myproject",
-          sbt.Keys.scalaVersion := "2.9.0-1",
-          sbt.Keys.libraryDependencies += sbt.toGroupID("org.scalatest").%("scalatest_2.9.0").%("1.4.1").%("test")
-      )
+  val mySettings = sbt.Defaults.defaultSettings ++ scala.Seq(
+      sbt.Keys.name := "My Project",
+      sbt.Keys.version := "1.0",
+      sbt.Keys.organization := "org.myproject",
+      sbt.Keys.scalaVersion := "2.9.0-1",
+      sbt.Keys.libraryDependencies += sbt.toGroupID("org.scalatest").%("scalatest_2.9.0").%("1.4.1").%("test")
+  )
 
-      val myProject = sbt.Project("MyProject", new java.io.File("."), settings = mySettings)
+  val myProject = sbt.Project("MyProject", new java.io.File("."), settings = mySettings)
 
-    } 
+} 
+```

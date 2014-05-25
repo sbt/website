@@ -91,9 +91,7 @@ This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
 [Settings API documentation](../../api/sbt/Settings.html) for
-details.
-
-`SettingsUsage.scala`
+details. `SettingsUsage.scala`:
 
 ```scala
 /** Usage Example **/
@@ -134,20 +132,22 @@ object SettingsUsage {
 }
 ```
 
-This produces the following output when run: :
+This produces the following output when run:
 
-    a0 = None
-    b0 = None
-    a1 = None
-    b1 = None
-    a2 = None
-    b2 = None
-    a3 = Some(3)
-    b3 = None
-    a4 = Some(3)
-    b4 = Some(9)
-    a5 = Some(4)
-    b5 = Some(9)
+```
+a0 = None
+b0 = None
+a1 = None
+b1 = None
+a2 = None
+b2 = None
+a3 = Some(3)
+b3 = None
+a4 = Some(3)
+b4 = Some(9)
+a5 = Some(4)
+b5 = Some(9)
+```
 
 -   For the None results, we never defined the value and there was no
     value to delegate to.

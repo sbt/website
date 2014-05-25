@@ -40,8 +40,10 @@ def makeFoo(): Unit = ... initialize foo ...
 
 Typical usage would be:
 
-    makeFoo()
-    doSomething( foo )
+```scala
+makeFoo()
+doSomething(foo)
+```
 
 This example is rather exaggerated in its badness, but I claim it is
 nearly the same situation as our two step task definitions. Particular
@@ -59,11 +61,15 @@ and the third is a consequence of unsynchronized, shared state.
 In Scala, we have the built-in functionality to easily fix this:
 `lazy val`.
 
-    lazy val foo: Foo = ... initialize foo ...
+```scala
+lazy val foo: Foo = ... initialize foo ...
+```
 
 with the example usage:
 
-    doSomething( foo )
+```scala
+doSomething(foo)
+```
 
 Here, `lazy val` gives us thread safety, guaranteed initialization
 before access, and immutability all in one, DRY construct. The task
@@ -79,11 +85,13 @@ process.
 
 The general form of a task definition looks like:
 
-    myTask := {
-      val a: A = aTask.value
-      val b: B = bTask.value
-      ... do something with a, b and generate a result ...
-    }
+```scala
+myTask := {
+  val a: A = aTask.value
+  val b: B = bTask.value
+  ... do something with a, b and generate a result ...
+}
+```
 
 (This is only intended to be a discussion of the ideas behind tasks, so
 see the [sbt Tasks][Tasks] page for details on usage.)
@@ -102,15 +110,17 @@ tasks and including their outputs in a zip file. As good practice, we
 then return the File for this zip so that other tasks can map on the zip
 task.
 
-    zip := {
-        val bin: File = (packageBin in Compile).value
-        val src: File = (packageSrc in Compile).value
-        val doc: File = (packageDoc in Compile).value
-        val out: File = zipPath.value
-        val inputs: Seq[(File,String)] = Seq(bin, src, doc) x Path.flat
-        IO.zip(inputs, out)
-        out
-    }
+```scala
+zip := {
+    val bin: File = (packageBin in Compile).value
+    val src: File = (packageSrc in Compile).value
+    val doc: File = (packageDoc in Compile).value
+    val out: File = zipPath.value
+    val inputs: Seq[(File,String)] = Seq(bin, src, doc) x Path.flat
+    IO.zip(inputs, out)
+    out
+}
+```
 
 The `val inputs` line defines how the input files are mapped to paths in
 the zip. See [Mapping Files][Mapping-Files] for details. The explicit
@@ -119,5 +129,6 @@ types are not required, but are included for clarity.
 The `zipPath` input would be a custom task to define the location of the
 zip file. For example:
 
-    zipPath :=
-       target.value / "out.zip"
+```scala
+zipPath := target.value / "out.zip"
+```

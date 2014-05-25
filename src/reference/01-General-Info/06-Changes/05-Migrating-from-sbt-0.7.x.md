@@ -43,7 +43,7 @@ Download sbt $app_version$ as described on
 You can run $app_version$ the same way that you run 0.7.x, either simply:
 
 ```
-java -jar sbt-launch.jar
+\$ java -jar sbt-launch.jar
 ```
 
 Or (as most users do) with a shell script, as described on

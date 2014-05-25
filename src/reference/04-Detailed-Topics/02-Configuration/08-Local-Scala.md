@@ -14,7 +14,9 @@ compiled against.
 
 Example:
 
-    scalaHome := Some(file("/path/to/scala"))
+```scala
+scalaHome := Some(file("/path/to/scala"))
+```
 
 Using a local Scala version will override the `scalaVersion` setting and
 will not work with [cross building][Cross-Build].
@@ -23,6 +25,8 @@ sbt reuses the class loader for the local Scala version. If you
 recompile your local Scala version and you are using sbt interactively,
 run
 
-    > reload
+```
+> reload
+```
 
 to use the new compilation results.

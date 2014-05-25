@@ -115,7 +115,7 @@ The Scala compiler does not print the full details of warnings by
 default. Compiling code that uses the deprecated `error` method from
 Predef might generate the following output:
 
-``` scala
+```
 > compile
 [info] Compiling 1 Scala source to <...>/classes...
 [warn] there were 1 deprecation warnings; re-run with -deprecation for details
@@ -128,7 +128,7 @@ alternative when using Scala 2.10 and later is to run `printWarnings`.
 This task will display all warnings from the previous compilation. For
 example,
 
-```scala
+```
 > printWarnings
 [warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead
 [warn]  def x = error("Failed.")
@@ -175,13 +175,13 @@ section, or it may be applied to a specific project, configuration, or
 task. For example, to change the logging level for compilation to only
 show warnings and errors:
 
-```
+```scala
 > set logLevel in compile := Level.Warn
 ```
 
 To enable debug logging for all tasks in the current project,
 
-```
+```scala
 > set logLevel := Level.Warn
 ```
 
@@ -214,7 +214,7 @@ stack frames.
 For example, the following configures sbt to show stack traces up to the
 first sbt frame:
 
-```
+```scala
 > set every traceLevel := 0
 ```
 
@@ -222,7 +222,7 @@ The `every` part means to override the setting in all scopes. To change
 the trace printing behavior for a single project, configuration, or
 task, scope `traceLevel` appropriately:
 
-```
+```scala
 > set traceLevel in Test := 5
 > set traceLevel in update := 0
 > set traceLevel in ThisProject := -1

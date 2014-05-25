@@ -11,22 +11,26 @@ Task ordering is specified by declaring a task's inputs. Correctness of
 execution requires correct input declarations. For example, the
 following two tasks do not have an ordering specified:
 
-    write := IO.write(file("/tmp/sample.txt"), "Some content.")
+```scala
+write := IO.write(file("/tmp/sample.txt"), "Some content.")
 
-    read := IO.read(file("/tmp/sample.txt"))
+read := IO.read(file("/tmp/sample.txt"))
+```
 
 sbt is free to execute `write` first and then `read`, `read` first and
 then `write`, or `read` and `write` simultaneously. Execution of these
 tasks is non-deterministic because they share a file. A correct
 declaration of the tasks would be:
 
-    write := {
-      val f = file("/tmp/sample.txt")
-      IO.write(f, "Some content.")
-      f
-    }
+```scala
+write := {
+  val f = file("/tmp/sample.txt")
+  IO.write(f, "Some content.")
+  f
+}
 
-    read := IO.read(write.value)
+read := IO.read(write.value)
+```
 
 This establishes an ordering: `read` must run after `write`. We've also
 guaranteed that `read` will read from the same file that `write`
@@ -64,7 +68,7 @@ tasks in separate projects could still run in parallel if overall
 execution was parallel. There was no way to restriction execution such
 that only a single test out of all projects executed.
 
-#### Configuration
+### Configuration
 
 sbt 0.12.0 introduces a general infrastructure for restricting task
 concurrency beyond the usual ordering declarations. There are two parts
@@ -80,7 +84,7 @@ to these restrictions.
 The system is thus dependent on proper tagging of tasks and then on a
 good set of rules.
 
-##### Tagging Tasks
+#### Tagging Tasks
 
 In general, a tag is associated with a weight that represents the task's
 relative utilization of the resource represented by the tag. Currently,
@@ -92,30 +96,36 @@ accepts pairs of tags and weights. For example, the following associates
 the `CPU` and `Compile` tags with the `compile` task (with a weight of
 1).
 
-    def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+```scala
+def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
-    compile := myCompileTask.value
+compile := myCompileTask.value
+```
 
 Different weights may be specified by passing tag/weight pairs to
 `tagw`:
 
-    def downloadImpl = Def.task { ... } tagw(Tags.Network -> 3)
+```scala
+def downloadImpl = Def.task { ... } tagw(Tags.Network -> 3)
 
-    download := downloadImpl.value
+download := downloadImpl.value
+```
 
-##### Defining Restrictions
+#### Defining Restrictions
 
 Once tasks are tagged, the `concurrentRestrictions` setting sets
 restrictions on the tasks that may be concurrently executed based on the
 weighted tags of those tasks. This is necessarily a global set of rules,
 so it must be scoped `in Global`. For example,
 
-    concurrentRestrictions in Global := Seq(
-      Tags.limit(Tags.CPU, 2),
-      Tags.limit(Tags.Network, 10),
-      Tags.limit(Tags.Test, 1),
-      Tags.limitAll( 15 )
-    )
+```scala
+concurrentRestrictions in Global := Seq(
+  Tags.limit(Tags.CPU, 2),
+  Tags.limit(Tags.Network, 10),
+  Tags.limit(Tags.Test, 1),
+  Tags.limitAll( 15 )
+)
+```
 
 The example limits:
 
@@ -134,9 +144,11 @@ tasks are automatically assigned the label `Untagged`. You may want to
 include these tasks in the CPU rule by using the `limitSum` method. For
 example:
 
-    ...
-    Tags.limitSum(2, Tags.CPU, Tags.Untagged)
-    ...
+```scala
+...
+Tags.limitSum(2, Tags.CPU, Tags.Untagged)
+...
+```
 
 Note that the limit is the first argument so that tags can be provided
 as varargs.
@@ -149,9 +161,11 @@ completes. For example, a task could be tagged with a custom tag
 `Benchmark` and a rule configured to ensure such a task is executed by
 itself:
 
-    ...
-    Tags.exclusive(Benchmark)
-    ...
+```scala
+...
+Tags.exclusive(Benchmark)
+...
+```
 
 Finally, for the most flexibility, you can specify a custom function of
 type `Map[Tag,Int] => Boolean`. The `Map[Tag,Int]` represents the
@@ -161,17 +175,19 @@ the return value is `false`, the set of tasks will not be allowed to
 execute concurrently. For example, `Tags.exclusive(Benchmark)` is
 equivalent to the following:
 
-    ...
-    Tags.customLimit { (tags: Map[Tag,Int]) =>
-      val exclusive = tags.getOrElse(Benchmark, 0)
-       //  the total number of tasks in the group
-      val all = tags.getOrElse(Tags.All, 0)
-       // if there are no exclusive tasks in this group, this rule adds no restrictions
-      exclusive == 0 ||
-        // If there is only one task, allow it to execute.
-        all == 1
-    }
-    ...
+```scala
+...
+Tags.customLimit { (tags: Map[Tag,Int]) =>
+  val exclusive = tags.getOrElse(Benchmark, 0)
+   //  the total number of tasks in the group
+  val all = tags.getOrElse(Tags.All, 0)
+   // if there are no exclusive tasks in this group, this rule adds no restrictions
+  exclusive == 0 ||
+    // If there is only one task, allow it to execute.
+    all == 1
+}
+...
+```
 
 There are some basic rules that custom functions must follow, but the
 main one to be aware of in practice is that if there is only one task,
@@ -213,69 +229,79 @@ tags to each child task created for each test class.
 
 The default rules provide the same behavior as previous versions of sbt:
 
-    concurrentRestrictions in Global := {
-      val max = Runtime.getRuntime.availableProcessors
-      Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
-    }
+```scala
+concurrentRestrictions in Global := {
+  val max = Runtime.getRuntime.availableProcessors
+  Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
+}
+```
 
 As before, `parallelExecution in Test` controls whether tests are mapped
 to separate tasks. To restrict the number of concurrently executing
 tests in all projects, use:
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+```scala
+concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+```
 
 #### Custom Tags
 
 To define a new tag, pass a String to the `Tags.Tag` method. For
 example:
 
-    val Custom = Tags.Tag("custom")
+```scala
+val Custom = Tags.Tag("custom")
+```
 
 Then, use this tag as any other tag. For example:
 
-    def aImpl = Def.task { ... } tag(Custom)
+```scala
+def aImpl = Def.task { ... } tag(Custom)
 
-    aCustomTask := aImpl.value 
+aCustomTask := aImpl.value 
 
-    concurrentRestrictions in Global += 
-      Tags.limit(Custom, 1)
+concurrentRestrictions in Global += 
+  Tags.limit(Custom, 1)
+```
 
-#### Future work
+### Future work
 
 This is an experimental feature and there are several aspects that may
 change or require further work.
 
-##### Tagging Tasks
+#### Tagging Tasks
 
 Currently, a tag applies only to the immediate computation it is defined
 on. For example, in the following, the second compile definition has no
 tags applied to it. Only the first computation is labeled.
 
-    def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+```scala
+def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
-    compile := myCompileTask.value
+compile := myCompileTask.value
 
-    compile := { 
-      val result = compile.value
-      ... do some post processing ...
-    }
+compile := { 
+  val result = compile.value
+  ... do some post processing ...
+}
+```
 
 Is this desirable? expected? If not, what is a better, alternative
 behavior?
 
-##### Fractional weighting
+#### Fractional weighting
 
 Weights are currently `int`s, but could be changed to be `double`s if
 fractional weights would be useful. It is important to preserve a
 consistent notion of what a weight of 1 means so that built-in and
 custom tasks share this definition and useful rules can be written.
 
-##### Default Behavior
+#### Default Behavior
 
 User feedback on what custom rules work for what workloads will help
 determine a good set of default tags and rules.
 
-##### Adjustments to Defaults
+#### Adjustments to Defaults
 
 Rules should be easier to remove or redefine, perhaps by giving them
 names. As it is, rules must be appended or all rules must be completely
@@ -285,7 +311,7 @@ definition site when using the `:=` syntax.
 For removing tags, an implementation of `removeTag` should follow from
 the implementation of `tag` in a straightforward manner.
 
-##### Other characteristics
+#### Other characteristics
 
 The system of a tag with a weight was selected as being reasonably
 powerful and flexible without being too complicated. This selection is

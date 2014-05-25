@@ -20,7 +20,9 @@ The most common case is when you want to use a version of Scala that is
 available in a repository. The only required configuration is the Scala
 version you want to use. For example,
 
-    scalaVersion := "2.10.0"
+```scala
+scalaVersion := "2.10.0"
+```
 
 This will retrieve Scala from the repositories configured via the
 `resolvers` setting. It will use this version for building your project:
@@ -32,7 +34,9 @@ By default, the standard Scala library is automatically added as a
 dependency. If you want to configure it differently than the default or
 you have a project with only Java sources, set:
 
-    autoScalaLibrary := false
+```scala
+autoScalaLibrary := false
+```
 
 In order to compile Scala sources, the Scala library needs to be on the
 classpath. When `autoScalaLibrary` is true, the Scala library will be on
@@ -40,9 +44,11 @@ all classpaths: test, runtime, and compile. Otherwise, you need to add
 it like any other dependency. For example, the following dependency
 definition uses Scala only for tests:
 
-    autoScalaLibrary := false
+```scala
+autoScalaLibrary := false
 
-    libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
+libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
+```
 
 #### Configuring additional Scala dependencies
 
@@ -50,7 +56,9 @@ When using a Scala dependency other than the standard library, add it as
 a normal managed dependency. For example, to depend on the Scala
 compiler,
 
-    libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
+```scala
+libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
+```
 
 Note that this is necessary regardless of the value of the
 `autoScalaLibrary` setting described in the previous section.
@@ -64,7 +72,9 @@ in the special, private `scala-tool` configuration. It may be desirable
 to have more control over this in some situations. Disable this
 automatic behavior with the `managedScalaInstance` key:
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
+```
 
 This will also disable the automatic dependency on `scala-library`. If
 you do not need the Scala compiler for anything (compiling, the REPL,
@@ -80,19 +90,21 @@ is not important, but sbt needs the module name to be `scala-compiler`
 and `scala-library` in order to handle those jars appropriately. For
 example,
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
 
-    // Add the configuration for the dependencies on Scala tool jars
-    // You can also use a manually constructed configuration like:
-    //   config("scala-tool").hide
-    ivyConfigurations += Configurations.ScalaTool
+// Add the configuration for the dependencies on Scala tool jars
+// You can also use a manually constructed configuration like:
+//   config("scala-tool").hide
+ivyConfigurations += Configurations.ScalaTool
 
-    // Add the usual dependency on the library as well on the compiler in the
-    //  'scala-tool' configuration
-    libraryDependencies ++= Seq(
-       "org.scala-lang" % "scala-library" % scalaVersion.value,
-       "org.scala-lang" % "scala-compiler" % scalaVersion.value % "scala-tool"
-    )
+// Add the usual dependency on the library as well on the compiler in the
+//  'scala-tool' configuration
+libraryDependencies ++= Seq(
+   "org.scala-lang" % "scala-library" % scalaVersion.value,
+   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "scala-tool"
+)
+```
 
 In the second case, directly construct a value of type
 [ScalaInstance](../../api/sbt/ScalaInstance.html), typically using a
@@ -101,11 +113,13 @@ and assign it to `scalaInstance`. You will also need to add the
 `scala-library` jar to the classpath to compile and run Scala sources.
 For example,
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
 
-    scalaInstance := ...
+scalaInstance := ...
 
-    unmanagedJars in Compile += scalaInstance.value.libraryJar
+unmanagedJars in Compile += scalaInstance.value.libraryJar
+```
 
 #### Switching to a local Scala version
 
@@ -122,7 +136,9 @@ obtained by downloading and extracting a Scala distribution. Such a
 Scala home directory may be used as the source for jars by setting
 `scalaHome`. For example,
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
+```
 
 By default, `lib/scala-library.jar` will be added to the unmanaged
 classpath and `lib/scala-compiler.jar` will be used to compile Scala
@@ -138,9 +154,11 @@ home `lib/` directory.
 As an example, consider adding a dependency on `scala-reflect` when
 `scalaHome` is configured:
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
 
-    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+```
 
 This will be resolved as normal, except that sbt will see if
 `/home/user/scala-2.10/lib/scala-reflect.jar` exists. If it does, that
@@ -153,9 +171,11 @@ add them. The `scalaInstance` task provides structured access to the
 Scala distribution. For example, to add all jars in the Scala home
 `lib/` directory,
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
 
-    unmanagedJars in Compile ++= scalaInstance.value.jars
+unmanagedJars in Compile ++= scalaInstance.value.jars
+```
 
 To add only some jars, filter the jars from `scalaInstance` before
 adding them.

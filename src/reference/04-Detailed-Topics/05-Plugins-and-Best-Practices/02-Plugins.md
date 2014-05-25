@@ -32,14 +32,16 @@ A common situation is using a binary plugin published to a repository.
 Create `project/plugins.sbt` with the desired sbt plugins, any general
 dependencies, and any necessary repositories:
 
-    addSbtPlugin("org.example" % "plugin" % "1.0")
+```scala
+addSbtPlugin("org.example" % "plugin" % "1.0")
 
-    addSbtPlugin("org.example" % "another-plugin" % "2.0")
+addSbtPlugin("org.example" % "another-plugin" % "2.0")
 
-    // plain library (not an sbt plugin) for use in the build definition
-    libraryDependencies += "org.example" % "utilities" % "1.3"
+// plain library (not an sbt plugin) for use in the build definition
+libraryDependencies += "org.example" % "utilities" % "1.3"
 
-    resolvers += "Example Plugin Repository" at "http://example.org/repo/"
+resolvers += "Example Plugin Repository" at "http://example.org/repo/"
+```
 
 See the rest of the page for more information on creating and using
 plugins.
@@ -110,7 +112,9 @@ demonstrates how to declare plugins.
 
 Edit `project/plugins.sbt` to contain:
 
-    libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+```scala
+libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+```
 
 If sbt is running, do `reload`.
 
@@ -154,8 +158,10 @@ built from source and used on the classpath.
 
 Edit `project/plugins.sbt`
 
-    lazy val root = project.in( file(".") ).dependsOn( assemblyPlugin )
-    lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+```scala
+lazy val root = (project in file(".")).dependsOn(assemblyPlugin)
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+```
 
 If sbt is running, run `reload`.
 
@@ -168,7 +174,9 @@ repository.
 It is recommended to explicitly specify the commit or tag by appending
 it to the repository as a fragment:
 
-    lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
+```scala
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
+```
 
 One caveat to using this method is that the local sbt will try to run
 the remote plugin's build. It is quite possible that the plugin's own
@@ -187,14 +195,16 @@ the `eval` and `set` commands and `.sbt` and `project/*.scala` files.
 
 In a `build.sbt` file:
 
-    import grizzled.sys._
-    import OperatingSystem._
+```scala
+import grizzled.sys._
+import OperatingSystem._
 
-    libraryDependencies ++=
-        if(os ==Windows)
-            ("org.example" % "windows-only" % "1.0") :: Nil
-        else
-            Nil
+libraryDependencies ++=
+    if(os ==Windows)
+        ("org.example" % "windows-only" % "1.0") :: Nil
+    else
+        Nil
+```
 
 ### Creating a plugin
 
@@ -243,60 +253,64 @@ An example of a typical plugin:
 
 `build.sbt`:
 
-    sbtPlugin := true
+```scala
+sbtPlugin := true
 
-    name := "sbt-obfuscate"
+name := "sbt-obfuscate"
 
-    organization := "org.example"
+organization := "org.example"
+```
 
 `Plugin.scala`:
 
-    package sbtobfuscate
+```scala
+package sbtobfuscate
 
-    import sbt._
+import sbt._
 
-    object Plugin extends AutoPlugin
+object Plugin extends AutoPlugin
+{
+    // by definging autoImport, these are automatically imported into user's `*.sbt`
+    object autoImport
     {
-        // by definging autoImport, these are automatically imported into user's `*.sbt`
-        object autoImport
-        {
-            // configuration points, like the built in `version`, `libraryDependencies`, or `compile`
-            val obfuscate = taskKey[Seq[File]]("Obfuscates files.")
-            val obfuscateLiterals = settingKey[Boolean]("Obfuscate literals.")
+        // configuration points, like the built in `version`, `libraryDependencies`, or `compile`
+        val obfuscate = taskKey[Seq[File]]("Obfuscates files.")
+        val obfuscateLiterals = settingKey[Boolean]("Obfuscate literals.")
 
-            // default values for the tasks and settings
-            lazy val baseObfuscateSettings: Seq[sbt.Def.Setting[_]] = Seq(
-                obfuscate := {
-                    Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
-                },
-                obfuscateLiterals in obfuscate := false                
-            )
-        }
-
-        import autoImport._
-        override def requires = sbt.plugins.JvmModule
-
-        // This plugin is automatically enabled for projects which are JvmModules.
-        override def trigger = allRequirements
-
-        // a group of settings that are automatically added to projects.
-        override val projectSettings =
-            inConfig(Compile)(baseObfucscateSettings) ++
-            inConfig(Test)(baseObfuscateSettings)
+        // default values for the tasks and settings
+        lazy val baseObfuscateSettings: Seq[sbt.Def.Setting[_]] = Seq(
+            obfuscate := {
+                Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
+            },
+            obfuscateLiterals in obfuscate := false                
+        )
     }
 
-    object Obfuscate
-    {
-        def apply(sources: Seq[File]): Seq[File] := sources
-    }
+    import autoImport._
+    override def requires = sbt.plugins.JvmModule
+
+    // This plugin is automatically enabled for projects which are JvmModules.
+    override def trigger = allRequirements
+
+    // a group of settings that are automatically added to projects.
+    override val projectSettings =
+        inConfig(Compile)(baseObfucscateSettings) ++
+        inConfig(Test)(baseObfuscateSettings)
+}
+
+object Obfuscate
+{
+    def apply(sources: Seq[File]): Seq[File] := sources
+}
+```
 
 #### Usage example
 
-A build definition that uses the plugin might look like:
+A build definition that uses the plugin might look like. `obfuscate.sbt`:
 
-`obfuscate.sbt`
-
-    obfuscateLiterals in obfuscate := true
+```scala
+obfuscateLiterals in obfuscate := true
+```
 
 #### Root Plugins
 
@@ -306,32 +320,33 @@ depdendency graph. `AutoPlugin` by default defines a root plugin.
 
 Example command root plugin ----------------------
 
-A basic plugin that adds commands looks like:
+A basic plugin that adds commands looks like. `build.sbt`:
 
-`build.sbt`
+```scala
+sbtPlugin := true
 
-    sbtPlugin := true
+name := "sbt-sample"
 
-    name := "sbt-sample"
+organization := "org.example"
+```
 
-    organization := "org.example"
+`Plugin.scala`:
 
-`Plugin.scala`
+```scala
+package sbtsample
 
-    package sbtsample
+import sbt._
+import Keys._
+object Plugin extends AutoPlugin {
+  override lazy val projectSettings = Seq(commands += myCommand)
 
-    import sbt._
-    import Keys._
-    object Plugin extends AutoPlugin
-    {
-      override lazy val projectSettings = Seq(commands += myCommand)
-
-      lazy val myCommand = 
-        Command.command("hello") { (state: State) =>
-          println("Hi!")
-          state
-        }
+  lazy val myCommand = 
+    Command.command("hello") { (state: State) =>
+      println("Hi!")
+      state
     }
+}
+```
 
 This example demonstrates how to take a Command (here, `myCommand`) and
 distribute it in a plugin. Note that multiple commands can be included
@@ -341,11 +356,11 @@ for defining more useful commands, including ones that accept arguments
 and affect the execution state.
 
 For a user to consume this plugin, it requires an explicit include via
-the `Project` instance. Here's what their local sbt will look like.
+the `Project` instance. Here's what their local sbt will look like. `build.sbt`:
 
-`build.sbt`
-
-    val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin)
+```scala
+val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin)
+```
 
 The `setPlugins` method allows projects to explicitly define the
 `RootPlugin`s they wish to consume. `AutoPlugin`s are automatically
@@ -355,7 +370,10 @@ Projects can also exclude any type of plugin using the `disablePlugins`
 method. For example, if we wish to remove the JvmModule settings
 (`compile`,`test`,`run`), we modify our `build.sbt` as follows:
 
-    val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
+
+```scala
+val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
+```
 
 #### Global plugins example
 

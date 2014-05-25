@@ -36,23 +36,27 @@ comprehension of details, which are described at
 
 `<base>/build.sbt` (light)
 
-    name := "My Project"
+```scala
+name := "My Project"
 
-    libraryDependencies += "junit" % "junit" % "4.8" % "test"
+libraryDependencies += "junit" % "junit" % "4.8" % "test"
+```
 
 `<base>/project/Build.scala` (full)
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object MyBuild extends Build
-    {
-       lazy val root = Project("root", file(".")) dependsOn(sub)
-       lazy val sub = Project("sub", file("sub")) settings(
-          name := "My Project",
-          libraryDependencies += "junit" % "junit" % "4.8" % "test"
-       )
-    }
+object MyBuild extends Build
+{
+   lazy val root = Project("root", file(".")) dependsOn(sub)
+   lazy val sub = Project("sub", file("sub")) settings(
+      name := "My Project",
+      libraryDependencies += "junit" % "junit" % "4.8" % "test"
+   )
+}
+```
 
 Important Settings Background
 -----------------------------
@@ -66,7 +70,9 @@ the `settings` method in the `Build.scala` example are of type
 
 Throughout the documentation, many examples show a setting, such as:
 
-    libraryDependencies += "junit" % "junit" % "4.8" % "test"
+```scala
+libraryDependencies += "junit" % "junit" % "4.8" % "test"
+```
 
 This setting expression either goes in a
 `light definition <Basic-Configuration>` `(build.sbt)` as is or in the
@@ -88,16 +94,18 @@ To emphasize this, the setting in the following `Build.scala` fragment
 `settings` of a `Project`. (Unfortunately, Scala will discard non-Unit
 values to get Unit, which is why there is no compile error.)
 
-    object Bad extends Build {
-      libraryDependencies += "junit" % "junit" % "4.8" % "test"
-    }
+```scala
+object Bad extends Build {
+  libraryDependencies += "junit" % "junit" % "4.8" % "test"
+}
 
-    object Good extends Build
-    {
-      lazy val root = Project("root", file(".")) settings(
-        libraryDependencies += "junit" % "junit" % "4.8" % "test"
-      )
-    }
+object Good extends Build
+{
+  lazy val root = Project("root", file(".")) settings(
+    libraryDependencies += "junit" % "junit" % "4.8" % "test"
+  )
+}
+```
 
 Declaring a Setting
 -------------------
@@ -135,7 +143,9 @@ without referring to other settings. For example, the following defines
 a setting that will set *name* to "My Project" regardless of whether
 *name* has already been initialized.
 
-    name := "My Project"
+```scala
+name := "My Project"
+```
 
 No other settings are used. The value assigned is just a constant.
 
@@ -146,7 +156,9 @@ current sequence without referring to other settings. For example, the
 following defines a setting that will append a JUnit dependency to
 *libraryDependencies*. No other settings are referenced.
 
-    libraryDependencies += "junit" % "junit" % "4.8" % "test"
+```scala
+libraryDependencies += "junit" % "junit" % "4.8" % "test"
+```
 
 The related method `++=` appends a sequence to the current sequence,
 also without using other settings. For example, the following defines a
@@ -154,11 +166,13 @@ setting that will add dependencies on ScalaCheck and specs to the
 current list of dependencies. Because it will append a `Seq`, it uses
 ++= instead of +=.
 
-    libraryDependencies ++= Seq(
-       "org.scala-tools.testing" %% "scalacheck" % "1.9" % "test",
-       "org.scala-tools.testing" %% "specs" % "1.6.8" % "test"
-        )
+```scala
+libraryDependencies ++= Seq(
+   "org.scala-tools.testing" %% "scalacheck" % "1.9" % "test",
+   "org.scala-tools.testing" %% "specs" % "1.6.8" % "test"
     )
+)
+```
 
 The types involved in += and ++= are constrained by the existence of an
 implicit parameter of type Append.Value[A,B] in the case of += or
@@ -173,16 +187,20 @@ provided instances.
 the following defines a setting that will remove `-Y` compiler options
 from the current list of compiler options.
 
-    scalacOptions in Compile ~= { (options: Seq[String]) =>
-       options filterNot ( _ startsWith "-Y" )
-    }
+```scala
+scalacOptions in Compile ~= { (options: Seq[String]) =>
+   options filterNot ( _ startsWith "-Y" )
+}
+```
 
 The earlier declaration of JUnit as a library dependency using `+=`
 could also be written as:
 
-    libraryDependencies ~= { (deps: Seq[ModuleID]) =>
-      deps :+ ("junit" % "junit" % "4.8" % "test")
-    }
+```scala
+libraryDependencies ~= { (deps: Seq[ModuleID]) =>
+  deps :+ ("junit" % "junit" % "4.8" % "test")
+}
+```
 
 ### <<=
 
@@ -191,10 +209,12 @@ in terms of <<=. <<= defines a setting using other settings,
 possibly including the previous value of the setting being defined. For
 example, declaring JUnit as a dependency using <<= would look like:
 
-    libraryDependencies <<= libraryDependencies apply { (deps: Seq[ModuleID]) =>
-       // Note that :+ is a method on Seq that appends a single value
-       deps :+ ("junit" % "junit" % "4.8" % "test")
-    }
+```scala
+libraryDependencies <<= libraryDependencies apply { (deps: Seq[ModuleID]) =>
+   // Note that :+ is a method on Seq that appends a single value
+   deps :+ ("junit" % "junit" % "4.8" % "test")
+}
+```
 
 This defines a setting that will apply the provided function to the
 previous value of *libraryDependencies*. `apply` and `Seq[ModuleID]` are
@@ -211,17 +231,21 @@ For example, the following will add a dependency on the Scala compiler
 to the current list of dependencies. Because the *scalaVersion* setting
 is used, the method is <+= instead of +=.
 
-    libraryDependencies <+= scalaVersion( "org.scala-lang" % "scala-compiler" % _ )
+```scala
+libraryDependencies <+= scalaVersion( "org.scala-lang" % "scala-compiler" % _ )
+```
 
 This next example adds a dependency on the Scala compiler to the current
 list of dependencies. Because another setting (*scalaVersion*) is used
 and a Seq is appended, the method is <++=.
 
-    libraryDependencies <++= scalaVersion { sv =>
-      ("org.scala-lang" % "scala-compiler" % sv) ::
-      ("org.scala-lang" % "scala-swing" % sv) ::
-      Nil
-    }
+```scala
+libraryDependencies <++= scalaVersion { sv =>
+  ("org.scala-lang" % "scala-compiler" % sv) ::
+  ("org.scala-lang" % "scala-swing" % sv) ::
+  Nil
+}
+```
 
 The types involved in <+= and <++=, like += and ++=, are constrained
 by the existence of an implicit parameter of type Append.Value[A,B] in
@@ -271,7 +295,9 @@ For example, the setting for compiler options for the test sources is
 referenced using the *scalacOptions* key and the `Test` configuration in
 the current project.
 
-    val ref: ScopedSetting[Seq[String]] = scalacOptions in Test
+```scala
+val ref: ScopedSetting[Seq[String]] = scalacOptions in Test
+```
 
 The current project doesn't need to be explicitly specified, since that
 is the default in most cases. Some settings are specific to a task, in
@@ -279,7 +305,9 @@ which case the task should be specified as part of the scope as well.
 For example, the compiler options used for the *console* task for test
 sources is referenced like:
 
-    val ref: ScopedSetting[Seq[String]] = scalacOptions in Test in console
+```scala
+val ref: ScopedSetting[Seq[String]] = scalacOptions in Test in console
+```
 
 In these examples, the type of the setting reference key is given
 explicitly and the key is assigned to a value to emphasize that it is a
@@ -300,26 +328,32 @@ A value of type `Initialize[T]` represents a computation that takes the
 values of other settings as inputs. For example, in the following
 setting, the argument to <<= is of type `Initialize[File]`:
 
-    scalaSource in Compile <<= baseDirectory {
-       (base: File) => base / "src"
-    }
+```scala
+scalaSource in Compile <<= baseDirectory {
+   (base: File) => base / "src"
+}
+```
 
 This example can be written more explicitly as:
 
-    {
-      val key: ScopedSetting[File] = scalaSource.in(Compile)
-      val init: Initialize[File] = baseDirectory.apply( (base: File) => base / "src" )
-      key.<<=(init)
-    }
+```scala
+{
+  val key: ScopedSetting[File] = scalaSource.in(Compile)
+  val init: Initialize[File] = baseDirectory.apply( (base: File) => base / "src" )
+  key.<<=(init)
+}
+```
 
 To construct a value of type `Initialize`, construct a tuple of up to
 nine input `ScopedSetting`s. Then, define the function that will compute
 the value of the setting given the values for these input settings.
 
-    val path: Initialize[File] =
-      (baseDirectory, name, version).apply( (base: File, n: String, v: String) =>
-        base / (n + "-" + v + ".jar")
-      )
+```scala
+val path: Initialize[File] =
+  (baseDirectory, name, version).apply( (base: File, n: String, v: String) =>
+    base / (n + "-" + v + ".jar")
+  )
+```
 
 This example takes the base directory, project name, and project version
 as inputs. The keys for these settings are defined in [sbt.Keys], along
@@ -340,10 +374,12 @@ the [report|Update-Report] produced by the *update* task and the context
 *configuration*. The function computes the locations of the dependencies
 for that configuration.
 
-    val mainDeps: Initialize[Task[File]] =
-      (update, configuration).map( (report: UpdateReport, config: Configuration) =>
-        report.select(configuration = config.name)
-      )
+```scala
+val mainDeps: Initialize[Task[File]] =
+  (update, configuration).map( (report: UpdateReport, config: Configuration) =>
+    report.select(configuration = config.name)
+  )
+```
 
 As before, *update* and *configuration* are defined in
 [Keys](../../sxr/sbt/Keys.scala.html). *update* is of type

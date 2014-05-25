@@ -36,7 +36,9 @@ long-standing issues with plugins.
 sbt has a number of [predefined keys](../../api/sbt/Keys%24.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
-    val sourceFiles = settingKey[Seq[File]]("Some source files")
+```scala
+val sourceFiles = settingKey[Seq[File]]("Some source files")
+```
 
 Instead, simply reuse sbt's existing `sources` key.
 
@@ -49,31 +51,39 @@ acceptable ways to accomplish this goal.
 
 #### Just use a `val` prefix
 
-    package sbtobfuscate
-    object Plugin extends sbt.Plugin {
-      val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
-    }
+```scala
+package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
+}
+```
 
 In this approach, every `val` starts with `obfuscate`. A user of the
 plugin would refer to the settings like this:
 
-    obfuscateStylesheet := ...
+```scala
+obfuscateStylesheet := ...
+```
 
 #### Use a nested object
 
-    package sbtobfuscate
-    object Plugin extends sbt.Plugin {
-      object ObfuscateKeys {
-        val stylesheet = SettingKey[File]("obfuscateStylesheet")
-      }
-    }
+```scala
+package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  object ObfuscateKeys {
+    val stylesheet = SettingKey[File]("obfuscateStylesheet")
+  }
+}
+```
 
 In this approach, all non-common settings are in a nested object. A user
 of the plugin would refer to the settings like this:
 
-    import ObfuscateKeys._ // place this at the top of build.sbt
+```scala
+import ObfuscateKeys._ // place this at the top of build.sbt
 
-    stylesheet := ...
+stylesheet := ...
+```
 
 ### Configuration Advice
 
@@ -100,14 +110,19 @@ distinct from other target directories. Thus, these two definitions use
 the same *key*, but they represent distinct *values*. So, in a user's
 `build.sbt`, we might see:
 
-    target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
-    target in Compile := baseDirectory.value / "mytarget"
+```scala
+target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
+
+target in Compile := baseDirectory.value / "mytarget"
+```
 
 In the PDF plugin, this is achieved with an `inConfig` definition:
 
-    val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
-      target := baseDirectory.value / "target" / "docs" # the default value
-    ))
+```scala
+val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
+  target := baseDirectory.value / "target" / "docs" # the default value
+))
+```
 
 #### When *not* to define your own configuration.
 
@@ -115,17 +130,22 @@ If you're merely adding to existing definitions, don't define your own
 configuration. Instead, reuse an existing one *or* scope by the main
 task (see below).
 
-    val akka = config("akka")  // This isn't needed.
-    val akkaStartCluster = TaskKey[Unit]("akkaStartCluster")
+```scala
+val akka = config("akka")  // This isn't needed.
+val akkaStartCluster = TaskKey[Unit]("akkaStartCluster")
 
-    target in akkaStartCluster := ... // This is ok.
-    akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+target in akkaStartCluster := ... // This is ok.
+
+akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+```
 
 #### Configuration Cat says "Configuration is for configuration"
 
 When defining a new type of configuration, e.g.
 
-    val Config = config("profile")
+```scala
+val Config = config("profile")
+```
 
 should be used to create a "cross-task" configuration. The task
 definitions don't change in this case, but the default configuration
@@ -139,9 +159,11 @@ can alter generated pom files.
 
 Configurations should *not* be used to namespace keys for a plugin. e.g.
 
-    val Config = config("my-plugin")
-    val pluginKey = settingKey[String]("A plugin specific key")
-    val settings = pluginKey in Config  // DON'T DO THIS!
+```scala
+val Config = config("my-plugin")
+val pluginKey = settingKey[String]("A plugin specific key")
+val settings = pluginKey in Config  // DON'T DO THIS!
+```
 
 #### Playing nice with configurations
 
@@ -156,12 +178,14 @@ flexibility.
 
 Split your settings by the configuration axis like so:
 
-    val obfuscate = TaskKey[Seq[File]]("obfuscate")
-    val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-    val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-      obfuscate := ... (sources in obfuscate).value ...,
-      sources in obfuscate := sources.value
-    )
+```scala
+val obfuscate = TaskKey[Seq[File]]("obfuscate")
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+```
 
 The `baseObfuscateSettings` value provides base configuration for the
 plugin's tasks. This can be re-used in other configurations if projects
@@ -170,17 +194,23 @@ scoped settings for projects to use directly. This gives the greatest
 flexibility in using features provided by a plugin. Here's how the raw
 settings may be reused:
 
-    Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+```scala
+Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+```
 
 Alternatively, one could provide a utility method to load settings in a
 given configuration:
 
-    def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
-      inConfig(c)(baseObfuscateSettings)
+```scala
+def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
+  inConfig(c)(baseObfuscateSettings)
+```
 
 This could be used as follows:
 
-    seq(obfuscateSettingsIn(Test): _*) 
+```scala
+seq(obfuscateSettingsIn(Test): _*) 
+```
 
 ##### Using a 'main' task scope for settings
 
@@ -188,12 +218,14 @@ Sometimes you want to define some settings for a particular 'main' task
 in your plugin. In this instance, you can scope your settings using the
 task itself.
 
-    val obfuscate = TaskKey[Seq[File]]("obfuscate")
-    val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-    val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-      obfuscate := ... (sources in obfuscate).value ...,
-      sources in obfuscate := sources.value
-    )
+```scala
+val obfuscate = TaskKey[Seq[File]]("obfuscate")
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+```
 
 In the above example, `sources in obfuscate` is scoped under the main
 task, `obfuscate`.
@@ -206,10 +238,12 @@ general rule is *be careful what you touch*.
 First, make sure your user does not include global build configuration
 in *every* project but rather in the build itself. e.g.
 
-    object MyBuild extends Build {
-      override lazy val settings = super.settings ++ MyPlugin.globalSettings
-      val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
-    }
+```scala
+object MyBuild extends Build {
+  override lazy val settings = super.settings ++ MyPlugin.globalSettings
+  val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
+}
+```
 
 Global settings should *not* be placed into a `build.sbt` file.
 
@@ -218,10 +252,11 @@ settings from other plugins are not ignored. e.g. when creating a new
 `onLoad` handler, ensure that the previous `onLoad` handler is not
 removed.
 
-    object MyPlugin extends Plugin {
-       val globalSettigns: Seq[Setting[_]] = Seq(
-         onLoad in Global := (onLoad in Global).value andThen { state =>
-             ... return new state ...
-         }
-       )
+```scala
+object MyPlugin extends Plugin {
+   val globalSettigns: Seq[Setting[_]] = Seq(
+     onLoad in Global := (onLoad in Global).value andThen { state =>
+         ... return new state ...
      }
+   )
+```

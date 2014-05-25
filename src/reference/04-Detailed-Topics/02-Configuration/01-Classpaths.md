@@ -26,17 +26,21 @@ and `Artifact` that defined the dependency.
 To explicitly extract the raw `Seq[File]`, use the `files` method
 implicitly added to `Classpath`:
 
-    val cp: Classpath = ...
-    val raw: Seq[File] = cp.files
+```scala
+val cp: Classpath = ...
+val raw: Seq[File] = cp.files
+```
 
 To create a `Classpath` from a `Seq[File]`, use `classpath` and to
 create an `Attributed[File]` from a `File`, use `Attributed.blank`:
 
-    val raw: Seq[File] = ...
-    val cp: Classpath = raw.classpath
+```scala
+val raw: Seq[File] = ...
+val cp: Classpath = raw.classpath
 
-    val rawFile: File = ..
-    val af: Attributed[File] = Attributed.blank(rawFile)
+val rawFile: File = ..
+val af: Attributed[File] = Attributed.blank(rawFile)
+```
 
 #### Unmanaged v. managed
 
@@ -49,8 +53,10 @@ retrieved dependencies and compiled classes.
 
 Tasks that produce managed files should be inserted as follows:
 
-    sourceGenerators in Compile +=
-        generate( (sourceManaged in Compile).value / "some_directory")
+```scala
+sourceGenerators in Compile +=
+    generate( (sourceManaged in Compile).value / "some_directory")
+```
 
 In this example, `generate` is some function of type `File => Seq[File]`
 that actually does the work. So, we are appending a new task to the list
@@ -79,7 +85,9 @@ The project base directory is by default a source directory in addition
 to `src/main/scala`. You can exclude source files by name
 (`butler.scala` in the example below) like:
 
-    excludeFilter in unmanagedSources := "butler.scala" 
+```scala
+excludeFilter in unmanagedSources := "butler.scala" 
+```
 
 Read more on
 [How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
@@ -137,4 +145,6 @@ xxx.properties from classpath at run time. You put xxx.properties inside
 directory "config". When you run "sbt run", you want the directory to be
 in classpath.
 
-    unmanagedClasspath in Runtime += baseDirectory.value / "config"
+```scala
+unmanagedClasspath in Runtime += baseDirectory.value / "config"
+```

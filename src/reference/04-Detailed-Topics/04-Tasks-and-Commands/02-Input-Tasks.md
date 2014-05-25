@@ -21,8 +21,10 @@ task like a `SettingKey` represents a setting or a `TaskKey` represents
 a task. Define a new input task key using the `inputKey.apply` factory
 method:
 
-    // goes in project/Build.scala or in build.sbt
-    val demo = inputKey[Unit]("A demo input task.")
+```scala
+// goes in project/Build.scala or in build.sbt
+val demo = inputKey[Unit]("A demo input task.")
+```
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
@@ -42,14 +44,16 @@ present to the user during tab completion.
 For example, the following task prints the current Scala version and
 then echoes the arguments passed to it on their own line.
 
-    demo := {
-        // get the result of parsing
-      val args: Seq[String] = spaceDelimited("<arg>").parsed
-        // Here, we also use the value of the `scalaVersion` setting
-      println("The current Scala version is " + scalaVersion.value)
-      println("The arguments to demo were:")
-      args foreach println
-    }
+```scala
+demo := {
+    // get the result of parsing
+  val args: Seq[String] = spaceDelimited("<arg>").parsed
+    // Here, we also use the value of the `scalaVersion` setting
+  println("The current Scala version is " + scalaVersion.value)
+  println("The arguments to demo were:")
+  args foreach println
+}
+```
 
 ### Input Task using Parsers
 
@@ -110,19 +114,23 @@ The following contrived example uses the previous example's output (of
 type `(String,String)`) and the result of the `package` task to print
 some information to the screen.
 
-    demo := {
-        val (tpe, value) = parser.parsed
-        println("Type: " + tpe)
-        println("Value: " + value)
-        println("Packaged: " + packageBin.value.getAbsolutePath)
-    }
+```scala
+demo := {
+    val (tpe, value) = parser.parsed
+    println("Type: " + tpe)
+    println("Value: " + value)
+    println("Packaged: " + packageBin.value.getAbsolutePath)
+}
+```
 
 ### The InputTask type
 
 It helps to look at the `InputTask` type to understand more advanced
 usage of input tasks. The core input task type is:
 
-    class InputTask[T](val parser: State => Parser[Task[T]])
+```scala
+class InputTask[T](val parser: State => Parser[Task[T]])
+```
 
 Normally, an input task is assigned to a setting and you work with
 `Initialize[InputTask[T]]`.
@@ -161,27 +169,31 @@ parser `--`, and `run` again. The parsers are sequenced in order of
 syntactic appearance, so that the arguments before `--` are passed to
 the first `run` and the ones after are passed to the second.
 
-    val run2 = inputKey[Unit](
-        "Runs the main class twice with different argument lists separated by --")
+```scala
+val run2 = inputKey[Unit](
+    "Runs the main class twice with different argument lists separated by --")
 
-    val separator: Parser[String] = "--"
+val separator: Parser[String] = "--"
 
-    run2 := {
-       val one = (run in Compile).evaluated
-       val sep = separator.parsed
-       val two = (run in Compile).evaluated
-    }
+run2 := {
+   val one = (run in Compile).evaluated
+   val sep = separator.parsed
+   val two = (run in Compile).evaluated
+}
+```
 
 For a main class Demo that echoes its arguments, this looks like:
 
-    \$ sbt
-    > run2 a b -- c d
-    [info] Running Demo c d
-    [info] Running Demo a b
-    c
-    d
-    a
-    b
+```
+\$ sbt
+> run2 a b -- c d
+[info] Running Demo c d
+[info] Running Demo a b
+c
+d
+a
+b
+```
 
 ### Preapplying input
 
@@ -212,33 +224,37 @@ we:
 > **Note**: the current implementation of `:=` doesn't actually support
 applying input derived from settings yet.
 
-    lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
-       "once with the project name and version as arguments"
-       "and once with command line arguments preceded by hard coded values.")
+```scala
+lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
+   "once with the project name and version as arguments"
+   "and once with command line arguments preceded by hard coded values.")
 
-    // The argument string for the first run task is ' <name> <version>'
-    lazy val firstInput: Initialize[String] =
-       Def.setting(s" \${name.value} \${version.value}")
+// The argument string for the first run task is ' <name> <version>'
+lazy val firstInput: Initialize[String] =
+   Def.setting(s" \${name.value} \${version.value}")
 
-    // Make the first arguments to the second run task ' red blue'
-    lazy val secondInput: String = " red blue"
+// Make the first arguments to the second run task ' red blue'
+lazy val secondInput: String = " red blue"
 
-    run2 := {
-       val one = (run in Compile).fullInput(firstInput.value).evaluated
-       val two = (run in Compile).partialInput(secondInput).evaluated
-    }
+run2 := {
+   val one = (run in Compile).fullInput(firstInput.value).evaluated
+   val two = (run in Compile).partialInput(secondInput).evaluated
+}
+```
 
 For a main class Demo that echoes its arguments, this looks like:
 
-    \$ sbt
-    > run2 green
-    [info] Running Demo demo 1.0
-    [info] Running Demo red blue green
-    demo
-    1.0
-    red
-    blue
-    green
+```
+\$ sbt
+> run2 green
+[info] Running Demo demo 1.0
+[info] Running Demo red blue green
+demo
+1.0
+red
+blue
+green
+```
 
 ### Get a Task from an InputTask
 
@@ -249,36 +265,42 @@ and produces a task that can be used normally. For example, the
 following defines a plain task `runFixed` that can be used by other
 tasks or run directly without providing any input, :
 
-    lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
+```scala
+lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
 
-    runFixed := {
-       val _ = (run in Compile).toTask(" blue green").value
-       println("Done!")
-    }
+runFixed := {
+   val _ = (run in Compile).toTask(" blue green").value
+   println("Done!")
+}
+```
 
 For a main class Demo that echoes its arguments, running `runFixed`
 looks like:
 
-    \$ sbt
-    > runFixed
-    [info] Running Demo blue green
-    blue
-    green
-    Done!
+```
+\$ sbt
+> runFixed
+[info] Running Demo blue green
+blue
+green
+Done!
+```
 
 Each call to `toTask` generates a new task, but each task is configured
 the same as the original `InputTask` (in this case, `run`) but with
 different input applied. For example, :
 
-    lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
+```scala
+lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
 
-    fork in run := true
+fork in run := true
 
-    runFixed2 := {
-       val x = (run in Compile).toTask(" blue green").value
-       val y = (run in Compile).toTask(" red orange").value
-       println("Done!")
-    }
+runFixed2 := {
+   val x = (run in Compile).toTask(" blue green").value
+   val y = (run in Compile).toTask(" red orange").value
+   println("Done!")
+}
+```
 
 The different `toTask` calls define different tasks that each run the
 project's main class in a new jvm. That is, the `fork` setting
@@ -287,12 +309,14 @@ class. However, each task passes different arguments to the main class.
 For a main class Demo that echoes its arguments, the output of running
 `runFixed2` might look like:
 
-    \$ sbt
-    > runFixed2
-    [info] Running Demo blue green
-    [info] Running Demo red orange
-    blue
-    green
-    red
-    orange
-    Done!
+```
+\$ sbt
+> runFixed2
+[info] Running Demo blue green
+[info] Running Demo red orange
+blue
+green
+red
+orange
+Done!
+```

@@ -61,7 +61,9 @@ especially important for plugins. A user might change the `target`
 setting to point to `build/`, for example, and the plugin needs to
 respect that. Instead, use the setting, like:
 
-    myDirectory := target.value / "sub-directory"
+```scala
+myDirectory := target.value / "sub-directory"
+```
 
 ### Don't "mutate" files
 
@@ -82,21 +84,23 @@ file contents as immutable at the level of Tasks.
 
 For example:
 
-    lazy val makeFile = taskKey[File]("Creates a file with some content.")
+```scala
+lazy val makeFile = taskKey[File]("Creates a file with some content.")
 
-    // define a task that creates a file,
-    //  writes some content, and returns the File
-    makeFile := {
-        val f: File = file("/tmp/data.txt")
-        IO.write(f, "Some content")
-        f
-    }
+// define a task that creates a file,
+//  writes some content, and returns the File
+makeFile := {
+    val f: File = file("/tmp/data.txt")
+    IO.write(f, "Some content")
+    f
+}
 
-    // The result of makeFile is the constructed File,
-    //   so useFile can map makeFile and simultaneously
-    //   get the File and declare the dependency on makeFile
-    useFile :=
-        doSomething( makeFile.value )
+// The result of makeFile is the constructed File,
+//   so useFile can map makeFile and simultaneously
+//   get the File and declare the dependency on makeFile
+useFile :=
+    doSomething( makeFile.value )
+```
 
 This arrangement is not always possible, but it should be the rule and
 not the exception.
@@ -105,18 +109,24 @@ not the exception.
 
 Construct only absolute Files. Either specify an absolute path
 
-    file("/home/user/A.scala")
+```scala
+file("/home/user/A.scala")
+```
 
 or construct the file from an absolute base:
 
-    base / "A.scala"
+```scala
+base / "A.scala"
+```
 
 This is related to the no hard coding best practice because the proper
 way involves referencing the `baseDirectory` setting. For example, the
 following defines the myPath setting to be the `<base>/licenses/`
 directory.
 
-    myPath := baseDirectory.value / "licenses"
+```scala
+myPath := baseDirectory.value / "licenses"
+```
 
 In Java (and thus in Scala), a relative File is relative to the current
 working directory. The working directory is not always the same as the

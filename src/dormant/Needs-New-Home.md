@@ -8,7 +8,7 @@ Snippets of docs that need to move to another page
 Temporarily change the logging level and configure how stack traces are
 displayed by modifying the `log-level` or `trace-level` settings:
 
-``` {.sourceCode .console}
+```scala
 > set logLevel := Level.Warn
 ```
 
@@ -21,7 +21,7 @@ does not have to be listed in your build definition, but it does have to
 be available in a repository. You can also include the initial command
 to run after switching to that version. For example:
 
-``` {.sourceCode .console}
+```
 > ++2.9.1 console-quick
 ...
 Welcome to Scala version 2.9.1.final (Java HotSpot(TM) Server VM, Java 1.6.0).
@@ -49,23 +49,29 @@ change the location of the directory you store the jars in.
 To change the directory jars are stored in, change the `unmanaged-base`
 setting in your project definition. For example, to use `custom_lib/`:
 
-    unmanagedBase := baseDirectory.value / "custom_lib"
+```scala
+unmanagedBase := baseDirectory.value / "custom_lib"
+```
 
 If you want more control and flexibility, override the `unmanaged-jars`
 task, which ultimately provides the manual dependencies to sbt. The
 default implementation is roughly:
 
-    unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```scala
+unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```
 
 If you want to add jars from multiple directories in addition to the
 default directory, you can do:
 
-    unmanagedJars in Compile ++= {
-        val base = baseDirectory.value
-        val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
-        val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
-        customJars.classpath
-    }
+```scala
+unmanagedJars in Compile ++= {
+    val base = baseDirectory.value
+    val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
+    val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
+    customJars.classpath
+}
+```
 
 See [[Paths]] for more information on building up paths.
 
@@ -74,8 +80,10 @@ See [[Paths]] for more information on building up paths.
 To use the local and Maven Central repositories, but not the Scala Tools
 releases repository:
 
-    externalResolvers :=
-      Resolver.withDefaultResolvers(resolvers.value, mavenCentral = true, scalaTools = false)
+```scala
+externalResolvers :=
+  Resolver.withDefaultResolvers(resolvers.value, mavenCentral = true, scalaTools = false)
+```
 
 ### Explicit URL
 
@@ -83,7 +91,9 @@ If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified with the `from`
 method as follows:
 
-    libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```scala
+libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```
 
 The URL is only used as a fallback if the dependency cannot be found
 through the configured repositories. Also, when you publish a project, a
@@ -99,14 +109,18 @@ In some instances, you may find that the dependencies listed for a
 project aren't necessary for it to build. Avoid fetching artifact
 dependencies with `intransitive()`, as in this example:
 
-    libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```scala
+libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```
 
 ### Classifiers
 
 You can specify the classifer for a dependency using the `classifier`
 method. For example, to get the jdk15 version of TestNG:
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```scala
+libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```
 
 To obtain particular classifiers for all dependencies transitively, run
 the `update-classifiers` task. By default, this resolves all artifacts
@@ -114,7 +128,9 @@ with the `sources` or `javadoc` classifer. Select the classifiers to
 obtain by configuring the `transitive-classifiers` setting. For example,
 to only retrieve sources:
 
-    transitiveClassifiers := Seq("sources")
+```scala
+transitiveClassifiers := Seq("sources")
+```
 
 ### Extra Attributes
 
@@ -123,13 +139,17 @@ to only retrieve sources:
 
 To select dependencies by extra attributes:
 
-    libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```scala
+libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```
 
 To define extra attributes on the current project:
 
-    projectID ~= { id =>
-        id extra("color" -> "blue", "component" -> "compiler-interface")
-    }
+```scala
+projectID ~= { id =>
+    id extra("color" -> "blue", "component" -> "compiler-interface")
+}
+```
 
 ### Inline Ivy XML
 
@@ -139,12 +159,14 @@ this with inline Scala dependency and repository declarations.
 
 For example:
 
-    ivyXML :=
-      <dependencies>
-        <dependency org="javax.mail" name="mail" rev="1.4.2">
-          <exclude module="activation"/>
-        </dependency>
-      </dependencies>
+```scala
+ivyXML :=
+  <dependencies>
+    <dependency org="javax.mail" name="mail" rev="1.4.2">
+      <exclude module="activation"/>
+    </dependency>
+  </dependencies>
+```
 
 ### Ivy Home Directory
 
@@ -156,7 +178,7 @@ Started Setup]]).
 
 For example:
 
-``` {.sourceCode .console}
+```
 java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 ```
 
@@ -168,17 +190,23 @@ checksums to use are specified by the *checksums* setting.
 
 To disable checksum checking during update:
 
-    checksums in update := Nil
+```scala
+checksums in update := Nil
+```
 
 To disable checksum creation during artifact publishing:
 
-    checksums in publishLocal := Nil
+```scala
+checksums in publishLocal := Nil
 
-    checksums in publish := Nil
+checksums in publish := Nil
+```
 
 The default value is:
 
-    checksums := Seq("sha1", "md5")
+```scala
+checksums := Seq("sha1", "md5")
+```
 
 ### Publishing
 
@@ -193,48 +221,64 @@ expressions.
 
 ### Ivy settings (resolver configuration)
 
-    externalIvySettings()
+```scala
+externalIvySettings()
+```
 
 or
 
-    externalIvySettings(baseDirectory(_ / "custom-settings-name.xml"))
+```scala
+externalIvySettings(baseDirectory(_ / "custom-settings-name.xml"))
+```
 
 ### Ivy file (dependency configuration)
 
-    externalIvyFile()
+```scala
+externalIvyFile()
+```
 
 or
 
-    externalIvyFile(baseDirectory(_ / "custom-name.xml"))
+```scala
+externalIvyFile(baseDirectory(_ / "custom-name.xml"))
+```
 
 Because Ivy files specify their own configurations, sbt needs to know
 which configurations to use for the compile, runtime, and test
 classpaths. For example, to specify that the Compile classpath should
 use the 'default' configuration:
 
-    classpathConfiguration in Compile := config("default")
+```scala
+classpathConfiguration in Compile := config("default")
+```
 
 ### Maven pom (dependencies only)
 
-    externalPom()
+```scala
+externalPom()
+```
 
 or
 
-    externalPom(baseDirectory(_ / "custom-name.xml"))
+```scala
+externalPom(baseDirectory(_ / "custom-name.xml"))
+```
 
 ### Full Ivy Example
 
 For example, a `build.sbt` using external Ivy files might look like:
 
-    externalIvySettings()
+```scala
+externalIvySettings()
 
-    externalIvyFile( baseDirectory { base => base / "ivyA.xml"} )
+externalIvyFile( baseDirectory { base => base / "ivyA.xml"} )
 
-    classpathConfiguration in Compile := Compile
+classpathConfiguration in Compile := Compile
 
-    classpathConfiguration in Test := Test
+classpathConfiguration in Test := Test
 
-    classpathConfiguration in Runtime := Runtime
+classpathConfiguration in Runtime := Runtime
+```
 
 ### Known limitations
 

@@ -17,12 +17,16 @@ class files.
 
 Pass options to the Java compiler by setting `javacOptions`:
 
-    javacOptions += "-g:none"
+```scala
+javacOptions += "-g:none"
+```
 
 As with options for the Scala compiler, the arguments are not parsed by
 sbt. Multi-element options, such as `-source 1.5`, are specified like:
 
-    javacOptions ++= Seq("-source", "1.5")
+```scala
+javacOptions ++= Seq("-source", "1.5")
+```
 
 You can specify the order in which Scala and Java sources are built with
 the `compileOrder` setting. Possible values are from the `CompileOrder`
@@ -35,16 +39,20 @@ up your build by not passing the Java sources to `scalac`. For example,
 if your Scala sources depend on your Java sources, but your Java sources
 do not depend on your Scala sources, you can do:
 
-    compileOrder := CompileOrder.JavaThenScala
+```scala
+compileOrder := CompileOrder.JavaThenScala
+```
 
 To specify different orders for main and test sources, scope the setting
 by configuration:
 
-    // Java then Scala for main sources
-    compileOrder in Compile := CompileOrder.JavaThenScala
+```scala
+// Java then Scala for main sources
+compileOrder in Compile := CompileOrder.JavaThenScala
 
-    // allow circular dependencies for test sources
-    compileOrder in Test := CompileOrder.Mixed
+// allow circular dependencies for test sources
+compileOrder in Test := CompileOrder.Mixed
+```
 
 Note that in an incremental compilation setting, it is not practical to
 ensure complete isolation between Java sources and Scala sources because
@@ -57,11 +65,13 @@ list of unmanaged source directories. For Java-only projects, the
 unnecessary Scala directories can be ignored by modifying
 `unmanagedSourceDirectories`:
 
-    // Include only src/main/java in the compile configuration
-    unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
+```scala
+// Include only src/main/java in the compile configuration
+unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
 
-    // Include only src/test/java in the test configuration
-    unmanagedSourceDirectories in Test := (javaSource in Test).value :: Nil
+// Include only src/test/java in the test configuration
+unmanagedSourceDirectories in Test := (javaSource in Test).value :: Nil
+```
 
 However, there should not be any harm in leaving the Scala directories
 if they are empty.

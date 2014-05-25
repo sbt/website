@@ -30,7 +30,7 @@ mode that only requires a JRE installed.
 Install [conscript](https://github.com/n8han/conscript).
 
 ```
-cs sbt/sbt --branch 0.12.0
+\$ cs sbt/sbt --branch 0.12.0
 ```
 
 This will create two scripts: `screpl` and `scalas`.
@@ -46,13 +46,13 @@ main class, by adding the `-Dsbt.main.class=sbt.ScriptMain` parameter to
 the `java` command. Its command line should look like:
 
 ```
-java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "\$@"
+\$ java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "\$@"
 ```
 
 For the REPL runner `screpl`, use `sbt.ConsoleMain` as the main class:
 
 ```
-java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "\$@"
+\$ java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "\$@"
 ```
 
 In each case, `/home/user/.sbt/boot` should be replaced with wherever
@@ -120,15 +120,21 @@ or a resolver to use when retrieving dependencies.
 
 A dependency definition looks like:
 
-    organization%module%revision
+```
+organization%module%revision
+```
 
 Or, for a cross-built dependency:
 
-    organization%%module%revision
+```
+organization%%module%revision
+```
 
 A repository argument looks like:
 
-    "id at url"
+```
+"id at url"
+```
 
 ##### Example:
 
@@ -136,7 +142,7 @@ To add the Sonatype snapshots repository and add Scalaz 7.0-SNAPSHOT to
 REPL classpath:
 
 ```
-screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/" "org.scalaz%%scalaz-core%7.0-SNAPSHOT"
+\$ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/" "org.scalaz%%scalaz-core%7.0-SNAPSHOT"
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant

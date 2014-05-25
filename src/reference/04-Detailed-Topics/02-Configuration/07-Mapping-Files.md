@@ -53,24 +53,28 @@ the case of multiple base directories.
 For example, the following demonstrates building a `Seq[(File, String)]`
 using `rebase`:
 
-    import Path.rebase
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val mappings: Seq[(File,String)] = files pair rebase(baseDirectories, "pre/")
+```scala
+import Path.rebase
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val mappings: Seq[(File,String)] = files pair rebase(baseDirectories, "pre/")
 
-    val expected = (file("/a/b/C.scala") -> "pre/b/C.scala" ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "pre/b/C.scala" ) :: Nil
+assert( mappings == expected )
+```
 
 Or, to build a `Seq[(File, File)]`:
 
-    import Path.rebase
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val newBase: File = file("/new/base")
-    val mappings: Seq[(File,File)] = files pair rebase(baseDirectories, newBase)
+```scala
+import Path.rebase
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val newBase: File = file("/new/base")
+val mappings: Seq[(File,File)] = files pair rebase(baseDirectories, newBase)
 
-    val expected = (file("/a/b/C.scala") -> file("/new/base/b/C.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> file("/new/base/b/C.scala") ) :: Nil
+assert( mappings == expected )
+```
 
 ### Flatten
 
@@ -79,22 +83,26 @@ component of the path (its name). For a File to File mapping, the input
 file is mapped to a file with the same name in a given target directory.
 For example:
 
-    import Path.flat
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val mappings: Seq[(File,String)] = files pair flat
+```scala
+import Path.flat
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val mappings: Seq[(File,String)] = files pair flat
 
-    val expected = (file("/a/b/C.scala") -> "C.scala" ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "C.scala" ) :: Nil
+assert( mappings == expected )
+```
 
 To build a `Seq[(File, File)]` using `flat`:
 
-    import Path.flat
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val newBase: File = file("/new/base")
-    val mappings: Seq[(File,File)] = files pair flat(newBase)
+```scala
+import Path.flat
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val newBase: File = file("/new/base")
+val mappings: Seq[(File,File)] = files pair flat(newBase)
 
-    val expected = (file("/a/b/C.scala") -> file("/new/base/C.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> file("/new/base/C.scala") ) :: Nil
+assert( mappings == expected )
+```
 
 ### Alternatives
 
@@ -103,10 +111,12 @@ is implicitly added to a function of type `A => Option[B]`. For example,
 to try to relativize a file against some base directories but fall back
 to flattening:
 
-    import Path.relativeTo
-    val files: Seq[File] = file("/a/b/C.scala") :: file("/zzz/D.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val mappings: Seq[(File,String)] = files pair ( relativeTo(baseDirectories) | flat )
+```scala
+import Path.relativeTo
+val files: Seq[File] = file("/a/b/C.scala") :: file("/zzz/D.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val mappings: Seq[(File,String)] = files pair ( relativeTo(baseDirectories) | flat )
 
-    val expected = (file("/a/b/C.scala") -> "b/C.scala") ) :: (file("/zzz/D.scala") -> "D.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "b/C.scala") ) :: (file("/zzz/D.scala") -> "D.scala") ) :: Nil
+assert( mappings == expected )
+```

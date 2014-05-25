@@ -11,6 +11,8 @@ out: Tasks.html
 Tasks
 -----
 
+<!-- TODO: Replace error with sys.error() -->
+
 Tasks and settings are introduced in the
 [getting started guide][Basic-Def], which you may wish
 to read first. This page has additional details and background and is
@@ -53,11 +55,13 @@ These features are discussed in detail in the following sections.
 
 #### Hello World example (sbt)
 
-build.sbt
+`build.sbt`:
 
-    lazy val hello = taskKey[Unit]("Prints 'Hello World'")
+```scala
+lazy val hello = taskKey[Unit]("Prints 'Hello World'")
 
-    hello := println("hello world!")
+hello := println("hello world!")
+```
 
 Run "sbt hello" from command line to invoke the task. Run "sbt tasks" to
 see this task listed.
@@ -66,7 +70,9 @@ see this task listed.
 
 To declare a new task, define a lazy val of type `TaskKey`:
 
-    lazy val sampleTask = taskKey[Int]("A sample task.")
+```scala
+lazy val sampleTask = taskKey[Int]("A sample task.")
+```
 
 The name of the `val` is used when referring to the task in Scala code
 and at the command line. The string passed to the `taskKey` method is a
@@ -75,8 +81,10 @@ description of the task. The type parameter passed to `taskKey` (here,
 
 We'll define a couple of other keys for the examples:
 
-    lazy val intTask = taskKey[Int]("An int task")
-    lazy val stringTask = taskKey[String]("A string task")
+```scala
+lazy val intTask = taskKey[Int]("An int task")
+lazy val stringTask = taskKey[String]("A string task")
+```
 
 The examples themselves are valid entries in a `build.sbt` or can be
 provided as part of a sequence to `Project.settings` (see
@@ -99,15 +107,17 @@ combined.
 
 A task is defined using `:=`
 
-    intTask := 1 + 2
+```scala
+intTask := 1 + 2
 
-    stringTask := System.getProperty("user.name")
+stringTask := System.getProperty("user.name")
 
-    sampleTask := {
-       val sum = 1 + 2
-       println("sum: " + sum)
-       sum
-    }
+sampleTask := {
+   val sum = 1 + 2
+   println("sum: " + sum)
+   sum
+}
+```
 
 As mentioned in the introduction, a task is evaluated on demand. Each
 time `sampleTask` is invoked, for example, it will print the sum. If the
@@ -124,11 +134,15 @@ This method is special syntax and can only be called when defining a
 task, such as in the argument to `:=`. The following defines a task that
 adds one to the value produced by `intTask` and returns the result.
 
-    sampleTask := intTask.value + 1
+```scala
+sampleTask := intTask.value + 1
+```
 
 Multiple settings are handled similarly:
 
-    stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
+```scala
+stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
+```
 
 ##### Task Scope
 
@@ -138,7 +152,9 @@ The scope of a task is defined the same as for a setting. In the
 following example, `test:sampleTask` uses the result of
 `compile:intTask`.
 
-    sampleTask in Test := (intTask in Compile).value * 3
+```scala
+sampleTask in Test := (intTask in Compile).value * 3
+```
 
 ##### On precedence
 
@@ -156,11 +172,16 @@ postfix methods have lower precedence than infix methods.
 
 Therefore, the the previous example is equivalent to the following:
 
-    (sampleTask in Test).:=( (intTask in Compile).value * 3 )
+
+```scala
+(sampleTask in Test).:=( (intTask in Compile).value * 3 )
+```
 
 Additionally, the braces in the following are necessary:
 
-    helloTask := { "echo Hello" ! }
+```scala
+helloTask := { "echo Hello" ! }
+```
 
 Without them, Scala interprets the line as
 `( helloTask.:=("echo Hello") ).!` instead of the desired
@@ -171,12 +192,14 @@ Without them, Scala interprets the line as
 The implementation of a task can be separated from the binding. For
 example, a basic separate definition looks like:
 
-    // Define a new, standalone task implemention
-    lazy val intTaskImpl: Initialize[Task[Int]] =
-       Def.task { sampleTask.value - 3 }
+```scala
+// Define a new, standalone task implemention
+lazy val intTaskImpl: Initialize[Task[Int]] =
+   Def.task { sampleTask.value - 3 }
 
-    // Bind the implementation to a specific key
-    intTask := intTaskImpl.value
+// Bind the implementation to a specific key
+intTask := intTaskImpl.value
+```
 
 Note that whenever `.value` is used, it must be within a task
 definition, such as within `Def.task` above or as an argument to `:=`.
@@ -186,31 +209,35 @@ definition, such as within `Def.task` above or as an argument to `:=`.
 In the general case, modify a task by declaring the previous task as an
 input.
 
-    // initial definition
-    intTask := 3
+```scala
+// initial definition
+intTask := 3
 
-    // overriding definition that references the previous definition
-    intTask := intTask.value + 1
+// overriding definition that references the previous definition
+intTask := intTask.value + 1
+```
 
 Completely override a task by not declaring the previous task as an
 input. Each of the definitions in the following example completely
 overrides the previous one. That is, when `intTask` is run, it will only
 print `#3`.
 
-    intTask := {
-        println("#1")
-        3
-    }
+```scala
+intTask := {
+    println("#1")
+    3
+}
 
-    intTask := {
-        println("#2")
-        5
-    }
+intTask := {
+    println("#2")
+    5
+}
 
-    intTask :=  {
-        println("#3")
-        sampleTask.value - 3
-    }
+intTask :=  {
+    println("#3")
+    sampleTask.value - 3
+}
+```
 
 <a name="multiple-scopes"></a>
 
@@ -221,7 +248,9 @@ print `#3`.
 The general form of an expression that gets values from multiple scopes
 is:
 
-    <setting-or-task>.all(<scope-filter>).value
+```scala
+<setting-or-task>.all(<scope-filter>).value
+```
 
 The `all` method is implicitly added to tasks and settings. It accepts a
 `ScopeFilter` that will select the `Scopes`. The result has type
@@ -235,19 +264,21 @@ we want to obtain values for is `sources` and we want to get the values
 in all non-root projects and in the `Compile` configuration. This looks
 like:
 
-    lazy val core = project
+```scala
+lazy val core = project
 
-    lazy val util = project
+lazy val util = project
 
-    lazy val root = project.settings(
-       sources := {
-          val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
-          // each sources definition is of type Seq[File],
-          //   giving us a Seq[Seq[File]] that we then flatten to Seq[File]
-          val allSources: Seq[Seq[File]] = sources.all(filter).value
-          allSources.flatten
-       }
-    )
+lazy val root = project.settings(
+   sources := {
+      val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
+      // each sources definition is of type Seq[File],
+      //   giving us a Seq[Seq[File]] that we then flatten to Seq[File]
+      val allSources: Seq[Seq[File]] = sources.all(filter).value
+      allSources.flatten
+   }
+)
+```
 
 The next section describes various ways to construct a ScopeFilter.
 
@@ -258,11 +289,13 @@ This method makes a `ScopeFilter` from filters on the parts of a
 `Scope`: a `ProjectFilter`, `ConfigurationFilter`, and `TaskFilter`. The
 simplest case is explicitly specifying the values for the parts:
 
-    val filter: ScopeFilter =
-       ScopeFilter(
-          inProjects( core, util ),
-          inConfigurations( Compile, Test )
-       )
+```scala
+val filter: ScopeFilter =
+   ScopeFilter(
+      inProjects( core, util ),
+      inConfigurations( Compile, Test )
+   )
+```
 
 ##### Unspecified filters
 
@@ -293,25 +326,20 @@ details.
 `ScopeFilters` may be combined with the `&&`, `||`, `--`, and `-`
 methods:
 
-a && b
-:   Selects scopes that match both a and b
-
-a || b
-:   Selects scopes that match either a or b
-
-a -- b
-:   Selects scopes that match a but not b
-
--b
-:   Selects scopes that do not match b
+- `a && b` Selects scopes that match both a and b
+- `a || b` Selects scopes that match either a or b
+- `a -- b` Selects scopes that match a but not b
+- `-b` Selects scopes that do not match b
 
 For example, the following selects the scope for the `Compile` and
 `Test` configurations of the `core` project and the global configuration
 of the `util` project:
 
-    val filter: ScopeFilter =
-       ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
-       ScopeFilter( inProjects(util), inGlobalConfiguration )
+```scala
+val filter: ScopeFilter =
+   ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
+   ScopeFilter( inProjects(util), inGlobalConfiguration )
+```
 
 #### More operations
 
@@ -320,10 +348,22 @@ The `all` method applies to both settings (values of type
 returns a setting or task that provides a `Seq[T]`, as shown in this
 table:
 
-  Target                Result
-  --------------------- --------------------------
-  Initialize[T]         Initialize[Seq[T]]
-  Initialize[Task[T]]   Initialize[Task[Seq[T]]]
+<table>
+  <tr>
+    <th>Target</th>
+    <th>Result</th>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[T] </tt></td>
+    <td><tt>Initialize[Seq[T]]</tt></td>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[Task[T]]</tt></td>
+    <td><tt>Initialize[Task[Seq[T]]]</tt></td>
+  </tr>
+</table>
 
 This means that the `all` method can be combined with methods that
 construct tasks and settings.
@@ -334,30 +374,38 @@ Some scopes might not define a setting or task. The `?` and `??` methods
 can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
 
-`?`
-:   On a setting or task with underlying type T, this accepts no
+<table>
+  <tr>
+    <td><tt>?</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts no
     arguments and returns a setting or task (respectively) of type
     Option[T]. The result is None if the setting/task is undefined and
-    Some[T] with the value if it is.
+    Some[T] with the value if it is.</tt></td>
+  </tr>
 
-`??`
-:   On a setting or task with underlying type T, this accepts an
+  <tr>
+    <td><tt>??</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts an
     argument of type T and uses this argument if the setting/task is
-    undefined.
+    undefined.</tt></td>
+  </tr>
+</table>
 
 The following contrived example sets the maximum errors to be the
 maximum of all aggregates of the current project.
 
-    maxErrors := {
-       // select the transitive aggregates for this project, but not the project itself
-       val filter: ScopeFilter =
-          ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
-       // get the configured maximum errors in each selected scope,
-       // using 0 if not defined in a scope
-       val allVersions: Seq[Int] =
-          (maxErrors ?? 0).all(filter).value
-       allVersions.max
-    }
+```scala
+maxErrors := {
+   // select the transitive aggregates for this project, but not the project itself
+   val filter: ScopeFilter =
+      ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
+   // get the configured maximum errors in each selected scope,
+   // using 0 if not defined in a scope
+   val allVersions: Seq[Int] =
+      (maxErrors ?? 0).all(filter).value
+   allVersions.max
+}
+```
 
 ##### Multiple values from multiple scopes
 
@@ -425,17 +473,21 @@ loggers, and a default logger. The default
 [Logger](../../api/sbt/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
-    myTask := {
-      val s: TaskStreams = streams.value
-      s.log.debug("Saying hi...")
-      s.log.info("Hello!")
-    }
+```scala
+myTask := {
+  val s: TaskStreams = streams.value
+  s.log.debug("Saying hi...")
+  s.log.info("Hello!")
+}
+```
 
 You can scope logging settings by the specific task's scope:
 
-    logLevel in myTask := Level.Debug
+```scala
+logLevel in myTask := Level.Debug
 
-    traceLevel in myTask := 5
+traceLevel in myTask := 5
+```
 
 To obtain the last logging output from a task, use the `last` command:
 
@@ -458,36 +510,35 @@ is called a dynamic task because it introduces dependencies at runtime.
 The `taskDyn` method supports the same syntax as `Def.task` and `:=`
 except that you return a task instead of a plain value.
 
-For example, :
+For example,
 
-    val dynamic = Def.taskDyn {
-       // decide what to evaluate based on the value of `stringTask`
-       if(stringTask.value == "dev")
-          // create the dev-mode task: this is only evaluated if the
-          //   value of stringTask is "dev"
-          Def.task {
-             3
-          }
-       else
-          // create the production task: only evaluated if the value
-          //    of the stringTask is not "dev"
-          Def.task {
-             intTask.value + 5
-          }
+```scala
+val dynamic = Def.taskDyn {
+  // decide what to evaluate based on the value of `stringTask`
+  if(stringTask.value == "dev")
+    // create the dev-mode task: this is only evaluated if the
+    //   value of stringTask is "dev"
+    Def.task {
+      3
     }
+  else
+    // create the production task: only evaluated if the value
+    //    of the stringTask is not "dev"
+    Def.task {
+      intTask.value + 5
+    }
+}
 
-
-    myTask := {
-       val num = dynamic.value
-         println(s"Number selected was \$num")
-     }
+myTask := {
+  val num = dynamic.value
+  println(s"Number selected was \$num")
+}
+```
 
 The only static dependency of `myTask` is `stringTask`. The dependency
 on `intTask` is only introduced in non-dev mode.
 
-> **note**
->
-> A dynamic task cannot refer to itself or a circular dependency will
+> **Note**: A dynamic task cannot refer to itself or a circular dependency will
 > result. In the example above, there would be a circular dependency if
 > the code passed to taskDyn referenced myTask.
 
@@ -507,12 +558,14 @@ exceptions thrown during task execution.
 
 For example:
 
-    intTask := error("Failed.")
+```scala
+intTask := error("Failed.")
 
-    intTask := {
-       println("Ignoring failure: " + intTask.failure.value)
-       3
-    }
+intTask := {
+   println("Ignoring failure: " + intTask.failure.value)
+   3
+}
+```
 
 This overrides the `intTask` so that the original exception is printed
 and the constant `3` is returned.
@@ -520,29 +573,99 @@ and the constant `3` is returned.
 `failure` does not prevent other tasks that depend on the target from
 failing. Consider the following example:
 
-    intTask := if(shouldSucceed) 5 else error("Failed.")
+```scala
+intTask := if(shouldSucceed) 5 else error("Failed.")
 
-    // Return 3 if intTask fails. If intTask succeeds, this task will fail.
-    aTask := intTask.failure.value - 2
+// Return 3 if intTask fails. If intTask succeeds, this task will fail.
+aTask := intTask.failure.value - 2
 
-    // A new task that increments the result of intTask.
-    bTask := intTask.value + 1
+// A new task that increments the result of intTask.
+bTask := intTask.value + 1
 
-    cTask := aTask.value + bTask.value
+cTask := aTask.value + bTask.value
+```
 
 The following table lists the results of each task depending on the
 initially invoked task:
 
-    invoked task   intTask result   aTask result   bTask result   cTask result   overall result
-    -------------- ---------------- -------------- -------------- -------------- ----------------
-    intTask        failure          not run        not run        not run        failure
-    aTask          failure          success        not run        not run        success
-    bTask          failure          not run        failure        not run        failure
-    cTask          failure          success        failure        failure        failure
-    intTask        success          not run        not run        not run        success
-    aTask          success          failure        not run        not run        failure
-    bTask          success          not run        success        not run        success
-    cTask          success          failure        success        failure        failure
+<table>
+  <thead>
+    <tr>
+      <th>invoked task</th>
+      <th>intTask result</th>
+      <th>aTask result</th>
+      <th>bTask result</th>
+      <th>cTask result</th>
+      <th>overall result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>intTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>intTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+  </tbody>
+</table>
 
 The overall result is always the same as the root task (the directly
 invoked task). A `failure` turns a success into a failure, and a failure
@@ -564,16 +687,18 @@ task succeeds or fails.
 
 For example:
 
-    intTask := error("Failed.")
+```scala
+intTask := error("Failed.")
 
-    intTask := intTask.result.value match {
-       case Inc(inc: Incomplete) =>
-          println("Ignoring failure: " + inc)
-          3
-       case Value(v) =>
-          println("Using successful result: " + v)
-          v
-    }
+intTask := intTask.result.value match {
+   case Inc(inc: Incomplete) =>
+      println("Ignoring failure: " + inc)
+      3
+   case Value(v) =>
+      println("Using successful result: " + v)
+      v
+}
+```
 
 This overrides the original `intTask` definition so that if the original
 task fails, the exception is printed and the constant `3` is returned.
@@ -586,11 +711,13 @@ and evaluates a side effect regardless of whether the original task
 succeeded. The result of the task is the result of the original task.
 For example:
 
-    intTask := error("I didn't succeed.")
+```scala
+intTask := error("I didn't succeed.")
 
-    lazy val intTaskImpl = intTask andFinally { println("andFinally") }
+lazy val intTaskImpl = intTask andFinally { println("andFinally") }
 
-    intTask := intTaskImpl.value
+intTask := intTaskImpl.value
+```
 
 This modifies the original `intTask` to always print "andFinally" even
 if the task fails.
@@ -600,23 +727,27 @@ task has to be invoked in order for the extra block to run. This is
 important when calling andFinally on another task instead of overriding
 a task like in the previous example. For example, consider this code:
 
-    intTask := error("I didn't succeed.")
+```scala
+intTask := error("I didn't succeed.")
 
-    lazy val intTaskImpl = intTask andFinally { println("andFinally") }
+lazy val intTaskImpl = intTask andFinally { println("andFinally") }
 
-    otherIntTask := intTaskImpl.value
+otherIntTask := intTaskImpl.value
+```
 
 If `intTask` is run directly, `otherIntTask` is never involved in
 execution. This case is similar to the following plain Scala code:
 
-    def intTask(): Int =
-      error("I didn't succeed.")
+```scala
+def intTask(): Int =
+  error("I didn't succeed.")
 
-    def otherIntTask(): Int =
-      try { intTask() }
-      finally { println("finally") }
+def otherIntTask(): Int =
+  try { intTask() }
+  finally { println("finally") }
 
-    intTask()
+intTask()
+```
 
 It is obvious here that calling intTask() will never result in "finally"
 being printed.

@@ -29,12 +29,16 @@ A few predefined repositories are available and are listed below
 For example, to use the `java.net` repository, use the following setting
 in your build definition:
 
-    resolvers += JavaNet1Repository
+```scala
+resolvers += JavaNet1Repository
+```
 
 Predefined repositories will go under Resolver going forward so they are
 in one place:
 
-    Resolver.sonatypeRepo("releases")  // Or "snapshots"
+```scala
+Resolver.sonatypeRepo("releases")  // Or "snapshots"
+```
 
 ### Custom
 
@@ -104,17 +108,23 @@ Define a filesystem repository in the `test` directory of the current
 working directory and declare that publishing to this repository must be
 atomic.
 
-    resolvers += Resolver.file("my-test-repo", file("test")) transactional()
+```scala
+resolvers += Resolver.file("my-test-repo", file("test")) transactional()
+```
 
 ##### URL
 
 Define a URL repository at `"http://example.org/repo-releases/"`.
 
-    resolvers += Resolver.url("my-test-repo", url("http://example.org/repo-releases/"))
+```scala
+resolvers += Resolver.url("my-test-repo", url("http://example.org/repo-releases/"))
+```
 
 To specify an Ivy repository, use:
 
-    resolvers += Resolver.url("my-test-repo", url)(Resolver.ivyStylePatterns)
+```scala
+resolvers += Resolver.url("my-test-repo", url)(Resolver.ivyStylePatterns)
+```
 
 or customize the layout pattern described in the Custom Layout section
 below.
@@ -124,42 +134,58 @@ below.
 The following defines a repository that is served by SFTP from host
 `"example.org"`:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org")
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org")
+```
 
 To explicitly specify the port:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org", 22)
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org", 22)
+```
 
 To specify a base path:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org", "maven2/repo-releases/")
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org", "maven2/repo-releases/")
+```
 
 Authentication for the repositories returned by `sftp` and `ssh` can be
 configured by the `as` methods.
 
 To use password authentication:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", "password")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", "password")
+```
 
 or to be prompted for the password:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user")
+```
 
 To use key authentication:
 
-    resolvers += {
-      val keyFile: File = ...
-      Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile, "keyFilePassword")
-    }
+```scala
+resolvers += {
+  val keyFile: File = ...
+  Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile, "keyFilePassword")
+}
+```
 
 or if no keyfile password is required or if you want to be prompted for
 it:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile)
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile)
+```
 
 To specify the permissions used when publishing to the server:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") withPermissions("0644")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") withPermissions("0644")
+```
 
 This is a chmod-like mode specification.
 
@@ -171,7 +197,9 @@ to use. The patterns are first resolved against the base file or URL.
 The default patterns give the default Maven-style layout. Provide a
 different Patterns object to use a different layout. For example:
 
-    resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
+```scala
+resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
+```
 
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
@@ -182,5 +210,7 @@ For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and
 using `ivys` and `artifacts`:
 
-    resolvers += Resolver.url("my-test-repo") artifacts
-            "http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
+```scala
+resolvers += Resolver.url("my-test-repo") artifacts
+        "http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
+```

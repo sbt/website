@@ -1,5 +1,5 @@
 ---
-out: Cross-Building.html
+out: Cross-Build.html
 ---
 
   [Command-Line-Reference]: Command-Line-Reference.html
@@ -35,15 +35,20 @@ first `%` in an inline dependency to be `%%`. This tells `sbt` that it
 should append the current version of Scala being used to build the
 library to the dependency's name. For example:
 
-    libraryDependencies += "net.databinder" %% "dispatch" % "0.8.0"
-
+```scala
+libraryDependencies += "net.databinder" %% "dispatch" % "0.8.0"
+```
 A nearly equivalent, manual alternative for a fixed version of Scala is:
 
-    libraryDependencies += "net.databinder" % "dispatch_2.10" % "0.8.0"
+```scala
+libraryDependencies += "net.databinder" % "dispatch_2.10" % "0.8.0"
+```
 
 or for Scala versions before 2.10:
 
-    libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
+```scala
+libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
+```
 
 ### Cross-Building a Project
 
@@ -51,12 +56,16 @@ Define the versions of Scala to build against in the
 `crossScalaVersions` setting. Versions of Scala 2.8.0 or later are
 allowed. For example, in a `.sbt` build definition:
 
-    crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
+```scala
+crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
+```
 
 To build against all versions listed in `build.scala.versions`, prefix
 the action to run with `+`. For example:
 
-    > + package
+```
+> + package
+```
 
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
@@ -89,35 +98,45 @@ compiled against 2.10 for your 2.10.x builds, and so on. You can have
 fine-grained control over the behavior for for different Scala versions
 by using the `cross` method on `ModuleID` These are equivalent:
 
-    "a" % "b" % "1.0"
-    "a" % "b" % "1.0" cross CrossVersion.Disabled
+```scala
+"a" % "b" % "1.0"
+"a" % "b" % "1.0" cross CrossVersion.Disabled
+```
 
 These are equivalent:
 
-    "a" %% "b" % "1.0"
-    "a" % "b" % "1.0" cross CrossVersion.binary
+```scala
+"a" %% "b" % "1.0"
+"a" % "b" % "1.0" cross CrossVersion.binary
+```
 
 This overrides the defaults to always use the full Scala version instead
 of the binary Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.full
+```scala
+"a" % "b" % "1.0" cross CrossVersion.full
+```
 
 This uses a custom function to determine the Scala version to use based
 on the binary Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.binaryMapped {
-      case "2.9.1" => "2.9.0" // remember that pre-2.10, binary=full
-      case "2.10" => "2.10.0" // useful if a%b was released with the old style
-      case x => x
-    }
+```scala
+"a" % "b" % "1.0" cross CrossVersion.binaryMapped {
+  case "2.9.1" => "2.9.0" // remember that pre-2.10, binary=full
+  case "2.10" => "2.10.0" // useful if a%b was released with the old style
+  case x => x
+}
+```
 
 This uses a custom function to determine the Scala version to use based
 on the full Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.fullMapped {
-      case "2.9.1" => "2.9.0"
-      case x => x
-    }
+```scala
+"a" % "b" % "1.0" cross CrossVersion.fullMapped {
+  case "2.9.1" => "2.9.0"
+  case x => x
+}
+```
 
 A custom function is mainly used when cross-building and a dependency
 isn't available for all Scala versions or it uses a different convention

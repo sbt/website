@@ -28,19 +28,21 @@ same machine.
 To specify the repository, assign a repository to `publishTo` and
 optionally set the publishing style. For example, to upload to Nexus:
 
-    publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
+```scala
+publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
+```
 
 To publish to a local repository:
 
-:
-
-    publishTo := Some(Resolver.file("file",  new File( "path/to/my/maven-repo/releases" )) )
+```scala
+publishTo := Some(Resolver.file("file",  new File( "path/to/my/maven-repo/releases" )) )
+```
 
 Publishing to the users local maven repository:
 
-:
-
-    publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
+```scala
+publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
+```
 
 If you're using Maven repositories you will also have to select the
 right repository depending on your artifacts: SNAPSHOT versions go to
@@ -48,24 +50,30 @@ the /snapshot repository while other versions go to the /releases
 repository. Doing this selection can be done by using the value of the
 `version` SettingKey:
 
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (version.value.trim.endsWith("SNAPSHOT")) 
-        Some("snapshots" at nexus + "content/repositories/snapshots") 
-      else
-        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-    }
+```scala
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT")) 
+    Some("snapshots" at nexus + "content/repositories/snapshots") 
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+```
 
 ### Credentials
 
 There are two ways to specify credentials for such a repository. The
 first is to specify them inline:
 
-    credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+```scala
+credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+```
 
 The second and better way is to load them from a file, for example:
 
-    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+```scala
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+```
 
 The credentials file is a properties file with keys `realm`, `host`,
 `user`, and `password`. For example:
@@ -98,30 +106,36 @@ file may be altered by changing a few settings. Set `pomExtra` to
 provide XML (`scala.xml.NodeSeq`) to insert directly into the generated
 pom. For example:
 
-    pomExtra :=
-    <licenses>
-      <license>
-        <name>Apache 2</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
+```scala
+pomExtra :=
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+</licenses>
+```
 
 `makePom` adds to the POM any Maven-style repositories you have
 declared. You can filter these by modifying `pomRepositoryFilter`, which
 by default excludes local repositories. To instead only include local
 repositories:
 
-    pomIncludeRepository := { (repo: MavenRepository) => 
-      repo.root.startsWith("file:")
-    }
+```scala
+pomIncludeRepository := { (repo: MavenRepository) => 
+  repo.root.startsWith("file:")
+}
+```
 
 There is also a `pomPostProcess` setting that can be used to manipulate
 the final XML before it is written. It's type is `Node => Node`.
 
-    pomPostProcess := { (node: Node) =>
-        ...
-    }
+```scala
+pomPostProcess := { (node: Node) =>
+  ...
+}
+```
 
 ### Publishing Locally
 
@@ -130,13 +144,19 @@ default, this is in `\${user.home}/.ivy2/local`. Other projects on the
 same machine can then list the project as a dependency. For example, if
 the SBT project you are publishing has configuration parameters like:
 
-    name := 'My Project'
-    organization := 'org.me'
-    version := '0.1-SNAPSHOT'
+```scala
+name := "My Project"
+
+organization := "org.me"
+
+version := "0.1-SNAPSHOT"
+```
 
 Then another project can depend on it:
 
-    libraryDependencies += "org.me" %% "my-project" % "0.1-SNAPSHOT"
+```scala
+libraryDependencies += "org.me" %% "my-project" % "0.1-SNAPSHOT"
+```
 
 The version number you select must end with `SNAPSHOT`, or you must
 change the version number each time you publish. Ivy maintains a cache,

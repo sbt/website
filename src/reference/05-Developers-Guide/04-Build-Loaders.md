@@ -23,7 +23,9 @@ checkout a build using git based on a git URI, use a build in an
 existing local directory, or download and extract a build packaged in a
 jar file. A resolver has type:
 
-    ResolveInfo => Option[() => File]
+```scala
+ResolveInfo => Option[() => File]
+```
 
 The resolver should return None if it cannot handle the URI or Some
 containing a function that will retrieve the build. The ResolveInfo
@@ -33,16 +35,18 @@ returned by the loading function. A resolver is registered by passing it
 to *BuildLoader.resolve* and overriding *Build.buildLoaders* with the
 result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.resolve(demoResolver) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
 
-      def demoResolver: BuildLoader.ResolveInfo => Option[() => File] = ...
+  def demoResolver: BuildLoader.ResolveInfo => Option[() => File] = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -109,23 +113,27 @@ version := "1.0"
 Once a project is resolved, it needs to be built and then presented to
 sbt as an instance of `sbt.BuildUnit`. A custom builder has type:
 
-    BuildInfo => Option[() => BuildUnit] 
+```scala
+BuildInfo => Option[() => BuildUnit] 
+```
 
 A builder returns None if it does not want to handle the build
 identified by the `BuildInfo`. Otherwise, it provides a function that
 will load the build when evaluated. Register a builder by passing it to
 *BuildLoader.build* and overriding *Build.buildLoaders* with the result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.build(demoBuilder) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
 
-      def demoBuilder: BuildLoader.BuildInfo => Option[() => BuildUnit] = ...
+  def demoBuilder: BuildLoader.BuildInfo => Option[() => BuildUnit] = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -142,7 +150,7 @@ read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
 
 ```scala
-    ... imports ...
+... imports ...
 
 object Demo extends Build
 {
@@ -184,21 +192,25 @@ Once a project has been loaded into an `sbt.BuildUnit`, it is
 transformed by all registered transformers. A custom transformer has
 type:
 
-    TransformInfo => BuildUnit
+```scala
+TransformInfo => BuildUnit
+```
 
 A transformer is registered by passing it to *BuildLoader.transform* and
 overriding *Build.buildLoaders* with the result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.transform(demoTransformer) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.transform(demoTransformer) ::
+    Nil
 
-      def demoBuilder: BuildLoader.TransformInfo => BuildUnit = ...
+  def demoBuilder: BuildLoader.TransformInfo => BuildUnit = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -247,20 +259,22 @@ URI with a new URI. This could be used to translate all references to a
 certain git repository to a different one or to a different mechanism,
 like a local directory.
 
-    buildDependencies in Global := {
-      val deps = (buildDependencies in Global).value
-      val oldURI = uri("...") // the URI to replace
-      val newURI = uri("...") // the URI replacing oldURI
-      def substitute(dep: ClasspathDep[ProjectRef]): ClasspathDep[ProjectRef] =
-        if(dep.project.build == oldURI)
-          ResolvedClasspathDependency(ProjectRef(newURI, dep.project.project), dep.configuration)
-        else
-          dep
-      val newcp = 
-        for( (proj, deps) <- deps.cp) yield
-          (proj, deps map substitute)
-      new BuildDependencies(newcp, deps.aggregate)
-    }
+```scala
+buildDependencies in Global := {
+  val deps = (buildDependencies in Global).value
+  val oldURI = uri("...") // the URI to replace
+  val newURI = uri("...") // the URI replacing oldURI
+  def substitute(dep: ClasspathDep[ProjectRef]): ClasspathDep[ProjectRef] =
+    if(dep.project.build == oldURI)
+      ResolvedClasspathDependency(ProjectRef(newURI, dep.project.project), dep.configuration)
+    else
+      dep
+  val newcp = 
+    for( (proj, deps) <- deps.cp) yield
+      (proj, deps map substitute)
+  new BuildDependencies(newcp, deps.aggregate)
+}
+```
 
 It is not limited to such basic translations, however. The configuration
 a dependency is defined in may be modified and dependencies may be added

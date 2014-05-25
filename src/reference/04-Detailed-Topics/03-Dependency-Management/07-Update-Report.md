@@ -34,9 +34,13 @@ or classifier.
 
 The relevant methods (implicitly on `UpdateReport`) are:
 
-    def matching(f: DependencyFilter): Seq[File]
+```scala
+def matching(f: DependencyFilter): Seq[File]
 
-    def select(configuration: ConfigurationFilter = ..., module: ModuleFilter = ..., artifact: ArtifactFilter = ...): Seq[File]
+def select(configuration: ConfigurationFilter = ...,
+  module: ModuleFilter = ...,
+  artifact: ArtifactFilter = ...): Seq[File]
+```
 
 Any argument to `select` may be omitted, in which case all values are
 allowed for the corresponding component. For example, if the
@@ -50,42 +54,50 @@ applying a `NameFilter` to each component of a `Configuration`,
 `ModuleID`, or `Artifact`. A basic `NameFilter` is implicitly
 constructed from a String, with `*` interpreted as a wildcard.
 
-    import sbt._
-    // each argument is of type NameFilter
-    val mf: ModuleFilter = moduleFilter(organization = "*sbt*", name = "main" | "actions", revision = "1.*" - "1.0")
+```scala
+import sbt._
+// each argument is of type NameFilter
+val mf: ModuleFilter = moduleFilter(organization = "*sbt*",
+  name = "main" | "actions", revision = "1.*" - "1.0")
 
-    // unspecified arguments match everything by default
-    val mf: ModuleFilter = moduleFilter(organization = "net.databinder")
+// unspecified arguments match everything by default
+val mf: ModuleFilter = moduleFilter(organization = "net.databinder")
 
-    // specifying "*" is the same as omitting the argument
-    val af: ArtifactFilter = artifactFilter(name = "*", `type` = "source", extension = "jar", classifier = "sources")
+// specifying "*" is the same as omitting the argument
+val af: ArtifactFilter = artifactFilter(name = "*", `type` = "source",
+  extension = "jar", classifier = "sources")
 
-    val cf: ConfigurationFilter = configurationFilter(name = "compile" | "test")
+val cf: ConfigurationFilter = configurationFilter(name = "compile" | "test")
+```
 
 Alternatively, these filters, including a `NameFilter`, may be directly
 defined by an appropriate predicate (a single-argument function
 returning a Boolean).
 
-    import sbt._
+```scala
+import sbt._
 
-    // here the function value of type String => Boolean is implicitly converted to a NameFilter
-    val nf: NameFilter = (s: String) => s.startsWith("dispatch-")
+// here the function value of type String => Boolean is implicitly converted to a NameFilter
+val nf: NameFilter = (s: String) => s.startsWith("dispatch-")
 
-    // a Set[String] is a function String => Boolean
-    val acceptConfigs: Set[String] = Set("compile", "test")
-    // implicitly converted to a ConfigurationFilter
-    val cf: ConfigurationFilter = acceptConfigs
+// a Set[String] is a function String => Boolean
+val acceptConfigs: Set[String] = Set("compile", "test")
+// implicitly converted to a ConfigurationFilter
+val cf: ConfigurationFilter = acceptConfigs
 
-    val mf: ModuleFilter = (m: ModuleID) => m.organization contains "sbt"
+val mf: ModuleFilter = (m: ModuleID) => m.organization contains "sbt"
 
-    val af: ArtifactFilter = (a: Artifact) => a.classifier.isEmpty
+val af: ArtifactFilter = (a: Artifact) => a.classifier.isEmpty
+```
 
 #### ConfigurationFilter
 
 A configuration filter essentially wraps a `NameFilter` and is
 explicitly constructed by the `configurationFilter` method:
 
-    def configurationFilter(name: NameFilter = ...): ConfigurationFilter
+```scala
+def configurationFilter(name: NameFilter = ...): ConfigurationFilter
+```
 
 If the argument is omitted, the filter matches all configurations.
 Functions of type `String => Boolean` are implicitly convertible to a
@@ -93,10 +105,12 @@ Functions of type `String => Boolean` are implicitly convertible to a
 `NameFilter`, the `&`, `|`, and `-` methods may be used to combine
 `ConfigurationFilter`s.
 
-    import sbt._
-    val a: ConfigurationFilter = Set("compile", "test")
-    val b: ConfigurationFilter = (c: String) => c.startsWith("r")
-    val c: ConfigurationFilter = a | b
+```scala
+import sbt._
+val a: ConfigurationFilter = Set("compile", "test")
+val b: ConfigurationFilter = (c: String) => c.startsWith("r")
+val c: ConfigurationFilter = a | b
+```
 
 (The explicit types are optional here.)
 
@@ -107,7 +121,9 @@ organization, one for the module name, and one for the revision. Each
 component filter must match for the whole module filter to match. A
 module filter is explicitly constructed by the `moduleFilter` method:
 
-    def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
+```scala
+def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
+```
 
 An omitted argument does not contribute to the match. If all arguments
 are omitted, the filter matches all `ModuleID`s. Functions of type
@@ -115,10 +131,12 @@ are omitted, the filter matches all `ModuleID`s. Functions of type
 with `ConfigurationFilter`, `ArtifactFilter`, and `NameFilter`, the `&`,
 `|`, and `-` methods may be used to combine `ModuleFilter`s:
 
-    import sbt._
-    val a: ModuleFilter = moduleFilter(name = "dispatch-twitter", revision = "0.7.8")
-    val b: ModuleFilter = moduleFilter(name = "dispatch-*")
-    val c: ModuleFilter = b - a
+```scala
+import sbt._
+val a: ModuleFilter = moduleFilter(name = "dispatch-twitter", revision = "0.7.8")
+val b: ModuleFilter = moduleFilter(name = "dispatch-*")
+val c: ModuleFilter = b - a
+```
 
 (The explicit types are optional here.)
 
@@ -130,17 +148,22 @@ Each component filter must match for the whole artifact filter to match.
 An artifact filter is explicitly constructed by the `artifactFilter`
 method:
 
-    def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ..., extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
+```scala
+def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ...,
+  extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
+```
 
 Functions of type `Artifact => Boolean` are implicitly convertible to an
 `ArtifactFilter`. As with `ConfigurationFilter`, `ModuleFilter`, and
 `NameFilter`, the `&`, `|`, and `-` methods may be used to combine
 `ArtifactFilter`s:
 
-    import sbt._
-    val a: ArtifactFilter = artifactFilter(classifier = "javadoc")
-    val b: ArtifactFilter = artifactFilter(`type` = "jar")
-    val c: ArtifactFilter = b - a
+```scala
+import sbt._
+val a: ArtifactFilter = artifactFilter(classifier = "javadoc")
+val b: ArtifactFilter = artifactFilter(`type` = "jar")
+val c: ArtifactFilter = b - a
+```
 
 (The explicit types are optional here.)
 
@@ -157,10 +180,14 @@ and artifacts. These double-character methods will always return a
 `DependencyFilter`, whereas the single character methods preserve the
 more specific filter type. For example:
 
-    import sbt._
+```scala
+import sbt._
 
-    val df: DependencyFilter =
-      configurationFilter(name = "compile" | "test") && artifactFilter(`type` = "jar") || moduleFilter(name = "dispatch-*")
+val df: DependencyFilter =
+  configurationFilter(name = "compile" | "test") &&
+  artifactFilter(`type` = "jar") ||
+  moduleFilter(name = "dispatch-*")
+```
 
 Here, we used `&&` and `||` to combine individual component filters into
 a dependency filter, which can then be provided to the

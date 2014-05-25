@@ -222,5 +222,6 @@ includeFilter in (Compile, unmanagedJars) := "*.jar"
 
 includeFilter in (Test, unmanagedJars) := "*.jar" || "*.zip"
 ```
+
 > **Note**: By default, sbt includes jars, zips, and native dynamic libraries,
 > excluding hidden files.

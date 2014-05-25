@@ -69,22 +69,24 @@ source file:
 
 Here's an example illustrating the definition above:
 
-    //A.scala
-    class A {
-      def foo: Int = 123
-    }
+```scala
+//A.scala
+class A {
+  def foo: Int = 123
+}
 
-    //B.scala
-    class B extends A
+//B.scala
+class B extends A
 
-    //C.scala
-    class C extends B
+//C.scala
+class C extends B
 
-    //D.scala
-    class D(a: A)
+//D.scala
+class D(a: A)
 
-    //E.scala
-    class E(d: D)
+//E.scala
+class E(d: D)
+```
 
 There are the following dependencies through inheritance:
 
@@ -201,15 +203,19 @@ sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
 
 Let's suppose you have the following source code in `Test.scala`:
 
-    class A {
-       def b: Int = 123
-    }
+```scala
+class A {
+  def b: Int = 123
+}
+```
 
 compile it and then change the `Test.scala` file so it looks like:
 
-    class A {
-       def b: String = "abc"
-    }
+```scala
+class A {
+   def b: String = "abc"
+}
+```
 
 and run `compile` task again. Now if you run `last compile` you should
 see the following lines in the debugging log
@@ -325,9 +331,9 @@ public interface, with two undesirable consequences:
 3.  More in general, client code might now even be invalid. The
     following code will for instance become invalid after the change:
 
-<!-- -->
-
-    val res: List[FileWriter] = A.openFiles(List(new File("foo.input")))
+```scala
+val res: List[FileWriter] = A.openFiles(List(new File("foo.input")))
+```
 
 Also the following code will break:
 
@@ -350,12 +356,14 @@ simplified example and in a real-world extension of the above code.
 
 The client snippets above will now become
 
-    val res: Seq[Writer] =
-        A.openFiles(List(new File("foo.input")))
+```scala
+val res: Seq[Writer] =
+  A.openFiles(List(new File("foo.input")))
 
-    val a: Seq[Writer] =
-        new BufferedWriter(new FileWriter("bar.input")) +:
-        A.openFiles(List(new File("foo.input")))
+val a: Seq[Writer] =
+  new BufferedWriter(new FileWriter("bar.input")) +:
+  A.openFiles(List(new File("foo.input")))
+```
 
 XXX the rest of the section must be reintegrated or dropped: In general,
 changing the return type of a method might be source-compatible, for

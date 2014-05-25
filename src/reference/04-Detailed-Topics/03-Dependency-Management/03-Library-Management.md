@@ -46,23 +46,29 @@ change the location of the directory you store the jars in.
 To change the directory jars are stored in, change the `unmanagedBase`
 setting in your project definition. For example, to use `custom_lib/`:
 
-    unmanagedBase := baseDirectory.value / "custom_lib"
+```scala
+unmanagedBase := baseDirectory.value / "custom_lib"
+```
 
 If you want more control and flexibility, override the `unmanagedJars`
 task, which ultimately provides the manual dependencies to sbt. The
 default implementation is roughly:
 
-    unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```scala
+unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```
 
 If you want to add jars from multiple directories in addition to the
 default directory, you can do:
 
-    unmanagedJars in Compile ++= {
-        val base = baseDirectory.value
-        val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
-        val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
-        customJars.classpath
-    }
+```scala
+unmanagedJars in Compile ++= {
+    val base = baseDirectory.value
+    val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
+    val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
+    customJars.classpath
+}
+```
 
 See [Paths][Paths] for more information on building up paths.
 
@@ -93,24 +99,32 @@ to a full configuration using Ivy.
 
 Declaring a dependency looks like:
 
-    libraryDependencies += groupID % artifactID % revision
+```scala
+libraryDependencies += groupID % artifactID % revision
+```
 
 or
 
-    libraryDependencies += groupID % artifactID % revision % configuration
+```scala
+libraryDependencies += groupID % artifactID % revision % configuration
+```
 
 See [configurations](#ivy-configurations) for details on configuration
 mappings. Also, several dependencies can be declared together:
 
-    libraryDependencies ++= Seq(
-        groupID %% artifactID % revision,
-        groupID %% otherID % otherRevision
-    )
+```scala
+libraryDependencies ++= Seq(
+  groupID %% artifactID % revision,
+  groupID %% otherID % otherRevision
+)
+```
 
 If you are using a dependency that was built with sbt, double the first
 `%` to be `%%`:
 
-    libraryDependencies += groupID %% artifactID % revision
+```scala
+libraryDependencies += groupID %% artifactID % revision
+```
 
 This will use the right jar for the dependency built with the version of
 Scala that you are currently using. If you get an error while resolving
@@ -129,21 +143,27 @@ sbt uses the standard Maven2 repository by default.
 
 Declare additional repositories with the form:
 
-    resolvers += name at location
+```scala
+resolvers += name at location
+```
 
 For example:
 
-    libraryDependencies ++= Seq(
-        "org.apache.derby" % "derby" % "10.4.1.3",
-        "org.specs" % "specs" % "1.6.1"
-    )
+```scala
+libraryDependencies ++= Seq(
+    "org.apache.derby" % "derby" % "10.4.1.3",
+    "org.specs" % "specs" % "1.6.1"
+)
 
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
 
 sbt can search your local Maven repository if you add it as a
 repository:
 
-    resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```scala
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```
 
 See [Resolvers][Resolvers] for details on defining other types of repositories.
 
@@ -159,11 +179,15 @@ specify repositories in addition to the usual defaults, configure
 For example, to use the Sonatype OSS Snapshots repository in addition to
 the default repositories,
 
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```scala
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
 
 To use the local repository, but not the Maven Central repository:
 
-    externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+```scala
+externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+```
 
 ##### Override all resolvers for all builds
 
@@ -197,7 +221,9 @@ repositories for dependency resolution and retrieval.
 If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified as follows:
 
-    libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```scala
+libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```
 
 The URL is only used as a fallback if the dependency cannot be found
 through the configured repositories. Also, the explicit URL is not
@@ -212,19 +238,25 @@ the Felix OSGI framework, for instance, only explicitly require its main
 jar to compile and run. Avoid fetching artifact dependencies with either
 `intransitive()` or `notTransitive()`, as in this example:
 
-    libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```scala
+libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```
 
 ##### Classifiers
 
 You can specify the classifier for a dependency using the `classifier`
 method. For example, to get the jdk15 version of TestNG:
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```scala
+libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```
 
 For multiple classifiers, use multiple `classifier` calls:
 
-    libraryDependencies += 
-      "org.lwjgl.lwjgl" % "lwjgl-platform" % lwjglVersion classifier "natives-windows" classifier "natives-linux" classifier "natives-osx"
+```scala
+libraryDependencies += 
+  "org.lwjgl.lwjgl" % "lwjgl-platform" % lwjglVersion classifier "natives-windows" classifier "natives-linux" classifier "natives-osx"
+```
 
 To obtain particular classifiers for all dependencies transitively, run
 the `updateClassifiers` task. By default, this resolves all artifacts
@@ -232,7 +264,9 @@ with the `sources` or `javadoc` classifier. Select the classifiers to
 obtain by configuring the `transitiveClassifiers` setting. For example,
 to only retrieve sources:
 
-    transitiveClassifiers := Seq("sources")
+```scala
+transitiveClassifiers := Seq("sources")
+```
 
 ##### Exclude Transitive Dependencies
 
@@ -241,19 +275,23 @@ To exclude certain transitive dependencies of a dependency, use the
 when a pom will be published for the project. It requires the
 organization and module name to exclude. For example,
 
-    libraryDependencies += 
-      "log4j" % "log4j" % "1.2.15" exclude("javax.jms", "jms")
+```scala
+libraryDependencies += 
+  "log4j" % "log4j" % "1.2.15" exclude("javax.jms", "jms")
+```
 
 The `excludeAll` method is more flexible, but because it cannot be
 represented in a pom.xml, it should only be used when a pom doesn't need
 to be generated. For example,
 
-    libraryDependencies +=
-      "log4j" % "log4j" % "1.2.15" excludeAll(
-        ExclusionRule(organization = "com.sun.jdmk"),
-        ExclusionRule(organization = "com.sun.jmx"),
-        ExclusionRule(organization = "javax.jms")
-      )
+```scala
+libraryDependencies +=
+  "log4j" % "log4j" % "1.2.15" excludeAll(
+    ExclusionRule(organization = "com.sun.jdmk"),
+    ExclusionRule(organization = "com.sun.jmx"),
+    ExclusionRule(organization = "javax.jms")
+  )
+```
 
 See [ModuleID](../../api/sbt/ModuleID.html) for API details.
 
@@ -268,8 +306,10 @@ To have sbt download the dependency's sources without using an IDE
 plugin, add `withSources()` to the dependency definition. For API jars,
 add `withJavadoc()`. For example:
 
-    libraryDependencies += 
-      "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" withSources() withJavadoc()
+```scala
+libraryDependencies += 
+  "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" withSources() withJavadoc()
+```
 
 Note that this is not transitive. Use the `update-*classifiers` tasks
 for that.
@@ -281,14 +321,18 @@ can be specified by passing key/value pairs to the `extra` method.
 
 To select dependencies by extra attributes:
 
-    libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```scala
+libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```
 
 To define extra attributes on the current project:
 
-    projectID := {
-        val previous = projectID.value
-        previous.extra("color" -> "blue", "component" -> "compiler-interface")
-    }
+```scala
+projectID := {
+    val previous = projectID.value
+    previous.extra("color" -> "blue", "component" -> "compiler-interface")
+}
+```
 
 ##### Inline Ivy XML
 
@@ -298,12 +342,14 @@ this with inline Scala dependency and repository declarations.
 
 For example:
 
-    ivyXML :=
-      <dependencies>
-        <dependency org="javax.mail" name="mail" rev="1.4.2">
-          <exclude module="activation"/>
-        </dependency>
-      </dependencies>
+```scala
+ivyXML :=
+  <dependencies>
+    <dependency org="javax.mail" name="mail" rev="1.4.2">
+      <exclude module="activation"/>
+    </dependency>
+  </dependencies>
+```
 
 ##### Ivy Home Directory
 
@@ -329,17 +375,23 @@ the *checksums* setting.
 
 To disable checksum checking during update:
 
-    checksums in update := Nil
+```scala
+checksums in update := Nil
+```
 
 To disable checksum creation during artifact publishing:
 
-    checksums in publishLocal := Nil
+```scala
+checksums in publishLocal := Nil
 
-    checksums in publish := Nil
+checksums in publish := Nil
+```
 
 The default value is:
 
-    checksums := Seq("sha1", "md5")
+```scala
+checksums := Seq("sha1", "md5")
+```
 
 <a name="conflict-management"></a>
 
@@ -354,7 +406,9 @@ See the
 for details on the different conflict managers. For example, to specify
 that no conflicts are allowed,
 
-    conflictManager := ConflictManager.strict
+```scala
+conflictManager := ConflictManager.strict
+```
 
 With this set, any conflicts will generate an error. To resolve a
 conflict,
@@ -370,39 +424,47 @@ Both are explained in the following sections.
 The following direct dependencies will introduce a conflict on the log4j
 version because spark requires log4j 1.2.16.
 
-    libraryDependencies ++= Seq(
-      "org.spark-project" %% "spark-core" % "0.5.1",
-      "log4j" % "log4j" % "1.2.14"
-    )
+```scala
+libraryDependencies ++= Seq(
+  "org.spark-project" %% "spark-core" % "0.5.1",
+  "log4j" % "log4j" % "1.2.14"
+)
+```
 
 The default conflict manager will select the newer version of log4j,
 1.2.16. This can be confirmed in the output of `show update`, which
 shows the newer version as being selected and the older version as not
 selected:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.16: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.14
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.16: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.14
+...
+```
 
 To say that we prefer the version we've specified over the version from
 indirect dependencies, use `force()`:
 
-    libraryDependencies ++= Seq(
-      "org.spark-project" %% "spark-core" % "0.5.1",
-      "log4j" % "log4j" % "1.2.14" force()
-    )
+```scala
+libraryDependencies ++= Seq(
+  "org.spark-project" %% "spark-core" % "0.5.1",
+  "log4j" % "log4j" % "1.2.14" force()
+)
+```
 
 The output of `show update` is now reversed:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.14: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.14: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.16
+...
+```
 
 **Note:** this is an Ivy-only feature and cannot be included in a
 published pom.xml.
@@ -417,35 +479,43 @@ overrides for this and in sbt, overrides are configured in sbt with the
 example, the following dependency definitions conflict because spark
 uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:
 
-    libraryDependencies ++= Seq(
-       "org.spark-project" %% "spark-core" % "0.5.1",
-       "org.scalaxb" %% "scalaxb" % "1.0.0"
-    )
+```scala
+libraryDependencies ++= Seq(
+   "org.spark-project" %% "spark-core" % "0.5.1",
+   "org.scalaxb" %% "scalaxb" % "1.0.0"
+)
+```
 
 The default conflict manager chooses the latest revision of log4j,
 1.2.17:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.17: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.17: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.16
+...
+```
 
 To change the version selected, add an override:
 
-    dependencyOverrides += "log4j" % "log4j" % "1.2.16"
+```scala
+dependencyOverrides += "log4j" % "log4j" % "1.2.16"
+```
 
 This will not add a direct dependency on log4j, but will force the
 revision to be 1.2.16. This is confirmed by the output of `show update`:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.16
+...
+```
 
-**Note:** this is an Ivy-only feature and will not be included in a
-published pom.xml.
+> **Note:** this is an Ivy-only feature and will not be included in a
+> published pom.xml.
 
 ##### Publishing
 
@@ -474,7 +544,9 @@ dependency's configuration `B`. The mapping for this looks like
 `"A->B"`. To apply this mapping to a dependency, add it to the end of
 your dependency definition:
 
-    libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile"
+```scala
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile"
+```
 
 This says that your project's `"test"` configuration uses `ScalaTest`'s
 `"compile"` configuration. See the
@@ -487,11 +559,13 @@ not used on normal classpaths. For example, your project might use a
 `"js"` configuration to automatically download jQuery and then include
 it in your jar by modifying `resources`. For example:
 
-    ivyConfigurations += config("js") hide
+```scala
+ivyConfigurations += config("js") hide
 
-    libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
 
-    resources ++= update.value.select(configurationFilter("js"))
+resources ++= update.value.select(configurationFilter("js"))
+```
 
 The `config` method defines a new configuration with name `"js"` and
 makes it private to the project so that it is not used for publishing.
@@ -503,7 +577,9 @@ or `"compile"`. The `->` is only needed when mapping to a different
 configuration than those. The ScalaTest dependency above can then be
 shortened to:
 
-    libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
+```scala
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
+```
 
 #### Maven/Ivy
 
@@ -514,52 +590,70 @@ expressions.
 
 ##### Ivy settings (resolver configuration)
 
-    externalIvySettings()
+```scala
+externalIvySettings()
+```
 
 or
 
-    externalIvySettings(baseDirectory.value / "custom-settings-name.xml")
+```scala
+externalIvySettings(baseDirectory.value / "custom-settings-name.xml")
+```
 
 or
 
-    externalIvySettingsURL(url("your_url_here"))
+```scala
+externalIvySettingsURL(url("your_url_here"))
+```
 
 ##### Ivy file (dependency configuration)
 
-    externalIvyFile()
+```scala
+externalIvyFile()
+```
 
 or
 
-    externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
+```scala
+externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
+```
 
 Because Ivy files specify their own configurations, sbt needs to know
 which configurations to use for the compile, runtime, and test
 classpaths. For example, to specify that the Compile classpath should
 use the 'default' configuration:
 
-    classpathConfiguration in Compile := config("default")
+```scala
+classpathConfiguration in Compile := config("default")
+```
 
 ##### Maven pom (dependencies only)
 
-    externalPom()
+```scala
+externalPom()
+```
 
 or
 
-    externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
+```scala
+externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
+```
 
 ##### Full Ivy Example
 
 For example, a `build.sbt` using external Ivy files might look like:
 
-    externalIvySettings()
+```scala
+externalIvySettings()
 
-    externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
+externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
 
-    classpathConfiguration in Compile := Compile
+classpathConfiguration in Compile := Compile
 
-    classpathConfiguration in Test := Test
+classpathConfiguration in Test := Test
 
-    classpathConfiguration in Runtime := Runtime
+classpathConfiguration in Runtime := Runtime
+```
 
 ##### Known limitations
 
