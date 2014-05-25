@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -63,9 +65,11 @@ these filter types, you can filter by the configuration name, the module
 organization, name, or revision, and the artifact name, type, extension,
 or classifier.
 </p><p>The relevant methods (implicitly on <code>UpdateReport</code>) are:
-</p><pre><code>def matching(f: DependencyFilter): Seq[File]
+</p><pre><code class="prettyprint lang-scala">def matching(f: DependencyFilter): Seq[File]
 
-def select(configuration: ConfigurationFilter = ..., module: ModuleFilter = ..., artifact: ArtifactFilter = ...): Seq[File]
+def select(configuration: ConfigurationFilter = ...,
+  module: ModuleFilter = ...,
+  artifact: ArtifactFilter = ...): Seq[File]
 </code></pre><p>Any argument to <code>select</code> may be omitted, in which case all values are
 allowed for the corresponding component. For example, if the
 <code>ConfigurationFilter</code> is not specified, all configurations are accepted.
@@ -74,21 +78,23 @@ The individual filter types are discussed below.
 applying a <code>NameFilter</code> to each component of a <code>Configuration</code>,
 <code>ModuleID</code>, or <code>Artifact</code>. A basic <code>NameFilter</code> is implicitly
 constructed from a String, with <code>*</code> interpreted as a wildcard.
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 // each argument is of type NameFilter
-val mf: ModuleFilter = moduleFilter(organization = &quot;*sbt*&quot;, name = &quot;main&quot; | &quot;actions&quot;, revision = &quot;1.*&quot; - &quot;1.0&quot;)
+val mf: ModuleFilter = moduleFilter(organization = &quot;*sbt*&quot;,
+  name = &quot;main&quot; | &quot;actions&quot;, revision = &quot;1.*&quot; - &quot;1.0&quot;)
 
 // unspecified arguments match everything by default
 val mf: ModuleFilter = moduleFilter(organization = &quot;net.databinder&quot;)
 
 // specifying &quot;*&quot; is the same as omitting the argument
-val af: ArtifactFilter = artifactFilter(name = &quot;*&quot;, `type` = &quot;source&quot;, extension = &quot;jar&quot;, classifier = &quot;sources&quot;)
+val af: ArtifactFilter = artifactFilter(name = &quot;*&quot;, `type` = &quot;source&quot;,
+  extension = &quot;jar&quot;, classifier = &quot;sources&quot;)
 
 val cf: ConfigurationFilter = configurationFilter(name = &quot;compile&quot; | &quot;test&quot;)
 </code></pre><p>Alternatively, these filters, including a <code>NameFilter</code>, may be directly
 defined by an appropriate predicate (a single-argument function
 returning a Boolean).
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 
 // here the function value of type String =&gt; Boolean is implicitly converted to a NameFilter
 val nf: NameFilter = (s: String) =&gt; s.startsWith(&quot;dispatch-&quot;)
@@ -103,13 +109,13 @@ val mf: ModuleFilter = (m: ModuleID) =&gt; m.organization contains &quot;sbt&quo
 val af: ArtifactFilter = (a: Artifact) =&gt; a.classifier.isEmpty
 </code></pre><h4 id="ConfigurationFilter">ConfigurationFilter<a href="#ConfigurationFilter" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A configuration filter essentially wraps a <code>NameFilter</code> and is
 explicitly constructed by the <code>configurationFilter</code> method:
-</p><pre><code>def configurationFilter(name: NameFilter = ...): ConfigurationFilter
+</p><pre><code class="prettyprint lang-scala">def configurationFilter(name: NameFilter = ...): ConfigurationFilter
 </code></pre><p>If the argument is omitted, the filter matches all configurations.
 Functions of type <code>String =&gt; Boolean</code> are implicitly convertible to a
 <code>ConfigurationFilter</code>. As with <code>ModuleFilter</code>, <code>ArtifactFilter</code>, and
 <code>NameFilter</code>, the <code>&amp;</code>, <code>|</code>, and <code>-</code> methods may be used to combine
 <code>ConfigurationFilter</code>s.
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 val a: ConfigurationFilter = Set(&quot;compile&quot;, &quot;test&quot;)
 val b: ConfigurationFilter = (c: String) =&gt; c.startsWith(&quot;r&quot;)
 val c: ConfigurationFilter = a | b
@@ -118,13 +124,13 @@ val c: ConfigurationFilter = a | b
 organization, one for the module name, and one for the revision. Each
 component filter must match for the whole module filter to match. A
 module filter is explicitly constructed by the <code>moduleFilter</code> method:
-</p><pre><code>def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
+</p><pre><code class="prettyprint lang-scala">def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
 </code></pre><p>An omitted argument does not contribute to the match. If all arguments
 are omitted, the filter matches all <code>ModuleID</code>s. Functions of type
 <code>ModuleID =&gt; Boolean</code> are implicitly convertible to a <code>ModuleFilter</code>. As
 with <code>ConfigurationFilter</code>, <code>ArtifactFilter</code>, and <code>NameFilter</code>, the <code>&amp;</code>,
 <code>|</code>, and <code>-</code> methods may be used to combine <code>ModuleFilter</code>s:
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 val a: ModuleFilter = moduleFilter(name = &quot;dispatch-twitter&quot;, revision = &quot;0.7.8&quot;)
 val b: ModuleFilter = moduleFilter(name = &quot;dispatch-*&quot;)
 val c: ModuleFilter = b - a
@@ -134,12 +140,13 @@ one for the type, one for the extension, and one for the classifier.
 Each component filter must match for the whole artifact filter to match.
 An artifact filter is explicitly constructed by the <code>artifactFilter</code>
 method:
-</p><pre><code>def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ..., extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
+</p><pre><code class="prettyprint lang-scala">def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ...,
+  extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
 </code></pre><p>Functions of type <code>Artifact =&gt; Boolean</code> are implicitly convertible to an
 <code>ArtifactFilter</code>. As with <code>ConfigurationFilter</code>, <code>ModuleFilter</code>, and
 <code>NameFilter</code>, the <code>&amp;</code>, <code>|</code>, and <code>-</code> methods may be used to combine
 <code>ArtifactFilter</code>s:
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 val a: ArtifactFilter = artifactFilter(classifier = &quot;javadoc&quot;)
 val b: ArtifactFilter = artifactFilter(`type` = &quot;jar&quot;)
 val c: ArtifactFilter = b - a
@@ -154,10 +161,12 @@ combinators of the more specific filters for configurations, modules,
 and artifacts. These double-character methods will always return a
 <code>DependencyFilter</code>, whereas the single character methods preserve the
 more specific filter type. For example:
-</p><pre><code>import sbt._
+</p><pre><code class="prettyprint lang-scala">import sbt._
 
 val df: DependencyFilter =
-  configurationFilter(name = &quot;compile&quot; | &quot;test&quot;) &amp;&amp; artifactFilter(`type` = &quot;jar&quot;) || moduleFilter(name = &quot;dispatch-*&quot;)
+  configurationFilter(name = &quot;compile&quot; | &quot;test&quot;) &amp;&amp;
+  artifactFilter(`type` = &quot;jar&quot;) ||
+  moduleFilter(name = &quot;dispatch-*&quot;)
 </code></pre><p>Here, we used <code>&amp;&amp;</code> and <code>||</code> to combine individual component filters into
 a dependency filter, which can then be provided to the
 <code>UpdateReport.matches</code> method. Alternatively, the <code>UpdateReport.select</code>
@@ -173,7 +182,7 @@ arguments combined with <code>&amp;&amp;</code>.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div class="current">Update Report</div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div class="current">Update Report</div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

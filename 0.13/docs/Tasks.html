@@ -41,7 +41,8 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="Tasks">Tasks<a href="#Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Tasks and settings are introduced in the
+            <h2 id="Tasks">Tasks<a href="#Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><!-- TODO: Replace error with sys.error() -->
+<p>Tasks and settings are introduced in the
 <a href="../tutorial/Basic-Def.html">getting started guide</a>, which you may wish
 to read first. This page has additional details and background and is
 intended more as a reference.
@@ -69,20 +70,20 @@ of another task.
 logging for that task at a more verbose level than is initially
 printed to the screen.
 </li></ol><p>These features are discussed in detail in the following sections.
-</p><h3 id="Defining+a+Task">Defining a Task<a href="#Defining+a+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Hello+World+example+%28sbt%29">Hello World example (sbt)<a href="#Hello+World+example+%28sbt%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>build.sbt
-</p><pre><code>lazy val hello = taskKey[Unit](&quot;Prints 'Hello World'&quot;)
+</p><h3 id="Defining+a+Task">Defining a Task<a href="#Defining+a+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Hello+World+example+%28sbt%29">Hello World example (sbt)<a href="#Hello+World+example+%28sbt%29" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p><code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">lazy val hello = taskKey[Unit](&quot;Prints 'Hello World'&quot;)
 
 hello := println(&quot;hello world!&quot;)
 </code></pre><p>Run “sbt hello” from command line to invoke the task. Run “sbt tasks” to
 see this task listed.
 </p><h4 id="Define+the+key">Define the key<a href="#Define+the+key" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To declare a new task, define a lazy val of type <code>TaskKey</code>:
-</p><pre><code>lazy val sampleTask = taskKey[Int](&quot;A sample task.&quot;)
+</p><pre><code class="prettyprint lang-scala">lazy val sampleTask = taskKey[Int](&quot;A sample task.&quot;)
 </code></pre><p>The name of the <code>val</code> is used when referring to the task in Scala code
 and at the command line. The string passed to the <code>taskKey</code> method is a
 description of the task. The type parameter passed to <code>taskKey</code> (here,
 <code>Int</code>) is the type of value produced by the task.
 </p><p>We’ll define a couple of other keys for the examples:
-</p><pre><code>lazy val intTask = taskKey[Int](&quot;An int task&quot;)
+</p><pre><code class="prettyprint lang-scala">lazy val intTask = taskKey[Int](&quot;An int task&quot;)
 lazy val stringTask = taskKey[String](&quot;A string task&quot;)
 </code></pre><p>The examples themselves are valid entries in a <code>build.sbt</code> or can be
 provided as part of a sequence to <code>Project.settings</code> (see
@@ -96,7 +97,7 @@ the task’s inputs.
 </li></ol><p>These parts are then combined just like the parts of a setting are
 combined.
 </p><h5 id="Defining+a+basic+task">Defining a basic task<a href="#Defining+a+basic+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>A task is defined using <code>:=</code>
-</p><pre><code>intTask := 1 + 2
+</p><pre><code class="prettyprint lang-scala">intTask := 1 + 2
 
 stringTask := System.getProperty(&quot;user.name&quot;)
 
@@ -116,15 +117,15 @@ fixed until the next reload.
 This method is special syntax and can only be called when defining a
 task, such as in the argument to <code>:=</code>. The following defines a task that
 adds one to the value produced by <code>intTask</code> and returns the result.
-</p><pre><code>sampleTask := intTask.value + 1
+</p><pre><code class="prettyprint lang-scala">sampleTask := intTask.value + 1
 </code></pre><p>Multiple settings are handled similarly:
-</p><pre><code>stringTask := &quot;Sample: &quot; + sampleTask.value + &quot;, int: &quot; + intTask.value
+</p><pre><code class="prettyprint lang-scala">stringTask := &quot;Sample: &quot; + sampleTask.value + &quot;, int: &quot; + intTask.value
 </code></pre><h5 id="Task+Scope">Task Scope<a href="#Task+Scope" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>As with settings, tasks can be defined in a specific scope. For example,
 there are separate <code>compile</code> tasks for the <code>compile</code> and <code>test</code> scopes.
 The scope of a task is defined the same as for a setting. In the
 following example, <code>test:sampleTask</code> uses the result of
 <code>compile:intTask</code>.
-</p><pre><code>sampleTask in Test := (intTask in Compile).value * 3
+</p><pre><code class="prettyprint lang-scala">sampleTask in Test := (intTask in Compile).value * 3
 </code></pre><h5 id="On+precedence">On precedence<a href="#On+precedence" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>As a reminder, infix method precedence is by the name of the method and
 postfix methods have lower precedence than infix methods.
 </p><ol><li>Assignment methods have the lowest precedence. These are methods
@@ -136,15 +137,15 @@ start with <code>=</code>.
 according to the specific character it starts with. See the Scala
 specification for details.)
 </li></ol></li></ol><p>Therefore, the the previous example is equivalent to the following:
-</p><pre><code>(sampleTask in Test).:=( (intTask in Compile).value * 3 )
+</p><pre><code class="prettyprint lang-scala">(sampleTask in Test).:=( (intTask in Compile).value * 3 )
 </code></pre><p>Additionally, the braces in the following are necessary:
-</p><pre><code>helloTask := { &quot;echo Hello&quot; ! }
+</p><pre><code class="prettyprint lang-scala">helloTask := { &quot;echo Hello&quot; ! }
 </code></pre><p>Without them, Scala interprets the line as
 <code>( helloTask.:=(&quot;echo Hello&quot;) ).!</code> instead of the desired
 <code>helloTask.:=( &quot;echo Hello&quot;.! )</code>.
 </p><h4 id="Separating+implementations">Separating implementations<a href="#Separating+implementations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The implementation of a task can be separated from the binding. For
 example, a basic separate definition looks like:
-</p><pre><code>// Define a new, standalone task implemention
+</p><pre><code class="prettyprint lang-scala">// Define a new, standalone task implemention
 lazy val intTaskImpl: Initialize[Task[Int]] =
    Def.task { sampleTask.value - 3 }
 
@@ -154,7 +155,7 @@ intTask := intTaskImpl.value
 definition, such as within <code>Def.task</code> above or as an argument to <code>:=</code>.
 </p><h4 id="Modifying+an+Existing+Task">Modifying an Existing Task<a href="#Modifying+an+Existing+Task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In the general case, modify a task by declaring the previous task as an
 input.
-</p><pre><code>// initial definition
+</p><pre><code class="prettyprint lang-scala">// initial definition
 intTask := 3
 
 // overriding definition that references the previous definition
@@ -163,7 +164,7 @@ intTask := intTask.value + 1
 input. Each of the definitions in the following example completely
 overrides the previous one. That is, when <code>intTask</code> is run, it will only
 print <code>#3</code>.
-</p><pre><code>intTask := {
+</p><pre><code class="prettyprint lang-scala">intTask := {
     println(&quot;#1&quot;)
     3
 }
@@ -179,7 +180,7 @@ intTask :=  {
 }
 </code></pre><a name="multiple-scopes"></a><h3 id="Getting+values+from+multiple+scopes">Getting values from multiple scopes<a href="#Getting+values+from+multiple+scopes" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="Introduction">Introduction<a href="#Introduction" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The general form of an expression that gets values from multiple scopes
 is:
-</p><pre><code>&lt;setting-or-task&gt;.all(&lt;scope-filter&gt;).value
+</p><pre><code class="prettyprint lang-scala">&lt;setting-or-task&gt;.all(&lt;scope-filter&gt;).value
 </code></pre><p>The <code>all</code> method is implicitly added to tasks and settings. It accepts a
 <code>ScopeFilter</code> that will select the <code>Scopes</code>. The result has type
 <code>Seq[T]</code>, where <code>T</code> is the key’s underlying type.
@@ -188,7 +189,7 @@ processing all at once, such as passing them to scaladoc. The task that
 we want to obtain values for is <code>sources</code> and we want to get the values
 in all non-root projects and in the <code>Compile</code> configuration. This looks
 like:
-</p><pre><code>lazy val core = project
+</p><pre><code class="prettyprint lang-scala">lazy val core = project
 
 lazy val util = project
 
@@ -206,7 +207,7 @@ lazy val root = project.settings(
 This method makes a <code>ScopeFilter</code> from filters on the parts of a
 <code>Scope</code>: a <code>ProjectFilter</code>, <code>ConfigurationFilter</code>, and <code>TaskFilter</code>. The
 simplest case is explicitly specifying the values for the parts:
-</p><pre><code>val filter: ScopeFilter =
+</p><pre><code class="prettyprint lang-scala">val filter: ScopeFilter =
    ScopeFilter(
       inProjects( core, util ),
       inConfigurations( Compile, Test )
@@ -229,45 +230,58 @@ can be organized into four groups:
 details.
 </p><h5 id="Combining+ScopeFilters">Combining ScopeFilters<a href="#Combining+ScopeFilters" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p><code>ScopeFilters</code> may be combined with the <code>&amp;&amp;</code>, <code>||</code>, <code>--</code>, and <code>-</code>
 methods:
-</p><p>a &amp;&amp; b
-:   Selects scopes that match both a and b
-</p><p>a || b
-:   Selects scopes that match either a or b
-</p><p>a — b
-:   Selects scopes that match a but not b
-</p><ul><li>b
-:   Selects scopes that do not match b
+</p><ul><li><code>a &amp;&amp; b</code> Selects scopes that match both a and b
+</li><li><code>a || b</code> Selects scopes that match either a or b
+</li><li><code>a -- b</code> Selects scopes that match a but not b
+</li><li><code>-b</code> Selects scopes that do not match b
 </li></ul><p>For example, the following selects the scope for the <code>Compile</code> and
 <code>Test</code> configurations of the <code>core</code> project and the global configuration
 of the <code>util</code> project:
-</p><pre><code>val filter: ScopeFilter =
+</p><pre><code class="prettyprint lang-scala">val filter: ScopeFilter =
    ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
    ScopeFilter( inProjects(util), inGlobalConfiguration )
 </code></pre><h4 id="More+operations">More operations<a href="#More+operations" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The <code>all</code> method applies to both settings (values of type
 <code>Initialize[T]</code>) and tasks (values of type <code>Initialize[Task[T]]</code>). It
 returns a setting or task that provides a <code>Seq[T]</code>, as shown in this
 table:
-</p><p>  Target                Result
-  ——————————- —————————————
-  Initialize[T]         Initialize[Seq[T]]
-  Initialize[Task[T]]   Initialize[Task[Seq[T]]]
-</p><p>This means that the <code>all</code> method can be combined with methods that
+</p><table>
+  <tr>
+    <th>Target</th>
+    <th>Result</th>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[T] </tt></td>
+    <td><tt>Initialize[Seq[T]]</tt></td>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[Task[T]]</tt></td>
+    <td><tt>Initialize[Task[Seq[T]]]</tt></td>
+  </tr>
+</table><p>This means that the <code>all</code> method can be combined with methods that
 construct tasks and settings.
 </p><h5 id="Missing+values">Missing values<a href="#Missing+values" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Some scopes might not define a setting or task. The <code>?</code> and <code>??</code> methods
 can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
-</p><p><code>?</code>
-:   On a setting or task with underlying type T, this accepts no
+</p><table>
+  <tr>
+    <td><tt>?</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts no
     arguments and returns a setting or task (respectively) of type
     Option[T]. The result is None if the setting/task is undefined and
-    Some[T] with the value if it is.
-</p><p><code>??</code>
-:   On a setting or task with underlying type T, this accepts an
+    Some[T] with the value if it is.</tt></td>
+  </tr>
+
+  <tr>
+    <td><tt>??</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts an
     argument of type T and uses this argument if the setting/task is
-    undefined.
-</p><p>The following contrived example sets the maximum errors to be the
+    undefined.</tt></td>
+  </tr>
+</table><p>The following contrived example sets the maximum errors to be the
 maximum of all aggregates of the current project.
-</p><pre><code>maxErrors := {
+</p><pre><code class="prettyprint lang-scala">maxErrors := {
    // select the transitive aggregates for this project, but not the project itself
    val filter: ScopeFilter =
       ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
@@ -328,13 +342,13 @@ task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
 <a href="../../api/sbt/Logger.html">Logger</a>, which is the most commonly used
 aspect, is obtained by the <code>log</code> method:
-</p><pre><code>myTask := {
+</p><pre><code class="prettyprint lang-scala">myTask := {
   val s: TaskStreams = streams.value
   s.log.debug(&quot;Saying hi...&quot;)
   s.log.info(&quot;Hello!&quot;)
 }
 </code></pre><p>You can scope logging settings by the specific task’s scope:
-</p><pre><code>logLevel in myTask := Level.Debug
+</p><pre><code class="prettyprint lang-scala">logLevel in myTask := Level.Debug
 
 traceLevel in myTask := 5
 </code></pre><p>To obtain the last logging output from a task, use the <code>last</code> command:
@@ -350,31 +364,30 @@ to evaluate. This is done using <code>Def.taskDyn</code>. The result of <code>ta
 is called a dynamic task because it introduces dependencies at runtime.
 The <code>taskDyn</code> method supports the same syntax as <code>Def.task</code> and <code>:=</code>
 except that you return a task instead of a plain value.
-</p><p>For example, :
-</p><pre><code>val dynamic = Def.taskDyn {
-   // decide what to evaluate based on the value of `stringTask`
-   if(stringTask.value == &quot;dev&quot;)
-      // create the dev-mode task: this is only evaluated if the
-      //   value of stringTask is &quot;dev&quot;
-      Def.task {
-         3
-      }
-   else
-      // create the production task: only evaluated if the value
-      //    of the stringTask is not &quot;dev&quot;
-      Def.task {
-         intTask.value + 5
-      }
+</p><p>For example,
+</p><pre><code class="prettyprint lang-scala">val dynamic = Def.taskDyn {
+  // decide what to evaluate based on the value of `stringTask`
+  if(stringTask.value == &quot;dev&quot;)
+    // create the dev-mode task: this is only evaluated if the
+    //   value of stringTask is &quot;dev&quot;
+    Def.task {
+      3
+    }
+  else
+    // create the production task: only evaluated if the value
+    //    of the stringTask is not &quot;dev&quot;
+    Def.task {
+      intTask.value + 5
+    }
 }
 
 myTask := {
-   val num = dynamic.value
-     println(s&quot;Number selected was $num&quot;)
- }
+  val num = dynamic.value
+  println(s&quot;Number selected was $num&quot;)
+}
 </code></pre><p>The only static dependency of <code>myTask</code> is <code>stringTask</code>. The dependency
 on <code>intTask</code> is only introduced in non-dev mode.
-</p><blockquote><p><strong>note</strong>
-</p><p>A dynamic task cannot refer to itself or a circular dependency will
+</p><blockquote><p><strong>Note</strong>: A dynamic task cannot refer to itself or a circular dependency will
 result. In the example above, there would be a circular dependency if
 the code passed to taskDyn referenced myTask.
 </p></blockquote><h4 id="Handling+Failure">Handling Failure<a href="#Handling+Failure" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This section discusses the <code>failure</code>, <code>result</code>, and <code>andFinally</code>
@@ -386,7 +399,7 @@ task succeeds, the new task fails.
 information about any tasks that caused the failure and any underlying
 exceptions thrown during task execution.
 </p><p>For example:
-</p><pre><code>intTask := error(&quot;Failed.&quot;)
+</p><pre><code class="prettyprint lang-scala">intTask := error(&quot;Failed.&quot;)
 
 intTask := {
    println(&quot;Ignoring failure: &quot; + intTask.failure.value)
@@ -396,7 +409,7 @@ intTask := {
 and the constant <code>3</code> is returned.
 </p><p><code>failure</code> does not prevent other tasks that depend on the target from
 failing. Consider the following example:
-</p><pre><code>intTask := if(shouldSucceed) 5 else error(&quot;Failed.&quot;)
+</p><pre><code class="prettyprint lang-scala">intTask := if(shouldSucceed) 5 else error(&quot;Failed.&quot;)
 
 // Return 3 if intTask fails. If intTask succeeds, this task will fail.
 aTask := intTask.failure.value - 2
@@ -407,17 +420,84 @@ bTask := intTask.value + 1
 cTask := aTask.value + bTask.value
 </code></pre><p>The following table lists the results of each task depending on the
 initially invoked task:
-</p><pre><code>invoked task   intTask result   aTask result   bTask result   cTask result   overall result
--------------- ---------------- -------------- -------------- -------------- ----------------
-intTask        failure          not run        not run        not run        failure
-aTask          failure          success        not run        not run        success
-bTask          failure          not run        failure        not run        failure
-cTask          failure          success        failure        failure        failure
-intTask        success          not run        not run        not run        success
-aTask          success          failure        not run        not run        failure
-bTask          success          not run        success        not run        success
-cTask          success          failure        success        failure        failure
-</code></pre><p>The overall result is always the same as the root task (the directly
+</p><table>
+  <thead>
+    <tr>
+      <th>invoked task</th>
+      <th>intTask result</th>
+      <th>aTask result</th>
+      <th>bTask result</th>
+      <th>cTask result</th>
+      <th>overall result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>intTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>intTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+  </tbody>
+</table><p>The overall result is always the same as the root task (the directly
 invoked task). A <code>failure</code> turns a success into a failure, and a failure
 into an <code>Incomplete</code>. A normal task definition fails when any of its
 inputs fail and computes its value otherwise.
@@ -430,7 +510,7 @@ the same structure as <code>Either[Incomplete, T]</code> for a task result of ty
 </li></ul><p>Thus, the task created by <code>result</code> executes whether or not the original
 task succeeds or fails.
 </p><p>For example:
-</p><pre><code>intTask := error(&quot;Failed.&quot;)
+</p><pre><code class="prettyprint lang-scala">intTask := error(&quot;Failed.&quot;)
 
 intTask := intTask.result.value match {
    case Inc(inc: Incomplete) =&gt;
@@ -447,7 +527,7 @@ If it succeeds, the value is printed and returned.
 and evaluates a side effect regardless of whether the original task
 succeeded. The result of the task is the result of the original task.
 For example:
-</p><pre><code>intTask := error(&quot;I didn't succeed.&quot;)
+</p><pre><code class="prettyprint lang-scala">intTask := error(&quot;I didn't succeed.&quot;)
 
 lazy val intTaskImpl = intTask andFinally { println(&quot;andFinally&quot;) }
 
@@ -458,14 +538,14 @@ if the task fails.
 task has to be invoked in order for the extra block to run. This is
 important when calling andFinally on another task instead of overriding
 a task like in the previous example. For example, consider this code:
-</p><pre><code>intTask := error(&quot;I didn't succeed.&quot;)
+</p><pre><code class="prettyprint lang-scala">intTask := error(&quot;I didn't succeed.&quot;)
 
 lazy val intTaskImpl = intTask andFinally { println(&quot;andFinally&quot;) }
 
 otherIntTask := intTaskImpl.value
 </code></pre><p>If <code>intTask</code> is run directly, <code>otherIntTask</code> is never involved in
 execution. This case is similar to the following plain Scala code:
-</p><pre><code>def intTask(): Int =
+</p><pre><code class="prettyprint lang-scala">def intTask(): Int =
   error(&quot;I didn't succeed.&quot;)
 
 def otherIntTask(): Int =
@@ -485,7 +565,7 @@ being printed.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div class="current">Tasks</div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div class="current">Tasks</div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

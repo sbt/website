@@ -154,7 +154,7 @@ ignore the main options:
 </p><pre><code class="prettyprint lang-scala">scalacOptions in Samples := &quot;-deprecation&quot; :: Nil
 </code></pre><p>The example adds all of the usual compilation related settings and tasks
 to <code>samples</code>:
-</p><pre><code>samples:run
+</p><pre><code class="">samples:run
 samples:runMain
 samples:compile
 samples:console
@@ -182,7 +182,7 @@ fullRunTask(myRunTask, Test, &quot;foo.Foo&quot;, &quot;arg1&quot;, &quot;arg2&q
 <code>Compile</code>, to use that configuration’s classpath.
 </p><p>This run task can be configured individually by specifying the task key
 in the scope. For example:
-</p><pre><code>fork in myRunTask := true
+</p><pre><code class="prettyprint lang-scala">fork in myRunTask := true
 
 javaOptions in myRunTask += &quot;-Xmx6144m&quot;
 </code></pre><h4 id="How+should+I+express+a+dependency+on+an+outside+tool+such+as+proguard%3F">How should I express a dependency on an outside tool such as proguard?<a href="#How+should+I+express+a+dependency+on+an+outside+tool+such+as+proguard%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Tool dependencies are used to implement a task and are not needed by
@@ -198,11 +198,11 @@ configuration.
 </li></ol><p>As an example, consider a <code>proguard</code> task. This task needs the ProGuard
 jars in order to run the tool. First, define and add the new
 configuration:
-</p><pre><code>val ProguardConfig = config(&quot;proguard&quot;) hide
+</p><pre><code class="prettyprint lang-scala">val ProguardConfig = config(&quot;proguard&quot;) hide
 
 ivyConfigurations += ProguardConfig
 </code></pre><p>Then,
-</p><pre><code>// Add proguard as a dependency in the custom configuration.
+</p><pre><code class="prettyprint lang-scala">// Add proguard as a dependency in the custom configuration.
 //  This keeps it separate from project dependencies.
 libraryDependencies +=
    &quot;net.sf.proguard&quot; % &quot;proguard&quot; % &quot;4.4&quot; % ProguardConfig.name
@@ -225,7 +225,7 @@ proguard := {
 for debugging or if it needs to be used by multiple tasks. It is also
 possible to specify artifact types inline. This alternative <code>proguard</code>
 task would look like:
-</p><pre><code>proguard := {
+</p><pre><code class="prettyprint lang-scala">proguard := {
    val artifactTypes = Set(&quot;jar&quot;)
     val cp: Seq[File] =
       Classpaths.managedJars(proguardConfig, artifactTypes, update.value)
@@ -252,8 +252,7 @@ such as in the <code>onLoad</code> setting (described below) or in a
 <a href="Commands.html">command</a>. It adds some files to the “extra”
 component and reloads sbt if they were not already added. Note that
 reloading will drop the user’s session state.
-</p><pre><code>def augment(extra: Seq[File])(s: State): State =
-{
+</p><pre><code class="prettyprint lang-scala">def augment(extra: Seq[File])(s: State): State = {
     // Get the component provider
   val cs: xsbti.ComponentProvider = s.configuration.provider.components()
 
@@ -274,7 +273,7 @@ is unloaded. Project unloading typically occurs as a result of a
 hooks are global, modifying this setting typically involves composing a
 new function with the previous value. The following example shows the
 basic structure of defining <code>onLoad</code>:
-</p><pre><code>// Compose our new function 'f' with the existing transformation.
+</p><pre><code class="prettyprint lang-scala">// Compose our new function 'f' with the existing transformation.
 {
   val f: State =&gt; State = ...
   onLoad in Global := {
@@ -284,7 +283,7 @@ basic structure of defining <code>onLoad</code>:
 }
 </code></pre><h4 id="Example+of+project+load%2Funload+hooks">Example of project load/unload hooks<a href="#Example+of+project+load%2Funload+hooks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The following example maintains a count of the number of times a project
 has been loaded and prints that number:
-</p><pre><code>{
+</p><pre><code class="prettyprint lang-scala">{
   // the key for the current count
   val key = AttributeKey[Int](&quot;loadCount&quot;)
   // the State transformer
@@ -303,7 +302,7 @@ setting depends on other settings that has not been initialized, sbt
 will stop loading.
 </p><p>In this example, we try to append a library to <code>libraryDependencies</code>
 before it is initialized with an empty sequence.
-</p><pre><code>object MyBuild extends Build {
+</p><pre><code class="prettyprint lang-scala">object MyBuild extends Build {
   val root = Project(id = &quot;root&quot;, base = file(&quot;.&quot;),
     settings = Seq(
       libraryDependencies += &quot;commons-io&quot; % &quot;commons-io&quot; % &quot;1.4&quot; % &quot;test&quot;
@@ -312,7 +311,7 @@ before it is initialized with an empty sequence.
 }
 </code></pre><p>To correct this, include the IvyModule plugin settings, which includes
 <code>libraryDependencies := Seq()</code>. So, we just drop the explicit disabling.
-</p><pre><code>object MyBuild extends Build {
+</p><pre><code class="prettyprint lang-scala">object MyBuild extends Build {
   val root = Project(id = &quot;root&quot;, base = file(&quot;.&quot;),
     settings = Seq(
       libraryDependencies += &quot;commons-io&quot; % &quot;commons-io&quot; % &quot;1.4&quot; % &quot;test&quot;
@@ -321,7 +320,7 @@ before it is initialized with an empty sequence.
 }
 </code></pre><p>A more subtle variation of this error occurs when using
 <a href="../tutorial/Scopes.html">scoped settings</a>.
-</p><pre><code>// error: Reference to uninitialized setting
+</p><pre><code class="prettyprint lang-scala">// error: Reference to uninitialized setting
 settings = Seq(
   libraryDependencies += &quot;commons-io&quot; % &quot;commons-io&quot; % &quot;1.2&quot; % &quot;test&quot;,
   fullClasspath := fullClasspath.value.filterNot(_.data.name.contains(&quot;commons-io&quot;))
@@ -329,11 +328,11 @@ settings = Seq(
 </code></pre><p>This setting varies between the test and compile scopes. The solution is
 use the scoped setting, both as the input to the initializer, and the
 setting that we update.
-</p><pre><code>fullClasspath in Compile := (fullClasspath in Compile).value.filterNot(_.data.name.contains(&quot;commons-io&quot;))
+</p><pre><code class="prettyprint lang-scala">fullClasspath in Compile := (fullClasspath in Compile).value.filterNot(_.data.name.contains(&quot;commons-io&quot;))
 </code></pre><h3 id="Dependency+Management">Dependency Management<a href="#Dependency+Management" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="How+do+I+resolve+a+checksum+error%3F">How do I resolve a checksum error?<a href="#How+do+I+resolve+a+checksum+error%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This error occurs when the published checksum, such as a sha1 or md5
 hash, differs from the checksum computed for a downloaded artifact, such
 as a jar or pom.xml. An example of such an error is:
-</p><pre><code>[warn]  problem while downloading module descriptor:
+</p><pre><code class="">[warn]  problem while downloading module descriptor:
 http://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2.pom:
 invalid sha1: expected=ad3fda4adc95eb0d061341228cc94845ddb9a6fe computed=0ce5d4a03b07c8b00ab60252e5cacdc708a4e6d8 (1070ms)
 </code></pre><p>The invalid checksum should generally be reported to the repository
@@ -341,7 +340,7 @@ owner (as
 <a href="https://issues.sonatype.org/browse/MVNCENTRAL-46">was done</a> for the
 above error). In the meantime, you can temporarily disable checking with
 the following setting:
-</p><pre><code>checksums in update := Nil
+</p><pre><code class="prettyprint lang-scala">checksums in update := Nil
 </code></pre><p>See <a href="Library-Management.html">library management</a> for details.
 </p><h4 id="I%E2%80%99ve+added+a+plugin%2C+and+now+my+cross-compilations+fail%21">I’ve added a plugin, and now my cross-compilations fail!<a href="#I%E2%80%99ve+added+a+plugin%2C+and+now+my+cross-compilations+fail%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This problem crops up frequently. Plugins are only published for the
 Scala version that sbt uses (currently, 2.9.1). You can still <em>use</em>
@@ -365,15 +364,15 @@ Any file name ending in <code>.sbt</code> will do, but most people use
 in the same class loader as the application classes. Therefore, when
 using the Scala interpreter, it is important to set it up properly to
 avoid an error message like:
-</p><pre><code>Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
+</p><pre><code class="">Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
 ** Note that as of 2.8 scala does not assume use of the java classpath.
 ** For the old behavior pass -usejavacp to scala, or if using a Settings
 ** object programmatically, settings.usejavacp.value = true.
 </code></pre><p>The key is to initialize the Settings for the interpreter using
 <em>embeddedDefaults</em>. For example:
-</p><pre><code>val settings = new Settings
-settings.embeddedDefaults[MyType]
-val interpreter = new Interpreter(settings, ...)
+</p><pre><code class="prettyprint lang-scala"> val settings = new Settings
+ settings.embeddedDefaults[MyType]
+ val interpreter = new Interpreter(settings, ...)
 </code></pre><p>Here, MyType is a representative class that should be included on the
 interpreter’s classpath and in its application class loader. For more
 background, see the
@@ -382,7 +381,7 @@ background, see the
 </p><p>Similarly, use a representative class as the type argument when using
 the <em>break</em> and <em>breakIf</em> methods of <em>ILoop</em>, as in the following
 example:
-</p><pre><code>def x(a: Int, b: Int) = {
+</p><pre><code class="prettyprint lang-scala">def x(a: Int, b: Int) = {
   import scala.tools.nsc.interpreter.ILoop
   ILoop.breakIf[MyType](a != b, &quot;a&quot; -&gt; a, &quot;b&quot; -&gt; b )
 }
@@ -428,7 +427,7 @@ classpaths.
 0.13.2. If your test code isn’t thread-safe then you may want to
 change this behaviour by adding one of the following to your
 <code>build.sbt</code>:
-</p><pre><code>// Execute tests in the current project serially.
+</p><pre><code class="prettyprint lang-scala">// Execute tests in the current project serially.
 // Tests from other projects may still run concurrently.
 parallelExecution in Test := false
 
@@ -496,7 +495,7 @@ plugins.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div class="current">Frequently Asked Questions</div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div class="current">Frequently Asked Questions</div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

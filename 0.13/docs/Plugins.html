@@ -56,7 +56,7 @@ guidelines to writing sbt plugins. See also the general
 </p><h3 id="Using+a+binary+sbt+plugin">Using a binary sbt plugin<a href="#Using+a+binary+sbt+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>A common situation is using a binary plugin published to a repository.
 Create <code>project/plugins.sbt</code> with the desired sbt plugins, any general
 dependencies, and any necessary repositories:
-</p><pre><code>addSbtPlugin(&quot;org.example&quot; % &quot;plugin&quot; % &quot;1.0&quot;)
+</p><pre><code class="prettyprint lang-scala">addSbtPlugin(&quot;org.example&quot; % &quot;plugin&quot; % &quot;1.0&quot;)
 
 addSbtPlugin(&quot;org.example&quot; % &quot;another-plugin&quot; % &quot;2.0&quot;)
 
@@ -110,7 +110,7 @@ demonstrates how to declare plugins.
 <a href="https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar">https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala<em>2.8.1/1.0.4/grizzled-scala</em>2.8.1-1.0.4.jar</a>
 </li><li>Put it in <code>project/lib/</code>
 </li></ol><h5 id="1b%29+Automatically+managed%3A+direct+editing+approach">1b) Automatically managed: direct editing approach<a href="#1b%29+Automatically+managed%3A+direct+editing+approach" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Edit <code>project/plugins.sbt</code> to contain:
-</p><pre><code>libraryDependencies += &quot;org.clapper&quot; %% &quot;grizzled-scala&quot; % &quot;1.0.4&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.clapper&quot; %% &quot;grizzled-scala&quot; % &quot;1.0.4&quot;
 </code></pre><p>If sbt is running, do <code>reload</code>.
 </p><h5 id="1c%29+Automatically+managed%3A+command+line+approach">1c) Automatically managed: command line approach<a href="#1c%29+Automatically+managed%3A+command+line+approach" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>We can change to the plugins project in <code>project/</code> using
 <code>reload plugins</code>.
@@ -134,7 +134,7 @@ to verify that the dependencies are correct.
 a source dependency on a plugin. This means that the plugin will be
 built from source and used on the classpath.
 </p><p>Edit <code>project/plugins.sbt</code>
-</p><pre><code>lazy val root = project.in( file(&quot;.&quot;) ).dependsOn( assemblyPlugin )
+</p><pre><code class="prettyprint lang-scala">lazy val root = (project in file(&quot;.&quot;)).dependsOn(assemblyPlugin)
 lazy val assemblyPlugin = uri(&quot;git://github.com/sbt/sbt-assembly&quot;)
 </code></pre><p>If sbt is running, run <code>reload</code>.
 </p><p>Note that this approach can be useful used when developing a plugin. A
@@ -144,7 +144,7 @@ be used to work with the development version of a plugin from its
 repository.
 </p><p>It is recommended to explicitly specify the commit or tag by appending
 it to the repository as a fragment:
-</p><pre><code>lazy val assemblyPlugin = uri(&quot;git://github.com/sbt/sbt-assembly#0.9.1&quot;)
+</p><pre><code class="prettyprint lang-scala">lazy val assemblyPlugin = uri(&quot;git://github.com/sbt/sbt-assembly#0.9.1&quot;)
 </code></pre><p>One caveat to using this method is that the local sbt will try to run
 the remote plugin’s build. It is quite possible that the plugin’s own
 build uses a different sbt version, as many plugins cross-publish for
@@ -154,7 +154,7 @@ artifacts when possible.
 the <code>eval</code> and <code>set</code> commands and <code>.sbt</code> and <code>project/*.scala</code> files.
 </p><pre><code class="">&gt; eval grizzled.sys.os
 </code></pre><p>In a <code>build.sbt</code> file:
-</p><pre><code>import grizzled.sys._
+</p><pre><code class="prettyprint lang-scala">import grizzled.sys._
 import OperatingSystem._
 
 libraryDependencies ++=
@@ -194,13 +194,13 @@ of this feature is to globally add commands, such as for IDE plugins.
 Use <code>globalSettings</code> to define the default value of a setting.
 </p><h4 id="Example+Plugin">Example Plugin<a href="#Example+Plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>An example of a typical plugin:
 </p><p><code>build.sbt</code>:
-</p><pre><code>sbtPlugin := true
+</p><pre><code class="prettyprint lang-scala">sbtPlugin := true
 
 name := &quot;sbt-obfuscate&quot;
 
 organization := &quot;org.example&quot;
 </code></pre><p><code>Plugin.scala</code>:
-</p><pre><code>package sbtobfuscate
+</p><pre><code class="prettyprint lang-scala">package sbtobfuscate
 
 import sbt._
 
@@ -238,27 +238,23 @@ object Obfuscate
 {
     def apply(sources: Seq[File]): Seq[File] := sources
 }
-</code></pre><h4 id="Usage+example">Usage example<a href="#Usage+example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A build definition that uses the plugin might look like:
-</p><p><code>obfuscate.sbt</code>
-</p><pre><code>obfuscateLiterals in obfuscate := true
+</code></pre><h4 id="Usage+example">Usage example<a href="#Usage+example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A build definition that uses the plugin might look like. <code>obfuscate.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">obfuscateLiterals in obfuscate := true
 </code></pre><h4 id="Root+Plugins">Root Plugins<a href="#Root+Plugins" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Some plugins should always be explicitly enabled on projects. Sbt calls
 these root plugins, i.e. plugins that are “root” nodes in the plugin
 depdendency graph. <code>AutoPlugin</code> by default defines a root plugin.
-</p><p>Example command root plugin ———————————
-</p><p>A basic plugin that adds commands looks like:
-</p><p><code>build.sbt</code>
-</p><pre><code>sbtPlugin := true
+</p><h4 id="Example+command+root+plugin">Example command root plugin<a href="#Example+command+root+plugin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>A basic plugin that adds commands looks like. <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">sbtPlugin := true
 
 name := &quot;sbt-sample&quot;
 
 organization := &quot;org.example&quot;
-</code></pre><p><code>Plugin.scala</code>
-</p><pre><code>package sbtsample
+</code></pre><p><code>Plugin.scala</code>:
+</p><pre><code class="prettyprint lang-scala">package sbtsample
 
 import sbt._
 import Keys._
-object Plugin extends AutoPlugin
-{
+object Plugin extends AutoPlugin {
   override lazy val projectSettings = Seq(commands += myCommand)
 
   lazy val myCommand = 
@@ -274,16 +270,15 @@ in one plugin (for example, use <code>commands ++= Seq(a,b)</code>). See
 for defining more useful commands, including ones that accept arguments
 and affect the execution state.
 </p><p>For a user to consume this plugin, it requires an explicit include via
-the <code>Project</code> instance. Here’s what their local sbt will look like.
-</p><p><code>build.sbt</code>
-</p><pre><code>val root = Project(&quot;example-plugin-usage&quot;, file(&quot;.&quot;)).setPlugins(MyPlugin)
+the <code>Project</code> instance. Here’s what their local sbt will look like. <code>build.sbt</code>:
+</p><pre><code class="prettyprint lang-scala">val root = Project(&quot;example-plugin-usage&quot;, file(&quot;.&quot;)).setPlugins(MyPlugin)
 </code></pre><p>The <code>setPlugins</code> method allows projects to explicitly define the
 <code>RootPlugin</code>s they wish to consume. <code>AutoPlugin</code>s are automatically
 added to the project as appropriate.
 </p><p>Projects can also exclude any type of plugin using the <code>disablePlugins</code>
 method. For example, if we wish to remove the JvmModule settings
 (<code>compile</code>,<code>test</code>,<code>run</code>), we modify our <code>build.sbt</code> as follows:
-</p><pre><code>val root = Project(&quot;example-plugin-usage&quot;, file(&quot;.&quot;)).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
+</p><pre><code class="prettyprint lang-scala">val root = Project(&quot;example-plugin-usage&quot;, file(&quot;.&quot;)).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
 </code></pre><h4 id="Global+plugins+example">Global plugins example<a href="#Global+plugins+example" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The simplest global plugin definition is declaring a library or plugin
 in <code>~/.sbt/0.13/plugins/build.sbt</code>:
 </p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;org.example&quot; %% &quot;example-plugin&quot; % &quot;0.1&quot;
@@ -324,7 +319,7 @@ plugin is consistent with and plays well with other plugins.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div class="current">Plugins</div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div class="current">Plugins</div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

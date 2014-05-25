@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -54,7 +56,7 @@ well: <code>(State, T) =&gt; State</code>.
 to be executed. This is done in the action part by transforming the
 (immutable) State provided to the command. A function that registers
 additional power commands might look like:
-</p><pre><code>val powerCommands: Seq[Command] = ...
+</p><pre><code class="prettyprint lang-scala">val powerCommands: Seq[Command] = ...
 
 val addPower: State =&gt; State =
   (state: State) =&gt;
@@ -64,10 +66,10 @@ val addPower: State =&gt; State =
 </code></pre><p>This takes the current commands, appends new commands, and drops
 duplicates. Alternatively, State has a convenience method for doing the
 above:
-</p><pre><code>val addPower2 = (state: State) =&gt; state ++ powerCommands
+</p><pre><code class="prettyprint lang-scala">val addPower2 = (state: State) =&gt; state ++ powerCommands
 </code></pre><p>Some examples of functions that modify the remaining commands to
 execute:
-</p><pre><code>val appendCommand: State =&gt; State =
+</p><pre><code class="prettyprint lang-scala">val appendCommand: State =&gt; State =
   (state: State) =&gt;
     state.copy(remainingCommands = state.remainingCommands :+ &quot;cleanup&quot;)
 
@@ -79,14 +81,14 @@ commands run. The second inserts a command that will run next. The
 remaining commands will run after the inserted command completes.
 </p><p>To indicate that a command has failed and execution should not continue,
 return <code>state.fail</code>.
-</p><pre><code>(state: State) =&gt; {
+</p><pre><code class="prettyprint lang-scala">(state: State) =&gt; {
   val success: Boolean = ...
   if(success) state else state.fail
 }
 </code></pre><h3 id="Project-related+data">Project-related data<a href="#Project-related+data" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Project-related information is stored in <code>attributes</code>. Typically,
 commands won’t access this directly but will instead use a convenience
 method to extract the most useful information:
-</p><pre><code>val state: State
+</p><pre><code class="prettyprint lang-scala">val state: State
 val extracted: Extracted = Project.extract(state)
 import extracted._
 </code></pre><p><a href="../../api/sbt/Extracted.html">Extracted</a> provides:
@@ -100,7 +102,7 @@ instance for evaluating Scala expressions in the build context.
 </li></ul><h3 id="Project+data">Project data<a href="#Project+data" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>All project data is stored in <code>structure.data</code>, which is of type
 <code>sbt.Settings[Scope]</code>. Typically, one gets information of type <code>T</code> in
 the following way:
-</p><pre><code>val key: SettingKey[T]
+</p><pre><code class="prettyprint lang-scala">val key: SettingKey[T]
 val scope: Scope
 val value: Option[T] = key in scope get structure.data
 </code></pre><p>Here, a <code>SettingKey[T]</code> is typically obtained from
@@ -111,7 +113,7 @@ obtained for. There are convenience overloads of <code>in</code> that can be use
 to specify only the required scope axes. See
 <a href="../../sxr/sbt/Structure.scala.html">Structure.scala</a> for where <code>in</code>
 and other parts of the settings interface are defined. Some examples:
-</p><pre><code>import Keys._
+</p><pre><code class="prettyprint lang-scala">import Keys._
 val extracted: Extracted
 import extracted._
 
@@ -122,13 +124,13 @@ val nameOpt: Option[String] = name in currentRef get structure.data
 val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 </code></pre><p><a href="../../api/sbt/Load$$BuildStructure.html">BuildStructure</a> contains
 information about build and project relationships. Key members are:
-</p><pre><code>units: Map[URI, LoadedBuildUnit]
+</p><pre><code class="prettyprint lang-scala">units: Map[URI, LoadedBuildUnit]
 root: URI
 </code></pre><p>A <code>URI</code> identifies a build and <code>root</code> identifies the initial build
 loaded. <a href="../../api/sbt/Load$$LoadedBuildUnit.html">LoadedBuildUnit</a>
 provides information about a single build. The key members of
 <code>LoadedBuildUnit</code> are:
-</p><pre><code>// Defines the base directory for the build
+</p><pre><code class="prettyprint lang-scala">// Defines the base directory for the build
 localBase: File
 
 // maps the project ID to the Project definition
@@ -144,7 +146,7 @@ the information needed for multi-project incremental recompilation. It
 also associates the ModuleID and Artifact with managed entries (those
 obtained by dependency management). When you only want the underlying
 <code>Seq[File]</code>, use <code>files</code>:
-</p><pre><code>val attributedClasspath: Seq[Attribute[File]] = ...
+</p><pre><code class="prettyprint lang-scala">val attributedClasspath: Seq[Attribute[File]] = ...
 val classpath: Seq[File] = attributedClasspath.files
 </code></pre><h3 id="Running+tasks">Running tasks<a href="#Running+tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>It can be useful to run a specific project task from a
 <a href="Commands.html">command</a> (<em>not from another task</em>) and get its result. For
@@ -152,10 +154,10 @@ example, an IDE-related command might want to get the classpath from a
 project or a task might analyze the results of a compilation. The
 relevant method is <code>Project.evaluateTask</code>, which has the following
 signature:
-</p><pre><code>def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
+</p><pre><code class="prettyprint lang-scala">def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
   checkCycles: Boolean = false, maxWorkers: Int = ...): Option[Result[T]]
 </code></pre><p>For example,
-</p><pre><code>val eval: State =&gt; State = (state: State) =&gt; {
+</p><pre><code class="prettyprint lang-scala">val eval: State =&gt; State = (state: State) =&gt; {
 
     // This selects the main 'compile' task for the current project.
     //   The value produced by 'compile' is of type inc.Analysis,
@@ -176,12 +178,12 @@ signature:
     }
 }
 </code></pre><p>For getting the test classpath of a specific project, use this key:
-</p><pre><code>val projectRef: ProjectRef = ...
+</p><pre><code class="prettyprint lang-scala">val projectRef: ProjectRef = ...
 val taskKey: Task[Seq[Attributed[File]]] =
   Keys.fullClasspath in (projectRef, Test)
 </code></pre><h3 id="Using+State+in+a+task">Using State in a task<a href="#Using+State+in+a+task" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>To access the current State from a task, use the <code>state</code> task as an
 input. For example,
-</p><pre><code>myTask := ... state.value ...
+</p><pre><code class="prettyprint lang-scala">myTask := ... state.value ...
 </code></pre><div class="bottom nav span-16">
                         <em>Next Page</em>
                         <span class="arrow">&gt;</span>
@@ -192,7 +194,7 @@ input. For example,
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div class="current">State and actions</div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div><a href="Parallel-Execution.html">Parallel Execution</a></div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div class="current">State and actions</div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

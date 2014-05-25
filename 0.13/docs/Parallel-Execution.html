@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -42,14 +44,14 @@
             <h2 id="Parallel+Execution">Parallel Execution<a href="#Parallel+Execution" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><h3 id="Task+ordering">Task ordering<a href="#Task+ordering" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Task ordering is specified by declaring a task’s inputs. Correctness of
 execution requires correct input declarations. For example, the
 following two tasks do not have an ordering specified:
-</p><pre><code>write := IO.write(file(&quot;/tmp/sample.txt&quot;), &quot;Some content.&quot;)
+</p><pre><code class="prettyprint lang-scala">write := IO.write(file(&quot;/tmp/sample.txt&quot;), &quot;Some content.&quot;)
 
 read := IO.read(file(&quot;/tmp/sample.txt&quot;))
 </code></pre><p>sbt is free to execute <code>write</code> first and then <code>read</code>, <code>read</code> first and
 then <code>write</code>, or <code>read</code> and <code>write</code> simultaneously. Execution of these
 tasks is non-deterministic because they share a file. A correct
 declaration of the tasks would be:
-</p><pre><code>write := {
+</p><pre><code class="prettyprint lang-scala">write := {
   val f = file(&quot;/tmp/sample.txt&quot;)
   IO.write(f, &quot;Some content.&quot;)
   f
@@ -81,7 +83,7 @@ Each project still had a separate task for running its tests and so test
 tasks in separate projects could still run in parallel if overall
 execution was parallel. There was no way to restriction execution such
 that only a single test out of all projects executed.
-</p><h4 id="Configuration">Configuration<a href="#Configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt 0.12.0 introduces a general infrastructure for restricting task
+</p><h3 id="Configuration">Configuration<a href="#Configuration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>sbt 0.12.0 introduces a general infrastructure for restricting task
 concurrency beyond the usual ordering declarations. There are two parts
 to these restrictions.
 </p><ol><li>A task is tagged in order to classify its purpose and resource
@@ -92,7 +94,7 @@ For example, Tags.limit(Tags.CPU, 4) would allow up to four
 computation-heavy tasks to run at a time.
 </li></ol><p>The system is thus dependent on proper tagging of tasks and then on a
 good set of rules.
-</p><h5 id="Tagging+Tasks">Tagging Tasks<a href="#Tagging+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>In general, a tag is associated with a weight that represents the task’s
+</p><h4 id="Tagging+Tasks">Tagging Tasks<a href="#Tagging+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In general, a tag is associated with a weight that represents the task’s
 relative utilization of the resource represented by the tag. Currently,
 this weight is an integer, but it may be a floating point in the future.
 <code>Initialize[Task[T]]</code> defines two methods for tagging the constructed
@@ -101,19 +103,19 @@ Task: <code>tag</code> and <code>tagw</code>. The first method, <code>tag</code>
 accepts pairs of tags and weights. For example, the following associates
 the <code>CPU</code> and <code>Compile</code> tags with the <code>compile</code> task (with a weight of
 1).
-</p><pre><code>def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+</p><pre><code class="prettyprint lang-scala">def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
 compile := myCompileTask.value
 </code></pre><p>Different weights may be specified by passing tag/weight pairs to
 <code>tagw</code>:
-</p><pre><code>def downloadImpl = Def.task { ... } tagw(Tags.Network -&gt; 3)
+</p><pre><code class="prettyprint lang-scala">def downloadImpl = Def.task { ... } tagw(Tags.Network -&gt; 3)
 
 download := downloadImpl.value
-</code></pre><h5 id="Defining+Restrictions">Defining Restrictions<a href="#Defining+Restrictions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Once tasks are tagged, the <code>concurrentRestrictions</code> setting sets
+</code></pre><h4 id="Defining+Restrictions">Defining Restrictions<a href="#Defining+Restrictions" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Once tasks are tagged, the <code>concurrentRestrictions</code> setting sets
 restrictions on the tasks that may be concurrently executed based on the
 weighted tags of those tasks. This is necessarily a global set of rules,
 so it must be scoped <code>in Global</code>. For example,
-</p><pre><code>concurrentRestrictions in Global := Seq(
+</p><pre><code class="prettyprint lang-scala">concurrentRestrictions in Global := Seq(
   Tags.limit(Tags.CPU, 2),
   Tags.limit(Tags.Network, 10),
   Tags.limit(Tags.Test, 1),
@@ -132,7 +134,7 @@ met.
 tasks are automatically assigned the label <code>Untagged</code>. You may want to
 include these tasks in the CPU rule by using the <code>limitSum</code> method. For
 example:
-</p><pre><code>...
+</p><pre><code class="prettyprint lang-scala">...
 Tags.limitSum(2, Tags.CPU, Tags.Untagged)
 ...
 </code></pre><p>Note that the limit is the first argument so that tags can be provided
@@ -144,7 +146,7 @@ exclusive tag) and no other tasks may start execution until it
 completes. For example, a task could be tagged with a custom tag
 <code>Benchmark</code> and a rule configured to ensure such a task is executed by
 itself:
-</p><pre><code>...
+</p><pre><code class="prettyprint lang-scala">...
 Tags.exclusive(Benchmark)
 ...
 </code></pre><p>Finally, for the most flexibility, you can specify a custom function of
@@ -154,7 +156,7 @@ indicates that the set of tasks is allowed to execute concurrently. If
 the return value is <code>false</code>, the set of tasks will not be allowed to
 execute concurrently. For example, <code>Tags.exclusive(Benchmark)</code> is
 equivalent to the following:
-</p><pre><code>...
+</p><pre><code class="prettyprint lang-scala">...
 Tags.customLimit { (tags: Map[Tag,Int]) =&gt;
   val exclusive = tags.getOrElse(Benchmark, 0)
    //  the total number of tasks in the group
@@ -193,30 +195,30 @@ define any tags.
 </li></ul><p>Of additional note is that the default <code>test</code> task will propagate its
 tags to each child task created for each test class.
 </p><p>The default rules provide the same behavior as previous versions of sbt:
-</p><pre><code>concurrentRestrictions in Global := {
+</p><pre><code class="prettyprint lang-scala">concurrentRestrictions in Global := {
   val max = Runtime.getRuntime.availableProcessors
   Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
 }
 </code></pre><p>As before, <code>parallelExecution in Test</code> controls whether tests are mapped
 to separate tasks. To restrict the number of concurrently executing
 tests in all projects, use:
-</p><pre><code>concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+</p><pre><code class="prettyprint lang-scala">concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
 </code></pre><h4 id="Custom+Tags">Custom Tags<a href="#Custom+Tags" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>To define a new tag, pass a String to the <code>Tags.Tag</code> method. For
 example:
-</p><pre><code>val Custom = Tags.Tag(&quot;custom&quot;)
+</p><pre><code class="prettyprint lang-scala">val Custom = Tags.Tag(&quot;custom&quot;)
 </code></pre><p>Then, use this tag as any other tag. For example:
-</p><pre><code>def aImpl = Def.task { ... } tag(Custom)
+</p><pre><code class="prettyprint lang-scala">def aImpl = Def.task { ... } tag(Custom)
 
 aCustomTask := aImpl.value 
 
 concurrentRestrictions in Global += 
   Tags.limit(Custom, 1)
-</code></pre><h4 id="Future+work">Future work<a href="#Future+work" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>This is an experimental feature and there are several aspects that may
+</code></pre><h3 id="Future+work">Future work<a href="#Future+work" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>This is an experimental feature and there are several aspects that may
 change or require further work.
-</p><h5 id="Tagging+Tasks">Tagging Tasks<a href="#Tagging+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Currently, a tag applies only to the immediate computation it is defined
+</p><h4 id="Tagging+Tasks">Tagging Tasks<a href="#Tagging+Tasks" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Currently, a tag applies only to the immediate computation it is defined
 on. For example, in the following, the second compile definition has no
 tags applied to it. Only the first computation is labeled.
-</p><pre><code>def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+</p><pre><code class="prettyprint lang-scala">def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
 compile := myCompileTask.value
 
@@ -226,19 +228,19 @@ compile := {
 }
 </code></pre><p>Is this desirable? expected? If not, what is a better, alternative
 behavior?
-</p><h5 id="Fractional+weighting">Fractional weighting<a href="#Fractional+weighting" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Weights are currently <code>int</code>s, but could be changed to be <code>double</code>s if
+</p><h4 id="Fractional+weighting">Fractional weighting<a href="#Fractional+weighting" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Weights are currently <code>int</code>s, but could be changed to be <code>double</code>s if
 fractional weights would be useful. It is important to preserve a
 consistent notion of what a weight of 1 means so that built-in and
 custom tasks share this definition and useful rules can be written.
-</p><h5 id="Default+Behavior">Default Behavior<a href="#Default+Behavior" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>User feedback on what custom rules work for what workloads will help
+</p><h4 id="Default+Behavior">Default Behavior<a href="#Default+Behavior" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>User feedback on what custom rules work for what workloads will help
 determine a good set of default tags and rules.
-</p><h5 id="Adjustments+to+Defaults">Adjustments to Defaults<a href="#Adjustments+to+Defaults" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>Rules should be easier to remove or redefine, perhaps by giving them
+</p><h4 id="Adjustments+to+Defaults">Adjustments to Defaults<a href="#Adjustments+to+Defaults" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Rules should be easier to remove or redefine, perhaps by giving them
 names. As it is, rules must be appended or all rules must be completely
 redefined. Also, tags can only be defined for tasks at the original
 definition site when using the <code>:=</code> syntax.
 </p><p>For removing tags, an implementation of <code>removeTag</code> should follow from
 the implementation of <code>tag</code> in a straightforward manner.
-</p><h5 id="Other+characteristics">Other characteristics<a href="#Other+characteristics" class="header-link"><span class="header-link-content">&nbsp;</span></a></h5><p>The system of a tag with a weight was selected as being reasonably
+</p><h4 id="Other+characteristics">Other characteristics<a href="#Other+characteristics" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>The system of a tag with a weight was selected as being reasonably
 powerful and flexible without being too complicated. This selection is
 not fundamental and could be enhance, simplified, or replaced if
 necessary. The fundamental interface that describes the constraints the
@@ -261,7 +263,7 @@ API documentation for details.
       <a name="toc"></a>
       <h4 class="toctitle">Contents</h4>
       <div class="tocbody">
-      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Building.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div class="current">Parallel Execution</div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
+      <div><a href="index.html">sbt Reference Manual</a></div><ol class="toc"> <li><div><a href="General-Info.html">General Information</a></div><ol class="toc"> <li><div><a href="Credits.html">Credits</a></div></li><li><div><a href="Community-Plugins.html">Community Plugins</a></div></li><li><div><a href="Repository-Roles.html">Community Repository Policy</a></div></li><li><div><a href="Bintray-For-Plugins.html">Bintray For Plugins</a></div></li><li><div><a href="Setup-Notes.html">Setup Notes</a></div></li><li><div><a href="Using-Sonatype.html">Deploying to Sonatype</a></div></li><li><div><a href="Changes.html">Changes</a></div><ol class="toc"> <li><div><a href="ChangeSummary_0.13.0.html">sbt 0.13.0 Changes</a></div></li><li><div><a href="ChangeSummary_0.12.0.html">sbt 0.12.0 Changes</a></div></li><li><div><a href="Older-Changes.html">Older Changes</a></div></li><li><div><a href="Migrating-from-sbt-07x.html">Migrating from 0.7 to 0.10+</a></div></li> </ol></li><li><div><a href="Contibuting-to-sbt.html">Contributing to sbt</a></div></li> </ol></li><li><div><a href="Faq.html">Frequently Asked Questions</a></div><ol class="toc">  </ol></li><li><div><a href="Howto.html">How to…</a></div><ol class="toc"> <li><div><a href="Howto-Classpaths.html">Classpaths</a></div></li><li><div><a href="Howto-Customizing-Paths.html">Customizing paths</a></div></li><li><div><a href="Howto-Generating-Files.html">Generating files</a></div></li><li><div><a href="Howto-Inspect-the-Build.html">Inspect the build</a></div></li><li><div><a href="Howto-Interactive-Mode.html">Interactive mode</a></div></li><li><div><a href="Howto-Logging.html">Configure and use logging</a></div></li><li><div><a href="Howto-Project-Metadata.html">Project metadata</a></div></li><li><div><a href="Howto-Package.html">Configure packaging</a></div></li><li><div><a href="Howto-Running-Commands.html">Running commands</a></div></li><li><div><a href="Howto-Scala.html">Configure and use Scala</a></div></li><li><div><a href="Howto-Scaladoc.html">Generate API documentation</a></div></li><li><div><a href="Howto-Triggered.html">Triggered execution</a></div></li><li><div><a href="Examples.html">Examples</a></div><ol class="toc"> <li><div><a href="Basic-Def-Examples.html">.sbt build examples</a></div></li><li><div><a href="Full-Def-Example.html">.scala build example</a></div></li><li><div><a href="Advanced-Configurations-Example.html">Advanced configurations example</a></div></li><li><div><a href="Advanced-Command-Example.html">Advanced command example</a></div></li> </ol></li> </ol></li><li><div><a href="Detailed-Topics.html">Detailed Topics</a></div><ol class="toc"> <li><div><a href="Using-sbt.html">Using sbt</a></div><ol class="toc"> <li><div><a href="Command-Line-Reference.html">Command Line Reference</a></div></li><li><div><a href="Console-Project.html">Console Project</a></div></li><li><div><a href="Cross-Build.html">Cross-building</a></div></li><li><div><a href="Inspecting-Settings.html">Interacting with the Configuration System</a></div></li><li><div><a href="Triggered-Execution.html">Triggered Execution</a></div></li><li><div><a href="Scripts.html">Scripts, REPL, and Dependencies</a></div></li><li><div><a href="Understanding-Recompilation.html">Understanding Incremental Recompilation</a></div></li> </ol></li><li><div><a href="Configuration.html">Configuration</a></div><ol class="toc"> <li><div><a href="Classpaths.html">Classpaths, sources, and resources</a></div></li><li><div><a href="Compiler-Plugins.html">Compiler Plugin Support</a></div></li><li><div><a href="Configuring-Scala.html">Configuring Scala</a></div></li><li><div><a href="Forking.html">Forking</a></div></li><li><div><a href="Global-Settings.html">Global Settings</a></div></li><li><div><a href="Java-Sources.html">Java Sources</a></div></li><li><div><a href="Mapping-Files.html">Mapping Files</a></div></li><li><div><a href="Local-Scala.html">Local Scala</a></div></li><li><div><a href="Macro-Projects.html">Macro Projects</a></div></li><li><div><a href="Paths.html">Paths</a></div></li><li><div class="current">Parallel Execution</div></li><li><div><a href="Process.html">External Processes</a></div></li><li><div><a href="Running-Project-Code.html">Running Project Code</a></div></li><li><div><a href="Testing.html">Testing</a></div></li> </ol></li><li><div><a href="Dependency-Management.html">Dependency Management</a></div><ol class="toc"> <li><div><a href="Artifacts.html">Artifacts</a></div></li><li><div><a href="Dependency-Management-Flow.html">Dependency Management Flow</a></div></li><li><div><a href="Library-Management.html">Library Management</a></div></li><li><div><a href="Proxy-Repositories.html">Proxy Repositories</a></div></li><li><div><a href="Publishing.html">Publishing</a></div></li><li><div><a href="Resolvers.html">Resolvers</a></div></li><li><div><a href="Update-Report.html">Update Report</a></div></li> </ol></li><li><div><a href="Tasks-and-Commands.html">Tasks and Commands</a></div><ol class="toc"> <li><div><a href="Tasks.html">Tasks</a></div></li><li><div><a href="Input-Tasks.html">Input Tasks</a></div></li><li><div><a href="Commands.html">Commands</a></div></li><li><div><a href="Parsing-Input.html">Parsing and tab completion</a></div></li><li><div><a href="Build-State.html">State and actions</a></div></li><li><div><a href="Task-Inputs.html">Tasks/Settings: Motivation</a></div></li> </ol></li><li><div><a href="Plugins-and-Best-Practices.html">Plugins and Best Practices</a></div><ol class="toc"> <li><div><a href="Best-Practices.html">General Best Practices</a></div></li><li><div><a href="Plugins.html">Plugins</a></div></li><li><div><a href="Plugins-Best-Practices.html">Plugins Best Practices</a></div></li> </ol></li><li><div><a href="Sbt-Launcher.html">Sbt Launcher</a></div><ol class="toc"> <li><div><a href="Launcher-Getting-Started.html">Getting Started with the Sbt Launcher</a></div></li><li><div><a href="Launcher-Architecture.html">Sbt Launcher Architecture</a></div></li><li><div><a href="Launcher-Configuration.html">Sbt Launcher Configuration</a></div></li> </ol></li> </ol></li><li><div><a href="Developers-Guide.html">Developer’s Guide</a></div><ol class="toc"> <li><div><a href="Core-Principles.html">Core Principles</a></div></li><li><div><a href="Settings-Core.html">Settings Core</a></div></li><li><div><a href="Setting-Initialization.html">Setting Initialization</a></div></li><li><div><a href="Build-Loaders.html">Build Loaders</a></div></li><li><div><a href="Command-Line-Applications.html">Creating Command Line Applications Using sbt</a></div></li><li><div><a href="Nightly-Builds.html">Nightly Builds</a></div></li> </ol></li><li><div><a href="Name-Index.html">Index</a></div></li><li class="generated"><div><a href="Contents+in+Depth.html">Contents in Depth</a></div></li><li class="generated"><div><a href="Combined+Pages.html">Combined Pages</a></div></li> </ol></div></div>
           </div>
         </div>
         <div class="header">

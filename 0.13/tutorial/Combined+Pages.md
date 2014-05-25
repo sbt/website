@@ -1515,7 +1515,7 @@ or like this, where `configuration` is also a string:
 libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
-`libraryDependencies `is declared in
+`libraryDependencies` is declared in
 [Keys](../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) like
 this:
 

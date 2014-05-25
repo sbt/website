@@ -2981,7 +2981,7 @@ Download sbt 0.13.2 as described on
 You can run 0.13.2 the same way that you run 0.7.x, either simply:
 
 ```
-java -jar sbt-launch.jar
+$ java -jar sbt-launch.jar
 ```
 
 Or (as most users do) with a shell script, as described on
@@ -3368,16 +3368,18 @@ scalacOptions in Samples := "-deprecation" :: Nil
 The example adds all of the usual compilation related settings and tasks
 to `samples`:
 
-    samples:run
-    samples:runMain
-    samples:compile
-    samples:console
-    samples:consoleQuick
-    samples:scalacOptions
-    samples:fullClasspath
-    samples:package
-    samples:packageSrc
-    ...
+```
+samples:run
+samples:runMain
+samples:compile
+samples:console
+samples:consoleQuick
+samples:scalacOptions
+samples:fullClasspath
+samples:package
+samples:packageSrc
+...
+```
 
 #### How do I add a test configuration?
 
@@ -3410,9 +3412,11 @@ If you want to be able to supply arguments on the command line, replace
 This run task can be configured individually by specifying the task key
 in the scope. For example:
 
-    fork in myRunTask := true
+```scala
+fork in myRunTask := true
 
-    javaOptions in myRunTask += "-Xmx6144m"
+javaOptions in myRunTask += "-Xmx6144m"
+```
 
 #### How should I express a dependency on an outside tool such as proguard?
 
@@ -3432,43 +3436,49 @@ As an example, consider a `proguard` task. This task needs the ProGuard
 jars in order to run the tool. First, define and add the new
 configuration:
 
-    val ProguardConfig = config("proguard") hide
+```scala
+val ProguardConfig = config("proguard") hide
 
-    ivyConfigurations += ProguardConfig
+ivyConfigurations += ProguardConfig
+```
 
 Then,
 
-    // Add proguard as a dependency in the custom configuration.
-    //  This keeps it separate from project dependencies.
-    libraryDependencies +=
-       "net.sf.proguard" % "proguard" % "4.4" % ProguardConfig.name
+```scala
+// Add proguard as a dependency in the custom configuration.
+//  This keeps it separate from project dependencies.
+libraryDependencies +=
+   "net.sf.proguard" % "proguard" % "4.4" % ProguardConfig.name
 
-    // Extract the dependencies from the UpdateReport.
-    managedClasspath in proguard := {
-        // these are the types of artifacts to include
-        val artifactTypes: Set[String] = (classpathTypes in proguard).value
-        Classpaths.managedJars(proguardConfig, artifactTypes, update.value)
-    }
+// Extract the dependencies from the UpdateReport.
+managedClasspath in proguard := {
+    // these are the types of artifacts to include
+    val artifactTypes: Set[String] = (classpathTypes in proguard).value
+    Classpaths.managedJars(proguardConfig, artifactTypes, update.value)
+}
 
-    // Use the dependencies in a task, typically by putting them
-    //  in a ClassLoader and reflectively calling an appropriate
-    //  method.
-    proguard := {
-        val cp: Seq[File] = (managedClasspath in proguard).value
-      // ... do something with , which includes proguard ...
-    }
+// Use the dependencies in a task, typically by putting them
+//  in a ClassLoader and reflectively calling an appropriate
+//  method.
+proguard := {
+    val cp: Seq[File] = (managedClasspath in proguard).value
+  // ... do something with , which includes proguard ...
+}
+```
 
 Defining the intermediate classpath is optional, but it can be useful
 for debugging or if it needs to be used by multiple tasks. It is also
 possible to specify artifact types inline. This alternative `proguard`
 task would look like:
 
-    proguard := {
-       val artifactTypes = Set("jar")
-        val cp: Seq[File] =
-          Classpaths.managedJars(proguardConfig, artifactTypes, update.value)
-      // ... do something with , which includes proguard ...
-    }
+```scala
+proguard := {
+   val artifactTypes = Set("jar")
+    val cp: Seq[File] =
+      Classpaths.managedJars(proguardConfig, artifactTypes, update.value)
+  // ... do something with , which includes proguard ...
+}
+```
 
 #### How would I change sbt's classpath dynamically?
 
@@ -3499,20 +3509,21 @@ such as in the `onLoad` setting (described below) or in a
 component and reloads sbt if they were not already added. Note that
 reloading will drop the user's session state.
 
-    def augment(extra: Seq[File])(s: State): State =
-    {
-        // Get the component provider
-      val cs: xsbti.ComponentProvider = s.configuration.provider.components()
+```scala
+def augment(extra: Seq[File])(s: State): State = {
+    // Get the component provider
+  val cs: xsbti.ComponentProvider = s.configuration.provider.components()
 
-        // Adds the files in 'extra' to the "extra" component
-        //   under an exclusive machine-wide lock.
-        //   The returned value is 'true' if files were actually copied and 'false'
-        //   if the target files already exists (based on name only).
-      val copied: Boolean = s.locked(cs.lockFile, cs.addToComponent("extra", extra.toArray))
+    // Adds the files in 'extra' to the "extra" component
+    //   under an exclusive machine-wide lock.
+    //   The returned value is 'true' if files were actually copied and 'false'
+    //   if the target files already exists (based on name only).
+  val copied: Boolean = s.locked(cs.lockFile, cs.addToComponent("extra", extra.toArray))
 
-        // If files were copied, reload so that we use the new classpath.
-      if(copied) s.reload else s
-    }
+    // If files were copied, reload so that we use the new classpath.
+  if(copied) s.reload else s
+}
+```
 
 #### How can I take action when the project is loaded or unloaded?
 
@@ -3525,34 +3536,38 @@ hooks are global, modifying this setting typically involves composing a
 new function with the previous value. The following example shows the
 basic structure of defining `onLoad`:
 
-    // Compose our new function 'f' with the existing transformation.
-    {
-      val f: State => State = ...
-      onLoad in Global := {
-        val previous = (onLoad in Global).value
-        f compose previous
-      }
-    }
+```scala
+// Compose our new function 'f' with the existing transformation.
+{
+  val f: State => State = ...
+  onLoad in Global := {
+    val previous = (onLoad in Global).value
+    f compose previous
+  }
+}
+```
 
 #### Example of project load/unload hooks
 
 The following example maintains a count of the number of times a project
 has been loaded and prints that number:
 
-    {
-      // the key for the current count
-      val key = AttributeKey[Int]("loadCount")
-      // the State transformer
-      val f = (s: State) => {
-        val previous = s get key getOrElse 0
-        println("Project load count: " + previous)
-        s.put(key, previous + 1)
-      }
-      onLoad in Global := {
-        val previous = (onLoad in Global).value
-        f compose previous
-      }
-    }
+```scala
+{
+  // the key for the current count
+  val key = AttributeKey[Int]("loadCount")
+  // the State transformer
+  val f = (s: State) => {
+    val previous = s get key getOrElse 0
+    println("Project load count: " + previous)
+    s.put(key, previous + 1)
+  }
+  onLoad in Global := {
+    val previous = (onLoad in Global).value
+    f compose previous
+  }
+}
+```
 
 ### Errors
 
@@ -3565,39 +3580,47 @@ will stop loading.
 In this example, we try to append a library to `libraryDependencies`
 before it is initialized with an empty sequence.
 
-    object MyBuild extends Build {
-      val root = Project(id = "root", base = file("."),
-        settings = Seq(
-          libraryDependencies += "commons-io" % "commons-io" % "1.4" % "test"
-        )
-      ).disablePlugins(plugins.IvyModule)
-    }
+```scala
+object MyBuild extends Build {
+  val root = Project(id = "root", base = file("."),
+    settings = Seq(
+      libraryDependencies += "commons-io" % "commons-io" % "1.4" % "test"
+    )
+  ).disablePlugins(plugins.IvyModule)
+}
+```
 
 To correct this, include the IvyModule plugin settings, which includes
 `libraryDependencies := Seq()`. So, we just drop the explicit disabling.
 
-    object MyBuild extends Build {
-      val root = Project(id = "root", base = file("."),
-        settings = Seq(
-          libraryDependencies += "commons-io" % "commons-io" % "1.4" % "test"
-        )
-      )
-    }
+```scala
+object MyBuild extends Build {
+  val root = Project(id = "root", base = file("."),
+    settings = Seq(
+      libraryDependencies += "commons-io" % "commons-io" % "1.4" % "test"
+    )
+  )
+}
+```
 
 A more subtle variation of this error occurs when using
 [scoped settings][Scopes].
 
-    // error: Reference to uninitialized setting
-    settings = Seq(
-      libraryDependencies += "commons-io" % "commons-io" % "1.2" % "test",
-      fullClasspath := fullClasspath.value.filterNot(_.data.name.contains("commons-io"))
-    )
+```scala
+// error: Reference to uninitialized setting
+settings = Seq(
+  libraryDependencies += "commons-io" % "commons-io" % "1.2" % "test",
+  fullClasspath := fullClasspath.value.filterNot(_.data.name.contains("commons-io"))
+)
+```
 
 This setting varies between the test and compile scopes. The solution is
 use the scoped setting, both as the input to the initializer, and the
 setting that we update.
 
-    fullClasspath in Compile := (fullClasspath in Compile).value.filterNot(_.data.name.contains("commons-io"))
+```scala
+fullClasspath in Compile := (fullClasspath in Compile).value.filterNot(_.data.name.contains("commons-io"))
+```
 
 ### Dependency Management
 
@@ -3607,9 +3630,11 @@ This error occurs when the published checksum, such as a sha1 or md5
 hash, differs from the checksum computed for a downloaded artifact, such
 as a jar or pom.xml. An example of such an error is:
 
-    [warn]  problem while downloading module descriptor:
-    http://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2.pom:
-    invalid sha1: expected=ad3fda4adc95eb0d061341228cc94845ddb9a6fe computed=0ce5d4a03b07c8b00ab60252e5cacdc708a4e6d8 (1070ms)
+```
+[warn]  problem while downloading module descriptor:
+http://repo1.maven.org/maven2/commons-fileupload/commons-fileupload/1.2.2/commons-fileupload-1.2.2.pom:
+invalid sha1: expected=ad3fda4adc95eb0d061341228cc94845ddb9a6fe computed=0ce5d4a03b07c8b00ab60252e5cacdc708a4e6d8 (1070ms)
+```
 
 The invalid checksum should generally be reported to the repository
 owner (as
@@ -3617,7 +3642,9 @@ owner (as
 above error). In the meantime, you can temporarily disable checking with
 the following setting:
 
-    checksums in update := Nil
+```scala
+checksums in update := Nil
+```
 
 See [library management][Library-Management] for details.
 
@@ -3654,17 +3681,21 @@ in the same class loader as the application classes. Therefore, when
 using the Scala interpreter, it is important to set it up properly to
 avoid an error message like:
 
-    Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
-    ** Note that as of 2.8 scala does not assume use of the java classpath.
-    ** For the old behavior pass -usejavacp to scala, or if using a Settings
-    ** object programmatically, settings.usejavacp.value = true.
+```
+Failed to initialize compiler: class scala.runtime.VolatileBooleanRef not found.
+** Note that as of 2.8 scala does not assume use of the java classpath.
+** For the old behavior pass -usejavacp to scala, or if using a Settings
+** object programmatically, settings.usejavacp.value = true.
+```
 
 The key is to initialize the Settings for the interpreter using
 *embeddedDefaults*. For example:
 
-    val settings = new Settings
-    settings.embeddedDefaults[MyType]
-    val interpreter = new Interpreter(settings, ...)
+```scala
+ val settings = new Settings
+ settings.embeddedDefaults[MyType]
+ val interpreter = new Interpreter(settings, ...)
+```
 
 Here, MyType is a representative class that should be included on the
 interpreter's classpath and in its application class loader. For more
@@ -3676,10 +3707,12 @@ Similarly, use a representative class as the type argument when using
 the *break* and *breakIf* methods of *ILoop*, as in the following
 example:
 
-    def x(a: Int, b: Int) = {
-      import scala.tools.nsc.interpreter.ILoop
-      ILoop.breakIf[MyType](a != b, "a" -> a, "b" -> b )
-    }
+```scala
+def x(a: Int, b: Int) = {
+  import scala.tools.nsc.interpreter.ILoop
+  ILoop.breakIf[MyType](a != b, "a" -> a, "b" -> b )
+}
+```
 
 ### 0.7 to 0.10+ Migration
 
@@ -3748,12 +3781,14 @@ Be aware that compilation and tests run in parallel by default in sbt
 change this behaviour by adding one of the following to your
 `build.sbt`:
 
-    // Execute tests in the current project serially.
-    // Tests from other projects may still run concurrently.
-    parallelExecution in Test := false
+```scala
+// Execute tests in the current project serially.
+// Tests from other projects may still run concurrently.
+parallelExecution in Test := false
 
-    // Execute everything serially (including compilation and tests)
-    parallelExecution := false
+// Execute everything serially (including compilation and tests)
+parallelExecution := false
+```
 
 #### What happened to the web development and Web Start support since 0.7?
 
@@ -4220,6 +4255,7 @@ includeFilter in (Compile, unmanagedJars) := "*.jar"
 
 includeFilter in (Test, unmanagedJars) := "*.jar" || "*.zip"
 ```
+
 > **Note**: By default, sbt includes jars, zips, and native dynamic libraries,
 > excluding hidden files.
 
@@ -4946,7 +4982,7 @@ The Scala compiler does not print the full details of warnings by
 default. Compiling code that uses the deprecated `error` method from
 Predef might generate the following output:
 
-``` scala
+```
 > compile
 [info] Compiling 1 Scala source to <...>/classes...
 [warn] there were 1 deprecation warnings; re-run with -deprecation for details
@@ -4959,7 +4995,7 @@ alternative when using Scala 2.10 and later is to run `printWarnings`.
 This task will display all warnings from the previous compilation. For
 example,
 
-```scala
+```
 > printWarnings
 [warn] A.scala:2: method error in object Predef is deprecated: Use sys.error(message) instead
 [warn]  def x = error("Failed.")
@@ -5006,13 +5042,13 @@ section, or it may be applied to a specific project, configuration, or
 task. For example, to change the logging level for compilation to only
 show warnings and errors:
 
-```
+```scala
 > set logLevel in compile := Level.Warn
 ```
 
 To enable debug logging for all tasks in the current project,
 
-```
+```scala
 > set logLevel := Level.Warn
 ```
 
@@ -5045,7 +5081,7 @@ stack frames.
 For example, the following configures sbt to show stack traces up to the
 first sbt frame:
 
-```
+```scala
 > set every traceLevel := 0
 ```
 
@@ -5053,7 +5089,7 @@ The `every` part means to override the setting in all scopes. To change
 the trace printing behavior for a single project, configuration, or
 task, scope `traceLevel` appropriately:
 
-```
+```scala
 > set traceLevel in Test := 5
 > set traceLevel in update := 0
 > set traceLevel in ThisProject := -1
@@ -6693,15 +6729,20 @@ first `%` in an inline dependency to be `%%`. This tells `sbt` that it
 should append the current version of Scala being used to build the
 library to the dependency's name. For example:
 
-    libraryDependencies += "net.databinder" %% "dispatch" % "0.8.0"
-
+```scala
+libraryDependencies += "net.databinder" %% "dispatch" % "0.8.0"
+```
 A nearly equivalent, manual alternative for a fixed version of Scala is:
 
-    libraryDependencies += "net.databinder" % "dispatch_2.10" % "0.8.0"
+```scala
+libraryDependencies += "net.databinder" % "dispatch_2.10" % "0.8.0"
+```
 
 or for Scala versions before 2.10:
 
-    libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
+```scala
+libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
+```
 
 ### Cross-Building a Project
 
@@ -6709,12 +6750,16 @@ Define the versions of Scala to build against in the
 `crossScalaVersions` setting. Versions of Scala 2.8.0 or later are
 allowed. For example, in a `.sbt` build definition:
 
-    crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
+```scala
+crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
+```
 
 To build against all versions listed in `build.scala.versions`, prefix
 the action to run with `+`. For example:
 
-    > + package
+```
+> + package
+```
 
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
@@ -6747,35 +6792,45 @@ compiled against 2.10 for your 2.10.x builds, and so on. You can have
 fine-grained control over the behavior for for different Scala versions
 by using the `cross` method on `ModuleID` These are equivalent:
 
-    "a" % "b" % "1.0"
-    "a" % "b" % "1.0" cross CrossVersion.Disabled
+```scala
+"a" % "b" % "1.0"
+"a" % "b" % "1.0" cross CrossVersion.Disabled
+```
 
 These are equivalent:
 
-    "a" %% "b" % "1.0"
-    "a" % "b" % "1.0" cross CrossVersion.binary
+```scala
+"a" %% "b" % "1.0"
+"a" % "b" % "1.0" cross CrossVersion.binary
+```
 
 This overrides the defaults to always use the full Scala version instead
 of the binary Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.full
+```scala
+"a" % "b" % "1.0" cross CrossVersion.full
+```
 
 This uses a custom function to determine the Scala version to use based
 on the binary Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.binaryMapped {
-      case "2.9.1" => "2.9.0" // remember that pre-2.10, binary=full
-      case "2.10" => "2.10.0" // useful if a%b was released with the old style
-      case x => x
-    }
+```scala
+"a" % "b" % "1.0" cross CrossVersion.binaryMapped {
+  case "2.9.1" => "2.9.0" // remember that pre-2.10, binary=full
+  case "2.10" => "2.10.0" // useful if a%b was released with the old style
+  case x => x
+}
+```
 
 This uses a custom function to determine the Scala version to use based
 on the full Scala version:
 
-    "a" % "b" % "1.0" cross CrossVersion.fullMapped {
-      case "2.9.1" => "2.9.0"
-      case x => x
-    }
+```scala
+"a" % "b" % "1.0" cross CrossVersion.fullMapped {
+  case "2.9.1" => "2.9.0"
+  case x => x
+}
+```
 
 A custom function is mainly used when cross-building and a dependency
 isn't available for all Scala versions or it uses a different convention
@@ -7183,7 +7238,7 @@ mode that only requires a JRE installed.
 Install [conscript](https://github.com/n8han/conscript).
 
 ```
-cs sbt/sbt --branch 0.12.0
+$ cs sbt/sbt --branch 0.12.0
 ```
 
 This will create two scripts: `screpl` and `scalas`.
@@ -7199,13 +7254,13 @@ main class, by adding the `-Dsbt.main.class=sbt.ScriptMain` parameter to
 the `java` command. Its command line should look like:
 
 ```
-java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "$@"
+$ java -Dsbt.main.class=sbt.ScriptMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "$@"
 ```
 
 For the REPL runner `screpl`, use `sbt.ConsoleMain` as the main class:
 
 ```
-java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "$@"
+$ java -Dsbt.main.class=sbt.ConsoleMain -Dsbt.boot.directory=/home/user/.sbt/boot -jar sbt-launch.jar "$@"
 ```
 
 In each case, `/home/user/.sbt/boot` should be replaced with wherever
@@ -7273,15 +7328,21 @@ or a resolver to use when retrieving dependencies.
 
 A dependency definition looks like:
 
-    organization%module%revision
+```
+organization%module%revision
+```
 
 Or, for a cross-built dependency:
 
-    organization%%module%revision
+```
+organization%%module%revision
+```
 
 A repository argument looks like:
 
-    "id at url"
+```
+"id at url"
+```
 
 ##### Example:
 
@@ -7289,7 +7350,7 @@ To add the Sonatype snapshots repository and add Scalaz 7.0-SNAPSHOT to
 REPL classpath:
 
 ```
-screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/" "org.scalaz%%scalaz-core%7.0-SNAPSHOT"
+$ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/" "org.scalaz%%scalaz-core%7.0-SNAPSHOT"
 ```
 
 This syntax was a quick hack. Feel free to improve it. The relevant
@@ -7363,22 +7424,24 @@ source file:
 
 Here's an example illustrating the definition above:
 
-    //A.scala
-    class A {
-      def foo: Int = 123
-    }
+```scala
+//A.scala
+class A {
+  def foo: Int = 123
+}
 
-    //B.scala
-    class B extends A
+//B.scala
+class B extends A
 
-    //C.scala
-    class C extends B
+//C.scala
+class C extends B
 
-    //D.scala
-    class D(a: A)
+//D.scala
+class D(a: A)
 
-    //E.scala
-    class E(d: D)
+//E.scala
+class E(d: D)
+```
 
 There are the following dependencies through inheritance:
 
@@ -7495,15 +7558,19 @@ sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
 
 Let's suppose you have the following source code in `Test.scala`:
 
-    class A {
-       def b: Int = 123
-    }
+```scala
+class A {
+  def b: Int = 123
+}
+```
 
 compile it and then change the `Test.scala` file so it looks like:
 
-    class A {
-       def b: String = "abc"
-    }
+```scala
+class A {
+   def b: String = "abc"
+}
+```
 
 and run `compile` task again. Now if you run `last compile` you should
 see the following lines in the debugging log
@@ -7619,9 +7686,9 @@ public interface, with two undesirable consequences:
 3.  More in general, client code might now even be invalid. The
     following code will for instance become invalid after the change:
 
-<!-- -->
-
-    val res: List[FileWriter] = A.openFiles(List(new File("foo.input")))
+```scala
+val res: List[FileWriter] = A.openFiles(List(new File("foo.input")))
+```
 
 Also the following code will break:
 
@@ -7644,12 +7711,14 @@ simplified example and in a real-world extension of the above code.
 
 The client snippets above will now become
 
-    val res: Seq[Writer] =
-        A.openFiles(List(new File("foo.input")))
+```scala
+val res: Seq[Writer] =
+  A.openFiles(List(new File("foo.input")))
 
-    val a: Seq[Writer] =
-        new BufferedWriter(new FileWriter("bar.input")) +:
-        A.openFiles(List(new File("foo.input")))
+val a: Seq[Writer] =
+  new BufferedWriter(new FileWriter("bar.input")) +:
+  A.openFiles(List(new File("foo.input")))
+```
 
 XXX the rest of the section must be reintegrated or dropped: In general,
 changing the return type of a method might be source-compatible, for
@@ -7729,17 +7798,21 @@ and `Artifact` that defined the dependency.
 To explicitly extract the raw `Seq[File]`, use the `files` method
 implicitly added to `Classpath`:
 
-    val cp: Classpath = ...
-    val raw: Seq[File] = cp.files
+```scala
+val cp: Classpath = ...
+val raw: Seq[File] = cp.files
+```
 
 To create a `Classpath` from a `Seq[File]`, use `classpath` and to
 create an `Attributed[File]` from a `File`, use `Attributed.blank`:
 
-    val raw: Seq[File] = ...
-    val cp: Classpath = raw.classpath
+```scala
+val raw: Seq[File] = ...
+val cp: Classpath = raw.classpath
 
-    val rawFile: File = ..
-    val af: Attributed[File] = Attributed.blank(rawFile)
+val rawFile: File = ..
+val af: Attributed[File] = Attributed.blank(rawFile)
+```
 
 #### Unmanaged v. managed
 
@@ -7752,8 +7825,10 @@ retrieved dependencies and compiled classes.
 
 Tasks that produce managed files should be inserted as follows:
 
-    sourceGenerators in Compile +=
-        generate( (sourceManaged in Compile).value / "some_directory")
+```scala
+sourceGenerators in Compile +=
+    generate( (sourceManaged in Compile).value / "some_directory")
+```
 
 In this example, `generate` is some function of type `File => Seq[File]`
 that actually does the work. So, we are appending a new task to the list
@@ -7782,7 +7857,9 @@ The project base directory is by default a source directory in addition
 to `src/main/scala`. You can exclude source files by name
 (`butler.scala` in the example below) like:
 
-    excludeFilter in unmanagedSources := "butler.scala" 
+```scala
+excludeFilter in unmanagedSources := "butler.scala" 
+```
 
 Read more on
 [How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
@@ -7840,7 +7917,9 @@ xxx.properties from classpath at run time. You put xxx.properties inside
 directory "config". When you run "sbt run", you want the directory to be
 in classpath.
 
-    unmanagedClasspath in Runtime += baseDirectory.value / "config"
+```scala
+unmanagedClasspath in Runtime += baseDirectory.value / "config"
+```
 
 
 Compiler Plugin Support
@@ -7849,49 +7928,61 @@ Compiler Plugin Support
 There is some special support for using compiler plugins. You can set
 `autoCompilerPlugins` to `true` to enable this functionality.
 
-    autoCompilerPlugins := true
+```scala
+autoCompilerPlugins := true
+```
 
 To use a compiler plugin, you either put it in your unmanaged library
 directory (`lib/` by default) or add it as managed dependency in the
 `plugin` configuration. `addCompilerPlugin` is a convenience method for
 specifying `plugin` as the configuration for a dependency:
 
-    addCompilerPlugin("org.scala-tools.sxr" %% "sxr" % "0.3.0")
+```scala
+addCompilerPlugin("org.scala-tools.sxr" %% "sxr" % "0.3.0")
+```
 
 The `compile` and `testCompile` actions will use any compiler plugins
 found in the `lib` directory or in the `plugin` configuration. You are
 responsible for configuring the plugins as necessary. For example, Scala
 X-Ray requires the extra option:
 
-    // declare the main Scala source directory as the base directory
-    scalacOptions :=
-        scalacOptions.value :+ ("-Psxr:base-directory:" + (scalaSource in Compile).value.getAbsolutePath)
+```scala
+// declare the main Scala source directory as the base directory
+scalacOptions :=
+    scalacOptions.value :+ ("-Psxr:base-directory:" + (scalaSource in Compile).value.getAbsolutePath)
+```
 
 You can still specify compiler plugins manually. For example:
 
-    scalacOptions += "-Xplugin:<path-to-sxr>/sxr-0.3.0.jar"
+```scala
+scalacOptions += "-Xplugin:<path-to-sxr>/sxr-0.3.0.jar"
+```
 
 ### Continuations Plugin Example
 
 Support for continuations in Scala 2.8 is implemented as a compiler
 plugin. You can use the compiler plugin support for this, as shown here.
 
-    autoCompilerPlugins := true
+```scala
+autoCompilerPlugins := true
 
-    addCompilerPlugin("org.scala-lang.plugins" % "continuations" % "2.8.1")
+addCompilerPlugin("org.scala-lang.plugins" % "continuations" % "2.8.1")
 
-    scalacOptions += "-P:continuations:enable"
+scalacOptions += "-P:continuations:enable"
+```
 
 ### Version-specific Compiler Plugin Example
 
 Adding a version-specific compiler plugin can be done as follows:
 
-    autoCompilerPlugins := true
+```scala
+autoCompilerPlugins := true
 
-    libraryDependencies +=
-        compilerPlugin("org.scala-lang.plugins" % "continuations" % scalaVersion.value)
+libraryDependencies +=
+    compilerPlugin("org.scala-lang.plugins" % "continuations" % scalaVersion.value)
 
-    scalacOptions += "-P:continuations:enable"
+scalacOptions += "-P:continuations:enable"
+```
 
 
   [Sbt-Launcher]: Sbt-Launcher.html
@@ -7912,7 +8003,9 @@ The most common case is when you want to use a version of Scala that is
 available in a repository. The only required configuration is the Scala
 version you want to use. For example,
 
-    scalaVersion := "2.10.0"
+```scala
+scalaVersion := "2.10.0"
+```
 
 This will retrieve Scala from the repositories configured via the
 `resolvers` setting. It will use this version for building your project:
@@ -7924,7 +8017,9 @@ By default, the standard Scala library is automatically added as a
 dependency. If you want to configure it differently than the default or
 you have a project with only Java sources, set:
 
-    autoScalaLibrary := false
+```scala
+autoScalaLibrary := false
+```
 
 In order to compile Scala sources, the Scala library needs to be on the
 classpath. When `autoScalaLibrary` is true, the Scala library will be on
@@ -7932,9 +8027,11 @@ all classpaths: test, runtime, and compile. Otherwise, you need to add
 it like any other dependency. For example, the following dependency
 definition uses Scala only for tests:
 
-    autoScalaLibrary := false
+```scala
+autoScalaLibrary := false
 
-    libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
+libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
+```
 
 #### Configuring additional Scala dependencies
 
@@ -7942,7 +8039,9 @@ When using a Scala dependency other than the standard library, add it as
 a normal managed dependency. For example, to depend on the Scala
 compiler,
 
-    libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
+```scala
+libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
+```
 
 Note that this is necessary regardless of the value of the
 `autoScalaLibrary` setting described in the previous section.
@@ -7956,7 +8055,9 @@ in the special, private `scala-tool` configuration. It may be desirable
 to have more control over this in some situations. Disable this
 automatic behavior with the `managedScalaInstance` key:
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
+```
 
 This will also disable the automatic dependency on `scala-library`. If
 you do not need the Scala compiler for anything (compiling, the REPL,
@@ -7972,19 +8073,21 @@ is not important, but sbt needs the module name to be `scala-compiler`
 and `scala-library` in order to handle those jars appropriately. For
 example,
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
 
-    // Add the configuration for the dependencies on Scala tool jars
-    // You can also use a manually constructed configuration like:
-    //   config("scala-tool").hide
-    ivyConfigurations += Configurations.ScalaTool
+// Add the configuration for the dependencies on Scala tool jars
+// You can also use a manually constructed configuration like:
+//   config("scala-tool").hide
+ivyConfigurations += Configurations.ScalaTool
 
-    // Add the usual dependency on the library as well on the compiler in the
-    //  'scala-tool' configuration
-    libraryDependencies ++= Seq(
-       "org.scala-lang" % "scala-library" % scalaVersion.value,
-       "org.scala-lang" % "scala-compiler" % scalaVersion.value % "scala-tool"
-    )
+// Add the usual dependency on the library as well on the compiler in the
+//  'scala-tool' configuration
+libraryDependencies ++= Seq(
+   "org.scala-lang" % "scala-library" % scalaVersion.value,
+   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "scala-tool"
+)
+```
 
 In the second case, directly construct a value of type
 [ScalaInstance](../../api/sbt/ScalaInstance.html), typically using a
@@ -7993,11 +8096,13 @@ and assign it to `scalaInstance`. You will also need to add the
 `scala-library` jar to the classpath to compile and run Scala sources.
 For example,
 
-    managedScalaInstance := false
+```scala
+managedScalaInstance := false
 
-    scalaInstance := ...
+scalaInstance := ...
 
-    unmanagedJars in Compile += scalaInstance.value.libraryJar
+unmanagedJars in Compile += scalaInstance.value.libraryJar
+```
 
 #### Switching to a local Scala version
 
@@ -8014,7 +8119,9 @@ obtained by downloading and extracting a Scala distribution. Such a
 Scala home directory may be used as the source for jars by setting
 `scalaHome`. For example,
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
+```
 
 By default, `lib/scala-library.jar` will be added to the unmanaged
 classpath and `lib/scala-compiler.jar` will be used to compile Scala
@@ -8030,9 +8137,11 @@ home `lib/` directory.
 As an example, consider adding a dependency on `scala-reflect` when
 `scalaHome` is configured:
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
 
-    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+```
 
 This will be resolved as normal, except that sbt will see if
 `/home/user/scala-2.10/lib/scala-reflect.jar` exists. If it does, that
@@ -8045,9 +8154,11 @@ add them. The `scalaInstance` task provides structured access to the
 Scala distribution. For example, to add all jars in the Scala home
 `lib/` directory,
 
-    scalaHome := Some(file("/home/user/scala-2.10/"))
+```scala
+scalaHome := Some(file("/home/user/scala-2.10/"))
 
-    unmanagedJars in Compile ++= scalaInstance.value.jars
+unmanagedJars in Compile ++= scalaInstance.value.jars
+```
 
 To add only some jars, filter the jars from `scalaInstance` before
 adding them.
@@ -8089,16 +8200,22 @@ in the `test` scope to only fork `test` commands.
 To fork all test tasks (`test`, `testOnly`, and `testQuick`) and run
 tasks (`run`, `runMain`, `test:run`, and `test:runMain`),
 
-    fork := true
+```scala
+fork := true
+```
 
 To enable forking `run` tasks only, set `fork` to `true` in the `run`
 scope.
 
-    fork in run := true
+```scala
+fork in run := true
+```
 
 To only fork `test:run` and `test:runMain`:
 
-    fork in (Test,run) := true
+```scala
+fork in (Test, run) := true
+```
 
 Similarly, set `fork in (Compile,run) := true` to only fork the main
 `run` tasks. `run` and `runMain` share the same configuration and cannot
@@ -8107,7 +8224,9 @@ be configured separately.
 To enable forking all `test` tasks only, set `fork` to `true` in the
 `test` scope:
 
-    fork in test := true
+```scala
+fork in test := true
+```
 
 See [Testing][Testing] for more control over how tests are assigned to JVMs and
 what options to pass to each group.
@@ -8117,44 +8236,56 @@ what options to pass to each group.
 To change the working directory when forked, set `baseDirectory in run`
 or `baseDirectory in test`:
 
-    // sets the working directory for all `run`-like tasks
-    baseDirectory in run := file("/path/to/working/directory/")
+```scala
+// sets the working directory for all `run`-like tasks
+baseDirectory in run := file("/path/to/working/directory/")
 
-    // sets the working directory for `run` and `runMain` only
-    baseDirectory in (Compile,run) := file("/path/to/working/directory/")
+// sets the working directory for `run` and `runMain` only
+baseDirectory in (Compile,run) := file("/path/to/working/directory/")
 
-    // sets the working directory for `test:run` and `test:runMain` only
-    baseDirectory in (Test,run) := file("/path/to/working/directory/")
+// sets the working directory for `test:run` and `test:runMain` only
+baseDirectory in (Test,run) := file("/path/to/working/directory/")
 
-    // sets the working directory for `test`, `testQuick`, and `testOnly`
-    baseDirectory in test := file("/path/to/working/directory/")
+// sets the working directory for `test`, `testQuick`, and `testOnly`
+baseDirectory in test := file("/path/to/working/directory/")
+```
 
 ### Forked JVM options
 
 To specify options to be provided to the forked JVM, set `javaOptions`:
 
-    javaOptions in run += "-Xmx8G"
+```scala
+javaOptions in run += "-Xmx8G"
+```
 
 or specify the configuration to affect only the main or test `run`
 tasks:
 
-    javaOptions in (Test,run) += "-Xmx8G"
+```scala
+javaOptions in (Test,run) += "-Xmx8G"
+```
 
 or only affect the `test` tasks:
 
-    javaOptions in test += "-Xmx8G"
+```scala
+javaOptions in test += "-Xmx8G"
+```
 
 ### Java Home
 
 Select the Java installation to use by setting the `javaHome` directory:
 
-    javaHome := Some(file("/path/to/jre/"))
+```scala
+javaHome := Some(file("/path/to/jre/"))
+```
 
 Note that if this is set globally, it also sets the Java installation
 used to compile Java sources. You can restrict it to running only by
 setting it in the `run` scope:
 
-    javaHome in run := Some(file("/path/to/jre/"))
+```scala
+javaHome in run := Some(file("/path/to/jre/"))
+```
 
 As with the other settings, you can specify the configuration to affect
 only the main or test `run` tasks or just the `test` tasks.
@@ -8166,17 +8297,19 @@ logged at the `Info` level and standard error at the `Error` level. This
 can be configured with the `outputStrategy` setting, which is of type
 [OutputStrategy](../../api/sbt/OutputStrategy.html).
 
-    // send output to the build's standard output and error
-    outputStrategy := Some(StdoutOutput)
+```scala
+// send output to the build's standard output and error
+outputStrategy := Some(StdoutOutput)
 
-    // send output to the provided OutputStream `someStream`
-    outputStrategy := Some(CustomOutput(someStream: OutputStream))
+// send output to the provided OutputStream `someStream`
+outputStrategy := Some(CustomOutput(someStream: OutputStream))
 
-    // send output to the provided Logger `log` (unbuffered)
-    outputStrategy := Some(LoggedOutput(log: Logger))
+// send output to the provided Logger `log` (unbuffered)
+outputStrategy := Some(LoggedOutput(log: Logger))
 
-    // send output to the provided Logger `log` after the process terminates
-    outputStrategy := Some(BufferedOutput(log: Logger))
+// send output to the provided Logger `log` after the process terminates
+outputStrategy := Some(BufferedOutput(log: Logger))
+```
 
 As with other settings, this can be configured individually for main or
 test `run` tasks or for `test` tasks.
@@ -8187,7 +8320,9 @@ By default, the standard input of the sbt process is not forwarded to
 the forked process. To enable this, configure the `connectInput`
 setting:
 
-    connectInput in run := true
+```scala
+connectInput in run := true
+```
 
 ### Direct Usage
 
@@ -8197,22 +8332,26 @@ To fork a new Java process, use the
 type [Fork](../../api/sbt/Fork.html) and provide `apply` and `fork`
 methods. For example, to fork a new Java process, :
 
-    val options = ForkOptions(...)
-    val arguments: Seq[String] = ...
-    val mainClass: String = ...
-    val exitCode: Int = Fork.java(options, mainClass +: arguments)
+```scala
+val options = ForkOptions(...)
+val arguments: Seq[String] = ...
+val mainClass: String = ...
+val exitCode: Int = Fork.java(options, mainClass +: arguments)
+```
 
 [ForkOptions](../../api/sbt/ForkOptions.html) defines the Java
 installation to use, the working directory, environment variables, and
 more. For example, :
 
-    val cwd: File = ...
-    val javaDir: File = ...
-    val options = ForkOptions(
-       envVars = Map("KEY" -> "value"),
-       workingDirectory = Some(cwd),
-       javaHome = Some(javaDir)
-    )
+```scala
+val cwd: File = ...
+val javaDir: File = ...
+val options = ForkOptions(
+   envVars = Map("KEY" -> "value"),
+   workingDirectory = Some(cwd),
+   javaHome = Some(javaDir)
+)
+```
 
 
 Global Settings
@@ -8284,12 +8423,16 @@ class files.
 
 Pass options to the Java compiler by setting `javacOptions`:
 
-    javacOptions += "-g:none"
+```scala
+javacOptions += "-g:none"
+```
 
 As with options for the Scala compiler, the arguments are not parsed by
 sbt. Multi-element options, such as `-source 1.5`, are specified like:
 
-    javacOptions ++= Seq("-source", "1.5")
+```scala
+javacOptions ++= Seq("-source", "1.5")
+```
 
 You can specify the order in which Scala and Java sources are built with
 the `compileOrder` setting. Possible values are from the `CompileOrder`
@@ -8302,16 +8445,20 @@ up your build by not passing the Java sources to `scalac`. For example,
 if your Scala sources depend on your Java sources, but your Java sources
 do not depend on your Scala sources, you can do:
 
-    compileOrder := CompileOrder.JavaThenScala
+```scala
+compileOrder := CompileOrder.JavaThenScala
+```
 
 To specify different orders for main and test sources, scope the setting
 by configuration:
 
-    // Java then Scala for main sources
-    compileOrder in Compile := CompileOrder.JavaThenScala
+```scala
+// Java then Scala for main sources
+compileOrder in Compile := CompileOrder.JavaThenScala
 
-    // allow circular dependencies for test sources
-    compileOrder in Test := CompileOrder.Mixed
+// allow circular dependencies for test sources
+compileOrder in Test := CompileOrder.Mixed
+```
 
 Note that in an incremental compilation setting, it is not practical to
 ensure complete isolation between Java sources and Scala sources because
@@ -8324,11 +8471,13 @@ list of unmanaged source directories. For Java-only projects, the
 unnecessary Scala directories can be ignored by modifying
 `unmanagedSourceDirectories`:
 
-    // Include only src/main/java in the compile configuration
-    unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
+```scala
+// Include only src/main/java in the compile configuration
+unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
 
-    // Include only src/test/java in the test configuration
-    unmanagedSourceDirectories in Test := (javaSource in Test).value :: Nil
+// Include only src/test/java in the test configuration
+unmanagedSourceDirectories in Test := (javaSource in Test).value :: Nil
+```
 
 However, there should not be any harm in leaving the Scala directories
 if they are empty.
@@ -8385,24 +8534,28 @@ the case of multiple base directories.
 For example, the following demonstrates building a `Seq[(File, String)]`
 using `rebase`:
 
-    import Path.rebase
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val mappings: Seq[(File,String)] = files pair rebase(baseDirectories, "pre/")
+```scala
+import Path.rebase
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val mappings: Seq[(File,String)] = files pair rebase(baseDirectories, "pre/")
 
-    val expected = (file("/a/b/C.scala") -> "pre/b/C.scala" ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "pre/b/C.scala" ) :: Nil
+assert( mappings == expected )
+```
 
 Or, to build a `Seq[(File, File)]`:
 
-    import Path.rebase
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val newBase: File = file("/new/base")
-    val mappings: Seq[(File,File)] = files pair rebase(baseDirectories, newBase)
+```scala
+import Path.rebase
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val newBase: File = file("/new/base")
+val mappings: Seq[(File,File)] = files pair rebase(baseDirectories, newBase)
 
-    val expected = (file("/a/b/C.scala") -> file("/new/base/b/C.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> file("/new/base/b/C.scala") ) :: Nil
+assert( mappings == expected )
+```
 
 ### Flatten
 
@@ -8411,22 +8564,26 @@ component of the path (its name). For a File to File mapping, the input
 file is mapped to a file with the same name in a given target directory.
 For example:
 
-    import Path.flat
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val mappings: Seq[(File,String)] = files pair flat
+```scala
+import Path.flat
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val mappings: Seq[(File,String)] = files pair flat
 
-    val expected = (file("/a/b/C.scala") -> "C.scala" ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "C.scala" ) :: Nil
+assert( mappings == expected )
+```
 
 To build a `Seq[(File, File)]` using `flat`:
 
-    import Path.flat
-    val files: Seq[File] = file("/a/b/C.scala") :: Nil
-    val newBase: File = file("/new/base")
-    val mappings: Seq[(File,File)] = files pair flat(newBase)
+```scala
+import Path.flat
+val files: Seq[File] = file("/a/b/C.scala") :: Nil
+val newBase: File = file("/new/base")
+val mappings: Seq[(File,File)] = files pair flat(newBase)
 
-    val expected = (file("/a/b/C.scala") -> file("/new/base/C.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> file("/new/base/C.scala") ) :: Nil
+assert( mappings == expected )
+```
 
 ### Alternatives
 
@@ -8435,13 +8592,15 @@ is implicitly added to a function of type `A => Option[B]`. For example,
 to try to relativize a file against some base directories but fall back
 to flattening:
 
-    import Path.relativeTo
-    val files: Seq[File] = file("/a/b/C.scala") :: file("/zzz/D.scala") :: Nil
-    val baseDirectories: Seq[File] = file("/a") :: Nil
-    val mappings: Seq[(File,String)] = files pair ( relativeTo(baseDirectories) | flat )
+```scala
+import Path.relativeTo
+val files: Seq[File] = file("/a/b/C.scala") :: file("/zzz/D.scala") :: Nil
+val baseDirectories: Seq[File] = file("/a") :: Nil
+val mappings: Seq[(File,String)] = files pair ( relativeTo(baseDirectories) | flat )
 
-    val expected = (file("/a/b/C.scala") -> "b/C.scala") ) :: (file("/zzz/D.scala") -> "D.scala") ) :: Nil
-    assert( mappings == expected )
+val expected = (file("/a/b/C.scala") -> "b/C.scala") ) :: (file("/zzz/D.scala") -> "D.scala") ) :: Nil
+assert( mappings == expected )
+```
 
 
   [Cross-Build]: Cross-Build.html
@@ -8456,7 +8615,9 @@ compiled against.
 
 Example:
 
-    scalaHome := Some(file("/path/to/scala"))
+```scala
+scalaHome := Some(file("/path/to/scala"))
+```
 
 Using a local Scala version will override the `scalaVersion` setting and
 will not work with [cross building][Cross-Build].
@@ -8465,7 +8626,9 @@ sbt reuses the class loader for the local Scala version. If you
 recompile your local Scala version and you are using sbt interactively,
 run
 
-    > reload
+```
+> reload
+```
 
 to use the new compilation results.
 
@@ -8492,58 +8655,60 @@ The rest of the page shows example solutions to these problems.
 The macro implementation will go in a subproject in the `macro/`
 directory. The main project in the project's base directory will depend
 on this subproject and use the macro. This configuration is shown in the
-following build definition:
+following build definition. `project/Build.scala`:
 
-`project/Build.scala`
+```scala
+import sbt._
+import Keys._
 
-    import sbt._
-    import Keys._
-
-    object MacroBuild extends Build {
-       lazy val main = Project("main", file(".")) dependsOn(macroSub)
-       lazy val macroSub = Project("macro", file("macro")) settings(
-          libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
-       )
-    }
+object MacroBuild extends Build {
+   lazy val main = Project("main", file(".")) dependsOn(macroSub)
+   lazy val macroSub = Project("macro", file("macro")) settings(
+      libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+   )
+}
+```
 
 This specifies that the macro implementation goes in
 `macro/src/main/scala/` and tests go in `macro/src/test/scala/`. It also
 shows that we need a dependency on the compiler for the macro
 implementation. As an example macro, we'll use `desugar` from
-[macrocosm](https://github.com/retronym/macrocosm).
+[macrocosm](https://github.com/retronym/macrocosm). `macro/src/main/scala/demo/Demo.scala`:
 
-`macro/src/main/scala/demo/Demo.scala`
+```scala
+package demo
 
-    package demo
+import language.experimental.macros
+import scala.reflect.macros.Context
 
-    import language.experimental.macros
-    import scala.reflect.macros.Context
+object Demo {
 
-    object Demo {
+  // Returns the tree of `a` after the typer, printed as source code.
+  def desugar(a: Any): String = macro desugarImpl
 
-      // Returns the tree of `a` after the typer, printed as source code.
-      def desugar(a: Any): String = macro desugarImpl
+  def desugarImpl(c: Context)(a: c.Expr[Any]) = {
+    import c.universe._
 
-      def desugarImpl(c: Context)(a: c.Expr[Any]) = {
-        import c.universe._
+    val s = show(a.tree)
+    c.Expr(
+      Literal(Constant(s))
+    )
+  }
+}
+```
 
-        val s = show(a.tree)
-        c.Expr(
-          Literal(Constant(s))
-        )
-      }
-    }
+`macro/src/test/scala/demo/Usage.scala`:
 
-`macro/src/test/scala/demo/Usage.scala`
+```scala
+package demo
 
-    package demo
-
-    object Usage {
-       def main(args: Array[String]) {
-          val s = Demo.desugar(List(1, 2, 3).reverse)
-          println(s)
-       }
-    }
+object Usage {
+   def main(args: Array[String]) {
+      val s = Demo.desugar(List(1, 2, 3).reverse)
+      println(s)
+   }
+}
+```
 
 This can be then be run at the console:
 
@@ -8552,16 +8717,18 @@ Actual tests can be defined and run as usual with `macro/test`.
 The main project can use the macro in the same way that the tests do.
 For example,
 
-`src/main/scala/MainUsage.scala`
+`src/main/scala/MainUsage.scala`:
 
-    package demo
+```scala
+package demo
 
-    object Usage {
-       def main(args: Array[String]) {
-          val s = Demo.desugar(List(6, 4, 5).sorted)
-          println(s)
-       }
-    }
+object Usage {
+   def main(args: Array[String]) {
+      val s = Demo.desugar(List(6, 4, 5).sorted)
+      println(s)
+   }
+}
+```
 
 ### Common Interface
 
@@ -8571,11 +8738,13 @@ common code and have the main project and the macro subproject depend on
 the new subproject. For example, the project definitions from above
 would look like:
 
-    lazy val main = Project("main", file(".")) dependsOn(macroSub, commonSub)
-    lazy val macroSub = Project("macro", file("macro")) dependsOn(commonSub) settings(
-        libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
-    )
-    lazy val commonSub = Project("common", file("common"))
+```scala
+lazy val main = Project("main", file(".")) dependsOn(macroSub, commonSub)
+lazy val macroSub = Project("macro", file("macro")) dependsOn(commonSub) settings(
+    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+)
+lazy val commonSub = Project("common", file("common"))
+```
 
 Code in `common/src/main/scala/` is available for both the `macro` and
 `main` projects to use.
@@ -8586,20 +8755,24 @@ To include the macro code with the main code, add the binary and source
 mappings from the macro subproject to the main project. For example, the
 `main` Project definition above would now look like:
 
-    lazy val main = Project("main", file(".")) dependsOn(macroSub) settings(
-       // include the macro classes and resources in the main jar
-       mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
-       // include the macro sources in the main source jar
-       mappings in (Compile, packageSrc) ++= mappings.in(macroSub, Compile, packageSrc).value
-    )
+```scala
+lazy val main = Project("main", file(".")) dependsOn(macroSub) settings(
+   // include the macro classes and resources in the main jar
+   mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
+   // include the macro sources in the main source jar
+   mappings in (Compile, packageSrc) ++= mappings.in(macroSub, Compile, packageSrc).value
+)
+```
 
 You may wish to disable publishing the macro implementation. This is
 done by overriding `publish` and `publishLocal` to do nothing:
 
-    lazy val macroSub = Project("macro", file("macro")) settings(
-        publish := {},
-        publishLocal := {}
-    )
+```scala
+lazy val macroSub = Project("macro", file("macro")) settings(
+    publish := {},
+    publishLocal := {}
+)
+```
 
 The techniques described here may also be used for the common interface
 described in the previous section.
@@ -8629,17 +8802,23 @@ that an extra import is not necessary. The `file` method is an alias for
 the single-argument `File` constructor to simplify constructing a new
 file from a String:
 
-    val source: File = file("/home/user/code/A.scala")
+```scala
+val source: File = file("/home/user/code/A.scala")
+```
 
 Additionally, sbt augments File with a `/` method, which is an alias for
 the two-argument `File` constructor for building up a path:
 
-    def readme(base: File): File = base / "README"
+```scala
+def readme(base: File): File = base / "README"
+```
 
 Relative files should only be used when defining the base directory of a
 `Project`, where they will be resolved properly.
 
-    val root = Project("root", file("."))
+```scala
+val root = Project("root", file("."))
+```
 
 Elsewhere, files should be absolute or be built up from an absolute base
 `File`. The `baseDirectory` setting defines the base directory of the
@@ -8648,17 +8827,23 @@ build or project depending on the scope.
 For example, the following setting sets the unmanaged library directory
 to be the "custom_lib" directory in a project's base directory:
 
-    unmanagedBase := baseDirectory.value /"custom_lib"
+```scala
+unmanagedBase := baseDirectory.value /"custom_lib"
+```
 
 Or, more concisely:
 
-    unmanagedBase := baseDirectory.value /"custom_lib"
+```scala
+unmanagedBase := baseDirectory.value /"custom_lib"
+```
 
 This setting sets the location of the shell history to be in the base
 directory of the build, irrespective of the project the setting is
 defined in:
 
-    historyPath := Some( (baseDirectory in ThisBuild).value / ".history"),
+```scala
+historyPath := Some( (baseDirectory in ThisBuild).value / ".history"),
+```
 
 ### Path Finders
 
@@ -8672,7 +8857,9 @@ resulting `PathFinder` to evaluate it and get back a `Seq[File]`.
 The `**` method accepts a `java.io.FileFilter` and selects all files
 matching that filter.
 
-    def scalaSources(base: File): PathFinder = (base / "src") ** "*.scala"
+```scala
+def scalaSources(base: File): PathFinder = (base / "src") ** "*.scala"
+```
 
 #### get
 
@@ -8680,10 +8867,12 @@ This selects all files that end in `.scala` that are in `src` or a
 descendent directory. The list of files is not actually evaluated until
 `get` is called:
 
-    def scalaSources(base: File): Seq[File] = {
-      val finder: PathFinder = (base / "src") ** "*.scala" 
-      finder.get
-    }
+```scala
+def scalaSources(base: File): Seq[File] = {
+  val finder: PathFinder = (base / "src") ** "*.scala" 
+  finder.get
+}
+```
 
 If the filesystem changes, a second call to `get` on the same
 `PathFinder` object will reflect the changes. That is, the `get` method
@@ -8695,7 +8884,9 @@ reconstructs the list of files each time. Also, `get` only returns
 Selecting files that are immediate children of a subdirectory is done
 with a single `*`:
 
-    def scalaSources(base: File): PathFinder = (base / "src") * "*.scala"
+```scala
+def scalaSources(base: File): PathFinder = (base / "src") * "*.scala"
+```
 
 This selects all files that end in `.scala` that are in the `src`
 directory.
@@ -8705,7 +8896,9 @@ directory.
 If a selector, such as `/`, `**`, or `*`, is used on a path that does
 not represent a directory, the path list will be empty:
 
-    def emptyFinder(base: File) = (base / "lib" / "ivy.jar") * "not_possible"
+```scala
+def emptyFinder(base: File) = (base / "lib" / "ivy.jar") * "not_possible"
+```
 
 #### Name Filter
 
@@ -8718,25 +8911,31 @@ any value. See the Name Filters section below for more information.
 
 Another operation is concatenation of `PathFinder`s:
 
-    def multiPath(base: File): PathFinder =
-       (base / "src" / "main") +++
-       (base / "lib") +++
-       (base / "target" / "classes")
+```scala
+def multiPath(base: File): PathFinder =
+   (base / "src" / "main") +++
+   (base / "lib") +++
+   (base / "target" / "classes")
+```
 
 When evaluated using `get`, this will return `src/main/`, `lib/`, and
 `target/classes/`. The concatenated finder supports all standard
 methods. For example,
 
-    def jars(base: File): PathFinder =
-       (base / "lib" +++ base / "target") * "*.jar"
+```scala
+def jars(base: File): PathFinder =
+   (base / "lib" +++ base / "target") * "*.jar"
+```
 
 selects all jars directly in the "lib" and "target" directories.
 
 A common problem is excluding version control directories. This can be
 accomplished as follows:
 
-    def sources(base: File) =
-       ( (base / "src") ** "*.scala") --- ( (base / "src") ** ".svn" ** "*.scala")
+```scala
+def sources(base: File) =
+   ( (base / "src") ** "*.scala") --- ( (base / "src") ** ".svn" ** "*.scala")
+```
 
 The first selector selects all Scala sources and the second selects all
 sources that are a descendent of a `.svn` directory. The `---` method
@@ -8763,7 +8962,9 @@ def archivesOnly(base: PathFinder) = base filter ClasspathUtilities.isArchive
 `PathFinder.empty` is a `PathFinder` that returns the empty sequence
 when `get` is called:
 
-    assert( PathFinder.empty.get == Seq[File]() )
+```scala
+assert( PathFinder.empty.get == Seq[File]() )
+```
 
 #### PathFinder to String conversions
 
@@ -8797,19 +8998,25 @@ resulting filter selects files with a name matching the string, with a
 `*` in the string interpreted as a wildcard. For example, the following
 selects all Scala sources with the word "Test" in them:
 
-    def testSrcs(base: File): PathFinder =  (base / "src") * "*Test*.scala"
+```scala
+def testSrcs(base: File): PathFinder =  (base / "src") * "*Test*.scala"
+```
 
 There are some useful combinators added to `FileFilter`. The `||` method
 declares alternative `FileFilter`s. The following example selects all
 Java or Scala source files under "src":
 
-    def sources(base: File): PathFinder  =  (base / "src") ** ("*.scala" || "*.java")
+```scala
+def sources(base: File): PathFinder  =  (base / "src") ** ("*.scala" || "*.java")
+```
 
 The `--` method excludes a files matching a second filter from the files
 matched by the first:
 
-    def imageResources(base: File): PathFinder =
-       (base/"src"/"main"/"resources") * ("*.png" -- "logo.png")
+```scala
+def imageResources(base: File): PathFinder =
+   (base/"src"/"main"/"resources") * ("*.png" -- "logo.png")
+```
 
 This will get `right.png` and `left.png`, but not `logo.png`, for
 example.
@@ -8824,22 +9031,26 @@ Task ordering is specified by declaring a task's inputs. Correctness of
 execution requires correct input declarations. For example, the
 following two tasks do not have an ordering specified:
 
-    write := IO.write(file("/tmp/sample.txt"), "Some content.")
+```scala
+write := IO.write(file("/tmp/sample.txt"), "Some content.")
 
-    read := IO.read(file("/tmp/sample.txt"))
+read := IO.read(file("/tmp/sample.txt"))
+```
 
 sbt is free to execute `write` first and then `read`, `read` first and
 then `write`, or `read` and `write` simultaneously. Execution of these
 tasks is non-deterministic because they share a file. A correct
 declaration of the tasks would be:
 
-    write := {
-      val f = file("/tmp/sample.txt")
-      IO.write(f, "Some content.")
-      f
-    }
+```scala
+write := {
+  val f = file("/tmp/sample.txt")
+  IO.write(f, "Some content.")
+  f
+}
 
-    read := IO.read(write.value)
+read := IO.read(write.value)
+```
 
 This establishes an ordering: `read` must run after `write`. We've also
 guaranteed that `read` will read from the same file that `write`
@@ -8877,7 +9088,7 @@ tasks in separate projects could still run in parallel if overall
 execution was parallel. There was no way to restriction execution such
 that only a single test out of all projects executed.
 
-#### Configuration
+### Configuration
 
 sbt 0.12.0 introduces a general infrastructure for restricting task
 concurrency beyond the usual ordering declarations. There are two parts
@@ -8893,7 +9104,7 @@ to these restrictions.
 The system is thus dependent on proper tagging of tasks and then on a
 good set of rules.
 
-##### Tagging Tasks
+#### Tagging Tasks
 
 In general, a tag is associated with a weight that represents the task's
 relative utilization of the resource represented by the tag. Currently,
@@ -8905,30 +9116,36 @@ accepts pairs of tags and weights. For example, the following associates
 the `CPU` and `Compile` tags with the `compile` task (with a weight of
 1).
 
-    def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+```scala
+def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
-    compile := myCompileTask.value
+compile := myCompileTask.value
+```
 
 Different weights may be specified by passing tag/weight pairs to
 `tagw`:
 
-    def downloadImpl = Def.task { ... } tagw(Tags.Network -> 3)
+```scala
+def downloadImpl = Def.task { ... } tagw(Tags.Network -> 3)
 
-    download := downloadImpl.value
+download := downloadImpl.value
+```
 
-##### Defining Restrictions
+#### Defining Restrictions
 
 Once tasks are tagged, the `concurrentRestrictions` setting sets
 restrictions on the tasks that may be concurrently executed based on the
 weighted tags of those tasks. This is necessarily a global set of rules,
 so it must be scoped `in Global`. For example,
 
-    concurrentRestrictions in Global := Seq(
-      Tags.limit(Tags.CPU, 2),
-      Tags.limit(Tags.Network, 10),
-      Tags.limit(Tags.Test, 1),
-      Tags.limitAll( 15 )
-    )
+```scala
+concurrentRestrictions in Global := Seq(
+  Tags.limit(Tags.CPU, 2),
+  Tags.limit(Tags.Network, 10),
+  Tags.limit(Tags.Test, 1),
+  Tags.limitAll( 15 )
+)
+```
 
 The example limits:
 
@@ -8947,9 +9164,11 @@ tasks are automatically assigned the label `Untagged`. You may want to
 include these tasks in the CPU rule by using the `limitSum` method. For
 example:
 
-    ...
-    Tags.limitSum(2, Tags.CPU, Tags.Untagged)
-    ...
+```scala
+...
+Tags.limitSum(2, Tags.CPU, Tags.Untagged)
+...
+```
 
 Note that the limit is the first argument so that tags can be provided
 as varargs.
@@ -8962,9 +9181,11 @@ completes. For example, a task could be tagged with a custom tag
 `Benchmark` and a rule configured to ensure such a task is executed by
 itself:
 
-    ...
-    Tags.exclusive(Benchmark)
-    ...
+```scala
+...
+Tags.exclusive(Benchmark)
+...
+```
 
 Finally, for the most flexibility, you can specify a custom function of
 type `Map[Tag,Int] => Boolean`. The `Map[Tag,Int]` represents the
@@ -8974,17 +9195,19 @@ the return value is `false`, the set of tasks will not be allowed to
 execute concurrently. For example, `Tags.exclusive(Benchmark)` is
 equivalent to the following:
 
-    ...
-    Tags.customLimit { (tags: Map[Tag,Int]) =>
-      val exclusive = tags.getOrElse(Benchmark, 0)
-       //  the total number of tasks in the group
-      val all = tags.getOrElse(Tags.All, 0)
-       // if there are no exclusive tasks in this group, this rule adds no restrictions
-      exclusive == 0 ||
-        // If there is only one task, allow it to execute.
-        all == 1
-    }
-    ...
+```scala
+...
+Tags.customLimit { (tags: Map[Tag,Int]) =>
+  val exclusive = tags.getOrElse(Benchmark, 0)
+   //  the total number of tasks in the group
+  val all = tags.getOrElse(Tags.All, 0)
+   // if there are no exclusive tasks in this group, this rule adds no restrictions
+  exclusive == 0 ||
+    // If there is only one task, allow it to execute.
+    all == 1
+}
+...
+```
 
 There are some basic rules that custom functions must follow, but the
 main one to be aware of in practice is that if there is only one task,
@@ -9026,69 +9249,79 @@ tags to each child task created for each test class.
 
 The default rules provide the same behavior as previous versions of sbt:
 
-    concurrentRestrictions in Global := {
-      val max = Runtime.getRuntime.availableProcessors
-      Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
-    }
+```scala
+concurrentRestrictions in Global := {
+  val max = Runtime.getRuntime.availableProcessors
+  Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
+}
+```
 
 As before, `parallelExecution in Test` controls whether tests are mapped
 to separate tasks. To restrict the number of concurrently executing
 tests in all projects, use:
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+```scala
+concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+```
 
 #### Custom Tags
 
 To define a new tag, pass a String to the `Tags.Tag` method. For
 example:
 
-    val Custom = Tags.Tag("custom")
+```scala
+val Custom = Tags.Tag("custom")
+```
 
 Then, use this tag as any other tag. For example:
 
-    def aImpl = Def.task { ... } tag(Custom)
+```scala
+def aImpl = Def.task { ... } tag(Custom)
 
-    aCustomTask := aImpl.value 
+aCustomTask := aImpl.value 
 
-    concurrentRestrictions in Global += 
-      Tags.limit(Custom, 1)
+concurrentRestrictions in Global += 
+  Tags.limit(Custom, 1)
+```
 
-#### Future work
+### Future work
 
 This is an experimental feature and there are several aspects that may
 change or require further work.
 
-##### Tagging Tasks
+#### Tagging Tasks
 
 Currently, a tag applies only to the immediate computation it is defined
 on. For example, in the following, the second compile definition has no
 tags applied to it. Only the first computation is labeled.
 
-    def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
+```scala
+def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
-    compile := myCompileTask.value
+compile := myCompileTask.value
 
-    compile := { 
-      val result = compile.value
-      ... do some post processing ...
-    }
+compile := { 
+  val result = compile.value
+  ... do some post processing ...
+}
+```
 
 Is this desirable? expected? If not, what is a better, alternative
 behavior?
 
-##### Fractional weighting
+#### Fractional weighting
 
 Weights are currently `int`s, but could be changed to be `double`s if
 fractional weights would be useful. It is important to preserve a
 consistent notion of what a weight of 1 means so that built-in and
 custom tasks share this definition and useful rules can be written.
 
-##### Default Behavior
+#### Default Behavior
 
 User feedback on what custom rules work for what workloads will help
 determine a good set of default tags and rules.
 
-##### Adjustments to Defaults
+#### Adjustments to Defaults
 
 Rules should be easier to remove or redefine, perhaps by giving them
 names. As it is, rules must be appended or all rules must be completely
@@ -9098,7 +9331,7 @@ definition site when using the `:=` syntax.
 For removing tags, an implementation of `removeTag` should follow from
 the implementation of `tag` in a straightforward manner.
 
-##### Other characteristics
+#### Other characteristics
 
 The system of a tag with a weight was selected as being reasonably
 powerful and flexible without being too complicated. This selection is
@@ -9129,7 +9362,9 @@ task.
 
 To run an external command, follow it with an exclamation mark `!`:
 
-    "find project -name *.jar" !
+```scala
+"find project -name *.jar" !
+```
 
 An implicit converts the `String` to `sbt.ProcessBuilder`, which defines
 the `!` method. This method runs the constructed command, waits until
@@ -9140,14 +9375,18 @@ before it completes. With no arguments, the `!` method sends output to
 standard output and standard error. You can pass a `Logger` to the `!`
 method to send output to the `Logger`:
 
-    "find project -name *.jar" ! log
+```scala
+"find project -name *.jar" ! log
+```
 
 Two alternative implicit conversions are from `scala.xml.Elem` or
 `List[String]` to `sbt.ProcessBuilder`. These are useful for
 constructing commands. An example of the first variant from the android
 plugin:
 
-    <x> {dxPath.absolutePath} --dex --output={classesDexPath.absolutePath} {classesMinJarPath.absolutePath}</x> !
+```scala
+<x> {dxPath.absolutePath} --dex --output={classesDexPath.absolutePath} {classesMinJarPath.absolutePath}</x> !
+```
 
 If you need to set the working directory or modify the environment, call
 `sbt.Process` explicitly, passing the command sequence (command and
@@ -9155,7 +9394,9 @@ argument list) or command string first and the working directory second.
 Any environment variables can be passed as a vararg list of key/value
 String pairs.
 
-    Process("ls" :: "-l" :: Nil, Path.userHome, "key1" -> value1, "key2" -> value2) ! log
+```scala
+Process("ls" :: "-l" :: Nil, Path.userHome, "key1" -> value1, "key2" -> value2) ! log
+```
 
 Operators are defined to combine commands. These operators start with
 `#` in order to keep the precedence the same and to separate them from
@@ -9189,8 +9430,10 @@ process into a `String` or the output lines as a `Stream[String]`. Here
 are some examples, but see the
 [ProcessBuilder API](../../api/sbt/ProcessBuilder.html) for details.
 
-    val listed: String = "ls" !!
-    val lines2: Stream[String] = "ls" lines_!
+```scala
+val listed: String = "ls" !!
+val lines2: Stream[String] = "ls" lines_!
+```
 
 Finally, there is a `cat` method to send the contents of `File`s and
 `URL`s to standard output.
@@ -9199,33 +9442,43 @@ Finally, there is a `cat` method to send the contents of `File`s and
 
 Download a `URL` to a `File`:
 
-    url("http://databinder.net/dispatch/About") #> file("About.html") !
-    or
-    file("About.html") #< url("http://databinder.net/dispatch/About") !
+```scala
+url("http://databinder.net/dispatch/About") #> file("About.html") !
+// or
+file("About.html") #< url("http://databinder.net/dispatch/About") !
+```
 
 Copy a `File`:
 
-    file("About.html") #> file("About_copy.html") !
-    or
-    file("About_copy.html") #< file("About.html") !
+```scala
+file("About.html") #> file("About_copy.html") !
+// or
+file("About_copy.html") #< file("About.html") !
+```
 
 Append the contents of a `URL` to a `File` after filtering through
 `grep`:
 
-    url("http://databinder.net/dispatch/About") #> "grep JSON" #>> file("About_JSON") !
-    or
-    file("About_JSON") #<< ( "grep JSON" #< url("http://databinder.net/dispatch/About") )  !
+```scala
+url("http://databinder.net/dispatch/About") #> "grep JSON" #>> file("About_JSON") !
+// or
+file("About_JSON") #<< ( "grep JSON" #< url("http://databinder.net/dispatch/About") )  !
+```
 
 Search for uses of `null` in the source directory:
 
-    "find src -name *.scala -exec grep null {} ;"  #|  "xargs test -z"  #&&  "echo null-free"  #||  "echo null detected"  !
+```scala
+"find src -name *.scala -exec grep null {} ;"  #|  "xargs test -z"  #&&  "echo null-free"  #||  "echo null detected"  !
+```
 
 Use `cat`:
 
-    val spde = url("http://technically.us/spde/About")
-    val dispatch = url("http://databinder.net/dispatch/About")
-    val build = file("project/build.properties")
-    cat(spde, dispatch, build) #| "grep -i scala" !
+```scala
+val spde = url("http://technically.us/spde/About")
+val dispatch = url("http://databinder.net/dispatch/About")
+val build = file("project/build.properties")
+cat(spde, dispatch, build) #| "grep -i scala" !
+```
 
 
   [Forking]: Forking.html
@@ -9428,7 +9681,9 @@ By default, logging is buffered for each test source file until all
 tests for that file complete. This can be disabled by setting
 `logBuffered`:
 
-    logBuffered in Test := false
+```scala
+logBuffered in Test := false
+```
 
 #### Test Reports
 
@@ -9436,7 +9691,9 @@ By default, sbt will generate JUnit XML test reports for all tests in
 the build, located in the `target/test-reports` directory for a project.
 This can be disabled by disabling the `JUnitXmlReportPlugin`
 
-    val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
+```scala
+val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
+```
 
 ### Options
 
@@ -9452,11 +9709,15 @@ the `testOnly` tasks following a `--` separator. For example:
 To specify test framework arguments as part of the build, add options
 constructed by `Tests.Argument`:
 
-    testOptions in Test += Tests.Argument("-d", "-g")
+```scala
+testOptions in Test += Tests.Argument("-d", "-g")
+```
 
 To specify them for a specific test framework only:
 
-    testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
+```scala
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
+```
 
 #### Setup and Cleanup
 
@@ -9467,21 +9728,21 @@ ClassLoader is passed the class loader that is (or was) used for running
 the tests. It provides access to the test classes as well as the test
 framework classes.
 
-> **note**
->
-> When forking, the ClassLoader containing the test classes cannot be
+> **Note**: When forking, the ClassLoader containing the test classes cannot be
 > provided because it is in another JVM. Only use the () => Unit
 > variants in this case.
 
 Examples:
 
-    testOptions in Test += Tests.Setup( () => println("Setup") )
+```scala
+testOptions in Test += Tests.Setup( () => println("Setup") )
 
-    testOptions in Test += Tests.Cleanup( () => println("Cleanup") )
+testOptions in Test += Tests.Cleanup( () => println("Cleanup") )
 
-    testOptions in Test += Tests.Setup( loader => ... )
+testOptions in Test += Tests.Setup( loader => ... )
 
-    testOptions in Test += Tests.Cleanup( loader => ... )
+testOptions in Test += Tests.Cleanup( loader => ... )
+```
 
 #### Disable Parallel Execution of Tests
 
@@ -9489,7 +9750,9 @@ By default, sbt runs all tasks in parallel. Because each test is mapped
 to a task, tests are also run in parallel by default. To make tests
 within a given project execute serially: :
 
-    parallelExecution in Test := false
+```scala
+parallelExecution in Test := false
+```
 
 `Test` can be replaced with `IntegrationTest` to only execute
 integration tests serially. Note that tests from different projects may
@@ -9500,29 +9763,35 @@ still execute concurrently.
 If you want to only run test classes whose name ends with "Test", use
 `Tests.Filter`:
 
-    testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
+```scala
+testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
+```
 
 #### Forking tests
 
 The setting:
 
-    fork in Test := true
+```scala
+fork in Test := true
+```
 
 specifies that all tests will be executed in a single external JVM. See
 [Forking][Forking] for configuring standard options for forking. More control
 over how tests are assigned to JVMs and what options to pass to those is
 available with `testGrouping` key. For example in build.sbt:
 
-    import Tests._
+```scala
+import Tests._
 
-    {
-      def groupByFirst(tests: Seq[TestDefinition]) =
-        tests groupBy (_.name(0)) map {
-          case (letter, tests) => new Group(letter.toString, tests, SubProcess(Seq("-Dfirst.letter"+letter)))
-        } toSeq
+{
+  def groupByFirst(tests: Seq[TestDefinition]) =
+    tests groupBy (_.name(0)) map {
+      case (letter, tests) => new Group(letter.toString, tests, SubProcess(Seq("-Dfirst.letter"+letter)))
+    } toSeq
 
-        testGrouping in Test <<= groupByFirst( (definedTests in Test).value )
-    }
+    testGrouping in Test <<= groupByFirst( (definedTests in Test).value )
+}
+```
 
 The tests in a single group are run sequentially. Control the number of
 forked JVMs allowed to run at the same time by setting the limit on
@@ -9597,19 +9866,25 @@ Similarly the standard settings may be configured for the
 `IntegrationTest` settings delegate to `Test` settings by default. For
 example, if test options are specified as:
 
-    testOptions in Test += ...
+```scala
+testOptions in Test += ...
+```
 
 then these will be picked up by the `Test` configuration and in turn by
 the `IntegrationTest` configuration. Options can be added specifically
 for integration tests by putting them in the `IntegrationTest`
 configuration:
 
-    testOptions in IntegrationTest += ...
+```scala
+testOptions in IntegrationTest += ...
+```
 
 Or, use `:=` to overwrite any existing options, declaring these to be
 the definitive integration test options:
 
-    testOptions in IntegrationTest := Seq(...)
+```scala
+testOptions in IntegrationTest := Seq(...)
+```
 
 #### Custom test configuration
 
@@ -9633,13 +9908,17 @@ object B extends Build {
 
 Instead of using the built-in configuration, we defined a new one:
 
-    lazy val FunTest = config("fun") extend(Test)
+```scala
+lazy val FunTest = config("fun") extend(Test)
+```
 
 The `extend(Test)` part means to delegate to `Test` for undefined
 `CustomTest` settings. The line that adds the tasks and settings for the
 new test configuration is:
 
-    settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+```scala
+settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+```
 
 This says to add test and settings tasks in the `FunTest` configuration.
 We could have done it this way for integration tests as well. In fact,
@@ -9651,7 +9930,9 @@ The comments in the integration test section hold, except with
 `"fun"`. For example, test options can be configured specifically for
 `FunTest`:
 
-    testOptions in FunTest += ...
+```scala
+testOptions in FunTest += ...
+```
 
 Test tasks are run by prefixing them with `fun:`
 
@@ -9666,26 +9947,28 @@ compilations) is to share sources. In this approach, the sources are
 compiled together using the same classpath and are packaged together.
 However, different tests are run depending on the configuration.
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    object B extends Build {
-      lazy val root =
-        Project("root", file("."))
-          .configs( FunTest )
-          .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
-          .settings(
-            libraryDependencies += specs,
-            testOptions in Test := Seq(Tests.Filter(unitFilter)),
-            testOptions in FunTest := Seq(Tests.Filter(itFilter))
-          )
+object B extends Build {
+  lazy val root =
+    Project("root", file("."))
+      .configs( FunTest )
+      .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
+      .settings(
+        libraryDependencies += specs,
+        testOptions in Test := Seq(Tests.Filter(unitFilter)),
+        testOptions in FunTest := Seq(Tests.Filter(itFilter))
+      )
 
-      def itFilter(name: String): Boolean = name endsWith "ITest"
-      def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
+  def itFilter(name: String): Boolean = name endsWith "ITest"
+  def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
 
-      lazy val FunTest = config("fun") extend(Test)
-      lazy val specs = "org.specs2" %% "specs2" % "2.0" % "test"
-    }
+  lazy val FunTest = config("fun") extend(Test)
+  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "test"
+}
+```
 
 The key differences are:
 
@@ -9715,12 +9998,16 @@ run in parallel from those that must execute serially. Apply the
 procedure described in this section for an additional configuration.
 Let's call the configuration `serial`:
 
-    lazy val Serial = config("serial") extend(Test)
+```scala
+lazy val Serial = config("serial") extend(Test)
+```
 
 Then, we can disable parallel execution in just that configuration
 using:
 
-    parallelExecution in Serial := false
+```scala
+parallelExecution in Serial := false
+```
 
 The tests to run in parallel would be run with `test` and the ones to
 run in serial would be run with `serial:test`.
@@ -9732,7 +10019,9 @@ Support for JUnit is provided by
 JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
-    libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+```scala
+libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+```
 
 ### Extensions
 
@@ -9763,12 +10052,16 @@ To use your extensions in a project definition:
 
 Modify the `testFrameworks` setting to reference your test framework:
 
-    testFrameworks += new TestFramework("custom.framework.ClassName")
+```scala
+testFrameworks += new TestFramework("custom.framework.ClassName")
+```
 
 Specify the test reporters you want to use by overriding the
 `testListeners` setting in your project definition.
 
-    testListeners += customTestListener
+```scala
+testListeners += customTestListener
+```
 
 where `customTestListener` is of type `sbt.TestReportListener`.
 
@@ -9799,29 +10092,35 @@ API or you can disable some of the main artifacts.
 
 To add all test artifacts:
 
-    publishArtifact in Test := true
+```scala
+publishArtifact in Test := true
+```
 
 To add them individually:
 
-    // enable publishing the jar produced by `test:package`
-    publishArtifact in (Test, packageBin) := true
+```scala
+// enable publishing the jar produced by `test:package`
+publishArtifact in (Test, packageBin) := true
 
-    // enable publishing the test API jar
-    publishArtifact in (Test, packageDoc) := true
+// enable publishing the test API jar
+publishArtifact in (Test, packageDoc) := true
 
-    // enable publishing the test sources jar
-    publishArtifact in (Test, packageSrc) := true
+// enable publishing the test sources jar
+publishArtifact in (Test, packageSrc) := true
+```
 
 To disable main artifacts individually:
 
-    // disable publishing the main jar produced by `package`
-    publishArtifact in (Compile, packageBin) := false
+```scala
+// disable publishing the main jar produced by `package`
+publishArtifact in (Compile, packageBin) := false
 
-    // disable publishing the main API jar
-    publishArtifact in (Compile, packageDoc) := false
+// disable publishing the main API jar
+publishArtifact in (Compile, packageDoc) := false
 
-    // disable publishing the main sources jar
-    publishArtifact in (Compile, packageSrc) := false
+// disable publishing the main sources jar
+publishArtifact in (Compile, packageSrc) := false
+```
 
 ### Modifying default artifacts
 
@@ -9833,10 +10132,12 @@ and `artifactPath` (of type `SettingKey[File]`). They are scoped by
 
 To modify the type of the main artifact, for example:
 
-    artifact in (Compile, packageBin) := {
-      val previous: Artifact = (artifact in (Compile, packageBin)).value
-      previous.copy(`type` = "bundle")
-    }
+```scala
+artifact in (Compile, packageBin) := {
+  val previous: Artifact = (artifact in (Compile, packageBin)).value
+  previous.copy(`type` = "bundle")
+}
+```
 
 The generated artifact name is determined by the `artifactName` setting.
 This setting is of type `(ScalaVersion, ModuleID, Artifact) => String`.
@@ -9851,9 +10152,11 @@ repository pattern.
 For example, to produce a minimal name without a classifier or cross
 path:
 
-    artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-      artifact.name + "-" + module.revision + "." + artifact.extension
-    }
+```scala
+artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+  artifact.name + "-" + module.revision + "." + artifact.extension
+}
+```
 
 (Note that in practice you rarely want to drop the classifier.)
 
@@ -9866,13 +10169,15 @@ guaranteed to be up-to-date.
 
 For example:
 
-    val myTask = taskKey[Unit]("My task.")
+```scala
+val myTask = taskKey[Unit]("My task.")
 
-    myTask :=  {
-      val (art, file) = packagedArtifact.in(Compile, packageBin).value
-      println("Artifact definition: " + art)
-      println("Packaged file: " + file.getAbsolutePath)
-    }
+myTask :=  {
+  val (art, file) = packagedArtifact.in(Compile, packageBin).value
+  println("Artifact definition: " + art)
+  println("Packaged file: " + file.getAbsolutePath)
+}
+```
 
 ### Defining custom artifacts
 
@@ -9883,16 +10188,20 @@ based on classifiers and these are not recorded in the POM.
 
 Basic `Artifact` construction look like:
 
-    Artifact("name", "type", "extension")
-    Artifact("name", "classifier")
-    Artifact("name", url: URL)
-    Artifact("name", Map("extra1" -> "value1", "extra2" -> "value2"))
+```scala
+Artifact("name", "type", "extension")
+Artifact("name", "classifier")
+Artifact("name", url: URL)
+Artifact("name", Map("extra1" -> "value1", "extra2" -> "value2"))
+```
 
 For example:
 
-    Artifact("myproject", "zip", "zip")
-    Artifact("myproject", "image", "jpg")
-    Artifact("myproject", "jdk15")
+```scala
+Artifact("myproject", "zip", "zip")
+Artifact("myproject", "image", "jpg")
+Artifact("myproject", "jdk15")
+```
 
 See the
 [Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
@@ -9903,40 +10212,46 @@ parameters above and specifying [Configurations] and extra attributes.
 To declare these artifacts for publishing, map them to the task that
 generates the artifact:
 
-    val myImageTask = taskKey[File](...)
+```scala
+val myImageTask = taskKey[File](...)
 
-    myImageTask := {
-      val artifact: File = makeArtifact(...)
-      artifact
-    }
+myImageTask := {
+  val artifact: File = makeArtifact(...)
+  artifact
+}
 
-    addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
+addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
+```
 
 `addArtifact` returns a sequence of settings (wrapped in a
 [SettingsDefinition](../../api/#sbt.Init$SettingsDefinition)). In a
 full build configuration, usage looks like:
 
-    ...
-    lazy val proj = Project(...)
-      .settings( addArtifact(...).settings : _* )
-    ...
+```scala
+...
+lazy val proj = Project(...).
+  settings( addArtifact(...).settings : _* )
+...
+```
 
 ### Publishing .war files
 
 A common use case for web applications is to publish the `.war` file
 instead of the `.jar` file.
 
-    // disable .jar publishing 
-    publishArtifact in (Compile, packageBin) := false 
+```scala
+// disable .jar publishing 
+publishArtifact in (Compile, packageBin) := false 
 
-    // create an Artifact for publishing the .war file 
-    artifact in (Compile, packageWar) := {
-      val previous: Artifact = (artifact in (Compile, packageWar)).value
-      previous.copy(`type` = "war", extension = "war") 
-    } 
+// create an Artifact for publishing the .war file 
+artifact in (Compile, packageWar) := {
+  val previous: Artifact = (artifact in (Compile, packageWar)).value
+  previous.copy(`type` = "war", extension = "war") 
+} 
 
-    // add the .war file to what gets published 
-    addArtifact(artifact in (Compile, packageWar), packageWar) 
+// add the .war file to what gets published 
+addArtifact(artifact in (Compile, packageWar), packageWar) 
+``` 
 
 ### Using dependencies with artifacts
 
@@ -9944,20 +10259,26 @@ To specify the artifacts to use from a dependency that has custom or
 multiple artifacts, use the `artifacts` method on your dependencies. For
 example:
 
-    libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
+```scala
+libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
+```
 
 The `from` and `classifer` methods (described on the
 [Library Management][Library-Management] page) are actually convenience
 methods that translate to `artifacts`:
 
-    def from(url: String) = artifacts( Artifact(name, new URL(url)) )
-    def classifier(c: String) = artifacts( Artifact(name, c) )
+```scala
+def from(url: String) = artifacts( Artifact(name, new URL(url)) )
+def classifier(c: String) = artifacts( Artifact(name, c) )
+```
 
 That is, the following two dependency declarations are equivalent:
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```scala
+libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" artifacts(Artifact("testng", "jdk15") )
+libraryDependencies += "org.testng" % "testng" % "5.7" artifacts(Artifact("testng", "jdk15") )
+```
 
 
 Dependency Management Flow
@@ -10111,23 +10432,29 @@ change the location of the directory you store the jars in.
 To change the directory jars are stored in, change the `unmanagedBase`
 setting in your project definition. For example, to use `custom_lib/`:
 
-    unmanagedBase := baseDirectory.value / "custom_lib"
+```scala
+unmanagedBase := baseDirectory.value / "custom_lib"
+```
 
 If you want more control and flexibility, override the `unmanagedJars`
 task, which ultimately provides the manual dependencies to sbt. The
 default implementation is roughly:
 
-    unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```scala
+unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+```
 
 If you want to add jars from multiple directories in addition to the
 default directory, you can do:
 
-    unmanagedJars in Compile ++= {
-        val base = baseDirectory.value
-        val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
-        val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
-        customJars.classpath
-    }
+```scala
+unmanagedJars in Compile ++= {
+    val base = baseDirectory.value
+    val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
+    val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
+    customJars.classpath
+}
+```
 
 See [Paths][Paths] for more information on building up paths.
 
@@ -10158,24 +10485,32 @@ to a full configuration using Ivy.
 
 Declaring a dependency looks like:
 
-    libraryDependencies += groupID % artifactID % revision
+```scala
+libraryDependencies += groupID % artifactID % revision
+```
 
 or
 
-    libraryDependencies += groupID % artifactID % revision % configuration
+```scala
+libraryDependencies += groupID % artifactID % revision % configuration
+```
 
 See [configurations](#ivy-configurations) for details on configuration
 mappings. Also, several dependencies can be declared together:
 
-    libraryDependencies ++= Seq(
-        groupID %% artifactID % revision,
-        groupID %% otherID % otherRevision
-    )
+```scala
+libraryDependencies ++= Seq(
+  groupID %% artifactID % revision,
+  groupID %% otherID % otherRevision
+)
+```
 
 If you are using a dependency that was built with sbt, double the first
 `%` to be `%%`:
 
-    libraryDependencies += groupID %% artifactID % revision
+```scala
+libraryDependencies += groupID %% artifactID % revision
+```
 
 This will use the right jar for the dependency built with the version of
 Scala that you are currently using. If you get an error while resolving
@@ -10194,21 +10529,27 @@ sbt uses the standard Maven2 repository by default.
 
 Declare additional repositories with the form:
 
-    resolvers += name at location
+```scala
+resolvers += name at location
+```
 
 For example:
 
-    libraryDependencies ++= Seq(
-        "org.apache.derby" % "derby" % "10.4.1.3",
-        "org.specs" % "specs" % "1.6.1"
-    )
+```scala
+libraryDependencies ++= Seq(
+    "org.apache.derby" % "derby" % "10.4.1.3",
+    "org.specs" % "specs" % "1.6.1"
+)
 
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
 
 sbt can search your local Maven repository if you add it as a
 repository:
 
-    resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```scala
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```
 
 See [Resolvers][Resolvers] for details on defining other types of repositories.
 
@@ -10224,11 +10565,15 @@ specify repositories in addition to the usual defaults, configure
 For example, to use the Sonatype OSS Snapshots repository in addition to
 the default repositories,
 
-    resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```scala
+resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
+```
 
 To use the local repository, but not the Maven Central repository:
 
-    externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+```scala
+externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+```
 
 ##### Override all resolvers for all builds
 
@@ -10262,7 +10607,9 @@ repositories for dependency resolution and retrieval.
 If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified as follows:
 
-    libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```scala
+libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+```
 
 The URL is only used as a fallback if the dependency cannot be found
 through the configured repositories. Also, the explicit URL is not
@@ -10277,19 +10624,25 @@ the Felix OSGI framework, for instance, only explicitly require its main
 jar to compile and run. Avoid fetching artifact dependencies with either
 `intransitive()` or `notTransitive()`, as in this example:
 
-    libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```scala
+libraryDependencies += "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" intransitive()
+```
 
 ##### Classifiers
 
 You can specify the classifier for a dependency using the `classifier`
 method. For example, to get the jdk15 version of TestNG:
 
-    libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```scala
+libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+```
 
 For multiple classifiers, use multiple `classifier` calls:
 
-    libraryDependencies += 
-      "org.lwjgl.lwjgl" % "lwjgl-platform" % lwjglVersion classifier "natives-windows" classifier "natives-linux" classifier "natives-osx"
+```scala
+libraryDependencies += 
+  "org.lwjgl.lwjgl" % "lwjgl-platform" % lwjglVersion classifier "natives-windows" classifier "natives-linux" classifier "natives-osx"
+```
 
 To obtain particular classifiers for all dependencies transitively, run
 the `updateClassifiers` task. By default, this resolves all artifacts
@@ -10297,7 +10650,9 @@ with the `sources` or `javadoc` classifier. Select the classifiers to
 obtain by configuring the `transitiveClassifiers` setting. For example,
 to only retrieve sources:
 
-    transitiveClassifiers := Seq("sources")
+```scala
+transitiveClassifiers := Seq("sources")
+```
 
 ##### Exclude Transitive Dependencies
 
@@ -10306,19 +10661,23 @@ To exclude certain transitive dependencies of a dependency, use the
 when a pom will be published for the project. It requires the
 organization and module name to exclude. For example,
 
-    libraryDependencies += 
-      "log4j" % "log4j" % "1.2.15" exclude("javax.jms", "jms")
+```scala
+libraryDependencies += 
+  "log4j" % "log4j" % "1.2.15" exclude("javax.jms", "jms")
+```
 
 The `excludeAll` method is more flexible, but because it cannot be
 represented in a pom.xml, it should only be used when a pom doesn't need
 to be generated. For example,
 
-    libraryDependencies +=
-      "log4j" % "log4j" % "1.2.15" excludeAll(
-        ExclusionRule(organization = "com.sun.jdmk"),
-        ExclusionRule(organization = "com.sun.jmx"),
-        ExclusionRule(organization = "javax.jms")
-      )
+```scala
+libraryDependencies +=
+  "log4j" % "log4j" % "1.2.15" excludeAll(
+    ExclusionRule(organization = "com.sun.jdmk"),
+    ExclusionRule(organization = "com.sun.jmx"),
+    ExclusionRule(organization = "javax.jms")
+  )
+```
 
 See [ModuleID](../../api/sbt/ModuleID.html) for API details.
 
@@ -10333,8 +10692,10 @@ To have sbt download the dependency's sources without using an IDE
 plugin, add `withSources()` to the dependency definition. For API jars,
 add `withJavadoc()`. For example:
 
-    libraryDependencies += 
-      "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" withSources() withJavadoc()
+```scala
+libraryDependencies += 
+  "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" withSources() withJavadoc()
+```
 
 Note that this is not transitive. Use the `update-*classifiers` tasks
 for that.
@@ -10346,14 +10707,18 @@ can be specified by passing key/value pairs to the `extra` method.
 
 To select dependencies by extra attributes:
 
-    libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```scala
+libraryDependencies += "org" % "name" % "rev" extra("color" -> "blue")
+```
 
 To define extra attributes on the current project:
 
-    projectID := {
-        val previous = projectID.value
-        previous.extra("color" -> "blue", "component" -> "compiler-interface")
-    }
+```scala
+projectID := {
+    val previous = projectID.value
+    previous.extra("color" -> "blue", "component" -> "compiler-interface")
+}
+```
 
 ##### Inline Ivy XML
 
@@ -10363,12 +10728,14 @@ this with inline Scala dependency and repository declarations.
 
 For example:
 
-    ivyXML :=
-      <dependencies>
-        <dependency org="javax.mail" name="mail" rev="1.4.2">
-          <exclude module="activation"/>
-        </dependency>
-      </dependencies>
+```scala
+ivyXML :=
+  <dependencies>
+    <dependency org="javax.mail" name="mail" rev="1.4.2">
+      <exclude module="activation"/>
+    </dependency>
+  </dependencies>
+```
 
 ##### Ivy Home Directory
 
@@ -10394,17 +10761,23 @@ the *checksums* setting.
 
 To disable checksum checking during update:
 
-    checksums in update := Nil
+```scala
+checksums in update := Nil
+```
 
 To disable checksum creation during artifact publishing:
 
-    checksums in publishLocal := Nil
+```scala
+checksums in publishLocal := Nil
 
-    checksums in publish := Nil
+checksums in publish := Nil
+```
 
 The default value is:
 
-    checksums := Seq("sha1", "md5")
+```scala
+checksums := Seq("sha1", "md5")
+```
 
 <a name="conflict-management"></a>
 
@@ -10419,7 +10792,9 @@ See the
 for details on the different conflict managers. For example, to specify
 that no conflicts are allowed,
 
-    conflictManager := ConflictManager.strict
+```scala
+conflictManager := ConflictManager.strict
+```
 
 With this set, any conflicts will generate an error. To resolve a
 conflict,
@@ -10435,39 +10810,47 @@ Both are explained in the following sections.
 The following direct dependencies will introduce a conflict on the log4j
 version because spark requires log4j 1.2.16.
 
-    libraryDependencies ++= Seq(
-      "org.spark-project" %% "spark-core" % "0.5.1",
-      "log4j" % "log4j" % "1.2.14"
-    )
+```scala
+libraryDependencies ++= Seq(
+  "org.spark-project" %% "spark-core" % "0.5.1",
+  "log4j" % "log4j" % "1.2.14"
+)
+```
 
 The default conflict manager will select the newer version of log4j,
 1.2.16. This can be confirmed in the output of `show update`, which
 shows the newer version as being selected and the older version as not
 selected:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.16: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.14
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.16: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.14
+...
+```
 
 To say that we prefer the version we've specified over the version from
 indirect dependencies, use `force()`:
 
-    libraryDependencies ++= Seq(
-      "org.spark-project" %% "spark-core" % "0.5.1",
-      "log4j" % "log4j" % "1.2.14" force()
-    )
+```scala
+libraryDependencies ++= Seq(
+  "org.spark-project" %% "spark-core" % "0.5.1",
+  "log4j" % "log4j" % "1.2.14" force()
+)
+```
 
 The output of `show update` is now reversed:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.14: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.14: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.16
+...
+```
 
 **Note:** this is an Ivy-only feature and cannot be included in a
 published pom.xml.
@@ -10482,35 +10865,43 @@ overrides for this and in sbt, overrides are configured in sbt with the
 example, the following dependency definitions conflict because spark
 uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:
 
-    libraryDependencies ++= Seq(
-       "org.spark-project" %% "spark-core" % "0.5.1",
-       "org.scalaxb" %% "scalaxb" % "1.0.0"
-    )
+```scala
+libraryDependencies ++= Seq(
+   "org.spark-project" %% "spark-core" % "0.5.1",
+   "org.scalaxb" %% "scalaxb" % "1.0.0"
+)
+```
 
 The default conflict manager chooses the latest revision of log4j,
 1.2.17:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.17: ...
-    ...
-    [info]      (EVICTED) log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.17: ...
+...
+[info]    (EVICTED) log4j:log4j:1.2.16
+...
+```
 
 To change the version selected, add an override:
 
-    dependencyOverrides += "log4j" % "log4j" % "1.2.16"
+```scala
+dependencyOverrides += "log4j" % "log4j" % "1.2.16"
+```
 
 This will not add a direct dependency on log4j, but will force the
 revision to be 1.2.16. This is confirmed by the output of `show update`:
 
-    > show update
-    [info] compile:
-    [info]      log4j:log4j:1.2.16
-    ...
+```
+> show update
+[info] compile:
+[info]    log4j:log4j:1.2.16
+...
+```
 
-**Note:** this is an Ivy-only feature and will not be included in a
-published pom.xml.
+> **Note:** this is an Ivy-only feature and will not be included in a
+> published pom.xml.
 
 ##### Publishing
 
@@ -10539,7 +10930,9 @@ dependency's configuration `B`. The mapping for this looks like
 `"A->B"`. To apply this mapping to a dependency, add it to the end of
 your dependency definition:
 
-    libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile"
+```scala
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile"
+```
 
 This says that your project's `"test"` configuration uses `ScalaTest`'s
 `"compile"` configuration. See the
@@ -10552,11 +10945,13 @@ not used on normal classpaths. For example, your project might use a
 `"js"` configuration to automatically download jQuery and then include
 it in your jar by modifying `resources`. For example:
 
-    ivyConfigurations += config("js") hide
+```scala
+ivyConfigurations += config("js") hide
 
-    libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
 
-    resources ++= update.value.select(configurationFilter("js"))
+resources ++= update.value.select(configurationFilter("js"))
+```
 
 The `config` method defines a new configuration with name `"js"` and
 makes it private to the project so that it is not used for publishing.
@@ -10568,7 +10963,9 @@ or `"compile"`. The `->` is only needed when mapping to a different
 configuration than those. The ScalaTest dependency above can then be
 shortened to:
 
-    libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
+```scala
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
+```
 
 #### Maven/Ivy
 
@@ -10579,52 +10976,70 @@ expressions.
 
 ##### Ivy settings (resolver configuration)
 
-    externalIvySettings()
+```scala
+externalIvySettings()
+```
 
 or
 
-    externalIvySettings(baseDirectory.value / "custom-settings-name.xml")
+```scala
+externalIvySettings(baseDirectory.value / "custom-settings-name.xml")
+```
 
 or
 
-    externalIvySettingsURL(url("your_url_here"))
+```scala
+externalIvySettingsURL(url("your_url_here"))
+```
 
 ##### Ivy file (dependency configuration)
 
-    externalIvyFile()
+```scala
+externalIvyFile()
+```
 
 or
 
-    externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
+```scala
+externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
+```
 
 Because Ivy files specify their own configurations, sbt needs to know
 which configurations to use for the compile, runtime, and test
 classpaths. For example, to specify that the Compile classpath should
 use the 'default' configuration:
 
-    classpathConfiguration in Compile := config("default")
+```scala
+classpathConfiguration in Compile := config("default")
+```
 
 ##### Maven pom (dependencies only)
 
-    externalPom()
+```scala
+externalPom()
+```
 
 or
 
-    externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
+```scala
+externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
+```
 
 ##### Full Ivy Example
 
 For example, a `build.sbt` using external Ivy files might look like:
 
-    externalIvySettings()
+```scala
+externalIvySettings()
 
-    externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
+externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
 
-    classpathConfiguration in Compile := Compile
+classpathConfiguration in Compile := Compile
 
-    classpathConfiguration in Test := Test
+classpathConfiguration in Test := Test
 
-    classpathConfiguration in Runtime := Runtime
+classpathConfiguration in Runtime := Runtime
+```
 
 ##### Known limitations
 
@@ -10782,19 +11197,21 @@ same machine.
 To specify the repository, assign a repository to `publishTo` and
 optionally set the publishing style. For example, to upload to Nexus:
 
-    publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
+```scala
+publishTo := Some("Sonatype Snapshots Nexus" at "https://oss.sonatype.org/content/repositories/snapshots")
+```
 
 To publish to a local repository:
 
-:
-
-    publishTo := Some(Resolver.file("file",  new File( "path/to/my/maven-repo/releases" )) )
+```scala
+publishTo := Some(Resolver.file("file",  new File( "path/to/my/maven-repo/releases" )) )
+```
 
 Publishing to the users local maven repository:
 
-:
-
-    publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
+```scala
+publishTo := Some(Resolver.file("file",  new File(Path.userHome.absolutePath+"/.m2/repository")))
+```
 
 If you're using Maven repositories you will also have to select the
 right repository depending on your artifacts: SNAPSHOT versions go to
@@ -10802,24 +11219,30 @@ the /snapshot repository while other versions go to the /releases
 repository. Doing this selection can be done by using the value of the
 `version` SettingKey:
 
-    publishTo := {
-      val nexus = "https://oss.sonatype.org/"
-      if (version.value.trim.endsWith("SNAPSHOT")) 
-        Some("snapshots" at nexus + "content/repositories/snapshots") 
-      else
-        Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-    }
+```scala
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT")) 
+    Some("snapshots" at nexus + "content/repositories/snapshots") 
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+```
 
 ### Credentials
 
 There are two ways to specify credentials for such a repository. The
 first is to specify them inline:
 
-    credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+```scala
+credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+```
 
 The second and better way is to load them from a file, for example:
 
-    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+```scala
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+```
 
 The credentials file is a properties file with keys `realm`, `host`,
 `user`, and `password`. For example:
@@ -10852,30 +11275,36 @@ file may be altered by changing a few settings. Set `pomExtra` to
 provide XML (`scala.xml.NodeSeq`) to insert directly into the generated
 pom. For example:
 
-    pomExtra :=
-    <licenses>
-      <license>
-        <name>Apache 2</name>
-        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        <distribution>repo</distribution>
-      </license>
-    </licenses>
+```scala
+pomExtra :=
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+</licenses>
+```
 
 `makePom` adds to the POM any Maven-style repositories you have
 declared. You can filter these by modifying `pomRepositoryFilter`, which
 by default excludes local repositories. To instead only include local
 repositories:
 
-    pomIncludeRepository := { (repo: MavenRepository) => 
-      repo.root.startsWith("file:")
-    }
+```scala
+pomIncludeRepository := { (repo: MavenRepository) => 
+  repo.root.startsWith("file:")
+}
+```
 
 There is also a `pomPostProcess` setting that can be used to manipulate
 the final XML before it is written. It's type is `Node => Node`.
 
-    pomPostProcess := { (node: Node) =>
-        ...
-    }
+```scala
+pomPostProcess := { (node: Node) =>
+  ...
+}
+```
 
 ### Publishing Locally
 
@@ -10884,13 +11313,19 @@ default, this is in `${user.home}/.ivy2/local`. Other projects on the
 same machine can then list the project as a dependency. For example, if
 the SBT project you are publishing has configuration parameters like:
 
-    name := 'My Project'
-    organization := 'org.me'
-    version := '0.1-SNAPSHOT'
+```scala
+name := "My Project"
+
+organization := "org.me"
+
+version := "0.1-SNAPSHOT"
+```
 
 Then another project can depend on it:
 
-    libraryDependencies += "org.me" %% "my-project" % "0.1-SNAPSHOT"
+```scala
+libraryDependencies += "org.me" %% "my-project" % "0.1-SNAPSHOT"
+```
 
 The version number you select must end with `SNAPSHOT`, or you must
 change the version number each time you publish. Ivy maintains a cache,
@@ -10928,12 +11363,16 @@ A few predefined repositories are available and are listed below
 For example, to use the `java.net` repository, use the following setting
 in your build definition:
 
-    resolvers += JavaNet1Repository
+```scala
+resolvers += JavaNet1Repository
+```
 
 Predefined repositories will go under Resolver going forward so they are
 in one place:
 
-    Resolver.sonatypeRepo("releases")  // Or "snapshots"
+```scala
+Resolver.sonatypeRepo("releases")  // Or "snapshots"
+```
 
 ### Custom
 
@@ -11003,17 +11442,23 @@ Define a filesystem repository in the `test` directory of the current
 working directory and declare that publishing to this repository must be
 atomic.
 
-    resolvers += Resolver.file("my-test-repo", file("test")) transactional()
+```scala
+resolvers += Resolver.file("my-test-repo", file("test")) transactional()
+```
 
 ##### URL
 
 Define a URL repository at `"http://example.org/repo-releases/"`.
 
-    resolvers += Resolver.url("my-test-repo", url("http://example.org/repo-releases/"))
+```scala
+resolvers += Resolver.url("my-test-repo", url("http://example.org/repo-releases/"))
+```
 
 To specify an Ivy repository, use:
 
-    resolvers += Resolver.url("my-test-repo", url)(Resolver.ivyStylePatterns)
+```scala
+resolvers += Resolver.url("my-test-repo", url)(Resolver.ivyStylePatterns)
+```
 
 or customize the layout pattern described in the Custom Layout section
 below.
@@ -11023,42 +11468,58 @@ below.
 The following defines a repository that is served by SFTP from host
 `"example.org"`:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org")
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org")
+```
 
 To explicitly specify the port:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org", 22)
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org", 22)
+```
 
 To specify a base path:
 
-    resolvers += Resolver.sftp("my-sftp-repo", "example.org", "maven2/repo-releases/")
+```scala
+resolvers += Resolver.sftp("my-sftp-repo", "example.org", "maven2/repo-releases/")
+```
 
 Authentication for the repositories returned by `sftp` and `ssh` can be
 configured by the `as` methods.
 
 To use password authentication:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", "password")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", "password")
+```
 
 or to be prompted for the password:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user")
+```
 
 To use key authentication:
 
-    resolvers += {
-      val keyFile: File = ...
-      Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile, "keyFilePassword")
-    }
+```scala
+resolvers += {
+  val keyFile: File = ...
+  Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile, "keyFilePassword")
+}
+```
 
 or if no keyfile password is required or if you want to be prompted for
 it:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile)
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") as("user", keyFile)
+```
 
 To specify the permissions used when publishing to the server:
 
-    resolvers += Resolver.ssh("my-ssh-repo", "example.org") withPermissions("0644")
+```scala
+resolvers += Resolver.ssh("my-ssh-repo", "example.org") withPermissions("0644")
+```
 
 This is a chmod-like mode specification.
 
@@ -11070,7 +11531,9 @@ to use. The patterns are first resolved against the base file or URL.
 The default patterns give the default Maven-style layout. Provide a
 different Patterns object to use a different layout. For example:
 
-    resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
+```scala
+resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
+```
 
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
@@ -11081,8 +11544,10 @@ For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and
 using `ivys` and `artifacts`:
 
-    resolvers += Resolver.url("my-test-repo") artifacts
-            "http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
+```scala
+resolvers += Resolver.url("my-test-repo") artifacts
+        "http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
+```
 
 
 Update Report
@@ -11117,9 +11582,13 @@ or classifier.
 
 The relevant methods (implicitly on `UpdateReport`) are:
 
-    def matching(f: DependencyFilter): Seq[File]
+```scala
+def matching(f: DependencyFilter): Seq[File]
 
-    def select(configuration: ConfigurationFilter = ..., module: ModuleFilter = ..., artifact: ArtifactFilter = ...): Seq[File]
+def select(configuration: ConfigurationFilter = ...,
+  module: ModuleFilter = ...,
+  artifact: ArtifactFilter = ...): Seq[File]
+```
 
 Any argument to `select` may be omitted, in which case all values are
 allowed for the corresponding component. For example, if the
@@ -11133,42 +11602,50 @@ applying a `NameFilter` to each component of a `Configuration`,
 `ModuleID`, or `Artifact`. A basic `NameFilter` is implicitly
 constructed from a String, with `*` interpreted as a wildcard.
 
-    import sbt._
-    // each argument is of type NameFilter
-    val mf: ModuleFilter = moduleFilter(organization = "*sbt*", name = "main" | "actions", revision = "1.*" - "1.0")
+```scala
+import sbt._
+// each argument is of type NameFilter
+val mf: ModuleFilter = moduleFilter(organization = "*sbt*",
+  name = "main" | "actions", revision = "1.*" - "1.0")
 
-    // unspecified arguments match everything by default
-    val mf: ModuleFilter = moduleFilter(organization = "net.databinder")
+// unspecified arguments match everything by default
+val mf: ModuleFilter = moduleFilter(organization = "net.databinder")
 
-    // specifying "*" is the same as omitting the argument
-    val af: ArtifactFilter = artifactFilter(name = "*", `type` = "source", extension = "jar", classifier = "sources")
+// specifying "*" is the same as omitting the argument
+val af: ArtifactFilter = artifactFilter(name = "*", `type` = "source",
+  extension = "jar", classifier = "sources")
 
-    val cf: ConfigurationFilter = configurationFilter(name = "compile" | "test")
+val cf: ConfigurationFilter = configurationFilter(name = "compile" | "test")
+```
 
 Alternatively, these filters, including a `NameFilter`, may be directly
 defined by an appropriate predicate (a single-argument function
 returning a Boolean).
 
-    import sbt._
+```scala
+import sbt._
 
-    // here the function value of type String => Boolean is implicitly converted to a NameFilter
-    val nf: NameFilter = (s: String) => s.startsWith("dispatch-")
+// here the function value of type String => Boolean is implicitly converted to a NameFilter
+val nf: NameFilter = (s: String) => s.startsWith("dispatch-")
 
-    // a Set[String] is a function String => Boolean
-    val acceptConfigs: Set[String] = Set("compile", "test")
-    // implicitly converted to a ConfigurationFilter
-    val cf: ConfigurationFilter = acceptConfigs
+// a Set[String] is a function String => Boolean
+val acceptConfigs: Set[String] = Set("compile", "test")
+// implicitly converted to a ConfigurationFilter
+val cf: ConfigurationFilter = acceptConfigs
 
-    val mf: ModuleFilter = (m: ModuleID) => m.organization contains "sbt"
+val mf: ModuleFilter = (m: ModuleID) => m.organization contains "sbt"
 
-    val af: ArtifactFilter = (a: Artifact) => a.classifier.isEmpty
+val af: ArtifactFilter = (a: Artifact) => a.classifier.isEmpty
+```
 
 #### ConfigurationFilter
 
 A configuration filter essentially wraps a `NameFilter` and is
 explicitly constructed by the `configurationFilter` method:
 
-    def configurationFilter(name: NameFilter = ...): ConfigurationFilter
+```scala
+def configurationFilter(name: NameFilter = ...): ConfigurationFilter
+```
 
 If the argument is omitted, the filter matches all configurations.
 Functions of type `String => Boolean` are implicitly convertible to a
@@ -11176,10 +11653,12 @@ Functions of type `String => Boolean` are implicitly convertible to a
 `NameFilter`, the `&`, `|`, and `-` methods may be used to combine
 `ConfigurationFilter`s.
 
-    import sbt._
-    val a: ConfigurationFilter = Set("compile", "test")
-    val b: ConfigurationFilter = (c: String) => c.startsWith("r")
-    val c: ConfigurationFilter = a | b
+```scala
+import sbt._
+val a: ConfigurationFilter = Set("compile", "test")
+val b: ConfigurationFilter = (c: String) => c.startsWith("r")
+val c: ConfigurationFilter = a | b
+```
 
 (The explicit types are optional here.)
 
@@ -11190,7 +11669,9 @@ organization, one for the module name, and one for the revision. Each
 component filter must match for the whole module filter to match. A
 module filter is explicitly constructed by the `moduleFilter` method:
 
-    def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
+```scala
+def moduleFilter(organization: NameFilter = ..., name: NameFilter = ..., revision: NameFilter = ...): ModuleFilter
+```
 
 An omitted argument does not contribute to the match. If all arguments
 are omitted, the filter matches all `ModuleID`s. Functions of type
@@ -11198,10 +11679,12 @@ are omitted, the filter matches all `ModuleID`s. Functions of type
 with `ConfigurationFilter`, `ArtifactFilter`, and `NameFilter`, the `&`,
 `|`, and `-` methods may be used to combine `ModuleFilter`s:
 
-    import sbt._
-    val a: ModuleFilter = moduleFilter(name = "dispatch-twitter", revision = "0.7.8")
-    val b: ModuleFilter = moduleFilter(name = "dispatch-*")
-    val c: ModuleFilter = b - a
+```scala
+import sbt._
+val a: ModuleFilter = moduleFilter(name = "dispatch-twitter", revision = "0.7.8")
+val b: ModuleFilter = moduleFilter(name = "dispatch-*")
+val c: ModuleFilter = b - a
+```
 
 (The explicit types are optional here.)
 
@@ -11213,17 +11696,22 @@ Each component filter must match for the whole artifact filter to match.
 An artifact filter is explicitly constructed by the `artifactFilter`
 method:
 
-    def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ..., extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
+```scala
+def artifactFilter(name: NameFilter = ..., `type`: NameFilter = ...,
+  extension: NameFilter = ..., classifier: NameFilter = ...): ArtifactFilter
+```
 
 Functions of type `Artifact => Boolean` are implicitly convertible to an
 `ArtifactFilter`. As with `ConfigurationFilter`, `ModuleFilter`, and
 `NameFilter`, the `&`, `|`, and `-` methods may be used to combine
 `ArtifactFilter`s:
 
-    import sbt._
-    val a: ArtifactFilter = artifactFilter(classifier = "javadoc")
-    val b: ArtifactFilter = artifactFilter(`type` = "jar")
-    val c: ArtifactFilter = b - a
+```scala
+import sbt._
+val a: ArtifactFilter = artifactFilter(classifier = "javadoc")
+val b: ArtifactFilter = artifactFilter(`type` = "jar")
+val c: ArtifactFilter = b - a
+```
 
 (The explicit types are optional here.)
 
@@ -11240,10 +11728,14 @@ and artifacts. These double-character methods will always return a
 `DependencyFilter`, whereas the single character methods preserve the
 more specific filter type. For example:
 
-    import sbt._
+```scala
+import sbt._
 
-    val df: DependencyFilter =
-      configurationFilter(name = "compile" | "test") && artifactFilter(`type` = "jar") || moduleFilter(name = "dispatch-*")
+val df: DependencyFilter =
+  configurationFilter(name = "compile" | "test") &&
+  artifactFilter(`type` = "jar") ||
+  moduleFilter(name = "dispatch-*")
+```
 
 Here, we used `&&` and `||` to combine individual component filters into
 a dependency filter, which can then be provided to the
@@ -11272,6 +11764,8 @@ a foundation.
 
 Tasks
 -----
+
+<!-- TODO: Replace error with sys.error() -->
 
 Tasks and settings are introduced in the
 [getting started guide][Basic-Def], which you may wish
@@ -11315,11 +11809,13 @@ These features are discussed in detail in the following sections.
 
 #### Hello World example (sbt)
 
-build.sbt
+`build.sbt`:
 
-    lazy val hello = taskKey[Unit]("Prints 'Hello World'")
+```scala
+lazy val hello = taskKey[Unit]("Prints 'Hello World'")
 
-    hello := println("hello world!")
+hello := println("hello world!")
+```
 
 Run "sbt hello" from command line to invoke the task. Run "sbt tasks" to
 see this task listed.
@@ -11328,7 +11824,9 @@ see this task listed.
 
 To declare a new task, define a lazy val of type `TaskKey`:
 
-    lazy val sampleTask = taskKey[Int]("A sample task.")
+```scala
+lazy val sampleTask = taskKey[Int]("A sample task.")
+```
 
 The name of the `val` is used when referring to the task in Scala code
 and at the command line. The string passed to the `taskKey` method is a
@@ -11337,8 +11835,10 @@ description of the task. The type parameter passed to `taskKey` (here,
 
 We'll define a couple of other keys for the examples:
 
-    lazy val intTask = taskKey[Int]("An int task")
-    lazy val stringTask = taskKey[String]("A string task")
+```scala
+lazy val intTask = taskKey[Int]("An int task")
+lazy val stringTask = taskKey[String]("A string task")
+```
 
 The examples themselves are valid entries in a `build.sbt` or can be
 provided as part of a sequence to `Project.settings` (see
@@ -11361,15 +11861,17 @@ combined.
 
 A task is defined using `:=`
 
-    intTask := 1 + 2
+```scala
+intTask := 1 + 2
 
-    stringTask := System.getProperty("user.name")
+stringTask := System.getProperty("user.name")
 
-    sampleTask := {
-       val sum = 1 + 2
-       println("sum: " + sum)
-       sum
-    }
+sampleTask := {
+   val sum = 1 + 2
+   println("sum: " + sum)
+   sum
+}
+```
 
 As mentioned in the introduction, a task is evaluated on demand. Each
 time `sampleTask` is invoked, for example, it will print the sum. If the
@@ -11386,11 +11888,15 @@ This method is special syntax and can only be called when defining a
 task, such as in the argument to `:=`. The following defines a task that
 adds one to the value produced by `intTask` and returns the result.
 
-    sampleTask := intTask.value + 1
+```scala
+sampleTask := intTask.value + 1
+```
 
 Multiple settings are handled similarly:
 
-    stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
+```scala
+stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
+```
 
 ##### Task Scope
 
@@ -11400,7 +11906,9 @@ The scope of a task is defined the same as for a setting. In the
 following example, `test:sampleTask` uses the result of
 `compile:intTask`.
 
-    sampleTask in Test := (intTask in Compile).value * 3
+```scala
+sampleTask in Test := (intTask in Compile).value * 3
+```
 
 ##### On precedence
 
@@ -11418,11 +11926,16 @@ postfix methods have lower precedence than infix methods.
 
 Therefore, the the previous example is equivalent to the following:
 
-    (sampleTask in Test).:=( (intTask in Compile).value * 3 )
+
+```scala
+(sampleTask in Test).:=( (intTask in Compile).value * 3 )
+```
 
 Additionally, the braces in the following are necessary:
 
-    helloTask := { "echo Hello" ! }
+```scala
+helloTask := { "echo Hello" ! }
+```
 
 Without them, Scala interprets the line as
 `( helloTask.:=("echo Hello") ).!` instead of the desired
@@ -11433,12 +11946,14 @@ Without them, Scala interprets the line as
 The implementation of a task can be separated from the binding. For
 example, a basic separate definition looks like:
 
-    // Define a new, standalone task implemention
-    lazy val intTaskImpl: Initialize[Task[Int]] =
-       Def.task { sampleTask.value - 3 }
+```scala
+// Define a new, standalone task implemention
+lazy val intTaskImpl: Initialize[Task[Int]] =
+   Def.task { sampleTask.value - 3 }
 
-    // Bind the implementation to a specific key
-    intTask := intTaskImpl.value
+// Bind the implementation to a specific key
+intTask := intTaskImpl.value
+```
 
 Note that whenever `.value` is used, it must be within a task
 definition, such as within `Def.task` above or as an argument to `:=`.
@@ -11448,31 +11963,35 @@ definition, such as within `Def.task` above or as an argument to `:=`.
 In the general case, modify a task by declaring the previous task as an
 input.
 
-    // initial definition
-    intTask := 3
+```scala
+// initial definition
+intTask := 3
 
-    // overriding definition that references the previous definition
-    intTask := intTask.value + 1
+// overriding definition that references the previous definition
+intTask := intTask.value + 1
+```
 
 Completely override a task by not declaring the previous task as an
 input. Each of the definitions in the following example completely
 overrides the previous one. That is, when `intTask` is run, it will only
 print `#3`.
 
-    intTask := {
-        println("#1")
-        3
-    }
+```scala
+intTask := {
+    println("#1")
+    3
+}
 
-    intTask := {
-        println("#2")
-        5
-    }
+intTask := {
+    println("#2")
+    5
+}
 
-    intTask :=  {
-        println("#3")
-        sampleTask.value - 3
-    }
+intTask :=  {
+    println("#3")
+    sampleTask.value - 3
+}
+```
 
 <a name="multiple-scopes"></a>
 
@@ -11483,7 +12002,9 @@ print `#3`.
 The general form of an expression that gets values from multiple scopes
 is:
 
-    <setting-or-task>.all(<scope-filter>).value
+```scala
+<setting-or-task>.all(<scope-filter>).value
+```
 
 The `all` method is implicitly added to tasks and settings. It accepts a
 `ScopeFilter` that will select the `Scopes`. The result has type
@@ -11497,19 +12018,21 @@ we want to obtain values for is `sources` and we want to get the values
 in all non-root projects and in the `Compile` configuration. This looks
 like:
 
-    lazy val core = project
+```scala
+lazy val core = project
 
-    lazy val util = project
+lazy val util = project
 
-    lazy val root = project.settings(
-       sources := {
-          val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
-          // each sources definition is of type Seq[File],
-          //   giving us a Seq[Seq[File]] that we then flatten to Seq[File]
-          val allSources: Seq[Seq[File]] = sources.all(filter).value
-          allSources.flatten
-       }
-    )
+lazy val root = project.settings(
+   sources := {
+      val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
+      // each sources definition is of type Seq[File],
+      //   giving us a Seq[Seq[File]] that we then flatten to Seq[File]
+      val allSources: Seq[Seq[File]] = sources.all(filter).value
+      allSources.flatten
+   }
+)
+```
 
 The next section describes various ways to construct a ScopeFilter.
 
@@ -11520,11 +12043,13 @@ This method makes a `ScopeFilter` from filters on the parts of a
 `Scope`: a `ProjectFilter`, `ConfigurationFilter`, and `TaskFilter`. The
 simplest case is explicitly specifying the values for the parts:
 
-    val filter: ScopeFilter =
-       ScopeFilter(
-          inProjects( core, util ),
-          inConfigurations( Compile, Test )
-       )
+```scala
+val filter: ScopeFilter =
+   ScopeFilter(
+      inProjects( core, util ),
+      inConfigurations( Compile, Test )
+   )
+```
 
 ##### Unspecified filters
 
@@ -11555,25 +12080,20 @@ details.
 `ScopeFilters` may be combined with the `&&`, `||`, `--`, and `-`
 methods:
 
-a && b
-:   Selects scopes that match both a and b
-
-a || b
-:   Selects scopes that match either a or b
-
-a -- b
-:   Selects scopes that match a but not b
-
--b
-:   Selects scopes that do not match b
+- `a && b` Selects scopes that match both a and b
+- `a || b` Selects scopes that match either a or b
+- `a -- b` Selects scopes that match a but not b
+- `-b` Selects scopes that do not match b
 
 For example, the following selects the scope for the `Compile` and
 `Test` configurations of the `core` project and the global configuration
 of the `util` project:
 
-    val filter: ScopeFilter =
-       ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
-       ScopeFilter( inProjects(util), inGlobalConfiguration )
+```scala
+val filter: ScopeFilter =
+   ScopeFilter( inProjects(core), inConfigurations(Compile, Test)) ||
+   ScopeFilter( inProjects(util), inGlobalConfiguration )
+```
 
 #### More operations
 
@@ -11582,10 +12102,22 @@ The `all` method applies to both settings (values of type
 returns a setting or task that provides a `Seq[T]`, as shown in this
 table:
 
-  Target                Result
-  --------------------- --------------------------
-  Initialize[T]         Initialize[Seq[T]]
-  Initialize[Task[T]]   Initialize[Task[Seq[T]]]
+<table>
+  <tr>
+    <th>Target</th>
+    <th>Result</th>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[T] </tt></td>
+    <td><tt>Initialize[Seq[T]]</tt></td>
+  </tr>
+
+  <tr>
+    <td><tt>Initialize[Task[T]]</tt></td>
+    <td><tt>Initialize[Task[Seq[T]]]</tt></td>
+  </tr>
+</table>
 
 This means that the `all` method can be combined with methods that
 construct tasks and settings.
@@ -11596,30 +12128,38 @@ Some scopes might not define a setting or task. The `?` and `??` methods
 can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
 
-`?`
-:   On a setting or task with underlying type T, this accepts no
+<table>
+  <tr>
+    <td><tt>?</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts no
     arguments and returns a setting or task (respectively) of type
     Option[T]. The result is None if the setting/task is undefined and
-    Some[T] with the value if it is.
+    Some[T] with the value if it is.</tt></td>
+  </tr>
 
-`??`
-:   On a setting or task with underlying type T, this accepts an
+  <tr>
+    <td><tt>??</tt></td>
+    <td><tt>On a setting or task with underlying type T, this accepts an
     argument of type T and uses this argument if the setting/task is
-    undefined.
+    undefined.</tt></td>
+  </tr>
+</table>
 
 The following contrived example sets the maximum errors to be the
 maximum of all aggregates of the current project.
 
-    maxErrors := {
-       // select the transitive aggregates for this project, but not the project itself
-       val filter: ScopeFilter =
-          ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
-       // get the configured maximum errors in each selected scope,
-       // using 0 if not defined in a scope
-       val allVersions: Seq[Int] =
-          (maxErrors ?? 0).all(filter).value
-       allVersions.max
-    }
+```scala
+maxErrors := {
+   // select the transitive aggregates for this project, but not the project itself
+   val filter: ScopeFilter =
+      ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
+   // get the configured maximum errors in each selected scope,
+   // using 0 if not defined in a scope
+   val allVersions: Seq[Int] =
+      (maxErrors ?? 0).all(filter).value
+   allVersions.max
+}
+```
 
 ##### Multiple values from multiple scopes
 
@@ -11687,17 +12227,21 @@ loggers, and a default logger. The default
 [Logger](../../api/sbt/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
-    myTask := {
-      val s: TaskStreams = streams.value
-      s.log.debug("Saying hi...")
-      s.log.info("Hello!")
-    }
+```scala
+myTask := {
+  val s: TaskStreams = streams.value
+  s.log.debug("Saying hi...")
+  s.log.info("Hello!")
+}
+```
 
 You can scope logging settings by the specific task's scope:
 
-    logLevel in myTask := Level.Debug
+```scala
+logLevel in myTask := Level.Debug
 
-    traceLevel in myTask := 5
+traceLevel in myTask := 5
+```
 
 To obtain the last logging output from a task, use the `last` command:
 
@@ -11720,36 +12264,35 @@ is called a dynamic task because it introduces dependencies at runtime.
 The `taskDyn` method supports the same syntax as `Def.task` and `:=`
 except that you return a task instead of a plain value.
 
-For example, :
+For example,
 
-    val dynamic = Def.taskDyn {
-       // decide what to evaluate based on the value of `stringTask`
-       if(stringTask.value == "dev")
-          // create the dev-mode task: this is only evaluated if the
-          //   value of stringTask is "dev"
-          Def.task {
-             3
-          }
-       else
-          // create the production task: only evaluated if the value
-          //    of the stringTask is not "dev"
-          Def.task {
-             intTask.value + 5
-          }
+```scala
+val dynamic = Def.taskDyn {
+  // decide what to evaluate based on the value of `stringTask`
+  if(stringTask.value == "dev")
+    // create the dev-mode task: this is only evaluated if the
+    //   value of stringTask is "dev"
+    Def.task {
+      3
     }
+  else
+    // create the production task: only evaluated if the value
+    //    of the stringTask is not "dev"
+    Def.task {
+      intTask.value + 5
+    }
+}
 
-
-    myTask := {
-       val num = dynamic.value
-         println(s"Number selected was $num")
-     }
+myTask := {
+  val num = dynamic.value
+  println(s"Number selected was $num")
+}
+```
 
 The only static dependency of `myTask` is `stringTask`. The dependency
 on `intTask` is only introduced in non-dev mode.
 
-> **note**
->
-> A dynamic task cannot refer to itself or a circular dependency will
+> **Note**: A dynamic task cannot refer to itself or a circular dependency will
 > result. In the example above, there would be a circular dependency if
 > the code passed to taskDyn referenced myTask.
 
@@ -11769,12 +12312,14 @@ exceptions thrown during task execution.
 
 For example:
 
-    intTask := error("Failed.")
+```scala
+intTask := error("Failed.")
 
-    intTask := {
-       println("Ignoring failure: " + intTask.failure.value)
-       3
-    }
+intTask := {
+   println("Ignoring failure: " + intTask.failure.value)
+   3
+}
+```
 
 This overrides the `intTask` so that the original exception is printed
 and the constant `3` is returned.
@@ -11782,29 +12327,99 @@ and the constant `3` is returned.
 `failure` does not prevent other tasks that depend on the target from
 failing. Consider the following example:
 
-    intTask := if(shouldSucceed) 5 else error("Failed.")
+```scala
+intTask := if(shouldSucceed) 5 else error("Failed.")
 
-    // Return 3 if intTask fails. If intTask succeeds, this task will fail.
-    aTask := intTask.failure.value - 2
+// Return 3 if intTask fails. If intTask succeeds, this task will fail.
+aTask := intTask.failure.value - 2
 
-    // A new task that increments the result of intTask.
-    bTask := intTask.value + 1
+// A new task that increments the result of intTask.
+bTask := intTask.value + 1
 
-    cTask := aTask.value + bTask.value
+cTask := aTask.value + bTask.value
+```
 
 The following table lists the results of each task depending on the
 initially invoked task:
 
-    invoked task   intTask result   aTask result   bTask result   cTask result   overall result
-    -------------- ---------------- -------------- -------------- -------------- ----------------
-    intTask        failure          not run        not run        not run        failure
-    aTask          failure          success        not run        not run        success
-    bTask          failure          not run        failure        not run        failure
-    cTask          failure          success        failure        failure        failure
-    intTask        success          not run        not run        not run        success
-    aTask          success          failure        not run        not run        failure
-    bTask          success          not run        success        not run        success
-    cTask          success          failure        success        failure        failure
+<table>
+  <thead>
+    <tr>
+      <th>invoked task</th>
+      <th>intTask result</th>
+      <th>aTask result</th>
+      <th>bTask result</th>
+      <th>cTask result</th>
+      <th>overall result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>intTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>intTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>aTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>not run</td>
+      <td>not run</td>
+      <td>failure</td>
+    </tr>
+    <tr>
+      <td>bTask</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+      <td>not run</td>
+      <td>success</td>
+    </tr>
+    <tr>
+      <td>cTask</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>success</td>
+      <td>failure</td>
+      <td>failure</td>
+    </tr>
+  </tbody>
+</table>
 
 The overall result is always the same as the root task (the directly
 invoked task). A `failure` turns a success into a failure, and a failure
@@ -11826,16 +12441,18 @@ task succeeds or fails.
 
 For example:
 
-    intTask := error("Failed.")
+```scala
+intTask := error("Failed.")
 
-    intTask := intTask.result.value match {
-       case Inc(inc: Incomplete) =>
-          println("Ignoring failure: " + inc)
-          3
-       case Value(v) =>
-          println("Using successful result: " + v)
-          v
-    }
+intTask := intTask.result.value match {
+   case Inc(inc: Incomplete) =>
+      println("Ignoring failure: " + inc)
+      3
+   case Value(v) =>
+      println("Using successful result: " + v)
+      v
+}
+```
 
 This overrides the original `intTask` definition so that if the original
 task fails, the exception is printed and the constant `3` is returned.
@@ -11848,11 +12465,13 @@ and evaluates a side effect regardless of whether the original task
 succeeded. The result of the task is the result of the original task.
 For example:
 
-    intTask := error("I didn't succeed.")
+```scala
+intTask := error("I didn't succeed.")
 
-    lazy val intTaskImpl = intTask andFinally { println("andFinally") }
+lazy val intTaskImpl = intTask andFinally { println("andFinally") }
 
-    intTask := intTaskImpl.value
+intTask := intTaskImpl.value
+```
 
 This modifies the original `intTask` to always print "andFinally" even
 if the task fails.
@@ -11862,23 +12481,27 @@ task has to be invoked in order for the extra block to run. This is
 important when calling andFinally on another task instead of overriding
 a task like in the previous example. For example, consider this code:
 
-    intTask := error("I didn't succeed.")
+```scala
+intTask := error("I didn't succeed.")
 
-    lazy val intTaskImpl = intTask andFinally { println("andFinally") }
+lazy val intTaskImpl = intTask andFinally { println("andFinally") }
 
-    otherIntTask := intTaskImpl.value
+otherIntTask := intTaskImpl.value
+```
 
 If `intTask` is run directly, `otherIntTask` is never involved in
 execution. This case is similar to the following plain Scala code:
 
-    def intTask(): Int =
-      error("I didn't succeed.")
+```scala
+def intTask(): Int =
+  error("I didn't succeed.")
 
-    def otherIntTask(): Int =
-      try { intTask() }
-      finally { println("finally") }
+def otherIntTask(): Int =
+  try { intTask() }
+  finally { println("finally") }
 
-    intTask()
+intTask()
+```
 
 It is obvious here that calling intTask() will never result in "finally"
 being printed.
@@ -11903,8 +12526,10 @@ task like a `SettingKey` represents a setting or a `TaskKey` represents
 a task. Define a new input task key using the `inputKey.apply` factory
 method:
 
-    // goes in project/Build.scala or in build.sbt
-    val demo = inputKey[Unit]("A demo input task.")
+```scala
+// goes in project/Build.scala or in build.sbt
+val demo = inputKey[Unit]("A demo input task.")
+```
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
@@ -11924,14 +12549,16 @@ present to the user during tab completion.
 For example, the following task prints the current Scala version and
 then echoes the arguments passed to it on their own line.
 
-    demo := {
-        // get the result of parsing
-      val args: Seq[String] = spaceDelimited("<arg>").parsed
-        // Here, we also use the value of the `scalaVersion` setting
-      println("The current Scala version is " + scalaVersion.value)
-      println("The arguments to demo were:")
-      args foreach println
-    }
+```scala
+demo := {
+    // get the result of parsing
+  val args: Seq[String] = spaceDelimited("<arg>").parsed
+    // Here, we also use the value of the `scalaVersion` setting
+  println("The current Scala version is " + scalaVersion.value)
+  println("The arguments to demo were:")
+  args foreach println
+}
+```
 
 ### Input Task using Parsers
 
@@ -11992,19 +12619,23 @@ The following contrived example uses the previous example's output (of
 type `(String,String)`) and the result of the `package` task to print
 some information to the screen.
 
-    demo := {
-        val (tpe, value) = parser.parsed
-        println("Type: " + tpe)
-        println("Value: " + value)
-        println("Packaged: " + packageBin.value.getAbsolutePath)
-    }
+```scala
+demo := {
+    val (tpe, value) = parser.parsed
+    println("Type: " + tpe)
+    println("Value: " + value)
+    println("Packaged: " + packageBin.value.getAbsolutePath)
+}
+```
 
 ### The InputTask type
 
 It helps to look at the `InputTask` type to understand more advanced
 usage of input tasks. The core input task type is:
 
-    class InputTask[T](val parser: State => Parser[Task[T]])
+```scala
+class InputTask[T](val parser: State => Parser[Task[T]])
+```
 
 Normally, an input task is assigned to a setting and you work with
 `Initialize[InputTask[T]]`.
@@ -12043,27 +12674,31 @@ parser `--`, and `run` again. The parsers are sequenced in order of
 syntactic appearance, so that the arguments before `--` are passed to
 the first `run` and the ones after are passed to the second.
 
-    val run2 = inputKey[Unit](
-        "Runs the main class twice with different argument lists separated by --")
+```scala
+val run2 = inputKey[Unit](
+    "Runs the main class twice with different argument lists separated by --")
 
-    val separator: Parser[String] = "--"
+val separator: Parser[String] = "--"
 
-    run2 := {
-       val one = (run in Compile).evaluated
-       val sep = separator.parsed
-       val two = (run in Compile).evaluated
-    }
+run2 := {
+   val one = (run in Compile).evaluated
+   val sep = separator.parsed
+   val two = (run in Compile).evaluated
+}
+```
 
 For a main class Demo that echoes its arguments, this looks like:
 
-    $ sbt
-    > run2 a b -- c d
-    [info] Running Demo c d
-    [info] Running Demo a b
-    c
-    d
-    a
-    b
+```
+$ sbt
+> run2 a b -- c d
+[info] Running Demo c d
+[info] Running Demo a b
+c
+d
+a
+b
+```
 
 ### Preapplying input
 
@@ -12094,33 +12729,37 @@ we:
 > **Note**: the current implementation of `:=` doesn't actually support
 applying input derived from settings yet.
 
-    lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
-       "once with the project name and version as arguments"
-       "and once with command line arguments preceded by hard coded values.")
+```scala
+lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
+   "once with the project name and version as arguments"
+   "and once with command line arguments preceded by hard coded values.")
 
-    // The argument string for the first run task is ' <name> <version>'
-    lazy val firstInput: Initialize[String] =
-       Def.setting(s" ${name.value} ${version.value}")
+// The argument string for the first run task is ' <name> <version>'
+lazy val firstInput: Initialize[String] =
+   Def.setting(s" ${name.value} ${version.value}")
 
-    // Make the first arguments to the second run task ' red blue'
-    lazy val secondInput: String = " red blue"
+// Make the first arguments to the second run task ' red blue'
+lazy val secondInput: String = " red blue"
 
-    run2 := {
-       val one = (run in Compile).fullInput(firstInput.value).evaluated
-       val two = (run in Compile).partialInput(secondInput).evaluated
-    }
+run2 := {
+   val one = (run in Compile).fullInput(firstInput.value).evaluated
+   val two = (run in Compile).partialInput(secondInput).evaluated
+}
+```
 
 For a main class Demo that echoes its arguments, this looks like:
 
-    $ sbt
-    > run2 green
-    [info] Running Demo demo 1.0
-    [info] Running Demo red blue green
-    demo
-    1.0
-    red
-    blue
-    green
+```
+$ sbt
+> run2 green
+[info] Running Demo demo 1.0
+[info] Running Demo red blue green
+demo
+1.0
+red
+blue
+green
+```
 
 ### Get a Task from an InputTask
 
@@ -12131,36 +12770,42 @@ and produces a task that can be used normally. For example, the
 following defines a plain task `runFixed` that can be used by other
 tasks or run directly without providing any input, :
 
-    lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
+```scala
+lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
 
-    runFixed := {
-       val _ = (run in Compile).toTask(" blue green").value
-       println("Done!")
-    }
+runFixed := {
+   val _ = (run in Compile).toTask(" blue green").value
+   println("Done!")
+}
+```
 
 For a main class Demo that echoes its arguments, running `runFixed`
 looks like:
 
-    $ sbt
-    > runFixed
-    [info] Running Demo blue green
-    blue
-    green
-    Done!
+```
+$ sbt
+> runFixed
+[info] Running Demo blue green
+blue
+green
+Done!
+```
 
 Each call to `toTask` generates a new task, but each task is configured
 the same as the original `InputTask` (in this case, `run`) but with
 different input applied. For example, :
 
-    lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
+```scala
+lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
 
-    fork in run := true
+fork in run := true
 
-    runFixed2 := {
-       val x = (run in Compile).toTask(" blue green").value
-       val y = (run in Compile).toTask(" red orange").value
-       println("Done!")
-    }
+runFixed2 := {
+   val x = (run in Compile).toTask(" blue green").value
+   val y = (run in Compile).toTask(" red orange").value
+   println("Done!")
+}
+```
 
 The different `toTask` calls define different tasks that each run the
 project's main class in a new jvm. That is, the `fork` setting
@@ -12169,15 +12814,17 @@ class. However, each task passes different arguments to the main class.
 For a main class Demo that echoes its arguments, the output of running
 `runFixed2` might look like:
 
-    $ sbt
-    > runFixed2
-    [info] Running Demo blue green
-    [info] Running Demo red orange
-    blue
-    green
-    red
-    orange
-    Done!
+```
+$ sbt
+> runFixed2
+[info] Running Demo blue green
+[info] Running Demo red orange
+blue
+green
+red
+orange
+Done!
+```
 
 
   [Parsing-Input]: Parsing-Input.html
@@ -12242,36 +12889,44 @@ API details for constructing commands.
 
 General command construction looks like:
 
-    val action: (State, T) => State = ...
-    val parser: State => Parser[T] = ...
-    val command: Command = Command("name")(parser)(action)
+```scala
+val action: (State, T) => State = ...
+val parser: State => Parser[T] = ...
+val command: Command = Command("name")(parser)(action)
+```
 
 #### No-argument commands
 
 There is a convenience method for constructing commands that do not
 accept any arguments.
 
-    val action: State => State = ...
-    val command: Command = Command.command("name")(action)
+```scala
+val action: State => State = ...
+val command: Command = Command.command("name")(action)
+```
 
 #### Single-argument command
 
 There is a convenience method for constructing commands that accept a
 single argument with arbitrary content.
 
-    // accepts the state and the single argument
-    val action: (State, String) => State = ...
-    val command: Command = Command.single("name")(action)
+```scala
+// accepts the state and the single argument
+val action: (State, String) => State = ...
+val command: Command = Command.single("name")(action)
+```
 
 #### Multi-argument command
 
 There is a convenience method for constructing commands that accept
 multiple arguments separated by spaces.
 
-    val action: (State, Seq[String]) => State = ...
+```scala
+val action: (State, Seq[String]) => State = ...
 
-    // <arg> is the suggestion printed for tab completion on an argument
-    val command: Command = Command.args("name", "<arg>")(action)
+// <arg> is the suggestion printed for tab completion on an argument
+val command: Command = Command.args("name", "<arg>")(action)
+```
 
 ### Full Example
 
@@ -12285,88 +12940,87 @@ commands to a project. To try it out:
     printState commands.
 4.  Use tab-completion and the code below as guidance.
 
-<!-- -->
+```scala
+import sbt._
+import Keys._
 
-    import sbt._
-    import Keys._
+// imports standard command parsing functionality
+import complete.DefaultParsers._
 
-    // imports standard command parsing functionality
-    import complete.DefaultParsers._
+object CommandExample extends Build {
+    // Declare a single project, adding several new commands, which are discussed below.
+    lazy override val projects = Seq(root)
+    lazy val root = Project("root", file(".")) settings(
+        commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
+    )
 
-    object CommandExample extends Build
-    {
-        // Declare a single project, adding several new commands, which are discussed below.
-        lazy override val projects = Seq(root)
-        lazy val root = Project("root", file(".")) settings(
-            commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
-        )
-
-        // A simple, no-argument command that prints "Hi",
-        //  leaving the current state unchanged.
-        def hello = Command.command("hello") { state =>
-            println("Hi!")
-            state
-        }
-
-
-        // A simple, multiple-argument command that prints "Hi" followed by the arguments.
-        //   Again, it leaves the current state unchanged.
-        def helloAll = Command.args("helloAll", "<name>") { (state, args) =>
-            println("Hi " + args.mkString(" "))
-            state
-        }
-
-
-        // A command that demonstrates failing or succeeding based on the input
-        def failIfTrue = Command.single("failIfTrue") {
-            case (state, "true") => state.fail
-            case (state, _) => state
-        }
-
-
-        // Demonstration of a custom parser.
-        // The command changes the foreground or background terminal color
-        //  according to the input.
-        lazy val change = Space ~> (reset | setColor)
-        lazy val reset = token("reset" ^^^ "\033[0m")
-        lazy val color = token( Space ~> ("blue" ^^^ "4" | "green" ^^^ "2") )
-        lazy val select = token( "fg" ^^^ "3" | "bg" ^^^ "4" )
-        lazy val setColor = (select ~ color) map { case (g, c) => "\033[" + g + c + "m" }
-
-        def changeColor = Command("color")(_ => change) { (state, ansicode) =>
-            print(ansicode)
-            state
-        }
-
-
-        // A command that demonstrates getting information out of State.
-        def printState = Command.command("printState") { state =>
-            import state._
-            println(definedCommands.size + " registered commands")
-            println("commands to run: " + show(remainingCommands))
-            println()
-
-            println("original arguments: " + show(configuration.arguments))
-            println("base directory: " + configuration.baseDirectory)
-            println()
-
-            println("sbt version: " + configuration.provider.id.version)
-            println("Scala version (for sbt): " + configuration.provider.scalaProvider.version)
-            println()
-
-            val extracted = Project.extract(state)
-            import extracted._
-            println("Current build: " + currentRef.build)
-            println("Current project: " + currentRef.project)
-            println("Original setting count: " + session.original.size)
-            println("Session setting count: " + session.append.size)
-
-            state
-        }
-
-        def show[T](s: Seq[T]) =
-            s.map("'" + _ + "'").mkString("[", ", ", "]")
+    // A simple, no-argument command that prints "Hi",
+    //  leaving the current state unchanged.
+    def hello = Command.command("hello") { state =>
+        println("Hi!")
+        state
     }
+
+
+    // A simple, multiple-argument command that prints "Hi" followed by the arguments.
+    //   Again, it leaves the current state unchanged.
+    def helloAll = Command.args("helloAll", "<name>") { (state, args) =>
+        println("Hi " + args.mkString(" "))
+        state
+    }
+
+
+    // A command that demonstrates failing or succeeding based on the input
+    def failIfTrue = Command.single("failIfTrue") {
+        case (state, "true") => state.fail
+        case (state, _) => state
+    }
+
+
+    // Demonstration of a custom parser.
+    // The command changes the foreground or background terminal color
+    //  according to the input.
+    lazy val change = Space ~> (reset | setColor)
+    lazy val reset = token("reset" ^^^ "\033[0m")
+    lazy val color = token( Space ~> ("blue" ^^^ "4" | "green" ^^^ "2") )
+    lazy val select = token( "fg" ^^^ "3" | "bg" ^^^ "4" )
+    lazy val setColor = (select ~ color) map { case (g, c) => "\033[" + g + c + "m" }
+
+    def changeColor = Command("color")(_ => change) { (state, ansicode) =>
+        print(ansicode)
+        state
+    }
+
+
+    // A command that demonstrates getting information out of State.
+    def printState = Command.command("printState") { state =>
+        import state._
+        println(definedCommands.size + " registered commands")
+        println("commands to run: " + show(remainingCommands))
+        println()
+
+        println("original arguments: " + show(configuration.arguments))
+        println("base directory: " + configuration.baseDirectory)
+        println()
+
+        println("sbt version: " + configuration.provider.id.version)
+        println("Scala version (for sbt): " + configuration.provider.scalaProvider.version)
+        println()
+
+        val extracted = Project.extract(state)
+        import extracted._
+        println("Current build: " + currentRef.build)
+        println("Current project: " + currentRef.project)
+        println("Original setting count: " + session.original.size)
+        println("Session setting count: " + session.append.size)
+
+        state
+    }
+
+    def show[T](s: Seq[T]) =
+        s.map("'" + _ + "'").mkString("[", ", ", "]")
+}
+```
 
 
   [Commands]: Commands.html
@@ -12392,35 +13046,41 @@ discussion.
 
 The following examples assume the imports: :
 
-    import sbt._
-    import complete.DefaultParsers._
+```scala
+import sbt._
+import complete.DefaultParsers._
+```
 
 ### Basic parsers
 
 The simplest parser combinators match exact inputs:
 
-    // A parser that succeeds if the input is 'x', returning the Char 'x'
-    //  and failing otherwise
-    val singleChar: Parser[Char] = 'x'
+```scala
+// A parser that succeeds if the input is 'x', returning the Char 'x'
+//  and failing otherwise
+val singleChar: Parser[Char] = 'x'
 
-    // A parser that succeeds if the input is "blue", returning the String "blue"
-    //   and failing otherwise
-    val litString: Parser[String] = "blue"
+// A parser that succeeds if the input is "blue", returning the String "blue"
+//   and failing otherwise
+val litString: Parser[String] = "blue"
+```
 
 In these examples, implicit conversions produce a literal `Parser` from
 a `Char` or `String`. Other basic parser constructors are the
 `charClass`, `success` and `failure` methods:
 
-    // A parser that succeeds if the character is a digit, returning the matched Char 
-    //   The second argument, "digit", describes the parser and is used in error messages
-    val digit: Parser[Char] = charClass( (c: Char) => c.isDigit, "digit")
+```scala
+// A parser that succeeds if the character is a digit, returning the matched Char 
+//   The second argument, "digit", describes the parser and is used in error messages
+val digit: Parser[Char] = charClass( (c: Char) => c.isDigit, "digit")
 
-    // A parser that produces the value 3 for an empty input string, fails otherwise
-    val alwaysSucceed: Parser[Int] = success( 3 )
+// A parser that produces the value 3 for an empty input string, fails otherwise
+val alwaysSucceed: Parser[Int] = success( 3 )
 
-    // Represents failure (always returns None for an input String).
-    //  The argument is the error message.
-    val alwaysFail: Parser[Nothing] = failure("Invalid input.")
+// Represents failure (always returns None for an input String).
+//  The argument is the error message.
+val alwaysFail: Parser[Nothing] = failure("Invalid input.")
+```
 
 ### Built-in parsers
 
@@ -12446,31 +13106,33 @@ We build on these basic parsers to construct more interesting parsers.
 We can combine parsers in a sequence, choose between parsers, or repeat
 a parser.
 
-    // A parser that succeeds if the input is "blue" or "green",
-    //  returning the matched input
-    val color: Parser[String] = "blue" | "green"
+```scala
+// A parser that succeeds if the input is "blue" or "green",
+//  returning the matched input
+val color: Parser[String] = "blue" | "green"
 
-    // A parser that matches either "fg" or "bg"
-    val select: Parser[String] = "fg" | "bg"
+// A parser that matches either "fg" or "bg"
+val select: Parser[String] = "fg" | "bg"
 
-    // A parser that matches "fg" or "bg", a space, and then the color, returning the matched values.
-    //   ~ is an alias for Tuple2.
-    val setColor: Parser[String ~ Char ~ String] =
-      select ~ ' ' ~ color
+// A parser that matches "fg" or "bg", a space, and then the color, returning the matched values.
+//   ~ is an alias for Tuple2.
+val setColor: Parser[String ~ Char ~ String] =
+  select ~ ' ' ~ color
 
-    // Often, we don't care about the value matched by a parser, such as the space above
-    //  For this, we can use ~> or <~, which keep the result of
-    //  the parser on the right or left, respectively
-    val setColor2: Parser[String ~ String]  =  select ~ (' ' ~> color)
+// Often, we don't care about the value matched by a parser, such as the space above
+//  For this, we can use ~> or <~, which keep the result of
+//  the parser on the right or left, respectively
+val setColor2: Parser[String ~ String]  =  select ~ (' ' ~> color)
 
-    // Match one or more digits, returning a list of the matched characters
-    val digits: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").+
+// Match one or more digits, returning a list of the matched characters
+val digits: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").+
 
-    // Match zero or more digits, returning a list of the matched characters
-    val digits0: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").*
+// Match zero or more digits, returning a list of the matched characters
+val digits0: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").*
 
-    // Optionally match a digit
-    val optDigit: Parser[Option[Char]]  =  charClass(_.isDigit, "digit").?
+// Optionally match a digit
+val optDigit: Parser[Option[Char]]  =  charClass(_.isDigit, "digit").?
+```
 
 ### Transforming results
 
@@ -12479,22 +13141,24 @@ into more useful data structures. The fundamental methods for this are
 `map` and `flatMap`. Here are examples of `map` and some convenience
 methods implemented on top of `map`.
 
-    // Apply the `digits` parser and apply the provided function to the matched
-    //   character sequence
-    val num: Parser[Int] = digits map { (chars: Seq[Char]) => chars.mkString.toInt }
+```scala
+// Apply the `digits` parser and apply the provided function to the matched
+//   character sequence
+val num: Parser[Int] = digits map { (chars: Seq[Char]) => chars.mkString.toInt }
 
-    // Match a digit character, returning the matched character or return '0' if the input is not a digit
-    val digitWithDefault: Parser[Char]  =  charClass(_.isDigit, "digit") ?? '0'
+// Match a digit character, returning the matched character or return '0' if the input is not a digit
+val digitWithDefault: Parser[Char]  =  charClass(_.isDigit, "digit") ?? '0'
 
-    // The previous example is equivalent to:
-    val digitDefault: Parser[Char] =
-      charClass(_.isDigit, "digit").? map { (d: Option[Char]) => d getOrElse '0' }
+// The previous example is equivalent to:
+val digitDefault: Parser[Char] =
+  charClass(_.isDigit, "digit").? map { (d: Option[Char]) => d getOrElse '0' }
 
-    // Succeed if the input is "blue" and return the value 4
-    val blue = "blue" ^^^ 4
+// Succeed if the input is "blue" and return the value 4
+val blue = "blue" ^^^ 4
 
-    // The above is equivalent to:
-    val blueM = "blue" map { (s: String) => 4 }
+// The above is equivalent to:
+val blueM = "blue" map { (s: String) => 4 }
+```
 
 ### Controlling tab completion
 
@@ -12505,14 +13169,18 @@ to determine the valid completions for `charClass`, since it accepts an
 arbitrary predicate. The `examples` method defines explicit completions
 for such a parser:
 
-    val digit = charClass(_.isDigit, "digit").examples("0", "1", "2")
+```scala
+val digit = charClass(_.isDigit, "digit").examples("0", "1", "2")
+```
 
 Tab completion will use the examples as suggestions. The other method
 controlling tab completion is `token`. The main purpose of `token` is to
 determine the boundaries for suggestions. For example, if your parser
 is:
 
-    ("fg" | "bg") ~ ' ' ~ ("green" | "blue")
+```scala
+("fg" | "bg") ~ ' ' ~ ("green" | "blue")
+```
 
 then the potential completions on empty input are:
 `console fg green fg blue bg green bg blue`
@@ -12520,7 +13188,9 @@ then the potential completions on empty input are:
 Typically, you want to suggest smaller segments or the number of
 suggestions becomes unmanageable. A better parser is:
 
-    token( ("fg" | "bg") ~ ' ') ~ token("green" | "blue")
+```scala
+token( ("fg" | "bg") ~ ' ') ~ token("green" | "blue")
+```
 
 Now, the initial suggestions would be (with `_` representing a space):
 `console fg_ bg_`
@@ -12557,30 +13227,36 @@ to be executed. This is done in the action part by transforming the
 (immutable) State provided to the command. A function that registers
 additional power commands might look like:
 
-    val powerCommands: Seq[Command] = ...
+```scala
+val powerCommands: Seq[Command] = ...
 
-    val addPower: State => State =
-      (state: State) =>
-        state.copy(definedCommands =
-          (state.definedCommands ++ powerCommands).distinct
-        )
+val addPower: State => State =
+  (state: State) =>
+    state.copy(definedCommands =
+      (state.definedCommands ++ powerCommands).distinct
+    )
+```
 
 This takes the current commands, appends new commands, and drops
 duplicates. Alternatively, State has a convenience method for doing the
 above:
 
-    val addPower2 = (state: State) => state ++ powerCommands
+```scala
+val addPower2 = (state: State) => state ++ powerCommands
+```
 
 Some examples of functions that modify the remaining commands to
 execute:
 
-    val appendCommand: State => State =
-      (state: State) =>
-        state.copy(remainingCommands = state.remainingCommands :+ "cleanup")
+```scala
+val appendCommand: State => State =
+  (state: State) =>
+    state.copy(remainingCommands = state.remainingCommands :+ "cleanup")
 
-    val insertCommand: State => State =
-      (state: State) =>
-        state.copy(remainingCommands = "next-command" +: state.remainingCommands)
+val insertCommand: State => State =
+  (state: State) =>
+    state.copy(remainingCommands = "next-command" +: state.remainingCommands)
+```
 
 The first adds a command that will run after all currently specified
 commands run. The second inserts a command that will run next. The
@@ -12589,10 +13265,12 @@ remaining commands will run after the inserted command completes.
 To indicate that a command has failed and execution should not continue,
 return `state.fail`.
 
-    (state: State) => {
-      val success: Boolean = ...
-      if(success) state else state.fail
-    }
+```scala
+(state: State) => {
+  val success: Boolean = ...
+  if(success) state else state.fail
+}
+```
 
 ### Project-related data
 
@@ -12600,9 +13278,11 @@ Project-related information is stored in `attributes`. Typically,
 commands won't access this directly but will instead use a convenience
 method to extract the most useful information:
 
-    val state: State
-    val extracted: Extracted = Project.extract(state)
-    import extracted._
+```scala
+val state: State
+val extracted: Extracted = Project.extract(state)
+import extracted._
+```
 
 [Extracted](../../api/sbt/Extracted.html) provides:
 
@@ -12620,9 +13300,11 @@ All project data is stored in `structure.data`, which is of type
 `sbt.Settings[Scope]`. Typically, one gets information of type `T` in
 the following way:
 
-    val key: SettingKey[T]
-    val scope: Scope
-    val value: Option[T] = key in scope get structure.data
+```scala
+val key: SettingKey[T]
+val scope: Scope
+val value: Option[T] = key in scope get structure.data
+```
 
 Here, a `SettingKey[T]` is typically obtained from
 [Keys](../../api/sbt/Keys$.html) and is the same type that is used to
@@ -12633,32 +13315,38 @@ to specify only the required scope axes. See
 [Structure.scala](../../sxr/sbt/Structure.scala.html) for where `in`
 and other parts of the settings interface are defined. Some examples:
 
-    import Keys._
-    val extracted: Extracted
-    import extracted._
+```scala
+import Keys._
+val extracted: Extracted
+import extracted._
 
-    // get name of current project
-    val nameOpt: Option[String] = name in currentRef get structure.data
+// get name of current project
+val nameOpt: Option[String] = name in currentRef get structure.data
 
-    // get the package options for the `test:packageSrc` task or Nil if none are defined
-    val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
+// get the package options for the `test:packageSrc` task or Nil if none are defined
+val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
+```
 
 [BuildStructure](../../api/sbt/Load$$BuildStructure.html) contains
 information about build and project relationships. Key members are:
 
-    units: Map[URI, LoadedBuildUnit]
-    root: URI
+```scala
+units: Map[URI, LoadedBuildUnit]
+root: URI
+```
 
 A `URI` identifies a build and `root` identifies the initial build
 loaded. [LoadedBuildUnit](../../api/sbt/Load$$LoadedBuildUnit.html)
 provides information about a single build. The key members of
 `LoadedBuildUnit` are:
 
-    // Defines the base directory for the build
-    localBase: File
+```scala
+// Defines the base directory for the build
+localBase: File
 
-    // maps the project ID to the Project definition
-    defined: Map[String, ResolvedProject]
+// maps the project ID to the Project definition
+defined: Map[String, ResolvedProject]
+```
 
 [ResolvedProject](../../api/sbt/ResolvedProject.html) has the same
 information as the `Project` used in a `project/Build.scala` except that
@@ -12675,8 +13363,10 @@ also associates the ModuleID and Artifact with managed entries (those
 obtained by dependency management). When you only want the underlying
 `Seq[File]`, use `files`:
 
-    val attributedClasspath: Seq[Attribute[File]] = ...
-    val classpath: Seq[File] = attributedClasspath.files
+```scala
+val attributedClasspath: Seq[Attribute[File]] = ...
+val classpath: Seq[File] = attributedClasspath.files
+```
 
 ### Running tasks
 
@@ -12687,44 +13377,52 @@ project or a task might analyze the results of a compilation. The
 relevant method is `Project.evaluateTask`, which has the following
 signature:
 
-    def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
-      checkCycles: Boolean = false, maxWorkers: Int = ...): Option[Result[T]]
+```scala
+def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
+  checkCycles: Boolean = false, maxWorkers: Int = ...): Option[Result[T]]
+```
 
 For example,
 
-    val eval: State => State = (state: State) => {
+```scala
+val eval: State => State = (state: State) => {
 
-        // This selects the main 'compile' task for the current project.
-        //   The value produced by 'compile' is of type inc.Analysis,
-        //   which contains information about the compiled code.
-        val taskKey = Keys.compile in Compile
+    // This selects the main 'compile' task for the current project.
+    //   The value produced by 'compile' is of type inc.Analysis,
+    //   which contains information about the compiled code.
+    val taskKey = Keys.compile in Compile
 
-        // Evaluate the task
-        // None if the key is not defined
-        // Some(Inc) if the task does not complete successfully (Inc for incomplete)
-        // Some(Value(v)) with the resulting value
-        val result: Option[Result[inc.Analysis]] = Project.evaluateTask(taskKey, state)
-        // handle the result
-        result match
-        {
-            case None => // Key wasn't defined.
-            case Some(Inc(inc)) => // error detail, inc is of type Incomplete, use Incomplete.show(inc.tpe) to get an error message
-            case Some(Value(v)) => // do something with v: inc.Analysis
-        }
+    // Evaluate the task
+    // None if the key is not defined
+    // Some(Inc) if the task does not complete successfully (Inc for incomplete)
+    // Some(Value(v)) with the resulting value
+    val result: Option[Result[inc.Analysis]] = Project.evaluateTask(taskKey, state)
+    // handle the result
+    result match
+    {
+        case None => // Key wasn't defined.
+        case Some(Inc(inc)) => // error detail, inc is of type Incomplete, use Incomplete.show(inc.tpe) to get an error message
+        case Some(Value(v)) => // do something with v: inc.Analysis
     }
+}
+```
 
 For getting the test classpath of a specific project, use this key:
 
-    val projectRef: ProjectRef = ...
-    val taskKey: Task[Seq[Attributed[File]]] =
-      Keys.fullClasspath in (projectRef, Test)
+```scala
+val projectRef: ProjectRef = ...
+val taskKey: Task[Seq[Attributed[File]]] =
+  Keys.fullClasspath in (projectRef, Test)
+```
 
 ### Using State in a task
 
 To access the current State from a task, use the `state` task as an
 input. For example,
 
-    myTask := ... state.value ...
+```scala
+myTask := ... state.value ...
+```
 
 
   [More-About-Settings]: ../tutorial/More-About-Settings.html
@@ -12765,8 +13463,10 @@ def makeFoo(): Unit = ... initialize foo ...
 
 Typical usage would be:
 
-    makeFoo()
-    doSomething( foo )
+```scala
+makeFoo()
+doSomething(foo)
+```
 
 This example is rather exaggerated in its badness, but I claim it is
 nearly the same situation as our two step task definitions. Particular
@@ -12784,11 +13484,15 @@ and the third is a consequence of unsynchronized, shared state.
 In Scala, we have the built-in functionality to easily fix this:
 `lazy val`.
 
-    lazy val foo: Foo = ... initialize foo ...
+```scala
+lazy val foo: Foo = ... initialize foo ...
+```
 
 with the example usage:
 
-    doSomething( foo )
+```scala
+doSomething(foo)
+```
 
 Here, `lazy val` gives us thread safety, guaranteed initialization
 before access, and immutability all in one, DRY construct. The task
@@ -12804,11 +13508,13 @@ process.
 
 The general form of a task definition looks like:
 
-    myTask := {
-      val a: A = aTask.value
-      val b: B = bTask.value
-      ... do something with a, b and generate a result ...
-    }
+```scala
+myTask := {
+  val a: A = aTask.value
+  val b: B = bTask.value
+  ... do something with a, b and generate a result ...
+}
+```
 
 (This is only intended to be a discussion of the ideas behind tasks, so
 see the [sbt Tasks][Tasks] page for details on usage.)
@@ -12827,15 +13533,17 @@ tasks and including their outputs in a zip file. As good practice, we
 then return the File for this zip so that other tasks can map on the zip
 task.
 
-    zip := {
-        val bin: File = (packageBin in Compile).value
-        val src: File = (packageSrc in Compile).value
-        val doc: File = (packageDoc in Compile).value
-        val out: File = zipPath.value
-        val inputs: Seq[(File,String)] = Seq(bin, src, doc) x Path.flat
-        IO.zip(inputs, out)
-        out
-    }
+```scala
+zip := {
+    val bin: File = (packageBin in Compile).value
+    val src: File = (packageSrc in Compile).value
+    val doc: File = (packageDoc in Compile).value
+    val out: File = zipPath.value
+    val inputs: Seq[(File,String)] = Seq(bin, src, doc) x Path.flat
+    IO.zip(inputs, out)
+    out
+}
+```
 
 The `val inputs` line defines how the input files are mapped to paths in
 the zip. See [Mapping Files][Mapping-Files] for details. The explicit
@@ -12844,8 +13552,9 @@ types are not required, but are included for clarity.
 The `zipPath` input would be a custom task to define the location of the
 zip file. For example:
 
-    zipPath :=
-       target.value / "out.zip"
+```scala
+zipPath := target.value / "out.zip"
+```
 
 
   [Getting-Started]: ../tutorial/index.html
@@ -12919,7 +13628,9 @@ especially important for plugins. A user might change the `target`
 setting to point to `build/`, for example, and the plugin needs to
 respect that. Instead, use the setting, like:
 
-    myDirectory := target.value / "sub-directory"
+```scala
+myDirectory := target.value / "sub-directory"
+```
 
 ### Don't "mutate" files
 
@@ -12940,21 +13651,23 @@ file contents as immutable at the level of Tasks.
 
 For example:
 
-    lazy val makeFile = taskKey[File]("Creates a file with some content.")
+```scala
+lazy val makeFile = taskKey[File]("Creates a file with some content.")
 
-    // define a task that creates a file,
-    //  writes some content, and returns the File
-    makeFile := {
-        val f: File = file("/tmp/data.txt")
-        IO.write(f, "Some content")
-        f
-    }
+// define a task that creates a file,
+//  writes some content, and returns the File
+makeFile := {
+    val f: File = file("/tmp/data.txt")
+    IO.write(f, "Some content")
+    f
+}
 
-    // The result of makeFile is the constructed File,
-    //   so useFile can map makeFile and simultaneously
-    //   get the File and declare the dependency on makeFile
-    useFile :=
-        doSomething( makeFile.value )
+// The result of makeFile is the constructed File,
+//   so useFile can map makeFile and simultaneously
+//   get the File and declare the dependency on makeFile
+useFile :=
+    doSomething( makeFile.value )
+```
 
 This arrangement is not always possible, but it should be the rule and
 not the exception.
@@ -12963,18 +13676,24 @@ not the exception.
 
 Construct only absolute Files. Either specify an absolute path
 
-    file("/home/user/A.scala")
+```scala
+file("/home/user/A.scala")
+```
 
 or construct the file from an absolute base:
 
-    base / "A.scala"
+```scala
+base / "A.scala"
+```
 
 This is related to the no hard coding best practice because the proper
 way involves referencing the `baseDirectory` setting. For example, the
 following defines the myPath setting to be the `<base>/licenses/`
 directory.
 
-    myPath := baseDirectory.value / "licenses"
+```scala
+myPath := baseDirectory.value / "licenses"
+```
 
 In Java (and thus in Scala), a relative File is relative to the current
 working directory. The working directory is not always the same as the
@@ -13037,14 +13756,16 @@ A common situation is using a binary plugin published to a repository.
 Create `project/plugins.sbt` with the desired sbt plugins, any general
 dependencies, and any necessary repositories:
 
-    addSbtPlugin("org.example" % "plugin" % "1.0")
+```scala
+addSbtPlugin("org.example" % "plugin" % "1.0")
 
-    addSbtPlugin("org.example" % "another-plugin" % "2.0")
+addSbtPlugin("org.example" % "another-plugin" % "2.0")
 
-    // plain library (not an sbt plugin) for use in the build definition
-    libraryDependencies += "org.example" % "utilities" % "1.3"
+// plain library (not an sbt plugin) for use in the build definition
+libraryDependencies += "org.example" % "utilities" % "1.3"
 
-    resolvers += "Example Plugin Repository" at "http://example.org/repo/"
+resolvers += "Example Plugin Repository" at "http://example.org/repo/"
+```
 
 See the rest of the page for more information on creating and using
 plugins.
@@ -13115,7 +13836,9 @@ demonstrates how to declare plugins.
 
 Edit `project/plugins.sbt` to contain:
 
-    libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+```scala
+libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+```
 
 If sbt is running, do `reload`.
 
@@ -13159,8 +13882,10 @@ built from source and used on the classpath.
 
 Edit `project/plugins.sbt`
 
-    lazy val root = project.in( file(".") ).dependsOn( assemblyPlugin )
-    lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+```scala
+lazy val root = (project in file(".")).dependsOn(assemblyPlugin)
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+```
 
 If sbt is running, run `reload`.
 
@@ -13173,7 +13898,9 @@ repository.
 It is recommended to explicitly specify the commit or tag by appending
 it to the repository as a fragment:
 
-    lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
+```scala
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
+```
 
 One caveat to using this method is that the local sbt will try to run
 the remote plugin's build. It is quite possible that the plugin's own
@@ -13192,14 +13919,16 @@ the `eval` and `set` commands and `.sbt` and `project/*.scala` files.
 
 In a `build.sbt` file:
 
-    import grizzled.sys._
-    import OperatingSystem._
+```scala
+import grizzled.sys._
+import OperatingSystem._
 
-    libraryDependencies ++=
-        if(os ==Windows)
-            ("org.example" % "windows-only" % "1.0") :: Nil
-        else
-            Nil
+libraryDependencies ++=
+    if(os ==Windows)
+        ("org.example" % "windows-only" % "1.0") :: Nil
+    else
+        Nil
+```
 
 ### Creating a plugin
 
@@ -13248,60 +13977,64 @@ An example of a typical plugin:
 
 `build.sbt`:
 
-    sbtPlugin := true
+```scala
+sbtPlugin := true
 
-    name := "sbt-obfuscate"
+name := "sbt-obfuscate"
 
-    organization := "org.example"
+organization := "org.example"
+```
 
 `Plugin.scala`:
 
-    package sbtobfuscate
+```scala
+package sbtobfuscate
 
-    import sbt._
+import sbt._
 
-    object Plugin extends AutoPlugin
+object Plugin extends AutoPlugin
+{
+    // by definging autoImport, these are automatically imported into user's `*.sbt`
+    object autoImport
     {
-        // by definging autoImport, these are automatically imported into user's `*.sbt`
-        object autoImport
-        {
-            // configuration points, like the built in `version`, `libraryDependencies`, or `compile`
-            val obfuscate = taskKey[Seq[File]]("Obfuscates files.")
-            val obfuscateLiterals = settingKey[Boolean]("Obfuscate literals.")
+        // configuration points, like the built in `version`, `libraryDependencies`, or `compile`
+        val obfuscate = taskKey[Seq[File]]("Obfuscates files.")
+        val obfuscateLiterals = settingKey[Boolean]("Obfuscate literals.")
 
-            // default values for the tasks and settings
-            lazy val baseObfuscateSettings: Seq[sbt.Def.Setting[_]] = Seq(
-                obfuscate := {
-                    Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
-                },
-                obfuscateLiterals in obfuscate := false                
-            )
-        }
-
-        import autoImport._
-        override def requires = sbt.plugins.JvmModule
-
-        // This plugin is automatically enabled for projects which are JvmModules.
-        override def trigger = allRequirements
-
-        // a group of settings that are automatically added to projects.
-        override val projectSettings =
-            inConfig(Compile)(baseObfucscateSettings) ++
-            inConfig(Test)(baseObfuscateSettings)
+        // default values for the tasks and settings
+        lazy val baseObfuscateSettings: Seq[sbt.Def.Setting[_]] = Seq(
+            obfuscate := {
+                Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
+            },
+            obfuscateLiterals in obfuscate := false                
+        )
     }
 
-    object Obfuscate
-    {
-        def apply(sources: Seq[File]): Seq[File] := sources
-    }
+    import autoImport._
+    override def requires = sbt.plugins.JvmModule
+
+    // This plugin is automatically enabled for projects which are JvmModules.
+    override def trigger = allRequirements
+
+    // a group of settings that are automatically added to projects.
+    override val projectSettings =
+        inConfig(Compile)(baseObfucscateSettings) ++
+        inConfig(Test)(baseObfuscateSettings)
+}
+
+object Obfuscate
+{
+    def apply(sources: Seq[File]): Seq[File] := sources
+}
+```
 
 #### Usage example
 
-A build definition that uses the plugin might look like:
+A build definition that uses the plugin might look like. `obfuscate.sbt`:
 
-`obfuscate.sbt`
-
-    obfuscateLiterals in obfuscate := true
+```scala
+obfuscateLiterals in obfuscate := true
+```
 
 #### Root Plugins
 
@@ -13309,34 +14042,35 @@ Some plugins should always be explicitly enabled on projects. Sbt calls
 these root plugins, i.e. plugins that are "root" nodes in the plugin
 depdendency graph. `AutoPlugin` by default defines a root plugin.
 
-Example command root plugin ----------------------
+#### Example command root plugin
 
-A basic plugin that adds commands looks like:
+A basic plugin that adds commands looks like. `build.sbt`:
 
-`build.sbt`
+```scala
+sbtPlugin := true
 
-    sbtPlugin := true
+name := "sbt-sample"
 
-    name := "sbt-sample"
+organization := "org.example"
+```
 
-    organization := "org.example"
+`Plugin.scala`:
 
-`Plugin.scala`
+```scala
+package sbtsample
 
-    package sbtsample
+import sbt._
+import Keys._
+object Plugin extends AutoPlugin {
+  override lazy val projectSettings = Seq(commands += myCommand)
 
-    import sbt._
-    import Keys._
-    object Plugin extends AutoPlugin
-    {
-      override lazy val projectSettings = Seq(commands += myCommand)
-
-      lazy val myCommand = 
-        Command.command("hello") { (state: State) =>
-          println("Hi!")
-          state
-        }
+  lazy val myCommand = 
+    Command.command("hello") { (state: State) =>
+      println("Hi!")
+      state
     }
+}
+```
 
 This example demonstrates how to take a Command (here, `myCommand`) and
 distribute it in a plugin. Note that multiple commands can be included
@@ -13346,11 +14080,11 @@ for defining more useful commands, including ones that accept arguments
 and affect the execution state.
 
 For a user to consume this plugin, it requires an explicit include via
-the `Project` instance. Here's what their local sbt will look like.
+the `Project` instance. Here's what their local sbt will look like. `build.sbt`:
 
-`build.sbt`
-
-    val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin)
+```scala
+val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin)
+```
 
 The `setPlugins` method allows projects to explicitly define the
 `RootPlugin`s they wish to consume. `AutoPlugin`s are automatically
@@ -13360,7 +14094,10 @@ Projects can also exclude any type of plugin using the `disablePlugins`
 method. For example, if we wish to remove the JvmModule settings
 (`compile`,`test`,`run`), we modify our `build.sbt` as follows:
 
-    val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
+
+```scala
+val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
+```
 
 #### Global plugins example
 
@@ -13441,7 +14178,9 @@ long-standing issues with plugins.
 sbt has a number of [predefined keys](../../api/sbt/Keys%24.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
-    val sourceFiles = settingKey[Seq[File]]("Some source files")
+```scala
+val sourceFiles = settingKey[Seq[File]]("Some source files")
+```
 
 Instead, simply reuse sbt's existing `sources` key.
 
@@ -13454,31 +14193,39 @@ acceptable ways to accomplish this goal.
 
 #### Just use a `val` prefix
 
-    package sbtobfuscate
-    object Plugin extends sbt.Plugin {
-      val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
-    }
+```scala
+package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
+}
+```
 
 In this approach, every `val` starts with `obfuscate`. A user of the
 plugin would refer to the settings like this:
 
-    obfuscateStylesheet := ...
+```scala
+obfuscateStylesheet := ...
+```
 
 #### Use a nested object
 
-    package sbtobfuscate
-    object Plugin extends sbt.Plugin {
-      object ObfuscateKeys {
-        val stylesheet = SettingKey[File]("obfuscateStylesheet")
-      }
-    }
+```scala
+package sbtobfuscate
+object Plugin extends sbt.Plugin {
+  object ObfuscateKeys {
+    val stylesheet = SettingKey[File]("obfuscateStylesheet")
+  }
+}
+```
 
 In this approach, all non-common settings are in a nested object. A user
 of the plugin would refer to the settings like this:
 
-    import ObfuscateKeys._ // place this at the top of build.sbt
+```scala
+import ObfuscateKeys._ // place this at the top of build.sbt
 
-    stylesheet := ...
+stylesheet := ...
+```
 
 ### Configuration Advice
 
@@ -13505,14 +14252,19 @@ distinct from other target directories. Thus, these two definitions use
 the same *key*, but they represent distinct *values*. So, in a user's
 `build.sbt`, we might see:
 
-    target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
-    target in Compile := baseDirectory.value / "mytarget"
+```scala
+target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
+
+target in Compile := baseDirectory.value / "mytarget"
+```
 
 In the PDF plugin, this is achieved with an `inConfig` definition:
 
-    val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
-      target := baseDirectory.value / "target" / "docs" # the default value
-    ))
+```scala
+val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
+  target := baseDirectory.value / "target" / "docs" # the default value
+))
+```
 
 #### When *not* to define your own configuration.
 
@@ -13520,17 +14272,22 @@ If you're merely adding to existing definitions, don't define your own
 configuration. Instead, reuse an existing one *or* scope by the main
 task (see below).
 
-    val akka = config("akka")  // This isn't needed.
-    val akkaStartCluster = TaskKey[Unit]("akkaStartCluster")
+```scala
+val akka = config("akka")  // This isn't needed.
+val akkaStartCluster = TaskKey[Unit]("akkaStartCluster")
 
-    target in akkaStartCluster := ... // This is ok.
-    akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+target in akkaStartCluster := ... // This is ok.
+
+akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+```
 
 #### Configuration Cat says "Configuration is for configuration"
 
 When defining a new type of configuration, e.g.
 
-    val Config = config("profile")
+```scala
+val Config = config("profile")
+```
 
 should be used to create a "cross-task" configuration. The task
 definitions don't change in this case, but the default configuration
@@ -13544,9 +14301,11 @@ can alter generated pom files.
 
 Configurations should *not* be used to namespace keys for a plugin. e.g.
 
-    val Config = config("my-plugin")
-    val pluginKey = settingKey[String]("A plugin specific key")
-    val settings = pluginKey in Config  // DON'T DO THIS!
+```scala
+val Config = config("my-plugin")
+val pluginKey = settingKey[String]("A plugin specific key")
+val settings = pluginKey in Config  // DON'T DO THIS!
+```
 
 #### Playing nice with configurations
 
@@ -13561,12 +14320,14 @@ flexibility.
 
 Split your settings by the configuration axis like so:
 
-    val obfuscate = TaskKey[Seq[File]]("obfuscate")
-    val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-    val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-      obfuscate := ... (sources in obfuscate).value ...,
-      sources in obfuscate := sources.value
-    )
+```scala
+val obfuscate = TaskKey[Seq[File]]("obfuscate")
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+```
 
 The `baseObfuscateSettings` value provides base configuration for the
 plugin's tasks. This can be re-used in other configurations if projects
@@ -13575,17 +14336,23 @@ scoped settings for projects to use directly. This gives the greatest
 flexibility in using features provided by a plugin. Here's how the raw
 settings may be reused:
 
-    Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+```scala
+Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+```
 
 Alternatively, one could provide a utility method to load settings in a
 given configuration:
 
-    def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
-      inConfig(c)(baseObfuscateSettings)
+```scala
+def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
+  inConfig(c)(baseObfuscateSettings)
+```
 
 This could be used as follows:
 
-    seq(obfuscateSettingsIn(Test): _*) 
+```scala
+seq(obfuscateSettingsIn(Test): _*) 
+```
 
 ##### Using a 'main' task scope for settings
 
@@ -13593,12 +14360,14 @@ Sometimes you want to define some settings for a particular 'main' task
 in your plugin. In this instance, you can scope your settings using the
 task itself.
 
-    val obfuscate = TaskKey[Seq[File]]("obfuscate")
-    val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-    val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-      obfuscate := ... (sources in obfuscate).value ...,
-      sources in obfuscate := sources.value
-    )
+```scala
+val obfuscate = TaskKey[Seq[File]]("obfuscate")
+val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
+val baseObfuscateSettings: Seq[Setting[_]] = Seq(
+  obfuscate := ... (sources in obfuscate).value ...,
+  sources in obfuscate := sources.value
+)
+```
 
 In the above example, `sources in obfuscate` is scoped under the main
 task, `obfuscate`.
@@ -13611,10 +14380,12 @@ general rule is *be careful what you touch*.
 First, make sure your user does not include global build configuration
 in *every* project but rather in the build itself. e.g.
 
-    object MyBuild extends Build {
-      override lazy val settings = super.settings ++ MyPlugin.globalSettings
-      val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
-    }
+```scala
+object MyBuild extends Build {
+  override lazy val settings = super.settings ++ MyPlugin.globalSettings
+  val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
+}
+```
 
 Global settings should *not* be placed into a `build.sbt` file.
 
@@ -13623,13 +14394,14 @@ settings from other plugins are not ignored. e.g. when creating a new
 `onLoad` handler, ensure that the previous `onLoad` handler is not
 removed.
 
-    object MyPlugin extends Plugin {
-       val globalSettigns: Seq[Setting[_]] = Seq(
-         onLoad in Global := (onLoad in Global).value andThen { state =>
-             ... return new state ...
-         }
-       )
+```scala
+object MyPlugin extends Plugin {
+   val globalSettigns: Seq[Setting[_]] = Seq(
+     onLoad in Global := (onLoad in Global).value andThen { state =>
+         ... return new state ...
      }
+   )
+```
 
 
 Sbt Launcher
@@ -14128,6 +14900,58 @@ by the following grammar. `'nl'` is a newline or end of file and
 `'text'` is plain text without newlines or the surrounding delimiters
 (such as parentheses or square brackets):
 
+```scala
+configuration: scala app repositories boot log appProperties
+scala: "[" "scala" "]" nl version nl classifiers nl
+app: "[" "app" "]" nl org nl name nl version nl components nl class nl crossVersioned nl resources nl classifiers nl
+repositories: "[" "repositories" "]" nl (repository nl)*
+boot: "[" "boot" "]" nl directory nl bootProperties nl search nl promptCreate nl promptFill nl quickOption nl
+log: "["' "log" "]" nl logLevel nl
+appProperties: "[" "app-properties" "]" nl (property nl)*
+ivy: "[" "ivy" "]" nl homeDirectory nl checksums nl overrideRepos nl repoConfig nl
+directory: "directory" ":" path
+bootProperties: "properties" ":" path
+search: "search" ":" ("none" | "nearest" | "root-first" | "only" ) ("," path)*
+logLevel: "level" ":" ("debug" | "info" | "warn" | "error")
+promptCreate: "prompt-create"  ":"  label
+promptFill: "prompt-fill" ":" boolean
+quickOption: "quick-option" ":" boolean
+version: "version" ":" versionSpecification
+versionSpecification: readProperty | fixedVersion
+readProperty: "read"  "(" propertyName ")"  "[" default "]"
+fixedVersion: text
+classifiers: "classifiers" ":" text ("," text)*
+homeDirectory: "ivy-home" ":" path
+checksums: "checksums" ":" checksum ("," checksum)*
+overrideRepos: "override-build-repos" ":" boolean
+repoConfig: "repository-config" ":" path
+org: "org" ":" text
+name: "name" ":" text
+class: "class" ":" text
+components: "components" ":" component ("," component)*
+crossVersioned: "cross-versioned" ":"  ("true" | "false" | "none" | "binary" | "full")
+resources: "resources" ":" path ("," path)*
+repository: ( predefinedRepository | customRepository ) nl
+predefinedRepository: "local" | "maven-local" | "maven-central"
+customRepository: label ":" url [ ["," ivyPattern] ["," artifactPattern] [", mavenCompatible"] [", bootOnly"]]
+property: label ":" propertyDefinition ("," propertyDefinition)*
+propertyDefinition: mode "=" (set | prompt)
+mode: "quick" | "new" | "fill"
+set: "set" "(" value ")"
+prompt: "prompt"  "(" label ")" ("[" default "]")?
+boolean: "true" | "false"
+nl: "\r\n" | "\n" | "\r"
+path: text
+propertyName: text
+label: text
+default: text
+checksum: text
+ivyPattern: text
+artifactPattern: text
+url: text
+component: text
+```
+
 
 Developer's Guide
 -----------------
@@ -14372,9 +15196,7 @@ This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
 [Settings API documentation](../../api/sbt/Settings.html) for
-details.
-
-`SettingsUsage.scala`
+details. `SettingsUsage.scala`:
 
 ```scala
 /** Usage Example **/
@@ -14415,20 +15237,22 @@ object SettingsUsage {
 }
 ```
 
-This produces the following output when run: :
+This produces the following output when run:
 
-    a0 = None
-    b0 = None
-    a1 = None
-    b1 = None
-    a2 = None
-    b2 = None
-    a3 = Some(3)
-    b3 = None
-    a4 = Some(3)
-    b4 = Some(9)
-    a5 = Some(4)
-    b5 = Some(9)
+```
+a0 = None
+b0 = None
+a1 = None
+b1 = None
+a2 = None
+b2 = None
+a3 = Some(3)
+b3 = None
+a4 = Some(3)
+b4 = Some(9)
+a5 = Some(4)
+b5 = Some(9)
+```
 
 -   For the None results, we never defined the value and there was no
     value to delegate to.
@@ -14540,18 +15364,16 @@ the following:
 The blue circles represent actions happening when sbt loads a project.
 We can see that sbt performs the following actions in load:
 
-1.  Compile the user-level project (`~/.sbt/<version>/`)
-    a.  Load any plugins defined by this project
-        (`~/.sbt/<version>/plugins/*.sbt` and
-        `~/.sbt/<version>/plugins/project/*.scala`)
+1. Compile the user-level project (`~/.sbt/<version>/`)
 
-    b. Load all settings defined (`~/.sbt/<version>/*.sbt` and
-    `~/.sbt/<version>/plugins/*.scala`)
+    a. Load any plugins defined by this project (`~/.sbt/<version>/plugins/*.sbt` and `~/.sbt/<version>/plugins/project/*.scala`)
+    b. Load all settings defined (`~/.sbt/<version>/*.sbt` and `~/.sbt/<version>/plugins/*.scala`)
+
 2.  Compile the current project (`<working-directory/project`)
-    a.  Load all defined plugins (`project/plugins.sbt` and
-        `project/project/*.scala`)
 
+    a. Load all defined plugins (`project/plugins.sbt` and `project/project/*.scala`)
     b. Load/Compile the project (`project/*.scala`)
+
 3.  Load project `*.sbt` files (`build.sbt` and friends).
 
 Each of these loads defines several sequences of settings. The diagram
@@ -14561,13 +15383,17 @@ shows the two most important:
     directly against the `Build` object. They are initialized *once* for
     the build. You can add these, e.g. in `project/build.scala` :
 
-        object MyBuild extends Build {
-          override val settings = Seq(foo := "hi")
-        }
+    ```scala
+    object MyBuild extends Build {
+      override val settings = Seq(foo := "hi")
+    }
+    ```
 
     or in a `build.sbt` file :
 
-        foo in ThisBuild := "hi"
+    ```scala
+    foo in ThisBuild := "hi"
+    ```
 
 -   `projectSettings` - These are settings specific to a project. They
     are specific to a *particular sub project* in the build. A plugin
@@ -14575,9 +15401,11 @@ shows the two most important:
     case the values are duplicated for each project. You add project
     specific settings, eg. in `project/build.scala` :
 
-        object MyBuild extends Build {
-          val test = project.in(file(".")).settings(...)
-        }
+    ```scala
+    object MyBuild extends Build {
+      val test = project.in(file(".")).settings(...)
+    }
+    ```
 
 After loading/compiling all the build definitions, sbt has a series of
 `Seq[Setting[_]]` that it must order. As shown in the diagram, the
@@ -14596,15 +15424,17 @@ level. This means that we can't control the order of settings added to
 Build/Global namespace, but we can control how each project loads, e.g.
 plugins and `.sbt` files. To do so, use the `AddSettings` class :
 
-    import sbt._
-    import Keys._
+```scala
+import sbt._
+import Keys._
 
-    import AddSettings._
+import AddSettings._
 
-    object MyOwnOrder extends Build {
-      // here we load config from a txt file.
-      lazy val root = project.in(file(".")).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file("silly.txt")) )
-    }
+object MyOwnOrder extends Build {
+  // here we load config from a txt file.
+  lazy val root = project.in(file(".")).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file("silly.txt")) )
+}
+```
 
 In the above project, we've modified the order of settings to be:
 
@@ -14621,52 +15451,42 @@ What we've excluded:
 The AddSettings object provides the following "groups" of settings you
 can use for ordering:
 
-`autoPlugins`
-:   All the ordered settings of plugins after they've gone through
-    dependency resolution
-
-`buildScalaFiles`
-:   The full sequence of settings defined directly in `project/*.scala`
+- `autoPlugins` All the ordered settings of plugins after they've gone through
+   dependency resolution
+- `buildScalaFiles` The full sequence of settings defined directly in `project/*.scala`
     builds.
-
-`sbtFiles(*)`
-:   Specifies the exact setting DSL files to include (files must use the
+- `sbtFiles(*)` Specifies the exact setting DSL files to include (files must use the
     `.sbt` file format)
+- `userSettings` All the settings defined in the user directory `~/.sbt/<version>/`.
+- `defaultSbtFiles` Include all local `*.sbt` file settings.
 
-`userSettings`
-:   All the settings defined in the user directory `~/.sbt/<version>/`.
-
-`defaultSbtFiles`
-:   Include all local `*.sbt` file settings.
-
-*Note: Be very careful when reordering settings. It's easy to
-accidentally remove core functionality.*
+> *Note: Be very careful when reordering settings. It's easy to
+> accidentally remove core functionality.*
 
 For example, let's see what happens if we move the `build.sbt` files
 *before* the `buildScalaFile`.
 
-Let's create an example project the following defintiion:
+Let's create an example project the following defintiion. `project/build.scala` :
 
-`project/build.scala` :
-
-    object MyTestBuild extends Build {
-
-      val testProject = project.in(file(".")).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
-        version := scalaBinaryVersion.value match {
-          case "2.10" => "1.0-SNAPSHOT"
-          case v => "1.0-for-${v}-SNAPSHOT"
-        }
-      )
+```scala
+object MyTestBuild extends Build {
+  val testProject = project.in(file(".")).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
+    version := scalaBinaryVersion.value match {
+      case "2.10" => "1.0-SNAPSHOT"
+      case v => "1.0-for-${v}-SNAPSHOT"
     }
+  )
+}
+```
 
 This build defines a version string which appends the scala version if
 the current scala version is not the in the `2.10.x` series. Now, when
 issuing a release we want to lock down the version. Most tools assume
-this can happen by writing a `version.sbt` file:
+this can happen by writing a `version.sbt` file. `version.sbt` :
 
-`version.sbt` :
-
-    version := "1.0.0"
+```scala
+version := "1.0.0"
+```
 
 However, when we load this new build, we find that the `version` in
 `version.sbt` has been **overriden** by the one defined in
@@ -14695,7 +15515,9 @@ checkout a build using git based on a git URI, use a build in an
 existing local directory, or download and extract a build packaged in a
 jar file. A resolver has type:
 
-    ResolveInfo => Option[() => File]
+```scala
+ResolveInfo => Option[() => File]
+```
 
 The resolver should return None if it cannot handle the URI or Some
 containing a function that will retrieve the build. The ResolveInfo
@@ -14705,16 +15527,18 @@ returned by the loading function. A resolver is registered by passing it
 to *BuildLoader.resolve* and overriding *Build.buildLoaders* with the
 result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.resolve(demoResolver) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.resolve(demoResolver) ::
+    Nil
 
-      def demoResolver: BuildLoader.ResolveInfo => Option[() => File] = ...
+  def demoResolver: BuildLoader.ResolveInfo => Option[() => File] = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -14781,23 +15605,27 @@ version := "1.0"
 Once a project is resolved, it needs to be built and then presented to
 sbt as an instance of `sbt.BuildUnit`. A custom builder has type:
 
-    BuildInfo => Option[() => BuildUnit] 
+```scala
+BuildInfo => Option[() => BuildUnit] 
+```
 
 A builder returns None if it does not want to handle the build
 identified by the `BuildInfo`. Otherwise, it provides a function that
 will load the build when evaluated. Register a builder by passing it to
 *BuildLoader.build* and overriding *Build.buildLoaders* with the result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.build(demoBuilder) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.build(demoBuilder) ::
+    Nil
 
-      def demoBuilder: BuildLoader.BuildInfo => Option[() => BuildUnit] = ...
+  def demoBuilder: BuildLoader.BuildInfo => Option[() => BuildUnit] = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -14814,7 +15642,7 @@ read configuration from a pom.xml instead of the standard .sbt files and
 project/ directory.
 
 ```scala
-    ... imports ...
+... imports ...
 
 object Demo extends Build
 {
@@ -14856,21 +15684,25 @@ Once a project has been loaded into an `sbt.BuildUnit`, it is
 transformed by all registered transformers. A custom transformer has
 type:
 
-    TransformInfo => BuildUnit
+```scala
+TransformInfo => BuildUnit
+```
 
 A transformer is registered by passing it to *BuildLoader.transform* and
 overriding *Build.buildLoaders* with the result:
 
-    ...
-    object Demo extends Build {
-      ...
-      override def buildLoaders =
-        BuildLoader.transform(demoTransformer) ::
-        Nil
+```scala
+...
+object Demo extends Build {
+  ...
+  override def buildLoaders =
+    BuildLoader.transform(demoTransformer) ::
+    Nil
 
-      def demoBuilder: BuildLoader.TransformInfo => BuildUnit = ...
+  def demoBuilder: BuildLoader.TransformInfo => BuildUnit = ...
 
-    }
+}
+```
 
 #### API Documentation
 
@@ -14919,20 +15751,22 @@ URI with a new URI. This could be used to translate all references to a
 certain git repository to a different one or to a different mechanism,
 like a local directory.
 
-    buildDependencies in Global := {
-      val deps = (buildDependencies in Global).value
-      val oldURI = uri("...") // the URI to replace
-      val newURI = uri("...") // the URI replacing oldURI
-      def substitute(dep: ClasspathDep[ProjectRef]): ClasspathDep[ProjectRef] =
-        if(dep.project.build == oldURI)
-          ResolvedClasspathDependency(ProjectRef(newURI, dep.project.project), dep.configuration)
-        else
-          dep
-      val newcp = 
-        for( (proj, deps) <- deps.cp) yield
-          (proj, deps map substitute)
-      new BuildDependencies(newcp, deps.aggregate)
-    }
+```scala
+buildDependencies in Global := {
+  val deps = (buildDependencies in Global).value
+  val oldURI = uri("...") // the URI to replace
+  val newURI = uri("...") // the URI replacing oldURI
+  def substitute(dep: ClasspathDep[ProjectRef]): ClasspathDep[ProjectRef] =
+    if(dep.project.build == oldURI)
+      ResolvedClasspathDependency(ProjectRef(newURI, dep.project.project), dep.configuration)
+    else
+      dep
+  val newcp = 
+    for( (proj, deps) <- deps.cp) yield
+      (proj, deps map substitute)
+  new BuildDependencies(newcp, deps.aggregate)
+}
+```
 
 It is not limited to such basic translations, however. The configuration
 a dependency is defined in may be modified and dependencies may be added
@@ -14984,13 +15818,15 @@ and organization. To use the sbt command system, a dependency on the
 `command` module is needed. To use the task system, add a dependency on
 the `task-system` module as well.
 
-    organization := "org.example"
+```scala
+organization := "org.example"
 
-    name := "hello"
+name := "hello"
 
-    version := "0.1-SNAPSHOT"
+version := "0.1-SNAPSHOT"
 
-    libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
+libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
+```
 
 #### Application: Main.scala
 
@@ -15008,51 +15844,49 @@ The application itself is defined by implementing
     file after each user interaction and sends brief logging to the
     console and verbose logging to the log file.
 
-<!-- -->
+```scala
+package org.example
 
-    package org.example
+   import sbt._
+   import java.io.{File, PrintWriter}
 
-       import sbt._
-       import java.io.{File, PrintWriter}
+final class Main extends xsbti.AppMain
+{
+   /** Defines the entry point for the application.
+   * The call to `initialState` sets up the application.
+   * The call to runLogged starts command processing. */
+   def run(configuration: xsbti.AppConfiguration): xsbti.MainResult =
+      MainLoop.runLogged( initialState(configuration) )
 
-    final class Main extends xsbti.AppMain
-    {
-       /** Defines the entry point for the application.
-       * The call to `initialState` sets up the application.
-       * The call to runLogged starts command processing. */
-       def run(configuration: xsbti.AppConfiguration): xsbti.MainResult =
-          MainLoop.runLogged( initialState(configuration) )
+   /** Sets up the application by constructing an initial State instance with the supported commands
+   * and initial commands to run.  See the State API documentation for details. */
+   def initialState(configuration: xsbti.AppConfiguration): State =
+   {
+      val commandDefinitions = hello +: BasicCommands.allBasicCommands
+      val commandsToRun = Hello +: "iflast shell" +: configuration.arguments.map(_.trim)
+      State( configuration, commandDefinitions, Set.empty, None, commandsToRun, State.newHistory,
+         AttributeMap.empty, initialGlobalLogging, State.Continue )
+   }
 
-       /** Sets up the application by constructing an initial State instance with the supported commands
-       * and initial commands to run.  See the State API documentation for details. */
-       def initialState(configuration: xsbti.AppConfiguration): State =
-       {
-          val commandDefinitions = hello +: BasicCommands.allBasicCommands
-          val commandsToRun = Hello +: "iflast shell" +: configuration.arguments.map(_.trim)
-          State( configuration, commandDefinitions, Set.empty, None, commandsToRun, State.newHistory,
-             AttributeMap.empty, initialGlobalLogging, State.Continue )
-       }
+   // defines an example command.  see the Commands page for details.
+   val Hello = "hello"
+   val hello = Command.command(Hello) { s =>
+      s.log.info("Hello!")
+      s
+   }
 
-       // defines an example command.  see the Commands page for details.
-       val Hello = "hello"
-       val hello = Command.command(Hello) { s =>
-          s.log.info("Hello!")
-          s
-       }
-
-       /** Configures logging to log to a temporary backing file as well as to the console. 
-       * An application would need to do more here to customize the logging level and
-       * provide access to the backing file (like sbt's last command and logLevel setting).*/
-       def initialGlobalLogging: GlobalLogging =
-          GlobalLogging.initial(MainLogging.globalDefault _, File.createTempFile("hello", "log"))
-    }
+   /** Configures logging to log to a temporary backing file as well as to the console. 
+   * An application would need to do more here to customize the logging level and
+   * provide access to the backing file (like sbt's last command and logLevel setting).*/
+   def initialGlobalLogging: GlobalLogging =
+      GlobalLogging.initial(MainLogging.globalDefault _, File.createTempFile("hello", "log"))
+}
+```
 
 #### Launcher configuration file: hello.build.properties
 
 The launcher needs a configuration file in order to retrieve and run an
-application.
-
-`hello.build.properties`
+application. `hello.build.properties`:
 
 ```
 [scala]

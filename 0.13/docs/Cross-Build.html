@@ -24,7 +24,9 @@
         <script type="text/javascript">
           Pamflet.page.language = 'en';
         </script>
-        
+        <script type="text/javascript" src="js/prettify/prettify.js"></script><script type="text/javascript" src="js/prettify/lang-scala.js"></script><link type="text/css" rel="stylesheet" href="css/prettify.css"/><script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
         <link rel="stylesheet" href="css/custom.css" type="text/css" media="screen, projection"/>
         
         
@@ -56,18 +58,18 @@ of cross-building.
 first <code>%</code> in an inline dependency to be <code>%%</code>. This tells <code>sbt</code> that it
 should append the current version of Scala being used to build the
 library to the dependency’s name. For example:
-</p><pre><code>libraryDependencies += &quot;net.databinder&quot; %% &quot;dispatch&quot; % &quot;0.8.0&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;net.databinder&quot; %% &quot;dispatch&quot; % &quot;0.8.0&quot;
 </code></pre><p>A nearly equivalent, manual alternative for a fixed version of Scala is:
-</p><pre><code>libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.10&quot; % &quot;0.8.0&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.10&quot; % &quot;0.8.0&quot;
 </code></pre><p>or for Scala versions before 2.10:
-</p><pre><code>libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.8.1&quot; % &quot;0.8.0&quot;
+</p><pre><code class="prettyprint lang-scala">libraryDependencies += &quot;net.databinder&quot; % &quot;dispatch_2.8.1&quot; % &quot;0.8.0&quot;
 </code></pre><h3 id="Cross-Building+a+Project">Cross-Building a Project<a href="#Cross-Building+a+Project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Define the versions of Scala to build against in the
 <code>crossScalaVersions</code> setting. Versions of Scala 2.8.0 or later are
 allowed. For example, in a <code>.sbt</code> build definition:
-</p><pre><code>crossScalaVersions := Seq(&quot;2.8.2&quot;, &quot;2.9.2&quot;, &quot;2.10.0&quot;)
+</p><pre><code class="prettyprint lang-scala">crossScalaVersions := Seq(&quot;2.8.2&quot;, &quot;2.9.2&quot;, &quot;2.10.0&quot;)
 </code></pre><p>To build against all versions listed in <code>build.scala.versions</code>, prefix
 the action to run with <code>+</code>. For example:
-</p><pre><code>&gt; + package
+</p><pre><code class="">&gt; + package
 </code></pre><p>A typical way to use this feature is to do development on a single Scala
 version (no <code>+</code> prefix) and then cross-build (using <code>+</code>) occasionally
 and when releasing. The ultimate purpose of <code>+</code> is to cross-publish your
@@ -90,24 +92,24 @@ Dispatch compiled against 2.8.1 for your 2.8.1 build, the version
 compiled against 2.10 for your 2.10.x builds, and so on. You can have
 fine-grained control over the behavior for for different Scala versions
 by using the <code>cross</code> method on <code>ModuleID</code> These are equivalent:
-</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot;
+</p><pre><code class="prettyprint lang-scala">&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot;
 &quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.Disabled
 </code></pre><p>These are equivalent:
-</p><pre><code>&quot;a&quot; %% &quot;b&quot; % &quot;1.0&quot;
+</p><pre><code class="prettyprint lang-scala">&quot;a&quot; %% &quot;b&quot; % &quot;1.0&quot;
 &quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.binary
 </code></pre><p>This overrides the defaults to always use the full Scala version instead
 of the binary Scala version:
-</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.full
+</p><pre><code class="prettyprint lang-scala">&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.full
 </code></pre><p>This uses a custom function to determine the Scala version to use based
 on the binary Scala version:
-</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.binaryMapped {
+</p><pre><code class="prettyprint lang-scala">&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.binaryMapped {
   case &quot;2.9.1&quot; =&gt; &quot;2.9.0&quot; // remember that pre-2.10, binary=full
   case &quot;2.10&quot; =&gt; &quot;2.10.0&quot; // useful if a%b was released with the old style
   case x =&gt; x
 }
 </code></pre><p>This uses a custom function to determine the Scala version to use based
 on the full Scala version:
-</p><pre><code>&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.fullMapped {
+</p><pre><code class="prettyprint lang-scala">&quot;a&quot; % &quot;b&quot; % &quot;1.0&quot; cross CrossVersion.fullMapped {
   case &quot;2.9.1&quot; =&gt; &quot;2.9.0&quot;
   case x =&gt; x
 }
