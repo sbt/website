@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/classpath/RawURL.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010 Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> classpath
+
+	<span class="keyword">import</span> java.io.<span class="delimiter">{</span>ByteArrayInputStream, InputStream<span class="delimiter">}</span>
+	<span class="keyword">import</span> java.net.<span class="delimiter">{</span>Proxy, URL, URLConnection, URLStreamHandler<span class="delimiter">}</span>
+	<span class="keyword">import</span> java.util.Enumeration
+
+<span class="keyword">object</span> <a title="sbt.classpath.RawURL.type" id="sbt.classpath.RawURL">RawURL</a>
+<a href="#sbt.classpath.RawURL" title="sbt.classpath.RawURL.type" class="delimiter">{</a>
+	<span class="comment">/** Constructs a URL with scheme `raw` and path `file` that will return the bytes for `value` in the platform default encoding
+	* when a connection to the URL is opened. */</span>
+	<span class="keyword">def</span> <a title="(file: String, value: String)java.net.URL" id="sbt.classpath.RawURL.apply(e4480e2728)">apply</a><span class="delimiter">(</span><a title="String" id="sbt.classpath.RawURL.apply(e4480e2728).file">file</a>: <span title="String">String</span>, <a title="String" id="sbt.classpath.RawURL.apply(e4480e2728).value">value</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="java.net.URL">URL</span> =
+		<a href="#sbt.classpath.RawURL.apply(32a22a6a79)" title="(file: String, value: Array[Byte])java.net.URL">apply</a><span class="delimiter">(</span><a href="#sbt.classpath.RawURL.apply(e4480e2728).file" title="String">file</a>, <a href="#sbt.classpath.RawURL.apply(e4480e2728).value" title="String">value</a>.<span title="()Array[Byte]">getBytes</span><span class="delimiter">)</span>
+
+	<span class="comment">/** Constructs a URL with scheme `raw` and path `file` that will return the bytes `value` when a connection to the URL is opened. */</span>
+	<span class="keyword">def</span> <a title="(file: String, value: Array[Byte])java.net.URL" id="sbt.classpath.RawURL.apply(32a22a6a79)">apply</a><span class="delimiter">(</span><a title="String" id="sbt.classpath.RawURL.apply(32a22a6a79).file">file</a>: <span title="String">String</span>, <a title="Array[Byte]" id="sbt.classpath.RawURL.apply(32a22a6a79).value">value</a>: <span title="Array[Byte]">Array</span><span class="delimiter">[</span>Byte<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="java.net.URL">URL</span> =
+		<a href="#sbt.classpath.RawURL.apply(0cde20108d)" title="(file: String)(value: =&gt; java.io.InputStream)java.net.URL">apply</a><span class="delimiter">(</span><a href="#sbt.classpath.RawURL.apply(32a22a6a79).file" title="String">file</a><span class="delimiter">)</span><span class="delimiter">(</span><span title="java.io.ByteArrayInputStream" class="keyword">new</span> <span title="java.io.ByteArrayInputStream">ByteArrayInputStream</span><span class="delimiter">(</span><a href="#sbt.classpath.RawURL.apply(32a22a6a79).value" title="Array[Byte]">value</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="comment">/** Constructs a URL with scheme `raw` and path `file` that will use `value` to construct the `InputStream` used when a connection
+	* to the URL is opened. */</span>
+	<span class="keyword">def</span> <a title="(file: String)(value: =&gt; java.io.InputStream)java.net.URL" id="sbt.classpath.RawURL.apply(0cde20108d)">apply</a><span class="delimiter">(</span><a title="String" id="sbt.classpath.RawURL.apply(0cde20108d).file">file</a>: <span title="String">String</span><span class="delimiter">)</span><span class="delimiter">(</span><a title="=&gt; java.io.InputStream" id="sbt.classpath.RawURL.apply(0cde20108d).value">value</a>: =&gt; InputStream<span class="delimiter">)</span>: <span title="java.net.URL">URL</span> =
+		<span title="(x$1: String, x$2: String, x$3: Int, x$4: String, x$5: java.net.URLStreamHandler)java.net.URL" class="keyword">new</span> <span title="java.net.URL">URL</span><span class="delimiter">(</span><span title="String(&quot;raw&quot;)" class="string">&quot;raw&quot;</span>, <span title="Null(null)" class="keyword">null</span>, -<span title="Int(-1)" class="int">1</span>, <a href="#sbt.classpath.RawURL.apply(0cde20108d).file" title="String">file</a>, <span title="sbt.classpath.RawURL.RawStreamHandler" class="keyword">new</span> <a href="#sbt.classpath.RawURL;RawStreamHandler" title="sbt.classpath.RawURL.RawStreamHandler">RawStreamHandler</a><span class="delimiter">(</span><a href="#sbt.classpath.RawURL.apply(0cde20108d).value" title="=&gt; java.io.InputStream">value</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class RawStreamHandler extends java.net.URLStreamHandler" id="sbt.classpath.RawURL;RawStreamHandler">RawStreamHandler</a><a href="#sbt.classpath.RawURL;RawStreamHandler" title="sbt.classpath.RawURL.RawStreamHandler" class="delimiter">(</a><a title="=&gt; java.io.InputStream" id="sbt.classpath.RawURL;RawStreamHandler.value">value</a>: =&gt; InputStream<span class="delimiter">)</span> <span class="keyword">extends</span> <span title="java.net.URLStreamHandler">URLStreamHandler</span>
+	<span class="delimiter">{</span>
+		<span class="keyword">override</span> <span class="keyword">protected</span> <span class="keyword">def</span> <a title="(url: java.net.URL, p: java.net.Proxy)java.net.URLConnection" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(cc4bb380e7)">openConnection</a><span class="delimiter">(</span><a title="java.net.URL" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(cc4bb380e7).url">url</a>: <span title="java.net.URL">URL</span>, <a title="java.net.Proxy" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(cc4bb380e7).p">p</a>: <span title="java.net.Proxy">Proxy</span><span class="delimiter">)</span>: <span title="java.net.URLConnection">URLConnection</span> =
+			<a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba)" title="(url: java.net.URL)java.net.URLConnection">openConnection</a><span class="delimiter">(</span><a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(cc4bb380e7).url" title="java.net.URL">url</a><span class="delimiter">)</span>
+		<span class="keyword">override</span> <span class="keyword">protected</span> <span class="keyword">def</span> <a title="(url: java.net.URL)java.net.URLConnection" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba)">openConnection</a><span class="delimiter">(</span><a title="java.net.URL" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba).url">url</a>: <span title="java.net.URL">URL</span><span class="delimiter">)</span>: <span title="java.net.URLConnection">URLConnection</span> =
+			<a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon" title="java.net.URLConnection{}" class="keyword">new</a> <a title="anonymous class $anon extends java.net.URLConnection" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon">URLConnection</a><span class="delimiter">(</span><a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba).url" title="java.net.URL">url</a><span class="delimiter">)</span>
+			<span class="delimiter">{</span>
+				<span class="keyword">private</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="java.io.InputStream" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon.in">in</a> = <a href="#sbt.classpath.RawURL;RawStreamHandler.value" title="=&gt; java.io.InputStream">value</a>
+				<span class="keyword">def</span> <a title="()Unit" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon.connect">connect</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span> <a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon.in" title="=&gt; java.io.InputStream">in</a> <span class="delimiter">}</span>
+				<span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.io.InputStream" id="sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon.getInputStream">getInputStream</a> = <a href="#sbt.classpath.RawURL;RawStreamHandler.openConnection(2bafbb85ba);$anon.in" title="=&gt; java.io.InputStream">in</a>
+			<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span class="comment">/** A ClassLoader that looks up resource requests in a `Map` prior to the base ClassLoader's resource lookups. */</span>
+<span title="AnyRef" class="keyword">trait</span> <a title="trait RawResources extends ClassLoader with sbt.classpath.FixedResources" id="sbt.classpath;RawResources">RawResources</a> <span title="Unit" class="keyword">extends</span> <a href="#sbt.classpath;FixedResources" title="sbt.classpath.FixedResources">FixedResources</a>
+<span class="delimiter">{</span>
+	<span class="comment">/** The map from resource paths to the raw String content to provide via the URL returned by [[findResource]] or [[findResources]]. */</span>
+	<span class="keyword">protected</span> <span class="keyword">def</span> <a title="=&gt; Map[String,String]" id="sbt.classpath;RawResources.resources">resources</a>: <span title="Map[String,String]">Map</span><span class="delimiter">[</span>String, String<span class="delimiter">]</span>
+	<span class="keyword">override</span> <span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">val</span> <a title="scala.collection.immutable.Map[String,java.net.URL]" id="sbt.classpath;RawResources.resourceURL">resourceURL</a> = <a href="#sbt.classpath;RawResources.resources" title="=&gt; Map[String,String]">resources</a>.<span title="(f: (String, String) =&gt; java.net.URL)(implicit bf: scala.collection.generic.CanBuildFrom[scala.collection.immutable.Map[String,String],(String, java.net.URL),scala.collection.immutable.Map[String,java.net.URL]])scala.collection.immutable.Map[String,java.net.URL]">transform</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.immutable.Map.Coll,(String, java.net.URL),scala.collection.immutable.Map[String,java.net.URL]]" class="delimiter">(</span><a href="#sbt.classpath.RawURL" title="sbt.classpath.RawURL.type">RawURL</a>.<a href="#sbt.classpath.RawURL.apply(e4480e2728)" title="(file: String, value: String)java.net.URL">apply</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+<span class="comment">/** A ClassLoader that looks up resource requests in a `Map` prior to the base ClassLoader's resource lookups. */</span>
+<span class="keyword">trait</span> <a title="trait FixedResources extends ClassLoader" id="sbt.classpath;FixedResources">FixedResources</a> <span title="Unit" class="keyword">extends</span> <span title="ClassLoader">ClassLoader</span>
+<span class="delimiter">{</span>
+	<span class="comment">/** The map from resource paths to URL to provide in [[findResource]] and [[findResources]]. */</span>
+	<span class="keyword">protected</span> <span class="keyword">def</span> <a title="=&gt; Map[String,java.net.URL]" id="sbt.classpath;FixedResources.resourceURL">resourceURL</a>: <span title="Map[String,java.net.URL]">Map</span><span class="delimiter">[</span>String, URL<span class="delimiter">]</span>
+
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="(s: String)java.net.URL" id="sbt.classpath;FixedResources.findResource">findResource</a><span class="delimiter">(</span><a title="String" id="sbt.classpath;FixedResources.findResource.s">s</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="java.net.URL">URL</span> = <a href="#sbt.classpath;FixedResources.resourceURL" title="=&gt; Map[String,java.net.URL]">resourceURL</a>.<span title="(key: String, default: =&gt; java.net.URL)java.net.URL">getOrElse</span><span class="delimiter">(</span><a href="#sbt.classpath;FixedResources.findResource.s" title="String">s</a>, <a href="#sbt.classpath;FixedResources" title="sbt.classpath.FixedResources" class="keyword">super</a>.<span title="(x$1: String)java.net.URL">findResource</span><span class="delimiter">(</span><a href="#sbt.classpath;FixedResources.findResource.s" title="String">s</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+		<span class="keyword">import</span> java.util.<span title="java.util.Collections.type">Collections</span>.<span class="delimiter">{</span>enumeration, singletonList<span class="delimiter">}</span>
+	<span class="keyword">override</span> <span class="keyword">def</span> <a title="(s: String)java.util.Enumeration[java.net.URL]" id="sbt.classpath;FixedResources.findResources">findResources</a><span class="delimiter">(</span><a title="String" id="sbt.classpath;FixedResources.findResources.s">s</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="java.util.Enumeration[java.net.URL]">Enumeration</span><span class="delimiter">[</span>URL<span class="delimiter">]</span> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="java.util.Enumeration[java.net.URL]" id="sbt.classpath;FixedResources.findResources.sup">sup</a> = <a href="#sbt.classpath;FixedResources" title="sbt.classpath.FixedResources" class="keyword">super</a>.<span title="(x$1: String)java.util.Enumeration[java.net.URL]">findResources</span><span class="delimiter">(</span><a href="#sbt.classpath;FixedResources.findResources.s" title="String">s</a><span class="delimiter">)</span>
+		<a href="#sbt.classpath;FixedResources.resourceURL" title="=&gt; Map[String,java.net.URL]">resourceURL</a>.<span title="(key: String)Option[java.net.URL]">get</span><span class="delimiter">(</span><a href="#sbt.classpath;FixedResources.findResources.s" title="String">s</a><span class="delimiter">)</span> <span title="java.util.Enumeration[java.net.URL]" class="keyword">match</span>
+		<span class="delimiter">{</span>
+			<span class="keyword">case</span> Some<span class="delimiter">(</span><a title="java.net.URL" id="sbt.classpath;FixedResources.findResources.url">url</a><span class="delimiter">)</span> =&gt; <span title="sbt.classpath.DualEnumeration[java.net.URL]" class="keyword">new</span> <a href="DualLoader.scala.html#sbt.classpath;DualEnumeration" title="sbt.classpath.DualEnumeration[java.net.URL]">DualEnumeration</a><span class="delimiter">(</span><span title="(x$1: java.util.Collection[java.net.URL])java.util.Enumeration[java.net.URL]">enumeration</span><span class="delimiter">(</span><span title="(x$1: java.net.URL)java.util.List[java.net.URL]">singletonList</span><span class="delimiter">(</span><a href="#sbt.classpath;FixedResources.findResources.url" title="java.net.URL">url</a><span class="delimiter">)</span><span class="delimiter">)</span>, <a href="#sbt.classpath;FixedResources.findResources.sup" title="java.util.Enumeration[java.net.URL]">sup</a><span class="delimiter">)</span>
+			<span class="keyword">case</span> <span title="None.type">None</span> =&gt; <a href="#sbt.classpath;FixedResources.findResources.sup" title="java.util.Enumeration[java.net.URL]">sup</a>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

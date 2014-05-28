@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/ServerMain.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti;
+
+/** The main entry point for a launched service.  This allows applciations
+ * to instantiate server instances.
+ */
+public interface ServerMain {
+  /**
+   * This method should launch one or more thread(s) which run the service.  After the service has
+   * been started, it should return the port/URI it is listening for connections on.
+   * 
+   * @param configuration
+   *          The configuration used to launch this service.
+   * @return
+   *    A running server.
+   */
+  public Server start(AppConfiguration configuration);
+}
+        </pre>
+    </body>
+</html>

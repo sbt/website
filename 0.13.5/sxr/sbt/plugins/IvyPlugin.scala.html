@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/plugins/IvyPlugin.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> plugins
+
+<span class="keyword">import</span> <a href="../Def.scala.html#sbt.Def" title="sbt.Def.type">Def</a>.Setting
+
+<span class="comment">/**
+ * Plugin that enables resolving artifacts via ivy.
+ *
+ * Core Tasks
+ * - `update`
+ * - `makePom`
+ * - `publish`
+ * - `artifacts`
+ * - `publishedArtifacts`
+ */</span>
+<span class="keyword">object</span> <a title="sbt.plugins.IvyPlugin.type" id="sbt.plugins.IvyPlugin">IvyPlugin</a> <a href="#sbt.plugins.IvyPlugin" title="sbt.plugins.IvyPlugin.type" class="keyword">extends</a> <a href="../Plugins.scala.html#sbt;AutoPlugin" title="sbt.AutoPlugin">AutoPlugin</a> <span class="delimiter">{</span>
+  <span class="comment">// We are automatically included on everything that has the global module,</span>
+  <span class="comment">// which is automatically included on everything.</span>
+  <span class="keyword">override</span> <span class="keyword">def</span> <a title="=&gt; sbt.plugins.CorePlugin.type" id="sbt.plugins.IvyPlugin.requires">requires</a> = <a href="CorePlugin.scala.html#sbt.plugins.CorePlugin" title="sbt.plugins.CorePlugin.type">CorePlugin</a>
+  <span class="keyword">override</span> <span class="keyword">def</span> <a title="=&gt; sbt.PluginTrigger" id="sbt.plugins.IvyPlugin.trigger">trigger</a> = <a href="../Plugins.scala.html#sbt;PluginsFunctions.allRequirements" title="=&gt; sbt.PluginTrigger">allRequirements</a>
+
+  <span class="keyword">override</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="Seq[sbt.Def.Setting[_]]" id="sbt.plugins.IvyPlugin.projectSettings">projectSettings</a>: <span title="Seq[sbt.Def.Setting[_]]">Seq</span><span class="delimiter">[</span>Setting<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span> = 
+    <a href="../Defaults.scala.html#sbt.Classpaths" title="sbt.Classpaths.type">Classpaths</a>.<a href="../Defaults.scala.html#sbt.Classpaths.ivyPublishSettings" title="=&gt; Seq[sbt.Def.Setting[_]]">ivyPublishSettings</a> <span title="(that: scala.collection.GenTraversableOnce[sbt.Def.Setting[_]])(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.Def.Setting[_]],sbt.Def.Setting[_],Seq[sbt.Def.Setting[_]]])Seq[sbt.Def.Setting[_]]">++</span> <a href="../Defaults.scala.html#sbt.Classpaths" title="sbt.Classpaths.type">Classpaths</a>.<a href="../Defaults.scala.html#sbt.Classpaths.ivyBaseSettings" title="=&gt; Seq[sbt.Def.Setting[_]]">ivyBaseSettings</a>
+  <span class="keyword">override</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="Seq[sbt.Def.Setting[_]]" id="sbt.plugins.IvyPlugin.globalSettings">globalSettings</a>: <span title="Seq[sbt.Def.Setting[_]]">Seq</span><span class="delimiter">[</span>Setting<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span> =
+     <a href="../Defaults.scala.html#sbt.Defaults" title="sbt.Defaults.type">Defaults</a>.<a href="../Defaults.scala.html#sbt.Defaults.globalIvyCore" title="=&gt; Seq[sbt.Def.Setting[_]]">globalIvyCore</a>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

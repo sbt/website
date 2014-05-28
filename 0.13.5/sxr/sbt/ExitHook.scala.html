@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/ExitHook.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2009, 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="comment">/** Defines a function to call as sbt exits.*/</span>
+<span class="keyword">trait</span> <a title="trait ExitHook extends AnyRef" id="sbt;ExitHook">ExitHook</a>
+<span class="delimiter">{</span>
+	<span class="comment">/** Subclasses should implement this method, which is called when this hook is executed. */</span>
+	<span class="keyword">def</span> <a title="()Unit" id="sbt;ExitHook.runBeforeExiting">runBeforeExiting</a><span class="delimiter">(</span><span class="delimiter">)</span>: <span title="Unit">Unit</span>
+<span class="delimiter">}</span>
+<span title="AnyRef" class="keyword">object</span> <a title="sbt.ExitHook.type" id="sbt.ExitHook">ExitHook</a>
+<a href="#sbt.ExitHook" title="sbt.ExitHook.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="(f: =&gt; Unit)sbt.ExitHook" id="sbt.ExitHook.apply">apply</a><span class="delimiter">(</span><a title="=&gt; Unit" id="sbt.ExitHook.apply.f">f</a>: =&gt; Unit<span class="delimiter">)</span>: <a href="#sbt;ExitHook" title="sbt.ExitHook">ExitHook</a> = <a href="#sbt.ExitHook.apply;$anon" title="sbt.ExitHook" class="keyword">new</a> <a title="anonymous class $anon extends AnyRef with sbt.ExitHook" id="sbt.ExitHook.apply;$anon">ExitHook</a> <span class="delimiter">{</span> <span class="keyword">def</span> <a title="()Unit" id="sbt.ExitHook.apply;$anon.runBeforeExiting">runBeforeExiting</a><span class="delimiter">(</span><span class="delimiter">)</span> = <a href="#sbt.ExitHook.apply.f" title="=&gt; Unit">f</a> <span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+<span title="AnyRef" class="keyword">object</span> <a title="sbt.ExitHooks.type" id="sbt.ExitHooks">ExitHooks</a>
+<a href="#sbt.ExitHooks" title="sbt.ExitHooks.type" class="delimiter">{</a>
+	<span class="comment">/** Calls each registered exit hook, trapping any exceptions so that each hook is given a chance to run. */</span>
+	<span class="keyword">def</span> <a title="(exitHooks: Seq[sbt.ExitHook])Seq[Throwable]" id="sbt.ExitHooks.runExitHooks">runExitHooks</a><span class="delimiter">(</span><a title="Seq[sbt.ExitHook]" id="sbt.ExitHooks.runExitHooks.exitHooks">exitHooks</a>: <span title="Seq[sbt.ExitHook]">Seq</span><span class="delimiter">[</span>ExitHook<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Seq[Throwable]">Seq</span><span class="delimiter">[</span>Throwable<span class="delimiter">]</span> =
+		<a href="#sbt.ExitHooks.runExitHooks.exitHooks" title="Seq[sbt.ExitHook]">exitHooks</a>.<span title="(f: sbt.ExitHook =&gt; scala.collection.GenTraversableOnce[Throwable])(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.ExitHook],Throwable,Seq[Throwable]])Seq[Throwable]">flatMap</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.Seq.Coll,Throwable,Seq[Throwable]]" class="delimiter">(</span> <a title="sbt.ExitHook" id="sbt.ExitHooks.runExitHooks.$anonfun.hook">hook</a> =&gt;
+			<a href="ErrorHandling.scala.html#sbt.ErrorHandling" title="sbt.ErrorHandling.type">ErrorHandling</a>.<a href="ErrorHandling.scala.html#sbt.ErrorHandling.wideConvert" title="(f: =&gt; Unit)Either[Throwable,Unit]">wideConvert</a><span class="delimiter">(</span> <a href="#sbt.ExitHooks.runExitHooks.$anonfun.hook" title="sbt.ExitHook">hook</a>.<a href="#sbt;ExitHook.runBeforeExiting" title="()Unit">runBeforeExiting</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">)</span>.<span title="=&gt; scala.util.Either.LeftProjection[Throwable,Unit]">left</span>.<span title="(xo: Option[Throwable])Iterable[Throwable]">toOption</span>
+		<span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

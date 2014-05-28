@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/LoadedSbtFile.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+	<span class="keyword">import</span> <a href="Def.scala.html#sbt.Def" title="sbt.Def.type">Def</a>.Setting
+
+<span class="comment">/** Represents the exported contents of a .sbt file.  Currently, that includes the list of settings,
+* the values of Project vals, and the import statements for all defined vals/defs. */</span>
+<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class LoadedSbtFile extends AnyRef" id="sbt;LoadedSbtFile">LoadedSbtFile</a><a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile" class="delimiter">(</a><span class="keyword">val</span> <a title="Seq[sbt.Def.Setting[_]]" id="sbt;LoadedSbtFile.settings">settings</a>: <span title="Seq[sbt.Def.Setting[_]]">Seq</span><span class="delimiter">[</span>Setting<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Seq[sbt.Project]" id="sbt;LoadedSbtFile.projects">projects</a>: <span title="Seq[sbt.Project]">Seq</span><span class="delimiter">[</span>Project<span class="delimiter">]</span>, <span class="keyword">val</span> <a title="Seq[String]" id="sbt;LoadedSbtFile.importedDefs">importedDefs</a>: <span title="Seq[String]">Seq</span><span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">)</span>
+<span class="delimiter">{</span>
+	<span class="keyword">def</span> <a title="(o: sbt.LoadedSbtFile)sbt.LoadedSbtFile" id="sbt;LoadedSbtFile.merge">merge</a><span class="delimiter">(</span><a title="sbt.LoadedSbtFile" id="sbt;LoadedSbtFile.merge.o">o</a>: <a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile">LoadedSbtFile</a><span class="delimiter">)</span>: <a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile">LoadedSbtFile</a> =
+		<span title="sbt.LoadedSbtFile" class="keyword">new</span> <a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile">LoadedSbtFile</a><span class="delimiter">(</span><a href="#sbt;LoadedSbtFile.settings" title="=&gt; Seq[sbt.Def.Setting[_]]">settings</a> <span title="(that: scala.collection.GenTraversableOnce[sbt.Def.Setting[_]])(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.Def.Setting[_]],sbt.Def.Setting[_],Seq[sbt.Def.Setting[_]]])Seq[sbt.Def.Setting[_]]">++</span> <a href="#sbt;LoadedSbtFile.merge.o" title="sbt.LoadedSbtFile">o</a>.<a href="#sbt;LoadedSbtFile.settings" title="=&gt; Seq[sbt.Def.Setting[_]]">settings</a>, <a href="#sbt;LoadedSbtFile.projects" title="=&gt; Seq[sbt.Project]">projects</a> <span title="(that: scala.collection.GenTraversableOnce[sbt.Project])(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.Project],sbt.Project,Seq[sbt.Project]])Seq[sbt.Project]">++</span> <a href="#sbt;LoadedSbtFile.merge.o" title="sbt.LoadedSbtFile">o</a>.<a href="#sbt;LoadedSbtFile.projects" title="=&gt; Seq[sbt.Project]">projects</a>, <a href="#sbt;LoadedSbtFile.importedDefs" title="=&gt; Seq[String]">importedDefs</a> <span title="(that: scala.collection.GenTraversableOnce[String])(implicit bf: scala.collection.generic.CanBuildFrom[Seq[String],String,Seq[String]])Seq[String]">++</span> <a href="#sbt;LoadedSbtFile.merge.o" title="sbt.LoadedSbtFile">o</a>.<a href="#sbt;LoadedSbtFile.importedDefs" title="=&gt; Seq[String]">importedDefs</a><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.LoadedSbtFile" id="sbt;LoadedSbtFile.clearProjects">clearProjects</a> = <span title="sbt.LoadedSbtFile" class="keyword">new</span> <a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile">LoadedSbtFile</a><span class="delimiter">(</span><a href="#sbt;LoadedSbtFile.settings" title="=&gt; Seq[sbt.Def.Setting[_]]">settings</a>, <span title="scala.collection.immutable.Nil.type">Nil</span>, <a href="#sbt;LoadedSbtFile.importedDefs" title="=&gt; Seq[String]">importedDefs</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+<span title="AnyRef" class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">object</span> <a title="sbt.LoadedSbtFile.type" id="sbt.LoadedSbtFile">LoadedSbtFile</a>
+<a href="#sbt.LoadedSbtFile" title="sbt.LoadedSbtFile.type" class="delimiter">{</a>
+	<span class="comment">/** Represents an empty .sbt file: no Projects, imports, or settings.*/</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.LoadedSbtFile" id="sbt.LoadedSbtFile.empty">empty</a> = <span title="sbt.LoadedSbtFile" class="keyword">new</span> <a href="#sbt;LoadedSbtFile" title="sbt.LoadedSbtFile">LoadedSbtFile</a><span class="delimiter">(</span><span title="scala.collection.immutable.Nil.type">Nil</span>, <span title="scala.collection.immutable.Nil.type">Nil</span>, <span title="scala.collection.immutable.Nil.type">Nil</span><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+
+        </pre>
+    </body>
+</html>

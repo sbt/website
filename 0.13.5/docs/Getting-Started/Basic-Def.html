@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>.sbt Build Definition &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title="Scopes" href="Scopes.html" />
+    <link rel="prev" title="Running" href="Running.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title"><span class="pre">.sbt</span> Build Definition</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Scopes.html">Scopes</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Running.html">Running</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="sbt-build-definition">
+<h1><span class="pre">.sbt</span> Build Definition<a class="headerlink" href="#sbt-build-definition" title="Permalink to this headline">¶</a></h1>
+<p>This page describes sbt build definitions, including some &quot;theory&quot; and
+the syntax of <span class="pre">build.sbt</span>. It assumes you know how to <a class="reference internal" href="Running.html"><em>use sbt</em></a> and have read the previous pages in the
+<tt class="xref doc docutils literal"><span class="pre">Getting</span> <span class="pre">Started</span> <span class="pre">Guide</span></tt>.</p>
+<div class="section" id="sbt-vs-scala-build-definition">
+<h2><span class="pre">.sbt</span> vs. <span class="pre">.scala</span> Build Definition<a class="headerlink" href="#sbt-vs-scala-build-definition" title="Permalink to this headline">¶</a></h2>
+<p>An sbt build definition can contain files ending in <span class="pre">.sbt</span>, located in
+the base directory of a project, and files ending in <span class="pre">.scala</span>, located in the
+<span class="pre">project/</span> subdirectory of the base directory.</p>
+<p>This page discusses <span class="pre">.sbt</span> files, which are suitable for most cases.
+The <span class="pre">.scala</span> files are typically used for sharing code across <span class="pre">.sbt</span> files and for more complex build definitions.
+See <a class="reference internal" href="Full-Def.html"><em>.scala build definition</em></a> (later in Getting Started) for more on <span class="pre">.scala</span> files.</p>
+</div>
+<div class="section" id="what-is-a-build-definition">
+<h2>What is a Build Definition?<a class="headerlink" href="#what-is-a-build-definition" title="Permalink to this headline">¶</a></h2>
+<p>After examining a project and processing build definition files, sbt ends up
+with an immutable map (set of key-value pairs) describing the build.</p>
+<p>For example, one key is <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a> and it maps to a string value, the name of your project.</p>
+<p><em>Build definition files do not affect sbt's map directly.</em></p>
+<p>Instead, the build definition creates a huge list of objects with type
+<span class="pre">Setting[T]</span> where <span class="pre">T</span> is the type of the value in the map.  A <span class="pre">Setting</span> describes
+a <em>transformation to the map</em>, such as adding a new key-value pair or
+appending to an existing value. (In the spirit of functional
+programming with immutable data structures and values, a transformation returns a new map
+- it does not update the old map in-place.)</p>
+<p>In <span class="pre">build.sbt</span>, you might create a <span class="pre">Setting[String]</span> for the name of
+your project like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<p>This <span class="pre">Setting[String]</span> transforms the map by adding (or replacing) the
+<span class="pre">name</span> key, giving it the value <span class="pre">&quot;hello&quot;</span>. The transformed map
+becomes sbt's new map.</p>
+<p>To create the map, sbt first sorts the list of settings so that all
+changes to the same key are made together, and values that depend on
+other keys are processed after the keys they depend on. Then sbt walks
+over the sorted list of <span class="pre">Setting</span>s and applies each one to the map in
+turn.</p>
+<p>Summary: A build definition defines a list of <span class="pre">Setting[T]</span>, where a
+<span class="pre">Setting[T]</span> is a transformation affecting sbt's map of key-value
+pairs and <span class="pre">T</span> is the type of each value.</p>
+</div>
+<div class="section" id="how-build-sbt-defines-settings">
+<h2>How <span class="pre">build.sbt</span> defines settings<a class="headerlink" href="#how-build-sbt-defines-settings" title="Permalink to this headline">¶</a></h2>
+<p><span class="pre">build.sbt</span> defines a <span class="pre">Seq[Setting[_]]</span>; it's a list of Scala
+expressions, separated by blank lines, where each one becomes one
+element in the sequence. If you put <span class="pre">Seq(</span> in front of the <span class="pre">.sbt</span>
+file and <span class="pre">)</span> at the end and replace the blank lines with commas, you'd
+be looking at the equivalent <span class="pre">.scala</span> code.</p>
+<p>Here's an example:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+
+<span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+
+<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.4&quot;</span>
+</pre></div>
+</div>
+<p>Each <span class="pre">Setting</span> is defined with a Scala expression.
+The expressions in <span class="pre">build.sbt</span> are independent of one another, and
+they are expressions, rather than complete Scala statements.  These
+expressions may be interspersed with <span class="pre">val</span>s, <span class="pre">lazy val</span>s, and <span class="pre">def</span>s.
+Top-level <span class="pre">object</span>s and <span class="pre">class</span>es are not allowed in <span class="pre">build.sbt</span>.
+Those should go in the <span class="pre">project/</span> directory as full Scala source files.</p>
+<p>On the left, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.version">version</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.scalaVersion">scalaVersion</a> are <em>keys</em>. A
+key is an instance of <span class="pre">SettingKey[T]</span>, <span class="pre">TaskKey[T]</span>, or
+<span class="pre">InputKey[T]</span> where <span class="pre">T</span> is the expected value type. The kinds of key
+are explained below.</p>
+<p>Keys have a method called <span class="pre">:=</span>, which returns a <span class="pre">Setting[T]</span>. You
+could use a Java-like syntax to call the method:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span><span class="o">.:=(</span><span class="s">&quot;hello&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>But Scala allows <span class="pre">name := &quot;hello&quot;</span> instead (in Scala, a single-parameter method can
+use either syntax).</p>
+<p>The <span class="pre">:=</span> method on key <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a> returns a <span class="pre">Setting</span>, specifically a
+<span class="pre">Setting[String]</span>. <span class="pre">String</span> also appears in the type of <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>
+itself, which is <span class="pre">SettingKey[String]</span>. In this case, the returned
+<span class="pre">Setting[String]</span> is a transformation to add or replace the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>
+key in sbt's map, giving it the value <span class="pre">&quot;hello&quot;</span>.</p>
+<p>If you use the wrong value type, the build definition will not compile:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="mi">42</span>  <span class="c1">// will not compile</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settings-must-be-separated-by-blank-lines">
+<h2>Settings must be separated by blank lines<a class="headerlink" href="#settings-must-be-separated-by-blank-lines" title="Permalink to this headline">¶</a></h2>
+<p>You can't write a <span class="pre">build.sbt</span> like this:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// will NOT compile, no blank lines</span>
+<span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+<span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.10.3&quot;</span>
+</pre></div>
+</div>
+<p>sbt needs some kind of delimiter to tell where one expression stops and
+the next begins.</p>
+<p><span class="pre">.sbt</span> files contain a list of Scala expressions, not a single Scala
+program. These expressions have to be split up and passed to the
+compiler individually.</p>
+</div>
+<div class="section" id="keys">
+<h2>Keys<a class="headerlink" href="#keys" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="types">
+<h3>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h3>
+<p>There are three flavors of key:</p>
+<ul class="simple">
+<li><span class="pre">SettingKey[T]</span>: a key for a value computed once (the value is
+computed when loading the project, and kept around).</li>
+<li><span class="pre">TaskKey[T]</span>: a key for a value, called a <em>task</em>,
+that has to be recomputed each time, potentially with side effects.</li>
+<li><span class="pre">InputKey[T]</span>: a key for a task that has command line arguments as
+input. Check out <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> for more details.</li>
+</ul>
+</div>
+<div class="section" id="built-in-keys">
+<h3>Built-in Keys<a class="headerlink" href="#built-in-keys" title="Permalink to this headline">¶</a></h3>
+<p>The built-in keys are just fields in an object called
+<a class="reference external" href="../../sxr/sbt/Keys.scala.html">Keys</a>. A
+<span class="pre">build.sbt</span> implicitly has an <span class="pre">import sbt.Keys._</span>, so
+<span class="pre">sbt.Keys.name</span> can be referred to as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>.</p>
+</div>
+<div class="section" id="custom-keys">
+<h3>Custom Keys<a class="headerlink" href="#custom-keys" title="Permalink to this headline">¶</a></h3>
+<p>Custom keys may be defined with their respective creation methods: <span class="pre">settingKey</span>, <span class="pre">taskKey</span>, and <span class="pre">inputKey</span>.
+Each method expects the type of the value associated with the key as well as a description.
+The name of the key is taken from the <span class="pre">val</span> the key is assigned to.
+For example, to define a key for a new task called <span class="pre">hello</span>,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">lazy</span> <span class="k">val</span> <span class="n">hello</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;An example task&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Here we have used the fact that an <span class="pre">.sbt</span> file can contain <span class="pre">val</span>s and <span class="pre">def</span>s in addition to settings.
+All such definitions are evaluated before settings regardless of where they are defined in the file.
+<span class="pre">val</span>s and <span class="pre">def</span>s must be separated from settings by blank lines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Typically, <span class="pre">lazy val</span>s are used instead of <span class="pre">val</span>s to avoid initialization order problems.</p>
+</div>
+</div>
+<div class="section" id="task-v-setting-keys">
+<h3>Task v. Setting keys<a class="headerlink" href="#task-v-setting-keys" title="Permalink to this headline">¶</a></h3>
+<p>A <span class="pre">TaskKey[T]</span> is said to define a <em>task</em>. Tasks are operations such
+as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> or <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a>. They may return <span class="pre">Unit</span> (<span class="pre">Unit</span> is
+Scala for <span class="pre">void</span>), or they may return a value related to the task, for
+example <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.package">package</a> is a <span class="pre">TaskKey[File]</span> and its value is the jar file
+it creates.</p>
+<p>Each time you start a task execution, for example by typing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a>
+at the interactive sbt prompt, sbt will re-run any tasks involved
+exactly once.</p>
+<p>sbt's map describing the project can keep around a fixed string value
+for a setting such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.name">name</a>, but it has to keep around some
+executable code for a task such as <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> -- even if that
+executable code eventually returns a string, it has to be re-run every
+time.</p>
+<p><em>A given key always refers to either a task or a plain setting.</em> That
+is, &quot;taskiness&quot; (whether to re-run each time) is a property of the key,
+not the value.</p>
+</div>
+</div>
+<div class="section" id="defining-tasks-and-settings">
+<h2>Defining tasks and settings<a class="headerlink" href="#defining-tasks-and-settings" title="Permalink to this headline">¶</a></h2>
+<p>Using <span class="pre">:=</span>, you can assign a value to a setting and a computation to a task.
+For a setting, the value will be computed once at project load time.
+For a task, the computation will be re-run each time the task is executed.</p>
+<p>For example, to implement the <span class="pre">hello</span> task from the previous section,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">hello</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello!&quot;</span><span class="o">)</span> <span class="o">}</span>
+</pre></div>
+</div>
+<p>We already saw an example of defining settings when we defined the project's name,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</pre></div>
+</div>
+<div class="section" id="types-for-tasks-and-settings">
+<h3>Types for tasks and settings<a class="headerlink" href="#types-for-tasks-and-settings" title="Permalink to this headline">¶</a></h3>
+<p>From a type-system perspective, the <span class="pre">Setting</span> created from a task key
+is slightly different from the one created from a setting key.
+<span class="pre">taskKey := 42</span> results in a <span class="pre">Setting[Task[T]]</span> while
+<span class="pre">settingKey := 42</span> results in a <span class="pre">Setting[T]</span>. For most purposes this
+makes no difference; the task key still creates a value of type <span class="pre">T</span>
+when the task executes.</p>
+<p>The <span class="pre">T</span> vs. <span class="pre">Task[T]</span> type difference has this implication: a
+setting can't depend on a task, because a setting is
+evaluated only once on project load and is not re-run.
+More on this in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>, coming up
+soon.</p>
+</div>
+</div>
+<div class="section" id="keys-in-sbt-interactive-mode">
+<h2>Keys in sbt interactive mode<a class="headerlink" href="#keys-in-sbt-interactive-mode" title="Permalink to this headline">¶</a></h2>
+<p>In sbt's interactive mode, you can type the name of any task to execute
+that task. This is why typing <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> runs the compile task.
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.compile">compile</a> is a task key.</p>
+<p>If you type the name of a setting key rather than a task key, the value
+of the setting key will be displayed. Typing a task key name executes
+the task but doesn't display the resulting value; to see a task's
+result, use <span class="pre">show &lt;task name&gt;</span> rather than plain <span class="pre">&lt;task name&gt;</span>.
+The convention for keys names is to use <span class="pre">camelCase</span> so that the
+command line name and the Scala identifiers are the same.</p>
+<p>To learn more about any key, type <span class="pre">inspect &lt;keyname&gt;</span> at the sbt
+interactive prompt. Some of the information <span class="pre">inspect</span> displays won't
+make sense yet, but at the top it shows you the setting's value type and
+a brief description of the setting.</p>
+</div>
+<div class="section" id="imports-in-build-sbt">
+<h2>Imports in <span class="pre">build.sbt</span><a class="headerlink" href="#imports-in-build-sbt" title="Permalink to this headline">¶</a></h2>
+<p>You can place import statements at the top of <span class="pre">build.sbt</span>; they need
+not be separated by blank lines.</p>
+<p>There are some implied default imports, as follows:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">import</span> <span class="nn">sbt._</span>
+<span class="k">import</span> <span class="nn">Process._</span>
+<span class="k">import</span> <span class="nn">Keys._</span>
+</pre></div>
+</div>
+<p>(In addition, if you have <a class="reference internal" href="Full-Def.html"><em>.scala files</em></a>,
+the contents of any <span class="pre">Build</span> or <span class="pre">Plugin</span> objects in those files will
+be imported. More on that when we get to <a class="reference internal" href="Full-Def.html"><em>.scala build definitions</em></a>.)</p>
+</div>
+<div class="section" id="adding-library-dependencies">
+<h2>Adding library dependencies<a class="headerlink" href="#adding-library-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>To depend on third-party libraries, there are two options. The first is
+to drop jars in <span class="pre">lib/</span> (unmanaged dependencies) and the other is to
+add managed dependencies, which will look like this in <span class="pre">build.sbt</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span>
+</pre></div>
+</div>
+<p>This is how you add a managed dependency on the Apache Derby library,
+version 10.4.1.3.</p>
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies">libraryDependencies</a> key involves two complexities: <span class="pre">+=</span> rather
+than <span class="pre">:=</span>, and the <span class="pre">%</span> method. <span class="pre">+=</span> appends to the key's old value
+rather than replacing it, this is explained in
+<a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.
+The <span class="pre">%</span> method is used to construct an Ivy module ID from strings,
+explained in <a class="reference internal" href="Library-Dependencies.html"><em>library dependencies</em></a>.</p>
+<p>We'll skip over the details of library dependencies until later in the
+Getting Started Guide. There's a <a class="reference internal" href="Library-Dependencies.html"><em>whole page</em></a>
+covering it later on.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>Move on to <a class="reference internal" href="Scopes.html"><em>learn about scopes</em></a>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Getting-Started/Basic-Def.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#"><span class="pre">.sbt</span> Build Definition</a><ul>
+<li><a class="reference internal" href="#sbt-vs-scala-build-definition"><span class="pre">.sbt</span> vs. <span class="pre">.scala</span> Build Definition</a></li>
+<li><a class="reference internal" href="#what-is-a-build-definition">What is a Build Definition?</a></li>
+<li><a class="reference internal" href="#how-build-sbt-defines-settings">How <span class="pre">build.sbt</span> defines settings</a></li>
+<li><a class="reference internal" href="#settings-must-be-separated-by-blank-lines">Settings must be separated by blank lines</a></li>
+<li><a class="reference internal" href="#keys">Keys</a><ul>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#built-in-keys">Built-in Keys</a></li>
+<li><a class="reference internal" href="#custom-keys">Custom Keys</a></li>
+<li><a class="reference internal" href="#task-v-setting-keys">Task v. Setting keys</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#defining-tasks-and-settings">Defining tasks and settings</a><ul>
+<li><a class="reference internal" href="#types-for-tasks-and-settings">Types for tasks and settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keys-in-sbt-interactive-mode">Keys in sbt interactive mode</a></li>
+<li><a class="reference internal" href="#imports-in-build-sbt">Imports in <span class="pre">build.sbt</span></a></li>
+<li><a class="reference internal" href="#adding-library-dependencies">Adding library dependencies</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

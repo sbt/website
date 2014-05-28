@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/plugins/JUnitXmlReportPlugin.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> plugins
+
+<span class="keyword">import</span> <a href="../Def.scala.html#sbt.Def" title="sbt.Def.type">Def</a>.Setting
+<span class="keyword">import</span> <a href="../Keys.scala.html#sbt.Keys" title="sbt.Keys.type">Keys</a>._
+<span class="keyword">import</span> <a href="../Project.scala.html#sbt.Project" title="sbt.Project.type">Project</a>.inConfig
+<span class="keyword">import</span> <a href="../Configuration.scala.html#sbt.Configurations" title="sbt.Configurations.type">Configurations</a>.Test
+
+<span class="comment">/** An experimental plugin that adds the ability for junit-xml to be generated.
+ *
+ *  To disable this plugin, you need to add:
+ *  {{{
+ *     val myProject = project in file(&quot;.&quot;) disablePlugins (plugins.JunitXmlReportPlugin)
+ *  }}}
+ *
+ *  Note:  Using AutoPlugins to enable/disable build features is experimental in sbt 0.13.5.
+ */</span>
+<span class="keyword">object</span> <a title="sbt.plugins.JUnitXmlReportPlugin.type" id="sbt.plugins.JUnitXmlReportPlugin">JUnitXmlReportPlugin</a> <a href="#sbt.plugins.JUnitXmlReportPlugin" title="sbt.plugins.JUnitXmlReportPlugin.type" class="keyword">extends</a> <a href="../Plugins.scala.html#sbt;AutoPlugin" title="sbt.AutoPlugin">AutoPlugin</a> <span class="delimiter">{</span>
+  <span class="comment">// TODO - If testing becomes its own plugin, we only rely on the core settings.</span>
+  <span class="keyword">override</span> <span class="keyword">def</span> <a title="=&gt; sbt.plugins.JvmPlugin.type" id="sbt.plugins.JUnitXmlReportPlugin.requires">requires</a> = <a href="JvmPlugin.scala.html#sbt.plugins.JvmPlugin" title="sbt.plugins.JvmPlugin.type">JvmPlugin</a>
+  <span class="keyword">override</span> <span class="keyword">def</span> <a title="=&gt; sbt.PluginTrigger" id="sbt.plugins.JUnitXmlReportPlugin.trigger">trigger</a> = <a href="../Plugins.scala.html#sbt;PluginsFunctions.allRequirements" title="=&gt; sbt.PluginTrigger">allRequirements</a>
+  
+  <span class="comment">// Right now we add to the global test listeners which should capture *all* tests.</span>
+  <span class="comment">// It might be a good idea to derive this setting into specific test scopes.</span>
+  <span class="keyword">override</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="Seq[sbt.Def.Setting[_]]" id="sbt.plugins.JUnitXmlReportPlugin.projectSettings">projectSettings</a>: <span title="Seq[sbt.Def.Setting[_]]">Seq</span><span class="delimiter">[</span>Setting<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span> =
+    <span title="(elems: sbt.Def.Setting[sbt.Task[Seq[sbt.TestReportListener]]]*)Seq[sbt.Def.Setting[sbt.Task[Seq[sbt.TestReportListener]]]]">Seq</span><span class="delimiter">(</span>
+      <a href="../Keys.scala.html#sbt.Keys.testListeners" title="=&gt; sbt.TaskKey[Seq[sbt.TestReportListener]]">testListeners</a> <a href="../Structure.scala.html#sbt;TaskKey.+=" title="(v: sbt.JUnitXmlTestsListener)(implicit a: sbt.Append.Value[Seq[sbt.TestReportListener],sbt.JUnitXmlTestsListener])sbt.Def.Setting[sbt.Task[Seq[sbt.TestReportListener]]]">+=</a> <span title="sbt.JUnitXmlTestsListener" class="keyword">new</span> <a href="../JUnitXmlTestsListener.scala.html#sbt;JUnitXmlTestsListener" title="sbt.JUnitXmlTestsListener">JUnitXmlTestsListener</a><span class="delimiter">(</span><a href="../Def.scala.html#sbt.Def.macroValueI" title="(in: sbt.Def.Initialize[java.io.File])sbt.std.MacroValue[java.io.File]">target</a>.<a href="../std/InputWrapper.scala.html#sbt.std;MacroValue.value" title="=&gt; java.io.File">value</a>.<span title="()String">getAbsolutePath</span><span class="delimiter">)</span>
+    <span class="delimiter">)</span>
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

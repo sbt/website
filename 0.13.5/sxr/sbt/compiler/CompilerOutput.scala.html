@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/compiler/CompilerOutput.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2012  Eugene Vigdorchik
+ */</span>
+
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> compiler
+
+	<span class="keyword">import</span> xsbti.compile.<span class="delimiter">{</span>Output, SingleOutput, MultipleOutput<span class="delimiter">}</span>
+	<span class="keyword">import</span> java.io.File
+
+<span class="keyword">object</span> <a title="sbt.compiler.CompileOutput.type" id="sbt.compiler.CompileOutput">CompileOutput</a> <a href="#sbt.compiler.CompileOutput" title="sbt.compiler.CompileOutput.type" class="delimiter">{</a>
+	<span class="keyword">def</span> <a title="(dir: java.io.File)xsbti.compile.Output" id="sbt.compiler.CompileOutput.apply(47c093e299)">apply</a><span class="delimiter">(</span><a title="java.io.File" id="sbt.compiler.CompileOutput.apply(47c093e299).dir">dir</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <a href="../../xsbti/compile/Output.java.html#xsbti.compile;Output" title="xsbti.compile.Output">Output</a> = <a href="#sbt.compiler.CompileOutput.apply(47c093e299);$anon" title="xsbti.compile.SingleOutput" class="keyword">new</a> <a title="anonymous class $anon extends Object with xsbti.compile.SingleOutput" id="sbt.compiler.CompileOutput.apply(47c093e299);$anon">SingleOutput</a> <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="()java.io.File" id="sbt.compiler.CompileOutput.apply(47c093e299);$anon.outputDirectory">outputDirectory</a> = <a href="#sbt.compiler.CompileOutput.apply(47c093e299).dir" title="java.io.File">dir</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="(groups: (java.io.File, java.io.File)*)xsbti.compile.Output" id="sbt.compiler.CompileOutput.apply(33249e4897)">apply</a><span class="delimiter">(</span><a title="(java.io.File, java.io.File)*" id="sbt.compiler.CompileOutput.apply(33249e4897).groups">groups</a>: <span title="(java.io.File, java.io.File)*" class="delimiter">(</span>File, File<span class="delimiter">)</span>*<span class="delimiter">)</span>: <a href="../../xsbti/compile/Output.java.html#xsbti.compile;Output" title="xsbti.compile.Output">Output</a> = <a href="#sbt.compiler.CompileOutput.apply(33249e4897);$anon" title="xsbti.compile.MultipleOutput" class="keyword">new</a> <a title="anonymous class $anon extends Object with xsbti.compile.MultipleOutput" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon">MultipleOutput</a> <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="()Array[this.OutputGroup]" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups">outputGroups</a> = <a href="#sbt.compiler.CompileOutput.apply(33249e4897).groups" title="(java.io.File, java.io.File)*">groups</a>.<span title="(xs: Array[(java.io.File, java.io.File)])scala.collection.mutable.ArrayOps[(java.io.File, java.io.File)]">toArray</span> <span title="(f: ((java.io.File, java.io.File)) =&gt; xsbti.compile.MultipleOutput.OutputGroup)(implicit bf: scala.collection.generic.CanBuildFrom[Array[(java.io.File, java.io.File)],xsbti.compile.MultipleOutput.OutputGroup,Array[this.OutputGroup]])Array[this.OutputGroup]">map</span> <a href="#sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun.x0$1" title="$anonfun extends Object with xsbti.compile.MultipleOutput.OutputGroup" class="delimiter">{</a>
+			<span class="keyword">case</span> <span class="delimiter">(</span><a title="java.io.File" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun.src">src</a>, <a title="java.io.File" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun.out">out</a><span class="delimiter">)</span> =&gt; <a href="#sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun;$anon" title="xsbti.compile.MultipleOutput.OutputGroup" class="keyword">new</a> <a title="anonymous class $anon extends Object with xsbti.compile.MultipleOutput.OutputGroup" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun;$anon">MultipleOutput</a>.<a href="../../xsbti/compile/MultipleOutput.java.html#xsbti.compile.MultipleOutput;OutputGroup" title="xsbti.compile.MultipleOutput.OutputGroup">OutputGroup</a> <span class="delimiter">{</span>
+				<span class="keyword">def</span> <a title="()java.io.File" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun;$anon.sourceDirectory">sourceDirectory</a> = <a href="#sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun.src" title="java.io.File">src</a>
+				<span class="keyword">def</span> <a title="()java.io.File" id="sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun;$anon.outputDirectory">outputDirectory</a> = <a href="#sbt.compiler.CompileOutput.apply(33249e4897);$anon.outputGroups.$anonfun.out" title="java.io.File">out</a>
+			<span class="delimiter">}</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

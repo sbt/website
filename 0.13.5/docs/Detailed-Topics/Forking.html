@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Forking &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Configuration" href="Configuration-Index.html" />
+    <link rel="next" title="Global Settings" href="Global-Settings.html" />
+    <link rel="prev" title="Configuring Scala" href="Configuring-Scala.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Forking</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Global-Settings.html">Global Settings</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Configuring-Scala.html">Configuring Scala</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="forking">
+<h1>Forking<a class="headerlink" href="#forking" title="Permalink to this headline">¶</a></h1>
+<p>By default, the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> task runs in the same JVM as sbt. Forking is
+required under <a class="reference internal" href="Running-Project-Code.html"><em>certain circumstances</em></a>, however.
+Or, you might want to fork Java processes when implementing new tasks.</p>
+<p>By default, a forked process uses the same Java and Scala versions being
+used for the build and the working directory and JVM options of the
+current process. This page discusses how to enable and configure forking
+for both <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> tasks. Each kind of task may be configured
+separately by scoping the relevant keys as explained below.</p>
+<div class="section" id="enable-forking">
+<h2>Enable forking<a class="headerlink" href="#enable-forking" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fork">fork</a> setting controls whether forking is enabled (true) or not
+(false). It can be set in the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> scope to only fork <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>
+commands or in the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> scope to only fork <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> commands.</p>
+<p>To fork all test tasks (<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testOnly">testOnly</a>, and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.testQuick">testQuick</a>) and
+run tasks (<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a>, <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.runMain">runMain</a>, <span class="pre">test:run</span>, and <span class="pre">test:runMain</span>),</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>To enable forking <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> tasks only, set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fork">fork</a> to <span class="pre">true</span> in the
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> scope.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>To only fork <span class="pre">test:run</span> and <span class="pre">test:runMain</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>Similarly, set <span class="pre">fork in (Compile,run) := true</span> to only fork the main
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> tasks. <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> and <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.runMain">runMain</a> share the same configuration and
+cannot be configured separately.</p>
+<p>To enable forking all <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> tasks only, set <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.fork">fork</a> to <span class="pre">true</span> in
+the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> scope:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">fork</span> <span class="n">in</span> <span class="n">test</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Testing.html"><em>Testing</em></a> for more control over how tests are assigned to JVMs and
+what options to pass to each group.</p>
+</div>
+<div class="section" id="change-working-directory">
+<h2>Change working directory<a class="headerlink" href="#change-working-directory" title="Permalink to this headline">¶</a></h2>
+<p>To change the working directory when forked, set
+<span class="pre">baseDirectory in run</span> or <span class="pre">baseDirectory in test</span>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// sets the working directory for all `run`-like tasks</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `run` and `runMain` only</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `test:run` and `test:runMain` only</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+
+<span class="c1">// sets the working directory for `test`, `testQuick`, and `testOnly`</span>
+<span class="n">baseDirectory</span> <span class="n">in</span> <span class="n">test</span> <span class="o">:=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/working/directory/&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="forked-jvm-options">
+<h2>Forked JVM options<a class="headerlink" href="#forked-jvm-options" title="Permalink to this headline">¶</a></h2>
+<p>To specify options to be provided to the forked JVM, set
+<a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.javaOptions">javaOptions</a>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="n">run</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+<p>or specify the configuration to affect only the main or test <span class="pre">run</span>
+tasks:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Test</span><span class="o">,</span><span class="n">run</span><span class="o">)</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+<p>or only affect the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> tasks:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaOptions</span> <span class="n">in</span> <span class="n">test</span> <span class="o">+=</span> <span class="s">&quot;-Xmx8G&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="java-home">
+<h2>Java Home<a class="headerlink" href="#java-home" title="Permalink to this headline">¶</a></h2>
+<p>Select the Java installation to use by setting the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.javaHome">javaHome</a>
+directory:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/jre/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Note that if this is set globally, it also sets the Java installation
+used to compile Java sources. You can restrict it to running only by
+setting it in the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> scope:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">javaHome</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/path/to/jre/&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>As with the other settings, you can specify the configuration to affect
+only the main or test <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> tasks or just the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> tasks.</p>
+</div>
+<div class="section" id="configuring-output">
+<h2>Configuring output<a class="headerlink" href="#configuring-output" title="Permalink to this headline">¶</a></h2>
+<p>By default, forked output is sent to the Logger, with standard output
+logged at the <span class="pre">Info</span> level and standard error at the <span class="pre">Error</span> level.
+This can be configured with the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.outputStrategy">outputStrategy</a> setting, which is of
+type
+<a class="reference external" href="../../api/sbt/OutputStrategy.html">OutputStrategy</a>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// send output to the build&#39;s standard output and error</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">StdoutOutput</span><span class="o">)</span>
+
+<span class="c1">// send output to the provided OutputStream `someStream`</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">CustomOutput</span><span class="o">(</span><span class="n">someStream</span><span class="k">:</span> <span class="kt">OutputStream</span><span class="o">))</span>
+
+<span class="c1">// send output to the provided Logger `log` (unbuffered)</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">LoggedOutput</span><span class="o">(</span><span class="n">log</span><span class="k">:</span> <span class="kt">Logger</span><span class="o">))</span>
+
+<span class="c1">// send output to the provided Logger `log` after the process terminates</span>
+<span class="n">outputStrategy</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">BufferedOutput</span><span class="o">(</span><span class="n">log</span><span class="k">:</span> <span class="kt">Logger</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>As with other settings, this can be configured individually for main or
+test <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.run">run</a> tasks or for <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.test">test</a> tasks.</p>
+</div>
+<div class="section" id="configuring-input">
+<h2>Configuring Input<a class="headerlink" href="#configuring-input" title="Permalink to this headline">¶</a></h2>
+<p>By default, the standard input of the sbt process is not forwarded to
+the forked process. To enable this, configure the <a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.connectInput">connectInput</a>
+setting:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">connectInput</span> <span class="n">in</span> <span class="n">run</span> <span class="o">:=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="direct-usage">
+<h2>Direct Usage<a class="headerlink" href="#direct-usage" title="Permalink to this headline">¶</a></h2>
+<p>To fork a new Java process, use the <a class="reference external" href="../../api/sbt/Fork$.html">Fork
+API</a>.
+The values of interest are <span class="pre">Fork.java</span>, <span class="pre">Fork.javac</span>, <span class="pre">Fork.scala</span>, and <span class="pre">Fork.scalac</span>.
+These are of type <a class="reference external" href="../../api/sbt/Fork.html">Fork</a> and provide <span class="pre">apply</span> and <span class="pre">fork</span> methods.
+For example, to fork a new Java process,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">options</span> <span class="k">=</span> <span class="nc">ForkOptions</span><span class="o">(...)</span>
+<span class="k">val</span> <span class="n">arguments</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">mainClass</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">exitCode</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="nc">Fork</span><span class="o">.</span><span class="n">java</span><span class="o">(</span><span class="n">options</span><span class="o">,</span> <span class="n">mainClass</span> <span class="o">+:</span> <span class="n">arguments</span><span class="o">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="../../api/sbt/ForkOptions.html">ForkOptions</a> defines the Java installation to use, the working directory, environment variables, and more.
+For example,</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">cwd</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">javaDir</span><span class="k">:</span> <span class="kt">File</span> <span class="o">=</span> <span class="o">...</span>
+<span class="k">val</span> <span class="n">options</span> <span class="k">=</span> <span class="nc">ForkOptions</span><span class="o">(</span>
+   <span class="n">envVars</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;KEY&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;value&quot;</span><span class="o">),</span>
+   <span class="n">workingDirectory</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">cwd</span><span class="o">),</span>
+   <span class="n">javaHome</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">javaDir</span><span class="o">)</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Detailed-Topics/Forking.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Forking</a><ul>
+<li><a class="reference internal" href="#enable-forking">Enable forking</a></li>
+<li><a class="reference internal" href="#change-working-directory">Change working directory</a></li>
+<li><a class="reference internal" href="#forked-jvm-options">Forked JVM options</a></li>
+<li><a class="reference internal" href="#java-home">Java Home</a></li>
+<li><a class="reference internal" href="#configuring-output">Configuring output</a></li>
+<li><a class="reference internal" href="#configuring-input">Configuring Input</a></li>
+<li><a class="reference internal" href="#direct-usage">Direct Usage</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

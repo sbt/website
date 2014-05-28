@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Migrating from 0.7 to 0.10+ &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Advanced" href="Advanced-Index.html" />
+    <link rel="next" title="Architecture" href="../Architecture/index.html" />
+    <link rel="prev" title="Settings Core" href="../Extending/Settings-Core.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Migrating from 0.7 to 0.10+</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="../Architecture/index.html">Architecture</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="../Extending/Settings-Core.html">Settings Core</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="migrating-from-0-7-to-0-10">
+<h1>Migrating from 0.7 to 0.10+<a class="headerlink" href="#migrating-from-0-7-to-0-10" title="Permalink to this headline">¶</a></h1>
+<p>The assumption here is that you are familiar with sbt 0.7 but new to sbt 0.13.</p>
+<p>sbt 0.13's many new capabilities can be a bit overwhelming, but this
+page should help you migrate to 0.13 with a minimum of fuss.</p>
+<div class="section" id="why-move-to-version">
+<h2>Why move to 0.13?<a class="headerlink" href="#why-move-to-version" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Faster builds (because it is smarter at re-compiling only what it
+must)</li>
+<li>Easier configuration. For simple projects a single <span class="pre">build.sbt</span> file
+in your root directory is easier to create than
+<span class="pre">project/build/MyProject.scala</span> was.</li>
+<li>No more <span class="pre">lib_managed</span> directory, reducing disk usage and avoiding
+backup and version control hassles.</li>
+<li><a class="pre reference external" href="../../sxr/sbt/Keys.scala.html#sbt.Keys.update">update</a> is now much faster and it's invoked automatically by sbt.</li>
+<li>Terser output. (Yet you can ask for more details if something goes
+wrong.)</li>
+</ol>
+<div class="section" id="step-1-read-the-getting-started-guide-for-sbt-version">
+<h3>Step 1: Read the Getting Started Guide for sbt 0.13<a class="headerlink" href="#step-1-read-the-getting-started-guide-for-sbt-version" title="Permalink to this headline">¶</a></h3>
+<p>Reading the <a class="reference internal" href="../Getting-Started/Welcome.html"><em>Getting Started Guide</em></a> will
+probably save you a lot of confusion.</p>
+</div>
+<div class="section" id="step-2-install-sbt-release">
+<h3>Step 2: Install sbt 0.13.5<a class="headerlink" href="#step-2-install-sbt-release" title="Permalink to this headline">¶</a></h3>
+<p>Download sbt 0.13 as described on <a class="reference internal" href="../Getting-Started/Setup.html"><em>the setup page</em></a>.</p>
+<p>You can run 0.13 the same way that you run 0.7.x, either simply:</p>
+<div class="highlight-console"><div class="highlight"><pre><span class="go">java -jar sbt-launch.jar</span>
+</pre></div>
+</div>
+<p>Or (as most users do) with a shell script, as described on
+<a class="reference internal" href="../Getting-Started/Setup.html"><em>the setup page</em></a>.</p>
+<p>For more details see <a class="reference internal" href="../Getting-Started/Setup.html"><em>the setup page</em></a>.</p>
+</div>
+<div class="section" id="step-3-a-technique-for-switching-an-existing-project">
+<h3>Step 3: A technique for switching an existing project<a class="headerlink" href="#step-3-a-technique-for-switching-an-existing-project" title="Permalink to this headline">¶</a></h3>
+<p>Here is a technique for switching an existing project to 0.13 while
+retaining the ability to switch back again at will. Some builds, such as
+those with subprojects, are not suited for this technique, but if you
+learn how to transition a simple project it will help you do a more
+complex one next.</p>
+</div>
+</div>
+<div class="section" id="preserve-project-for-0-7-x-project">
+<h2>Preserve <span class="pre">project/</span> for 0.7.x project<a class="headerlink" href="#preserve-project-for-0-7-x-project" title="Permalink to this headline">¶</a></h2>
+<p>Rename your <span class="pre">project/</span> directory to something like <span class="pre">project-old</span>.
+This will hide it from sbt 0.13 but keep it in case you want to switch
+back to 0.7.x.</p>
+</div>
+<div class="section" id="create-build-sbt-for-version">
+<h2>Create <span class="pre">build.sbt</span> for 0.13<a class="headerlink" href="#create-build-sbt-for-version" title="Permalink to this headline">¶</a></h2>
+<p>Create a <span class="pre">build.sbt</span> file in the root directory of your project. See
+<a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> in the Getting
+Started Guide, and for simple examples <a class="reference internal" href="../Examples/Quick-Configuration-Examples.html"><em>Basic Definition Examples</em></a>.
+If you have a simple project then converting your existing project file
+to this format is largely a matter of re-writing your dependencies and
+maven archive declarations in a modified yet familiar syntax.</p>
+<p>This <span class="pre">build.sbt</span> file combines aspects of the old
+<span class="pre">project/build/ProjectName.scala</span> and <span class="pre">build.properties</span> files. It
+looks like a property file, yet contains Scala code in a special format.</p>
+<p>A <span class="pre">build.properties</span> file like:</p>
+<div class="highlight-text"><div class="highlight"><pre>#Project properties
+#Fri Jan 07 15:34:00 GMT 2011
+project.organization=org.myproject
+project.name=My Project
+sbt.version=0.7.7
+project.version=1.0
+def.scala.version=2.7.7
+build.scala.versions=2.8.1
+project.initialize=false
+</pre></div>
+</div>
+<p>Now becomes part of your <span class="pre">build.sbt</span> file with lines like:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;My Project&quot;</span>
+
+<span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+
+<span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.myproject&quot;</span>
+
+<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.2&quot;</span>
+</pre></div>
+</div>
+<p>Currently, a <span class="pre">project/build.properties</span> is still needed to explicitly
+select the sbt version. For example:</p>
+<pre class="literal-block">
+sbt.version=0.13.5
+</pre>
+</div>
+<div class="section" id="run-sbt-version">
+<h2>Run sbt 0.13<a class="headerlink" href="#run-sbt-version" title="Permalink to this headline">¶</a></h2>
+<p>Now launch sbt. If you're lucky it works and you're done. For help
+debugging, see below.</p>
+</div>
+<div class="section" id="switching-back-to-sbt-0-7-x">
+<h2>Switching back to sbt 0.7.x<a class="headerlink" href="#switching-back-to-sbt-0-7-x" title="Permalink to this headline">¶</a></h2>
+<p>If you get stuck and want to switch back, you can leave your
+<span class="pre">build.sbt</span> file alone. sbt 0.7.x will not understand or notice it.
+Just rename your 0.13 <span class="pre">project</span> directory to something like
+<span class="pre">project10</span> and rename the backup of your old project from
+<span class="pre">project-old</span> to <span class="pre">project</span> again.</p>
+<div class="section" id="faqs">
+<h3>FAQs<a class="headerlink" href="#faqs" title="Permalink to this headline">¶</a></h3>
+<p>There's a section in the <a class="reference internal" href="../faq.html"><em>FAQ</em></a> about migration from 0.7 that covers
+several other important points.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Detailed-Topics/Migrating-from-sbt-0.7.x-to-0.10.x.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Migrating from 0.7 to 0.10+</a><ul>
+<li><a class="reference internal" href="#why-move-to-version">Why move to 0.13?</a><ul>
+<li><a class="reference internal" href="#step-1-read-the-getting-started-guide-for-sbt-version">Step 1: Read the Getting Started Guide for sbt 0.13</a></li>
+<li><a class="reference internal" href="#step-2-install-sbt-release">Step 2: Install sbt 0.13.5</a></li>
+<li><a class="reference internal" href="#step-3-a-technique-for-switching-an-existing-project">Step 3: A technique for switching an existing project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#preserve-project-for-0-7-x-project">Preserve <span class="pre">project/</span> for 0.7.x project</a></li>
+<li><a class="reference internal" href="#create-build-sbt-for-version">Create <span class="pre">build.sbt</span> for 0.13</a></li>
+<li><a class="reference internal" href="#run-sbt-version">Run sbt 0.13</a></li>
+<li><a class="reference internal" href="#switching-back-to-sbt-0-7-x">Switching back to sbt 0.7.x</a><ul>
+<li><a class="reference internal" href="#faqs">FAQs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

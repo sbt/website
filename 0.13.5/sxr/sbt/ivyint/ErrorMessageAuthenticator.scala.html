@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/ivyint/ErrorMessageAuthenticator.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+<span class="keyword">package</span> ivyint
+
+<span class="keyword">import</span> java.lang.reflect.Field
+<span class="keyword">import</span> java.lang.reflect.Method
+<span class="keyword">import</span> java.net.Authenticator
+<span class="keyword">import</span> java.net.PasswordAuthentication
+<span class="keyword">import</span> org.apache.ivy.util.Credentials
+<span class="keyword">import</span> org.apache.ivy.util.Message
+<span class="keyword">import</span> org.apache.ivy.util.url.IvyAuthenticator
+<span class="keyword">import</span> org.apache.ivy.util.url.CredentialsStore
+
+<span class="comment">/**
+ * Helper to install an Authenticator that works with the IvyAuthenticator to provide better error messages when
+ * credentials don't line up.
+ */</span>
+<span class="keyword">object</span> <a title="sbt.ivyint.ErrorMessageAuthenticator.type" id="sbt.ivyint.ErrorMessageAuthenticator">ErrorMessageAuthenticator</a> <a href="#sbt.ivyint.ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator.type" class="delimiter">{</a>
+  <span class="keyword">private</span> <span class="keyword">var</span> <a title="Boolean" id="sbt.ivyint.ErrorMessageAuthenticator.securityWarningLogged_=">securityWarningLogged</a> = <span title="Boolean(false)" class="keyword">false</span>
+  
+  <span class="keyword">private</span> <span class="keyword">def</span> <a title="=&gt; Option[java.net.Authenticator]" id="sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator">originalAuthenticator</a>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span> = <span class="delimiter">{</span>
+    <span class="keyword">try</span> <span class="delimiter">{</span>
+      <span class="keyword">val</span> <a title="java.lang.reflect.Field" id="sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator.f">f</a> = classOf<span title="Class[java.net.Authenticator](classOf[java.net.Authenticator])" class="delimiter">[</span>Authenticator<span class="delimiter">]</span>.<span title="(x$1: String)java.lang.reflect.Field">getDeclaredField</span><span class="delimiter">(</span><span title="String(&quot;theAuthenticator&quot;)" class="string">&quot;theAuthenticator&quot;</span><span class="delimiter">)</span>;
+      <a href="#sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator.f" title="java.lang.reflect.Field">f</a>.<span title="(x$1: Boolean)Unit">setAccessible</span><span class="delimiter">(</span><span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>;
+      <span title="(x: java.net.Authenticator)Option[java.net.Authenticator]">Option</span><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator.f" title="java.lang.reflect.Field">f</a>.<span title="(x$1: Any)Object">get</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="java.net.Authenticator" class="delimiter">[</span><span title="java.net.Authenticator">Authenticator</span><span class="delimiter">]</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span>
+      <span class="comment">// TODO - Catch more specific errors.</span>
+      <span class="keyword">case</span> <a title="Throwable" id="sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator.t">t</a>: <span title="Throwable">Throwable</span> =&gt;
+        <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">debug</span><span class="delimiter">(</span><span title="String(&quot;Error occurred while getting the original authenticator: &quot;)" class="string">&quot;Error occurred while getting the original authenticator: &quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator.t" title="Throwable">t</a>.<span title="()String">getMessage</span><span class="delimiter">)</span>
+        <span title="None.type">None</span>
+    <span class="delimiter">}</span>
+  <span class="delimiter">}</span>
+  
+  <span class="keyword">private</span> <span class="keyword">lazy</span> <span class="keyword">val</span> <a title="java.lang.reflect.Field" id="sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField">ivyOriginalField</a> = <span class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="java.lang.reflect.Field" id="sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField.field">field</a> = classOf<span title="Class[org.apache.ivy.util.url.IvyAuthenticator](classOf[org.apache.ivy.util.url.IvyAuthenticator])" class="delimiter">[</span>IvyAuthenticator<span class="delimiter">]</span>.<span title="(x$1: String)java.lang.reflect.Field">getDeclaredField</span><span class="delimiter">(</span><span title="String(&quot;original&quot;)" class="string">&quot;original&quot;</span><span class="delimiter">)</span>
+    <a href="#sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField.field" title="java.lang.reflect.Field">field</a>.<span title="(x$1: Boolean)Unit">setAccessible</span><span class="delimiter">(</span><span title="Boolean(true)" class="keyword">true</span><span class="delimiter">)</span>
+    <a href="#sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField.field" title="java.lang.reflect.Field">field</a>
+  <span class="delimiter">}</span>
+  <span class="comment">// Attempts to get the original authenticator form the ivy class or returns null.</span>
+  <span class="keyword">private</span> <span class="keyword">def</span> <a title="(ivy: org.apache.ivy.util.url.IvyAuthenticator)Option[java.net.Authenticator]" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy">installIntoIvy</a><span class="delimiter">(</span><a title="org.apache.ivy.util.url.IvyAuthenticator" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.ivy">ivy</a>: <span title="org.apache.ivy.util.url.IvyAuthenticator">IvyAuthenticator</span><span class="delimiter">)</span>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span> = <span class="delimiter">{</span>
+    <span class="comment">// Here we install ourselves as the IvyAuthenticator's default so we get called AFTER Ivy has a chance to run.</span>
+    <span class="keyword">def</span> <a title="(original: Option[java.net.Authenticator])Unit" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl">installIntoIvyImpl</a><span class="delimiter">(</span><a title="Option[java.net.Authenticator]" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl.original">original</a>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <span class="delimiter">{</span>
+      <span class="keyword">val</span> <a title="sbt.ivyint.ErrorMessageAuthenticator" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl.newOriginal">newOriginal</a> = <span title="sbt.ivyint.ErrorMessageAuthenticator" class="keyword">new</span> <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator">ErrorMessageAuthenticator</a><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl.original" title="Option[java.net.Authenticator]">original</a><span class="delimiter">)</span>
+      <a href="#sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField" title="=&gt; java.lang.reflect.Field">ivyOriginalField</a>.<span title="(x$1: Any, x$2: Any)Unit">set</span><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.ivy" title="org.apache.ivy.util.url.IvyAuthenticator">ivy</a>, <a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl.newOriginal" title="sbt.ivyint.ErrorMessageAuthenticator">newOriginal</a><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+    
+    <span class="keyword">try</span> <span title="(x: java.net.Authenticator)Option[java.net.Authenticator]">Option</span><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.ivyOriginalField" title="=&gt; java.lang.reflect.Field">ivyOriginalField</a>.<span title="(x$1: Any)Object">get</span><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.ivy" title="org.apache.ivy.util.url.IvyAuthenticator">ivy</a><span class="delimiter">)</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="java.net.Authenticator" class="delimiter">[</span><span title="java.net.Authenticator">Authenticator</span><span class="delimiter">]</span><span class="delimiter">)</span> <span title="Unit" class="keyword">match</span> <span class="delimiter">{</span>
+      <span class="keyword">case</span> Some<span class="delimiter">(</span><a title="sbt.ivyint.ErrorMessageAuthenticator" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.alreadyThere">alreadyThere</a>: <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator">ErrorMessageAuthenticator</a><span class="delimiter">)</span> =&gt; <span class="comment">// We're already installed, no need to do the work again.</span>
+      <span class="keyword">case</span> <a title="Option[java.net.Authenticator]" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.originalOpt">originalOpt</a> =&gt; <a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.installIntoIvyImpl" title="(original: Option[java.net.Authenticator])Unit">installIntoIvyImpl</a><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.originalOpt" title="Option[java.net.Authenticator]">originalOpt</a><span class="delimiter">)</span>
+    <span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span>
+      <span class="keyword">case</span> <a title="Throwable" id="sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.t">t</a>: <span title="Throwable">Throwable</span> =&gt; 
+        <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">debug</span><span class="delimiter">(</span><span title="String(&quot;Error occurred will trying to install debug messages into Ivy Authentication&quot;)" class="string">&quot;Error occurred will trying to install debug messages into Ivy Authentication&quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.t" title="Throwable">t</a>.<span title="()String">getMessage</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+    <span title="(x: org.apache.ivy.util.url.IvyAuthenticator)Some[org.apache.ivy.util.url.IvyAuthenticator]">Some</span><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy.ivy" title="org.apache.ivy.util.url.IvyAuthenticator">ivy</a><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+  
+  <span class="comment">/** Installs the error message authenticator so we have nicer error messages when using java's URL for downloading. */</span>
+  <span class="keyword">def</span> <a title="()Unit" id="sbt.ivyint.ErrorMessageAuthenticator.install">install</a><span class="delimiter">(</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+    <span class="comment">// Actually installs the error message authenticator.</span>
+    <span class="keyword">def</span> <a title="(original: Option[java.net.Authenticator])Unit" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstall">doInstall</a><span class="delimiter">(</span><a title="Option[java.net.Authenticator]" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstall.original">original</a>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+      <span class="keyword">try</span> <span title="java.net.Authenticator.type">Authenticator</span>.<span title="(x$1: java.net.Authenticator)Unit">setDefault</span><span class="delimiter">(</span><span title="sbt.ivyint.ErrorMessageAuthenticator" class="keyword">new</span> <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator">ErrorMessageAuthenticator</a><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.install.doInstall.original" title="Option[java.net.Authenticator]">original</a><span class="delimiter">)</span><span class="delimiter">)</span>
+      <span class="keyword">catch</span> <span class="delimiter">{</span>
+        <span class="keyword">case</span> <a title="SecurityException" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstall.e">e</a>: <span title="SecurityException">SecurityException</span> <span class="keyword">if</span> <span title="=&gt; Boolean">!</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.securityWarningLogged_=" title="=&gt; Boolean">securityWarningLogged</a> =&gt;
+          <a href="#sbt.ivyint.ErrorMessageAuthenticator.securityWarningLogged_=" title="(x$1: Boolean)Unit">securityWarningLogged</a> = <span title="Boolean(true)" class="keyword">true</span>;
+          <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">warn</span><span class="delimiter">(</span><span class="string">&quot;Not enough permissions to set the ErorrMessageAuthenticator. &quot;</span>
+                     <span title="String(&quot;Not enough permissions to set the ErorrMessageAuthenticator. Helpful debug messages disabled!&quot;)">+</span> <span class="string">&quot;Helpful debug messages disabled!&quot;</span><span class="delimiter">)</span>;
+     <span class="delimiter">}</span>
+     <span class="comment">// We will try to use the original authenticator as backup authenticator.</span>
+     <span class="comment">// Since there is no getter available, so try to use some reflection to</span>
+     <span class="comment">// obtain it. If that doesn't work, assume there is no original authenticator</span>
+     <span class="keyword">def</span> <a title="(original: Option[java.net.Authenticator])Unit" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstallIfIvy">doInstallIfIvy</a><span class="delimiter">(</span><span title="Option[java.net.Authenticator]">original</span>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> =
+       <span title="Option[java.net.Authenticator]">original</span> <span title="Unit" class="keyword">match</span> <span class="delimiter">{</span>
+         <span class="keyword">case</span> Some<span class="delimiter">(</span><a title="sbt.ivyint.ErrorMessageAuthenticator" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstallIfIvy.installed">installed</a>: <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator">ErrorMessageAuthenticator</a><span class="delimiter">)</span> =&gt; <span class="comment">// Ignore, we're already installed</span>
+         <span class="keyword">case</span> Some<span class="delimiter">(</span><a title="org.apache.ivy.util.url.IvyAuthenticator" id="sbt.ivyint.ErrorMessageAuthenticator.install.doInstallIfIvy.ivy">ivy</a>: <span title="org.apache.ivy.util.url.IvyAuthenticator">IvyAuthenticator</span><span class="delimiter">)</span> =&gt; <a href="#sbt.ivyint.ErrorMessageAuthenticator.installIntoIvy" title="(ivy: org.apache.ivy.util.url.IvyAuthenticator)Option[java.net.Authenticator]">installIntoIvy</a><span title="Unit" class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.install.doInstallIfIvy.ivy" title="org.apache.ivy.util.url.IvyAuthenticator">ivy</a><span class="delimiter">)</span>
+         <span class="keyword">case</span> <span title="Option[java.net.Authenticator]">original</span> =&gt; <a href="#sbt.ivyint.ErrorMessageAuthenticator.install.doInstall" title="(original: Option[java.net.Authenticator])Unit">doInstall</a><span class="delimiter">(</span><span title="Option[java.net.Authenticator]">original</span><span class="delimiter">)</span>
+       <span class="delimiter">}</span>
+     <a href="#sbt.ivyint.ErrorMessageAuthenticator.install.doInstallIfIvy" title="(original: Option[java.net.Authenticator])Unit">doInstallIfIvy</a><span class="delimiter">(</span><a href="#sbt.ivyint.ErrorMessageAuthenticator.originalAuthenticator" title="=&gt; Option[java.net.Authenticator]">originalAuthenticator</a><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+<span class="delimiter">}</span>
+<span class="comment">/**
+ * An authenticator which just delegates to a previous authenticator and issues *nice* 
+ * error messages on failure to find credentials. 
+ * 
+ * Since ivy installs its own credentials handler EVERY TIME it resolves or publishes, we want to 
+ * install this one at some point and eventually ivy will capture it and use it.
+ */</span>
+<span title="AnyRef" class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">final</span> <span class="keyword">class</span> <a title="class ErrorMessageAuthenticator extends java.net.Authenticator" id="sbt.ivyint;ErrorMessageAuthenticator">ErrorMessageAuthenticator</a><a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator" class="delimiter">(</a><a title="Option[java.net.Authenticator]" id="sbt.ivyint;ErrorMessageAuthenticator.original">original</a>: <span title="Option[java.net.Authenticator]">Option</span><span class="delimiter">[</span>Authenticator<span class="delimiter">]</span><span class="delimiter">)</span> <span class="keyword">extends</span> <span title="java.net.Authenticator">Authenticator</span> <span class="delimiter">{</span>
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">def</span> <a title="()java.net.PasswordAuthentication" id="sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication">getPasswordAuthentication</a><span class="delimiter">(</span><span class="delimiter">)</span>: <span title="java.net.PasswordAuthentication">PasswordAuthentication</span> = <span class="delimiter">{</span>
+        <span class="comment">// We're guaranteed to only get here if Ivy's authentication fails</span>
+        <span title="Unit" class="keyword">if</span> <span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.isProxyAuthentication" title="=&gt; Boolean">isProxyAuthentication</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+          <span class="keyword">val</span> <a title="String" id="sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.host">host</a> = <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingHost</a>
+          <span class="comment">// TODO - levenshtein distance &quot;did you mean&quot; message.</span>
+          <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">error</span><span class="delimiter">(</span><span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;Unable to find credentials for [&quot;)">Unable to find credentials for [$</span><span class="delimiter">{</span><a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingPrompt</a><span class="delimiter">}</span><span title="String(&quot; @ &quot;)"> @ $</span><span class="delimiter">{</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.host" title="String">host</a><span class="delimiter">}</span><span title="String(&quot;].&quot;)" class="string">].&quot;</span><span class="delimiter">)</span>
+          <span class="keyword">val</span> <a title="Set[String]" id="sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.configuredRealms">configuredRealms</a> = <a href="IvyCredentialsLookup.scala.html#sbt.ivyint.IvyCredentialsLookup" title="sbt.ivyint.IvyCredentialsLookup.type">IvyCredentialsLookup</a>.<a href="IvyCredentialsLookup.scala.html#sbt.ivyint.IvyCredentialsLookup.realmsForHost" title="=&gt; Map[String,Set[String]]">realmsForHost</a>.<span title="(key: String, default: =&gt; Set[String])Set[String]">getOrElse</span><span class="delimiter">(</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.host" title="String">host</a>, <span title="=&gt; scala.collection.immutable.Set.type">Set</span>.<span title="scala.collection.immutable.Set[String]">empty</span><span class="delimiter">)</span>
+          <span title="Unit" class="keyword">if</span><span class="delimiter">(</span><span title="=&gt; Boolean">!</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.configuredRealms" title="Set[String]">configuredRealms</a>.<span title="=&gt; Boolean">isEmpty</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+            <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">error</span><span class="delimiter">(</span><span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;  Is one of these realms mispelled for host [&quot;)">  Is one of these realms mispelled for host [$</span><span class="delimiter">{</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.host" title="String">host</a><span class="delimiter">}</span><span title="String(&quot;]:&quot;)" class="string">]:&quot;</span><span class="delimiter">)</span>
+            <a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.configuredRealms" title="Set[String]">configuredRealms</a> <span title="(f: String =&gt; Unit)Unit">foreach</span> <span class="delimiter">{</span> <a title="String" id="sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.$anonfun.realm">realm</a> =&gt;
+              <span title="org.apache.ivy.util.Message.type">Message</span>.<span title="(x$1: String)Unit">error</span><span class="delimiter">(</span><span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;  * &quot;)">  * $</span><span class="delimiter">{</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.$anonfun.realm" title="String">realm</a><span class="delimiter">}</span><span title="String(&quot;&quot;)" class="string">&quot;</span><span class="delimiter">)</span>
+            <span class="delimiter">}</span>
+          <span class="delimiter">}</span>
+        <span class="delimiter">}</span>
+        <span class="comment">// TODO - Maybe we should work on a helpful proxy message...</span>
+        
+        <span class="comment">// TODO - To be more maven friendly, we may want to also try to grab the &quot;first&quot; authentication that shows up for a server and try it.</span>
+        <span class="comment">//        or maybe allow that behavior to be configured, since maven users aren't used to realms (which they should be).</span>
+        
+        <span class="comment">// Grabs the authentication that would have been provided had we not been installed...</span>
+        <span class="keyword">def</span> <a title="=&gt; Option[java.net.PasswordAuthentication]" id="sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.originalAuthentication">originalAuthentication</a>: <span title="Option[java.net.PasswordAuthentication]">Option</span><span class="delimiter">[</span>PasswordAuthentication<span class="delimiter">]</span> = <span class="delimiter">{</span>
+          <span title="java.net.Authenticator.type">Authenticator</span>.<span title="(x$1: java.net.Authenticator)Unit">setDefault</span><span class="delimiter">(</span><a href="#sbt.ivyint;ErrorMessageAuthenticator.original" title="Option[java.net.Authenticator]">original</a>.<span title="(default: =&gt; java.net.Authenticator)java.net.Authenticator">getOrElse</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span><span class="delimiter">)</span>
+          <span class="keyword">try</span> <span title="(x: java.net.PasswordAuthentication)Option[java.net.PasswordAuthentication]">Option</span><span class="delimiter">(</span><span title="java.net.Authenticator.type">Authenticator</span>.<span title="(x$1: String, x$2: java.net.InetAddress, x$3: Int, x$4: String, x$5: String, x$6: String)java.net.PasswordAuthentication">requestPasswordAuthentication</span><span class="delimiter">(</span>
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingHost</a>,
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()java.net.InetAddress">getRequestingSite</a>, 
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()Int">getRequestingPort</a>, 
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingProtocol</a>,
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingPrompt</a>, 
+              <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()String">getRequestingScheme</a><span class="delimiter">)</span><span class="delimiter">)</span>
+          <span class="keyword">finally</span> <span title="java.net.Authenticator.type">Authenticator</span>.<span title="(x$1: java.net.Authenticator)Unit">setDefault</span><span class="delimiter">(</span><a href="#sbt.ivyint;ErrorMessageAuthenticator" title="sbt.ivyint.ErrorMessageAuthenticator" class="keyword">this</a><span class="delimiter">)</span>
+        <span class="delimiter">}</span>
+        <a href="#sbt.ivyint;ErrorMessageAuthenticator.getPasswordAuthentication.originalAuthentication" title="=&gt; Option[java.net.PasswordAuthentication]">originalAuthentication</a>.<span title="(default: =&gt; java.net.PasswordAuthentication)java.net.PasswordAuthentication">getOrElse</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+
+    <span class="comment">/** Returns true if this authentication if for a proxy and not for an HTTP server.
+     *  We want to display different error messages, depending.
+     */</span>
+    <span class="keyword">private</span> <span class="keyword">def</span> <a title="=&gt; Boolean" id="sbt.ivyint;ErrorMessageAuthenticator.isProxyAuthentication">isProxyAuthentication</a>: <span title="Boolean">Boolean</span> =
+       <a href="#sbt.ivyint;ErrorMessageAuthenticator" title="()java.net.Authenticator.RequestorType">getRequestorType</a> <span title="(x$1: AnyRef)Boolean">==</span> Authenticator.RequestorType.<span title="java.net.Authenticator.RequestorType(PROXY)">PROXY</span>
+
+<span class="delimiter">}</span>
+        </pre>
+    </body>
+</html>

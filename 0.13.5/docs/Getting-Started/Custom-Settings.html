@@ -1,0 +1,206 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Custom Settings and Tasks &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Getting Started" href="index.html" />
+    <link rel="next" title=".scala Build Definition" href="Full-Def.html" />
+    <link rel="prev" title="Using Plugins" href="Using-Plugins.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Custom Settings and Tasks</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Full-Def.html"><span class="pre">.scala</span> Build Definition</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Getting Started</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Using-Plugins.html">Using Plugins</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="custom-settings-and-tasks">
+<h1>Custom Settings and Tasks<a class="headerlink" href="#custom-settings-and-tasks" title="Permalink to this headline">¶</a></h1>
+<p>This page gets you started creating your own settings and tasks.</p>
+<p>To understand this page, be sure you've read earlier pages in the
+Getting Started Guide, especially <a class="reference internal" href="Basic-Def.html"><em>build.sbt</em></a> and <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<div class="section" id="defining-a-key">
+<h2>Defining a key<a class="headerlink" href="#defining-a-key" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="../../sxr/sbt/Keys.scala.html">Keys</a> is
+packed with examples illustrating how to define keys. Most of the keys
+are implemented in
+<a class="reference external" href="../../sxr/sbt/Defaults.scala.html">Defaults</a>.</p>
+<p>Keys have one of three types. <span class="pre">SettingKey</span> and <span class="pre">TaskKey</span> are
+described in <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>. Read
+about <span class="pre">InputKey</span> on the <a class="reference internal" href="../Extending/Input-Tasks.html"><em>Input Tasks</em></a> page.</p>
+<p>Some examples from <a class="reference external" href="../../sxr/sbt/Keys.scala.html">Keys</a>:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">scalaVersion</span> <span class="k">=</span> <span class="n">settingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;The version of Scala used for building.&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">clean</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Unit</span><span class="o">](</span><span class="s">&quot;Deletes files produced by the build, such as generated sources, compiled classes, and task caches.&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The key constructors have two string parameters: the name of the key
+(<span class="pre">&quot;scalaVersion&quot;</span>) and a documentation string
+(<span class="pre">&quot;The version of scala used for building.&quot;</span>).</p>
+<p>Remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a> that
+the type parameter <span class="pre">T</span> in <span class="pre">SettingKey[T]</span> indicates the type of
+value a setting has. <span class="pre">T</span> in <span class="pre">TaskKey[T]</span> indicates the type of the
+task's result. Also remember from <a class="reference internal" href="Basic-Def.html"><em>.sbt build definition</em></a>
+that a setting has a fixed value until project
+reload, while a task is re-computed for every &quot;task execution&quot; (every
+time someone types a command at the sbt interactive prompt or in batch
+mode).</p>
+<p>Keys may be defined in a <a class="reference internal" href="Basic-Def.html"><em>.sbt file</em></a>, <a class="reference internal" href="Full-Def.html"><em>.scala file</em></a>, or in a <a class="reference internal" href="Using-Plugins.html"><em>plugin</em></a>.
+Any <span class="pre">val</span> found in a <span class="pre">Build</span> object in your <span class="pre">.scala</span> build definition files or any
+<span class="pre">val</span> found in a <span class="pre">Plugin</span> object from a plugin will be imported automatically into your <span class="pre">.sbt</span> files.</p>
+</div>
+<div class="section" id="implementing-a-task">
+<h2>Implementing a task<a class="headerlink" href="#implementing-a-task" title="Permalink to this headline">¶</a></h2>
+<p>Once you've defined a key for your task, you'll need to complete it
+with a task definition. You could be defining your own task, or you
+could be planning to redefine an existing task. Either way looks the
+same; use <span class="pre">:=</span> to associate some code with the task key:</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">val</span> <span class="n">sampleStringTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;A sample string task.&quot;</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">sampleIntTask</span> <span class="k">=</span> <span class="n">taskKey</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="s">&quot;A sample int task.&quot;</span><span class="o">)</span>
+
+<span class="n">sampleStringTask</span> <span class="o">:=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.home&quot;</span><span class="o">)</span>
+
+<span class="n">sampleIntTask</span> <span class="o">:=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;sum: &quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="o">)</span>
+  <span class="n">sum</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>If the task has dependencies, you'd reference their value using
+<span class="pre">value</span>, as discussed in <a class="reference internal" href="More-About-Settings.html"><em>more about settings</em></a>.</p>
+<p>The hardest part about implementing tasks is often not sbt-specific;
+tasks are just Scala code. The hard part could be writing the &quot;meat&quot; of
+your task that does whatever you're trying to do. For example, maybe
+you're trying to format HTML in which case you might want to use an HTML
+library (you would <a class="reference internal" href="Using-Plugins.html"><em>add a library dependency to your build definition</em></a>
+and write code based on the HTML library, perhaps).</p>
+<p>sbt has some utility libraries and convenience functions, in particular
+you can often use the convenient APIs in
+<a class="reference external" href="../../api/index.html#sbt.IO$">IO</a> to manipulate files and directories.</p>
+</div>
+<div class="section" id="use-plugins">
+<h2>Use plugins!<a class="headerlink" href="#use-plugins" title="Permalink to this headline">¶</a></h2>
+<p>If you find you have a lot of custom code, consider
+moving it to a plugin for re-use across multiple builds.</p>
+<p>It's very easy to create a plugin, as <a class="reference internal" href="Using-Plugins.html"><em>teased earlier</em></a> and <a class="reference internal" href="../Extending/Plugins.html"><em>discussed at more length here</em></a>.</p>
+</div>
+<div class="section" id="next">
+<h2>Next<a class="headerlink" href="#next" title="Permalink to this headline">¶</a></h2>
+<p>This page has been a quick taste; there's much much more about custom
+tasks on the <a class="reference internal" href="../Detailed-Topics/Tasks.html"><em>Tasks</em></a> page.</p>
+<p>Move on to <a class="reference internal" href="Full-Def.html"><em>.scala Build Definition</em></a>.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Getting-Started/Custom-Settings.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Custom Settings and Tasks</a><ul>
+<li><a class="reference internal" href="#defining-a-key">Defining a key</a></li>
+<li><a class="reference internal" href="#implementing-a-task">Implementing a task</a></li>
+<li><a class="reference internal" href="#use-plugins">Use plugins!</a></li>
+<li><a class="reference internal" href="#next">Next</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

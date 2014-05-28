@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/_internalOnly_NameHash.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.api;
+
+import java.util.Arrays;
+import java.util.List;
+public final class _internalOnly_NameHash implements java.io.Serializable
+{
+	public _internalOnly_NameHash(String name, int hash)
+	{
+		this.name = name;
+		this.hash = hash;
+	}
+	private final String name;
+	private final int hash;
+	public final String name()
+	{
+		return name;
+	}
+	public final int hash()
+	{
+		return hash;
+	}
+	public boolean equals(Object obj)
+	{
+		 if (this == obj) {
+			 return true;
+		} else if (!(obj instanceof _internalOnly_NameHash)) {
+			 return false;
+		} else {
+			_internalOnly_NameHash o = (_internalOnly_NameHash)obj;
+			return name().equals(o.name()) &amp;&amp; hash() == o.hash();
+		}
+	}
+	public int hashCode()
+	{
+		 return 37 * (37 * (17) + name().hashCode()) + hash();
+	}
+	public String toString()
+	{
+		 return &quot;_internalOnly_NameHash(&quot; + &quot;name: &quot; + name() + &quot;, &quot; + &quot;hash: &quot; + hash() + &quot;)&quot;;
+	}
+}
+
+        </pre>
+    </body>
+</html>

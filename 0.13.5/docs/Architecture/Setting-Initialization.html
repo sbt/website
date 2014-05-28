@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting Initialization &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Architecture" href="index.html" />
+    <link rel="next" title="Task Engine" href="Task-Engine.html" />
+    <link rel="prev" title="Core Principles" href="Core-Principles.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Setting Initialization</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Task-Engine.html">Task Engine</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="../Detailed-Topics/index.html">Detailed Topics</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="Core-Principles.html">Core Principles</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="setting-initialization">
+<h1>Setting Initialization<a class="headerlink" href="#setting-initialization" title="Permalink to this headline">¶</a></h1>
+<p>This page outlines the mechanisms by which sbt loads settings for a particular build, including the hooks where
+users can control the ordering of everything.</p>
+<p>As stated elsewhere, sbt constructs its initialization graph and task graph via <tt class="docutils literal"><span class="pre">Setting[_]</span></tt> objects.  A setting
+is something which can take the values stored at other Keys in the build state, and generates a new value for
+a particular build key.  Sbt converts all registered <tt class="docutils literal"><span class="pre">Setting[_]</span></tt> objects into a giant linear sequence and
+<em>compiles</em> them into the a task graph.  This task graph is then used to execute your build.</p>
+<p>All of sbt's loading semantics are contained within the <span class="pre">Load.scala &lt;../../sxr/sbt/Load.scala.html&gt;</span> file.  It is approximately the following:</p>
+<img alt="../_images/settings-initialization-load-ordering.png" src="../_images/settings-initialization-load-ordering.png" />
+<p>The blue circles represent actions happening when sbt loads a project.  We can see that sbt performs the following actions in load:</p>
+<ol class="arabic simple">
+<li>Compile the user-level project (<tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/</span></tt>)
+a. Load any plugins defined by this project  (<tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/plugins/*.sbt</span></tt> and <tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/plugins/project/*.scala</span></tt>)
+b. Load all settings defined (<tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/*.sbt</span></tt> and <tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/plugins/*.scala</span></tt>)</li>
+<li>Compile the current project (<tt class="docutils literal"><span class="pre">&lt;working-directory/project</span></tt>)
+a. Load all defined plugins (<tt class="docutils literal"><span class="pre">project/plugins.sbt</span></tt> and <tt class="docutils literal"><span class="pre">project/project/*.scala</span></tt>)
+b. Load/Compile the project (<tt class="docutils literal"><span class="pre">project/*.scala</span></tt>)</li>
+<li>Load project <a href="#id1"><span class="problematic" id="id2">*</span></a>.sbt files (<tt class="docutils literal"><span class="pre">build.sbt</span></tt> and friends).</li>
+</ol>
+<p>Each of these loads defines several sequences of settings.  The diagram shows the two most important:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">buildSettings</span></tt> - These are settings defined to be <tt class="docutils literal"><span class="pre">in</span> <span class="pre">ThisBuild</span></tt> or directly against the <tt class="docutils literal"><span class="pre">Build</span></tt> object.   They are initialized <em>once</em> for the build.
+You can add these, e.g. in <tt class="docutils literal"><span class="pre">project/build.scala</span></tt></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">foo</span> <span class="o">:=</span> <span class="s">&quot;hi&quot;</span><span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>or in a <tt class="docutils literal"><span class="pre">build.sbt</span></tt> file</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">foo</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="s">&quot;hi&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">projectSettings</span></tt> - These are settings specific to a project.  They are specific to a <em>particular sub project</em> in the build.  A
+plugin may be contributing its settings to more than on project, in which case the values are duplicated for each project.
+You add project specific settings, eg. in <tt class="docutils literal"><span class="pre">project/build.scala</span></tt></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">test</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)).</span><span class="n">settings</span><span class="o">(...)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>After loading/compiling all the build definitions, sbt has a series of Seq[Setting[_]] that it must order.  As shown in the diagram,
+the default inclusion order for sbt is:</p>
+<ol class="arabic simple">
+<li>All AutoPlugin settings</li>
+<li>All settings defined in <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt></li>
+<li>All settings defined in the user directory (<tt class="docutils literal"><span class="pre">~/.sbt/&lt;verison&gt;/*.sbt</span></tt>)</li>
+<li>All local configurations (<tt class="docutils literal"><span class="pre">build.sbt</span></tt>)</li>
+</ol>
+<div class="section" id="controlling-initialization">
+<h2>Controlling Initialization<a class="headerlink" href="#controlling-initialization" title="Permalink to this headline">¶</a></h2>
+<p>The order which sbt uses to load settings is configurable at a <em>project</em> level.   This means that we can't control
+the order of settings added to Build/Global namespace, but we can control how each project loads, e.g. plugins and <tt class="docutils literal"><span class="pre">.sbt</span></tt> files.
+To do so, use the <tt class="docutils literal"><span class="pre">AddSettings</span></tt> class</p>
+<div class="highlight-scala"><div class="highlight"><pre>    <span class="k">import</span> <span class="nn">sbt._</span>
+    <span class="k">import</span> <span class="nn">Keys._</span>
+
+    <span class="k">import</span> <span class="nn">AddSettings._</span>
+
+<span class="k">object</span> <span class="nc">MyOwnOrder</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+      <span class="c1">// here we load config from a txt file.</span>
+      <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)).</span><span class="n">settingSets</span><span class="o">(</span> <span class="n">autoPlugins</span><span class="o">,</span> <span class="n">buildScalaFiles</span><span class="o">,</span> <span class="n">sbtFiles</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;silly.txt&quot;</span><span class="o">))</span> <span class="o">)</span>
+    <span class="o">}</span>
+</pre></div>
+</div>
+<p>In the above project, we've modified the order of settings to be:</p>
+<ol class="arabic simple">
+<li>All AutoPlugin settings.</li>
+<li>All settings defined in the <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> file (shown above).</li>
+<li>All settings found in the <tt class="docutils literal"><span class="pre">silly.txt</span></tt> file.</li>
+</ol>
+<p>What we've excluded:</p>
+<ul class="simple">
+<li>All settings from the user directory (<tt class="docutils literal"><span class="pre">~/.sbt/&lt;verison&gt;</span></tt>)</li>
+<li>All <tt class="docutils literal"><span class="pre">*.sbt</span></tt> settings.</li>
+</ul>
+<p>The AddSettings object provides the following &quot;groups&quot; of settings you can use for ordering:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">autoPlugins</span></tt></dt>
+<dd>All the ordered settings of plugins after they've gone through dependency resolution</dd>
+<dt><tt class="docutils literal"><span class="pre">buildScalaFiles</span></tt></dt>
+<dd>The full sequence of settings defined directly in <tt class="docutils literal"><span class="pre">project/*.scala</span></tt> builds.</dd>
+<dt><tt class="docutils literal"><span class="pre">sbtFiles(*)</span></tt></dt>
+<dd>Specifies the exact setting DSL files to include (files must use the <tt class="docutils literal"><span class="pre">.sbt</span></tt> file format)</dd>
+<dt><tt class="docutils literal"><span class="pre">userSettings</span></tt></dt>
+<dd>All the settings defined in the user directory <tt class="docutils literal"><span class="pre">~/.sbt/&lt;version&gt;/</span></tt>.</dd>
+<dt><tt class="docutils literal"><span class="pre">defaultSbtFiles</span></tt></dt>
+<dd>Include all local <tt class="docutils literal"><span class="pre">*.sbt</span></tt> file settings.</dd>
+</dl>
+<p><em>Note: Be very careful when reordering settings.  It's easy to accidentally remove core functionality.</em></p>
+<p>For example, let's see what happens if we move the <tt class="docutils literal"><span class="pre">build.sbt</span></tt> files <em>before</em> the <tt class="docutils literal"><span class="pre">buildScalaFile</span></tt>.</p>
+<p>Let's create an example project the following defintiion:</p>
+<p><span class="pre">project/build.scala</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="k">object</span> <span class="nc">MyTestBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+
+  <span class="k">val</span> <span class="n">testProject</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span><span class="n">in</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">)).</span><span class="n">settingSets</span><span class="o">(</span><span class="n">autoPlugins</span><span class="o">,</span> <span class="n">defaultSbtFiles</span><span class="o">,</span> <span class="n">buildScalaFile</span><span class="o">).</span><span class="n">settings</span><span class="o">(</span>
+    <span class="n">version</span> <span class="o">:=</span> <span class="n">scalaBinaryVersion</span><span class="o">.</span><span class="n">value</span> <span class="k">match</span> <span class="o">{</span>
+      <span class="k">case</span> <span class="s">&quot;2.10&quot;</span> <span class="k">=&gt;</span> <span class="s">&quot;1.0-SNAPSHOT&quot;</span>
+      <span class="k">case</span> <span class="n">v</span> <span class="k">=&gt;</span> <span class="s">&quot;1.0-for-${v}-SNAPSHOT&quot;</span>
+    <span class="o">}</span>
+  <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>This build defines a version string which appends the scala version if the current scala version is not the in the <tt class="docutils literal"><span class="pre">2.10.x</span></tt> series.
+Now, when issuing a release we want to lock down the version.  Most tools assume this can happen by writing a <tt class="docutils literal"><span class="pre">version.sbt</span></tt> file:</p>
+<p><span class="pre">version.sbt</span></p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0.0&quot;</span>
+</pre></div>
+</div>
+<p>However, when we load this new build, we find that the <tt class="docutils literal"><span class="pre">version</span></tt> in <tt class="docutils literal"><span class="pre">version.sbt</span></tt> has been <strong>overriden</strong> by the one defined
+in <tt class="docutils literal"><span class="pre">project/Build.scala</span></tt> because of the order we defined for settings, so the new <tt class="docutils literal"><span class="pre">version.sbt</span></tt> file has no effect.</p>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Architecture/Setting-Initialization.rst">Source for this page</a></p>
+</p>
+</div>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Setting Initialization</a><ul>
+<li><a class="reference internal" href="#controlling-initialization">Controlling Initialization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>

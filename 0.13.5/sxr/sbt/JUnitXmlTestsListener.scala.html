@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/JUnitXmlTestsListener.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> java.io.<span class="delimiter">{</span>StringWriter, PrintWriter, File<span class="delimiter">}</span>
+<span class="keyword">import</span> java.net.InetAddress
+<span class="keyword">import</span> scala.collection.mutable.ListBuffer
+<span class="keyword">import</span> scala.util.DynamicVariable
+<span class="keyword">import</span> scala.xml.<span class="delimiter">{</span>Elem, Node=&gt;XNode, XML<span class="delimiter">}</span>
+<span class="keyword">import</span> testing.<span class="delimiter">{</span>Event =&gt; TEvent, Status =&gt; TStatus, OptionalThrowable, TestSelector<span class="delimiter">}</span>
+
+<span class="comment">/**
+ * A tests listener that outputs the results it receives in junit xml
+ * report format.
+ * @param outputDir path to the dir in which a folder with results is generated
+ */</span>
+<span class="keyword">class</span> <a title="class JUnitXmlTestsListener extends AnyRef with sbt.TestsListener" id="sbt;JUnitXmlTestsListener">JUnitXmlTestsListener</a><a href="#sbt;JUnitXmlTestsListener" title="sbt.JUnitXmlTestsListener" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="sbt;JUnitXmlTestsListener.outputDir">outputDir</a>:<span title="String">String</span><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="TestReportListener.scala.html#sbt;TestsListener" title="sbt.TestsListener">TestsListener</a>
+<span class="delimiter">{</span>
+		<span class="comment">/**Current hostname so we know which machine executed the tests*/</span>
+    <span class="keyword">val</span> <a title="String" id="sbt;JUnitXmlTestsListener.hostname">hostname</a> = <span title="java.net.InetAddress.type">InetAddress</span>.<span title="()java.net.InetAddress">getLocalHost</span>.<span title="()String">getHostName</span>
+    <span class="comment">/**The dir in which we put all result files. Is equal to the given dir + &quot;/test-reports&quot;*/</span>
+    <span class="keyword">val</span> <a title="java.io.File" id="sbt;JUnitXmlTestsListener.targetDir">targetDir</a> = <span title="java.io.File" class="keyword">new</span> <span title="java.io.File">File</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.outputDir" title="=&gt; String">outputDir</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;/test-reports/&quot;)" class="string">&quot;/test-reports/&quot;</span><span class="delimiter">)</span>
+
+    <span class="comment">/**all system properties as XML*/</span>
+    <span class="keyword">val</span> <a title="scala.xml.Elem" id="sbt;JUnitXmlTestsListener.properties">properties</a> =
+        <span class="delimiter">&lt;properties&gt; {</span>
+            <span class="keyword">val</span> <a title="java.util.Iterator[java.util.Map.Entry[Object,Object]]" id="sbt;JUnitXmlTestsListener.properties.iter">iter</a> = <span title="System.type">System</span>.<span title="()java.util.Properties">getProperties</span>.<span title="()java.util.Set[java.util.Map.Entry[Object,Object]]">entrySet</span>.<span title="()java.util.Iterator[java.util.Map.Entry[Object,Object]]">iterator</span>
+            <span class="keyword">val</span> <a title="scala.collection.mutable.ListBuffer[scala.xml.Node]" id="sbt;JUnitXmlTestsListener.properties.props">props</a>:<span title="scala.collection.mutable.ListBuffer[scala.xml.Node]">ListBuffer</span><span class="delimiter">[</span>XNode<span class="delimiter">]</span> = <span title="scala.collection.mutable.ListBuffer[scala.xml.Node]" class="keyword">new</span> <span title="scala.collection.mutable.ListBuffer[scala.xml.Node]">ListBuffer</span><span class="delimiter">(</span><span class="delimiter">)</span>
+            <span title="Unit" class="keyword">while</span> <span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.properties.iter" title="java.util.Iterator[java.util.Map.Entry[Object,Object]]">iter</a>.<span title="()Boolean">hasNext</span><span class="delimiter">)</span> <a href="#sbt;JUnitXmlTestsListener.properties.while$1" title="()Unit" class="delimiter">{</a>
+                <span class="keyword">val</span> <a title="java.util.Map.Entry[Object,Object]" id="sbt;JUnitXmlTestsListener.properties.next">next</a> = <a href="#sbt;JUnitXmlTestsListener.properties.iter" title="java.util.Iterator[java.util.Map.Entry[Object,Object]]">iter</a>.<span title="()java.util.Map.Entry[Object,Object]">next</span>
+                <a href="#sbt;JUnitXmlTestsListener.properties.props" title="scala.collection.mutable.ListBuffer[scala.xml.Node]">props</a> <span title="(x: scala.xml.Node)props.type">+=</span> <span class="delimiter">&lt;property name={</span><a href="#sbt;JUnitXmlTestsListener.properties.next" title="java.util.Map.Entry[Object,Object]">next</a>.<span title="()Object">getKey</span>.<span title="()String">toString</span><span class="delimiter">} value={</span><a href="#sbt;JUnitXmlTestsListener.properties.next" title="java.util.Map.Entry[Object,Object]">next</a>.<span title="()Object">getValue</span>.<span title="()String">toString</span>} /&gt;
+            <span class="delimiter">}</span>
+            <a href="#sbt;JUnitXmlTestsListener.properties.props" title="scala.collection.mutable.ListBuffer[scala.xml.Node]">props</a>
+        }
+        &lt;/properties&gt;
+
+    <span class="comment">/** Gathers data for one Test Suite. We map test groups to TestSuites.
+     * Each TestSuite gets its own output file.
+     */</span>
+    <span class="keyword">class</span> <a title="class TestSuite extends AnyRef" id="sbt;JUnitXmlTestsListener;TestSuite">TestSuite</a><a href="#sbt;JUnitXmlTestsListener;TestSuite" title="JUnitXmlTestsListener.this.TestSuite" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="sbt;JUnitXmlTestsListener;TestSuite.name">name</a>:<span title="String">String</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+        <span class="keyword">val</span> <a title="scala.collection.mutable.ListBuffer[sbt.testing.Event]" id="sbt;JUnitXmlTestsListener;TestSuite.events">events</a>:<span title="scala.collection.mutable.ListBuffer[sbt.testing.Event]">ListBuffer</span><span class="delimiter">[</span>TEvent<span class="delimiter">]</span> = <span title="scala.collection.mutable.ListBuffer[sbt.testing.Event]" class="keyword">new</span> <span title="scala.collection.mutable.ListBuffer[sbt.testing.Event]">ListBuffer</span><span class="delimiter">(</span><span class="delimiter">)</span>
+
+        <span class="comment">/**Adds one test result to this suite.*/</span>
+        <span class="keyword">def</span> <a title="(e: sbt.testing.Event)scala.collection.mutable.ListBuffer[sbt.testing.Event]" id="sbt;JUnitXmlTestsListener;TestSuite.addEvent">addEvent</a><span class="delimiter">(</span><a title="sbt.testing.Event" id="sbt;JUnitXmlTestsListener;TestSuite.addEvent.e">e</a>:<span title="sbt.testing.Event">TEvent</span><span class="delimiter">)</span> = <a href="#sbt;JUnitXmlTestsListener;TestSuite.events" title="=&gt; scala.collection.mutable.ListBuffer[sbt.testing.Event]">events</a> <span title="(x: sbt.testing.Event)TestSuite.this.events.type">+=</span> <a href="#sbt;JUnitXmlTestsListener;TestSuite.addEvent.e" title="sbt.testing.Event">e</a>
+
+        <span class="comment">/** Returns the number of tests of each state for the specified. */</span>
+        <span class="keyword">def</span> <a title="(status: sbt.testing.Status)Int" id="sbt;JUnitXmlTestsListener;TestSuite.count">count</a><span class="delimiter">(</span><a title="sbt.testing.Status" id="sbt;JUnitXmlTestsListener;TestSuite.count.status">status</a>: <span title="sbt.testing.Status">TStatus</span><span class="delimiter">)</span> = <a href="#sbt;JUnitXmlTestsListener;TestSuite.events" title="=&gt; scala.collection.mutable.ListBuffer[sbt.testing.Event]">events</a>.<span title="(p: sbt.testing.Event =&gt; Boolean)Int">count</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.count.$anonfun.x$1" title="sbt.testing.Event">_</a>.<span title="()sbt.testing.Status">status</span> <span title="(x$1: AnyRef)Boolean">==</span> <a href="#sbt;JUnitXmlTestsListener;TestSuite.count.status" title="sbt.testing.Status">status</a><span class="delimiter">)</span>
+
+        <span class="comment">/** Stops the time measuring and emits the XML for
+         * All tests collected so far.
+         */</span>
+        <span class="keyword">def</span> <a title="()scala.xml.Elem" id="sbt;JUnitXmlTestsListener;TestSuite.stop">stop</a><span class="delimiter">(</span><span class="delimiter">)</span>:<span title="scala.xml.Elem">Elem</span> = <span class="delimiter">{</span>
+            <span class="keyword">val</span> <a title="Long" id="sbt;JUnitXmlTestsListener;TestSuite.stop.duration">duration</a>  = <a href="#sbt;JUnitXmlTestsListener;TestSuite.events" title="=&gt; scala.collection.mutable.ListBuffer[sbt.testing.Event]">events</a>.<span title="(f: sbt.testing.Event =&gt; Long)(implicit bf: scala.collection.generic.CanBuildFrom[scala.collection.mutable.ListBuffer[sbt.testing.Event],Long,scala.collection.mutable.ListBuffer[Long]])scala.collection.mutable.ListBuffer[Long]">map</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.mutable.ListBuffer.Coll,Long,scala.collection.mutable.ListBuffer[Long]]" class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.duration.$anonfun.x$2" title="sbt.testing.Event">_</a>.<span title="()Long">duration</span><span class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">)</span>.<span title="(implicit num: Numeric[Long])Long">sum</span>
+
+            <span class="keyword">val</span> <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.errors" title="(Int, Int, Int)" class="delimiter">(</a><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.x$3" title="Int" id="sbt;JUnitXmlTestsListener;TestSuite.stop.errors">errors</a>, <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.x$3" title="Int" id="sbt;JUnitXmlTestsListener;TestSuite.stop.failures">failures</a>, <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.x$3" title="Int" id="sbt;JUnitXmlTestsListener;TestSuite.stop.tests">tests</a><span class="delimiter">)</span> = <span title="(_1: Int, _2: Int, _3: Int)(Int, Int, Int)" class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.count" title="(status: sbt.testing.Status)Int">count</a><span class="delimiter">(</span>TStatus.<span title="sbt.testing.Status(Error)">Error</span><span class="delimiter">)</span>, <a href="#sbt;JUnitXmlTestsListener;TestSuite.count" title="(status: sbt.testing.Status)Int">count</a><span class="delimiter">(</span>TStatus.<span title="sbt.testing.Status(Failure)">Failure</span><span class="delimiter">)</span>, <a href="#sbt;JUnitXmlTestsListener;TestSuite.events" title="=&gt; scala.collection.mutable.ListBuffer[sbt.testing.Event]">events</a>.<span title="=&gt; Int">size</span><span class="delimiter">)</span>
+
+            <span class="keyword">val</span> <a title="scala.xml.Elem" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result">result</a> = <span class="delimiter">&lt;testsuite hostname={</span><a href="#sbt;JUnitXmlTestsListener.hostname" title="=&gt; String">hostname</a><span class="delimiter">} name={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.name" title="=&gt; String">name</a><span class="delimiter">}
+                           tests={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.tests" title="Int">tests</a> <span title="(x: String)String">+</span> <span title="String(&quot;&quot;)" class="string">&quot;&quot;</span><span class="delimiter">} errors={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.errors" title="Int">errors</a> <span title="(x: String)String">+</span> <span title="String(&quot;&quot;)" class="string">&quot;&quot;</span><span class="delimiter">} failures={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.failures" title="Int">failures</a> <span title="(x: String)String">+</span> <span title="String(&quot;&quot;)" class="string">&quot;&quot;</span><span class="delimiter">}
+                           time={</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.duration" title="Long">duration</a><span title="(x: Double)Double">/</span><span title="Double(1000.0)" class="double">1000.0</span><span class="delimiter">)</span>.<span title="()String">toString</span><span class="delimiter">} &gt;
+                {</span><a href="#sbt;JUnitXmlTestsListener.properties" title="=&gt; scala.xml.Elem">properties</a><span class="delimiter">}
+                {</span>
+                    <span class="keyword">for</span> <span class="delimiter">(</span><a title="sbt.testing.Event" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e">e</a> &lt;- <a href="#sbt;JUnitXmlTestsListener;TestSuite.events" title="(f: sbt.testing.Event =&gt; scala.xml.Elem)(implicit bf: scala.collection.generic.CanBuildFrom[scala.collection.mutable.ListBuffer[sbt.testing.Event],scala.xml.Elem,Any])Any">events</a><span class="delimiter">)</span> <span class="keyword">yield</span>
+                    <span class="delimiter">&lt;testcase classname={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.name" title="=&gt; String">name</a><span class="delimiter">}
+                              name={</span>
+                                <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.Selector">selector</span> <span title="String" class="keyword">match</span> <span class="delimiter">{</span>
+                                  <span class="keyword">case</span> <a title="sbt.testing.TestSelector" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.selector">selector</a>: <span title="sbt.testing.TestSelector">TestSelector</span> =&gt; <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.selector" title="sbt.testing.TestSelector">selector</a>.<span title="implicit scala.Predef.augmentString : (x: String)scala.collection.immutable.StringOps">testName</span>.<span title="(separator: Char)Array[String]">split</span><span title="(xs: Array[String])scala.collection.mutable.ArrayOps[String]" class="delimiter">(</span><span title="Char('.')" class="char">'.'</span><span class="delimiter">)</span>.<span title="=&gt; String">last</span>
+                                  <span class="keyword">case</span> _ =&gt; <span title="String(&quot;(It is not a test)&quot;)" class="string">&quot;(It is not a test)&quot;</span>
+                                <span class="delimiter">}</span>
+                              <span class="delimiter">}
+                              time={</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()Long">duration</span><span class="delimiter">(</span><span class="delimiter">)</span> <span title="(x: Double)Double">/</span> <span title="Double(1000.0)" class="double">1000.0</span><span class="delimiter">)</span>.<span title="()String">toString</span><span class="delimiter">}&gt; {</span>
+                        <span class="keyword">var</span> <a title="String" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace">trace</a>:<span title="String">String</span> = <span title="String" class="keyword">if</span> <span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Boolean">isDefined</span><span class="delimiter">)</span> <span class="delimiter">{</span>
+                            <span class="keyword">val</span> <a title="java.io.StringWriter" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.stringWriter">stringWriter</a> = <span title="java.io.StringWriter" class="keyword">new</span> <span title="java.io.StringWriter">StringWriter</span><span class="delimiter">(</span><span class="delimiter">)</span>
+                            <span class="keyword">val</span> <a title="java.io.PrintWriter" id="sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.writer">writer</a> = <span title="java.io.PrintWriter" class="keyword">new</span> <span title="java.io.PrintWriter">PrintWriter</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.stringWriter" title="java.io.StringWriter">stringWriter</a><span class="delimiter">)</span>
+                            <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Throwable">get</span>.<span title="(x$1: java.io.PrintWriter)Unit">printStackTrace</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.writer" title="java.io.PrintWriter">writer</a><span class="delimiter">)</span>
+                            <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.writer" title="java.io.PrintWriter">writer</a>.<span title="()Unit">flush</span><span class="delimiter">(</span><span class="delimiter">)</span>
+                            <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace.stringWriter" title="java.io.StringWriter">stringWriter</a>.<span title="()String">toString</span>
+                        <span class="delimiter">}</span>
+                        <span class="keyword">else</span> <span class="delimiter">{</span>
+                            <span title="String(&quot;&quot;)" class="string">&quot;&quot;</span>
+                        <span class="delimiter">}</span>
+                        <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.Status">status</span> <span title="Any" class="keyword">match</span> <span class="delimiter">{</span>
+                            <span class="keyword">case</span> TStatus.<span title="sbt.testing.Status(Error)">Error</span>   <span class="keyword">if</span> <span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Boolean">isDefined</span><span class="delimiter">)</span> =&gt; <span class="delimiter">&lt;error message={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Throwable">get</span>.<span title="()String">getMessage</span><span class="delimiter">} type={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Throwable">get</span>.<span title="()Class[_]">getClass</span>.<span title="()String">getName</span><span class="delimiter">}&gt;{</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace" title="String">trace</a>}&lt;/error&gt;
+                            <span class="keyword">case</span> TStatus.<span title="sbt.testing.Status(Error)">Error</span>                              =&gt; <span class="delimiter">&lt;error message={</span><span title="String(&quot;No Exception or message provided&quot;)" class="string">&quot;No Exception or message provided&quot;</span>} /&gt;
+                            <span class="keyword">case</span> TStatus.<span title="sbt.testing.Status(Failure)">Failure</span> <span class="keyword">if</span> <span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Boolean">isDefined</span><span class="delimiter">)</span> =&gt; <span class="delimiter">&lt;failure message={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Throwable">get</span>.<span title="()String">getMessage</span><span class="delimiter">} type={</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.e" title="sbt.testing.Event">e</a>.<span title="()sbt.testing.OptionalThrowable">throwable</span>.<span title="()Throwable">get</span>.<span title="()Class[_]">getClass</span>.<span title="()String">getName</span><span class="delimiter">}&gt;{</span><a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result.$anonfun.trace" title="String">trace</a>}&lt;/failure&gt;
+                            <span class="keyword">case</span> TStatus.<span title="sbt.testing.Status(Failure)">Failure</span>                            =&gt; <span class="delimiter">&lt;failure message={</span><span title="String(&quot;No Exception or message provided&quot;)" class="string">&quot;No Exception or message provided&quot;</span>} /&gt;
+                            <span class="keyword">case</span> TStatus.<span title="sbt.testing.Status(Skipped)">Skipped</span>                            =&gt; &lt;skipped /&gt;
+                            <span class="keyword">case</span> _               =&gt; <span title="Unit" class="delimiter">{</span><span class="delimiter">}</span>
+                            <span class="delimiter">}</span>
+                    }
+                    &lt;/testcase&gt;
+
+                }
+                &lt;system-out&gt;&lt;![CDATA[]]&gt;&lt;/system-out&gt;
+                &lt;system-err&gt;&lt;![CDATA[]]&gt;&lt;/system-err&gt;
+                &lt;/testsuite&gt;
+
+            <a href="#sbt;JUnitXmlTestsListener;TestSuite.stop.result" title="scala.xml.Elem">result</a>
+        <span class="delimiter">}</span>
+    <span class="delimiter">}</span>
+
+    <span class="comment">/**The currently running test suite*/</span>
+    <span class="keyword">var</span> <a title="scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]" id="sbt;JUnitXmlTestsListener.testSuite_=">testSuite</a> = <span title="scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]" class="keyword">new</span> <span title="scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">DynamicVariable</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span>: <a href="#sbt;JUnitXmlTestsListener;TestSuite" title="JUnitXmlTestsListener.this.TestSuite">TestSuite</a><span class="delimiter">)</span>
+
+    <span class="comment">/**Creates the output Dir*/</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="()Unit" id="sbt;JUnitXmlTestsListener.doInit">doInit</a><span class="delimiter">(</span><span class="delimiter">)</span> = <span class="delimiter">{</span><a href="#sbt;JUnitXmlTestsListener.targetDir" title="=&gt; java.io.File">targetDir</a>.<span title="()Boolean">mkdirs</span><span title="Unit" class="delimiter">(</span><span class="delimiter">)</span><span class="delimiter">}</span>
+
+    <span class="comment">/** Starts a new, initially empty Suite with the given name.
+     */</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(name: String)Unit" id="sbt;JUnitXmlTestsListener.startGroup">startGroup</a><span class="delimiter">(</span><a title="String" id="sbt;JUnitXmlTestsListener.startGroup.name">name</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="delimiter">{</span><a href="#sbt;JUnitXmlTestsListener.testSuite_=" title="=&gt; scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">testSuite</a>.<span title="(newval: JUnitXmlTestsListener.this.TestSuite)Unit">value_=</span><span class="delimiter">(</span><span title="JUnitXmlTestsListener.this.TestSuite" class="keyword">new</span> <a href="#sbt;JUnitXmlTestsListener;TestSuite" title="JUnitXmlTestsListener.this.TestSuite">TestSuite</a><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.startGroup.name" title="String">name</a><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">}</span>
+
+    <span class="comment">/** Adds all details for the given even to the current suite.
+     */</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(event: sbt.TestEvent)Unit" id="sbt;JUnitXmlTestsListener.testEvent">testEvent</a><span class="delimiter">(</span><a title="sbt.TestEvent" id="sbt;JUnitXmlTestsListener.testEvent.event">event</a>: <a href="TestReportListener.scala.html#sbt;TestEvent" title="sbt.TestEvent">TestEvent</a><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <span class="keyword">for</span> <span class="delimiter">(</span><a title="sbt.testing.Event" id="sbt;JUnitXmlTestsListener.testEvent.$anonfun.e">e</a> &lt;- <a href="#sbt;JUnitXmlTestsListener.testEvent.event" title="sbt.TestEvent">event</a>.<a href="TestReportListener.scala.html#sbt;TestEvent.detail" title="(f: sbt.testing.Event =&gt; scala.collection.mutable.ListBuffer[sbt.testing.Event])Unit">detail</a><span class="delimiter">)</span> <span class="delimiter">{</span><a href="#sbt;JUnitXmlTestsListener.testSuite_=" title="=&gt; scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">testSuite</a>.<span title="=&gt; JUnitXmlTestsListener.this.TestSuite">value</span>.<a href="#sbt;JUnitXmlTestsListener;TestSuite.addEvent" title="(e: sbt.testing.Event)scala.collection.mutable.ListBuffer[sbt.testing.Event]">addEvent</a><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.testEvent.$anonfun.e" title="sbt.testing.Event">e</a><span class="delimiter">)</span><span class="delimiter">}</span>
+
+    <span class="comment">/** called for each class or equivalent grouping
+     *  We map one group to one Testsuite, so for each Group
+     *  we create an XML like this:
+     *  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+     *  &lt;testsuite errors=&quot;x&quot; failures=&quot;y&quot; tests=&quot;z&quot; hostname=&quot;example.com&quot; name=&quot;eu.henkelmann.bla.SomeTest&quot; time=&quot;0.23&quot;&gt;
+     *       &lt;properties&gt;
+     *           &lt;property name=&quot;os.name&quot; value=&quot;Linux&quot; /&gt;
+     *           ...
+     *       &lt;/properties&gt;
+     *       &lt;testcase classname=&quot;eu.henkelmann.bla.SomeTest&quot; name=&quot;testFooWorks&quot; time=&quot;0.0&quot; &gt;
+     *           &lt;error message=&quot;the foo did not work&quot; type=&quot;java.lang.NullPointerException&quot;&gt;... stack ...&lt;/error&gt;
+     *       &lt;/testcase&gt;
+     *       &lt;testcase classname=&quot;eu.henkelmann.bla.SomeTest&quot; name=&quot;testBarThrowsException&quot; time=&quot;0.0&quot; /&gt;
+     *       &lt;testcase classname=&quot;eu.henkelmann.bla.SomeTest&quot; name=&quot;testBaz&quot; time=&quot;0.0&quot;&gt;
+     *           &lt;failure message=&quot;the baz was no bar&quot; type=&quot;junit.framework.AssertionFailedError&quot;&gt;...stack...&lt;/failure&gt;
+     *        &lt;/testcase&gt;
+     *       &lt;system-out&gt;&lt;![CDATA[]]&gt;&lt;/system-out&gt;
+     *       &lt;system-err&gt;&lt;![CDATA[]]&gt;&lt;/system-err&gt;
+     *  &lt;/testsuite&gt;
+     */</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(name: String, t: Throwable)Unit" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753)">endGroup</a><span class="delimiter">(</span><a title="String" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).name">name</a>: <span title="String">String</span>, <a title="Throwable" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).t">t</a>: <span title="Throwable">Throwable</span><span class="delimiter">)</span> = <span class="delimiter">{</span>
+        <span class="comment">// create our own event to record the error</span>
+        <span class="keyword">val</span> <a title="event extends Object with sbt.testing.Event" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event">event</a> = <a href="#sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon" title="sbt.testing.Event" class="keyword">new</a> <a title="anonymous class $anon extends Object with sbt.testing.Event" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon">TEvent</a> <span class="delimiter">{</span>
+            <span class="keyword">def</span> <a title="()String" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.fullyQualifiedName">fullyQualifiedName</a>= <a href="#sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).name" title="String">name</a>
+            <span class="comment">//def description =</span>
+              <span class="comment">//&quot;Throwable escaped the test run of '%s'&quot;.format(name)</span>
+              <span class="keyword">def</span> <a title="()Long" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.duration">duration</a> = -<span title="Long(-1L)" class="int">1</span>
+            <span class="keyword">def</span> <a title="()sbt.testing.Status" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.status">status</a>  = TStatus.<span title="sbt.testing.Status(Error)">Error</span>
+            <span class="keyword">def</span> <a title="()Null" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.fingerprint">fingerprint</a> = <span title="Null(null)" class="keyword">null</span>
+            <span class="keyword">def</span> <a title="()Null" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.selector">selector</a> = <span title="Null(null)" class="keyword">null</span>
+            <span class="keyword">def</span> <a title="()sbt.testing.OptionalThrowable" id="sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event;$anon.throwable">throwable</a> = <span title="sbt.testing.OptionalThrowable" class="keyword">new</span> <span title="sbt.testing.OptionalThrowable">OptionalThrowable</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).t" title="Throwable">t</a><span class="delimiter">)</span>
+        <span class="delimiter">}</span>
+        <a href="#sbt;JUnitXmlTestsListener.testSuite_=" title="=&gt; scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">testSuite</a>.<span title="=&gt; JUnitXmlTestsListener.this.TestSuite">value</span>.<a href="#sbt;JUnitXmlTestsListener;TestSuite.addEvent" title="(e: sbt.testing.Event)scala.collection.mutable.ListBuffer[sbt.testing.Event]">addEvent</a><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.endGroup(a4ee6c6753).event" title="event extends Object with sbt.testing.Event">event</a><span class="delimiter">)</span>
+        <a href="#sbt;JUnitXmlTestsListener.writeSuite" title="()Unit">writeSuite</a><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+
+    <span class="comment">/** Ends the current suite, wraps up the result and writes it to an XML file
+     *  in the output folder that is named after the suite.
+     */</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(name: String, result: sbt.TestResult.Value)Unit" id="sbt;JUnitXmlTestsListener.endGroup(2238b836ea)">endGroup</a><span class="delimiter">(</span><a title="String" id="sbt;JUnitXmlTestsListener.endGroup(2238b836ea).name">name</a>: <span title="String">String</span>, <a title="sbt.TestResult.Value" id="sbt;JUnitXmlTestsListener.endGroup(2238b836ea).result">result</a>: TestResult.<span title="sbt.TestResult.Value">Value</span><span class="delimiter">)</span> = <span class="delimiter">{</span>
+        <a href="#sbt;JUnitXmlTestsListener.writeSuite" title="()Unit">writeSuite</a><span class="delimiter">(</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+
+    <span class="keyword">private</span> <span class="keyword">def</span> <a title="()Unit" id="sbt;JUnitXmlTestsListener.writeSuite">writeSuite</a><span class="delimiter">(</span><span class="delimiter">)</span> = <span class="delimiter">{</span>
+      <span class="keyword">val</span> <a title="String" id="sbt;JUnitXmlTestsListener.writeSuite.file">file</a> = <span title="(x$1: java.io.File, x$2: String)java.io.File" class="keyword">new</span> <span title="java.io.File">File</span><span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.targetDir" title="=&gt; java.io.File">targetDir</a>, <a href="#sbt;JUnitXmlTestsListener.testSuite_=" title="=&gt; scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">testSuite</a>.<span title="=&gt; JUnitXmlTestsListener.this.TestSuite">value</span>.<a href="#sbt;JUnitXmlTestsListener;TestSuite.name" title="=&gt; String">name</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;.xml&quot;)" class="string">&quot;.xml&quot;</span><span class="delimiter">)</span>.<span title="()String">getAbsolutePath</span>
+      <span class="comment">// TODO would be nice to have a logger and log this with level debug</span>
+      <span class="comment">// System.err.println(&quot;Writing JUnit XML test report: &quot; + file)</span>
+      <span title="scala.xml.XML.type">XML</span>.<span title="(filename: String, node: scala.xml.Node, enc: String, xmlDecl: Boolean, doctype: scala.xml.dtd.DocType)Unit">save</span> <span class="delimiter">(</span><a href="#sbt;JUnitXmlTestsListener.writeSuite.file" title="String">file</a>, <a href="#sbt;JUnitXmlTestsListener.testSuite_=" title="=&gt; scala.util.DynamicVariable[JUnitXmlTestsListener.this.TestSuite]">testSuite</a>.<span title="=&gt; JUnitXmlTestsListener.this.TestSuite">value</span>.<a href="#sbt;JUnitXmlTestsListener;TestSuite.stop" title="()scala.xml.Elem">stop</a><span class="delimiter">(</span><span class="delimiter">)</span>, <span title="String(&quot;UTF-8&quot;)" class="string">&quot;UTF-8&quot;</span>, <span title="Boolean(true)" class="keyword">true</span>, <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+
+    <span class="comment">/**Does nothing, as we write each file after a suite is done.*/</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(finalResult: sbt.TestResult.Value)Unit" id="sbt;JUnitXmlTestsListener.doComplete">doComplete</a><span class="delimiter">(</span><a title="sbt.TestResult.Value" id="sbt;JUnitXmlTestsListener.doComplete.finalResult">finalResult</a>: TestResult.<span title="sbt.TestResult.Value">Value</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <span title="Unit" class="delimiter">{</span><span class="delimiter">}</span>
+
+    <span class="comment">/**Returns None*/</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="(test: sbt.TestDefinition)Option[sbt.ContentLogger]" id="sbt;JUnitXmlTestsListener.contentLogger">contentLogger</a><span class="delimiter">(</span><a title="sbt.TestDefinition" id="sbt;JUnitXmlTestsListener.contentLogger.test">test</a>: <a href="TestFramework.scala.html#sbt;TestDefinition" title="sbt.TestDefinition">TestDefinition</a><span class="delimiter">)</span>: <span title="Option[sbt.ContentLogger]">Option</span><span class="delimiter">[</span>ContentLogger<span class="delimiter">]</span> = <span title="None.type">None</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

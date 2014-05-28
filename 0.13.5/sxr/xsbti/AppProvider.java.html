@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/AppProvider.java</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti;
+
+import java.io.File;
+
+/**
+ * This represents an interface that can generate applications or servers.
+ * 
+ * This provider grants access to launcher related features associated with
+ * the id.
+ */
+public interface AppProvider
+{
+	/** Returns the ScalaProvider that this AppProvider will use. */
+	public ScalaProvider scalaProvider();
+	/** The ID of the application that will be created by 'newMain' or 'mainClass'.*/
+	public ApplicationID id();
+	/** The classloader used to load this application. */
+	public ClassLoader loader();
+	/** Loads the class for the entry point for the application given by 'id'.  
+	 * This method will return the same class every invocation.  
+	 * That is, the ClassLoader is not recreated each call.
+	 * @deprecated(&quot;use entryPoint instead&quot;)
+	 * 
+	 * Note:  This will throw an exception if the launched application does not extend AppMain.
+	 */
+	@Deprecated
+	public Class&lt;? extends AppMain&gt; mainClass();
+	/** Loads the class for the entry point for the application given by 'id'.  
+	 * This method will return the same class every invocation.  
+	 * That is, the ClassLoader is not recreated each call.
+	 */
+	public Class&lt;?&gt; entryPoint();
+	/** Creates a new instance of the entry point of the application given by 'id'.
+	* It is NOT guaranteed that newMain().getClass() == mainClass().
+	* The sbt launcher can wrap generic static main methods. In this case, there will be a wrapper class,
+	* and you must use the `entryPoint` method.
+	* @throws IncompatibleClassChangeError if the configuration used for this Application does not
+	*                                         represent a launched application.
+	*/
+	public AppMain newMain();
+	
+	/** The classpath from which the main class is loaded, excluding Scala jars.*/
+	public File[] mainClasspath();
+
+	/** Returns a mechanism you can use to install/find/resolve components.  
+	 * A component is just a related group of files.
+	 */
+	public ComponentProvider components();
+}
+
+        </pre>
+    </body>
+</html>
