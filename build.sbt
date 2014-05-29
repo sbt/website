@@ -1,9 +1,6 @@
 import com.typesafe.sbt.site.PamfletSupport
 import Docs._
 
-lazy val Tutorial = config("tutorial")
-lazy val Ref = config("reference")
-
 site.settings
 
 site.nanocSupport()
@@ -15,5 +12,9 @@ site.addMappingsToSiteDir(mappings in Tutorial, s"""$targetSbtBinaryVersion/tuto
 PamfletSupport.settings(Ref)
 
 site.addMappingsToSiteDir(mappings in Ref, s"""$targetSbtBinaryVersion/docs""")
+
+redirectSettings
+
+site.addMappingsToSiteDir(mappings in Redirect, s"""$targetSbtBinaryVersion/docs""")
 
 customGhPagesSettings // see project/Docs.scala

@@ -7,6 +7,10 @@ import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
 
 object Docs {
+  lazy val Tutorial = config("tutorial")
+  lazy val Ref = config("reference")
+  lazy val Redirect = config("redirect")
+
   // New documents will live under /x.y/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
   // - src/nanoc/nanoc.yaml
@@ -14,6 +18,103 @@ object Docs {
   // - src/tutorial/template.properties
   lazy val targetSbtBinaryVersion = "0.13"
   lazy val targetSbtFullVersion = "0.13.2"
+
+  def redirectSettings: Seq[Setting[_]] = Seq(
+    mappings in Redirect := {
+      val output = target.value / Redirect.name
+      val s = streams.value
+      val gettingStarted = output / "Getting-Started"
+      generateRedirect("../../tutorial/index.html", gettingStarted / "Welcome.html", s.log)
+      Seq("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
+          "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
+          "Multi-Project.html", "Using-Plugins.html", "Full-Def.html", "Summary.html") foreach { x =>
+        generateRedirect(s"../../tutorial/$x", gettingStarted / x, s.log)
+      }
+      val dt = output / "Detailed-Topics"
+      generateRedirect("../Detailed-Topics.html", dt / "index.html", s.log)
+      generateRedirect("../Tasks-and-Commands.html", dt / "Command-Details-Index.html", s.log)
+      generateRedirect("../Sbt-Launcher.html", dt / "Launcher.html", s.log)
+      generateRedirect("../Migrating-from-sbt-0.7.x.html", dt / "Migrating-from-sbt-0.7.x-to-0.10.x.html", s.log)
+      generateRedirect("../Incremental-Recompilation.html", dt / "Understanding-incremental-recompilation.html", s.log)
+      Seq("Artifacts.html", "Best-Practices.html", "Classpaths.html", "Command-Line-Reference.html",
+          "Compiler-Plugins.html", "Configuration-Index.html", "Configuring-Scala.html", "Console-Project.html",
+          "Cross-Build.html", "Dependency-Management-Flow.html", "Dependency-Management-Index.html",
+          "Forking.html", "Global-Settings.html", "Inspecting-Settings.html", "Java-Sources.html",
+          "Library-Management.html", "Local-Scala.html", "Macro-Projects.html", "Mapping-Files.html",
+          "Parallel-Execution.html", "Parsing-Input.html", "Paths.html", "Plugins-and-Best-Practices.html",
+          "Process.html", "Proxy-Repositories.html", "Publishing.html", "Resolvers.html",
+          "Running-Project-Code.html", "Scripts.html", "Setup-Notes.html", "TaskInputs.html",
+          "Tasks-and-Commands.html", "Tasks.html", "Testing.html", "Triggered-Execution.html",
+          "Update-Report.html") foreach { x =>
+        generateRedirect(s"../$x", dt / x, s.log)
+      }
+      val arc = output / "Architecture"
+      generateRedirect("../Developers-Guide.html", arc / "index.html", s.log)
+      generateRedirect("../Core-Principles.html", arc / "Core-Principles.html", s.log)
+      generateRedirect("../Setting-Initialization.html", arc / "Setting-Initialization.html", s.log)
+      val cmm = output / "Community"
+      generateRedirect("../General-Info.html", cmm / "index.html", s.log)
+      generateRedirect("../Contributing-to-sbt.html", cmm / "Opportunities.html", s.log)
+      Seq("Bintray-For-Plugins.html", "ChangeSummary_0.12.0.html", "ChangeSummary_0.13.0.html",
+          "Changes.html", "Community-Plugins.html", "Credits.html", "Nightly-Builds.html",
+          "Repository-Rules.html", "Using-Sonatype.html") foreach { x =>
+        generateRedirect(s"../$x", cmm / x, s.log)
+      }
+      val ext = output / "Extending"
+      Seq("Build-Loaders.html", "Build-State.html", "Command-Line-Applications.html",
+          "Commands.html", "Input-Tasks.html",  "Plugins-Best-Practices.html", "Plugins.html",
+          "Settings-Core.html") foreach { x =>
+        generateRedirect(s"../$x", ext / x, s.log)
+      }
+      val lnc = output / "Launcher"
+      generateRedirect("../sbt-Launcher.html", lnc / "index.html", s.log)
+      generateRedirect("../Launcher-Getting-Started.html", lnc / "GettingStarted.html", s.log)
+      generateRedirect("../Launcher-Architecture.html", lnc / "Architecture.html", s.log)
+      generateRedirect("../Launcher-Configuration.html", lnc / "Configuration.html", s.log)
+      val howto = output / "Howto"
+      generateRedirect("../Howto.html", howto / "index.html", s.log)
+      generateRedirect("../Howto-Classpaths.html", howto / "classpaths.html", s.log)
+      generateRedirect("../Howto-Customizing-Paths.html", howto / "defaultpaths.html", s.log)
+      generateRedirect("../Howto-Generating-Files.html", howto / "geratefiles.html", s.log)
+      generateRedirect("../Howto-Inspect-the-Build.html", howto / "inspect.html", s.log)
+      generateRedirect("../Howto-Interactive-Mode.html", howto / "interactive.html", s.log)
+      generateRedirect("../Howto-Logging.html", howto / "logging.html", s.log)
+      generateRedirect("../Howto-Project-Metadata.html", howto / "metadata.html", s.log)
+      generateRedirect("../Howto-Package.html", howto / "package.html", s.log)
+      generateRedirect("../Howto-Running-Commands.html", howto / "runningcommands.html", s.log)
+      generateRedirect("../Howto-Scala.html", howto / "scala.html", s.log)
+      generateRedirect("../Howto-Scaladoc.html", howto / "scaladoc.html", s.log)
+      generateRedirect("../Howto-Triggered.html", howto / "triggered.html", s.log)
+      val exp = output / "Examples"
+      generateRedirect("../Examples.html", exp / "index.html", s.log)
+      generateRedirect("../Basic-Def-Examples.html", exp / "Quick-Configuration-Examples.html", s.log)
+      generateRedirect("../Full-Def-Example.html", exp / "Full-Configuration-Example.html", s.log)
+      generateRedirect("../Advanced-Configurations-Example.html", exp / "Advanced-Configurations-Example.html", s.log)
+      generateRedirect("../Advanced-Command-Example.html", exp / "Advanced-Command-Example.html", s.log)
+
+      output ** AllPassFilter --- output x relativeTo(output)
+    }
+  )
+
+  def generateRedirect(path: String, linkFile: File, log: Logger): File = {
+    val page = s"""<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta http-equiv="refresh" content="0;url=$path"></meta>
+    <title>This page has moved</title>
+  </head>
+  <body>
+    <p>This page has moved to <a href="$path">$path</a>.</p>
+  </body>
+</html>
+"""
+    IO.write(linkFile, page, IO.utf8)
+    log.info(s"generated ${linkFile.toString} that links to $path")
+    linkFile
+  }
+
 
   def customGhPagesSettings: Seq[Setting[_]] = ghpages.settings ++ Seq(
     git.remoteRepo := "git@github.com:sbt/website.git",
