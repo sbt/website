@@ -17,7 +17,7 @@ object Docs {
   // - src/reference/template.properties
   // - src/tutorial/template.properties
   lazy val targetSbtBinaryVersion = "0.13"
-  lazy val targetSbtFullVersion = "0.13.2"
+  lazy val targetSbtFullVersion = "0.13.5"
 
   def redirectSettings: Seq[Setting[_]] = Seq(
     mappings in Redirect := {
@@ -140,7 +140,7 @@ object Docs {
     val sxrLink = versioned / "sxr"
     if (apiLink.exists) apiLink.delete
     if (sxrLink.exists) sxrLink.delete
-    
+
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
     val mappings =  for {
