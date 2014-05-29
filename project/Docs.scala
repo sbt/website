@@ -136,6 +136,11 @@ object Docs {
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value
+    val apiLink = versioned / "api"
+    val sxrLink = versioned / "sxr"
+    if (apiLink.exists) apiLink.delete
+    if (sxrLink.exists) sxrLink.delete
+    
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
     val mappings =  for {
@@ -144,8 +149,8 @@ object Docs {
     IO.copy(mappings)
 
     // symlink API and SXR
-    symlink(s"../$targetSbtFullVersion/api/", versioned / "api", s.log)
-    symlink(s"../$targetSbtFullVersion/sxr/", versioned / "sxr", s.log)
+    symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
+    symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
 
     repo
   }
