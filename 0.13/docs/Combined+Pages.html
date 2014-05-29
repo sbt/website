@@ -82,7 +82,7 @@ on <a href="https://github.com/sbt/website/">GitHub</a>. Feel free to make
 corrections and add documentation.
 </p><p>Documentation for 0.7.x has been
 <a href="http://www.scala-sbt.org/0.7.7/docs/home.html">archived here</a>. This
-documentation applies to sbt 0.13.2.
+documentation applies to sbt 0.13.5.
 </p><p>See also the <a href="../api/index.html">API Documentation</a>,
 <a href="../sxr/index.html">SXR Documentation</a>, and the
 <a href="Name-Index.html">index of names and types</a>.
@@ -2288,10 +2288,10 @@ classpath
 </li></ul><h3 id="0.1+to+0.1.1">0.1 to 0.1.1<a href="#0.1+to+0.1.1" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ul><li>Fixed handling of source files without a package
 </li><li>Added easy project setup
 </li></ul><h2 id="Migrating+from+0.7+to+0.10%2B">Migrating from 0.7 to 0.10+<a href="#Migrating+from+0.7+to+0.10%2B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The assumption here is that you are familiar with sbt 0.7 but new to sbt
-0.13.2.
-</p><p>sbt 0.13.2’s many new capabilities can be a bit overwhelming, but
-this page should help you migrate to 0.13.2 with a minimum of fuss.
-</p><h3 id="Why+move+to+0.13.2%3F">Why move to 0.13.2?<a href="#Why+move+to+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
+0.13.5.
+</p><p>sbt 0.13.5’s many new capabilities can be a bit overwhelming, but
+this page should help you migrate to 0.13.5 with a minimum of fuss.
+</p><h3 id="Why+move+to+0.13.5%3F">Why move to 0.13.5?<a href="#Why+move+to+0.13.5%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
 must)
 </li><li>Easier configuration. For simple projects a single <code>build.sbt</code> file
 in your root directory is easier to create than
@@ -2301,25 +2301,25 @@ backup and version control hassles.
 </li><li><code>update</code> is now much faster and it’s invoked automatically by sbt.
 </li><li>Terser output. (Yet you can ask for more details if something goes
 wrong.)
-</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2">Step 1: Read the Getting Started Guide for sbt 0.13.2<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
+</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.5">Step 1: Read the Getting Started Guide for sbt 0.13.5<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
 probably save you a lot of confusion.
-</p><h4 id="Step+2%3A+Install+sbt+0.13.2">Step 2: Install sbt 0.13.2<a href="#Step+2%3A+Install+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.2 as described on
+</p><h4 id="Step+2%3A+Install+sbt+0.13.5">Step 2: Install sbt 0.13.5<a href="#Step+2%3A+Install+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.5 as described on
 <a href="../tutorial/Setup.html">the setup page</a>.
-</p><p>You can run 0.13.2 the same way that you run 0.7.x, either simply:
+</p><p>You can run 0.13.5 the same way that you run 0.7.x, either simply:
 </p><pre><code class="">$ java -jar sbt-launch.jar
 </code></pre><p>Or (as most users do) with a shell script, as described on
 <a href="../tutorial/Setup.html">the setup page</a>.
 </p><p>For more details see
 <a href="../tutorial/Setup.html">the setup page</a>.
-</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.2 while
+</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.5 while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
 complex one next.
 </p><h3 id="Preserve++for+0.7.x+project">Preserve <code>project/</code> for 0.7.x project<a href="#Preserve++for+0.7.x+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Rename your <code>project/</code> directory to something like <code>project-old</code>. This
-will hide it from sbt 0.13.2 but keep it in case you want to switch
+will hide it from sbt 0.13.5 but keep it in case you want to switch
 back to 0.7.x.
-</p><h3 id="Create++for+0.13.2">Create <code>build.sbt</code> for 0.13.2<a href="#Create++for+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
+</p><h3 id="Create++for+0.13.5">Create <code>build.sbt</code> for 0.13.5<a href="#Create++for+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
 <a href="../tutorial/Basic-Def.html">.sbt build definition</a> in the Getting
 Started Guide, and for <a href="Basic-Def-Examples.html">simple examples</a>.
 If you have a simple project
@@ -2349,11 +2349,11 @@ organization := &quot;org.myproject&quot;
 scalaVersion := &quot;2.9.2&quot;
 </code></pre><p>Currently, a <code>project/build.properties</code> is still needed to explicitly
 select the sbt version. For example:
-</p><h3 id="Run+sbt+0.13.2">Run sbt 0.13.2<a href="#Run+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
+</p><h3 id="Run+sbt+0.13.5">Run sbt 0.13.5<a href="#Run+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
 debugging, see below.
 </p><h3 id="Switching+back+to+sbt+0.7.x">Switching back to sbt 0.7.x<a href="#Switching+back+to+sbt+0.7.x" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you get stuck and want to switch back, you can leave your <code>build.sbt</code>
 file alone. sbt 0.7.x will not understand or notice it. Just rename your
-0.13.2 <code>project</code> directory to something like <code>project10</code> and rename
+0.13.5 <code>project</code> directory to something like <code>project10</code> and rename
 the backup of your old project from <code>project-old</code> to <code>project</code> again.
 </p><h4 id="FAQs">FAQs<a href="#FAQs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There’s a section in the <a href="Faq.html">FAQ</a> about migration from 0.7 that
 covers several other important points.
@@ -2443,7 +2443,7 @@ clear and reproducible.
 </li><li>Fix issues that affect you. <a href="http://help.github.com/fork-a-repo/">Fork, fix, and submit a pull request</a>.
 </li><li>Implement features that are important to you.
 See <a href="Contributing-to-sbt.html">Contributing to sbt</a> for more details.
-</li></ul><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F">My last command didn’t work but I can’t see an explanation. Why?<a href="#My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt 0.13.2 by default suppresses most stack traces and debugging
+</li></ul><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F">My last command didn’t work but I can’t see an explanation. Why?<a href="#My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt 0.13.5 by default suppresses most stack traces and debugging
 information. It has the nice side effect of giving you less noise on
 screen, but as a newcomer it can leave you lost for explanation. To see
 the previous output of a command at a higher verbosity, type
@@ -2769,7 +2769,7 @@ example:
 </code></pre><h3 id="0.7+to+0.10%2B+Migration">0.7 to 0.10+ Migration<a href="#0.7+to+0.10%2B+Migration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="How+do+I+migrate+from+0.7+to+0.10%2B%3F">How do I migrate from 0.7 to 0.10+?<a href="#How+do+I+migrate+from+0.7+to+0.10%2B%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See the
 <a href="Migrating-from-sbt-07x.html">migration page</a>
 first and then the following questions.
-</p><h4 id="Where+has+0.7%E2%80%99s++gone%3F">Where has 0.7’s <code>lib_managed</code> gone?<a href="#Where+has+0.7%E2%80%99s++gone%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt 0.13.2 loads managed libraries from your ivy cache
+</p><h4 id="Where+has+0.7%E2%80%99s++gone%3F">Where has 0.7’s <code>lib_managed</code> gone?<a href="#Where+has+0.7%E2%80%99s++gone%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt 0.13.5 loads managed libraries from your ivy cache
 without copying them to a <code>lib_managed</code> directory. This fixes some bugs
 with the previous solution and keeps your project directory small. If
 you want to insulate your builds from the ivy cache being cleared, set
@@ -2777,12 +2777,12 @@ you want to insulate your builds from the ivy cache being cleared, set
 <code>lib_managed</code> as a build-local cache (while avoiding the issues of
 <code>lib_managed</code> in 0.7.x).
 </p><p>This does mean that existing solutions for sharing libraries with your
-favoured IDE may not work. There are 0.13.2 plugins for IDEs being
+favoured IDE may not work. There are 0.13.5 plugins for IDEs being
 developed:
 </p><ul><li><a href="https://github.com/mpeltonen/sbt-idea">IntelliJ IDEA</a>
 </li><li><a href="https://github.com/remeniuk/sbt-netbeans-plugin">Netbeans</a>
 </li><li><a href="https://github.com/typesafehub/sbteclipse">Eclipse</a>
-</li></ul><h4 id="What+are+the+commands+I+can+use+in+0.13.2+vs.+0.7%3F">What are the commands I can use in 0.13.2 vs. 0.7?<a href="#What+are+the+commands+I+can+use+in+0.13.2+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For a list of commands, run <code>help</code>. For details on a specific command,
+</li></ul><h4 id="What+are+the+commands+I+can+use+in+0.13.5+vs.+0.7%3F">What are the commands I can use in 0.13.5 vs. 0.7?<a href="#What+are+the+commands+I+can+use+in+0.13.5+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For a list of commands, run <code>help</code>. For details on a specific command,
 run <code>help &lt;command&gt;</code>. To view a list of tasks defined on the current
 project, run <code>tasks</code>. Alternatively, see the
 <a href="../tutorial/Running.html">Running</a> page in the Getting Started Guide
@@ -2805,7 +2805,7 @@ on a classpath.
 run. Use <code>show update</code> to view a summary of files comprising managed
 classpaths.
 </p><h3 id="My+tests+all+run+really+fast+but+some+are+broken+that+weren%E2%80%99t+in+0.7%21">My tests all run really fast but some are broken that weren’t in 0.7!<a href="#My+tests+all+run+really+fast+but+some+are+broken+that+weren%E2%80%99t+in+0.7%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Be aware that compilation and tests run in parallel by default in sbt
-0.13.2. If your test code isn’t thread-safe then you may want to
+0.13.5. If your test code isn’t thread-safe then you may want to
 change this behaviour by adding one of the following to your
 <code>build.sbt</code>:
 </p><pre><code class="prettyprint lang-scala">// Execute tests in the current project serially.
@@ -2819,7 +2819,7 @@ parallelExecution := false
 project.
 </p><p>For an early version of an xsbt Web Start plugin, visit the
 <a href="https://github.com/ritschwumm/xsbt-webstart">xsbt-webstart</a> project.
-</p><h4 id="How+are+inter-project+dependencies+different+in+0.13.2+vs.+0.7%3F">How are inter-project dependencies different in 0.13.2 vs. 0.7?<a href="#How+are+inter-project+dependencies+different+in+0.13.2+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In 0.13.2, there are three types of project dependencies (classpath,
+</p><h4 id="How+are+inter-project+dependencies+different+in+0.13.5+vs.+0.7%3F">How are inter-project dependencies different in 0.13.5 vs. 0.7?<a href="#How+are+inter-project+dependencies+different+in+0.13.5+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In 0.13.5, there are three types of project dependencies (classpath,
 execution, and configuration) and they are independently defined. These
 were combined in a single dependency type in 0.7.x. A declaration like:
 </p><pre><code class="prettyprint lang-scala">lazy val a = project(&quot;a&quot;, &quot;A&quot;)
@@ -2832,13 +2832,13 @@ classpath for B.
 </li><li>Execution: A task executed on <code>B</code> would be executed on <code>A</code> first.
 </li><li>Configuration: For some settings, if they were not overridden in A,
 they would default to the value provided in B.
-</li></ol><p>In 0.13.2, declare the specific type of dependency you want. Read
+</li></ol><p>In 0.13.5, declare the specific type of dependency you want. Read
 about <a href="../tutorial/Multi-Project.html">multi-project builds</a> in the
 Getting Started Guide for details.
 </p><h4 id="Where+did+class%2Fobject+X+go+since+0.7%3F">Where did class/object X go since 0.7?<a href="#Where+did+class%2Fobject+X+go+since+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><table>
   <tr>
     <th>0.7</th>
-    <th>0.13.2</th>
+    <th>0.13.5</th>
   </tr>
 
   <tr>
@@ -2864,7 +2864,7 @@ Getting Started Guide for details.
       <a href="../api/sbt/PathFinder$.html">PathFinder object</a>
     </td>
   </tr>
-</table><h4 id="Where+can+I+find+plugins+for+0.13.2%3F">Where can I find plugins for 0.13.2?<a href="#Where+can+I+find+plugins+for+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See <a href="Community-Plugins.html">Community Plugins</a> for a list of currently available
+</table><h4 id="Where+can+I+find+plugins+for+0.13.5%3F">Where can I find plugins for 0.13.5?<a href="#Where+can+I+find+plugins+for+0.13.5%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See <a href="Community-Plugins.html">Community Plugins</a> for a list of currently available
 plugins.
 </p><h2 id="How+to%E2%80%A6">How to…<a href="#How+to%E2%80%A6" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>See <a href="Contents+in+Depth.html">Detailed Table of Contents</a> for the list of all the how-tos.
 </p><h2 id="Classpaths">Classpaths<a href="#Classpaths" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><a name="classpath-types"></a><h3 id="Include+a+new+type+of+managed+artifact+on+the+classpath%2C+such+as">Include a new type of managed artifact on the classpath, such as <code>mar</code><a href="#Include+a+new+type+of+managed+artifact+on+the+classpath%2C+such+as" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>The <code>classpathTypes</code> setting controls the types of managed artifacts
@@ -4507,7 +4507,7 @@ influence SBT execution. Also see <a href="Sbt-Launcher.html">sbt launcher</a>.
   <tr>
     <td><tt>sbt.version</tt></td>
     <td>Version</td>
-    <td><tt>0.13.2</tt></td>
+    <td><tt>0.13.5</tt></td>
     <td>sbt version to use, usually taken from <tt>project/build.properties</tt>.</td>
   </tr>
 
@@ -5527,7 +5527,7 @@ adding them.
 uses that same version of Scala to compile the build definitions that
 you write for your project because they use sbt APIs. This version of
 Scala is fixed for a specific sbt release and cannot be changed. For sbt
-0.13.2, this version is Scala 2.10.3. Because this Scala
+0.13.5, this version is Scala 2.10.3. Because this Scala
 version is needed before sbt runs, the repositories used to retrieve
 this version are configured in the sbt
 <a href="Sbt-Launcher.html">launcher</a>.
@@ -8200,7 +8200,7 @@ Def.setting {
 The input syntax defined isn’t very flexible; it is just a
 demonstration. It will produce one of the following values for a
 successful parse (assuming the current Scala version is 2.10.3,
-the current sbt version is 0.13.2, and there are 3 commands left to
+the current sbt version is 0.13.5, and there are 3 commands left to
 run):
 </p><p>Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
@@ -10450,7 +10450,7 @@ application. <code>hello.build.properties</code>:
   local
   maven-central
   typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
-</code></pre><h2 id="Nightly+Builds">Nightly Builds<a href="#Nightly+Builds" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The latest development versions of 0.13.2 are available as nightly
+</code></pre><h2 id="Nightly+Builds">Nightly Builds<a href="#Nightly+Builds" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The latest development versions of 0.13.5 are available as nightly
 builds on <a href="http://repo.typesafe.com/typesafe/ivy-snapshots/">Typesafe Snapshots</a>.
 </p><p>To use a nightly build, the instructions are the same for
 <a href="../tutorial/Manual-Installation.html">normal manual setup</a> except:
@@ -10458,7 +10458,7 @@ builds on <a href="http://repo.typesafe.com/typesafe/ivy-snapshots/">Typesafe Sn
 |nightly-launcher|. They should be listed in chronological order, so
 the most recent one will be last.
 </li><li>The version number is the name of the subdirectory and is of the
-form <code>0.13.2.x-yyyyMMdd-HHmmss</code>. Use this in a build.properties
+form <code>0.13.5.x-yyyyMMdd-HHmmss</code>. Use this in a build.properties
 file.
 </li><li>Call your script something like <code>sbt-nightly</code> to retain access to a
 stable sbt launcher. The documentation will refer to the script as

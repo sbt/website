@@ -34,7 +34,7 @@ sbt を試してくれて、ありがとう。_楽しもう！_
   [Basic-Def]: Basic-Def.html
   [Hello]: Hello.html
   [Running]: Running.html
-  [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi
+  [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.msi
   [Setup-Notes]: ../docs/Setup-Notes.html
   [Mac]: Installing-sbt-on-Mac.html
   [Windows]: Installing-sbt-on-Windows.html
@@ -62,8 +62,8 @@ sbt プロジェクトを作るには、以下の手順をたどる:
 `sbt` の実行に上手くいかない場合は、[[Setup Notes]] のターミナルの文字エンコーディング、HTTP プロキシ、JVM のオプションにかんする説明を参照する。
 
 
-  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip
-  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz
+  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.zip
+  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.tgz
   [Manual-Installation]: Manual-Installation.html
  
 Mac への sbt のインストール
@@ -95,9 +95,9 @@ $ brew install sbt
 手動インストールの手順を参照。
 
 
-  [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.msi
-  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip
-  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz
+  [MSI]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.msi
+  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.zip
+  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.tgz
 
 Windows への sbt のインストール
 ----------------------------
@@ -115,10 +115,10 @@ Windows への sbt のインストール
 手動インストールの手順を参照。
 
 
-  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.zip
-  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz
-  [RPM]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.rpm
-  [DEB]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.deb
+  [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.zip
+  [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.tgz
+  [RPM]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.rpm
+  [DEB]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.deb
   [Manual-Installation]: Manual-Installation.html
  
 Linux への sbt のインストール
@@ -159,7 +159,7 @@ sbt をマージする [ebuild](https://github.com/whiter4bbit/overlays/tree/mas
 手動インストールの手順を参照。
 
 
-  [sbt-launch.jar]: http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar
+  [sbt-launch.jar]: http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
 手動インストール
 --------------
@@ -326,7 +326,7 @@ scalaVersion := "2.10.3"
 このファイルに、以下のように書く:
 
 ```
-sbt.version=0.13.2
+sbt.version=0.13.5
 ```
 
 sbt はリリース間で 99% ソースの互換性を持たせてある。

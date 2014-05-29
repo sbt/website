@@ -39,9 +39,9 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="Installing+sbt+manually">Installing sbt manually<a href="#Installing+sbt+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Manual installation requires downloading <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> and creating a
+            <h2 id="Installing+sbt+manually">Installing sbt manually<a href="#Installing+sbt+manually" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>Manual installation requires downloading <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> and creating a
 script to start it.
-</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Put <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> in <code>~/bin</code>.
+</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Put <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> in <code>~/bin</code>.
 </p><p>Create a script to run the jar, by creating <code>~/bin/sbt</code> with these
 contents:
 </p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
@@ -56,13 +56,13 @@ necessary.
 </p><h4 id="Non-Cygwin">Non-Cygwin<a href="#Non-Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For non-Cygwin users using the standard Windows terminal, create a batch file <code>sbt.bat</code>:
 </p><pre><code class="">set SCRIPT_DIR=%~dp0
 java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
-</code></pre><p>and put the downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the
+</code></pre><p>and put the downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> in the same directory as the
 batch file.
 </p><h4 id="Cygwin+with+the+standard+Windows+termnial">Cygwin with the standard Windows termnial<a href="#Cygwin+with+the+standard+Windows+termnial" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>If using Cygwin with the standard Windows terminal, create a bash
 script <code>~/bin/sbt</code>:
 </p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
 java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
-</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a>
+</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a>
 and remember to use cygpath if necessary. Make the script executable:
 </p><pre><code class="">$ chmod u+x ~/bin/sbt
 </code></pre><h4 id="Cygwin+with+an+Ansi+terminal">Cygwin with an Ansi terminal<a href="#Cygwin+with+an+Ansi+terminal" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Cygwin with an Ansi terminal (supports Ansi escape sequences and is configurable via stty), create a bash script
@@ -71,7 +71,7 @@ and remember to use cygpath if necessary. Make the script executable:
 stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
 java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
 stty icanon echo &gt; /dev/null 2&gt;&amp;1
-</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a>
+</code></pre><p>Replace sbt-launch.jar with the path to your downloaded <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a>
 and remember to use cygpath if necessary. Then, make the script
 executable:
 </p><pre><code class="">$ chmod u+x ~/bin/sbt

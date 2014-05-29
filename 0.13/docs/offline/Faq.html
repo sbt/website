@@ -62,7 +62,7 @@ clear and reproducible.
 </li><li>Fix issues that affect you. <a href="http://help.github.com/fork-a-repo/">Fork, fix, and submit a pull request</a>.
 </li><li>Implement features that are important to you.
 See <a href="Contributing-to-sbt.html">Contributing to sbt</a> for more details.
-</li></ul><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F">My last command didn’t work but I can’t see an explanation. Why?<a href="#My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt 0.13.2 by default suppresses most stack traces and debugging
+</li></ul><h3 id="Usage">Usage<a href="#Usage" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F">My last command didn’t work but I can’t see an explanation. Why?<a href="#My+last+command+didn%E2%80%99t+work+but+I+can%E2%80%99t+see+an+explanation.+Why%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>sbt 0.13.5 by default suppresses most stack traces and debugging
 information. It has the nice side effect of giving you less noise on
 screen, but as a newcomer it can leave you lost for explanation. To see
 the previous output of a command at a higher verbosity, type
@@ -388,7 +388,7 @@ example:
 </code></pre><h3 id="0.7+to+0.10%2B+Migration">0.7 to 0.10+ Migration<a href="#0.7+to+0.10%2B+Migration" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><h4 id="How+do+I+migrate+from+0.7+to+0.10%2B%3F">How do I migrate from 0.7 to 0.10+?<a href="#How+do+I+migrate+from+0.7+to+0.10%2B%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See the
 <a href="Migrating-from-sbt-07x.html">migration page</a>
 first and then the following questions.
-</p><h4 id="Where+has+0.7%E2%80%99s++gone%3F">Where has 0.7’s <code>lib_managed</code> gone?<a href="#Where+has+0.7%E2%80%99s++gone%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt 0.13.2 loads managed libraries from your ivy cache
+</p><h4 id="Where+has+0.7%E2%80%99s++gone%3F">Where has 0.7’s <code>lib_managed</code> gone?<a href="#Where+has+0.7%E2%80%99s++gone%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>By default, sbt 0.13.5 loads managed libraries from your ivy cache
 without copying them to a <code>lib_managed</code> directory. This fixes some bugs
 with the previous solution and keeps your project directory small. If
 you want to insulate your builds from the ivy cache being cleared, set
@@ -396,12 +396,12 @@ you want to insulate your builds from the ivy cache being cleared, set
 <code>lib_managed</code> as a build-local cache (while avoiding the issues of
 <code>lib_managed</code> in 0.7.x).
 </p><p>This does mean that existing solutions for sharing libraries with your
-favoured IDE may not work. There are 0.13.2 plugins for IDEs being
+favoured IDE may not work. There are 0.13.5 plugins for IDEs being
 developed:
 </p><ul><li><a href="https://github.com/mpeltonen/sbt-idea">IntelliJ IDEA</a>
 </li><li><a href="https://github.com/remeniuk/sbt-netbeans-plugin">Netbeans</a>
 </li><li><a href="https://github.com/typesafehub/sbteclipse">Eclipse</a>
-</li></ul><h4 id="What+are+the+commands+I+can+use+in+0.13.2+vs.+0.7%3F">What are the commands I can use in 0.13.2 vs. 0.7?<a href="#What+are+the+commands+I+can+use+in+0.13.2+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For a list of commands, run <code>help</code>. For details on a specific command,
+</li></ul><h4 id="What+are+the+commands+I+can+use+in+0.13.5+vs.+0.7%3F">What are the commands I can use in 0.13.5 vs. 0.7?<a href="#What+are+the+commands+I+can+use+in+0.13.5+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>For a list of commands, run <code>help</code>. For details on a specific command,
 run <code>help &lt;command&gt;</code>. To view a list of tasks defined on the current
 project, run <code>tasks</code>. Alternatively, see the
 <a href="../tutorial/Running.html">Running</a> page in the Getting Started Guide
@@ -424,7 +424,7 @@ on a classpath.
 run. Use <code>show update</code> to view a summary of files comprising managed
 classpaths.
 </p><h3 id="My+tests+all+run+really+fast+but+some+are+broken+that+weren%E2%80%99t+in+0.7%21">My tests all run really fast but some are broken that weren’t in 0.7!<a href="#My+tests+all+run+really+fast+but+some+are+broken+that+weren%E2%80%99t+in+0.7%21" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Be aware that compilation and tests run in parallel by default in sbt
-0.13.2. If your test code isn’t thread-safe then you may want to
+0.13.5. If your test code isn’t thread-safe then you may want to
 change this behaviour by adding one of the following to your
 <code>build.sbt</code>:
 </p><pre><code class="prettyprint lang-scala">// Execute tests in the current project serially.
@@ -438,7 +438,7 @@ parallelExecution := false
 project.
 </p><p>For an early version of an xsbt Web Start plugin, visit the
 <a href="https://github.com/ritschwumm/xsbt-webstart">xsbt-webstart</a> project.
-</p><h4 id="How+are+inter-project+dependencies+different+in+0.13.2+vs.+0.7%3F">How are inter-project dependencies different in 0.13.2 vs. 0.7?<a href="#How+are+inter-project+dependencies+different+in+0.13.2+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In 0.13.2, there are three types of project dependencies (classpath,
+</p><h4 id="How+are+inter-project+dependencies+different+in+0.13.5+vs.+0.7%3F">How are inter-project dependencies different in 0.13.5 vs. 0.7?<a href="#How+are+inter-project+dependencies+different+in+0.13.5+vs.+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>In 0.13.5, there are three types of project dependencies (classpath,
 execution, and configuration) and they are independently defined. These
 were combined in a single dependency type in 0.7.x. A declaration like:
 </p><pre><code class="prettyprint lang-scala">lazy val a = project(&quot;a&quot;, &quot;A&quot;)
@@ -451,13 +451,13 @@ classpath for B.
 </li><li>Execution: A task executed on <code>B</code> would be executed on <code>A</code> first.
 </li><li>Configuration: For some settings, if they were not overridden in A,
 they would default to the value provided in B.
-</li></ol><p>In 0.13.2, declare the specific type of dependency you want. Read
+</li></ol><p>In 0.13.5, declare the specific type of dependency you want. Read
 about <a href="../tutorial/Multi-Project.html">multi-project builds</a> in the
 Getting Started Guide for details.
 </p><h4 id="Where+did+class%2Fobject+X+go+since+0.7%3F">Where did class/object X go since 0.7?<a href="#Where+did+class%2Fobject+X+go+since+0.7%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><table>
   <tr>
     <th>0.7</th>
-    <th>0.13.2</th>
+    <th>0.13.5</th>
   </tr>
 
   <tr>
@@ -483,7 +483,7 @@ Getting Started Guide for details.
       <a href="../api/sbt/PathFinder$.html">PathFinder object</a>
     </td>
   </tr>
-</table><h4 id="Where+can+I+find+plugins+for+0.13.2%3F">Where can I find plugins for 0.13.2?<a href="#Where+can+I+find+plugins+for+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See <a href="Community-Plugins.html">Community Plugins</a> for a list of currently available
+</table><h4 id="Where+can+I+find+plugins+for+0.13.5%3F">Where can I find plugins for 0.13.5?<a href="#Where+can+I+find+plugins+for+0.13.5%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>See <a href="Community-Plugins.html">Community Plugins</a> for a list of currently available
 plugins.
 </p><div class="bottom nav span-16">
                         <em>Next Page</em>

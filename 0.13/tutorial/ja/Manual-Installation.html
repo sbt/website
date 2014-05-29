@@ -39,8 +39,8 @@
           </a>
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
-            <h2 id="%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">手動インストール<a href="#%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> をダウンロードして起動スクリプトを書くことで手動でインストールできる。
-</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> を <code>~/bin</code> に置く。
+            <h2 id="%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">手動インストール<a href="#%E6%89%8B%E5%8B%95%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p><a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> をダウンロードして起動スクリプトを書くことで手動でインストールできる。
+</p><h3 id="Unix">Unix<a href="#Unix" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p><a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> を <code>~/bin</code> に置く。
 </p><p><code>~/bin/sbt</code> に以下のスクリプトを作成して JAR を起動する:
 </p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
 java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
@@ -54,11 +54,11 @@ java $SBT_OPTS -jar `dirname $0`/sbt-launch.jar &quot;$@&quot;
 </p><h4 id="%E9%9D%9ECygwin">非Cygwin<a href="#%E9%9D%9ECygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>標準の Windows ターミナルを使っている非Cygwin ユーザは、以下のバッチファイル <code>sbt.bat</code> を作る:
 </p><pre><code class="">set SCRIPT_DIR=%~dp0
 java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar &quot;%SCRIPT_DIR%sbt-launch.jar&quot; %*
-</code></pre><p>そしてダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> はバッチファイルと同じディレクトリに置く。
+</code></pre><p>そしてダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> はバッチファイルと同じディレクトリに置く。
 </p><h4 id="%E6%A8%99%E6%BA%96+Windows+%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Cygwin">標準 Windows ターミナルを使った Cygwin<a href="#%E6%A8%99%E6%BA%96+Windows+%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>標準 Windows ターミナルとともに Cygwin を使っている場合は、<code>~/bin/sbt</code> という名前で bash スクリプトを作る:
 </p><pre><code class="">SBT_OPTS=&quot;-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M&quot;
 java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
-</code></pre><p>sbt-launch.jar の所はダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> へのパスで置き換える。
+</code></pre><p>sbt-launch.jar の所はダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> へのパスで置き換える。
 必要ならば <code>cygpath</code> を使う。スクリプトを実行可能にする:
 </p><pre><code class="">$ chmod u+x ~/bin/sbt
 </code></pre><h4 id="Ansi+%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Cygwin">Ansi ターミナルを使った Cygwin<a href="#Ansi+%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F+Cygwin" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Ansi ターミナル (Ansi エスケープをサポートして、stty によって設定できる) を使って Cygwin を実行している場合は、<code>~/bin/sbt</code> という名前で bash スクリプトを作る:
@@ -66,7 +66,7 @@ java $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
 stty -icanon min 1 -echo &gt; /dev/null 2&gt;&amp;1
 java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true $SBT_OPTS -jar sbt-launch.jar &quot;$@&quot;
 stty icanon echo &gt; /dev/null 2&gt;&amp;1
-</code></pre><p>sbt-launch.jar の所はダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.2/sbt-launch.jar">sbt-launch.jar</a> へのパスで置き換える。
+</code></pre><p>sbt-launch.jar の所はダウンロードしてきた <a href="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar">sbt-launch.jar</a> へのパスで置き換える。
 必要ならば <code>cygpath</code> を使う。スクリプトを実行可能にする:
 </p><pre><code class="">$ chmod u+x ~/bin/sbt
 </code></pre><p>scala コンソールでバックスペースが正しく動作するためには、バックスペースが

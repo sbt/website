@@ -42,10 +42,10 @@
         <div class="container contentswrapper">
           <div class="span-16 prepend-1 append-1 contents">
             <h2 id="Migrating+from+0.7+to+0.10%2B">Migrating from 0.7 to 0.10+<a href="#Migrating+from+0.7+to+0.10%2B" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2><p>The assumption here is that you are familiar with sbt 0.7 but new to sbt
-0.13.2.
-</p><p>sbt 0.13.2’s many new capabilities can be a bit overwhelming, but
-this page should help you migrate to 0.13.2 with a minimum of fuss.
-</p><h3 id="Why+move+to+0.13.2%3F">Why move to 0.13.2?<a href="#Why+move+to+0.13.2%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
+0.13.5.
+</p><p>sbt 0.13.5’s many new capabilities can be a bit overwhelming, but
+this page should help you migrate to 0.13.5 with a minimum of fuss.
+</p><h3 id="Why+move+to+0.13.5%3F">Why move to 0.13.5?<a href="#Why+move+to+0.13.5%3F" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><ol><li>Faster builds (because it is smarter at re-compiling only what it
 must)
 </li><li>Easier configuration. For simple projects a single <code>build.sbt</code> file
 in your root directory is easier to create than
@@ -55,25 +55,25 @@ backup and version control hassles.
 </li><li><code>update</code> is now much faster and it’s invoked automatically by sbt.
 </li><li>Terser output. (Yet you can ask for more details if something goes
 wrong.)
-</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2">Step 1: Read the Getting Started Guide for sbt 0.13.2<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
+</li></ol><h4 id="Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.5">Step 1: Read the Getting Started Guide for sbt 0.13.5<a href="#Step+1%3A+Read+the+Getting+Started+Guide+for+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Reading the <a href="../tutorial/index.html">Getting Started Guide</a> will
 probably save you a lot of confusion.
-</p><h4 id="Step+2%3A+Install+sbt+0.13.2">Step 2: Install sbt 0.13.2<a href="#Step+2%3A+Install+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.2 as described on
+</p><h4 id="Step+2%3A+Install+sbt+0.13.5">Step 2: Install sbt 0.13.5<a href="#Step+2%3A+Install+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Download sbt 0.13.5 as described on
 <a href="../tutorial/Setup.html">the setup page</a>.
-</p><p>You can run 0.13.2 the same way that you run 0.7.x, either simply:
+</p><p>You can run 0.13.5 the same way that you run 0.7.x, either simply:
 </p><pre><code class="">$ java -jar sbt-launch.jar
 </code></pre><p>Or (as most users do) with a shell script, as described on
 <a href="../tutorial/Setup.html">the setup page</a>.
 </p><p>For more details see
 <a href="../tutorial/Setup.html">the setup page</a>.
-</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.2 while
+</p><h4 id="Step+3%3A+A+technique+for+switching+an+existing+project">Step 3: A technique for switching an existing project<a href="#Step+3%3A+A+technique+for+switching+an+existing+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>Here is a technique for switching an existing project to 0.13.5 while
 retaining the ability to switch back again at will. Some builds, such as
 those with subprojects, are not suited for this technique, but if you
 learn how to transition a simple project it will help you do a more
 complex one next.
 </p><h3 id="Preserve++for+0.7.x+project">Preserve <code>project/</code> for 0.7.x project<a href="#Preserve++for+0.7.x+project" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Rename your <code>project/</code> directory to something like <code>project-old</code>. This
-will hide it from sbt 0.13.2 but keep it in case you want to switch
+will hide it from sbt 0.13.5 but keep it in case you want to switch
 back to 0.7.x.
-</p><h3 id="Create++for+0.13.2">Create <code>build.sbt</code> for 0.13.2<a href="#Create++for+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
+</p><h3 id="Create++for+0.13.5">Create <code>build.sbt</code> for 0.13.5<a href="#Create++for+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Create a <code>build.sbt</code> file in the root directory of your project. See
 <a href="../tutorial/Basic-Def.html">.sbt build definition</a> in the Getting
 Started Guide, and for <a href="Basic-Def-Examples.html">simple examples</a>.
 If you have a simple project
@@ -103,11 +103,11 @@ organization := &quot;org.myproject&quot;
 scalaVersion := &quot;2.9.2&quot;
 </code></pre><p>Currently, a <code>project/build.properties</code> is still needed to explicitly
 select the sbt version. For example:
-</p><h3 id="Run+sbt+0.13.2">Run sbt 0.13.2<a href="#Run+sbt+0.13.2" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
+</p><h3 id="Run+sbt+0.13.5">Run sbt 0.13.5<a href="#Run+sbt+0.13.5" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>Now launch sbt. If you’re lucky it works and you’re done. For help
 debugging, see below.
 </p><h3 id="Switching+back+to+sbt+0.7.x">Switching back to sbt 0.7.x<a href="#Switching+back+to+sbt+0.7.x" class="header-link"><span class="header-link-content">&nbsp;</span></a></h3><p>If you get stuck and want to switch back, you can leave your <code>build.sbt</code>
 file alone. sbt 0.7.x will not understand or notice it. Just rename your
-0.13.2 <code>project</code> directory to something like <code>project10</code> and rename
+0.13.5 <code>project</code> directory to something like <code>project10</code> and rename
 the backup of your old project from <code>project-old</code> to <code>project</code> again.
 </p><h4 id="FAQs">FAQs<a href="#FAQs" class="header-link"><span class="header-link-content">&nbsp;</span></a></h4><p>There’s a section in the <a href="Faq.html">FAQ</a> about migration from 0.7 that
 covers several other important points.
