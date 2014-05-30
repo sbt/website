@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbt/Command.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010  Jason Zaugg
+ */</span>
+<span class="keyword">package</span> xsbt
+
+	<span class="keyword">import</span> scala.tools.nsc.<span class="delimiter">{</span>CompilerCommand, Settings<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="xsbt.Command.type" id="xsbt.Command">Command</a>
+<a href="#xsbt.Command" title="xsbt.Command.type" class="delimiter">{</a>
+	<span class="comment">/**
+	 * Construct a CompilerCommand using reflection, to be compatible with Scalac before and after
+	 * &lt;a href=&quot;https://lampsvn.epfl.ch/trac/scala/changeset/21274&quot;&gt;r21274&lt;/a&gt;
+	 */</span>
+	<span class="keyword">def</span> <a title="(arguments: List[String], settings: scala.tools.nsc.Settings)scala.tools.nsc.CompilerCommand" id="xsbt.Command.apply">apply</a><span class="delimiter">(</span><a title="List[String]" id="xsbt.Command.apply.arguments">arguments</a>: <span title="List[String]">List</span><span class="delimiter">[</span>String<span class="delimiter">]</span>, <a title="scala.tools.nsc.Settings" id="xsbt.Command.apply.settings">settings</a>: <span title="scala.tools.nsc.Settings">Settings</span><span class="delimiter">)</span>: <span title="scala.tools.nsc.CompilerCommand">CompilerCommand</span> = <span class="delimiter">{</span>
+		<span class="keyword">def</span> <a title="(params: Class[_]*)java.lang.reflect.Constructor[scala.tools.nsc.CompilerCommand]" id="xsbt.Command.apply.constr">constr</a><span class="delimiter">(</span><a title="Class[_]*" id="xsbt.Command.apply.constr.params">params</a>: <span title="Class[_]*">Class</span><span class="delimiter">[</span>_<span class="delimiter">]</span>*<span class="delimiter">)</span> = classOf<span title="Class[scala.tools.nsc.CompilerCommand](classOf[scala.tools.nsc.CompilerCommand])" class="delimiter">[</span>CompilerCommand<span class="delimiter">]</span>.<span title="(x$1: &lt;repeated...&gt;[Class[_]])java.lang.reflect.Constructor[scala.tools.nsc.CompilerCommand]">getConstructor</span><span class="delimiter">(</span><a href="#xsbt.Command.apply.constr.params" title="Class[_]*">params</a>: _*<span class="delimiter">)</span>
+		<span class="keyword">try</span> <span class="delimiter">{</span>
+			<a href="#xsbt.Command.apply.constr" title="(params: Class[_]*)java.lang.reflect.Constructor[scala.tools.nsc.CompilerCommand]">constr</a><span class="delimiter">(</span>classOf<span title="Class[List[_]](classOf[scala.collection.immutable.List])" class="delimiter">[</span>List<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span>, classOf<span title="Class[scala.tools.nsc.Settings](classOf[scala.tools.nsc.Settings])" class="delimiter">[</span>Settings<span class="delimiter">]</span><span class="delimiter">)</span>.<span title="(x$1: &lt;repeated...&gt;[Object])scala.tools.nsc.CompilerCommand">newInstance</span><span class="delimiter">(</span><a href="#xsbt.Command.apply.arguments" title="List[String]">arguments</a>, <a href="#xsbt.Command.apply.settings" title="scala.tools.nsc.Settings">settings</a><span class="delimiter">)</span>
+		<span class="delimiter">}</span> <span class="keyword">catch</span> <span class="delimiter">{</span>
+		<span class="keyword">case</span> <a title="NoSuchMethodException" id="xsbt.Command.apply.e">e</a>: <span title="NoSuchMethodException">NoSuchMethodException</span> =&gt;
+			<a href="#xsbt.Command.apply.constr" title="(params: Class[_]*)java.lang.reflect.Constructor[scala.tools.nsc.CompilerCommand]">constr</a><span class="delimiter">(</span>classOf<span title="Class[List[_]](classOf[scala.collection.immutable.List])" class="delimiter">[</span>List<span class="delimiter">[</span>_<span class="delimiter">]</span><span class="delimiter">]</span>, classOf<span title="Class[scala.tools.nsc.Settings](classOf[scala.tools.nsc.Settings])" class="delimiter">[</span>Settings<span class="delimiter">]</span>, classOf<span title="Class[Function1[_, _]](classOf[scala.Function1])" class="delimiter">[</span>Function1<span class="delimiter">[</span>_, _<span class="delimiter">]</span><span class="delimiter">]</span>, classOf<span title="Class[Boolean](classOf[scala.Boolean])" class="delimiter">[</span>Boolean<span class="delimiter">]</span><span class="delimiter">)</span>.<span title="(x$1: &lt;repeated...&gt;[Object])scala.tools.nsc.CompilerCommand">newInstance</span><span class="delimiter">(</span><a href="#xsbt.Command.apply.arguments" title="List[String]">arguments</a>, <a href="#xsbt.Command.apply.settings" title="scala.tools.nsc.Settings">settings</a>, <span class="delimiter">(</span>s: <span title="String">String</span><span class="delimiter">)</span> =&gt; <span title="Nothing" class="keyword">throw</span> <span title="(x$1: String)RuntimeException" class="keyword">new</span> <span title="RuntimeException">RuntimeException</span><span class="delimiter">(</span><a href="#xsbt.Command.apply.$anonfun.s" title="String">s</a><span class="delimiter">)</span>, <span title="Boolean(false)" class="keyword">false</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="AnyRef" class="delimiter">[</span><span title="AnyRef">AnyRef</span><span class="delimiter">]</span><span class="delimiter">)</span>
+		<span class="delimiter">}</span>
+	<span class="delimiter">}</span>
+	
+	<span class="keyword">def</span> <a title="(settings: scala.tools.nsc.Settings)Boolean" id="xsbt.Command.getWarnFatal">getWarnFatal</a><span class="delimiter">(</span><a title="scala.tools.nsc.Settings" id="xsbt.Command.getWarnFatal.settings">settings</a>: <span title="scala.tools.nsc.Settings">Settings</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+		<a href="#xsbt.Command.getWarnFatal.settings" title="scala.tools.nsc.Settings">settings</a>.<span title="=&gt; settings.BooleanSetting">Xwarnfatal</span>.<span title="=&gt; Boolean">value</span>
+
+	<span class="keyword">def</span> <a title="(settings: scala.tools.nsc.Settings)Boolean" id="xsbt.Command.getNoWarn">getNoWarn</a><span class="delimiter">(</span><a title="scala.tools.nsc.Settings" id="xsbt.Command.getNoWarn.settings">settings</a>: <span title="scala.tools.nsc.Settings">Settings</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> =
+		<a href="#xsbt.Command.getNoWarn.settings" title="scala.tools.nsc.Settings">settings</a>.<span title="=&gt; settings.BooleanSetting">nowarn</span>.<span title="=&gt; Boolean">value</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

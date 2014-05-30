@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/TypeParameter.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.api;
+
+import java.util.Arrays;
+import java.util.List;
+public final class TypeParameter implements java.io.Serializable
+{
+	public TypeParameter(String id, Annotation[] annotations, TypeParameter[] typeParameters, Variance variance, Type lowerBound, Type upperBound)
+	{
+		this.id = id;
+		this.annotations = annotations;
+		this.typeParameters = typeParameters;
+		this.variance = variance;
+		this.lowerBound = lowerBound;
+		this.upperBound = upperBound;
+	}
+	private final String id;
+	private final Annotation[] annotations;
+	private final TypeParameter[] typeParameters;
+	private final Variance variance;
+	private final Type lowerBound;
+	private final Type upperBound;
+	public final String id()
+	{
+		return id;
+	}
+	public final Annotation[] annotations()
+	{
+		return annotations;
+	}
+	public final TypeParameter[] typeParameters()
+	{
+		return typeParameters;
+	}
+	public final Variance variance()
+	{
+		return variance;
+	}
+	public final Type lowerBound()
+	{
+		return lowerBound;
+	}
+	public final Type upperBound()
+	{
+		return upperBound;
+	}
+	public boolean equals(Object obj)
+	{
+		 if (this == obj) {
+			 return true;
+		} else if (!(obj instanceof TypeParameter)) {
+			 return false;
+		} else {
+			TypeParameter o = (TypeParameter)obj;
+			return id().equals(o.id()) &amp;&amp; Arrays.deepEquals(annotations(), o.annotations()) &amp;&amp; Arrays.deepEquals(typeParameters(), o.typeParameters()) &amp;&amp; variance().equals(o.variance()) &amp;&amp; lowerBound().equals(o.lowerBound()) &amp;&amp; upperBound().equals(o.upperBound());
+		}
+	}
+	public int hashCode()
+	{
+		 return 37 * (37 * (37 * (37 * (37 * (37 * (17) + id().hashCode()) + Arrays.deepHashCode(annotations())) + Arrays.deepHashCode(typeParameters())) + variance().hashCode()) + lowerBound().hashCode()) + upperBound().hashCode();
+	}
+	public String toString()
+	{
+		 return &quot;TypeParameter(&quot; + &quot;id: &quot; + id() + &quot;, &quot; + &quot;annotations: &quot; + Arrays.toString(annotations()) + &quot;, &quot; + &quot;typeParameters: &quot; + Arrays.toString(typeParameters()) + &quot;, &quot; + &quot;variance: &quot; + variance() + &quot;, &quot; + &quot;lowerBound: &quot; + lowerBound() + &quot;, &quot; + &quot;upperBound: &quot; + upperBound() + &quot;)&quot;;
+	}
+}
+
+        </pre>
+    </body>
+</html>

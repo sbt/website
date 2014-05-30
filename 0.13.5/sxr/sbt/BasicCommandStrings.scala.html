@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>sbt/BasicCommandStrings.scala</title>
+        <script type="text/javascript" src="../jquery-all.js"></script>
+        <script type="text/javascript" src="../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="comment">/* sbt -- Simple Build Tool
+ * Copyright 2010  Mark Harrah
+ */</span>
+<span class="keyword">package</span> sbt
+
+<span class="keyword">import</span> complete.HistoryCommands
+<span class="keyword">import</span> scala.annotation.tailrec
+
+<span class="keyword">import</span> java.io.File
+<span class="keyword">import</span> <a href="Path.scala.html#sbt.Path" title="sbt.Path.type">Path</a>._
+
+<span class="keyword">object</span> <a title="sbt.BasicCommandStrings.type" id="sbt.BasicCommandStrings">BasicCommandStrings</a>
+<a href="#sbt.BasicCommandStrings" title="sbt.BasicCommandStrings.type" class="delimiter">{</a>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.HelpCommand">HelpCommand</a> = <span title="String(&quot;help&quot;)" class="string">&quot;help&quot;</span>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.CompletionsCommand">CompletionsCommand</a> = <span title="String(&quot;completions&quot;)" class="string">&quot;completions&quot;</span>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.Exit">Exit</a> = <span title="String(&quot;exit&quot;)" class="string">&quot;exit&quot;</span>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.Quit">Quit</a> = <span title="String(&quot;quit&quot;)" class="string">&quot;quit&quot;</span>
+
+	<span class="comment">/** The command name to terminate the program.*/</span>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.TerminateAction">TerminateAction</a>: <span title="String">String</span> = <a href="#sbt.BasicCommandStrings.Exit" title="=&gt; String">Exit</a>
+
+	<span class="keyword">def</span> <a title="=&gt; (String, String)" id="sbt.BasicCommandStrings.helpBrief">helpBrief</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><a href="#sbt.BasicCommandStrings.HelpCommand" title="=&gt; String">HelpCommand</a>, <span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;Displays this help message or prints detailed help on requested commands (run \'&quot;)">Displays this help message or prints detailed help on requested commands (run '$</span><a href="#sbt.BasicCommandStrings.HelpCommand" title="=&gt; String">HelpCommand</a><span title="String(&quot; &lt;command&gt;\').&quot;)" class="string"> &lt;command&gt;').&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.helpDetailed">helpDetailed</a> = <a href="#sbt.BasicCommandStrings.HelpCommand" title="=&gt; String">HelpCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;\n\n\tPrints a help summary.\n\n&quot;)" class="string">&quot;&quot;&quot;
+
+	Prints a help summary.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.HelpCommand" title="=&gt; String">HelpCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt;\n\n\tPrints detailed help for command &lt;command&gt;.\n\n&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+
+	Prints detailed help for command &lt;command&gt;.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.HelpCommand" title="=&gt; String">HelpCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;regular expression&gt;\n\n\tSearches the help according to the provided regular expression.\n&quot;)" class="string">&quot;&quot;&quot; &lt;regular expression&gt;
+
+	Searches the help according to the provided regular expression.
+&quot;&quot;&quot;</span>
+
+  	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.CompletionsDetailed">CompletionsDetailed</a> = <span title="String(&quot;Displays a list of completions for the given argument string (run \'completions &lt;string&gt;\').&quot;)" class="string">&quot;Displays a list of completions for the given argument string (run 'completions &lt;string&gt;').&quot;</span>
+  	<span class="keyword">def</span> <a title="=&gt; (String, String)" id="sbt.BasicCommandStrings.CompletionsBrief">CompletionsBrief</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><a href="#sbt.BasicCommandStrings.CompletionsCommand" title="=&gt; String">CompletionsCommand</a>, <a href="#sbt.BasicCommandStrings.CompletionsDetailed" title="=&gt; String">CompletionsDetailed</a><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="=&gt; (String, String)" id="sbt.BasicCommandStrings.HistoryHelpBrief">HistoryHelpBrief</a> = <span class="delimiter">(</span><a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands" title="sbt.complete.HistoryCommands.type">HistoryCommands</a>.<a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands.Start" title="(x: String)ArrowAssoc[String]">Start</a> <span title="(y: String)(String, String)">-&gt;</span> <span title="String(&quot;History command help.  Lists and describes all history commands.&quot;)" class="string">&quot;History command help.  Lists and describes all history commands.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; sbt.Help" id="sbt.BasicCommandStrings.historyHelp">historyHelp</a> = <a href="Command.scala.html#sbt.Help.apply(820f1bb4b1)" title="(briefHelp: Seq[(String, String)], detailedHelp: Map[String,String], more: Set[String])sbt.Help">Help</a><span class="delimiter">(</span><span title="scala.collection.immutable.Nil.type">Nil</span>, <span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.HistoryHelpBrief" title="=&gt; (String, String)">HistoryHelpBrief</a> <a href="#sbt.BasicCommandStrings.historyHelp.x$1" title="(elem: (String, String))(implicit bf: scala.collection.generic.CanBuildFrom[Seq[(String, String)],(String, String),Seq[(String, String)]])Seq[(String, String)]">+:</a> <a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands" title="sbt.complete.HistoryCommands.type">HistoryCommands</a>.<a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands.descriptions" title="=&gt; Seq[(String, String)]">descriptions</a><span class="delimiter">)</span>.<span title="(implicit ev: &lt;:&lt;[(String, String),(String, String)])scala.collection.immutable.Map[String,String]">toMap</span>, <span title="(elems: String*)scala.collection.immutable.Set[String]">Set</span><span class="delimiter">(</span><a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands" title="sbt.complete.HistoryCommands.type">HistoryCommands</a>.<a href="complete/HistoryCommands.scala.html#sbt.complete.HistoryCommands.Start" title="=&gt; String">Start</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.exitBrief">exitBrief</a> = <span title="String(&quot;Terminates the build.&quot;)" class="string">&quot;Terminates the build.&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; sbt.Help" id="sbt.BasicCommandStrings.logLevelHelp">logLevelHelp</a> =
+	<span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="Seq[sbt.Level.Value]" id="sbt.BasicCommandStrings.logLevelHelp.levels">levels</a> = <a href="Level.scala.html#sbt.Level" title="sbt.Level.type">Level</a>.<span title="=&gt; sbt.Level.ValueSet">values</span>.<span title="=&gt; Seq[sbt.Level.Value]">toSeq</span>
+		<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.logLevelHelp.levelList">levelList</a> = <a href="#sbt.BasicCommandStrings.logLevelHelp.levels" title="Seq[sbt.Level.Value]">levels</a>.<span title="(sep: String)String">mkString</span><span class="delimiter">(</span><span title="String(&quot;, &quot;)" class="string">&quot;, &quot;</span><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="(String, String)" id="sbt.BasicCommandStrings.logLevelHelp.brief">brief</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><span title="String(&quot;&lt;log-level&gt;&quot;)" class="string">&quot;&lt;log-level&gt;&quot;</span>, <span title="String(&quot;Sets the logging level to \'log-level\'.  Valid levels: &quot;)" class="string">&quot;Sets the logging level to 'log-level'.  Valid levels: &quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.logLevelHelp.levelList" title="String">levelList</a><span class="delimiter">)</span>
+		<span class="keyword">val</span> <a title="scala.collection.immutable.Map[String,String]" id="sbt.BasicCommandStrings.logLevelHelp.detailed">detailed</a> = <a href="#sbt.BasicCommandStrings.logLevelHelp.levels" title="Seq[sbt.Level.Value]">levels</a>.<span title="(f: sbt.Level.Value =&gt; (String, String))(implicit bf: scala.collection.generic.CanBuildFrom[Seq[sbt.Level.Value],(String, String),Seq[(String, String)]])Seq[(String, String)]">map</span><span title="scala.collection.generic.CanBuildFrom[scala.collection.Seq.Coll,(String, String),Seq[(String, String)]]" class="delimiter">(</span><a title="sbt.Level.Value" id="sbt.BasicCommandStrings.logLevelHelp.detailed.$anonfun.l">l</a> =&gt; <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><a href="#sbt.BasicCommandStrings.logLevelHelp.detailed.$anonfun.l" title="sbt.Level.Value">l</a>.<span title="()String">toString</span>, <a href="#sbt.BasicCommandStrings.logLevelDetail" title="(level: sbt.Level.Value)String">logLevelDetail</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.logLevelHelp.detailed.$anonfun.l" title="sbt.Level.Value">l</a><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">)</span>.<span title="(implicit ev: &lt;:&lt;[(String, String),(String, String)])scala.collection.immutable.Map[String,String]">toMap</span>
+		<a href="Command.scala.html#sbt.Help.apply(6e02535712)" title="(briefHelp: (String, String), detailedHelp: Map[String,String])sbt.Help">Help</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.logLevelHelp.brief" title="(String, String)">brief</a>, <a href="#sbt.BasicCommandStrings.logLevelHelp.detailed" title="scala.collection.immutable.Map[String,String]">detailed</a><span class="delimiter">)</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(level: sbt.Level.Value)String" id="sbt.BasicCommandStrings.logLevelDetail">logLevelDetail</a><span class="delimiter">(</span><a title="sbt.Level.Value" id="sbt.BasicCommandStrings.logLevelDetail.level">level</a>: Level.<span title="sbt.Level.Value">Value</span><span class="delimiter">)</span>: <span title="String">String</span> =
+<span title="(args: Any*)String">s</span>&quot;&quot;&quot;<span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.logLevelDetail.level" title="sbt.Level.Value">level</a><span title="String(&quot;\n\n\tSets the global logging level to &quot;)">
+
+	Sets the global logging level to $</span><a href="#sbt.BasicCommandStrings.logLevelDetail.level" title="sbt.Level.Value">level</a><span title="String(&quot;.\n\tThis will be used as the default level for logging from commands, settings, and tasks.\n\tAny explicit `logLevel` configuration in a project overrides this setting.\n\n&quot;)">.
+	This will be used as the default level for logging from commands, settings, and tasks.
+	Any explicit `logLevel` configuration in a project overrides this setting.
+
+$</span><span class="delimiter">{</span><a href="#sbt.BasicCommandStrings.runEarly" title="(command: String)String">runEarly</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.logLevelDetail.level" title="sbt.Level.Value">level</a>.<span title="()String">toString</span><span class="delimiter">)</span><span class="delimiter">}</span><span title="String(&quot;\n\n\tSets the global logging level as described above, but does so before any other commands are executed on startup, including project loading.\n\tThis is useful as a startup option:\n\t\t* it takes effect before any logging occurs\n\t\t* if no other commands are passed, interactive mode is still entered\n&quot;)" class="string">
+
+	Sets the global logging level as described above, but does so before any other commands are executed on startup, including project loading.
+	This is useful as a startup option:
+		* it takes effect before any logging occurs
+		* if no other commands are passed, interactive mode is still entered
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="(command: String)String" id="sbt.BasicCommandStrings.runEarly">runEarly</a><span class="delimiter">(</span><a title="String" id="sbt.BasicCommandStrings.runEarly.command">command</a>: <span title="String">String</span><span class="delimiter">)</span> = <span class="delimiter">{</span>
+		<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.runEarly.sep">sep</a> = <span title="String" class="keyword">if</span><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.runEarly.command" title="String">command</a>.<span title="()Boolean">isEmpty</span> <span title="(x: Boolean)Boolean">||</span> <span title="Character.type">Character</span>.<span title="(x$1: Char)Boolean">isLetter</span><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.runEarly.command" title="String">command</a>.<span title="(x$1: Int)Char">charAt</span><span class="delimiter">(</span><span title="Int(0)" class="int">0</span><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">)</span> <span title="String(&quot;&quot;)" class="string">&quot;&quot;</span> <span class="keyword">else</span> <span title="String(&quot; &quot;)" class="string">&quot; &quot;</span>
+		<span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.EarlyCommand" title="=&gt; String">EarlyCommand</a><span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.runEarly.sep" title="String">sep</a><span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.runEarly.command" title="String">command</a><span title="String(&quot;&quot;)" class="string">&quot;</span>
+	<span class="delimiter">}</span>
+	<span class="keyword">private</span><span class="delimiter">[</span>sbt<span class="delimiter">]</span> <span class="keyword">def</span> <a title="(s: String)Boolean" id="sbt.BasicCommandStrings.isEarlyCommand">isEarlyCommand</a><span class="delimiter">(</span><a title="String" id="sbt.BasicCommandStrings.isEarlyCommand.s">s</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Boolean">Boolean</span> = <span class="delimiter">{</span>
+		<a href="#sbt.BasicCommandStrings.isEarlyCommand.s" title="String">s</a>.<span title="(x$1: String)Boolean">startsWith</span><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.EarlyCommand" title="=&gt; String">EarlyCommand</a><span class="delimiter">)</span> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#sbt.BasicCommandStrings.isEarlyCommand.s" title="String">s</a> <span title="(x$1: AnyRef)Boolean">!=</span> <a href="#sbt.BasicCommandStrings.Compat" title="sbt.BasicCommandStrings.Compat.type">Compat</a>.<a href="#sbt.BasicCommandStrings.Compat.FailureWall" title="=&gt; String">FailureWall</a> <span title="(x: Boolean)Boolean">&amp;&amp;</span> <a href="#sbt.BasicCommandStrings.isEarlyCommand.s" title="String">s</a> <span title="(x$1: AnyRef)Boolean">!=</span> <a href="#sbt.BasicCommandStrings.Compat" title="sbt.BasicCommandStrings.Compat.type">Compat</a>.<a href="#sbt.BasicCommandStrings.Compat.ClearOnFailure" title="=&gt; String">ClearOnFailure</a>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.EarlyCommand">EarlyCommand</a> = <span title="String(&quot;--&quot;)" class="string">&quot;--&quot;</span>
+	<span class="keyword">val</span> <a title="(String, String)" id="sbt.BasicCommandStrings.EarlyCommandBrief">EarlyCommandBrief</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.EarlyCommand" title="=&gt; String">EarlyCommand</a><span title="String(&quot;&lt;command&gt;&quot;)" class="string">&lt;command&gt;&quot;</span>, <span title="String(&quot;Schedules a command to run before other commands on startup.&quot;)" class="string">&quot;Schedules a command to run before other commands on startup.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.EarlyCommandDetailed">EarlyCommandDetailed</a> =
+<span title="(args: Any*)String">s</span>&quot;&quot;&quot;<span title="String(&quot;&quot;)">$</span><a href="#sbt.BasicCommandStrings.EarlyCommand" title="=&gt; String">EarlyCommand</a><span title="String(&quot;&lt;command&gt;\n\n\tSchedules an early command, which will be run before other commands on the command line.\n\tThe order is preserved between all early commands, so `sbt --a --b` executes `a` and `b` in order.\n&quot;)" class="string">&lt;command&gt;
+
+	Schedules an early command, which will be run before other commands on the command line.
+	The order is preserved between all early commands, so `sbt --a --b` executes `a` and `b` in order.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ReadCommand">ReadCommand</a> = <span title="String(&quot;&lt;&quot;)" class="string">&quot;&lt;&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ReadFiles">ReadFiles</a> = <span title="String(&quot; file1 file2 ...&quot;)" class="string">&quot; file1 file2 ...&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ReadDetailed">ReadDetailed</a> =
+<a href="#sbt.BasicCommandStrings.ReadCommand" title="=&gt; String">ReadCommand</a> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.ReadFiles" title="=&gt; String">ReadFiles</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;\n\n\tReads the lines from the given files and inserts them as commands.\n\tAll empty lines and lines that start with \'#\' are ignored.\n\tIf a file does not exist or is not readable, this command fails.\n\n\tAll the lines from all the files are read before any of the commands\n\t  are executed. Thus, if any file is not readable, none of commands\n\t  from any of the files (even the existing ones) will be run.\n\n\tYou probably need to escape this command if entering it at your shell.&quot;)" class="string">&quot;&quot;&quot;
+
+	Reads the lines from the given files and inserts them as commands.
+	All empty lines and lines that start with '#' are ignored.
+	If a file does not exist or is not readable, this command fails.
+
+	All the lines from all the files are read before any of the commands
+	  are executed. Thus, if any file is not readable, none of commands
+	  from any of the files (even the existing ones) will be run.
+
+	You probably need to escape this command if entering it at your shell.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ApplyCommand">ApplyCommand</a> = <span title="String(&quot;apply&quot;)" class="string">&quot;apply&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ApplyDetailed">ApplyDetailed</a> =
+<a href="#sbt.BasicCommandStrings.ApplyCommand" title="=&gt; String">ApplyCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; [-cp|-classpath &lt;classpath&gt;] &lt;module-name&gt;*\n\tTransforms the current State by calling &lt;module-name&gt;.apply(currentState) for each listed module name.\n\tHere, currentState is of type sbt.State.\n   If a classpath is provided, modules are loaded from a new class loader for this classpath.\n&quot;)" class="string">&quot;&quot;&quot; [-cp|-classpath &lt;classpath&gt;] &lt;module-name&gt;*
+	Transforms the current State by calling &lt;module-name&gt;.apply(currentState) for each listed module name.
+	Here, currentState is of type sbt.State.
+   If a classpath is provided, modules are loaded from a new class loader for this classpath.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.RebootCommand">RebootCommand</a> = <span title="String(&quot;reboot&quot;)" class="string">&quot;reboot&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.RebootDetailed">RebootDetailed</a> =
+<a href="#sbt.BasicCommandStrings.RebootCommand" title="=&gt; String">RebootCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; [full]\n\n\tThis command is equivalent to exiting sbt, restarting, and running the\n\t  remaining commands with the exception that the JVM is not shut down.\n\n\tIf \'full\' is specified, the boot directory (`~/.sbt/boot` by default)\n\t  is deleted before restarting.  This forces an update of sbt and Scala\n\t  and is useful when working with development versions of sbt or Scala.&quot;)" class="string">&quot;&quot;&quot; [full]
+
+	This command is equivalent to exiting sbt, restarting, and running the
+	  remaining commands with the exception that the JVM is not shut down.
+
+	If 'full' is specified, the boot directory (`~/.sbt/boot` by default)
+	  is deleted before restarting.  This forces an update of sbt and Scala
+	  and is useful when working with development versions of sbt or Scala.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Multi">Multi</a> = <span title="String(&quot;;&quot;)" class="string">&quot;;&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (String, String)" id="sbt.BasicCommandStrings.MultiBrief">MultiBrief</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><a href="#sbt.BasicCommandStrings.Multi" title="=&gt; String">Multi</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt; (&quot;)" class="string">&quot; &lt;command&gt; (&quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.Multi" title="=&gt; String">Multi</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt;)*&quot;)" class="string">&quot; &lt;command&gt;)*&quot;</span>, <span title="String(&quot;Runs the provided semicolon-separated commands.&quot;)" class="string">&quot;Runs the provided semicolon-separated commands.&quot;</span><span class="delimiter">)</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.MultiDetailed">MultiDetailed</a> =
+<a href="#sbt.BasicCommandStrings.Multi" title="=&gt; String">Multi</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; command1 &quot;)" class="string">&quot; command1 &quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.Multi" title="=&gt; String">Multi</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; command2 ...\n\n\tRuns the specified commands.&quot;)" class="string">&quot;&quot;&quot; command2 ...
+
+	Runs the specified commands.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.AppendCommand">AppendCommand</a> = <span title="String(&quot;append&quot;)" class="string">&quot;append&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.AppendLastDetailed">AppendLastDetailed</a> =
+<a href="#sbt.BasicCommandStrings.AppendCommand" title="=&gt; String">AppendCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt;\n\tAppends \'command\' to list of commands to run.\n&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+	Appends 'command' to list of commands to run.
+&quot;&quot;&quot;</span>
+
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.AliasCommand">AliasCommand</a> = <span title="String(&quot;alias&quot;)" class="string">&quot;alias&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.AliasDetailed">AliasDetailed</a> =
+<a href="#sbt.BasicCommandStrings.AliasCommand" title="=&gt; String">AliasCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot;\n\n\tPrints a list of defined aliases.\n\n&quot;)" class="string">&quot;&quot;&quot;
+
+	Prints a list of defined aliases.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span>
+<a href="#sbt.BasicCommandStrings.AliasCommand" title="=&gt; String">AliasCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; name\n\n\tPrints the alias defined for `name`.\n\n&quot;)" class="string">&quot;&quot;&quot; name
+
+	Prints the alias defined for `name`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span>
+<a href="#sbt.BasicCommandStrings.AliasCommand" title="=&gt; String">AliasCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; name=value\n\n\tSets the alias `name` to `value`, replacing any existing alias with that name.\n\tWhenever `name` is entered, the corresponding `value` is run.\n\tIf any argument is provided to `name`, it is appended as argument to `value`.\n\n&quot;)" class="string">&quot;&quot;&quot; name=value
+
+	Sets the alias `name` to `value`, replacing any existing alias with that name.
+	Whenever `name` is entered, the corresponding `value` is run.
+	If any argument is provided to `name`, it is appended as argument to `value`.
+
+&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span>
+<a href="#sbt.BasicCommandStrings.AliasCommand" title="=&gt; String">AliasCommand</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; name=\n\n\tRemoves the alias for `name`.&quot;)" class="string">&quot;&quot;&quot; name=
+
+	Removes the alias for `name`.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Shell">Shell</a> = <span title="String(&quot;shell&quot;)" class="string">&quot;shell&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ShellDetailed">ShellDetailed</a> = <span title="String(&quot;Provides an interactive prompt from which commands can be run.&quot;)" class="string">&quot;Provides an interactive prompt from which commands can be run.&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.StashOnFailure">StashOnFailure</a> = <span title="String(&quot;sbtStashOnFailure&quot;)" class="string">&quot;sbtStashOnFailure&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.PopOnFailure">PopOnFailure</a> = <span title="String(&quot;sbtPopOnFailure&quot;)" class="string">&quot;sbtPopOnFailure&quot;</span>
+
+	<span class="comment">// commands with poor choices for names since they clash with the usual conventions for command line options</span>
+	<span class="comment">//   these are not documented and are mainly internal commands and can be removed without a full deprecation cycle</span>
+	<span class="keyword">object</span> <a title="sbt.BasicCommandStrings.Compat.type" id="sbt.BasicCommandStrings.Compat">Compat</a> <a href="#sbt.BasicCommandStrings.Compat" title="sbt.BasicCommandStrings.Compat.type" class="delimiter">{</a>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.OnFailure">OnFailure</a> = <span title="String(&quot;-&quot;)" class="string">&quot;-&quot;</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.ClearOnFailure">ClearOnFailure</a> = <span title="String(&quot;--&quot;)" class="string">&quot;--&quot;</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.FailureWall">FailureWall</a> = <span title="String(&quot;---&quot;)" class="string">&quot;---&quot;</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.OnFailureDeprecated">OnFailureDeprecated</a> = <a href="#sbt.BasicCommandStrings.Compat.deprecatedAlias" title="(oldName: String, newName: String)String">deprecatedAlias</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.Compat.OnFailure" title="=&gt; String">OnFailure</a>, <a href="#sbt.BasicCommandStrings" title="sbt.BasicCommandStrings.type">BasicCommandStrings</a>.<a href="#sbt.BasicCommandStrings.OnFailure" title="=&gt; String">OnFailure</a><span class="delimiter">)</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.ClearOnFailureDeprecated">ClearOnFailureDeprecated</a> = <a href="#sbt.BasicCommandStrings.Compat.deprecatedAlias" title="(oldName: String, newName: String)String">deprecatedAlias</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.Compat.ClearOnFailure" title="=&gt; String">ClearOnFailure</a>, <a href="#sbt.BasicCommandStrings" title="sbt.BasicCommandStrings.type">BasicCommandStrings</a>.<a href="#sbt.BasicCommandStrings.ClearOnFailure" title="=&gt; String">ClearOnFailure</a><span class="delimiter">)</span>
+		<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.Compat.FailureWallDeprecated">FailureWallDeprecated</a> = <a href="#sbt.BasicCommandStrings.Compat.deprecatedAlias" title="(oldName: String, newName: String)String">deprecatedAlias</a><span class="delimiter">(</span><a href="#sbt.BasicCommandStrings.Compat.FailureWall" title="=&gt; String">FailureWall</a>, <a href="#sbt.BasicCommandStrings" title="sbt.BasicCommandStrings.type">BasicCommandStrings</a>.<a href="#sbt.BasicCommandStrings.FailureWall" title="=&gt; String">FailureWall</a><span class="delimiter">)</span>
+		<span class="keyword">private</span><span class="delimiter">[</span><span class="keyword">this</span><span class="delimiter">]</span> <span class="keyword">def</span> <a title="(oldName: String, newName: String)String" id="sbt.BasicCommandStrings.Compat.deprecatedAlias">deprecatedAlias</a><span class="delimiter">(</span><a title="String" id="sbt.BasicCommandStrings.Compat.deprecatedAlias.oldName">oldName</a>: <span title="String">String</span>, <a title="String" id="sbt.BasicCommandStrings.Compat.deprecatedAlias.newName">newName</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="String">String</span> =
+			<span title="(args: Any*)String">s</span>&quot;<span title="String(&quot;The `&quot;)">The `$</span><a href="#sbt.BasicCommandStrings.Compat.deprecatedAlias.oldName" title="String">oldName</a><span title="String(&quot;` command is deprecated in favor of `&quot;)">` command is deprecated in favor of `$</span><a href="#sbt.BasicCommandStrings.Compat.deprecatedAlias.newName" title="String">newName</a><span title="String(&quot;` and will be removed in 0.14.0&quot;)" class="string">` and will be removed in 0.14.0&quot;</span>
+	<span class="delimiter">}</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.FailureWall">FailureWall</a> = <span title="String(&quot;resumeFromFailure&quot;)" class="string">&quot;resumeFromFailure&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.ClearOnFailure">ClearOnFailure</a> = <span title="String(&quot;sbtClearOnFailure&quot;)" class="string">&quot;sbtClearOnFailure&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.OnFailure">OnFailure</a> = <span title="String(&quot;onFailure&quot;)" class="string">&quot;onFailure&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.OnFailureDetailed">OnFailureDetailed</a> =
+<a href="#sbt.BasicCommandStrings.OnFailure" title="=&gt; String">OnFailure</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; command\n\n\tRegisters \'command\' to run when a command fails to complete normally.\n\n\tOnly one failure command may be registered at a time, so this command\n\t  replaces the previous command if there is one.\n\n\tThe failure command resets when it runs once, so it must be added\n\t  again if desired.&quot;)" class="string">&quot;&quot;&quot; command
+
+	Registers 'command' to run when a command fails to complete normally.
+
+	Only one failure command may be registered at a time, so this command
+	  replaces the previous command if there is one.
+
+	The failure command resets when it runs once, so it must be added
+	  again if desired.&quot;&quot;&quot;</span>
+
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.IfLast">IfLast</a> = <span title="String(&quot;iflast&quot;)" class="string">&quot;iflast&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.IfLastCommon">IfLastCommon</a> = <span title="String(&quot;If there are no more commands after this one, \'command\' is run.&quot;)" class="string">&quot;If there are no more commands after this one, 'command' is run.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.IfLastDetailed">IfLastDetailed</a> =
+<a href="#sbt.BasicCommandStrings.IfLast" title="=&gt; String">IfLast</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt;\n\n\t&quot;)" class="string">&quot;&quot;&quot; &lt;command&gt;
+
+	&quot;&quot;&quot;</span> <span title="(x$1: Any)String">+</span> <a href="#sbt.BasicCommandStrings.IfLastCommon" title="=&gt; String">IfLastCommon</a>
+
+	<span class="keyword">val</span> <a title="String" id="sbt.BasicCommandStrings.ContinuousExecutePrefix">ContinuousExecutePrefix</a> = <span title="String(&quot;~&quot;)" class="string">&quot;~&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; String" id="sbt.BasicCommandStrings.continuousDetail">continuousDetail</a> = <span title="String(&quot;Executes the specified command whenever source files change.&quot;)" class="string">&quot;Executes the specified command whenever source files change.&quot;</span>
+	<span class="keyword">def</span> <a title="=&gt; (String, String)" id="sbt.BasicCommandStrings.continuousBriefHelp">continuousBriefHelp</a> = <span title="(_1: String, _2: String)(String, String)" class="delimiter">(</span><a href="#sbt.BasicCommandStrings.ContinuousExecutePrefix" title="=&gt; String">ContinuousExecutePrefix</a> <span title="(x$1: Any)String">+</span> <span title="String(&quot; &lt;command&gt;&quot;)" class="string">&quot; &lt;command&gt;&quot;</span>, <a href="#sbt.BasicCommandStrings.continuousDetail" title="=&gt; String">continuousDetail</a><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

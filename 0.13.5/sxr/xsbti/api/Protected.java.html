@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>xsbti/api/Protected.java</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+package xsbti.api;
+
+import java.util.Arrays;
+import java.util.List;
+public final class Protected extends Qualified 
+{
+	public Protected(Qualifier qualifier)
+	{
+		super(qualifier);
+		
+	}
+	
+	public boolean equals(Object obj)
+	{
+		 if (this == obj) {
+			 return true;
+		} else if (!(obj instanceof Protected)) {
+			 return false;
+		} else {
+			Protected o = (Protected)obj;
+			return qualifier().equals(o.qualifier());
+		}
+	}
+	public int hashCode()
+	{
+		 return 37 * (17) + qualifier().hashCode();
+	}
+	public String toString()
+	{
+		 return &quot;Protected(&quot; + &quot;qualifier: &quot; + qualifier() + &quot;)&quot;;
+	}
+}
+
+        </pre>
+    </body>
+</html>

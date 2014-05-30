@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basic Definition Examples &mdash; sbt Documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/issuetracker.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/base.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Exo:300,400,600,700" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.13.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../versions.js"></script>
+    <script type="text/javascript" src="../_static/set-versions.js"></script>
+    <link rel="top" title="sbt Documentation" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Full Configuration Example" href="Full-Configuration-Example.html" />
+    <link rel="prev" title="Examples" href="index.html" /> 
+  </head>
+  <body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <ul class="nav">
+          <li><a href="http://www.scala-sbt.org/">Home</a></li>
+          <li><a href="../index.html">Documentation</a></li>
+          <li><a href="../Getting-Started/Setup.html">Download</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a></li>
+          <li><a href="http://github.com/sbt/sbt">Project</a></li>           
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="container">
+      <div class="page-title">Basic Definition Examples</div>
+      <div class="search-box">
+        <form method="get" action="http://www.google.com/search" id="search">
+          <input type="search" placeholder="Search 0.13.5 on Google" name="q" results="10" size="29" id="search-input">
+          <input type="hidden"  name="sitesearch" value="http://www.scala-sbt.org/0.13.5/docs/"> 
+          <input type="submit" id="submit-search">
+        </form>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <ul class="breadcrumb">        
+              <li>
+                 <span class="divider">|</span> <a href="Full-Configuration-Example.html">Full Configuration Example</a> <span class="divider">»</span>
+              </li>
+              <li>
+                 <span class="divider">&gt;</span><a href="index.html">Examples</a>
+              </li>
+              <li>
+                <a href="../index.html">Contents</a>
+              </li>
+              <li>
+                <span class="divider">«</span> <a href="index.html">Examples</a> <span class="divider">|</span>
+              </li>
+              <li>
+                <select id="versions"><option selected value="0.13.5">Version 0.13.5</option></select>
+              </li>
+            </ul>         
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            
+  <div class="section" id="basic-definition-examples">
+<h1>Basic Definition Examples<a class="headerlink" href="#basic-definition-examples" title="Permalink to this headline">¶</a></h1>
+<p>Listed here are some examples of settings (each setting is independent).
+See <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a> for details.</p>
+<p><em>Please note</em> that blank lines are used to separate individual settings.
+Avoid using blank lines within a single multiline expression. As
+explained in <a class="reference internal" href="../Getting-Started/Basic-Def.html"><em>.sbt build definition</em></a>, each
+setting is otherwise a normal Scala expression with expected type
+<a class="reference external" href="../../api/sbt/Init$SettingsDefinition.html">sbt.SettingDefinition</a>.</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="c1">// set the name of the project</span>
+<span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;My Project&quot;</span>
+
+<span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+
+<span class="n">organization</span> <span class="o">:=</span> <span class="s">&quot;org.myproject&quot;</span>
+
+<span class="c1">// set the Scala version used for the project</span>
+<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.0-SNAPSHOT&quot;</span>
+
+<span class="c1">// set the main Scala source directory to be &lt;base&gt;/src</span>
+<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;src&quot;</span>
+
+<span class="c1">// set the Scala test source directory to be &lt;base&gt;/test</span>
+<span class="n">scalaSource</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;test&quot;</span>
+
+<span class="c1">// add a test dependency on ScalaCheck</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-tools.testing&quot;</span> <span class="o">%%</span> <span class="s">&quot;scalacheck&quot;</span> <span class="o">%</span> <span class="s">&quot;1.8&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+
+<span class="c1">// add compile dependencies on some dispatch modules</span>
+<span class="n">libraryDependencies</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span>
+    <span class="s">&quot;net.databinder&quot;</span> <span class="o">%%</span> <span class="s">&quot;dispatch-meetup&quot;</span> <span class="o">%</span> <span class="s">&quot;0.7.8&quot;</span><span class="o">,</span>
+    <span class="s">&quot;net.databinder&quot;</span> <span class="o">%%</span> <span class="s">&quot;dispatch-twitter&quot;</span> <span class="o">%</span> <span class="s">&quot;0.7.8&quot;</span>
+<span class="o">)</span>
+
+<span class="c1">// Set a dependency based partially on a val.</span>
+<span class="o">{</span>
+  <span class="k">val</span> <span class="n">libosmVersion</span> <span class="k">=</span> <span class="s">&quot;2.5.2-RC1&quot;</span>
+  <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;net.sf.travelingsales&quot;</span> <span class="o">%</span> <span class="s">&quot;osmlib&quot;</span> <span class="o">%</span> <span class="n">libosmVersion</span> <span class="n">from</span> <span class="s">&quot;http://downloads.sourceforge.net/project/travelingsales/libosm/&quot;</span><span class="o">+</span><span class="n">libosmVersion</span><span class="o">+</span><span class="s">&quot;/libosm-&quot;</span><span class="o">+</span><span class="n">libosmVersion</span><span class="o">+</span><span class="s">&quot;.jar&quot;</span>
+<span class="o">}</span>
+
+<span class="c1">// reduce the maximum number of errors shown by the Scala compiler</span>
+<span class="n">maxErrors</span> <span class="o">:=</span> <span class="mi">20</span>
+
+<span class="c1">// increase the time between polling for file changes when using continuous execution</span>
+<span class="n">pollInterval</span> <span class="o">:=</span> <span class="mi">1000</span>
+
+<span class="c1">// append several options to the list of options passed to the Java compiler</span>
+<span class="n">javacOptions</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;-source&quot;</span><span class="o">,</span> <span class="s">&quot;1.5&quot;</span><span class="o">,</span> <span class="s">&quot;-target&quot;</span><span class="o">,</span> <span class="s">&quot;1.5&quot;</span><span class="o">)</span>
+
+<span class="c1">// append -deprecation to the options passed to the Scala compiler</span>
+<span class="n">scalacOptions</span> <span class="o">+=</span> <span class="s">&quot;-deprecation&quot;</span>
+
+<span class="c1">// define the statements initially evaluated when entering &#39;console&#39;, &#39;consoleQuick&#39;, or &#39;consoleProject&#39;</span>
+<span class="n">initialCommands</span> <span class="o">:=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">  import System.{currentTimeMillis =&gt; now}</span>
+<span class="s">  def time[T](f: =&gt; T): T = {</span>
+<span class="s">    val start = now</span>
+<span class="s">    try { f } finally { println(&quot;Elapsed: &quot; + (now - start)/1000.0 + &quot; s&quot;) }</span>
+<span class="s">  }</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="c1">// set the initial commands when entering &#39;console&#39; or &#39;consoleQuick&#39;, but not &#39;consoleProject&#39;</span>
+<span class="n">initialCommands</span> <span class="n">in</span> <span class="n">console</span> <span class="o">:=</span> <span class="s">&quot;import myproject._&quot;</span>
+
+<span class="c1">// set the main class for packaging the main jar</span>
+<span class="c1">// &#39;run&#39; will still auto-detect and prompt</span>
+<span class="c1">// change Compile to Test to set it for the test jar</span>
+<span class="n">mainClass</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageBin</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;myproject.MyMain&quot;</span><span class="o">)</span>
+
+<span class="c1">// set the main class for the main &#39;run&#39; task</span>
+<span class="c1">// change Compile to Test to set it for &#39;test:run&#39;</span>
+<span class="n">mainClass</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">run</span><span class="o">)</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;myproject.MyMain&quot;</span><span class="o">)</span>
+
+<span class="c1">// add &lt;base&gt;/input to the files that &#39;~&#39; triggers on</span>
+<span class="n">watchSources</span> <span class="o">+=</span> <span class="n">baseDirectory</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="s">&quot;input&quot;</span>
+
+<span class="c1">// add a maven-style repository</span>
+<span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;name&quot;</span> <span class="n">at</span> <span class="s">&quot;url&quot;</span>
+
+<span class="c1">// add a sequence of maven-style repositories</span>
+<span class="n">resolvers</span> <span class="o">++=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;name&quot;</span> <span class="n">at</span> <span class="s">&quot;url&quot;</span><span class="o">)</span>
+
+<span class="c1">// define the repository to publish to</span>
+<span class="n">publishTo</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;name&quot;</span> <span class="n">at</span> <span class="s">&quot;url&quot;</span><span class="o">)</span>
+
+<span class="c1">// set Ivy logging to be at the highest level</span>
+<span class="n">ivyLoggingLevel</span> <span class="o">:=</span> <span class="nc">UpdateLogging</span><span class="o">.</span><span class="nc">Full</span>
+
+<span class="c1">// disable updating dynamic revisions (including -SNAPSHOT versions)</span>
+<span class="n">offline</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="c1">// set the prompt (for this build) to include the project id.</span>
+<span class="n">shellPrompt</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">Project</span><span class="o">.</span><span class="n">extract</span><span class="o">(</span><span class="n">state</span><span class="o">).</span><span class="n">currentRef</span><span class="o">.</span><span class="n">project</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+
+<span class="c1">// set the prompt (for the current project) to include the username</span>
+<span class="n">shellPrompt</span> <span class="o">:=</span> <span class="o">{</span> <span class="n">state</span> <span class="k">=&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="s">&quot;&gt; &quot;</span> <span class="o">}</span>
+
+<span class="c1">// disable printing timing information, but still print [success]</span>
+<span class="n">showTiming</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// disable printing a message indicating the success or failure of running a task</span>
+<span class="n">showSuccess</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// change the format used for printing task completion time</span>
+<span class="n">timingFormat</span> <span class="o">:=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">java.text.DateFormat</span>
+    <span class="nc">DateFormat</span><span class="o">.</span><span class="n">getDateTimeInstance</span><span class="o">(</span><span class="nc">DateFormat</span><span class="o">.</span><span class="nc">SHORT</span><span class="o">,</span> <span class="nc">DateFormat</span><span class="o">.</span><span class="nc">SHORT</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="c1">// disable using the Scala version in output paths and artifacts</span>
+<span class="n">crossPaths</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// fork a new JVM for &#39;run&#39; and &#39;test:run&#39;</span>
+<span class="n">fork</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="c1">// fork a new JVM for &#39;test:run&#39;, but not &#39;run&#39;</span>
+<span class="n">fork</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="c1">// add a JVM option to use when forking a JVM for &#39;run&#39;</span>
+<span class="n">javaOptions</span> <span class="o">+=</span> <span class="s">&quot;-Xmx2G&quot;</span>
+
+<span class="c1">// only use a single thread for building</span>
+<span class="n">parallelExecution</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// Execute tests in the current project serially</span>
+<span class="c1">//   Tests from other projects may still run concurrently.</span>
+<span class="n">parallelExecution</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// set the location of the JDK to use for compiling Java code.</span>
+<span class="c1">// if &#39;fork&#39; is true, this is used for &#39;run&#39; as well</span>
+<span class="n">javaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/usr/lib/jvm/sun-jdk-1.6&quot;</span><span class="o">))</span>
+
+<span class="c1">// Use Scala from a directory on the filesystem instead of retrieving from a repository</span>
+<span class="n">scalaHome</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/home/user/scala/trunk/&quot;</span><span class="o">))</span>
+
+<span class="c1">// don&#39;t aggregate clean (See FullConfiguration for aggregation details)</span>
+<span class="n">aggregate</span> <span class="n">in</span> <span class="n">clean</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// only show warnings and errors on the screen for compilations.</span>
+<span class="c1">//  this applies to both test:compile and compile and is Info by default</span>
+<span class="n">logLevel</span> <span class="n">in</span> <span class="n">compile</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Warn</span>
+
+<span class="c1">// only show warnings and errors on the screen for all tasks (the default is Info)</span>
+<span class="c1">//  individual tasks can then be more verbose using the previous setting</span>
+<span class="n">logLevel</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Warn</span>
+
+<span class="c1">// only store messages at info and above (the default is Debug)</span>
+<span class="c1">//   this is the logging level for replaying logging with &#39;last&#39;</span>
+<span class="n">persistLogLevel</span> <span class="o">:=</span> <span class="nc">Level</span><span class="o">.</span><span class="nc">Debug</span>
+
+<span class="c1">// only show 10 lines of stack traces</span>
+<span class="n">traceLevel</span> <span class="o">:=</span> <span class="mi">10</span>
+
+<span class="c1">// only show stack traces up to the first sbt stack frame</span>
+<span class="n">traceLevel</span> <span class="o">:=</span> <span class="mi">0</span>
+
+<span class="c1">// add SWT to the unmanaged classpath</span>
+<span class="n">unmanagedJars</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">+=</span> <span class="nc">Attributed</span><span class="o">.</span><span class="n">blank</span><span class="o">(</span><span class="n">file</span><span class="o">(</span><span class="s">&quot;/usr/share/java/swt.jar&quot;</span><span class="o">))</span>
+
+<span class="c1">// publish test jar, sources, and docs</span>
+<span class="n">publishArtifact</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="c1">// disable publishing of main docs</span>
+<span class="n">publishArtifact</span> <span class="n">in</span> <span class="o">(</span><span class="nc">Compile</span><span class="o">,</span> <span class="n">packageDoc</span><span class="o">)</span> <span class="o">:=</span> <span class="kc">false</span>
+
+<span class="c1">// change the classifier for the docs artifact</span>
+<span class="n">artifactClassifier</span> <span class="n">in</span> <span class="n">packageDoc</span> <span class="o">:=</span> <span class="nc">Some</span><span class="o">(</span><span class="s">&quot;doc&quot;</span><span class="o">)</span>
+
+<span class="c1">// Copy all managed dependencies to &lt;build-root&gt;/lib_managed/</span>
+<span class="c1">//   This is essentially a project-local cache and is different</span>
+<span class="c1">//   from the lib_managed/ in sbt 0.7.x.  There is only one</span>
+<span class="c1">//   lib_managed/ in the build root (not per-project).</span>
+<span class="n">retrieveManaged</span> <span class="o">:=</span> <span class="kc">true</span>
+
+<span class="cm">/* Specify a file containing credentials for publishing. The format is:</span>
+<span class="cm">realm=Sonatype Nexus Repository Manager</span>
+<span class="cm">host=nexus.scala-tools.org</span>
+<span class="cm">user=admin</span>
+<span class="cm">password=admin123</span>
+<span class="cm">*/</span>
+<span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="nc">Path</span><span class="o">.</span><span class="n">userHome</span> <span class="o">/</span> <span class="s">&quot;.ivy2&quot;</span> <span class="o">/</span> <span class="s">&quot;.credentials&quot;</span><span class="o">)</span>
+
+<span class="c1">// Directly specify credentials for publishing.</span>
+<span class="n">credentials</span> <span class="o">+=</span> <span class="nc">Credentials</span><span class="o">(</span><span class="s">&quot;Sonatype Nexus Repository Manager&quot;</span><span class="o">,</span> <span class="s">&quot;nexus.scala-tools.org&quot;</span><span class="o">,</span> <span class="s">&quot;admin&quot;</span><span class="o">,</span> <span class="s">&quot;admin123&quot;</span><span class="o">)</span>
+
+<span class="c1">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
+<span class="n">libraryDependencies</span> <span class="o">+=</span>
+  <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;log4j&quot;</span> <span class="o">%</span> <span class="s">&quot;1.2.15&quot;</span> <span class="n">excludeAll</span><span class="o">(</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;com.sun.jdmk&quot;</span><span class="o">),</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;com.sun.jmx&quot;</span><span class="o">),</span>
+    <span class="nc">ExclusionRule</span><span class="o">(</span><span class="n">organization</span> <span class="k">=</span> <span class="s">&quot;javax.jms&quot;</span><span class="o">)</span>
+  <span class="o">)</span>
+</pre></div>
+</div>
+<p><p class="page-source"><a class="reference external" href="https://github.com/sbt/sbt/raw/0.13.5/src/sphinx/Examples/Quick-Configuration-Examples.rst">Source for this page</a></p>
+</p>
+</div>
+
+
+          </div>
+          <div class="span3"><p class="contents-title">Contents</p>
+              <div id="scroller-anchor">
+                <div id="scroller">
+                  <div id="toc"><ul>
+<li><a class="reference internal" href="#">Basic Definition Examples</a></li>
+</ul>
+</div>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41449189-1', 'scala-sbt.org');
+  ga('send', 'pageview');
+
+  </script>
+  
+
+  </body>
+</html>
