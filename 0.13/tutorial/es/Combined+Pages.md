@@ -122,8 +122,8 @@ See instruction to install manually.
 
   [ZIP]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.zip
   [TGZ]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.tgz
-  [RPM]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.rpm
-  [DEB]: http://dl.bintray.com/sbt/native-packages/sbt/0.13.5/sbt-0.13.5.deb
+  [RPM]: http://dl.bintray.com/sbt/rpm/sbt-0.13.5.rpm
+  [DEB]: http://dl.bintray.com/sbt/debian/sbt-0.13.5.deb
   [Manual-Installation]: Manual-Installation.html
 
 <!-- TODO: Translate to Spanish -->
