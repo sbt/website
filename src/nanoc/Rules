@@ -22,6 +22,7 @@ compile '*' do
   elsif item.binary?
     # don’t filter binary items
   elsif (item[:extension] == 'md')
+    filter :erb
     filter :redcarpet
     layout item[:layout] || 'default'
     filter :relativize_paths, :type => :html

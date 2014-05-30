@@ -7,7 +7,7 @@ sbt 0.13
 
 - [sbt tutorial](0.13/tutorial/index.html)
 - [sbt reference manual](0.13/docs/index.html)
-- [sbt API](0.13.2/api/index.html)
+- [sbt API](<%= @site.config[:sbtVersion] %>/api/index.html)
 
 sbt 0.12
 --------
