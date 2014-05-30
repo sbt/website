@@ -117,7 +117,8 @@ object Docs {
 
 
   def customGhPagesSettings: Seq[Setting[_]] = ghpages.settings ++ Seq(
-    git.remoteRepo := "git@github.com:sbt/website.git",
+    git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
+    GitKeys.gitBranch in ghkeys.updatedRepository := Some("master"),
     ghkeys.synchLocal := syncLocalImpl.value
   )
 
@@ -136,10 +137,14 @@ object Docs {
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value
+
+    // remove symlinks
     val apiLink = versioned / "api"
     val sxrLink = versioned / "sxr"
+    val releaseLink = repo / "release"
     if (apiLink.exists) apiLink.delete
     if (sxrLink.exists) sxrLink.delete
+    if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
@@ -151,7 +156,7 @@ object Docs {
     // symlink API and SXR
     symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
     symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
-
+    symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
   }
 
