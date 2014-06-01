@@ -1,5 +1,5 @@
 ---
-title: Communtiy
+title: Community
 ---
 
   [so]: http://stackoverflow.com/questions/tagged/sbt
