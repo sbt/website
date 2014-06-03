@@ -13,10 +13,11 @@ $ gem install redcarpet
 $ gem install nokogiri
 ```
 
-If you're running ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet:
+If you're running ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet, and
+pandoc/latex for PDF generation:
 
 ```
-$ apt-get install ruby-dev
+$ apt-get install ruby-dev pandoc
 ```
 
 ## Usage
