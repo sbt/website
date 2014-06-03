@@ -12,7 +12,7 @@ object Pdf {
 		Seq(
 			pandocLatexEngine in Global := "xelatex",
 			pandocCommand in Global := "pandoc",
-			pandoc in Global := new Pandoc((pandocCommand in Global).value, (pandocLatexEngine in Global).value)
+			pandoc in Global := new Pandoc((pandocCommand in Global).value)
 		)
 
 	def settingsFor(config: Configuration, pdfName: String): Seq[Setting[_]] =
@@ -28,26 +28,40 @@ object Pdf {
       val log = streams.value.log
   	  (mappings in config).value collect {
         case (file, fname) if (fname contains "Combined+Pages.md") && !(fname contains "offline/") =>
-          log.info(s"Generating pdf [${file.getAbsolutePath}]...")
+          val t = (target in config).value
+          val language = getPdfLanguage(file, t)
+          // TODO - Create front matter for the file.
+          log.info(s"Generating pdf $language/$name...")
           val p = pandoc.value
 	      val cwd = file.getParentFile
+	      val args = latexArgs(language) ++ Seq("--toc")
 	      val pdf = cwd / s"${name}.pdf"
 	      p(cwd)(file, pdf, log)
 	      pdf
 	  }
     }
 
+    def getPdfLanguage(file: File, target: File): String =
+    	IO.relativize(target, file.getParentFile) match {
+    		case Some(language) => language
+    		case None => "en"
+    	}
+
+    def latexArgs(language: String): Seq[String] = 
+      language match {
+      	 case "jp" => Seq("-V", "documentclass=ltjarticle", "--latex-engine=lualatex")
+         case _ => Seq("--latex-engine=xelatex")
+      }
+
 }
 
 /** Helper to run pandoc. */
-class Pandoc(cmd: String, latexEngine: String) {
+class Pandoc(cmd: String) {
 	/** Runs pandoc and returns the error code. */
 	def apply(cwd: File)(input: File, output: File, log: Logger, extraArgs: String*): Int = {
-		Process(command = Seq(
-			cmd,
-			s"--latex-engine=$latexEngine",
+		Process(command = Seq(cmd) ++ extraArgs ++ Seq(
 			input.getAbsolutePath,
 			"-o", output.getAbsolutePath
-		) ++ extraArgs, cwd = cwd) ! log
+		), cwd = cwd) ! log
 	}
 }
