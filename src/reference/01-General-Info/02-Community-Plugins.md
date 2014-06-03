@@ -110,6 +110,7 @@ your plugin to the list.
 -   sbt-requirejs: <https://github.com/scalatra/sbt-requirejs>
 -   sbt-vaadin-plugin:
     <https://github.com/henrikerola/sbt-vaadin-plugin>
+-  sbt-purescript: <https://github.com/eamelink/sbt-purescript>
 
 #### Game development plugins
 
