@@ -8,6 +8,9 @@ object Pdf {
 	lazy val pandoc = settingKey[Pandoc]("A runner to execute Pandoc")
 	lazy val generatePdf = taskKey[Seq[File]]("Create the tutorial pdf file")
 
+
+  def failOnPdfError: Boolean = sys.props("ignore.pdf") != "true"
+
 	def settings: Seq[Setting[_]] = 
 		Seq(
 			pandocLatexEngine in Global := "xelatex",
@@ -37,7 +40,12 @@ object Pdf {
 	      val cwd = cleanedUp.getParentFile
 	      val args = latexArgs(language) ++ Seq("--toc")
 	      val pdf = cwd / s"${name}.pdf"
-	      p(cwd)(cleanedUp, pdf, log, args:_*)
+	      p(cwd)(cleanedUp, pdf, log, args:_*) match {
+          case 0 => ()
+          case n => 
+            if(failOnPdfError)
+              sys.error(s"Failed to run pandoc($cwd)($cleanedUp, $pdf, ${args mkString ", "}) - Exit code $n")
+        }
 	      pdf
 	  }
     }
