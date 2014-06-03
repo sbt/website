@@ -254,7 +254,7 @@ removed.
 
 ```scala
 object MyPlugin extends Plugin {
-   val globalSettigns: Seq[Setting[_]] = Seq(
+   val globalSettings: Seq[Setting[_]] = Seq(
      onLoad in Global := (onLoad in Global).value andThen { state =>
          ... return new state ...
      }
