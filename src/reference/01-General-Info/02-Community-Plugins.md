@@ -265,6 +265,8 @@ your plugin to the list.
     <https://github.com/zavakid/sbt-one-log>
 -   sbt-git-stamp (include git metadata in MANIFEST.MF file in artifact):
     <https://bitbucket.org/pkaeding/sbt-git-stamp>
+-   fm-sbt-s3-resolver (Resolve and Publish using Amazon S3):
+    <https://github.com/frugalmechanic/fm-sbt-s3-resolver>
 
 #### Code coverage plugins
 
