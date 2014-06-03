@@ -228,6 +228,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-dirty-money>
 -   sbt-updates (Checks Maven repos for dependency updates):
     <https://github.com/rtimush/sbt-updates>
+-   sbt-lock (Locks library versions for reproducible build):
+    <https://github.com/tkawachi/sbt-lock>
 
 #### Utility plugins
 
@@ -261,10 +263,12 @@ your plugin to the list.
     <https://github.com/jozic/sbt-about-plugins>
 -   sbt-one-log (make Log dependency easy):
     <https://github.com/zavakid/sbt-one-log>
+-   sbt-git-stamp (include git metadata in MANIFEST.MF file in artifact):
+    <https://bitbucket.org/pkaeding/sbt-git-stamp>
 
 #### Code coverage plugins
 
--   sbt-scct: <https://github.com/dvc94ch/sbt-scct>
+-   sbt-scct: <https://github.com/sqality/sbt-scct>
 -   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
 -   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
 -   xsbt-coveralls-plugin:
