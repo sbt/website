@@ -31,4 +31,5 @@ site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Tutorial, s"""$targetSb
 
 Pdf.settingsFor(Ref, "sbt-reference")
 
+
 site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Ref, s"""$targetSbtBinaryVersion/docs""")

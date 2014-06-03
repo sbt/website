@@ -33,12 +33,42 @@ object Pdf {
           // TODO - Create front matter for the file.
           log.info(s"Generating pdf $language/$name...")
           val p = pandoc.value
-	      val cwd = file.getParentFile
+          val cleanedUp = cleanupHeader(file)
+	      val cwd = cleanedUp.getParentFile
 	      val args = latexArgs(language) ++ Seq("--toc")
 	      val pdf = cwd / s"${name}.pdf"
-	      p(cwd)(file, pdf, log)
+	      p(cwd)(cleanedUp, pdf, log, args:_*)
 	      pdf
 	  }
+    }
+
+    private def getFirstTitle(lines: List[String]): (Option[String], List[String]) = {
+    	def findTitle(title: Option[String], output: List[String], remaining: List[String]): (Option[String],List[String]) = 
+    	  remaining match {
+    	  	case Nil => (title, output.reverse)
+    	  	case t :: line :: rest if title.isEmpty && line.matches("[\\=]+") => findTitle(Some(t), output, rest)
+    	  	case line :: rest => findTitle(title, line :: output, rest)
+    	  }
+    	findTitle(None, Nil, lines)
+    }
+
+    def cleanupHeader(file: File): File = {
+    	val cleanedUp = file.getAbsoluteFile.getParentFile / "Combined+Pages+Pdf.md"
+    	val origLines = IO readLines file
+    	getFirstTitle(IO readLines file) match {
+    		case (Some(title), lines) =>
+    		    IO.write(cleanedUp,
+s"""---
+  title: ${title}
+  ntags: [scala, sbt]
+---
+
+Preface
+-------
+${lines mkString "\n"}""".stripMargin)
+    		case _ => sys.error(s"Could not find title in document ${file}")
+    	}
+    	cleanedUp
     }
 
     def getPdfLanguage(file: File, target: File): String =
@@ -49,7 +79,7 @@ object Pdf {
 
     def latexArgs(language: String): Seq[String] = 
       language match {
-      	 case "jp" => Seq("-V", "documentclass=ltjarticle", "--latex-engine=lualatex")
+      	 case "ja" => Seq("-V", "documentclass=ltjarticle", "--latex-engine=lualatex")
          case _ => Seq("--latex-engine=xelatex")
       }
 
@@ -59,9 +89,12 @@ object Pdf {
 class Pandoc(cmd: String) {
 	/** Runs pandoc and returns the error code. */
 	def apply(cwd: File)(input: File, output: File, log: Logger, extraArgs: String*): Int = {
-		Process(command = Seq(cmd) ++ extraArgs ++ Seq(
-			input.getAbsolutePath,
-			"-o", output.getAbsolutePath
-		), cwd = cwd) ! log
+		val cmdSeq: Seq[String] = (
+		  Seq(cmd) ++ 
+		  extraArgs ++ 
+		  Seq(input.getAbsolutePath, "-o", output.getAbsolutePath)
+		)
+		log.debug(s"Running: ${cmdSeq mkString " "}")
+		Process(command = cmdSeq, cwd = cwd) ! log
 	}
 }
