@@ -270,7 +270,7 @@ import sbt._
 
 object Plugin extends AutoPlugin
 {
-    // by definging autoImport, these are automatically imported into user's `*.sbt`
+    // by defining autoImport, these are automatically imported into user's `*.sbt`
     object autoImport
     {
         // configuration points, like the built in `version`, `libraryDependencies`, or `compile`
