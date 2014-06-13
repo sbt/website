@@ -21,6 +21,15 @@ time.
 artifacts. It can work with the GPG command line tool, but the command
 line is not needed.*
 
+If the command to generate your key fails execute the following commands and remove the displayed files:
+
+```
+> show */*:pgpSecretRing
+[info] /home/username/.sbt/.gnupg/secring.gpg
+> show */*:pgpPublicRing
+[info] /home/username/.sbt/.gnupg/pubring.gpg
+```
+
 If your PGP key has not yet been distributed to the keyserver pool,
 i.e., you've just generated it, you'll need to publish it. You can do so
 using the [sbt-pgp][sbt-pgp] plugin:
@@ -29,11 +38,13 @@ using the [sbt-pgp][sbt-pgp] plugin:
 pgp-cmd send-key keyname hkp://pool.sks-keyservers.net/
 ```
 
-(where keyname is the name, email address used when creating the key or
+(where keyname is the name or email address used when creating the key or
 hexadecimal identifier for the key.)
 
 If you see no output from sbt-pgp then the key name specified was not
 found.
+
+If it fails to run the `SendKey` command you can try another server (for example: hkp://keyserver.ubuntu.com). A list of servers can be found at [the status page](https://sks-keyservers.net/status/) of sks-keyservers.net.
 
 ### Second - Maven Publishing Settings
 
