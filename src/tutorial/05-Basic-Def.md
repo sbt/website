@@ -174,7 +174,7 @@ must be separated from settings by blank lines.
 > **Note:** Typically, lazy vals are used instead of vals to avoid initialization
 > order problems.
 
-#### Task v. Setting keys
+#### Task vs Setting keys
 
 A `TaskKey[T]` is said to define a *task*. Tasks are operations such as
 `compile` or `package`. They may return `Unit` (`Unit` is Scala for `void`), or
