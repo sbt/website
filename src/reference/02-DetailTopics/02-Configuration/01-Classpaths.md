@@ -42,7 +42,7 @@ val rawFile: File = ..
 val af: Attributed[File] = Attributed.blank(rawFile)
 ```
 
-#### Unmanaged v. managed
+#### Unmanaged vs managed
 
 Classpaths, sources, and resources are separated into two main
 categories: unmanaged and managed. Unmanaged files are manually created
@@ -92,7 +92,7 @@ excludeFilter in unmanagedSources := "butler.scala"
 Read more on
 [How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
 
-#### External v. internal
+#### External vs internal
 
 Classpaths are also divided into internal and external dependencies. The
 internal dependencies are inter-project dependencies. These effectively
