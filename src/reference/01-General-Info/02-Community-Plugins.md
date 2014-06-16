@@ -36,11 +36,14 @@ your plugin to the list.
 #### Plugins for IDEs
 
 -   IntelliJ IDEA
--   sbt Plugin to generate IDEA project configuration:
+    -   sbt Plugin to generate IDEA project configuration:
     <https://github.com/mpeltonen/sbt-idea>
--   IDEA Plugin to embed an sbt Console into the IDE:
+    -   IDEA Plugin to embed an sbt Console into the IDE:
     <https://github.com/orfjackal/idea-sbt-plugin>
--   Netbeans: <https://github.com/remeniuk/sbt-netbeans-plugin>
+-   Netbeans
+    -   sbt-netbeans-plugin (older): <https://github.com/remeniuk/sbt-netbeans-plugin>
+    -   sbt plugin to generate NetBeans configuration: <https://github.com/dcaoyuan/nbsbt>
+    -   sbt plugin to add scala support to NetBeans: <https://github.com/dcaoyuan/nbscala>
 -   Eclipse: <https://github.com/typesafehub/sbteclipse>
 -   Sublime Text: <https://github.com/orrsella/sbt-sublime>
 -   Ensime: <https://github.com/aemoncannon/ensime-sbt-cmd>
