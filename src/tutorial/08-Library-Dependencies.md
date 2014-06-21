@@ -13,7 +13,7 @@ out: Library-Dependencies.html
 Library dependencies
 --------------------
 
-This page assumes you've read the earlier Getting Started pages, in
+This page assumes you've already read the earlier Getting Started pages, in
 particular [.sbt build definition][Basic-Def], [scopes][Scopes], and
 [more kinds of setting][More-About-Settings].
 
@@ -32,8 +32,8 @@ Unmanaged dependencies work like this: add jars to `lib` and they will be
 placed on the project classpath. Not much else to it!
 
 You can place test jars such as
-[ScalaCheck](https://github.com/rickynils/scalacheck),
-[specs](http://code.google.com/p/specs/), and
+[ScalaCheck](http://scalacheck.org/),
+[Specs2](http://specs2.org), and
 [ScalaTest](http://www.scalatest.org/) in `lib` as well.
 
 Dependencies in `lib` go on all the classpaths (for `compile`, `test`, `run`,
@@ -52,18 +52,23 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 ```
 
 `baseDirectory` is the project's root directory, so here you're changing
-`unmanagedBase` depending on `baseDirectory` using the special value method
+`unmanagedBase` depending on `baseDirectory` using the special `value` method
 as explained in [more kinds of setting][More-About-Settings].
 
 There's also an `unmanagedJars` task which lists the jars from the
 `unmanagedBase` directory. If you wanted to use multiple directories or do
 something else complex, you might need to replace the whole
-`unmanagedJars` task with one that does something else.
+`unmanagedJars` task with one that does something else, e.g. empty the list for
+`Compile` configuration regardless of the files in `lib` directory:
+
+```scala
+unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
+```
 
 ### Managed Dependencies
 
 sbt uses [Apache Ivy](http://ant.apache.org/ivy/) to implement managed
-dependencies, so if you're familiar with Maven or Ivy, you won't have
+dependencies, so if you're familiar with Ivy or Maven, you won't have
 much trouble.
 
 #### The `libraryDependencies` key
@@ -81,7 +86,8 @@ Declaring a dependency looks like this, where `groupId`, `artifactId`, and
 libraryDependencies += groupID % artifactID % revision
 ```
 
-or like this, where `configuration` is also a string:
+or like this, where `configuration` can be a string or
+[Configuration](../sxr/sbt/Configurations.scala.html#sbt.Configuration) val:
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration
@@ -95,19 +101,20 @@ this:
 val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependencies.")
 ```
 
-The `%` methods create`ModuleID` objects from strings, then you add those
+The `%` methods create `ModuleID` objects from strings, then you add those
 `ModuleID` to `libraryDependencies`.
 
 Of course, sbt (via Ivy) has to know where to download the module. If
 your module is in one of the default repositories sbt comes with, this
-will just work. For example, Apache Derby is in a default repository:
+will just work. For example, Apache Derby is in the standard Maven2
+repository:
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
 If you type that in `build.sbt` and then `update`, sbt should download Derby
-to `~/.ivy2/cache/org.apache.derby/`. (By the way, `updat`e is a dependency
+to `~/.ivy2/cache/org.apache.derby/`. (By the way, `update` is a dependency
 of `compile` so there's no need to manually type `update` most of the time.)
 
 Of course, you can also use `++=` to add a list of dependencies all at
@@ -131,24 +138,25 @@ the `groupID`), sbt will add your project's Scala version to the artifact
 name. This is just a shortcut. You could write this without the `%%`:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.9.1" % "0.3"
+libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
 ```
 
-Assuming the `scalaVersion` for your build is `2.9.1`, the following is
-identical:
+Assuming the `scalaVersion` for your build is `2.11.1`, the following is
+identical (note the double `%%` after `"org.scala-tools"`):
 
 ```scala
 libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 ```
 
 The idea is that many dependencies are compiled for multiple Scala
-versions, and you'd like to get the one that matches your project.
+versions, and you'd like to get the one that matches your project
+to ensure binary compatibility.
 
 The complexity in practice is that often a dependency will work with a
 slightly different Scala version; but `%%` is not smart about that. So if
-the dependency is available for `2.9.0` but you're using
-`scalaVersion := "2.9.1"`, you won't be able to use `%%` even though the
-`2.9.0` dependency likely works. If `%%` stops working just go see which
+the dependency is available for `2.10.1` but you're using
+`scalaVersion := "2.10.4"`, you won't be able to use `%%` even though the
+`2.10.1` dependency likely works. If `%%` stops working, just go see which
 versions the dependency is really built for, and hardcode the one you
 think will work (assuming there is one).
 
@@ -178,6 +186,8 @@ To add an additional repository, use
 resolvers += name at location
 ```
 
+with the special `at` between two strings.
+
 For example:
 
 ```scala
@@ -198,6 +208,12 @@ repository:
 
 ```scala
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```
+
+or shorter:
+
+```scala
+resolvers += Resolver.mavenLocal
 ```
 
 See [Resolvers][Resolvers] for details on defining other types of
@@ -226,15 +242,20 @@ configuration and not the `Compile` configuration, add `% "test"` like this:
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
 ```
 
+You may also use the type-safe version of `Test` configuration as follows:
+
+```scala
+libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
+```
+
 Now, if you type `show compile:dependencyClasspath` at the sbt interactive
-prompt, you should not see derby. But if you type
+prompt, you should not see the derby jar. But if you type
 `show test:dependencyClasspath`, you should see the derby jar in the list.
 
 Typically, test-related dependencies such as
-[ScalaCheck](https://github.com/rickynils/scalacheck),
-[specs](http://code.google.com/p/specs/), and
+[ScalaCheck](http://scalacheck.org/),
+[Specs2](http://specs2.org), and
 [ScalaTest](http://www.scalatest.org/) would be defined with `% "test"`.
 
-There are some more details and tips-and-tricks related to library
-dependencies on [this page][Library-Management], if
-you didn't find an answer on this introductory page.
+There are more details and tips-and-tricks related to library
+dependencies on [this page][Library-Management].
