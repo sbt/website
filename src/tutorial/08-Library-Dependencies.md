@@ -210,7 +210,7 @@ repository:
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 ```
 
-or shorter:
+or, for convenience:
 
 ```scala
 resolvers += Resolver.mavenLocal
