@@ -126,14 +126,14 @@ Arguments to the test framework may be provided on the command line to
 the `testOnly` tasks following a `--` separator. For example:
 
 ```
-> testOnly org.example.MyTest -- -d -S
+> testOnly org.example.MyTest -- -verbosity 1
 ```
 
 To specify test framework arguments as part of the build, add options
 constructed by `Tests.Argument`:
 
 ```scala
-testOptions in Test += Tests.Argument("-d", "-g")
+testOptions in Test += Tests.Argument("-verbosity", "1")
 ```
 
 To specify them for a specific test framework only:
