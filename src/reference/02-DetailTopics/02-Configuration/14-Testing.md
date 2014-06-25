@@ -31,7 +31,7 @@ with sbt. For example, ScalaCheck may be used by declaring it as a
 [managed dependency][Library-Dependencies]:
 
 ```scala
-libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.10.1" % "test"
+libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.11.4" % "test"
 ```
 
 The fourth component `"test"` is the
@@ -139,7 +139,7 @@ testOptions in Test += Tests.Argument("-d", "-g")
 To specify them for a specific test framework only:
 
 ```scala
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-d", "-g")
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-verbosity", "-2")
 ```
 
 #### Setup and Cleanup
