@@ -139,7 +139,7 @@ testOptions in Test += Tests.Argument("-d", "-g")
 To specify them for a specific test framework only:
 
 ```scala
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-verbosity", "-2")
+testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-verbosity", "1")
 ```
 
 #### Setup and Cleanup
