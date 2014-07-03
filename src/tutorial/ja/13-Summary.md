@@ -6,7 +6,7 @@ out: Summary.html
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
-  [getting-help]: ../docs/Faq.html#getting-help
+  [getting-help]: ../../docs/Faq.html#getting-help
 
 まとめ
 -----

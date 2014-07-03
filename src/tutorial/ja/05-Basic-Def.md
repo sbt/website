@@ -7,7 +7,7 @@ out: Basic-Def.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
-  [Input-Tasks]: ../docs/Input-Tasks.html
+  [Input-Tasks]: ../../docs/Input-Tasks.html
   [Using-Plugins]: Using-Plugins.html
   [Scopes]: Scopes.html
 
