@@ -16,13 +16,13 @@ and its access. The goal of the sbt organization is to organize sbt
 software into one central location.
 
 A side benefit to using the sbt organization for projects is that you
-can use gh-pages to host websites in the http://scala-sbt.org domain.
+can use gh-pages to host websites under the http://scala-sbt.org domain.
 
 ### Community Ivy Repository
 
 [Typesafe](http://www.typesafe.com) has provided a freely available
 [Ivy Repository](http://repo.scala-sbt.org/scalasbt) for sbt projects
-to use. This ivy repository is mirrored from the freely available
+to use. This Ivy repository is mirrored from the freely available
 [Bintray service](http://bintray.com).
 If you'd like to submit your plugin, please follow these instructions:
 [Bintray For Plugins][Bintray-For-Plugins].
@@ -36,12 +36,12 @@ your plugin to the list.
 #### Plugins for IDEs
 
 -   IntelliJ IDEA
- -   sbt Plugin to generate IDEA project configuration: <https://github.com/mpeltonen/sbt-idea>
- -   IDEA Plugin to embed an sbt Console into the IDE: <https://github.com/orfjackal/idea-sbt-plugin>
--   Netbeans
- -   sbt-netbeans-plugin (older): <https://github.com/remeniuk/sbt-netbeans-plugin>
- -   sbt plugin to generate NetBeans configuration: <https://github.com/dcaoyuan/nbsbt>
- -   sbt plugin to add scala support to NetBeans: <https://github.com/dcaoyuan/nbscala>
+    -   sbt Plugin to generate IDEA project configuration: <https://github.com/mpeltonen/sbt-idea>
+    -   IDEA Plugin to embed an sbt Console into the IDE: <https://github.com/orfjackal/idea-sbt-plugin>
+-   Netbeans (no support to create a new sbt project yet)
+    -   sbt-netbeans-plugin (older): <https://github.com/remeniuk/sbt-netbeans-plugin>
+    -   sbt plugin to generate NetBeans configuration: <https://github.com/dcaoyuan/nbsbt>
+    -   sbt plugin to add scala support to NetBeans: <https://github.com/dcaoyuan/nbscala>
 -   Eclipse: <https://github.com/typesafehub/sbteclipse>
 -   Sublime Text: <https://github.com/orrsella/sbt-sublime>
 -   Ensime: <https://github.com/aemoncannon/ensime-sbt-cmd>
