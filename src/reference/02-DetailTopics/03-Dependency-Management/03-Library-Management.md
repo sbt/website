@@ -581,7 +581,7 @@ shortened to:
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
 ```
 
-#### Maven/Ivy
+#### External Maven or Ivy
 
 For this method, create the configuration files as you would for Maven
 (`pom.xml`) or Ivy (`ivy.xml` and optionally `ivysettings.xml`).
@@ -619,8 +619,8 @@ externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
 ```
 
 Because Ivy files specify their own configurations, sbt needs to know
-which configurations to use for the compile, runtime, and test
-classpaths. For example, to specify that the Compile classpath should
+which configurations to use for the `compile`, `runtime`, and `test`
+classpaths. For example, to specify that the `Compile` classpath should
 use the 'default' configuration:
 
 ```scala
@@ -663,5 +663,5 @@ with this support:
 -   Specifying `relativePath` in the `parent` section of a POM will
     produce an error.
 -   Ivy ignores repositories specified in the POM. A workaround is to
-    specify repositories inline or in an Ivy ivysettings.xml file.
+    specify repositories inline or in an Ivy `ivysettings.xml` file.
 
