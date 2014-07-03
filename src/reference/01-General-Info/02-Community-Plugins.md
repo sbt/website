@@ -234,6 +234,8 @@ your plugin to the list.
 
 #### Utility plugins
 
+-   sbt-process-runner (Run your own applications from SBT console)
+    <https://github.com/whysoserious/sbt-process-runner>
 -   jot (Write down your ideas lest you forget them)
     <https://github.com/softprops/jot>
 -   np (Dead simple new project directory generation):
