@@ -51,8 +51,7 @@ resolvers += Resolver.sonatypeRepo("public")
 通常、プラグインは、プロジェクトに追加されるセッティングを提供することで機能を追加する。
 これを次に説明しよう。
 
-
-### プラグインのセッティングの追加
+### auto plugin の有効化と無効化
 
 プラグインはビルド定義に自動的に追加されるセッティングを宣言することができ、
 その場合は何もしなくてもいい。
@@ -67,7 +66,19 @@ auto plugin の多くはデフォルトセッティングを自動的に追加�
 ```scala
 lazy val util = project in file("util")
 
-util.enablePlugins(ThePluginIWant)
+util.enablePlugins(FooPlugin, BarPlugin)
+```
+
+プロジェクトは `enablePlugins` メソッドを用いて使用したい auto plugin
+を明示的に定義することができる。
+
+プロジェクトは、`disablePlugins` メソッドを用いてプラグインを除外することもできる。
+例えば、`util` から `JvmPlugins` のセッティング (`compile`、`test`、`run`) を除外したいとすると、`build.sbt` を以下のように変更する:
+
+```scala
+lazy val util = project in file("util")
+
+util.enablePlugins(FooPlugin, BarPlugin).disablePlugins(plugins.JvmModule)
 ```
 
 明示的な有効化が必要かはそれぞれの auto plugin がドキュメントに書くべきだ。

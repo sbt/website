@@ -52,7 +52,7 @@ resolvers += Resolver.sonatypeRepo("public")
 Plugins usually provide settings that get added to a project to enable
 the plugin's functionality. This is described in the next section.
 
-### Adding settings for a plugin
+### Enabling and disabling auto plugins
 
 A plugin can declare that its settings be automatically added to the build definition,
 in which case you don't have to do anything to add them.
@@ -69,7 +69,20 @@ have to add the following to your `build.sbt`:
 ```scala
 lazy val util = project in file("util")
 
-util.enablePlugins(ThePluginIWant)
+util.enablePlugins(FooPlugin, BarPlugin)
+```
+
+The `enablePlugins` method allows projects to explicitly define the
+auto plugins they wish to consume.
+
+Projects can also exclude plugins using the `disablePlugins`
+method. For example, if we wish to remove the `JvmPlugins` settings
+(`compile`,`test`,`run`) from `util`, we modify our `build.sbt` as follows:
+
+```scala
+lazy val util = project in file("util")
+
+util.enablePlugins(FooPlugin, BarPlugin).disablePlugins(plugins.JvmPlugins)
 ```
 
 Auto plugins should document whether they need to explicitly enabled. If you're
