@@ -35,6 +35,12 @@ sbt-site を追加するとした場合、`hello/project/site.sbt` を新規作�
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.7.0")
 ```
 
+sbt-assembly を追加したければ、`hello/project/assembly.sbt` を作って以下を書く:
+
+```scala
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
+```
+
 全てのプラグインがデフォルトのリポジトリにある訳では無いので、
 プラグインの説明書にレポジトリの追加する手順が書かれているかもしれない:
 
@@ -59,7 +65,9 @@ auto plugin の多くはデフォルトセッティングを自動的に追加�
 明示的な有効化が必要な auto plugin を使っている場合は、以下を `build.sbt` に追加する:
 
 ```scala
-lazy val util = (project in file("util")).enablePlugins(ThePluginIWant)
+lazy val util = project in file("util")
+
+util.enablePlugins(ThePluginIWant)
 ```
 
 明示的な有効化が必要かはそれぞれの auto plugin がドキュメントに書くべきだ。
@@ -104,10 +112,12 @@ site.settings
 
 ```scala
 // don't use the site plugin for the `util` project
-lazy val util = (project in file("util"))
+lazy val util = project in file("util")
 
 // enable the site plugin for the `core` project
-lazy val core = (project in file("core")).settings(site.settings : _*)
+lazy val core = project in file("core")
+
+core.settings(site.settings : _*)
 ```
 
 ### グローバル・プラグイン

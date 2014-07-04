@@ -35,6 +35,12 @@ to `addSbtPlugin`:
 addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.7.0")
 ```
 
+If you're adding sbt-assembly, create `hello/project/assembly.sbt` with the following:
+
+```scala
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
+```
+
 Not every plugin is located on one of the default repositories and a
 plugin's documentation may instruct you to also add the repository where
 it can be found:
@@ -61,7 +67,9 @@ If you're using an auto plugin that requires explicit enablement, then you you
 have to add the following to your `build.sbt`:
 
 ```scala
-lazy val util = (project in file("util")).enablePlugins(ThePluginIWant)
+lazy val util = project in file("util")
+
+util.enablePlugins(ThePluginIWant)
 ```
 
 Auto plugins should document whether they need to explicitly enabled. If you're
@@ -109,10 +117,12 @@ project:
 
 ```scala
 // don't use the site plugin for the `util` project
-lazy val util = (project in file("util"))
+lazy val util = project in file("util")
 
 // enable the site plugin for the `core` project
-lazy val core = (project in file("core")).settings(site.settings : _*)
+lazy val core = project in file("core")
+
+core.settings(site.settings : _*)
 ```
 
 ### Global plugins
