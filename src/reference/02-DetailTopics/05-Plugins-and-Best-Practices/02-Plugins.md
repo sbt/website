@@ -57,9 +57,12 @@ Many of the auto plugins automatically adds settings into projects,
 however, some may require explicit enablement. Here's an example:
 
 ```scala
-lazy val util = project in file("util")
-
-util.enablePlugins(FooPlugin, BarPlugin).disablePlugins(plugins.JvmModule)
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  disablePlugins(plugins.IvyPlugin).
+  settings(
+    name := "hello-util"
+  )
 ```
 
 See [using plugins][Using-Plugins] in the Getting Started guide for more details on using plugins.
@@ -119,8 +122,8 @@ This becomes complicated as the number of plugins increase within an application
 Suppose we have the `SbtLessPlugin` and the `SbtCoffeeScriptPlugin`, which in turn depends on the `SbtJsTaskPlugin`, `SbtWebPlugin`, and `JvmPlugin`. Instead of manually activating all of these plugins, a project can just activate the `SbtLessPlugin` and `SbtCoffeeScriptPlugin` like this:
 
 ```scala
-lazy val root = project in file(".")
-rootProject.addPlugins(SbtLessPlugin, SbtCoffeeScriptPlugin)
+lazy val root = (project in file(".")).
+  enablePlugins(SbtLessPlugin, SbtCoffeeScriptPlugin)
 ```
 
 This will pull in the right setting sequence from the plugins in the right order.  The key notion here is you declare the plugins you want, and sbt can fill in the gap.
