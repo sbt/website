@@ -2,10 +2,17 @@
 out: Plugins-Best-Practices.html
 ---
 
+  [Using-Plugins]: ../tutorial/Using-Plugins.html
+  [Pluings]: Plugins.html
+  [Tasks]: Tasks.html
+  [Commands]: Commands.html
+  [ScopeFilter]: Tasks.html#ScopeFilter
+
 Plugins Best Practices
 ----------------------
 
 *This page is intended primarily for sbt plugin authors.*
+This page assumes you've read [using plugins][Using-Plugins] and [Plugins][Plugins].
 
 A plugin developer should strive for consistency and ease of use.
 Specifically:
@@ -16,18 +23,31 @@ Specifically:
     sbt *user* should be consistent, no matter what plugins are pulled
     in.
 
-Here are some current plugin best practices. **NOTE:** Best practices
-are evolving, so check back frequently.
+Here are some current plugin best practices.
+
+> **Note:** Best practices are evolving, so check back frequently.
 
 ### Don't use default package
 
 Users who have their build files in some package will not be able to use
 your plugin if it's defined in default (no-name) package.
 
-### Avoid older `sbt.Plugin` mechanism
+### Use tasks. Avoid commands.
 
-sbt has deprecated the old `sbt.Plugin` mechanism in favor of
-`sbt.AutoPlugin`. The new mechanism features a set of user-level
+Your plugin should fit in naturally with the rest of the sbt ecosystem.
+The first thing you can do is to avoid defining [commands][Commands],
+and use [tasks][Tasks] and task-scoping instead (see below for more on task-scoping).
+Most of the interesting things in sbt like
+`compile`, `test` and `publish` are provided using tasks.
+Tasks can take advantage of duplication reduction and parallel execution by the task engine.
+Tasks can be called from other tasks. Commands do not compose well.
+With features like [ScopeFilter][ScopeFilter] many of the features that previously required
+commands are now possible using tasks. 
+
+### Use `sbt.AutoPlugin`
+
+sbt is in the process of migrating to `sbt.AutoPlugin` from `sbt.Plugin`.
+The new mechanism features a set of user-level
 controls and dependency declarations that cleans up a lot of
 long-standing issues with plugins.
 
@@ -45,125 +65,122 @@ Instead, simply reuse sbt's existing `sources` key.
 ### Avoid namespace clashes
 
 Sometimes, you need a new key, because there is no existing sbt key. In
-this case, use a plugin-specific prefix, both in the (string) key name
-used in the sbt namespace and in the Scala `val`. There are two
-acceptable ways to accomplish this goal.
-
-#### Just use a `val` prefix
+this case, use a plugin-specific prefix.
 
 ```scala
 package sbtobfuscate
-object Plugin extends sbt.Plugin {
-  val obfuscateStylesheet = settingKey[File]("Obfuscate stylesheet")
+
+import sbt._, Keys._
+
+object ObfuscatePlugin extends sbt.AutoPlugin {
+  object autoImport {
+    lazy val obfuscateStylesheet = settingKey[File]("obfuscate stylesheet")
+  } 
 }
 ```
 
-In this approach, every `val` starts with `obfuscate`. A user of the
+In this approach, every `lazy val` starts with `obfuscate`. A user of the
 plugin would refer to the settings like this:
 
 ```scala
-obfuscateStylesheet := ...
+obfuscateStylesheet := file("something.txt")
 ```
 
-#### Use a nested object
+### Provide core feature in a plain old Scala object
 
-```scala
-package sbtobfuscate
-object Plugin extends sbt.Plugin {
-  object ObfuscateKeys {
-    val stylesheet = SettingKey[File]("obfuscateStylesheet")
-  }
-}
-```
+The core feature of sbt's `package` task, for example, is implemented in [sbt.Package](../api/#sbt.Package%24),
+which can be called via its `apply` method.
+This allows greater reuse of the feature from other plugins such as sbt-assembly,
+which in return implements `sbtassembly.Assembly` object to implement its core feature.
 
-In this approach, all non-common settings are in a nested object. A user
-of the plugin would refer to the settings like this:
+Follow their lead, and provide core feature in a plain old Scala object.
 
-```scala
-import ObfuscateKeys._ // place this at the top of build.sbt
+### Configuration advices
 
-stylesheet := ...
-```
+If your plugin introduces either a new set of source code or
+its own library dependencies, only then you want your own configuration.
 
-### Configuration Advice
+#### You probably won't need your own configuration
 
-Due to usability concerns from the shell, you could opt out of
-task-scoping described in this section, if your plugin makes heavy use
-of the shell. Using configuration-scoping the user could discover your
-tasks using tab completion:
-
-```
-coffee:[tab]
-```
-
-This method no longer works with per-task keys, but there's a pending
-case, so hopefully it will be addressed in the future.
-
-#### When to define your own configuration
-
-If your plugin introduces a new concept (even if that concept reuses an
-existing key), you want your own configuration. For instance, suppose
-you've built a plugin that produces PDF files from some kind of markup,
-and your plugin defines a target directory to receive the resulting
-PDFs. That target directory is scoped in its own configuration, so it is
-distinct from other target directories. Thus, these two definitions use
-the same *key*, but they represent distinct *values*. So, in a user's
-`build.sbt`, we might see:
-
-```scala
-target in PDFPlugin := baseDirectory.value / "mytarget" / "pdf"
-
-target in Compile := baseDirectory.value / "mytarget"
-```
-
-In the PDF plugin, this is achieved with an `inConfig` definition:
-
-```scala
-val settings: Seq[sbt.Project.Setting[_]] = inConfig(LWM)(Seq(
-  target := baseDirectory.value / "target" / "docs" # the default value
-))
-```
-
-#### When *not* to define your own configuration.
-
-If you're merely adding to existing definitions, don't define your own
+Configurations should *not* be used to namespace keys for a plugin. 
+If you're merely adding tasks and settings, don't define your own
 configuration. Instead, reuse an existing one *or* scope by the main
 task (see below).
 
 ```scala
-val akka = config("akka")  // This isn't needed.
-val akkaStartCluster = TaskKey[Unit]("akkaStartCluster")
+package sbtwhatever
 
-target in akkaStartCluster := ... // This is ok.
+import sbt._, Keys._
 
-akkaStartCluster in akka := ...   // BAD.  No need for a Config for plugin-specific task.
+object WhateverPlugin extends sbt.AutoPlugin {
+  override def requires = plugins.JvmPlugin
+  override def trigger = allRequirements
+
+  object autoImport {
+    // BAD sample
+    lazy val Whatever = config("whatever") extend(Compile)
+    lazy val dude = settingKey[String]("A plugin specific key")
+  }
+  import autoImport._
+  override lazy val projectSettings = Seq(
+    dude in Whatever := "your opinion man" // DON'T DO THIS
+  )
+}
 ```
 
-#### Configuration Cat says "Configuration is for configuration"
+#### When to define your own configuration
+
+If your plugin introduces either a new set of source code or
+its own library dependencies, only then you want your own configuration.
+For instance, suppose you've built a plugin that performs fuzz testing
+that requires its own fuzzing library and fuzzing source code.
+`scalaSource` key can be reused similar to `Compile` and `Test` configuration,
+but `scalaSource` scoped to `Fuzz` configuration (denoted as `scalaSource in Fuzz`)
+can point to `src/fuzz/scala` so it is distinct from other Scala source directories.
+Thus, these three definitions use
+the same *key*, but they represent distinct *values*. So, in a user's
+`build.sbt`, we might see:
+
+```scala
+scalaSource in Fuzz := baseDirectory.value / "source" / "fuzz" / "scala"
+
+scalaSource in Compile := baseDirectory.value / "source" / "main" / "scala"
+```
+
+In the fuzzing plugin, this is achieved with an `inConfig` definition:
+
+```scala
+package sbtfuzz
+
+import sbt._, Keys._
+
+object FuzzPlugin extends sbt.AutoPlugin {
+  override def requires = plugins.JvmPlugin
+  override def trigger = allRequirements
+
+  object autoImport {
+    lazy val Fuzz = config("fuzz") extend(Compile)
+  }
+  import autoImport._
+  
+  lazy val baseFuzzSettings: Seq[Def.Setting[_]] = Seq(
+    test := {
+      println("fuzz test")
+    }
+  )
+  override lazy val projectSettings = inConfig(Fuzz)(baseFuzzSettings)
+}
+```
 
 When defining a new type of configuration, e.g.
 
 ```scala
-val Config = config("profile")
+lazy val Fuzz = config("fuzz") extend(Compile)
 ```
 
-should be used to create a "cross-task" configuration. The task
-definitions don't change in this case, but the default configuration
-does. For example, the `profile` configuration can extend the test
-configuration with additional settings and changes to allow profiling in
-sbt. Plugins should not create arbitrary Configurations, but utilize
-them for specific purposes and builds.
-
+should be used to create a configuration.
 Configurations actually tie into dependency resolution (with Ivy) and
 can alter generated pom files.
-
-Configurations should *not* be used to namespace keys for a plugin. e.g.
-
-```scala
-val Config = config("my-plugin")
-val pluginKey = settingKey[String]("A plugin specific key")
-val settings = pluginKey in Config  // DON'T DO THIS!
-```
 
 #### Playing nice with configurations
 
@@ -174,17 +191,37 @@ re-used in other configurations. While you may not see the need
 immediately in your plugin, some project may and will ask you for the
 flexibility.
 
-##### Provide raw settings and configured settings
+#### Provide raw settings and configured settings
 
 Split your settings by the configuration axis like so:
 
 ```scala
-val obfuscate = TaskKey[Seq[File]]("obfuscate")
-val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-  obfuscate := ... (sources in obfuscate).value ...,
-  sources in obfuscate := sources.value
-)
+package sbtobfuscate
+
+import sbt._, Keys._
+
+object ObfuscatePlugin extends sbt.AutoPlugin {
+  override def requires = plugins.JvmPlugin
+  override def trigger = allRequirements
+
+  object autoImport {
+    lazy val obfuscate = taskKey[Seq[File]]("obfuscate the source")
+    lazy val obfuscateStylesheet = settingKey[File]("obfuscate stylesheet")
+  }
+  import autoImport._
+  lazy val baseObfuscateSettings: Seq[Def.Setting[_]] = Seq(
+    obfuscate := Obfuscate((sources in obfuscate).value),
+    sources in obfuscate := sources.value
+  )
+  override lazy val projectSettings = inConfig(Compile)(baseObfuscateSettings)
+}
+
+// core feature implemented here
+object Obfuscate {
+  def apply(sources: Seq[File]): Seq[File] = {
+    sources
+  }
+}
 ```
 
 The `baseObfuscateSettings` value provides base configuration for the
@@ -195,57 +232,32 @@ flexibility in using features provided by a plugin. Here's how the raw
 settings may be reused:
 
 ```scala
-Project.inConfig(Test)(sbtObfuscate.Plugin.baseObfuscateSettings)
+import sbtobfuscate.ObfuscatePlugin
+
+lazy val app = (project in file("app")).
+  settings(inConfig(Test)(ObfuscatePlugin.baseObfuscateSettings): _*)
 ```
 
-Alternatively, one could provide a utility method to load settings in a
-given configuration:
+#### Using a "main" task scope for settings
 
-```scala
-def obfuscateSettingsIn(c: Configuration): Seq[Project.Setting[_]] =
-  inConfig(c)(baseObfuscateSettings)
-```
-
-This could be used as follows:
-
-```scala
-seq(obfuscateSettingsIn(Test): _*) 
-```
-
-##### Using a 'main' task scope for settings
-
-Sometimes you want to define some settings for a particular 'main' task
+Sometimes you want to define some settings for a particular "main" task
 in your plugin. In this instance, you can scope your settings using the
-task itself.
+task itself. See the `baseObfuscateSettings`:
 
 ```scala
-val obfuscate = TaskKey[Seq[File]]("obfuscate")
-val obfuscateSettings = inConfig(Compile)(baseObfuscateSettings)
-val baseObfuscateSettings: Seq[Setting[_]] = Seq(
-  obfuscate := ... (sources in obfuscate).value ...,
-  sources in obfuscate := sources.value
-)
+  lazy val baseObfuscateSettings: Seq[Def.Setting[_]] = Seq(
+    obfuscate := Obfuscate((sources in obfuscate).value),
+    sources in obfuscate := sources.value
+  )
 ```
 
 In the above example, `sources in obfuscate` is scoped under the main
 task, `obfuscate`.
 
-### Mucking with Global build state
+### Mucking with `globalSettings`
 
-There may be times when you need to muck with global build state. The
+There may be times when you need to muck with `globalSettings`. The
 general rule is *be careful what you touch*.
-
-First, make sure your user does not include global build configuration
-in *every* project but rather in the build itself. e.g.
-
-```scala
-object MyBuild extends Build {
-  override lazy val settings = super.settings ++ MyPlugin.globalSettings
-  val main = project(file("."), "root") settings(MyPlugin.globalSettings:_*) // BAD!
-}
-```
-
-Global settings should *not* be placed into a `build.sbt` file.
 
 When overriding global settings, care should be taken to ensure previous
 settings from other plugins are not ignored. e.g. when creating a new
@@ -253,10 +265,18 @@ settings from other plugins are not ignored. e.g. when creating a new
 removed.
 
 ```scala
-object MyPlugin extends Plugin {
-   val globalSettings: Seq[Setting[_]] = Seq(
-     onLoad in Global := (onLoad in Global).value andThen { state =>
-         ... return new state ...
-     }
-   )
+package sbtsomething
+
+import sbt._, Keys._
+
+object MyPlugin extends AutoPlugin {
+  override def requires = plugins.JvmPlugin
+  override def trigger = allRequirements
+
+  override val globalSettings: Seq[Def.Setting[_]] = Seq(
+    onLoad in Global := (onLoad in Global).value andThen { state =>
+      ... return new state ...
+    }
+  )
+}
 ```
