@@ -6,6 +6,7 @@ out: Plugins-Best-Practices.html
   [Pluings]: Plugins.html
   [Tasks]: Tasks.html
   [Commands]: Commands.html
+  [Plugins]: Plugins.html
   [ScopeFilter]: Tasks.html#ScopeFilter
 
 Plugins Best Practices
@@ -41,7 +42,7 @@ Most of the interesting things in sbt like
 `compile`, `test` and `publish` are provided using tasks.
 Tasks can take advantage of duplication reduction and parallel execution by the task engine.
 Tasks can be called from other tasks. Commands do not compose well.
-With features like [ScopeFilter][ScopeFilter] many of the features that previously required
+With features like [ScopeFilter][ScopeFilter], many of the features that previously required
 commands are now possible using tasks. 
 
 ### Use `sbt.AutoPlugin`
