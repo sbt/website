@@ -51,8 +51,7 @@ resolvers += Resolver.sonatypeRepo("public")
 通常、プラグインは、プロジェクトに追加されるセッティングを提供することで機能を追加する。
 これを次に説明しよう。
 
-
-### プラグインのセッティングの追加
+### auto plugin の有効化と無効化
 
 プラグインはビルド定義に自動的に追加されるセッティングを宣言することができ、
 その場合は何もしなくてもいい。
@@ -65,9 +64,26 @@ auto plugin の多くはデフォルトセッティングを自動的に追加�
 明示的な有効化が必要な auto plugin を使っている場合は、以下を `build.sbt` に追加する:
 
 ```scala
-lazy val util = project in file("util")
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  settings(
+    name := "hello-util"
+  )
+```
 
-util.enablePlugins(ThePluginIWant)
+プロジェクトは `enablePlugins` メソッドを用いて使用したい auto plugin
+を明示的に定義することができる。
+
+プロジェクトは、`disablePlugins` メソッドを用いてプラグインを除外することもできる。
+例えば、`util` から `IvyPlugin` のセッティングを除外したいとすると、`build.sbt` を以下のように変更する:
+
+```scala
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  disablePlugins(plugins.IvyPlugin).
+  settings(
+    name := "hello-util"
+  )
 ```
 
 明示的な有効化が必要かはそれぞれの auto plugin がドキュメントに書くべきだ。
@@ -112,12 +128,11 @@ site.settings
 
 ```scala
 // don't use the site plugin for the `util` project
-lazy val util = project in file("util")
+lazy val util = (project in file("util"))
 
 // enable the site plugin for the `core` project
-lazy val core = project in file("core")
-
-core.settings(site.settings : _*)
+lazy val core = (project in file("core")).
+  settings(site.settings : _*)
 ```
 
 ### グローバル・プラグイン

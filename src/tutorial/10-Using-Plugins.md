@@ -52,7 +52,7 @@ resolvers += Resolver.sonatypeRepo("public")
 Plugins usually provide settings that get added to a project to enable
 the plugin's functionality. This is described in the next section.
 
-### Adding settings for a plugin
+### Enabling and disabling auto plugins
 
 A plugin can declare that its settings be automatically added to the build definition,
 in which case you don't have to do anything to add them.
@@ -67,9 +67,27 @@ If you're using an auto plugin that requires explicit enablement, then you you
 have to add the following to your `build.sbt`:
 
 ```scala
-lazy val util = project in file("util")
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  settings(
+    name := "hello-util"
+  )
+```
 
-util.enablePlugins(ThePluginIWant)
+The `enablePlugins` method allows projects to explicitly define the
+auto plugins they wish to consume.
+
+Projects can also exclude plugins using the `disablePlugins`
+method. For example, if we wish to remove the `IvyPlugin` settings
+from `util`, we modify our `build.sbt` as follows:
+
+```scala
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  disablePlugins(plugins.IvyPlugin).
+  settings(
+    name := "hello-util"
+  )
 ```
 
 Auto plugins should document whether they need to explicitly enabled. If you're
@@ -117,12 +135,11 @@ project:
 
 ```scala
 // don't use the site plugin for the `util` project
-lazy val util = project in file("util")
+lazy val util = (project in file("util"))
 
 // enable the site plugin for the `core` project
-lazy val core = project in file("core")
-
-core.settings(site.settings : _*)
+lazy val core = (project in file("core")).
+  settings(site.settings : _*)
 ```
 
 ### Global plugins

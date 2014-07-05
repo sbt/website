@@ -2,6 +2,7 @@
 out: Plugins.html
 ---
 
+  [Using-Plugins]: ../tutorial/Using-Plugins.html
   [Full-Def]: ../tutorial/Full-Def.html
   [Best-Practices]: Best-Practices.html
   [Plugins-Best-Practices]: Plugins-Best-Practices.html
@@ -10,10 +11,11 @@ out: Plugins.html
 Plugins
 -------
 
-### Introduction
+There's a [getting started page][Using-Plugins] focused on using existing plugins,
+which you may want to read first.
 
-A plugin is essentially a way to use external code in a build
-definition. A plugin can be a library used to implement a task (you might use
+A plugin is a way to use external code in a build definition.
+A plugin can be a library used to implement a task (you might use
 [Knockoff](https://github.com/tristanjuricek/knockoff/) to write a
 markdown processing task). A plugin can define a sequence of sbt settings
 that are automatically added to all projects or that are explicitly
@@ -21,15 +23,24 @@ declared for selected projects. For example, a plugin might add a
 `proguard` task and associated (overridable) settings. Finally, a plugin
 can define new commands (via the `commands` setting).
 
+sbt 0.13.5 intoduces auto plugin with improved dependency management
+among the plugins and explicitly scoped auto importing.
+Going forward, our recommendation is to migrate to the auto plugins.
 The [Plugins Best Practices][Plugins-Best-Practices] page describes
 the currently evolving guidelines to writing sbt plugins. See also the general
 [best practices][Best-Practices].
 
-### Using a binary sbt plugin
+### Using an auto plugin
 
 A common situation is when using a binary plugin published to a repository.
-Create `project/plugins.sbt` with the desired sbt plugins, any general
-dependencies, and any necessary repositories:
+If you're adding sbt-assembly, create `project/assembly.sbt` with the following:
+
+```scala
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
+```
+
+Alternatively, you can create `project/plugins.sbt` with
+all of the desired sbt plugins, any general dependencies, and any necessary repositories:
 
 ```scala
 addSbtPlugin("org.example" % "plugin" % "1.0")
@@ -42,8 +53,19 @@ libraryDependencies += "org.example" % "utilities" % "1.3"
 resolvers += "Example Plugin Repository" at "http://example.org/repo/"
 ```
 
-See the rest of the page for more information on creating and using
-plugins.
+Many of the auto plugins automatically adds settings into projects,
+however, some may require explicit enablement. Here's an example:
+
+```scala
+lazy val util = (project in file("util")).
+  enablePlugins(FooPlugin, BarPlugin).
+  disablePlugins(plugins.IvyPlugin).
+  settings(
+    name := "hello-util"
+  )
+```
+
+See [using plugins][Using-Plugins] in the Getting Started guide for more details on using plugins.
 
 ### By Description
 
@@ -71,13 +93,8 @@ Specifically,
     "sbt is recursive", remember?).
 
 The build definition classpath is searched for `sbt/sbt.plugins`
-descriptor files containing the names of `sbt.Plugin` implementations. A
-plugin is a module that defines settings to automatically inject to
-projects. Additionally, all plugin modules are wildcard imported for the
-`eval` and `set` commands and `.sbt` files. A plugin implementation is
-not required to produce a plugin, however. It is a convenience for
-plugin consumers and because of the automatic nature, it is not always
-appropriate.
+descriptor files containing the names of
+`sbt.AutoPlugin` or `sbt.Plugin` implementations.
 
 The `reload plugins` command changes the current build to
 the (root) project's `project/` build definition. This allows manipulating
@@ -85,9 +102,34 @@ the build definition project like a normal project. `reload return` changes back
 to the original build. Any session settings for the plugin definition
 project that have not been saved are dropped.
 
-*Note*: At runtime, all plugins for all builds are loaded in a separate,
-parent class loader of the class loaders for builds. This means that
-plugins will not see classes or resources from build definitions.
+An auto plugin is a module that defines settings to automatically inject to
+projects. In addition an auto plugin provides the following feature:
+
+- Automatically import selective names to `.sbt` files and the `eval` and `set` commands.
+- Specify plugin dependencies to other auto plugins.
+- Automatically activate itself when all dependencies are present.
+- Specify `projectSettings`, `buildSettings`, and `globalSettings` as appropriate.
+
+### Plugin dependencies
+
+When a traditional plugin wanted to reuse some functionality from an existing plugin, it would pull in the plugin as a library dependency, and then it would either:
+
+1. add the setting sequence from the dependency as part of its own setting sequence, or
+2. tell the build users to include them in the right order.
+
+This becomes complicated as the number of plugins increase within an application, and becomes more error prone. The main goal of auto plugin is to alleviate this setting dependency problem. An auto plugin can depend on other auto plugins and lensure these dependency settings are loaded first.
+
+Suppose we have the `SbtLessPlugin` and the `SbtCoffeeScriptPlugin`, which in turn depends on the `SbtJsTaskPlugin`, `SbtWebPlugin`, and `JvmPlugin`. Instead of manually activating all of these plugins, a project can just activate the `SbtLessPlugin` and `SbtCoffeeScriptPlugin` like this:
+
+```scala
+lazy val root = (project in file(".")).
+  enablePlugins(SbtLessPlugin, SbtCoffeeScriptPlugin)
+```
+
+This will pull in the right setting sequence from the plugins in the right order.  The key notion here is you declare the plugins you want, and sbt can fill in the gap.
+
+A plugin implementation is not required to produce an auto plugin, however.
+It is a convenience for plugin consumers and because of the automatic nature, it is not always appropriate.
 
 #### Global plugins
 
@@ -96,134 +138,17 @@ definition project. It is a normal sbt project whose classpath is
 available to all sbt project definitions for that user as described
 above for per-project plugins.
 
-### By Example
+### Creating an auto plugin
 
-#### Using a library in a build definition
-
-As an example, we'll add the Grizzled Scala library as a plugin.
-Although this does not provide sbt-specific functionality, it
-demonstrates how to declare plugins.
-
-##### 1a) Manually managed
-
-1.  Download the jar manually from
-    [https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar](https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar)
-2.  Put it in `project/lib/`
-
-##### 1b) Automatically managed: direct editing approach
-
-Edit `project/plugins.sbt` to contain:
-
-```scala
-libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
-```
-
-If sbt is running, do `reload`.
-
-##### 1c) Automatically managed: command-line approach
-
-We can change to the plugins project in `project/` using
-`reload plugins`.
-
-```
-\$ sbt
-> reload plugins
-[info] Set current project to default (in build file:/Users/sbt/demo2/project/)
->
-```
-
-Then, we can add dependencies like usual and save them to
-`project/plugins.sbt`. It is useful, but not required, to run `update`
-to verify that the dependencies are correct.
-
-```
-> set libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
-...
-> update
-...
-> session save
-...
-```
-
-To switch back to the main project use `reload return`:
-
-```
-> reload return
-[info] Set current project to root (in build file:/Users/sbt/demo2/)
-```
-
-##### 1d) Project dependency
-
-This variant shows how to use sbt's external project support to declare
-a source dependency on a plugin. This means that the plugin will be
-built from source and used on the classpath.
-
-Edit `project/plugins.sbt`
-
-```scala
-lazy val root = project.in(file(".")).dependsOn(assemblyPlugin)
-
-lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
-```
-
-If sbt is running, run `reload`.
-
-Note that this approach can be useful used when developing a plugin. A
-project that uses the plugin will rebuild the plugin on `reload`. This
-saves the intermediate steps of `publishLocal` and `update`. It can also
-be used to work with the development version of a plugin from its
-repository.
-
-It is however recommended to explicitly specify the commit or tag by appending
-it to the repository as a fragment:
-
-```scala
-lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
-```
-
-One caveat to using this method is that the local sbt will try to run
-the remote plugin's build. It is quite possible that the plugin's own
-build uses a different sbt version, as many plugins cross-publish for
-several sbt versions. As such, it is recommended to stick with binary
-artifacts when possible.
-
-##### 2) Use the library
-
-Grizzled Scala is ready to be used in build definitions. This includes
-the `eval` and `set` commands and `.sbt` and `project/*.scala` files.
-
-```
-> eval grizzled.sys.os
-```
-
-In a `build.sbt` file:
-
-```scala
-import grizzled.sys._
-import OperatingSystem._
-
-libraryDependencies ++=
-    if(os == Windows)
-        Seq("org.example" % "windows-only" % "1.0")
-    else
-        Seq.empty
-```
-
-### Creating a plugin
-
-#### Introduction
-
-A minimal plugin is a Scala library that is built against the version of
+A minimal sbt plugin is a Scala library that is built against the version of
 Scala that sbt runs (currently, $scala_version$) or a Java library.
-Nothing special needs to be done for this type of library, as shown in
-the previous section. A more typical plugin will provide sbt tasks,
-commands, or settings. This kind of plugin may provide these settings
+Nothing special needs to be done for this type of library.
+A more typical plugin will provide sbt tasks, commands, or settings.
+This kind of plugin may provide these settings
 automatically or make them available for the user to explicitly
 integrate.
 
-#### Description
-
-To make a plugin, create a project and configure `sbtPlugin` to `true`.
+To make an auto plugin, create a project and configure `sbtPlugin` to `true`.
 
 ```scala
 sbtPlugin := true
@@ -232,56 +157,37 @@ sbtPlugin := true
 Then, write the plugin code and publish your project to a repository.
 The plugin can be used as described in the previous section.
 
--   Automatically importing selective names to `.sbt` files.
--   Specifying plugin dependencies.
--   Automatically activating itself when all dependencies are present.
--   Specifying `projectSettings`, `buildSettings`, and `globalSettings`
-    as appropriate.
+First, in an appropriate namespace, define your auto plugin object
+by extending `sbt.AutoPlugin`.
 
-When an AutoPlugin provides a stable field such as `val` or `object`
-named `autoImport`, the contents of the field are wildcard imported in
-in `set`, `eval`, and `.sbt` files.
+#### projectSettings and buildSettings
+
+With auto plugins, all provided settings (e.g. `assemblySettings`) are provided by the plugin directly via the `projectSettings` method. Here’s an example plugin that adds a command named hello to sbt projects:
 
 ```scala
-object autoImport
-{
-  lazy val hello = taskKey[String]("Returning a hello string")
-  lazy val settings: Seq[Def.Setting[_]] = Seq(
-    hello := {
-      "Hello from hello task"
+package sbthello
+
+import sbt._
+import Keys._
+
+object HelloPlugin extends AutoPlugin {
+  override lazy val projectSettings = Seq(commands += helloCommand)
+  lazy val helloCommand =
+    Command.command("hello") { (state: State) =>
+      println("Hi!")
+      state
     }
-  )
 }
 ```
 
-Typically, this is used to provide new keys - `SettingKey`s, `TaskKey`s,
-or `InputKey`s - or core methods without requiring an import or qualification.
+This example demonstrates how to take a Command (here, `helloCommand`) and
+distribute it in a plugin. Note that multiple commands can be included
+in one plugin (for example, use `commands ++= Seq(a,b)`). See
+[Commands][Commands]
+for defining more useful commands, including ones that accept arguments
+and affect the execution state.
 
-The `requires` method defines the dependencies to other plugins. When not specified,
-it defaults to an empty list which means no dependency on other plugins.
-
-```scala
-override def requires: Plugins = empty
-```
-
-The `trigger` method defines the conditions by which this plugin's settings
-are automatically activated. It defaults to `noTrigger` which means that the plugin
-is activated only when it is manually activated.
-
-```scala
-override def trigger: PluginTrigger = allRequirements
-```
-
-The AutoPlugin's `projectSettings` is automatically appended to each
-project's settings, when its dependencies also exist on that project, i.e.
-in the scope of each project that activates this AutoPlugin.
-
-```scala
-override val projectSettings = inConfig(Compile)(settings)
-```
-
-The `buildSettings` is appended to each build's settings (that is, to the build scope as `in ThisBuild`).
-The settings returned here are guaranteed to be added to a given build scope only once
+If the plugin needs to append settings at the build-level (that is, in `ThisBuild`) there's a `buildSettings` method. The settings returned here are guaranteed to be added to a given build scope only once
 regardless of how many projects for that build activate this AutoPlugin.
 
 ```scala
@@ -298,6 +204,113 @@ override def globalSettings: Seq[Setting[_]] = Nil
 
 Use `globalSettings` to define the default value of a setting.
 
+#### Implementing plugin dependencies
+
+Next step is to define the plugin dependencies.
+
+```scala
+package sbtless
+
+import sbt._
+import Keys._
+object SbtLessPlugin extends AutoPlugin {
+  override def requires = SbtJsTaskPlugin
+  override lazy val projectSettings = ...
+}
+```
+
+The `requires` method returns a value of type `Plugins`, which is a DSL for constructing the dependency list. The requires method typically contains one of the following values:
+
+- `empty` (No plugins, this is the default)
+- other auto plugins
+- `&&` operator (for defining multiple dependencies)
+
+#### Root plugins and triggered plugins
+
+Some plugins should always be explicitly enabled on projects. we call
+these root plugins, i.e. plugins that are "root" nodes in the plugin
+depdendency graph. An auto plugin is by default a root plugin.
+
+Auto plugins also provide a way for plugins to automatically attach themselves to
+projects if their dependencies are met. We call these triggered plugins,
+and they are created by overriding the `trigger` method.
+
+For example, we might want to create a triggered plugin that can append commands automatically to the build. To do this, set the `requires` method to return `empty` (this is the default), and override the `trigger` method with `allRequirements`.
+
+```scala
+package sbthello
+
+import sbt._
+import Keys._
+
+object HelloPlugin2 extends AutoPlugin {
+  override def trigger = allRequirements
+  override lazy val buildSettings = Seq(commands += helloCommand)
+  lazy val helloCommand =
+    Command.command("hello") { (state: State) =>
+      println("Hi!")
+      state
+    }
+}
+```
+
+The build user still needs to include this plugin in `project/plugins.sbt`, but it is no longer needed to be included in `build.sbt`. This becomes more interesting when you do specify a plugin with requirements. Let's modify the `SbtLessPlugin` so that it depends on another plugin:
+
+```scala
+package sbtless
+import sbt._
+import Keys._
+object SbtLessPlugin extends AutoPlugin {
+  override def trigger = allRequirements
+  override def requires = SbtJsTaskPlugin
+  override lazy val projectSettings = ...
+}
+```
+
+As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of it required plugins. So, if we define a `build.sbt` with:
+
+```scala
+plazy val root = project in file(".")
+
+root.enablePlugins(PlayScala)
+```
+
+then the setting sequence from `SbtLessPlugin` will be automatically appended somewhere after the settings from `PlayScala`.
+
+This allows plugins to silently, and correctly, extend existing plugins with more features.  It also can help remove the burden of ordering from the user, allowing the plugin authors greater freedom and power when providing feature for their users.
+
+#### Controlling the import with autoImport
+
+When an auto plugin provides a stable field such as `val` or `object`
+named `autoImport`, the contents of the field are wildcard imported in
+in `set`, `eval`, and `.sbt` files.
+
+```scala
+package sbthello
+
+import sbt._
+import Keys._
+
+object HelloPlugin3 extends AutoPlugin {
+  object autoImport {
+    val greeting = settingKey[String]("greeting")
+  }
+  import autoImport._
+  override def trigger = allRequirements
+  override lazy val buildSettings = Seq(
+    greeting := "Hi!",
+    commands += helloCommand)
+  lazy val helloCommand =
+    Command.command("hello") { (state: State) =>
+      println(greeting.value)
+      state
+    }
+}
+```
+
+Typically, `autoImport` is used to provide new keys - `SettingKey`s, `TaskKey`s,
+or `InputKey`s - or core methods without requiring an import or qualification.
+
 #### Example Plugin
 
 An example of a typical plugin:
@@ -312,18 +325,16 @@ name := "sbt-obfuscate"
 organization := "org.example"
 ```
 
-`Plugin.scala`:
+`ObfuscatePlugin.scala`:
 
 ```scala
 package sbtobfuscate
 
 import sbt._
 
-object Plugin extends AutoPlugin
-{
+object ObfuscatePlugin extends AutoPlugin {
   // by defining autoImport, the settings are automatically imported into user's `*.sbt`
-  object autoImport
-  {
+  object autoImport {
     // configuration points, like the built-in `version`, `libraryDependencies`, or `compile`
     val obfuscate = taskKey[Seq[File]]("Obfuscates files.")
     val obfuscateLiterals = settingKey[Boolean]("Obfuscate literals.")
@@ -338,9 +349,9 @@ object Plugin extends AutoPlugin
   }
 
   import autoImport._
-  override def requires = sbt.plugins.JvmModule
+  override def requires = sbt.plugins.JvmPlugin
 
-  // This plugin is automatically enabled for projects which are JvmModules.
+  // This plugin is automatically enabled for projects which are JvmPlugin.
   override def trigger = allRequirements
 
   // a group of settings that are automatically added to projects.
@@ -349,8 +360,7 @@ object Plugin extends AutoPlugin
     inConfig(Test)(baseObfuscateSettings)
 }
 
-object Obfuscate
-{
+object Obfuscate {
     def apply(sources: Seq[File]): Seq[File] := sources
 }
 ```
@@ -361,70 +371,6 @@ A build definition that uses the plugin might look like. `obfuscate.sbt`:
 
 ```scala
 obfuscateLiterals in obfuscate := true
-```
-
-#### Root Plugins
-
-Some plugins should always be explicitly enabled on projects. Sbt calls
-these root plugins, i.e. plugins that are "root" nodes in the plugin
-depdendency graph. `AutoPlugin` by default defines a root plugin.
-
-#### Example command root plugin
-
-A basic plugin that adds commands looks like. `build.sbt`:
-
-```scala
-sbtPlugin := true
-
-name := "sbt-sample"
-
-organization := "org.example"
-```
-
-`Plugin.scala`:
-
-```scala
-package sbtsample
-
-import sbt._
-import Keys._
-
-object Plugin extends AutoPlugin {
-  override lazy val projectSettings = Seq(commands += myCommand)
-
-  lazy val myCommand = 
-    Command.command("hello") { (state: State) =>
-      println("Hi!")
-      state
-    }
-}
-```
-
-This example demonstrates how to take a Command (here, `myCommand`) and
-distribute it in a plugin. Note that multiple commands can be included
-in one plugin (for example, use `commands ++= Seq(a,b)`). See
-[Commands][Commands]
-for defining more useful commands, including ones that accept arguments
-and affect the execution state.
-
-For a user to consume this plugin, it requires an explicit include (trigger) via
-the `Project` instance. Here's what their local sbt will look like. `build.sbt`:
-
-```scala
-lazy val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin)
-```
-
-The `setPlugins` method allows projects to explicitly define the
-`RootPlugin`s they wish to consume. `AutoPlugin`s are automatically
-added to the project as appropriate.
-
-Projects can also exclude any type of plugin using the `disablePlugins`
-method. For example, if we wish to remove the JvmModule settings
-(`compile`,`test`,`run`), we modify our `build.sbt` as follows:
-
-
-```scala
-lazy val root = Project("example-plugin-usage", file(".")).setPlugins(MyPlugin).disablePlugins(plugins.JvmModule)
 ```
 
 #### Global plugins example
@@ -464,6 +410,117 @@ In addition:
 These are all consequences of `$global_plugins_base$` being a standard
 project whose classpath is added to every sbt project's build
 definition.
+
+### Using a library in a build definition example
+
+As an example, we'll add the Grizzled Scala library as a plugin.
+Although this does not provide sbt-specific functionality, it
+demonstrates how to declare plugins.
+
+#### 1a) Manually managed
+
+1.  Download the jar manually from
+    [https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar](https://oss.sonatype.org/content/repositories/releases/org/clapper/grizzled-scala_2.8.1/1.0.4/grizzled-scala_2.8.1-1.0.4.jar)
+2.  Put it in `project/lib/`
+
+#### 1b) Automatically managed: direct editing approach
+
+Edit `project/plugins.sbt` to contain:
+
+```scala
+libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+```
+
+If sbt is running, do `reload`.
+
+#### 1c) Automatically managed: command-line approach
+
+We can change to the plugins project in `project/` using
+`reload plugins`.
+
+```
+\$ sbt
+> reload plugins
+[info] Set current project to default (in build file:/Users/sbt/demo2/project/)
+>
+```
+
+Then, we can add dependencies like usual and save them to
+`project/plugins.sbt`. It is useful, but not required, to run `update`
+to verify that the dependencies are correct.
+
+```
+> set libraryDependencies += "org.clapper" %% "grizzled-scala" % "1.0.4"
+...
+> update
+...
+> session save
+...
+```
+
+To switch back to the main project use `reload return`:
+
+```
+> reload return
+[info] Set current project to root (in build file:/Users/sbt/demo2/)
+```
+
+#### 1d) Project dependency
+
+This variant shows how to use sbt's external project support to declare
+a source dependency on a plugin. This means that the plugin will be
+built from source and used on the classpath.
+
+Edit `project/plugins.sbt`
+
+```scala
+lazy val root = (project in file(".")).dependsOn(assemblyPlugin)
+
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+```
+
+If sbt is running, run `reload`.
+
+Note that this approach can be useful used when developing a plugin. A
+project that uses the plugin will rebuild the plugin on `reload`. This
+saves the intermediate steps of `publishLocal` and `update`. It can also
+be used to work with the development version of a plugin from its
+repository.
+
+It is however recommended to explicitly specify the commit or tag by appending
+it to the repository as a fragment:
+
+```scala
+lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly#0.9.1")
+```
+
+One caveat to using this method is that the local sbt will try to run
+the remote plugin's build. It is quite possible that the plugin's own
+build uses a different sbt version, as many plugins cross-publish for
+several sbt versions. As such, it is recommended to stick with binary
+artifacts when possible.
+
+#### 2) Use the library
+
+Grizzled Scala is ready to be used in build definitions. This includes
+the `eval` and `set` commands and `.sbt` and `project/*.scala` files.
+
+```
+> eval grizzled.sys.os
+```
+
+In a `build.sbt` file:
+
+```scala
+import grizzled.sys._
+import OperatingSystem._
+
+libraryDependencies ++=
+    if(os == Windows)
+        Seq("org.example" % "windows-only" % "1.0")
+    else
+        Seq.empty
+```
 
 ### Best Practices
 
