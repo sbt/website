@@ -8,6 +8,7 @@ out: Plugins-Best-Practices.html
   [Commands]: Commands.html
   [Plugins]: Plugins.html
   [ScopeFilter]: Tasks.html#ScopeFilter
+  [inspectr]: https://github.com/eed3si9n/sbt-inspectr/blob/aa88bfac609e4668d0ad8ac220e4ef5fb1c3b9f5/src/main/scala/sbtinspectr/InspectrCommand.scala
 
 Plugins Best Practices
 ----------------------
@@ -33,17 +34,23 @@ Here are some current plugin best practices.
 Users who have their build files in some package will not be able to use
 your plugin if it's defined in default (no-name) package.
 
-### Use tasks. Avoid commands.
+### Use settings and tasks. Avoid commands.
 
 Your plugin should fit in naturally with the rest of the sbt ecosystem.
 The first thing you can do is to avoid defining [commands][Commands],
-and use [tasks][Tasks] and task-scoping instead (see below for more on task-scoping).
+and use settings and [tasks][Tasks] and task-scoping instead (see below for more on task-scoping).
 Most of the interesting things in sbt like
 `compile`, `test` and `publish` are provided using tasks.
 Tasks can take advantage of duplication reduction and parallel execution by the task engine.
-Tasks can be called from other tasks. Commands do not compose well.
 With features like [ScopeFilter][ScopeFilter], many of the features that previously required
 commands are now possible using tasks. 
+
+Settings can be composed from other settings and tasks.
+Tasks can be composed from other tasks and input tasks.
+Commands, on the other hand, cannot be composed from any of the above.
+In general, use the minimal thing that you need.
+One legitimate use of commands may be using plugin to access the build definition itself not the code.
+sbt-inspectr was implemented using [a command][inspectr] before it became `insect tree`.
 
 ### Use `sbt.AutoPlugin`
 
