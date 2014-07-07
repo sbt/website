@@ -50,7 +50,7 @@ Tasks can be composed from other tasks and input tasks.
 Commands, on the other hand, cannot be composed from any of the above.
 In general, use the minimal thing that you need.
 One legitimate use of commands may be using plugin to access the build definition itself not the code.
-sbt-inspectr was implemented using [a command][inspectr] before it became `insect tree`.
+sbt-inspectr was implemented using [a command][inspectr] before it became `inspect tree`.
 
 ### Use `sbt.AutoPlugin`
 
