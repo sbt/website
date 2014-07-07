@@ -64,29 +64,6 @@ Some commands have different levels of completion. Hitting tab multiple
 times increases the verbosity of completions. (Presently, this feature
 is only used by the `set` command.)
 
-<a name="show_keybindings"></a>
-
-### Show JLine keybindings
-
-Both the Scala and sbt command prompts use JLine for interaction. The
-Scala REPL contains a `:keybindings` command to show many of the
-keybindings used for JLine. For sbt, this can be used by running one of
-the `console` commands (`console`, `consoleQuick`, or `consoleProject`)
-and then running `:keybindings`. For example:
-
-```
-> consoleProject
-[info] Starting scala interpreter...
-...
-scala> :keybindings
-Reading jline properties for default key bindings.
-Accuracy not guaranteed: treat this as a guideline only.
-
-1 CTRL-A: move to the beginning of the line
-2 CTRL-B: move to the previous character
-...
-```
-
 <a name="change_keybindings"></a>
 
 ### Modify the default JLine keybindings
