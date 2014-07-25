@@ -169,6 +169,8 @@ your plugin to the list.
     <https://github.com/eed3si9n/scalaxb>
 -   sbt-protobuf (Google Protocol Buffers):
     <https://github.com/sbt/sbt-protobuf>
+-   sbt-cppp (Cross-Project Protobuf Plugin for Sbt):
+    <https://github.com/Atry/sbt-cppp>
 -   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
 -   sbt-xjc (XSD binding, using
     [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
