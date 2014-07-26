@@ -16,7 +16,7 @@ These two engines are driven by [sbt-site](https://github.com/sbt/sbt-site) and 
 You'll need the following gems for running nanoc:
 
 ```
-$ gem install nanoc
+$ gem install nanoc:6.3.9
 $ gem install redcarpet
 $ gem install nokogiri
 ```
