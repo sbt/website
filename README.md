@@ -11,6 +11,11 @@ scala-sbt.org is powered by two static site engines.
 
 These two engines are driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages). We will shortly use pandoc to also generate pdf files.
 
+## Attention plugin authors
+
+The source for [Community plugins](http://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/blob/master/src/reference/01-General-Info/02-Community-Plugins.md).
+Fork this project, add your plugin and send us a pull request if your plugin is not already on it.
+
 ## Setup
 
 You'll need the following gems for running nanoc:
