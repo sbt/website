@@ -254,6 +254,8 @@ your plugin to the list.
     <http://software.clapper.org/sbt-editsource/>
 -   sbt-cross-building (Simplifies building your plugins for multiple
     versions of sbt): <https://github.com/jrudolph/sbt-cross-building>
+-   sbt-doge (aggregates tasks across subprojects and their `crossScalaVersions`):
+    <https://github.com/sbt/sbt-doge>
 -   sbt-revolver (Triggered restart, hot reloading):
     <https://github.com/spray/sbt-revolver>
 -   sbt-scalaedit (Open and upgrade ScalaEdit (text editor)):
