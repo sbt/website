@@ -6,31 +6,29 @@ out: Installing-sbt-on-Mac.html
   [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
  
-Installing sbt on Mac
+在Mac上安装sbt
 ---------------------
 
-### Installing from a third-party package
+### 通过第三方的包安装
 
-> **Note:** Third-party packages may not provide the latest version. Please make
-> sure to report any issues with these packages to the relevant
-> maintainers.
+> **注意:** 第三方的包可能没有提供最新的版本. 请记得将任何问题反馈给这些包相关的维护者.
 
-#### [Macports](http://macports.org/)
+#### 通过[Macports](http://macports.org/)安装
 
 ```
 \$ port install sbt
 ```
 
-#### [Homebrew](http://mxcl.github.com/homebrew/)
+#### 通过[Homebrew](http://mxcl.github.com/homebrew/)安装
 
 ```
 \$ brew install sbt
 ```
 
-### Installing from a universal package
+### 通过通用的包安装
 
-Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
+下载[ZIP][ZIP]或者[TGZ][TGZ]包并解压.
 
-### Installaing manually
+### 手动安装
 
-See instruction to install manually.
+参见手动安装指南.
