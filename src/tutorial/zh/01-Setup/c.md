@@ -8,38 +8,34 @@ out: Installing-sbt-on-Linux.html
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
  
-Installing sbt on Linux
+在Linux上安装sbt
 -----------------------
 
-### Installing from a universal package
+### 通过通用的安装包安装
 
-Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
+下载[ZIP][ZIP]或者[TGZ][TGZ]包并解压.
 
-### RPM and DEB
+### RPM和DEB
 
-The following packages are also officially supported:
+官方也提供下面这两种包:
 
-  - [RPM][RPM] package
-  - [DEB][DEB] package
+  - [RPM][RPM]包
+  - [DEB][DEB]包
 
-> **Note:** Please report any issues with these to the
-> [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
-> project.
+> **注意:** 请将任何和这两个包相关的问题反馈到[sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)项目.
 
 ### Gentoo
 
-In the official tree there is no ebuild for sbt. But there are
-[ebuilds](https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin) to merge sbt from binaries.
-To merge sbt from this ebuilds you can do:
+在sbt官方的树中没有提供ebuild. 但是有从二进制合并sbt的[ebuilds](https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin).
+可以通过以下方式从这些ebuilds中合并sbt:
 
     \$ mkdir -p /usr/local/portage && cd /usr/local/portage
     \$ git clone git://github.com/whiter4bbit/overlays.git
     \$ echo "PORTDIR_OVERLAY=\$PORTDIR_OVERLAY /usr/local/portage/overlays" >> /etc/make.conf
     \$ emerge sbt-bin
 
-> **Note:** Please report any issues with the ebuild
-> [here](https://github.com/whiter4bbit/overlays/issues).
+> **注意:** 请将任何和ebuild相关的问题反馈到[这里](https://github.com/whiter4bbit/overlays/issues).
 
-### Installaing manually
+### 手动安装
 
-See instruction to install manually.
+参见手动安装指南.
