@@ -4,25 +4,23 @@ out: Manual-Installation.html
 
   [sbt-launch.jar]: $launcher_release_base$$app_version$/sbt-launch.jar
 
-Installing sbt manually
+手动安装sbt
 -----------------------
 
-Manual installation requires downloading [sbt-launch.jar][sbt-launch.jar] and creating a
-script to start it.
+手动安装需要下载[sbt-launch.jar][sbt-launch.jar], 然后创建脚本来运行它.
 
 ### Unix
 
-Put [sbt-launch.jar][sbt-launch.jar] in `~/bin`.
+将[sbt-launch.jar][sbt-launch.jar]文件放在`~/bin`下.
 
-Create a script to run the jar, by creating `~/bin/sbt` with these
-contents:
+创建一个脚本来运行这个jar, 脚本`~/bin/sbt`内容如下:
 
 ```
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
-java \$SBT_OPTS -jar `dirname \$0`/sbt-launch.jar "\$@"
+java \$SBT_OPTS -jar `路径名 \$0`/sbt-launch.jar "\$@"
 ```
 
-Make the script executable:
+给该脚本赋予可执行权限:
 
 ```
 \$ chmod u+x ~/bin/sbt
@@ -30,45 +28,38 @@ Make the script executable:
 
 ### Windows
 
-Manual installation for Windows varies by terminal type and whether
-Cygwin is used. In all cases, put the batch file or script on the path
-so that you can launch sbt in any directory by typing `sbt` at the command
-prompt. Also, adjust JVM settings according to your machine if
-necessary.
+在Windows上手动安装的步骤根据是否使用Cygwin和终端的不同而不同. 在任何情况下, 将batch文件或者脚本文件添加到path中, 使得可以在任意路径下的命令行中敲`sbt`来运行sbt.
+同时, 如果需要的话, 根据机器调节一下JVM的参数设置.
 
 #### Non-Cygwin
 
-For non-Cygwin users using the standard Windows terminal, create a batch file `sbt.bat`:
+对于使用标准Windows终端的非Cygwin用户, 创建如`sbt.bat`的batch文件:
 
 ```
 set SCRIPT_DIR=%~dp0
 java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 ```
 
-and put the downloaded [sbt-launch.jar][sbt-launch.jar] in the same directory as the
-batch file.
+然后将下载好的[sbt-launch.jar][sbt-launch.jar]放在和`sbt.bat`相同的路径下.
 
-#### Cygwin with the standard Windows termnial
+#### Cygwin和标准的Windows终端
 
-If using Cygwin with the standard Windows terminal, create a bash
-script `~/bin/sbt`:
+如果使用Cygwin和标准的Windows终端, 创建如下的bash脚本`~/bin/sbt`:
 
 ```
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
 java \$SBT_OPTS -jar sbt-launch.jar "\$@"
 ```
 
-Replace sbt-launch.jar with the path to your downloaded [sbt-launch.jar][sbt-launch.jar]
-and remember to use cygpath if necessary. Make the script executable:
+用下载好的[sbt-launch.jar][sbt-launch.jar]文件的路径替换掉sbt-launch.jar, 如果需要的话记得使用cygpath. 给脚本赋予可执行权限:
 
 ```
 \$ chmod u+x ~/bin/sbt
 ```
 
-#### Cygwin with an Ansi terminal
+#### Cygwin和Ansi终端
 
-Cygwin with an Ansi terminal (supports Ansi escape sequences and is configurable via stty), create a bash script
-`~/bin/sbt`:
+如果使用Cygwin和Ansi终端(支持Ansi转义序列并且可以通过stty配置), 创建一个bash文件`~/bin/sbt`:
 
 ```
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
@@ -77,20 +68,13 @@ java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true \$SBT_OPTS -jar sbt-l
 stty icanon echo > /dev/null 2>&1
 ```
 
-Replace sbt-launch.jar with the path to your downloaded [sbt-launch.jar][sbt-launch.jar]
-and remember to use cygpath if necessary. Then, make the script
-executable:
+用下载好的[sbt-launch.jar][sbt-launch.jar]文件的路径替换掉sbt-launch.jar, 如果需要的话记得使用cygpath. 给脚本赋予可执行权限:
 
 ```
 \$ chmod u+x ~/bin/sbt
 ```
 
-In order for backspace to work correctly in the scala console, you need
-to make sure your backspace key is sending the erase character as
-configured by stty. For the default cygwin terminal (mintty) you can
-find a setting under Options -> Keys "Backspace sends ^H" which will
-need to be checked if your erase key is the cygwin default of ^H.
+为了让退格(backspace)能够在scala的控制台中正常工作, 你需要确保你的退格键发送的是删除符(erase character), 和在stty中配置的一样. 对于默认的cygwin终端(mintty), 
+在设置选项 -> 键中, "退格发送 ^H"需要被选中如果你的删除符是cygwin默认的^H.
 
-> **Note:** Other configurations are currently unsupported. Please [submit a pull
-> request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md)
-> implementing or describing that support.
+> **注意:** 当前其他的配置还不支持. 请[提交pull request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md)实现或者描述已经支持的配置.
