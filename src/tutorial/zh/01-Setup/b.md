@@ -6,17 +6,17 @@ out: Installing-sbt-on-Windows.html
   [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
 
-Installing sbt on Windows
+在Windows上安装sbt
 -------------------------
 
-### Windows installer
+### 通过Windows安装包安装
 
-Download [msi installer][MSI] and install it.
+下载[msi安装包][MSI]并安装.
 
-### Installing from a universal package
+### 通过通用的安装包安装
 
-Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
+下载[ZIP][ZIP]或者[TGZ][TGZ]包并解压.
 
-### Installaing manually
+### 手动安装
 
-See instruction to install manually.
+参见手动安装指南.
