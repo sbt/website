@@ -239,6 +239,8 @@ your plugin to the list.
     <https://github.com/rtimush/sbt-updates>
 -   sbt-lock (Locks library versions for reproducible build):
     <https://github.com/tkawachi/sbt-lock>
+-   sbt-versions (Checks for updated versions of your dependencies):
+    <https://github.com/sksamuel/sbt-versions>
 
 #### Utility plugins
 
