@@ -84,6 +84,7 @@ your plugin to the list.
     supports Java projects atm)
 -   scalastyle: <https://github.com/scalastyle/scalastyle-sbt-plugin>
     (Scalastyle - static code checker for Scala)
+-   sbt-scapegoat: <https://github.com/sksamuel/sbt-scapegoat> (Scapegoat - Scala static code analysis)
 -   sbt-stats: <https://github.com/orrsella/sbt-stats> (simple,
     extensible source code statistics)
 
