@@ -60,8 +60,8 @@ your plugin to the list.
     <https://github.com/timperrett/sbt-cloudbees-plugin>
 -   sbt-jelastic-deploy:
     <https://github.com/casualjim/sbt-jelastic-deploy>
--   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk):
-    <https://github.com/sqs/sbt-elasticbeanstalk>
+-   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk): <https://github.com/sqs/sbt-elasticbeanstalk>
+-   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
 
 ### Test plugins
 
@@ -254,6 +254,8 @@ your plugin to the list.
     <https://github.com/reikje/npt>
 -   sbt-editsource (A poor man's *sed*(1), for sbt):
     <http://software.clapper.org/sbt-editsource/>
+-   sbt-conflict-classes (Show conclict classes from classpath):
+    <https://github.com/todesking/sbt-conflict-classes>
 -   sbt-cross-building (Simplifies building your plugins for multiple
     versions of sbt): <https://github.com/jrudolph/sbt-cross-building>
 -   sbt-doge (aggregates tasks across subprojects and their `crossScalaVersions`):
