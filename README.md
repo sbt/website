@@ -21,7 +21,7 @@ Fork this project, add your plugin and send us a pull request if your plugin is 
 You'll need the following gems for running nanoc:
 
 ```
-$ gem install nanoc:3.7.1
+$ gem install nanoc:3.6.9
 $ gem install redcarpet
 $ gem install nokogiri
 ```
