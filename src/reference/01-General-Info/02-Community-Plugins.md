@@ -73,8 +73,6 @@ your plugin to the list.
     <https://github.com/skipoleschris/xsbt-cucumber-plugin>
 -   sbt-multi-jvm: <https://github.com/typesafehub/sbt-multi-jvm>
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
--   schoir (Distributed testing plugin):
-    <https://github.com/typesafehub/schoir>
 
 #### Static Code Analysis plugins
 
