@@ -205,6 +205,8 @@ your plugin to the list.
     code): <https://github.com/sbt/sbt-boilerplate>
 -   sbt-fxml (Generates controller classes for JavaFX FXML files):
     <https://bitbucket.org/phdoerfler/sbt-fxml>
+-   sbt-clojure (Compiling Clojure code):
+    <https://github.com/Geal/sbt-clojure>
 
 #### Database plugins
 
