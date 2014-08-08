@@ -73,8 +73,6 @@ your plugin to the list.
     <https://github.com/skipoleschris/xsbt-cucumber-plugin>
 -   sbt-multi-jvm: <https://github.com/typesafehub/sbt-multi-jvm>
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
--   schoir (Distributed testing plugin):
-    <https://github.com/typesafehub/schoir>
 
 #### Static Code Analysis plugins
 
@@ -133,8 +131,8 @@ your plugin to the list.
 -   sbt-signer-plugin: <https://github.com/rossabaker/sbt-signer-plugin>
 -   sbt-izpack (generates IzPack an installer):
     <http://software.clapper.org/sbt-izpack/>
--   sbt-ghpages-plugin (publishes generated site and api):
-    <https://github.com/jsuereth/xsbt-ghpages-plugin>
+-   sbt-ghpages (publishes generated site and api):
+    <https://github.com/sbt/sbt-ghpages>
 -   sbt-pgp (PGP signing plugin, can generate keys too):
     <https://github.com/sbt/sbt-pgp>
 -   sbt-release (customizable release process):
@@ -207,6 +205,8 @@ your plugin to the list.
     code): <https://github.com/sbt/sbt-boilerplate>
 -   sbt-fxml (Generates controller classes for JavaFX FXML files):
     <https://bitbucket.org/phdoerfler/sbt-fxml>
+-   sbt-clojure (Compiling Clojure code):
+    <https://github.com/Geal/sbt-clojure>
 
 #### Database plugins
 
