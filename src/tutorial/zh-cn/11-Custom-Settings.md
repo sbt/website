@@ -10,7 +10,7 @@ out: Custom-Settings.html
   [Plugins]: ../docs/Plugins.html
   [Tasks]: ../docs/Tasks.html
 
-自定义设置和设置
+自定义设置和任务
 -------------------------
 
 翻译中
