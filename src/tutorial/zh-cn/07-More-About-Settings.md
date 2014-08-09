@@ -6,7 +6,7 @@ out: More-About-Settings.html
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
 
-更多项设置
+更多关于设置
 ---------------------
 
 翻译中
