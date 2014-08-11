@@ -227,6 +227,8 @@ your plugin to the list.
     no external tools): <http://planet42.github.io/Laika/>
 -   literator-plugin (Converts sources into markdown documents):
     <https://github.com/laughedelic/literator>
+-   sbt-class-diagram (Create a class diagram)
+    <https://github.com/xuwei-k/sbt-class-diagram>
 
 #### Library dependency plugins
 
