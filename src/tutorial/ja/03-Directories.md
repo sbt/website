@@ -17,7 +17,7 @@ out: Directories.html
 ### ベースディレクトリ
 
 sbt 用語では「ベースディレクトリ」(base directory) はプロジェクトが入ったディレクトリを指す。
-[Hello, World](../hello) での例のように、`hello/build.sbt` と `hello/hw.scala` が入った
+[Hello, World][Hello] での例のように、`hello/build.sbt` と `hello/hw.scala` が入った
 `hello` プロジェクトを作ったとすると、ベースディレクトリは `hello` だ。
 
 ### ソースコード

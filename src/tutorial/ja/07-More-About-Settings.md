@@ -5,7 +5,7 @@ out: More-About-Settings.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Full-Def]: Full-Def.html
-  [Keys]: ../sxr/sbt/Keys.scala.html
+  [Keys]: ../../sxr/sbt/Keys.scala.html
 
 他の種類のセッティング
 -------------------
@@ -243,7 +243,7 @@ name <<= (name, organization, version) { (n, o, v) => "project " + n + " from " 
 
 この実践上の大切さは、非タスクのセッティングはタスクを依存性としてもつことができないということだ。
 
-（[Keys] より）以下の二つのキーを例に説明する:
+（[Keys][Keys] より）以下の二つのキーを例に説明する:
 
 ```scala
 val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")

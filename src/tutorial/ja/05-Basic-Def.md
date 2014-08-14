@@ -2,7 +2,7 @@
 out: Basic-Def.html
 ---
 
-  [Keys]: ../sxr/sbt/Keys.scala.html
+  [Keys]: ../../sxr/sbt/Keys.scala.html
   [More-About-Settings]: More-About-Settings.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
@@ -104,7 +104,7 @@ name := 42  // コンパイルしない
 
 ### キーは Keys オブジェクトで定義される
 
-組み込みのキーは [Keys] と呼ばれるオブジェクトのフィールドにすぎない。
+組み込みのキーは [Keys][Keys] と呼ばれるオブジェクトのフィールドにすぎない。
 `build.sbt` は、自動的に `import sbt.Keys._` するため、
 `sbt.Keys.name` は `name` として呼ぶことができる。
 
@@ -128,9 +128,9 @@ name := 42  // コンパイルしない
  - `TaskKey[T]`: 毎回再計算され、副作用を伴う可能性のある値のキー。
  - `InputKey[T]`: コマンドラインの引数を受け取るタスクキー。
  　「初めての sbt」では `InputKey` を説明しないので、このガイドを終えた後で、
-   [[Input Tasks]] を読んでみよう。
+   [Input Tasks][Input-Tasks] を読んでみよう。
 
-`TaskKey[T]` は、_タスク_を定義しているといわれる。タスクは、`compile` や `packae` のような作業だ。
+`TaskKey[T]` は、_タスク_を定義しているといわれる。タスクは、`compile` や `package` のような作業だ。
 タスクは `Unit` を返すかもしれないし（`Unit` は、Scala での `void` だ）、
 タスクに関連した値を返すかもしれない。例えば、`package` は作成した jar ファイルを値として返す `TaskKey[File]` だ。
 
@@ -156,7 +156,7 @@ hello := { println("Hello!") }
 
 `T` と `Task[T]` の型の違いによる影響が一つある。
 それは、セッティングキーはキャッシュされていて、再実行されないため、タスキキーに依存できないということだ。
-このことについては、後ほどの[他の種類のセッティング](../more-about-settings)にて詳しくみていく。
+このことについては、後ほどの[他の種類のセッティング][More-About-Settings]にて詳しくみていく。
 
 ### sbt インタラクティブモードにおけるキー
 
@@ -169,7 +169,7 @@ sbt のインタラクティブモードからタスクの名前を打ち込む�
 
 Scala の慣例にのっとり、ビルド定義ファイル内ではキーはキャメルケース（`camelCase`）で命名されているけども、
 sbt コマンドラインではハイフン分けされて（`hyphen-separated-words`）命名されている。
-sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（[Keys] 参照）。
+sbt で使われているハイフン分けされた文字列はキーの定義とともに宣言されている（[Keys][Keys] 参照）。
 例えば、`Keys.scala` に以下のキーがある:
 
 ```scala
@@ -193,8 +193,8 @@ import Process._
 import Keys._
 ```
 
-（さらに、[.scala ファイル](../full-def)がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
-これに関しては、[.scala ビルド定義](../full-def)でさらに詳しく。）
+（さらに、[.scala ファイル][Full-Def]がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
+これに関しては、[.scala ビルド定義][Full-Def]でさらに詳しく。）
 
 ### ライブラリへの依存性を加える
 

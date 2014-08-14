@@ -56,7 +56,7 @@ sbt は、リフレクションを用いて `Build` オブジェクト内の
 サブディレクトリ `foo` に置かれる。
 そのソースは、`foo/Foo.scala` のように `foo` の直下に置かれるか、
 `foo/src/main/scala` 内に置かれる。
-ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造](../directories)が `foo` 以下に適用される。
+ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造][Directories]が `foo` 以下に適用される。
 
 `foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
 `hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
@@ -80,7 +80,7 @@ sbt は、リフレクションを用いて `Build` オブジェクト内の
 `hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
 `hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
 `hello/*:version` は、`hello/build.sbt` 内で定義される。
-[スコープ付けされたキーの構文](../scope)を復習しておこう。
+[スコープ付けされたキーの構文][Scopes]を復習しておこう。
 それぞれの `version` キーは、`build.sbt` の場所により、
 特定のプロジェクトにスコープ付けされている。
 だけど、三つの `build.sbt` とも同じビルド定義の一部だ。
@@ -117,7 +117,7 @@ aggregate in update := false
 ```
 
 `aggregate in update` は、`update` タスクにスコープ付けされた `aggregate` キーだ
-（[スコープ](../scope)参照）。
+（[スコープ][Scopes]参照）。
 
 注意: 集約は、集約されるタスクを順不同に並列実行する。
 
