@@ -111,7 +111,7 @@ sbt のデフォルトセッティングは 3つのプラグインによって�
 
 さらに `JUnitXmlReportPlugin` は実験的に junit-xml の生成機能を提供する。
 
-古い auto plugin ではないプラグインは、、[マルチプロジェクトビルド](../multi-project)内に
+古い auto plugin ではないプラグインは、、[マルチプロジェクトビルド][Multi-Project]内に
 異なるタイプのプロジェクトを持つことができるようにセッティングを明示的に追加することを必要とする。
 それぞれのプラグインのドキュメンテーションに設定方法が書いてあると思うけど、
 典型的にはベースとなるセッティングを追加して、必要に応じてカスタム化というパターンが多い。
@@ -142,7 +142,7 @@ lazy val core = (project in file("core")).
 大まかに言うと、`$global_plugins_base$` 内の `.sbt` ファイルは、それが全てのプロジェクトの
 `project/` ディレクトリに入っているかのように振る舞う。
 
-`$global_plugins_base$/build.sbt` を作って、そこに `addSbtPlugin()` 式を書くことで
+`$global_plugins_base$build.sbt` を作って、そこに `addSbtPlugin()` 式を書くことで
 全プロジェクトにプラグインを追加することができる。
 しかし、これを多用するとマシン環境への依存性を増やしてしまうことになるので、この機能は注意してほどほどに使うべきだ。
 [ベスト・プラクティス][global-vs-local-plugins]も参照してほしい。

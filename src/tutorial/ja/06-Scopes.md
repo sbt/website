@@ -77,7 +77,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 
 これをサポートするため、（`package-src` のような）タスクキーは、（`package-option` のような）別のキーのスコープとなりえる。
 
-パッケージを構築するさまざまなタスク（`package-src`、`package-bin`、`package-duc`）は、`artifact-name` や `package-option` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
+パッケージを構築するさまざまなタスク（`package-src`、`package-bin`、`package-doc`）は、`artifact-name` や `package-option` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
 
 ### グローバルスコープ
 

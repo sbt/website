@@ -9,8 +9,8 @@ out: Custom-Settings.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
   [Plugins]: ../../docs/Plugins.html
   [Tasks]: ../../docs/Tasks.html
-  [Keys]: ../sxr/sbt/Keys.scala.html
-  [Defaults]: ../sxr/sbt/Defaults.scala.html
+  [Keys]: ../../sxr/sbt/Keys.scala.html
+  [Defaults]: ../../sxr/sbt/Defaults.scala.html
   [Scaladocs-IO]: ../api/index.html#sbt.IO\$
 
 カスタムセッティングとタスク
@@ -25,8 +25,8 @@ out: Custom-Settings.html
 
 ### キーの定義
 
-[Keys] は、キーの定義の方法で満載だ。
-多くのキーは、[Defaults] で実装されている。
+[Keys][Keys] は、キーの定義の方法で満載だ。
+多くのキーは、[Defaults][Defaults] で実装されている。
 
 キーは三つの型のうちどれかを持つ。`SettingKey` と `TaskKey` は、
 [.sbt ビルド定義][Basic-Def]で説明した。`InputKey` に関しては、
@@ -83,7 +83,7 @@ sampleIntTask := {
 （その場合は、[ビルド定義にライブラリ依存性を追加して][Using-Plugins]、その HTML ライブラリに基づいたコードを書く）。
 
 sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO][Scaladocs-IO] にある API を重宝する。
 
 ### 置換しない場合のタスクの拡張
 
