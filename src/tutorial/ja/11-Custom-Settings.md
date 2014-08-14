@@ -48,8 +48,7 @@ val clean = taskKey[Unit]("Deletes files produced by the build, such as generate
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
 
-（[.scala ビルド定義][Full-Def] でみたように、）`.scala` ファイル内、
-もしくは（[プラグインの使用][Using-Plugins] でみたように、）プラグイン内でキーを定義することができる。
+[.sbt file][Basic-Def] や [.scala file][Full-Def] や [a plugin][Using-Plugins] でキーを定義する事が出来る。
 `.scala` ビルド定義ファイル内の `Build` オブジェクト内の `val`、
 もしくはプラグイン内の `Plugin` オブジェクト内の `val` は全て `.sbt` ファイルに自動的にインポートされる。
 
@@ -84,18 +83,6 @@ sampleIntTask := {
 
 sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
 特にファイルやディレクトリの取り扱いには [Scaladocs-IO][Scaladocs-IO] にある API を重宝する。
-
-### 置換しない場合のタスクの拡張
-
-既存のタスクを実行して、他の別のアクションも実行したい場合は、
-`~=` か `<<=` を用いて、既存のタスクをインプットとして取り（これはそのタスクを実行することを意味する）、
-既存の実装が完了した後で、別に好きな事をできる。
-
-<pre>
-// 以下の二つのセッティングは等価だ。
-intTask <<= intTask map { (value: Int) => value + 1 }
-intTask ~= { (value: Int) => value + 1 }
-</pre>
 
 ### プラグインを使おう！
 
