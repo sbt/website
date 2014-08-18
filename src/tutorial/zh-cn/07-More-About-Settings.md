@@ -29,7 +29,7 @@ out: More-About-Settings.html
 - `+=` 会追加单个元素到列表中。
 - `++=` 会连接两个列表。
 
-例如，key `sourceDirectories in Compile` 有一个值是 `Seq[File]`。默认情况下该 key 的值会包含 `src/main/scala`。如果你也想编译叫做 source 的目录下的源代码（因为你不得不成为非标准的），你可以添加该目录：
+例如，一个 key `sourceDirectories in Compile` 的值是 `Seq[File]`。默认情况下该 key 的值会包含 `src/main/scala`。如果你也想编译叫做 source 的目录下的源代码（因为你不得不成为非标准的），你可以添加该目录：
 
 ```scala
 sourceDirectories in Compile += new File("source")
@@ -84,7 +84,7 @@ name := baseDirectory.value.getName
 name := "project " + name.value + " from " + organization.value + " version " + version.value
 ```
 
-这根据它之前的值和 organization 以及 version 的值设置了它的值。
+通过将 name 之前的值和 organization 以及 version 的值拼接起来，组成 name 的新值。
 
 #### 包含依赖的设置
 
