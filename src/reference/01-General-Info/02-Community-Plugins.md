@@ -287,6 +287,8 @@ your plugin to the list.
     <https://bitbucket.org/pkaeding/sbt-git-stamp>
 -   fm-sbt-s3-resolver (Resolve and Publish using Amazon S3):
     <https://github.com/frugalmechanic/fm-sbt-s3-resolver>
+-   sbt-notebook (Adds scala-notebook capabilities to sbt projects):
+    <https://github.com/alexarchambault/sbt-notebook>
 
 #### Code coverage plugins
 
