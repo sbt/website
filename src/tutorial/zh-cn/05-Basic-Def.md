@@ -24,7 +24,7 @@ out: Basic-Def.html
 
 sbt 在检查项目和处理构建定义文件之后，形成一个不可变的映射表（immutable map）（一些键值对的集合）来描述构建。
 
-例如，一个 key 为 `name` 映射到一个字符串 value 作为项目名称的。
+例如，以 `name` 为 key，它的 value 是它的项目名称。
 
 *构建定义文件不会直接影响 sbt 的 map。*
 
@@ -39,10 +39,10 @@ name := "hello"
 
 这个 `Setting[String]` 会通过增加（或着替换） name 作为 key，并给 value 赋值为 `"hello"` 对 map 做一次转换。转换后的 map 成为 sbt 新的 map。
 
-为了创建这个 map，sbt 会先对所有的设置的列表进行排序，这样的话能将对同一个 key 的改变一起操作，而且如果 value 依赖于其他的 key，会先处理其他被依赖的 key。
+为了创建这个 map，sbt 会先对所有的设置的列表进行排序，这样可以对同一个 key 的改变一起操作，而且如果 value 依赖于其他的 key，会先处理其他被依赖的 key。
 然后， sbt 会对 `Settings` 排好序的列表进行遍历，把每一项都按顺序应用到 map 中。
 
-总结：一个构建定义为一个类型为 `Setting[T]` 的列表，`Setting[T]` 是会影响到 sbt 保存键值对的 map 的一种转换，`T` 是每一个 value 的类型。
+总结：一个构建定义是一个类型为 `Setting[T]` 的列表，`Setting[T]` 是会影响到 sbt 保存键值对的 map 的一种转换，`T` 是每一个 value 的类型。
 
 ### 如何在 build.sbt 中定义设置
 
@@ -113,8 +113,8 @@ sbt 需要一种分隔符来告诉它一个表达式在哪里结束，下一个�
 
 #### 自定义 Keys
 
-可以通过它们各自的创建方法：`settingKey`，`taskKey` 和 `inputKey` 自定义 keys。每个方法都期待 key 和 value 的类型已经一段描述。
-key 的名称取自于 `val` 变量的变量名。例如，给一个新的 task `hello` 定义一个 key，
+可以通过它们各自的创建方法：`settingKey`，`taskKey` 和 `inputKey` 自定义 keys。每个方法都期待 key 和 value 的类型以及一段描述。
+key 的名称取自于赋给 `val` 变量的值。例如，给一个新的 task `hello` 定义一个 key，
 
 ```scala
 lazy val hello = taskKey[Unit]("一个 task 示例")
@@ -127,8 +127,8 @@ lazy val hello = taskKey[Unit]("一个 task 示例")
 
 #### Task vs Setting keys
 
-`TaskKey[T]` 是用来定义 *task* 的。Tasks 就是像 `compile` 或者 `package` 这样的操作。它们可能返回 `Unit`（`Unit` 在 Scala 中表示 `void`），或者可能返回 task 的返回值，
-例如 `package` 就是一个类型为 `TaskKey[File]` 的 task 它的返回值是它生成的 jar 文件。
+`TaskKey[T]` 是用来定义 *task* 的。Tasks 就是像 `compile` 或者 `package` 这样的操作。它们可能返回 `Unit`（`Unit` 在 Scala 中表示 `void`），或者可能返回 task 相关的返回值，
+例如 `package` 就是一个类型为 `TaskKey[File]` 的 task， 它的返回值是它生成的 jar 文件。
 
 每当你执行一个 task，例如在 sbt 命令行中输入 `compile`，sbt 只会将涉及到的每个 task 执行一次。
 
