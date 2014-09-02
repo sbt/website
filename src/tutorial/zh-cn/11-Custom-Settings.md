@@ -13,7 +13,7 @@ out: Custom-Settings.html
 自定义设置和任务
 -------------------------
 
-这一小节讲解如何创建自定义设置和任务
+这一小节讲解如何创建自定义设置和任务。
 
 在理解本节之前, 请先阅读sbt 入门前面的章节, 尤其是 [.sbt 构建定义][Basic-Def] 和
 [更多关于设置][More-About-Settings].
@@ -31,7 +31,7 @@ out: Custom-Settings.html
 
 ```scala
 val scalaVersion = settingKey [String]("scala的版本")
-val clean = taskKey[Unit]（"删除构建产生的文件，包括生成的source文件，编译的类和任务缓存。" ）
+val clean = taskKey[Unit]("删除构建产生的文件，包括生成的 source 文件，编译的类和任务缓存。")
 ```
 
 
@@ -40,13 +40,11 @@ val clean = taskKey[Unit]（"删除构建产生的文件，包括生成的source
 （ `“用于构建工程的scala的版本。 ”` ） 。
 
 还记得[.sbt构建定义][Basic-Def]中，类型`T`在` SettingKey [T]`中表示的设置的值的类型。类型`T`在` TaskKey [T] `中指示任务的结果的类型。
-在[.sbt构建定义][Basic-Def]中，一个设置有一个固定的
-值，直到项目重装。任务会在每一个“任务执行”(用户输入一个命令算一次)被重新计算。
+在[.sbt构建定义][Basic-Def]中，一个设置有一个固定的值，直到项目重装。任务会在每一个“任务执行”（用户输入一个命令算一次）被重新计算。
 
 
 键可以在定义在[.sbt构建定义][Basic-Def]，
-[.scala file][Full-Def]或[插件] [Using-Plugins]。任何` val`
-在你的` .scala`构建定义文件, ` Build`对象或` Plugin`对象中plugin的`val`将被自动导入
+[.scala file][Full-Def]或[插件] [Using-Plugins]。任何在` .scala`构建定义文件发现的`val`, ` Build`对象或` Plugin`对象中plugin的`val`将被自动导入
 到你的` .sbt`文件。
 
 ###执行任务
@@ -70,9 +68,9 @@ sampleIntTask := {
 }
 ```
 
-在[more kinds of setting][More-About-Settings]里有描述，如果任务有依赖关系，你使用`value`来引用值，在多种环境中进行讨论。
+在[more kinds of setting][More-About-Settings]里有描述，如果任务有依赖关系，你使用`value`来引用值。
 
-有关任务实现最困难的部分往往不是SBT专用;任务只是Scala代码。困难的部分可能是写你的任务是做什么，你正在试图做的。例如，你要格式化的HTML在这种情况下，你可能需要使用一个HTML库（[您将添加一个库的依赖][Using-Plugins]，以构建定义和编写基于HTML库代码）。
+有关任务实现最困难的部分往往不是SBT专用;任务只是Scala代码。困难的部分可能是写你的任务做什么，或者说你正在试图做的。例如，你要格式化HTML，在这种情况下，你可能需要使用一个HTML库（[您将添加一个库的依赖][Using-Plugins]，以构建定义和编写基于HTML库代码）。
 
 SBT具有一定的实用工具库和方便的函数，特别是可以经常使用API中的[IO](../api/index.html#sbt.IO\$)来操作文件和目录。
 
