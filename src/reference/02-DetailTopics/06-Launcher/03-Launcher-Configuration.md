@@ -124,10 +124,6 @@ resolving applications. It consists of the following properties:
 -   `ivy-home` - The home directory for Ivy. This determines where the
     ivy-local repository is located, and also where the ivy cache is
     stored. Defaults to `~/.ivy2`
--   `ivy.cache-directory` - provides an alternative location for the Ivy
-    cache used by the launcher. This does not automatically set the Ivy
-    cache for the application, but the application is provided this
-    location through the AppConfiguration instance.
 -   `checksums` - The comma-separated list of checksums that Ivy should
     use to verify artifacts have correctly resolved, e.g. md5 or sha1.
 -   `override-build-repos` - If this is set, then the
