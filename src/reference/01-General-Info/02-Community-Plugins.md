@@ -295,8 +295,7 @@ your plugin to the list.
 -   sbt-scct: <https://github.com/sqality/sbt-scct>
 -   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
 -   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
--   xsbt-coveralls-plugin:
-    <https://github.com/theon/xsbt-coveralls-plugin>
+-   sbt-coveralls: <https://github.com/scoverage/sbt-coveralls>
 
 #### Android plugin
 
