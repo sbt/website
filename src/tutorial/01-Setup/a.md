@@ -31,6 +31,6 @@ Installing sbt on Mac
 
 Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
 
-### Installaing manually
+### Installing manually
 
 See instruction to install manually.

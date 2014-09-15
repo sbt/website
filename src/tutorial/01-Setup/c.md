@@ -40,6 +40,6 @@ To merge sbt from this ebuilds you can do:
 > **Note:** Please report any issues with the ebuild
 > [here](https://github.com/whiter4bbit/overlays/issues).
 
-### Installaing manually
+### Installing manually
 
 See instruction to install manually.
