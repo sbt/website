@@ -23,6 +23,10 @@ A few predefined repositories are available and are listed below
 
 -   `DefaultMavenRepository` This is the main Maven repository at
     <http://repo1.maven.org/maven2/> and is included by default
+-   `Resolver.jcenterRepo` This is the Bintray JCenter repository at
+    <https://jcenter.bintray.com/>
+-   `Resolver.bintrayRepo` This is the Bintray repository at
+     <https://dl.bintray.com/[owner]/[repo]/>, requires two arguments - `owner` and `repo`    
 -   `JavaNet1Repository` This is the Maven 1 repository at
     <http://download.java.net/maven/1/>
 
