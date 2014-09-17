@@ -71,11 +71,11 @@ issuetracker_title_template = '#{issue.id}'
 
 # links, substitutions
 
-typesafe_base = 'http://repo.typesafe.com/typesafe/'
+typesafe_base = 'https://repo.typesafe.com/typesafe/'
 typesafe_ivy_snapshots = typesafe_base + 'ivy-snapshots/'
 typesafe_ivy_releases = typesafe_base + 'ivy-releases/'
 launcher_release_base = typesafe_ivy_releases + 'org.scala-sbt/sbt-launch/'
-bintray_dl_base = 'http://dl.bintray.com/'
+bintray_dl_base = 'https://dl.bintray.com/'
 launcher_snapshots_base = typesafe_ivy_snapshots + 'org.scala-sbt/sbt-launch/'
 sbt_native_package_base = bintray_dl_base + 'sbt/native-packages/sbt/'
 sbt_debian_base = bintray_dl_base + 'sbt/debian/'
