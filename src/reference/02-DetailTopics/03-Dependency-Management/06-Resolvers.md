@@ -22,7 +22,7 @@ page describes how to define other types of repositories.
 A few predefined repositories are available and are listed below
 
 -   `DefaultMavenRepository` This is the main Maven repository at
-    <http://repo1.maven.org/maven2/> and is included by default
+    <https://repo1.maven.org/maven2/> and is included by default
 -   `JavaNet1Repository` This is the Maven 1 repository at
     <http://download.java.net/maven/1/>
 
@@ -44,7 +44,7 @@ Resolver.sonatypeRepo("releases")  // Or "snapshots"
 
 sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
-[patterns](http://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns)
+[patterns](https://ant.apache.org/ivy/history/latest-milestone/concept.html#patterns)
 to configure repositories.
 
 Construct a repository definition using the factory in `sbt.Resolver`
@@ -67,7 +67,7 @@ configured identically except for the name of the factory. Use
   <tr>
     <td>Filesystem</td>
     <td><tt>Resolver.file</tt></td>
-    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
+    <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
     <td><a href="../api/sbt/Resolver\$\$file\$.html">filesystem factory</a></td>
     <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
   </tr>
@@ -75,7 +75,7 @@ configured identically except for the name of the factory. Use
   <tr>
     <td>SFTP</td>
     <td><tt>Resolver.sftp</tt></td>
-    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
+    <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
     <td><a href="../api/sbt/Resolver\$\$Define\$.html">sftp factory</a></td>
     <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
   </tr>
@@ -83,7 +83,7 @@ configured identically except for the name of the factory. Use
   <tr>
     <td>SSH</td>
     <td><tt>Resolver.ssh</tt></td>
-    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
+    <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
     <td><a href="../api/sbt/Resolver\$\$Define\$.html">ssh factory</a></td>
     <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
   </tr>
@@ -91,7 +91,7 @@ configured identically except for the name of the factory. Use
   <tr>
     <td>URL</td>
     <td><tt>Resolver.url</tt></td>
-    <td><a href="http://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
+    <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
     <td><a href="../api/sbt/Resolver\$\$url\$.html">url factory</a></td>
     <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
   </tr>
@@ -114,10 +114,10 @@ resolvers += Resolver.file("my-test-repo", file("test")) transactional()
 
 ##### URL
 
-Define a URL repository at `"http://example.org/repo-releases/"`.
+Define a URL repository at `"https://example.org/repo-releases/"`.
 
 ```scala
-resolvers += Resolver.url("my-test-repo", url("http://example.org/repo-releases/"))
+resolvers += Resolver.url("my-test-repo", url("https://example.org/repo-releases/"))
 ```
 
 To specify an Ivy repository, use:
@@ -212,5 +212,5 @@ using `ivys` and `artifacts`:
 
 ```scala
 resolvers += Resolver.url("my-test-repo") artifacts
-        "http://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
+        "https://example.org/[organisation]/[module]/[revision]/[artifact].[ext]"
 ```

@@ -9,7 +9,7 @@ Community Plugins
 
 ### sbt Organization
 
-The [sbt organization](http://github.com/sbt) is available for use by
+The [sbt organization](https://github.com/sbt) is available for use by
 any sbt plugin. Developers who contribute their plugins into the
 community organization will still retain control over their repository
 and its access. The goal of the sbt organization is to organize sbt
@@ -20,10 +20,10 @@ can use gh-pages to host websites under the http://scala-sbt.org domain.
 
 ### Community Ivy Repository
 
-[Typesafe](http://www.typesafe.com) has provided a freely available
-[Ivy Repository](http://repo.scala-sbt.org/scalasbt) for sbt projects
+[Typesafe](https://www.typesafe.com) has provided a freely available
+[Ivy Repository](https://repo.scala-sbt.org/scalasbt) for sbt projects
 to use. This Ivy repository is mirrored from the freely available
-[Bintray service](http://bintray.com).
+[Bintray service](https://bintray.com).
 If you'd like to submit your plugin, please follow these instructions:
 [Bintray For Plugins][Bintray-For-Plugins].
 
@@ -200,7 +200,7 @@ your plugin to the list.
 -   sbt-scalashim (Generate Scala shim like `sys.error`):
     <https://github.com/sbt/sbt-scalashim>
 -   sbtend (Generate Java source code from
-    [xtend](http://www.eclipse.org/xtend/) ):
+    [xtend](https://www.eclipse.org/xtend/) ):
     <https://github.com/xuwei-k/sbtend>
 -   sbt-boilerplate (generating scala.Tuple/Function related boilerplate
     code): <https://github.com/sbt/sbt-boilerplate>

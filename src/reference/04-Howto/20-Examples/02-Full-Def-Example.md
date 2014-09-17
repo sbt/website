@@ -146,7 +146,7 @@ object CDAP2Build extends Build {
 
 ### External Builds
 
--   [Mojolly Backchat Build](http://gist.github.com/1021873)
+-   [Mojolly Backchat Build](https://gist.github.com/1021873)
 -   [Scalaz Build](https://github.com/scalaz/scalaz/blob/master/project/ScalazBuild.scala)
 -   Source Code Generation
 -   Generates Scaladoc and Scala X-Ray HTML Sources, with a unified view

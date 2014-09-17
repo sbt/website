@@ -128,7 +128,7 @@ Artifact("myproject", "jdk15")
 ```
 
 See the
-[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
+[Ivy documentation](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)
 for more details on artifacts. See the
 [Artifact API](../api/sbt/Artifact\$.html) for combining the
 parameters above and specifying [Configurations] and extra attributes.

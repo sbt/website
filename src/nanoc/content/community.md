@@ -2,8 +2,8 @@
 title: Community
 ---
 
-  [so]: http://stackoverflow.com/questions/tagged/sbt
-  [sub]: http://typesafe.com/how/subscription
+  [so]: https://stackoverflow.com/questions/tagged/sbt
+  [sub]: https://typesafe.com/how/subscription
   [ml]: https://groups.google.com/d/forum/sbt-dev
   [github]: https://github.com/sbt/sbt
   [twitter]: https://twitter.com/scala_sbt
