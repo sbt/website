@@ -62,5 +62,5 @@ startYear := Some(2008)
 
 description := "A build tool for Scala."
 
-licenses += "GPLv2" -> url("http://www.gnu.org/licenses/gpl-2.0.html")
+licenses += "GPLv2" -> url("https://www.gnu.org/licenses/gpl-2.0.html")
 ```

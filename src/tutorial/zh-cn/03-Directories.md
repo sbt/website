@@ -19,7 +19,7 @@ out: Directories.html
 
 源代码可以像 `hello/hw.scala` 一样的放在项目的基础目录。然而，大多数人不会在真实的项目中这样做，因为太杂乱了。
 
-sbt 和 [Maven](http://maven.apache.org/) 的默认的源文件的目录结构是一样的（所有的路径都是相对于基础目录的）：
+sbt 和 [Maven](https://maven.apache.org/) 的默认的源文件的目录结构是一样的（所有的路径都是相对于基础目录的）：
 
 ```
 src/

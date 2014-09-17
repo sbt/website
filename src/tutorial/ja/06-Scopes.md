@@ -2,7 +2,7 @@
 out: Scopes.html
 ---
 
-  [MavenScopes]: http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
+  [MavenScopes]: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Library-Dependencies]: Library-Dependencies.html

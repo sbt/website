@@ -67,7 +67,7 @@ unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
 
 ### Managed Dependencies
 
-sbt uses [Apache Ivy](http://ant.apache.org/ivy/) to implement managed
+sbt uses [Apache Ivy](https://ant.apache.org/ivy/) to implement managed
 dependencies, so if you're familiar with Ivy or Maven, you won't have
 much trouble.
 
@@ -169,7 +169,7 @@ single fixed version. Ivy can select the latest revision of a module
 according to constraints you specify. Instead of a fixed revision like
 `"1.6.1"`, you specify `"latest.integration"`, `"2.9.+"`, or `"[1.0,)"`. See the
 [Ivy
-revisions](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
+revisions](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
 documentation for details.
 
 <!-- TODO: Add aliases -->

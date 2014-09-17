@@ -71,11 +71,11 @@ issuetracker_title_template = '#{issue.id}'
 
 # links, substitutions
 
-typesafe_base = 'http://repo.typesafe.com/typesafe/'
+typesafe_base = 'https://repo.typesafe.com/typesafe/'
 typesafe_ivy_snapshots = typesafe_base + 'ivy-snapshots/'
 typesafe_ivy_releases = typesafe_base + 'ivy-releases/'
 launcher_release_base = typesafe_ivy_releases + 'org.scala-sbt/sbt-launch/'
-bintray_dl_base = 'http://dl.bintray.com/'
+bintray_dl_base = 'https://dl.bintray.com/'
 launcher_snapshots_base = typesafe_ivy_snapshots + 'org.scala-sbt/sbt-launch/'
 sbt_native_package_base = bintray_dl_base + 'sbt/native-packages/sbt/'
 sbt_debian_base = bintray_dl_base + 'sbt/debian/'
@@ -96,8 +96,8 @@ rst_epilog = """
 .. _sbt-dev mailing list: https://groups.google.com/forum/#!forum/sbt-dev
 .. _adept: https://groups.google.com/group/adept-dev/topics
 .. _sbt-launcher-package: https://github.com/sbt/sbt-launcher-package
-.. _Stack Overflow: http://stackoverflow.com/tags/sbt
-.. _source code: http://github.com/sbt/sbt
+.. _Stack Overflow: https://stackoverflow.com/tags/sbt
+.. _source code: https://github.com/sbt/sbt
 
 :srcref:`ignored`
 """ % {

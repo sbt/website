@@ -111,7 +111,7 @@ pomExtra :=
   <licenses>
     <license>
       <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
 </licenses>
@@ -163,5 +163,5 @@ change the version number each time you publish. Ivy maintains a cache,
 and it stores even local projects in that cache. If Ivy already has a
 version cached, it will not check the local repository for updates,
 unless the version number matches a
-[changing pattern](http://ant.apache.org/ivy/history/2.3.0/concept.html#change),
+[changing pattern](https://ant.apache.org/ivy/history/2.3.0/concept.html#change),
 and `SNAPSHOT` is one such pattern.

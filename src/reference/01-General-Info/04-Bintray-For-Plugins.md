@@ -8,7 +8,7 @@ Bintray For Plugins
 **This is currently in Beta mode.**
 
 sbt hosts their community plugin repository on
-[Bintray](http://bintray.com/sbt).
+[Bintray](https://bintray.com/sbt).
 Bintray is a repository hosting site, similar to github, which allows users to contribute their own
 plugins, while sbt can aggregate them together in a common repository.
 
@@ -22,7 +22,7 @@ To do this, we need to perform the following steps:
 
 ### Create an account on Bintray
 
-First, go to <http://bintray.com>. Click on the sign in link on the top
+First, go to <https://bintray.com>. Click on the sign in link on the top
 left, and then the sign up button.
 
 *Note: If you had an account on repo.scala-sbt.org previous, please use
@@ -61,7 +61,7 @@ First, create a `project/bintray.sbt` file
 ```scala
 resolvers += Resolver.url(
   "bintray-sbt-plugin-releases",
-   url("http://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
+   url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
        Resolver.ivyStylePatterns)
 
 addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.1")
@@ -88,7 +88,7 @@ repository in bintray := "sbt-plugins"
 
 // This is an example.  bintray-sbt requires licenses to be specified 
 // (using a canonical name).
-licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 bintrayOrganization in bintray := None
 ```
@@ -108,7 +108,7 @@ sbt> publish
 ```
 
 The plugin will ask you for your credentials. If you don't know where
-they are, you can find them on [Bintray](http://bintray.com).
+they are, you can find them on [Bintray](https://bintray.com).
 
 1.  Login to the website with your credentials.
 2.  Click on your username

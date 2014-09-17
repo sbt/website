@@ -388,7 +388,7 @@ Some of the more visible changes:
 -   Tab completion parser combinators for commands and input tasks:
     [Commands][Commands]
 -   No project creation prompts anymore
--   Moved to GitHub: <http://github.com/harrah/xsbt>
+-   Moved to GitHub: <https://github.com/harrah/xsbt>
 
 ### 0.7.5 to 0.7.7
 
@@ -402,12 +402,12 @@ Some of the more visible changes:
 -   Updated to work with Jetty 7.2 WebAppClassLoader binary
     incompatibility (issue 129).
 -   Provide application and boot classpaths to tests and 'run'ning code
-    according to <http://gist.github.com/404272>
+    according to <https://gist.github.com/404272>
 -   Fix `provided` configuration. It is no longer included on the
     classpath of dependent projects.
 -   Scala 2.8.1 is the default version used when starting a new project.
 -   Updated to
-    [Ivy 2.2.0](http://ant.apache.org/ivy/history/2.2.0/release-notes.html).
+    [Ivy 2.2.0](https://ant.apache.org/ivy/history/2.2.0/release-notes.html).
 -   Trond's patches that allow configuring
     [jetty-env.xml](http://github.com/sbt/sbt/commit/5e41a47f50e6) and
     [webdefault.xml](http://github.com/sbt/sbt/commit/030e2ee91bac0)
@@ -533,7 +533,7 @@ Some of the more visible changes:
     tests.
 -   Works with Scala 2.8 trunk
 -   Fixed logging level behavior on subprojects.
--   All sbt code is now at <http://github.com/harrah/xsbt> in one
+-   All sbt code is now at <https://github.com/harrah/xsbt> in one
     project.
 
 ### 0.7.0 to 0.7.1

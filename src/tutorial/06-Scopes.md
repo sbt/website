@@ -75,7 +75,7 @@ A *configuration* defines a flavor of build, potentially with its own
 classpath, sources, generated packages, etc. The configuration concept
 comes from Ivy, which sbt uses for
 managed dependencies [Library Dependencies][Library-Dependencies], and from
-[MavenScopes](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
+[MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
 
 Some configurations you'll see in sbt:
 
