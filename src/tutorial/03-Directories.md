@@ -26,7 +26,7 @@ Source code can be placed in the project's base directory as with
 too much clutter.
 
 sbt uses the same directory structure as
-[Maven](http://maven.apache.org/) for source files by default (all paths
+[Maven](https://maven.apache.org/) for source files by default (all paths
 are relative to the base directory):
 
 ```

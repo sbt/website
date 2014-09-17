@@ -50,7 +50,7 @@ addSbtPlugin("org.example" % "another-plugin" % "2.0")
 // plain library (not an sbt plugin) for use in the build definition
 libraryDependencies += "org.example" % "utilities" % "1.3"
 
-resolvers += "Example Plugin Repository" at "http://example.org/repo/"
+resolvers += "Example Plugin Repository" at "https://example.org/repo/"
 ```
 
 Many of the auto plugins automatically adds settings into projects,

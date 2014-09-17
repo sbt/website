@@ -96,8 +96,8 @@ rst_epilog = """
 .. _sbt-dev mailing list: https://groups.google.com/forum/#!forum/sbt-dev
 .. _adept: https://groups.google.com/group/adept-dev/topics
 .. _sbt-launcher-package: https://github.com/sbt/sbt-launcher-package
-.. _Stack Overflow: http://stackoverflow.com/tags/sbt
-.. _source code: http://github.com/sbt/sbt
+.. _Stack Overflow: https://stackoverflow.com/tags/sbt
+.. _source code: https://github.com/sbt/sbt
 
 :srcref:`ignored`
 """ % {

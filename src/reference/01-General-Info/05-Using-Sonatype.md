@@ -141,7 +141,7 @@ duplicate entries in the final POM file, leading to a rejection in
 Sonatype's staging process.
 
 *The full format of a pom.xml file is
-[outlined here](http://maven.apache.org/pom.html).*
+[outlined here](https://maven.apache.org/pom.html).*
 
 ### Fourth - Adding credentials
 

@@ -88,7 +88,7 @@ example,
 ```scala
 apiMappings += (
   (unmanagedBase.value / "a-library.jar") -> 
-    url("http://example.org/api/")
+    url("https://example.org/api/")
 )
 ```
 
@@ -102,7 +102,7 @@ against the API documentation using `autoAPIMappings`. (This only works
 for Scala 2.10.2 and later.) For example,
 
 ```scala
-apiURL := Some(url("http://example.org/api/"))
+apiURL := Some(url("https://example.org/api/"))
 ```
 
 This information will get included in a property of the published

@@ -3,10 +3,10 @@ out: Library-Dependencies.html
 ---
 
   [Keys]: ../sxr/sbt/Keys.scala.html
-  [Apache Ivy]: http://ant.apache.org/ivy/
-  [Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
-  [Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
-  [through Ivy]: http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
+  [Apache Ivy]: https://ant.apache.org/ivy/
+  [Ivy revisions]: https://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
+  [Extra attributes]: https://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
+  [through Ivy]: https://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
   [ScalaCheck]: http://scalacheck.org
   [specs]: http://code.google.com/p/specs/
   [ScalaTest]: http://scalatest.org

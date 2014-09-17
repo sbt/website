@@ -90,7 +90,7 @@ excludeFilter in unmanagedSources := "butler.scala"
 ```
 
 Read more on
-[How to exclude .scala source file in project folder - Google Groups](http://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
+[How to exclude .scala source file in project folder - Google Groups](https://groups.google.com/group/simple-build-tool/browse_thread/thread/cd5332a164405568?hl=en)
 
 #### External vs internal
 
@@ -136,7 +136,7 @@ Use the [inspect command][Inspecting-Settings] for
 more details.
 
 See also a related
-[StackOverflow answer](http://stackoverflow.com/a/7862872/850196).
+[StackOverflow answer](https://stackoverflow.com/a/7862872/850196).
 
 #### Example
 

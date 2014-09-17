@@ -92,7 +92,7 @@ repository, a direct URL to its jar can be specified with the `from`
 method as follows:
 
 ```scala
-libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+libraryDependencies += "slinky" % "slinky" % "2.1" from "https://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
 ```
 
 The URL is only used as a fallback if the dependency cannot be found

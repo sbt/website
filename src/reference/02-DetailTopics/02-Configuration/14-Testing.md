@@ -468,7 +468,7 @@ packaging the project as an sbt [Plugin][Plugins].
 
 The main Scala testing libraries have built-in support for sbt. To add
 support for a different framework, implement the
-[uniform test interface](http://github.com/sbt/test-interface).
+[uniform test interface](https://github.com/sbt/test-interface).
 
 #### Custom Test Reporters
 

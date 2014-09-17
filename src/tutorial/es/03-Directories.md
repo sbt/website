@@ -26,7 +26,7 @@ en el caso de `hello/hw.scala`. Sin embargo, la mayoría de las personas
 no hacen esto para proyectos reales; se traduce en mucho desorden.
 
 sbt utiliza la misma estructura de directorios que
-[Maven](http://maven.apache.org/) para el código fuente por default
+[Maven](https://maven.apache.org/) para el código fuente por default
 (todos las rutas son relativas al directorio base):
 
 ```

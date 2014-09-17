@@ -85,7 +85,7 @@ Una configuración define el tipo de construcción, potencialmente con su
 propio classpath, código fuente, paquetes generados, etc. El concepto de
 configuración viene de Iviy, que sbt usa para
 [managed dependencies][Library-Dependencies], y para
-[MavenScopes](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
+[MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
 
 Algunas configuraciones que verá en sbt:
 

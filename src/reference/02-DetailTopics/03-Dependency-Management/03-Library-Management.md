@@ -83,7 +83,7 @@ dependencies:
 -   Maven POM files (dependency definitions only: no repositories)
 -   Ivy configuration and settings files
 
-sbt uses [Apache Ivy](http://ant.apache.org/ivy/) to implement
+sbt uses [Apache Ivy](https://ant.apache.org/ivy/) to implement
 dependency management in all three cases. The default is to use inline
 declarations, but external configuration can be explicitly selected. The
 following sections describe how to use each method of automatic
@@ -134,7 +134,7 @@ the version of Scala you are using. See [Cross Build][Cross-Build] for details.
 Ivy can select the latest revision of a module according to constraints
 you specify. Instead of a fixed revision like `"1.6.1"`, you specify
 `"latest.integration"`, `"2.9.+"`, or `"[1.0,)"`. See the
-[Ivy revisions](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
+[Ivy revisions](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
 documentation for details.
 
 ##### Resolvers
@@ -207,8 +207,8 @@ with the same format as the `Launcher` configuration file. For example:
 ```
 [repositories]
 local
-my-maven-repo: http://example.org/repo
-my-ivy-repo: http://example.org/ivy-repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+my-maven-repo: https://example.org/repo
+my-ivy-repo: https://example.org/ivy-repo/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
 ```
 
 A different location for the repositories file may be specified by the
@@ -222,7 +222,7 @@ If your project requires a dependency that is not present in a
 repository, a direct URL to its jar can be specified as follows:
 
 ```scala
-libraryDependencies += "slinky" % "slinky" % "2.1" from "http://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
+libraryDependencies += "slinky" % "slinky" % "2.1" from "https://slinky2.googlecode.com/svn/artifacts/2.1/slinky.jar"
 ```
 
 The URL is only used as a fallback if the dependency cannot be found
@@ -316,7 +316,7 @@ for that.
 
 ##### Extra Attributes
 
-[Extra attributes](http://ant.apache.org/ivy/history/2.3.0/concept.html#extra)
+[Extra attributes](https://ant.apache.org/ivy/history/2.3.0/concept.html#extra)
 can be specified by passing key/value pairs to the `extra` method.
 
 To select dependencies by extra attributes:
@@ -368,7 +368,7 @@ java -Dsbt.ivy.home=/tmp/.ivy2/ ...
 ##### Checksums
 
 sbt
-([through Ivy](http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum))
+([through Ivy](https://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum))
 verifies the checksums of downloaded files by default. It also publishes
 checksums of artifacts by default. The checksums to use are specified by
 the *checksums* setting.
@@ -402,7 +402,7 @@ brings in different versions of the same library. By default, the latest
 revision is selected. This can be changed by setting `conflictManager`,
 which has type [ConflictManager](../api/sbt/ConflictManager.html).
 See the
-[Ivy documentation](http://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
+[Ivy documentation](https://ant.apache.org/ivy/history/latest-milestone/settings/conflict-managers.html)
 for details on the different conflict managers. For example, to specify
 that no conflicts are allowed,
 
@@ -528,13 +528,13 @@ See [Publishing][Publishing] for how to publish your project.
 Ivy configurations are a useful feature for your build when you need
 custom groups of dependencies, such as for a plugin. Ivy configurations
 are essentially named sets of dependencies. You can read the
-[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
+[Ivy documentation](https://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
 for details.
 
 The built-in use of configurations in sbt is similar to scopes in Maven.
 sbt adds dependencies to different classpaths by the configuration that
 they are defined in. See the description of
-[Maven Scopes](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope)
+[Maven Scopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope)
 for details.
 
 You put a dependency in a configuration by selecting one or more of its
@@ -550,7 +550,7 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile
 
 This says that your project's `"test"` configuration uses `ScalaTest`'s
 `"compile"` configuration. See the
-[Ivy documentation](http://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
+[Ivy documentation](https://ant.apache.org/ivy/history/2.3.0/tutorial/conf.html)
 for more advanced mappings. Most projects published to Maven
 repositories will use the `"compile"` configuration.
 
@@ -562,7 +562,7 @@ it in your jar by modifying `resources`. For example:
 ```scala
 ivyConfigurations += config("js") hide
 
-libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "https://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
 
 resources ++= update.value.select(configurationFilter("js"))
 ```
