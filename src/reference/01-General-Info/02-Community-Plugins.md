@@ -62,6 +62,7 @@ your plugin to the list.
     <https://github.com/casualjim/sbt-jelastic-deploy>
 -   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk): <https://github.com/sqs/sbt-elasticbeanstalk>
 -   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
+-   sbt-heroku: <https://github.com/heroku/sbt-heroku>
 
 ### Test plugins
 
