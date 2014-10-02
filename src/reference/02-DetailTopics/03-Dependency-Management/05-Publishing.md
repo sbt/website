@@ -48,12 +48,12 @@ If you're using Maven repositories you will also have to select the
 right repository depending on your artifacts: SNAPSHOT versions go to
 the /snapshot repository while other versions go to the /releases
 repository. Doing this selection can be done by using the value of the
-`version` SettingKey:
+`isSnapshot` SettingKey:
 
 ```scala
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
-  if (version.value.trim.endsWith("SNAPSHOT")) 
+  if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots") 
   else
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
