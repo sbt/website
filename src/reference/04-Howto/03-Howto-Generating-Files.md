@@ -2,7 +2,7 @@
 out: Howto-Generating-Files.html
 ---
 
-  [modify-package-contents]: Howto-Configure-Packaging.html#modify-package-contents
+  [modify-package-contents]: Howto-Package.html#modify-package-contents
 
 Generating files
 ----------------
