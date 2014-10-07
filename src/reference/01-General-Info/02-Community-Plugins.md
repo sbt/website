@@ -49,21 +49,6 @@ your plugin to the list.
 -   sbt-ctags (manage library dependency sources for vim, emacs,
     sublime) <https://github.com/kalmanb/sbt-ctags>
 
-#### Web Plugins
-
--   xsbt-web-plugin:
-    <https://github.com/JamesEarlDouglas/xsbt-web-plugin>
--   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
--   sbt-appengine: <https://github.com/sbt/sbt-appengine>
--   sbt-gwt-plugin: <https://github.com/thunderklaus/sbt-gwt-plugin>
--   sbt-cloudbees-plugin:
-    <https://github.com/timperrett/sbt-cloudbees-plugin>
--   sbt-jelastic-deploy:
-    <https://github.com/casualjim/sbt-jelastic-deploy>
--   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk): <https://github.com/sqs/sbt-elasticbeanstalk>
--   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
--   sbt-heroku: <https://github.com/heroku/sbt-heroku>
-
 ### Test plugins
 
 -   junit_xml_listener: <https://github.com/ijuma/junit_xml_listener>
@@ -76,7 +61,14 @@ your plugin to the list.
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
 -   sbt-doctest: <https://github.com/tkawachi/sbt-doctest>
 
-#### Static Code Analysis plugins
+#### Code coverage plugins
+
+-   sbt-scct: <https://github.com/sqality/sbt-scct>
+-   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
+-   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
+-   sbt-coveralls: <https://github.com/scoverage/sbt-coveralls>
+
+#### Static code analysis plugins
 
 -   cpd4sbt: <https://github.com/sbt/cpd4sbt> (copy/paste detection,
     works for Scala, too)
@@ -99,8 +91,53 @@ your plugin to the list.
 -   sbt-onejar (Packages your project using One-JAR™):
     <https://github.com/sbt/sbt-onejar>
 
-#### Frontend development plugins
+#### Release plugins
 
+-   sbt-native-packager: <https://github.com/sbt/sbt-native-packager>
+-   sbt-ghpages (publishes generated site and api):
+    <https://github.com/sbt/sbt-ghpages>
+-   sbt-pgp (PGP signing plugin, can generate keys too):
+    <https://github.com/sbt/sbt-pgp>
+-   sbt-release (customizable release process):
+    <https://github.com/sbt/sbt-release>
+-   sbt-sonatype-plugin (releases to Sonatype Nexus repository)
+    <https://github.com/xerial/sbt-sonatype>
+-   sbt-aether-plugin (Published artifacts using Sonatype Aether):
+    <https://github.com/arktekk/sbt-aether-deploy>
+-   posterous-sbt: <https://github.com/n8han/posterous-sbt>
+-   sbt-signer-plugin: <https://github.com/rossabaker/sbt-signer-plugin>
+-   sbt-izpack (generates IzPack an installer):
+    <http://software.clapper.org/sbt-izpack/>
+-   sbt-unique-version (emulates unique snapshots):
+    <https://github.com/sbt/sbt-unique-version>
+-   sbt-install4j: <https://github.com/jpsacha/sbt-install4j>
+-   sbt-pack (generates packages with dependent jars and launch
+    scripts): <https://github.com/xerial/sbt-pack>
+-   sbt-start-script: <https://github.com/sbt/sbt-start-script>
+-   xitrum-package (collects dependency .jar files for standalone Scala
+    programs): <https://github.com/ngocdaothanh/xitrum-package>
+
+#### Deployment integration plugins
+
+-   sbt-appengine: <https://github.com/sbt/sbt-appengine>
+-   sbt-cloudbees-plugin:
+    <https://github.com/timperrett/sbt-cloudbees-plugin>
+-   sbt-jelastic-deploy:
+    <https://github.com/casualjim/sbt-jelastic-deploy>
+-   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk): <https://github.com/sqs/sbt-elasticbeanstalk>
+-   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
+-   sbt-heroku: <https://github.com/heroku/sbt-heroku>
+
+#### Monitoring integration plugins
+
+-   sbt-newrelic: <https://github.com/gilt/sbt-newrelic>
+
+#### Web and frontend development plugins
+
+-   xsbt-web-plugin:
+    <https://github.com/JamesEarlDouglas/xsbt-web-plugin>
+-   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
+-   sbt-gwt-plugin: <https://github.com/thunderklaus/sbt-gwt-plugin>
 -   coffeescripted-sbt:
     <https://github.com/softprops/coffeescripted-sbt>
 -   less-sbt (for less-1.3.0): <https://github.com/softprops/less-sbt>
@@ -118,113 +155,12 @@ your plugin to the list.
 -   sbt-jasmine-plugin (Run javascript tests with jasmine within sbt):
     <https://github.com/joescii/sbt-jasmine-plugin>
 
-#### Game development plugins
-
--   sbt-lwjgl-plugin (Light Weight Java Game Library):
-    <https://github.com/philcali/sbt-lwjgl-plugin>
--   sbt-scage-plugin (Scala Game Engine):
-    <https://github.com/mvallerie/sbt-scage-plugin>
-
-#### Release plugins
-
--   sbt-aether-plugin (Published artifacts using Sonatype Aether):
-    <https://github.com/arktekk/sbt-aether-deploy>
--   posterous-sbt: <https://github.com/n8han/posterous-sbt>
--   sbt-signer-plugin: <https://github.com/rossabaker/sbt-signer-plugin>
--   sbt-izpack (generates IzPack an installer):
-    <http://software.clapper.org/sbt-izpack/>
--   sbt-ghpages (publishes generated site and api):
-    <https://github.com/sbt/sbt-ghpages>
--   sbt-pgp (PGP signing plugin, can generate keys too):
-    <https://github.com/sbt/sbt-pgp>
--   sbt-release (customizable release process):
-    <https://github.com/sbt/sbt-release>
--   sbt-unique-version (emulates unique snapshots):
-    <https://github.com/sbt/sbt-unique-version>
--   sbt-install4j: <https://github.com/jpsacha/sbt-install4j>
--   sbt-pack (generates packages with dependent jars and launch
-    scripts): <https://github.com/xerial/sbt-pack>
--   sbt-start-script: <https://github.com/sbt/sbt-start-script>
--   sbt-native-packager: <https://github.com/sbt/sbt-native-packager>
--   sbt-sonatype-plugin (releases to Sonatype Nexus repository)
-    <https://github.com/xerial/sbt-sonatype>
--   xitrum-package (collects dependency .jar files for standalone Scala
-    programs): <https://github.com/ngocdaothanh/xitrum-package>
-
-#### System plugins
-
--   sbt-sh (executes shell commands):
-    <https://github.com/steppenwells/sbt-sh>
--   cronish-sbt (interval sbt / shell command execution):
-    <https://github.com/philcali/cronish-sbt>
--   git (executes git commands): <https://github.com/sbt/sbt-git>
--   svn (execute svn commands): <https://github.com/xuwei-k/sbtsvn>
--   sbt-groll (sbt plugin to navigate the Git history):
-    <https://github.com/sbt/sbt-groll>
--   sbt-twt (twitter processor for sbt):
-    <https://github.com/sbt/sbt-twt>
-
-#### Code generator plugins
-
--   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
-    <https://bitbucket.org/qforce/sbt-haxe>
--   sbt-scalabuff (Google Protocol Buffers with native scala suppport
-    thru ScalaBuff): <https://github.com/sbt/sbt-scalabuff>
--   sbt-fmpp (FreeMarker Scala/Java Templating):
-    <https://github.com/sbt/sbt-fmpp>
--   sbt-scalaxb (XSD and WSDL binding):
-    <https://github.com/eed3si9n/scalaxb>
--   sbt-protobuf (Google Protocol Buffers):
-    <https://github.com/sbt/sbt-protobuf>
--   sbt-cppp (Cross-Project Protobuf Plugin for Sbt):
-    <https://github.com/Atry/sbt-cppp>
--   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
--   sbt-xjc (XSD binding, using
-    [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
-    <https://github.com/sbt/sbt-xjc>
--   xsbt-scalate-generate (Generate/Precompile Scalate Templates):
-    <https://github.com/backchatio/xsbt-scalate-generate>
--   sbt-antlr (Generate Java source code based on ANTLR3 grammars):
-    <https://github.com/stefri/sbt-antlr>
--   sbt-antlr4 (Antlr4 runner for generating Java source code):
-    <https://github.com/ihji/sbt-antlr4>
--   xsbt-reflect (Generate Scala source code for project name and
-    version): <https://github.com/ritschwumm/xsbt-reflect>
--   sbt-buildinfo (Generate Scala source for any settings):
-    <https://github.com/sbt/sbt-buildinfo>
--   lifty (Brings scaffolding to sbt): <https://github.com/lifty/lifty>
--   sbt-thrift (Thrift Code Generation):
-    <https://github.com/bigtoast/sbt-thrift>
--   xsbt-hginfo (Generate Scala source code for Mercurial repository
-    information):
-    <https://bitbucket.org/lukas_pustina/xsbt-hginfo>
--   sbt-scalashim (Generate Scala shim like `sys.error`):
-    <https://github.com/sbt/sbt-scalashim>
--   sbtend (Generate Java source code from
-    [xtend](https://www.eclipse.org/xtend/) ):
-    <https://github.com/xuwei-k/sbtend>
--   sbt-boilerplate (generating scala.Tuple/Function related boilerplate
-    code): <https://github.com/sbt/sbt-boilerplate>
--   sbt-fxml (Generates controller classes for JavaFX FXML files):
-    <https://bitbucket.org/phdoerfler/sbt-fxml>
--   sbt-clojure (Compiling Clojure code):
-    <https://github.com/Geal/sbt-clojure>
-
-#### Database plugins
-
--   flyway-sbt (Flyway - The agile database migration framework):
-    <http://flywaydb.org/getstarted/firststeps/sbt.html>
--   sbt-liquibase (Liquibase RDBMS database migrations):
-    <https://github.com/bigtoast/sbt-liquibase>
--   sbt-dbdeploy (dbdeploy, a database change management tool):
-    <https://github.com/mr-ken/sbt-dbdeploy>
-
 #### Documentation plugins
 
+-   sbt-site (Site generation for sbt):
+    <https://github.com/sbt/sbt-site>
 -   sbt-lwm (Convert lightweight markup files, e.g., Markdown and
     Textile, to HTML): <http://software.clapper.org/sbt-lwm/>
--   sbt-site (Site generation for SBT):
-    <https://github.com/sbt/sbt-site>
 -   Laika (Template-based site generation, Markdown, reStructuredText,
     no external tools): <http://planet42.github.io/Laika/>
 -   literator-plugin (Converts sources into markdown documents):
@@ -234,10 +170,10 @@ your plugin to the list.
 
 #### Library dependency plugins
 
--   ls-sbt (An sbt interface for ls.implicit.ly):
-    <https://github.com/softprops/ls>
 -   sbt-dependency-graph (Creates a graphml file of the dependency
     tree): <https://github.com/jrudolph/sbt-dependency-graph>
+-   ls-sbt (An sbt interface for ls.implicit.ly):
+    <https://github.com/softprops/ls>
 -   sbt-dirty-money (Cleans Ivy2 cache):
     <https://github.com/sbt/sbt-dirty-money>
 -   sbt-updates (Checks Maven repos for dependency updates):
@@ -247,8 +183,15 @@ your plugin to the list.
 -   sbt-versions (Checks for updated versions of your dependencies):
     <https://github.com/sksamuel/sbt-versions>
 
-#### Utility plugins
+#### Build interoperability plugins
 
+-   ant4sbt: <https://github.com/sbt/ant4sbt>
+-   sbt-pom-reader: <https://github.com/sbt/sbt-pom-reader>
+
+#### Utility and system plugins
+
+-   sbt-scalariform (adding support for source code formatting using
+    Scalariform): <https://github.com/sbt/sbt-scalariform>
 -   sbt-process-runner (Run your own applications from SBT console)
     <https://github.com/whysoserious/sbt-process-runner>
 -   jot (Write down your ideas lest you forget them)
@@ -274,8 +217,6 @@ your plugin to the list.
     <https://github.com/johanandren/sbt-taglist>
 -   migration-manager:
     <https://github.com/typesafehub/migration-manager>
--   sbt-scalariform (adding support for source code formatting using
-    Scalariform): <https://github.com/sbt/sbt-scalariform>
 -   sbt-aspectj: <https://github.com/sbt/sbt-aspectj>
 -   sbt-properties: <https://github.com/sbt/sbt-properties>
 -   sbt-multi-publish (publish to more than one repository
@@ -291,23 +232,83 @@ your plugin to the list.
     <https://github.com/frugalmechanic/fm-sbt-s3-resolver>
 -   sbt-notebook (Adds scala-notebook capabilities to sbt projects):
     <https://github.com/alexarchambault/sbt-notebook>
+-   sbt-sh (executes shell commands):
+    <https://github.com/steppenwells/sbt-sh>
+-   cronish-sbt (interval sbt / shell command execution):
+    <https://github.com/philcali/cronish-sbt>
+-   git (executes git commands): <https://github.com/sbt/sbt-git>
+-   svn (execute svn commands): <https://github.com/xuwei-k/sbtsvn>
+-   sbt-groll (sbt plugin to navigate the Git history):
+    <https://github.com/sbt/sbt-groll>
+-   sbt-twt (twitter processor for sbt):
+    <https://github.com/sbt/sbt-twt>
 
-#### Code coverage plugins
+#### Database plugins
 
--   sbt-scct: <https://github.com/sqality/sbt-scct>
--   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
--   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
--   sbt-coveralls: <https://github.com/scoverage/sbt-coveralls>
+-   flyway-sbt (Flyway - The agile database migration framework):
+    <http://flywaydb.org/getstarted/firststeps/sbt.html>
+-   sbt-liquibase (Liquibase RDBMS database migrations):
+    <https://github.com/bigtoast/sbt-liquibase>
+-   sbt-dbdeploy (dbdeploy, a database change management tool):
+    <https://github.com/mr-ken/sbt-dbdeploy>
+
+#### Code generator plugins
+
+-   sbt-buildinfo (Generate Scala source for any settings):
+    <https://github.com/sbt/sbt-buildinfo>
+-   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
+    <https://bitbucket.org/qforce/sbt-haxe>
+-   sbt-scalabuff (Google Protocol Buffers with native scala suppport
+    thru ScalaBuff): <https://github.com/sbt/sbt-scalabuff>
+-   sbt-fmpp (FreeMarker Scala/Java Templating):
+    <https://github.com/sbt/sbt-fmpp>
+-   sbt-scalaxb (XSD and WSDL binding):
+    <https://github.com/eed3si9n/scalaxb>
+-   sbt-protobuf (Google Protocol Buffers):
+    <https://github.com/sbt/sbt-protobuf>
+-   sbt-cppp (Cross-Project Protobuf Plugin for Sbt):
+    <https://github.com/Atry/sbt-cppp>
+-   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
+-   sbt-xjc (XSD binding, using
+    [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
+    <https://github.com/sbt/sbt-xjc>
+-   xsbt-scalate-generate (Generate/Precompile Scalate Templates):
+    <https://github.com/backchatio/xsbt-scalate-generate>
+-   sbt-antlr (Generate Java source code based on ANTLR3 grammars):
+    <https://github.com/stefri/sbt-antlr>
+-   sbt-antlr4 (Antlr4 runner for generating Java source code):
+    <https://github.com/ihji/sbt-antlr4>
+-   xsbt-reflect (Generate Scala source code for project name and
+    version): <https://github.com/ritschwumm/xsbt-reflect>
+-   lifty (Brings scaffolding to sbt): <https://github.com/lifty/lifty>
+-   sbt-thrift (Thrift Code Generation):
+    <https://github.com/bigtoast/sbt-thrift>
+-   xsbt-hginfo (Generate Scala source code for Mercurial repository
+    information):
+    <https://bitbucket.org/lukas_pustina/xsbt-hginfo>
+-   sbt-scalashim (Generate Scala shim like `sys.error`):
+    <https://github.com/sbt/sbt-scalashim>
+-   sbtend (Generate Java source code from
+    [xtend](https://www.eclipse.org/xtend/) ):
+    <https://github.com/xuwei-k/sbtend>
+-   sbt-boilerplate (generating scala.Tuple/Function related boilerplate
+    code): <https://github.com/sbt/sbt-boilerplate>
+-   sbt-fxml (Generates controller classes for JavaFX FXML files):
+    <https://bitbucket.org/phdoerfler/sbt-fxml>
+-   sbt-clojure (Compiling Clojure code):
+    <https://github.com/Geal/sbt-clojure>
+
+#### Game development plugins
+
+-   sbt-lwjgl-plugin (Light Weight Java Game Library):
+    <https://github.com/philcali/sbt-lwjgl-plugin>
+-   sbt-scage-plugin (Scala Game Engine):
+    <https://github.com/mvallerie/sbt-scage-plugin>
 
 #### Android plugin
 
 -   android-plugin: <https://github.com/jberkel/android-plugin>
 -   android-sdk-plugin: <https://github.com/pfn/android-sdk-plugin>
-
-#### Build interoperability plugins
-
--   ant4sbt: <https://github.com/sbt/ant4sbt>
--   sbt-pom-reader: <https://github.com/sbt/sbt-pom-reader>
 
 #### OSGi plugin
 
