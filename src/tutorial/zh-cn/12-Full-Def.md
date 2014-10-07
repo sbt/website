@@ -45,5 +45,20 @@ hello/                  # 项目的基目录
 ```
 不用担心！大部分时候不需要`project/project/`目录。但是理解它是有帮助的。
 
+文件以`.scala` or `.sbt`结尾，一般命名`build.sbt` and `Build.scala`。实际上，这只是一个惯例，更多文件是允许的。
+
+### `.scala` 源文件在构建定义项目
+
+`.sbt` 文件被融入它的兄弟目录. 再次看项目布局：
+```
+hello/                  # 项目的基目录
+
+    build.sbt           # build.sbt 是project/ 中构建定义的一部分。
+
+    project/            # 构建定义项目的基目录
+
+        Build.scala     # 构建定义源文件
+
+```
 
 
