@@ -183,14 +183,25 @@ sbt附加设置从`.sbt`文件到`Build.settings`和`Project.setting`的设置�
 
 ### 提醒：总是不可改变的。
 
-It would be wrong to think that the settings in `build.sbt` are added to
-the `settings` fields in `Build` and `Project` objects. Instead, the `settings`
-list from `Build` and `Project`, and the settings from `build.sbt`, are
-concatenated into another immutable list which is then used by sbt. The
-`Build` and `Project` objects are "immutable configuration" forming only
-part of the complete build definition.
-
 这将是错误的认为，在` build.sbt`的设置将被添加到在` Build`和`Project`对象中的 `settings`领域。相反，`Build`和` Project`中的 settings`列 ，以及` build.sbt`设置列表，被
 串连到另一个不可变的列表中，然后用SBT 。该
 ` Build`和` Project`对象是“不可改变的配置”形成
-完整的构建定义的一部分
+完整的构建定义的一部分。
+
+
+
+事实上，也有设置其他来源也是如此。他们被追加
+顺序如下：
+
+ - 从` Build.settings`和` Project.settings`在你的` .scala`设置
+    文件。
+ - 您的用户 - 全局设置;例如` $ global_sbt_file $ `你可以
+    定义影响*所有*你的项目设置。
+ - 设置了插件注入，参见[使用插件][Using-Plugins]
+    那接下来。
+ - 设置的项目` .sbt`文件。
+ - 构建定义项目（即内` project`项目）有
+    从全局插件的设置（ ` $ global_plugins_base $ `）补充说。
+    [使用插件][Using-Plugins]解释这个了。
+
+后来设置会覆盖前面的。设置表格的完整列表构建定义。
