@@ -25,123 +25,79 @@ out: Multi-Project.html
 `package` を実行すると独自の jar ファイルを生成するなど、
 普通のプロジェクト同様に振る舞う。
 
-### `.scala` ファイル内でのプロジェクトの定義
-
-複数のプロジェクトを持つには、全てのプロジェクトとその関係を `.scala` ファイルで宣言する必要があり、
-`.sbt` ファイルからは不可能だ。
-だけど、それぞれのプロジェクトのセッティングは `.sbt` ファイルからでも定義することができる。
-以下に、ルートプロジェクト `hello` が、二つのサブプロジェクト `hello-foo` と `hello-bar` を
-集約（aggregate）する `.scala` ビルド定義を例に説明する:
+個々のプロジェクトは lazy val を用いて [Project](../../api/sbt/Project.html) 型の値を宣言することで定義される。例として、以下のようなものがプロジェクトだ:
 
 ```scala
-import sbt._
-import Keys._
+lazy val util = project
 
-object HelloBuild extends Build {
-    lazy val root = Project(id = "hello",
-                            base = file(".")) aggregate(foo, bar)
-
-    lazy val foo = Project(id = "hello-foo",
-                           base = file("foo"))
-
-    lazy val bar = Project(id = "hello-bar",
-                           base = file("bar"))
-}
+lazy val core = project
 ```
 
-sbt は、リフレクションを用いて `Build` オブジェクト内の
-`Project` 型を持ったフィールドを検索することで、`Project` オブジェクトの全リストを作成する。
+変数名はプロジェクトの ID 及びベースディレクトリの名前になる。 ID はコマンドラインからプロジェクトを指定する時に用いられる。ベースディレクトリは以下の様な関数を呼び出す事で変更出来る。上記の例と同じ結果になる記述を明示的に書くと、以下のようになる。
 
-プロジェクト `hello-foo` は、`base = file("foo")` と共に定義されているため、
-サブディレクトリ `foo` に置かれる。
-そのソースは、`foo/Foo.scala` のように `foo` の直下に置かれるか、
-`foo/src/main/scala` 内に置かれる。
-ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造](../directories)が `foo` 以下に適用される。
+```scala
+lazy val util = project.in(file("util"))
 
-`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
-`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
-
-
-ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
-`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
-次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
-以下のように表示されるはずだ（定義したバージョンによるが）:
-
-```
-> show version
-[info] hello-foo/*:version
-[info] 	0.7
-[info] hello-bar/*:version
-[info] 	0.9
-[info] hello/*:version
-[info] 	0.5
+lazy val core = project in file("core")
 ```
 
-`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
-`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
-`hello/*:version` は、`hello/build.sbt` 内で定義される。
-[スコープ付けされたキーの構文](../scope)を復習しておこう。
-それぞれの `version` キーは、`build.sbt` の場所により、
-特定のプロジェクトにスコープ付けされている。
-だけど、三つの `build.sbt` とも同じビルド定義の一部だ。
+### 依存関係
 
-`.scala` ファイルは、上に示したように、単にプロジェクトとそのベースディレクトリを列挙するだけの簡単なものにして、
-_それぞれのプロジェクトのセッティングは、そのプロジェクトのベースディレクトリ直下の
-`.sbt` ファイル内で宣言することができる_。
-_全てのセッティングを `.scala` ファイル内で宣言することは義務付けられいるわけではない。_
+個々のプロジェクトのビルドを他のプロジェクトと完全に独立した形で行うこともできる。しかし、大抵プロジェクトというのは他のプロジェクトと何らかの形で依存関係を持つ。ここには集約かクラスパス依存性といった2種類の依存関係が存在する:
 
-ビルド定義の全てを単一の `project` ディレクトリ内の場所にまとめるために、
-`.scala` ファイル内にセッティングも含めてしまうほうが洗練されていると思うかもしれない。
-ただし、これは好みの問題だから、好きにやっていい。
+#### 集約
 
-サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
-`foo/project/Build.scala` は無視される。
+集約は、集約するプロジェクトを走らせる際に集約されるプロジェクトも同時に走らせる必要がある、といった関係のことである。例えば、以下のような例がある。
 
-### 集約
+```scala
+lazy val root = (project in file(".")).
+  aggregate(util, core)
 
-もし望むなら、ビルド内のプロジェクトは、お互いに対して完全に独立であることができる。
+lazy val util = project
 
-だけど、上の例では、`aggregate(foo, bar)` というメソッドが呼び出されていることが分かる。
-これは、`hello-foo` と `hello-bar` を、ルートプロジェクト下に集約する。
+lazy val core = project
+```
 
-集約とは、集約プロジェクトで実行されたタスクが部分プロジェクトでも実行されることを意味する。
-例のような、二つのサブプロジェクトがある状態で sbt を起動して、`compile` を実行してみよう。
-三つのプロジェクト全てがコンパイルされたことが分かると思う。
+上の例では、`root` プロジェクトが `util` と `core` を集約している。この状態で sbt を起動してコンパイルしてみよう。3つのプロジェクトが全てコンパイルされることが分かると思う。
 
 _集約プロジェクト内で_（この場合は、ルートの `hello` プロジェクトで）、
 タスクごとに集約をコントロールすることができる。
-例えば `hello/build.sbt` 内で、`update` タスクの集約を以下のようにして回避できる:
+例えば、`update` タスクの集約を以下のようにして回避できる:
 
 ```scala
-aggregate in update := false
+lazy val root = (project in file(".")).
+  aggregate(util, core).
+  settings(
+    aggregate in update := false
+  )
+
+[...]
 ```
 
 `aggregate in update` は、`update` タスクにスコープ付けされた `aggregate` キーだ
-（[スコープ](../scope)参照）。
+（[スコープ][Scopes]参照）。
 
 注意: 集約は、集約されるタスクを順不同に並列実行する。
 
-### クラスパス依存性
+#### クラスパス依存性
 
 プロジェクトは、他のプロジェクトのコードに依存することができる。
 これは、`dependsOn` メソッドを呼び出すことで実現する。
-例えば、`hello-foo` が `hello-bar` のクラスパスが必要な場合は、
-`Build.scala` 内に以下のように書く:
+例えば、`core` に `util` のクラスパスが必要な場合は、 `core` の定義を次のように書く:
 
 ```scala
-    lazy val foo = Project(id = "hello-foo",
-                           base = file("foo")) dependsOn(bar)
+lazy val core = project.dependsOn(util)
 ```
 
-これで `hello-foo` 内のコードから `hello-bar` のクラスを利用することができる。
+これで `core` 内のコードから `util` のクラスを利用することができる。
 これは、プロジェクトをコンパイルするときの順序も作り出す。
-この場合、`hello-foo` がコンパイルされる前に、`hello-bar` が更新（update）され、
+この場合、`core` がコンパイルされる前に、`util` が更新（update）され、
 コンパイルされる必要がある。
 
 複数のプロジェクトに依存するには、`dependsOn(bar, baz)` というふうに、
 `dependsOn` に複数の引数を渡せばいい。
 
-#### コンフィギュレーションごとのクラスパス依存性
+##### コンフィギュレーションごとのクラスパス依存性
 
 `foo dependsOn(bar)` は、`foo` の `Compile` コンフィギュレーションが
 `bar` の `Compile` コンフィギュレーションに依存することを意味する。
@@ -162,9 +118,82 @@ aggregate in update := false
 複数のコンフィギュレーション依存性を宣言する場合は、セミコロンで区切る。
 例えば、`dependsOn(bar % "test->test;compile->compile")` と書ける。
 
+### デフォルトルートプロジェクト
+
+もしプロジェクトがルートディレクトリに定義されてなかったら、 sbt はビルド時に他のプロジェクトを集約するデフォルトプロジェクトを勝手に生成する。
+
+プロジェクト `hello-foo` は、`base = file("foo")` と共に定義されているため、
+サブディレクトリ `foo` に置かれる。
+そのソースは、`foo/Foo.scala` のように `foo` の直下に置かれるか、
+`foo/src/main/scala` 内に置かれる。
+ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造][Directories]が `foo` 以下に適用される。
+
+`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
+`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
+
+ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
+`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
+次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
+以下のように表示されるはずだ（定義したバージョンによるが）:
+
+```
+> show version
+[info] hello-foo/*:version
+[info] 	0.7
+[info] hello-bar/*:version
+[info] 	0.9
+[info] hello/*:version
+[info] 	0.5
+```
+
+`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
+`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
+`hello/*:version` は、`hello/build.sbt` 内で定義される。
+[スコープ付けされたキーの構文][Scopes]を復習しておこう。
+それぞれの `version` キーは、`build.sbt` の場所により、
+特定のプロジェクトにスコープ付けされている。
+だけど、三つの `build.sbt` とも同じビルド定義の一部だ。
+
+`.scala` ファイルは、上に示したように、単にプロジェクトとそのベースディレクトリを列挙するだけの簡単なものにして、
+_それぞれのプロジェクトのセッティングは、そのプロジェクトのベースディレクトリ直下の
+`.sbt` ファイル内で宣言することができる_。
+_全てのセッティングを `.scala` ファイル内で宣言することは義務付けられいるわけではない。_
+
+ビルド定義の全てを単一の `project` ディレクトリ内の場所にまとめるために、
+`.scala` ファイル内にセッティングも含めてしまうほうが洗練されていると思うかもしれない。
+ただし、これは好みの問題だから、好きにやっていい。
+
+サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
+`foo/project/Build.scala` は無視される。
+
 ### プロジェクトの切り替え
 
 sbt インタラクティブプロンプトから、`projects` と打ち込むことでプロジェクトの全リストが表示され、
 `project <プロジェクト名>` で、現在プロジェクトを選択できる。
 `compile` のようなタスクを実行すると、それは現在プロジェクトに対して実行される。
 これにより、ルートプロジェクトをコンパイルせずに、サブプロジェクトのみをコンパイルすることができる。
+
+また `subProjectID/compile` のように、他のプロジェクト ID を明示的に指定することで、そのプロジェクトのタスクを実行することもできる。
+
+### Common code
+
+`.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間のコードを共有するためには、 ビルドルートにある `project/` ディレクトリに Scala ファイルを用意すれば良い。このディレクトリは sbt プロジェクトになるが、ビルドのためのプロジェクトとなる。以下がサンプルである。
+
+`<root>/project/Common.scala`:
+
+```scala
+import sbt._
+import Keys._
+
+object Common {
+  def text = "org.example"
+}
+```
+
+`<root>/build.sbt`:
+
+```scala
+organization := Common.text
+```
+
+詳細は [.scala Build Definition][Full-Def] を見てほしい。

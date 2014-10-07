@@ -5,6 +5,7 @@ out: Full-Def.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
+  [Multi-Project]: Multi-Project.html
 
 .scala ビルド定義
 ----------------
@@ -124,7 +125,7 @@ sampleKeyC in ThisBuild := "C: in build.sbt scoped to ThisBuild"
 sampleKeyD := "D: in build.sbt"
 ```
 
-sbt のインタラクティブプロンプトを起動する。`inspect sample-a` と打ち込むと、以下のように表示されるはず（一部抜粋）:
+sbt のインタラクティブプロンプトを起動する。`inspect sampleKeyA` と打ち込むと、以下のように表示されるはず（一部抜粋）:
 
 ```
 [info] Setting: java.lang.String = A: in Build.settings in Build.scala
@@ -132,7 +133,7 @@ sbt のインタラクティブプロンプトを起動する。`inspect sample-
 [info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
 ```
 
-次に、`inspect sample-c` と打ち込むと、以下のように表示される:
+次に、`inspect sampleKeyC` と打ち込むと、以下のように表示される:
 
 ```
 [info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
@@ -145,7 +146,7 @@ sbt のインタラクティブプロンプトを起動する。`inspect sample-
 `.scala` ファイルの `Build.settings` リストにセッティングを追加するのと等価とういうことだ。
 sbt は、ビルド全体にスコープ付けされたセッティングを両者から取り込んでビルド定義を作成する。
 
-次は、`inspect sample-b`:
+次は、`inspect sampleKeyB`:
 
 ```
 [info] Setting: java.lang.String = B: in the root project settings in Build.scala
@@ -153,12 +154,12 @@ sbt は、ビルド全体にスコープ付けされたセッティングを両�
 [info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
 ```
 
-`sample-b` は、
+`sampleKeyB` は、
 ビルド全体（`{file:/home/hp/checkout/hello/}`）ではなく、
 特定のプロジェクト（`{file:/home/hp/checkout/hello/}hello`）
 にスコープ付けされいることに注意してほしい。
 
-もうお分かりだと思うが、`inspect sample-d` は `sample-b` に対応する:
+もうお分かりだと思うが、`inspect sampleKeyD` は `sampleKeyB` に対応する:
 
 ```
 [info] Setting: java.lang.String = D: in build.sbt
@@ -170,10 +171,10 @@ sbt は `.sbt` ファイルからのセッティングを
 `Build.settings` と `Project.settings` に_追加する_ため、
 これは `.sbt` 内のセッティングの優先順位が高いことを意味する。
 `Build.scala` を変更して、`build.sbt` でも設定されている
-`sample-c` か `sample-d` キーを設定してみよう。
+`sampleKeyC` か `sampleKeyD` キーを設定してみよう。
 `build.sbt` 内のセッティングが、`Build.scala` 内のそれに「勝つ」はずだ。
 
-もう一つ気づいたかもしれないが、`sampleC` と `sampleD` は `build.sbt` でそのまま使うことができる。
+もう一つ気づいたかもしれないが、`sampleKeyC` と `sampleKeyD` は `build.sbt` でそのまま使うことができる。
 これは、sbt が `Build` オブジェクトのコンテンツを自動的に `.sbt` ファイルにインポートすることにより実現されている。
 具体的には、`build.sbt` ファイル内で `import HelloBuild._` が暗黙に呼ばれている。
 
@@ -196,20 +197,6 @@ sbt は `.sbt` ファイルからのセッティングを
 
 _推奨される方法の一つとしては、`.scala` ファイルは `val` や `object` やメソッド定義を
 くくり出すのに使用して、セッティングの定義は `.sbt` で行うことだ。_
-
-`.sbt` 形式は、単一の式のみが許されているので、式の間でコードを共有する方法を持たない。
-コードを共有したければ、共通の変数やメソッドの定義ができるように `.scala` ファイルが必要になる。
-(sbt 0.13.0 からbuild.sbtでも、val、lazy val、メソッド定義は可能になりました。classやobjectが必要な場合は引き続きbuild.scalaが必要です)
-
-`.sbt` ファイルと `.scala` ファイルの両方がコンパイルされ、一つのビルド定義が作られる。
-
-`.scala` ファイルは、単一のビルド内で複数のプロジェクトを定義する場合にも必須だ。
-これに関しては、[マルチプロジェクト](../multi-project)で後ほど説明する。
-
-（[マルチプロジェクト](../multi-project)で `.sbt` ファイルを使うことの欠点は、
-`.sbt` ファイルが異なるディレクトリに散らばってしまうことだ。
-そのため、サブプロジェクトがある場合は、セッティングを `.scala` に置くことを好む人もいる。
-これは、[マルチプロジェクト](../multi-project)のふるまいを理解すると、すぐ分かるようになる。）
 
 ### インタラクティブモードにおけるビルド定義
 
@@ -245,9 +232,9 @@ sbt のインタラクティブプロンプトの現プロジェクトを
 
  - `.scala` ファイル内の `Build.settings` と `Project.settings` 。
  - ユーザ定義のグローバルセッティング。例えば、`~/.sbt/build.sbt` に_全て_のプロジェクトに影響するセッティングを定義できる。
- - プラグインによって注入されるセッティング、次の[プラグインの使用](../using-plugins)参照。
+ - プラグインによって注入されるセッティング、次の[プラグインの使用][Using-Plugins]参照。
  - プロジェクトの `.sbt` ファイル内のセッティング。
  - （`project` 内のプロジェクトである）ビルド定義プロジェクトの場合は、グローバルプラグイン（~/.sbt/plugins）が追加される。
-   [プラグインの使用](../using-plugins)で詳細が説明される。
+   [プラグインの使用][Using-Plugins]で詳細が説明される。
 
 後続のセッティングは古いものをオーバーライドする。このリスト全体でビルド定義が構成される。

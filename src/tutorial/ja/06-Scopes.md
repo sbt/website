@@ -25,7 +25,7 @@ out: Scopes.html
 
  - ビルド定義に複数のプロジェクトがあれば、それぞれのプロジェクトにおいて同じキーが別の値を取ることができる。
  - メインのソースとテストとのソースが異なるようにコンパイルしたければ、`compile` キーは別の値をとることができる。
- - （jar パッケージの作成のオプションを表す）`package-option` キーはクラスファイルのパッケージ（`package-bin`）とソースコードのパッケージ（`package-src`）で異なる値をとることができる。
+ - （jar パッケージの作成のオプションを表す）`packageOption` キーはクラスファイルのパッケージ（`packageBin`）とソースコードのパッケージ（`packageSrc`）で異なる値をとることができる。
 
 スコープによって値が異なる可能性があるため、_あるキーへの単一の値は存在しない_。
 
@@ -69,15 +69,15 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 デフォルトでは、コンパイル、パッケージ化、と実行に関するキーの全てはコンフィグレーションにスコープ付けされているため、
 コンフィギュレーションごとに異なる動作をする可能性がある。
 その最たる例が `compile`、`package` と `run` のタスクキーだが、
-（`source-directories` や `scalac-options` や `full-classpath` など）それらのキーに_影響を及ぼす_全てのキーもコンフィグレーションにスコープ付けされている。
+（`sourceDirectories` や `scalacOptions` や `fullClasspath` など）それらのキーに_影響を及ぼす_全てのキーもコンフィグレーションにスコープ付けされている。
 
 #### タスク軸によるスコープ付け
 
-セッティングはタスクの動作に影響を与えることもできる。例えば、`pakcage-src` は `package-options` セッティングの影響を受ける。
+セッティングはタスクの動作に影響を与えることもできる。例えば、`pakcageSrc` は `packageOptions` セッティングの影響を受ける。
 
-これをサポートするため、（`package-src` のような）タスクキーは、（`package-option` のような）別のキーのスコープとなりえる。
+これをサポートするため、（`packageSrc` のような）タスクキーは、（`packageOption` のような）別のキーのスコープとなりえる。
 
-パッケージを構築するさまざまなタスク（`package-src`、`package-bin`、`package-duc`）は、`artifact-name` や `package-option` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
+パッケージを構築するさまざまなタスク（`packageSrc`、`packageBin`、`packageDoc`）は、`artifactName` や `packageOption` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
 
 ### グローバルスコープ
 
@@ -121,6 +121,17 @@ sbt は、`Global` や、ビルド全体スコープなど、より一般的な�
  - タスクを省略した場合は、`Global` タスクが使われる。
 
 さらに詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
+
+### スコープ付きキーの表記例
+
+- `fullClasspath` はキーのみを指定し、デフォルトスコープを用いる。ここでは、現在のプロジェクト、キーに依存したコンフィギュレーション、グローバルタスクスコープとなる。
+- `test:fullClasspath` はコンフィギュレーションを指定する。つまりプロジェクト軸とタスク軸はデフォルトを用いつつも `test`コンフィギュレーションにおける `fullClasspath` というキーを表す。
+- `*:fullClasspath` はデフォルトコンフィギュレーションを用いずに `Global` コンフィギュレーションを用いる事を明示している。
+- `doc::fullClasspath` はプロジェクト軸とコンフィギュレーション軸はデフォルトを用いつつ、 `doc` タスクスコープにおける `fullClasspath` というキーを表す。
+- `{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath` は `{file:/home/hp/checkout/hello/}` をルートディレクトリにビルドした際に含まれる `default-aea33a` というプロジェクトを指定している。さらにこのプロジェクト内の `test` コンフィギュレーションを用いる事も明示している。
+- `{file:/home/hp/checkout/hello/}/test:fullClasspath` は `{file:/home/hp/checkout/hello/}` のビルド全体をプロジェクトの軸とする。
+- `{.}/test:fullClasspath` は `{.}` で指定されたルートディレクトリのビルド全体をプロジェクト軸に取る。`{.}` は Scala code において `ThisBuild` と記述できる。
+- `{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath` は3つのスコープ軸全てを指定している。
 
 ### スコープの検査
 
@@ -213,7 +224,7 @@ sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/
 name in Compile := "hello"
 ```
 
-また、`package-bin` タスクでスコープ付けされた `name` の設定（これも意味なし！ただの例だよ）:
+また、`packageBin` タスクでスコープ付けされた `name` の設定（これも意味なし！ただの例だよ）:
 
 ```scala
 name in packageBin := "hello"

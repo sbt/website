@@ -9,8 +9,8 @@ out: Custom-Settings.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
   [Plugins]: ../../docs/Plugins.html
   [Tasks]: ../../docs/Tasks.html
-  [Keys]: ../sxr/sbt/Keys.scala.html
-  [Defaults]: ../sxr/sbt/Defaults.scala.html
+  [Keys]: ../../sxr/sbt/Keys.scala.html
+  [Defaults]: ../../sxr/sbt/Defaults.scala.html
   [Scaladocs-IO]: ../api/index.html#sbt.IO\$
 
 カスタムセッティングとタスク
@@ -25,8 +25,8 @@ out: Custom-Settings.html
 
 ### キーの定義
 
-[Keys] は、キーの定義の方法で満載だ。
-多くのキーは、[Defaults] で実装されている。
+[Keys][Keys] は、キーの定義の方法で満載だ。
+多くのキーは、[Defaults][Defaults] で実装されている。
 
 キーは三つの型のうちどれかを持つ。`SettingKey` と `TaskKey` は、
 [.sbt ビルド定義][Basic-Def]で説明した。`InputKey` に関しては、
@@ -48,8 +48,7 @@ val clean = taskKey[Unit]("Deletes files produced by the build, such as generate
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
 
-（[.scala ビルド定義][Full-Def] でみたように、）`.scala` ファイル内、
-もしくは（[プラグインの使用][Using-Plugins] でみたように、）プラグイン内でキーを定義することができる。
+[.sbt file][Basic-Def] や [.scala file][Full-Def] や [a plugin][Using-Plugins] でキーを定義する事が出来る。
 `.scala` ビルド定義ファイル内の `Build` オブジェクト内の `val`、
 もしくはプラグイン内の `Plugin` オブジェクト内の `val` は全て `.sbt` ファイルに自動的にインポートされる。
 
@@ -83,19 +82,7 @@ sampleIntTask := {
 （その場合は、[ビルド定義にライブラリ依存性を追加して][Using-Plugins]、その HTML ライブラリに基づいたコードを書く）。
 
 sbt には、いくつかのユーティリティ・ライブラリや便利な関数があって、
-特にファイルやディレクトリの取り扱いには [Scaladocs-IO] にある API を重宝する。
-
-### 置換しない場合のタスクの拡張
-
-既存のタスクを実行して、他の別のアクションも実行したい場合は、
-`~=` か `<<=` を用いて、既存のタスクをインプットとして取り（これはそのタスクを実行することを意味する）、
-既存の実装が完了した後で、別に好きな事をできる。
-
-<pre>
-// 以下の二つのセッティングは等価だ。
-intTask <<= intTask map { (value: Int) => value + 1 }
-intTask ~= { (value: Int) => value + 1 }
-</pre>
+特にファイルやディレクトリの取り扱いには [Scaladocs-IO][Scaladocs-IO] にある API を重宝する。
 
 ### プラグインを使おう！
 
