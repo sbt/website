@@ -149,15 +149,36 @@ sbt附加设置从`.sbt`文件到`Build.settings`和`Project.setting`的设置�
 另一要点应该被注意到：`sampleKeyC`和`sampleKeyD`是可以在`build.sbt`内部获得的。这是因为sbt引入`Build`中的内容到`.sbt`文件中。在这种情况下，`import HelloBuild._`是被隐含引入在`build.sbt`文件中。
 
 总结：
--在`.scala`文件中，可以在`Build.settings`中增加设置，会自动增加构建作用域。
--在`.scala`文家中，可以在`Project.settings`中增加设置，会自动增加构建作用域。
--任何在`.scala`中的`Build`对象将会把它的内容倒入到`.sbt`文件中。
--在`.sbt`文件中的设置被`依附`到`.scala`中的设置。
--在`.sbt`文家中的设置是在项目作用域的除非你指定它在其他域。
+- 在`.scala`文件中，可以在`Build.settings`中增加设置，会自动增加构建作用域。
+- 在`.scala`文家中，可以在`Project.settings`中增加设置，会自动增加构建作用域。
+- 任何在`.scala`中的`Build`对象将会把它的内容倒入到`.sbt`文件中。
+- 在`.sbt`文件中的设置被`依附`到`.scala`中的设置。
+- 在`.sbt`文家中的设置是在项目作用域的除非你指定它在其他域。
 
 
+### 何时用`.scala`文件
+
+在`.scala`文件,你可以写任意的scala代码, 包括顶层的类和对象. 另外, 它没有对空白行的限制，
+因为它是一个`.scala`文件。
+推荐的方法是定义设置在`.sbt`文件中，用`.scala`文件用于任务实现，或者共享键值在`.sbt`文件中。
 
 
+### 命令窗口构建定义项目
 
+又可以转换sbt 命令模式，为了有构建定义项目在`project/`目录内，作当前的项目。可以敲`plugins`来实现。
+
+```
+> reload plugins
+[info] Set current project to default-a0e8e4 (in build file:/home/hp/checkout/hello/project/)
+> show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/project/Build.scala)
+> reload return
+[info] Loading project definition from /home/hp/checkout/hello/project
+[info] Set current project to hello (in build file:/home/hp/checkout/hello/)
+> show sources
+[info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
+>
+```
+你可以用`reload return` 离开构建定义项目，回到你的项目。
 
 
