@@ -54,52 +54,39 @@ sbt 使用 [Apache Ivy](http://ant.apache.org/ivy/) 来实现托管依赖，所�
 
 #### `libraryDependencies` Key
 
-Most of the time, you can simply list your dependencies in the setting
-`libraryDependencies`. It's also possible to write a Maven POM file or Ivy
-configuration file to externally configure your dependencies, and have
-sbt use those external configuration files. You can learn more about
-that [here][external-maven-ivy].
+大多数时候，你可以很简单的在 `libraryDependencies` 设置项中列出你的依赖。也可以通过 Maven POM 文件或者 Ivy 配置文件来配置依赖，而且可以通过 sbt 来调用这些外部的配置文件。
+你可以从[这里][external-maven-ivy]获取更详细的内容。
 
-Declaring a dependency looks like this, where `groupId`, `artifactId`, and
-`revision` are strings:
+像这样定义一个依赖，`groupId`， `artifactId` 和 `revision` 都是字符串：
 
 ```scala
 libraryDependencies += groupID % artifactID % revision
 ```
 
-or like this, where `configuration` can be a string or
-[Configuration](../sxr/sbt/Configurations.scala.html#sbt.Configuration) val:
+或者像这样， 用字符串或者 [Configuration](../sxr/sbt/Configurations.scala.html#sbt.Configuration) val 当做 `configuration`：
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
-`libraryDependencies` is declared in
-[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) like
-this:
+`libraryDependencies` 在 [Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) 中像这样声明：
 
 ```scala
 val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependencies.")
 ```
 
-The `%` methods create `ModuleID` objects from strings, then you add those
-`ModuleID` to `libraryDependencies`.
+方法 `%` 从字符串创建 `ModuleID` 对象，然后将 `ModuleID` 添加到 `libraryDependencies` 中。
 
-Of course, sbt (via Ivy) has to know where to download the module. If
-your module is in one of the default repositories sbt comes with, this
-will just work. For example, Apache Derby is in the standard Maven2
-repository:
+当然，要让 sbt（通过 Ivy）知道从哪里下载模块。如果你的模块和 sbt 来自相同的某个默认的仓库，这样就会工作。例如，Apache Derby 在标准的 Maven2 仓库中：
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
-If you type that in `build.sbt` and then `update`, sbt should download Derby
-to `~/.ivy2/cache/org.apache.derby/`. (By the way, `update` is a dependency
-of `compile` so there's no need to manually type `update` most of the time.)
+如果你在 `build.sbt` 中输入上面这些内容，然后执行 `update`，sbt 会将 Derby 下载到 `~/.ivy2/cache/org.apache.derby/`。（顺便提一下， `compile` 依赖于 `update`，所以
+大多数时候不需要手动的执行 `update`。）
 
-Of course, you can also use `++=` to add a list of dependencies all at
-once:
+当然，你也可以通过 `++=` 一次将所有依赖作为一个列表添加：
 
 ```scala
 libraryDependencies ++= Seq(
@@ -108,135 +95,105 @@ libraryDependencies ++= Seq(
 )
 ```
 
-In rare cases you might find reasons to use `:=` with `libraryDependencies`
-as well.
+在很少情况下，你也会需要在 `libraryDependencies` 上用 `:=` 方法。
 
-#### Getting the right Scala version with `%%`
+#### 通过 `%%` 方法获取正确的 Scala 版本
 
-If you use `groupID %% artifactID % revision` rather than
-`groupID % artifactID % revision` (the difference is the double `%%` after
-the `groupID`), sbt will add your project's Scala version to the artifact
-name. This is just a shortcut. You could write this without the `%%`:
+如果你用是 `groupID %% artifactID % revision` 而不是 `groupID % artifactID % revision`（区别在于 `groupID` 后面是 `%%`），sbt 会在 工件名称中加上项目的 Scala 版本号。
+这只是一种快捷方法。你可以这样写不用 `%%`：
 
 ```scala
 libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
 ```
 
-Assuming the `scalaVersion` for your build is `2.11.1`, the following is
-identical (note the double `%%` after `"org.scala-tools"`):
+假设这个构建的 `scalaVersion` 是 `2.11.1`，下面这种方式是等效的（注意 `"org.scala-tools"` 后面是 `%%`）：
 
 ```scala
 libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 ```
 
-The idea is that many dependencies are compiled for multiple Scala
-versions, and you'd like to get the one that matches your project
-to ensure binary compatibility.
+这个想法是很多依赖都会被编译之后给多个 Scala 版本，然后你想确保和项目匹配的某一个是二进制兼容的。
 
-The complexity in practice is that often a dependency will work with a
-slightly different Scala version; but `%%` is not smart about that. So if
-the dependency is available for `2.10.1` but you're using
-`scalaVersion := "2.10.4"`, you won't be able to use `%%` even though the
-`2.10.1` dependency likely works. If `%%` stops working, just go see which
-versions the dependency is really built for, and hardcode the one you
-think will work (assuming there is one).
+实践中的复杂度在于通常一个依赖会和稍微不同的 Scala 版本一起工作；但是 `%%` 就没有那么智能了。所以如果一个依赖要求版本为 `2.10.1`，但是你使用的 `scalaVersion := "2.10.4"`，
+你不可能使用 `%%` 方法即使 `2.10.1` 的版本很有可能工作。如果 `%%` 停止工作了，只需要去检查那个依赖是基于哪个 Scala 版本构建的，然后硬编码你认为可以工作的版本号（假设已经有一个）。
 
-See [Cross Building][Cross-Build] for some more detail on this.
+参见 [交叉构建][Cross-Build] 获取更多信息。
 
-#### Ivy revisions
+#### Ivy 修正
 
-The `revision` in `groupID % artifactID % revision` does not have to be a
-single fixed version. Ivy can select the latest revision of a module
-according to constraints you specify. Instead of a fixed revision like
-`"1.6.1"`, you specify `"latest.integration"`, `"2.9.+"`, or `"[1.0,)"`. See the
-[Ivy
-revisions](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)
-documentation for details.
+`groupID % artifactID % revision` 中的 `revision` 不需要是一个固定的版本号。Ivy 能够根据你指定的约束选择一个模块的最新版本。你指定 `"latest.integration"`，`"2.9.+"` 或者 `"[1.0,)"`，而不是
+一个固定的版本号，像 `"1.6.1"`。参看[Ivy 修订](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)文档获取详细内容。
 
-<!-- TODO: Add aliases -->
+#### 解析器
 
-#### Resolvers
+不是所有的依赖包都放在同一台服务器上，sbt 默认使用标准的 Maven2 仓库。如果你的依赖不在默认的仓库中，你需要添加 *resolver* 来帮助 Ivy 找到它。
 
-Not all packages live on the same server; sbt uses the standard Maven2
-repository by default. If your dependency isn't on one of the default
-repositories, you'll have to add a *resolver* to help Ivy find it.
-
-To add an additional repository, use
+通过以下形式添加额外的仓库：
 
 ```scala
 resolvers += name at location
 ```
 
-with the special `at` between two strings.
+在两个字符串中间有一个特殊的 `at`。
 
-For example:
+例如：
 
 ```scala
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
-The `resolvers` key is defined in
-[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) like this:
+`resolvers` key 在 [Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) 中像这样定义：
 
 ```scala
-val resolvers = settingKey[Seq[Resolver]]("The user-defined additional resolvers for automatically managed dependencies.")
+val resolvers = settingKey[Seq[Resolver]]("用户为托管依赖定义的额外的解析器。")
 ```
 
-The `at` method creates a `Resolver` object from two strings.
+`at` 方法通过两个字符串创建了一个 `Resolver` 对象。
 
-sbt can search your local Maven repository if you add it as a
-repository:
+sbt 会搜索你的本地 Maven 仓库如果你将它添加为一个仓库：
 
 ```scala
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 ```
 
-or, for convenience:
+或者，为了方便起见：
 
 ```scala
 resolvers += Resolver.mavenLocal
 ```
 
-See [Resolvers][Resolvers] for details on defining other types of
-repositories.
+参见[解析器][Resolvers]获取更多关于定义其他类型的仓库的内容。
 
-#### Overriding default resolvers
+#### 覆写默认的解析器
 
-`resolvers` does not contain the default resolvers; only additional ones
-added by your build definition.
+`resolvers` 不包含默认的解析器，仅仅通过构建定义添加额外的解析器。
 
-sbt combines `resolvers` with some default repositories to form
-`externalResolvers`.
+sbt 将 `resolvers` 和一些默认的仓库组合起来构成 `externalResolvers`。
 
-Therefore, to change or remove the default resolvers, you would need to
-override `externalResolvers` instead of `resolvers`.
+然而，为了改变或者移除默认的解析器，你需要覆写`externalResolvers` 而不是 `resolvers`。
 
 #### Per-configuration dependencies
 
-Often a dependency is used by your test code (in `src/test/scala`, which
-is compiled by the `Test` configuration) but not your main code.
+通常一个依赖只被测试代码使用（在 `src/test/scala` 中，通过 `Test` configuration 编译）。
 
-If you want a dependency to show up in the classpath only for the `Test`
-configuration and not the `Compile` configuration, add `% "test"` like this:
+如果你想要一个依赖只在 `Test` configuration 的 classpath 中出现而不是 `Compile` configuration，像这样添加 `% "test"`：
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
 ```
 
-You may also use the type-safe version of `Test` configuration as follows:
+也可能也会像这样使用类型安全的 `Test` configuration：
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 ```
 
-Now, if you type `show compile:dependencyClasspath` at the sbt interactive
-prompt, you should not see the derby jar. But if you type
-`show test:dependencyClasspath`, you should see the derby jar in the list.
+现在，如果你在 sbt 的命令提示行里输入 `show compile:dependencyClasspath`，你不应该看到 derby jar。但是如果你输入 `show test:dependencyClasspath`，
+你应该在列表中看到 derby jar。
 
-Typically, test-related dependencies such as
-[ScalaCheck](http://scalacheck.org/),
-[Specs2](http://specs2.org), and
-[ScalaTest](http://www.scalatest.org/) would be defined with `% "test"`.
+通常，测试相关的依赖，如
+[ScalaCheck](http://scalacheck.org/)，
+[Specs2](http://specs2.org)和
+[ScalaTest](http://www.scalatest.org/) 将会被定义为 `% "test"`。
 
-There are more details and tips-and-tricks related to library
-dependencies on [this page][Library-Management].
+库依赖更详细的内容和技巧在[这里][Library-Management]。
