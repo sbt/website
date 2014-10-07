@@ -142,4 +142,22 @@ sampleKeyD := "D: in build.sbt"
 [info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
 ```
 
+sbt附加设置从`.sbt`文件到`Build.settings`和`Project.setting`的设置。另句话说，`.sbt`设置拥有优先权。
+尝试改变`Build.scala`，是的它能设置健值`sanokeC` 或者`sampleD`，
+他们已经在`build.sbt`设置过。`build.sbt`中的设置应该能赢过`Build.sbt`。
+
+另一要点应该被注意到：`sampleKeyC`和`sampleKeyD`是可以在`build.sbt`内部获得的。这是因为sbt引入`Build`中的内容到`.sbt`文件中。在这种情况下，`import HelloBuild._`是被隐含引入在`build.sbt`文件中。
+
+总结：
+-在`.scala`文件中，可以在`Build.settings`中增加设置，会自动增加构建作用域。
+-在`.scala`文家中，可以在`Project.settings`中增加设置，会自动增加构建作用域。
+-任何在`.scala`中的`Build`对象将会把它的内容倒入到`.sbt`文件中。
+-在`.sbt`文件中的设置被`依附`到`.scala`中的设置。
+-在`.sbt`文家中的设置是在项目作用域的除非你指定它在其他域。
+
+
+
+
+
+
 
