@@ -2,11 +2,11 @@
 out: Library-Dependencies.html
 ---
 
-  [Keys]: ../../sxr/sbt/Keys.scala.html
-  [Apache Ivy]: http://ant.apache.org/ivy/
-  [Ivy revisions]: http://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
-  [Extra attributes]: http://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
-  [through Ivy]: http://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
+  [Keys]: ../sxr/sbt/Keys.scala.html
+  [Apache Ivy]: https://ant.apache.org/ivy/
+  [Ivy revisions]: https://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
+  [Extra attributes]: https://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
+  [through Ivy]: https://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
   [ScalaCheck]: http://scalacheck.org
   [specs]: http://code.google.com/p/specs/
   [ScalaTest]: http://scalatest.org
@@ -68,14 +68,14 @@ unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
 
 ### マネージ依存性
 
-sbt は、[Apache Ivy][Apache Ivy] を使ってマネージ依存性を実装するため、既に Maven か Ivy に慣れていれば、違和感無く入り込めるだろう。
+sbt は、[Apache Ivy] を使ってマネージ依存性を実装するため、既に Maven か Ivy に慣れていれば、違和感無く入り込めるだろう。
 
 #### `libraryDependencies` キー
 
 依存性を `libraryDependencies` セッティングに列挙するだけで、普通はうまくいく。
 Maven POM ファイルや、Ivy コンフィギュレーションファイルを書くなどして、依存性を外部で設定してしまって、
 sbt にその外部コンフィギュレーションファイルを使わせるということも可能だ。
-これに関しては、[ここ][external-maven-ivy] を参照。
+これに関しては、[Library Management] を参照。
 
 依存性の宣言は、以下のようになる。ここで、`groupId`、`artifactId`、と `revision` は文字列だ:
 
@@ -89,7 +89,7 @@ libraryDependencies += groupID % artifactID % revision
 libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
-`libraryDependencies` は [Keys][Keys] で以下のように定義されている:
+`libraryDependencies` は [Keys] で以下のように定義されている:
 
 ```scala
 val libraryDependencies = SettingKey[Seq[ModuleID]]("library-dependencies", "Declares managed dependencies.")
@@ -146,14 +146,14 @@ libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 もし、`%%` が動かなくなったら、依存ライブラリが使っている実際のバージョンを確認して、
 動くだろうバージョン（それががあればの話だけど）に決め打ちすればいい。
 
-詳しくは、[Cross Build][Cross-Build] を参照。
+詳しくは、[Cross Build] を参照。
 
 #### Ivy revision
 
 `groupID % artifactID % revision` の `revision` は、単一の固定されたバージョン番号じゃなくてもいい。
 Ivy は与えられた制限の中でモジュールの最新の revision を選ぶことができる。
 `"1.6.1"` のような固定 revision ではなく、`"latest.integration"`、`"2.9.+"`、や `"[1.0,)"` など指定できる。
-詳しくは、[Ivy revisions][Ivy revisions] を参照。
+詳しくは、[Ivy revisions] を参照。
 
 <!-- TODO: Add aliases -->
 
@@ -189,7 +189,7 @@ sbt は、リポジトリとして追加すれば、ローカル Maven リポジ
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 ```
 
-他の種類のリポジトリの定義の詳細に関しては、[Resolvers][Resolvers] 参照。
+他の種類のリポジトリの定義の詳細に関しては、[Resolvers] 参照。
 
 #### デフォルトの resolver のオーバーライド
 
