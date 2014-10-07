@@ -307,6 +307,7 @@ your plugin to the list.
 #### Build interoperability plugins
 
 -   ant4sbt: <https://github.com/sbt/ant4sbt>
+-   sbt-pom-reader: <https://github.com/sbt/sbt-pom-reader>
 
 #### OSGi plugin
 
