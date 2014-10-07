@@ -183,7 +183,7 @@ sbt附加设置从`.sbt`文件到`Build.settings`和`Project.setting`的设置�
 
 ### 提醒：总是不可改变的。
 
-这将是错误的认为，在` build.sbt`的设置将被添加到在` Build`和`Project`对象中的 `settings`领域。相反，`Build`和` Project`中的 settings`列 ，以及` build.sbt`设置列表，被
+这将是错误的认为，在` build.sbt`的设置将被添加到在` Build`和`Project`对象中的 `settings`领域。相反，`Build`和` Project`中的 `settings`列 ，以及` build.sbt`设置列表，被
 串连到另一个不可变的列表中，然后用SBT 。该
 ` Build`和` Project`对象是“不可改变的配置”形成
 完整的构建定义的一部分。
