@@ -39,9 +39,11 @@ hello/                  # 项目的基目录
         build.sbt       # 项目构建定义的一部分
 
 
-        project/        
+        project/        # 构建定义项目的基目录
 
             Build.scala 
 ```
+不用担心！大部分时候不需要`project/project/`目录。但是理解它是有帮助的。
+
 
 
