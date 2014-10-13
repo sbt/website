@@ -305,10 +305,14 @@ your plugin to the list.
 -   sbt-scage-plugin (Scala Game Engine):
     <https://github.com/mvallerie/sbt-scage-plugin>
 
-#### Android plugin
+#### Android plugins
 
 -   android-plugin: <https://github.com/jberkel/android-plugin>
 -   android-sdk-plugin: <https://github.com/pfn/android-sdk-plugin>
+
+#### iOS plugins
+
+-   sbt-robovm (Compiling Scala using RoboVM for iOS or native OSX): <https://github.com/roboscala/sbt-robovm>
 
 #### OSGi plugin
 
