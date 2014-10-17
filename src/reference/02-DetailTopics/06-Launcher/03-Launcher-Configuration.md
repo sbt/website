@@ -38,7 +38,7 @@ one property:
 -   `classifiers` - The (optional) list of additional scala artifacts to
     resolve, e.g. sources.
 
-#### 2. Applicaiton Identification
+#### 2. Application Identification
 
 The `[app]` section configures how the launcher will look for your
 application using the Ivy dependency manager. It consists of the
