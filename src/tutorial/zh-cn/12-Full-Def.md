@@ -183,9 +183,9 @@ sbt 附加设置从 `.sbt` 文件到 `Build.settings` 和 `Project.setting` 的�
 事实上，也有设置的其他来源。他们被追加顺序如下：
 
  - 从 `Build.settings` 和 `Project.settings` 在你的 `.scala` 设置文件。
- - 你的用户账号的全局设置；例如在 `$ global_sbt_file $` 中你可以定义影响你 *所有* 项目的设置。
+ - 你的用户账号的全局设置；例如在 `$global_sbt_file$` 中你可以定义影响你 *所有* 项目的设置。
  - 插件注入的设置，参见接下来的[使用插件][Using-Plugins]。
  - 项目下 `.sbt` 文件中的设置。
- - 构建定义项目（即 ` project` 中的项目）有从全局插件（ `$ global_plugins_base $`）的设置。[使用插件][Using-Plugins]解释了更多的内容。
+ - 构建定义项目（即 `project` 中的项目）有从全局插件（`$global_plugins_base$`）的设置。[使用插件][Using-Plugins]解释了更多的内容。
 
 后面的设置会覆盖前面的。全部的设置列表构成了完整的构建定义。
