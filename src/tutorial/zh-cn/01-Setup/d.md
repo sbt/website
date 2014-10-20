@@ -12,7 +12,6 @@ out: Manual-Installation.html
 ### Unix
 
 将 [sbt-launch.jar][sbt-launch.jar] 文件放在 `~/bin` 下。
-
 创建一个脚本来运行这个 jar，脚本 `~/bin/sbt` 内容如下:
 
 ```
@@ -59,7 +58,7 @@ java \$SBT_OPTS -jar sbt-launch.jar "\$@"
 
 #### Cygwin 和 Ansi 终端
 
-如果使用 Cygwin 和 Ansi 终端(支持 Ansi 转义序列并且可以通过 stty 配置)，创建一个 bash 文件 `~/bin/sbt`：
+如果使用 Cygwin 和 Ansi 终端（支持 Ansi 转义序列并且可以通过 stty 配置），创建一个 bash 文件 `~/bin/sbt`：
 
 ```
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
@@ -74,7 +73,7 @@ stty icanon echo > /dev/null 2>&1
 \$ chmod u+x ~/bin/sbt
 ```
 
-为了让退格(backspace)能够在 scala 的控制台中正常工作，你需要确保你的退格键发送的是删除符(erase character)，和在 stty 中配置的一样。对于默认的 cygwin 终端(mintty)，
-在设置选项 -> 键中，“退格发送 ^H” 需要被选中如果你的删除符是 cygwin 默认的 ^H。
+为了让退格（backspace）能够在 Scala 的控制台中正常工作，你需要确保你的退格键发送的是删除符（erase character），和在 stty 中配置的一样。对于默认的 cygwin 终端（mintty），
+在设置选项 -> 键中，如果你的删除符是 cygwin 默认的 ^H，“退格发送 ^H” 需要被选中。
 
-> **注意:** 当前其他的配置还不支持。请[提交 pull request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md) 实现或者描述已经支持的配置。
+> **注意：** 当前其他的配置还不支持。请 [提交 pull request](https://github.com/sbt/sbt/blob/0.13/CONTRIBUTING.md) 实现或者描述已经支持的配置。

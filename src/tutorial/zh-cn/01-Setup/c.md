@@ -8,7 +8,7 @@ out: Installing-sbt-on-Linux.html
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
  
-在Linux上安装sbt
+在 Linux 上安装 sbt
 -----------------------
 
 ### 通过通用的安装包安装
@@ -34,7 +34,7 @@ out: Installing-sbt-on-Linux.html
     \$ echo "PORTDIR_OVERLAY=\$PORTDIR_OVERLAY /usr/local/portage/overlays" >> /etc/make.conf
     \$ emerge sbt-bin
 
-> **注意：** 请将任何和 ebuild 相关的问题反馈到[这里](https://github.com/whiter4bbit/overlays/issues)。
+> **注意：** 请将任何和 ebuild 相关的问题反馈到 [这里](https://github.com/whiter4bbit/overlays/issues)。
 
 ### 手动安装
 
