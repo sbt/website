@@ -72,9 +72,9 @@ to a Java annotation (a compile-time constant expression is required).
 2. The selection of a constant variable is not replaced by its value, but compiled
 as an actual field load (the
 [Scala specification 4.1](http://www.scala-lang.org/files/archive/spec/2.11/04-basic-declarations-and-definitions.html#value-declarations-and-definitions)
-defines that constant expressions are replaced by their values).
+defines that constant expressions should be replaced by their values).
 3. Exhaustiveness checking does not work when pattern matching on the values of a
-Java enumeration ([SI-8700](https://issues.scala-lang.org/browse/SI-8700))
+Java enumeration ([SI-8700](https://issues.scala-lang.org/browse/SI-8700)).
 
 Since Scala 2.11.4, a similar issue arises when using a Java-defined annotation in
 a Scala class. The Scala compiler does not recognize `@Retention` annotations when
