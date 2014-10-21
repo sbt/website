@@ -79,6 +79,8 @@ your plugin to the list.
 -   sbt-scapegoat: <https://github.com/sksamuel/sbt-scapegoat> (Scapegoat - Scala static code analysis)
 -   sbt-stats: <https://github.com/orrsella/sbt-stats> (simple,
     extensible source code statistics)
+-   sbt-checkstyle-plugin: <https://github.com/etsy/sbt-checkstyle-plugin>
+    (Checkstyle - static analysis for Java code)
 
 #### One jar plugins
 
@@ -242,6 +244,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-groll>
 -   sbt-twt (twitter processor for sbt):
     <https://github.com/sbt/sbt-twt>
+-   sbt-compile-quick-plugin (compile and package a single file):
+    <https://github.com/etsy/sbt-compile-quick-plugin>
 
 #### Database plugins
 
