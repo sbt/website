@@ -60,6 +60,22 @@ they share the same output directory. So, previously compiled classes
 not involved in the current recompilation may be picked up. A clean
 compile will always provide full checking, however.
 
+### Known issue in mixed mode compilation
+
+The Scala compiler does not identify compile-time constant variables
+(Java specification [4.12.4](http://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12.4)
+as such when parsing a Java file from source.
+This issue has two symptoms, both described in the Scala ticket [SI-5333](https://issues.scala-lang.org/browse/SI-5333):
+
+1. The selection of a constant variable is rejected when used as an argument
+to a Java annotation (a compile-time constant expression is required).
+2. The selection of a constant variable is not replaced by its value, but compiled
+as an actual field load (the
+[Scala specification 4.1](http://www.scala-lang.org/files/archive/spec/2.11/04-basic-declarations-and-definitions.html#value-declarations-and-definitions)
+defines that constant expressions are replaced by their values).
+
+### Ignoring the Scala source directories
+
 By default, sbt includes `src/main/scala` and `src/main/java` in its
 list of unmanaged source directories. For Java-only projects, the
 unnecessary Scala directories can be ignored by modifying
