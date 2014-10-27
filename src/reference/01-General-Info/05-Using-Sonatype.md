@@ -35,7 +35,7 @@ i.e., you've just generated it, you'll need to publish it. You can do so
 using the [sbt-pgp][sbt-pgp] plugin:
 
 ```
-pgp-cmd send-key keyname hkp://pool.sks-keyservers.net/
+pgp-cmd send-key keyname hkp://pool.sks-keyservers.net
 ```
 
 (where keyname is the name or email address used when creating the key or
