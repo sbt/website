@@ -35,7 +35,7 @@ i.e., you've just generated it, you'll need to publish it. You can do so
 using the [sbt-pgp][sbt-pgp] plugin:
 
 ```
-pgp-cmd send-key keyname hkp://pool.sks-keyservers.net/
+pgp-cmd send-key keyname hkp://pool.sks-keyservers.net
 ```
 
 (where keyname is the name or email address used when creating the key or
@@ -189,8 +189,8 @@ Please enter your PGP passphrase> ***********
 ```
 
 After publishing you have to follow the
-[Release workflow of nexus](https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt).
-[sbt-sonatype plugin](https://github.com/xerial/sbt-sonatype) allows
+[release workflow of Nexus](http://central.sonatype.org/pages/releasing-the-deployment.html).
+The [sbt-sonatype plugin](https://github.com/xerial/sbt-sonatype) allows
 the release workflow procedures to be performed directly from sbt.
 
 > *Note: Staged releases allow testing across large projects of
