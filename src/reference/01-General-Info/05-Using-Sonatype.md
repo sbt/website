@@ -189,8 +189,8 @@ Please enter your PGP passphrase> ***********
 ```
 
 After publishing you have to follow the
-[Release workflow of nexus](https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide#SonatypeOSSMavenRepositoryUsageGuide-8.ReleaseIt).
-[sbt-sonatype plugin](https://github.com/xerial/sbt-sonatype) allows
+[release workflow of Nexus](http://central.sonatype.org/pages/releasing-the-deployment.html).
+The [sbt-sonatype plugin](https://github.com/xerial/sbt-sonatype) allows
 the release workflow procedures to be performed directly from sbt.
 
 > *Note: Staged releases allow testing across large projects of
