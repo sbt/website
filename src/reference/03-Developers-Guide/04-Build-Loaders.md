@@ -207,7 +207,7 @@ object Demo extends Build {
     BuildLoader.transform(demoTransformer) ::
     Nil
 
-  def demoBuilder: BuildLoader.TransformInfo => BuildUnit = ...
+  def demoTransformer: BuildLoader.TransformInfo => BuildUnit = ...
 
 }
 ```
@@ -272,7 +272,7 @@ buildDependencies in Global := {
   val newcp = 
     for( (proj, deps) <- deps.cp) yield
       (proj, deps map substitute)
-  new BuildDependencies(newcp, deps.aggregate)
+  BuildDependencies(newcp, deps.aggregate)
 }
 ```
 
