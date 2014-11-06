@@ -139,7 +139,7 @@ your plugin to the list.
 -   xsbt-web-plugin:
     <https://github.com/JamesEarlDouglas/xsbt-web-plugin>
 -   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
--   sbt-gwt-plugin: <https://github.com/thunderklaus/sbt-gwt-plugin>
+-   sbt-gwt-plugin: <https://github.com/cdietze/sbt-gwt-plugin>
 -   coffeescripted-sbt:
     <https://github.com/softprops/coffeescripted-sbt>
 -   less-sbt (for less-1.3.0): <https://github.com/softprops/less-sbt>
