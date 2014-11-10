@@ -20,7 +20,7 @@ at the command line.
 A fully-qualified reference to a setting or task looks like:
 
 ```
-{<build-uri>}<project-id>/config:inkey::key
+{<build-uri>}<project-id>/config:intask::key
 ```
 
 This "scoped key" reference is used by commands like `last` and
@@ -28,7 +28,7 @@ This "scoped key" reference is used by commands like `last` and
 required by the parser; the remaining optional pieces select the scope.
 These optional pieces are individually referred to as scope axes. In the
 above description, `{<build-uri>}` and `<project-id>/` specify the
-project axis, `config:` is the configuration axis, and `inkey` is the
+project axis, `config:` is the configuration axis, and `intask` is the
 task-specific axis. Unspecified components are taken to be the current
 project (project axis) or auto-detected (configuration and task axes).
 An asterisk (`*`) is used to explicitly refer to the `Global` context,
