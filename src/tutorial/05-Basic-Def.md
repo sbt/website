@@ -3,6 +3,7 @@ out: Basic-Def.html
 ---
 
   [More-About-Settings]: More-About-Settings.html
+  [Bare-Def]: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
