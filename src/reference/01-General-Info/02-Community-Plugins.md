@@ -60,6 +60,7 @@ your plugin to the list.
 -   sbt-multi-jvm: <https://github.com/typesafehub/sbt-multi-jvm>
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
 -   sbt-doctest: <https://github.com/tkawachi/sbt-doctest>
+-   sbt-cassandra-plugin: <https://github.com/hochgi/sbt-cassandra-plugin>
 
 #### Code coverage plugins
 
