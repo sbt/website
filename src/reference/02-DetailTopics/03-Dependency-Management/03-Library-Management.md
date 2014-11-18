@@ -11,6 +11,7 @@ out: Library-Management.html
   [Resolvers]: Resolvers.html
   [Publishing]: Publishing.html
   [Cross-Build]: Cross-Build.html
+  [Cached-Resolution]: Cached-Resolution.html
 
 Library Management
 ------------------
@@ -413,68 +414,60 @@ conflictManager := ConflictManager.strict
 With this set, any conflicts will generate an error. To resolve a
 conflict,
 
-> -   configure a dependency override if the conflict is for a
->     transitive dependency
-> -   force the revision if it is a direct dependency
+-   configure a dependency override if the conflict is for a
+    transitive dependency
+-   force the revision if it is a direct dependency
 
 Both are explained in the following sections.
 
-##### Forcing a revision
+<a name="eviction-warning"></a>
 
-The following direct dependencies will introduce a conflict on the log4j
-version because spark requires log4j 1.2.16.
+##### Eviction warning
+
+The following direct dependencies will introduce a conflict on the akka-actor
+version because banana-rdf requires akka-actor 2.1.4.
 
 ```scala
 libraryDependencies ++= Seq(
-  "org.spark-project" %% "spark-core" % "0.5.1",
-  "log4j" % "log4j" % "1.2.14"
+  "org.w3" %% "banana-rdf" % "0.4",
+  "com.typesafe.akka" %% "akka-actor" % "2.3.7",
 )
 ```
 
-The default conflict manager will select the newer version of log4j,
-1.2.16. This can be confirmed in the output of `show update`, which
-shows the newer version as being selected and the older version as not
-selected:
+The default conflict manager will select the newer version of akka-actor,
+2.3.7. This can be confirmed in the output of `show update`, which
+shows the newer version as being selected and the older version as evicted.
 
 ```
 > show update
 [info] compile:
-[info]    log4j:log4j:1.2.16: ...
+
+[info]  com.typesafe.akka:akka-actor_2.10
+[info]    - 2.3.7
 ...
-[info]    (EVICTED) log4j:log4j:1.2.14
+[info]    - 2.1.4
 ...
+[info]      evicted: true
+[info]      evictedReason: latest-revision
+...
+[info]      callers: org.w3:banana-rdf_2.10:0.4
 ```
 
-To say that we prefer the version we've specified over the version from
-indirect dependencies, use `force()`:
-
-```scala
-libraryDependencies ++= Seq(
-  "org.spark-project" %% "spark-core" % "0.5.1",
-  "log4j" % "log4j" % "1.2.14" force()
-)
-```
-
-The output of `show update` is now reversed:
+Furthermore, the binary version compatibility of the akka-actor 2.1.4 and 2.3.7 are not guaranteed since the second segment has bumped up. sbt 0.13.6+ detects this automatically and prints out the following warning:
 
 ```
-> show update
-[info] compile:
-[info]    log4j:log4j:1.2.14: ...
-...
-[info]    (EVICTED) log4j:log4j:1.2.16
-...
+[warn] There may be incompatibilities among your library dependencies.
+[warn] Here are some of the libraries that were evicted:
+[warn]  * com.typesafe.akka:akka-actor_2.10:2.1.4 -> 2.3.7
+[warn] Run 'evicted' to see detailed eviction warnings
 ```
 
-**Note:** this is an Ivy-only feature and cannot be included in a
-published pom.xml.
+Since akka-actor 2.1.4 and 2.3.7 are not binary compatible, the only way to fix this is to downgrade your dependency to akka-actor 2.1.4, or upgrade banana-rdf to use akka-actor 2.3.
 
-##### Forcing a revision without introducing a dependency
+##### Overriding a version
 
-Use of the `force()` method described in the previous section requires
-having a direct dependency. However, it may be desirable to force a
-revision without introducing that direct dependency. Ivy provides
-overrides for this and in sbt, overrides are configured in sbt with the
+For binary compatible conflicts, sbt provides overrides.
+They are configured with the
 `dependencyOverrides` setting, which is a set of `ModuleIDs`. For
 example, the following dependency definitions conflict because spark
 uses log4j 1.2.16 and scalaxb uses log4j 1.2.17:
@@ -516,6 +509,34 @@ revision to be 1.2.16. This is confirmed by the output of `show update`:
 
 > **Note:** this is an Ivy-only feature and will not be included in a
 > published pom.xml.
+
+##### Unresolved dependencies error
+
+Adding the following dependency to your project will result to an unresolved dependencies error of vpp 2.2.1:
+
+```scala
+libraryDependencies += "org.apache.cayenne.plugins" % "maven-cayenne-plugin" % "3.0.2"
+```
+
+sbt 0.13.6+ will try to reconstruct dependencies tree when it fails to resolve a managed dependency. his is an approximation, but it should help you figure out where the problematic dependency is coming from. When possible sbt will display the source position next to the modules:
+
+```
+[warn]  ::::::::::::::::::::::::::::::::::::::::::::::
+[warn]  ::          UNRESOLVED DEPENDENCIES         ::
+[warn]  ::::::::::::::::::::::::::::::::::::::::::::::
+[warn]  :: foundrylogic.vpp#vpp;2.2.1: not found
+[warn]  ::::::::::::::::::::::::::::::::::::::::::::::
+[warn] 
+[warn]  Note: Unresolved dependencies path:
+[warn]      foundrylogic.vpp:vpp:2.2.1
+[warn]        +- org.apache.cayenne:cayenne-tools:3.0.2
+[warn]        +- org.apache.cayenne.plugins:maven-cayenne-plugin:3.0.2 (/foo/some-test/build.sbt#L28)
+[warn]        +- d:d_2.10:0.1-SNAPSHOT
+```
+
+##### Cached resolution
+
+See [Cached resolution][Cached-Resolution] for performance improvement option.
 
 ##### Publishing
 
@@ -654,6 +675,23 @@ classpathConfiguration in Test := Test
 
 classpathConfiguration in Runtime := Runtime
 ```
+
+##### Forcing a revision (Not recommended)
+
+**Note**: Forcing can create logical conflicts, when it appears transitively, so it's no longer recommended.
+
+To say that we prefer the version we've specified over the version from
+indirect dependencies, use `force()`:
+
+```scala
+libraryDependencies ++= Seq(
+  "org.spark-project" %% "spark-core" % "0.5.1",
+  "log4j" % "log4j" % "1.2.14" force()
+)
+```
+
+**Note:** this is an Ivy-only feature and cannot be included in a
+published pom.xml.
 
 ##### Known limitations
 
