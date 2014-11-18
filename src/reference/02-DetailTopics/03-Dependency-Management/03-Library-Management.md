@@ -412,13 +412,7 @@ conflictManager := ConflictManager.strict
 ```
 
 With this set, any conflicts will generate an error. To resolve a
-conflict,
-
--   configure a dependency override if the conflict is for a
-    transitive dependency
--   force the revision if it is a direct dependency
-
-Both are explained in the following sections.
+conflict, you must configure a dependency override, which is explained in a later section.
 
 <a name="eviction-warning"></a>
 
@@ -466,7 +460,7 @@ Since akka-actor 2.1.4 and 2.3.7 are not binary compatible, the only way to fix 
 
 ##### Overriding a version
 
-For binary compatible conflicts, sbt provides overrides.
+For binary compatible conflicts, sbt provides dependency overrides.
 They are configured with the
 `dependencyOverrides` setting, which is a set of `ModuleIDs`. For
 example, the following dependency definitions conflict because spark
@@ -518,7 +512,7 @@ Adding the following dependency to your project will result to an unresolved dep
 libraryDependencies += "org.apache.cayenne.plugins" % "maven-cayenne-plugin" % "3.0.2"
 ```
 
-sbt 0.13.6+ will try to reconstruct dependencies tree when it fails to resolve a managed dependency. his is an approximation, but it should help you figure out where the problematic dependency is coming from. When possible sbt will display the source position next to the modules:
+sbt 0.13.6+ will try to reconstruct dependencies tree when it fails to resolve a managed dependency. This is an approximation, but it should help you figure out where the problematic dependency is coming from. When possible sbt will display the source position next to the modules:
 
 ```
 [warn]  ::::::::::::::::::::::::::::::::::::::::::::::
@@ -678,7 +672,7 @@ classpathConfiguration in Runtime := Runtime
 
 ##### Forcing a revision (Not recommended)
 
-**Note**: Forcing can create logical conflicts, when it appears transitively, so it's no longer recommended.
+**Note**: Forcing can create logical inconsistencies so it's no longer recommended.
 
 To say that we prefer the version we've specified over the version from
 indirect dependencies, use `force()`:
