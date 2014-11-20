@@ -7,10 +7,70 @@ out: ChangeSummary_0.13.0.html
   [Setup]: ../tutorial/Setup.html
   [Input-Tasks]: Input-Tasks.html
 
-sbt 0.13.0 Changes
-------------------
+sbt 0.13.0 - 0.13.2
+-------------------
 
-### Overview
+### sbt 0.13.2
+
+- Adding new name-hashing feature to incremental compiler. Alters how scala dependencies are tracked, reducing number of recompiles necessary.
+- Added the ability to launch servers via the sbt-launcher.
+- Added `.previous` feature on tasks which can load the pervious value.
+- Added `all` command which can run more than tasks in parallel.
+- Exposed the 'overwrite' flags from ivy. Added warning if overwriting a release version.
+- Improve the error message when credentials are not found in Ivy.
+- Improve task macros to handle more scala constructs.
+- Fix `last` and `export` tasks to read from the correct stream.
+- Fix issue where ivy's `.+` dependency ranges were not correctly translated to maven.
+- Override security manager to ignore file permissions (performance issue)
+- 2.11 compatibility fixes
+- Launcher can now handle ivy's `.+` revisions.
+- `SessionSettings` now correctly overwrite existing settings.
+- Adding a simple `Logic` system for inclusionary/dependency logic of plugins.
+- Improve build hooks for `LoggerReporter` and `TaskProgress`.
+- Serialize incremental compiler analysis into text-file format.
+- Issue a warning when generating Paths and separate already exists in the path.
+- Migrate to Ivy 2.3.0-final.
+- Docs: Use bintray as default repository host
+- Docs: improved docs on test groups.
+- Docs: updated documentation on the Launcher.
+- Docs: started architecture document.
+
+### sbt 0.13.1
+
+- The Scala version for sbt and sbt plugins is now 2.10.3. This is a compatible version bump.
+- New method `toTask` on `Initialize[InputTask[T]]` to apply the full input and get a plain task out.
+- Improved performance of inspect tree
+- Work around various issues with Maven local repositories, including resolving -SNAPSHOTs from them. (#321)
+- Better representation of no cross-version suffix in suffix conflict error message: now shows `<none>` instead of just `_`
+- `TrapExit` support for multiple, concurrent managed applications. Now enabled by default for all `run`-like tasks. (#831)
+- Add minimal support for class file formats 51.0, 52.0 in incremental compiler. (#842)
+- Allow main class to be non-public. (#883)
+- Convert `-classpath` to `CLASSPATH` when forking on Windows and length exceeds a heuristic maximum. (#755)
+- `scalacOptions` for `.scala` build definitions are now also used for `.sbt` files
+- `error`, `warn`, `info`, `debug` commands to set log level and `--error`, ... to set the level before the project is loaded. (#806)
+- `sLog` settings that provides a `Logger` for use by settings. (#806)
+- Early commands: any command prefixed with `--` gets moved before other commands on startup and doesn't force sbt into batch mode.
+- Deprecate internal `-`, `--`, and `---` commands in favor of `onFailure`, `sbtClearOnFailure`, and `resumeFromFailure`.
+- `makePom` no longer generates `<type>` elements for standard classifiers. (#728)
+- Fix many instances of the Turkish i bug.
+- Read https+ftp proxy environment variables into system properties where Java will use them. (#886)
+- The `Process` methods that are redirection-like no longer discard the exit code of the input. This addresses an inconsistency with `Fork`, where using the `CustomOutput OutputStrategy` makes the exit code always zero.
+- Recover from failed `reload` command in the scripted sbt handler.
+- Parse external `pom.xml` with `CustomPomParser` to handle multiple definitions. (#758)
+- Improve key collision error message (#877)
+- Display the source position of an undefined setting.
+- Respect the `-nowarn` option when compiling Scala sources.
+- Improve forked test debugging by listing tests run by sbt in debug output. (#868)
+- Fix scaladoc cache to track changes to `-doc-root-content` (#837)
+- Incremental compiler: Internal refactoring in preparation for name-hashing (#936)
+- Incremental compiler: improved cache loading/saving speed by internal file names (#931)
+- Docs: many contributed miscellaneous fixes and additions
+- Docs: link to page source now at the bottom of the page
+- Docs: sitemap now automatically generated
+- Docs: custom `:key:` role enables links from a key name in the docs to the val in `sxr/sbt/Keys.scala`
+- Docs: restore sxr support and fix links to sxr'd sources. (#863)
+
+### sbt 0.13.0
 
 #### Features, fixes, changes with compatibility implications
 
