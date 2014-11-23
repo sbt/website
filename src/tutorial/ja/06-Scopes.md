@@ -73,7 +73,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 
 #### タスク軸によるスコープ付け
 
-セッティングはタスクの動作に影響を与えることもできる。例えば、`pakcageSrc` は `packageOptions` セッティングの影響を受ける。
+セッティングはタスクの動作に影響を与えることもできる。例えば、`packageSrc` は `packageOptions` セッティングの影響を受ける。
 
 これをサポートするため、（`packageSrc` のような）タスクキーは、（`packageOption` のような）別のキーのスコープとなりえる。
 
@@ -206,15 +206,13 @@ sbt のインタラクティブモード内で `inspect` コマンドを使っ�
 `build.sbt` で裸のキーを使ってセッティングを作った場合は、現プロジェクト、`Global` コンフィグレーション、`Global` タスクにスコープ付けされる:
 
 ```scala
-name := "hello"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello"
+  )
 ```
 
 sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/hp/checkout/hello/}default-aea33a/*:name` により提供されていることを確認しよう。つまり、プロジェクトは、`{file:/home/hp/checkout/hello/}default-aea33a` で、コンフィギュレーションは `*` で、タスクは表示されていない（グローバルを指す）ということだ。
-
-<!-- TODO: Fix this. -->
-
-`build.sbt` は常に単一のプロジェクトのセッティングを定義するため、「現プロジェクト」は今 `build.sbt` で定義しているプロジェクトを指す。
-（[マルチプロジェクト・ビルド][Multi-Project]の場合は、プロジェクトごとに `build.sbt` がある。）
 
 キーにはオーバーロードされた `in` メソッドがあり、それによりスコープを設定できる。
 `in` への引数として、どのスコープ軸のインスタンスでも渡すことができる。

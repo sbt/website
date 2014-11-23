@@ -62,16 +62,15 @@ For example, if your project is in the directory `hello`, in
 `hello/build.sbt` you might write:
 
 ```scala
-name := "hello"
-
-version := "1.0"
-
-scalaVersion := "2.10.3"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello",
+    version := "1.0",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
-Notice the blank line between every item. This isn't just for show;
-they're actually required in order to separate each item. In
-[.sbt build definition][Basic-Def] you'll learn more about how to write
+In [.sbt build definition][Basic-Def] you'll learn more about how to write
 a `build.sbt` file.
 
 If you plan to package your project in a jar, you will want to set at

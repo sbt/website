@@ -272,7 +272,10 @@ If you create a setting in `build.sbt` with a bare key, it will be scoped
 to the current project, configuration `Global` and task `Global`:
 
 ```scala
-name := "hello"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello"
+  )
 ```
 
 Run sbt and `inspect name` to see that it's provided by
@@ -280,13 +283,6 @@ Run sbt and `inspect name` to see that it's provided by
 project is `{file:/home/hp/checkout/hello/}default-aea33a`, the
 configuration is `*` (meaning global), and the task is not shown (which
 also means global).
-
-<!-- TODO: Fix this. -->
-
-`build.sbt` always defines settings for a single project, so the "current
-project" is the project you're defining in that particular `build.sbt`.
-(For [multi-project builds][Multi-Project], each project has its own
-`build.sbt`.)
 
 Keys have an overloaded method called in used to set the scope. The
 argument to in can be an instance of any of the scope axes. So for

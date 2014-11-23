@@ -4,6 +4,7 @@ out: Basic-Def.html
 
   [Keys]: ../../sxr/sbt/Keys.scala.html
   [More-About-Settings]: More-About-Settings.html
+  [Bare-Def]: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
@@ -15,25 +16,33 @@ out: Basic-Def.html
 このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と `build.sbt` の構文を説明する。
 君が、[sbt の使い方][Running]を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
 
-### `.sbt` vs. `.scala` 定義
+### 3種類のビルド定義
 
-sbt のビルド定義はベースディレクトリ内の `.sbt` で終わるファイルと、
-`project` サブディレクトリ内の `.scala` で終わるファイルを含むことができる。
+ビルド定義には以下の 3種類がある:
 
-どちらか一つだけを使うこともできるし、両方使うこともできる。
-普通の用途には `.sbt` を使って、`.scala` を使うのは以下のような `.sbt` で出来ないことに限定する、というのが良い方法だ:
+1. マルチ・プロジェクト `.sbt` ビルド定義
+2. bare `.sbt` ビルド定義
+3. `.scala` ビルド定義
 
- - sbt をカスタマイズする（新しい設定値やタスクを加える）
- - サブプロジェクトを定義する(sbt0.13.0以降はbuild.sbtでも可能)
+このページでは最も新しいマルチ・プロジェクト `.sbt` ビルド定義を紹介する。これは、従来あった 2つのビルド定義の長所を組み合わせたもので、全ての状況において使うことができる。
+以前に書かれたビルド定義を使って作業をするときは、古い種類のものも目にするかもしれない。
+それらに関しては (このガイドの後ほどの) [bare .sbt ビルド定義][Bare-Def]と [.scala ビルド定義][Full-Def]を参照。
 
-このページでは `.sbt` ファイルの説明をする。`.scala` ファイルの詳細と、それがどう `.sbt` に絡んでくるかに関しては、
-（このガイドの後ほどの）[.scala ビルド定義][Full-Def]を参照。
+さらに、ビルド定義は `project/` ディレクトリ直下に置かれた `.scala` で終わるファイルを含むことができ、そこで共通の関数や値を定義することもできる。
 
 ### ビルド定義って何？
 
 ** ここは読んで下さい **
 
-プロジェクトを調べ、全てのビルド定義ファイルを処理した後、sbt は、ビルドを記述した不可変マップ（キーと値のペア）を最終的に作る。
+あらかじめ決められたディレクトリを走査して、ビルド定義に関わるファイル群を処理した後、sbt は `Project` の定義群を最終的に作る。
+
+例えば、現在のディレクトリに位置するプロジェクトの [Project](../../api/sbt/Project.html) 定義を以下のようにして `build.sbt` に書くことができる:
+
+```scala
+lazy val root = (project in file("."))
+```
+
+それぞれのプロジェクトは、そのプロジェクトを記述した不可変マップ（キーと値のペア）に関連付けられる。
 
 例えば、`name` というキーがあり、それは文字列の値、つまり君のプロジェクト名に関連付けられる。
 
@@ -45,10 +54,14 @@ _ビルド定義ファイルは直接には sbt のマップに影響を与え�
 `Setting` は、新しいキーと値のペアや、既存の値への追加など、_マップの変換_を記述する。
 （関数型プログラミングの精神に則り、変換は新しいマップを返し、古いマップは更新されない。）
 
-`build.sbt` では、プロジェクト名の `Setting[String]` を以下のように作る:
+現在のディレクトリに位置するプロジェクトに対してプロジェクト名のための `Setting[String]`
+を関連付けるためには以下のように書く:
 
 ```scala
-name := "hello"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello"
+  )
 ```
 
 この `Setting[String]` は `name` キーを追加（もしくは置換）して `"hello"` という値に設定することでマップを変換する。
@@ -57,25 +70,30 @@ name := "hello"
 マップを作るために、sbt はまず、同じキーへの変更が一緒に起き、かつ他のキーに依存する値の処理が依存するキーの後にくるように `Setting` のリストをソートする。
 次に、sbt はソートされた `Setting` のリストを順番にみていって、一つづつマップに適用する。
 
-まとめ: _ビルド定義は `Setting[T]` のリストを定義し、`Setting[T]` は sbt のキー・値ペアへの変換を表し、`T` は値の型を指す。_
+まとめ: _ビルド定義は `Setting[T]` のリストを持った `Project` を定義して、`Setting[T]` は sbt のキー・値ペアへの変換を表し、`T` は値の型を指す。_
 
 ### `build.sbt` はどう設定値を定義するか
+
+`build.sbt` が定義する `Project` は `settings` と呼ばれる Scala の式のリストを持つ。
+
 
 以下に具体例で説明しよう:
 
 ```scala
-name := "hello"
-
-version := "1.0"
-
-scalaVersion := "2.10.3"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello",
+    version := "1.0",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
-`build.sbt` は、空行で分けられた `Setting` のリストだ。それぞれの `Setting` は Scala の式で表される。
+それぞれの `Setting` は Scala の式で表される。
+`settings` 内の式は、それぞれ独立しており、完全な Scala 文ではなく、式だ。
 
-`build.sbt` 内の式は、それぞれ独立しており、完全な Scala 文ではなく、式だ。
-そのため、`build.sbt` 内ではトップレベルでの `val`、`object`、クラスやメソッドの定義は禁止されている。
-(sbt0.13.0以降、val、lazy val、メソッド定義は可能になった。objectやclass、varの定義は引き続き不可能)
+`build.sbt` 内には、他に `val`、`lazy val`、`def` を定義することができる。
+トップレベルでの `object` とクラスの定義は `build.sbt` 内では禁止されている。
+それらは `project/` ディレクトリ直下の `.scala` ファイルに置かれる。
 
 左辺値の `name`、`version`、および `scalaVersion` は _キー_だ。
 キーは `SettingKey[T]`、`TaskKey[T]`、もしくは `InputKey[T]` のインスタンスで、
@@ -85,7 +103,10 @@ scalaVersion := "2.10.3"
 Java 的な構文でこのメソッドを呼び出すこともできる:
 
 ```scala
-name.:=("hello")
+lazy val root = (project in file(".")).
+  settings(
+    name.:=("hello")
+  )
 ```
 
 だけど、Scala では `name := "hello"` と書ける（Scala では全てのメソッドがどちらの構文でも書ける）。
@@ -97,23 +118,11 @@ name.:=("hello")
 間違った型の値を使うと、ビルド定義はコンパイルできない:
 
 ```scala
-name := 42  // コンパイルできない
+lazy val root = (project in file(".")).
+  settings(
+    name := 42  // コンパイルできない
+  )
 ```
-
-### 設定は空白行で区切る
-
-こんな風に `build.sbt` を書くことはできない。
-
-```scala
-// 空白行がない場合はコンパイルしない
-name := "hello"
-version := "1.0"
-scalaVersion := "2.10.3"
-```
-
-sbt はどこまでで式が終わってどこからが次の式なのかを判別するために、何らかの区切りを必要とする。
-
-`.sbt` ファイルには複数の Scala 式が含まれる。これらの式を区切った上で別々にコンパイラに渡される。
 
 ### Keys
 
@@ -171,13 +180,21 @@ _あるキーがあるとき、それは常にタスクか素のセッティン�
 例えば、少し前に宣言した `hello` というタスクはこのように実装できる:
 
 ```scala
-hello := { println("Hello!") }
+lazy val hello = taskKey[Unit]("An example task")
+
+lazy val root = (project in file(".")).
+  settings(
+    hello := { println("Hello!") }
+  )
 ```
 
 セッティングの定義は既に何度か見ていると思うが、プロジェクト名の定義はこのようにできる:
 
 ```scala
-name := "hello"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello"
+  )
 ```
 
 #### タスクとセッティングの型
@@ -224,7 +241,11 @@ import Keys._
 第二はマネージ依存性（managed dependency）を加えることで、`build.sbt` ではこのようになる:
 
 ```scala
-libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello",
+    libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+  )
 ```
 
 これで Apache Derby ライブラリのバージョン 10.4.1.3 へのマネージ依存性を加えることができた。

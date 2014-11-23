@@ -60,6 +60,7 @@ your plugin to the list.
 -   sbt-multi-jvm: <https://github.com/typesafehub/sbt-multi-jvm>
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
 -   sbt-doctest: <https://github.com/tkawachi/sbt-doctest>
+-   sbt-cassandra-plugin: <https://github.com/hochgi/sbt-cassandra-plugin>
 
 #### Code coverage plugins
 
@@ -79,6 +80,8 @@ your plugin to the list.
 -   sbt-scapegoat: <https://github.com/sksamuel/sbt-scapegoat> (Scapegoat - Scala static code analysis)
 -   sbt-stats: <https://github.com/orrsella/sbt-stats> (simple,
     extensible source code statistics)
+-   sbt-checkstyle-plugin: <https://github.com/etsy/sbt-checkstyle-plugin>
+    (Checkstyle - static analysis for Java code)
 
 #### One jar plugins
 
@@ -137,7 +140,7 @@ your plugin to the list.
 -   xsbt-web-plugin:
     <https://github.com/JamesEarlDouglas/xsbt-web-plugin>
 -   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
--   sbt-gwt-plugin: <https://github.com/thunderklaus/sbt-gwt-plugin>
+-   sbt-gwt-plugin: <https://github.com/cdietze/sbt-gwt-plugin>
 -   coffeescripted-sbt:
     <https://github.com/softprops/coffeescripted-sbt>
 -   less-sbt (for less-1.3.0): <https://github.com/softprops/less-sbt>
@@ -242,6 +245,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-groll>
 -   sbt-twt (twitter processor for sbt):
     <https://github.com/sbt/sbt-twt>
+-   sbt-compile-quick-plugin (compile and package a single file):
+    <https://github.com/etsy/sbt-compile-quick-plugin>
 
 #### Database plugins
 

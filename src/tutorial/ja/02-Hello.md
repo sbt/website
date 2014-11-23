@@ -59,11 +59,12 @@ sbt は以下を自動的に検知する:
 例えば、君のプロジェクトが `hello` ディレクトリにあるなら、`hello/build.sbt` をこんな感じで書く:
 
 ```scala
-name := "hello"
-
-version := "1.0"
-
-scalaVersion := "2.10.3"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello",
+    version := "1.0",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
 [.sbt ビルド定義][Basic-Def]で、`build.sbt` の書き方をもっと詳しく説明する。
