@@ -13,10 +13,10 @@ out: More-About-Settings.html
 
 ### 回顾：设置
 
-[还记得][Basic-Def]，一个构建定义创建了一个 `Setting` 列表，然后这些 `Setting` 被用来对 sbt 的构建描述做转换（它是一个保存键值对的 map）。一个 Setting 就是将 sbt 之前的 map 作为输入并且输出一个新的 map 的转换。
+还记得在 [.sbt 构建定义][Basic-Def] 中，一个构建定义创建了一个 `Setting` 列表，然后这些 `Setting` 被用来对 sbt 的构建描述做转换（它是一个保存键值对的 map）。一个 Setting 就是将 sbt 之前的 map 作为输入并且输出一个新的 map 的转换。
 这个新的 map 就是 sbt 的新状态。
 
-不同 setting 通过不同的方式对该 map 进行转换。[之前][Basic-Def]，你已经阅读了 `:=` 方法相关的内容。
+不同 setting 通过不同的方式对该 map 进行转换。之前在 [.sbt 构建定义][Basic-Def] 中，你已经阅读了 `:=` 方法相关的内容。
 
 通过 `:=` 创建的 `Setting` 会往转换之后新的 map 中放入一个固定的常量。例如，如果你通过 `name := "hello"` 对 map 做一次转换，新的 map 中 key `name` 就保存着一个字符串 `"hello"`。
 
@@ -51,13 +51,13 @@ sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
 
 `Seq(a, b, c, ...)` 是 Scala 用来构建列表的标准语法。
 
-为了完整替换默认的 source 目录，当然使用 `:=`：
+为了完整替换默认的 source 目录，当然使用 `:=` 方法：
 
 ```scala
 sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
 ```
 
-### 依赖于其他 key 的值计算一个值
+### 依赖于其他 key 的值计算值
 
 引用另一个 task 或者 setting 的值只需要调用它们各自的 value 方法。该 value 方法比较特殊而且只能在 `:=`，`+=` 或者 `++=` 方法的参数上调用。
 
@@ -97,10 +97,10 @@ name := "project " + name.value + " from " + organization.value + " version " + 
 
 这就是 sbt 知道一个 setting 如何依赖于另一个 setting。还记得一些 setting 描述了 task，所以这种方式也创建了 task 之间的依赖关系。
 
-例如，如果你 `inspect compile` 你会看到它依赖了另一个 key `compileInputs`，而且如果你 `inspect compileInputs` 它还会依赖于其他的 key。一直追溯依赖链会有魔法发生。例如当你输入 `compile` 时，
-sbt 自动执行了 `update`。它工作了是因为 `compile` 计算需要的输入的值需要 sbt 先执行`update` 计算。
+例如，如果你执行 `inspect compile` 你会看到它依赖了另一个 key `compileInputs`，而且如果你执行 `inspect compileInputs` 它还会依赖于其他的 key。一直追溯依赖链会有魔法发生。例如当你输入 `compile` 时，
+sbt 自动执行了 `update`。它可以工作是因为 `compile` 计算需要的输入的值需要 sbt 先执行 `update` 计算。
 
-这样，sbt 中所有的构建依赖都是 *自动的* 而不是显示声明的。如果你在另一个计算中用到了该 key 的值，那么那个计算就会依赖该 key。他就是可以工作！
+这样，sbt 中所有的构建依赖都是 *自动的* 而不是显示声明的。如果你在另一个计算中用到了该 key 的值，那么那个计算就会依赖该 key。它就是可以工作！
 
 #### 当设置未定义时
 
@@ -110,8 +110,8 @@ sbt 自动执行了 `update`。它工作了是因为 `compile` 计算需要的�
 可能循环引用，这是错误的；sbt 会告诉你，如果你循环引用了。
 
 #### 依赖于其他 key 的值的 task
-
-你可以计算一些 task 或者 setting 的值来定义另一个 task 或者为另一个 task 追加一直值。通过使用 `Def.task` 和 `taskValue` 可以做到，作为`:=`， `+=` 或者 `++=`的参数。
+  
+你可以计算一些 task 或者 setting 的值来定义另一个 task 或者为另一个 task 追加一直值。通过使用 `Def.task` 和 `taskValue` 作为`:=`， `+=` 或者 `++=`的参数可以做到。
 
 作为第一个例子，考虑追加一个使用项目基目录和编译 classpath 的 source generator。
 
@@ -123,8 +123,8 @@ sourceGenerators in Compile += Def.task {
 
 #### 包含依赖的 task
 
-在 [.sbt 构建定义][Basic-Def] 中提到过，当你通过 `:=` 或其他方法创建一个设置时 task key 创建一个 `Setting[Task[T]]` 而不是 `Setting[T]`。
-Task 可以以 setting 作为输入，但是 setting 不能以 task 作为输入。
+在 [.sbt 构建定义][Basic-Def] 中提到过，当你通过 `:=` 或其他方法创建一个设置时，task key 创建的是 `Setting[Task[T]]` 而不是 `Setting[T]`。
+Setting 可以是 Task 的输入，但 Task 不能是 Setting 的输入。
 
 取到这两个 key（从 [Keys](../sxr/sbt/Keys.scala.html) 中）：
 
@@ -133,27 +133,25 @@ val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
 val checksums = settingKey[Seq[String]]("The list of checksums to generate and to verify for dependencies.")
 ```
 
-（`scalacOptions` 和 `checksums` 互相之间没有关系，它们只是有相同值类型的两个 key，其中一个是 task。）
+（`scalacOptions` 和 `checksums` 互相没有关系，它们只是有相同值类型的两个 key，其中一个是 task。）
 
 可以编译 `build.sbt` 将 `scalacOptions` 映射到 `checksums`，但是反过来不可以。例如，这样是允许的：
 
 ```scala
-// scalacOptions task 会依据 checksums setting 来定义
+// scalacOptions task 会依赖 checksums setting 来定义
 scalacOptions := checksums.value
 ```
 
 反向的操作是 *不可能* 的。也就是说，一个 setting 的 key 不能依赖于一个 task 的 key。是因为一个 setting 的 key 只会在项目加载的时候计算一次，所以 task 不会每次都重新执行，而 task 期待每次都重新计算。
 
 ```scala
-// checksums setting 不能依据 scalacOptions task 来定义
+// checksums setting 不能依赖 scalacOptions task 来定义
 checksums := scalacOptions.value
 ```
 
 ### 追加依赖：`+=` 和 `++=`
 
-当追加到一个已经存在的 setting 或者 task 时可以使用另一些 key，就像它们可以通过 `:=` 赋值一样。
-
-例如，比方说你有一个命名用到了项目名称的覆盖率报告，而且你想在每次清除文件的时候都清除它：
+当追加到一个已经存在的 setting 或者 task 时可以使用另一些 key，就像它们可以通过 `:=` 赋值一样。例如，比方说你有一个以项目名称命名的覆盖率报告，而且你想在每次清除文件的时候都清除它：
 
 ```scala
 cleanFiles += file("coverage-report-" + name.value + ".txt")
