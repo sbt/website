@@ -22,7 +22,7 @@ out: Library-Dependencies.html
 
 ### 非托管依赖
 
-大多数人会用托管依赖而非非托管依赖。但是非托管依赖在起步阶段会简单很多。
+大多数人会用托管依赖而不是非托管依赖。但是非托管依赖在起步阶段会简单很多。
 
 非托管依赖像这样工作：将 jar 文件放在 `lib` 文件夹下，然后它们将会被添加到项目的 classpath 中。没有更多的事情了！
 
@@ -41,7 +41,7 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 
 `baseDirectory` 是项目的根目录，所以在这里你依据 `baseDirectory` 的值改变了 `unmanagedBase`，通过在 [更多关于设置][More-About-Settings] 中介绍的一个特殊的 `value` 方法。
 
-同时也有一个列举 `unmanagedBase` 目录下所有 jar 文件的 task 叫 `unmanagedJars`。如果你想用多个目录或者做一些更加复杂的事情，你可能需要用一个可以做其它事情的 task 替换整个 `unmanagedJars` task，
+同时也有一个列举 `unmanagedBase` 目录下所有 jar 文件的 task 叫 `unmanagedJars`。如果你想用多个目录或者做一些更加复杂的事情，你可能需要用一个可以做其他事情的 task 替换整个 `unmanagedJars` task，
 例如清空 `Compile` configuration 的列表，不考虑 `lib` 目录下的文件：
 
 ```scala
@@ -122,7 +122,7 @@ libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 #### Ivy 修正
 
 `groupID % artifactID % revision` 中的 `revision` 不需要是一个固定的版本号。Ivy 能够根据你指定的约束选择一个模块的最新版本。你指定 `"latest.integration"`，`"2.9.+"` 或者 `"[1.0,)"`，而不是
-一个固定的版本号，像 `"1.6.1"`。参看[Ivy 修订](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision)文档获取详细内容。
+一个固定的版本号，像 `"1.6.1"`。参看 [Ivy 修订](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision) 文档获取详细内容。
 
 #### 解析器
 
@@ -162,7 +162,7 @@ resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/
 resolvers += Resolver.mavenLocal
 ```
 
-参见[解析器][Resolvers]获取更多关于定义其他类型的仓库的内容。
+参见 [解析器][Resolvers] 获取更多关于定义其他类型的仓库的内容。
 
 #### 覆写默认的解析器
 
@@ -191,9 +191,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 现在，如果你在 sbt 的命令提示行里输入 `show compile:dependencyClasspath`，你不应该看到 derby jar。但是如果你输入 `show test:dependencyClasspath`，
 你应该在列表中看到 derby jar。
 
-通常，测试相关的依赖，如
-[ScalaCheck](http://scalacheck.org/)，
-[Specs2](http://specs2.org)和
-[ScalaTest](http://www.scalatest.org/) 将会被定义为 `% "test"`。
+通常，测试相关的依赖，如 [ScalaCheck](http://scalacheck.org/)，
+[Specs2](http://specs2.org) 和 [ScalaTest](http://www.scalatest.org/) 将会被定义为 `% "test"`。
 
 库依赖更详细的内容和技巧在[这里][Library-Management]。

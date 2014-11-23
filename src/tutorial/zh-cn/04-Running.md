@@ -10,7 +10,7 @@ out: Running.html
 运行
 -------
 
-这一小节将讲述在你建立好项目之后如何去使用 sbt。假设你已经[安装 sbt][Setup] 并且已经创建过 [Hello, World][Hello] 项目或其他项目。
+这一小节将讲述在你建立好项目之后如何去使用 sbt。假设你已经 [安装 sbt][Setup] 并且已经创建过 [Hello, World][Hello] 项目或其他项目。
 
 ### 交互模式
 
@@ -28,10 +28,8 @@ out: Running.html
 > compile
 ```
 
-再次 `compile`，只需要按方向键上然后回车。
-
+再次 `compile`，只需要按向上的方向键，然后回车。
 输入 `run` 来启动程序。
-
 输入 `exit` 或者 Ctrl+D （Unix）或者 Ctrl+Z （Windows）可以退出交互模式。
 
 ### 批处理模式
@@ -47,7 +45,6 @@ out: Running.html
 ### 持续构建和测试
 
 为了加快编辑-编译-测试循环，你可以让 sbt 在你保存源文件时自动重新编译或者跑测试。
-
 在命令前面加上前缀 `~` 后，每当有一个或多个源文件发生变化时就会自动运行该命令。例如，在交互模式下尝试：
 
 ```
@@ -55,14 +52,12 @@ out: Running.html
 ```
 
 按回车键停止监视变化。
-
 你可以在交互模式或者批处理模式下使用 `~` 前缀。
-
-参见[触发执行][Triggered-Execution]获取详细信息。
+参见 [触发执行][Triggered-Execution] 获取详细信息。
 
 ### 常用命令
 
-下面是一些非常常用的的 sbt 命令。更加详细的列表请参见[命令行参考][Command-Line-Reference]。
+下面是一些非常常用的的 sbt 命令。更加详细的列表请参见 [命令行参考][Command-Line-Reference]。
 
 <table>
   <tr>
@@ -128,7 +123,7 @@ out: Running.html
   </tr>
   <tr>
     <td><tt>!n</tt></td>
-    <td>执行下标为 <tt>n</tt> 的命令，顺序和 <tt>!:</tt> 命令展示的一直。</td>
+    <td>执行 <tt>!:</tt> 命令显示的结果中下标为 <tt>n</tt> 的命令。</td>
   </tr>
   <tr>
     <td><tt>!-n</tt></td>

@@ -15,29 +15,24 @@ out: Basic-Def.html
 
 ### `.sbt` vs `.scala` 构建定义
 
-一个 sbt 构建定义可以包含项目基目录中以 `.sbt` 结尾的文件，也可以包含项目基目录下 `project/` 子目录中以 `.scala` 结尾的文件。
-
-这一小节将讨论适用于绝大多数场景的 `.sbt` 文件。`.scala` 文件通常适用于通过与.sbt共享代码，进而定义更复杂的构建。参见 [.scala 构建定义][Full-Def] （在入门指南的后面）了解
+一个 sbt 构建定义可以包含项目基础目录中以 `.sbt` 结尾的文件，也可以包含项目基础目录下 `project/` 子目录中以 `.scala` 结尾的文件。
+这一小节将讨论适用于大多数场景的 `.sbt` 文件。`.scala` 文件通常适用于通过与 .sbt 共享代码，进而定义更复杂的构建。参见 [.scala 构建定义][Full-Def] （在入门指南的后面部分）了解
 更多关于 `.scala` 文件的内容。
 
 ### 什么是构建定义？
 
 sbt 在检查项目和处理构建定义文件之后，形成一个不可变的映射表（immutable map）（一些键值对的集合）来描述构建。
-
-例如，以 `name` 为 key，它的 value 是它的项目名称。
-
+例如，一个叫做 `name` 的 key，映射到一个字符串的值，即项目的名称。
 *构建定义文件不会直接影响 sbt 的 map。*
-
 替而代之的是，构建定义会创建一个庞大的类型为 `Setting[T]` 的对象列表，`T` 是映射表中值（value）的类型。一个 `Setting` 描述的是一次 *对映射表（map）的转换*，
-像增加一个新的键值对或者附加到一个已经存在的 value 上。（在函数式编程的使用不可变数据结构、值，在 map 上做一次转换后返回一个新的 map 的宗旨下，它不会现场更新旧的 map。）
-
-在 `build.sbt` 中，你可以想这样为项目名称创建一个 `Setting[String]`：
+像增加一个新的键值对或者追加到一个已经存在的 value 上。（在函数式编程使用不可变数据结构和值，在 map 上做一次转换后返回一个新的 map 的宗旨下，它不会就地更新旧的 map。）
+在 `build.sbt` 中，你可以像这样为项目名称创建一个 `Setting[String]`：
 
 ```scala
 name := "hello"
 ```
 
-这个 `Setting[String]` 会通过增加（或着替换） name 作为 key，并给 value 赋值为 `"hello"` 对 map 做一次转换。转换后的 map 成为 sbt 新的 map。
+这个 `Setting[String]` 会通过增加（或者替换）name 作为 key，并给 value 赋值为 `"hello"` 对 map 做一次转换。转换后的 map 成为 sbt 新的 map。
 
 为了创建这个 map，sbt 会先对所有的设置的列表进行排序，这样可以对同一个 key 的改变一起操作，而且如果 value 依赖于其他的 key，会先处理其他被依赖的 key。
 然后， sbt 会对 `Settings` 排好序的列表进行遍历，把每一项都按顺序应用到 map 中。
@@ -47,8 +42,7 @@ name := "hello"
 ### 如何在 build.sbt 中定义设置
 
 `build.sbt` 定义了一个 `Seq[Setting[_]]`；它是一个以空行分隔的 Scala 表达式的列表，每一个表达式都会成为序列 （sequence）中的一个元素。
-如果你在 `.sbt` 文件的开头写上 `Seq(`，在末尾写上 `)`，并且将每一个空行替换成为一个逗号，你会看到和 `.scala` 中等效的代码。
-
+如果你在 `.sbt` 文件的开头写上 `Seq(`，在末尾写上 `)`，并且将每一个空行替换成为一个逗号，你会看到和 `.scala` 文件中等效的代码。
 下面是一个例子：
 
 ```scala
@@ -60,7 +54,7 @@ scalaVersion := "2.10.3"
 ```
 
 每一项 `Setting` 都定义为一个 Scala 表达式。在 `build.sbt` 中的表达式是相互独立的，而且它们仅仅是表达式，不是完整的 Scala 语句。这些表达式可以用 `val`，`lazy val`，`def` 声明。
-`build.sbt` 不允许使用顶层的 `object` 和`class`。它们必须写到 `project/` 目录下的完整的 Scala 源文件中。
+`build.sbt` 不允许使用顶层的 `object` 和 `class`。它们必须写到 `project/` 目录下的完整的 Scala 源文件中。
 
 在左边，`name`， `version` 和 `scalaVersion` 都是 *键（keys）*。一个键（key）就是一个 `SettingKey[T]`，`TaskKey[T]` 或者 `InputKey[T]` 的实例，`T` 是期待的 value 的类型。
 key 的类别将在下面讲解。
@@ -94,7 +88,6 @@ scalaVersion := "2.10.3"
 ```
 
 sbt 需要一种分隔符来告诉它一个表达式在哪里结束，下一个表达式从哪里开始。
-
 `.sbt` 文件包含了一个 Scala 表达式列表，不是一个单独的 Scala 程序。这些表达式会被分开然后分别传递给编译器。
 
 ### 键（Keys）
@@ -103,9 +96,9 @@ sbt 需要一种分隔符来告诉它一个表达式在哪里结束，下一个�
 
 有三种类型的 key：
 
-- `SettingKey[T]`: 一个 key 对应一个只计算一次的 value（这个值在加载项目的时候计算，然后一直保存着）。
-- `TaskKey[T]`: 一个 key 对应一个称之为 *task* 的 value，每次都会重新计算，可能存在潜在的副作用。
-- `InputKey[T]`: 一个可以对应一个可以接收命令行参数的 task。详细内容参见 [Input Tasks][Input-Tasks]。
+- `SettingKey[T]`：一个 key 对应一个只计算一次的 value（这个值在加载项目的时候计算，然后一直保存着）。
+- `TaskKey[T]`：一个 key 对应一个称之为 *task* 的 value，每次都会重新计算，可能存在潜在的副作用。
+- `InputKey[T]`：一个可以对应一个可以接收命令行参数的 task。详细内容参见 [Input Tasks][Input-Tasks]。
 
 #### 内置的 Keys
 
@@ -113,7 +106,7 @@ sbt 需要一种分隔符来告诉它一个表达式在哪里结束，下一个�
 
 #### 自定义 Keys
 
-可以通过它们各自的创建方法：`settingKey`，`taskKey` 和 `inputKey` 自定义 keys。每个方法都期待 key 和 value 的类型以及一段描述。
+可以通过它们各自的创建方法：`settingKey`，`taskKey` 和 `inputKey` 创建自定义 keys。每个方法都期待 key 和 value 的类型以及一段描述。
 key 的名称取自于赋给 `val` 变量的值。例如，给一个新的 task `hello` 定义一个 key，
 
 ```scala
@@ -138,7 +131,7 @@ sbt 描述项目的 map 会将设置（setting）保存为固定的字符串，�
 
 ### 定义 tasks 和 settings
 
-你可以使用 `:=` 给一个 setting 赋一个值或者给一个 task 赋一种计算。对于 setting，这个值 value 只会在项目加载的时候执行一次。对于 task，这个计算会在 task 每次执行的时候重新计算。
+你可以使用 `:=` 给一个 setting 赋一个值或者给一个 task 赋一种计算。对于 setting，这个值（value）只会在项目加载的时候执行一次。对于 task，这个计算会在 task 每次执行的时候重新计算。
 
 例如，实现前面一部分中的 `hello` task：
 
@@ -155,9 +148,9 @@ name := "hello"
 #### Tasks 和 Settings 的类型
 
 从类型系统的角度来讲，通过 task key 创建的 `Setting` 和通过 setting key 创建的 `Setting` 有稍微不同。`taskKey := 42` 的类型是 `Setting[Task[T]]` 而 `settingKey := 42`
-的类型是 `Setting[T]`。这对于绝大多数情况并无影响；task key 在执行的时候仍然创建一个类型为 `T` 的 value。
+的类型是 `Setting[T]`。这对于绝大多数情况并无影响；task key 在执行的时候仍然创建一个类型为 `T` 的值（value）。
 
-`T` 类型和 `Task[T]` 类型的不同的含义是：一个 setting 不能依赖一个 task，因为一个 setting 只会在项目加载的时候计算一次，不会重新计算。更多关于 [更多关于设置][More-About-Settings] 的内容很快就会讲到。
+`T` 类型和 `Task[T]` 类型的不同的含义是：一个 setting 不能依赖一个 task，因为一个 setting 只会在项目加载的时候计算一次，不会重新计算。[更多关于设置][More-About-Settings] 的内容很快就会讲到。
 
 ### sbt 交互模式中的 Keys
 
@@ -171,7 +164,6 @@ name := "hello"
 ### build.sbt 中的引入
 
 你可以将引入语句放在 `build.sbt` 的顶部；它们可以不用空行分隔。
-
 下面是一些默认的引入：
 
 ```scala
@@ -180,7 +172,7 @@ import Process._
 import Keys._
 ```
 
-（另外，如果你有 [.scala 文件][Full-Def]，这些文件中任何 `Build` 或者 `Plugin` 对象你的内容都会被引入。更多关于这些的内容放在 [.scala 构建定义][Full-Def]。）
+（另外，如果你有 [.scala 文件][Full-Def]，这些文件中任何 `Build` 对象或者 `Plugin` 对象里的内容都会被引入。更多关于这些的内容放在 [.scala 构建定义][Full-Def]。）
 
 ### 添加依赖库
 
@@ -192,7 +184,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 
 就是像这样添加版本为 10.4.1.3 的 Apache Derby 库作为依赖。
 
-key `libraryDependencies` 包含两个方面的复杂性：`+=` 方法而不是 `:=`，第二个就是 `%` 方法。`+=` 方法是将新的值附加该 key 的旧值后面而不是替换它，这将在 
-[更多关于设置][More-About-Settings] 中介绍。`%` 方法是用来从字符串构造 Ivy 模块 ID 的，将在 [库依赖][Library-Dependencies] 中介绍。
+key `libraryDependencies` 包含两个方面的复杂性：`+=` 方法而不是 `:=`，第二个就是 `%` 方法。`+=` 方法是将新的值追加该 key 的旧值后面而不是替换它，这将在 
+[更多设置][More-About-Settings] 中介绍。`%` 方法是用来从字符串构造 Ivy 模块 ID 的，将在 [库依赖][Library-Dependencies] 中介绍。
 
-目前我们跳过了库依赖的一些细节，直到入门指南的后面部分。后面有一节 [库依赖][Library-Dependencies] 来介绍这些内容。
+目前，一直到入门指南的后面部分，我们跳过了库依赖的一些细节。后面有一节 [库依赖][Library-Dependencies] 来介绍这些内容。

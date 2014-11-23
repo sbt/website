@@ -43,14 +43,12 @@ Hi!
 -   `lib` 中的 jar 文件
 
 默认情况下，sbt 会用和启动自身相同版本的 Scala 来构建项目。
-
 你可以通过执行 `sbt run` 来运行项目或者通过 `sbt console` 进入 [Scala REPL](http://www.scala-lang.org/node/2097)。`sbt console` 已经帮你
 设置好项目的 classpath，所以你可以根据项目的代码尝试实际的 Scala 示例。
 
 ### 构建定义
 
 大多数项目需要一些手动设置。基本的构建设置都放在项目根目录的 `build.sbt` 文件里。
-
 例如，如果你的项目放在 `hello` 下，在 `hello/build.sbt` 中可以这样写：
 
 ```scala
@@ -61,9 +59,8 @@ version := "1.0"
 scalaVersion := "2.10.3"
 ```
 
-注意相邻的两行之间都有一个空行。这不仅仅是为了好看，它们是为了能将每一项分隔必须的。在 [.sbt 构建定义][Basic-Def]这节中你将会学到更多关于
+注意相邻的两行之间都有一个空行。这不仅仅是为了好看，它们是为了能将每一项分隔开来而必须的。在 [.sbt 构建定义][Basic-Def] 这节中你将会学到更多关于
 如何编写 `build.sbt` 脚本的东西。
-
 如果你准备将你的项目打包成一个 jar 包，在 `build.sbt` 中至少要写上 name 和 version。
 
 ### 设置 sbt 版本

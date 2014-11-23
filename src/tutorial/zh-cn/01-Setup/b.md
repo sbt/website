@@ -11,7 +11,7 @@ out: Installing-sbt-on-Windows.html
 
 ### 通过 Windows 安装包安装
 
-下载 [msi 安装包][MSI]并安装。
+下载 [msi 安装包][MSI] 并安装。
 
 ### 通过通用的安装包安装
 

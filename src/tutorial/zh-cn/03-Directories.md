@@ -9,7 +9,7 @@ out: Directories.html
 目录结构
 -------------------
 
-这一小节假设你已经[安装 sbt][Setup] 并且已经阅读过 [Hello, World][Hello] 了。
+这一小节假设你已经 [安装 sbt][Setup] 并且已经阅读过 [Hello, World][Hello] 了。
 
 ### 基础目录
 
@@ -17,8 +17,7 @@ out: Directories.html
 
 ### 源代码
 
-源代码可以像 `hello/hw.scala` 一样的放在项目的基础目录。然而，大多数人不会在真实的项目中这样做，因为太杂乱了。
-
+源代码可以像 `hello/hw.scala` 一样的放在项目的基础目录中。然而，大多数人不会在真实的项目中这样做，因为太杂乱了。
 sbt 和 [Maven](https://maven.apache.org/) 的默认的源文件的目录结构是一样的（所有的路径都是相对于基础目录的）：
 
 ```
@@ -44,7 +43,6 @@ src/
 ### sbt 构建定义文件
 
 你已经在项目的基础目录中看到了 `build.sbt`。其他的 sbt 文件在 `project` 子目录中。
-
 `project` 目录可以包含 `.scala` 文件，这些文件最后会和 `.sbt` 文件合并共同构成完整的构建定义。想知道更多请参见 [.scala 构建定义][Full-Def]。
 
 ```
@@ -53,11 +51,11 @@ project/
   Build.scala
 ```
 
-你可能在 `project/` 中也看到了 `.sbt` 文件，但是它不等同于项目基础目录中的 `.sbt` 文件。这将在[稍后][Full-Def]解释，因为首先你需要一些背景知识。
+你可能在 `project/` 中也看到了 `.sbt` 文件，但是它不等同于项目基础目录中的 `.sbt` 文件。这将在 [稍后][Full-Def] 解释，因为首先你需要一些背景知识。
 
 ### 构建产品
 
-生成的文件（编译的 classes，打包的 jars，托管文件，caches 和文档）默认写在 `target` 目录中。
+构建出来的文件（编译的 classes，打包的 jars，托管文件，caches 和文档）默认写在 `target` 目录中。
 
 ### 配置版本管理
 
