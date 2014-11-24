@@ -451,7 +451,7 @@ JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
 ```scala
-libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
 ```
 
 ### Extensions
