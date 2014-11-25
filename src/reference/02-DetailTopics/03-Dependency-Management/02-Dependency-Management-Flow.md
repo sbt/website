@@ -53,24 +53,24 @@ about when it actually performs a resolution.
 
 ### General troubleshooting steps
 
-A.  Run `update` explicitly. This will typically fix problems with out
+1.  Run `update` explicitly. This will typically fix problems with out
     of date SNAPSHOTs or locally published artifacts.
-B.  If a file cannot be found, look at the output of update to see where
+2.  If a file cannot be found, look at the output of update to see where
     Ivy is looking for the file. This may help diagnose an incorrectly
     defined dependency or a dependency that is actually not present in a
     repository.
-C.  `last update` contains more information about the most recent
+3.  `last update` contains more information about the most recent
     resolution and download. The amount of debugging output from Ivy is
     high, so you may want to use lastGrep (run help lastGrep for usage).
-D.  Run `clean` and then `update`. If this works, it could indicate a
+4.  Run `clean` and then `update`. If this works, it could indicate a
     bug in sbt, but the problem would need to be reproduced in order to
     diagnose and fix it.
-E.  Before deleting all of the Ivy cache, first try deleting files in
+5.  Before deleting all of the Ivy cache, first try deleting files in
     `~/.ivy2/cache` related to problematic dependencies. For example, if
     there are problems with dependency `"org.example" % "demo" % "1.0"`,
     delete `~/.ivy2/cache/org.example/demo/1.0/` and retry update. This
     avoids needing to redownload all dependencies.
-F.  Normal sbt usage should not require deleting files from
+6.  Normal sbt usage should not require deleting files from
     `~/.ivy2/cache`, especially if the first four steps have been
     followed. If deleting the cache fixes a dependency management issue,
     please try to reproduce the issue and submit a test case.
@@ -89,21 +89,21 @@ the main project. For example:
 
 ### Notes
 
-A.  Configure offline behavior for all projects on a machine by putting
+1.  Configure offline behavior for all projects on a machine by putting
     `offline := true` in `$global_sbt_file$`. A command that does this for
     the user would make a nice pull request. Perhaps the setting of
     offline should go into the output of about or should it be a warning
     in the output of update or both?
-B.  The cache improvements in 0.12.1 address issues in the change
+2.  The cache improvements in 0.12.1 address issues in the change
     detection for update so that it will correctly re-resolve
     automatically in more situations. A problem with an out of date
     cache can usually be attributed to a bug in that change detection if
     explicitly running update fixes the problem.
-C.  A common solution to dependency management problems in sbt has been
+3.  A common solution to dependency management problems in sbt has been
     to remove `~/.ivy2/cache`. Before doing this with 0.12.1, be sure to
     follow the steps in the troubleshooting section first. In
     particular, verify that a clean and an explicit update do not solve
     the issue.
-D.  There is no need to mark SNAPSHOT dependencies as `changing()`
+4.  There is no need to mark SNAPSHOT dependencies as `changing()`
     because sbt configures Ivy to know this already.
 
