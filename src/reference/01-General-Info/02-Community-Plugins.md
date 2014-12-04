@@ -247,6 +247,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-twt>
 -   sbt-compile-quick-plugin (compile and package a single file):
     <https://github.com/etsy/sbt-compile-quick-plugin>
+-   sbt-meow (display ascii-fied random cat pictures):
+    <https://github.com/thricejamie/sbt-meow>
 
 #### Database plugins
 
