@@ -2,16 +2,15 @@
 out: Advanced-Configurations-Example.html
 ---
 
-  [Full-Def]: ../tutorial/Full-Def.html
-
+  [Basic-Def]: ../tutorial/Basic-Def.html
 
 Advanced configurations example
 -------------------------------
 
-This is an example [.scala build definition][Full-Def]
-that demonstrates using Ivy configurations to group dependencies.
+This is an example [.sbt build definition][Basic-Def]
+that demonstrates using configurations to group dependencies.
 
-The `utils` module provides utilities for other modules. It uses Ivy
+The `utils` module provides utilities for other modules. It uses
 configurations to group dependencies so that a dependent project doesn't
 have to pull in all dependencies if it only uses a subset of
 functionality. This can be an alternative to having multiple utilities
@@ -26,53 +25,58 @@ need Saxon. By depending only on the `scalate` configuration of `utils`,
 it only gets the Scalate-related dependencies.
 
 ```scala
-import sbt._
-import Keys._
+/********* Configurations *******/
 
-object B extends Build {
-   /********** Projects ************/
+// Custom configurations
+lazy val Common = config("common") describedAs("Dependencies required in all configurations.")
+lazy val Scalate = config("scalate") extend(Common) describedAs("Dependencies for using Scalate utilities.")
+lazy val Saxon = config("saxon") extend(Common) describedAs("Dependencies for using Saxon utilities.")
 
-   // An example project that only uses the Scalate utilities.
-   lazy val a = Project("a", file("a")) dependsOn(utils % "compile->scalate")
+// Define a customized compile configuration that includes
+//   dependencies defined in our other custom configurations
+lazy val CustomCompile = config("compile") extend(Saxon, Common, Scalate)
 
-   // An example project that uses the Scalate and Saxon utilities.
-   // For the configurations defined here, this is equivalent to doing dependsOn(utils),
-   //  but if there were more configurations, it would select only the Scalate and Saxon
-   //  dependencies.
-   lazy val b = Project("b", file("b")) dependsOn(utils % "compile->scalate,saxon")
+/********** Projects ************/
 
-   // Defines the utilities project
-   lazy val utils = Project("utils", file("utils")) settings(utilsSettings : _*)
+// factor out common settings into a sequence
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "2.10.4"
+)
 
-   def utilsSettings: Seq[Setting[_]] =
-        // Add the src/common/scala/ compilation configuration.
-      inConfig(Common)(Defaults.configSettings) ++
-        // Publish the common artifact
-      addArtifact(artifact in (Common, packageBin), packageBin in Common) ++ Seq(
-        // We want our Common sources to have access to all of the dependencies on the classpaths
-        //   for compile and test, but when depended on, it should only require dependencies in 'common'
-      classpathConfiguration in Common := CustomCompile,
-        // Modify the default Ivy configurations.
-        //   'overrideConfigs' ensures that Compile is replaced by CustomCompile
-      ivyConfigurations := overrideConfigs(Scalate, Saxon, Common, CustomCompile)(ivyConfigurations.value),
-        // Put all dependencies without an explicit configuration into Common (optional)
-      defaultConfiguration := Some(Common),
-        // Declare dependencies in the appropriate configurations
-      libraryDependencies ++= Seq(
-         "org.fusesource.scalate" % "scalate-core" % "1.5.0" % "scalate",
-         "org.squeryl" %% "squeryl" % "0.9.4" % "scalate",
-         "net.sf.saxon" % "saxon" % "8.7" % "saxon"
-      )
-   )
+// An example project that only uses the Scalate utilities.
+lazy val a = (project in file("a")).
+  dependsOn(utils % "compile->scalate").
+  settings(commonSettings: _*)
 
-   /********* Configurations *******/
+// An example project that uses the Scalate and Saxon utilities.
+// For the configurations defined here, this is equivalent to doing dependsOn(utils),
+//  but if there were more configurations, it would select only the Scalate and Saxon
+//  dependencies.
+lazy val b = (project in file("b")).
+  dependsOn(utils % "compile->scalate,saxon").
+  settings(commonSettings: _*)
 
-   lazy val Scalate = config("scalate") extend(Common) describedAs("Dependencies for using Scalate utilities.")
-   lazy val Common = config("common") describedAs("Dependencies required in all configurations.")
-   lazy val Saxon = config("saxon") extend(Common) describedAs("Dependencies for using Saxon utilities.")
-
-     // Define a customized compile configuration that includes
-     //   dependencies defined in our other custom configurations
-   lazy val CustomCompile = config("compile") extend(Saxon, Common, Scalate)
-}
+// Defines the utilities project
+lazy val utils = (project in file("utils")).
+  settings(commonSettings: _*).
+  settings(inConfig(Common)(Defaults.configSettings): _*).  // Add the src/common/scala/ compilation configuration.
+  settings(addArtifact(artifact in (Common, packageBin), packageBin in Common): _*). // Publish the common artifact
+  settings(
+      // We want our Common sources to have access to all of the dependencies on the classpaths
+      //   for compile and test, but when depended on, it should only require dependencies in 'common'
+    classpathConfiguration in Common := CustomCompile,
+      // Modify the default Ivy configurations.
+      //   'overrideConfigs' ensures that Compile is replaced by CustomCompile
+    ivyConfigurations := overrideConfigs(Scalate, Saxon, Common, CustomCompile)(ivyConfigurations.value),
+      // Put all dependencies without an explicit configuration into Common (optional)
+    defaultConfiguration := Some(Common),
+      // Declare dependencies in the appropriate configurations
+    libraryDependencies ++= Seq(
+       "org.fusesource.scalate" % "scalate-core" % "1.5.0" % Scalate,
+       "org.squeryl" %% "squeryl" % "0.9.5-6" % Scalate,
+       "net.sf.saxon" % "saxon" % "8.7" % Saxon
+    )
+  )
 ```
