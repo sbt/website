@@ -90,11 +90,16 @@ and `T` is the type of each value.
 Here's an example:
 
 ```scala
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "$example_scala_version$"
+)
+
 lazy val root = (project in file(".")).
+  settings(commonSettings: _*).
   settings(
-    name := "hello",
-    version := "1.0",
-    scalaVersion := "$example_scala_version$"
+    name := "hello"
   )
 ```
 
@@ -281,10 +286,19 @@ to drop jars in `lib/` (unmanaged dependencies) and the other is to add
 managed dependencies, which will look like this in `build.sbt`:
 
 ```scala
+val derby = "org.apache.derby" % "derby" % "10.4.1.3"
+
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "$example_scala_version$"
+)
+
 lazy val root = (project in file(".")).
+  settings(commonSettings: _*).
   settings(
     name := "hello",
-    libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
+    libraryDependencies += derby
   )
 ```
 
