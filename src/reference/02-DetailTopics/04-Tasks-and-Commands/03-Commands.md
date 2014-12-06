@@ -105,15 +105,32 @@ val command: Command = Command.args("name", "<arg>")(action)
 
 ### Full Example
 
-The following example is a valid `project/Build.scala` that adds
+The following example is a sample build that adds
 commands to a project. To try it out:
 
-1.  Copy the following build definition into `project/Build.scala` for a
-    new project.
+1.  Create `build.sbt` and `project/CommandExample.scala`.
 2.  Run sbt on the project.
 3.  Try out the `hello`, `helloAll`, `failIfTrue`, `color`, and
     printState commands.
 4.  Use tab-completion and the code below as guidance.
+
+Here's `build.sbt`:
+
+```scala
+import CommandExample._
+
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+)
+
+lazy val root = (project in file(".")).
+  settings(commonSettings: _*).
+  settings(
+    commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
+  )
+```
+
+Here's `project/CommandExample.scala`:
 
 ```scala
 import sbt._
@@ -122,77 +139,67 @@ import Keys._
 // imports standard command parsing functionality
 import complete.DefaultParsers._
 
-object CommandExample extends Build {
-    // Declare a single project, adding several new commands, which are discussed below.
-    lazy override val projects = Seq(root)
-    lazy val root = Project("root", file(".")) settings(
-        commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
-    )
+object CommandExample {
+  // A simple, no-argument command that prints "Hi",
+  //  leaving the current state unchanged.
+  def hello = Command.command("hello") { state =>
+    println("Hi!")
+    state
+  }
 
-    // A simple, no-argument command that prints "Hi",
-    //  leaving the current state unchanged.
-    def hello = Command.command("hello") { state =>
-        println("Hi!")
-        state
-    }
+  // A simple, multiple-argument command that prints "Hi" followed by the arguments.
+  //   Again, it leaves the current state unchanged.
+  def helloAll = Command.args("helloAll", "<name>") { (state, args) =>
+    println("Hi " + args.mkString(" "))
+    state
+  }
 
+  // A command that demonstrates failing or succeeding based on the input
+  def failIfTrue = Command.single("failIfTrue") {
+    case (state, "true") => state.fail
+    case (state, _) => state
+  }
 
-    // A simple, multiple-argument command that prints "Hi" followed by the arguments.
-    //   Again, it leaves the current state unchanged.
-    def helloAll = Command.args("helloAll", "<name>") { (state, args) =>
-        println("Hi " + args.mkString(" "))
-        state
-    }
+  // Demonstration of a custom parser.
+  // The command changes the foreground or background terminal color
+  //  according to the input.
+  lazy val change = Space ~> (reset | setColor)
+  lazy val reset = token("reset" ^^^ "\033[0m")
+  lazy val color = token( Space ~> ("blue" ^^^ "4" | "green" ^^^ "2") )
+  lazy val select = token( "fg" ^^^ "3" | "bg" ^^^ "4" )
+  lazy val setColor = (select ~ color) map { case (g, c) => "\033[" + g + c + "m" }
 
+  def changeColor = Command("color")(_ => change) { (state, ansicode) =>
+    print(ansicode)
+    state
+  }
 
-    // A command that demonstrates failing or succeeding based on the input
-    def failIfTrue = Command.single("failIfTrue") {
-        case (state, "true") => state.fail
-        case (state, _) => state
-    }
+  // A command that demonstrates getting information out of State.
+  def printState = Command.command("printState") { state =>
+    import state._
+    println(definedCommands.size + " registered commands")
+    println("commands to run: " + show(remainingCommands))
+    println()
 
+    println("original arguments: " + show(configuration.arguments))
+    println("base directory: " + configuration.baseDirectory)
+    println()
 
-    // Demonstration of a custom parser.
-    // The command changes the foreground or background terminal color
-    //  according to the input.
-    lazy val change = Space ~> (reset | setColor)
-    lazy val reset = token("reset" ^^^ "\033[0m")
-    lazy val color = token( Space ~> ("blue" ^^^ "4" | "green" ^^^ "2") )
-    lazy val select = token( "fg" ^^^ "3" | "bg" ^^^ "4" )
-    lazy val setColor = (select ~ color) map { case (g, c) => "\033[" + g + c + "m" }
+    println("sbt version: " + configuration.provider.id.version)
+    println("Scala version (for sbt): " + configuration.provider.scalaProvider.version)
+    println()
 
-    def changeColor = Command("color")(_ => change) { (state, ansicode) =>
-        print(ansicode)
-        state
-    }
+    val extracted = Project.extract(state)
+    import extracted._
+    println("Current build: " + currentRef.build)
+    println("Current project: " + currentRef.project)
+    println("Original setting count: " + session.original.size)
+    println("Session setting count: " + session.append.size)
 
+    state
+  }
 
-    // A command that demonstrates getting information out of State.
-    def printState = Command.command("printState") { state =>
-        import state._
-        println(definedCommands.size + " registered commands")
-        println("commands to run: " + show(remainingCommands))
-        println()
-
-        println("original arguments: " + show(configuration.arguments))
-        println("base directory: " + configuration.baseDirectory)
-        println()
-
-        println("sbt version: " + configuration.provider.id.version)
-        println("Scala version (for sbt): " + configuration.provider.scalaProvider.version)
-        println()
-
-        val extracted = Project.extract(state)
-        import extracted._
-        println("Current build: " + currentRef.build)
-        println("Current project: " + currentRef.project)
-        println("Original setting count: " + session.original.size)
-        println("Session setting count: " + session.append.size)
-
-        state
-    }
-
-    def show[T](s: Seq[T]) =
-        s.map("'" + _ + "'").mkString("[", ", ", "]")
+  def show[T](s: Seq[T]) =
+    s.map("'" + _ + "'").mkString("[", ", ", "]")
 }
 ```
