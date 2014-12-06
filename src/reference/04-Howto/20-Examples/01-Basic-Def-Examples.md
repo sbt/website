@@ -7,198 +7,196 @@ out: Basic-Def-Examples.html
 .sbt build examples
 -------------------
 
+**Note**: As of sbt 0.13.7 blank lines are no longer used to delimit `build.sbt` files. The following example requires sbt 0.13.7+.
+
 Listed here are some examples of settings (each setting is independent).
 See [.sbt build definition][Basic-Def] for details.
 
-*Note* that blank lines are used to separate individual settings.
-Avoid using blank lines within a single multiline expression. As
-explained in [.sbt build definition][Basic-Def], each
-setting is otherwise a normal Scala expression with expected type
-[sbt.SettingDefinition](../api/sbt/Init\$SettingsDefinition.html).
-
 ```scala
-// set the name of the project
-name := "My Project"
-
-version := "1.0"
-
-organization := "org.myproject"
-
-// set the Scala version used for the project
-scalaVersion := "2.9.0-SNAPSHOT"
-
-// set the main Scala source directory to be <base>/src
-scalaSource in Compile := baseDirectory.value / "src"
-
-// set the Scala test source directory to be <base>/test
-scalaSource in Test := baseDirectory.value / "test"
-
-// add a test dependency on ScalaCheck
-libraryDependencies += "org.scala-tools.testing" %% "scalacheck" % "1.8" % "test"
-
-// add compile dependencies on some dispatch modules
-libraryDependencies ++= Seq(
-    "net.databinder" %% "dispatch-meetup" % "0.7.8",
-    "net.databinder" %% "dispatch-twitter" % "0.7.8"
+// factor out common settings into a sequence
+lazy val commonSettings = Seq(
+  organization := "org.myproject",
+  version := "0.1.0",
+  // set the Scala version used for the project
+  scalaVersion := "$example_scala_version$"
 )
 
-// Set a dependency based partially on a val.
-{
-  val libosmVersion = "2.5.2-RC1"
-  libraryDependencies += ("net.sf.travelingsales" % "osmlib" % libosmVersion from
-    "http://downloads.sourceforge.net/project/travelingsales/libosm/"+libosmVersion+"/libosm-"+libosmVersion+".jar")
-}
+// define ModuleID for library dependencies
+lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "$example_scalacheck_version$"
 
-// reduce the maximum number of errors shown by the Scala compiler
-maxErrors := 20
+// define ModuleID using string interpolator
+lazy val osmlibVersion = "2.5.2-RC1"
+lazy val osmlib = ("net.sf.travelingsales" % "osmlib" % osmlibVersion from
+  s"""http://downloads.sourceforge.net/project/travelingsales/libosm/\$osmlibVersion/libosm-\$osmlibVersion.jar""")
 
-// increase the time between polling for file changes when using continuous execution
-pollInterval := 1000
+lazy val root = (project in file(".")).
+  settings(commonSettings: _*).
+  settings(
+    // set the name of the project
+    name := "My Project",
 
-// append several options to the list of options passed to the Java compiler
-javacOptions ++= Seq("-source", "1.5", "-target", "1.5")
+    // set the main Scala source directory to be <base>/src
+    scalaSource in Compile := baseDirectory.value / "src",
 
-// append -deprecation to the options passed to the Scala compiler
-scalacOptions += "-deprecation"
+    // set the Scala test source directory to be <base>/test
+    scalaSource in Test := baseDirectory.value / "test",
 
-// define the statements initially evaluated when entering 'console', 'consoleQuick', or 'consoleProject'
-initialCommands := """
-  import System.{currentTimeMillis => now}
-  def time[T](f: => T): T = {
-    val start = now
-    try { f } finally { println("Elapsed: " + (now - start)/1000.0 + " s") }
-  }
-"""
+    // add a test dependency on ScalaCheck
+    libraryDependencies += scalacheck % Test,
 
-// set the initial commands when entering 'console' or 'consoleQuick', but not 'consoleProject'
-initialCommands in console := "import myproject._"
+    // add compile dependency on osmlib
+    libraryDependencies += osmlib,
 
-// set the main class for packaging the main jar
-// 'run' will still auto-detect and prompt
-// change Compile to Test to set it for the test jar
-mainClass in (Compile, packageBin) := Some("myproject.MyMain")
+    // reduce the maximum number of errors shown by the Scala compiler
+    maxErrors := 20,
 
-// set the main class for the main 'run' task
-// change Compile to Test to set it for 'test:run'
-mainClass in (Compile, run) := Some("myproject.MyMain")
+    // increase the time between polling for file changes when using continuous execution
+    pollInterval := 1000,
 
-// add <base>/input to the files that '~' triggers on
-watchSources += baseDirectory.value / "input"
+    // append several options to the list of options passed to the Java compiler
+    javacOptions ++= Seq("-source", "1.5", "-target", "1.5"),
 
-// add a maven-style repository
-resolvers += "name" at "url"
+    // append -deprecation to the options passed to the Scala compiler
+    scalacOptions += "-deprecation",
 
-// add a sequence of maven-style repositories
-resolvers ++= Seq("name" at "url")
+    // define the statements initially evaluated when entering 'console', 'consoleQuick', or 'consoleProject'
+    initialCommands := """
+      |import System.{currentTimeMillis => now}
+      |def time[T](f: => T): T = {
+      |  val start = now
+      |  try { f } finally { println("Elapsed: " + (now - start)/1000.0 + " s") }
+      |}""".stripMargin,
 
-// define the repository to publish to
-publishTo := Some("name" at "url")
+    // set the initial commands when entering 'console' or 'consoleQuick', but not 'consoleProject'
+    initialCommands in console := "import myproject._",
 
-// set Ivy logging to be at the highest level
-ivyLoggingLevel := UpdateLogging.Full
+    // set the main class for packaging the main jar
+    // 'run' will still auto-detect and prompt
+    // change Compile to Test to set it for the test jar
+    mainClass in (Compile, packageBin) := Some("myproject.MyMain"),
 
-// disable updating dynamic revisions (including -SNAPSHOT versions)
-offline := true
+    // set the main class for the main 'run' task
+    // change Compile to Test to set it for 'test:run'
+    mainClass in (Compile, run) := Some("myproject.MyMain"),
 
-// set the prompt (for this build) to include the project id.
-shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
+    // add <base>/input to the files that '~' triggers on
+    watchSources += baseDirectory.value / "input",
 
-// set the prompt (for the current project) to include the username
-shellPrompt := { state => System.getProperty("user.name") + "> " }
+    // add a maven-style repository
+    resolvers += "name" at "url",
 
-// disable printing timing information, but still print [success]
-showTiming := false
+    // add a sequence of maven-style repositories
+    resolvers ++= Seq("name" at "url"),
 
-// disable printing a message indicating the success or failure of running a task
-showSuccess := false
+    // define the repository to publish to
+    publishTo := Some("name" at "url"),
 
-// change the format used for printing task completion time
-timingFormat := {
-    import java.text.DateFormat
-    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-}
+    // set Ivy logging to be at the highest level
+    ivyLoggingLevel := UpdateLogging.Full,
 
-// disable using the Scala version in output paths and artifacts
-crossPaths := false
+    // disable updating dynamic revisions (including -SNAPSHOT versions)
+    offline := true,
 
-// fork a new JVM for 'run' and 'test:run'
-fork := true
+    // set the prompt (for this build) to include the project id.
+    shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " },
 
-// fork a new JVM for 'test:run', but not 'run'
-fork in Test := true
+    // set the prompt (for the current project) to include the username
+    shellPrompt := { state => System.getProperty("user.name") + "> " },
 
-// add a JVM option to use when forking a JVM for 'run'
-javaOptions += "-Xmx2G"
+    // disable printing timing information, but still print [success]
+    showTiming := false,
 
-// only use a single thread for building
-parallelExecution := false
+    // disable printing a message indicating the success or failure of running a task
+    showSuccess := false,
 
-// Execute tests in the current project serially
-//   Tests from other projects may still run concurrently.
-parallelExecution in Test := false
+    // change the format used for printing task completion time
+    timingFormat := {
+        import java.text.DateFormat
+        DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+    },
 
-// set the location of the JDK to use for compiling Java code.
-// if 'fork' is true, this is used for 'run' as well
-javaHome := Some(file("/usr/lib/jvm/sun-jdk-1.6"))
+    // disable using the Scala version in output paths and artifacts
+    crossPaths := false,
 
-// Use Scala from a directory on the filesystem instead of retrieving from a repository
-scalaHome := Some(file("/home/user/scala/trunk/"))
+    // fork a new JVM for 'run' and 'test:run'
+    fork := true,
 
-// don't aggregate clean (See FullConfiguration for aggregation details)
-aggregate in clean := false
+    // fork a new JVM for 'test:run', but not 'run'
+    fork in Test := true,
 
-// only show warnings and errors on the screen for compilations.
-//  this applies to both test:compile and compile and is Info by default
-logLevel in compile := Level.Warn
+    // add a JVM option to use when forking a JVM for 'run'
+    javaOptions += "-Xmx2G",
 
-// only show warnings and errors on the screen for all tasks (the default is Info)
-//  individual tasks can then be more verbose using the previous setting
-logLevel := Level.Warn
+    // only use a single thread for building
+    parallelExecution := false,
 
-// only store messages at info and above (the default is Debug)
-//   this is the logging level for replaying logging with 'last'
-persistLogLevel := Level.Debug
+    // Execute tests in the current project serially
+    //   Tests from other projects may still run concurrently.
+    parallelExecution in Test := false,
 
-// only show 10 lines of stack traces
-traceLevel := 10
+    // set the location of the JDK to use for compiling Java code.
+    // if 'fork' is true, this is used for 'run' as well
+    javaHome := Some(file("/usr/lib/jvm/sun-jdk-1.6")),
 
-// only show stack traces up to the first sbt stack frame
-traceLevel := 0
+    // Use Scala from a directory on the filesystem instead of retrieving from a repository
+    scalaHome := Some(file("/home/user/scala/trunk/")),
 
-// add SWT to the unmanaged classpath
-unmanagedJars in Compile += Attributed.blank(file("/usr/share/java/swt.jar"))
+    // don't aggregate clean (See FullConfiguration for aggregation details)
+    aggregate in clean := false,
 
-// publish test jar, sources, and docs
-publishArtifact in Test := true
+    // only show warnings and errors on the screen for compilations.
+    //  this applies to both test:compile and compile and is Info by default
+    logLevel in compile := Level.Warn,
 
-// disable publishing of main docs
-publishArtifact in (Compile, packageDoc) := false
+    // only show warnings and errors on the screen for all tasks (the default is Info)
+    //  individual tasks can then be more verbose using the previous setting
+    logLevel := Level.Warn,
 
-// change the classifier for the docs artifact
-artifactClassifier in packageDoc := Some("doc")
+    // only store messages at info and above (the default is Debug)
+    //   this is the logging level for replaying logging with 'last'
+    persistLogLevel := Level.Debug,
 
-// Copy all managed dependencies to <build-root>/lib_managed/
-//   This is essentially a project-local cache and is different
-//   from the lib_managed/ in sbt 0.7.x.  There is only one
-//   lib_managed/ in the build root (not per-project).
-retrieveManaged := true
+    // only show 10 lines of stack traces
+    traceLevel := 10,
 
-/* Specify a file containing credentials for publishing. The format is:
-realm=Sonatype Nexus Repository Manager
-host=nexus.scala-tools.org
-user=admin
-password=admin123
-*/
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+    // only show stack traces up to the first sbt stack frame
+    traceLevel := 0,
 
-// Directly specify credentials for publishing.
-credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+    // add SWT to the unmanaged classpath
+    unmanagedJars in Compile += Attributed.blank(file("/usr/share/java/swt.jar")),
 
-// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.
-libraryDependencies +=
-  "log4j" % "log4j" % "1.2.15" excludeAll(
-    ExclusionRule(organization = "com.sun.jdmk"),
-    ExclusionRule(organization = "com.sun.jmx"),
-    ExclusionRule(organization = "javax.jms")
+    // publish test jar, sources, and docs
+    publishArtifact in Test := true,
+
+    // disable publishing of main docs
+    publishArtifact in (Compile, packageDoc) := false,
+
+    // change the classifier for the docs artifact
+    artifactClassifier in packageDoc := Some("doc"),
+
+    // Copy all managed dependencies to <build-root>/lib_managed/
+    //   This is essentially a project-local cache and is different
+    //   from the lib_managed/ in sbt 0.7.x.  There is only one
+    //   lib_managed/ in the build root (not per-project).
+    retrieveManaged := true,
+
+    /* Specify a file containing credentials for publishing. The format is:
+    realm=Sonatype Nexus Repository Manager
+    host=nexus.scala-tools.org
+    user=admin
+    password=admin123
+    */
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials"),
+
+    // Directly specify credentials for publishing.
+    credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123"),
+
+    // Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.
+    libraryDependencies +=
+      "log4j" % "log4j" % "1.2.15" excludeAll(
+        ExclusionRule(organization = "com.sun.jdmk"),
+        ExclusionRule(organization = "com.sun.jmx"),
+        ExclusionRule(organization = "javax.jms")
+      )
   )
 ```
