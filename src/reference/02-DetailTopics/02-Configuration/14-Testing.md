@@ -31,11 +31,11 @@ with sbt. For example, ScalaCheck may be used by declaring it as a
 [managed dependency][Library-Dependencies]:
 
 ```scala
-libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.11.4" % "test"
+lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "$example_scalacheck_version$"
+libraryDependencies += scalacheck % Test
 ```
 
-The fourth component `"test"` is the
-[configuration][ivy-configurations] and means that ScalaCheck will
+`Test` is the [configuration][ivy-configurations] and means that ScalaCheck will
 only be on the test classpath and it isn't needed by the main sources.
 This is generally good practice for libraries because your users don't
 typically need your test dependencies to use your library.
@@ -115,7 +115,7 @@ the build, located in the `target/test-reports` directory for a project.
 This can be disabled by disabling the `JUnitXmlReportPlugin`
 
 ```scala
-val myProject = project in file(".") disablePlugins (plugins.JUnitXmlReportPlugin)  
+val myProject = (project in file(".")).disablePlugins(plugins.JUnitXmlReportPlugin)  
 ```
 
 ### Options
@@ -254,26 +254,28 @@ per project.
 The following full build configuration demonstrates integration tests.
 
 ```scala
-import sbt._
-import Keys._
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+  organization := "com.example"
+)
+lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
 
-object B extends Build {
-  lazy val root =
-    Project("root", file(".")).
-      configs( IntegrationTest ).
-      settings( Defaults.itSettings : _*).
-      settings( libraryDependencies += specs )
-
-  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "it,test"
-}
+lazy val root = (project in file(".")).
+  configs(IntegrationTest).
+  settings(commonSettings: _*).
+  settings(Defaults.itSettings: _*).
+  settings(
+    libraryDependencies += specs2core % "it,test"
+    // other settings here
+  )
 ```
 
 -   `configs(IntegrationTest)` adds the predefined integration test
     configuration. This configuration is referred to by the name it.
--   `settings( Defaults.itSettings : _* )` adds compilation, packaging,
+-   `settings(Defaults.itSettings : _*)` adds compilation, packaging,
     and testing actions and settings in the IntegrationTest
     configuration.
--   `settings( libraryDependencies += specs )` adds specs to both the
+-   `settings(libraryDependencies += specs2core % "it,test")` adds specs2 to both the
     standard test configuration and the integration test configuration
     it. To define a dependency only for integration tests, use "it" as
     the configuration instead of "it,test".
@@ -322,19 +324,21 @@ testOptions in IntegrationTest := Seq(...)
 The previous example may be generalized to a custom test configuration.
 
 ```scala
-import sbt._
-import Keys._
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+  organization := "com.example"
+)
+lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
+lazy val FunTest = config("fun") extend(Test)
 
-object B extends Build {
-  lazy val root =
-    Project("root", file(".")).
-      configs( FunTest ).
-      settings( inConfig(FunTest)(Defaults.testSettings) : _*).
-      settings( libraryDependencies += specs )
-
-  lazy val FunTest = config("fun") extend(Test)
-  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "fun"
-}
+lazy val root = (project in file(".")).
+  configs(FunTest).
+  settings(commonSettings: _*).
+  settings(inConfig(FunTest)(Defaults.testSettings): _*).
+  settings(
+    libraryDependencies += specs2core % FunTest
+    // other settings here
+  )
 ```
 
 Instead of using the built-in configuration, we defined a new one:
@@ -348,7 +352,7 @@ The `extend(Test)` part means to delegate to `Test` for undefined
 new test configuration is:
 
 ```scala
-settings( inConfig(FunTest)(Defaults.testSettings) : _*)
+settings(inConfig(FunTest)(Defaults.testSettings): _*)
 ```
 
 This says to add test and settings tasks in the `FunTest` configuration.
@@ -379,26 +383,26 @@ compiled together using the same classpath and are packaged together.
 However, different tests are run depending on the configuration.
 
 ```scala
-import sbt._
-import Keys._
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+  organization := "com.example"
+)
+lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
+lazy val FunTest = config("fun") extend(Test)
 
-object B extends Build {
-  lazy val root =
-    Project("root", file("."))
-      .configs( FunTest )
-      .settings( inConfig(FunTest)(Defaults.testTasks) : _*)
-      .settings(
-        libraryDependencies += specs,
-        testOptions in Test := Seq(Tests.Filter(unitFilter)),
-        testOptions in FunTest := Seq(Tests.Filter(itFilter))
-      )
+def itFilter(name: String): Boolean = name endsWith "ITest"
+def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
 
-  def itFilter(name: String): Boolean = name endsWith "ITest"
-  def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
-
-  lazy val FunTest = config("fun") extend(Test)
-  lazy val specs = "org.specs2" %% "specs2" % "2.0" % "test"
-}
+lazy val root = (project in file(".")).
+  configs(FunTest).
+  settings(commonSettings: _*).
+  settings(inConfig(FunTest)(Defaults.testTasks): _*).
+  settings(
+    libraryDependencies += specs2core % FunTest,
+    testOptions in Test := Seq(Tests.Filter(unitFilter)),
+    testOptions in FunTest := Seq(Tests.Filter(itFilter))
+    // other settings here
+  )
 ```
 
 The key differences are:
@@ -451,7 +455,7 @@ JUnit support into your project, add the junit-interface dependency in
 your project's main build.sbt file.
 
 ```scala
-libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
+libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
 ```
 
 ### Extensions
