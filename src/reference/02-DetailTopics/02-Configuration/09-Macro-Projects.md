@@ -22,20 +22,30 @@ The rest of the page shows example solutions to these problems.
 ### Defining the Project Relationships
 
 The macro implementation will go in a subproject in the `macro/`
-directory. The main project in the project's base directory will depend
+directory. The core project in the `core/` directory will depend
 on this subproject and use the macro. This configuration is shown in the
-following build definition. `project/Build.scala`:
+following build definition. `build.sbt`:
 
 ```scala
-import sbt._
-import Keys._
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+  organization := "com.example"
+)
+lazy val scalaRefect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
-object MacroBuild extends Build {
-   lazy val main = Project("main", file(".")) dependsOn(macroSub)
-   lazy val macroSub = Project("macro", file("macro")) settings(
-      libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
-   )
-}
+lazy val core = (project in file("core")).
+  dependsOn(macroSub).
+  settings(commonSettings: _*).
+  settings(
+    // other settings here
+  )
+
+lazy val macroSub = (project in file("macro")).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies += scalaRefect.value
+    // other settings here
+  )
 ```
 
 This specifies that the macro implementation goes in
@@ -86,7 +96,7 @@ Actual tests can be defined and run as usual with `macro/test`.
 The main project can use the macro in the same way that the tests do.
 For example,
 
-`src/main/scala/MainUsage.scala`:
+`core/src/main/scala/MainUsage.scala`:
 
 ```scala
 package demo
@@ -107,40 +117,68 @@ common code and have the main project and the macro subproject depend on
 the new subproject. For example, the project definitions from above
 would look like:
 
+
 ```scala
-lazy val main = Project("main", file(".")) dependsOn(macroSub, commonSub)
-lazy val macroSub = Project("macro", file("macro")) dependsOn(commonSub) settings(
-    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
+lazy val commonSettings = Seq(
+  scalaVersion := "$example_scala_version$",
+  organization := "com.example"
 )
-lazy val commonSub = Project("common", file("common"))
+lazy val scalaRefect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
+
+lazy val core = (project in file("core")).
+  dependsOn(macroSub, util).
+  settings(commonSettings: _*).
+  settings(
+    // other settings here
+  )
+
+lazy val macroSub = (project in file("macro")).
+  dependsOn(util).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies += scalaRefect.value
+    // other settings here
+  )
+
+lazy util = (project in file("util")).
+  settings(commonSettings: _*).
+  settings(
+    // other setting here
+  )
 ```
 
-Code in `common/src/main/scala/` is available for both the `macro` and
+Code in `util/src/main/scala/` is available for both the `macroSub` and
 `main` projects to use.
 
 ### Distribution
 
-To include the macro code with the main code, add the binary and source
-mappings from the macro subproject to the main project. For example, the
-`main` Project definition above would now look like:
+To include the macro code with the core code, add the binary and source
+mappings from the macro subproject to the core project. For example, the
+`core` Project definition above would now look like:
 
 ```scala
-lazy val main = Project("main", file(".")) dependsOn(macroSub) settings(
-   // include the macro classes and resources in the main jar
-   mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
-   // include the macro sources in the main source jar
-   mappings in (Compile, packageSrc) ++= mappings.in(macroSub, Compile, packageSrc).value
-)
+lazy val core = (project in file("core")).
+  dependsOn(macroSub).
+  settings(commonSettings: _*).
+  settings(
+    // include the macro classes and resources in the main jar
+    mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
+    // include the macro sources in the main source jar
+    mappings in (Compile, packageSrc) ++= mappings.in(macroSub, Compile, packageSrc).value
+  )
 ```
 
 You may wish to disable publishing the macro implementation. This is
 done by overriding `publish` and `publishLocal` to do nothing:
 
 ```scala
-lazy val macroSub = Project("macro", file("macro")) settings(
+lazy val macroSub = (project in file("macro")).
+  settings(commonSettings: _*).
+  settings(
+    libraryDependencies += scalaRefect.value,
     publish := {},
     publishLocal := {}
-)
+  )
 ```
 
 The techniques described here may also be used for the common interface
