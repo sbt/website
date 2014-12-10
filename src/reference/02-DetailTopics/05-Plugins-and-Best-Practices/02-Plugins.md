@@ -229,7 +229,7 @@ The `requires` method returns a value of type `Plugins`, which is a DSL for cons
 
 Some plugins should always be explicitly enabled on projects. we call
 these root plugins, i.e. plugins that are "root" nodes in the plugin
-depdendency graph. An auto plugin is by default a root plugin.
+dependency graph. An auto plugin is by default a root plugin.
 
 Auto plugins also provide a way for plugins to automatically attach themselves to
 projects if their dependencies are met. We call these triggered plugins,
@@ -270,7 +270,7 @@ object SbtLessPlugin extends AutoPlugin {
 As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of it required plugins. So, if we define a `build.sbt` with:
 
 ```scala
-plazy val root = (project in file(".")).
+lazy val root = (project in file(".")).
   enablePlugins(PlayScala)
 ```
 
@@ -281,7 +281,7 @@ This allows plugins to silently, and correctly, extend existing plugins with mor
 #### Controlling the import with autoImport
 
 When an auto plugin provides a stable field such as `val` or `object`
-named `autoImport`, the contents of the field are wildcard imported in
+named `autoImport`, the contents of the field are wildcard imported
 in `set`, `eval`, and `.sbt` files.
 
 ```scala
