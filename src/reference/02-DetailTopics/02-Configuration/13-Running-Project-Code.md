@@ -79,11 +79,11 @@ following situations must apply for user code to run in the same JVM:
 3.  The program ends when user-created threads terminate on their own.
 4.  `System.exit` is used to end the program and user-created threads
     terminate when interrupted.
-5.  No deserialization is done, or the deserialization code avoids
+5.  No deserialization is done, or the deserialization code
     ensures that the right class loader is used, as in
-    <https://github.com/NetLogo/NetLogo/blob/master/src/main/org/nlogo/util/ClassLoaderObjectInputStream.scala>
+    <https://github.com/NetLogo/NetLogo/blob/5.x/src/main/org/nlogo/util/ClassLoaderObjectInputStream.scala>
     or
-    <https://github.com/scala/scala/blob/master/src/actors/scala/actors/remote/JavaSerializer.scala#L20>.
+    <https://github.com/scala/scala/blob/2.11.x/src/actors/scala/actors/remote/JavaSerializer.scala#L20>.
 
 The requirements on threading and shutdown hooks are required because
 the JVM does not actually shut down. So, shutdown hooks cannot be run
