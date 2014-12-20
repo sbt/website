@@ -52,15 +52,17 @@ Hi!
 例如，如果你的项目放在 `hello` 下，在 `hello/build.sbt` 中可以这样写：
 
 ```scala
-name := "hello"
-
-version := "1.0"
-
-scalaVersion := "2.10.3"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello",
+    version := "1.0",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
-注意相邻的两行之间都有一个空行。这不仅仅是为了好看，它们是为了能将每一项分隔开来而必须的。在 [.sbt 构建定义][Basic-Def] 这节中你将会学到更多关于
+在 [.sbt 构建定义][Basic-Def] 这节中你将会学到更多关于
 如何编写 `build.sbt` 脚本的东西。
+
 如果你准备将你的项目打包成一个 jar 包，在 `build.sbt` 中至少要写上 name 和 version。
 
 ### 设置 sbt 版本

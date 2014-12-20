@@ -17,7 +17,7 @@ out: Using-Plugins.html
 
 ### 什么是插件
 
-插件继承了构建定义，大多数通常是通过添加设置。新的设置可以新的 task。例如，一个插件可以添加一个 `codeCoverage` task，它会生成一个测试覆盖率报告。
+插件继承了构建定义，大多数通常是通过添加设置。新的设置可以是新的 task。例如，一个插件可以添加一个 `codeCoverage` task 来生成一个测试覆盖率报告。
 
 ### 声明一个插件
 
@@ -45,7 +45,7 @@ resolvers += Resolver.sonatypeRepo("public")
 
 一个插件能够声明它自己的设置被自动添加到构建定义中去，在这种情况下你不需要为添加它做任何事情。
 
-作为 0.13.5 版本的 sbt，有一个新的特性叫[自动插件][Plugins]，它能够在自动的、安全的、确保所有依赖都在项目里的前提下开启插件。很多自动插件应该能够自动开启，然而有些却需要显示的开启。
+作为 0.13.5 版本的 sbt，有一个新的特性叫[自动插件][Plugins]，它能够在自动的、安全的、确保所有依赖都在项目里的前提下开启插件。很多自动插件应该能够自动开启，然而有些却需要显式开启。
 
 如果你正在使用一个需要显示开启的自动插件，那么你需要添加这样的代码到你的 `build.sbt` 文件：
 
@@ -57,7 +57,7 @@ lazy val util = (project in file("util")).
   )
 ```
 
-`enablePlugins` 方法允许项目显示的定义它们需要使用的自动插件。
+`enablePlugins` 方法允许项目显式定义它们需要使用的自动插件。
 
 项目也可以使用 `disablePlugins` 方法排除掉一些插件。例如，如果我们希望能够从 `util` 中移除 `IvyPlugin` 插件的设置，我们将 `build.sbt` 修改如下：
 
@@ -70,7 +70,7 @@ lazy val util = (project in file("util")).
   )
 ```
 
-自动插件会在文档中说明是否需要显示的开启。如果你队一个项目中有哪些插件开启了好奇，只需要在 sbt 命令行中执行 `plugins` 命令。
+自动插件会在文档中说明是否需要显示的开启。如果你对一个项目中开启了哪些插件好奇，只需要在 sbt 命令行中执行 `plugins` 命令。
 
 例如：
 
@@ -85,11 +85,11 @@ In file:/home/jsuereth/projects/sbt/test-ivy-issues/
 
 这里， `plugins` 的输出显示 sbt 默认的插件都被开启了。sbt 默认的设置通过3个插件提供：
 
-1.  `CorePlugin`: 提供对 task 的核心并行控制
-2.  `IvyPlugin`: 提供发布、解析模块的算法
-3.  `JvmPlugin`: 提供编译、测试、执行、打包 Java/Scala 项目的算法。
+1.  `CorePlugin`: 提供对 task 的核心并行控制。
+2.  `IvyPlugin`: 提供发布、解析模块的机制。
+3.  `JvmPlugin`: 提供编译、测试、执行、打包 Java/Scala 项目的机制。
 
-而且，`JUnitXmlReportPlugin` 提供对生成 junit-xml 的试验性支持。
+另外，`JUnitXmlReportPlugin` 提供对生成 junit-xml 的试验性支持。
 
 老的非自动的插件通常需要显示的添加设置，以致于[多项目构建][Multi-Project]可以有不同的项目类型。插件的文档会指出如何配置它，但是特别是对于老的插件，这包含添加对插件必要的基本设置和自定义。
 
