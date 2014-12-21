@@ -13,9 +13,9 @@ out: Full-Def.html
 
 ### sbt是递归的
 
-`build.sbt` 很简单，隐藏了 sbt 是如何工作的。sbt 建立是用 Scala 代码定义的。代码本身是必须被建立的。有比 .sbt 更好的建立方式么？
+`build.sbt` 很简单，隐藏了 sbt 是如何工作的。sbt 构建是用 Scala 代码定义的。代码本身也必须是能被构建的。有比 sbt 更好的建立方式么？
 
-`project` 目录 *另一个工程的项目* 知道如何建立一个工程。在 `project` 内部的项目能做任何其他项目可以做的事情。 *你的构建定义是一个 sbt 项目。*
+`project` 目录 *是你的工程内另一个工程的项目*，它知道如何构建你的工程。在 `project` 内部的项目能做任何其他项目可以做的事情。 *你的构建定义是一个 sbt 项目。*
 
 递归可以继续下去。如果你喜欢, 你可以稍稍调整项目的构建定义，比如创建 `project/project/` 目录。
 
@@ -24,15 +24,15 @@ out: Full-Def.html
 ```
 hello/                  # 项目的基目录
 
-    Hello.scala         # 一个项目源文件
+    Hello.scala         # 一个项目源文件（也可以在src/main/scala）
 
-    build.sbt           # build.sbt 是project/ 中构建定义的一部分。
+    build.sbt           # build.sbt 是project/ 中构建定义项目的一部分。
 
     project/            # 构建定义项目的基目录
 
-        Build.scala     # 构建定义源文件
+        Build.scala     # 构建定义源文件，即project/ project的源文件
 
-        build.sbt       # 项目构建定义的一部分
+        build.sbt       # project/project中工程项目构建定义的一部分；构建定义的构建定义
 
         project/        # 构建定义项目的基目录
 
@@ -41,27 +41,27 @@ hello/                  # 项目的基目录
 
 *不用担心！* 大部分时候不需要 `project/project/` 目录。但是理解它是有帮助的。
 
-文件以 `.scala` 或者 `.sbt` 结尾，一般命名 `build.sbt` 和 `Build.scala`。实际上，这只是一个惯例，更多的文件也是允许的。
+另外，任何以 `.scala` 或者 `.sbt` 结尾的文件都会被使用，命名为 `build.sbt` 和 `Build.scala`只是惯例。多个文件也是允许的。
 
-### `.scala` 源文件在构建定义项目
+### 构建定义项目的`.scala` 源文件
 
-`.sbt` 文件被融入它的兄弟目录。再次看项目布局：
+`.sbt` 文件被融入其兄弟工程目录中。再次看项目布局：
+
 ```
 hello/                  # 项目的基目录
 
-    build.sbt           # build.sbt 是project/ 中构建定义的一部分。
+    build.sbt           # build.sbt 是project/ 中构建定义工程的一部分。
 
     project/            # 构建定义项目的基目录
 
-        Build.scala     # 构建定义源文件
-
+        Build.scala     # project/ 工程源文件，即构建定义源文件
 ```
 
-在 build.sbt 中的 Scala 表达式被延续编译，和 `Build.scala` 融入在一起。（和其他在 `project/` 目录下的 `.scala` 文件）
+在 build.sbt 中的 Scala 表达式被延续编译，和 `Build.scala` 融入在一起（和在 `project/` 目录下的其他 `.scala` 文件）。
 
-在基目录中的 `*.sbt` 文件变成项目构建定义的一部分。
+在基目录中的 `*.sbt` 文件变成项目构建定义项目的一部分。
 
-`.sbt` 文件形式，对于在构建定义项目中增加设定，是一种方便的缩写
+`.sbt` 文件形式，对于在构建定义项目中增加设定，是一种方便的缩写。
 
 ### 关联 build.sbt 和 Build.scala
 
@@ -116,8 +116,7 @@ sampleKeyD := "D: in build.sbt"
 [info] Provided by:
 [info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
 ```
-注意 "Provided by" 会显示两个 value 的相同作用范围。那是 `.sbt` 文件中的 `sampleKeyC in ThisBuild` 等同与放置一个设置在 `Build.settings` 列表，在 `.scala` 文件中。sbt 会抽取构建范围内的设置从
-两个地方，而创建构建定义。
+注意 "Provided by" 显示两个 value 具有相同作用范围。那是 `.sbt` 文件中的 `sampleKeyC in ThisBuild` 等同与放置在 `.scala` 文件 `Build.settings` 列表中的一个设置。sbt 会从两个地方抽取构建范围内的设置，来创建构建定义。
 
 然后，`inspect sampleKeyB`：
 
@@ -138,14 +137,15 @@ sampleKeyD := "D: in build.sbt"
 [info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
 ```
 
-sbt 附加设置从 `.sbt` 文件到 `Build.settings` 和 `Project.setting` 的设置。另句话说，`.sbt` 设置拥有优先权。
-尝试改变 `Build.scala`，使得它能设置健值 `sanokeC` 或者 `sampleD`，他们已经在 `build.sbt` 设置过。`build.sbt` 中的设置应该能赢过 `Build.sbt`。
+sbt 从 `.sbt` 文件*附加*设置到 `Build.settings` 和 `Project.setting` 的设置，换句话说，`.sbt` 设置拥有优先权。
+尝试改变 `Build.scala`，使得它能设置健值 `sampleC` 或者 `sampleD`，他们已经在 `build.sbt` 设置过。`build.sbt` 中的设置应该能“赢”过 `Build.sbt`。
 
-另一要点应该被注意到：`sampleKeyC` 和 `sampleKeyD` 是可以在 `build.sbt` 内部获得的。这是因为 sbt 引入 `Build` 中的内容到 `.sbt` 文件中。在这种情况下，`import HelloBuild._` 是被隐含引入在 `build.sbt` 文件中。
+你也许会注意到另一要点：`sampleKeyC` 和 `sampleKeyD` 是可以在 `build.sbt` 内部获得的。这是因为 sbt 引入 `Build` 中的内容到 `.sbt` 文件中。在这种情况下，`import HelloBuild._` 是被隐含引入在 `build.sbt` 文件中。
 
 总结：
-- 在 `.scala` 文件中，可以在 `Build.settings` 中增加设置，会自动增加构建作用域。
-- 在 `.scala` 文件中，可以在 `Project.settings` 中增加设置，会自动增加构建作用域。
+
+- 在 `.scala` 文件中，可以在 `Build.settings` 中增加设置，这些设置自动成为构建作用域。
+- 在 `.scala` 文件中，可以在 `Project.settings` 中增加设置，这些设置自动成为工程作用域。
 - 任何在 `.scala` 中的 `Build` 对象将会把它的内容导入到 `.sbt` 文件中。
 - 在 `.sbt` 文件中的设置被 *追加* 到 `.scala` 中的设置。
 - 在 `.sbt` 文件中的设置是在项目作用域的，除非你指定它在其他域。
@@ -153,11 +153,12 @@ sbt 附加设置从 `.sbt` 文件到 `Build.settings` 和 `Project.setting` 的�
 
 ### 何时用 `.scala` 文件
 
-在 `.scala` 文件，你可以写任意的 Scala 代码，包括顶层的类和对象。另外，它没有对空白行的限制，因为它是一个 `.scala` 文件。
-推荐的方法是定义设置在 `.sbt` 文件中，用 `.scala` 文件用于任务实现，或者共享键值在 `.sbt` 文件中。
+在 `.scala` 文件，你可以写任意的 Scala 代码，包括顶层的类和对象。另外，它没有对空白行的限制，因为它是一个标准 `.scala` 文件。
+
+推荐的方法是定义大部分设置在 `.sbt` 文件中，用 `.scala` 文件来做任务实现，或者在多个 `.sbt` 文件中共享键值。
 
 
-### 命令窗口构建定义项目
+### 交互模式中的构建定义项目
 
 你现在可以切换到 sbt 命令行的交互模式，让在 `project/` 目录下的构建定义项目作为当前项目。可以输入 `reload plugins` 来达到目的。
 
@@ -173,19 +174,20 @@ sbt 附加设置从 `.sbt` 文件到 `Build.settings` 和 `Project.setting` 的�
 [info] ArrayBuffer(/home/hp/checkout/hello/hw.scala)
 >
 ```
-你可以用 `reload return` 离开构建定义项目，回到你平常的项目。
 
-### 提醒：它总是不可改变的
+如上所示，你可以用 `reload return` 离开构建定义项目，回到你平常的项目。
+
+### 提醒：它总是不可变的
 
 认为在 `build.sbt` 的设置将被添加到 `Build` 和 `Project` 对象中的 `settings` 字段是错误的。取而代之的是，`Build` 和 `Project` 中的 `settings` 列表，以及 `build.sbt` 中的设置，被
-串连到另一个不可变的列表中，然后被 sbt 使用。该 `Build` 和 `Project` 对象是“不可改变的配置”形成完整的构建定义的一部分。
+串连到另一个不可变的列表中，然后被 sbt 使用。该 `Build` 和 `Project` 对象是“不可变配置”形成完整构建定义的一部分。
 
 事实上，也有设置的其他来源。他们被追加顺序如下：
 
- - 从 `Build.settings` 和 `Project.settings` 在你的 `.scala` 设置文件。
- - 你的用户账号的全局设置；例如在 `$global_sbt_file$` 中你可以定义影响你 *所有* 项目的设置。
+ - 来自你的 `.scala` 设置文件中的 `Build.settings` 和 `Project.settings`。
+ - 你的用户账号全局设置；例如在 `$global_sbt_file$` 中你可以定义影响你 *所有* 项目的设置。
  - 插件注入的设置，参见接下来的[使用插件][Using-Plugins]。
  - 项目下 `.sbt` 文件中的设置。
- - 构建定义项目（即 `project` 中的项目）有从全局插件（`$global_plugins_base$`）的设置。[使用插件][Using-Plugins]解释了更多的内容。
+ - 构建定义项目（即 `project` 中的项目）有来自全局插件（`$global_plugins_base$`）的设置。[使用插件][Using-Plugins]解释了更多的内容。
 
 后面的设置会覆盖前面的。全部的设置列表构成了完整的构建定义。

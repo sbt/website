@@ -108,7 +108,7 @@ In file:/home/jsuereth/projects/sbt/test-ivy-issues/
 Here, the `plugins` output is showing that the sbt default plugins are all
 enabled. sbt's default settings are provided via three plugins:
 
-1.  `CorePlugin`: Provides the core parallelism controls for tasks
+1.  `CorePlugin`: Provides the core parallelism controls for tasks.
 2.  `IvyPlugin`: Provides the mechanisms to publish/resolve modules.
 3.  `JvmPlugin`: Provides the mechanisms to compile/test/run/package
     Java/Scala projects.

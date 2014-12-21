@@ -15,7 +15,7 @@ The current recommendation is to use [Multi-project .sbt build definition][Basic
 ### What is a bare .sbt build definition
 
 Unlike [Multi-project .sbt build definition][Basic-Def] and [.scala build definition][Full-Def]
-that explicitly deftine a [Project](../api/sbt/Project.html) definition,
+that explicitly define a [Project](../api/sbt/Project.html) definition,
 bare build definition implicitly defines one based on the location of the `.sbt` file.
 
 Instead of defining `Project`s, bare `.sbt` build definition consists of

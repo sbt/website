@@ -16,7 +16,9 @@ Scope
 ### 关于 Key 的所有故事
 
 [前一小节][Basic-Def] 我们认为像 `name` 的一个 key 相当于 sbt 保存键值对的 map 中的一条记录，这只是一种简化。
+
 事实上，每一个 key 可以在多个上下文中关联一个值，每个上下文称之为 “scope”。
+
 一些具体的例子：
 
 - 如果在你的构建定义中有多个项目，在每个项目中同一个 key 可以有不同的值。
@@ -24,7 +26,9 @@ Scope
 - Key `packageOptions`（包含创建 jar 包的一些选项）可以有不同的值，在对 class 文件打包时是 `packageBin`，对源代码打包时是 `packageSrc`。
 
 *给定的 key `name` 没有单一的值*，因为在不同的 scope 下它的值不同。
+
 然而，给定的 `scoped` key 的值是单一的。
+
 如果你想起 [前面][Basic-Def] 我们讨论过的，sbt 生成一个 map 来处理描述项目的 settings 列表，这个 map 中的 key 就是 *scope 下的* key。构建定义中定义的每一个 setting（例如在 `build.sbt` 中）都有一个 scope 下的 key。
 
 一般 scope 是隐式的或者是默认的，但是一旦默认的是错误的，你就需要在 `build.sbt` 中指定你期待的 scope。
@@ -32,6 +36,7 @@ Scope
 ### Scope 轴
 
 *Scope 轴* 是一种类型，该类型的每个实例都能定义自己的 scope（也就是说，每个实例的 key 可以有自己唯一的值）。
+
 有三种类型的 scope 轴：
 
 - Projects
@@ -41,7 +46,8 @@ Scope
 #### 通过 Project 轴划分 Scope
 
 如果你将 [多个项目][Multi-Project] 放在同一个构建中，每个项目需要有属于自己的 settings。也就是说，keys 可以根据项目被局限在不同的上下文中。
-Project 轴可以设置成构建全局的，因此一个 setting 可以应用到全局构建而不是单个项目。当一个项目没有定义项目层级的 setting 的时候，构建层级的 setting 通常作为替代的设置。
+
+Project 轴可以设置成构建全局的，因此一个 setting 可以应用到全局构建而不是单个项目。当一个项目没有定义项目层级的 setting 的时候，构建层级的 setting 通常作为默认的设置。
 
 #### 通过 Configuration 轴划分 Scope
 
@@ -178,16 +184,17 @@ Settings 可以影响一个 task 如何工作。例如，task `packageSrc` 就�
 
 ### 在构建定义中涉及 scope
 
-如果你创建的 `build.sbt` 中有一个光秃秃的 key，它将被局限在当前的 project 下，configuration 和 task 均为 `Global`：
+如果你创建的 `build.sbt` 中有一个bare key，它的作用于将是当前的 project 下，configuration 和 task 均为 `Global`：
 
 ```scala
-name := "hello"
+lazy val root = (project in file(".")).
+  settings(
+    name := "hello"
+  )
 ```
 
 启动 sbt 并且执行 `inspect name` 可以看到它由 `{file:/home/hp/checkout/hello/}default-aea33a/*:name` 提供，也就是说，project 是 `{file:/home/hp/checkout/hello/}default-aea33a`，
 configuration 是 `*`（表示全局），task 没有显示出来（实际上也是全局）。
-
-`build.sbt` 总给单个项目定义设置，所以 “当前项目” 就是你在特定的 `build.sbt` 中定义的项目。（对于 [多项目构建][Multi-Project]，每个项目都有自己的 `build.sbt`。）
 
 Keys 会调用一个重载的 in 方法设置 scope。传给 in 方法的参数可以是任何 scope 轴的实例。比如说，你可以将 `name` 局限在 `Compile` configuration 中，尽管没有真实的理由要这样做：
 
@@ -216,7 +223,7 @@ name in Global := "hello"
 （`name in Global` 隐式的把 scope 轴的值 `Global` 转换为 scope 所有轴的值均为 `Global`；task 和 configuration 默认是 `Global`，因此这里的效果是将 project 设置成 `Global`，
 也就是说，定义了 `*/*:name` 而不是 `{file:/home/hp/checkout/hello/}default-aea33a/*:name`）
 
-如果你之前不熟悉 Scala，提醒一下：理解 in 和 `:=` 仅仅是方法，不是魔法很重要。Scala 让你用一种更好的方式编写它们，但是你也可以用 Java 的风格：
+如果你之前不熟悉 Scala，提醒一下：in 和 `:=` 仅仅是方法，不是魔法，理解这点很重要。Scala 让你用一种更好的方式编写它们，但是你也可以用 Java 的风格：
 
 ```scala
 name.in(Compile).:=("hello")
@@ -230,8 +237,8 @@ name.in(Compile).:=("hello")
 
 为了改变 key `compile` 的值，你需要写成 `compile in Compile` 或者 `compile in Test`。用普通的 `compile` 会在当前 project 的 scope 中定义一个新的 task，而不是覆盖 configuration 的 scope 标准的 `compile` task。
 
-如果你遇到像 *“引用未定义的设置”* 这样的错误，通常是你指定 scope 失败了，或者你指定了一个错误的 scope。你使用的 key 可能定义在其他的 scope 中。sbt 会尝试在错误消息里面提示你你的想法是什么；如 “你是指 compile:compile？”
+如果你遇到像 *“引用未定义的设置”* 这样的错误，通常是你指定 scope 失败了，或者你指定了一个错误的 scope。你使用的 key 可能定义在其他的 scope 中。sbt 会尝试在错误消息里面提示你的想法是什么；如 “你是指 compile:compile？”
 
 一种方式是你可以这样认为，name 只是 key 的 *一部分*。实际上，所有的 key 都有 name 和 scope 组成（scope 有三个轴）。换句话说，`packageOptions in (Compile, packageBin)` 是表示 key name 的完整的表达式。
-简单地，`packageOptions` 也是一个 key name，但是是一个不同的（对于没有 in 方法的 key，会隐式的假设一个 scope：当前的 project，global
+其简写 `packageOptions` 也是一个 key name，但是是不同的（对于没有 in 方法的 key，会隐式的假设一个 scope：当前的 project，global
 config，global task）。

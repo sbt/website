@@ -131,7 +131,7 @@ method can use either syntax).
 
 The `:=` method on key `name` returns a `Setting`, specifically a
 `Setting[String]`. `String` also appears in the type of `name` itself, which
-is `SettingKey[String]`. In this case, the returned Setting[String] is a
+is `SettingKey[String]`. In this case, the returned `Setting[String]` is a
 transformation to add or replace the `name` key in sbt's map, giving it
 the value `"hello"`.
 
@@ -210,7 +210,7 @@ task. For a setting, the value will be computed once at project load
 time. For a task, the computation will be re-run each time the task is
 executed.
 
-For example, to implement the `hello` task from the previous section, :
+For example, to implement the `hello` task from the previous section:
 
 ```scala
 lazy val hello = taskKey[Unit]("An example task")

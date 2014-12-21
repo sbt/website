@@ -28,7 +28,7 @@ out: Library-Dependencies.html
 
 你也可以将测试依赖的 jar 文件放在 `lib` 目录下，比如 [ScalaCheck](http://scalacheck.org/)，[Specs2](http://specs2.org)，[ScalaTest](http://www.scalatest.org/)。
 
-`lib` 目录下的所有依赖都会在 classpaths（为了 `compile`， `test`， `run` 和 `console`）。如果你想对其中的一个改变 classpath，
+`lib` 目录下的所有依赖都会在 classpaths（对 `compile`， `test`， `run` 和 `console` 都成立）。如果你想对其中的一个改变 classpath，
 你需要做适当调整，例如 `dependencyClasspath in Compile` 或者 `dependencyClasspath in Runtime`。
 
 如果用非托管依赖的话，不用往 `build.sbt` 文件中添加任何内容，不过你可以改变 `unmanagedBase` key，如果你想用一个不同的目录而非 `lib`。
@@ -57,19 +57,19 @@ sbt 使用 [Apache Ivy](http://ant.apache.org/ivy/) 来实现托管依赖，所�
 大多数时候，你可以很简单的在 `libraryDependencies` 设置项中列出你的依赖。也可以通过 Maven POM 文件或者 Ivy 配置文件来配置依赖，而且可以通过 sbt 来调用这些外部的配置文件。
 你可以从[这里][external-maven-ivy]获取更详细的内容。
 
-像这样定义一个依赖，`groupId`， `artifactId` 和 `revision` 都是字符串：
+可以像这样定义一个依赖，其中 `groupId`， `artifactId` 和 `revision` 都是字符串：
 
 ```scala
 libraryDependencies += groupID % artifactID % revision
 ```
 
-或者像这样， 用字符串或者 [Configuration](../sxr/sbt/Configurations.scala.html#sbt.Configuration) val 当做 `configuration`：
+或者像这样， 用字符串或者 [Configuration](../../sxr/sbt/Configurations.scala.html#sbt.Configuration) val 当做 `configuration`：
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
-`libraryDependencies` 在 [Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) 中像这样声明：
+`libraryDependencies` 在 [Keys](../../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) 中像这样声明：
 
 ```scala
 val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependencies.")
@@ -112,10 +112,10 @@ libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
 libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 ```
 
-这个想法是很多依赖都会被编译之后给多个 Scala 版本，然后你想确保和项目匹配的某一个是二进制兼容的。
+这个想法是很多依赖都会被编译给多个 Scala 版本，而你想确保和项目匹配的jar是二进制兼容的。
 
 实践中的复杂度在于通常一个依赖会和稍微不同的 Scala 版本一起工作；但是 `%%` 就没有那么智能了。所以如果一个依赖要求版本为 `2.10.1`，但是你使用的 `scalaVersion := "2.10.4"`，
-你不可能使用 `%%` 方法即使 `2.10.1` 的版本很有可能工作。如果 `%%` 停止工作了，只需要去检查那个依赖是基于哪个 Scala 版本构建的，然后硬编码你认为可以工作的版本号（假设已经有一个）。
+你无法使用 `%%` 方法即使 `2.10.1` 的版本很可能也可以工作。如果 `%%` 无法达到目的，只需要去检查那个依赖是基于哪个 Scala 版本构建的，然后硬编码你认为可以工作的版本号（假设已经有一个）。
 
 参见 [交叉构建][Cross-Build] 获取更多信息。
 
@@ -142,7 +142,7 @@ resolvers += name at location
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
-`resolvers` key 在 [Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) 中像这样定义：
+`resolvers` key 在 [Keys](../../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) 中像这样定义：
 
 ```scala
 val resolvers = settingKey[Seq[Resolver]]("用户为托管依赖定义的额外的解析器。")
@@ -174,7 +174,7 @@ sbt 将 `resolvers` 和一些默认的仓库组合起来构成 `externalResolver
 
 #### Per-configuration dependencies
 
-通常一个依赖只被测试代码使用（在 `src/test/scala` 中，通过 `Test` configuration 编译）。
+通常会有依赖只被测试代码使用（在 `src/test/scala` 中，通过 `Test` configuration 编译）而没有在主应用中使用。
 
 如果你想要一个依赖只在 `Test` configuration 的 classpath 中出现而不是 `Compile` configuration，像这样添加 `% "test"`：
 

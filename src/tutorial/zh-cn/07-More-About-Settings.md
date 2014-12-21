@@ -20,7 +20,7 @@ out: More-About-Settings.html
 
 通过 `:=` 创建的 `Setting` 会往转换之后新的 map 中放入一个固定的常量。例如，如果你通过 `name := "hello"` 对 map 做一次转换，新的 map 中 key `name` 就保存着一个字符串 `"hello"`。
 
-最终 Settings 必须在主列表中（`build.sbt` 中的所有行最后都会自动到该列表中，但是 [.scala 文件][Full-Def] 中的内容如果在创建 `Setting` 时没有没放在 sbt 能够找到的位置就会出错）。
+最终 Settings 必须在主列表中来工作（`build.sbt` 中的所有行最后都会自动到该列表中，但是 [.scala 文件][Full-Def] 中的内容如果在创建 `Setting` 时没有放在 sbt 能够找到的位置就会出错）。
 
 ### 追加值： `+=` 和 `++=`
 
@@ -51,7 +51,7 @@ sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
 
 `Seq(a, b, c, ...)` 是 Scala 用来构建列表的标准语法。
 
-为了完整替换默认的 source 目录，当然使用 `:=` 方法：
+要完全替换默认的 source 目录，当然可以使用 `:=` 方法：
 
 ```scala
 sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
@@ -107,11 +107,11 @@ sbt 自动执行了 `update`。它可以工作是因为 `compile` 计算需要�
 无论何时一个设置用 `:=`，`+=` 或者 `++=` 时依赖于自己或者另一个 key 的值，它依赖的值必须存在。如果不存在，sbt 就会抱怨。例如，它可能会说 *“引用了未定义的设置”*。
 当这发生时，确认一下你使用的 key 在 [scope][Scopes] 中并且已经定义了。
 
-可能循环引用，这是错误的；sbt 会告诉你，如果你循环引用了。
+在sbt中创建循环引用是可能的，这是错误的；如果你循环引用了，sbt 会告诉你。
 
 #### 依赖于其他 key 的值的 task
   
-你可以计算一些 task 或者 setting 的值来定义另一个 task 或者为另一个 task 追加一直值。通过使用 `Def.task` 和 `taskValue` 作为`:=`， `+=` 或者 `++=`的参数可以做到。
+你可以计算一些 task 或者 setting 的值来定义另一个 task 或者为另一个 task 追加值。通过使用 `Def.task` 和 `taskValue` 作为`:=`， `+=` 或者 `++=`的参数可以做到。
 
 作为第一个例子，考虑追加一个使用项目基目录和编译 classpath 的 source generator。
 
@@ -126,7 +126,7 @@ sourceGenerators in Compile += Def.task {
 在 [.sbt 构建定义][Basic-Def] 中提到过，当你通过 `:=` 或其他方法创建一个设置时，task key 创建的是 `Setting[Task[T]]` 而不是 `Setting[T]`。
 Setting 可以是 Task 的输入，但 Task 不能是 Setting 的输入。
 
-取到这两个 key（从 [Keys](../sxr/sbt/Keys.scala.html) 中）：
+以这两个 key 为例（从 [Keys](../../sxr/sbt/Keys.scala.html) 中）：
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
