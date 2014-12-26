@@ -5,7 +5,7 @@ out: Multi-Project.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Directories]: Directories.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 Multi-project builds
 --------------------
@@ -192,26 +192,6 @@ project ID, such as `subProjectID/compile`.
 
 The definitions in `.sbt` files are not visible in other `.sbt` files. In
 order to share code between `.sbt` files, define one or more Scala files
-in the `project/` directory of the build root. This directory is also an
-sbt project, but for your build.
+in the `project/` directory of the build root.
 
-For example:
-
-`<root>/project/Common.scala`:
-
-```scala
-import sbt._
-import Keys._
-
-object Common {
-  def text = "org.example"
-}
-```
-
-`<root>/build.sbt`:
-
-```scala
-organization := Common.text
-```
-
-See [.scala Build Definition][Full-Def] for details.
+See [organizing the build][Organizing-Build] for details.

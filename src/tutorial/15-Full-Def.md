@@ -6,87 +6,17 @@ out: Full-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
 
-.scala build definition
------------------------
+Appendix: .scala build definition
+---------------------------------
 
-This page assumes you've read previous pages in the Getting Started
+This page describes an old style of `.scala` build definition.
+In the previous versions of sbt, `.scala` was the only way to create multi-project build definition,
+but sbt 0.13 added [multi-project .sbt build definition][Basic-Def],
+which is the recommended style.
+
+We assume you've read previous pages in the Getting Started
 Guide, *especially* [.sbt build definition][Basic-Def] and
 [more kinds of setting][More-About-Settings].
-
-### sbt is recursive
-
-`build.sbt` is so simple, it conceals how sbt really works. sbt builds are
-defined with Scala code. That code, itself, has to be built. What better
-way than with sbt?
-
-The `project` directory *is another project inside your project* which
-knows how to build your project. The project inside `project` can (in
-theory) do anything any other project can do. *Your build definition is
-an sbt project.*
-
-And the turtles go all the way down. If you like, you can tweak the
-build definition of the build definition project, by creating a
-`project/project/` directory.
-
-Here's an illustration.
-
-```
-hello/                  # your project's base directory
-
-    Hello.scala         # a source file in your project (could be in
-                        #   src/main/scala too)
-
-    build.sbt           # build.sbt is part of the source code for the
-                        #   build definition project inside project/
-
-    project/            # base directory of the build definition project
-
-        Build.scala     # a source file in the project/ project,
-                        #   that is, a source file in the build definition
-
-        build.sbt       # this is part of a build definition for a project
-                        #   in project/project ; build definition's build
-                        #   definition
-
-
-        project/        # base directory of the build definition project
-                        #   for the build definition
-
-            Build.scala # source file in the project/project/ project
-```
-
-*Don't worry!* Most of the time you are not going to need all that. But
-understanding the principle can be helpful.
-
-By the way: any time files ending in `.scala` or `.sbt` are used, naming
-them `build.sbt` and `Build.scala` are conventions only. This also means
-that multiple files are allowed.
-
-### `.scala` source files in the build definition project
-
-`.sbt` files are merged into their sibling project directory. Looking back
-at the project layout:
-
-```
-hello/                  # your project's base directory
-
-    build.sbt           # build.sbt is part of the source code for the
-                        #   build definition project inside project/
-
-    project/            # base directory of the build definition project
-
-        Build.scala     # a source file in the project/ project,
-                        #   that is, a source file in the build definition
-```
-
-The Scala expressions in build.sbt are compiled alongside and merged
-with `Build.scala` (or any other `.scala` files in the `project/` directory).
-
-`*.sbt` files in the base directory for a project become part of the
-project build definition project also located in that base directory.
-
-The `.sbt` file format is a convenient shorthand for adding settings to
-the build definition project.
 
 ### Relating build.sbt to Build.scala
 
@@ -193,16 +123,6 @@ In summary:
   files.
 - The settings in `.sbt` files are project-scoped unless you explicitly
   specify another scope.
-
-### When to use `.scala` files
-
-In `.scala` files, you can write any Scala code, including top-level
-classes and objects. Also, there are no restrictions on blank lines,
-since they are standard `.scala` files.
-
-The recommended approach is to define most configuration in `.sbt` files,
-using `.scala` files for task implementations or to share values, such as
-keys, across `.sbt` files.
 
 ### The build definition project in interactive mode
 

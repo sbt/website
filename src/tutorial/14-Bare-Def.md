@@ -6,8 +6,8 @@ out: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Basic-Def]: Basic-Def.html
 
-Bare .sbt build definition
---------------------------
+Appendix: Bare .sbt build definition
+------------------------------------
 
 This page describes an old style of `.sbt` build definition.
 The current recommendation is to use [Multi-project .sbt build definition][Basic-Def].

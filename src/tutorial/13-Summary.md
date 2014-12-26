@@ -4,7 +4,6 @@ out: Summary.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
   [getting-help]: ../docs/faq.html#getting-help
 
@@ -50,7 +49,6 @@ need to know.
     or the test one (`Test`).
 -   the per-project axis also supports "entire build" scope.
 -   scopes fall back to or *delegate* to more general scopes.
--   [.sbt][Basic-Def] vs. [.scala][Full-Def] build definition
 -   put most of your configuration in `build.sbt`, but use `.scala` build
     definition files for defining classes and larger task
     implementations.

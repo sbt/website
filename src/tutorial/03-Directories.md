@@ -4,7 +4,7 @@ out: Directories.html
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 Directory structure
 -------------------
@@ -56,7 +56,7 @@ You've already seen `build.sbt` in the project's base directory. Other sbt
 files appear in a `project` subdirectory.
 
 `project` can contain `.scala` files, which are combined with `.sbt` files to
-form the complete build definition. See [.scala build definition][Full-Def] for more.
+form the complete build definition. See [organizing the build][Organizing-Build] for more.
 
 ```
 build.sbt
@@ -66,7 +66,7 @@ project/
 
 You may see `.sbt` files inside `project/` but they are not equivalent to
 `.sbt` files in the project's base directory. Explaining this will
-come [later][Full-Def], since you'll need some background information first.
+come [later][Organizing-Build], since you'll need some background information first.
 
 ### Build products
 
