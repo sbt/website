@@ -5,7 +5,7 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
   [Input-Tasks]: ../docs/Input-Tasks.html
   [Plugins]: ../docs/Plugins.html
   [Tasks]: ../docs/Tasks.html
@@ -48,9 +48,9 @@ value until project reload, while a task is re-computed for every "task
 execution" (every time someone types a command at the sbt interactive
 prompt or in batch mode).
 
-Keys may be defined in a [.sbt file][Basic-Def],
-[.scala file][Full-Def], or in [a plugin][Using-Plugins].
-Any `val` found in the `autoImport` object of an enabled auto plugin
+Keys may be defined in an [.sbt file][Basic-Def],
+a [.scala file][Organizing-Build], or in an [auto plugin][Using-Plugins].
+Any `val`s found under `autoImport` object of an enabled auto plugin
 will be imported automatically into your `.sbt` files.
 
 ### Implementing a task

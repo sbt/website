@@ -4,7 +4,6 @@ out: More-About-Settings.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
 
 More kinds of setting
 ---------------------
@@ -28,11 +27,6 @@ The `Setting` which `:=` creates puts a fixed, constant value in the new,
 transformed map. For example, if you transform a map with the setting
 `name := "hello"` the new map has the string `"hello"` stored under the key
 name.
-
-Settings must end up in the master list of settings to do any good (all
-lines in a `build.sbt` automatically end up in the list, but in a
-[.scala file][Full-Def] you can get it wrong by creating a `Setting`
-without putting it where sbt will find it).
 
 ### Appending to previous values: `+=` and `++=`
 
