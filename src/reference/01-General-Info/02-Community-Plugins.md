@@ -157,6 +157,7 @@ your plugin to the list.
 -   sbt-purescript: <https://github.com/eamelink/sbt-purescript>
 -   sbt-jasmine-plugin (Run javascript tests with jasmine within sbt):
     <https://github.com/joescii/sbt-jasmine-plugin>
+-   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
 
 #### Documentation plugins
 
