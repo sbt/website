@@ -296,6 +296,16 @@ libraryDependencies +=
 
 See [ModuleID](../api/sbt/ModuleID.html) for API details.
 
+To exclude a transitive dependency from all dependencies in a sequence
+you can use a `map` call like this:
+
+```scala
+libraryDependencies ++= Seq(
+  "log4j" % "log4j" % "1.2.15",
+  "more" % "libs" % "1.0"
+).map(_.exclude("commons-logging", "commons-logging"))
+```
+
 ##### Download Sources
 
 Downloading source and API documentation jars is usually handled by an
