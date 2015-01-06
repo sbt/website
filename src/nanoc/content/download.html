@@ -25,10 +25,14 @@ $ port install sbt
 <div class="arc_linux">
   <div class="distro_debian">
   	<h2>Linux (deb)</h2>
-  	<a href="https://dl.bintray.com/sbt/debian/sbt-<%= @site.config[:sbtVersion] %>.deb" class="btn btn-primary btn-lg active" role="button">sbt-<%= @site.config[:sbtVersion] %>.deb</a>
+<pre>
+echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+sudo apt-get update
+sudo apt-get install sbt
+</pre>
   </div>
 
-  <div class="distro_redhad">
+  <div class="distro_redhat">
   	<h2>Linux (rpm)</h2>
   	<a href="https://dl.bintray.com/sbt/rpm/sbt-<%= @site.config[:sbtVersion] %>.rpm" class="btn btn-primary btn-lg active" role="button">sbt-<%= @site.config[:sbtVersion] %>.rpm</a>
   </div>
