@@ -32,11 +32,18 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 
 ![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-### RPM
+### Red Hat Enterprise Linux and other RPM-based distributions
 
-The RPM packages are also officially supported:
+[RPM][RPM] package is officially supported by sbt.
 
-  - [RPM][RPM] package
+Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
+Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
+
+    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
+    sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
+    sudo yum install sbt
+
+sbt binaries are published to Bintray, and conveniently Bintray provides an RPM repository. You just have to add the repository to the places your package manager will check.
 
 > **Note:** Please report any issues with these to the
 > [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)

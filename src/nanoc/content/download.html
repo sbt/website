@@ -34,7 +34,11 @@ sudo apt-get install sbt
 
   <div class="distro_redhat">
   	<h2>Linux (rpm)</h2>
-  	<a href="https://dl.bintray.com/sbt/rpm/sbt-<%= @site.config[:sbtVersion] %>.rpm" class="btn btn-primary btn-lg active" role="button">sbt-<%= @site.config[:sbtVersion] %>.rpm</a>
+<pre>
+curl https://bintray.com/sbt/rpm/rpm &gt; bintray-sbt-rpm.repo
+sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
+sudo yum install sbt
+</pre>
   </div>
 
   <div class="distro_gentoo">
