@@ -158,6 +158,7 @@ your plugin to the list.
 -   sbt-jasmine-plugin (Run javascript tests with jasmine within sbt):
     <https://github.com/joescii/sbt-jasmine-plugin>
 -   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
+-   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
 
 #### Documentation plugins
 
