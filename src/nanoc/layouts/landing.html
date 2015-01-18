@@ -36,7 +36,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="large-logo"><img src="<%= @items['/sbt-logo-white-288x200/'].path %>" alt="sbt"></div>
+            <div class="logo"><img src="<%= @items['/sbt-logo-white-72x50/'].path %>" alt="sbt"></div>
             <ul class="nav">
               <li><a href="<%= @items['/documentation/'].path %>">Documentation</a></li>
               <li><a href="<%= @items['/download/'].path %>">Download</a></li>
@@ -67,7 +67,22 @@
       </div>
     </footer>
     <!-- Placed at the end -->
-    <script src="<%= @items['/jquery/'].path %>"></script>
-    <script src="<%= @items['/bootstrap/'].path %>"></script>
+    <script src="<%= @items['/jquery/'].path %>" type="text/javascript"></script>
+    <script src="<%= @items['/bootstrap/'].path %>" type="text/javascript"></script>
+    <script type="text/javascript">
+function onResize() {
+  var w = $(window).width();
+  $('div.logo img').remove();
+  if (w > 1000) {
+    $('div.logo').append('<img src=".<%= @items['/sbt-logo-white-288x200/'].path %>" alt="sbt">');
+  } else {
+    $('div.logo').append('<img src=".<%= @items['/sbt-logo-white-72x50/'].path %>" alt="sbt">');
+  } // if-else
+}
+$(function() {
+  onResize();
+});
+$(window).on('resize', onResize);
+    </script>
   </body>
 </html>
