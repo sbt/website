@@ -348,7 +348,7 @@ lazy val FunTest = config("fun") extend(Test)
 ```
 
 The `extend(Test)` part means to delegate to `Test` for undefined
-`CustomTest` settings. The line that adds the tasks and settings for the
+`FunTest` settings. The line that adds the tasks and settings for the
 new test configuration is:
 
 ```scala
