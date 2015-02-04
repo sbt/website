@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<%= @items['/bootstrap_style/'].path %>">
     <link rel="stylesheet" href="<%= @items['/bootstrap-theme/'].path %>">
     <link rel="stylesheet" href="<%= @items['/stylesheet/'].path %>">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <!-- you don't need to keep this, but it's cool for stats! -->
     <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
     <script type="text/javascript" async>
@@ -30,25 +30,32 @@
     </script>
   </head>
   <body class="default">
-    <header class="navbar navbar-static-top">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="logo">
-              <a href="<%= @items['/'].path %>index.html"><img src="<%= @items['/sbt-logo-white-72x50/'].path %>" alt="sbt"></a>
+    <header>
+        <nav>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="logo">
+                  <a href="<%= @items['/'].path %>index.html">
+                    <img src="<%= @items['/typesafe_sbt_svg/'].path %>" alt="sbt">
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="nav">
+                  <a href="<%= @items['/documentation/'].path %>">Documentation</a>
+                  <a href="<%= @items['/download/'].path %>">Download</a>
+                  <a href="<%= @items['/community/'].path %>">Community</a>
+                  <a id="source-code" href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo-teal/'].path %>" alt="Source code"></a>
+                  <a id="twitter" href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-teal/'].path %>" alt="sbt on Twitter"></a>
+                </div>
+              </div>
             </div>
-            <ul class="nav">
-              <li><a href="<%= @items['/documentation/'].path %>">Documentation</a></li>
-              <li><a href="<%= @items['/download/'].path %>">Download</a></li>
-              <li><a href="<%= @items['/community/'].path %>">Community</a></li>
-              <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo/'].path %>" alt="Source code"></a></li>
-              <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-white/'].path %>" alt="sbt on Twitter"></a></li>
-            </ul>
           </div>
-        </div>
-      </div>
+        </nav>
     </header>
-    <div class="midbluebar">
+
+    <div class="page-title">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
@@ -57,11 +64,13 @@
         </div>
       </div>
     </div>
-    <div class="container content">
-      <div class="row">
-        <div class="col-md-8">
-          <div id="main">
-            <%= yield %>
+    <div class="fw-wrapper white">
+      <div class="container content">
+        <div class="row">
+          <div class="col-md-8">
+            <div id="main">
+              <%= yield %>
+            </div>
           </div>
         </div>
       </div>
@@ -70,7 +79,7 @@
       <div class="container footer">
         <div class="row">
           <div class="col-md-12">
-           © 2014 Typesafe Inc.
+           © 2015 Typesafe Inc.
           </div>
         </div>
       </div>
