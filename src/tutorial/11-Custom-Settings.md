@@ -167,7 +167,7 @@ sum: 3
 [success] Total time: 1 s, completed Dec 22, 2014 5:00:00 PM
 ```
 
-To review what happened, let's look at a gaphical notation of `sampleIntTask`:
+To review what happened, let's look at a graphical notation of `sampleIntTask`:
 
 ![task-dependency](files/task-dependency00.png)
 
