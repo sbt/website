@@ -34,18 +34,18 @@
     <div class="row">
       <div class="col-md-8 sbt">
         <nav>
-          <a href="../../index.html">
-            <img src="files/typesafe_sbt_reverse_svg.svg" alt="sbt">
+          <a href="../../../index.html">
+            <img src="../files/typesafe_sbt_reverse_svg.svg" alt="sbt">
           </a>
-          <a href="../../documentation.html">Documentation</a>
-          <a href="../../download.html">Download</a>
-          <a href="../../community.html">Community</a>
+          <a href="../../../documentation.html">Documentation</a>
+          <a href="../../../download.html">Download</a>
+          <a href="../../../community.html">Community</a>
         </nav>
       </div>
       <div class="col-md-4 text-right ts">
         &copy; 2015 Typesafe Inc.
         <a href="https://typesafe.com">
-          <img src="files/typesafe_reverse.svg" alt="Typesafe, Inc.">
+          <img src="../files/typesafe_reverse.svg" alt="Typesafe, Inc.">
         </a>
       </div>
     </div>
