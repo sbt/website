@@ -2,14 +2,113 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>sbt - <%= @item[:title] %></title>
+    <title>sbt - The interactive build tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<%= @items['/bootstrap_style/'].path %>">
     <link rel="stylesheet" href="<%= @items['/bootstrap-theme/'].path %>">
     <link rel="stylesheet" href="<%= @items['/stylesheet/'].path %>">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link rel='shortcut icon' href="<%= @items['/favicon/'].path %>" />
     <!-- you don't need to keep this, but it's cool for stats! -->
     <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
+    
+  </head>
+  <body class="landing">
+    <header>
+      <div class="wrench">
+        <nav>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="logo">
+                  <a href="<%= @items['/'].path %>index.html">
+                    <img src="<%= @items['/typesafe_sbt_svg/'].path %>" alt="sbt">
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="nav">
+                  <a href="<%= @items['/documentation/'].path %>">Documentation</a>
+                  <a href="<%= @items['/download/'].path %>">Download</a>
+                  <a href="<%= @items['/community/'].path %>">Community</a>
+                  <a id="source-code" href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo-teal/'].path %>" alt="Source code"></a>
+                  <a id="twitter" href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-teal/'].path %>" alt="sbt on Twitter"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="fw-wrapper white">
+      <div class="container content">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="main" class="text-center">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fw-wrapper navy-ltr support-strip">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="support-item">
+              <div class="support-icon">
+                <svg class="svg-icon svg-icon-chat" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97.5 85.2" enable-background="new 0 0 97.5 85.2"><path stroke="#fff" stroke-width="4.282" stroke-linecap="round" stroke-miterlimit="10" d="M27 29.5h-16.3c-4.7 0-8.6 3.9-8.6 8.6v25.7c0 4.7 3.9 8.6 8.6 8.6h2.7c.8 0 1.5.7 1.5 1.5v7.8c0 1.3 1.6 2 2.5 1l9.5-9.5c.5-.5 1.2-.8 2-.8h20.2c4.7 0 8.6-3.9 8.6-8.6v-7.8" fill="none"/><path fill="#fff" d="M85 0h-40c-6.9 0-12.5 5.6-12.5 12.5v33.4c0 2.2 1.8 4.1 4.1 4.1h29.9c.7 0 1.3.3 1.8.7l10 10c1.6 1.6 4.3.5 4.3-1.8v-6.5c0-1.4 1.1-2.5 2.5-2.5 6.9 0 12.5-5.6 12.5-12.5v-25c-.1-6.8-5.8-12.4-12.6-12.4z"/></svg>
+              </div>
+              <div class="support-detail">
+                <h2>Community Support</h2>
+                <a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a>
+                <a href="https://stackoverflow.com/questions/tagged/sbt">StackOverflow</a>
+              </div>
+            </div>
+            <div class="support-item">
+              <div class="support-icon">
+                <svg class="svg-icon svg-icon-typesafe" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 154 154" enable-background="new 0 0 154 154"><path fill="#fff" d="M49.7 114c-4.8 0-8.7-5.1-8.7-9.9v-.2c0-4.8 3.9-7.9 8.7-7.9h100c.9-3 1.6-7 2-11h-84c-4.8 0-8.7-3.7-8.7-8.5s3.9-8.5 8.7-8.5h83.7c-.5-4-1.2-8-2.3-11h-63.4c-4.8 0-8.7-3.7-8.7-8.5s3.9-8.5 8.7-8.5h56c-13.1-23-37.2-37.8-64.7-37.8-41.4 0-75 33.3-75 74.7s33.6 75.6 75 75.6c28.4 0 53.1-15.4 65.8-38.4h-93.1z"/></svg>
+              </div>
+              <div class="support-detail">
+                <h2>Commercial Support</h2>
+                <a href="http://typesafe.com/subscription">Typesafe Subscription</a>
+                <a href="http://typesafe.com/subscription/training">Training</a>
+                <a href="http://typesafe.com/subscription/consulting">Consulting</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container footer">
+        <div class="row">
+          <div class="col-md-8 sbt">
+            <nav>
+              <a href="<%= @items['/'].path %>index.html">
+                <img src="<%= @items['/typesafe_sbt_reverse/'].path %>" alt="sbt">
+              </a>
+              <a href="<%= @items['/documentation/'].path %>">Documentation</a>
+              <a href="<%= @items['/download/'].path %>">Download</a>
+              <a href="<%= @items['/community/'].path %>">Community</a>
+            </nav>
+          </div>
+          <div class="col-md-4 text-right ts">
+            &copy; 2015 Typesafe Inc.
+            <a href="https://typesafe.com">
+              <img src="<%= @items['/typesafe_reverse/'].path %>" alt="Typesafe, Inc.">
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Placed at the end -->
+    <script src="<%= @items['/jquery/'].path %>" type="text/javascript"></script>
+    <script src="<%= @items['/bootstrap/'].path %>" type="text/javascript"></script>
     <script type="text/javascript" async>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -27,62 +126,6 @@
       ga('tsTracker.require', 'linker');
       ga('tsTracker.linker:autoLink', ['typesafe.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
       ga('tsTracker.send', 'pageview');
-    </script>
-  </head>
-  <body class="landing">
-    <header class="navbar navbar-static-top">
-      <div class="splash">
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="logo"><img src="<%= @items['/sbt-logo-white-72x50/'].path %>" alt="sbt"></div>
-            <ul class="nav">
-              <li><a href="<%= @items['/documentation/'].path %>">Documentation</a></li>
-              <li><a href="<%= @items['/download/'].path %>">Download</a></li>
-              <li><a href="<%= @items['/community/'].path %>">Community</a></li>
-              <li id="source-code"><a href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo/'].path %>" alt="Source code"></a></li>
-              <li id="twitter"><a href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-white/'].path %>" alt="sbt on Twitter"></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="container content">
-      <div class="row">
-        <div class="col-md-12">
-          <div id="main">
-            <%= yield %>
-          </div>
-        </div>
-      </div>
-    </div>
-    <footer>
-      <div class="container footer">
-        <div class="row">
-          <div class="col-md-12">
-           © 2014 Typesafe Inc.
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- Placed at the end -->
-    <script src="<%= @items['/jquery/'].path %>" type="text/javascript"></script>
-    <script src="<%= @items['/bootstrap/'].path %>" type="text/javascript"></script>
-    <script type="text/javascript">
-function onResize() {
-  var w = $(window).width();
-  $('div.logo img').remove();
-  if (w > 1000) {
-    $('div.logo').append('<img src=".<%= @items['/sbt-logo-white-288x200/'].path %>" alt="sbt">');
-  } else {
-    $('div.logo').append('<img src=".<%= @items['/sbt-logo-white-72x50/'].path %>" alt="sbt">');
-  } // if-else
-}
-$(function() {
-  onResize();
-});
-$(window).on('resize', onResize);
     </script>
   </body>
 </html>
