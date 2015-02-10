@@ -251,6 +251,8 @@ your plugin to the list.
     <https://github.com/etsy/sbt-compile-quick-plugin>
 -   sbt-meow (display ascii-fied random cat pictures):
     <https://github.com/thricejamie/sbt-meow>
+-   sbt-build-files-watcher (show message on build files changed):
+    <https://github.com/tototoshi/sbt-build-files-watcher>
 
 #### Database plugins
 
