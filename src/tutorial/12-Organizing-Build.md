@@ -7,7 +7,7 @@ out: Organizing-Build.html
   [Using-Plugins]: Using-Plugins.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
-  [Plugins]: ../reference/Plugins.html
+  [Plugins]: ../docs/Plugins.html
 
 Organizing the build
 --------------------
