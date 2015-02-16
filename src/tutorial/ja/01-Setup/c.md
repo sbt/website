@@ -7,6 +7,7 @@ out: Installing-sbt-on-Linux.html
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
+  [Activator-Installation]: Activator-Installation.html
  
 Linux への sbt のインストール
 --------------------------
@@ -62,6 +63,10 @@ sbt をマージする [ebuild](https://github.com/whiter4bbit/overlays/tree/mas
 > **注意:** この ebuild に関する問題があれば
 > [ここ](https://github.com/whiter4bbit/overlays/issues)
 > に報告してほしい。
+
+### Typesafe Activator
+
+[Typesafe Activator][Activator-Installation]の手順を参照。
 
 ### 手動インストール
 
