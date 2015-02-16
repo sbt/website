@@ -41,6 +41,35 @@ lazy val util = project.in(file("util"))
 lazy val core = project in file("core")
 ```
 
+#### 共通のセッティング
+
+複数のプロジェクト間に共通のセッティングを抜き出すには、
+`commonSettings` という名前で列を作って、
+各プロジェクトから `settings` メソッドを呼べばいい。
+可変引数を受け取るメソッドに列を渡すのに `_*` が必要なことに注意。
+
+```scala
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "$example_scala_version$"
+)
+
+lazy val core = (project in file("core")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+```
+
+これで `version` を一箇所で変更すれば、再読み込み後に全サブプロジェクトに反映されるようになった。
+
 ### 依存関係
 
 個々のプロジェクトのビルドを他のプロジェクトと完全に独立した形で行うこともできる。しかし、大抵プロジェクトというのは他のプロジェクトと何らかの形で依存関係を持つ。ここには集約かクラスパス依存性といった2種類の依存関係が存在する:
