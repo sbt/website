@@ -5,7 +5,7 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
   [Plugins]: ../../docs/Plugins.html
   [Tasks]: ../../docs/Tasks.html
@@ -48,7 +48,9 @@ val clean = taskKey[Unit]("Deletes files produced by the build, such as generate
 セッティングはプロジェクトが再読み込みされるまでは固定値を持ち、
 タスクは「タスク実行」のたび（sbt のインタラクティブモードかバッチモードでコマンドが打ち込まれるたび）に再計算される。
 
-キーは [.sbt ファイル][Basic-Def]、[.scala ファイル][Full-Def]、もしくは[プラグイン][Using-Plugins]内で定義する事が出来る。
+キーは [.sbt ファイル][Basic-Def]、
+[.scala ファイル][Organizing-Build]、もしくは
+[auto plugin][Using-Plugins] 内で定義する事が出来る。
 有効化された auto plugin の `autoImport` オブジェクト内で定義された `val` は全て `.sbt` ファイルに自動的にインポートされる。
 
 ### タスクの実装
