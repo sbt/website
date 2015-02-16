@@ -39,11 +39,19 @@ sbt のバイナリは Bintray にて公開されており、Bintrary は APT �
 
 ![Ubuntu Software & Updates Screenshot](../files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-### RPM
+### Red Hat Enterprise Linux その他の RPM ベースのディストリビューション
 
-以下のパッケージも公式にサポートしている:
+[RPM][RPM] は sbt による公式パッケージだ。
 
-  - [RPM][RPM] package
+Red Hat Enterprise Linux 及びその他の RPM ベースのディストロは RPM フォーマットを用いる。
+ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
+
+    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
+    sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
+    sudo yum install sbt
+
+sbt のバイナリは Bintray にて公開されており、Bintrary は RPM リポジトリを提供する。
+そのため、このリポジトリをパッケージ・マネージャに追加する必要がある。
 
 > **注意:** これらのパッケージに問題があれば、
 > [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
