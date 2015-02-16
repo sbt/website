@@ -5,7 +5,7 @@ out: Multi-Project.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Directories]: Directories.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 マルチプロジェクト・ビルド
 ----------------------
@@ -177,23 +177,6 @@ sbt インタラクティブプロンプトから、`projects` と打ち込む�
 
 ### Common code
 
-`.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間のコードを共有するためには、 ビルドルートにある `project/` ディレクトリに Scala ファイルを用意すれば良い。このディレクトリは sbt プロジェクトになるが、ビルドのためのプロジェクトとなる。以下がサンプルである。
+`.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間のコードを共有するためには、 ビルドルートにある `project/` ディレクトリに Scala ファイルを用意すれば良い。
 
-`<root>/project/Common.scala`:
-
-```scala
-import sbt._
-import Keys._
-
-object Common {
-  def text = "org.example"
-}
-```
-
-`<root>/build.sbt`:
-
-```scala
-organization := Common.text
-```
-
-詳細は [.scala Build Definition][Full-Def] を見てほしい。
+詳細は[ビルドの整理][Organizing-Build]を見てほしい。

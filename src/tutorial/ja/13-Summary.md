@@ -4,9 +4,9 @@ out: Summary.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
   [getting-help]: ../../docs/Faq.html#getting-help
+  [Organizing-Build]: Organizing-Build.html
 
 まとめ
 -----
@@ -43,8 +43,7 @@ sbt は、強力なコア・コンセプトだけを用いて全てを実現し�
    - コンフィギュレーションは、メインのもの（`Compile`）や、テスト用のもの（`Test`）のようなビルドの種類だ。
    - プロジェクト軸は、「ビルド全体」を指すスコープにも設定することができる。
    - スコープは、より一般的なスコープにフォールバックし、これを_委譲_（delegate）という。
-   
- - [.sbt][Basic-Def] 対 [.scala][Full-Def] ビルド定義
+ - [ビルドの整理][Organizing-Build]
    - `build.sbt` にセッティングのほとんどを置き、
      `.scala` ビルドファイルは、共通の値、オブジェクト、メソッドなどをくくり出すのに使う。
    - ビルド定義そのものも、れっきとした sbt プロジェクトで、`project` ディレクトリを基とする。
