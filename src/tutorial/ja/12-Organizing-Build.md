@@ -93,7 +93,7 @@ object Dependencies {
 ```
 
 この `Dependencies` は `build.sbt` 内で利用可能となる。
-定義されている `val` が使う安いように `Dependencies._` を import しておこう。
+定義されている `val` が使いやすいように `Dependencies._` を import しておこう。
 
 ```scala
 import Dependencies._
