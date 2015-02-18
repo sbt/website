@@ -46,8 +46,7 @@ sbt のバイナリは Bintray にて公開されており、Bintrary は APT �
 Red Hat Enterprise Linux 及びその他の RPM ベースのディストロは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
-    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
-    sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
+    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
 sbt のバイナリは Bintray にて公開されており、Bintrary は RPM リポジトリを提供する。
