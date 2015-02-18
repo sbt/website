@@ -12,7 +12,7 @@ commands, `activator ui` and `activator new`. The `activator`
 command is a superset of sbt, in short.
 
 You can obtain Activator from
-[typesafe.com](http://typesafe.com/platform/getstarted).
+[typesafe.com](http://typesafe.com/get-started).
 
 If you see a command line such as `sbt ~test` in the
 documentation, you will also be able to type `activator ~test`.

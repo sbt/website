@@ -11,7 +11,7 @@ Typesafe Activator は `activator ui` と `activator new` という
 2つのコマンドを追加するカスタム版の sbt だ。
 つまり、`activator` は sbt の上位セットであると言える。
 
-Activator は [typesafe.com](http://typesafe.com/platform/getstarted) から取得できる。
+Activator は [typesafe.com](http://typesafe.com/get-started) から取得できる。
 
 このガイドで `sbt ~test` というようなコマンドラインがあれば、
 `activator ~test` と打ち込めばそのまま動作するはずだ。
