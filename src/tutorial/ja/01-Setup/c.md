@@ -31,7 +31,7 @@ Ubuntu 及びその他の Debian ベースのディストロは DEB フォーマ
     sudo apt-get install sbt
 
 パッケージ・マネージャは設定されたリポジトリに指定されたパッケージがあるか確認しにいく。
-sbt のバイナリは Bintray にて公開されており、Bintrary は APT リポジトリを提供する。
+sbt のバイナリは Bintray にて公開されており、Bintray は APT リポジトリを提供する。
 そのため、このリポジトリをパッケージ・マネージャに追加する必要がある。
 `sbt` を最初にインストールした後は、このパッケージは `aptitude` や Synaptic
 上から管理することができる (パッケージ・キャッシュの更新を忘れずに)。
@@ -49,7 +49,7 @@ Red Hat Enterprise Linux 及びその他の RPM ベースのディストロは R
     curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
-sbt のバイナリは Bintray にて公開されており、Bintrary は RPM リポジトリを提供する。
+sbt のバイナリは Bintray にて公開されており、Bintray は RPM リポジトリを提供する。
 そのため、このリポジトリをパッケージ・マネージャに追加する必要がある。
 
 > **注意:** これらのパッケージに問題があれば、
