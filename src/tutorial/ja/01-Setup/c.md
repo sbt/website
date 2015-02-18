@@ -16,11 +16,11 @@ Linux への sbt のインストール
 
 [ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
 
-### Ubuntu その他の Debian ベースの Linux ディストリビューション
+### Ubuntu 及びその他の Debian ベースの Linux ディストリビューション
 
 [DEB][DEB] は sbt による公式パッケージだ。
 
-Ubuntu 及びその他の Debian ベースのディストロは DEB フォーマットを用いるが、
+Ubuntu 及びその他の Debian ベースのディストリビューションは DEB フォーマットを用いるが、
 ローカルの DEB ファイルからソフトウェアをインストールすることは稀だ。
 これらのディストロは通常コマンドラインや GUI 上から使えるパッケージ・マネージャがあって
 (例: `apt-get`、`aptitude`、Synaptic など)、インストールはそれらから行う。
@@ -39,11 +39,11 @@ sbt のバイナリは Bintray にて公開されており、Bintray は APT リ
 
 ![Ubuntu Software & Updates Screenshot](../files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-### Red Hat Enterprise Linux その他の RPM ベースのディストリビューション
+### Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューション
 
 [RPM][RPM] は sbt による公式パッケージだ。
 
-Red Hat Enterprise Linux 及びその他の RPM ベースのディストロは RPM フォーマットを用いる。
+Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューションは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
     curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
