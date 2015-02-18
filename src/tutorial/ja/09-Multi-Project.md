@@ -46,7 +46,7 @@ lazy val core = project in file("core")
 複数のプロジェクト間に共通のセッティングを抜き出すには、
 `commonSettings` という名前で列を作って、
 各プロジェクトから `settings` メソッドを呼べばいい。
-可変引数を受け取るメソッドに列を渡すのに `_*` が必要なことに注意。
+可変長引数を受け取るメソッドに列を渡すのに `_*` が必要なことに注意。
 
 ```scala
 lazy val commonSettings = Seq(
