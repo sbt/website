@@ -98,7 +98,7 @@ sbt には、いくつかのユーティリティ・ライブラリや便利な�
 タスクの実行意味論 (execution semantics) に注意する必要がある。
 ここで実行意味論とは、実際どの時点でタスクが評価されるかを決定するものとする。
 
-`sampleIntTask` を例に取ると、タスク本文の各行は一行ずつ正格に評価されているはずだ。
+`sampleIntTask` を例に取ると、タスク本文の各行は一行ずつ正格評価 (strict evaluation) されているはずだ。
 これは逐次実行の意味論だ:
 
 ```scala
@@ -165,7 +165,7 @@ sum: 3
 
 ![task-dependency](../files/task-dependency00.png)
 
-素の Scala のメソッド呼び出しと違って、タスクの `value` メソッドの呼び出しは正格には評価されない。
+素の Scala のメソッド呼び出しと違って、タスクの `value` メソッドの呼び出しは正格評価されない。
 代わりに、`sampleIntTask` が `startServer` タスクと `stopServer` タスクに依存するということを表すマークとして機能する。
 `sampleIntTask` がユーザによって呼び出されると、sbt のタスクエンジンは以下を行う:
 
@@ -187,9 +187,9 @@ s: 3
 ```
 
 `sampleStringTask` は `startServer` と `sampleIntTask` の両方に依存して、
-`sampleInTask` もまた `startServer` タスクに依存するため、`startServer` はタスク依存性として 2度現れる。
+`sampleIntTask` もまた `startServer` タスクに依存するため、`startServer` はタスク依存性として 2度現れる。
 しかし、`value` はタスク依存性を表記するだけなので、評価は一回だけ行われる。
-以下は `sampeStringTask` の評価を視覚化したものだ:
+以下は `sampleStringTask` の評価を視覚化したものだ:
 
 ![task-dependency](../files/task-dependency01.png)
 
@@ -199,7 +199,7 @@ s: 3
 #### 終了処理タスク
 
 `stopServer` タスクはどう実装するべきだろうか?
-タスクは依存性を保持するものなので、終了処理タスクという考えはタスクのの実行モデルにそぐわないものだ。
+タスクは依存性を保持するものなので、終了処理タスクという考えはタスクの実行モデルにそぐわないものだ。
 最後の処理そのものもタスクになるべきで、そのタスクが他の中間タスクに依存すればいい。
 例えば、`stopServer` が　`sampleStringTask` に依存するべきだが、
 その時点で `stopServer` は `sampleStringTask` と呼ばれるべきだろう。
