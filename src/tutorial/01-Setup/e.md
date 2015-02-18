@@ -12,7 +12,7 @@ commands, `activator ui` and `activator new`. The `activator`
 command is a superset of sbt, in short.
 
 You can obtain Activator from
-[typesafe.com](http://typesafe.com/platform/getstarted).
+[typesafe.com](http://typesafe.com/get-started).
 
 If you see a command line such as `sbt ~test` in the
 documentation, you will also be able to type `activator ~test`.
@@ -32,7 +32,7 @@ differences between Activator and a
  * `activator new` allows you to create projects from a large
    [catalog of template projects](https://typesafe.com/activator/templates),
    for example the `play-scala` template is a skeleton
-   [Play Framework](http://playframework.com) Scala app.
+   [Play Framework](https://playframework.com) Scala app.
  * `activator ui` launches a quick start UI that can be used to
    work through tutorials from the template catalog (many
    templates in the catalog have accompanying tutorials).

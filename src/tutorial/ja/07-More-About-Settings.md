@@ -4,7 +4,6 @@ out: More-About-Settings.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
   [Keys]: ../../sxr/sbt/Keys.scala.html
 
 他の種類のセッティング
@@ -22,10 +21,6 @@ out: More-About-Settings.html
 
 `:=` が作る `Setting` は、不変の固定値を新たに変換されたマップに代入する。
 例えば、マップを `name := "hello"` というセッティングで変換すると、新しいマップは `name` キーの中に `"hello"` を格納する。
-
-セッティングがその効果を発揮するにはセッティングのマスターリストに入らなくてはいけない
-（`build.sbt` の全ての行は自動的にそのリストに入るけど、
-[.scala ファイル][Full-Def]の場合は、sbt が検知しない場所に `Setting` を作ってしまうことができる）。
 
 ### 既存の値に追加する: `+=` と `++=`
 

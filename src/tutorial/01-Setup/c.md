@@ -39,8 +39,7 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
-    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
-    sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
+    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
 sbt binaries are published to Bintray, and conveniently Bintray provides an RPM repository. You just have to add the repository to the places your package manager will check.

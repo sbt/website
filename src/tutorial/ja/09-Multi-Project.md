@@ -5,7 +5,7 @@ out: Multi-Project.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Directories]: Directories.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 マルチプロジェクト・ビルド
 ----------------------
@@ -40,6 +40,35 @@ lazy val util = project.in(file("util"))
 
 lazy val core = project in file("core")
 ```
+
+#### 共通のセッティング
+
+複数のプロジェクト間に共通のセッティングを抜き出すには、
+`commonSettings` という名前で列を作って、
+各プロジェクトから `settings` メソッドを呼べばいい。
+可変引数を受け取るメソッドに列を渡すのに `_*` が必要なことに注意。
+
+```scala
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "$example_scala_version$"
+)
+
+lazy val core = (project in file("core")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+```
+
+これで `version` を一箇所で変更すれば、再読み込み後に全サブプロジェクトに反映されるようになった。
 
 ### 依存関係
 
@@ -177,23 +206,6 @@ sbt インタラクティブプロンプトから、`projects` と打ち込む�
 
 ### Common code
 
-`.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間のコードを共有するためには、 ビルドルートにある `project/` ディレクトリに Scala ファイルを用意すれば良い。このディレクトリは sbt プロジェクトになるが、ビルドのためのプロジェクトとなる。以下がサンプルである。
+`.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間でコードを共有するためには、 ビルドルートにある `project/` ディレクトリに Scala ファイルを用意すれば良い。
 
-`<root>/project/Common.scala`:
-
-```scala
-import sbt._
-import Keys._
-
-object Common {
-  def text = "org.example"
-}
-```
-
-`<root>/build.sbt`:
-
-```scala
-organization := Common.text
-```
-
-詳細は [.scala Build Definition][Full-Def] を見てほしい。
+詳細は[ビルドの整理][Organizing-Build]を見てほしい。

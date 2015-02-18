@@ -6,8 +6,8 @@ out: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Basic-Def]: Basic-Def.html
 
-bare .sbt ビルド定義
--------------------
+付録: bare .sbt ビルド定義
+------------------------
 
 このページでは旧式の `.sbt` ビルド定義の説明をする。
 現在は[マルチ・プロジェクト .sbt ビルド定義][Basic-Def]が推奨される。

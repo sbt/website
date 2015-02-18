@@ -4,13 +4,13 @@ out: Directories.html
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
   [Maven]: https://maven.apache.org/
 
 ディレクトリ構造
 --------------
 
-このページは、君が
+このページは、
 [sbt をインストール][Setup]して、
 [Hello, World][Hello] を見たことを前提にする。
 
@@ -53,7 +53,7 @@ src/
 他の sbt 関連のファイルは　`project` サブディレクトリに置かれる。
 
 `project` には `.scala` ファイルを含むことができ、それは `.sbt` ファイルと
-組み合わさって一つのビルド定義を構成する。詳しくは、[.scala ビルド定義][Full-Def]を参照。
+組み合わさって一つのビルド定義を構成する。詳しくは、[ビルドの整理][Organizing-Build]を参照。
 
 ```
 build.sbt
@@ -63,7 +63,7 @@ project/
 
 `project` 内に `.sbt` があるのを見ることがあるかもしれないけど、それはプロジェクトの
 ベースディレクトリ下の `.sbt` とは別物だ。これに関しても、他に前提となる知識が必要なので、
-[後で説明する][Full-Def]。
+[後で説明する][Organizing-Build]。
 
 ### ビルド成果物
 
