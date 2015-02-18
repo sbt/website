@@ -28,7 +28,7 @@ Activator をダウンロードすると `activator` スクリプトと
   コマンドラインプロンプトを強制したい場合は `activator shell` と打ち込む。
 - `activator new` を使うことで豊富な
 　[テンプレートのカタログ](https://typesafe.com/activator/templates)をもとにプロジェクトを新規作成することができる。
-  例えば、`play-scala` テンプレートを使うと Scala の [Play Framework](http://playframework.com) アプリを作れる。
+  例えば、`play-scala` テンプレートを使うと Scala の [Play Framework](https://playframework.com) アプリを作れる。
 - `activator ui` は、クイックスタート UI を起動する。
   これを使ってテンプレート付属のチュートリアルを読みながら作業できる
   (カタログ内の多くのテンプレートにはチュートリアルが付属している)。
