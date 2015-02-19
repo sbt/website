@@ -24,7 +24,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
 
-    echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-get update
     sudo apt-get install sbt
 

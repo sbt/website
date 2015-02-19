@@ -5,7 +5,7 @@ out: Custom-Settings.html
   [Basic-Def]: Basic-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
   [Input-Tasks]: ../docs/Input-Tasks.html
   [Plugins]: ../docs/Plugins.html
   [Tasks]: ../docs/Tasks.html
@@ -35,7 +35,7 @@ val clean = taskKey[Unit]("删除构建产生的文件，包括生成的 source 
 还记得[ .sbt 构建定义][Basic-Def]中，类型 `T` 在 `SettingKey[T]` 中表示的设置的值的类型。类型 `T` 在 `TaskKey [T]` 中指示任务的结果的类型。
 在[ .sbt 构建定义][Basic-Def]中，一个设置有一个固定的值，直到项目重新加载。任务会在每一个“任务执行”（用户在交互输入中或在batch模式下输入一个命令）被重新计算。
 
-键可以在定义在[ .sbt 构建定义][Basic-Def]，[.scala 文件][Full-Def]或[插件][Using-Plugins]。任何在 `.scala` 构建定义文件发现的 `val`，`Build` 对象或 `Plugin` 对象中 plugin 的 `val` 将被自动导入
+键可以在定义在[.sbt 构建定义][Basic-Def]，[.scala 文件][Organizing-Build]或一个[自动插件][Using-Plugins]中。任何在 `.scala` 构建定义文件发现的 `val`，`Build` 对象或 `Plugin` 对象中 plugin 的 `val` 将被自动导入
 到你的 `.sbt` 文件。
 
 ### 执行任务

@@ -3,10 +3,9 @@ out: Bare-Def.html
 ---
 
   [More-About-Settings]: More-About-Settings.html
-  [Full-Def]: Full-Def.html
   [Basic-Def]: Basic-Def.html
 
-Bare .sbt 构建定义
+附录：Bare .sbt 构建定义
 ------------------
 
 这一小节讲述一种老式风格的 `.sbt` 构建定义。

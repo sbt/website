@@ -4,7 +4,7 @@ out: Directories.html
 
   [Hello]: Hello.html
   [Setup]: Setup.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 目录结构
 -------------------
@@ -43,7 +43,7 @@ src/
 ### sbt 构建定义文件
 
 你已经在项目的基础目录中看到了 `build.sbt`。其他的 sbt 文件在 `project` 子目录中。
-`project` 目录可以包含 `.scala` 文件，这些文件最后会和 `.sbt` 文件合并共同构成完整的构建定义。想知道更多请参见 [.scala 构建定义][Full-Def]。
+`project` 目录可以包含 `.scala` 文件，这些文件最后会和 `.sbt` 文件合并共同构成完整的构建定义。想知道更多请参见 [组织构建][Organizing-Build]。
 
 ```
 build.sbt
@@ -51,7 +51,7 @@ project/
   Build.scala
 ```
 
-你可能在 `project/` 中也看到了 `.sbt` 文件，但是它不等同于项目基础目录中的 `.sbt` 文件。这将在 [稍后][Full-Def] 解释，因为首先你需要一些背景知识。
+你可能在 `project/` 中也看到了 `.sbt` 文件，但是它不等同于项目基础目录中的 `.sbt` 文件。这将在 [稍后][Organizing-Build] 解释，因为首先你需要一些背景知识。
 
 ### 构建产品
 
