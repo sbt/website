@@ -32,12 +32,12 @@ Keys have one of three types. `SettingKey` and `TaskKey` are described in
 Some examples from [Keys](../sxr/sbt/Keys.scala.html):
 
 ```scala
-val scalaVersion = settingKey[String]("The version of Scala used for building.")
-val clean = taskKey[Unit]("Deletes files produced by the build, such as generated sources, compiled classes, and task caches.")
+val scalaVersion = settingKey[String]("scala-version", "The version of Scala used for building.")
+val clean = taskKey[Unit]("clean", "Deletes files produced by the build, such as generated sources, compiled classes, and task caches.")
 ```
 
 The key constructors have two string parameters: the name of the key
-(`"scalaVersion"`) and a documentation string
+(`"scala-version"`) and a documentation string
 (`"The version of scala used for building."`).
 
 Remember from [.sbt build definition][Basic-Def] that the type
