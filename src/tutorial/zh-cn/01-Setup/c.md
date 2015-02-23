@@ -16,7 +16,7 @@ out: Installing-sbt-on-Linux.html
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。
 
-### Ubuntu and other Debian-based distributions
+### Ubuntu和其他基于Debian的发行版
 
 [DEB][DEB] 安装包由sbt官方支持。
 
@@ -33,7 +33,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 
 ![Ubuntu Software & Updates Screenshot](../files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-### Red Hat Enterprise Linux and other RPM-based distributions
+### 红帽企业版Linux和其他基于RPM的发行版
 
 [RPM][RPM] 安装包由sbt官方支持。
 
