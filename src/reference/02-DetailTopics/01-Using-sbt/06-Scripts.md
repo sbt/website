@@ -74,42 +74,51 @@ Copy the following script and make it executable. You may need to adjust
 the first line depending on your script name and operating system. When
 run, the example should retrieve Scala, the required dependencies,
 compile the script, and run it directly. For example, if you name it
-`dispatch_example.scala`, you would do on Unix:
+`shout.scala`, you would do on Unix:
 
 ```
-chmod u+x dispatch_example.scala
-./dispatch_example.scala
+chmod u+x shout.scala
+./shout.scala
 ```
 
 <nbsp>
 
 ```scala
 #!/usr/bin/env scalas
-!#
-
-/***
-scalaVersion := "2.9.0-1"
-
-libraryDependencies ++= Seq(
-  "net.databinder" %% "dispatch-twitter" % "0.8.3",
-  "net.databinder" %% "dispatch-http" % "0.8.3"
-)
-*/
-
-import dispatch.{ json, Http, Request }
-import dispatch.twitter.Search
-import json.{ Js, JsObject }
-
-def process(param: JsObject) = {
-  val Search.text(txt)        = param
-  val Search.from_user(usr)   = param
-  val Search.created_at(time) = param
-
-  "(" + time + ")" + usr + ": " + txt
+ 
+/***         
+scalaVersion := "$scala_version$"
+ 
+resolvers += Resolver.url("typesafe-ivy-repo", url("http://typesafe.artifactoryonline.com/typesafe/releases"))(Resolver.ivyStylePatterns)
+ 
+libraryDependencies += "org.scala-sbt" % "io" % "$app_version$"
+*/         
+ 
+import sbt._, Path._
+import java.io.File
+import java.net.{URI, URL}
+import sys.process._
+def file(s: String): File = new File(s)
+def uri(s: String): URI = new URI(s)
+ 
+val targetDir = file("./target/")
+val srcDir = file("./src/")
+val toTarget = rebase(srcDir, targetDir)
+ 
+def processFile(f: File): Unit = {
+  val newParent = toTarget(f.getParentFile) getOrElse {sys.error("wat")}
+  val file1 = newParent / f.name
+  println(s"""\$f => \$file1""")
+  val xs = IO.readLines(f) map { _ + "!" }
+  IO.writeLines(file1, xs)
 }
 
-Http.x((Search("#scala") lang "en") ~> (_ map process foreach println))
+val fs: Seq[File] = (srcDir ** "*.scala").get
+fs foreach { processFile }
 ```
+
+This script will take all `*.scala` files under `src/`, append "!" at the end of the
+line, and write them under `target/`.
 
 #### sbt REPL with dependencies
 
