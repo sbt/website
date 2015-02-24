@@ -8,7 +8,6 @@
           </div>
           <div class="support-detail">
             <h2>Community Support</h2>
-            <a href="https://groups.google.com/forum/#!forum/sbt-dev">Mailing List</a>
             <a href="https://stackoverflow.com/questions/tagged/sbt">StackOverflow</a>
           </div>
         </div>
@@ -39,7 +38,7 @@
           </a>
           <a href="../../documentation.html">Documentation</a>
           <a href="../../download.html">Download</a>
-          <a href="../../community.html">Community</a>
+          <a href="../../community.html">Get Involved</a>
         </nav>
       </div>
       <div class="col-md-4 text-right ts">
