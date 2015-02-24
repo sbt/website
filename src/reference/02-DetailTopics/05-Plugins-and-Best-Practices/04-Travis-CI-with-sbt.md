@@ -185,7 +185,7 @@ Next, we can put `cache` section as follows:
 cache:
   directories:
     - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/scala-\$TRAVIS_SCALA_VERSION
+    - \$HOME/.sbt/boot/
 ```
 
 Finally, the following a few lines of cleanup script are added:
@@ -311,7 +311,7 @@ language: scala
 cache:
   directories:
     - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/scala-\$TRAVIS_SCALA_VERSION
+    - \$HOME/.sbt/boot/
 
 # This is an sbt plugin, so this section is for demo purpose
 scala:
