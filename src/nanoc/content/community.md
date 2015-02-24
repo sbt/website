@@ -13,7 +13,8 @@ title: Get Involved
   [gitter]: https://gitter.im/sbt/sbt
   [community-label]: https://github.com/sbt/sbt/labels/Commuity
 
-## How you can help
+<a name="how-can-I-help"></a>
+## How can I help?
 
 sbt is an open source project and everyone is encouraged to get involved!
 Join the commuity of developers building sbt and related tools like Play and Activator.
@@ -59,3 +60,18 @@ Check out the list of [community plugins][Community-Plugins].
 ### Twitter
 
 Follow [@scala_sbt][twitter] on twitter for updates.
+
+<a name="how-can-I-get-help"></a>
+## How can I get help?
+
+For community support use [StackOverflow's sbt tag][so]:
+
+-   State the problem or question clearly and provide enough
+    context. Code examples and `build.sbt` are often useful when
+    appropriately edited.
+
+For professional support, Typesafe provides:
+
+- [Typesafe Subscription](http://typesafe.com/subscription)
+- [Training](https://typesafe.com/subscription/training)
+- [Consulting](http://typesafe.com/subscription/consulting)
