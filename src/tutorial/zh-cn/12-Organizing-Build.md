@@ -12,7 +12,7 @@ out: Organizing-Build.html
 组织构建
 --------------------
 
-本页将讨论构建结构的组织。
+本页面将讨论构建结构的组织。
 
 本小节假设你已经阅读了之前的章节，尤其是 [build.sbt][Basic-Def]，[库依赖][Library-Dependencies]和[多工程构建][Multi-Project]。
 
