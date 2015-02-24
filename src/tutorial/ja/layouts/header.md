@@ -6,7 +6,7 @@
     <div class="nav">
       <a href="../../../documentation.html">Documentation</a>
       <a href="../../../download.html">Download</a>
-      <a href="../../../community.html">Community</a>
+      <a href="../../../community.html">Get Involved</a>
       <a id="source-code" href="https://github.com/sbt/sbt"><img src="../files/github-logo-teal.png" alt="Source code"></a>
       <a id="twitter" href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-teal.png" alt="sbt on Twitter"></a>
     </div>

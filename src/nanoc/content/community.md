@@ -1,5 +1,5 @@
 ---
-title: Community
+title: Get Involved
 ---
 
   [so]: https://stackoverflow.com/questions/tagged/sbt
