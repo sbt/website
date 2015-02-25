@@ -11,7 +11,7 @@ title: Get Involved
   [issues]: https://github.com/sbt/sbt/issues
   [website]: https://github.com/sbt/website
   [gitter]: https://gitter.im/sbt/sbt
-  [community-label]: https://github.com/sbt/sbt/labels/Commuity
+  [community-label]: https://github.com/sbt/sbt/labels/Community
 
 <a name="how-can-I-help"></a>
 ## How can I help?
