@@ -12,57 +12,10 @@ title: Get Involved
   [website]: https://github.com/sbt/website
   [gitter]: https://gitter.im/sbt/sbt
   [community-label]: https://github.com/sbt/sbt/labels/Community
+  [327]: https://github.com/sbt/sbt/issues/327
+  [831]: https://github.com/sbt/sbt/issues/831
 
-<a name="how-can-I-help"></a>
-## How can I help?
-
-sbt is an open source project and everyone is encouraged to get involved!
-Join the commuity of developers building sbt and related tools like Play and Activator.
-
-### Contribute to StackOverflow
-
-Stack Overflow is a Q&A site for programmers. 
-Asking and answering questions on [StackOverflow's sbt tag][so] is a great way to share knowledge about sbt.
-Users can vote on each others' contributions and earn reputation points.
-
-### Report bugs
-
-When you find a bug in sbt we want to hear about it.
-Your bug reports play an important part in making sbt more reliable and usable.
-sbt uses [GitHub to track issues][issues].
-
-When you report bugs, make sure to distinguish facts and opinions.
-What we need first is the exact steps to reproduce your problems on **our computers**.
-If not reproducible tests, include `build.sbt`, version numbers, your method of running `sbt`,
-example code, or anything else you think might help.
-
-Next, describe the problems, or what *you think* is the problem.
-It might be obvious to you that it's a problem, but it could actually be an intentional behavior.
-The same goes for expectations. Describe what *you think* should've happened. 
-
-### Patch the core
-
-sbt's code is hosted on Github [sbt/sbt][github] repository,
-and sbt's documentation (including this page) is on [sbt/website][website] repository.
-sbt development is discussed on the [sbt-dev list][ml] and
-on [Gitter sbt/sbt][gitter].
-You can ask on the list or the chat if you have any questions regarding sbt development.
-
-You're welcome to work on any feature you like but if you'd like some good ideas,
-look for issues tagged with the [Community label][community-label].
-
-### Create plugins
-
-Plugins extend the power of sbt and Play.
-Writing a new plugin is often easier than patching sbt's core code. 
-Check out the list of [community plugins][Community-Plugins].
-
-### Twitter
-
-Follow [@scala_sbt][twitter] on twitter for updates.
-
-<a name="how-can-I-get-help"></a>
-## How can I get help?
+<h2 id="how-can-I-get-help">How can I get help? <a href="#how-can-I-get-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
 For community support use [StackOverflow's sbt tag][so]:
 
@@ -75,3 +28,67 @@ For professional support, Typesafe provides:
 - [Typesafe Subscription](http://typesafe.com/subscription)
 - [Training](https://typesafe.com/subscription/training)
 - [Consulting](http://typesafe.com/subscription/consulting)
+
+<h2 id="how-can-I-help">How can I help? <a href="#how-can-I-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
+
+sbt is an open source project and everyone is encouraged to get involved!
+Join the commuity of developers building sbt and related tools like Play and Activator.
+
+### Twitter
+
+Follow [@scala_sbt][twitter] on twitter for updates.
+
+### Contribute to StackOverflow
+
+Stack Overflow is a Q&A site for programmers. 
+Asking and answering questions on [StackOverflow's sbt tag][so] is a great way to share knowledge about sbt.
+Users can vote on each others' contributions and earn reputation points.
+
+### Report bugs
+
+When you find a bug in sbt we want to hear about it!
+Your bug reports play an important part in making sbt more reliable and usable.
+sbt uses [GitHub to track issues][issues].
+The developers need three things from you: **Steps**, **Problems**, and **Expectations**.
+See [#327][327] and [#831][831] for example.
+
+#### Steps
+
+When you report bugs, make sure to distinguish facts and opinions.
+What we need first is the exact **Steps** to reproduce your problems on **our computers**.
+If not reproducible tests, include `build.sbt`, version numbers, your method of running `sbt`,
+example code, or anything else you think might help.
+If we cannot reproduce the problem in one way or the other, the problem can't be fixed.
+Telling us the error messages is not enough.
+
+#### Problems
+
+Next, describe the **Problems**, or what *you think* is the problem.
+It might be obvious to you that it's a problem, but it could actually be an intentional behavior.
+
+#### Expectations
+
+The same goes for **Expectations**. Describe what *you think* should've happened. 
+
+#### Notes
+
+Add an optional **Notes** section to describe your analysis.
+
+### Create plugins
+
+Plugins extend the power of sbt and Play.
+Writing a new plugin is often easier than patching sbt's core code. 
+Check out the list of [community plugins][Community-Plugins].
+
+plugin and sbt core development is discussed on the [sbt-dev list][ml] and
+on [Gitter sbt/sbt][gitter].
+You can ask on the list or the chat if you have any questions regarding
+plugin and sbt core development.
+
+### Patch the core
+
+sbt's code is hosted on Github [sbt/sbt][github] repository,
+and sbt's documentation (including this page) is on [sbt/website][website] repository.
+
+You're welcome to work on any feature you like but if you'd like some good ideas,
+look for issues tagged with the [Community label][community-label].
