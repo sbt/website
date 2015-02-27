@@ -94,5 +94,5 @@ and sbt's documentation (including this page) is on [sbt/website][website] repos
 You are welcome to work on any feature you like but if you'd like some good ideas
 
 - look for issues tagged with the [Community label][community-label]
-- check out [waffle sbt/sbt][waffle] Ready or Backlogs
-- talk to us in [Gitter sbt/sbt][gitter]
+- check out [waffle sbt/sbt][waffle]'s Ready or Backlogs list
+- talk to us on [Gitter sbt/sbt][gitter]
