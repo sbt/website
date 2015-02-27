@@ -11,6 +11,7 @@ title: Get Involved
   [issues]: https://github.com/sbt/sbt/issues
   [website]: https://github.com/sbt/website
   [gitter]: https://gitter.im/sbt/sbt
+  [waffle]: https://waffle.io/sbt/sbt
   [community-label]: https://github.com/sbt/sbt/labels/Community
   [327]: https://github.com/sbt/sbt/issues/327
   [831]: https://github.com/sbt/sbt/issues/831
@@ -90,5 +91,8 @@ plugin and sbt core development.
 sbt's code is hosted on Github [sbt/sbt][github] repository,
 and sbt's documentation (including this page) is on [sbt/website][website] repository.
 
-You're welcome to work on any feature you like but if you'd like some good ideas,
-look for issues tagged with the [Community label][community-label].
+You are welcome to work on any feature you like but if you'd like some good ideas
+
+- look for issues tagged with the [Community label][community-label]
+- check out [waffle sbt/sbt][waffle] Ready or Backlogs
+- talk to us in [Gitter sbt/sbt][gitter]
