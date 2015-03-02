@@ -61,6 +61,7 @@ your plugin to the list.
 -   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
 -   sbt-doctest: <https://github.com/tkawachi/sbt-doctest>
 -   sbt-cassandra-plugin: <https://github.com/hochgi/sbt-cassandra-plugin>
+-   sbt-tabular-test-reporter: <https://github.com/programmiersportgruppe/sbt-tabular-test-reporter>
 
 #### Code coverage plugins
 
