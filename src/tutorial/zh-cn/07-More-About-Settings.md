@@ -4,7 +4,6 @@ out: More-About-Settings.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
 
 更多关于设置
 ---------------------
@@ -19,8 +18,6 @@ out: More-About-Settings.html
 不同 setting 通过不同的方式对该 map 进行转换。之前在 [.sbt 构建定义][Basic-Def] 中，你已经阅读了 `:=` 方法相关的内容。
 
 通过 `:=` 创建的 `Setting` 会往转换之后新的 map 中放入一个固定的常量。例如，如果你通过 `name := "hello"` 对 map 做一次转换，新的 map 中 key `name` 就保存着一个字符串 `"hello"`。
-
-最终 Settings 必须在主列表中来工作（`build.sbt` 中的所有行最后都会自动到该列表中，但是 [.scala 文件][Full-Def] 中的内容如果在创建 `Setting` 时没有放在 sbt 能够找到的位置就会出错）。
 
 ### 追加值： `+=` 和 `++=`
 

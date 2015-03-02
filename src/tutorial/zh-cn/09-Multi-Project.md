@@ -5,7 +5,7 @@ out: Multi-Project.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Directories]: Directories.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 多项目构建
 --------------------
@@ -35,6 +35,33 @@ lazy val util = project.in(file("util"))
 
 lazy val core = project in file("core")
 ```
+
+#### 公共设定
+
+To factor out common settings across multiple projects, create a sequence named `commonSettings` and call `settings` method on each project. Note `_*` is required to pass sequence into a vararg method.
+要跨多个项目提取公共设置，请创建一个名为`commonSettings`的序列，并在每个项目上调用`settings`方法。注意要传入序列给变参数方法时需要调用`_*`。
+
+```scala
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0",
+  scalaVersion := "$example_scala_version$"
+)
+
+lazy val core = (project in file("core")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(commonSettings: _*).
+  settings(
+    // other settings
+  )
+```
+
+现在我们可以在一处修改`version`，当重新加载构建时，将在各个子项目相应更新。
 
 ### 依赖
 
@@ -134,25 +161,6 @@ lazy val core = project.dependsOn(util)
 
 ### 通用代码
 
-在一个 `.sbt` 文件中的定义对于其他的 `.sbt` 文件不可见。为了在不同的 `.sbt` 文件中共享代码，在构建根目录下的 `project/` 目录下定义一个或多个 Scala 文件。该目录也是一个 sbt 项目，但是只针对你的构建。
+在一个 `.sbt` 文件中的定义对于其他的 `.sbt` 文件不可见。为了在不同的 `.sbt` 文件中共享代码，在构建根目录下的 `project/` 目录下定义一个或多个 Scala 文件。
 
-例如：
-
-`<root>/project/Common.scala`：
-
-```scala
-import sbt._
-import Keys._
-
-object Common {
-  def text = "org.example"
-}
-```
-
-`<root>/build.sbt`：
-
-```scala
-organization := Common.text
-```
-
-参见 [.scala 构建定义][Full-Def] 获取详细内容。
+参见 [组织构建][Organizing-Build] 获取详细内容。

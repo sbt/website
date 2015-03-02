@@ -6,62 +6,12 @@ out: Full-Def.html
   [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
 
-.scala 构建定义
+附录：.scala 构建定义
 -----------------------
 
-本小节假设你已经阅读了之前的章节，尤其是 [.sbt 构建定义][Basic-Def]和[更多关于设置][More-About-Settings]。
+本页面描述了`.scala`构建定义的旧的风格。在以前的版本的sbt中，`.scala`是用来创建多项目构建定义的唯一方式，但sbt 0.13 添加了[多项目.sbt 生成定义][Basic-Def]，这也是推荐的样式。
 
-### sbt是递归的
-
-`build.sbt` 很简单，隐藏了 sbt 是如何工作的。sbt 构建是用 Scala 代码定义的。代码本身也必须是能被构建的。有比 sbt 更好的建立方式么？
-
-`project` 目录 *是你的工程内另一个工程的项目*，它知道如何构建你的工程。在 `project` 内部的项目能做任何其他项目可以做的事情。 *你的构建定义是一个 sbt 项目。*
-
-递归可以继续下去。如果你喜欢, 你可以稍稍调整项目的构建定义，比如创建 `project/project/` 目录。
-
-下面是一个例子：
-
-```
-hello/                  # 项目的基目录
-
-    Hello.scala         # 一个项目源文件（也可以在src/main/scala）
-
-    build.sbt           # build.sbt 是project/ 中构建定义项目的一部分。
-
-    project/            # 构建定义项目的基目录
-
-        Build.scala     # 构建定义源文件，即project/ project的源文件
-
-        build.sbt       # project/project中工程项目构建定义的一部分；构建定义的构建定义
-
-        project/        # 构建定义项目的基目录
-
-            Build.scala # project/project/ 项目中的源文件
-```
-
-*不用担心！* 大部分时候不需要 `project/project/` 目录。但是理解它是有帮助的。
-
-另外，任何以 `.scala` 或者 `.sbt` 结尾的文件都会被使用，命名为 `build.sbt` 和 `Build.scala`只是惯例。多个文件也是允许的。
-
-### 构建定义项目的`.scala` 源文件
-
-`.sbt` 文件被融入其兄弟工程目录中。再次看项目布局：
-
-```
-hello/                  # 项目的基目录
-
-    build.sbt           # build.sbt 是project/ 中构建定义工程的一部分。
-
-    project/            # 构建定义项目的基目录
-
-        Build.scala     # project/ 工程源文件，即构建定义源文件
-```
-
-在 build.sbt 中的 Scala 表达式被延续编译，和 `Build.scala` 融入在一起（和在 `project/` 目录下的其他 `.scala` 文件）。
-
-在基目录中的 `*.sbt` 文件变成项目构建定义项目的一部分。
-
-`.sbt` 文件形式，对于在构建定义项目中增加设定，是一种方便的缩写。
+这里假设你已经阅读了之前的章节，尤其是 [.sbt 构建定义][Basic-Def]和[更多关于设置][More-About-Settings]。
 
 ### 关联 build.sbt 和 Build.scala
 
@@ -148,15 +98,7 @@ sbt 从 `.sbt` 文件*附加*设置到 `Build.settings` 和 `Project.setting` �
 - 在 `.scala` 文件中，可以在 `Project.settings` 中增加设置，这些设置自动成为工程作用域。
 - 任何在 `.scala` 中的 `Build` 对象将会把它的内容导入到 `.sbt` 文件中。
 - 在 `.sbt` 文件中的设置被 *追加* 到 `.scala` 中的设置。
-- 在 `.sbt` 文件中的设置是在项目作用域的，除非你指定它在其他域。
-
-
-### 何时用 `.scala` 文件
-
-在 `.scala` 文件，你可以写任意的 Scala 代码，包括顶层的类和对象。另外，它没有对空白行的限制，因为它是一个标准 `.scala` 文件。
-
-推荐的方法是定义大部分设置在 `.sbt` 文件中，用 `.scala` 文件来做任务实现，或者在多个 `.sbt` 文件中共享键值。
-
+- 在 `.sbt` 文件中的设置是在项目作用域里，除非你指定它在其他域。
 
 ### 交互模式中的构建定义项目
 

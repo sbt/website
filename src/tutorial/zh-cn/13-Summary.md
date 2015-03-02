@@ -4,7 +4,6 @@ out: Summary.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [Full-Def]: Full-Def.html
   [Using-Plugins]: Using-Plugins.html
   [getting-help]: ../docs/faq.html#getting-help
 
@@ -33,7 +32,6 @@ out: Summary.html
 -   一个 configuration 是一种类型的构建，例如 `Compile` 或者 `Test`。
 -   project 轴也支持 "构建全局" scope。
 -   scopes 回滚或 *代理* 到更通用的 scope。
--   [.sbt][Basic-Def] vs. [.scala][Full-Def] 构建定义
 -   将大部分配置放在 `build.sbt` 中，但是用 `.scala` 构建定义文件定义类和更大的 task 实现。
 -   构建定义是一个 sbt 项目，来自于项目目录。
 -   [插件][Using-Plugins]是对构建定义的扩展
