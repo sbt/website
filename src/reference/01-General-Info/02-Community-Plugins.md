@@ -160,6 +160,7 @@ your plugin to the list.
     <https://github.com/joescii/sbt-jasmine-plugin>
 -   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
 -   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
+-   sbt-play-scalajs: <https://github.com/vmunier/sbt-play-scalajs>
 
 #### Documentation plugins
 
