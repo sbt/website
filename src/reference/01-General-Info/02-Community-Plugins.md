@@ -188,6 +188,8 @@ your plugin to the list.
     <https://github.com/tkawachi/sbt-lock>
 -   sbt-versions (Checks for updated versions of your dependencies):
     <https://github.com/sksamuel/sbt-versions>
+-   sbt-bobby (Prevents outdated dependencies from being used by your project):
+    <https://github.com/hmrc/sbt-bobby>
 
 #### Build interoperability plugins
 
