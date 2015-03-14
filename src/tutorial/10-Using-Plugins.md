@@ -63,7 +63,7 @@ plugins to automatically, and safely, ensure their settings and
 dependencies are on a project. Many auto plugins should have their default
 settings automatically, however some may require explicit enablement.
 
-If you're using an auto plugin that requires explicit enablement, then you you
+If you're using an auto plugin that requires explicit enablement, then you
 have to add the following to your `build.sbt`:
 
 ```scala
