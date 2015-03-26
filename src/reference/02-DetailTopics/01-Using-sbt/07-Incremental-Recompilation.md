@@ -2,47 +2,63 @@
 out: Understanding-Recompilation.html
 ---
 
+  [466]: https://github.com/sbt/sbt/issues/466
+  [288]: https://github.com/sbt/sbt/issues/288
+  [322]: https://github.com/sbt/sbt/issues/322
+
 Understanding Incremental Recompilation
 ---------------------------------------
 
-Compiling Scala code is slow, and sbt makes it often faster. By
-understanding how, you can even understand how to make compilation even
+Compiling Scala code with Scalac is slow, but sbt often makes it faster.
+By understanding how, you can even understand how to make compilation even
 faster. Modifying source files with many dependencies might require
-recompiling only those source files—which might take, say, 5
-seconds—instead of all the dependencies—which might take, say, 2
-minutes. Often you can control which will be your case and make
-development much faster by some simple coding practices.
+recompiling only those source files
+(which might take 5 seconds for instance)
+instead of all the dependencies
+(which might take 2 minutes for instance).
+Often you can control which will be your case and make
+development faster by a few coding practices.
 
-In fact, improving Scala compilation times is one major goal of sbt, and
-conversely the speedups it gives are one of the major motivations to use
-it. A significant portion of sbt sources and development efforts deals
+Improving Scala compilation performance is a major goal of sbt,
+and thus the speedups it gives are one of the major motivations to use it.
+A significant portion of sbt sources and development efforts deals
 with strategies for speeding up compilation.
 
 To reduce compile times, sbt uses two strategies:
 
-1.  reduce the overhead for restarting Scalac;
-2.  implement smart and transparent strategies for incremental
-    recompilation, so that only modified files and the needed
-    dependencies are recompiled.
-3.  sbt runs Scalac always in the same virtual machine. If one compiles
-    source code using sbt, keeps sbt alive, modifies source code and
-    triggers a new compilation, this compilation will be faster because
-    (part of) Scalac will have already been JIT-compiled. In the future,
-    sbt will reintroduce support for reusing the same compiler instance,
-    similarly to fsc.
-4.  When a source file `A.scala` is modified, sbt goes to great effort
-    to recompile other source files depending on A.scala only if
-    required - that is, only if the interface of A.scala was modified.
-    With other build management tools (especially for Java, like ant),
-    when a developer changes a source file in a non-binary-compatible
-    way, he needs to manually ensure that dependencies are also
-    recompiled - often by manually running the clean command to remove
-    existing compilation output; otherwise compilation might succeed
-    even when dependent class files might need to be recompiled. What is
-    worse, the change to one source might make dependencies incorrect,
-    but this is not discovered automatically: One might get a
-    compilation success with incorrect source code. Since Scala compile
-    times are so high, running clean is particularly undesirable.
+<ol>
+<li>Reduce the overhead for restarting Scalac
+    <ul>
+    <li>Implement smart and transparent strategies for incremental
+      recompilation, so that only modified files and the needed
+      dependencies are recompiled.</li>
+    <li>sbt always runs Scalac in the same virtual machine. If one compiles
+      source code using sbt, keeps sbt alive, modifies source code and
+      triggers a new compilation, this compilation will be faster because
+      (part of) Scalac will have already been JIT-compiled. In the future,
+      sbt will reintroduce support for reusing the same compiler instance,
+      similarly to fsc.</li>
+    </ul>
+</li>
+<li>Reduce the number of recompiled source. 
+    <ul>
+    <li>When a source file <code>A.scala</code> is modified, sbt goes to great effort
+        to recompile other source files depending on A.scala only if
+        required - that is, only if the interface of A.scala was modified.
+        With other build management tools (especially for Java, like ant),
+        when a developer changes a source file in a non-binary-compatible
+        way, she needs to manually ensure that dependencies are also
+        recompiled - often by manually running the clean command to remove
+        existing compilation output; otherwise compilation might succeed
+        even when dependent class files might need to be recompiled. What is
+        worse, the change to one source might make dependencies incorrect,
+        but this is not discovered automatically: One might get a
+        compilation success with incorrect source code. Since Scala compile
+        times are so high, running clean is particularly undesirable.
+    </li>
+    </ul>
+</li>
+</ol>
 
 By organizing your source code appropriately, you can minimize the
 amount of code affected by a change. sbt cannot determine precisely
@@ -59,8 +75,8 @@ dependent on that source must be recompiled. At the moment sbt uses the
 following algorithm to calculate source files dependent on a given
 source file:
 
--  dependencies introduced through inheritance are included
-   *transitively*; a dependency is introduced through inheritance if
+-  dependencies introduced through inheritance are included *transitively*;
+   a dependency is introduced through inheritance if
    a class/trait in one file inherits from a trait/class in another file
 -  all other direct dependencies are included; other dependencies are
    also called "meber reference" dependencies because they are
@@ -150,7 +166,7 @@ just to illustrate the ideas; this list is not intended to be complete.
     abstract method called `fullyQualifiedTraitName\$\$super\$methodName`;
     such methods only exist if they are used. Hence, adding the first
     call to super.methodName for a specific methodName changes the
-    interface. At present, this is not yet handled—see gh-466.
+    interface. At present, this is not yet handled—see [#466][466].
 4.  `sealed` hierarchies of case classes allow to check exhaustiveness
     of pattern matching. Hence pattern matches using case classes must
     depend on the complete hierarchy - this is one reason why
@@ -167,20 +183,19 @@ then sbt 0.13 has the right tools for that.
 In order to debug the interface representation and its changes as you
 modify and recompile source code you need to do two things:
 
-> 1.  Enable incremental compiler's apiDebug option.
-> 2.  Add [diff-utils
->     library](https://code.google.com/p/java-diff-utils/) to sbt's
->     classpath. Check documentation of sbt.extraClasspath system
->     property in the Command-Line-Reference.
+1.  Enable incremental compiler's apiDebug option.
+2.  Add [diff-utils library](https://code.google.com/p/java-diff-utils/) to sbt's
+    classpath. Check documentation of `sbt.extraClasspath` system
+    property in the Command-Line-Reference.
 
 > **warning**
 >
 > Enabling the `apiDebug` option increases significantly
-> :   memory consumption and degrades performance of the incremental
->     compiler. The underlying reason is that in order to produce
->     meaningful debugging information about interface differences
->     incremental compiler has to retain the full representation of the
->     interface instead of just hash sum as it does by default.
+> memory consumption and degrades performance of the incremental
+> compiler. The underlying reason is that in order to produce
+> meaningful debugging information about interface differences
+> incremental compiler has to retain the full representation of the
+> interface instead of just hash sum as it does by default.
 >
 > Keep this option enabled when you are debugging incremental compiler
 > problem only.
@@ -247,9 +262,9 @@ The heuristics used by sbt imply the following user-visible
 consequences, which determine whether a change to a class affects other
 classes.
 
-XXX Please note that this part of the documentation is a first draft;
+<!-- XXX Please note that this part of the documentation is a first draft;
 part of the strategy might be unsound, part of it might be not yet
-implemented.
+implemented. -->
 
 1.  Adding, removing, modifying `private` methods does not require
     recompilation of client classes. Therefore, suppose you add a method
@@ -365,6 +380,7 @@ val a: Seq[Writer] =
   A.openFiles(List(new File("foo.input")))
 ```
 
+<!--
 XXX the rest of the section must be reintegrated or dropped: In general,
 changing the return type of a method might be source-compatible, for
 instance if the new type is more specific, or if it is less specific,
@@ -383,14 +399,15 @@ between different modules become important—specifying such interface
 documents the intended behavior and helps ensuring binary compatibility,
 which is especially important when the exposed interface is used by
 other software component.
+-->
 
 #### Why adding a member requires recompiling existing clients
 
-In Java adding a member does not require recompiling existing valid
+In Java, adding a member does not require recompiling existing valid
 source code. The same should seemingly hold also in Scala, but this is
 not the case: implicit conversions might enrich class `Foo` with method
-`bar` without modifying class `Foo` itself (see discussion in issue
-gh-288 - XXX integrate more). However, if another method `bar` is
+`bar` without modifying class `Foo` itself (see discussion in [#288][288]).
+However, if another method `bar` is
 introduced in class `Foo`, this method should be used in preference to
 the one added through implicit conversions. Therefore any class
 depending on `Foo` should be recompiled. One can imagine more
@@ -401,7 +418,5 @@ implemented.
 
 The incremental compilation logic is implemented in
 <https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala>.
-Some related documentation for sbt 0.7 is available at:
-<https://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting>.
 Some discussion on the incremental recompilation policies is available
-in issue gh-322 and gh-288.
+in issue [#322][322] and [#288][288].
