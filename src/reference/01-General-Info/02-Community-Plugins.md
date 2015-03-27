@@ -259,6 +259,8 @@ your plugin to the list.
     <https://github.com/thricejamie/sbt-meow>
 -   sbt-build-files-watcher (show message on build files changed):
     <https://github.com/tototoshi/sbt-build-files-watcher>
+-   sbt-backup (compress and scp a directory):
+    <https://github.com/sensatus/sbt-backup>
 
 #### Database plugins
 
@@ -314,6 +316,8 @@ your plugin to the list.
     <https://bitbucket.org/phdoerfler/sbt-fxml>
 -   sbt-clojure (Compiling Clojure code):
     <https://github.com/Geal/sbt-clojure>
+-   sbt-build-info-conf (Generates resources.conf file with build information):
+    <https://github.com/Sensatus/sbt-build-info-conf>
 
 #### Game development plugins
 
