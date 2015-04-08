@@ -35,9 +35,7 @@ To reduce compile times, sbt uses two strategies:
     <li>sbt always runs Scalac in the same virtual machine. If one compiles
       source code using sbt, keeps sbt alive, modifies source code and
       triggers a new compilation, this compilation will be faster because
-      (part of) Scalac will have already been JIT-compiled. In the future,
-      sbt will reintroduce support for reusing the same compiler instance,
-      similarly to fsc.</li>
+      (part of) Scalac will have already been JIT-compiled.</li>
     </ul>
 </li>
 <li>Reduce the number of recompiled source. 
