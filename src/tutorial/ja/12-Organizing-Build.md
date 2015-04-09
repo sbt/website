@@ -100,13 +100,13 @@ import Dependencies._
 
 lazy val commonSettings = Seq(
   version := "0.1.0",
-  scalaVersion = "$example_scala_version$"
+  scalaVersion := "$example_scala_version$"
 )
 
 lazy val backend = (project in file("backend")).
   settings(commonSettings: _*).
   settings(
-    libraryDependencies += backendDeps
+    libraryDependencies ++= backendDeps
   )
 ```
 
