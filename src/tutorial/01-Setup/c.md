@@ -30,7 +30,7 @@ Run the following from the terminal to install `sbt` (You'll need superuser priv
 
 Package managers will check a number of configured repositories for packages to offer for installation. sbt binaries are published to Bintray, and conveniently Bintray provides an APT repository. You just have to add the repository to the places your package manager will check.
 
-> **Note:** Due to [sbt/website#127][website127] using https might cause segmentation fault.
+**Note:** Due to [sbt/website#127][website127] using https might cause segmentation fault.
 
 Once `sbt` is installed, you'll be able to manage the package in `aptitude` or Synaptic after you updated their package cache. You should also be able to see the added repository at the bottom of the list in System Settings -> Software & Updates -> Other Software:
 
