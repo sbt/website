@@ -5,6 +5,7 @@ out: Understanding-Recompilation.html
   [466]: https://github.com/sbt/sbt/issues/466
   [288]: https://github.com/sbt/sbt/issues/288
   [322]: https://github.com/sbt/sbt/issues/322
+  [1104]: https://github.com/sbt/sbt/issues/1104
 
 Understanding Incremental Recompilation
 ---------------------------------------
@@ -170,7 +171,8 @@ just to illustrate the ideas; this list is not intended to be complete.
     depend on the complete hierarchy - this is one reason why
     dependencies cannot be easily tracked at the class level (see Scala
     issue [SI-2559](https://issues.scala-lang.org/browse/SI-2559) for an
-    example.)
+    example.). Check [#1104][1104] for detailed discussion of tracking
+    dependencies at class level.
 
 #### Debugging an interface representation
 
