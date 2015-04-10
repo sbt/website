@@ -59,38 +59,32 @@ First, add the bintray-sbt to your plugin build.
 First, create a `project/bintray.sbt` file
 
 ```scala
-resolvers += Resolver.url(
-  "bintray-sbt-plugin-releases",
-   url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
-       Resolver.ivyStylePatterns)
-
-addSbtPlugin("me.lessis" % "bintray-sbt" % "0.1.1")
+addSbtPlugin("me.lessis" % "bintray-sbt" % "$bintray_sbt_version$")
 ```
 
-Next, a make sure your `build.sbt` file has the following settings :
+Next, a make sure your `build.sbt` file has the following settings
 
 ```scala
 import bintray.Keys._
 
-sbtPlugin := true
+lazy val commonSettings = Seq(
+  version in ThisBuild := "<YOUR PLUGIN VERSION HERE>",
+  organization in ThisBuild := "<INSERT YOUR ORG HERE>"
+)
 
-name := "<YOUR PLUGIN HERE>"
-
-organization := "<INSERT YOUR ORG HERE>"
-
-version := "<YOUR PLUGIN VERSION HERE>"
-
-publishMavenStyle := false
-
-bintrayPublishSettings
-
-repository in bintray := "sbt-plugins"
-
-// This is an example.  bintray-sbt requires licenses to be specified 
-// (using a canonical name).
-licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-
-bintrayOrganization in bintray := None
+lazy val root = (project in file(".")).
+  settings(commonSettings ++ bintrayPublishSettings: _*).
+  settings(
+    sbtPlugin := true,
+    name := "<YOUR PLUGIN HERE>",
+    description := "<YOUR DESCRIPTION HERE>",
+    // This is an example.  bintray-sbt requires licenses to be specified 
+    // (using a canonical name).
+    licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+    publishMavenStyle := false,
+    repository in bintray := "sbt-plugins",
+    bintrayOrganization in bintray := None
+  )
 ```
 
 Make sure your project has a valid license specified, as well as unique
