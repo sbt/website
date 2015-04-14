@@ -6,6 +6,8 @@ out: Understanding-Recompilation.html
   [288]: https://github.com/sbt/sbt/issues/288
   [322]: https://github.com/sbt/sbt/issues/322
   [1104]: https://github.com/sbt/sbt/issues/1104
+  [1002]: https://github.com/sbt/sbt/issues/1002
+  [1010]: https://github.com/sbt/sbt/issues/1010
 
 Understanding Incremental Recompilation
 ---------------------------------------
@@ -86,71 +88,473 @@ source file:
    irrelevant dependencies by looking at names of members that got modified
    and checking if dependent source files mention those names
 
-Here's an example illustrating the definition above:
+## Implementation of incremental recompilation
+
+This sections goes into details of incremental compiler implementation. It's
+starts with an overview of the problem incremental compiler tries to solve
+and then discusses design choices that led to the current implementation.
+
+### Overview
+
+The goal of incremental compilation is detect changes to source files or to the classpath and
+determine a small set of files to be recompiled in such a way that it'll yield the final result
+identical to the result from a full, batch compilation. When reacting to changes the incremental
+compiler has to goals that are at odds with each other:
+
+  * recompile as little source files as possible cover all changes to type checking and produced
+  * byte code triggered by changed source files and/or classpath
+
+The first goal is about making recompilation fast and it's a sole point of incremental compiler
+existence. The second goal is about correctness and sets a lower limit on the size of a set of
+recompiled files. Determining that set is the core problem incremental compiler tries to solve.
+We'll dive a little bit into this problem in the overview to understand what makes implementing
+incremental compiler a challenging task.
+
+Let's consider this very simple example:
 
 ```scala
-//A.scala
+// A.scala
+package a
 class A {
-  def foo: Int = 123
+  def foo(): Int = 12
 }
 
-//B.scala
+// B.scala
+package b
+class B {
+  def bar(x: a.A): Int = x.foo()
+}
+```
+
+Let's assume both of those files are already compiled and user changes `A.scala` so it looks like
+this:
+
+```scala
+// A.scala
+package a
+class A {
+  def foo(): Int = 23 // changed constant
+}
+```
+
+The first step of incremental compilation is to compile modified source files. That's minimal set of
+files incremental compiler has to compile. Modified version of `A.scala` will be compiled
+successfully as changing the constant doesn't introduce type checking errors. The next step of
+incremental compilation is determining whether changes applied to `A.scala` may affect other files.
+In the example above only the constant returned by method `foo` has changed and that does not affect
+compilation results of other files.
+
+Let's consider an other change to `A.scala`:
+
+```scala
+// A.scala
+package a
+class A {
+  def foo(): String = "abc" // changed constant and return type
+}
+```
+
+As before, the first step of incremental compilation is to compile modified files. In this case we
+compile `A.scala` and compilation will finish successfully. The second step is again determining
+whether changes to `A.scala` affect other files. We see that the return type of the `foo` public
+method has changed so this might affect compilation results of other files. Indeed, `B.scala`
+contains call to the `foo` method so has to be compiled in the second step. Compilation of `B.scala`
+will fail because of type mismatch in `B.bar` method and that error will be reported back to the
+user. That's where incremental compilation terminates in this case.
+
+Let's identify the two main pieces of information that were needed to make decisions in the examples
+presented above. The incremental compiler algorithm needs to:
+
+  * index source files so it knows whether there were API changes that might affect other source
+    files; e.g. it needs to detect changes to method signatures as in the example above
+  * track dependencies between source files; once the change to an API is detected the algorithm
+    needs to determine the set of files that might be potentially affected by this change
+
+Both of those pieces of information are extracted from the Scala compiler.
+
+### Interaction with the Scala compiler
+
+Incremental compiler interacts with Scala compiler in many ways:
+
+  * provides three phases additional phases that extract needed information:
+    - api phase extracts public interface of compiled sources by walking trees and indexing types
+    - dependency phase which extracts dependencies between source files (compilation units)
+    - analyzer phase which captures the list of emitted class files
+  * defines a custom reporter which allows sbt to gather errors and warnings
+  * subclasses Global to:
+    - add the api, dependency and analyzer phases
+    - set the custom reporter
+  * manages instances of the custom Global and uses them to compile files it determined that need
+    to be compiled
+
+#### API extraction phase
+
+The API extraction phase extracts information from Trees, Types and Symbols and maps it to
+incremental compiler's internal data structures described in the
+[api.specification](https://raw.github.com/sbt/sbt/0.13/api.specification) file.Those data
+structures allow to express an API in a way that is independent from Scala compiler version. Also,
+such representation is persistent so it is serialized on disk and reused between compiler runs or
+even sbt runs.
+
+The api extraction phase consist of two major components:
+
+  1. mapping Types and Symbols to incremental compiler representation of an extracted API
+  2. hashing that representation
+
+##### Mapping Types and Symbols
+
+The logic responsible for mapping Types and Symbols is implemented in
+[API.scala](https://github.com/sbt/sbt/blob/0.13/compile/interface/src/main/scala/xsbt/API.scala).
+With introduction of Scala reflection we have multiple variants of Types and Symbols. The
+incremental compiler uses the variant defined in `scala.reflect.internal` package.
+
+Also, there's one design choice that might not be obvious. When type corresponding to a class or a
+trait is mapped then all inherited members are copied instead of declarations in that class/trait.
+The reason for doing so is that it greatly simplifies analysis of API representation because all
+relevant information to a class is stored in one place so there's no need for looking up parent type
+representation. This simplicity comes at a price: the same information is copied over and over again
+resulting in a performance hit. For example, every class will have members of `java.lang.Object`
+duplicated along with full information about their signatures.
+
+##### Hashing an API representation
+
+The incremental compiler (as it's implemented right now) doesn't need very fine grained information
+about the API. The incremental compiler just needs to know whether an API has changed since the last
+time it was indexed. For that purpose hash sum is enough and it saves a lot of memory. Therefore,
+API representation is hashed immediately after single compilation unit is processed and only hash
+sum is stored persistently.
+
+In earlier versions the incremental compiler wouldn't hash. That resulted in a very high memory
+consumption and poor serialization/deserialization performance.
+
+The hashing logic is implemented in the [HashAPI.scala](https://github.com/sbt/sbt/blob/0.13/compile
+/api/src/main/scala/xsbt/api/HashAPI.scala) file.
+
+#### Dependency phase
+
+The incremental compiler extracts all Symbols given compilation unit depends on (refers to) and then
+tries to map them back to corresponding source/class files. Mapping a Symbol back to a source file
+is performed by using `sourceFile` attribute that Symbols derived from source files have set.
+Mapping a Symbol back to (binary) class file is more tricky because Scala compiler does not track
+origin of Symbols derived from binary files. Therefore simple heuristic is used which maps a
+qualified class name to corresponding classpath entry. This logic is implemented in dependency phase
+which has an access to the full classpath.
+
+The set of Symbols given compilation unit depend on is obtained by performing a tree walk. The tree
+walk examines all tree nodes that can introduce a dependency (refer to another Symbol) and gathers
+all Symbols assigned to them. Symbols are assigned to tree nodes by Scala compiler during type
+checking phase.
+
+_Incremental compiler used to rely on `CompilationUnit.depends` for collecting dependencies.
+However, name hashing requires a more precise dependency information. Check [#1002][1002] for
+details_.
+
+#### Analyzer phase
+
+Collection of produced class files is extracted by inspecting contents `CompilationUnit.icode`
+property which contains  all ICode classes that backend will emit as JVM class files.
+
+### Name hashing algorithm
+
+#### Motivation
+
+Let's consider the following example:
+
+```scala
+// A.scala
+class A {
+  def inc(x: Int): Int = x+1
+}
+
+// B.scala
+class B {
+  def foo(a: A, x: Int): Int = a.inc(x)
+}
+```
+
+Let's assume both of those files are compiled and user changes `A.scala` so it looks like this:
+
+```scala
+// A.scala
+class A {
+  def inc(x: Int): Int = x+1
+  def dec(x: Int): Int = x-1
+}
+```
+
+Once user hits save and asks incremental compiler to recompile it's project it will do the
+following:
+
+  1. Recompile `A.scala` as the source code has changed (first iteration)
+  2. While recompiling it will reindex API structure of `A.scala` and detect it has changed
+  3. It will determine that `B.scala` depends on `A.scala` and since the API structure of `A.scala` has changed `B.scala` has to be recompiled as well (`B.scala` has been invalidated)
+  4. Recompile `B.scala` because it was invalidated in 3. due to dependency change
+  5. Reindex API structure of `B.scala` and find out that it hasn't changed so we are done
+
+To summarize, we'll invoke Scala compiler twice: one time to recompile `A.scala` and then to
+recompile `B.scala` because `A` has a new method `dec`.
+
+However, one can easily see that in this simple scenario recompilation of `B.scala` is not needed
+because addition of `dec` method to `A` class is irrelevant to the `B` class as its not using it
+and it is not affected by it in any way.
+
+In case of two files the fact that we recompile too much doesn't sound too bad. However, in
+practice, the dependency graph is rather dense so one might end up recompiling the whole project
+upon a change that is irrelevant to almost all files in the whole project. That's exactly what
+happens in Play projects when routes are modified. The nature of routes and reversed routes is that
+every template and every controller depends on some methods defined in those two classes (`Routes`
+and `ReversedRoutes`) but changes to specific route definition usually affects only small subset of
+all templates and controllers.
+
+The idea behind name hashing is to exploit that observation and make the invalidation algorithm
+smarter about changes that can possibly affect a small number of files.
+
+#### Detection of irrelevant dependencies (direct approach)
+
+I call call a change to API of given source file `X.scala` irrelevant if doesn't affect compilation
+result of other file `Y.scala` even if `Y.scala` does depend on `X.scala`.
+
+From that definition one can easily see that change can be declared irrelevant only in respect to
+given dependency. Conversely, one can declare a dependency between two source files irrelevant in
+respect to given change of an API in one of the files if the change doesn't affect compilation
+result of the other file. From now on we'll focus on detection of irrelevant dependencies.
+
+A very naive way of solving a problem of detecting irrelevant dependencies would be to say that we
+keep track of all used methods in `Y.scala` so if a method in `X.scala` is added/removed/modified we
+just check if it's being used in `Y.scala` and if it's not then we consider dependency of `Y.scala`
+on `X.scala` irrelevant in this particular case.
+
+Just to give you a sneak preview of problems that quickly arise if you consider that strategy let's
+consider those two scenarios.
+
+##### Inheritance
+
+We'll see how method not used in other source file might affect it's compilation result. Let's
+consider this structure:
+
+```scala
+// A.scala
+abstract class A
+
+// B.scala
 class B extends A
-
-//C.scala
-class C extends B
-
-//D.scala
-class D(a: A)
-
-//E.scala
-class E(d: D)
 ```
 
-There are the following dependencies through inheritance:
+Let's add an abstract method to class `A`:
 
-```
-B.scala -> A.scala
-C.scala -> B.scala
-```
-
-There are also the following member reference dependencies:
-
-```
-D.scala -> A.scala
-E.scala -> D.scala
+```scala
+// A.scala
+abstract class A {
+  def foo(x: Int): Int
+}
 ```
 
-Now if the interface of `A.scala` is changed the following files will
-get invalidated: `B.scala`, `C.scala`, `D.scala`. Both `B.scala` and
-`C.scala` were included through transtive closure of inheritance
-dependencies. The `E.scala` was not included because `E.scala` doesn't
-depend directly on `A.scala`.
+Now, once we recompile `A.scala` we could just say that since `A.foo` is not used in `B` class then
+we don't need to recompile `B.scala`. However, it's not true because B doesn't implement a newly
+introduced, abstract method and an error should be reported.
 
-The distinction between depdencies by inheritance or member reference is
-a new feature in sbt 0.13 and is responsible for improved recompilation
-times in many cases where deep inheritance chains are not used
-extensively.
+Therefore, a simple strategy of looking at used methods for determining whether a given dependency
+is relevant or not is not enough.
 
-sbt does not instead track dependencies to source code at the
-granularity of individual output `.class` files, as one might hope.
-Doing so would be incorrect, because of some problems with sealed
-classes (see below for discussion).
+##### Enrichment pattern
 
-Dependencies on binary files are different - they are tracked both on
-the `.class` level and on the source file level. Adding a new
-implementation of a sealed trait to source file `A` affects all clients
-of that sealed trait, and such dependencies are tracked at the source
-file level.
+Here we'll see another case of newly introduced method (that is not used anywhere yet) that affects
+compilation results of other files. This time, no inheritance will be involved but we'll use
+enrichment pattern (implicit conversions) instead.
 
-Different sources are moreover recompiled together; hence a compile
-error in one source implies that no bytecode is generated for any of
-those. When a lot of files need to be recompiled and the compile fix is
-not clear, it might be best to comment out the offending location (if
-possible) to allow other sources to be compiled, and then try to figure
-out how to fix the offending location—this way, trying out a possible
-solution to the compile error will take less time, say 5 seconds instead
-of 2 minutes.
+Let's assume we have the following structure:
+
+```scala
+// A.scala
+class A
+
+// B.scala
+class B {
+  class AOps(a: A) {
+    def foo(x: Int): Int = x+1
+  }
+  implicit def richA(a: A): AOps = new AOps(a)
+  def bar(a: A): Int = a.foo(12) // this is expanded to richA(a).foo so we are calling AOPs.foo method
+}
+```
+
+Now, let's add a `foo` method directly to `A`:
+
+```scala
+// A.scala
+class A {
+  def foo(x: Int): Int = x-1
+}
+```
+
+Now, once we recompile `A.scala` and detect that there's a new method defined in `A` class we would
+need to consider whether this is relevant to dependency of `B.scala` on `A.scala`. Notice that in
+`B.scala` we do not use `A.foo` (it didn't exist at the time `B.scala` was compiled) but we use
+`AOps.foo` and it's not immediately clear that `AOps.foo` has anything to do with `A.foo`. One would
+need to detect the fact that a call to `AOps.foo` as a result of implicit conversion `richA` that
+was inserted because we failed to find `foo` on `A` before.
+
+This kind of analysis gets us very quickly to implementation complexity of Scala's type checker and
+is not feasible to implement in a general case.
+
+##### Too much information to track
+
+All above assumed we actually have full information about structure of API and used methods
+preserved so we can make use of it. However, as described in
+[Hashing an API representation](#hashing-an-api-representation) we do not store the whole
+representation of the API but only its hash sum. Also, dependencies are tracked at source file
+level and not at class/method level.
+
+One could imagine reworking current design to track more information but it would be a very big
+undertake. Also, incremental compiler used to preserve a whole API structure but it switched to
+hashing due to infeasible memory requirements.
+
+#### Detection of irrelevant dependencies (name hashing)
+
+As we saw in previous chapter, the direct approach of tracking more information about what's being
+used in files becomes tricky very quickly. One would wish to come up with some simpler and less
+precise approach that still yields big improvements over existing implementation.
+
+The idea is to not track all used members and reason very precisely when given change to some
+members affects result of compilation of other files. We would track just used _simple names_
+instead and we would also track hash sums for all members with given simple name. The simple name
+means just an unqualified name of a term or a type.
+
+Let's see first how this simplified strategy addresses the problem with 
+[enrichment pattern](#enrichment-pattern). We'll do that by simulating the name hashing algorithm.
+Let's start with the original code:
+
+```scala
+// A.scala
+class A
+
+// B.scala
+class B {
+  class AOps(a: A) {
+    def foo(x: Int): Int = x+1
+  }
+  implicit def richA(a: A): AOps = new AOps(a)
+  def bar(a: A): Int = a.foo(12) // this is expanded to richA(a).foo so we are calling AOPs.foo method
+}
+```
+
+During compilation of those two files we'll extract the following information:
+
+```
+usedNames("A.scala"): A
+usedNames("B.scala"): B, AOps, a, A, foo, x, Int, richA, AOps, bar
+
+nameHashes("A.scala"): A -> ...
+nameHashes("B.scala"): B -> ..., AOps -> ..., foo -> ..., richA -> ..., bar -> ...
+```
+
+The `usedNames` relation track all names mentioned in given source file. The `nameHashes` relation
+gives us a hash sum of groups of members that are put together in one bucket if they have the same
+simple name. In addition to information presented above we still track dependency of `B.scala` on
+`A.scala`.
+
+Now, if we add `foo` method to `A` class:
+
+```scala
+// A.scala
+class A {
+  def foo(x: Int): Int = x-1
+}
+```
+
+and recompile, we'll get the following (updated) information:
+
+```
+usedNames("A.scala"): A, foo
+nameHashes("A.scala"): A -> ..., foo -> ...
+```
+
+The incremental compiler compares name hashes before and after the change and detects that the hash
+sum of `foo` name has changed (it's been added). Therefore, it looks at all source files that depend
+on `A.scala`, in our case it's just `B.scala`, and checks whether `foo` appears as used name. It
+does, therefore it recompiles `B.scala` as intendent.
+
+You can see now, that if we added other method to `A` like `xyz` then `B.scala` wouldn't be
+recompiled because nowhere in `B.scala` the name `xyz` is mentioned. Therefore, if you have
+reasonably non-clashing names you should benefit from a lot of dependencies between source files
+marked as irrelevant.
+
+It's very nice that this simple, name-based heuristic manages to withstand "enrichment pattern"
+test. However,  name-hashing fails to pass other test of [inheritance](#inheritance). In order to
+address that problem, we'll need to have a closer look at dependencies introduced by inheritance vs
+dependencies introduced by member references.
+
+#### Dependencies introduced by member reference and inheritance
+
+The core assumption behind name-hashing algorithm is that if a user adds/modifies/removes a member
+of a class (e.g. a method) then other results of compilation of classes won't be affected unless
+they are using that particular member. Inheritance with various override checks makes the whole
+situation much more complicated; if you combine it with mix-in composition that introduces a new
+fields to classes inheriting from traits then you quickly realize that inheritance requires special
+handling.
+
+The idea is that for now we would switch back to the old scheme whenever inheritance is involved.
+Therefore, we track dependencies introduced by member reference separately from dependencies
+introduced by inheritance. All dependencies introduced by inheritance are _not_ a subject to name-
+hashing analysis so they are never marked as irrelevant.
+
+The intuition behind dependency introduced by inheritance is very simple: it's a dependency a
+class/trait introduces by inheriting from other class/trait. All other dependencies are called
+dependencies by member reference because they are introduced by referring (selecting) a member
+(method, type alis, inner class, val, etc.) from another class. Notice that in order to inherit from
+a class you need to refer to it so dependencies introduced by inheritance are a strict subset of
+member reference dependencies.
+
+Here's an example which illustrates the distinction:
+
+```scala
+// A.scala
+class A {
+  def foo(x: Int): Int = x+1
+}
+
+// B.scala
+class B(val a: A)
+
+// C.scala
+trait C
+
+// D.scala
+trait D[T]
+
+// X.scala
+class X extends A with C with D[B] {
+  // dependencies by inheritance: A, C, D
+  // dependencies by member reference: A, C, D, B
+}
+
+// Y.scala
+class Y {
+  def test(b: B): Int = b.a.foo(12)
+  // dependencies by member reference: B, Int, A
+}
+```
+
+There are two things to notice:
+
+  1. `X` does not depend on `B` by inheritance because `B` is passed as type parameter to `D`; we
+     consider only types that appear as parents to `X`
+  2. `Y` does depend on `A` even if there's no explicit mention of `A` in the source file; we
+     select a method `foo` defined in `A` and that's enough to introduce a dependency
+
+To sum it up, the way we want to handle inheritance and problems it introduces is to track all
+dependencies introduced by inheritance separately and have much more strict way of invalidating
+dependencies. Essentially, whenever there's a dependency by inheritance it will react to any
+(even minor) change in parent types.
+
+#### Computing name hashes
+
+One thing we skimmed over so far is how name hashes are actually computed.
+
+As mentioned before, all definitions are grouped together by simple name and then hashed as one
+bucket. If a definition (for example a class) contains other definition then those nested
+definitions do _not_ contribute to a hash sum. The nested definitions will contribute to hashes of
+buckets selected by their name.
 
 ### What is included in the interface of a Scala class
 
@@ -378,43 +782,9 @@ val a: Seq[Writer] =
   A.openFiles(List(new File("foo.input")))
 ```
 
-<!--
-XXX the rest of the section must be reintegrated or dropped: In general,
-changing the return type of a method might be source-compatible, for
-instance if the new type is more specific, or if it is less specific,
-but still more specific than the type required by clients (note however
-that making the type more specific might still invalidate clients in
-non-trivial scenarios involving for instance type inference or implicit
-conversions—for a more specific type, too many implicit conversions
-might be available, leading to ambiguity); however, the bytecode for a
-method call includes the return type of the invoked method, hence the
-client code needs to be recompiled.
-
-Hence, adding explicit return types on classes with many dependencies
-might reduce the occasions where client code needs to be recompiled.
-Moreover, this is in general a good development practice when interface
-between different modules become important—specifying such interface
-documents the intended behavior and helps ensuring binary compatibility,
-which is especially important when the exposed interface is used by
-other software component.
--->
-
-#### Why adding a member requires recompiling existing clients
-
-In Java, adding a member does not require recompiling existing valid
-source code. The same should seemingly hold also in Scala, but this is
-not the case: implicit conversions might enrich class `Foo` with method
-`bar` without modifying class `Foo` itself (see discussion in [#288][288]).
-However, if another method `bar` is
-introduced in class `Foo`, this method should be used in preference to
-the one added through implicit conversions. Therefore any class
-depending on `Foo` should be recompiled. One can imagine more
-fine-grained tracking of dependencies, but this is currently not
-implemented.
-
 ### Further references
 
 The incremental compilation logic is implemented in
 <https://github.com/sbt/sbt/blob/0.13/compile/inc/src/main/scala/inc/Incremental.scala>.
 Some discussion on the incremental recompilation policies is available
-in issue [#322][322] and [#288][288].
+in issue [#322][322], [#288][288] and [#1010][1010].
