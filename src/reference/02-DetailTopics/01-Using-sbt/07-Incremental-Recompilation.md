@@ -88,6 +88,8 @@ source file:
    irrelevant dependencies by looking at names of members that got modified
    and checking if dependent source files mention those names
 
+The name hashing optimization is enabled by default since sbt 0.13.6.
+
 ## Implementation of incremental recompilation
 
 This sections goes into details of incremental compiler implementation. It's
