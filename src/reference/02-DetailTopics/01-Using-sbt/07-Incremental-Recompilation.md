@@ -77,10 +77,14 @@ source file:
 -  dependencies introduced through inheritance are included *transitively*;
    a dependency is introduced through inheritance if
    a class/trait in one file inherits from a trait/class in another file
--  all other direct dependencies are included; other dependencies are
-   also called "meber reference" dependencies because they are
-   introduced by referring to a member (class, method, type, etc.)
+-  all other direct dependencies are considered by name hashing optimization;
+   other dependencies are also called "member reference" dependencies because
+   they are introduced by referring to a member (class, method, type, etc.)
    defined in some other source file
+-  name hashing optimization considers all member reference dependencies in
+   context of interface changes of a given source file; it tries to prune
+   irrelevant dependencies by looking at names of members that got modified
+   and checking if dependent source files mention those names
 
 Here's an example illustrating the definition above:
 
@@ -274,19 +278,13 @@ implemented. -->
     which are not accessible to other classes, hence methods marked with
     private or private[this]; methods which are private to a package,
     marked with private[name], are part of the API.
-2.  Modifying the interface of a non-private method requires recompiling
-    all clients, even if the method is not used.
+2.  Modifying the interface of a non-private method triggers name
+    hashing optimization
 3.  Modifying one class does require recompiling dependencies of other
     classes defined in the same file (unlike said in a previous version
     of this guide). Hence separating different classes in different
     source files might reduce recompilations.
-4.  Adding a method which did not exist requires recompiling all
-    clients, counterintuitively, due to complex scenarios with implicit
-    conversions. Hence in some cases you might want to start
-    implementing a new method in a separate, new class, complete the
-    implementation, and then cut-n-paste the complete implementation
-    back into the original source.
-5.  Changing the implementation of a method should *not* affect its
+4.  Changing the implementation of a method should *not* affect its
     clients, unless the return type is inferred, and the new
     implementation leads to a slightly different type being inferred.
     Hence, annotating the return type of a non-private method
