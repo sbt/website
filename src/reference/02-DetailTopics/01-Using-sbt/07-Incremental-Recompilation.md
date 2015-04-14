@@ -90,6 +90,39 @@ source file:
 
 The name hashing optimization is enabled by default since sbt 0.13.6.
 
+### How to take advantage of sbt heuristics
+
+The heuristics used by sbt imply the following user-visible
+consequences, which determine whether a change to a class affects other
+classes.
+
+1.  Adding, removing, modifying `private` methods does not require
+    recompilation of client classes. Therefore, suppose you add a method
+    to a class with a lot of dependencies, and that this method is only
+    used in the declaring class; marking it private will prevent
+    recompilation of clients. However, this only applies to methods
+    which are not accessible to other classes, hence methods marked with
+    private or private[this]; methods which are private to a package,
+    marked with private[name], are part of the API.
+2.  Modifying the interface of a non-private method triggers name
+    hashing optimization
+3.  Modifying one class does require recompiling dependencies of other
+    classes defined in the same file (unlike said in a previous version
+    of this guide). Hence separating different classes in different
+    source files might reduce recompilations.
+4.  Changing the implementation of a method should *not* affect its
+    clients, unless the return type is inferred, and the new
+    implementation leads to a slightly different type being inferred.
+    Hence, annotating the return type of a non-private method
+    explicitly, if it is more general than the type actually returned,
+    can reduce the code to be recompiled when the implementation of such
+    a method changes. (Explicitly annotating return types of a public
+    API is a good practice in general.)
+
+All the above discussion about methods also applies to fields and
+members in general; similarly, references to classes also extend to
+objects and traits.
+
 ## Implementation of incremental recompilation
 
 This sections goes into details of incremental compiler implementation. It's
@@ -665,43 +698,6 @@ see the following lines in the debugging log
 You can see an unified diff of two interface textual represetantions. As
 you can see, the incremental compiler detected a change to the return
 type of `b` method.
-
-### How to take advantage of sbt heuristics
-
-The heuristics used by sbt imply the following user-visible
-consequences, which determine whether a change to a class affects other
-classes.
-
-<!-- XXX Please note that this part of the documentation is a first draft;
-part of the strategy might be unsound, part of it might be not yet
-implemented. -->
-
-1.  Adding, removing, modifying `private` methods does not require
-    recompilation of client classes. Therefore, suppose you add a method
-    to a class with a lot of dependencies, and that this method is only
-    used in the declaring class; marking it private will prevent
-    recompilation of clients. However, this only applies to methods
-    which are not accessible to other classes, hence methods marked with
-    private or private[this]; methods which are private to a package,
-    marked with private[name], are part of the API.
-2.  Modifying the interface of a non-private method triggers name
-    hashing optimization
-3.  Modifying one class does require recompiling dependencies of other
-    classes defined in the same file (unlike said in a previous version
-    of this guide). Hence separating different classes in different
-    source files might reduce recompilations.
-4.  Changing the implementation of a method should *not* affect its
-    clients, unless the return type is inferred, and the new
-    implementation leads to a slightly different type being inferred.
-    Hence, annotating the return type of a non-private method
-    explicitly, if it is more general than the type actually returned,
-    can reduce the code to be recompiled when the implementation of such
-    a method changes. (Explicitly annotating return types of a public
-    API is a good practice in general.)
-
-All the above discussion about methods also applies to fields and
-members in general; similarly, references to classes also extend to
-objects and traits.
 
 #### Why changing the implementation of a method might affect clients, and why type annotations help
 
