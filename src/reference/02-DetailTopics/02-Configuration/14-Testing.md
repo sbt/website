@@ -64,6 +64,12 @@ It supports wildcards as well:
 > testOnly org.example.*Slow org.example.MyTest1
 ```
 
+And you can add exclusions as well by prefixing with a `-`:
+
+```
+> testOnly org.example.*Slow -*ReallySlow*
+```
+
 #### testQuick
 
 The `testQuick` task, like `testOnly`, allows to filter the tests to run
@@ -75,6 +81,7 @@ one of the following conditions are run:
 -   The tests that were not run before
 -   The tests that have one or more transitive dependencies, maybe in a
     different project, recompiled.
+-   The tests that are not specifically excluded with `-`.
 
 ##### Tab completion
 
