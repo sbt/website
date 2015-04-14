@@ -162,6 +162,7 @@ your plugin to the list.
 -   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
 -   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
 -   sbt-play-scalajs: <https://github.com/vmunier/sbt-play-scalajs>
+-   scalatra-sbt: <https://github.com/scalatra/scalatra-sbt>
 
 #### Documentation plugins
 
