@@ -50,3 +50,5 @@
     </div>
   </div>
 </footer>
+<script src="/assets/versions.js"></script>
+<script src="/assets/set-versions.js"></script>

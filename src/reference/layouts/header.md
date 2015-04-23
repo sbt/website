@@ -2,6 +2,7 @@
 <div class="container">
     <div class="logo">
       <a href="../../index.html"><img src="files/typesafe_sbt_svg.svg" alt="sbt"></a>
+      <span class="versions"><select id="versions"></select></span>
     </div>
     <div class="nav">
       <a href="../../documentation.html">Documentation</a>
