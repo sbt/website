@@ -8,12 +8,11 @@ out: Hello.html
 Hello, World
 ------------
 
-このページは、君が[sbt をインストール][Setup]したことを前提にする。
+このページは、既に[sbt をインストール][Setup]したことを前提とする。
 
 ### ソースコードの入ったプロジェクトディレクトリを作る
 
-一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、`hello`
-ディレクトリを作って、以下の内容の `hw.scala` というファイルを作成する:
+一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、`hello` ディレクトリを作って、以下の内容の `hw.scala` というファイルを作成する:
 
 ```scala
 object Hi {
@@ -21,10 +20,8 @@ object Hi {
 }
 ```
 
-次に `hello` ディレクトリ内から sbt を起動して 
-sbt のインタラクティブコンソールに `run` と打ち込む。
-Linux か OS X を使っていならばコマンドは以下のようになる:
-
+次に `hello` ディレクトリ内から sbt を起動して sbt のインタラクティブコンソールに `run` と入力する。
+Linux、Mac OS X の場合、コマンドは以下のようになる:
 
 ```
 \$ mkdir hello
@@ -37,26 +34,24 @@ Linux か OS X を使っていならばコマンドは以下のようになる:
 Hi!
 ```
 
-この例では、sbt は純粋に convention（デフォルトの慣例）だけを使って動作している。
-sbt は以下を自動的に検知する:
+この例では、sbt はただデフォルトの規約によって動作している。sbt は以下のものを自動的に検知する:
 
- - ベースディレクトリ内のソース
- - `src/main/scala` か `src/main/java` 内のソース
- - `src/test/scala` か `src/test/java` 内のテスト
+ - ベースディレクトリにあるソースファイル　
+ - `src/main/scala` か `src/main/java` 内のソースファイル
+ - `src/test/scala` か `src/test/java` 内のテストソースファイル
  - `src/main/resources` か `src/test/resources` 内のデータファイル
  - `lib` 内の jar ファイル
 
 デフォルトでは、sbt は sbt 自身が使っている Scala のバージョンを使ってプロジェクトをビルドする。
 
-`sbt run` を用いてプロジェクトを実行したり、`sbt console` を用いて [Scala REPL](http://www.scala-lang.org/node/2097) に入ることができる。`sbt console` は君のプロジェクトにクラスパスを通すから、
-君のプロジェクトのコードを使った Scala の例をライブで試すことができる。
+`sbt run` でプロジェクトを実行したり、`sbt console` で [Scala REPL](http://www.scala-lang.org/node/2097) に入ることができる。
+`sbt console` は君のプロジェクトにクラスパスを通すので、プロジェクトのコードを使った Scala コード例をその場で試すことができる。
 
 ### ビルド定義
 
-ほとんどのプロジェクトは何らかの手動設定が必要だ。基本的なビルド設定は `build.sbt` というファイルに書かれ、
-プロジェクトのベースディレクトリ (base directory) に置かれる。
-
-例えば、君のプロジェクトが `hello` ディレクトリにあるなら、`hello/build.sbt` をこんな感じで書く:
+ほとんどのプロジェクトでは何らかの手動設定が必要になるだろう。
+基本的なビルド設定方法はプロジェクトのベースディレクトリに `build.sbt` というファイルとして配置されるものだ。
+例えば、君のプロジェクトが `hello` ディレクトリにある場合、`hello/build.sbt` はこんな感じになる：
 
 ```scala
 lazy val root = (project in file(".")).
@@ -68,8 +63,7 @@ lazy val root = (project in file(".")).
 ```
 
 [.sbt ビルド定義][Basic-Def]で、`build.sbt` の書き方をもっと詳しく説明する。
-
-君のプロジェクトを jar ファイルにパッケージ化する予定なら、最低でも `build.sbt` に name と version は書いておこう。
+もし君のプロジェクトを jar ファイルにパッケージ化するつもりなら、最低でも `build.sbt` に name と version は書いておこう。
 
 ### sbt バージョンの設定
 
@@ -80,5 +74,5 @@ lazy val root = (project in file(".")).
 sbt.version=$app_version$
 ```
 
-sbt はリリース間で 99% ソースの互換性を持たせてある。
-だけど、sbt バージョンを `project/build.properties` に設定することで混乱を予防することできる。
+sbt はリリース間で 99% ソースコード互換性を維持しているが、
+sbt バージョンを `project/build.properties` に設定しておくことで、不要な混乱を避けることができるだろう。

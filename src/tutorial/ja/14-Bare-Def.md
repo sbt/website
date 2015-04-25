@@ -10,16 +10,15 @@ out: Bare-Def.html
 ------------------------
 
 このページでは旧式の `.sbt` ビルド定義の説明をする。
-現在は[マルチ・プロジェクト .sbt ビルド定義][Basic-Def]が推奨される。
+現在の推奨は[マルチプロジェクト .sbt ビルド定義][Basic-Def]だ。
 
 ### bare .sbt ビルド定義とは何か
 
 明示的に [Project](../api/sbt/Project.html) を定義する
-[マルチ・プロジェクト .sbt ビルド定義][Basic-Def]や [.scala ビルド定義][Full-Def]と違って
+[マルチプロジェクト .sbt ビルド定義][Basic-Def]や [.scala ビルド定義][Full-Def]と違って
 bare ビルド定義は `.sbt` ファイルの位置から暗黙にプロジェクトが定義される。
 
-`Project` を定義する代わりに、bare `.sbt` ビルド定義は
-`Setting[_]` 式のリストから構成される。
+`Project` を定義する代わりに、bare `.sbt` ビルド定義は `Setting[_]` 式のリストから構成される。
 
 ```scala
 name := "hello"

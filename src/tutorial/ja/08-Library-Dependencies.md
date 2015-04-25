@@ -31,30 +31,28 @@ out: Library-Dependencies.html
  - `lib` ディレクトリに jar ファイルを入れることでできる_アンマネージ依存性_（unmanaged dependencies）
  - ビルド定義に設定され、リポジトリから自動でダウンロードされる_マネージ依存性_（managed dependencies）
 
-### アンマネージ依存性
+### アンマネージ依存性（Unmanaged Dependencies）
 
-ほとんどの人は、アンマネージ依存性ではなく、マネージ依存性を使っている。だけど、始めはアンマネージの方が簡単なので分かりやすい。
+ほとんどの人はアンマネージ依存性ではなくマネージ依存性を使う。
+しかし、アンマネージの方が最初に始めるにあたってはより簡単かもしれない。
 
-アンマネージ依存性を説明すると、こんな感じになる。jar ファイルを `lib` に入れると、それはプロジェクトのクラスパスに追加される。
-以上！
+アンマネージ依存性はこんな感じのものだ: jar ファイルを `lib` 配下に置いておけばプロジェクトのクラスパスに追加される、以上！
 
-例えば、[ScalaCheck][ScalaCheck]、[specs][specs]、[ScalaTest][ScalaTest] などのテスト用の jar を `lib` に加えることもできる。
+[ScalaCheck][ScalaCheck]、[Specs2][Specs2]、[ScalaTest][ScalaTest] のようなテスト用の jar ファイルも `lib` に配置できる。
 
-`lib` の依存性は（`compile`、`test`、`run`、そして `console` の）全てのクラスパスに追加される。
+`lib` 配下の依存ライブラリは（`compile`、`test`、`run`、そして `console` の）全てのクラスパスに追加される。
 もし、どれか一つのクラスパスを変えたい場合は、例えば `dependencyClasspath in Compile` や
 `dependencyClasspath in Runtime` などを適宜調整する必要がある。
 
-アンマネージ依存性を利用するのに、`build.sbt` には何も書かなくてもいいけど、
-デフォルトの `lib` 以外のディレクトリを使いたい場合は、
-`unmanagedBase` キーを変更することができる。
+アンマネージ依存性を利用するのに、`build.sbt` には何も書く必要はないが、デフォルトの `lib` 以外のディレクトリを使いたい場合は `unmanagedBase` キーで変更することができる。
 
-`lib` のかわりに、`custom_lib` を使うには:
+`lib` のかわりに、`custom_lib` を使うならこのようになる:
 
 ```scala
 unmanagedBase := baseDirectory.value / "custom_lib"
 ```
 
-`baseDirectory` はプロジェクトのルートディレクトリで、
+`baseDirectory` はプロジェクトのベースディレクトリで、
 [他の種類のセッティング][More-About-Settings]で説明したとおり、ここでは `unmanagedBase`
 を `value` を使って取り出した `baseDirectory` の値を用いて変更している。
 
@@ -66,13 +64,13 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
 ```
 
-### マネージ依存性
+### マネージ依存性（Managed Dependencies）
 
-sbt は、[Apache Ivy] を使ってマネージ依存性を実装するため、既に Maven か Ivy に慣れていれば、違和感無く入り込めるだろう。
+sbt は [Apache Ivy] を使ってマネージ依存性を実装しているので、既に Maven か Ivy に慣れているなら、違和感無く入り込めるだろう。
 
 #### `libraryDependencies` キー
 
-依存性を `libraryDependencies` セッティングに列挙するだけで、普通はうまくいく。
+大体の場合、依存性を `libraryDependencies` セッティングに列挙するだけでうまくいくだろう。
 Maven POM ファイルや、Ivy コンフィギュレーションファイルを書くなどして、依存性を外部で設定してしまって、
 sbt にその外部コンフィギュレーションファイルを使わせるということも可能だ。
 これに関しては、[Library Management] を参照。
@@ -95,63 +93,64 @@ libraryDependencies += groupID % artifactID % revision % configuration
 val libraryDependencies = SettingKey[Seq[ModuleID]]("library-dependencies", "Declares managed dependencies.")
 ```
 
-`%` メソッドは、文字列から `ModuleID` オブジェクトを作り、その `ModuleID` を `libraryDependencies` に追加するだけでいい。
+`%` メソッドは、文字列から `ModuleID` オブジェクトを作るので、君はその `ModuleID` を `libraryDependencies` に追加するだけでいい。
 
-当然、sbt は（Ivy を通じて）モジュールをどこからダウンロードしてくるかを知らなければいけない。
-もしモジュールが sbt に最初から入っているデフォルトのリポジトリの一つにあれば、ちゃんと動く。
-例えば、Apache Derby はデフォルトのリポジトリにある:
+当然ながら、sbt は（Ivy を通じて）モジュールをどこからダウンロードしてくるかを知っていなければならない。
+もしそのモジュールが sbt に初めから入っているデフォルトのリポジトリの一つに存在していれば、何もしなくてもそのままで動作する。
+例えば、Apache Derby は Maven2 の標準リポジトリ（訳注: sbt にあらかじめ入っているデフォルトリポジトリの一つ）に存在している:
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
-これを `build.sbt` に打ち込んで、`update` を実行すると、sbt は Derby を
-`~/.ivy2/cache/org.apache.derby/` にダウンロードするはずだ。
-（ちなみに、`update` は `compile` の依存性であるため、手動で `update` と打ち込む必要がある状況は普通は無い。）
+これを `build.sbt` に記述して `update` を実行すると、sbt は Derby を `~/.ivy2/cache/org.apache.derby/` にダウンロードするはずだ。
+（ちなみに、`update` は `compile` の依存性であるため、ほとんどの場合、手動で `update` と入力する必要はないだろう）
 
-当然、`++=` を使って一度に依存ライブラリのリストを追加することもできる:
+もちろん `++=` を使って依存ライブラリのリストを一度に追加することもできる:
 
 ```scala
 libraryDependencies ++= Seq(
-    groupID % artifactID % revision,
-    groupID % otherID % otherRevision
+  groupID % artifactID % revision,
+  groupID % otherID % otherRevision
 )
 ```
 
-`libraryDependencies` に対して `:=`、その他を使う機会があるかもしれないが、稀だろう。
+`libraryDependencies` に対して `:=` を使う機会があるかもしれないが、おそらくそれは稀だろう。
 
 #### `%%` を使って正しい Scala バージョンを入手する
 
 `groupID % artifactID % revision` のかわりに、
-`groupID %% artifactID % revision` を使うと（違いは groupID の後ろの `%%`）、
-sbt はプロジェクトの Scala バージョンをアーティファクト名に追加する。
-これはただの略記法なので、`%%` 無しで書くこともできる:
+`groupID %% artifactID % revision` を使うと（違いは groupID の後ろの二つ連なった `%%`）、
+sbt はプロジェクトの Scala のバイナリバージョンをアーティファクト名に追加する。
+これはただの略記法なので `%%` 無しで書くこともできる:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.9.1" % "0.3"
+libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
 ```
 
-ビルドのバージョンが `scalaVersion` が `2.9.1` だとすると、以下は等価だ:
+君のビルドの Scala バージョンが `2.11.1` だとすると、以下の設定は上記と等価だ（"org.scala-tools" の後ろの二つ連なった %% に注意）:
 
 ```scala
 libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 ```
 
-多くの依存ライブラリが複数の Scala バージョンに対してコンパイルされていて、
-プロジェクトに合ったものを選択したいときに使うというのが考えだ。
+多くの依存ライブラリは複数の Scala バイナリバージョンに対してコンパイルされており、
+ライブラリの利用者はバイナリ互換性のあるものを選択したいと思うはずである。
 
-実践上での問題として、多くの場合依存ライブラリは少しズレた Scala バージョンが使われることがあるけど、
-`%%` はそこまでは賢くない。そのため、依存ライブラリが `2.10.1` までしか出てなくて、
-プロジェクトが `scalaVersion := "2.10.4"` の場合、`2.10.1` の依存ライブラリが多分動作するにも関わらず `%%` を使うことができない。
-もし、`%%` が動かなくなったら、依存ライブラリが使っている実際のバージョンを確認して、
+実際のところの複雑な問題として、依存ライブラリはしばしば少しくらい違った Scala バージョンでも動作するのだが、
+`%%` はこれについてそこまで賢くはない。
+もしある依存ライブラリが Scala 2.10.1 に対してビルドされているとして、
+君のプロジェクトが `scalaVersion := "2.10.4"` と指定している場合、
+その 2.10.1 に依存するライブラリがおそらく動作するにも関わらず `%%` を使うことはできない。
+もし `%%` が動かなくなったら、依存ライブラリが使っている実際のバージョンを確認して、
 動くだろうバージョン（それがあればの話だけど）に決め打ちすればいい。
 
 詳しくは、[Cross Build] を参照。
 
 #### Ivy revision
 
-`groupID % artifactID % revision` の `revision` は、単一の固定されたバージョン番号じゃなくてもいい。
-Ivy は与えられた制限の中でモジュールの最新の revision を選ぶことができる。
+`groupID % artifactID % revision` の `revision` は、単一の固定されたバージョン番号でなくてもよい。
+Ivy は指定されたバージョン指定の制限の中でモジュールの最新の revision を選ぶことができる。
 `"1.6.1"` のような固定 revision ではなく、`"latest.integration"`、`"2.9.+"`、や `"[1.0,)"` など指定できる。
 詳しくは、[Ivy revisions] を参照。
 
@@ -160,22 +159,24 @@ Ivy は与えられた制限の中でモジュールの最新の revision を選
 #### Resolvers
 
 全てのパッケージが一つのサーバに置いてあるとは限らない。
-sbt は、デフォルトで standard Maven2 repository のリポジトリを使う。
-もし依存ライブラリがこのデフォルトのリポジトリに無ければ、Ivy がそれを見つけられるように _resolver_ を追加する必要がある。
+sbt は、デフォルトで Maven の標準リポジトリ（訳注：Maven Central Repository）を使う。
+もし依存ライブラリがデフォルトのリポジトリに存在しないなら、Ivy がそれを見つけられるよう _resolver_ を追加する必要がある。
 
-リポジトリを追加するには、以下のようにする:
+リポジトリを追加するには、以下のように:
 
 ```scala
 resolvers += name at location
 ```
 
-例えば:
+二つの文字列の間の特別な `at` を使う。
+
+例えばこのようになる:
 
 ```scala
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
-[Keys][Keys] で定義されいる `resolvers` キーは以下のようになっている:
+[Keys][Keys] で定義されている `resolvers` キーは以下のようになっている:
 
 ```scala
 val resolvers = settingKey[Seq[Resolver]]("The user-defined additional resolvers for automatically managed dependencies.")
@@ -187,6 +188,12 @@ sbt は、リポジトリとして追加すれば、ローカル Maven リポジ
 
 ```scala
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+```
+
+こんな便利な指定方法もある:
+
+```scala
+resolvers += Resolver.mavenLocal
 ```
 
 他の種類のリポジトリの定義の詳細に関しては、[Resolvers] 参照。
@@ -204,23 +211,22 @@ resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/
 依存ライブラリをテストコード（`Test` コンフィギュレーションでコンパイルされる `src/test/scala` 内のコード）から使いたいが、
 メインのコードでは使わないということがよくある。
 
-ある依存ライブラリが `Test` コンフィギュレーションのクラスパスには出てきて欲しいけど、
-`Compile` コンフィギュレーションではいらない場合は、以下のように `% "test"` と追加する:
+ある依存ライブラリが `Test` コンフィギュレーションのクラスパスには出てきてほしいが、`Compile` コンフィギュレーションでは要らないという場合は、以下のように `% "test"` と追加する:
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
 ```
 
-以下のように書くことで、 `Test` コンフィギュレーションに合わせた型安全なバーションを用いることが出来るかもしれない:
+`Test` コンフィグレーションの型安全なバージョンを使ってもよい:
 
 ```scala
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 ```
 
-sbt のインタラクティブモードで `show compile:dependency-classpath` と打ち込んでも、Derby は出てこないはずだ。
-だけど、`show test:dependency-classpath` と打ち込むと、Derby の jar がリストにあるのが確認できる。
+この状態で sbt のインタラクティブモードで `show compile:dependency-classpath` と入力しても Derby は出てこないはずだ。
+だが、`show test:dependency-classpath` と入力すると、Derby の jar がリストに含まれていることを確認できるだろう。
 
-普通は、[ScalaCheck][ScalaCheck]、[specs][specs]、[ScalaTest][ScalaTest] などのテスト関連の依存ライブラリは `% "test"` と共に定義される。
+普通は、[ScalaCheck][ScalaCheck]、[Specs2][Specs2]、[ScalaTest][ScalaTest] などのテスト関連の依存ライブラリは `% "test"` と共に定義される。
 
 ライブラリの依存性に関しては、もうこの入門用のページで見つからない情報があれば、[このページ][Library-Management]に
 もう少し詳細やコツが書いてある。
