@@ -11,9 +11,9 @@ out: Manual-Installation.html
 
 ### Unix
 
-[sbt-launch.jar][sbt-launch.jar] を `~/bin` に置く。
+[sbt-launch.jar][sbt-launch.jar] を `~/bin` 配下に置く。
 
-`~/bin/sbt` に以下のスクリプトを作成して JAR を起動する:
+以下のようなスクリプトを `~/bin/sbt` として作成し JAR を起動する:
 
 ```
 SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
@@ -32,7 +32,7 @@ java \$SBT_OPTS -jar `dirname \$0`/sbt-launch.jar "\$@"
 環境での手動インストールは変わってくる。
 いずれにせよ、バッチファイルもしくはスクリプトにパスを通すことでコマンドプロンプトから
 `sbt` と打ち込めば sbt が起動できるようにする。
-あとは、必要に応じて JVM セッティングを調整する。
+あとは、必要に応じて JVM の起動設定も調整する。
 
 #### 非Cygwin
 
@@ -73,7 +73,7 @@ stty icanon echo > /dev/null 2>&1
 ```
 
 sbt-launch.jar の所はダウンロードしてきた [sbt-launch.jar][sbt-launch.jar] へのパスで置き換える。
-必要ならば `cygpath` を使う。スクリプトを実行可能にする:
+必要ならば `cygpath` を使う。そして、スクリプトを実行可能にする:
 
 ```
 \$ chmod u+x ~/bin/sbt

@@ -11,8 +11,8 @@ out: Full-Def.html
 ---------------------
 
 このページでは、旧式の `.scala` ビルド定義の説明をする。
-以前のバージョンの sbt で複数のプロジェクトを扱うには `.scala` ビルド定義を使う以外に方法が無かったけども、
-sbt 0.13 になって[マルチ・プロジェクト .sbt ビルド定義][Basic-Def]が追加され、今はそのスタイルが推奨されている。
+以前のバージョンの sbt で複数のプロジェクトを扱うには `.scala` ビルド定義を使う以外しかなかったが、
+sbt 0.13 からは[マルチプロジェクト .sbt ビルド定義][Basic-Def]が追加され、現在はそのスタイルが推奨されている。
 
 このページは、このガイドのこれまでのページ、特に 
 [.sbt ビルド定義][Basic-Def] と
@@ -22,7 +22,8 @@ sbt 0.13 になって[マルチ・プロジェクト .sbt ビルド定義][Basic
 
 ビルド定義の中で、`.sbt` と `.scala` を混ぜて使うには、両者の関係を理解する必要がある。
 
-以下に、具体例で説明する。プロジェクトが `hello` にあるとすると、
+実際に 2 つのファイルを使って説明しよう。
+まず、プロジェクトが `hello` というディレクトリにあるなら 
 `hello/project/Build.scala` を以下のように作る:
 
 ```scala
@@ -49,7 +50,7 @@ object HelloBuild extends Build {
 }
 ```
 
-次に、`hello/build.sbt` を以下のように書く:
+次に `hello/build.sbt` を以下のような内容で作成する:
 
 ```scala
 sampleKeyC in ThisBuild := "C: in build.sbt scoped to ThisBuild"
@@ -57,7 +58,8 @@ sampleKeyC in ThisBuild := "C: in build.sbt scoped to ThisBuild"
 sampleKeyD := "D: in build.sbt"
 ```
 
-sbt のインタラクティブプロンプトを起動する。`inspect sampleKeyA` と打ち込むと、以下のように表示されるはず（一部抜粋）:
+sbt のインタラクティブプロンプトを起動する。
+`inspect sampleKeyA` と入力すると、以下のように表示されるはずだ（一部抜粋）:
 
 ```
 [info] Setting: java.lang.String = A: in Build.settings in Build.scala
@@ -65,7 +67,7 @@ sbt のインタラクティブプロンプトを起動する。`inspect sampleK
 [info]  {file:/home/hp/checkout/hello/}/*:sampleKeyA
 ```
 
-次に、`inspect sampleKeyC` と打ち込むと、以下のように表示される:
+次に `inspect sampleKeyC` と入力すると、以下のように表示される:
 
 ```
 [info] Setting: java.lang.String = C: in build.sbt scoped to ThisBuild
@@ -73,10 +75,10 @@ sbt のインタラクティブプロンプトを起動する。`inspect sampleK
 [info]  {file:/home/hp/checkout/hello/}/*:sampleKeyC
 ```
 
-二つの値とも、"Provided by" は同じスコープを表示していることに注意してほしい。
+二つの値とも "Provided by" は同じスコープを表示していることに注目してほしい。
 つまり、`.sbt` ファイルの `sampleKeyC in ThisBuild` は、
-`.scala` ファイルの `Build.settings` リストにセッティングを追加するのと等価とういうことだ。
-sbt は、ビルド全体にスコープ付けされたセッティングを両者から取り込んでビルド定義を作成する。
+`.scala` ファイルの `Build.settings` リストにセッティングを追加することと等価ということだ。
+sbt はビルド全体にスコープ付けされたセッティングを両者から取り込んでビルド定義を作成する。
 
 次は、`inspect sampleKeyB`:
 
@@ -86,8 +88,7 @@ sbt は、ビルド全体にスコープ付けされたセッティングを両�
 [info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyB
 ```
 
-`sampleKeyB` は、
-ビルド全体（`{file:/home/hp/checkout/hello/}`）ではなく、
+`sampleKeyB` は、ビルド全体（`{file:/home/hp/checkout/hello/}`）ではなく、
 特定のプロジェクト（`{file:/home/hp/checkout/hello/}hello`）
 にスコープ付けされいることに注意してほしい。
 
@@ -99,18 +100,16 @@ sbt は、ビルド全体にスコープ付けされたセッティングを両�
 [info]  {file:/home/hp/checkout/hello/}hello/*:sampleKeyD
 ```
 
-sbt は `.sbt` ファイルからのセッティングを
-`Build.settings` と `Project.settings` に_追加する_ため、
+sbt は `.sbt` ファイルからのセッティングを `Build.settings` と `Project.settings` に_追加し_、
 これは `.sbt` 内のセッティングの優先順位が高いことを意味する。
-`Build.scala` を変更して、`build.sbt` でも設定されている
-`sampleKeyC` か `sampleKeyD` キーを設定してみよう。
-`build.sbt` 内のセッティングが、`Build.scala` 内のそれに「勝つ」はずだ。
+`Build.scala` を変更して、`build.sbt` でも設定されている `sampleKeyC` か `sampleKeyD` キーを設定してみよう。
+`build.sbt` 内のセッティングが `Build.scala` 内のそれに「勝って」優先されるはずだ。
 
 もう一つ気づいたかもしれないが、`sampleKeyC` と `sampleKeyD` は `build.sbt` でそのまま使うことができる。
-これは、sbt が `Build` オブジェクトのコンテンツを自動的に `.sbt` ファイルにインポートすることにより実現されている。
-具体的には、`build.sbt` ファイル内で `import HelloBuild._` が暗黙に呼ばれている。
+これは sbt が `Build` オブジェクトのコンテンツを自動的に `.sbt` ファイルにインポートすることにより実現されている。
+具体的には `build.sbt` ファイル内で `import HelloBuild._` が暗黙に呼ばれている。
 
-まとめてみると:
+まとめると:
 
  - `.scala` ファイル内で、`Build.settings` にセッティングを追加すると、
    自動的にビルド全体にスコープ付けされる。
@@ -124,7 +123,7 @@ sbt は `.sbt` ファイルからのセッティングを
 
 ### インタラクティブモードにおけるビルド定義
 
-sbt のインタラクティブプロンプトの現プロジェクトを
+sbt のインタラクティブプロンプトでカレントプロジェクトを
 `project/` 内のビルド定義プロジェクトに切り替えることができる。
 `reload plugins` と打ち込むことで切り替わる:
 
@@ -143,12 +142,12 @@ sbt のインタラクティブプロンプトの現プロジェクトを
 
 上記にあるとおり、`reload return` を使ってビルド定義プロジェクトから普通のプロジェクトに戻る。
 
-### 注意: 全て immutable だ
+### 注意: 全てが immutable だ
 
 `build.sbt` 内のセッティングが、`Build` や `Project` オブジェクトの `settings` フィールドに
 追加されると考えるのは間違っている。
-そうじゃなくて、`Build` や `Project` のセッティングリストと `build.sbt` のセッティングが
-連結されて別の不変リストになって、それが sbt に使われるというのが正しい。
+そうではなく、`Build` や `Project` のセッティングリストと `build.sbt` のセッティングが
+連結されて別の immutable なリストになって、それが sbt に使われるというのが正しい。
 `Build` と `Project` オブジェクトは、immutable なコンフィギュレーションであり、
 ビルド定義の全体からすると、たった一部にすぎない。
 
