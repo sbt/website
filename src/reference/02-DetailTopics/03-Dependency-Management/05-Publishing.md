@@ -52,7 +52,7 @@ repository. Doing this selection can be done by using the value of the
 
 ```scala
 publishTo := {
-  val nexus = "https://oss.sonatype.org/"
+  val nexus = "https://my.artifact.repo.net/"
   if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots") 
   else
@@ -66,7 +66,7 @@ There are two ways to specify credentials for such a repository. The
 first is to specify them inline:
 
 ```scala
-credentials += Credentials("Sonatype Nexus Repository Manager", "nexus.scala-tools.org", "admin", "admin123")
+credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
 ```
 
 The second and better way is to load them from a file, for example:
@@ -79,8 +79,8 @@ The credentials file is a properties file with keys `realm`, `host`,
 `user`, and `password`. For example:
 
 ```
-realm=Sonatype Nexus Repository Manager
-host=nexus.scala-tools.org
+realm=My Nexus Repository Manager
+host=my.artifact.repo.net
 user=admin
 password=admin123
 ```
