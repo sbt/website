@@ -263,6 +263,8 @@ your plugin to the list.
     <https://github.com/tototoshi/sbt-build-files-watcher>
 -   sbt-backup (compress and scp a directory):
     <https://github.com/sensatus/sbt-backup>
+-   sbt-project-graph (visualise inter-project dependencies):
+    <https://github.com/dwijnand/sbt-project-graph>
 
 #### Database plugins
 
