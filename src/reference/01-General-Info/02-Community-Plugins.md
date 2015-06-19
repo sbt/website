@@ -83,6 +83,8 @@ your plugin to the list.
     extensible source code statistics)
 -   sbt-checkstyle-plugin: <https://github.com/etsy/sbt-checkstyle-plugin>
     (Checkstyle - static analysis for Java code)
+-   sbt-jcheckstyle: <https://github.com/xerial/sbt-jcheckstyle> 
+    (handy checkstyle runner for Java projects)
 
 #### One jar plugins
 
