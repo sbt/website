@@ -196,7 +196,8 @@ can reference the root project in an external build with `RootProject`:
 
 ```scala
 RootProject( file("/home/user/a-project") )
-RootProject( uri("git://github.com/dragos/dupcheck.git") )
+RootProject( uri("git://github.com/dragos/dupcheck.git") ) // use git protocol
+RootProject( uri("ssh://git@github.com/dragos/dupcheck.git") ) // use ssh protocol
 ```
 
 or a specific project within the external build can be referenced using
