@@ -10,7 +10,8 @@ title: Get Involved
   [Community-Plugins]: release/docs/Community-Plugins.html
   [issues]: https://github.com/sbt/sbt/issues
   [website]: https://github.com/sbt/website
-  [gitter]: https://gitter.im/sbt/sbt
+  [gitter1]: https://gitter.im/sbt/sbt
+  [gitter2]: https://gitter.im/sbt/sbt-dev
   [waffle]: https://waffle.io/sbt/sbt
   [community-label]: https://github.com/sbt/sbt/labels/Community
   [327]: https://github.com/sbt/sbt/issues/327
@@ -29,6 +30,8 @@ For professional support, Typesafe provides:
 - [Typesafe Subscription](http://typesafe.com/subscription)
 - [Training](https://typesafe.com/subscription/training)
 - [Consulting](http://typesafe.com/subscription/consulting)
+
+There's also the [Gitter sbt/sbt][gitter1] channel, but the options above are recommended.
 
 <h2 id="how-can-I-help">How can I help? <a href="#how-can-I-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
@@ -82,7 +85,7 @@ Writing a new plugin is often easier than patching sbt's core code.
 Check out the list of [community plugins][Community-Plugins].
 
 plugin and sbt core development is discussed on the [sbt-dev list][ml] and
-on [Gitter sbt/sbt][gitter].
+on [Gitter sbt/sbt-dev][gitter2].
 You can ask on the list or the chat if you have any questions regarding
 plugin and sbt core development.
 
@@ -95,4 +98,4 @@ You are welcome to work on any feature you like but if you'd like some good idea
 
 - look for issues tagged with the [Community label][community-label]
 - check out [waffle sbt/sbt][waffle]'s Ready or Backlogs list
-- talk to us on [Gitter sbt/sbt][gitter]
+- talk to us on [Gitter sbt/sbt-dev][gitter2]
