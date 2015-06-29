@@ -2,6 +2,10 @@ import com.typesafe.sbt.site.PamfletSupport
 import Docs._
 
 lazy val root = (project in file("."))
+  .settings(
+    organization := "org.scala-sbt",
+    name := "website"
+  )
   // landing page
   .settings(site.settings ++ site.nanocSupport(): _*)
   // Getting Started guide
