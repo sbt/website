@@ -175,12 +175,12 @@ It can be useful to run a specific project task from a
 [command][Commands] (*not from another task*) and get its result. For
 example, an IDE-related command might want to get the classpath from a
 project or a task might analyze the results of a compilation. The
-relevant method is `Project.evaluateTask`, which has the following
+relevant method is `Project.runTask`, which has the following
 signature:
 
 ```scala
-def evaluateTask[T](taskKey: ScopedKey[Task[T]], state: State,
-  checkCycles: Boolean = false, maxWorkers: Int = ...): Option[Result[T]]
+def runTask[T](taskKey: ScopedKey[Task[T]], state: State,
+  checkCycles: Boolean = false): Option[(State, Result[T])]
 ```
 
 For example,
@@ -197,13 +197,13 @@ val eval: State => State = (state: State) => {
     // None if the key is not defined
     // Some(Inc) if the task does not complete successfully (Inc for incomplete)
     // Some(Value(v)) with the resulting value
-    val result: Option[Result[inc.Analysis]] = Project.evaluateTask(taskKey, state)
+    val result: Option[(State, Result[inc.Analysis])] = Project.runTask(taskKey, state)
     // handle the result
     result match
     {
         case None => // Key wasn't defined.
-        case Some(Inc(inc)) => // error detail, inc is of type Incomplete, use Incomplete.show(inc.tpe) to get an error message
-        case Some(Value(v)) => // do something with v: inc.Analysis
+        case Some((newState, Inc(inc))) => // error detail, inc is of type Incomplete, use Incomplete.show(inc.tpe) to get an error message
+        case Some((newState, Value(v))) => // do something with v: inc.Analysis
     }
 }
 ```
