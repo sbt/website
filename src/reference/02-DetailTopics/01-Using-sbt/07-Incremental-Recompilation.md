@@ -199,7 +199,6 @@ user. That's where incremental compilation terminates in this case.
 
 Let's identify the two main pieces of information that were needed to make decisions in the examples
 presented above. The incremental compiler algorithm needs to:
-
   * index source files so it knows whether there were API changes that might affect other source
     files; e.g. it needs to detect changes to method signatures as in the example above
   * track dependencies between source files; once the change to an API is detected the algorithm
@@ -210,7 +209,6 @@ Both of those pieces of information are extracted from the Scala compiler.
 ### Interaction with the Scala compiler
 
 Incremental compiler interacts with Scala compiler in many ways:
-
   * provides three phases additional phases that extract needed information:
     - api phase extracts public interface of compiled sources by walking trees and indexing types
     - dependency phase which extracts dependencies between source files (compilation units)
