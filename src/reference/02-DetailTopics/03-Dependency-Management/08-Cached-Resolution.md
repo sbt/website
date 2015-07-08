@@ -62,10 +62,6 @@ When a minigraph contains either a SNAPSHOT or dynamic dependency, the graph is 
 Therefore, if you have any SNAPSHOT in your graph, your exeperience may degrade.
 (This could be improved in the future)
 
-#### Internal dependencies with `% "test"`
-
-There have been several bug reports on internal dependencies with `% "test"` like [#1711][1711]. This is still an open issue, and we hope to fix it in the next release.
-
 <a name="motivation"></a>
 
 ### Motivation
