@@ -178,6 +178,8 @@ your plugin to the list.
     <https://github.com/laughedelic/literator>
 -   sbt-class-diagram (Create a class diagram)
     <https://github.com/xuwei-k/sbt-class-diagram>
+-   sbt-api-mappings (Resolves external links in ScalaDoc for common Scala libraries)
+    <https://github.com/ThoughtWorksInc/sbt-api-mappings>
 
 #### Library dependency plugins
 
