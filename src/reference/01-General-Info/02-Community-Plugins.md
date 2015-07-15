@@ -283,6 +283,8 @@ your plugin to the list.
 
 -   sbt-buildinfo (Generate Scala source for any settings):
     <https://github.com/sbt/sbt-buildinfo>
+-   pttrt (Pass any data from compile-time to run-time):
+    <https://github.com/Atry/pttrt>
 -   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
     <https://bitbucket.org/qforce/sbt-haxe>
 -   sbt-scalabuff (Google Protocol Buffers with native scala suppport
