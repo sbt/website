@@ -147,14 +147,14 @@ val files: Seq[File] = cp.files
 A classpath has type `Seq[Attributed[File]]`, which means that each
 entry carries additional metadata. This metadata is in the form of an
 [AttributeMap](../api/sbt/AttributeMap.html). Useful keys for
-entries in the map are `artifact.key`, `module.key`, and `analysis`. For
+entries in the map are `artifact.key`, `moduleID.key`, and `analysis`. For
 example,
 
 ```scala
 val classpath: Seq[Attributed[File]] = ???
 for(entry <- classpath) yield {
    val art: Option[Artifact] = entry.get(artifact.key)
-   val mod: Option[ModuleID] = entry.get(module.key)
+   val mod: Option[ModuleID] = entry.get(moduleID.key)
    val an: Option[inc.Analysis] = entry.get(analysis)
    ...
 }
