@@ -14,8 +14,8 @@ compiler authors:
 
 1. The compiler authors cannot remove old and deprecated public APIs from
    the Scala compiler.
-1. Sbt cannot use new APIs defined in the Scala compiler.
-1. Sbt must implement [all kinds of hackery](https://github.com/sbt/sbt/blob/0.13/compile/interface/src/main/scala/xsbt/Compat.scala#L6)
+1. sbt cannot use new APIs defined in the Scala compiler.
+1. sbt must implement [all kinds of hackery](https://github.com/sbt/sbt/blob/0.13/compile/interface/src/main/scala/xsbt/Compat.scala#L6)
    to remain source compatible all versions of the Scala compiler and support
    new features.
 
