@@ -286,7 +286,7 @@ your plugin to the list.
 -   pttrt (Pass any data from compile-time to run-time):
     <https://github.com/Atry/pttrt>
 -   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
-    <https://bitbucket.org/qforce/sbt-haxe>
+    <https://github.com/qifun/sbt-haxe>
 -   sbt-scalabuff (Google Protocol Buffers with native scala suppport
     thru ScalaBuff): <https://github.com/sbt/sbt-scalabuff>
 -   sbt-fmpp (FreeMarker Scala/Java Templating):
