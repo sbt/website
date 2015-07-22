@@ -281,6 +281,8 @@ your plugin to the list.
 
 #### Code generator plugins
 
+-   sbt-planout4j (Compiling Planout4j yaml to Planout language):
+    <https://github.com/reikje/sbt-planout4j>
 -   sbt-buildinfo (Generate Scala source for any settings):
     <https://github.com/sbt/sbt-buildinfo>
 -   pttrt (Pass any data from compile-time to run-time):
