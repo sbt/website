@@ -89,7 +89,7 @@ chmod u+x shout.scala
 /***         
 scalaVersion := "$scala_version$"
  
-resolvers += Resolver.url("typesafe-ivy-repo", url("http://typesafe.artifactoryonline.com/typesafe/releases"))(Resolver.ivyStylePatterns)
+resolvers += Resolver.url("typesafe-ivy-repo", url("http://repo.typesafe.com/typesafe/releases"))(Resolver.ivyStylePatterns)
  
 libraryDependencies += "org.scala-sbt" % "io" % "$app_version$"
 */         
