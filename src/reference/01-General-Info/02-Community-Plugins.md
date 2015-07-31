@@ -142,7 +142,7 @@ your plugin to the list.
 #### Web and frontend development plugins
 
 -   xsbt-web-plugin:
-    <https://github.com/JamesEarlDouglas/xsbt-web-plugin>
+    <https://github.com/earldouglas/xsbt-web-plugin>
 -   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
 -   sbt-gwt-plugin: <https://github.com/cdietze/sbt-gwt-plugin>
 -   coffeescripted-sbt:

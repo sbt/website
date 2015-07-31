@@ -206,7 +206,7 @@ Some of the more visible changes:
     sources
 -   Merged plugins and processors into improved plugins system:
     [Plugins][Plugins]
--   [Web application](https://github.com/JamesEarlDouglas/xsbt-web-plugin)
+-   [Web application](https://github.com/earldouglas/xsbt-web-plugin)
     and webstart support moved to plugins instead of core features
 -   Fixed all of the issues in (Google Code) issue #44
 -   Managed dependencies automatically updated when configuration

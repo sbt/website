@@ -125,7 +125,7 @@ lazy val core = (project in file("core")).
 一些特别流行的插件如下：
 
 -   对 IDE 的支持（为了将 sbt 项目导入到 IDE）
--   对 web 框架的支持，例如[xsbt-web-plugin](https://github.com/JamesEarlDouglas/xsbt-web-plugin)。
+-   对 web 框架的支持，例如[xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin)。
 
 更多详细信息，包含开发插件的方法，参见[插件][Plugins]。
 关于最佳实践，参见[插件最佳实践][Plugins-Best-Practices]。
