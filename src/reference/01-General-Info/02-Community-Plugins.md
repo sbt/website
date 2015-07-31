@@ -332,6 +332,8 @@ your plugin to the list.
     <https://github.com/Geal/sbt-clojure>
 -   sbt-build-info-conf (Generates resources.conf file with build information):
     <https://github.com/Sensatus/sbt-build-info-conf>
+-   sbt-frege (Build [Frege](https://github.com/frege/frege) code):
+    <https://github.com/earldouglas/sbt-frege>
 
 #### Game development plugins
 
