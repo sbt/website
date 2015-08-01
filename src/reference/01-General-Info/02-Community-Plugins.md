@@ -168,6 +168,7 @@ your plugin to the list.
 
 #### Documentation plugins
 
+-   tut (Scala literate programming): <https://github.com/tpolecat/tut>
 -   sbt-site (Site generation for sbt):
     <https://github.com/sbt/sbt-site>
 -   sbt-lwm (Convert lightweight markup files, e.g., Markdown and
