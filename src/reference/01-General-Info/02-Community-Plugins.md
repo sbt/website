@@ -72,6 +72,8 @@ your plugin to the list.
 
 #### Static code analysis plugins
 
+-   wartremover: <https://github.com/puffnfresh/wartremover> (WartRemover -
+    Scala static analysis)
 -   cpd4sbt: <https://github.com/sbt/cpd4sbt> (copy/paste detection,
     works for Scala, too)
 -   findbugs4sbt: <https://github.com/sbt/findbugs4sbt> (FindBugs only
