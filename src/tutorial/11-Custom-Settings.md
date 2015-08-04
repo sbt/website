@@ -180,7 +180,7 @@ When `sampleIntTask` is invoked by you, sbt's tasks engine will:
 - try to evaluate task dependencies in parallel if they are independent (parallelization)
 - each task dependency will be evaluated once and only once per command execution (deduplication)
 
-#### Deduplication of task depenencies
+#### Deduplication of task dependencies
 
 To demonstrate the last point, we can run `sampleStringTask` from sbt
 interactive prompt.
