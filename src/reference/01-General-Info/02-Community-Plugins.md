@@ -338,6 +338,8 @@ your plugin to the list.
     <https://github.com/Sensatus/sbt-build-info-conf>
 -   sbt-frege (Build [Frege](https://github.com/frege/frege) code):
     <https://github.com/earldouglas/sbt-frege>
+-   sbt-swagger-codegen (Models, Client and Server code generation integrated as an SBT plugin. Generate code from your Swagger(https://github.com/swagger-api) files):
+    <https://github.com/unicredit/sbt-swagger-codegen>
 
 #### Game development plugins
 
