@@ -3,9 +3,16 @@ out: Launcher-Getting-Started.html
 ---
 
   [Launcher-Configuration]: Launcher-Configuration.html
+  [launcher-inject]: https://github.com/sbt/sbt/blob/0.13/project/SbtLauncherPlugin.scala#L24-L34
 
-Getting Started with the Sbt Launcher
+Getting Started with the sbt launcher
 -------------------------------------
+
+The sbt launcher provides two parts:
+
+1. An interface for launched applications to interact with the launcher code
+2. A minimal sbt-launch.jar that can launch application by resolving them
+   through ivy.
 
 The sbt launcher component is a self-contained jar that boots a Scala
 application or server without Scala or the application already existing
@@ -20,6 +27,10 @@ For unix, the script would look like: `java -jar sbt-launcher.jar "\$@"`
 
 The user can now launch servers and applications which provide sbt
 launcher configuration.
+
+Alternatively, you can repackage the launcher with a launcher configuration file.
+The [sbt/sbt](https://github.com/sbt/sbt) for example pulls in the raw JAR and
+[injects the appropriate boot.properties files for sbt](launcher-inject).
 
 #### Applications
 
