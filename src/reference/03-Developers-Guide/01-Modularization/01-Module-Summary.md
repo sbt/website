@@ -16,15 +16,11 @@ out: Module-Summary.html
 
 ### Module summary
 
-The following is a conceptual diagram of the modules:
+The following is a conceptual diagram of the modular layers:
 
 ![Module diagram](files/module-diagram.png)
 
 This diagram is arranged such that each layer depends only on the layers underneath it.
-
-#### Website ([sbt/website][websiterepo])
-
-This website's source.
 
 #### IO API ([sbt/io][iorepo])
 
@@ -77,3 +73,7 @@ sbt Server provides a JSON-based API wrapping functionality of the commandline e
 One of the clients will be the "terminal client",
 which subsumes the commandline sbt shell.
 Other clients that are planned are integration with the IDEs.
+
+#### Website ([sbt/website][websiterepo])
+
+This website's source.
