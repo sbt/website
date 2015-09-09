@@ -210,7 +210,7 @@ your plugin to the list.
 #### Utility and system plugins
 
 -   sbt-scalariform (adding support for source code formatting using
-    Scalariform): <https://github.com/sbt/sbt-scalariform>
+    Scalariform): <https://github.com/daniel-trinh/sbt-scalariform>
 -   sbt-process-runner (Run your own applications from SBT console)
     <https://github.com/whysoserious/sbt-process-runner>
 -   jot (Write down your ideas lest you forget them)
