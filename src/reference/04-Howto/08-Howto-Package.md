@@ -60,7 +60,8 @@ Or, to read the manifest from a file:
 
 ```scala
 packageOptions in (Compile, packageBin) +=  {
-  val manifest = Using.fileInputStream( in => new java.util.jar.Manifest(in) )
+  val file = new java.io.File("META-INF/MANIFEST.MF")
+  val manifest = Using.fileInputStream(file)( in => new java.util.jar.Manifest(in) )
   Package.JarManifest( manifest )
 }
 ```
