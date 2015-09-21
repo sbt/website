@@ -275,6 +275,8 @@ your plugin to the list.
     <https://github.com/dwijnand/sbt-project-graph>
 -   solr-plugin (start solr search engine from sbt)
     <https://github.com/sgrouples/sbt-solr-plugin>
+-   sbt-todolist (find TODOs in source files and print them to console):
+    <https://github.com/fedragon/sbt-todolist>
 
 #### Database plugins
 
