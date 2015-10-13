@@ -56,44 +56,40 @@ publish to bintray.
 
 First, add the bintray-sbt to your plugin build.
 
-First, create a `project/bintray.sbt` file
+To do that, create a `project/bintray.sbt` file
 
 ```scala
 addSbtPlugin("me.lessis" % "bintray-sbt" % "$bintray_sbt_version$")
 ```
 
-Next, a make sure your `build.sbt` file has the following settings
+Next, ensure your `build.sbt` file has the following settings
 
 ```scala
-import bintray.Keys._
+version := "0.1.0" // change to suit
+organization := "com.domain" // change to suit
 
-lazy val commonSettings = Seq(
-  version in ThisBuild := "<YOUR PLUGIN VERSION HERE>",
-  organization in ThisBuild := "<INSERT YOUR ORG HERE>"
-)
+sbtPlugin := true
+name := "use-dashes-in-the-plugin-name"
+description := "This is an optional value"
 
-lazy val root = (project in file(".")).
-  settings(commonSettings ++ bintrayPublishSettings: _*).
-  settings(
-    sbtPlugin := true,
-    name := "<YOUR PLUGIN HERE>",
-    description := "<YOUR DESCRIPTION HERE>",
-    // This is an example.  bintray-sbt requires licenses to be specified 
-    // (using a canonical name).
-    licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-    publishMavenStyle := false,
-    repository in bintray := "sbt-plugins",
-    bintrayOrganization in bintray := None
-  )
+// bintray-sbt requires a license to be specified using a canonical name.
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
+publishMavenStyle := false // SBT plugins must be Ivy style; this is how to specify Ivy style
+bintrayOrganization := None // Some("myOrganization")
+bintrayRepository := "sbt-plugins" // call this anything you like
+publishArtifact in Test := false
 ```
 
-Make sure your project has a valid license specified, as well as unique
-name and organization.
+Ensure your project has a valid license specified, as well as unique name and organization.
 
 ### Make a release
 
 > *Note: bintray does not support snapshots. We recommend using
 [git-revisions supplied by the sbt-git plugin](https://github.com/sbt/sbt-git#versioning-with-git)*.
+
+However, unlike other repos, the `bintrayUnpublish` command for SBT allows you to delete versions once deployed.
+This is handy while you figure out how things work.
+You should never delete a properly deployed version, however.
 
 Once your build is configured, open the sbt console in your build and run
 
@@ -114,6 +110,28 @@ API key for future use.
 
 *NOTE: We have to do this before we can link our package to the sbt
 org.*
+
+### User Documentation
+
+You should add a few lines to your plugin's README file so users know how to modify their `project/plugins.sbt` in order to use your plugin.
+SBT plugins always use Ivy style patterns, so the resolver incantation is a bit verbose.
+As always, the first component in the resolver is just a human-friendly name for the resolver.
+
+The second component has two tokens that matter, set from keys in your plugin's `build.sbt`: `my-org-name` (set from the `bintrayOrganization` key) and `my-repo-name` (set from the `bintrayRepository` key).
+
+The `addSbtPlugin` statement that follows has three fields set from keys that are also specified in your plugin's `build.sbt`:
+
+1. `my.plugin.maven.id` (set from the `organization` key)
+2. `my-plugin-name` (set from the `name` key)
+3. `my.plugin.version` (set from the `version` key)
+
+Here is a generic example showing where the above fields belong:
+
+````
+resolvers += Resolver.url("my-org-name/my-repo-name on bintray", url("https://dl.bintray.com/my-org-name/my-repo-name"))(Resolver.ivyStylePatterns)
+
+addSbtPlugin("my.plugin.maven.id" %% "my-plugin-name" % "my.plugin.version")
+````
 
 ### Linking your package to the sbt organization
 
