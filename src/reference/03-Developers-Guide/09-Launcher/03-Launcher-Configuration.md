@@ -84,7 +84,7 @@ There are several built-in strings that can be used for common
 repositories:
 
 -   `local` - the local ivy repository `~/.ivy2/local`.
--   `maven-local` - The local maven repository `~/.ivy2/local`.
+-   `maven-local` - The local maven repository `~/.m2/repository`.
 -   `maven-central` - The maven central repository `repo.maven.org`.
 
 Besides built in repositories, other repositories can be configured
