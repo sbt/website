@@ -2,7 +2,7 @@
 out: Proxy-Repositories.html
 ---
 
-  [Sbt-Launcher]: Sbt-Launcher.html
+  [Launcher-Configuration]: Launcher-Configuration.html
 
 Proxy Repositories
 ------------------
@@ -45,7 +45,7 @@ is the launcher script.
 
 The repositories file is an external configuration for the Launcher. The
 exact syntax for the configuration file is detailed in the
-[sbt Launcher][Sbt-Launcher].
+[sbt Launcher Configuration][Launcher-Configuration].
 
 Here's an example config:
 
