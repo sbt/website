@@ -209,6 +209,7 @@ your plugin to the list.
 
 #### Utility and system plugins
 
+-   sbt-javaversioncheck (enforces build requirement for specific version level of Java): <https://github.com/sbt/sbt-javaversioncheck>
 -   sbt-scalariform (adding support for source code formatting using
     Scalariform): <https://github.com/sbt/sbt-scalariform>
 -   sbt-process-runner (Run your own applications from SBT console)
