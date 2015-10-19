@@ -90,7 +90,7 @@ lazy val util = (project in file("util")).
   )
 ```
 
-Auto plugins should document whether they need to explicitly enabled. If you're
+Auto plugins should document whether they need to be explicitly enabled. If you're
 curious which auto plugins are enabled for a given project, just run the
 `plugins` command on the sbt console.
 
