@@ -62,7 +62,11 @@ To do that, create a `project/bintray.sbt` file
 addSbtPlugin("me.lessis" % "bintray-sbt" % "$bintray_sbt_version$")
 ```
 
-Next, ensure your `build.sbt` file has the following settings
+Next, we'll look at two scenarios: a simple build consisting of a single project, and a multi-project build.
+In both scenarios, ensure your project has a valid license specified, as well as unique name and organization.
+
+#### Single-Project Build Scenario
+Here is how your build's main `build.sbt` file might look:
 
 ```scala
 version := "0.1.0" // change to suit
@@ -80,7 +84,28 @@ bintrayRepository := "sbt-plugins" // call this anything you like
 publishArtifact in Test := false
 ```
 
-Ensure your project has a valid license specified, as well as unique name and organization.
+#### Multi-Project Build Scenario
+Here is how your build's main `build.sbt` file might look:
+
+```scala
+lazy val commonSettings = Seq(
+  version in ThisBuild := "0.1.0", // change to suit
+  organization in ThisBuild := "com.domain" // change to suit
+)
+
+lazy val root = (project in file(".")).
+  settings(commonSettings ++ bintrayPublishSettings: _*).
+  settings(
+    sbtPlugin := true,
+    name := "use-dashes-in-the-plugin-name",
+    description := "This is an optional value",
+    // This is an example.  bintray-sbt requires a license to be specified using a canonical name.
+    licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+    publishMavenStyle := false, // SBT plugins must be Ivy style; this is how to specify Ivy style
+    repository in bintray := "sbt-plugins", // call this anything you like
+    bintrayOrganization in bintray := None // Some("myOrganization")
+  )
+```
 
 ### Make a release
 
