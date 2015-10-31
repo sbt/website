@@ -70,6 +70,7 @@ your plugin to the list.
 -   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
 -   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
 -   sbt-coveralls: <https://github.com/scoverage/sbt-coveralls>
+-   sbt-clover: <https://github.com/shanbin/sbt-clover>
 
 #### Static code analysis plugins
 
