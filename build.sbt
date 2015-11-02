@@ -1,29 +1,30 @@
-import com.typesafe.sbt.site.PamfletSupport
+import com.typesafe.sbt.site.pamflet.PamfletPlugin
+import com.typesafe.sbt.site.util.SiteHelpers
 import Docs._
+
+enablePlugins(NanocPlugin)
 
 lazy val root = (project in file("."))
   .settings(
     organization := "org.scala-sbt",
     name := "website"
   )
-  // landing page
-  .settings(site.settings ++ site.nanocSupport(): _*)
   // Getting Started guide
-  .settings(PamfletSupport.settings(Tutorial) ++
-    site.addMappingsToSiteDir(mappings in Tutorial, s"""$targetSbtBinaryVersion/tutorial"""): _*)
+  .settings(PamfletPlugin.pamfletSettings(Tutorial))
+  .settings(siteSubdirName in Tutorial := s"$targetSbtBinaryVersion/tutorial")
   // Reference
-  .settings(PamfletSupport.settings(Ref) ++
-    site.addMappingsToSiteDir(mappings in Ref, s"""$targetSbtBinaryVersion/docs"""): _*)
+  .settings(PamfletPlugin.pamfletSettings(Ref))
+  .settings(siteSubdirName in Ref := s"$targetSbtBinaryVersion/docs")
   // Redirects
-  .settings(redirectSettings ++
-    site.addMappingsToSiteDir(mappings in Redirect, s"""$targetSbtBinaryVersion/docs"""): _*)
+  .settings(redirectSettings)
+  .settings(SiteHelpers.addMappingsToSiteDir(mappings in Redirect, siteSubdirName in Ref))
   // Github Pages. See project/Docs.scala
-  .settings(customGhPagesSettings: _*)
+  .settings(customGhPagesSettings)
   // NOTE - PDF settings must be done externally like this because pdf generation generically looks
   // through `mappings in Config` for Combined+Pages.md to generate PDF from, and therefore we
   // can't create a circular dpeendnecy by adding it back into the original mappings.
   .settings(Pdf.settings ++
     Pdf.settingsFor(Tutorial, "sbt-tutorial") ++
-    site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Tutorial, s"""$targetSbtBinaryVersion/tutorial""") ++
+    SiteHelpers.addMappingsToSiteDir(mappings in Pdf.generatePdf in Tutorial, siteSubdirName in Tutorial) ++
     Pdf.settingsFor(Ref, "sbt-reference") ++
-    site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Ref, s"""$targetSbtBinaryVersion/docs"""): _*)
+    SiteHelpers.addMappingsToSiteDir(mappings in Pdf.generatePdf in Ref, siteSubdirName in Ref))
