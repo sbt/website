@@ -8,11 +8,18 @@ Running Project Code
 --------------------
 
 The `run` and `console` actions provide a means for running user code in
-the same virtual machine as sbt. This page describes the problems with
-doing so, how sbt handles these problems, what types of code can use
-this feature, and what types of code must use a [forked jvm][Forking].
-Skip to User Code if you just want to see when you should use a
-[forked jvm][Forking].
+the same virtual machine as sbt.
+
+`run` also exists in a variant called `runMain` that takes an
+additional initial argument allowing you to specify the fully
+qualified name of the main class you want to run.  `run` and`runMain`
+share the same configuration and cannot be configured separately.
+
+This page describes the problems with running user code in the same
+virtual machine as sbt, how sbt handles these problems, what types of
+code can use this feature, and what types of code must use a
+[forked jvm][Forking].  Skip to User Code if you just want to see when
+you should use a [forked jvm][Forking].
 
 ### Problems
 
