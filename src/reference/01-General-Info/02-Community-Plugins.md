@@ -347,7 +347,7 @@ your plugin to the list.
 -   sbt-heroku-deploy (Deploy Scala Web applications to Heroku):
     <https://github.com/earldouglas/sbt-heroku-deploy>
 -   scavro (Code generation from [Avro](http://avro.apache.org/) schema): 
-    <https://github.com/oysterbooks/scavro>
+    <https://github.com/oedura/scavro>
 
 #### Game development plugins
 
