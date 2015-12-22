@@ -1,3 +1,3 @@
-addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
+addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "1.0.0-RC2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-ghpages" % "0.5.2")
