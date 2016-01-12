@@ -88,7 +88,7 @@ your plugin to the list.
     extensible source code statistics)
 -   sbt-checkstyle-plugin: <https://github.com/etsy/sbt-checkstyle-plugin>
     (Checkstyle - static analysis for Java code)
--   sbt-jcheckstyle: <https://github.com/xerial/sbt-jcheckstyle> 
+-   sbt-jcheckstyle: <https://github.com/xerial/sbt-jcheckstyle>
     (handy checkstyle runner for Java projects)
 
 #### One jar plugins
@@ -280,6 +280,8 @@ your plugin to the list.
     <https://github.com/sgrouples/sbt-solr-plugin>
 -   sbt-todolist (find TODOs in source files and print them to console):
     <https://github.com/fedragon/sbt-todolist>
+-   sbt-ortho (simple spell and English style checker):
+    <https://github.com/henrikengstrom/sbt-ortho>
 
 #### Database plugins
 
@@ -347,7 +349,7 @@ your plugin to the list.
     <https://github.com/unicredit/sbt-swagger-codegen>
 -   sbt-heroku-deploy (Deploy Scala Web applications to Heroku):
     <https://github.com/earldouglas/sbt-heroku-deploy>
--   scavro (Code generation from [Avro](http://avro.apache.org/) schema): 
+-   scavro (Code generation from [Avro](http://avro.apache.org/) schema):
     <https://github.com/oedura/scavro>
 
 #### Game development plugins
