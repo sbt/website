@@ -21,6 +21,17 @@ shellPrompt := { state =>
 }
 ```
 
+You can also configure plugins globally added in `$global_plugin_sbt_file$`
+(see next paragraph) in that file, but you need to use fully qualified
+names for their properties. For example, for sbt-eclipse property `withSource`
+documented in https://github.com/typesafehub/sbteclipse/wiki/Using-sbteclipse,
+you need to use:
+
+```scala
+com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.withSource := true
+```
+
+
 ### Global Settings using a Global Plugin
 
 The `$global_plugins_base$` directory is a global plugin project. This
