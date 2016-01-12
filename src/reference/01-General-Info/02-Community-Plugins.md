@@ -63,6 +63,7 @@ your plugin to the list.
 -   sbt-cassandra-plugin: <https://github.com/hochgi/sbt-cassandra-plugin>
 -   sbt-tabular-test-reporter: <https://github.com/programmiersportgruppe/sbt-tabular-test-reporter>
 -   sbt-notifications: <https://github.com/PavelPenkov/sbt-notifications> (sends notifications when test run is finished)
+-   sbt-dynamodb: <https://github.com/localytics/sbt-dynamodb> (downloads and runs DynamoDB Local)
 
 #### Code coverage plugins
 
