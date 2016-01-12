@@ -30,8 +30,17 @@ If you're running ubuntu, you'll need to also install ruby-dev for the native-co
 pandoc/latex for PDF generation:
 
 ```
-$ apt-get install ruby-dev pandoc
+$ sudo add-apt-repository ppa:texlive-backports/ppa
+$ sudo apt-get update
+$ sudo apt-get install ruby-dev pandoc latex-cjk-all texlive-full
 ```
+
+On Mac
+
+- download and install MacTEX
+- `sudo tlmgr update --self --all`
+- follow https://oku.edu.mie-u.ac.jp/~okumura/texwiki/?TeX%20Live%2FMac#bcb0d462
+- `brew install pandoc`
 
 ## Usage
 
