@@ -21,9 +21,9 @@ shellPrompt := { state =>
 }
 ```
 
-You can also configure plugins globaly added in `$global_plugin_sbt_file$`
+You can also configure plugins globally added in `$global_plugin_sbt_file$`
 (see next paragraph) in that file, but you need to use fully qualified
-name for their properties. For example, for sbt-eclipse property `withSource`
+names for their properties. For example, for sbt-eclipse property `withSource`
 documented in https://github.com/typesafehub/sbteclipse/wiki/Using-sbteclipse,
 you need to use:
 
