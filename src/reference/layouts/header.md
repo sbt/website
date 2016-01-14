@@ -29,4 +29,17 @@
       ga('tsTracker.linker:autoLink', ['typesafe.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
       ga('tsTracker.send', 'pageview');
     </script>
+    <script type="text/javascript">
+\$(function() {
+  var scrollDown = function() {
+    if (window.location.hash !== "") {
+      setTimeout(function() { \$(window).scrollTop(\$(window).scrollTop() - 120); }, 100);
+    }
+  }
+  scrollDown();
+  \$(window).bind('hashchange', function() {
+    scrollDown();
+  });
+});
+    </script>
 </div>
