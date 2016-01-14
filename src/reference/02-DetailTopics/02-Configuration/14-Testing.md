@@ -2,7 +2,7 @@
 out: Testing.html
 ---
 
-  [Running]: ../tutorial/Running.html
+  [Running]: Running.html
   [Plugins]: Plugins.html
   [Library-Dependencies]: ../tutorial/Library-Dependencies.html
   [ivy-configurations]: Library-Management.html#ivy-configurations

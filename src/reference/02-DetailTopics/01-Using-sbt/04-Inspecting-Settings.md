@@ -2,7 +2,7 @@
 out: Inspecting-Settings.html
 ---
 
-  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Basic-Def]: Basic-Def.html
 
 Interacting with the Configuration System
 -----------------------------------------

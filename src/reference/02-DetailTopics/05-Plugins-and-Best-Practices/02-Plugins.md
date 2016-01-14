@@ -2,8 +2,8 @@
 out: Plugins.html
 ---
 
-  [Using-Plugins]: ../tutorial/Using-Plugins.html
-  [Full-Def]: ../tutorial/Full-Def.html
+  [Using-Plugins]: Using-Plugins.html
+  [Full-Def]: Full-Def.html
   [Best-Practices]: Best-Practices.html
   [Plugins-Best-Practices]: Plugins-Best-Practices.html
   [Commands]: Commands.html

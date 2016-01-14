@@ -2,10 +2,10 @@
 out: Library-Management.html
 ---
 
-  [Setup]: ../tutorial/Setup.html
-  [Basic-Def]: ../tutorial/Basic-Def.html
-  [Full-Def]: ../tutorial/Full-Def.html
-  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
+  [Setup]: Setup.html
+  [Basic-Def]: Basic-Def.html
+  [Full-Def]: Full-Def.html
+  [Library-Dependencies]: Library-Dependencies.html
   [Update-Report]: Update-Report.html
   [Paths]: Paths.html
   [Resolvers]: Resolvers.html

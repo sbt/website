@@ -10,25 +10,51 @@ object Docs {
   lazy val Tutorial = config("tutorial")
   lazy val Ref = config("reference")
   lazy val Redirect = config("redirect")
+  lazy val RedirectTutorial = config("redirect-tutorial")
 
   // New documents will live under /x.y/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
-  // - src/tutorial/template.properties
   lazy val targetSbtBinaryVersion = "0.13"
   lazy val targetSbtFullVersion = "0.13.5"
+
+  val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
+    "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
+    "Multi-Project.html", "Using-Plugins.html", "Full-Def.html", "Summary.html")
+  val zeroThirteenGettingStarted = List("Setup.html",
+    "Installing-sbt-on-Mac.html", "Installing-sbt-on-Windows.html", "Installing-sbt-on-Linux.html", "Manual-Installation.html",
+    "Activator-Installation.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html", "Scopes.html",
+    "More-About-Settings.html", "Library-Dependencies.html", "Multi-Project.html", "Using-Plugins.html",
+    "Custom-Settings.html", "Organizing-Build.html", "Summary.html", "Bare-Def.html", "Full-Def.html")
+  val languages = List("ja", "zh-cn", "es")
+
+  def redirectTutorialSettings: Seq[Setting[_]] = Seq(
+      mappings in RedirectTutorial := {
+        val output = target.value / RedirectTutorial.name
+        val s = streams.value
+        generateRedirect("../docs/Getting-Started.html", output / "index.html", s.log)
+        zeroThirteenGettingStarted foreach { x =>
+          generateRedirect(s"../docs/$x", output / x, s.log)
+        }
+        languages foreach { lang =>
+          generateRedirect(s"../../docs/$lang/Getting-Started.html", output / lang / "index.html", s.log)
+          zeroThirteenGettingStarted foreach { x =>
+            generateRedirect(s"../../docs/$lang/$x", output / lang / x, s.log)
+          }
+        }
+        output ** AllPassFilter --- output x relativeTo(output)
+      }
+    )
 
   def redirectSettings: Seq[Setting[_]] = Seq(
     mappings in Redirect := {
       val output = target.value / Redirect.name
       val s = streams.value
       val gettingStarted = output / "Getting-Started"
-      generateRedirect("../../tutorial/index.html", gettingStarted / "Welcome.html", s.log)
-      Seq("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
-          "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
-          "Multi-Project.html", "Using-Plugins.html", "Full-Def.html", "Summary.html") foreach { x =>
-        generateRedirect(s"../../tutorial/$x", gettingStarted / x, s.log)
+      generateRedirect("../Getting-Started.html", gettingStarted / "Welcome.html", s.log)
+      zeroTwelveGettingStarted foreach { x =>
+        generateRedirect(s"../$x", gettingStarted / x, s.log)
       }
       val dt = output / "Detailed-Topics"
       generateRedirect("../Detailed-Topics.html", dt / "index.html", s.log)

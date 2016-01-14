@@ -2,7 +2,7 @@
 out: Advanced-Configurations-Example.html
 ---
 
-  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Basic-Def]: Basic-Def.html
 
 Advanced configurations example
 -------------------------------

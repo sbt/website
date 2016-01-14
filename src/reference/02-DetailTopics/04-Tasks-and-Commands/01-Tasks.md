@@ -2,8 +2,8 @@
 out: Tasks.html
 ---
 
-  [Basic-Def]: ../tutorial/Basic-Def.html
-  [Full-Def]: ../tutorial/Full-Def.html
+  [Basic-Def]: Basic-Def.html
+  [Full-Def]: Full-Def.html
   [Input-Tasks]: Input-Tasks.html
   [Commands]: Commands.html
   [Parsing-Input]: Parsing-Input.html
