@@ -22,7 +22,5 @@ lazy val root = (project in file("."))
   // through `mappings in Config` for Combined+Pages.md to generate PDF from, and therefore we
   // can't create a circular dpeendnecy by adding it back into the original mappings.
   .settings(Pdf.settings ++
-    // Pdf.settingsFor(Tutorial, "sbt-tutorial") ++
-    // site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Tutorial, s"""$targetSbtBinaryVersion/tutorial""") ++
     Pdf.settingsFor(Ref, "sbt-reference") ++
     site.addMappingsToSiteDir(mappings in Pdf.generatePdf in Ref, s"""$targetSbtBinaryVersion/docs"""): _*)
