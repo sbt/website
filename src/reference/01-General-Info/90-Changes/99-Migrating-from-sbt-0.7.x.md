@@ -2,7 +2,7 @@
 out: Migrating-from-sbt-07x.html
 ---
 
-  [Getting-Started]: ../tutorial/index.html
+  [Getting-Started]: Getting-Started.html
   [Setup]: ../tutorial/Setup.html
   [Basic-Def]: ../tutorial/Basic-Def.html
   [Basic-Def-Examples]: Basic-Def-Examples.html

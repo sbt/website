@@ -3,10 +3,10 @@ out: Command-Line-Reference.html
 ---
 
   [Console-Project]: Console-Project.html
-  [Full-Def]: ../tutorial/Full-Def.html
-  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
-  [Multi-Project]: ../tutorial/Multi-Project.html
-  [Running]: ../tutorial/Running.html
+  [Full-Def]: Full-Def.html
+  [Library-Dependencies]: Library-Dependencies.html
+  [Multi-Project]: Multi-Project.html
+  [Running]: Running.html
   [Inspecting-Settings]: Inspecting-Settings.html
   [Triggered-Execution]: Triggered-Execution.html
   [Commands]: Commands.html

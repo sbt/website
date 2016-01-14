@@ -2,7 +2,7 @@
 out: Plugins-Best-Practices.html
 ---
 
-  [Using-Plugins]: ../tutorial/Using-Plugins.html
+  [Using-Plugins]: Using-Plugins.html
   [Pluings]: Plugins.html
   [Tasks]: Tasks.html
   [Commands]: Commands.html

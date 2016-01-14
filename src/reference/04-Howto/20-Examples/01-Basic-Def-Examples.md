@@ -2,7 +2,7 @@
 out: Basic-Def-Examples.html
 ---
 
-  [Basic-Def]: ../tutorial/Basic-Def.html
+  [Basic-Def]: Basic-Def.html
 
 .sbt build examples
 -------------------

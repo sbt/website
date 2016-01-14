@@ -2,8 +2,8 @@
 out: Older-Changes.html
 ---
 
-  [Basic-Def]: ../tutorial/Basic-Def.html
-  [Full-Def]: ../tutorial/Full-Def.html
+  [Basic-Def]: Basic-Def.html
+  [Full-Def]: Full-Def.html
   [Tasks]: Tasks.html
   [Artifacts]: Artifacts.html
   [Resolvers]: Resolvers.html

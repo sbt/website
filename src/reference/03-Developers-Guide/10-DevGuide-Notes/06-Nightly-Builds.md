@@ -1,8 +1,8 @@
 ---
 out: Nightly-Builds.html
 ---
-  
-  [Manual-Installation]: ../tutorial/Manual-Installation.html
+
+  [Manual-Installation]: Manual-Installation.html
 
 Nightly Builds
 --------------

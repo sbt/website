@@ -2,7 +2,7 @@
 out: Task-Inputs.html
 ---
 
-  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [More-About-Settings]: More-About-Settings.html
   [Tasks]: Tasks.html
   [Mapping-Files]: Mapping-Files.html
 

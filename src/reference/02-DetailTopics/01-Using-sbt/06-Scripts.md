@@ -2,7 +2,7 @@
 out: Scripts.html
 ---
 
-  [Setup]: ../tutorial/Setup.html
+  [Setup]: Setup.html
 
 Scripts, REPL, and Dependencies
 -------------------------------

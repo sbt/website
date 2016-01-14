@@ -2,7 +2,7 @@
 out: Triggered-Execution.html
 ---
 
-  [Full-Def]: ../tutorial/Full-Def.html
+  [Full-Def]: Full-Def.html
 
 Triggered Execution
 -------------------

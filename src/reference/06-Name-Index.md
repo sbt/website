@@ -2,13 +2,13 @@
 out: Name-Index.html
 ---
 
-  [Running]: ../tutorial/Running.html
-  [Scopes]: ../tutorial/Scopes.html
+  [Running]: Running.html
+  [Scopes]: Scopes.html
   [Community-Plugins]: Communitiy-Plugins.html
-  [Full-Def]: ../tutorial/Full-Def.html
-  [Basic-Def]: ../tutorial/Basic-Def.html
-  [Using-Plugins]: ../tutorial/Using-Plugins.html
-  [More-About-Settings]: ../tutorial/More-About-Settings.html
+  [Full-Def]: Full-Def.html
+  [Basic-Def]: Basic-Def.html
+  [Using-Plugins]: Using-Plugins.html
+  [More-About-Settings]: More-About-Settings.html
   [Library-Management]: Library-Management.html
   [Artifacts]: Artifacts.html
   [Paths]: Paths.html

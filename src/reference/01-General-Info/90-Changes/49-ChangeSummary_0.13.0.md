@@ -4,7 +4,7 @@ out: ChangeSummary_0.13.0.html
 
   [multiple-scopes]: Tasks.html#multiple-scopes
   [conflict-management]: Library-Management.html#conflict-management
-  [Setup]: ../tutorial/Setup.html
+  [Setup]: Setup.html
   [Input-Tasks]: Input-Tasks.html
 
 sbt 0.13.0 - 0.13.2
