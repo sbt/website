@@ -3,13 +3,20 @@ Define Custom Tasks
 
 ### Define a Task that runs tests in specific sub-projects
 
-Defines a task `myTestTask` that will run the `test` Task in specific subprojects  `abc` and `def` but no others:
+Consider a hypothetical multi-build project with 3 subprojects. The following defines a task `myTestTask` that will 
+run the `test` Task in specific subprojects  `core` and `tools` but not `client`:
 
 ```
+lazy val core = project.in(file("./core"))
+
+lazy val tools = project.in(file("./tools"))
+
+lazy val client = project.in(file("./client"))
+
 lazy val myTestTask = TaskKey[Unit]("my-test-task")
 
 myTestTask <<= Seq(
-  test in (abc, Test)
-  test in (def, Test)
+  test in (core, Test)
+  test in (tools, Test)
 ).dependOn
 ```
