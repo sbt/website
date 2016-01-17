@@ -1,8 +1,9 @@
-language: scala
+language: ruby
+rvm: 2.2.3
 cache:
   apt: true
   directories:
-    - $HOME/.ivy2/cache 
+    - $HOME/.ivy2/cache
 script:
   - sbt makeSite
   # Tricks to avoid unnecessary cache updates
@@ -10,16 +11,15 @@ script:
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 jdk:
   - oraclejdk7
-notifications:
-  email:
-    - qbranch@typesafe.com
 install:
   - gem install nanoc:4.0.0
   - gem install redcarpet
   - gem install nokogiri
 before_install:
  - sudo add-apt-repository -y ppa:texlive-backports/ppa
+ - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+ - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
  - sudo apt-get update -qq
- - sudo apt-get install -qq ruby-dev pandoc latex-cjk-all texlive-full
+ - sudo apt-get install -qq sbt ruby-dev pandoc latex-cjk-all texlive-full
 before_script:
-  - export JVM_OPTS="-Xms1024m -Xmx1024m -XX:ReservedCodeCacheSize=128m -XX:MaxPermSize=256m -Xss1m"
+ - export JVM_OPTS="-Xms1024m -Xmx1024m -XX:ReservedCodeCacheSize=128m -XX:MaxPermSize=256m -Xss1m"
