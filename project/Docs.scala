@@ -7,8 +7,6 @@ import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
 
 object Docs {
-  lazy val Tutorial = config("tutorial")
-  lazy val Ref = config("reference")
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
 
