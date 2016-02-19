@@ -542,7 +542,38 @@ on `intTask` is only introduced in non-dev mode.
 > result. In the example above, there would be a circular dependency if
 > the code passed to taskDyn referenced myTask.
 
-#### Handling Failure
+
+### Using Def.sequential
+
+sbt 0.13.8 added `Def.sequential` function to run tasks under semi-sequential semantics.
+This is similar to the dynamic task, but easier to define.
+To demonstrate the sequential task, let's create a custom task called `compilecheck` that runs `compile in Compile` and then `scalastyle in Compile` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
+
+```scala
+lazy val compilecheck = taskKey[Unit]("compile and then scalastyle")
+
+lazy val root = (project in file(".")).
+  settings(
+    compilecheck in Compile := Def.sequential(
+      compile in Compile,
+      (scalastyle in Compile).toTask("")
+    ).value
+  )
+```
+
+To call this task type in `compilecheck` from the shell. If the compilation fails, `compilecheck` would stop the execution.
+
+```
+root> compilecheck
+[info] Compiling 1 Scala source to /Users/x/proj/target/scala-2.10/classes...
+[error] /Users/x/proj/src/main/scala/Foo.scala:3: Unmatched closing brace '}' ignored here
+[error] }
+[error] ^
+[error] one error found
+[error] (compile:compileIncremental) Compilation failed
+```
+
+### Handling Failure
 
 This section discusses the `failure`, `result`, and `andFinally`
 methods, which are used to handle failure of other tasks.
