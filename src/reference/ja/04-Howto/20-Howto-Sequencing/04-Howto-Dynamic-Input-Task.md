@@ -2,9 +2,9 @@
 out: Howto-Dynamic-Input-Task.html
 ---
 
-### Defining a dynamic input task with Def.inputTaskDyn
+### Def.inputTaskDyn を用いた動的インプットタスクの定義
 
-Let's suppose that there's a task already that does the bowser opening called `openbrowser` because of a plugin. Here's how we can sequence a task after an input tasks.
+ここで、プラグインが `openbrowser` というブラウザを開くタスクを既に提供していると仮定する。それをインプットタスクの後で呼び出す方法を考察する。
 
 #### build.sbt v1
 
@@ -30,8 +30,8 @@ lazy val root = (project in file(".")).
 
 #### build.sbt v2
 
-Trying to rewire `run in Compile` is going to be complicated. Since the reference to the inner `run in Compile` is already inside the continuation task, simply rewiring `runopen` to `run in Compile` will create a cyclic reference.
-To break the cycle, we will introduce a clone of `run in Compile` called `actualRun in Compile`:
+この動的インプットタスクを `run in Compile` に再配線するのは複雑な作業だ。内側の `run in Compile` は既に継続タスクの中に入ってしまっているので、単純に再配線しただけだと循環参照を作ってしまうことになる。
+この循環を断ち切るためには、`run in Compile` のクローンである `actualRun in Compile` を導入する必要がある:
 
 ```scala
 lazy val actualRun = inputKey[Unit]("The actual run task")
@@ -58,6 +58,6 @@ lazy val root = (project in file(".")).
   )
 ```
 
-The `actualRun in Compile`'s implementation was copy-pasted from `run` task's implementation in Defaults.scala.
+この `actualRun in Compile` の実装は Defaults.scala にある `run` の実装からコピペしてきた。
 
-Now we can call `run foo` from the shell and it will evaluate `actualRun in Compile` with the passed in argument, and then evaluate the `openbrowser` task.
+これで `run foo` をシェルから打ち込むと、`actualRun in Compile` を引数とともに評価して、その後で `openbrowser` タスクを評価するようになった。
