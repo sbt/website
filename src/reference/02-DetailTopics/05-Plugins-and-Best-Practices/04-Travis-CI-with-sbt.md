@@ -191,13 +191,10 @@ cache:
 Finally, the following a few lines of cleanup script are added:
 
 ```yml
-script:
-  # Your normal script
-  - sbt ++\$TRAVIS_SCALA_VERSION -J-XX:ReservedCodeCacheSize=256M test
-
+before_cache:
   # Tricks to avoid unnecessary cache updates
-  - find \$HOME/.sbt -name "*.lock" | xargs rm
-  - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+  - find \$HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find \$HOME/.sbt -name "*.lock" -delete
 ```
 
 With the above changes combined Travis CI will tar up the cached directories and uploads them to Amazon S3.
