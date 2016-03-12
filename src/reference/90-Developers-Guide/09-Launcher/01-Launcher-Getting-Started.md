@@ -122,13 +122,17 @@ interface class will be provided by the launcher, so it is only a
 compile-time dependency. If you are building with sbt, your dependency
 definition would be:
 
-FIXME
+```scala
+libraryDependencies += "org.scala-sbt" % "launcher-interface" % "1.0.0" % "provided"
+
+resolvers <+= sbtResolver
+```
 
 Make the entry point to your class implement `xsbti.AppMain`. An example
 that uses some of the information:
 
 ```scala
-package xsbt.test
+package com.acme.launcherapp
 
 class Main extends xsbti.AppMain
 {
@@ -145,14 +149,14 @@ class Main extends xsbti.AppMain
         // and how to return the code to exit with
         scalaVersion match
         {
-            case "2.9.3" =>
+            case "2.10.6" =>
                 new xsbti.Reboot {
                     def arguments = configuration.arguments
                     def baseDirectory = configuration.baseDirectory
-                    def scalaVersion = "2.10.2"
+                    def scalaVersion = "2.11.8"
                     def app = configuration.provider.id
                 }
-            case "2.10.2" => new Exit(1)
+            case "2.11.8" => new Exit(1)
             case _ => new Exit(0)
         }
     }
@@ -163,7 +167,21 @@ class Main extends xsbti.AppMain
 Next, define a configuration file for the launcher. For the above class,
 it might look like:
 
-FIXME
+```
+[scala]
+  version: 2.11.8
+[app]
+  org: com.acme
+  name: launcherapp
+  version: 0.0.1
+  class: com.acme.launcherapp.Main
+  cross-versioned: true
+[repositories]
+  local
+  maven-central
+[boot]
+ directory: ${user.home}/.myapp/boot
+```
 
 Then, `sbt publishLocal` or `sbt +publishLocal` the application to make it
 available. For more information, see
