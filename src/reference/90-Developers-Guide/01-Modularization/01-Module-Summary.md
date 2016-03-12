@@ -33,21 +33,21 @@ The responsibility of the serialization API is to turn values into JSON.
 
 #### Util APIs ([sbt/util][utilrepo])
 
-Util APIs provide commonly used features like logging and internal datatypes used by sbt.
+Util APIs provide commonly used features like logging and internal data types used by sbt.
 
 #### LibraryManagement API ([sbt/librarymanagement][librarymanagementrepo])
 
 sbt's library management system is based on Apache Ivy, and as such
-the concepts and terminology around library management system is also influenced by Ivy.
-The responsibility of the library management API is to calcuate the transitive dependency graph,
+the concepts and terminology around the library management system are also influenced by Ivy.
+The responsibility of the library management API is to calculate the transitive dependency graph,
 and download artifacts from the given repositories.
 
 #### IncrementalCompiler API ([sbt/incrementalcompiler][incrementalcompilerrepo])
 
-Incremental compiler of Scala is so fundamental,
+Incremental compilation of Scala is so fundamental
 that we now seldom think of it as a feature of sbt.
-There are number of subprojects/classes involved that are actually internal details
-that we should use this opportunity to hide.
+There are number of subprojects/classes involved that are actually internal details,
+and we should use this opportunity to hide them.
 
 #### Build API (tbd)
 
@@ -68,11 +68,11 @@ See [n8han/conscript][conscriptrepo] and [Launcher][Sbt-Launcher] for more detai
 #### Client/Server (tbd)
 
 Currently developed in [sbt/sbt-remote-control](https://github.com/sbt/sbt-remote-control).
-sbt Server provides a JSON-based API wrapping functionality of the commandline experience.
+sbt Server provides a JSON-based API wrapping functionality of the command line experience.
 
 One of the clients will be the "terminal client",
-which subsumes the commandline sbt shell.
-Other clients that are planned are integration with the IDEs.
+which subsumes the command line sbt shell.
+Other clients that are planned are IDE integrations.
 
 #### Website ([sbt/website][websiterepo])
 

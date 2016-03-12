@@ -16,7 +16,7 @@ compiler authors:
    the Scala compiler.
 1. sbt cannot use new APIs defined in the Scala compiler.
 1. sbt must implement [all kinds of hackery](https://github.com/sbt/sbt/blob/0.13/compile/interface/src/main/scala/xsbt/Compat.scala#L6)
-   to remain source compatible all versions of the Scala compiler and support
+   to remain source-compatible with all versions of the Scala compiler and support
    new features.
 
 To circumvent this problem, a new mechanism that allows sbt to fetch the
