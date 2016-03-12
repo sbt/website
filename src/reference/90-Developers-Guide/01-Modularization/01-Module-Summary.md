@@ -33,7 +33,7 @@ The responsibility of the serialization API is to turn values into JSON.
 
 #### Util APIs ([sbt/util][utilrepo])
 
-Util APIs provide commonly used features like logging and internal data types used by sbt.
+Util APIs provide commonly used features like logging and internal datatypes used by sbt.
 
 #### LibraryManagement API ([sbt/librarymanagement][librarymanagementrepo])
 
