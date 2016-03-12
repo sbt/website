@@ -11,25 +11,25 @@ Getting Started with the sbt launcher
 The sbt launcher provides two parts:
 
 1. An interface for launched applications to interact with the launcher code
-2. A minimal sbt-launch.jar that can launch application by resolving them
+2. A minimal sbt-launch.jar that can launch applications by resolving them
    through ivy.
 
 The sbt launcher component is a self-contained jar that boots a Scala
 application or server without Scala or the application already existing
 on the system. The only prerequisites are the launcher jar itself, an
-optional configuration file, and a java runtime version 1.6 or greater.
+optional configuration file, and a Java runtime version 1.6 or greater.
 
 ### Overview
 
 A user downloads the launcher jar and creates a script to run it. In
 this documentation, the script will be assumed to be called `launch`.
-For unix, the script would look like: `java -jar sbt-launcher.jar "\$@"`
+For Unix, the script would look like: `java -jar sbt-launcher.jar "\$@"`
 
 The user can now launch servers and applications which provide sbt
 launcher configuration.
 
 Alternatively, you can repackage the launcher with a launcher configuration file.
-The [sbt/sbt](https://github.com/sbt/sbt) for example pulls in the raw JAR and
+For example, [sbt/sbt](https://github.com/sbt/sbt) pulls in the raw JAR and
 [injects the appropriate boot.properties files for sbt](launcher-inject).
 
 #### Applications
@@ -37,7 +37,10 @@ The [sbt/sbt](https://github.com/sbt/sbt) for example pulls in the raw JAR and
 To launch an application, the user then downloads the configuration file
 for the application (call it `my.app.configuration`) and creates a
 script to launch it (call it `myapp`):
-`launch @my.app.configuration "\$@"`
+
+```sh
+launch @my.app.configuration "\$@"
+```
 
 The user can then launch the application using `myapp arg1 arg2 ...`
 
@@ -56,17 +59,20 @@ To discover where a server is running (or launch it if it is not
 running), the user downloads the configuration file for the server (call
 it `my.server.configuration`) and creates a script to discover the
 server (call it `find-myserver`):
-`launch --locate @my.server.properties`.
+
+```sh
+launch --locate @my.server.properties.
+```
 
 This command will print out one string, the URI at which to reach the
 server, e.g. `sbt://127.0.0.1:65501`. Clients should use the IP/port to
 connect to to the server and initiate their connection.
 
-When using the `locate` feature, the sbt launcher makes these following
+When using the `locate` feature, the sbt launcher makes the following
 restrictions to servers:
 
 -   The Server must have a starting class that extends the
-    xsbti.ServerMain class
+    `xsbti.ServerMain` class
 -   The Server must have an entry point (URI) that clients can use to
     detect the server
 -   The server must have defined a lock file which the launcher can use
@@ -107,7 +113,7 @@ configuring, writing, distributing, and running the application.
 #### Creating a Launched Application
 
 This section shows how to make an application that is launched by this
-launcher. First, declare a dependency on the launcher-interface. Do not
+launcher. First, declare a dependency on the `launcher-interface`. Do not
 declare a dependency on the launcher itself. The launcher interface
 consists strictly of Java interfaces in order to avoid binary
 incompatibility between the version of Scala used to compile the
@@ -116,11 +122,14 @@ interface class will be provided by the launcher, so it is only a
 compile-time dependency. If you are building with sbt, your dependency
 definition would be:
 
-Make the entry point to your class implement 'xsbti.AppMain'. An example
+FIXME
+
+Make the entry point to your class implement `xsbti.AppMain`. An example
 that uses some of the information:
 
 ```scala
 package xsbt.test
+
 class Main extends xsbti.AppMain
 {
     def run(configuration: xsbti.AppConfiguration) =
@@ -140,7 +149,7 @@ class Main extends xsbti.AppMain
                 new xsbti.Reboot {
                     def arguments = configuration.arguments
                     def baseDirectory = configuration.baseDirectory
-                    def scalaVersion = "2.10.2
+                    def scalaVersion = "2.10.2"
                     def app = configuration.provider.id
                 }
             case "2.10.2" => new Exit(1)
@@ -154,7 +163,9 @@ class Main extends xsbti.AppMain
 Next, define a configuration file for the launcher. For the above class,
 it might look like:
 
-Then, `publishLocal` or `+publishLocal` the application to make it
+FIXME
+
+Then, `sbt publishLocal` or `sbt +publishLocal` the application to make it
 available. For more information, see
 [Launcher Configuration][Launcher-Configuration].
 
@@ -203,13 +214,13 @@ application itself. It and its dependencies are retrieved to
 Once all required code is downloaded, the class loaders are set up. The
 launcher creates a class loader for the requested version of Scala. It
 then creates a child class loader containing the jars for the requested
-'app.components' and with the paths specified in `app.resources`. An
+`app.components` and with the paths specified in `app.resources`. An
 application that does not use components will have all of its jars in
 this class loader.
 
 The main class for the application is then instantiated. It must be a
 public class with a public no-argument constructor and must conform to
-xsbti.AppMain. The `run` method is invoked and execution passes to the
+`xsbti.AppMain`. The `run` method is invoked and execution passes to the
 application. The argument to the 'run' method provides configuration
 information and a callback to obtain a class loader for any version of
 Scala that can be obtained from a repository in [repositories]. The
