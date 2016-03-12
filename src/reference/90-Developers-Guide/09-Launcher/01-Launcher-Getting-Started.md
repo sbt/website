@@ -125,7 +125,7 @@ definition would be:
 ```scala
 libraryDependencies += "org.scala-sbt" % "launcher-interface" % "1.0.0" % "provided"
 
-resolvers <+= sbtResolver
+resolvers += sbtResolver.value
 ```
 
 Make the entry point to your class implement `xsbti.AppMain`. An example

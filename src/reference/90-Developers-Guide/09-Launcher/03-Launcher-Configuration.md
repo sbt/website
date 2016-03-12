@@ -2,7 +2,7 @@
 out: Launcher-Configuration.html
 ---
 
-Sbt Launcher Configuration
+sbt Launcher Configuration
 --------------------------
 
 The launcher may be configured in one of the following ways in
@@ -25,6 +25,34 @@ An error is generated if none of these attempts succeed.
 ### Example
 
 The default configuration file for sbt as an application looks like:
+
+```
+[scala]
+  version: ${sbt.scala.version-auto}
+
+[app]
+  org: ${sbt.organization-org.scala-sbt}
+  name: sbt
+  version: ${sbt.version-read(sbt.version)[0.12.0]}
+  class: ${sbt.main.class-sbt.xMain}
+  components: xsbti,extra
+  cross-versioned: ${sbt.cross.versioned-false}
+
+[repositories]
+  local
+  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+  maven-central
+  sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
+
+[boot]
+ directory: ${sbt.boot.directory-${sbt.global.base-${user.home}/.sbt}/boot/}
+
+[ivy]
+  ivy-home: ${sbt.ivy.home-${user.home}/.ivy2/}
+  checksums: ${sbt.checksums-sha1,md5}
+  override-build-repos: ${sbt.override.build.repos-false}
+  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}
+```
 
 Let's look at all the launcher configuration sections in detail:
 
