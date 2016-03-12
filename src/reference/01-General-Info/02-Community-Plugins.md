@@ -353,6 +353,8 @@ your plugin to the list.
     <https://github.com/earldouglas/sbt-heroku-deploy>
 -   scavro (Code generation from [Avro](http://avro.apache.org/) schema):
     <https://github.com/oedura/scavro>
+-   sbt-spi-plugin (Generates provider-configuration files in the resource directory META-INF/services for later use with ServiceLoader)
+    <https://github.com/nyavro/spi-plugin>
 
 #### Game development plugins
 
