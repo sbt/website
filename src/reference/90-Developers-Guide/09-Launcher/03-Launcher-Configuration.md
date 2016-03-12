@@ -2,7 +2,7 @@
 out: Launcher-Configuration.html
 ---
 
-Sbt Launcher Configuration
+sbt Launcher Configuration
 --------------------------
 
 The launcher may be configured in one of the following ways in
