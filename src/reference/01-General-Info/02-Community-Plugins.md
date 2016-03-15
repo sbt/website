@@ -211,6 +211,15 @@ your plugin to the list.
 -   ant4sbt: <https://github.com/sbt/ant4sbt>
 -   sbt-pom-reader: <https://github.com/sbt/sbt-pom-reader>
 
+#### Create new project plugins
+
+-   np (Dead simple new project directory generation):
+    <https://github.com/softprops/np>
+-   npt (Creates new project skeletons based on templates):
+    <https://github.com/reikje/npt>
+-   sbt-fresh (create an opinionated fresh sbt project):
+    <https://github.com/sbt/sbt-fresh>
+
 #### Utility and system plugins
 
 -   sbt-javaversioncheck (enforces build requirement for specific version level of Java): <https://github.com/sbt/sbt-javaversioncheck>
@@ -220,10 +229,6 @@ your plugin to the list.
     <https://github.com/whysoserious/sbt-process-runner>
 -   jot (Write down your ideas lest you forget them)
     <https://github.com/softprops/jot>
--   np (Dead simple new project directory generation):
-    <https://github.com/softprops/np>
--   npt (Creates new project skeletons based on templates):
-    <https://github.com/reikje/npt>
 -   sbt-editsource (A poor man's *sed*(1), for sbt):
     <http://software.clapper.org/sbt-editsource/>
 -   sbt-conflict-classes (Show conclict classes from classpath):
