@@ -381,6 +381,14 @@ your plugin to the list.
 
 -   sbtosgi: <https://github.com/sbt/sbt-osgi>
 
+#### C++ interop plugins
+
+- sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets): <https://github.com/lloydmeta/sbt-javacpp>
+
+#### Computer vision plugins
+
+- sbt-opencv (Start an OpenCV via JavaCV project in 1 line): <https://github.com/lloydmeta/sbt-opencv>
+
 #### Plugin bundles
 
 -   tl-os-sbt-plugins (Version, Release, and Package Management, Play 2.0 and Git utilities) :
