@@ -6,6 +6,7 @@ out: Plugins.html
   [Full-Def]: Full-Def.html
   [Best-Practices]: Best-Practices.html
   [Plugins-Best-Practices]: Plugins-Best-Practices.html
+  [Use-Settings-And-Tasks]: Plugins-Best-Practices.html#Use+settings+and+tasks.+Avoid+commands.
   [Commands]: Commands.html
 
 Plugins
@@ -282,7 +283,9 @@ This allows plugins to silently, and correctly, extend existing plugins with mor
 
 When an auto plugin provides a stable field such as `val` or `object`
 named `autoImport`, the contents of the field are wildcard imported
-in `set`, `eval`, and `.sbt` files.
+in `set`, `eval`, and `.sbt` files. In the next example, we'll replace
+our hello command with a task to get the value of `greeting` easily.
+In practice, it's recommended [to prefer settings or tasks to commands][Use-Settings-And-Tasks].
 
 ```scala
 package sbthello
@@ -293,16 +296,16 @@ import Keys._
 object HelloPlugin3 extends AutoPlugin {
   object autoImport {
     val greeting = settingKey[String]("greeting")
+    val hello = taskKey[Unit]("say hello")
   }
   import autoImport._
   override def trigger = allRequirements
   override lazy val buildSettings = Seq(
     greeting := "Hi!",
-    commands += helloCommand)
-  lazy val helloCommand =
-    Command.command("hello") { (state: State) =>
+    hello := helloTask.value)
+  lazy val helloTask =
+    Def.task {
       println(greeting.value)
-      state
     }
 }
 ```
