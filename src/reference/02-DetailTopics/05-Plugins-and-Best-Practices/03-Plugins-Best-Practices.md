@@ -43,6 +43,22 @@ Make sure people can find your plugin. Here are some of the recommended steps:
 Users who have their build files in some package will not be able to use
 your plugin if it's defined in default (no-name) package.
 
+### Follow the naming conventions
+
+Use the `sbt-$projectname` scheme to name your library and artifact.
+A plugin ecosystem with a consistent naming convention makes it easier for users to tell whether a
+project or dependency is an SBT plugin.
+
+If the project's name is `foobar` the following holds:
+
+ - BAD: `foobar`
+ - BAD: `foobar-sbt`
+ - BAD: `sbt-foobar-plugin`
+ - GOOD: `sbt-foobar`
+
+If your plugin provides an obvious "main" task, consider naming it `foobar` or `foobar...` to make
+it more intuitive to explore the capabilities of your plugin within the sbt shell and tab-completion.
+
 ### Use settings and tasks. Avoid commands.
 
 Your plugin should fit in naturally with the rest of the sbt ecosystem.
