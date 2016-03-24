@@ -5,14 +5,14 @@ out: Launcher-Architecture.html
 Sbt Launcher Architecture
 -------------------------
 
-The sbt launcher is a mechanism whereby modules can be loaded from ivy
-and executed within a jvm. It abstracts the mechanism of grabbing and
-caching jars, allowing users to focus on what application they want and
+The sbt launcher is a mechanism whereby modules can be loaded from Ivy
+and executed within a JVM. It abstracts the mechanism of grabbing and
+caching jars, allowing users to focus on what application they want, and
 control its versions.
 
-The launcher's primary goal is to take configuration for applications,
-mostly just ivy coordinates and a main class, and start the application.
-The launcher resolves the ivy module, caches the required runtime jars
+The launcher's primary goal is to take configuration for applications—
+mostly Ivy coordinates and a main class—and start the application.
+The launcher resolves the Ivy module, caches the required runtime jars,
 and starts the application.
 
 The sbt launcher provides the application with the means to load a
@@ -33,27 +33,27 @@ run them. This is done through the `[app]` configuration section. See
 [launcher configuration][Launcher-Configuration] for more information on how to configure module
 resolution.
 
-Module resolution is performed using the Ivy dependency managemnet
+Module resolution is performed using the Ivy dependency management
 library. This library supports loading artifacts from Maven repositories
 as well.
 
 ### Classloader Caching and Isolation
 
 The sbt launcher's classloading structure is different than just
-starting an application in the standard java mechanism. Every
+starting an application in the standard Java mechanism. Every
 application loaded by by the launcher is given its own classloader. This
 classloader is a child of the Scala classloader used by the application.
 The Scala classloader can see all of the `xsbti.*` classes from the
 launcher itself.
 
-Here's an example classloader layout from an sbt launched application.
+Here's an example classloader layout from an sbt-launched application.
 
 ![image](files/classloaders.png)
 
 In this diagram, three different applications were loaded. Two of these
 use the same version of Scala (2.9.2). In this case, sbt can share the
 same classloader for these applications. This has the benefit that any
-JIT optimisations performed on scala classes can be re-used between
+JIT optimisations performed on Scala classes can be re-used between
 applications thanks to the shared classloader.
 
 ### Caching
@@ -96,6 +96,6 @@ following:
 5.  Release all locks and shutdown.
 
 The configured `server.lock` file is thus used to prevent multiple
-servers from running. Sbt itself uses this to prevent more than one
+servers from running. sbt itself uses this to prevent more than one
 server running on any given project directory by configuring
 `server.lock` to be `\${user.dir}/.sbtserver`.

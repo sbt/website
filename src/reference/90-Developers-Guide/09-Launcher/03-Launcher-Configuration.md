@@ -2,7 +2,7 @@
 out: Launcher-Configuration.html
 ---
 
-Sbt Launcher Configuration
+sbt Launcher Configuration
 --------------------------
 
 The launcher may be configured in one of the following ways in
@@ -15,7 +15,7 @@ increasing order of precedence:
     line, either as a path or an absolute URI. This can be done by
     either specifying the location as the system property
     sbt.boot.properties or as the first argument to the launcher
-    prefixed by '@'. The system property has lower precedence.
+    prefixed by `@`. The system property has lower precedence.
     Resolution of a relative path is first attempted against the current
     working directory, then against the user's home directory, and then
     against the directory containing the launcher jar.
@@ -26,6 +26,34 @@ An error is generated if none of these attempts succeed.
 
 The default configuration file for sbt as an application looks like:
 
+```
+[scala]
+  version: ${sbt.scala.version-auto}
+
+[app]
+  org: ${sbt.organization-org.scala-sbt}
+  name: sbt
+  version: ${sbt.version-read(sbt.version)[0.12.0]}
+  class: ${sbt.main.class-sbt.xMain}
+  components: xsbti,extra
+  cross-versioned: ${sbt.cross.versioned-false}
+
+[repositories]
+  local
+  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+  maven-central
+  sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
+
+[boot]
+ directory: ${sbt.boot.directory-${sbt.global.base-${user.home}/.sbt}/boot/}
+
+[ivy]
+  ivy-home: ${sbt.ivy.home-${user.home}/.ivy2/}
+  checksums: ${sbt.checksums-sha1,md5}
+  override-build-repos: ${sbt.override.build.repos-false}
+  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}
+```
+
 Let's look at all the launcher configuration sections in detail:
 
 #### 1. Scala Configuration
@@ -33,9 +61,9 @@ Let's look at all the launcher configuration sections in detail:
 The `[scala]` section is used to configure the version of Scala. It has
 one property:
 
--   `version` - The version of scala an application uses, or `auto` if
+-   `version` - The version of Scala an application uses, or `auto` if
     the application is not cross-versioned.
--   `classifiers` - The (optional) list of additional scala artifacts to
+-   `classifiers` - The (optional) list of additional Scala artifacts to
     resolve, e.g. sources.
 
 #### 2. Application Identification
@@ -44,29 +72,27 @@ The `[app]` section configures how the launcher will look for your
 application using the Ivy dependency manager. It consists of the
 following properties:
 
--   `org` - The organization associated with the Ivy module. (groupId in
-    maven vernacular)
--   `name` - The name of the Ivy module. (`artifactId` in maven
+-   `org` - The organization associated with the Ivy module. (`groupId` in
+    Maven vernacular)
+-   `name` - The name of the Ivy module. (`artifactId` in Maven
     vernacular)
 -   `version` - The revision of the Ivy module.
 -   `class` - The name of the "entry point" into the application. An
     entry point must be a class which meets one of the following critera
-    -   Extends the xsbti.AppMain interface.
-    -   Extends the xsbti.ServerMain interfaces.
-    -   Contains a method with the signature static void main(String[])
-    -   Contains a method with the signature static int main(String[])
-
-    - Contains a method with the signature
-    static xsbti.Exit main(String[])
+    -   Extends the `xsbti.AppMain` interface.
+    -   Extends the `xsbti.ServerMain` interfaces.
+    -   Contains a method with the signature `static void main(String[])`
+    -   Contains a method with the signature `static int main(String[])`
+    - Contains a method with the signature `static xsbti.Exit main(String[])`
 -   `components` - An optional list of additional components that Ivy
     should resolve.
 -   `cross-versioned` - An optional string denoting how this application
-    is published. If app.cross-versioned is binary, the resolved module
+    is published. If `app.cross-versioned` is binary, the resolved module
     ID is
     `{app.name+'_'+CrossVersion.binaryScalaVersion(scala.version)}`. If
-    app.cross-versioned is true or full, the resolved module ID is
-    `{app.name+'_'+scala.version}`. The scala.version property must be
-    specified and cannot be auto when cross-versioned.
+    `app.cross-versioned` is `true` or `full`, the resolved module ID is
+    `{app.name+'_'+scala.version}`. The `scala.version` property must be
+    specified and cannot be `auto` when cross-versioned.
 -   `resources` - An optional list of jar files that should be added to
     the application's classpath.
 -   `classifiers` - An optional list of additional classifiers that
@@ -83,9 +109,9 @@ but this can be overriden via user configuration.*
 There are several built-in strings that can be used for common
 repositories:
 
--   `local` - the local ivy repository `~/.ivy2/local`.
--   `maven-local` - The local maven repository `~/.m2/repository`.
--   `maven-central` - The maven central repository `repo.maven.org`.
+-   `local` - the local Ivy repository `~/.ivy2/local`.
+-   `maven-local` - The local Maven repository `~/.m2/repository`.
+-   `maven-central` - The Maven Central repository `repo.maven.org`.
 
 Besides built in repositories, other repositories can be configured
 using the following syntax:
@@ -102,7 +128,7 @@ The `pattern` property is an optional specification of *how* Ivy should
 look for modules. By default, the launcher assumes repositories are in
 the maven style format.
 
-The `skipConsistencyCheck` string is used to tell ivy not to validate
+The `skipConsistencyCheck` string is used to tell Ivy not to validate
 checksums and signatures of files it resolves.
 
 #### 4. The Boot section
@@ -122,19 +148,19 @@ The `[ivy]` section is used to configure the Ivy dependency manager for
 resolving applications. It consists of the following properties:
 
 -   `ivy-home` - The home directory for Ivy. This determines where the
-    ivy-local repository is located, and also where the ivy cache is
+    ivy-local repository is located, and also where the Ivy cache is
     stored. Defaults to `~/.ivy2`
 -   `checksums` - The comma-separated list of checksums that Ivy should
     use to verify artifacts have correctly resolved, e.g. md5 or sha1.
 -   `override-build-repos` - If this is set, then the
-    `isOverrideRepositories` method on xsbti.Launcher interface will
-    return its value. The use of this method is application specific,
+    `isOverrideRepositories` method on `xsbti.Launcher` interface will
+    return its value. The use of this method is application-specific,
     but in the case of sbt denotes that the configuration of
     repositories in the launcher should override those used by any
     build. Applications should respect this convention if they can.
 -   `repository-config` - This specifies a configuration location where
-    ivy repositories can also be configured. If this file exists, then
-    its contents override the [repositories] section.
+    Ivy repositories can also be configured. If this file exists, then
+    its contents override the `[repositories]` section.
 
 #### 6. The Server Section
 
@@ -145,12 +171,11 @@ properties:
 -   `lock` - The file that controls access to the running server. This
     file will contain the active port used by a server and must be
     located on a a filesystem that supports locking.
--   `jvmargs` - A file that contains line-separated JVM arguments that where
-    :   use when starting the server.
-
+-   `jvmargs` - A file that contains line-separated JVM arguments that were
+    used when starting the server.
 -   `jvmprops` - The location of a properties file that will define
     override properties in the server. All properties defined in this
-    file will be set as -D java properties.
+    file will be set as `-D` Java properties.
 
 ### Variable Substitution
 
@@ -169,11 +194,11 @@ substituted.
 
 There is also a special variable substitution:
 
--   `read(property.name)[default]`
+    read(property.name)[default]
 
 This will look in the file configured by `boot.properties` for a value.
 If there is no `boot.properties` file configured, or the property does
-not existt, then the default value is chosen.
+not exist, then the default value is chosen.
 
 ### Syntax
 

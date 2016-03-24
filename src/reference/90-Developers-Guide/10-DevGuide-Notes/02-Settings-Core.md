@@ -42,19 +42,19 @@ and `SettingsUsage.scala`. Finally, run sbt and enter the REPL using
 The first part of the example defines the custom settings system. There
 are three main parts:
 
-1.  Define the Scope type.
-2.  Define a function that converts that Scope (plus an AttributeKey) to
-    a String.
-3.  Define a delegation function that defines the sequence of Scopes in
+1.  Define the `Scope` type.
+2.  Define a function that converts that `Scope` (plus an `AttributeKey`) to
+    a `String`.
+3.  Define a delegation function that defines the sequence of `Scope`s in
     which to look up a value.
 
 There is also a fourth, but its usage is likely to be specific to sbt at
 this time. The example uses a trivial implementation for this part.
 
-`SettingsExample.scala`
+`SettingsExample.scala`:
 
 ```scala
-  import sbt._
+import sbt._
 
 /** Define our settings system */
 
@@ -91,14 +91,16 @@ This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
 [Settings API documentation](../api/sbt/Settings.html) for
-details. `SettingsUsage.scala`:
+details.
+
+`SettingsUsage.scala`:
 
 ```scala
 /** Usage Example **/
 
-   import sbt._
-   import SettingsExample._
-   import Types._
+import sbt._
+import SettingsExample._
+import Types._
 
 object SettingsUsage {
 
@@ -149,16 +151,16 @@ a5 = Some(4)
 b5 = Some(9)
 ```
 
--   For the None results, we never defined the value and there was no
+-   For the `None` results, we never defined the value and there was no
     value to delegate to.
--   For a3, we explicitly defined it to be 3.
--   a4 wasn't defined, so it delegates to a3 according to our delegates
+-   For `a3`, we explicitly defined it to be 3.
+-   `a4` wasn't defined, so it delegates to `a3` according to our `delegates`
     function.
--   b4 gets the value for a4 (which delegates to a3, so it is 3) and
+-   `b4` gets the value for `a4` (which delegates to `a3`, so it is 3) and
     multiplies by 3
--   a5 is defined as the previous value of a5 + 1 and since no previous
-    value of a5 was defined, it delegates to a4, resulting in 3+1=4.
--   b5 isn't defined explicitly, so it delegates to b4 and is therefore
+-   `a5` is defined as the previous value of `a5` + 1 and since no previous
+    value of `a5` was defined, it delegates to `a4`, resulting in 3+1=4.
+-   `b5` isn't defined explicitly, so it delegates to `b4` and is therefore
     equal to 9 as well
 
 ### sbt Settings Discussion
@@ -183,8 +185,8 @@ For example, in a project, a
 [Select][Sdocs-Select] referring to the defining project. All other axes that are
 [This][Sdocs-This] are
 translated to
-[Global][Sdocs-Global]. Functions like inConfig and inTask transform
-This into a
+[Global][Sdocs-Global]. Functions like `inConfig` and `inTask` transform
+`This` into a
 [Select][Sdocs-Select] for a specific value. For example,
 `inConfig(Compile)(someSettings)` translates the configuration axis for
 all settings in *someSettings* to be `Select(Compile)` if the axis value
@@ -193,20 +195,20 @@ is
 
 So, from the example and from sbt's scopes, you can see that the core
 settings engine does not impose much on the structure of a scope. All it
-requires is a delegates function `Scope => Seq[Scope]` and a `display`
+requires is a `delegates` function `Scope => Seq[Scope]` and a `display`
 function. You can choose a scope type that makes sense for your
 situation.
 
 #### Constructing settings
 
-The *app*, *value*, *update*, and related methods are the core methods
+The `app`, `value`, `update`, and related methods are the core methods
 for constructing settings. This example obviously looks rather different
 from sbt's interface because these methods are not typically used
 directly, but are wrapped in a higher-level abstraction.
 
-With the core settings engine, you work with HLists to access other
-settings. In sbt's higher-level system, there are wrappers around HList
-for TupleN and FunctionN for N = 1-9 (except Tuple1 isn't actually
+With the core settings engine, you work with `HList`s to access other
+settings. In sbt's higher-level system, there are wrappers around `HList`
+for `TupleN` and `FunctionN` for N = 1-9 (except `Tuple1` isn't actually
 used). When working with arbitrary arity, it is useful to make these
 wrappers at the highest level possible. This is because once wrappers
 are defined, code must be duplicated for every N. By making the wrappers
@@ -226,10 +228,10 @@ to `setting(a, value( task { 3 } ) )`. See
 
 #### Settings definitions
 
-sbt also provides a way to define these settings in a file (build.sbt
-and Build.scala). This is done for build.sbt using basic parsing and
+sbt also provides a way to define these settings in a file (`build.sbt`
+and `Build.scala`). This is done for `build.sbt` using basic parsing and
 then passing the resulting chunks of code to `compile/Eval.scala`. For
 all definitions, sbt manages the classpaths and recompilation process to
 obtain the settings. It also provides a way for users to define project,
 task, and configuration delegation, which ends up being used by the
-delegates function.
+`delegates` function.
