@@ -45,7 +45,7 @@ your plugin if it's defined in default (no-name) package.
 
 ### Follow the naming conventions
 
-Use the `sbt-$projectname` scheme to name your library and artifact.
+Use the `sbt-\$projectname` scheme to name your library and artifact.
 A plugin ecosystem with a consistent naming convention makes it easier for users to tell whether a
 project or dependency is an SBT plugin.
 
