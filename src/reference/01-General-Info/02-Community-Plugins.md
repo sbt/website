@@ -289,6 +289,8 @@ your plugin to the list.
     <https://github.com/fedragon/sbt-todolist>
 -   sbt-ortho (simple spell and English style checker):
     <https://github.com/henrikengstrom/sbt-ortho>
+-   sbt-write-output-to-file (redirect the output of `run` to a file):
+    <https://github.com/cb372/sbt-write-output-to-file>
 
 #### Database plugins
 
