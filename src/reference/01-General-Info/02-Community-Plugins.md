@@ -300,6 +300,8 @@ your plugin to the list.
     <https://github.com/bigtoast/sbt-liquibase>
 -   sbt-dbdeploy (dbdeploy, a database change management tool):
     <https://github.com/mr-ken/sbt-dbdeploy>
+-   sbt-pillar (tasks for managing Cassandra DB migrations using Pillar library):
+    <https://github.com/henders/sbt-pillar-plugin>
 
 #### Code generator plugins
 
