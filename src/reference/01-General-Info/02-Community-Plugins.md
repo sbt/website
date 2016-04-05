@@ -81,6 +81,7 @@ your plugin to the list.
     Scala static analysis)
 -   cpd4sbt: <https://github.com/sbt/cpd4sbt> (copy/paste detection,
     works for Scala, too)
+-   sbt-findbugs-plugin: <https://github.com/lenioapp/sbt-findbugs-plugin> (FindBugs - static analysis for Java code)
 -   findbugs4sbt: <https://github.com/sbt/findbugs4sbt> (FindBugs only
     supports Java projects atm)
 -   scalastyle: <https://github.com/scalastyle/scalastyle-sbt-plugin>
@@ -92,6 +93,8 @@ your plugin to the list.
     (Checkstyle - static analysis for Java code)
 -   sbt-jcheckstyle: <https://github.com/xerial/sbt-jcheckstyle>
     (handy checkstyle runner for Java projects)
+-   sbt-verify-plugin: <https://github.com/lenioapp/sbt-verify-plugin>
+    (statically verify the integrity of downloaded dependencies)
 
 #### One jar plugins
 
