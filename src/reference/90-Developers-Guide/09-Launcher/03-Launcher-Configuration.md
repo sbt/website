@@ -216,7 +216,7 @@ scala: "[" "scala" "]" nl version nl classifiers nl
 app: "[" "app" "]" nl org nl name nl version nl components nl class nl crossVersioned nl resources nl classifiers nl
 repositories: "[" "repositories" "]" nl (repository nl)*
 boot: "[" "boot" "]" nl directory nl bootProperties nl search nl promptCreate nl promptFill nl quickOption nl
-log: "["' "log" "]" nl logLevel nl
+log: "[" "log" "]" nl logLevel nl
 appProperties: "[" "app-properties" "]" nl (property nl)*
 ivy: "[" "ivy" "]" nl homeDirectory nl checksums nl overrideRepos nl repoConfig nl
 directory: "directory" ":" path
