@@ -95,7 +95,6 @@ your plugin to the list.
     (handy checkstyle runner for Java projects)
 -   sbt-verify-plugin: <https://github.com/lenioapp/sbt-verify-plugin>
     (statically verify the integrity of downloaded dependencies)
--   sbt-pmd-plugin: <https://github.com/qonceptual/sbt-pmd-plugin> (PMD - Source code analyzer that finds common programming flaws.)
 
 #### One jar plugins
 
