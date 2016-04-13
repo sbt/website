@@ -18,9 +18,9 @@ Windows への sbt のインストール
 
 [ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
 
-### Typesafe Activator
+### Lightbend Activator
 
-[Typesafe Activator][Activator-Installation]の手順を参照。
+[Lightbend Activator][Activator-Installation]の手順を参照。
 
 ### 手動インストール
 

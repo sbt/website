@@ -76,9 +76,9 @@ sbt のバイナリは Bintray にて公開されており、Bintray は RPM リ
 > [こちら](https://github.com/whiter4bbit/overlays/issues)
 > へ報告してほしい。
 
-### Typesafe Activator
+### Lightbend Activator
 
-[Typesafe Activator][Activator-Installation]の手順を参照。
+[Lightbend Activator][Activator-Installation]の手順を参照。
 
 ### 手動インストール
 

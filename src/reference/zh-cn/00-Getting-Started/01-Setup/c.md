@@ -61,9 +61,9 @@ sbt 二进制文件发布到 Bintray，而Bintray 方便地提供了RPM资源库
 
 > **注意：** 请将任何和 ebuild 相关的问题反馈到 [这里](https://github.com/whiter4bbit/overlays/issues)。
 
-### Typesafe Activator
+### Lightbend Activator
 
-参见 [Typesafe Activator安装指南][Activator-Installation].
+参见 [Lightbend Activator安装指南][Activator-Installation].
 
 ### 手动安装
 
