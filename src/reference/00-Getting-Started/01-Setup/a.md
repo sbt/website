@@ -32,9 +32,9 @@ Installing sbt on Mac
 
 Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
 
-### Typesafe Activator
+### Lightbend Activator
 
-See the [Typesafe Activator instructions][Activator-Installation].
+See the [Lightbend Activator instructions][Activator-Installation].
 
 ### Installing manually
 

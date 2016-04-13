@@ -4,10 +4,10 @@ out: Activator-Installation.html
 
   [Manual-Installation]: Manual-Installation.html
 
-安装 Typesafe Activator (包含sbt)
+安装 Lightbend Activator (包含sbt)
 ---------------------
 
-Typesafe Activator 是sbt的一个自定义版本，它添加两个额外的命令`activator ui`和`activator new`。`activator`命令简言之就是sbt的一个超集。
+Lightbend Activator 是sbt的一个自定义版本，它添加两个额外的命令`activator ui`和`activator new`。`activator`命令简言之就是sbt的一个超集。
 
 你可以从 [typesafe.com](http://typesafe.com/platform/getstarted)获得Activator。
 

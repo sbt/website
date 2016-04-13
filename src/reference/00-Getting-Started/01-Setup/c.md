@@ -65,9 +65,9 @@ To merge sbt from this ebuilds you can do:
 > **Note:** Please report any issues with the ebuild
 > [here](https://github.com/whiter4bbit/overlays/issues).
 
-### Typesafe Activator
+### Lightbend Activator
 
-See the [Typesafe Activator instructions][Activator-Installation].
+See the [Lightbend Activator instructions][Activator-Installation].
 
 ### Installing manually
 

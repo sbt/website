@@ -30,9 +30,9 @@ out: Installing-sbt-on-Mac.html
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。
 
-### Typesafe Activator
+### Lightbend Activator
 
-参见 [Typesafe Activator安装指南][Activator-Installation].
+参见 [Lightbend Activator安装指南][Activator-Installation].
 
 ### 手动安装
 
