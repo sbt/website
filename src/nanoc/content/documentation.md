@@ -6,7 +6,7 @@ sbt 0.13
 --------
 
 - [sbt documentation](0.13/docs/index.html) ([pdf](0.13/docs/sbt-reference.pdf))
-- [sbt API](<%= @config[:sbtVersionForScalaDoc] %>/api/index.html) ([source](<%= @config[:sbtVersionForScalaDoc] %>/sxr/index.html)) *Not the latest due to technical issues
+- [sbt API](<%= @config[:sbtVersionForScalaDoc] %>/api/index.html) ([source](<%= @config[:sbtVersionForScalaDoc] %>/sxr/index.html))
 
 sbt 0.12
 --------
