@@ -175,6 +175,8 @@ your plugin to the list.
 -   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
 -   sbt-play-scalajs: <https://github.com/vmunier/sbt-play-scalajs>
 -   scalatra-sbt: <https://github.com/scalatra/scalatra-sbt>
+-   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on Github):
+    <https://github.com/ThoughtWorksInc/sbt-scala-js-map>
 
 #### Documentation plugins
 
