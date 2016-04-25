@@ -2,7 +2,6 @@
 out: Testing-sbt-plugins.html
 ---
 
-  [ChangeDetectionAndTesting]: http://code.google.com/p/simple-build-tool/wiki/ChangeDetectionAndTesting#Scripts
   [sbtScriptedTests]: https://github.com/sbt/sbt/tree/0.13/sbt/src/sbt-test
   [xsbt-web-plugin]: https://github.com/JamesEarlDouglas/xsbt-web-plugin/tree/master/src/sbt-test
   [sbt-assembly]: https://github.com/sbt/sbt-assembly/tree/master/src/sbt-test/sbt-assembly
