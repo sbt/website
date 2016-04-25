@@ -36,7 +36,7 @@ There's also the [Gitter sbt/sbt][gitter1] channel, but the options above are re
 <h2 id="how-can-I-help">How can I help? <a href="#how-can-I-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
 sbt is an open source project and everyone is encouraged to get involved!
-Join the commuity of developers building sbt and related tools like Play and Activator.
+Join the community of developers building sbt and related tools like Play and Activator.
 
 ### Twitter
 
@@ -94,7 +94,7 @@ plugin and sbt core development.
 sbt's code is hosted on Github [sbt/sbt][github] repository,
 and sbt's documentation (including this page) is on [sbt/website][website] repository.
 
-You are welcome to work on any feature you like but if you'd like some good ideas
+You are welcome to work on any feature you like, but if you'd like some good ideas
 
 - look for issues tagged with the [Community label][community-label]
 - check out [waffle sbt/sbt][waffle]'s Ready or Backlogs list
