@@ -107,6 +107,7 @@ object Main extends App {
 - **`mkdir`** `path+` は、ディレクトリを作成する
 - **`absent`** `path+` は、はファイルが存在しないことを確認する
 - **`newer`** `source target` は、`source` の方が新しいことを確認する
+- **`must-mirror`** `source target` は、`source` が同一であることを確認する
 - **`pause`** は、enter が押されるまで待つ
 - **`sleep`** `time` は、スリープする
 - **`exec`** `command args*` は、別のプロセスでコマンドを実行する

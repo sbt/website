@@ -106,6 +106,7 @@ File commands are:
 - **`mkdir`** `path+` creates dirs
 - **`absent`** `path+` checks if the files don't exist
 - **`newer`** `source target` checks if `source` is newer
+- **`must-mirror`** `source target` checks if `source` is identical
 - **`pause`** pauses until enter is pressed
 - **`sleep`** `time` sleeps
 - **`exec`** `command args*` runs the command in another process
