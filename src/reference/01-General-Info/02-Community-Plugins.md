@@ -329,6 +329,7 @@ your plugin to the list.
 -   sbt-cppp (Cross-Project Protobuf Plugin for Sbt):
     <https://github.com/Atry/sbt-cppp>
 -   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
+-   courier (Type safe data bindings for web + mobile): <https://github.com/coursera/courier>
 -   sbt-xjc (XSD binding, using
     [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
     <https://github.com/sbt/sbt-xjc>
