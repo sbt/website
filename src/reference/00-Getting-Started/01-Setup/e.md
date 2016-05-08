@@ -12,7 +12,7 @@ commands, `activator ui` and `activator new`. The `activator`
 command is a superset of sbt, in short.
 
 You can obtain Activator from
-[typesafe.com](http://typesafe.com/get-started).
+[lightbend.com](http://www.lightbend.com/activator/download).
 
 If you see a command line such as `sbt ~test` in the
 documentation, you will also be able to type `activator ~test`.
@@ -30,7 +30,7 @@ differences between Activator and a
    whether to enter `activator shell` or `activator ui` mode;
    type `activator shell` to force the command line prompt.
  * `activator new` allows you to create projects from a large
-   [catalog of template projects](https://typesafe.com/activator/templates),
+   [catalog of template projects](https://www.lightbend.com/activator/templates),
    for example the `play-scala` template is a skeleton
    [Play Framework](https://playframework.com) Scala app.
  * `activator ui` launches a quick start UI that can be used to

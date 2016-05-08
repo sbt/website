@@ -20,7 +20,7 @@ can use gh-pages to host websites under the http://scala-sbt.org domain.
 
 ### Community Ivy Repository
 
-[Typesafe](https://www.typesafe.com) has provided a freely available
+[Lightbend](https://www.lightbend.com) has provided a freely available
 [Ivy Repository](https://repo.scala-sbt.org/scalasbt) for sbt projects
 to use. This Ivy repository is mirrored from the freely available
 [Bintray service](https://bintray.com).
