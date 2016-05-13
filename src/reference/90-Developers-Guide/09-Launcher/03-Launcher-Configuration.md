@@ -28,15 +28,15 @@ The default configuration file for sbt as an application looks like:
 
 ```
 [scala]
-  version: ${sbt.scala.version-auto}
+  version: \${sbt.scala.version-auto}
 
 [app]
-  org: ${sbt.organization-org.scala-sbt}
+  org: \${sbt.organization-org.scala-sbt}
   name: sbt
-  version: ${sbt.version-read(sbt.version)[0.13.5]}
-  class: ${sbt.main.class-sbt.xMain}
+  version: \${sbt.version-read(sbt.version)[0.13.5]}
+  class: \${sbt.main.class-sbt.xMain}
   components: xsbti,extra
-  cross-versioned: ${sbt.cross.versioned-false}
+  cross-versioned: \${sbt.cross.versioned-false}
 
 [repositories]
   local
@@ -45,13 +45,13 @@ The default configuration file for sbt as an application looks like:
   sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
 
 [boot]
-  directory: ${sbt.boot.directory-${sbt.global.base-${user.home}/.sbt}/boot/}
+  directory: \${sbt.boot.directory-\${sbt.global.base-\${user.home}/.sbt}/boot/}
 
 [ivy]
-  ivy-home: ${sbt.ivy.home-${user.home}/.ivy2/}
-  checksums: ${sbt.checksums-sha1,md5}
-  override-build-repos: ${sbt.override.build.repos-false}
-  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}
+  ivy-home: \${sbt.ivy.home-\${user.home}/.ivy2/}
+  checksums: \${sbt.checksums-sha1,md5}
+  override-build-repos: \${sbt.override.build.repos-false}
+  repository-config: \${sbt.repository.config-\${sbt.global.base-\${user.home}/.sbt}/repositories}
 ```
 
 Let's look at all the launcher configuration sections in detail:
