@@ -16,13 +16,12 @@ This page describes sbt build definitions, including some "theory" and
 the syntax of `build.sbt`. It assumes you know how to [use sbt][Running]
 and have read the previous pages in the Getting Started Guide.
 
-### Three Flavors of Build Definition
+### Two Flavors of Build Definition
 
-There are three flavors of build definition:
+There are two flavors of build definition:
 
 1. Multi-project `.sbt` build definition
 2. Bare `.sbt` build definition
-3. `.scala` build definition
 
 This page discusses the newest multi-project `.sbt` build definition, which combines the strength
 of the two older flavors, and is suitable for all cases.
@@ -278,6 +277,21 @@ import Keys._
 (In addition, if you have [.scala files][Full-Def], the contents of any
 `Build` or `Plugin` objects in those files will be imported. More on that
 when we get to [.scala build definition][Full-Def].)
+
+
+### Bare .sbt build definition
+
+Instead of defining `Project`s, bare `.sbt` build definition consists of
+a list of `Setting[_]` expressions.
+
+```scala
+name := "hello"
+version := "1.0"
+scalaVersion := "$example_scala_version$"
+```
+
+This syntax is recommended mostly for using plugins. See later section
+about the plugins.
 
 ### Adding library dependencies
 
