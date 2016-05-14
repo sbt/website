@@ -24,7 +24,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
 
-    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian-experimental /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
     sudo apt-get update
     sudo apt-get install sbt
@@ -41,7 +41,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 红帽企业版Linux和其他基于RPM的发行版使用RPM格式。
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
-    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
+    curl https://bintray.com/sbt/rpm/rpm-experimental > bintray-sbt-rpm.repo
     sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
     sudo yum install sbt
 
@@ -60,10 +60,6 @@ sbt 二进制文件发布到 Bintray，而Bintray 方便地提供了RPM资源库
     emerge sbt-bin
 
 > **注意：** 请将任何和 ebuild 相关的问题反馈到 [这里](https://github.com/whiter4bbit/overlays/issues)。
-
-### Lightbend Activator
-
-参见 [Lightbend Activator安装指南][Activator-Installation].
 
 ### 手动安装
 

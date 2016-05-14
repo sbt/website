@@ -18,10 +18,6 @@ out: Installing-sbt-on-Windows.html
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。
 
-### Lightbend Activator
-
-参见 [Lightbend Activator安装指南][Activator-Installation].
-
 ### 手动安装
 
 参见手动安装指南。

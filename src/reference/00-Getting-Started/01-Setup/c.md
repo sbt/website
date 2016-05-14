@@ -24,7 +24,7 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 Ubuntu and other Debian-based distributions use the DEB format, but usually you don't install your software from a local DEB file. Instead they come with package managers both for the command line (e.g. `apt-get`, `aptitude`) or with a graphical user interface (e.g. Synaptic).
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
-    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian-experimental /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
     sudo apt-get update
     sudo apt-get install sbt
@@ -42,7 +42,7 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
-    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    curl https://bintray.com/sbt/rpm/rpm-experimental | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
 sbt binaries are published to Bintray, and conveniently Bintray provides an RPM repository. You just have to add the repository to the places your package manager will check.
@@ -64,10 +64,6 @@ To merge sbt from this ebuilds you can do:
 
 > **Note:** Please report any issues with the ebuild
 > [here](https://github.com/whiter4bbit/overlays/issues).
-
-### Lightbend Activator
-
-See the [Lightbend Activator instructions][Activator-Installation].
 
 ### Installing manually
 

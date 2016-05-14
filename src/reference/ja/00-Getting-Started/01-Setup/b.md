@@ -18,10 +18,6 @@ Windows への sbt のインストール
 
 [ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
 
-### Lightbend Activator
-
-[Lightbend Activator][Activator-Installation]の手順を参照。
-
 ### 手動インストール
 
 手動インストールの手順を参照。

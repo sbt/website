@@ -10,30 +10,9 @@ out: Installing-sbt-on-Mac.html
 Mac への sbt のインストール
 -------------------------
 
-### サードパーティパッケージを使ってのインストール
-
-> **注意:** サードパーティが提供するパッケージは最新版を使っているとは限らない。
-> 何か問題があれば、パッケージメンテナに報告してほしい。
-
-#### [Macports](http://macports.org/)
-
-```
-\$ port install sbt
-```
-
-#### [Homebrew](http://mxcl.github.com/homebrew/)
-
-```
-\$ brew install sbt
-```
-
 ### ユニバーサルパッケージからのインストール
 
 [ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
-
-### Lightbend Activator
-
-[Lightbend Activator][Activator-Installation]の手順を参照。
 
 ### 手動インストール
 

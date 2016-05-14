@@ -18,10 +18,6 @@ Download [msi installer][MSI] and install it.
 
 Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 
-### Lightbend Activator
-
-See the [Lightbend Activator instructions][Activator-Installation].
-
 ### Installing manually
 
 See instruction to install manually.

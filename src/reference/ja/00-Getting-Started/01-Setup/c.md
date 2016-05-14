@@ -9,7 +9,7 @@ out: Installing-sbt-on-Linux.html
   [Manual-Installation]: Manual-Installation.html
   [Activator-Installation]: Activator-Installation.html
   [website127]: https://github.com/sbt/website/issues/12
- 
+
 Linux への sbt のインストール
 --------------------------
 
@@ -27,7 +27,7 @@ Ubuntu 及びその他の Debian ベースのディストリビューション�
 (例: `apt-get`、`aptitude`、Synaptic など)、インストールはそれらから行う。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
-    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian-experimental /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
     sudo apt-get update
     sudo apt-get install sbt
@@ -51,7 +51,7 @@ sbt のバイナリは Bintray にて公開されており、都合の良いこ�
 Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューションは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
-    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    curl https://bintray.com/sbt/rpm/rpm-experimental | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
 sbt のバイナリは Bintray にて公開されており、Bintray は RPM リポジトリを提供する。
@@ -75,10 +75,6 @@ sbt のバイナリは Bintray にて公開されており、Bintray は RPM リ
 > **注意:** この ebuild に関する問題は
 > [こちら](https://github.com/whiter4bbit/overlays/issues)
 > へ報告してほしい。
-
-### Lightbend Activator
-
-[Lightbend Activator][Activator-Installation]の手順を参照。
 
 ### 手動インストール
 
