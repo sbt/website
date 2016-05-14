@@ -14,8 +14,8 @@ object Docs {
   // Currently the following files needs to be manually updated:
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
-  lazy val targetSbtBinaryVersion = "0.13"
-  lazy val targetSbtFullVersion = "0.13.5"
+  lazy val targetSbtBinaryVersion = "1.0"
+  lazy val targetSbtFullVersion = "1.0.0-M4"
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
     "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
@@ -163,24 +163,29 @@ object Docs {
     val s = streams.value
 
     // remove symlinks
-    val apiLink = versioned / "api"
-    val sxrLink = versioned / "sxr"
-    val releaseLink = repo / "release"
-    if (apiLink.exists) apiLink.delete
-    if (sxrLink.exists) sxrLink.delete
-    if (releaseLink.exists) releaseLink.delete
+    // uncomment after sbt 1.0
+    // val apiLink = versioned / "api"
+    // val sxrLink = versioned / "sxr"
+    // val releaseLink = repo / "release"
+    // if (apiLink.exists) apiLink.delete
+    // if (sxrLink.exists) sxrLink.delete
+    // if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-    gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+
+    // uncomment afer sbt 1.0
+    // gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+
     val mappings =  for {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(mappings)
 
     // symlink API and SXR
-    symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
-    symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
-    symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
+    // uncomment after sbt 1.0
+    // symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
+    // symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
+    // symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
   }
 
