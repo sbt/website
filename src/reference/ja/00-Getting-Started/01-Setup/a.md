@@ -21,7 +21,7 @@ Mac への sbt のインストール
 #### [Homebrew](http://mxcl.github.com/homebrew/)
 
 ```
-\$ brew install sbt
+\$ brew install sbt -devel
 ```
 
 #### [Macports](http://macports.org/)

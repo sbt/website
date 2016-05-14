@@ -20,7 +20,7 @@ Installing sbt on Mac
 #### [Homebrew](http://mxcl.github.com/homebrew/)
 
 ```
-\$ brew install sbt
+\$ brew install sbt -devel
 ```
 
 #### [Macports](http://macports.org/)
@@ -28,11 +28,3 @@ Installing sbt on Mac
 ```
 \$ port install sbt
 ```
-
-### Installing from a universal package
-
-Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
-
-### Installing manually
-
-See instruction to install manually.
