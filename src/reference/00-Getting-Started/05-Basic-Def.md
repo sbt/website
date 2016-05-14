@@ -251,6 +251,21 @@ import Keys._
 
 (In addition, if you have auto plugins, the names marked under `autoImport` will be imported.)
 
+
+### Bare .sbt build definition
+
+Instead of defining `Project`s, bare `.sbt` build definition consists of
+a list of `Setting[_]` expressions.
+
+```scala
+name := "hello"
+version := "1.0"
+scalaVersion := "$example_scala_version$"
+```
+
+This syntax is recommended mostly for using plugins. See later section
+about the plugins.
+
 ### Adding library dependencies
 
 To depend on third-party libraries, there are two options. The first is
