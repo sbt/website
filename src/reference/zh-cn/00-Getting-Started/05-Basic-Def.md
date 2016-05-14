@@ -13,13 +13,12 @@ out: Basic-Def.html
 
 这一小节描述 sbt 构建定义，包含一些“理论”和 `build.sbt` 的语法。假设你已经知道如何 [使用 sbt][Running] 并且阅读过入门指南前面的几小节。
 
-### 构建定义的三种风格
+### 构建定义的二种风格
 
-构建定义有三种风格。
+构建定义有二种风格。
 
 1. 多工程 `.sbt` 构建定义
 2. bare `.sbt` 构建定义
-3. `.scala` 构建定义
 
 这一小节将讨论最新的多工程.sbt 构建定义，它结合了两种老风格的优点，并且适用于所有情况。当你处理新的构建的时候可能会遇见另外两个老的风格。参见[bare .sbt 构建定义][Bare-Def]和[.scala 构建定义][Full-Def]（在入门指南的后面部分）了解更多其它风格的内容。
 
@@ -203,6 +202,16 @@ import Keys._
 ```
 
 （另外，如果你有 [.scala 文件][Full-Def]，这些文件中任何 `Build` 对象或者 `Plugin` 对象里的内容都会被引入。更多关于这些的内容放在 [.scala 构建定义][Full-Def]。）
+
+### bare .sbt 构建定义
+
+bare `.sbt` 构建定义由一个 `Setting[_]` 表达式的列表组成，而不是定义 `Project`。
+
+```scala
+name := "hello"
+version := "1.0"
+scalaVersion := "$example_scala_version$"
+```
 
 ### 添加依赖库
 

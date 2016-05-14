@@ -225,9 +225,6 @@ import Process._
 import Keys._
 ```
 
-（さらに、[.scala ファイル][Full-Def]がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
-これに関しては、[.scala ビルド定義][Full-Def]でさらに詳しく。）
-
 (さらに、auto plugin があれば `autoImport` 以下の名前がインポートされる。)
 
 ### ライブラリへの依存性を加える
