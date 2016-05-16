@@ -391,9 +391,10 @@ your plugin to the list.
 
 -   sbtosgi: <https://github.com/sbt/sbt-osgi>
 
-#### C++ interop plugins
+#### Native interop plugins
 
 - sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets): <https://github.com/lloydmeta/sbt-javacpp>
+- sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs): <https://github.com/jodersky/sbt-jni>
 
 #### Computer vision plugins
 
