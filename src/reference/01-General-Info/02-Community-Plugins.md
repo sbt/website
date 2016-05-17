@@ -382,6 +382,8 @@ your plugin to the list.
 
 -   android-plugin: <https://github.com/jberkel/android-plugin>
 -   android-sdk-plugin: <https://github.com/pfn/android-sdk-plugin>
+-   sbt-crashlytics (Provides [crashlytics](https://fabric.io/kits/android/crashlytics/) support for android applications):
+    <https://github.com/seroperson/sbt-crashlytics>
 
 #### iOS plugins
 
