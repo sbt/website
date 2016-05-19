@@ -32,13 +32,12 @@ Before you start, set your version to a **-SNAPSHOT** one because scripted-plugi
 Add scripted-plugin to your plugin build. `project/scripted.sbt`:
 
 ```scala
-libraryDependencies += { "org.scala-sbt" % "scripted-plugin" % sbtVersion.value }
+libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
 ```
 
 Then add the following settings to `scripted.sbt`:
 
 ```scala
-ScriptedPlugin.scriptedSettings
 scriptedLaunchOpts := { scriptedLaunchOpts.value ++
   Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
 }
