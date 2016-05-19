@@ -33,13 +33,12 @@ scripted-plugin はプラグインをローカルに publish するため、ま�
 次に、scripted-plugin をプラグインのビルドに加える。`project/scripted.sbt`:
 
 ```scala
-libraryDependencies += { "org.scala-sbt" % "scripted-plugin" % sbtVersion.value }
+libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
 ```
 
 以下のセッティングを `scripted.sbt` に加える:
 
 ```scala
-ScriptedPlugin.scriptedSettings
 scriptedLaunchOpts := { scriptedLaunchOpts.value ++
   Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
 }
