@@ -44,4 +44,6 @@ lazy val root = (project in file(".")).
 ```
 
 - [Scripted plugin](Testing-sbt-plugins.html)
-- sbt-assembly: <https://github.com/sbt/sbt-assembly>
+- sbt-assembly 0.14.3: <https://github.com/sbt/sbt-assembly>
+- sbt-doge 0.1.5: <https://github.com/sbt/sbt-doge>
+- sbt-buildinfo 0.6.1: <https://github.com/sbt/sbt-buildinfo>
