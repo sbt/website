@@ -177,6 +177,7 @@ your plugin to the list.
 -   scalatra-sbt: <https://github.com/scalatra/scalatra-sbt>
 -   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on Github):
     <https://github.com/ThoughtWorksInc/sbt-scala-js-map>
+-   Naptime API framework plugin: <http://coursera.github.io/naptime> (<https://github.com/coursera/naptime>)
 
 #### Documentation plugins
 
