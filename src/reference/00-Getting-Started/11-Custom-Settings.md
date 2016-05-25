@@ -102,7 +102,7 @@ When depending on other tasks from a custom task using `value`,
 an important detail to note is the execution semantics of the tasks.
 By execution semantics, we mean exactly *when* these tasks are evaluated.
 
-We if take `sampeIntTask` for instance, each line in the body of the task
+We if take `sampleIntTask` for instance, each line in the body of the task
 should be strictly evaluated one after the other. That is sequential semantics:
 
 ```scala
