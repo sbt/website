@@ -46,8 +46,8 @@ an sbt build definition. For command names, see
     the actual location of the dependencies. However, sbt is not very
     consistent with this terminology and repository and resolver are
     occasionally used interchangeably.
--   A [ModuleConfiguration] defines a specific resolver to use for a
-    group of dependencies.
+-   A [ModuleConfiguration](../api/sbt/ModuleConfiguration.html) defines
+    a specific resolver to use for a group of dependencies.
 -   A [Configuration](../api/sbt/Configuration.html) is a useful Ivy
     construct for grouping dependencies. See ivy-configurations. It is
     also used for [scoping settings][Scopes].
