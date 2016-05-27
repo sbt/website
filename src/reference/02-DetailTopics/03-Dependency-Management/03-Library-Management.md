@@ -307,7 +307,7 @@ excludeDependencies ++= Seq(
 )
 ```
 
-Available since sbt 0.13.8.
+Available since sbt 0.13.9.
 
 See [SbtExclusionRule](../api/sbt/SbtExclusionRule.html) for API details.
 
