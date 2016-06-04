@@ -95,6 +95,8 @@ your plugin to the list.
     (handy checkstyle runner for Java projects)
 -   sbt-verify-plugin: <https://github.com/lenioapp/sbt-verify-plugin>
     (statically verify the integrity of downloaded dependencies)
+-   sbt-dependency-check: <https://github.com/albuch/sbt-dependency-check>
+    (check project dependencies for publicly known vulnerabilities/CVEs)
 
 #### One jar plugins
 
