@@ -299,7 +299,8 @@ your plugin to the list.
     <https://github.com/henrikengstrom/sbt-ortho>
 -   sbt-write-output-to-file (redirect the output of `run` to a file):
     <https://github.com/cb372/sbt-write-output-to-file>
-- sbt-jol (OpenJDK JOL (Java Object Layout) integration for sbt and Scala): <https://github.com/ktoso/sbt-jol>
+-   sbt-jol (OpenJDK JOL (Java Object Layout) integration for sbt and Scala):
+    <https://github.com/ktoso/sbt-jol>
 
 #### Database plugins
 
