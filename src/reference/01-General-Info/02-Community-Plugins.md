@@ -299,6 +299,7 @@ your plugin to the list.
     <https://github.com/henrikengstrom/sbt-ortho>
 -   sbt-write-output-to-file (redirect the output of `run` to a file):
     <https://github.com/cb372/sbt-write-output-to-file>
+- sbt-jol (OpenJDK JOL (Java Object Layout) integration for sbt and Scala): <https://github.com/ktoso/sbt-jol>
 
 #### Database plugins
 
@@ -400,6 +401,10 @@ your plugin to the list.
 
 - sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets): <https://github.com/lloydmeta/sbt-javacpp>
 - sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs): <https://github.com/jodersky/sbt-jni>
+
+#### Benchmarking plugins 
+
+- sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala): <https://github.com/ktoso/sbt-jmh>
 
 #### Computer vision plugins
 
