@@ -178,3 +178,35 @@ Be careful not to overlap or nest tokens, as in
 `token("green" ~ token("blue"))`. The behavior is unspecified (and
 should generate an error in the future), but typically the outer most
 token definition will be used.
+
+
+### Dependent parsers
+
+Sometimes a parser must analyze some data and then more data needs to be parsed, 
+and it is dependent on the previous one.  
+The key for obtaining this behaviour is to use the `flatMap` function.
+
+As an example, it will shown how to select several items from a list of valid ones 
+with completion, but no duplicates are possible.  A space is used to separate the 
+different items.
+
+
+```scala
+def select1(items: Iterable[String]) =
+  token(Space ~> StringBasic.examples(FixedSetExamples(items)))
+
+def selectSome(items: Seq[String]): Parser[Seq[String]] = {
+   select1(items).flatMap { v ⇒
+   val remaining = items filter { _ != v }
+   if (remaining.size == 0)
+     success(v :: Nil)
+   else
+     selectSome(remaining).?.map(v +: _.getOrElse(Seq()))
+ } 
+```
+ 
+ As you can see, the `flatMap` function provides the previous value.  With this info, a new
+ parser is constructed for the remaining items.  The `map` combinator is also used in order
+ to transform the output of the parser.
+ 
+ The parser is called recursively, until it is found the trivial case of no possible choices.
