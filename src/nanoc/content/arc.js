@@ -2,7 +2,7 @@ $(function () {
   var os_name = 'Unknown';
   var distro = 'Unknown';
   var packager = 'Unknown';
-  var ua = navigator.appVersion;
+  var ua = navigator.userAgent;
   if (ua.match('Win')) os_name = 'Windows';
   if (ua.match('Mac')) os_name = 'MacOS';
   if (ua.match('X11')) os_name = 'UNIX';
