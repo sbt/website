@@ -171,8 +171,7 @@ your plugin to the list.
 -   sbt-vaadin-plugin:
     <https://github.com/henrikerola/sbt-vaadin-plugin>
 -   sbt-purescript: <https://github.com/eamelink/sbt-purescript>
--   sbt-jasmine-plugin (Run javascript tests with jasmine within sbt):
-    <https://github.com/joescii/sbt-jasmine-plugin>
+-   sbt-js-test (Run javascript tests on the JVM with browser APIs): <https://github.com/joescii/sbt-js-test>
 -   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
 -   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
 -   sbt-play-scalajs: <https://github.com/vmunier/sbt-play-scalajs>
