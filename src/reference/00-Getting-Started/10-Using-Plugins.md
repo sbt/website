@@ -116,7 +116,7 @@ enabled. sbt's default settings are provided via three plugins:
 In addition, `JUnitXmlReportPlugin` provides an experimental support for
 generating junit-xml.
 
-Older non-auto plugins often require settings to be added explictly, so
+Older non-auto plugins often require settings to be added explicitly, so
 that [multi-project build][Multi-Project] could have different types of
 projects. The plugin documentation will indicate how to configure it,
 but typically for older plugins this involves adding the base settings
