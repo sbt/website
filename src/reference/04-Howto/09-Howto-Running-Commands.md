@@ -11,11 +11,11 @@ Running commands
 
 sbt interprets each command line argument provided to it as a command
 together with the command's arguments. Therefore, to run a command that
-takes arguments in batch mode, quote the command and its arguments. For
-example,
+takes arguments in batch mode, quote the command using double quotes,
+and its arguments. For example,
 
 ```
-\$ sbt 'project X' clean '~ compile'
+\$ sbt "project X" clean "~ compile"
 ```
 
 <a name="multi"></a>
