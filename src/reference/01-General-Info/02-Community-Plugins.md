@@ -300,6 +300,8 @@ your plugin to the list.
     <https://github.com/cb372/sbt-write-output-to-file>
 -   sbt-jol (OpenJDK JOL (Java Object Layout) integration for sbt and Scala):
     <https://github.com/ktoso/sbt-jol>
+-   sbt-hocon (operations on HOCON data against reference configuration aggregated from project dependencies):
+    <https://github.com/aalleexxeeii/sbt-hocon>
 
 #### Database plugins
 
