@@ -376,6 +376,8 @@ your plugin to the list.
     <https://github.com/oedura/scavro>
 -   sbt-spi-plugin (Generates provider-configuration files in the resource directory META-INF/services for later use with ServiceLoader)
     <https://github.com/nyavro/spi-plugin>
+-   sbt-dsl-platform ([DSL Platform](https://dsl-platform.com/) compiler plugin. Code/library generation from various languages. Postgres/Oracle database migrations):
+    <https://github.com/ngs-doo/dsl-compiler-client>
 
 #### Game development plugins
 
