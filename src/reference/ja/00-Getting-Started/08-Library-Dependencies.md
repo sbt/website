@@ -8,7 +8,7 @@ out: Library-Dependencies.html
   [Extra attributes]: https://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
   [through Ivy]: https://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
   [ScalaCheck]: http://scalacheck.org
-  [specs]: http://code.google.com/p/specs/
+  [Specs2]: http://specs2.org
   [ScalaTest]: http://scalatest.org
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
