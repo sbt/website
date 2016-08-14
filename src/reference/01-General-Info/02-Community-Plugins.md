@@ -195,6 +195,8 @@ your plugin to the list.
     <https://github.com/xuwei-k/sbt-class-diagram>
 -   sbt-api-mappings (Resolves external links in ScalaDoc for common Scala libraries)
     <https://github.com/ThoughtWorksInc/sbt-api-mappings>
+-   sbt-scaliterate (generates source code from a programming book written in Markdown)
+    <https://github.com/wookietreiber/sbt-scaliterate>
 
 #### Library dependency plugins
 
