@@ -146,6 +146,7 @@ your plugin to the list.
 -   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
 -   sbt-codedeploy: <https://github.com/gilt/sbt-codedeploy>
 -   sbt-heroku: <https://github.com/heroku/sbt-heroku>
+-   sbt-aws-fun (Deploy Jar files to AWS Lambda): <https://github.com/TailrecIO/sbt-aws-fun>
 
 #### Monitoring integration plugins
 
