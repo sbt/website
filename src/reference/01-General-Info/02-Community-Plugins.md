@@ -48,6 +48,7 @@ your plugin to the list.
 -   sbt-mode for Emacs: <https://github.com/hvesalai/sbt-mode>
 -   sbt-ctags (manage library dependency sources for vim, emacs,
     sublime) <https://github.com/kalmanb/sbt-ctags>
+-   sbt-scuggest (generates Scuggest import entries for Sublime Text) <https://github.com/ssanj/sbt-scuggest>
 
 ### Test plugins
 
