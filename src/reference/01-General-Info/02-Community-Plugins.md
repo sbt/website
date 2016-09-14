@@ -148,6 +148,7 @@ your plugin to the list.
 -   sbt-codedeploy: <https://github.com/gilt/sbt-codedeploy>
 -   sbt-heroku: <https://github.com/heroku/sbt-heroku>
 -   sbt-aws-fun (Deploy Jar files to AWS Lambda): <https://github.com/TailrecIO/sbt-aws-fun>
+-   sbt-aws-serverless (Deploy code to AWS Serverless Architecture): <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
 
 #### Monitoring integration plugins
 
