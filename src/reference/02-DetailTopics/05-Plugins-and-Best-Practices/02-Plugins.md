@@ -24,7 +24,7 @@ declared for selected projects. For example, a plugin might add a
 `proguard` task and associated (overridable) settings. Finally, a plugin
 can define new commands (via the `commands` setting).
 
-sbt 0.13.5 intoduces auto plugin with improved dependency management
+sbt 0.13.5 introduces auto plugins, with improved dependency management
 among the plugins and explicitly scoped auto importing.
 Going forward, our recommendation is to migrate to the auto plugins.
 The [Plugins Best Practices][Plugins-Best-Practices] page describes
@@ -54,7 +54,7 @@ libraryDependencies += "org.example" % "utilities" % "1.3"
 resolvers += "Example Plugin Repository" at "https://example.org/repo/"
 ```
 
-Many of the auto plugins automatically adds settings into projects,
+Many of the auto plugins automatically add settings into projects,
 however, some may require explicit enablement. Here's an example:
 
 ```scala
@@ -103,7 +103,7 @@ the build definition project like a normal project. `reload return` changes back
 to the original build. Any session settings for the plugin definition
 project that have not been saved are dropped.
 
-An auto plugin is a module that defines settings to automatically inject to
+An auto plugin is a module that defines settings to automatically inject into
 projects. In addition an auto plugin provides the following feature:
 
 - Automatically import selective names to `.sbt` files and the `eval` and `set` commands.
@@ -181,7 +181,7 @@ object HelloPlugin extends AutoPlugin {
 }
 ```
 
-This example demonstrates how to take a Command (here, `helloCommand`) and
+This example demonstrates how to take a `Command` (here, `helloCommand`) and
 distribute it in a plugin. Note that multiple commands can be included
 in one plugin (for example, use `commands ++= Seq(a,b)`). See
 [Commands][Commands]
@@ -346,7 +346,7 @@ object ObfuscatePlugin extends AutoPlugin {
       obfuscate := {
         Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
       },
-      obfuscateLiterals in obfuscate := false                
+      obfuscateLiterals in obfuscate := false
     )
   }
 
