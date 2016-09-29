@@ -263,7 +263,7 @@ input. In this section, applying input produces a `Task`. The `toTask`
 method on `Initialize[InputTask[T]]` accepts the `String` input to apply
 and produces a task that can be used normally. For example, the
 following defines a plain task `runFixed` that can be used by other
-tasks or run directly without providing any input, :
+tasks or run directly without providing any input:
 
 ```scala
 lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
@@ -288,7 +288,7 @@ Done!
 
 Each call to `toTask` generates a new task, but each task is configured
 the same as the original `InputTask` (in this case, `run`) but with
-different input applied. For example, :
+different input applied. For example:
 
 ```scala
 lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
