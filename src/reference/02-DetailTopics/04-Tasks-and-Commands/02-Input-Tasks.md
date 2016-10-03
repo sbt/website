@@ -46,9 +46,9 @@ then echoes the arguments passed to it on their own line.
 
 ```scala
 demo := {
-    // get the result of parsing
+  // get the result of parsing
   val args: Seq[String] = spaceDelimited("<arg>").parsed
-    // Here, we also use the value of the `scalaVersion` setting
+  // Here, we also use the value of the `scalaVersion` setting
   println("The current Scala version is " + scalaVersion.value)
   println("The arguments to demo were:")
   args foreach println
