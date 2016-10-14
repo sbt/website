@@ -8,7 +8,7 @@ out: Migrating-from-sbt-012x.html
 
 Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage of two aspects of sbt:
 
-* the "fishbone" operator: `<<=`, `<+=`, `<++=`
+* the key dependency operators: `<<=`, `<+=`, `<++=`
 * the tuple enrichments (apply and map) for TaskKey's and SettingKey's (eg. `(foo, bar) map { (f, b) => ... }`)
 
 The release of sbt 0.13 (which was over 3 years ago!) introduced the `.value` macro which allowed for much
