@@ -11,7 +11,7 @@ Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage 
 * the key dependency operators: `<<=`, `<+=`, `<++=`
 * the tuple enrichments (apply and map) for TaskKey's and SettingKey's (eg. `(foo, bar) map { (f, b) => ... }`)
 
-The release of sbt 0.13 (which was over 3 years ago!) introduced the `.value` macro which allowed for much
+The release of sbt 0.13 (which was over 3 years ago!) introduced the `.value` DSL which allowed for much
 easier to read and write code, effectively making both aspects redudant and they were removed from the official
 documentation.
 
@@ -58,7 +58,7 @@ latter:
 
 (Remember you can define tasks in terms of settings, but not the other way round)
 
-With the `.value` macro you don't have to know or remember if your key is a `SettingKey` or a `TaskKey`:
+With the `.value` DSL you don't have to know or remember if your key is a `SettingKey` or a `TaskKey`:
 
     sett1 := "s1"
     sett2 := "s2"
