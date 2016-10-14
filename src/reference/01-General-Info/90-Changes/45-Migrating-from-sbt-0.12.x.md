@@ -1,8 +1,8 @@
 ---
-out: sbt-0.13-Syntax-Migration-Guide.html
+out: Migrating-from-sbt-012x.html
 ---
 
-## sbt 0.13 Syntax Migration Guide
+## Migrating from sbt 0.12.x
 
 ### Introduction
 
