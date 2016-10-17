@@ -5,7 +5,6 @@ out: Installing-sbt-on-Windows.html
   [MSI]: $sbt_native_package_base$$app_version$/sbt-$app_version$.msi
   [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
-  [Activator-Installation]: Activator-Installation.html
 
 在 Windows 上安装 sbt
 -------------------------
@@ -17,10 +16,6 @@ out: Installing-sbt-on-Windows.html
 ### 通过通用的安装包安装
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。
-
-### Lightbend Activator
-
-参见 [Lightbend Activator安装指南][Activator-Installation].
 
 ### 手动安装
 

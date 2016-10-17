@@ -5,7 +5,6 @@ out: Installing-sbt-on-Windows.html
   [MSI]: $sbt_native_package_base$$app_version$/sbt-$app_version$.msi
   [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
-  [Activator-Installation]: Activator-Installation.html
 
 Installing sbt on Windows
 -------------------------
@@ -17,10 +16,6 @@ Download [msi installer][MSI] and install it.
 ### Installing from a universal package
 
 Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
-
-### Lightbend Activator
-
-See the [Lightbend Activator instructions][Activator-Installation].
 
 ### Installing manually
 

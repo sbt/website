@@ -7,7 +7,6 @@ out: Installing-sbt-on-Linux.html
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
-  [Activator-Installation]: Activator-Installation.html
   [website127]: https://github.com/sbt/website/issues/127
 
 Installing sbt on Linux
@@ -64,10 +63,6 @@ To merge sbt from this ebuilds you can do:
 
 > **Note:** Please report any issues with the ebuild
 > [here](https://github.com/whiter4bbit/overlays/issues).
-
-### Lightbend Activator
-
-See the [Lightbend Activator instructions][Activator-Installation].
 
 ### Installing manually
 
