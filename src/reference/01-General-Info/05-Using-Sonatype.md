@@ -2,7 +2,7 @@
 out: Using-Sonatype.html
 ---
 
-  [sbt-pgp]: http://scala-sbt.org/sbt-pgp
+  [sbt-pgp]: http://scala-sbt.org/sbt-pgp/
 
 Deploying to Sonatype
 ---------------------
