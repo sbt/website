@@ -23,9 +23,9 @@ The resources may be accessed from tests by using the `getResource`
 methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
 The main Scala testing frameworks (
-[specs2](http://specs2.org/),
-[ScalaCheck](http://scalacheck.org/), and
-[ScalaTest](http://scalatest.org/)) provide an implementation of the
+[ScalaCheck](http://scalacheck.org/),
+[ScalaTest](http://scalatest.org/), and
+[specs2](http://specs2.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
 [managed dependency][Library-Dependencies]:
@@ -258,14 +258,14 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$",
   organization := "com.example"
 )
-lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
+lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 
 lazy val root = (project in file(".")).
   configs(IntegrationTest).
   settings(commonSettings: _*).
   settings(Defaults.itSettings: _*).
   settings(
-    libraryDependencies += specs2core % "it,test"
+    libraryDependencies += scalatest % "it,test"
     // other settings here
   )
 ```
@@ -275,7 +275,7 @@ lazy val root = (project in file(".")).
 -   `settings(Defaults.itSettings : _*)` adds compilation, packaging,
     and testing actions and settings in the IntegrationTest
     configuration.
--   `settings(libraryDependencies += specs2core % "it,test")` adds specs2 to both the
+-   `settings(libraryDependencies += scalatest % "it,test")` adds scalatest to both the
     standard test configuration and the integration test configuration
     it. To define a dependency only for integration tests, use "it" as
     the configuration instead of "it,test".
@@ -328,7 +328,7 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$",
   organization := "com.example"
 )
-lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
+lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 lazy val FunTest = config("fun") extend(Test)
 
 lazy val root = (project in file(".")).
@@ -336,7 +336,7 @@ lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(inConfig(FunTest)(Defaults.testSettings): _*).
   settings(
-    libraryDependencies += specs2core % FunTest
+    libraryDependencies += scalatest % FunTest
     // other settings here
   )
 ```
@@ -387,7 +387,7 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$",
   organization := "com.example"
 )
-lazy val specs2core = "org.specs2" %% "specs2-core" % "$example_specs2_version$"
+lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 lazy val FunTest = config("fun") extend(Test)
 
 def itFilter(name: String): Boolean = name endsWith "ITest"
@@ -398,7 +398,7 @@ lazy val root = (project in file(".")).
   settings(commonSettings: _*).
   settings(inConfig(FunTest)(Defaults.testTasks): _*).
   settings(
-    libraryDependencies += specs2core % FunTest,
+    libraryDependencies += scalatest % FunTest,
     testOptions in Test := Seq(Tests.Filter(unitFilter)),
     testOptions in FunTest := Seq(Tests.Filter(itFilter))
     // other settings here
