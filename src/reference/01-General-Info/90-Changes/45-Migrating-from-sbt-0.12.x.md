@@ -96,8 +96,10 @@ a := (a dependsOn b).value
 For keys such as `sourceGenerators` and `resourceGenerators` which use sbt's Task type:
 
 ```scala
-val sourceGenerators = SettingKey[Seq[Task[Seq[File]]]]("source-generators", "List of tasks that generate sources.", CSetting)
-val resourceGenerators = SettingKey[Seq[Task[Seq[File]]]]("resource-generators", "List of tasks that generate resources.", CSetting)
+val sourceGenerators =
+  settingKey[Seq[Task[Seq[File]]]]("List of tasks that generate sources")
+val resourceGenerators =
+  settingKey[Seq[Task[Seq[File]]]]("List of tasks that generate resources")
 ```
 
 Where you previous would define things as:
