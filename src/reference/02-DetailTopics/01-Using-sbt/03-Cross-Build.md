@@ -83,7 +83,7 @@ In order to make this process as quick as possible, different output and
 managed dependency directories are used for different versions of Scala.
 For example, when building against Scala 2.10.0,
 
--   `./target/` becomes `./target/scala_2.1.0/`
+-   `./target/` becomes `./target/scala_2.10.0/`
 -   `./lib_managed/` becomes `./lib_managed/scala_2.10/`
 
 Packaged jars, wars, and other artifacts have `_<scala-version>`
