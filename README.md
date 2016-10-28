@@ -55,3 +55,5 @@ To push site, from sbt shell:
 ```
 > ghpagesPushSite
 ```
+
+Beward of https://github.com/sbt/sbt-ghpages/issues/25
