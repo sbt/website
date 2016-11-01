@@ -9,16 +9,15 @@ out: sbt-new-and-Templates.html
 sbt new and Templates
 ---------------------
 
-sbt 0.13.13 adds `new` command, which helps create new build definitions.
-The `new` command is extensible via a mechanism called the template resolver.
+sbt 0.13.13 adds a new command called new, to create new build definitions from a template.
+The `new` command is extensible via a mechanism called the [template resolver](#Template+Resolver).
 
 ### Trying new command
 
-To get started, you need to first install sbt 0.13.13 launcher or above.
+First, you need sbt's launcher version 0.13.13 or above.
 Normally the exact version for the `sbt` launcher does not matter
-because it will use the one specified in `project/build.properties`;
-however in this case we would need 0.13.13+ `sbt` because we would
-want it to work without `project/build.properties`.
+because it will use the version specified by `sbt.version` in `project/build.properties`;
+however for new sbt's launcher 0.13.13 or above is required as the command functions without a `project/build.properties` present.
 
 Next, run:
 
@@ -31,18 +30,18 @@ scala_version [2.11.8]:
 Template applied in ./hello
 ```
 
-This ran the template [eed3si9n/hello.g8](https://github.com/eed3si9n/hello.g8) using [Giter8][giter8], and create a build under `./hello`.
+This ran the template [eed3si9n/hello.g8](https://github.com/eed3si9n/hello.g8) using [Giter8][giter8], prompted for values for "name" and "scala_version" (which have defaults "hello" and "2.11.8", which we accepted hitting `[Enter]`), and created a build under `./hello`.
 
 ### Giter8 support
 
-[Giter8][giter8] is a templating project originally started by Nathan Hamblen in 2010, and now maintained by [foundweekends][foundweekends] project.
+[Giter8][giter8] is a templating project originally started by Nathan Hamblen in 2010, and now maintained by the [foundweekends][foundweekends] project.
 The unique aspect of Giter8 is that it uses Github (or any other git repository) to host the templates, so it allows anyone to participate in template creation.
 
-sbt provides support for Giter8 templates as a reference implementation of the template resolver concept.
+sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
 
 #### How to create a Giter8 template
 
-See [Making your own templates](http://www.foundweekends.org/giter8/template.html) for the details on creating a new Giter8 template.
+See [Making your own templates](http://www.foundweekends.org/giter8/template.html) for the details on how to create a new Giter8 template.
 
 ```
 \$ sbt new foundweekends/giter8.g8
@@ -53,42 +52,44 @@ See [Making your own templates](http://www.foundweekends.org/giter8/template.htm
 We recommend licensing software templates under [CC0 1.0][CC0],
 which waives all copyrights and related rights, similar to the "public domain."
 
-If you reside in a country covered by Berne Convention, such as the US,
+If you reside in a country covered by the Berne Convention, such as the US,
 copyright will arise automatically without registration.
 Thus, people won't have legal right to use your template if you do not
 declare the terms of license.
-The tricky thing is that even the most permissive license such as MIT License and Apache License will require attribution in the software.
+The tricky thing is that even permissive licenses such as MIT License and Apache License will require attribution to your template in the template user's software.
 To remove all claims to the templated snippets, distribute it under CC0, which is an international equivalent to public domain.
 
 ```
 License
 -------
-Copyright 20XX, Foo, Inc.
-This template is distributed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/), equivalent of public domain.
+Written in <YEAR> by <AUTHOR NAME> <AUTHOR E-MAIL ADDRESS>
+[other author/contributor lines as appropriate]
+To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 ```
 
 ### How to extend sbt new
 
-The rest of this page explains how to extend `sbt new` command
+The rest of this page explains how to extend the `sbt new` command
 to provide support for something other than Giter8 templates.
-You can skip this section if your not interested in extending `new`.
+You can skip this section if you're not interested in extending `new`.
 
 #### Template Resolver
 
 A template resolver is a partial function that looks at the arguments
-after `sbt new` and determines whether it can resolve to a particular template. This is analogous to `resolvers` resolving `ModuleID` from the Internet.
+after `sbt new` and determines whether it can resolve to a particular template. This is analogous to `resolvers` resolving a `ModuleID` from the Internet.
 
-The `Giter8TemplateResolver` checks whether the first non-option argument looks like
+The `Giter8TemplateResolver` takes the first argument that does not start with a hyphen (`-`), and checks whether it looks like
 a Github repo or a git repo that ends in ".g8".
-If it matches the one of the patterns, it will pass the arguments to Giter8 to process.
+If it matches one of the patterns, it will pass the arguments to Giter8 to process.
 
-To create your own template resolver, add create a library that has `template-resolver` as a dependency:
+To create your own template resolver, create a library that has `template-resolver` as a dependency:
 
 ```scala
 val templateResolverApi = "org.scala-sbt" % "template-resolver" % "0.1"
 ```
 
-and extend the `TemplateResolver`:
+and extend `TemplateResolver`, which is defined as:
 
 ```java
 package sbt.template;
@@ -109,7 +110,7 @@ Publish the library to sbt community repo or Maven Central.
 
 #### templateResolverInfos
 
-Next, create an sbt plugin that adds `TemplateResolverInfo` to `templateResolverInfos`.
+Next, create an sbt plugin that adds a `TemplateResolverInfo` to `templateResolverInfos`.
 
 ```scala
 import Def.Setting
@@ -130,4 +131,4 @@ object Giter8TemplatePlugin extends AutoPlugin {
 }
 ```
 
-This indirecton allows template resolvers to have an isolated classpath independent from the rest of the build.
+This indirecton allows template resolvers to have a classpath independent from the rest of the build.
