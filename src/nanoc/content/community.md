@@ -25,11 +25,11 @@ For community support use [StackOverflow's sbt tag][so]:
     context. Code examples and `build.sbt` are often useful when
     appropriately edited.
 
-For professional support, Typesafe provides:
+For professional support, [Lightbend](https://developer.lightbend.com/), the maintainer of Scala compiler and sbt, provides:
 
-- [Typesafe Subscription](http://typesafe.com/subscription)
-- [Training](https://typesafe.com/subscription/training)
-- [Consulting](http://typesafe.com/subscription/consulting)
+- [Lightbend Subscription](https://www.lightbend.com/platform/subscription), which includes [Expert Support](https://www.lightbend.com/services/expert-support)
+- [Training](https://www.lightbend.com/services/training)
+- [Consulting](https://www.lightbend.com/services/consulting)
 
 There's also the [Gitter sbt/sbt][gitter1] channel, but the options above are recommended.
 
