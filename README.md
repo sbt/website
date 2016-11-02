@@ -18,10 +18,12 @@ Fork this project, add your plugin and send us a pull request if your plugin is 
 
 ## Setup
 
+Currently, nanoc requires Ruby 2.1 or greater.
+
 You'll need the following gems for running nanoc:
 
 ```
-$ gem install nanoc:4.0.0
+$ gem install nanoc:4.0.2
 $ gem install redcarpet
 $ gem install nokogiri
 ```
