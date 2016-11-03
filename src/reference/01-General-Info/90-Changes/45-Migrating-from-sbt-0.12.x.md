@@ -77,7 +77,7 @@ task3 := { println(task1.value + task2.value); task1.value + task2.value }
 task4 := { println(sett1.value + sett2.value); sett1.value + sett2.value }
 ```
 
-### Migrating when using `.dependsOn`
+### Migrating when using `.dependsOn`, `.triggeredBy` or `.runBefore`
 
 When instead calling `.dependsOn`, instead of:
 
@@ -90,6 +90,9 @@ define it as:
 ```scala
 a := (a dependsOn b).value
 ```
+
+Note that you'll need to use the `<<=` operator with `.triggeredBy` and `.runBefore` in SBT 0.13.13 and
+earlier due to issue [#1444](https://github.com/sbt/sbt/issues/1444).
 
 ### Migrating when you need to set `Task`s
 
