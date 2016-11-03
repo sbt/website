@@ -91,8 +91,8 @@ define it as:
 a := (a dependsOn b).value
 ```
 
-Use the same pattern for replacing `runBefore` and `triggeredBy` calls.
-
+Note that you'll need to use the `<<=` operator with `.triggeredBy` and `.runBefore` in SBT 0.13.13 and
+earlier due to issue [#1444](https://github.com/sbt/sbt/issues/1444).
 
 ### Migrating when you need to set `Task`s
 
