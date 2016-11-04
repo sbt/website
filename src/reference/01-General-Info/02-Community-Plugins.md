@@ -180,7 +180,7 @@ your plugin to the list.
 -   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
 -   sbt-web-scalajs: <https://github.com/vmunier/sbt-web-scalajs>
 -   scalatra-sbt: <https://github.com/scalatra/scalatra-sbt>
--   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on Github):
+-   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on GitHub):
     <https://github.com/ThoughtWorksInc/sbt-scala-js-map>
 -   Naptime API framework plugin: <http://coursera.github.io/naptime> (<https://github.com/coursera/naptime>)
 

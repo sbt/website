@@ -23,7 +23,7 @@ out: Travis-CI-with-sbt.html
 Setting up Travis CI with sbt
 -----------------------------
 
-[Travis CI][Travis] is a hosted continuous integration service for open source and private projects. Many of the OSS projects hosted on Github uses [open source edition of Travis CI][Travis-org] to validate pushes and pull requests. We'll discuss some of the best practices setting up Travis CI.
+[Travis CI][Travis] is a hosted continuous integration service for open source and private projects. Many of the OSS projects hosted on GitHub uses [open source edition of Travis CI][Travis-org] to validate pushes and pull requests. We'll discuss some of the best practices setting up Travis CI.
 
 ### Set `project/build.properties`
 
@@ -162,7 +162,7 @@ Again, let's check the Travis log to see if the flags are taking effect:
 
 ### (Experimental) Reusing Ivy cache
 
-In late 2014, thanks to Travis CI members sending pull requests on Github, we learned that Ivy cache can be shared across the Travis builds.
+In late 2014, thanks to Travis CI members sending pull requests on GitHub, we learned that Ivy cache can be shared across the Travis builds.
 The public availability of [caching][Travis-caching] is part of the benefit for trying the new [container-based infrastructure][Travis-container].
 
 > Jobs running on container-based infrastructure:
