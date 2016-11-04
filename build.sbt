@@ -18,7 +18,7 @@ lazy val root = (project in file(".")).
     SiteHelpers.addMappingsToSiteDir(mappings in Redirect, siteSubdirName in Pamflet),
     redirectTutorialSettings,
     SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
-    // Github Pages. See project/Docs.scala
+    // GitHub Pages. See project/Docs.scala
     customGhPagesSettings,
     // NOTE - PDF settings must be done externally like this because pdf generation generically looks
     // through `mappings in Config` for Combined+Pages.md to generate PDF from, and therefore we

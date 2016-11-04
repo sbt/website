@@ -91,7 +91,7 @@ plugin and sbt core development.
 
 ### Patch the core
 
-sbt's code is hosted on Github [sbt/sbt][github] repository,
+sbt's code is hosted on GitHub [sbt/sbt][github] repository,
 and sbt's documentation (including this page) is on [sbt/website][website] repository.
 
 You are welcome to work on any feature you like, but if you'd like some good ideas

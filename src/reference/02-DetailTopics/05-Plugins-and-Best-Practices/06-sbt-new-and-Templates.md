@@ -35,7 +35,7 @@ This ran the template [eed3si9n/hello.g8](https://github.com/eed3si9n/hello.g8) 
 ### Giter8 support
 
 [Giter8][giter8] is a templating project originally started by Nathan Hamblen in 2010, and now maintained by the [foundweekends][foundweekends] project.
-The unique aspect of Giter8 is that it uses Github (or any other git repository) to host the templates, so it allows anyone to participate in template creation.
+The unique aspect of Giter8 is that it uses GitHub (or any other git repository) to host the templates, so it allows anyone to participate in template creation.
 
 sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
 
@@ -80,7 +80,7 @@ A template resolver is a partial function that looks at the arguments
 after `sbt new` and determines whether it can resolve to a particular template. This is analogous to `resolvers` resolving a `ModuleID` from the Internet.
 
 The `Giter8TemplateResolver` takes the first argument that does not start with a hyphen (`-`), and checks whether it looks like
-a Github repo or a git repo that ends in ".g8".
+a GitHub repo or a git repo that ends in ".g8".
 If it matches one of the patterns, it will pass the arguments to Giter8 to process.
 
 To create your own template resolver, create a library that has `template-resolver` as a dependency:

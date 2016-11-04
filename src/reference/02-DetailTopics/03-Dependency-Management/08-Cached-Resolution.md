@@ -39,7 +39,7 @@ The actual speedup will depend case by case, but you should see significant spee
 
 ### Caveats and known issues
 
-Cached resolution is an **experimental** feature, and you might run into some issues. When you see them please report to Github Issue or sbt-dev list.
+Cached resolution is an **experimental** feature, and you might run into some issues. When you see them please report to GitHub Issue or sbt-dev list.
 
 #### First runs
 
