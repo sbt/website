@@ -22,15 +22,16 @@ however for new sbt's launcher 0.13.13 or above is required as the command funct
 Next, run:
 
 ```
-\$ sbt new eed3si9n/hello.g8
+\$ sbt new scala/scala-seed.g8
 ....
 name [hello]:
-scala_version [2.11.8]:
 
 Template applied in ./hello
 ```
 
-This ran the template [eed3si9n/hello.g8](https://github.com/eed3si9n/hello.g8) using [Giter8][giter8], prompted for values for "name" and "scala_version" (which have defaults "hello" and "2.11.8", which we accepted hitting `[Enter]`), and created a build under `./hello`.
+This ran the template [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8) using [Giter8][giter8], prompted for values for "name" (which has a default value of "hello", which we accepted hitting `[Enter]`), and created a build under `./hello`.
+
+`scala-seed` is the official template for a "minimal" Scala project, but it's definitely not the only one out there. We expect other templates to emerge for other purposes, e.g. web or backend applications. 
 
 ### Giter8 support
 
