@@ -49,7 +49,7 @@ By default, sbt will build projects with the same version of Scala used
 to run sbt itself.
 
 You can run the project with `sbt run` or enter the [Scala
-REPL](http://www.scala-lang.org/node/2097) with `sbt console`. `sbt console`
+REPL](http://www.scala-lang.org/node/2097) with `sbt console`. Invoking `sbt console`
 sets up your project's classpath so you can try out live Scala examples
 based on your project's code.
 
