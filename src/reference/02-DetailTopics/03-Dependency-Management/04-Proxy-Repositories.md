@@ -70,7 +70,7 @@ be able to resolve sbt plugins.
 The final resolver is `my-maven-proxy-releases`. This repository is a
 proxy for all standard maven repositories, including maven central.
 
-This repositories file is all that's required to use a proxy repository.  These repositories will get included first in any sbt build, however you can add some addtiionaly configuration to force the use of the proxy repository instead of other configurations.
+This repositories file is all that's required to use a proxy repository.  These repositories will get included first in any sbt build, however you can add some additional configuration to force the use of the proxy repository instead of other configurations.
 
 #### Launcher Script
 
