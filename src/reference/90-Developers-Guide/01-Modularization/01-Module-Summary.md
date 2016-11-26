@@ -11,7 +11,7 @@ out: Module-Summary.html
   [librarymanagementrepo]: https://github.com/sbt/librarymanagement
   [incrementalcompilerrepo]: https://github.com/sbt/incrementalcompiler
   [launcherrepo]: https://github.com/sbt/launcher
-  [conscriptrepo]: https://github.com/n8han/conscript
+  [conscriptrepo]: https://github.com/foundweekends/conscript
   [websiterepo]: https://github.com/sbt/website
 
 ### Module summary
@@ -63,7 +63,7 @@ The sbt launcher provides a generic container that can load and run
 programs resolved using the Ivy dependency manager.
 sbt uses this as the deployment mechanism, but it can be used for other purposes.
 
-See [n8han/conscript][conscriptrepo] and [Launcher][Sbt-Launcher] for more details.
+See [foundweekends/conscript][conscriptrepo] and [Launcher][Sbt-Launcher] for more details.
 
 #### Client/Server (tbd)
 
