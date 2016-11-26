@@ -20,14 +20,14 @@ disadvantage of these approaches is the startup time involved.
 ### Setup
 
 To set up these entry points, you can either use
-[conscript](https://github.com/n8han/conscript) or manually construct
+[conscript](https://github.com/foundweekends/conscript) or manually construct
 the startup scripts. In addition, there is a
 [setup script](https://github.com/paulp/sbt-extras) for the script
 mode that only requires a JRE installed.
 
 #### Setup with Conscript
 
-Install [conscript](https://github.com/n8han/conscript).
+Install [conscript](https://github.com/foundweekends/conscript).
 
 ```
 \$ cs sbt/sbt --branch $app_version$
