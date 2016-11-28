@@ -333,6 +333,7 @@ organization := "org.example"
 package sbtobfuscate
 
 import sbt._
+import sbt.Keys._
 
 object ObfuscatePlugin extends AutoPlugin {
   // by defining autoImport, the settings are automatically imported into user's `*.sbt`
@@ -363,7 +364,10 @@ object ObfuscatePlugin extends AutoPlugin {
 }
 
 object Obfuscate {
-    def apply(sources: Seq[File]): Seq[File] := sources
+  def apply(sources: Seq[File], obfuscateLiterals: Boolean): Seq[File] = {
+    // TODO obfuscate stuff!
+    sources
+  }
 }
 ```
 
