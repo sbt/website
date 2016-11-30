@@ -26,7 +26,7 @@ This graph-like structure, which was adopted from Apache Ivy, allows us to defin
 
 ### Cached resolution
 
-Cached resolution feature is akin to incremental compilation, which only recompiles the sources that have been changed since the last `compile`. Unlike Scala compiler, Ivy does not have the concept of separate compilation, so that needed to be implemented.
+Cached resolution feature is akin to incremental compilation, which only recompiles the sources that have been changed since the last `compile`. Unlike the Scala compiler, Ivy does not have the concept of separate compilation, so that needed to be implemented.
 
 Instead of resolving the full dependency graph, cached resolution feature creates  minigraphs -- one for each direct dependency appearing in all related subprojects. These minigraphs are resolved using Ivy's resolution engine, and the result is stored locally under `$global_base$/dependency/` (or what's specified by `sbt.dependency.base` flag) shared across all builds. After all minigraphs are resolved, they are stitched together by applying the conflict resolution algorithm (typically picking the latest version).
 
@@ -66,7 +66,7 @@ Therefore, if you have any SNAPSHOT in your graph, your exeperience may degrade.
 
 ### Motivation
 
-sbt internally uses Apache Ivy to resolve library dependencies. While sbt has benefited from not having to reinvent depenendency resolution engine all these years, we are increasingly seeing scalability challenges especially for projects with both multiple subprojects and large dependency graph. There are several factors involved in sbt's resolution scalability:
+sbt internally uses Apache Ivy to resolve library dependencies. While sbt has benefited from not having to reinvent its own dependency resolution engine all these years, we are increasingly seeing scalability challenges especially for projects with both multiple subprojects and large dependency graph. There are several factors involved in sbt's resolution scalability:
 
 - Number of transitive nodes (libraries) in the graph
 - Exclusion and override rules
