@@ -46,6 +46,15 @@ On Mac
 
 ## Usage
 
+Currently, Java 7 is required to build the site.  If you have multiple
+versions of Java installed on your system, set it to Java 7 (also
+known as version 1.7).  One method for choosing the Java version is to
+override the value of `JAVA_HOME` in the environment sbt runs.
+
+```
+$ env JAVA_HOME="$(/usr/libexec/java_home -v 1.7)" sbt
+```
+
 To make site locally, from sbt shell:
 
 ```
