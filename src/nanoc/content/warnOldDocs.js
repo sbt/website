@@ -94,6 +94,8 @@ function showVersionWarning(site, series) {
   }
   else if (!isLatestInSeries) {
     var instead = latestSeries;
+    var insteadPage = targetUrl(true, site, instead);
+
     needsToShow = true;
     $floatyWarning.addClass("warning");
     $floatyWarning
@@ -103,6 +105,13 @@ function showVersionWarning(site, series) {
             'however the latest doc in this series is: ' +
             '<a href="' + targetUrl(true, site, instead) + '">' + instead + '</a>. <br/>' +
             '</p>');
+    $.ajax({
+      url: insteadPage,
+      type: 'HEAD',
+      success: function() {
+        $('#samePageLink').html('<a href="' + insteadPage + '">Click here to go to the same page on the ' + instead + ' version of the docs.</a>');
+      }
+    });
   }
 
   if (needsToShow && !versionWasAcked(site.p, version)) {
