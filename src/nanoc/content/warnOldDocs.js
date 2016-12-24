@@ -53,6 +53,9 @@ function targetUrl(samePage, site, instead) {
       page = 'docs/index.html';
     }
   }
+  else if (page == 'docs/home.html') {
+    page = 'docs/index.html';
+  }
   var project = site.p;
   return site.b + '/' + instead + '/' + page;
 }
@@ -72,7 +75,7 @@ function showVersionWarning(site, series) {
     needsToShow = true;
     $floatyWarning.addClass("warning");
 
-    var instead = latestSeries; // getInstead(akkaVersionsData, site.p, seriesInfo.instead);
+    var instead = latestSeries;
     var insteadSeries = targetUrl(false, site, instead);
     var insteadPage = targetUrl(true, site, instead);
 
@@ -90,7 +93,9 @@ function showVersionWarning(site, series) {
     });
   }
   else if (!isLatestInSeries) {
+    var instead = latestSeries;
     needsToShow = true;
+    $floatyWarning.addClass("warning");
     $floatyWarning
         .append(
             '<p>' +
