@@ -104,7 +104,8 @@ function showVersionWarning(site, series) {
             'You are browsing the docs for sbt ' + version + ', ' +
             'however the latest doc in this series is: ' +
             '<a href="' + targetUrl(true, site, instead) + '">' + instead + '</a>. <br/>' +
-            '</p>');
+            '</p>' +
+            '<p id="samePageLink"></p>');
     $.ajax({
       url: insteadPage,
       type: 'HEAD',
