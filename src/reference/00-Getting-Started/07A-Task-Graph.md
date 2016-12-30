@@ -110,9 +110,9 @@ As a first example, consider defining the `scalacOption` that depends on
 `update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../sxr/sbt/Keys.scala.html)):
 
 ```scala
-val scalacOptions = TaskKey[Seq[String]]("scalac-options", "Options for the Scala compiler.")
-val update = TaskKey[UpdateReport]("update", "Resolves and optionally retrieves dependencies, producing a report.")
-val clean = TaskKey[Unit]("clean", "Deletes files produced by the build, such as generated sources, compiled classes, and task caches.")
+val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
+val update = taskKey[UpdateReport]("Resolves and optionally retrieves dependencies, producing a report.")
+val clean = taskKey[Unit]("Deletes files produced by the build, such as generated sources, compiled classes, and task caches.")
 ```
 
 Here's how we can define `scalacOptions`:
