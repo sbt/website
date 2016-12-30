@@ -10,19 +10,19 @@ out: Multi-Project.html
 Multi-project builds
 --------------------
 
-This page introduces multiple projects in a single build.
+This page introduces multiple subprojects in a single build.
 
 Please read the earlier pages in the Getting Started Guide first, in
 particular you need to understand [build.sbt][Basic-Def] before reading
 this page.
 
-### Multiple projects
+### Multiple subprojects
 
-It can be useful to keep multiple related projects in a single build,
+It can be useful to keep multiple related subprojects in a single build,
 especially if they depend on one another and you tend to modify them
 together.
 
-Each sub-project in a build has its own source directories, generates
+Each subproject in a build has its own source directories, generates
 its own jar file when you run package, and in general works like any
 other project.
 
@@ -30,24 +30,12 @@ A project is defined by declaring a lazy val of type
 [Project](../api/sbt/Project.html). For example, :
 
 ```scala
-lazy val util = project
+lazy val util = (project in file("util"))
 
-lazy val core = project
+lazy val core = (project in file("core"))
 ```
 
-The name of the val is used as the project's ID and base directory name.
-The ID is used to refer to the project at the command line. The base
-directory may be changed from the default using the in method. For
-example, the following is a more explicit way to write the previous
-example:
-
-```scala
-lazy val util = project.in(file("util"))
-
-lazy val core = project in file("core")
-```
-
-#### Common settings
+#### Build settings
 
 To factor out common settings across multiple projects,
 create a sequence named `commonSettings` and call `settings` method
@@ -55,20 +43,24 @@ on each project. Note `_*` is required to pass sequence into a vararg
 method.
 
 ```scala
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    publish := (),
+    publishLocal := ()
+  )
 
 lazy val core = (project in file("core")).
-  settings(commonSettings: _*).
   settings(
     // other settings
   )
 
 lazy val util = (project in file("util")).
-  settings(commonSettings: _*).
   settings(
     // other settings
   )
@@ -89,12 +81,12 @@ Aggregation means that running a task on the aggregate project will also
 run it on the aggregated projects. For example,
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(util, core)
+lazy val root = (project in file("."))
+  .aggregate(util, core)
 
-lazy val util = project
+lazy val util = (project in file("util"))
 
-lazy val core = project
+lazy val core = (project in file("core"))
 ```
 
 In the above example, the root project aggregates `util` and `core`. Start
@@ -106,9 +98,9 @@ you can control aggregation per-task. For example, to avoid aggregating
 the `update` task:
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(util, core).
-  settings(
+lazy val root = (project in file("."))
+  .aggregate(util, core)
+  .settings(
     aggregate in update := false
   )
 
