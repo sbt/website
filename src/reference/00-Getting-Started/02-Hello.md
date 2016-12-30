@@ -10,63 +10,64 @@ Hello, World
 
 This page assumes you've [installed sbt][Setup].
 
-### Create a project directory with source code
+### sbt new command
 
-A valid sbt project can be a directory containing a single source file.
-Try creating a directory `hello` with a file `hw.scala`, containing the
-following:
-
-```scala
-object Hi {
-  def main(args: Array[String]) = println("Hi!")
-}
-```
-
-Now from inside the `hello` directory, start sbt and type `run` at the sbt
-interactive console. On Linux or OS X the commands might look like this:
+If you're using sbt 0.13.13 or later, you can use sbt `new` command to quickly setup a simple Hello world build. Type the following command to the terminal.
 
 ```
-\$ mkdir hello
+\$ sbt new sbt/scala-seed.g8
+....
+Minimum Scala build.
+
+name [My Something Project]: hello
+
+Template applied in ./hello
+```
+
+When prompted for the project name, type `hello`.
+
+This will create a new project under a directory named `hello`.
+
+### Running your app
+
+Now from inside the `hello` directory, start `sbt` and type `run` at the sbt shell. On Linux or OS X the commands might look like this:
+
+```
 \$ cd hello
-\$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
 \$ sbt
 ...
 > run
 ...
-Hi!
+[info] Compiling 1 Scala source to /xxx/hello/target/scala-2.12/classes...
+[info] Running example.Hello
+hello
 ```
 
-In this case, sbt works purely by convention. sbt will find the
-following automatically:
+To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
+(Windows).
 
--   Sources in the base directory
--   Sources in `src/main/scala` or `src/main/java`
--   Tests in `src/test/scala` or `src/test/java`
--   Data files in `src/main/resources` or `src/test/resources`
--   jars in `lib`
-
-By default, sbt will build projects with the same version of Scala used
-to run sbt itself.
-
-You can run the project with `sbt run` or enter the [Scala
-REPL](http://www.scala-lang.org/node/2097) with `sbt console`. Invoking `sbt console`
-sets up your project's classpath so you can try out live Scala examples
-based on your project's code.
+```
+> exit
+```
 
 ### Build definition
 
-Most projects will need some manual setup. Basic build settings go in a
-file called `build.sbt`, located in the project's base directory.
-
+Basic build settings go in a file called `build.sbt`, located in the project's base directory.
 For example, if your project is in the directory `hello`, in
 `hello/build.sbt` you might write:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
-    name := "hello",
-    version := "1.0",
-    scalaVersion := "$example_scala_version$"
+import Dependencies._
+
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    libraryDependencies += scalaTest % Test
   )
 ```
 
