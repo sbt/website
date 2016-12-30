@@ -287,7 +287,7 @@ organization and version settings.
 
 As explained above, `.value` is a special method that is used to express
 the dependency to other tasks and settings.
-To emphasize the fact that it is *not* a normal method call that are evaluated
+To emphasize the fact that they are *not* normal method calls that are evaluated
 sequentially the order of appearance, we have thus far bunched `.value` calls
 to the top of the task/setting body.
 Until you're familiar with build.sbt, we recommend you write it out that way.
