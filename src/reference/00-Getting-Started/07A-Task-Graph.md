@@ -69,7 +69,7 @@ Make is actually considered a hybrid system because while the DSL describes the 
 
 #### Rake
 
-This hybridness is continues for Make successors such as Ant, Rake, and sbt.
+This hybridity is continued for Make successors such as Ant, Rake, and sbt.
 Take a look at the basic syntax for Rakefile:
 
 ```ruby
@@ -78,7 +78,7 @@ task name: [:prereq1, :prereq2] do |t|
 end
 ```
 
-The breakthough made with Rake was that it used a programming language to
+The breakthrough made with Rake was that it used a programming language to
 describe the actions instead of the system commands.
 
 #### Benefits of hybrid flow-based programming
@@ -282,6 +282,36 @@ name := {
 
 This sets the name in terms of its previous value as well as the
 organization and version settings.
+
+### Inlining .value calls
+
+As explained above, `.value` is a special method that is used to express
+the dependency to other tasks and settings.
+To emphasize the fact that it is *not* a normal method call that are evaluated
+sequentially the order of appearance, we have thus far bunched `.value` calls
+to the top of the task/setting body.
+Until you're familiar with build.sbt, we recommend you write it out that way.
+
+However, as you get more comfortable, you might wish to inline the `.value` calls
+because it could make the task/setting more concise, and you don't have to
+come up with variable names.
+
+We've inlined a few of the above examples:
+
+```scala
+scalacOptions := {
+  val x = clean.value
+  update.value.allConfigurations.take(3)
+}
+
+// name our organization after our project (both are SettingKey[String])
+organization := name.value
+
+name := s"project \${name.value} from \${organization.value} version \${version.value}"
+```
+
+Note whether `.value` calls are inlined, or placed anywhere in the task body,
+they are still evaluated before entering the task body.
 
 ### Summary
 
