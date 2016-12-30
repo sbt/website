@@ -24,7 +24,7 @@ context, called a "scope."
 
 Some concrete examples:
 
-- if you have multiple projects in your build definition, a key can
+- if you have multiple projects (also called subprojects) in your build definition, a key can
   have a different value in each project.
 - the `compile` key may have a different value for your main sources and
   your test sources, if you want to compile them differently.
@@ -54,11 +54,11 @@ keys).
 
 There are three scope axes:
 
-- Projects
-- Configurations
+- Subprojects
+- Dependency configurations
 - Tasks
 
-#### Scoping by project axis
+#### Scoping by subproject axis
 
 If you [put multiple projects in a single build][Multi-Project], each
 project needs its own settings. That is, keys can be scoped according to
@@ -69,10 +69,10 @@ to the entire build rather than a single project. Build-level settings
 are often used as a fallback when a project doesn't define a
 project-specific setting.
 
-#### Scoping by configuration axis
+#### Scoping by dependency configuration axis
 
-A *configuration* defines a flavor of build, potentially with its own
-classpath, sources, generated packages, etc. The configuration concept
+A *dependency configuration* defines a graph of library dependencies, potentially with its own
+classpath, sources, generated packages, etc. The dependency configuration concept
 comes from Ivy, which sbt uses for
 managed dependencies [Library Dependencies][Library-Dependencies], and from
 [MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
@@ -84,8 +84,8 @@ Some configurations you'll see in sbt:
 - `Runtime` which defines the classpath for the `run` task.
 
 By default, all the keys associated with compiling, packaging, and
-running are scoped to a configuration and therefore may work differently
-in each configuration. The most obvious examples are the task keys
+running are scoped to a dependency configuration and therefore may work differently
+in each dependency configuration. The most obvious examples are the task keys
 `compile`, `package`, and `run`; but all the keys which *affect* those keys
 (such as `sourceDirectories` or `scalacOptions` or `fullClasspath`) are also
 scoped to the configuration.
@@ -182,7 +182,7 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
 
 ### Inspecting scopes
 
-In sbt's interactive mode, you can use the inspect command to understand
+In sbt shell, you can use the `inspect` command to understand
 keys and their scopes. Try `inspect test:fullClasspath`:
 
 ```
