@@ -4,6 +4,7 @@ out: Hello.html
 
   [Basic-Def]: Basic-Def.html
   [Setup]: Setup.html
+  [Running]: Running.html
 
 Hello, World
 ------------
@@ -42,6 +43,8 @@ Now from inside the `hello` directory, start `sbt` and type `run` at the sbt she
 [info] Running example.Hello
 hello
 ```
+
+We will see more tasks [later][Running].
 
 ### Exiting sbt shell
 
