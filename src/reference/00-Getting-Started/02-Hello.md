@@ -43,6 +43,8 @@ Now from inside the `hello` directory, start `sbt` and type `run` at the sbt she
 hello
 ```
 
+### Exiting sbt shell
+
 To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
 (Windows).
 
@@ -52,9 +54,7 @@ To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
 
 ### Build definition
 
-Basic build settings go in a file called `build.sbt`, located in the project's base directory.
-For example, if your project is in the directory `hello`, in
-`hello/build.sbt` you might write:
+The build definition goes in a file called `build.sbt`, located in the project's base directory. Here's a basic build that `sbt new sbt/scala-seed.g8` should have created:
 
 ```scala
 import Dependencies._
@@ -71,6 +71,7 @@ lazy val root = (project in file("."))
   )
 ```
 
+**Note**: Don't worry if the above build file doesn't make sense to you.
 In [.sbt build definition][Basic-Def] you'll learn more about how to write
 a `build.sbt` file.
 
