@@ -2,7 +2,7 @@
 out: Task-Inputs.html
 ---
 
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Tasks]: Tasks.html
   [Mapping-Files]: Mapping-Files.html
 
@@ -11,7 +11,7 @@ Tasks/Settings: Motivation
 
 This page motivates the task and settings system. You should already
 know how to use tasks and settings, which are described in the
-[getting started guide][More-About-Settings] and on
+[getting started guide][Task-Graph] and on
 the [Tasks][Tasks] page.
 
 An important aspect of the task system is to combine two common, related

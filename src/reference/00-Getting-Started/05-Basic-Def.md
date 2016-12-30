@@ -2,15 +2,15 @@
 out: Basic-Def.html
 ---
 
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Bare-Def]: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
   [Input-Tasks]: ../docs/Input-Tasks.html
 
-.sbt build definition
----------------------
+Build definition
+----------------
 
 This page describes sbt build definitions, including some "theory" and
 the syntax of `build.sbt`. It assumes you know how to [use sbt][Running]
@@ -200,8 +200,7 @@ task key still creates a value of type `T` when the task executes.
 
 The `T` vs. `Task[T]` type difference has this implication: a setting can't
 depend on a task, because a setting is evaluated only once on project
-load and is not re-run. More on this in
-[more kinds of setting][More-About-Settings], coming up soon.
+load and is not re-run. More on this in [task graph][Task-Graph], coming up soon.
 
 ### Keys in sbt shell
 
@@ -265,7 +264,7 @@ version 10.4.1.3.
 The `libraryDependencies` key involves two complexities: `+=` rather than
 `:=`, and the `%` method. `+=` appends to the key's old value rather than
 replacing it, this is explained in
-[more kinds of setting][More-About-Settings]. The `%`
+[Task Graph][Task-Graph]. The `%`
 method is used to construct an Ivy module ID from strings, explained in
 [Library dependencies][Library-Dependencies].
 

@@ -2,7 +2,6 @@
 out: Bare-Def.html
 ---
 
-  [More-About-Settings]: More-About-Settings.html
   [Full-Def]: Full-Def.html
   [Basic-Def]: Basic-Def.html
 

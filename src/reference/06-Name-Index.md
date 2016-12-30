@@ -8,7 +8,7 @@ out: Name-Index.html
   [Full-Def]: Full-Def.html
   [Basic-Def]: Basic-Def.html
   [Using-Plugins]: Using-Plugins.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Library-Management]: Library-Management.html
   [Artifacts]: Artifacts.html
   [Paths]: Paths.html
@@ -128,7 +128,7 @@ details.
     macro) and cannot be used except in the argument of one of the
     setting definition methods above (:=, ...) or in the standalone
     construction methods Def.setting and Def.task. See
-    [more about settings][More-About-Settings] for
+    [Task-Graph][Task-Graph] for
     details.
 -   `in` specifies the [Scope](../api/sbt/Scope.html) or part of the
     [Scope](../api/sbt/Scope.html) of a setting being referenced. See

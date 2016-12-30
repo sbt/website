@@ -4,7 +4,7 @@ out: Library-Dependencies.html
 
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
   [Cross-Build]: ../docs/Cross-Build.html
   [Resolvers]: ../docs/Resolvers.html
@@ -14,8 +14,8 @@ Library dependencies
 --------------------
 
 This page assumes you've already read the earlier Getting Started pages, in
-particular [.sbt build definition][Basic-Def], [scopes][Scopes], and
-[more kinds of setting][More-About-Settings].
+particular [build definition][Basic-Def], [scopes][Scopes], and
+[task graph][Task-Graph].
 
 Library dependencies can be added in two ways:
 
@@ -53,7 +53,7 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 
 `baseDirectory` is the project's root directory, so here you're changing
 `unmanagedBase` depending on `baseDirectory` using the special `value` method
-as explained in [more kinds of setting][More-About-Settings].
+as explained in [task graph][Task-Graph].
 
 There's also an `unmanagedJars` task which lists the jars from the
 `unmanagedBase` directory. If you wanted to use multiple directories or do

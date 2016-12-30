@@ -3,7 +3,7 @@ out: Organizing-Build.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Using-Plugins]: Using-Plugins.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -17,6 +17,7 @@ This page discusses the organization of the build structure.
 Please read the earlier pages in the Getting Started Guide first, in
 particular you need to understand
 [build.sbt][Basic-Def],
+[task graph][Task-Graph],
 [Library dependencies][Library-Dependencies],
 and [Multi-project builds][Multi-Project]
 before reading this page.

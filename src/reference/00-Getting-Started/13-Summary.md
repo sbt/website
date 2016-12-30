@@ -27,16 +27,10 @@ need to know.
     Scala](http://www.artima.com/shop/programming_in_scala_2ed) written
     by the creator of Scala is a great introduction.
 -   [.sbt build definition][Basic-Def]
--   your build definition is one big list of `Setting` objects, where a
-    `Setting` transforms the set of key-value pairs sbt uses to perform
-    tasks.
+-   your build definition is a big DAG of tasks and their dependencies.
 -   to create a `Setting`, call one of a few methods on a key: `:=`, `+=`, or
     `++=`.
--   there is no mutable state, only transformation; for example, a
-    `Setting` transforms sbt's collection of key-value pairs into a new
-    collection. It doesn't change anything in-place.
--   each setting has a value of a particular type, determined by the
-    key.
+-   each setting has a value of a particular type, determined by the key.
 -   *tasks* are special settings where the computation to produce the
     key's value will be re-run each time you kick off a task. Non-tasks
     compute the value once, when first loading the build definition.

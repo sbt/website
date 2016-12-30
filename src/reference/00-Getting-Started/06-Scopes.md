@@ -3,7 +3,7 @@ out: Scopes.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
   [Inspecting-Settings]: ../docs/Inspecting-Settings.html
@@ -233,7 +233,7 @@ is the `fullClasspath` key scoped to the `test` configuration and the
 `{file:/home/hp/checkout/hello/}default-aea33a` project).
 
 "Dependencies" may not make sense yet; stay tuned for the
-[next page][More-About-Settings].
+[next page][Task-Graph].
 
 You can also see the delegates; if the value were not defined, sbt would
 search through:
