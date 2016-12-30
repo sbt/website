@@ -16,90 +16,49 @@ This page describes sbt build definitions, including some "theory" and
 the syntax of `build.sbt`. It assumes you know how to [use sbt][Running]
 and have read the previous pages in the Getting Started Guide.
 
-### Three Flavors of Build Definition
-
-There are three flavors of build definition:
-
-1. Multi-project `.sbt` build definition
-2. Bare `.sbt` build definition
-3. `.scala` build definition
-
-This page discusses the newest multi-project `.sbt` build definition, which combines the strength
-of the two older flavors, and is suitable for all cases.
-You might come across the other older flavors when dealing with builds in the wild.
-See [bare .sbt build definition][Bare-Def] and [.scala build definition][Full-Def] (later in Getting Started) for more
-on other flavors.
-
-In addition, a build definition can contain files ending in `.scala`, located in the
-`project/` subdirectory of the base directory to define commonly used functions and values.
+This page discusses the `build.sbt` build definition.
 
 ### What is a Build Definition?
 
 After examining a set of directories and processing build definition files, sbt
-ends up with `Project` definitions.
+ends up with a set of `Project` definitions.
 
 In `build.sbt` you might create a [Project](../api/sbt/Project.html) definition of
 the project located in the current directory like this:
 
 ```scala
 lazy val root = (project in file("."))
+  .settings(
+    name := "Hello",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
 Each project is associated with an immutable map (set of key-value pairs) describing the project.
 
 For example, one key is `name` and it maps to a string value, the name of
 your project.
-
-*Build definition files do not affect sbt's map directly.*
-
-Instead, the build definition creates a huge list of objects with type
-`Setting[T]` where `T` is the type of the value in the map. A `Setting`
-describes a *transformation to the map*, such as adding a new key-value
-pair or appending to an existing value. (In the spirit of functional
-programming with immutable data structures and values, a transformation
-returns a new map -- it does not update the old map in-place.)
-
-Here is how you associate the `Setting[String]` for the name of
-the project located in the current directory:
+The key-value pairs are listed under the `settings(...)` method as follows:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
-    name := "hello"
+lazy val root = (project in file("."))
+  .settings(
+    name := "Hello",
+    scalaVersion := "$example_scala_version$"
   )
 ```
-
-This `Setting[String]` transforms the map by adding (or replacing) the
-name key, giving it the value `"hello"`. The transformed map becomes sbt's
-new map.
-
-To create the map, sbt first sorts the list of settings so that all
-changes to the same key are made together, and values that depend on
-other keys are processed after the keys they depend on. Then sbt walks
-over the sorted list of `Settings` and applies each one to the map in
-turn.
-
-Summary: A build definition defines `Project`s with a list of `Setting[T]`, where a
-`Setting[T]` is a transformation affecting sbt's map of key-value pairs
-and `T` is the type of each value.
 
 ### How build.sbt defines settings
 
 `build.sbt` defines a `Project`, which holds a list of Scala expressions called `settings`.
 
-Here's an example:
-
 ```scala
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
-
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
-    name := "hello"
+lazy val root = (project in file("."))
+  .settings(
+    name         := "hello",
+    organization := "com.example",
+    scalaVersion := "$example_scala_version$",
+    version      := "0.1.0-SNAPSHOT"
   )
 ```
 
@@ -110,7 +69,7 @@ rather than complete Scala statements.
 `build.sbt` may also be
 interspersed with `val`s, `lazy val`s, and `def`s. Top-level `object`s and
 `class`es are not allowed in `build.sbt`. Those should go in the `project/`
-directory as full Scala source files.
+directory as Scala source files.
 
 On the left, `name`, `version`, and `scalaVersion` are *keys*. A key is an
 instance of `SettingKey[T]`, `TaskKey[T]`, or `InputKey[T]` where `T` is the
@@ -120,8 +79,8 @@ Keys have a method called `:=`, which returns a `Setting[T]`. You could use
 a Java-like syntax to call the method:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name.:=("hello")
   )
 ```
@@ -138,8 +97,8 @@ the value `"hello"`.
 If you use the wrong value type, the build definition will not compile:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := 42  // will not compile
   )
 ```
@@ -215,8 +174,8 @@ For example, to implement the `hello` task from the previous section:
 ```scala
 lazy val hello = taskKey[Unit]("An example task")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     hello := { println("Hello!") }
   )
 ```
@@ -225,8 +184,8 @@ We already saw an example of defining settings when we defined the
 project's name,
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -244,9 +203,9 @@ depend on a task, because a setting is evaluated only once on project
 load and is not re-run. More on this in
 [more kinds of setting][More-About-Settings], coming up soon.
 
-### Keys in sbt interactive mode
+### Keys in sbt shell
 
-In sbt's interactive mode, you can type the name of any task to execute
+In sbt shell, you can type the name of any task to execute
 that task. This is why typing `compile` runs the `compile` task. `compile` is
 a task key.
 
@@ -288,16 +247,14 @@ managed dependencies, which will look like this in `build.sbt`:
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
-
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
-    name := "hello",
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
     libraryDependencies += derby
   )
 ```
