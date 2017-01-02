@@ -20,15 +20,16 @@ This page discusses the `build.sbt` build definition.
 
 ### Setting the sbt version
 
-You can force a particular version of sbt by creating a file
-`hello/project/build.properties`. In this file, write:
+First, create a file named `project/build.properties` to set
+a particular version. In this file, write:
 
 ```
 sbt.version=$app_version$
 ```
 
-to force the use of sbt $app_version$. sbt is 99% source compatible from
-release to release. Still, setting the sbt version in
+to use sbt $app_version$.
+Without this file sbt will chose the sbt version installed on the machine,
+but setting the sbt version in
 `project/build.properties` avoids any potential confusion.
 
 ### What is a Build Definition?
