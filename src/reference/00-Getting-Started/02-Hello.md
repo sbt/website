@@ -57,39 +57,7 @@ To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
 
 ### Build definition
 
-The build definition goes in a file called `build.sbt`, located in the project's base directory. Here's a basic build that `sbt new sbt/scala-seed.g8` should have created:
-
-```scala
-import Dependencies._
-
-lazy val root = (project in file("."))
-  .settings(
-    inThisBuild(List(
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
-    name := "Hello",
-    libraryDependencies += scalaTest % Test
-  )
-```
-
-**Note**: Don't worry if the above build file doesn't make sense to you.
+The build definition goes in a file called `build.sbt`, located in the project's base directory.
+You can take a look at the file, but don't worry if the details of this build file aren't clear yet.
 In [.sbt build definition][Basic-Def] you'll learn more about how to write
 a `build.sbt` file.
-
-If you plan to package your project in a jar, you will want to set at
-least the name and version in a `build.sbt`.
-
-### Setting the sbt version
-
-You can force a particular version of sbt by creating a file
-`hello/project/build.properties`. In this file, write:
-
-```
-sbt.version=$app_version$
-```
-
-to force the use of sbt $app_version$. sbt is 99% source compatible from
-release to release. Still, setting the sbt version in
-`project/build.properties` avoids any potential confusion.
