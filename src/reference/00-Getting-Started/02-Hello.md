@@ -9,7 +9,7 @@ out: Hello.html
 Hello, World
 ------------
 
-This page assumes you've [installed sbt][Setup].
+This page assumes you've [installed sbt][Setup] 0.13.13 or later.
 
 ### sbt new command
 
