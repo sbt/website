@@ -213,7 +213,7 @@ task key still creates a value of type `T` when the task executes.
 
 The `T` vs. `Task[T]` type difference has this implication: a setting can't
 depend on a task, because a setting is evaluated only once on project
-load and is not re-run. More on this in [task graph][Task-Graph], coming up soon.
+load and is not re-run. More on this in [task graph][Task-Graph].
 
 ### Keys in sbt shell
 

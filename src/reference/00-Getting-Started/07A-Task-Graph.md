@@ -84,7 +84,7 @@ describe the actions instead of the system commands.
 #### Benefits of hybrid flow-based programming
 
 Rather than thinking `settings` as a key-value map,
-a better analogy would be to think of it as a DAG (directed acyclic graph)
+a better analogy would be to think of it as a _directed acyclic graph_ (DAG)
 of tasks where the edges denote *happens-before*. Let's call this the _task graph_.
 There are several motivation to organizing the build this way.
 
@@ -107,7 +107,10 @@ another task or setting. The value method is special and may only be
 called in the argument to `:=` (or, `+=` or `++=`, which we'll see later).
 
 As a first example, consider defining the `scalacOption` that depends on
-`update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../sxr/sbt/Keys.scala.html)):
+`update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../sxr/sbt/Keys.scala.html)).
+
+**Note**: The values calculated below are nonsensical for `scalaOptions`,
+and it's just for demonstration purpose only:
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
@@ -124,9 +127,6 @@ scalacOptions := {
   ur.allConfigurations.take(3)
 }
 ```
-
-**Note**: The values calculated above are nonsensical for `scalaOptions`,
-and it's just for demonstration purpose only.
 
 The lines where `update.value` and `clean.value` are called
 corresponds to the declaration of task dependencies,
