@@ -33,7 +33,7 @@ knows how to build your build. To distinguish the builds,
 we sometimes use the term **proper build** to refer to your build,
 and **meta-build** to refer to the build in `project`.
 The projects inside the metabuild can do anything
-any other project can do. *Your build definition is an sbt project.* 
+any other project can do. *Your build definition is an sbt project.*
 
 And the turtles go all the way down. If you like, you can tweak the
 build definition of the build definition project, by creating a
@@ -42,37 +42,37 @@ build definition of the build definition project, by creating a
 Here's an illustration.
 
 ```
-hello/                  # your build's root project's base directory
+hello/                     # your build's root project's base directory
 
-    Hello.scala         # a source file in your build's root project
-                        #   (could be in src/main/scala too)
+    Hello.scala            # a source file in your build's root project
+                           #   (could be in src/main/scala too)
 
-    build.sbt           # build.sbt is part of the source code for
-                        #   meta-build's root project inside project/;
-                        #   the build definition for your build
+    build.sbt              # build.sbt is part of the source code for
+                           #   meta-build's root project inside project/;
+                           #   the build definition for your build
 
-    project/            # base directory of meta-build's root project
+    project/               # base directory of meta-build's root project
 
-        Build.scala     # a source file in the meta-build's root project,
-                        #   that is, a source file in the build definition
-                        #   the build definition for your build
+        Dependencies.scala # a source file in the meta-build's root project,
+                           #   that is, a source file in the build definition
+                           #   the build definition for your build
 
-        build.sbt       # this is part of the source code for
-                        #   meta-meta-build's root project in project/project;
-                        #   build definition's build definition
+        assembly.sbt       # this is part of the source code for
+                           #   meta-meta-build's root project in project/project;
+                           #   build definition's build definition
 
-        project/        # base directory of meta-meta-build's root project;
-                        #   the build definition project for the build definition
+        project/           # base directory of meta-meta-build's root project;
+                           #   the build definition project for the build definition
 
-            Build.scala # source file in the root project of
-                        #   meta-meta-build in project/project/
+            MetaDeps.scala # source file in the root project of
+                           #   meta-meta-build in project/project/
 ```
 
 *Don't worry!* Most of the time you are not going to need all that. But
 understanding the principle can be helpful.
 
 By the way: any time files ending in `.scala` or `.sbt` are used, naming
-them `build.sbt` and `Build.scala` are conventions only. This also means
+them `build.sbt` and `Dependencies.scala` are conventions only. This also means
 that multiple files are allowed.
 
 ### Tracking dependencies in one place
