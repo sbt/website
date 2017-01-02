@@ -53,7 +53,10 @@ quotes. For example,
 In this example, `testOnly` has arguments, `TestA` and `TestB`. The commands
 will be run in sequence (`clean`, `compile`, then `testOnly`).
 
-**Note**: Running in batch mode requires JVM spinup and JIT each time, so your build may run slower. For day-to-day coding, we recommend using the sbt shell.
+**Note**: Running in batch mode requires JVM spinup and JIT each time,
+so **your build will run much slower**.
+For day-to-day coding, we recommend using the sbt shell
+or Continuous build and test feature described below.
 
 ### Continuous build and test
 
@@ -64,7 +67,7 @@ Make a command run when one or more source files change by prefixing the
 command with `~`. For example, in sbt shell try:
 
 ```
-> ~ compile
+> ~testQuick
 ```
 
 Press enter to stop watching for changes.
