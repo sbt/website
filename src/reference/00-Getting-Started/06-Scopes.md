@@ -354,3 +354,42 @@ has three axes). The entire expression
 Simply `packageOptions` is also a key name, but a different one (for keys
 with no in, a scope is implicitly assumed: current project, global
 config, global task).
+
+#### Build-wide settings
+
+An advanced technique for factoring out common settings
+across subprojects is to define the settings scoped to `ThisBuild`.
+
+If a key is not defined scoped to a particular subproject,
+sbt will look for it in `ThisBuild` as a fallback.
+Using the mechanism, we can define a build-wide default setting for
+frequently used keys such as `version`, `scalaVersion`, and `organization`.
+
+For convenience, there is `inThisBuild(...)` function that will
+scope both the key and the body of the setting expression to `ThisBuild`.
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      // Same as:
+      // organization in ThisBuild := "com.example"
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    publish := (),
+    publishLocal := ()
+  )
+
+lazy val core = (project in file("core")).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(
+    // other settings
+  )
+```

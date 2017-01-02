@@ -259,13 +259,15 @@ managed dependencies, which will look like this in `build.sbt`:
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0-SNAPSHOT",
+  scalaVersion := "$example_scala_version$"
+)
+
 lazy val root = (project in file("."))
   .settings(
-    inThisBuild(List(
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
+    commonSettings,
     name := "Hello",
     libraryDependencies += derby
   )

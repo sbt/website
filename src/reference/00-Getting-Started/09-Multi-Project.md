@@ -46,39 +46,39 @@ lazy val util = project
 lazy val core = project
 ```
 
-#### Build settings
+#### Common settings
 
 To factor out common settings across multiple projects,
 create a sequence named `commonSettings` and call `settings` method
-on each project. Note `_*` is required to pass sequence into a vararg
-method.
+on each project.
 
 ```scala
-lazy val root = (project in file("."))
-  .settings(
-    inThisBuild(List(
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
-    name := "Hello",
-    publish := (),
-    publishLocal := ()
-  )
+lazy val commonSettings = Seq(
+  organization := "com.example",
+  version := "0.1.0-SNAPSHOT",
+  scalaVersion := "$example_scala_version$"
+)
 
 lazy val core = (project in file("core")).
   settings(
+    commonSettings,
     // other settings
   )
 
 lazy val util = (project in file("util")).
   settings(
+    commonSettings,
     // other settings
   )
 ```
 
 Now we can bump up `version` in one place, and it will be reflected
 across subprojects when you reload the build.
+
+#### Build-wide settings
+
+Another a bit advanced technique for factoring out common settings
+across subprojects is to define the settings scoped to `ThisBuild`. (See [Scopes][Scopes])
 
 ### Dependencies
 
