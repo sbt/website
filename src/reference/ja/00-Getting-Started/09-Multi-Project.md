@@ -46,7 +46,6 @@ lazy val core = project
 複数プロジェクトに共通なセッティングをくくり出す場合、
 `commonSettings` という名前のセッティングの Seq を作って、
 それを引数として各プロジェクトの `settings` メソッドを呼び出せばよい。
-（可変長引数を受け取るメソッドに Seq を渡すには `_*` が必要なので注意）
 
 ```scala
 lazy val commonSettings = Seq(
@@ -56,19 +55,24 @@ lazy val commonSettings = Seq(
 )
 
 lazy val core = (project in file("core")).
-  settings(commonSettings: _*).
   settings(
+    commonSettings,
     // other settings
   )
 
 lazy val util = (project in file("util")).
-  settings(commonSettings: _*).
   settings(
+    commonSettings,
     // other settings
   )
 ```
 
 これで `version` を一箇所で変更すれば、再読み込み後に全サブプロジェクトに反映されるようになる。
+
+#### ビルドワイド・セッティング
+
+サブプロジェクト間に共通なセッティングを一度に定義するためのもう一つの方法として、
+`ThisBuild` にスコープ付けするという少し上級なテクニックがある。（[スコープ][Scopes]参照）
 
 ### 依存関係
 

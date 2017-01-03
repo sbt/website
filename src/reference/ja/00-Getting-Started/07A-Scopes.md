@@ -271,3 +271,44 @@ _"Reference to undefined setting"_ のようなエラーに遭遇した場合は
 つまり、`packageOptions in (Compile, packageBin)` という式全体でキー名だということだ。
 単に `packageOptions` と言っただけでもキー名だけど、それは別のキーだ
 （`in` 無しのキーのスコープは暗黙で決定され、現プロジェクト、`Global` コンフィグレーション、`Global` タスクとなる）。
+
+#### ビルドワイド・セッティング
+
+サブプロジェクト間に共通なセッティングを一度に定義するための上級テクニックとしてセッティングを
+`ThisBuild` にスコープ付けするという方法がある。
+
+もし特定のサブプロジェクトにスコープ付けされたキーが見つから無かった場合、
+sbt はフォールバックとして `ThisBuild` 内を探す。
+この仕組みを利用して、
+`version`、 `scalaVersion`、 `organization`
+といったよく使われるキーに対してビルドワイドなデフォルトのセッティングを定義することができる。
+
+便宜のため、セッティング式のキーと本文の両方を `ThisBuild`
+にスコープ付けする
+`inThisBuild(...)` という関数が用意されている。
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      // Same as:
+      // organization in ThisBuild := "com.example"
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    publish := (),
+    publishLocal := ()
+  )
+
+lazy val core = (project in file("core")).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(
+    // other settings
+  )
+```
