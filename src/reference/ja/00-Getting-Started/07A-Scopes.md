@@ -12,7 +12,10 @@ out: Scopes.html
 スコープ
 -------
 
-このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義][Basic-Def]を読んで理解したことを前提とする。
+このページではスコープの説明をする。君が、前のページの
+[.sbt ビルド定義][Basic-Def]、
+[タスク・グラフ][Task-Graph]
+を読んで理解したことを前提とする。
 
 ### キーに関する本当の話
 
@@ -182,7 +185,7 @@ sbt シェルで `inspect` コマンドを使ってキーとそのスコープ�
 `{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath`
 （`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `full-classpath` キー）。
 
-"Dependencies" はまだよく分からないかもしれないが、これの説明は[次のページ][Task-Graph]まで待ってほしい。
+"Dependencies" に関しては、[前のページ][Task-Graph]で解説した。
 
 ここで委譲も見ることができ、もし値が定義されていなければ、sbt は以下を検索する:
 
