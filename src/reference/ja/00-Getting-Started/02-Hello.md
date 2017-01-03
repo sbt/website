@@ -46,6 +46,8 @@ Template applied in ./hello
 hello
 ```
 
+### sbt シェルの終了
+
 sbt シェルを終了するには、`exit` と入力するか、Ctrl+D (Unix) か Ctrl+Z (Windows) を押す。
 
 ```
