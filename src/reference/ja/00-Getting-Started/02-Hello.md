@@ -10,60 +10,70 @@ Hello, World
 
 このページは、既に[sbt をインストール][Setup]したことを前提とする。
 
-### ソースコードの入ったプロジェクトディレクトリを作る
+### sbt new コマンド
 
-一つのソースファイルを含むディレクトリでも、一応有効な sbt プロジェクトとなりうる。試しに、`hello` ディレクトリを作って、以下の内容の `hw.scala` というファイルを作成する:
-
-```scala
-object Hi {
-  def main(args: Array[String]) = println("Hi!")
-}
-```
-
-次に `hello` ディレクトリ内から sbt を起動して sbt のインタラクティブコンソールに `run` と入力する。
-Linux、Mac OS X の場合、コマンドは以下のようになる:
+sbt 0.13.13 以降を使っている場合は、sbt `new`
+コマンドを使って手早く簡単な Hello world ビルドをセットアップすることができる。
+以下をターミナルから打ち込む。
 
 ```
-\$ mkdir hello
+\$ sbt new sbt/scala-seed.g8
+....
+Minimum Scala build.
+
+name [My Something Project]: hello
+
+Template applied in ./hello
+```
+
+プロジェクト名を入力するプロンプトが出てきたら `hello` と入力する。
+
+これで、`hello` ディレクトリ以下に新しいプロジェクトができた。
+
+### アプリの実行
+
+次に `hello` ディレクトリ内から sbt を起動して sbt のシェルから
+`run` と入力する。Linux や OS X の場合、コマンドは以下のようになる:
+
+```
 \$ cd hello
-\$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' > hw.scala
 \$ sbt
 ...
 > run
 ...
-Hi!
+[info] Compiling 1 Scala source to /xxx/hello/target/scala-2.12/classes...
+[info] Running example.Hello
+hello
 ```
 
-この例では、sbt はただデフォルトの規約によって動作している。sbt は以下のものを自動的に検知する:
+sbt シェルを終了するには、`exit` と入力するか、Ctrl+D (Unix) か Ctrl+Z (Windows) を押す。
 
- - ベースディレクトリにあるソースファイル　
- - `src/main/scala` か `src/main/java` 内のソースファイル
- - `src/test/scala` か `src/test/java` 内のテストソースファイル
- - `src/main/resources` か `src/test/resources` 内のデータファイル
- - `lib` 内の jar ファイル
-
-デフォルトでは、sbt は sbt 自身が使っている Scala のバージョンを使ってプロジェクトをビルドする。
-
-`sbt run` でプロジェクトを実行したり、`sbt console` で [Scala REPL](http://www.scala-lang.org/node/2097) に入ることができる。
-`sbt console` は君のプロジェクトにクラスパスを通すので、プロジェクトのコードを使った Scala コード例をその場で試すことができる。
+```
+> exit
+```
 
 ### ビルド定義
 
-ほとんどのプロジェクトでは何らかの手動設定が必要になるだろう。
 基本的なビルド設定方法はプロジェクトのベースディレクトリに `build.sbt` というファイルとして配置されるものだ。
-例えば、君のプロジェクトが `hello` ディレクトリにある場合、`hello/build.sbt` はこんな感じになる：
+例えば、プロジェクトが `hello` ディレクトリにある場合、`hello/build.sbt` はこんな感じになる：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
-    name := "hello",
-    version := "1.0",
-    scalaVersion := "$example_scala_version$"
+import Dependencies._
+
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    libraryDependencies += scalaTest % Test
   )
 ```
 
 [.sbt ビルド定義][Basic-Def]で、`build.sbt` の書き方をもっと詳しく説明する。
-もし君のプロジェクトを jar ファイルにパッケージ化するつもりなら、最低でも `build.sbt` に name と version は書いておこう。
+もしプロジェクトを jar ファイルにパッケージ化するつもりなら、最低でも `build.sbt` に name と version は書いておこう。
 
 ### sbt バージョンの設定
 
