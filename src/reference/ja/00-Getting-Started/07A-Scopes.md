@@ -4,7 +4,7 @@ out: Scopes.html
 
   [MavenScopes]: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
   [Inspecting-Settings]: ../../docs/Inspecting-Settings.html
@@ -12,7 +12,10 @@ out: Scopes.html
 スコープ
 -------
 
-このページではスコープの説明をする。君が、前のページの [.sbt ビルド定義][Basic-Def]を読んで理解したことを前提とする。
+このページではスコープの説明をする。君が、前のページの
+[.sbt ビルド定義][Basic-Def]、
+[タスク・グラフ][Task-Graph]
+を読んで理解したことを前提とする。
 
 ### キーに関する本当の話
 
@@ -23,13 +26,13 @@ out: Scopes.html
 
 以下に具体例で説明する:
 
- - ビルド定義に複数のプロジェクトがあれば、それぞれのプロジェクトにおいて同じキーが別の値を取ることができる。
+ - ビルド定義に複数のプロジェクト (サブプロジェクトとも呼ばれる) があれば、それぞれのプロジェクトにおいて同じキーが別の値を取ることができる。
  - メインのソースとテストとのソースが異なるようにコンパイルしたければ、`compile` キーは別の値をとることができる。
  - （jar パッケージの作成のオプションを表す）`packageOption` キーはクラスファイルのパッケージ（`packageBin`）とソースコードのパッケージ（`packageSrc`）で異なる値をとることができる。
 
 スコープによって値が異なる可能性があるため、_あるキーへの単一の値は存在しない_。
 
-しかし、_スコープ付き_キーには単一の値が存在する。
+しかし、**スコープ付きキー**には単一の値が存在する。
 
  [これまで見てきた][Basic-Def]ように sbt がプロジェクトを記述するキーと値のマップを生成するためのセッティングキーのリストを処理していると考えるなら、
 そのキーと値の Map におけるキーとは、実は_スコープ付き_キーである。
@@ -40,16 +43,16 @@ out: Scopes.html
 
 ### スコープ軸
 
-_スコープ軸_（scope axis）は、型であり、そのインスタンスは独自のスコープを定義する
+**スコープ軸**（scope axis）は、型であり、そのインスタンスは独自のスコープを定義する
 （つまり、各インスタンスはキーの独自の値を持つことができる）。
 
 スコープ軸は三つある:
 
- - プロジェクト
- - コンフィギュレーション
+ - サブプロジェクト
+ - 依存性コンフィギュレーション
  - タスク
 
-#### プロジェクト軸によるスコープ付け
+#### サブプロジェクト軸によるスコープ付け
 
 [一つのビルドに複数のプロジェクトを入れる][Multi-Project]場合、それぞれのプロジェクトにセッティングが必要だ。
 つまり、キーはプロジェクトによりスコープ付けされる。
@@ -57,19 +60,19 @@ _スコープ軸_（scope axis）は、型であり、そのインスタンス�
 プロジェクト軸は「ビルド全体」に設定することもでき、その場合はセッティングは単一のプロジェクトではなくビルド全体に適用される。
 ビルドレベルでのセッティングは、プロジェクトが特定のセッティングを定義しない場合のフォールバックとして使われることがよくある。
 
-#### コンフィギュレーション軸によるスコープ付け
+#### 依存性コンフィギュレーション軸によるスコープ付け
 
-_コンフィギュレーション_（configuration）は、ビルドの種類を定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
+**依存性コンフィギュレーション**（dependency configuration）は、ライブラリ依存性のグラフを定義し、独自のクラスパス、ソース、生成パッケージなどをもつことができる。
 コンフィギュレーションの概念は、sbt が [マネージ依存性][Library-Dependencies] に使っている Ivy と、[MavenScopes][MavenScopes] に由来する。
 
-sbt で使われるコンフィギュレーションには以下のものがある:
+sbt で使われる代表的なコンフィギュレーションには以下のものがある:
 
  - `Compile` は、メインのビルド（`src/main/scala`）を定義する。
  - `Test` は、テスト（`src/test/scala`）のビルド方法を定義する。
  - `Runtime` は、`run` タスクのクラスパスを定義する。
 
-デフォルトでは、コンパイル、パッケージ化と実行に関するキーの全てはコンフィグレーションにスコープ付けされているため、
-コンフィギュレーションごとに異なる動作をする可能性がある。
+デフォルトでは、コンパイル、パッケージ化と実行に関するキーの全ては依存性コンフィグレーションにスコープ付けされているため、
+依存性コンフィギュレーションごとに異なる動作をする可能性がある。
 その最たる例が `compile`、`package` と `run` のタスクキーだが、
 （`sourceDirectories` や `scalacOptions` や `fullClasspath` など）それらのキーに_影響を及ぼす_全てのキーもコンフィグレーションにスコープ付けされている。
 
@@ -136,7 +139,7 @@ sbt で使われるコンフィギュレーションには以下のものがあ�
 
 ### スコープの検査
 
-sbt のインタラクティブモードで `inspect` コマンドを使ってキーとそのスコープを把握することができる。
+sbt シェルで `inspect` コマンドを使ってキーとそのスコープを把握することができる。
 例えば、`inspect test:full-classpath` と試してみよう:
 
 ```
@@ -182,7 +185,7 @@ sbt のインタラクティブモードで `inspect` コマンドを使って�
 `{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath`
 （`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `full-classpath` キー）。
 
-"Dependencies" はまだよく分からないかもしれないが、これの説明は[次のページ][More-About-Settings]まで待ってほしい。
+"Dependencies" に関しては、[前のページ][Task-Graph]で解説した。
 
 ここで委譲も見ることができ、もし値が定義されていなければ、sbt は以下を検索する:
 
@@ -271,3 +274,44 @@ _"Reference to undefined setting"_ のようなエラーに遭遇した場合は
 つまり、`packageOptions in (Compile, packageBin)` という式全体でキー名だということだ。
 単に `packageOptions` と言っただけでもキー名だけど、それは別のキーだ
 （`in` 無しのキーのスコープは暗黙で決定され、現プロジェクト、`Global` コンフィグレーション、`Global` タスクとなる）。
+
+#### ビルドワイド・セッティング
+
+サブプロジェクト間に共通なセッティングを一度に定義するための上級テクニックとしてセッティングを
+`ThisBuild` にスコープ付けするという方法がある。
+
+もし特定のサブプロジェクトにスコープ付けされたキーが見つから無かった場合、
+sbt はフォールバックとして `ThisBuild` 内を探す。
+この仕組みを利用して、
+`version`、 `scalaVersion`、 `organization`
+といったよく使われるキーに対してビルドワイドなデフォルトのセッティングを定義することができる。
+
+便宜のため、セッティング式のキーと本文の両方を `ThisBuild`
+にスコープ付けする
+`inThisBuild(...)` という関数が用意されている。
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      // Same as:
+      // organization in ThisBuild := "com.example"
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    publish := (),
+    publishLocal := ()
+  )
+
+lazy val core = (project in file("core")).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(
+    // other settings
+  )
+```

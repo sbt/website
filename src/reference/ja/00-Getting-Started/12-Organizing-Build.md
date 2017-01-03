@@ -3,7 +3,7 @@ out: Organizing-Build.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Using-Plugins]: Using-Plugins.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -16,6 +16,7 @@ out: Organizing-Build.html
 
 このガイドの前のページ、特に
 [build.sbt][Basic-Def]、
+[タスク・グラフ][Task-Graph]、
 [ライブラリ依存性][Library-Dependencies]、
 そして[マルチプロジェクト・ビルド][Multi-Project]を理解していることが必要になる。
 
@@ -37,35 +38,34 @@ sbt のビルドは、Scala コードにより定義されている。そのコ�
 以下に具体例で説明する:
 
 ```
-hello/                  # ビルドのルート・プロジェクトのベースディレクトリ
+hello/                     # ビルドのルート・プロジェクトのベースディレクトリ
 
-    Hello.scala         # ビルドのルート・プロジェクトのソースファイル  
-                        # （src/main/scala に入れることもできる）
+    Hello.scala            # ビルドのルート・プロジェクトのソースファイル
+                           # （src/main/scala に入れることもできる）
 
-    build.sbt           # build.sbt は、project/ 内のメタビルドの
-                        # ルート・プロジェクトのソースの一部となる。
-                        # つまり、プロパービルドのビルド定義
+    build.sbt              # build.sbt は、project/ 内のメタビルドの
+                           # ルート・プロジェクトのソースの一部となる。
+                           # つまり、プロパービルドのビルド定義
 
-    project/            # メタビルドのルート・プロジェクトのベースディレクトリ
-     
-        Build.scala     # メタビルドのルート・プロジェクトのソースファイル、
-                        # つまり、ビルド定義のソースファイル。
-                        # プロパービルドのビルド定義
+    project/               # メタビルドのルート・プロジェクトのベースディレクトリ
+        Dependencies.scala # メタビルドのルート・プロジェクトのソースファイル、
+                           # つまり、ビルド定義のソースファイル。
+                           # プロパービルドのビルド定義
 
-        build.sbt       # これは、project/project 内のメタメタビルドの
-                        # ルート・プロジェクトのソースの一部となり、
-                        # ビルド定義のビルド定義となる
-               
-        project/        # メタメタビルドのルート・プロジェクトのベースディレクトリ
+        assembly.sbt       # これは、project/project 内のメタメタビルドの
+                           # ルート・プロジェクトのソースの一部となり、
+                           # ビルド定義のビルド定義となる
 
-            Build.scala # project/project/ 内のメタメタビルドの
-                        # ルート・プロジェクトのソースファイル
+        project/           # メタメタビルドのルート・プロジェクトのベースディレクトリ
+
+            MetaDeps.scala # project/project/ 内のメタメタビルドの
+                           # ルート・プロジェクトのソースファイル
 ```
 
 _心配しないでほしい！_ 普通はこういうことをする必要は全くない。
 しかし、原理を理解しておくことはきっと役立つことだろう。
 
-ちなみに、`.scala` や `.sbt` の拡張子で終わっていればどんなファイル名でもよく、`build.sbt` や `Build.scala` と命名するのは慣例にすぎない。
+ちなみに、`.scala` や `.sbt` の拡張子で終わっていればどんなファイル名でもよく、`build.sbt` や `Dependencies.scala` と命名するのは慣例にすぎない。
 これは複数のファイルを使うことができるということも意味する。
 
 ### ライブラリ依存性を一箇所にまとめる

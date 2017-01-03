@@ -9,16 +9,14 @@ out: Installing-sbt-on-Mac.html
 Mac への sbt のインストール
 -------------------------
 
+### ユニバーサルパッケージからのインストール
+
+[ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
+
 ### サードパーティパッケージを使ってのインストール
 
 > **注意:** サードパーティが提供するパッケージは最新版を使っているとは限らない。
 > 何か問題があれば、パッケージメンテナに報告してほしい。
-
-#### [Macports](http://macports.org/)
-
-```
-\$ port install sbt
-```
 
 #### [Homebrew](http://mxcl.github.com/homebrew/)
 
@@ -26,10 +24,8 @@ Mac への sbt のインストール
 \$ brew install sbt
 ```
 
-### ユニバーサルパッケージからのインストール
+#### [Macports](http://macports.org/)
 
-[ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
-
-### 手動インストール
-
-手動インストールの手順を参照。
+```
+\$ port install sbt
+```

@@ -17,16 +17,16 @@ Installing sbt on Mac
 > disponible. Por favor asegúrese de reportar cualquier problema con
 > estos paquetes a los mantenedores respectivos.
 
-#### [Macports](http://macports.org/)
-
-```
-\$ port install sbt
-```
-
 #### [Homebrew](http://mxcl.github.com/homebrew/)
 
 ```
 \$ brew install sbt
+```
+
+#### [Macports](http://macports.org/)
+
+```
+\$ port install sbt
 ```
 
 ### Installing from a universal package

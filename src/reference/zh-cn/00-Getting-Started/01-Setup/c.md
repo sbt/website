@@ -6,8 +6,6 @@ out: Installing-sbt-on-Linux.html
   [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
-  [Manual-Installation]: Manual-Installation.html
-  [Activator-Installation]: Activator-Installation.html
 
 在 Linux 上安装 sbt
 -----------------------
@@ -60,11 +58,3 @@ sbt 二进制文件发布到 Bintray，而Bintray 方便地提供了RPM资源库
     emerge sbt-bin
 
 > **注意：** 请将任何和 ebuild 相关的问题反馈到 [这里](https://github.com/whiter4bbit/overlays/issues)。
-
-### Lightbend Activator
-
-参见 [Lightbend Activator安装指南][Activator-Installation].
-
-### 手动安装
-
-参见[手动安装指南][Manual-Installation]。

@@ -8,7 +8,7 @@ out: Installing-sbt-on-Linux.html
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
   [website127]: https://github.com/sbt/website/issues/12
- 
+
 Linux への sbt のインストール
 --------------------------
 
@@ -74,7 +74,3 @@ sbt のバイナリは Bintray にて公開されており、Bintray は RPM リ
 > **注意:** この ebuild に関する問題は
 > [こちら](https://github.com/whiter4bbit/overlays/issues)
 > へ報告してほしい。
-
-### 手動インストール
-
-手動インストールの手順を参照。

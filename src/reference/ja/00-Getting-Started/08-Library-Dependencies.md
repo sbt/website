@@ -12,7 +12,7 @@ out: Library-Dependencies.html
   [ScalaTest]: http://scalatest.org
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [external-maven-ivy]: ../../docs/Library-Management.html#external-maven-ivy
   [Cross-Build]: ../../docs/Cross-Build.html
   [Resolvers]: ../../docs/Resolvers.html
@@ -23,7 +23,7 @@ out: Library-Dependencies.html
 
 このページは、このガイドのこれまでのページ、特に
 [.sbt ビルド定義][Basic-Def]、[スコープ][Scopes]、と
-[他の種類のセッティング][More-About-Settings]
+[タスク・グラフ][Task-Graph]
 を読んでいることを前提とする。
 
 ライブラリ依存性は二つの方法で加えることができる:
@@ -53,7 +53,7 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 ```
 
 `baseDirectory` はプロジェクトのベースディレクトリで、
-[他の種類のセッティング][More-About-Settings]で説明したとおり、ここでは `unmanagedBase`
+[タスク・グラフ][Task-Graph]で説明したとおり、ここでは `unmanagedBase`
 を `value` を使って取り出した `baseDirectory` の値を用いて変更している。
 
 他には、`unmangedJars` という `unmanagedBase` ディレクトリに入っている jar ファイルのリストを返すタスクがある。
