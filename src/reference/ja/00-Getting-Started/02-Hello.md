@@ -59,35 +59,6 @@ sbt シェルを終了するには、`exit` と入力するか、Ctrl+D (Unix) �
 
 ### ビルド定義
 
-基本的なビルド設定方法はプロジェクトのベースディレクトリに `build.sbt` というファイルとして配置されるものだ。
-例えば、プロジェクトが `hello` ディレクトリにある場合、`hello/build.sbt` はこんな感じになる：
-
-```scala
-import Dependencies._
-
-lazy val root = (project in file("."))
-  .settings(
-    inThisBuild(List(
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
-    name := "Hello",
-    libraryDependencies += scalaTest % Test
-  )
-```
-
-[.sbt ビルド定義][Basic-Def]で、`build.sbt` の書き方をもっと詳しく説明する。
-もしプロジェクトを jar ファイルにパッケージ化するつもりなら、最低でも `build.sbt` に name と version は書いておこう。
-
-### sbt バージョンの設定
-
-`hello/project/build.properties` というファイルを作ることで、特定のバージョンの sbt を強制することができる。
-このファイルに、以下のように書く:
-
-```
-sbt.version=$app_version$
-```
-
-sbt はリリース間で 99% ソースコード互換性を維持しているが、
-sbt バージョンを `project/build.properties` に設定しておくことで、不要な混乱を避けることができるだろう。
+ビルド設定方法はプロジェクトのベースディレクトリに `build.sbt` というファイルとして配置される。
+ファイルを読んでみてもいいが、このビルドファイルに書いてあることが分からなくても心配しないでほしい。
+[ビルド定義][Basic-Def]で、`build.sbt` の書き方を説明する。
