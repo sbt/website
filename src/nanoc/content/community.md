@@ -36,7 +36,7 @@ There's also the [Gitter sbt/sbt][gitter1] channel, but the options above are re
 <h2 id="how-can-I-help">How can I help? <a href="#how-can-I-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
 sbt is an open source project and everyone is encouraged to get involved!
-Join the community of developers building sbt and related tools like Play and Activator.
+Join the community of developers building sbt and related tools like Play.
 
 ### Twitter
 

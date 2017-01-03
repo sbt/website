@@ -14,7 +14,7 @@ This page describes how to use sbt once you have set up your project. It
 assumes you've [installed sbt][Setup] and created a
 [Hello, World][Hello] or other project.
 
-### Interactive mode
+### sbt shell
 
 Run sbt in your project directory with no arguments:
 
@@ -22,11 +22,11 @@ Run sbt in your project directory with no arguments:
 \$ sbt
 ```
 
-Running sbt with no command line arguments starts it in interactive
-mode. Interactive mode has a command prompt (with tab completion and
+Running sbt with no command line arguments starts sbt shell.
+sbt shell has a command prompt (with tab completion and
 history!).
 
-For example, you could type `compile` at the sbt prompt:
+For example, you could type `compile` at the sbt shell:
 
 ```
 > compile
@@ -36,7 +36,7 @@ To `compile` again, press up arrow and then enter.
 
 To run your program, type `run`.
 
-To leave interactive mode, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
+To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z
 (Windows).
 
 ### Batch mode
@@ -53,21 +53,26 @@ quotes. For example,
 In this example, `testOnly` has arguments, `TestA` and `TestB`. The commands
 will be run in sequence (`clean`, `compile`, then `testOnly`).
 
+**Note**: Running in batch mode requires JVM spinup and JIT each time,
+so **your build will run much slower**.
+For day-to-day coding, we recommend using the sbt shell
+or Continuous build and test feature described below.
+
 ### Continuous build and test
 
 To speed up your edit-compile-test cycle, you can ask sbt to
 automatically recompile or run tests whenever you save a source file.
 
 Make a command run when one or more source files change by prefixing the
-command with `~`. For example, in interactive mode try:
+command with `~`. For example, in sbt shell try:
 
 ```
-> ~ compile
+> ~testQuick
 ```
 
 Press enter to stop watching for changes.
 
-You can use the `~` prefix with either interactive mode or batch mode.
+You can use the `~` prefix with either sbt shell or batch mode.
 
 See [Triggered Execution][Triggered-Execution] for more details.
 
@@ -122,14 +127,14 @@ see [Command Line Reference][Command-Line-Reference].
 
 ### Tab completion
 
-Interactive mode has tab completion, including at an empty prompt. A
+sbt shell has tab completion, including at an empty prompt. A
 special sbt convention is that pressing tab once may show only a subset
 of most likely completions, while pressing it more times shows more
 verbose choices.
 
 ### History Commands
 
-Interactive mode remembers history, even if you exit sbt and restart it.
+sbt shell remembers history, even if you exit sbt and restart it.
 The simplest way to access history is with the up arrow key. The
 following commands are also supported:
 
@@ -145,7 +150,7 @@ following commands are also supported:
   <tr>
     <td><tt>!:</tt></td>
     <td>Show all previous commands.</td>
-  </tr>  
+  </tr>
   <tr>
     <td><tt>!:n</tt></td>
     <td>Show the last <tt>n</tt> commands.</td>

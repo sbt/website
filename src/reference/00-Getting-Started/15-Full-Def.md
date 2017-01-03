@@ -3,7 +3,6 @@ out: Full-Def.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
 
 Appendix: .scala build definition
@@ -15,8 +14,7 @@ but sbt 0.13 added [multi-project .sbt build definition][Basic-Def],
 which is the recommended style.
 
 We assume you've read previous pages in the Getting Started
-Guide, *especially* [.sbt build definition][Basic-Def] and
-[more kinds of setting][More-About-Settings].
+Guide, *especially* [.sbt build definition][Basic-Def].
 
 ### Relating build.sbt to Build.scala
 

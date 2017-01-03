@@ -9,12 +9,13 @@ out: Using-Plugins.html
   [Community-Plugins]: ../docs/Community-Plugins.html
   [Plugins]: ../docs/Plugins.html
   [Plugins-Best-Practices]: ../docs/Plugins-Best-Practices.html
+  [Task-Graph]: Task-Graph.html
 
 Using plugins
 -------------
 
 Please read the earlier pages in the Getting Started Guide first, in
-particular you need to understand [build.sbt][Basic-Def] and
+particular you need to understand [build.sbt][Basic-Def], [task graph][Task-Graph],
 [library dependencies][Library-Dependencies], before reading this page.
 
 ### What is a plugin?

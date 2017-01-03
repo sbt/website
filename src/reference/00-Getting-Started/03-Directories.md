@@ -16,14 +16,10 @@ This page assumes you've [installed sbt][Setup] and seen the
 
 In sbt's terminology, the "base directory" is the directory containing
 the project. So if you created a project `hello` containing
-`hello/build.sbt` and `hello/hw.scala` as in the [Hello, World][Hello]
+`hello/build.sbt` as in the [Hello, World][Hello]
 example, `hello` is your base directory.
 
 ### Source code
-
-Source code can be placed in the project's base directory as with
-`hello/hw.scala`. However, most people don't do this for real projects;
-too much clutter.
 
 sbt uses the same directory structure as
 [Maven](https://maven.apache.org/) for source files by default (all paths
@@ -50,18 +46,31 @@ src/
 Other directories in `src/` will be ignored. Additionally, all hidden
 directories will be ignored.
 
+Source code can be placed in the project's base directory as
+`hello/app.scala`, which may be for small projects,
+though for normal projects people tend to keep the projects in
+the `src/main/` directory to keep things neat.
+The fact that you can place `*.scala` source code might seem like
+an odd trick, but this fact becomes relevant [later][Organizing-Build].
+
 ### sbt build definition files
 
-You've already seen `build.sbt` in the project's base directory. Other sbt
-files appear in a `project` subdirectory.
+The build definition is described in `build.sbt` (actually any files named `*.sbt`) in the project's base directory.
 
-`project` can contain `.scala` files, which are combined with `.sbt` files to
-form the complete build definition. See [organizing the build][Organizing-Build] for more.
+```
+build.sbt
+```
+
+### Build support files
+
+In addition to `build.sbt`, `project` directory can contain `.scala` files
+that defines helper objects and one-off plugins.
+See [organizing the build][Organizing-Build] for more.
 
 ```
 build.sbt
 project/
-  Build.scala
+  Dependencies.scala
 ```
 
 You may see `.sbt` files inside `project/` but they are not equivalent to

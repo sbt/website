@@ -3,7 +3,7 @@ out: Scopes.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
   [Inspecting-Settings]: ../docs/Inspecting-Settings.html
@@ -12,7 +12,7 @@ Scopes
 ------
 
 This page describes scopes. It assumes you've read and understood the
-previous page, [.sbt build definition][Basic-Def].
+previous pages, [build definition][Basic-Def] and [task graph][Task-Graph].
 
 ### The whole story about keys
 
@@ -24,7 +24,7 @@ context, called a "scope."
 
 Some concrete examples:
 
-- if you have multiple projects in your build definition, a key can
+- if you have multiple projects (also called subprojects) in your build definition, a key can
   have a different value in each project.
 - the `compile` key may have a different value for your main sources and
   your test sources, if you want to compile them differently.
@@ -54,11 +54,11 @@ keys).
 
 There are three scope axes:
 
-- Projects
-- Configurations
+- Subprojects
+- Dependency configurations
 - Tasks
 
-#### Scoping by project axis
+#### Scoping by subproject axis
 
 If you [put multiple projects in a single build][Multi-Project], each
 project needs its own settings. That is, keys can be scoped according to
@@ -69,10 +69,10 @@ to the entire build rather than a single project. Build-level settings
 are often used as a fallback when a project doesn't define a
 project-specific setting.
 
-#### Scoping by configuration axis
+#### Scoping by dependency configuration axis
 
-A *configuration* defines a flavor of build, potentially with its own
-classpath, sources, generated packages, etc. The configuration concept
+A *dependency configuration* defines a graph of library dependencies, potentially with its own
+classpath, sources, generated packages, etc. The dependency configuration concept
 comes from Ivy, which sbt uses for
 managed dependencies [Library Dependencies][Library-Dependencies], and from
 [MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
@@ -84,8 +84,8 @@ Some configurations you'll see in sbt:
 - `Runtime` which defines the classpath for the `run` task.
 
 By default, all the keys associated with compiling, packaging, and
-running are scoped to a configuration and therefore may work differently
-in each configuration. The most obvious examples are the task keys
+running are scoped to a dependency configuration and therefore may work differently
+in each dependency configuration. The most obvious examples are the task keys
 `compile`, `package`, and `run`; but all the keys which *affect* those keys
 (such as `sourceDirectories` or `scalacOptions` or `fullClasspath`) are also
 scoped to the configuration.
@@ -182,7 +182,7 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
 
 ### Inspecting scopes
 
-In sbt's interactive mode, you can use the inspect command to understand
+In sbt shell, you can use the `inspect` command to understand
 keys and their scopes. Try `inspect test:fullClasspath`:
 
 ```
@@ -232,8 +232,7 @@ this case
 is the `fullClasspath` key scoped to the `test` configuration and the
 `{file:/home/hp/checkout/hello/}default-aea33a` project).
 
-"Dependencies" may not make sense yet; stay tuned for the
-[next page][More-About-Settings].
+"Dependencies" was discussed in detail in the [previous page][Task-Graph].
 
 You can also see the delegates; if the value were not defined, sbt would
 search through:
@@ -354,3 +353,42 @@ has three axes). The entire expression
 Simply `packageOptions` is also a key name, but a different one (for keys
 with no in, a scope is implicitly assumed: current project, global
 config, global task).
+
+#### Build-wide settings
+
+An advanced technique for factoring out common settings
+across subprojects is to define the settings scoped to `ThisBuild`.
+
+If a key is not defined scoped to a particular subproject,
+sbt will look for it in `ThisBuild` as a fallback.
+Using the mechanism, we can define a build-wide default setting for
+frequently used keys such as `version`, `scalaVersion`, and `organization`.
+
+For convenience, there is `inThisBuild(...)` function that will
+scope both the key and the body of the setting expression to `ThisBuild`.
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      // Same as:
+      // organization in ThisBuild := "com.example"
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
+    publish := (),
+    publishLocal := ()
+  )
+
+lazy val core = (project in file("core")).
+  settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util")).
+  settings(
+    // other settings
+  )
+```
