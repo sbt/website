@@ -13,7 +13,9 @@ Build definition
 ----------------
 
 This page describes sbt build definitions, including some "theory" and
-the syntax of `build.sbt`. It assumes you know how to [use sbt][Running]
+the syntax of `build.sbt`.
+It assumes you have installed a recent version of sbt, such as sbt 0.13.13,
+know how to [use sbt][Running],
 and have read the previous pages in the Getting Started Guide.
 
 This page discusses the `build.sbt` build definition.
@@ -32,13 +34,15 @@ Without this file sbt will chose the sbt version installed on the machine,
 but setting the sbt version in
 `project/build.properties` avoids any potential confusion.
 
-### What is a Build Definition?
+### What is a build definition?
 
-After examining a set of directories and processing build definition files, sbt
-ends up with a set of `Project` definitions.
+A *build definition* is defined in `build.sbt`,
+and it consists of a set of projects (of type [`Project`](../api/sbt/Project.html)).
+Because the term *project* can be ambiguous,
+we often call it a *subproject* in this guide.
 
-In `build.sbt` you might create a [Project](../api/sbt/Project.html) definition of
-the project located in the current directory like this:
+For instance, in `build.sbt` you define
+the subproject located in the current directory like this:
 
 ```scala
 lazy val root = (project in file("."))
@@ -48,11 +52,11 @@ lazy val root = (project in file("."))
   )
 ```
 
-Each project is associated with an immutable map (set of key-value pairs) describing the project.
+Each subproject is associated with a sequence of key-value pairs describing the subproject.
 
 For example, one key is `name` and it maps to a string value, the name of
-your project.
-The key-value pairs are listed under the `settings(...)` method as follows:
+your subproject.
+The key-value pairs are listed under the `.settings(...)` method as follows:
 
 ```scala
 lazy val root = (project in file("."))
@@ -64,7 +68,8 @@ lazy val root = (project in file("."))
 
 ### How build.sbt defines settings
 
-`build.sbt` defines a `Project`, which holds a list of Scala expressions called `settings`.
+`build.sbt` defines subprojects, which holds a sequence of key-value pairs
+called *setting expressions* using *build.sbt DSL*.
 
 ```scala
 lazy val root = (project in file("."))
@@ -76,38 +81,25 @@ lazy val root = (project in file("."))
   )
 ```
 
-Each `Setting` is defined with a Scala expression. The expressions in
-`settings` are independent of one another, and they are expressions,
-rather than complete Scala statements.
+Let's take a closer look at the build.sbt DSL:
+![setting expression](files/setting-expression.png)<br>
+<br>
+Each entry is called a *setting expression*.
+Some among them are also called task expressions.
+We will see more on the difference later in this page.
 
-`build.sbt` may also be
-interspersed with `val`s, `lazy val`s, and `def`s. Top-level `object`s and
-`class`es are not allowed in `build.sbt`. Those should go in the `project/`
-directory as Scala source files.
+A setting expression consists of three parts:
 
-On the left, `name`, `version`, and `scalaVersion` are *keys*. A key is an
-instance of `SettingKey[T]`, `TaskKey[T]`, or `InputKey[T]` where `T` is the
+1. Left-hand side is a *key*.
+2. *Operator*, which in this case is `:=`
+3. Right-hand side is called the *body*, or the *setting body*.
+
+On the left-hand side, `name`, `version`, and `scalaVersion` are *keys*.
+A key is an instance of `SettingKey[T]`, `TaskKey[T]`, or `InputKey[T]` where `T` is the
 expected value type. The kinds of key are explained below.
 
-Keys have a method called `:=`, which returns a `Setting[T]`. You could use
-a Java-like syntax to call the method:
-
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name.:=("hello")
-  )
-```
-
-But Scala allows `name := "hello"` instead (in Scala, a single-parameter
-method can use either syntax).
-
-The `:=` method on key `name` returns a `Setting`, specifically a
-`Setting[String]`. `String` also appears in the type of `name` itself, which
-is `SettingKey[String]`. In this case, the returned `Setting[String]` is a
-transformation to add or replace the `name` key in sbt's map, giving it
-the value `"hello"`.
-
+Because key `name` is typed to `SettingKey[String]`,
+the `:=` operator on `name` is also typed specifically to `String`.
 If you use the wrong value type, the build definition will not compile:
 
 ```scala
@@ -117,6 +109,11 @@ lazy val root = (project in file("."))
   )
 ```
 
+`build.sbt` may also be
+interspersed with `val`s, `lazy val`s, and `def`s. Top-level `object`s and
+`class`es are not allowed in `build.sbt`. Those should go in the `project/`
+directory as Scala source files.
+
 ### Keys
 
 #### Types
@@ -124,7 +121,7 @@ lazy val root = (project in file("."))
 There are three flavors of key:
 
 - `SettingKey[T]`: a key for a value computed once (the value is
-  computed when loading the project, and kept around).
+  computed when loading the subproject, and kept around).
 - `TaskKey[T]`: a key for a value, called a *task*, that has to be
   recomputed each time, potentially with side effects.
 - `InputKey[T]`: a key for a task that has command line arguments as
@@ -150,8 +147,7 @@ lazy val hello = taskKey[Unit]("An example task")
 
 Here we have used the fact that an `.sbt` file can contain `val`s and `def`s
 in addition to settings. All such definitions are evaluated before
-settings regardless of where they are defined in the file. `val`s and `def`s
-must be separated from settings by blank lines.
+settings regardless of where they are defined in the file.
 
 > **Note:** Typically, lazy vals are used instead of vals to avoid initialization
 > order problems.
@@ -167,7 +163,7 @@ Each time you start a task execution, for example by typing `compile` at
 the interactive sbt prompt, sbt will re-run any tasks involved exactly
 once.
 
-sbt's map describing the project can keep around a fixed string value
+sbt's key-value pairs describing the subproject can keep around a fixed string value
 for a setting such as name, but it has to keep around some executable
 code for a task such as `compile` -- even if that executable code
 eventually returns a string, it has to be re-run every time.
@@ -247,9 +243,7 @@ import Process._
 import Keys._
 ```
 
-(In addition, if you have [.scala files][Full-Def], the contents of any
-`Build` or `Plugin` objects in those files will be imported. More on that
-when we get to [.scala build definition][Full-Def].)
+(In addition, if you have auto plugins, the names marked under `autoImport` will be imported.)
 
 ### Adding library dependencies
 
