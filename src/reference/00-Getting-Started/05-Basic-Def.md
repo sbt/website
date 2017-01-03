@@ -20,19 +20,22 @@ and have read the previous pages in the Getting Started Guide.
 
 This page discusses the `build.sbt` build definition.
 
-### Setting the sbt version
+### Specifying the sbt version
 
-First, create a file named `project/build.properties` to set
-a particular version. In this file, write:
+As part of your build definition you will specify the version of
+sbt that your build uses.
+This allows people with different versions of the sbt launcher to
+build the same projects with consistent results.
+To do this, create a file named `project/build.properties` that specifies the sbt version as follows:
 
 ```
 sbt.version=$app_version$
 ```
 
-to use sbt $app_version$.
-Without this file sbt will chose the sbt version installed on the machine,
-but setting the sbt version in
-`project/build.properties` avoids any potential confusion.
+If the required version is not available locally,
+the `sbt` launcher will download it for you.
+If this file is not present, the `sbt` launcher will choose an arbitrary version,
+which is discouraged because it makes your build non-portable.
 
 ### What is a build definition?
 
