@@ -10,19 +10,25 @@ out: Multi-Project.html
 マルチプロジェクト・ビルド
 ----------------------
 
-このページでは、一つのプロジェクトで複数のプロジェクトを管理する方法を紹介する。
+このページでは、一つのビルドで複数のサブプロジェクトを管理する方法を紹介する。
 このガイドのこれまでのページを読んでおいてほしい。
 特に [build.sbt][Basic-Def] を理解していることが必要になる。
 
-### 複数のプロジェクト
+### 複数のサブプロジェクト
 
-一つのビルドに複数の関連するプロジェクトを入れておくと、
-プロジェクト間に依存性がある場合や同時に変更されることが多い場合に便利だ。
+一つのビルドに複数の関連するサブプロジェクトを入れておくと、
+サブプロジェクト間に依存性がある場合や同時に変更されることが多い場合に便利だ。
 
 ビルド内の個々のサブプロジェクトは、それぞれ独自のソースディレクトリを持ち、
 `package` を実行すると独自の jar ファイルを生成するなど、概ね通常のプロジェクトと同様に動作する。
 
 個々のプロジェクトは lazy val を用いて [Project](../../api/sbt/Project.html) 型の値を宣言することで定義される。例として、以下のようなものがプロジェクトだ:
+
+```scala
+lazy val util = (project in file("util"))
+
+lazy val core = (project in file("core"))
+```
 
 ```scala
 lazy val util = project
@@ -81,12 +87,12 @@ lazy val util = (project in file("util")).
 集約とは、集約する側のプロジェクトであるタスクを実行するとき、集約される側の複数のプロジェクトでも同じタスクを実行するという関係を意味する。例えば、
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(util, core)
+lazy val root = (project in file("."))
+  .aggregate(util, core)
 
-lazy val util = project
+lazy val util = (project in file("util"))
 
-lazy val core = project
+lazy val core = (project in file("core"))
 ```
 
 上の例では、`root` プロジェクトが `util` と `core` を集約している。
@@ -98,9 +104,9 @@ _集約プロジェクト内で_（この場合は `root` プロジェクトで�
 例えば、`update` タスクの集約を以下のようにして回避できる:
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(util, core).
-  settings(
+lazy val root = (project in file("."))
+  .aggregate(util, core)
+  .settings(
     aggregate in update := false
   )
 
