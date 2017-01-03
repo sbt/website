@@ -14,15 +14,19 @@ out: Basic-Def.html
 ---------
 
 このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と `build.sbt` の構文を説明する。
+sbt 0.13.13 など最近のバージョンをインストール済みで、
 [sbt の使い方][Running]を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
 
 このページでは `build.sbt` ビルド定義を紹介する。
 
 ### ビルド定義とは何か
 
-あらかじめ決められたディレクトリを走査し、ビルド定義に関するファイル群を処理した後、最終的に sbt は `Project` 定義の集合を作る。
+**ビルド定義**は、`build.sbt`
+にて定義され、プロジェクト (型は [Project](../../api/sbt/Project.html))
+の集合によって構成される。
+プロジェクトという用語が曖昧であることがあるため、このガイドではこれらを**サブプロジェクト**と呼ぶことが多い。
 
-例えば、カレントディレクトリにあるプロジェクトの [Project](../../api/sbt/Project.html) 定義は `build.sbt` に以下のように記述できる：
+例えば、カレントディレクトリにあるサブプロジェクトは `build.sbt` に以下のように定義できる：
 
 ```scala
 lazy val root = (project in file("."))
@@ -32,10 +36,10 @@ lazy val root = (project in file("."))
   )
 ```
 
-それぞれのプロジェクトは、そのプロジェクトを記述する不変 Map （キーと値のペア群のセット）に関連付けられる。
+それぞれのサブプロジェクトは、それを記述するキーと値のペアの列に関連付けられる。
 
-例えば、`name` というキーがあるが、それはプロジェクト名という文字列の値に関連付けられる。
-キーと値のペア群は `settings(...)` メソッド内に列挙される:
+例えば、`name` というキーがあるが、それはサブプロジェクト名という文字列の値に関連付けられる。
+キーと値のペア列は `.settings(...)` メソッド内に列挙される:
 
 ```scala
 lazy val root = (project in file("."))
@@ -47,7 +51,8 @@ lazy val root = (project in file("."))
 
 ### `build.sbt` はどのように settings を定義するか
 
-`build.sbt` が定義する `Project` は `settings` と呼ばれる Scala の式のリストを持つ。
+`build.sbt` において定義されるサブプロジェクトは、キーと値のペア列を持つと言ったが、
+このペアは**セッティング式** (setting expression) と呼ばれ、**build.sbt DSL** にて記述される。
 
 ```scala
 lazy val root = (project in file("."))
@@ -59,33 +64,24 @@ lazy val root = (project in file("."))
   )
 ```
 
-それぞれの `Setting` は Scala の式で定義される。
-`settings` 内の式は、それぞれ独立しており、完全な Scala の文ではなく、式である。
+build.sbt DSL を詳しくみてみよう:
+![setting expression](../files/setting-expression.png)<br>
+<br>
+それぞれのエントリーは**セッティング式** (setting expression) と呼ばれる。
+中にはタスク式と呼ばれるものもある。この違いはこのページの後で説明する。
 
-`build.sbt` 内には `val`、`lazy val`、`def` を定義することもできる。
-`build.sbt` において、トップレベルで `object` や `class` を定義することはできない。
-それらが必要なら `project/` 配下にScala ソースファイル (`.scala`) を置くべきだろう。
+セッティング式は以下の 3部から構成される:
 
-左辺値の `name`、`version`、および `scalaVersion` は _キー_である。
+1. 左辺項を**キー** (key) という。
+2. **演算子**。この場合は `:=`。
+3. 右辺項は**本文** (body)、もしくは**セッティング本文**という。
+
+左辺値の `name`、`version`、および `scalaVersion` は**キー**である。
 キーは `SettingKey[T]`、`TaskKey[T]`、もしくは `InputKey[T]` のインスタンスで、
 `T` はその値の型である。キーの種類に関しては後述する。
 
-キーには `:=` というメソッドがあり、このメソッドは `Setting[T]` を返す。
-Java っぽい構文でこのメソッドを呼び出すこともできる:
-
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name.:=("hello")
-  )
-```
-
-しかし、Scala なら `name := "hello"` と書くこともできる（Scala では全てのメソッドがどちらの構文でも書ける）。
-
-`name` キーの `:=` メソッドは `Setting` を返すが、特に `Setting[String]` を返す。
-`String` は `name` 自体の型にも表れていて、そちらは `SettingKey[String]` となる。
-ここで返された `Setting[String]` は、sbt の Map における `name` というキーを追加または置換して `"hello"` という値に設定する変換である。
-
+`name` キーは `SettingKey[String]` に型付けされているため、
+`name` の `:=` 演算子も `String` に型付けされている。
 誤った型の値を使おうとするとビルド定義はコンパイルエラーになる:
 
 ```scala
@@ -95,14 +91,18 @@ lazy val root = (project in file("."))
   )
 ```
 
+`build.sbt` 内には `val`、`lazy val`、`def` を定義することもできる。
+`build.sbt` において、トップレベルで `object` や `class` を定義することはできない。
+それらが必要なら `project/` 配下にScala ソースファイル (`.scala`) を置くべきだろう。
+
 ### キー
 
 #### 種類
 
 キーには三種類ある:
 
- - `SettingKey[T]`: 一度だけ値が計算されるキー（値はプロジェクトの読み込み時に計算され、保存される）。
- - `TaskKey[T]`: 毎回再計算される_タスク_を呼び出す、副作用を伴う可能性のある値のキー。
+ - `SettingKey[T]`: 一度だけ値が計算されるキー（値はサブプロジェクトの読み込み時に計算され、保存される）。
+ - `TaskKey[T]`: 毎回再計算される**タスク**を呼び出す、副作用を伴う可能性のある値のキー。
  - `InputKey[T]`: コマンドラインの引数を入力として受け取るタスクのキー。
  　「始める sbt」では `InputKey` を説明しないので、このガイドを終えた後で、[Input Tasks][Input-Tasks] を読んでみよう。
 
@@ -124,7 +124,6 @@ lazy val hello = taskKey[Unit]("An example task")
 
 実は `.sbt` ファイルには、設定を記述するのに必要な `val` や `def` を含めることもできる。
 これらの定義はファイル内のどこで書かれてもプロジェクトの設定より前に評価される。
-`val` や `def` を用いた定義群は空白行によって他の設定から区切らなければいけない。
 
 > **注意** 一般的に、初期化順問題を避けるために val の代わりに lazy val が用いられることが多い。
 
@@ -137,7 +136,7 @@ lazy val hello = taskKey[Unit]("An example task")
 例えばインタラクティブモードの sbt プロンプトに `compile` と入力するなど、何らかのタスクを実行する度に、
 sbt はそのタスクを一回だけ再実行する。
 
-プロジェクトを記述する sbt の Map は、`name` のようなセッティング (setting) であれば、
+サブプロジェクトを記述する sbt のキーと値の列は、`name` のようなセッティング (setting) であれば、
 その文字列の値をキャッシュすることができるが、
 `compile` のようなタスク（task）の場合は実行可能コードを保持しておく必要がある
 （たとえその実行可能コードが最終的に文字列を返したとしても、それは毎回再実行されなければならない）。
@@ -208,6 +207,8 @@ import Keys._
 
 （さらに、[.scala ファイル][Full-Def]がある場合は、それらの全ての `Build` と `Plugin` の内容もインポートされる。
 これに関しては、[.scala ビルド定義][Full-Def]でさらに詳しく。）
+
+(さらに、auto plugin があれば `autoImport` 以下の名前がインポートされる。)
 
 ### ライブラリへの依存性を加える
 
