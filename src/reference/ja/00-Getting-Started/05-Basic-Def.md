@@ -81,7 +81,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-build.sbt DSL を詳しくみてみよう:
+build.sbt DSL を詳しくみてみよう:<br>
 ![setting expression](../files/setting-expression.png)<br>
 <br>
 それぞれのエントリーは**セッティング式** (setting expression) と呼ばれる。
