@@ -234,6 +234,49 @@ then the computation depends on that key.
 
 #### Defining a task that depends on other settings
 
+`scalacOptions` is a task key.
+Let's say it's been set to some values already, but you want to
+filter out `"-Xfatal-warnings"` and `"-deprecation"` for non-2.12.
+
+```scala
+lazy val root = (project in file(".")).
+  settings(
+    name := "Hello",
+    organization := "com.example",
+    scalaVersion := "$example_scala_version$",
+    version      := "0.1.0-SNAPSHOT",
+    scalacOptions := List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation", "-unchecked"),
+    scalacOptions := {
+      val old = scalacOptions.value
+      scalaBinaryVersion.value match {
+        case "2.12" => old
+        case _      => old filterNot (Set("-Xfatal-warnings", "-deprecation").apply)
+      }
+    }
+  )
+```
+
+Here's how it should look on the sbt shell:
+
+```
+> show scalacOptions
+[info] * -encoding
+[info] * utf8
+[info] * -Xfatal-warnings
+[info] * -deprecation
+[info] * -unchecked
+[success] Total time: 0 s, completed Jan 2, 2017 11:44:44 PM
+> ++2.11.8
+[info] Setting version to 2.11.8
+[info] Reapplying settings...
+[info] Set current project to Hello (in build file:/xxx/)
+> show scalacOptions
+[info] * -encoding
+[info] * utf8
+[info] * -unchecked
+[success] Total time: 0 s, completed Jan 2, 2017 11:44:51 PM
+```
+
 Next, take these two keys (from [Keys](../sxr/sbt/Keys.scala.html)):
 
 ```scala
