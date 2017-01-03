@@ -4,6 +4,7 @@ out: Hello.html
 
   [Basic-Def]: Basic-Def.html
   [Setup]: Setup.html
+  [Running]: Running.html
 
 Hello, World
 ------------
@@ -45,6 +46,8 @@ Template applied in ./hello
 [info] Running example.Hello
 hello
 ```
+
+[後で][Running]他のタスクもみていく。
 
 ### sbt シェルの終了
 
