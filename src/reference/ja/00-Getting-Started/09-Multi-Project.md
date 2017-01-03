@@ -30,21 +30,15 @@ lazy val util = (project in file("util"))
 lazy val core = (project in file("core"))
 ```
 
+val で定義された名前はプロジェクトの ID 及びベースディレクトリの名前になる。
+ID は sbt シェルからプロジェクトを指定する時に用いられる。
+
+ベースディレクトリ名が ID と同じ名前であるときは省略することができる。
+
 ```scala
 lazy val util = project
 
 lazy val core = project
-```
-
-val で定義された名前はプロジェクトの ID 及びベースディレクトリの名前になる。
-ID はコマンドラインからプロジェクトを指定する時に用いられる。
-ベースディレクトリは `in` メソッドを使ってこのデフォルトから変更することができる。
-上記の例と同じ結果になる記述を明示的に書くと、以下のようになる。
-
-```scala
-lazy val util = project.in(file("util"))
-
-lazy val core = project in file("core")
 ```
 
 #### 共通のセッティング
