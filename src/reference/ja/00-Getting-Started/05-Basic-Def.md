@@ -14,83 +14,48 @@ out: Basic-Def.html
 --------------
 
 このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と `build.sbt` の構文を説明する。
-君が[sbt の使い方][Running]を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
+[sbt の使い方][Running]を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
 
-### 3 種類のビルド定義
-
-ビルド定義には以下の 3 種類がある:
-
-1. マルチプロジェクトでの `.sbt` ビルド定義
-2. bare `.sbt` ビルド定義
-3. `.scala` ビルド定義
-
-このページでは最も新しいマルチプロジェクトでの `.sbt` ビルド定義を紹介する。
-これは従来の 2 つのビルド定義の長所を組み合わせたもので、全ての用途に適している。
-以前に書かれたビルド定義を使って作業をするときは、古い種類のものも目にするかもしれない。
-それらに関しては (このガイドの後ほどの) [bare .sbt ビルド定義][Bare-Def]と [.scala ビルド定義][Full-Def]を参照。
-
-さらに、ビルド定義は `project/` ディレクトリ直下に置かれた `.scala` で終わるファイルを含むことができ、そこで共通の関数や値を定義することもできる。
+このページでは `build.sbt` ビルド定義を紹介する。
 
 ### ビルド定義とは何か
 
-** ここは読んで下さい **
-
-あらかじめ決められたディレクトリを走査し、ビルド定義に関するファイル群を処理した後、最終的に sbt は `Project` の定義群を作る。
+あらかじめ決められたディレクトリを走査し、ビルド定義に関するファイル群を処理した後、最終的に sbt は `Project` 定義の集合を作る。
 
 例えば、カレントディレクトリにあるプロジェクトの [Project](../../api/sbt/Project.html) 定義は `build.sbt` に以下のように記述できる：
 
 ```scala
 lazy val root = (project in file("."))
+  .settings(
+    name := "Hello",
+    scalaVersion := "$example_scala_version$"
+  )
 ```
 
 それぞれのプロジェクトは、そのプロジェクトを記述する不変 Map （キーと値のペア群のセット）に関連付けられる。
 
 例えば、`name` というキーがあるが、それはプロジェクト名という文字列の値に関連付けられる。
-
-_ビルド定義ファイルは直接的には sbt の Map に影響を与えない。_
-
-その代わり、ビルド定義は `Setting[T]` 型のオブジェクトを含む巨大なリストを作る。
-`T` は Map における値の型だ。（Scala の `Setting[T]` は Java の `Setting<T>` と同様。）
-`Setting` は、新しいキーと値のペアの追加、既存の値への付加のような_ Map の変換_を記述する。
-（不変データ構造と関数型プログラミングの精神に則り、この変換は新しい Map を返し、古い Map は更新されない。）
-
-カレントディレクトリに位置するプロジェクトに対してプロジェクト名のための `Setting[String]`
-を関連付けるためには以下のように書く:
+キーと値のペア群は `settings(...)` メソッド内に列挙される:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
-    name := "hello"
+lazy val root = (project in file("."))
+  .settings(
+    name := "Hello",
+    scalaVersion := "$example_scala_version$"
   )
 ```
-
-この `Setting[String]` は `name` キーを追加（もしくは置換）して `"hello"` という値に設定することで Map を変換する。
-変換された Map は新しい sbt の Map となる。
-
- Map を作るにあたり、同じキーへのすべての変更が同時に実行されるため、そして、他のキーに依存する値の処理が依存するキーの後に処理されるように、
-sbt はまず `Setting` のリストをソートする。
-次にソートされた `Setting` のリストを順番にみていって、一つずつ Map に適用する。
-
-まとめ: _ビルド定義とは `Setting[T]` のリストを持った `Project` を定義するものであり、
-`Setting[T]` は sbt が持つキーと値のペアの Map に作用する変換を表し、その `T` は値の型である。_
 
 ### `build.sbt` はどのように settings を定義するか
 
 `build.sbt` が定義する `Project` は `settings` と呼ばれる Scala の式のリストを持つ。
 
-以下に具体例を示す:
-
 ```scala
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
-
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
-    name := "hello"
+lazy val root = (project in file("."))
+  .settings(
+    name         := "hello",
+    organization := "com.example",
+    scalaVersion := "$example_scala_version$",
+    version      := "0.1.0-SNAPSHOT"
   )
 ```
 
@@ -99,7 +64,7 @@ lazy val root = (project in file(".")).
 
 `build.sbt` 内には `val`、`lazy val`、`def` を定義することもできる。
 `build.sbt` において、トップレベルで `object` や `class` を定義することはできない。
-それらが必要なら `project/` 配下に `.scala` ビルド定義として完全な Scala ソースファイルを置くべきだろう。
+それらが必要なら `project/` 配下にScala ソースファイル (`.scala`) を置くべきだろう。
 
 左辺値の `name`、`version`、および `scalaVersion` は _キー_である。
 キーは `SettingKey[T]`、`TaskKey[T]`、もしくは `InputKey[T]` のインスタンスで、
@@ -109,8 +74,8 @@ lazy val root = (project in file(".")).
 Java っぽい構文でこのメソッドを呼び出すこともできる:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name.:=("hello")
   )
 ```
@@ -124,8 +89,8 @@ lazy val root = (project in file(".")).
 誤った型の値を使おうとするとビルド定義はコンパイルエラーになる:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := 42  // コンパイルできない
   )
 ```
@@ -191,8 +156,8 @@ _あるキーがあるとき、それは常にタスクかただのセッティ�
 ```scala
 lazy val hello = taskKey[Unit]("An example task")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     hello := { println("Hello!") }
   )
 ```
@@ -200,8 +165,8 @@ lazy val root = (project in file(".")).
 セッティングの定義は既に何度か見ていると思うが、プロジェクト名の定義はこのようにできる:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -216,7 +181,7 @@ lazy val root = (project in file(".")).
 それは、セッティングキーはキャッシュされていて、再実行されないため、タスキキーに依存できないということだ。
 このことについては、後ほどの[他の種類のセッティング][More-About-Settings]にて詳しくみていく。
 
-### sbt インタラクティブモードにおけるキー
+### sbt シェルにおけるキー
 
 sbt のインタラクティブモードからタスクの名前を入力することで、どのタスクでも実行することができる。
 それが `compile` と入力することでコンパイルタスクが起動する仕組みだ。つまり、`compile` はタスクキーだ。
@@ -253,16 +218,14 @@ import Keys._
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "2.11.4"
-)
-
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
-    name := "hello",
+lazy val root = (project in file("."))
+  .settings(
+    inThisBuild(List(
+      organization := "com.example",
+      scalaVersion := "$example_scala_version$",
+      version      := "0.1.0-SNAPSHOT"
+    )),
+    name := "Hello",
     libraryDependencies += derby
   )
 ```
