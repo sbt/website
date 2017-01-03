@@ -12,7 +12,7 @@ Scopes
 ------
 
 This page describes scopes. It assumes you've read and understood the
-previous page, [.sbt build definition][Basic-Def].
+previous pages, [build definition][Basic-Def] and [task graph][Task-Graph].
 
 ### The whole story about keys
 
@@ -232,8 +232,7 @@ this case
 is the `fullClasspath` key scoped to the `test` configuration and the
 `{file:/home/hp/checkout/hello/}default-aea33a` project).
 
-"Dependencies" may not make sense yet; stay tuned for the
-[next page][Task-Graph].
+"Dependencies" was discussed in detail in the [previous page][Task-Graph].
 
 You can also see the delegates; if the value were not defined, sbt would
 search through:
