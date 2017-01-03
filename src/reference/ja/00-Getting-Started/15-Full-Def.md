@@ -3,7 +3,6 @@ out: Full-Def.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
   [Using-Plugins]: Using-Plugins.html
   [Multi-Project]: Multi-Project.html
 
@@ -14,9 +13,9 @@ out: Full-Def.html
 以前のバージョンの sbt で複数のプロジェクトを扱うには `.scala` ビルド定義を使う以外しかなかったが、
 sbt 0.13 からは[マルチプロジェクト .sbt ビルド定義][Basic-Def]が追加され、現在はそのスタイルが推奨されている。
 
-このページは、このガイドのこれまでのページ、特に 
-[.sbt ビルド定義][Basic-Def] と
-[他の種類のセッティング][More-About-Settings]を読んでいることを前提とする。
+このページは、このガイドのこれまでのページ、特に
+[.sbt ビルド定義][Basic-Def]
+を読んでいることを前提とする。
 
 ### `build.sbt` と `Build.scala` の関係
 

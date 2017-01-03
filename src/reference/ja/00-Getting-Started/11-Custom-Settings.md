@@ -3,7 +3,7 @@ out: Custom-Settings.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Using-Plugins]: Using-Plugins.html
   [Organizing-Build]: Organizing-Build.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
@@ -19,7 +19,8 @@ out: Custom-Settings.html
 このページでは、独自のセッティングやタスクの作成を紹介する。
 
 このページを理解するには、このガイドの前のページ、
-特に [build.sbt][Basic-Def] と [他の種類のセッティング][More-About-Settings] を読んである必要がある。
+特に [build.sbt][Basic-Def] と
+[タスク・グラフ][Task-Graph] を読んである必要がある。
 
 ### キーを定義する
 
@@ -76,7 +77,7 @@ lazy val library = (project in file("library")).
   )
 ```
 
-もしタスクに依存してるものがあれば、[他の種類のセッティング][More-About-Settings]で説明したとおり `value` を使ってその値を参照すればよい。
+もしタスクに依存してるものがあれば、[タスク・グラフ][More-About-Settings]で説明したとおり `value` を使ってその値を参照すればよい。
 
 タスクを実装する上で一番難しい点は、多くの場合 sbt 固有の問題ではない。なぜならタスクはただの Scala コードだからだ。
 難しいのはそのタスクが実行したいことの「本体」部分を書くことだ。
@@ -222,7 +223,7 @@ lazy val library = (project in file("library")).
       val old = sampleStringTask.value
       println("stopping...")
       Thread.sleep(500)
-      old      
+      old
     }
   )
 ```
@@ -253,7 +254,7 @@ sampleIntTask := {
     println("sum: " + sum)
   } finally {
     ServerUtil.stopServer
-  } 
+  }
   sum
 }
 ```

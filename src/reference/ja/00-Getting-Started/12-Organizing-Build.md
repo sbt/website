@@ -3,7 +3,7 @@ out: Organizing-Build.html
 ---
 
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Using-Plugins]: Using-Plugins.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -16,6 +16,7 @@ out: Organizing-Build.html
 
 このガイドの前のページ、特に
 [build.sbt][Basic-Def]、
+[タスク・グラフ][Task-Graph]、
 [ライブラリ依存性][Library-Dependencies]、
 そして[マルチプロジェクト・ビルド][Multi-Project]を理解していることが必要になる。
 

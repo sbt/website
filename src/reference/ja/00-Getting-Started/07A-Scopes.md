@@ -4,7 +4,7 @@ out: Scopes.html
 
   [MavenScopes]: https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope
   [Basic-Def]: Basic-Def.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
   [Inspecting-Settings]: ../../docs/Inspecting-Settings.html
@@ -182,7 +182,7 @@ sbt シェルで `inspect` コマンドを使ってキーとそのスコープ�
 `{file:/home/hp/checkout/hello/}default-aea33a/test:full-classpath`
 （`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `full-classpath` キー）。
 
-"Dependencies" はまだよく分からないかもしれないが、これの説明は[次のページ][More-About-Settings]まで待ってほしい。
+"Dependencies" はまだよく分からないかもしれないが、これの説明は[次のページ][Task-Graph]まで待ってほしい。
 
 ここで委譲も見ることができ、もし値が定義されていなければ、sbt は以下を検索する:
 

@@ -9,12 +9,15 @@ out: Using-Plugins.html
   [Community-Plugins]: ../../docs/Community-Plugins.html
   [Plugins]: ../../docs/Plugins.html
   [Plugins-Best-Practices]: ../../docs/Plugins-Best-Practices.html
+  [Task-Graph]: Task-Graph.html
 
 プラグインの使用
 --------------
 
 このガイドのこれまでのページを読んでおいてほしい。
-特に [build.sbt][Basic-Def]と[ライブラリ依存性][Library-Dependencies]を理解していることが必要になる。
+特に [build.sbt][Basic-Def]、
+[タスク・グラフ][Task-Graph]、
+と[ライブラリ依存性][Library-Dependencies]を理解していることが必要になる。
 
 ### プラグインとは何か
 

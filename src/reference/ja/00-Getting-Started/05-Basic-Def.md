@@ -3,15 +3,15 @@ out: Basic-Def.html
 ---
 
   [Keys]: ../../sxr/sbt/Keys.scala.html
-  [More-About-Settings]: More-About-Settings.html
+  [Task-Graph]: Task-Graph.html
   [Bare-Def]: Bare-Def.html
   [Full-Def]: Full-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
 
-.sbt ビルド定義
---------------
+ビルド定義
+---------
 
 このページでは、多少の「理論」も含めた sbt のビルド定義 (build definition) と `build.sbt` の構文を説明する。
 [sbt の使い方][Running]を分かっていて、「始める sbt」の前のページも読んだことを前提とする。
@@ -179,7 +179,7 @@ lazy val root = (project in file("."))
 
 `T` と `Task[T]` の型の違いによる影響が一つある。
 それは、セッティングキーはキャッシュされていて、再実行されないため、タスキキーに依存できないということだ。
-このことについては、後ほどの[他の種類のセッティング][More-About-Settings]にて詳しくみていく。
+このことについては、後ほどの[タスク・グラフ][Task-Graph]にて詳しくみていく。
 
 ### sbt シェルにおけるキー
 
@@ -234,7 +234,7 @@ lazy val root = (project in file("."))
 
 `libraryDependencies` キーは二つの複雑な点がある:
 `:=` ではなく `+=` を使うことと、`%` メソッドだ。
-後で[他の種類のセッティング][More-About-Settings]で説明するが、`+=` はキーの古い値を上書きする代わりに新しい値を追加する。
+後で[タスク・グラフ][Task-Graph]で説明するが、`+=` はキーの古い値を上書きする代わりに新しい値を追加する。
 `%` メソッドは文字列から Ivy モジュール ID を構築するのに使われ、これは[ライブラリ依存性][Library-Dependencies]で説明する。
 
 ライブラリ依存性に関する詳細については、このガイドの後ろの方までとっておくことにする。
