@@ -53,7 +53,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-それぞれのサブプロジェクトは、それを記述するキーと値のペアの列に関連付けられる。
+それぞれのサブプロジェクトは、キーと値のペアによって詳細が設定される。
 
 例えば、`name` というキーがあるが、それはサブプロジェクト名という文字列の値に関連付けられる。
 キーと値のペア列は `.settings(...)` メソッド内に列挙される:
@@ -81,7 +81,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-build.sbt DSL を詳しくみてみよう:
+build.sbt DSL を詳しくみてみよう:<br>
 ![setting expression](../files/setting-expression.png)<br>
 <br>
 それぞれのエントリーは**セッティング式** (setting expression) と呼ばれる。
@@ -94,7 +94,10 @@ build.sbt DSL を詳しくみてみよう:
 3. 右辺項は**本文** (body)、もしくは**セッティング本文**という。
 
 左辺値の `name`、`version`、および `scalaVersion` は**キー**である。
-キーは `SettingKey[T]`、`TaskKey[T]`、もしくは `InputKey[T]` のインスタンスで、
+キーは
+[`SettingKey[T]`](../api/index.html#sbt.SettingKey)、
+[`TaskKey[T]`](../api/index.html#sbt.TaskKey)、もしくは
+[`InputKey[T]`]((../api/index.html#sbt.InputKey)) のインスタンスで、
 `T` はその値の型である。キーの種類に関しては後述する。
 
 `name` キーは `SettingKey[String]` に型付けされているため、

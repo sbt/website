@@ -38,7 +38,7 @@ lazy val core = (project in file("core"))
 The name of the val is used as the subproject's ID, which
 is used to refer to the subproject at the sbt shell.
 
-Optionally the base directory may be omitted if it's same as the name of the val.
+Optionally the base directory may be omitted if it's the same as the name of the val.
 
 ```scala
 lazy val util = project

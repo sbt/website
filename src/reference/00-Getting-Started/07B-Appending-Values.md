@@ -61,7 +61,7 @@ you do this.
 
 #### Tasks based on other keys' values
 
-You can compute values of some tasks or settings to define or append value for another task. It's done by using `Def.task` and `taskValue`, as argument to `:=`, `+=` or `++=`.
+You can compute values of some tasks or settings to define or append a value for another task. It's done by using `Def.task` and `taskValue` as an argument to `:=`, `+=`, or `++=`.
 
 As a first example, consider appending a source generator using the project base directory and compilation classpath.
 

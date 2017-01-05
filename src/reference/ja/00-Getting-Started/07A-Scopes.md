@@ -289,6 +289,7 @@ sbt はフォールバックとして `ThisBuild` 内を探す。
 便宜のため、セッティング式のキーと本文の両方を `ThisBuild`
 にスコープ付けする
 `inThisBuild(...)` という関数が用意されている。
+セッティング式を渡すと、それに `in ThisBuild` を可能な所に追加したのと同じものが得られる。
 
 ```scala
 lazy val root = (project in file("."))

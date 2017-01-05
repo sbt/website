@@ -50,7 +50,7 @@ Source code can be placed in the project's base directory as
 `hello/app.scala`, which may be for small projects,
 though for normal projects people tend to keep the projects in
 the `src/main/` directory to keep things neat.
-The fact that you can place `*.scala` source code might seem like
+The fact that you can place `*.scala` source code in the base directory might seem like
 an odd trick, but this fact becomes relevant [later][Organizing-Build].
 
 ### sbt build definition files
