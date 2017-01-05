@@ -55,7 +55,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-Each subproject is associated with a sequence of key-value pairs describing the subproject.
+Each subproject is configured by key-value pairs.
 
 For example, one key is `name` and it maps to a string value, the name of
 your subproject.
@@ -84,7 +84,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-Let's take a closer look at the build.sbt DSL:
+Let's take a closer look at the `build.sbt` DSL:
 ![setting expression](files/setting-expression.png)<br>
 <br>
 Each entry is called a *setting expression*.
@@ -98,7 +98,10 @@ A setting expression consists of three parts:
 3. Right-hand side is called the *body*, or the *setting body*.
 
 On the left-hand side, `name`, `version`, and `scalaVersion` are *keys*.
-A key is an instance of `SettingKey[T]`, `TaskKey[T]`, or `InputKey[T]` where `T` is the
+A key is an instance of
+[`SettingKey[T]`](../api/index.html#sbt.SettingKey),
+[`TaskKey[T]`](../api/index.html#sbt.TaskKey), or
+[`InputKey[T]`](../api/index.html#sbt.InputKey) where `T` is the
 expected value type. The kinds of key are explained below.
 
 Because key `name` is typed to `SettingKey[String]`,

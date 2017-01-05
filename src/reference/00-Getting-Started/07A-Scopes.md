@@ -359,13 +359,14 @@ config, global task).
 An advanced technique for factoring out common settings
 across subprojects is to define the settings scoped to `ThisBuild`.
 
-If a key is not defined scoped to a particular subproject,
+If a key that is scoped to a particular subproject is not found,
 sbt will look for it in `ThisBuild` as a fallback.
 Using the mechanism, we can define a build-wide default setting for
 frequently used keys such as `version`, `scalaVersion`, and `organization`.
 
 For convenience, there is `inThisBuild(...)` function that will
 scope both the key and the body of the setting expression to `ThisBuild`.
+Putting setting expressions in there would be equivalent to appending `in ThisBuild` where possible.
 
 ```scala
 lazy val root = (project in file("."))

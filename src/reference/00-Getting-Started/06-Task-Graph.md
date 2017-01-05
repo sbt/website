@@ -14,7 +14,7 @@ Task graph
 Continuing from [build definition][Basic-Def],
 this page explains `build.sbt` definition in more detail.
 
-Rather than thinking `settings` as a key-value pairs,
+Rather than thinking of `settings` as key-value pairs,
 a better analogy would be to think of it as a _directed acyclic graph_ (DAG)
 of tasks where the edges denote **happens-before**. Let's call this the _task graph_.
 
@@ -73,9 +73,9 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
-      val out = streams.value // stream task happens-before scalacOptions
+      val out = streams.value // streams task happens-before scalacOptions
       val log = out.log
       log.info("123")
       val ur = update.value   // update task happens-before scalacOptions
@@ -109,7 +109,7 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val ur = update.value  // update task happens-before scalacOptions
       if (false) {
@@ -244,7 +244,7 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation", "-unchecked"),
     scalacOptions := {
       val old = scalacOptions.value
@@ -284,8 +284,8 @@ val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
 val checksums = settingKey[Seq[String]]("The list of checksums to generate and to verify for dependencies.")
 ```
 
-**Note**: `scalacOptions` and `checksums` have nothing to do with each other, they
-are just two keys with the same value type, where one is a task.
+**Note**: `scalacOptions` and `checksums` have nothing to do with each other.
+They are just two keys with the same value type, where one is a task.
 
 It is possible to compile a `build.sbt` that aliases `scalacOptions` to
 `checksums`, but not the other way. For example, this is allowed:
@@ -301,14 +301,14 @@ computed once on project load, so the task would not be re-run every
 time, and tasks expect to re-run every time.
 
 ```scala
-// The checksums setting may not be defined in terms of the scalacOptions task
+// Bad example: The checksums setting cannot be defined in terms of the scalacOptions task!
 checksums := scalacOptions.value
 ```
 
 #### Defining a setting that depends on other settings
 
 In terms of the execution timing, we can think of the settings
-as a special tasks that evaluate during the loading time.
+as a special tasks that evaluate during loading time.
 
 Consider defining the project organization to be the same as the project name.
 
@@ -333,15 +333,10 @@ scalaSource in Compile := {
 
 ### What's the point of the build.sbt DSL?
 
-As we saw before, a [build definition][Basic-Def] consists of subprojects
-with a sequence of key-value pairs called `settings` describing the subproject.
-There's more to the story.
-Rather than thinking `settings` as a key-value pairs,
-a better analogy would be to think of it as a DAG
-of tasks where the edges denote **happens-before**.
+The `build.sbt` DSL is a domain-specific language used construct a DAG of settings and tasks.
+The setting expressions encode settings, tasks and the dependencies among them.
 
-What the `Setting` sequence encodes is tasks and the dependencies among them,
-similar to [Make][Make] (1976), [Ant][Ant] (2000), and [Rake][Rake] (2003).
+This structure is common to [Make][Make] (1976), [Ant][Ant] (2000), and [Rake][Rake] (2003).
 
 #### Intro to Make
 

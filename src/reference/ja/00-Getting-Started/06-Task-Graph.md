@@ -72,9 +72,9 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
-      val out = streams.value // stream タスクは scalacOptions よりも事前発生する
+      val out = streams.value // streams タスクは scalacOptions よりも事前発生する
       val log = out.log
       log.info("123")
       val ur = update.value   // update タスクは scalacOptions よりも事前発生する
@@ -108,7 +108,7 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val ur = update.value  // update task happens-before scalacOptions
       if (false) {
@@ -234,7 +234,7 @@ lazy val root = (project in file(".")).
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT",
+    version := "0.1.0-SNAPSHOT",
     scalacOptions := List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation", "-unchecked"),
     scalacOptions := {
       val old = scalacOptions.value
@@ -289,7 +289,7 @@ scalacOptions := checksums.value
 なぜなら、セッティングキーの値はプロジェクトのロード時に一度だけしか計算されず、毎回再実行されるべきタスクが毎回実行されなくなってしまうからだ。
 
 ```scala
-// checksums セッティングは scalacOptions タスクに関連付けても、値が定まらないかもしれない
+// 悪い例: checksums セッティングは scalacOptions タスクに関連付けて定義することはできない!
 checksums := scalacOptions.value
 ```
 
@@ -320,15 +320,12 @@ scalaSource in Compile := {
 
 ### そもそも build.sbt DSL は何のためにある?
 
-以前みたように[ビルド定義][Basic-Def]は、`settings`
-というキーと値のペア群を持つサブプロジェクトの集合から構成される。
-実は、それには奥がある。
-`settings` をキーと値のペア群だと考えるよりも、
-より良いアナロジーは、辺を**事前発生** (happens-before) 関係とするタスクの有向非巡回グラフだと考える事だ。
+`build.sbt` DSL は、セッティングやタスクの有向非巡回グラフを構築するためのドメイン特化言語だ。
+セッティング式はセッティング、タスク、そしてそれらの間の依存性をエンコードする。
 
-つまり、`Setting` 列がエンコードするのはタスクとタスク間の依存性であって、
+この構造は
 [Make][Make] (1976)、 [Ant][Ant] (2000)、 [Rake][Rake] (2003)
-などにも類似する。
+などにも共通する。
 
 #### Make 入門
 
