@@ -73,7 +73,7 @@ lazy val commonSettings = Seq(
 )
 
 lazy val root = (project in file(".")).
-  settings(commonSettings ++ bintrayPublishSettings: _*).
+  settings(commonSettings).
   settings(
     sbtPlugin := true,
     name := "<YOUR PLUGIN HERE>",
@@ -82,7 +82,7 @@ lazy val root = (project in file(".")).
     // (using a canonical name).
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     publishMavenStyle := false,
-    repository in bintray := "sbt-plugins",
+    bintrayRepository := "sbt-plugins",
     bintrayOrganization in bintray := None
   )
 ```
