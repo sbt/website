@@ -278,3 +278,16 @@ myTask := {
   log.warn("A warning.")
 }
 ```
+
+### Log messages in a setting
+
+Since settings cannot reference tasks, the special task `streams`
+cannot be used to provide logging during setting initialization.
+The recommented way is to use `sLog`:
+
+```scala
+mySetting := {
+  val log = sLog.value
+  log.warn("A warning.")
+}
+```
