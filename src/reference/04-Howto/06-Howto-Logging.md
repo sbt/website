@@ -270,7 +270,10 @@ the ones provided by the old function.
 
 The special task `streams` provides per-task logging and I/O via a
 [Streams](../api/#sbt.std.Streams) instance. To log, a task uses
-the `log` member from the `streams` task:
+the `log` member from the `streams` task. Calling `log` provides
+a [Logger](../api/#sbt.Logger).
+
+:
 
 ```scala
 myTask := {
@@ -283,7 +286,8 @@ myTask := {
 
 Since settings cannot reference tasks, the special task `streams`
 cannot be used to provide logging during setting initialization.
-The recommented way is to use `sLog`:
+The recommented way is to use `sLog`. Calling `sLog.value` provides
+a [Logger](../api/#sbt.Logger).
 
 ```scala
 mySetting := {
