@@ -1,8 +1,8 @@
 import sbt._
 import Keys._
 import com.typesafe.sbt.git.GitRunner
-import com.typesafe.sbt.{SbtGhPages, SbtGit, SbtSite, site=>sbtsite}
-import SbtGhPages.{ghpages, GhPagesKeys => ghkeys}
+import com.typesafe.sbt.{ SbtGit, SbtSite, site=>sbtsite }
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
 
@@ -139,13 +139,6 @@ object Docs {
     linkFile
   }
 
-
-  def customGhPagesSettings: Seq[Setting[_]] = ghpages.settings ++ Seq(
-    git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
-    GitKeys.gitBranch in ghkeys.updatedRepository := Some("master"),
-    ghkeys.synchLocal := syncLocalImpl.value
-  )
-
   // This task is responsible for updating the gh-pages branch on some temp dir.
   // On the branch there are files that was generated in some other ways such as:
   // - Scaladoc API doc
@@ -156,7 +149,7 @@ object Docs {
   // and then copy over the newly generated files.
   val syncLocalImpl = Def.task {
     // sync the generated site
-    val repo = ghkeys.updatedRepository.value
+    val repo = ghpagesUpdatedRepository.value
     val fullVersioned = repo / targetSbtFullVersion
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value

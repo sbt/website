@@ -1,11 +1,12 @@
 import com.typesafe.sbt.site.util.SiteHelpers
 import Docs._
+import com.typesafe.sbt.SbtGit.GitKeys
 
 lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
 
 lazy val root = (project in file(".")).
-  enablePlugins(NanocPlugin, PamfletPlugin).
+  enablePlugins(NanocPlugin, PamfletPlugin, GhpagesPlugin).
   settings(
     organization := "org.scala-sbt",
     name := "website",
@@ -19,7 +20,10 @@ lazy val root = (project in file(".")).
     redirectTutorialSettings,
     SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
     // GitHub Pages. See project/Docs.scala
-    customGhPagesSettings,
+    git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
+    GitKeys.gitBranch in ghpagesUpdatedRepository := Some("master"),
+    ghpagesSynchLocal := syncLocalImpl.value,
+
     // NOTE - PDF settings must be done externally like this because pdf generation generically looks
     // through `mappings in Config` for Combined+Pages.md to generate PDF from, and therefore we
     // can't create a circular dpeendnecy by adding it back into the original mappings.
