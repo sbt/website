@@ -38,7 +38,7 @@ To launch an application, the user then downloads the configuration file
 for the application (call it `my.app.configuration`) and creates a
 script to launch it (call it `myapp`):
 
-```sh
+```
 launch @my.app.configuration "\$@"
 ```
 
@@ -60,7 +60,7 @@ running), the user downloads the configuration file for the server (call
 it `my.server.configuration`) and creates a script to discover the
 server (call it `find-myserver`):
 
-```sh
+```
 launch --locate @my.server.properties.
 ```
 
