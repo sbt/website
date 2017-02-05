@@ -180,7 +180,7 @@ it might look like:
   local
   maven-central
 [boot]
- directory: ${user.home}/.myapp/boot
+ directory: \${user.home}/.myapp/boot
 ```
 
 Then, `sbt publishLocal` or `sbt +publishLocal` the application to make it
