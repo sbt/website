@@ -11,11 +11,10 @@ ordering of everything.
 
 As stated elsewhere, sbt constructs its initialization graph and task
 graph via `Setting[_]` objects. A setting is something which can take
-the values stored at other Keys in the build state, and generates a new
-value for a particular build key. Sbt converts all registered
+the values stored at other `Keys` in the build state, and generates a new
+value for a particular build key. sbt converts all registered
 `Setting[_]` objects into a giant linear sequence and *compiles* them
-into the a task graph. This task graph is then used to execute your
-build.
+into a task graph. This task graph is then used to execute your build.
 
 All of sbt's loading semantics are contained within the
 [Load.scala](../sxr/sbt/Load.scala.html) file. It is approximately
@@ -51,17 +50,17 @@ shows the two most important:
     }
     ```
 
-    or in a `build.sbt` file :
+    or in a `build.sbt` file:
 
     ```scala
     foo in ThisBuild := "hi"
     ```
 
 -   `projectSettings` - These are settings specific to a project. They
-    are specific to a *particular sub project* in the build. A plugin
+    are specific to a *particular subproject* in the build. A plugin
     may be contributing its settings to more than on project, in which
     case the values are duplicated for each project. You add project
-    specific settings, eg. in `project/build.scala` :
+    specific settings, eg. in `project/build.scala`:
 
     ```scala
     object MyBuild extends Build {
@@ -84,7 +83,7 @@ default inclusion order for sbt is:
 The order which sbt uses to load settings is configurable at a *project*
 level. This means that we can't control the order of settings added to
 Build/Global namespace, but we can control how each project loads, e.g.
-plugins and `.sbt` files. To do so, use the `AddSettings` class :
+plugins and `.sbt` files. To do so, use the `AddSettings` class:
 
 ```scala
 import sbt._
@@ -110,7 +109,7 @@ What we've excluded:
 -   All settings from the user directory (`~/.sbt/<verison>`)
 -   All `*.sbt` settings.
 
-The AddSettings object provides the following "groups" of settings you
+The `AddSettings` object provides the following "groups" of settings you
 can use for ordering:
 
 - `autoPlugins` All the ordered settings of plugins after they've gone through
@@ -128,7 +127,7 @@ can use for ordering:
 For example, let's see what happens if we move the `build.sbt` files
 *before* the `buildScalaFile`.
 
-Let's create an example project the following defintiion. `project/build.scala` :
+Let's create an example project the following definition. `project/build.scala`:
 
 ```scala
 object MyTestBuild extends Build {
@@ -141,16 +140,16 @@ object MyTestBuild extends Build {
 }
 ```
 
-This build defines a version string which appends the scala version if
-the current scala version is not the in the `2.10.x` series. Now, when
+This build defines a version string which appends the Scala version if
+the current Scala version is not the in the `2.10.x` series. Now, when
 issuing a release we want to lock down the version. Most tools assume
-this can happen by writing a `version.sbt` file. `version.sbt` :
+this can happen by writing a `version.sbt` file. `version.sbt`:
 
 ```scala
 version := "1.0.0"
 ```
 
 However, when we load this new build, we find that the `version` in
-`version.sbt` has been **overriden** by the one defined in
+`version.sbt` has been **overridden** by the one defined in
 `project/Build.scala` because of the order we defined for settings, so
 the new `version.sbt` file has no effect.
