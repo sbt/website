@@ -18,7 +18,7 @@ sbt 0.13.13 以降を使っている場合は、sbt `new`
 以下をターミナルから打ち込む。
 
 ```
-\$ sbt new sbt/scala-seed.g8
+\$ sbt new eed3si9n/hello.g8
 ....
 Minimum Scala build.
 

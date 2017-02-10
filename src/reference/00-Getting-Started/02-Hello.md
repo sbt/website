@@ -16,7 +16,7 @@ This page assumes you've [installed sbt][Setup] 0.13.13 or later.
 If you're using sbt 0.13.13 or later, you can use sbt `new` command to quickly setup a simple Hello world build. Type the following command to the terminal.
 
 ```
-\$ sbt new sbt/scala-seed.g8
+\$ sbt new eed3si9n/hello.g8
 ....
 Minimum Scala build.
 
