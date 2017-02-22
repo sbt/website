@@ -153,12 +153,14 @@ Code in `util/src/main/scala/` is available for both the `macroSub` and
 ### Distribution
 
 To include the macro code with the core code, add the binary and source
-mappings from the macro subproject to the core project. For example, the
-`core` Project definition above would now look like:
+mappings from the macro subproject to the core project. And also
+macro subproject should be removed from core project dependency in
+publishing. For example, the `core` Project definition above would now
+look like:
 
 ```scala
 lazy val core = (project in file("core")).
-  dependsOn(macroSub).
+  dependsOn(macroSub % "compile-internal, test-internal").
   settings(commonSettings: _*).
   settings(
     // include the macro classes and resources in the main jar
