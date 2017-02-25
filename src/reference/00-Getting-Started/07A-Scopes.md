@@ -138,7 +138,7 @@ scoped keys like this:
 {<build-uri>}<project-id>/config:intask::key
 ```
 
-- `{<build-uri>}/<project-id>` identifies the project axis. The
+- `{<build-uri>}<project-id>` identifies the project axis. The
   `<project-id>` part will be missing if the project axis has "entire build" scope.
 - `config` identifies the configuration axis.
 - `intask` identifies the task axis.
