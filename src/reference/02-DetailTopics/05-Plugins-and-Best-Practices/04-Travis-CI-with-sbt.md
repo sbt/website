@@ -160,7 +160,7 @@ Again, let's check the Travis log to see if the flags are taking effect:
 
 **Note**: This duplicates the `-Xms` flag as intended, which might not the best thing to do.
 
-### (Experimental) Reusing Ivy cache
+### Caching
 
 In late 2014, thanks to Travis CI members sending pull requests on GitHub, we learned that Ivy cache can be shared across the Travis builds.
 The public availability of [caching][Travis-caching] is part of the benefit for trying the new [container-based infrastructure][Travis-container].
@@ -185,16 +185,16 @@ Next, we can put `cache` section as follows:
 cache:
   directories:
     - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/
+    - \$HOME/.sbt
 ```
 
 Finally, the following a few lines of cleanup script are added:
 
 ```yml
 before_cache:
-  # Tricks to avoid unnecessary cache updates
-  - find \$HOME/.ivy2 -name "ivydata-*.properties" -delete
-  - find \$HOME/.sbt -name "*.lock" -delete
+  # Cleanup the cached directories to avoid unnecessary cache updates
+  - find \$HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find \$HOME/.sbt        -name "*.lock"               -print -delete
 ```
 
 With the above changes combined Travis CI will tar up the cached directories and uploads them to Amazon S3.
