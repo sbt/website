@@ -183,7 +183,7 @@ it might look like:
  directory: \${user.home}/.myapp/boot
 ```
 
-Then, `sbt publishLocal` or `sbt +publishLocal` the application to make it
+Then, `publishLocal` or `+publishLocal` the application in sbt's shell to make it
 available. For more information, see
 [Launcher Configuration][Launcher-Configuration].
 
