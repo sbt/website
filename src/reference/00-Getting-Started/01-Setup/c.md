@@ -54,4 +54,4 @@ sbt binaries are published to Bintray, and conveniently Bintray provides an RPM 
 
 The official tree contains ebuilds for sbt. To install the latest available version do:
 
-  emerge dev-java/sbt
+    emerge dev-java/sbt
