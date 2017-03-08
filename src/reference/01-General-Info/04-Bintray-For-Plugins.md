@@ -20,13 +20,14 @@ plugin).
 
 To do this, we need to perform the following steps:
 
-### Create an account on Bintray
+### Create an Open Source Distribution account on Bintray
 
-First, go to <https://bintray.com>. Click on the sign in link on the top
-left, and then the sign up button.
+First, go to <https://bintray.com/signup/oss> to create an Open Source Distribution Bintray Account.
 
-*Note: If you had an account on repo.scala-sbt.org previous, please use
-the same email address when you create this account.*
+If you end up at the [Bintray home page](https://bintray.com), do NOT click on the Free Trial,
+but click on the link that reads **"For Open Source Distribution Sign Up Here"**.
+
+<img src="files/bintray-signup.png" style="width: 100%; height: 100%">
 
 ### Create a repository for your sbt plugins
 
