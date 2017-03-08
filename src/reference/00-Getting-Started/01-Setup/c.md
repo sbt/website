@@ -52,14 +52,6 @@ sbt binaries are published to Bintray, and conveniently Bintray provides an RPM 
 
 ### Gentoo
 
-In the official tree there is no ebuild for sbt. But there are
-[ebuilds](https://github.com/whiter4bbit/overlays/tree/master/dev-java/sbt-bin) to merge sbt from binaries.
-To merge sbt from this ebuilds you can do:
+The official tree contains ebuilds for sbt. To install the latest available version do:
 
-    mkdir -p /usr/local/portage && cd /usr/local/portage
-    git clone git://github.com/whiter4bbit/overlays.git
-    echo "PORTDIR_OVERLAY=\$PORTDIR_OVERLAY /usr/local/portage/overlays" >> /etc/make.conf
-    emerge sbt-bin
-
-> **Note:** Please report any issues with the ebuild
-> [here](https://github.com/whiter4bbit/overlays/issues).
+    emerge dev-java/sbt
