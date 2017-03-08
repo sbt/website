@@ -135,6 +135,7 @@ your plugin to the list.
 -   sbt-start-script: <https://github.com/sbt/sbt-start-script>
 -   xitrum-package (collects dependency .jar files for standalone Scala
     programs): <https://github.com/ngocdaothanh/xitrum-package>
+-   sbt-dist-zip (Create a distributable zip file): <https://github.com/timt/sbt-dist-zip>
 
 #### Deployment integration plugins
 
