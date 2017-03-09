@@ -184,6 +184,8 @@ your plugin to the list.
 -   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on GitHub):
     <https://github.com/ThoughtWorksInc/sbt-scala-js-map>
 -   Naptime API framework plugin: <http://coursera.github.io/naptime> (<https://github.com/coursera/naptime>)
+-   sbt-npm (Run npm tasks as part of sbt build process): <https://github.com/timt/sbt-npm>
+
 
 #### Documentation plugins
 
