@@ -9,7 +9,7 @@ Because the compiler interface is recompiled against each Scala version
 in use in your project, its source must stay compatible with all the Scala
 versions that sbt supports (from Scala 2.8 to the latest version of Scala).
 
-This comes at great cost for both the the sbt maintainers and the Scala
+This comes at great cost for both the sbt maintainers and the Scala
 compiler authors:
 
 1. The compiler authors cannot remove old and deprecated public APIs from

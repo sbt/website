@@ -170,7 +170,7 @@ postfix methods have lower precedence than infix methods.
     according to the specific character it starts with. See the Scala
     specification for details.)
 
-Therefore, the the previous example is equivalent to the following:
+Therefore, the previous example is equivalent to the following:
 
 
 ```scala

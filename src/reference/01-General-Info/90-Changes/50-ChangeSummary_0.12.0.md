@@ -25,7 +25,7 @@ out: ChangeSummary_0.12.0.html
     was a compatibility liability)
 -   Incremental compiler: properly track `abstract override` modifier.
     (gh-726)
--   Incremental compiler: do not normalize types in the api extraction
+-   Incremental compiler: do not normalize types in the API extraction
     phase. (gh-736)
 -   Ivy cache: account for `localOnly` when cache subclass overrides
     `isChanging`
@@ -352,12 +352,12 @@ parts to this.
 Additionally, Sanjin's patches to add support for hg and svn URIs are
 included.
 
-1.  sbt uses subversion to retrieve URIs beginning with `svn` or
+1.  sbt uses Subversion to retrieve URIs beginning with `svn` or
     svn+ssh. An optional fragment identifies a specific revision to
     checkout.
-2.  Because a URI for mercurial doesn't have a mercurial-specific
+2.  Because a URI for Mercurial doesn't have a Mercurial-specific
     scheme, sbt requires the URI to be prefixed with hg: to identify it
-    as a mercurial repository.
+    as a Mercurial repository.
 3.  Also, URIs that end with `.git` are now handled properly.
 
 #### Cross building

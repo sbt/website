@@ -14,7 +14,7 @@ sbt 0.13.0 - 0.13.2
 
 - Adding new name-hashing feature to incremental compiler. Alters how scala dependencies are tracked, reducing number of recompiles necessary.
 - Added the ability to launch servers via the sbt-launcher.
-- Added `.previous` feature on tasks which can load the pervious value.
+- Added `.previous` feature on tasks which can load the previous value.
 - Added `all` command which can run more than tasks in parallel.
 - Exposed the 'overwrite' flags from ivy. Added warning if overwriting a release version.
 - Improve the error message when credentials are not found in Ivy.
@@ -98,7 +98,7 @@ sbt 0.13.0 - 0.13.2
 -   JLine is now configured differently for Cygwin. See
     [Installing sbt][Setup].
 -   Jline and Ansi codes work better on Windows now. CI servers might
-    have to explictly disable Ansi codes via `-Dsbt.log.format=false`.
+    have to explicitly disable Ansi codes via `-Dsbt.log.format=false`.
 -   JLine now tries to respect `~/.inputrc`.
 -   Forked tests and runs now use the project's base directory as the
     current working directory.

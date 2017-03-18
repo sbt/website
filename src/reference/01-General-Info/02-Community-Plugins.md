@@ -333,7 +333,7 @@ your plugin to the list.
     <https://github.com/Atry/pttrt>
 -   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
     <https://github.com/qifun/sbt-haxe>
--   sbt-scalabuff (Google Protocol Buffers with native scala suppport
+-   sbt-scalabuff (Google Protocol Buffers with native scala support
     thru ScalaBuff): <https://github.com/sbt/sbt-scalabuff>
 -   sbt-fmpp (FreeMarker Scala/Java Templating):
     <https://github.com/sbt/sbt-fmpp>

@@ -95,7 +95,7 @@ are independent of the others. `sbt` will resolve your dependencies for
 each version separately. This way, for example, you get the version of
 Dispatch compiled against 2.8.1 for your 2.8.1 build, the version
 compiled against 2.10 for your 2.10.x builds, and so on. You can have
-fine-grained control over the behavior for for different Scala versions
+fine-grained control over the behavior for different Scala versions
 by using the `cross` method on `ModuleID` These are equivalent:
 
 ```scala
