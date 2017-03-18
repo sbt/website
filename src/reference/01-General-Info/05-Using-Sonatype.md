@@ -216,7 +216,7 @@ need to:
 -   Modify `build.sbt` with the required elements in the generated POM.
 
 Starting with a project that is not being published, you'll need to
-install GPG, generate and publish your key. Swtiching to sbt, you'll
+install GPG, generate and publish your key. Switching to sbt, you'll
 then need to:
 
 #### ~/.sbt/sonatype.sbt

@@ -288,7 +288,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         launcher. The format is the same as a
         <tt>[repositories]</tt> section for a
         <a href="Launcher.html">sbt launcher</a> configuration file.
-        This setting is typically used in conjuction with setting
+        This setting is typically used in conjunction with setting
         <tt>sbt.override.build.repos</tt> to
         <tt>true</tt> (see previous row and the
         <a href="Launcher.html">sbt launcher</a> documentation).</td>

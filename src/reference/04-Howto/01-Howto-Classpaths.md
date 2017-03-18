@@ -101,7 +101,7 @@ exportJars := true
 This will use the result of `packageBin` on the classpath instead of the
 class directory.
 
-> **Note**: Specifically, fullClasspath is the concatentation of
+> **Note**: Specifically, fullClasspath is the concatenation of
 > dependencyClasspath and exportedProducts. When exportJars is true,
 > exportedProducts is the output of packageBin. When exportJars is
 > false, exportedProducts is just products, which is by default the

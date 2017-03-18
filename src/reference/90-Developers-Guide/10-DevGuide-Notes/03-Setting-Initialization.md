@@ -75,7 +75,7 @@ default inclusion order for sbt is:
 1.  All AutoPlugin settings
 2.  All settings defined in `project/Build.scala`
 3.  All settings defined in the user directory
-    (`~/.sbt/<verison>/*.sbt`)
+    (`~/.sbt/<version>/*.sbt`)
 4.  All local configurations (`build.sbt`)
 
 ### Controlling Initialization
@@ -106,7 +106,7 @@ In the above project, we've modified the order of settings to be:
 
 What we've excluded:
 
--   All settings from the user directory (`~/.sbt/<verison>`)
+-   All settings from the user directory (`~/.sbt/<version>`)
 -   All `*.sbt` settings.
 
 The `AddSettings` object provides the following "groups" of settings you

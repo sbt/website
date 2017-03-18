@@ -98,7 +98,7 @@ For example, from the following output we learn that it is using `JVM_OPTS` envi
 The default [sbt][cookbook-sbt] and [JVM][cookbook-jvm] options are set by Travis CI people,
 and it should work for most cases.
 If you do decide to customize it, read what they currently use as the defaults first.
-Because Travis is already using the environment varible `JVM_OPTS`, we can instead create a file `travis/jvmopts`:
+Because Travis is already using the environment variable `JVM_OPTS`, we can instead create a file `travis/jvmopts`:
 
 ```
 -Dfile.encoding=UTF8
