@@ -286,7 +286,7 @@ myTask := {
 
 Since settings cannot reference tasks, the special task `streams`
 cannot be used to provide logging during setting initialization.
-The recommented way is to use `sLog`. Calling `sLog.value` provides
+The recommended way is to use `sLog`. Calling `sLog.value` provides
 a [Logger](../api/#sbt.Logger).
 
 ```scala

@@ -179,7 +179,7 @@ incremental compilation is determining whether changes applied to `A.scala` may 
 In the example above only the constant returned by method `foo` has changed and that does not affect
 compilation results of other files.
 
-Let's consider an other change to `A.scala`:
+Let's consider another change to `A.scala`:
 
 ```scala
 // A.scala
@@ -239,7 +239,7 @@ structures allow to express an API in a way that is independent from Scala compi
 such representation is persistent so it is serialized on disk and reused between compiler runs or
 even sbt runs.
 
-The api extraction phase consist of two major components:
+The API extraction phase consist of two major components:
 
   1. mapping Types and Symbols to incremental compiler representation of an extracted API
   2. hashing that representation

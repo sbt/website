@@ -15,7 +15,7 @@ plugins, while sbt can aggregate them together in a common repository.
 This document walks you through the means to create your own repository
 for hosting your sbt plugins and then linking them into the sbt shared
 repository. This will make your plugins available for all sbt users
-without additonal configuration (besides declaring a dependency on your
+without additional configuration (besides declaring a dependency on your
 plugin).
 
 To do this, we need to perform the following steps:

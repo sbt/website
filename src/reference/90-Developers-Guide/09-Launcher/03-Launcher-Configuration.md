@@ -78,7 +78,7 @@ following properties:
     vernacular)
 -   `version` - The revision of the Ivy module.
 -   `class` - The name of the "entry point" into the application. An
-    entry point must be a class which meets one of the following critera
+    entry point must be a class which meets one of the following criteria
     -   Extends the `xsbti.AppMain` interface.
     -   Extends the `xsbti.ServerMain` interfaces.
     -   Contains a method with the signature `static void main(String[])`
@@ -104,7 +104,7 @@ The `[repositories]` section configures where and how Ivy will look for
 your application. Each line denotes a repository where Ivy will look.
 
 *Note: This section configured the default location where Ivy will look,
-but this can be overriden via user configuration.*
+but this can be overridden via user configuration.*
 
 There are several built-in strings that can be used for common
 repositories:
@@ -170,7 +170,7 @@ properties:
 
 -   `lock` - The file that controls access to the running server. This
     file will contain the active port used by a server and must be
-    located on a a filesystem that supports locking.
+    located on a filesystem that supports locking.
 -   `jvmargs` - A file that contains line-separated JVM arguments that were
     used when starting the server.
 -   `jvmprops` - The location of a properties file that will define

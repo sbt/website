@@ -41,7 +41,7 @@ as well.
 
 The sbt launcher's classloading structure is different than just
 starting an application in the standard Java mechanism. Every
-application loaded by by the launcher is given its own classloader. This
+application loaded by the launcher is given its own classloader. This
 classloader is a child of the Scala classloader used by the application.
 The Scala classloader can see all of the `xsbti.*` classes from the
 launcher itself.

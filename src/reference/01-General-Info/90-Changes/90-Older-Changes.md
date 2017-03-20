@@ -385,7 +385,7 @@ Some of the more visible changes:
 -   Stack trace detail can be controlled with `'on'`, `'off'`, 'nosbt',
     or an integer level. 'nosbt' means to show stack frames up to the
     first sbt method. An integer level denotes the number of frames to
-    show for each cause. This feature is courtesty of Tony Sloane.
+    show for each cause. This feature is courtesy of Tony Sloane.
 -   New action 'test-run' method that is analogous to 'run', but for
     test classes.
 -   New action 'clean-plugins' task that clears built plugins (useful
@@ -825,7 +825,7 @@ Some of the more visible changes:
     stack traces
 -   Project.loadProject and related methods now accept a Logger to use
 -   Made hidden files and files that start with `'.'` excluded by
-    default (`'.*'` is required because subversion seems to not mark `.svn`
+    default (`'.*'` is required because Subversion seems to not mark `.svn`
     directories hidden on Windows)
 -   Implemented exit codes
 -   Added continuous compilation command `cc`

@@ -14,7 +14,7 @@ Let's talk about testing. Once you write a plugin, it turns into a long-term thi
 
 ### scripted test framework
 
-sbt comes with scripted test framework, which let's you script a build scenario. It was written to test sbt itself on complex scenarios -- such as change detection and partial compilation:
+sbt comes with scripted test framework, which lets you script a build scenario. It was written to test sbt itself on complex scenarios -- such as change detection and partial compilation:
 
 > Now, consider what happens if you were to delete B.scala but do not update A.scala. When you recompile, you should get an error because B no longer exists for A to reference.
 > [... (really complicated stuff)]
