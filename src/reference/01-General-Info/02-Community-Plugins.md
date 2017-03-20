@@ -148,6 +148,7 @@ your plugin to the list.
 -   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
 -   sbt-codedeploy: <https://github.com/gilt/sbt-codedeploy>
 -   sbt-heroku: <https://github.com/heroku/sbt-heroku>
+-   sbt-heroku-deploy: <https://github.com/earldouglas/sbt-heroku-deploy>
 -   sbt-aws-fun (Deploy Jar files to AWS Lambda): <https://github.com/TailrecIO/sbt-aws-fun>
 -   sbt-aws-serverless (Deploy code to AWS Serverless Architecture): <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
 
@@ -379,8 +380,6 @@ your plugin to the list.
     <https://github.com/earldouglas/sbt-frege>
 -   sbt-swagger-codegen (Models, Client and Server code generation integrated as an SBT plugin. Generate code from your Swagger(https://github.com/swagger-api) files):
     <https://github.com/unicredit/sbt-swagger-codegen>
--   sbt-heroku-deploy (Deploy Scala Web applications to Heroku):
-    <https://github.com/earldouglas/sbt-heroku-deploy>
 -   scavro (Code generation from [Avro](http://avro.apache.org/) schema):
     <https://github.com/oedura/scavro>
 -   sbt-spi-plugin (Generates provider-configuration files in the resource directory META-INF/services for later use with ServiceLoader)
