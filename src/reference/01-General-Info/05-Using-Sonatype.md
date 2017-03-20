@@ -257,7 +257,7 @@ passphrase.
 
 ### Fourth - Integrate with the release process
 
-> *Note:* sbt-sonatype is a third-party plugin meaning it is not covered by Lightbend subscription.
+> *Note:* sbt-release is a third-party plugin meaning it is not covered by Lightbend subscription.
 
 To automate the above publishing approach with the [sbt-release plugin]
 [sbt-release], you should simply add the publishing commands as steps in the
