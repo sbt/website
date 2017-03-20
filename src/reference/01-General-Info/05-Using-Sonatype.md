@@ -144,8 +144,11 @@ pomIncludeRepository := { _ => false }
 ```
 
 To publish to a maven repository, you'll need to configure a few
-settings so that the correct metadata is generated. This
-is done through the `pomExtra` configuration option in `build.sbt`:
+settings so that the correct metadata is generated.
+Specifically, the build should provide data for `organization`, `url`,
+`license`, `scm.url`, `scm.connection` and `developer` keys. To generate a 
+correct `pom.xml` you can use sbt's build keys or manually through the 
+`pomExtra` configuration option in `build.sbt`:
 ```
 pomExtra := (
   <url>http://your.project.url</url>
@@ -169,13 +172,6 @@ pomExtra := (
   </developers>
 )
 ```
-
-Specifically, the `url`, `license`, `scm.url`, `scm.connection` and
-`developer` sections are required. 
-
-> *Note:* Make sure that you're providing the project data using standard sbt
-options e.g. `organization` as SBT will automatically inject them to your 
-`pom.xml`
 
 The full format of a pom.xml file is 
 [outlined here](https://maven.apache.org/pom.html).
@@ -222,6 +218,8 @@ publishArtifact in Test := false
 
 ### Third - Publish to the staging repository
 
+> *Note:* sbt-sonatype is a third-party plugin meaning it is not covered by Lightbend subscription.
+
 To simplify the usage of the Sonatype's Nexus, add the following line to 
 `build.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
 ```
@@ -259,6 +257,8 @@ passphrase.
 
 ### Fourth - Integrate with the release process
 
+> *Note:* sbt-sonatype is a third-party plugin meaning it is not covered by Lightbend subscription.
+
 To automate the above publishing approach with the [sbt-release plugin]
 [sbt-release], you should simply add the publishing commands as steps in the
 `releaseProcess` option:
@@ -267,6 +267,7 @@ To automate the above publishing approach with the [sbt-release plugin]
 ReleaseStep(action = Command.process("sonatypeOpen \"your groupId\" \"Some staging name\"", _)),
 ...
 ReleaseStep(action = Command.process("publishSigned", _)),
-
+...
 ReleaseStep(action = Command.process("sonatypeRelease", _)),
+...
 ```
