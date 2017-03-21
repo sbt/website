@@ -146,53 +146,34 @@ pomIncludeRepository := { _ => false }
 To publish to a maven repository, you'll need to configure a few
 settings so that the correct metadata is generated.
 Specifically, the build should provide data for `organization`, `url`,
-`license`, `scm.url`, `scm.connection` and `developer` keys. To generate a 
-correct `pom.xml` you can use sbt's build keys or manually through the 
-`pomExtra` configuration option in `build.sbt`:
+`license`, `scm.url`, `scm.connection` and `developer` keys. For example:
 ```
-pomExtra := (
-  <url>http://your.project.url</url>
-  <licenses>
-    <license>
-      <name>BSD-style</name>
-      <url>http://www.opensource.org/licenses/bsd-license.php</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>git@github.com:your-account/your-project.git</url>
-    <connection>scm:git:git@github.com:your-account/your-project.git</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>Your identifier</id>
-      <name>Your Name</name>
-      <url>http://your.url</url>
-    </developer>
-  </developers>
+licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
+
+homepage := Some(url("http://example.com"))
+
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/your-account/your-project"),
+    "scm:git@github.com:your-account/your-project.git"
+  )
+)
+
+developers := List(
+  Developer(
+    id    = "Your identifier",
+    name  = "Your Name",
+    email = "your@email",
+    url   = url("http://your.url")
+  )
 )
 ```
 
-The full format of a pom.xml file is 
-[outlined here](https://maven.apache.org/pom.html).
-
 #### Maven configuration tips'n'tricks
 
-Sbt will automatically inject `licenses` and `url` nodes if
-they are already present in your build file. Thus an alternative to parts of
-the above `pomExtra` is to include the following entries:
-
-```scala
-licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
-
-homepage := Some(url("http://jsuereth.com/scala-arm"))
-```
-
-This might be advantageous if those keys are used also by other plugins
-(e.g. `ls`). You **cannot use both** the sbt `licenses` key and the
-`licenses` section in `pomExtra` at the same time, as this will produce
-duplicate entries in the final POM file, leading to a rejection in
-Sonatype's staging process.
+The full format of a `pom.xml` (an end product of the project configuration 
+used by Maven) file is [outlined here](https://maven.apache.org/pom.html).
+You can add more data to it with the `pomExtra` option in `build.sbt`.
 
 
 To ensure the POMs are generated and pushed:
