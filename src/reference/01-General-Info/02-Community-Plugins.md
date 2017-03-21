@@ -102,6 +102,8 @@ your plugin to the list.
 #### One jar plugins
 
 -   sbt-assembly: <https://github.com/sbt/sbt-assembly>
+    -   sbt-assembly-log4j2 (sbt-assembly MergeStrategy for log4j2 plugins):
+        <https://github.com/idio/sbt-assembly-log4j2>
 -   xsbt-proguard-plugin:
     <https://github.com/adamw/xsbt-proguard-plugin>
 -   sbt-deploy: <https://github.com/reaktor/sbt-deploy>
