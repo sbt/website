@@ -68,8 +68,8 @@ regardless of which line it appears in the body.**
 See the following example:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
@@ -104,8 +104,8 @@ either of them.
 Here's another example:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
@@ -239,8 +239,8 @@ Let's say it's been set to some values already, but you want to
 filter out `"-Xfatal-warnings"` and `"-deprecation"` for non-2.12.
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",

@@ -28,8 +28,8 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 ```scala
 lazy val compilecheck = taskKey[sbt.inc.Analysis]("compile and then scalastyle")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     compilecheck := (Def.taskDyn {
       val c = (compile in Compile).value
       Def.task {
@@ -47,8 +47,8 @@ lazy val root = (project in file(".")).
 `compile in Compile` の戻り値と同じ型を返せるようになったので、もとのキーをこの動的タスクで再配線 (rewire) できるかもしれない。
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     compile in Compile := (Def.taskDyn {
       val c = (compile in Compile).value
       Def.task {

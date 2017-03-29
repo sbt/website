@@ -47,8 +47,8 @@ lazy val root = (project in file("."))
 你可以为本目录下的项目名称关联一个 `Setting[String]`，像这样：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -73,9 +73,9 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$"
 )
 
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
     name := "hello"
   )
 ```
@@ -91,8 +91,8 @@ key 的类别将在下面讲解。
 键（Keys）有一个返回 `Setting[T]` 的 `:=` 方法。你可以像使用 Java 的语法一样调用该方法：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name.:=("hello")
   )
 ```
@@ -105,8 +105,8 @@ lazy val root = (project in file(".")).
 如果你使用了错误类型的 value，构建定义会编译不通过：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := 42  // 编译不通过
   )
 ```
@@ -159,8 +159,8 @@ sbt 描述项目的 map 会将设置（setting）保存为固定的字符串，�
 ```scala
 lazy val hello = taskKey[Unit]("An example task")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     hello := { println("Hello!") }
   )
 ```
@@ -168,8 +168,8 @@ lazy val root = (project in file(".")).
 我们已经在定义项目名称时见过定义 settings 的例子，
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -217,9 +217,9 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$"
 )
 
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
     name := "hello",
     libraryDependencies += derby
   )

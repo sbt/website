@@ -24,8 +24,8 @@ object Greeting extends App {
 ```scala
 lazy val runopen = inputKey[Unit]("run and then open the browser")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     runopen := {
       (run in Compile).evaluated
       println("open browser!")
@@ -48,8 +48,8 @@ open browser!
 この新しいインプットタスクを `run in Compile` に再配線することで、実は `runopen` キーを外すことができる:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     run in Compile := {
       (run in Compile).evaluated
       println("open browser!")

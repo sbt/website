@@ -54,14 +54,14 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$"
 )
 
-lazy val core = (project in file("core")).
-  settings(
+lazy val core = (project in file("core"))
+  .settings(
     commonSettings,
     // other settings
   )
 
-lazy val util = (project in file("util")).
-  settings(
+lazy val util = (project in file("util"))
+  .settings(
     commonSettings,
     // other settings
   )

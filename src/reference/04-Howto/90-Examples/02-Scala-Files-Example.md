@@ -75,8 +75,8 @@ object ShellPromptPlugin extends AutoPlugin {
     def buffer[T] (f: => T): T = f
   }
   def currBranch =
-    ("git status -sb" lines_! devnull headOption).
-      getOrElse("-").stripPrefix("## ")
+    ("git status -sb" lines_! devnull headOption)
+      .getOrElse("-").stripPrefix("## ")
   val buildShellPrompt: State => String = {
     case (state: State) =>
       val currProject = Project.extract (state).currentProject.id
@@ -127,35 +127,35 @@ lazy val pricingDeps = Seq(
   scalatest % Test
 )
 
-lazy val cdap2 = (project in file(".")).
-  aggregate(common, server, compact, pricing, pricing_service).
-  settings(buildSettings: _*)
+lazy val cdap2 = (project in file("."))
+  .aggregate(common, server, compact, pricing, pricing_service)
+  .settings(buildSettings)
 
-lazy val common = (project in file("cdap2-common")).
-  settings(buildSettings: _*).
-  settings(
+lazy val common = (project in file("cdap2-common"))
+  .settings(
+    buildSettings,
     libraryDependencies ++= commonDeps
   )
 
-lazy val server = (project in file("cdap2-server")).
-  dependsOn(common).
-  settings(buildSettings: _*).
-  settings(
+lazy val server = (project in file("cdap2-server"))
+  .dependsOn(common)
+  .settings(
+    buildSettings,
     resolvers := oracleResolvers,
     libraryDependencies ++= serverDeps
   )
 
-lazy val pricing = (project in file("cdap2-pricing")).
-  dependsOn(common, compact, server).
-  settings(buildSettings: _*).
-  settings(
+lazy val pricing = (project in file("cdap2-pricing"))
+  .dependsOn(common, compact, server)
+  .settings(
+    buildSettings,
     libraryDependencies ++= pricingDeps
   )  
 
-lazy val pricing_service = (project in file("cdap2-pricing-service")).
-  dependsOn(pricing, server).
-  settings(buildSettings: _*)
+lazy val pricing_service = (project in file("cdap2-pricing-service"))
+  .dependsOn(pricing, server)
+  .settings(buildSettings)
 
-lazy val compatct = (project in file("compact-hashmap")).
-  settings(buildSettings: _*)
+lazy val compatct = (project in file("compact-hashmap"))
+  .settings(buildSettings)
 ```

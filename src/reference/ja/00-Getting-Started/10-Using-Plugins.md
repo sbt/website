@@ -63,9 +63,9 @@ auto plugin の多くはデフォルトのセッティング群を自動的に�
 明示的な有効化が必要な auto plugin を使っている場合は、以下を `build.sbt` に追加する必要がある:
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -74,10 +74,10 @@ lazy val util = (project in file("util")).
 例えば、`util` から `IvyPlugin` のセッティングを除外したいとすると、`build.sbt` を以下のように変更する:
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  disablePlugins(plugins.IvyPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .disablePlugins(plugins.IvyPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -127,8 +127,8 @@ site.settings
 lazy val util = (project in file("util"))
 
 // enable the site plugin for the `core` project
-lazy val core = (project in file("core")).
-  settings(site.settings : _*)
+lazy val core = (project in file("core"))
+  .settings(site.settings)
 ```
 
 ### グローバル・プラグイン

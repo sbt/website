@@ -173,7 +173,7 @@ object Demo extends Build
 
     val n = Project.normalizeProjectID(model.getName)
     val base = Option(model.getProjectDirectory) getOrElse info.base
-    val root = Project(n, base) settings( pomSettings(model) : _*)
+    val root = Project(n, base) settings( pomSettings(model) )
     val build = new Build { override def projects = Seq(root) }
     val loader = this.getClass.getClassLoader
     val definitions = new LoadedDefinitions(info.base, Nil, loader, build :: Nil, Nil)

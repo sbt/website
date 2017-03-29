@@ -271,8 +271,8 @@ If you create a setting in `build.sbt` with a bare key, it will be scoped
 to the current project, configuration `Global` and task `Global`:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -383,13 +383,13 @@ lazy val root = (project in file("."))
     publishLocal := ()
   )
 
-lazy val core = (project in file("core")).
-  settings(
+lazy val core = (project in file("core"))
+  .settings(
     // other settings
   )
 
-lazy val util = (project in file("util")).
-  settings(
+lazy val util = (project in file("util"))
+  .settings(
     // other settings
   )
 ```

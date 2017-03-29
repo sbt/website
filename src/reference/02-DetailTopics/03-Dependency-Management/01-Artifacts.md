@@ -153,8 +153,8 @@ full build configuration, usage looks like:
 
 ```scala
 ...
-lazy val proj = Project(...).
-  settings( addArtifact(...).settings : _* )
+lazy val proj = Project(...)
+  .settings( addArtifact(...).settings )
 ...
 ```
 
