@@ -117,6 +117,14 @@ of the binary Scala version:
 "a" % "b" % "1.0" cross CrossVersion.full
 ```
 
+`CrossVersion.patch` sites between `CrossVersion.binary` and `CrossVersion.full`
+in that it strips off any trailing `-bin-...` suffix which is used to
+distinguish varaint but binary compatible Scala toolchain builds.
+
+```scala
+"a" % "b" % "1.0" cross CrossVersion.patch
+```
+
 This uses a custom function to determine the Scala version to use based
 on the binary Scala version:
 
