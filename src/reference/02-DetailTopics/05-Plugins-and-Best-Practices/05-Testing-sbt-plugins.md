@@ -52,8 +52,8 @@ Make dir structure `src/sbt-test/<test-group>/<test-name>`. For starters, try so
 Now ready? Create an initial build in `simple`. Like a real build using your plugin. I'm sure you already have several of them to test manually. Here's an example `build.sbt`:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar"
@@ -137,8 +137,8 @@ The file commands are great, but not nearly enough because none of them test the
 For my hello project, I'd like to check if the resulting jar prints out "hello". I can take advantage of `sbt.Process` to run the jar. To express a failure, just throw an error. Here's `build.sbt`:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar",

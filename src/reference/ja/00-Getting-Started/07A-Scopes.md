@@ -210,8 +210,8 @@ sbt シェルで `inspect` コマンドを使ってキーとそのスコープ�
 `build.sbt` で裸のキーを使ってセッティングを作った場合は、現プロジェクト、`Global` コンフィグレーション、`Global` タスクにスコープ付けされる:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```
@@ -306,13 +306,13 @@ lazy val root = (project in file("."))
     publishLocal := ()
   )
 
-lazy val core = (project in file("core")).
-  settings(
+lazy val core = (project in file("core"))
+  .settings(
     // other settings
   )
 
-lazy val util = (project in file("util")).
-  settings(
+lazy val util = (project in file("util"))
+  .settings(
     // other settings
   )
 ```

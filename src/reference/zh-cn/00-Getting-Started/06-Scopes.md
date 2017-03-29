@@ -187,8 +187,8 @@ Settings 可以影响一个 task 如何工作。例如，task `packageSrc` 就�
 如果你创建的 `build.sbt` 中有一个bare key，它的作用于将是当前的 project 下，configuration 和 task 均为 `Global`：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello"
   )
 ```

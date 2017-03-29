@@ -267,8 +267,8 @@ settings may be reused:
 ```scala
 import sbtobfuscate.ObfuscatePlugin
 
-lazy val app = (project in file("app")).
-  settings(inConfig(Test)(ObfuscatePlugin.baseObfuscateSettings): _*)
+lazy val app = (project in file("app"))
+  .settings(inConfig(Test)(ObfuscatePlugin.baseObfuscateSettings))
 ```
 
 #### Using a "main" task scope for settings

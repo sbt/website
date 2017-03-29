@@ -12,8 +12,8 @@ out: Howto-Dynamic-Input-Task.html
 lazy val runopen = inputKey[Unit]("run and then open the browser")
 lazy val openbrowser = taskKey[Unit]("open the browser")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     runopen := (Def.inputTaskDyn {
       import sbt.complete.Parsers.spaceDelimited
       val args = spaceDelimited("<args>").parsed
@@ -37,8 +37,8 @@ lazy val root = (project in file(".")).
 lazy val actualRun = inputKey[Unit]("The actual run task")
 lazy val openbrowser = taskKey[Unit]("open the browser")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     run in Compile := (Def.inputTaskDyn {
       import sbt.complete.Parsers.spaceDelimited
       val args = spaceDelimited("<args>").parsed

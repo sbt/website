@@ -26,8 +26,8 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 ```scala
 lazy val compilecheck = taskKey[Unit]("compile and then scalastyle")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     compilecheck in Compile := Def.sequential(
       compile in Compile,
       (scalastyle in Compile).toTask("")

@@ -51,9 +51,9 @@ lazy val commonSettings = Seq(
   version := "0.1.0-SNAPSHOT"
 )
 
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     sampleStringTask := System.getProperty("user.home"),
     sampleIntTask := {
       val sum = 1 + 2
@@ -98,9 +98,9 @@ lazy val commonSettings = Seq(
   version := "0.1.0-SNAPSHOT"
 )
 
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     startServer := {
       println("starting...")
       Thread.sleep(500)
@@ -169,9 +169,9 @@ s: 3
 应该如何实现`stopServer`任务？清理任务的概念并不适合任务的执行模型，因为任务关心的是依赖项跟踪。最后一次操作应成为依赖其他中间任务的任务。例如`stopServer`应依赖于`sampleStringTask`，在其中`stopServer`应该是 `sampleStringTask`。
 
 ```scala
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     startServer := {
       println("starting...")
       Thread.sleep(500)

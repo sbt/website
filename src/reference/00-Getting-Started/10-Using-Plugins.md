@@ -68,9 +68,9 @@ If you're using an auto plugin that requires explicit enablement, then you
 have to add the following to your `build.sbt`:
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -83,10 +83,10 @@ method. For example, if we wish to remove the `IvyPlugin` settings
 from `util`, we modify our `build.sbt` as follows:
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  disablePlugins(plugins.IvyPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .disablePlugins(plugins.IvyPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -139,8 +139,8 @@ project:
 lazy val util = (project in file("util"))
 
 // enable the site plugin for the `core` project
-lazy val core = (project in file("core")).
-  settings(site.settings : _*)
+lazy val core = (project in file("core"))
+  .settings(site.settings)
 ```
 
 ### Global plugins

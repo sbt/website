@@ -38,8 +38,8 @@ lazy val core = project in file("core")
 
 #### 公共设定
 
-To factor out common settings across multiple projects, create a sequence named `commonSettings` and call `settings` method on each project. Note `_*` is required to pass sequence into a vararg method.
-要跨多个项目提取公共设置，请创建一个名为`commonSettings`的序列，并在每个项目上调用`settings`方法。注意要传入序列给变参数方法时需要调用`_*`。
+To factor out common settings across multiple projects, create a sequence named `commonSettings` and call `settings` method on each project.
+要跨多个项目提取公共设置，请创建一个名为`commonSettings`的序列，并在每个项目上调用`settings`方法。
 
 ```scala
 lazy val commonSettings = Seq(
@@ -48,15 +48,15 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$"
 )
 
-lazy val core = (project in file("core")).
-  settings(commonSettings: _*).
-  settings(
+lazy val core = (project in file("core"))
+  .settings(
+    commonSettings,
     // other settings
   )
 
-lazy val util = (project in file("util")).
-  settings(commonSettings: _*).
-  settings(
+lazy val util = (project in file("util"))
+  .settings(
+    commonSettings,
     // other settings
   )
 ```
@@ -84,9 +84,9 @@ lazy val core = project
 *在进行聚合的项目中*，像这个例子中的 root 项目一样，你可以按 task 来控制聚合。例如，为了避免聚合 `update` task：
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(util, core).
-  settings(
+lazy val root = (project in file("."))
+  .aggregate(util, core)
+  .settings(
     aggregate in update := false
   )
 

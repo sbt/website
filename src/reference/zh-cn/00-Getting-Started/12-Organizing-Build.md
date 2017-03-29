@@ -80,9 +80,9 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$"
 )
 
-lazy val backend = (project in file("backend")).
-  settings(commonSettings: _*).
-  settings(
+lazy val backend = (project in file("backend"))
+  .settings(
+    commonSettings,
     libraryDependencies ++= backendDeps
   )
 ```
