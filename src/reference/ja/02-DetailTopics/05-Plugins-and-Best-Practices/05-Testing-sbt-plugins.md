@@ -53,8 +53,8 @@ scriptedBufferLog := false
 ここがポイントなんだけど、`simple` 下にビルドを作成する。プラグインを使った普通のビルド。手動でテストするために、いくつか既にあると思うけど。以下に、`build.sbt` の例を示す:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar"
@@ -138,8 +138,8 @@ Running sbt-assembly / simple
 上記の hello プロジェクトを例に取ると、生成された jar が "hello" と表示するかを確認したいとする。`sbt.Process` を用いて jar を走らせることができる。失敗を表すには、単にエラーを投げればいい。以下に `build.sbt` を示す:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar",

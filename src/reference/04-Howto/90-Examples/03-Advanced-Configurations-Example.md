@@ -46,24 +46,26 @@ lazy val commonSettings = Seq(
 )
 
 // An example project that only uses the Scalate utilities.
-lazy val a = (project in file("a")).
-  dependsOn(utils % "compile->scalate").
-  settings(commonSettings: _*)
+lazy val a = (project in file("a"))
+  .dependsOn(utils % "compile->scalate")
+  .settings(commonSettings)
 
 // An example project that uses the Scalate and Saxon utilities.
 // For the configurations defined here, this is equivalent to doing dependsOn(utils),
 //  but if there were more configurations, it would select only the Scalate and Saxon
 //  dependencies.
-lazy val b = (project in file("b")).
-  dependsOn(utils % "compile->scalate,saxon").
-  settings(commonSettings: _*)
+lazy val b = (project in file("b"))
+  .dependsOn(utils % "compile->scalate,saxon")
+  .settings(commonSettings)
 
 // Defines the utilities project
-lazy val utils = (project in file("utils")).
-  settings(commonSettings: _*).
-  settings(inConfig(Common)(Defaults.configSettings): _*).  // Add the src/common/scala/ compilation configuration.
-  settings(addArtifact(artifact in (Common, packageBin), packageBin in Common): _*). // Publish the common artifact
-  settings(
+lazy val utils = (project in file("utils"))
+  .settings(
+    commonSettings,
+
+    inConfig(Common)(Defaults.configSettings),  // Add the src/common/scala/ compilation configuration.
+    addArtifact(artifact in (Common, packageBin), packageBin in Common), // Publish the common artifact
+
       // We want our Common sources to have access to all of the dependencies on the classpaths
       //   for compile and test, but when depended on, it should only require dependencies in 'common'
     classpathConfiguration in Common := CustomCompile,

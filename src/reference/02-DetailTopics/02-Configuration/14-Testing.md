@@ -260,11 +260,11 @@ lazy val commonSettings = Seq(
 )
 lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 
-lazy val root = (project in file(".")).
-  configs(IntegrationTest).
-  settings(commonSettings: _*).
-  settings(Defaults.itSettings: _*).
-  settings(
+lazy val root = (project in file("."))
+  .configs(IntegrationTest)
+  .settings(
+    commonSettings,
+    Defaults.itSettings,
     libraryDependencies += scalatest % "it,test"
     // other settings here
   )
@@ -272,7 +272,7 @@ lazy val root = (project in file(".")).
 
 -   `configs(IntegrationTest)` adds the predefined integration test
     configuration. This configuration is referred to by the name it.
--   `settings(Defaults.itSettings : _*)` adds compilation, packaging,
+-   `settings(Defaults.itSettings)` adds compilation, packaging,
     and testing actions and settings in the IntegrationTest
     configuration.
 -   `settings(libraryDependencies += scalatest % "it,test")` adds scalatest to both the
@@ -331,11 +331,11 @@ lazy val commonSettings = Seq(
 lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 lazy val FunTest = config("fun") extend(Test)
 
-lazy val root = (project in file(".")).
-  configs(FunTest).
-  settings(commonSettings: _*).
-  settings(inConfig(FunTest)(Defaults.testSettings): _*).
-  settings(
+lazy val root = (project in file("."))
+  .configs(FunTest)
+  .settings(
+    commonSettings,
+    inConfig(FunTest)(Defaults.testSettings),
     libraryDependencies += scalatest % FunTest
     // other settings here
   )
@@ -352,7 +352,7 @@ The `extend(Test)` part means to delegate to `Test` for undefined
 new test configuration is:
 
 ```scala
-settings(inConfig(FunTest)(Defaults.testSettings): _*)
+settings(inConfig(FunTest)(Defaults.testSettings))
 ```
 
 This says to add test and settings tasks in the `FunTest` configuration.
@@ -393,11 +393,11 @@ lazy val FunTest = config("fun") extend(Test)
 def itFilter(name: String): Boolean = name endsWith "ITest"
 def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
 
-lazy val root = (project in file(".")).
-  configs(FunTest).
-  settings(commonSettings: _*).
-  settings(inConfig(FunTest)(Defaults.testTasks): _*).
-  settings(
+lazy val root = (project in file("."))
+  .configs(FunTest)
+  .settings(
+    commonSettings,
+    inConfig(FunTest)(Defaults.testTasks),
     libraryDependencies += scalatest % FunTest,
     testOptions in Test := Seq(Tests.Filter(unitFilter)),
     testOptions in FunTest := Seq(Tests.Filter(itFilter))

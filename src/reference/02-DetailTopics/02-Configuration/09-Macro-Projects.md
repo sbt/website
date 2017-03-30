@@ -33,16 +33,16 @@ lazy val commonSettings = Seq(
 )
 lazy val scalaReflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
-lazy val core = (project in file("core")).
-  dependsOn(macroSub).
-  settings(commonSettings: _*).
-  settings(
+lazy val core = (project in file("core"))
+  .dependsOn(macroSub)
+  .settings(
+    commonSettings,
     // other settings here
   )
 
-lazy val macroSub = (project in file("macro")).
-  settings(commonSettings: _*).
-  settings(
+lazy val macroSub = (project in file("macro"))
+  .settings(
+    commonSettings,
     libraryDependencies += scalaReflect.value
     // other settings here
   )
@@ -125,24 +125,24 @@ lazy val commonSettings = Seq(
 )
 lazy val scalaReflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
-lazy val core = (project in file("core")).
-  dependsOn(macroSub, util).
-  settings(commonSettings: _*).
-  settings(
+lazy val core = (project in file("core"))
+  .dependsOn(macroSub, util)
+  .settings(
+    commonSettings,
     // other settings here
   )
 
-lazy val macroSub = (project in file("macro")).
-  dependsOn(util).
-  settings(commonSettings: _*).
-  settings(
+lazy val macroSub = (project in file("macro"))
+  .dependsOn(util)
+  .settings(
+    commonSettings,
     libraryDependencies += scalaReflect.value
     // other settings here
   )
 
-lazy util = (project in file("util")).
-  settings(commonSettings: _*).
-  settings(
+lazy util = (project in file("util"))
+  .settings(
+    commonSettings,
     // other setting here
   )
 ```
@@ -159,10 +159,10 @@ publishing. For example, the `core` Project definition above would now
 look like:
 
 ```scala
-lazy val core = (project in file("core")).
-  dependsOn(macroSub % "compile-internal, test-internal").
-  settings(commonSettings: _*).
-  settings(
+lazy val core = (project in file("core"))
+  .dependsOn(macroSub % "compile-internal, test-internal")
+  .settings(
+    commonSettings,
     // include the macro classes and resources in the main jar
     mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
     // include the macro sources in the main source jar
@@ -174,9 +174,9 @@ You may wish to disable publishing the macro implementation. This is
 done by overriding `publish` and `publishLocal` to do nothing:
 
 ```scala
-lazy val macroSub = (project in file("macro")).
-  settings(commonSettings: _*).
-  settings(
+lazy val macroSub = (project in file("macro"))
+  .settings(
+    commonSettings,
     libraryDependencies += scalaReflect.value,
     publish := {},
     publishLocal := {}

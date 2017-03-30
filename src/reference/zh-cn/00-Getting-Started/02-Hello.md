@@ -52,8 +52,8 @@ Hi!
 例如，如果你的项目放在 `hello` 下，在 `hello/build.sbt` 中可以这样写：
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "hello",
     version := "1.0",
     scalaVersion := "$example_scala_version$"

@@ -29,9 +29,10 @@ lazy val osmlibVersion = "2.5.2-RC1"
 lazy val osmlib = ("net.sf.travelingsales" % "osmlib" % osmlibVersion from
   s"""http://downloads.sourceforge.net/project/travelingsales/libosm/\$osmlibVersion/libosm-\$osmlibVersion.jar""")
 
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
+
     // set the name of the project
     name := "My Project",
 

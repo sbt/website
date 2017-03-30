@@ -29,8 +29,8 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
 ```scala
 lazy val compilecheck = taskKey[sbt.inc.Analysis]("compile and then scalastyle")
 
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     compilecheck := (Def.taskDyn {
       val c = (compile in Compile).value
       Def.task {
@@ -48,8 +48,8 @@ Now we have the same thing as the sequential task, except we can now return the 
 If we can return the same return type as `compile in Compile`, might actually rewire the key to our dynamic task.
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     compile in Compile := (Def.taskDyn {
       val c = (compile in Compile).value
       Def.task {

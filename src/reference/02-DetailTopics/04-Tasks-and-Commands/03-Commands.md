@@ -123,9 +123,9 @@ lazy val commonSettings = Seq(
   scalaVersion := "$example_scala_version$",
 )
 
-lazy val root = (project in file(".")).
-  settings(commonSettings: _*).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
     commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
   )
 ```

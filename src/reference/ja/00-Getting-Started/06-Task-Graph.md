@@ -67,8 +67,8 @@ scalacOptions := {
 具体例で説明しよう:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
@@ -103,8 +103,8 @@ lazy val root = (project in file(".")).
 もう一つの例:
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",
@@ -229,8 +229,8 @@ scalacOptions := {
 `"-Xfatal-warnings"` と `"-deprecation"` を除外したいとする。
 
 ```scala
-lazy val root = (project in file(".")).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
     name := "Hello",
     organization := "com.example",
     scalaVersion := "$example_scala_version$",

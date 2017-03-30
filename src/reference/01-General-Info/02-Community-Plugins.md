@@ -68,6 +68,7 @@ your plugin to the list.
 -   sbt-sqs: <https://github.com/localytics/sbt-sqs> (downloads and runs ElasticMQ for testing)
 -   sbt-s3: <https://github.com/localytics/sbt-s3> (downloads and runs S3Proxy for testing)
 -   sbt-scripted-scalatest: <https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin> (test SBT plugins with ScalaTest)
+-   sbt-flaky <https://github.com/otrebski/sbt-flaky> (detects flaky tests by running tests multiple times)
 
 #### Code coverage plugins
 

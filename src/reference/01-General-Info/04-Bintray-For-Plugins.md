@@ -73,9 +73,9 @@ lazy val commonSettings = Seq(
   organization in ThisBuild := "<INSERT YOUR ORG HERE>"
 )
 
-lazy val root = (project in file(".")).
-  settings(commonSettings).
-  settings(
+lazy val root = (project in file("."))
+  .settings(
+    commonSettings,
     sbtPlugin := true,
     name := "<YOUR PLUGIN HERE>",
     description := "<YOUR DESCRIPTION HERE>",

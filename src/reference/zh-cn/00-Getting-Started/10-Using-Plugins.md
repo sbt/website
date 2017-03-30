@@ -50,9 +50,9 @@ resolvers += Resolver.sonatypeRepo("public")
 如果你正在使用一个需要显示开启的自动插件，那么你需要添加这样的代码到你的 `build.sbt` 文件：
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -62,10 +62,10 @@ lazy val util = (project in file("util")).
 项目也可以使用 `disablePlugins` 方法排除掉一些插件。例如，如果我们希望能够从 `util` 中移除 `IvyPlugin` 插件的设置，我们将 `build.sbt` 修改如下：
 
 ```scala
-lazy val util = (project in file("util")).
-  enablePlugins(FooPlugin, BarPlugin).
-  disablePlugins(plugins.IvyPlugin).
-  settings(
+lazy val util = (project in file("util"))
+  .enablePlugins(FooPlugin, BarPlugin)
+  .disablePlugins(plugins.IvyPlugin)
+  .settings(
     name := "hello-util"
   )
 ```
@@ -106,8 +106,8 @@ site.settings
 lazy val util = (project in file("util"))
 
 // 在`core` 项目中开启 site 插件
-lazy val core = (project in file("core")).
-  settings(site.settings : _*)
+lazy val core = (project in file("core"))
+  .settings(site.settings)
 ```
 
 ### 全局插件

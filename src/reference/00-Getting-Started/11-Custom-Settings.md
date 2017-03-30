@@ -69,9 +69,9 @@ lazy val commonSettings = Seq(
   version := "0.1.0-SNAPSHOT"
 )
 
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     sampleStringTask := System.getProperty("user.home"),
     sampleIntTask := {
       val sum = 1 + 2
@@ -130,9 +130,9 @@ lazy val commonSettings = Seq(
   version := "0.1.0-SNAPSHOT"
 )
 
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     startServer := {
       println("starting...")
       Thread.sleep(500)
@@ -216,9 +216,9 @@ on other intermediate tasks. For instance `stopServer` should depend on `sampleS
 at which point `stopServer` should be the `sampleStringTask`.
 
 ```scala
-lazy val library = (project in file("library")).
-  settings(commonSettings: _*).
-  settings(
+lazy val library = (project in file("library"))
+  .settings(
+    commonSettings,
     startServer := {
       println("starting...")
       Thread.sleep(500)
