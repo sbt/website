@@ -18,7 +18,7 @@ Using Sonatype
 ---------------------
 Deploying to sonatype is easy! Just follow these simple steps:
 
-## Sonatype setup
+### Sonatype setup
 > *Note:* The reference process for configuring and publishing to Sonatype is 
 described in their [OSSRH Guide][sonatype-ossrhguide].
  
@@ -51,14 +51,14 @@ on the published artifacts.
 Notice that Sonatype advises that responding to the New Project ticket might 
 take up to two business days, but in my case it was few minutes.
 
-## SBT setup
+### SBT setup
 
 To address [Sonatype's requirements for publishing to the central repository]
 [sonatype-requirements] and to simplify the publishing process I recommend you
 to use community plugins [sbt-pgp for signing the files with GPG/PGP][sbt-pgp] 
 and [sbt-sonatype for publishing to Sonatype repository][sbt-sonatype]. 
 
-### First - PGP Signatures
+#### First - PGP Signatures
 
 Having the PGP key that you want to use, you need to sign the artifacts 
 published to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
