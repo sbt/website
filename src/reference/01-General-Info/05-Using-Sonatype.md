@@ -15,14 +15,16 @@ out: Using-Sonatype.html
   [gnupg]: https://www.gnupg.org/
 
 Using Sonatype
----------------------
+--------------
+
 Deploying to sonatype is easy! Just follow these simple steps:
 
 ### Sonatype setup
-> *Note:* The reference process for configuring and publishing to Sonatype is 
+
+The reference process for configuring and publishing to Sonatype is 
 described in their [OSSRH Guide][sonatype-ossrhguide].
- 
 In short, you need two publicly available URLs: 
+
 * the website of the project e.g. https://github.com/sonatype/nexus-oss
 * the project's source code e.g. https://github.com/sonatype/nexus-oss.git
 
@@ -35,6 +37,7 @@ it makes it easier to validate the relationship with the groupId requested in
 the ticket, but is not the only method used to confirm the ownership. 
 
 Creation of the New Project ticket is as simple as:
+
 * providing the name of the library in the ticket’s subject,
 * naming the groupId you want to use for distributing the library (make sure 
 it is matching the root package of your code). Sonatype provides you with 
@@ -43,7 +46,7 @@ additional hints on choosing the right groupId for publishing your library in
 * providing the SCM and Project URLs to the source code and homepage of the 
 library.
 
-> *Note:* After creating you Sonatype account (on their JIRA) you can login 
+*Note:* After creating you Sonatype account (on their JIRA) you can login 
 using the same credentials to the [Nexus Repository Manager][sonatype-nexus] 
 which is not required to be used in this guide, but can be used later to check 
 on the published artifacts.
@@ -65,8 +68,9 @@ published to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow
 the instructions for the plugin and you'll have PGP signed artifacts in no 
 time.
 
-In short, add the following line to your ~/.sbt/0.13/plugins/gpg.sbt file to 
+In short, add the following line to your `~/.sbt/0.13/plugins/gpg.sbt` file to 
 enable it globally for SBT projects:
+
 ```
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 ```
@@ -76,6 +80,7 @@ artifacts. It can also work with the GPG command line tool.
 
 If you don't have the PGP keys to sign your code with, one of the ways to 
 achieve that is to install the [GNU Privacy Guard][gnupg] and:
+
 * use it to generate the keypair you will use to sign your library,
 * publish your certificate to enable remote verification of the signatures,
 * make sure that the `gpg` command is in PATH available to the sbt,
@@ -101,8 +106,8 @@ you've just generated it, you'll need to publish it. You can do so using the
 pgp-cmd send-key keyname hkp://pool.sks-keyservers.net
 ```
 
-(where keyname is the name or email address used when creating the key or 
-hexadecimal identifier for the key.)
+Where `keyname` is the name or email address used when creating the key or 
+hexadecimal identifier for the key.
 
 If you see no output from sbt-pgp then the key name specified was not
 found.
@@ -147,6 +152,7 @@ To publish to a maven repository, you'll need to configure a few
 settings so that the correct metadata is generated.
 Specifically, the build should provide data for `organization`, `url`,
 `license`, `scm.url`, `scm.connection` and `developer` keys. For example:
+
 ```
 licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
 
@@ -177,11 +183,13 @@ You can add more data to it with the `pomExtra` option in `build.sbt`.
 
 
 To ensure the POMs are generated and pushed:
+
 ```scala
 publishMavenStyle := true
 ```
 
 Setting repositories to publish to:
+
 ```scala
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
@@ -193,6 +201,7 @@ publishTo := {
 ```
 
 Not publishing the test artifacts (this is the default):
+
 ```scala
 publishArtifact in Test := false
 ```
@@ -203,19 +212,22 @@ publishArtifact in Test := false
 
 To simplify the usage of the Sonatype's Nexus, add the following line to 
 `build.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
+
 ```
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "1.1")
 ```
 
 This plugin will facilitate the publishing process, but in short, these are 
 the main steps for publishing the libraries to the repository:
+
 1. Create a new staging repository: 
 `sonatypeOpen "your groupId" "Some staging name"`
 2. Sign and publish the library to the staging repository:
 `publishSigned`
-> *Note:* You can and should check the published artifacts in the [Nexus 
-Repository Manager][sonatype-nexus] (same login as Sonatype's Jira account)
-3. Close the staging repository and promote the release to central:
+3. You can and should check the published artifacts in the
+[Nexus Repository Manager][sonatype-nexus] (same login as Sonatype's
+Jira account)
+4. Close the staging repository and promote the release to central:
 `sonatypeRelease`
 
 After publishing you have to follow the
@@ -243,6 +255,7 @@ passphrase.
 To automate the above publishing approach with the [sbt-release plugin]
 [sbt-release], you should simply add the publishing commands as steps in the
 `releaseProcess` option:
+
 ```
 ...
 ReleaseStep(action = Command.process("sonatypeOpen \"your groupId\" \"Some staging name\"", _)),
