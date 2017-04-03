@@ -30,11 +30,11 @@ In short, you need two publicly available URLs:
 
 The [OSSRH Guide][sonatype-ossrhguide] walks you through the required 
 process of setting up the account with Sonatype. It’s as simple as 
-[creating a Sonatype's JIRA account][sonatype-signup] and afterwards creating a 
-[New Project ticket][sonatype-new-project]. When creating the account try to 
-use the same domain in your email address as the project is hosted on. I guess 
-it makes it easier to validate the relationship with the groupId requested in 
-the ticket, but is not the only method used to confirm the ownership. 
+[creating a Sonatype's JIRA account][sonatype-signup] and then a 
+[New Project ticket][sonatype-new-project]. When creating the account, try to 
+use the same domain in your email address that the project is hosted on.
+It makes it easier for Sonatype to validate the relationship with the groupId requested in 
+the ticket, but it is not the only method used to confirm the ownership. 
 
 Creation of the New Project ticket is as simple as:
 
