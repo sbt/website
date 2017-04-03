@@ -36,7 +36,7 @@ use the same domain in your email address that the project is hosted on.
 It makes it easier for Sonatype to validate the relationship with the groupId requested in 
 the ticket, but it is not the only method used to confirm the ownership. 
 
-Creation of the New Project ticket is as simple as:
+Creation of the *New Project ticket* is as simple as:
 
 * providing the name of the library in the ticket’s subject,
 * naming the groupId you want to use for distributing the library (make sure 
@@ -51,7 +51,7 @@ using the same credentials to the [Nexus Repository Manager][sonatype-nexus]
 which is not required to be used in this guide, but can be used later to check 
 on the published artifacts.
 
-Notice that Sonatype advises that responding to the New Project ticket might 
+Notice that Sonatype advises that responding to the **New Project ticket** might 
 take up to two business days, but in my case it was few minutes.
 
 ### SBT setup
