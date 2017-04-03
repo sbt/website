@@ -252,9 +252,9 @@ passphrase.
 
 > *Note:* sbt-release is a third-party plugin meaning it is not covered by Lightbend subscription.
 
-To automate the above publishing approach with the [sbt-release plugin]
+To automate the publishing approach above with the [sbt-release plugin]
 [sbt-release], you should simply add the publishing commands as steps in the
-`releaseProcess` option:
+`releaseProcess` task:
 
 ```
 ...
