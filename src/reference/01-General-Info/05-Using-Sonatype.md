@@ -46,10 +46,10 @@ additional hints on choosing the right groupId for publishing your library in
 * providing the SCM and Project URLs to the source code and homepage of the 
 library.
 
-*Note:* After creating you Sonatype account (on their JIRA) you can log in 
-using the same credentials to the [Nexus Repository Manager][sonatype-nexus] 
-which is not required to be used in this guide, but can be used later to check 
-on the published artifacts.
+*Note:* After creating you Sonatype account on JIRA, you can log in 
+to the [Nexus Repository Manager][sonatype-nexus] using the same credentials,
+although this is not required in the guide, it can be helpful later to check 
+on published artifacts.
 
 Notice that Sonatype advises that responding to the **New Project ticket** might 
 take up to two business days, but in my case it was few minutes.
