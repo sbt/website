@@ -39,8 +39,8 @@ the ticket, but it is not the only method used to confirm the ownership.
 Creation of the *New Project ticket* is as simple as:
 
 * providing the name of the library in the ticket’s subject,
-* naming the groupId you want to use for distributing the library (make sure 
-it is matching the root package of your code). Sonatype provides you with 
+* naming the groupId for distributing the library (make sure 
+it matches the root package of your code). Sonatype provides
 additional hints on choosing the right groupId for publishing your library in 
 [Choosing your coordinates guide][sonatype-coordinates].
 * providing the SCM and Project URLs to the source code and homepage of the 
