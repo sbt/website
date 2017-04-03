@@ -51,8 +51,8 @@ to the [Nexus Repository Manager][sonatype-nexus] using the same credentials,
 although this is not required in the guide, it can be helpful later to check 
 on published artifacts.
 
-Notice that Sonatype advises that responding to the **New Project ticket** might 
-take up to two business days, but in my case it was few minutes.
+> *Note:* Sonatype advises that responding to a **New Project ticket** might 
+take up to two business days, but in my case it was a few minutes.
 
 ### SBT setup
 
