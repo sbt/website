@@ -238,7 +238,7 @@ repositories
 
 #### Publishing tips'n'tricks
 
-Use staged releases for testing across large projects of independent releases 
+Use staged releases to test across large projects of independent releases 
 before pushing the full project.
 
 > *Note:* An error message of `PGPException: checksum mismatch at 0 of 20`
