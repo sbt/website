@@ -323,6 +323,8 @@ your plugin to the list.
     <http://flywaydb.org/getstarted/firststeps/sbt.html>
 -   sbt-liquibase (Liquibase RDBMS database migrations):
     <https://github.com/bigtoast/sbt-liquibase>
+-   sbt-liquibase-slick-codegen (Generate Slick database schema code from Liquibase changelog file):
+    <https://github.com/daniel-shuy/liquibase-slick-codegen-sbt-plugin>
 -   sbt-dbdeploy (dbdeploy, a database change management tool):
     <https://github.com/mr-ken/sbt-dbdeploy>
 -   sbt-pillar (tasks for managing Cassandra DB migrations using Pillar library):
