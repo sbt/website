@@ -63,8 +63,8 @@ and [sbt-sonatype][sbt-sonatype] can publish to a Sonatype repository.
 
 #### First - PGP Signatures
 
-Having the PGP key that you want to use, you need to sign the artifacts 
-published to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
+With the PGP key you want to use, you can sign the artifacts 
+you want to publish to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
 the instructions for the plugin and you'll have PGP signed artifacts in no 
 time.
 
