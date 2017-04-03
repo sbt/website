@@ -46,7 +46,7 @@ additional hints on choosing the right groupId for publishing your library in
 * providing the SCM and Project URLs to the source code and homepage of the 
 library.
 
-*Note:* After creating you Sonatype account on JIRA, you can log in 
+After creating your Sonatype account on JIRA, you can log in 
 to the [Nexus Repository Manager][sonatype-nexus] using the same credentials,
 although this is not required in the guide, it can be helpful later to check 
 on published artifacts.
