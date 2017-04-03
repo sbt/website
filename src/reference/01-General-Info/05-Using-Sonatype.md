@@ -56,10 +56,10 @@ take up to two business days, but in my case it was few minutes.
 
 ### SBT setup
 
-To address [Sonatype's requirements for publishing to the central repository]
-[sonatype-requirements] and to simplify the publishing process I recommend you
-to use community plugins [sbt-pgp for signing the files with GPG/PGP][sbt-pgp] 
-and [sbt-sonatype for publishing to Sonatype repository][sbt-sonatype]. 
+To address Sonatype's [requirements]
+[sonatype-requirements] for publishing to the central repository and to simplify the publishing process, you can
+use two community plugins. The [sbt-pgp plugin][sbt-pgp] can sign the files with GPG/PGP
+and [sbt-sonatype][sbt-sonatype] can publish to a Sonatype repository. 
 
 #### First - PGP Signatures
 
