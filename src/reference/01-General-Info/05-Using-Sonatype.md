@@ -116,7 +116,7 @@ If it fails to run the `SendKey` command you can try another server (for
 example: hkp://keyserver.ubuntu.com). A list of servers can be found at 
 [the status page](https://sks-keyservers.net/status/) of sks-keyservers.net.
 
-### Second - configure sonatype integration 
+### Second - Configure Sonatype integration 
 
 The credentials for your Sonatype OSSRH account need to be stored
 somewhere safe (*e.g. NOT in the repository*). Common convention is a 
