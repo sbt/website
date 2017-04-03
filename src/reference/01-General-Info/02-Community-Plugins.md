@@ -36,79 +36,111 @@ your plugin to the list.
 #### Plugins for IDEs
 
 -   IntelliJ IDEA
-    -   sbt Plugin to generate IDEA project configuration: <https://github.com/mpeltonen/sbt-idea>
-    -   IDEA Plugin to embed an sbt Console into the IDE: <https://github.com/orfjackal/idea-sbt-plugin>
+    -   sbt Plugin to generate IDEA project configuration:
+        <https://github.com/mpeltonen/sbt-idea>
+    -   IDEA Plugin to embed an sbt Console into the IDE:
+        <https://github.com/orfjackal/idea-sbt-plugin>
 -   Netbeans (no support to create a new sbt project yet)
-    -   sbt-netbeans-plugin (older): <https://github.com/remeniuk/sbt-netbeans-plugin>
-    -   sbt plugin to generate NetBeans configuration: <https://github.com/dcaoyuan/nbsbt>
-    -   sbt plugin to add scala support to NetBeans: <https://github.com/dcaoyuan/nbscala>
--   Eclipse: <https://github.com/typesafehub/sbteclipse>
--   Sublime Text: <https://github.com/orrsella/sbt-sublime>
--   Ensime: <https://github.com/aemoncannon/ensime-sbt-cmd>
--   sbt-mode for Emacs: <https://github.com/hvesalai/sbt-mode>
--   sbt-ctags (manage library dependency sources for vim, emacs,
-    sublime) <https://github.com/kalmanb/sbt-ctags>
--   sbt-scuggest (generates Scuggest import entries for Sublime Text) <https://github.com/ssanj/sbt-scuggest>
+    -   sbt-netbeans-plugin (older):
+        <https://github.com/remeniuk/sbt-netbeans-plugin>
+    -   sbt plugin to generate NetBeans configuration:
+        <https://github.com/dcaoyuan/nbsbt>
+    -   sbt plugin to add scala support to NetBeans:
+        <https://github.com/dcaoyuan/nbscala>
+-   Eclipse:
+    <https://github.com/typesafehub/sbteclipse>
+-   Sublime Text:
+    <https://github.com/orrsella/sbt-sublime>
+-   Ensime:
+    <https://github.com/aemoncannon/ensime-sbt-cmd>
+-   sbt-mode for Emacs:
+    <https://github.com/hvesalai/sbt-mode>
+-   sbt-ctags (manage library dependency sources for vim, emacs, sublime):
+    <https://github.com/kalmanb/sbt-ctags>
+-   sbt-scuggest (generates Scuggest import entries for Sublime Text):
+    <https://github.com/ssanj/sbt-scuggest>
 
 ### Test plugins
 
--   junit_xml_listener: <https://github.com/ijuma/junit_xml_listener>
--   sbt-growl-plugin: <https://github.com/softprops/sbt-growl-plugin>
+-   junit_xml_listener:
+    <https://github.com/ijuma/junit_xml_listener>
+-   sbt-growl-plugin:
+    <https://github.com/softprops/sbt-growl-plugin>
 -   sbt-teamcity-test-reporting-plugin:
     <https://github.com/guardian/sbt-teamcity-test-reporting-plugin>
 -   xsbt-cucumber-plugin:
     <https://github.com/skipoleschris/xsbt-cucumber-plugin>
--   sbt-multi-jvm: <https://github.com/sbt/sbt-multi-jvm>
--   sbt-testng-interface: <https://github.com/sbt/sbt-testng-interface>
--   sbt-doctest: <https://github.com/tkawachi/sbt-doctest>
--   sbt-cassandra-plugin: <https://github.com/hochgi/sbt-cassandra-plugin>
--   sbt-tabular-test-reporter: <https://github.com/programmiersportgruppe/sbt-tabular-test-reporter>
--   sbt-notifications: <https://github.com/PavelPenkov/sbt-notifications> (sends notifications when test run is finished)
--   sbt-dynamodb: <https://github.com/localytics/sbt-dynamodb> (downloads and runs DynamoDB Local for testing)
--   sbt-sqs: <https://github.com/localytics/sbt-sqs> (downloads and runs ElasticMQ for testing)
--   sbt-s3: <https://github.com/localytics/sbt-s3> (downloads and runs S3Proxy for testing)
--   sbt-scripted-scalatest: <https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin> (test SBT plugins with ScalaTest)
--   sbt-flaky <https://github.com/otrebski/sbt-flaky> (detects flaky tests by running tests multiple times)
+-   sbt-multi-jvm:
+    <https://github.com/sbt/sbt-multi-jvm>
+-   sbt-testng-interface:
+    <https://github.com/sbt/sbt-testng-interface>
+-   sbt-doctest:
+    <https://github.com/tkawachi/sbt-doctest>
+-   sbt-cassandra-plugin:
+    <https://github.com/hochgi/sbt-cassandra-plugin>
+-   sbt-tabular-test-reporter:
+    <https://github.com/programmiersportgruppe/sbt-tabular-test-reporter>
+-   sbt-notifications (sends notifications when test run is finished):
+    <https://github.com/PavelPenkov/sbt-notifications>
+-   sbt-dynamodb (downloads and runs DynamoDB Local for testing):
+    <https://github.com/localytics/sbt-dynamodb>
+-   sbt-sqs (downloads and runs ElasticMQ for testing):
+    <https://github.com/localytics/sbt-sqs>
+-   sbt-s3 (downloads and runs S3Proxy for testing):
+    <https://github.com/localytics/sbt-s3>
+-   sbt-scripted-scalatest (test SBT plugins with ScalaTest):
+    <https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin>
+-   sbt-flaky (detects flaky tests by running tests multiple times):
+    <https://github.com/otrebski/sbt-flaky>
 
 #### Code coverage plugins
 
--   sbt-scct: <https://github.com/sqality/sbt-scct>
--   sbt-scoverage: <https://github.com/scoverage/sbt-scoverage>
--   jacoco4sbt: <https://github.com/sbt/jacoco4sbt>
--   sbt-coveralls: <https://github.com/scoverage/sbt-coveralls>
--   sbt-clover: <https://github.com/shanbin/sbt-clover>
+-   sbt-scct:
+    <https://github.com/sqality/sbt-scct>
+-   sbt-scoverage:
+    <https://github.com/scoverage/sbt-scoverage>
+-   jacoco4sbt:
+    <https://github.com/sbt/jacoco4sbt>
+-   sbt-coveralls:
+    <https://github.com/scoverage/sbt-coveralls>
+-   sbt-clover:
+    <https://github.com/shanbin/sbt-clover>
 
 #### Static code analysis plugins
 
--   wartremover: <https://github.com/puffnfresh/wartremover> (WartRemover -
-    Scala static analysis)
--   cpd4sbt: <https://github.com/sbt/cpd4sbt> (copy/paste detection,
-    works for Scala, too)
--   sbt-findbugs-plugin: <https://github.com/lenioapp/sbt-findbugs-plugin> (FindBugs - static analysis for Java code)
--   findbugs4sbt: <https://github.com/sbt/findbugs4sbt> (FindBugs only
-    supports Java projects atm)
--   scalastyle: <https://github.com/scalastyle/scalastyle-sbt-plugin>
-    (Scalastyle - static code checker for Scala)
--   sbt-scapegoat: <https://github.com/sksamuel/sbt-scapegoat> (Scapegoat - Scala static code analysis)
--   sbt-stats: <https://github.com/orrsella/sbt-stats> (simple,
-    extensible source code statistics)
--   sbt-checkstyle-plugin: <https://github.com/etsy/sbt-checkstyle-plugin>
-    (Checkstyle - static analysis for Java code)
--   sbt-jcheckstyle: <https://github.com/xerial/sbt-jcheckstyle>
-    (handy checkstyle runner for Java projects)
--   sbt-verify-plugin: <https://github.com/lenioapp/sbt-verify-plugin>
-    (statically verify the integrity of downloaded dependencies)
--   sbt-dependency-check: <https://github.com/albuch/sbt-dependency-check>
-    (check project dependencies for publicly known vulnerabilities/CVEs)
+-   wartremover (WartRemover - Scala static analysis):
+    <https://github.com/puffnfresh/wartremover>
+-   cpd4sbt (copy/paste detection, works for Scala, too):
+    <https://github.com/sbt/cpd4sbt>
+-   sbt-findbugs-plugin (FindBugs - static analysis for Java code):
+    <https://github.com/lenioapp/sbt-findbugs-plugin>
+-   findbugs4sbt (FindBugs only supports Java projects atm):
+    <https://github.com/sbt/findbugs4sbt>
+-   scalastyle (Scalastyle - static code checker for Scala):
+    <https://github.com/scalastyle/scalastyle-sbt-plugin>
+-   sbt-scapegoat (Scapegoat - Scala static code analysis):
+    <https://github.com/sksamuel/sbt-scapegoat>
+-   sbt-stats (simple, extensible source code statistics):
+    <https://github.com/orrsella/sbt-stats>
+-   sbt-checkstyle-plugin (Checkstyle - static analysis for Java code):
+    <https://github.com/etsy/sbt-checkstyle-plugin>
+-   sbt-jcheckstyle (handy checkstyle runner for Java projects):
+    <https://github.com/xerial/sbt-jcheckstyle>
+-   sbt-verify-plugin (statically verify the integrity of downloaded dependencies):
+    <https://github.com/lenioapp/sbt-verify-plugin>
+-   sbt-dependency-check (check project dependencies for publicly known vulnerabilities/CVEs):
+    <https://github.com/albuch/sbt-dependency-check>
 
 #### One jar plugins
 
--   sbt-assembly: <https://github.com/sbt/sbt-assembly>
+-   sbt-assembly:
+    <https://github.com/sbt/sbt-assembly>
     -   sbt-assembly-log4j2 (sbt-assembly MergeStrategy for log4j2 plugins):
         <https://github.com/idio/sbt-assembly-log4j2>
 -   xsbt-proguard-plugin:
     <https://github.com/adamw/xsbt-proguard-plugin>
--   sbt-deploy: <https://github.com/reaktor/sbt-deploy>
+-   sbt-deploy:
+    <https://github.com/reaktor/sbt-deploy>
 -   sbt-appbundle (os x standalone):
     <https://github.com/sbt/sbt-appbundle>
 -   sbt-onejar (Packages your project using One-JAR™):
@@ -116,104 +148,135 @@ your plugin to the list.
 
 #### Release plugins
 
--   sbt-native-packager: <https://github.com/sbt/sbt-native-packager>
+-   sbt-native-packager:
+    <https://github.com/sbt/sbt-native-packager>
 -   sbt-ghpages (publishes generated site and api):
     <https://github.com/sbt/sbt-ghpages>
 -   sbt-pgp (PGP signing plugin, can generate keys too):
     <https://github.com/sbt/sbt-pgp>
 -   sbt-release (customizable release process):
     <https://github.com/sbt/sbt-release>
--   sbt-sonatype-plugin (releases to Sonatype Nexus repository)
+-   sbt-sonatype-plugin (releases to Sonatype Nexus repository):
     <https://github.com/xerial/sbt-sonatype>
 -   sbt-aether-plugin (Published artifacts using Sonatype Aether):
     <https://github.com/arktekk/sbt-aether-deploy>
--   posterous-sbt: <https://github.com/n8han/posterous-sbt>
--   sbt-signer-plugin: <https://github.com/rossabaker/sbt-signer-plugin>
+-   posterous-sbt:
+    <https://github.com/n8han/posterous-sbt>
+-   sbt-signer-plugin:
+    <https://github.com/rossabaker/sbt-signer-plugin>
 -   sbt-izpack (generates IzPack an installer):
     <http://software.clapper.org/sbt-izpack/>
 -   sbt-unique-version (emulates unique snapshots):
     <https://github.com/sbt/sbt-unique-version>
--   sbt-install4j: <https://github.com/jpsacha/sbt-install4j>
--   sbt-pack (generates packages with dependent jars and launch
-    scripts): <https://github.com/xerial/sbt-pack>
--   sbt-start-script: <https://github.com/sbt/sbt-start-script>
--   xitrum-package (collects dependency .jar files for standalone Scala
-    programs): <https://github.com/ngocdaothanh/xitrum-package>
--   sbt-dist-zip (Create a distributable zip file): <https://github.com/timt/sbt-dist-zip>
+-   sbt-install4j:
+    <https://github.com/jpsacha/sbt-install4j>
+-   sbt-pack (generates packages with dependent jars and launch scripts):
+    <https://github.com/xerial/sbt-pack>
+-   sbt-start-script:
+    <https://github.com/sbt/sbt-start-script>
+-   xitrum-package (collects dependency .jar files for standalone Scala programs):
+    <https://github.com/ngocdaothanh/xitrum-package>
+-   sbt-dist-zip (Create a distributable zip file):
+    <https://github.com/timt/sbt-dist-zip>
 
 #### Deployment integration plugins
 
--   sbt-appengine: <https://github.com/sbt/sbt-appengine>
+-   sbt-appengine:
+    <https://github.com/sbt/sbt-appengine>
 -   sbt-cloudbees-plugin:
     <https://github.com/timperrett/sbt-cloudbees-plugin>
 -   sbt-jelastic-deploy:
     <https://github.com/casualjim/sbt-jelastic-deploy>
--   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk): <https://github.com/sqs/sbt-elasticbeanstalk>
--   sbt-cloudformation (AWS CloudFormation templates and stacks management): <https://github.com/tptodorov/sbt-cloudformation>
--   sbt-codedeploy: <https://github.com/gilt/sbt-codedeploy>
--   sbt-heroku: <https://github.com/heroku/sbt-heroku>
--   sbt-heroku-deploy: <https://github.com/earldouglas/sbt-heroku-deploy>
--   sbt-aws-fun (Deploy Jar files to AWS Lambda): <https://github.com/TailrecIO/sbt-aws-fun>
--   sbt-aws-serverless (Deploy code to AWS Serverless Architecture): <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
+-   sbt-elasticbeanstalk (Deploy WAR files to AWS Elastic Beanstalk):
+    <https://github.com/sqs/sbt-elasticbeanstalk>
+-   sbt-cloudformation (AWS CloudFormation templates and stacks management):
+    <https://github.com/tptodorov/sbt-cloudformation>
+-   sbt-codedeploy:
+    <https://github.com/gilt/sbt-codedeploy>
+-   sbt-heroku:
+    <https://github.com/heroku/sbt-heroku>
+-   sbt-heroku-deploy:
+    <https://github.com/earldouglas/sbt-heroku-deploy>
+-   sbt-aws-fun (Deploy Jar files to AWS Lambda):
+    <https://github.com/TailrecIO/sbt-aws-fun>
+-   sbt-aws-serverless (Deploy code to AWS Serverless Architecture):
+    <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
 
 #### Monitoring integration plugins
 
--   sbt-newrelic: <https://github.com/gilt/sbt-newrelic>
+-   sbt-newrelic:
+    <https://github.com/gilt/sbt-newrelic>
 
 #### Web and frontend development plugins
 
 -   xsbt-web-plugin:
     <https://github.com/earldouglas/xsbt-web-plugin>
--   xsbt-webstart: <https://github.com/ritschwumm/xsbt-webstart>
--   sbt-gwt-plugin: <https://github.com/cdietze/sbt-gwt-plugin>
+-   xsbt-webstart:
+    <https://github.com/ritschwumm/xsbt-webstart>
+-   sbt-gwt-plugin:
+    <https://github.com/cdietze/sbt-gwt-plugin>
 -   coffeescripted-sbt:
     <https://github.com/softprops/coffeescripted-sbt>
--   less-sbt (for less-1.3.0): <https://github.com/softprops/less-sbt>
+-   less-sbt (for less-1.3.0):
+    <https://github.com/softprops/less-sbt>
 -   sbt-less-plugin (it uses less-1.3.0):
     <https://github.com/btd/sbt-less-plugin>
--   sbt-emberjs: <https://github.com/stefri/sbt-emberjs>
--   sbt-closure: <https://github.com/eltimn/sbt-closure>
--   sbt-imagej: <https://github.com/jpsacha/sbt-imagej>
+-   sbt-emberjs:
+    <https://github.com/stefri/sbt-emberjs>
+-   sbt-closure:
+    <https://github.com/eltimn/sbt-closure>
+-   sbt-imagej:
+    <https://github.com/jpsacha/sbt-imagej>
 -   sbt-yui-compressor:
     <https://github.com/indrajitr/sbt-yui-compressor>
--   sbt-requirejs: <https://github.com/scalatra/sbt-requirejs>
+-   sbt-requirejs:
+    <https://github.com/scalatra/sbt-requirejs>
 -   sbt-vaadin-plugin:
     <https://github.com/henrikerola/sbt-vaadin-plugin>
--   sbt-purescript: <https://github.com/eamelink/sbt-purescript>
--   sbt-elm: <https://github.com/choucrifahed/sbt-elm>
--   sbt-js-test (Run javascript tests on the JVM with browser APIs): <https://github.com/joescii/sbt-js-test>
--   sbt-javafx (Package JavaFX applications): <https://github.com/kavedaa/sbt-javafx>
--   sbt-phantomjs (Automated installer and configurator for PhantomJS): <https://github.com/saturday06/sbt-phantomjs>
--   sbt-web-scalajs: <https://github.com/vmunier/sbt-web-scalajs>
--   scalatra-sbt: <https://github.com/scalatra/scalatra-sbt>
+-   sbt-purescript:
+    <https://github.com/eamelink/sbt-purescript>
+-   sbt-elm:
+    <https://github.com/choucrifahed/sbt-elm>
+-   sbt-js-test (Run javascript tests on the JVM with browser APIs):
+    <https://github.com/joescii/sbt-js-test>
+-   sbt-javafx (Package JavaFX applications):
+    <https://github.com/kavedaa/sbt-javafx>
+-   sbt-phantomjs (Automated installer and configurator for PhantomJS):
+    <https://github.com/saturday06/sbt-phantomjs>
+-   sbt-web-scalajs:
+    <https://github.com/vmunier/sbt-web-scalajs>
+-   scalatra-sbt:
+    <https://github.com/scalatra/scalatra-sbt>
 -   sbt-scala-js-map (Configures source mapping for Scala.js projects hosted on GitHub):
     <https://github.com/ThoughtWorksInc/sbt-scala-js-map>
--   Naptime API framework plugin: <http://coursera.github.io/naptime> (<https://github.com/coursera/naptime>)
--   sbt-npm (Run npm tasks as part of sbt build process): <https://github.com/timt/sbt-npm>
-
+-   Naptime API framework plugin (<http://coursera.github.io/naptime>):
+    <https://github.com/coursera/naptime>
+-   sbt-npm (Run npm tasks as part of sbt build process):
+    <https://github.com/timt/sbt-npm>
 
 #### Documentation plugins
 
--   tut (Scala literate programming): <https://github.com/tpolecat/tut>
+-   tut (Scala literate programming):
+    <https://github.com/tpolecat/tut>
 -   sbt-site (Site generation for sbt):
     <https://github.com/sbt/sbt-site>
--   sbt-lwm (Convert lightweight markup files, e.g., Markdown and
-    Textile, to HTML): <http://software.clapper.org/sbt-lwm/>
--   Laika (Template-based site generation, Markdown, reStructuredText,
-    no external tools): <http://planet42.github.io/Laika/>
+-   sbt-lwm (Convert lightweight markup files, e.g., Markdown and Textile, to HTML):
+    <http://software.clapper.org/sbt-lwm/>
+-   Laika (Template-based site generation, Markdown, reStructuredText, no external tools):
+    <http://planet42.github.io/Laika/>
 -   literator-plugin (Converts sources into markdown documents):
     <https://github.com/laughedelic/literator>
--   sbt-class-diagram (Create a class diagram)
+-   sbt-class-diagram (Create a class diagram):
     <https://github.com/xuwei-k/sbt-class-diagram>
--   sbt-api-mappings (Resolves external links in ScalaDoc for common Scala libraries)
+-   sbt-api-mappings (Resolves external links in ScalaDoc for common Scala libraries):
     <https://github.com/ThoughtWorksInc/sbt-api-mappings>
--   sbt-scaliterate (generates source code from a programming book written in Markdown)
+-   sbt-scaliterate (generates source code from a programming book written in Markdown):
     <https://github.com/wookietreiber/sbt-scaliterate>
 
 #### Library dependency plugins
 
--   sbt-dependency-graph (Creates a graphml file of the dependency
-    tree): <https://github.com/jrudolph/sbt-dependency-graph>
+-   sbt-dependency-graph (Creates a graphml file of the dependency tree):
+    <https://github.com/jrudolph/sbt-dependency-graph>
 -   ls-sbt (An sbt interface for ls.implicit.ly):
     <https://github.com/softprops/ls>
 -   sbt-dirty-money (Cleans Ivy2 cache):
@@ -229,8 +292,10 @@ your plugin to the list.
 
 #### Build interoperability plugins
 
--   ant4sbt: <https://github.com/sbt/ant4sbt>
--   sbt-pom-reader: <https://github.com/sbt/sbt-pom-reader>
+-   ant4sbt:
+    <https://github.com/sbt/ant4sbt>
+-   sbt-pom-reader:
+    <https://github.com/sbt/sbt-pom-reader>
 
 #### Create new project plugins
 
@@ -243,12 +308,13 @@ your plugin to the list.
 
 #### Utility and system plugins
 
--   sbt-javaversioncheck (enforces build requirement for specific version level of Java): <https://github.com/sbt/sbt-javaversioncheck>
--   sbt-scalariform (adding support for source code formatting using
-    Scalariform): <https://github.com/sbt/sbt-scalariform>
--   sbt-process-runner (Run your own applications from SBT console)
+-   sbt-javaversioncheck (enforces build requirement for specific version level of Java):
+    <https://github.com/sbt/sbt-javaversioncheck>
+-   sbt-scalariform (adding support for source code formatting using Scalariform):
+    <https://github.com/sbt/sbt-scalariform>
+-   sbt-process-runner (Run your own applications from SBT console):
     <https://github.com/whysoserious/sbt-process-runner>
--   jot (Write down your ideas lest you forget them)
+-   jot (Write down your ideas lest you forget them):
     <https://github.com/softprops/jot>
 -   sbt-editsource (A poor man's *sed*(1), for sbt):
     <http://software.clapper.org/sbt-editsource/>
@@ -256,23 +322,25 @@ your plugin to the list.
     <https://github.com/todesking/sbt-conflict-classes>
 -   sbt-cross (An alternative to `crossScalaVersions`):
     <https://github.com/lucidsoftware/sbt-cross>
--   sbt-cross-building (Simplifies building your plugins for multiple
-    versions of sbt): <https://github.com/jrudolph/sbt-cross-building>
+-   sbt-cross-building (Simplifies building your plugins for multiple versions of sbt):
+    <https://github.com/jrudolph/sbt-cross-building>
 -   sbt-doge (aggregates tasks across subprojects and their `crossScalaVersions`):
     <https://github.com/sbt/sbt-doge>
 -   sbt-revolver (Triggered restart, hot reloading):
     <https://github.com/spray/sbt-revolver>
 -   sbt-scalaedit (Open and upgrade ScalaEdit (text editor)):
     <https://github.com/kjellwinblad/sbt-scalaedit-plugin>
--   sbt-man (Looks up scaladoc): <https://github.com/sbt/sbt-man>
+-   sbt-man (Looks up scaladoc):
+    <https://github.com/sbt/sbt-man>
 -   sbt-taglist (Looks for TODO-tags in the sources):
     <https://github.com/johanandren/sbt-taglist>
 -   migration-manager:
     <https://github.com/typesafehub/migration-manager>
--   sbt-aspectj: <https://github.com/sbt/sbt-aspectj>
--   sbt-properties: <https://github.com/sbt/sbt-properties>
--   sbt-multi-publish (publish to more than one repository
-    simultaneously):
+-   sbt-aspectj:
+    <https://github.com/sbt/sbt-aspectj>
+-   sbt-properties:
+    <https://github.com/sbt/sbt-properties>
+-   sbt-multi-publish (publish to more than one repository simultaneously):
     <https://github.com/davidharcombe/sbt-multi-publish>
 -   sbt-about-plugins (shows some details about plugins loaded):
     <https://github.com/jozic/sbt-about-plugins>
@@ -288,8 +356,10 @@ your plugin to the list.
     <https://github.com/steppenwells/sbt-sh>
 -   cronish-sbt (interval sbt / shell command execution):
     <https://github.com/philcali/cronish-sbt>
--   git (executes git commands): <https://github.com/sbt/sbt-git>
--   svn (execute svn commands): <https://github.com/xuwei-k/sbtsvn>
+-   git (executes git commands):
+    <https://github.com/sbt/sbt-git>
+-   svn (execute svn commands):
+    <https://github.com/xuwei-k/sbtsvn>
 -   sbt-groll (sbt plugin to navigate the Git history):
     <https://github.com/sbt/sbt-groll>
 -   sbt-twt (twitter processor for sbt):
@@ -304,7 +374,7 @@ your plugin to the list.
     <https://github.com/sensatus/sbt-backup>
 -   sbt-project-graph (visualise inter-project dependencies):
     <https://github.com/dwijnand/sbt-project-graph>
--   solr-plugin (start solr search engine from sbt)
+-   solr-plugin (start solr search engine from sbt):
     <https://github.com/sgrouples/sbt-solr-plugin>
 -   sbt-todolist (find TODOs in source files and print them to console):
     <https://github.com/fedragon/sbt-todolist>
@@ -340,8 +410,8 @@ your plugin to the list.
     <https://github.com/Atry/pttrt>
 -   sbt-haxe (Compiling [Haxe](http://www.haxe.org/) to Java):
     <https://github.com/qifun/sbt-haxe>
--   sbt-scalabuff (Google Protocol Buffers with native scala support
-    thru ScalaBuff): <https://github.com/sbt/sbt-scalabuff>
+-   sbt-scalabuff (Google Protocol Buffers with native scala support thru ScalaBuff):
+    <https://github.com/sbt/sbt-scalabuff>
 -   sbt-fmpp (FreeMarker Scala/Java Templating):
     <https://github.com/sbt/sbt-fmpp>
 -   sbt-scalaxb (XSD and WSDL binding):
@@ -350,10 +420,11 @@ your plugin to the list.
     <https://github.com/sbt/sbt-protobuf>
 -   sbt-cppp (Cross-Project Protobuf Plugin for Sbt):
     <https://github.com/Atry/sbt-cppp>
--   sbt-avro (Apache Avro): <https://github.com/cavorite/sbt-avro>
--   courier (Type safe data bindings for web + mobile): <https://github.com/coursera/courier>
--   sbt-xjc (XSD binding, using
-    [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
+-   sbt-avro (Apache Avro):
+    <https://github.com/cavorite/sbt-avro>
+-   courier (Type safe data bindings for web + mobile):
+    <https://github.com/coursera/courier>
+-   sbt-xjc (XSD binding, using [JAXB XJC](http://download.oracle.com/javase/6/docs/technotes/tools/share/xjc.html) ):
     <https://github.com/sbt/sbt-xjc>
 -   xsbt-scalate-generate (Generate/Precompile Scalate Templates):
     <https://github.com/backchatio/xsbt-scalate-generate>
@@ -361,21 +432,20 @@ your plugin to the list.
     <https://github.com/stefri/sbt-antlr>
 -   sbt-antlr4 (Antlr4 runner for generating Java source code):
     <https://github.com/ihji/sbt-antlr4>
--   xsbt-reflect (Generate Scala source code for project name and
-    version): <https://github.com/ritschwumm/xsbt-reflect>
--   lifty (Brings scaffolding to sbt): <https://github.com/lifty/lifty>
+-   xsbt-reflect (Generate Scala source code for project name and version):
+    <https://github.com/ritschwumm/xsbt-reflect>
+-   lifty (Brings scaffolding to sbt):
+    <https://github.com/lifty/lifty>
 -   sbt-thrift (Thrift Code Generation):
     <https://github.com/bigtoast/sbt-thrift>
--   xsbt-hginfo (Generate Scala source code for Mercurial repository
-    information):
+-   xsbt-hginfo (Generate Scala source code for Mercurial repository information):
     <https://bitbucket.org/lukas_pustina/xsbt-hginfo>
 -   sbt-scalashim (Generate Scala shim like `sys.error`):
     <https://github.com/sbt/sbt-scalashim>
--   sbtend (Generate Java source code from
-    [xtend](https://www.eclipse.org/xtend/) ):
+-   sbtend (Generate Java source code from [xtend](https://www.eclipse.org/xtend/) ):
     <https://github.com/xuwei-k/sbtend>
--   sbt-boilerplate (generating scala.Tuple/Function related boilerplate
-    code): <https://github.com/sbt/sbt-boilerplate>
+-   sbt-boilerplate (generating scala.Tuple/Function related boilerplate code):
+    <https://github.com/sbt/sbt-boilerplate>
 -   sbt-fxml (Generates controller classes for JavaFX FXML files):
     <https://bitbucket.org/phdoerfler/sbt-fxml>
 -   sbt-clojure (Compiling Clojure code):
@@ -388,7 +458,7 @@ your plugin to the list.
     <https://github.com/unicredit/sbt-swagger-codegen>
 -   scavro (Code generation from [Avro](http://avro.apache.org/) schema):
     <https://github.com/oedura/scavro>
--   sbt-spi-plugin (Generates provider-configuration files in the resource directory META-INF/services for later use with ServiceLoader)
+-   sbt-spi-plugin (Generates provider-configuration files in the resource directory META-INF/services for later use with ServiceLoader):
     <https://github.com/nyavro/spi-plugin>
 -   sbt-dsl-platform ([DSL Platform](https://dsl-platform.com/) compiler plugin. Code/library generation from various languages. Postgres/Oracle database migrations):
     <https://github.com/ngs-doo/dsl-compiler-client>
@@ -402,33 +472,41 @@ your plugin to the list.
 
 #### Android plugins
 
--   android-plugin: <https://github.com/jberkel/android-plugin>
--   android-sdk-plugin: <https://github.com/pfn/android-sdk-plugin>
+-   android-plugin:
+    <https://github.com/jberkel/android-plugin>
+-   android-sdk-plugin:
+    <https://github.com/pfn/android-sdk-plugin>
 -   sbt-crashlytics (Provides [crashlytics](https://fabric.io/kits/android/crashlytics/) support for android applications):
     <https://github.com/seroperson/sbt-crashlytics>
 
 #### iOS plugins
 
--   sbt-robovm (Compiling Scala using RoboVM for iOS or native OSX): <https://github.com/roboscala/sbt-robovm>
+-   sbt-robovm (Compiling Scala using RoboVM for iOS or native OSX):
+    <https://github.com/roboscala/sbt-robovm>
 
 #### OSGi plugin
 
--   sbtosgi: <https://github.com/sbt/sbt-osgi>
+-   sbtosgi:
+    <https://github.com/sbt/sbt-osgi>
 
 #### Native interop plugins
 
-- sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets): <https://github.com/lloydmeta/sbt-javacpp>
-- sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs): <https://github.com/jodersky/sbt-jni>
+-   sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets):
+    <https://github.com/lloydmeta/sbt-javacpp>
+-   sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs): 
+    <https://github.com/jodersky/sbt-jni>
 
 #### Benchmarking plugins 
 
-- sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala): <https://github.com/ktoso/sbt-jmh>
+-   sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala):
+    <https://github.com/ktoso/sbt-jmh>
 
 #### Computer vision plugins
 
-- sbt-opencv (Start an OpenCV via JavaCV project in 1 line): <https://github.com/lloydmeta/sbt-opencv>
+-   sbt-opencv (Start an OpenCV via JavaCV project in 1 line):
+    <https://github.com/lloydmeta/sbt-opencv>
 
 #### Plugin bundles
 
--   tl-os-sbt-plugins (Version, Release, and Package Management, Play 2.0 and Git utilities) :
+-   tl-os-sbt-plugins (Version, Release, and Package Management, Play 2.0 and Git utilities):
     <https://github.com/trafficland/tl-os-sbt-plugins>
