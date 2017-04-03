@@ -233,7 +233,7 @@ Jira account)
 After publishing you have to follow the
 [release workflow of Nexus](http://central.sonatype.org/pages/releasing-the-deployment.html).
 
-> *Note:* the sbt-sonatype plugin can be used also for other non-sonatype 
+> *Note:* the sbt-sonatype plugin can also be used to publish to other non-sonatype 
 repositories
 
 #### Publishing tips'n'tricks
