@@ -135,7 +135,7 @@ object Docs {
 </html>
 """
     IO.write(linkFile, page, IO.utf8)
-    log.info(s"generated ${linkFile.toString} that links to $path")
+    log.debug(s"generated ${linkFile.toString} that links to $path")
     linkFile
   }
 
