@@ -2,18 +2,25 @@
 out: Migrating-from-sbt-012x.html
 ---
 
+  [Organizing-Build]: Organizing-Build.html
+
 ## Migrating from sbt 0.12.x
 
 ### Introduction
 
-Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage of two aspects of sbt:
+Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage of three aspects of sbt:
 
 * the key dependency operators: `<<=`, `<+=`, `<++=`
 * the tuple enrichments (apply and map) for TaskKey's and SettingKey's (eg. `(foo, bar) map { (f, b) => ... }`)
+* the use of `Build` trait in `project/Build.scala`
 
 The release of sbt 0.13 (which was over 3 years ago!) introduced the `.value` DSL which allowed for much
-easier to read and write code, effectively making both aspects redudant and they were removed from the official
+easier to read and write code, effectively making the first two aspects redundant and they were removed from the official
 documentation.
+
+Similarly, sbt 0.13's introduction of multi-project `build.sbt` made the `Build` trait redundant.
+In addition, the auto plugin feature that's now standard in sbt 0.13 enabled automatic sorting of plugin settings
+and auto import feature, but it made `Build.scala` more difficult to maintain.
 
 As they will be removed in upcoming release of sbt 1.0.0 we've deprecated them in sbt 0.13.13, and here we'll
 help guide you to how to migrate your code.
@@ -132,3 +139,84 @@ when migrating you mustn't use `.value` but `.evaluated`:
 ```scala
 run := docsRunSetting.evaluated
 ```
+
+### Migrating from the Build trait
+
+With `Build` trait based build such as:
+
+```scala
+import sbt._
+import Keys._
+import xyz.XyzPlugin.autoImport._
+
+object HelloBuild extends Build {
+  val shared = Defaults.defaultSettings ++ xyz.XyzPlugin.projectSettings ++ Seq(
+    organization := "com.example",
+    version      := "0.1.0",
+    scalaVersion := "2.12.1")
+
+  lazy val hello =
+    Project("Hello", file("."),
+      settings = shared ++ Seq(
+        xyzSkipWrite := true)
+    ).aggregate(core)
+
+  lazy val core =
+    Project("hello-core", file("core"),
+      settings = shared ++ Seq(
+        description := "Core interfaces",
+        libraryDependencies ++= scalaXml.value)
+    )
+
+  def scalaXml = Def.setting {
+    scalaBinaryVersion.value match {
+      case "2.10" => Nil
+      case _      => ("org.scala-lang.modules" %% "scala-xml" % "1.0.6") :: Nil
+    }
+  }
+}
+```
+
+You can migrate to `build.sbt`:
+
+```scala
+val shared = Seq(
+  organization := "com.example",
+  version      := "0.1.0",
+  scalaVersion := "2.12.1"
+)
+
+lazy val helloRoot = (project in file("."))
+  .aggregate(core)
+  .enablePlugins(XyzPlugin)
+  .settings(
+    shared,
+    name := "Hello",
+    xyzSkipWrite := true
+  )
+
+lazy val core = (project in file("core"))
+  .enablePlugins(XyzPlugin)
+  .settings(
+    shared,
+    name := "hello-core",
+    description := "Core interfaces",
+    libraryDependencies ++= scalaXml.value
+  )
+
+def scalaXml = Def.setting {
+  scalaBinaryVersion.value match {
+    case "2.10" => Nil
+    case _      => ("org.scala-lang.modules" %% "scala-xml" % "1.0.6") :: Nil
+  }
+}
+```
+
+1. Rename `project/Build.scala` to `build.sbt`.
+2. Remove import statements `import sbt._`, `import Keys._`, and any auto imports.
+3. Move all of the inner definitions (like `shared`, `helloRoot`, etc) out of the `object HelloBuild`, and remove `HelloBuild`.
+4. Change `Project(...)` to `(project in file("x"))` style, and call its `settings(...)` method to pass in the settings. This is so the auto plugins can reorder their setting sequence based on the plugin dependencies. `name` setting should be set to keep the old names.
+5. Remove `Defaults.defaultSettings` out of `shared` since these settings are already set by the built-in auto plugins, also remove `xyz.XyzPlugin.projectSettings` out of `shared` and call `enablePlugins(XyzPlugin)` instead.
+
+**Note**: `Build` traits is deprecated, but you can still use `project/*.scala` file to organize your build and/or define ad-hoc plugins. See [Organizing the build][Organizing-Build].
+
