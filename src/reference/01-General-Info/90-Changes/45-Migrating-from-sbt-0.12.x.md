@@ -91,7 +91,7 @@ define it as:
 a := (a dependsOn b).value
 ```
 
-Note that you'll need to use the `<<=` operator with `.triggeredBy` and `.runBefore` in SBT 0.13.13 and
+**Note**: You'll need to use the `<<=` operator with `.triggeredBy` and `.runBefore` in sbt 0.13.13 and
 earlier due to issue [#1444](https://github.com/sbt/sbt/issues/1444).
 
 ### Migrating when you need to set `Task`s
@@ -111,11 +111,13 @@ Where you previous would define things as:
 sourceGenerators in Compile <+= buildInfo
 ```
 
-now you define them as:
+now you define them as for sbt 0.13.14+:
 
 ```scala
-sourceGenerators in Compile += buildInfo.taskValue
+sourceGenerators in Compile += buildInfo.value
 ```
+
+**Note**: In sbt 0.13.13 and earlier you'll need to write `sourceGenerators in Compile += buildInfo.taskValue`.
 
 ### Migrating with `InputKey`
 
