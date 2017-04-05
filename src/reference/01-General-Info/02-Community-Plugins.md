@@ -38,8 +38,6 @@ your plugin to the list.
 -   IntelliJ IDEA
     -   sbt Plugin to generate IDEA project configuration:
         <https://github.com/mpeltonen/sbt-idea>
-    -   IDEA Plugin to embed an sbt Console into the IDE:
-        <https://github.com/orfjackal/idea-sbt-plugin>
 -   Netbeans (no support to create a new sbt project yet)
     -   sbt-netbeans-plugin (older):
         <https://github.com/remeniuk/sbt-netbeans-plugin>
@@ -272,6 +270,8 @@ your plugin to the list.
     <https://github.com/ThoughtWorksInc/sbt-api-mappings>
 -   sbt-scaliterate (generates source code from a programming book written in Markdown):
     <https://github.com/wookietreiber/sbt-scaliterate>
+-   sbt-dash (Creates a Dash docset from Scaladoc)
+    <https://bintray.com/jastice/sbt-plugins/sbt-dash>
 
 #### Library dependency plugins
 
