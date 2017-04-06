@@ -121,7 +121,13 @@ sourceGenerators in Compile <+= buildInfo
 for sbt 0.13.14+, you define them as:
 
 ```scala
-sourceGenerators in Compile += buildInfo.value
+sourceGenerators in Compile += buildInfo
+```
+
+or in general,
+
+```scala
+sourceGenerators in Compile += Def.task { List(file1, file2) }
 ```
 
 **Note**: In sbt 0.13.13 and earlier you'll need to write `sourceGenerators in Compile += buildInfo.taskValue`.
