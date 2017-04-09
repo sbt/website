@@ -118,7 +118,7 @@ Where you previous would define things as:
 sourceGenerators in Compile <+= buildInfo
 ```
 
-for sbt 0.13.14+, you define them as:
+for sbt 0.13.15+, you define them as:
 
 ```scala
 sourceGenerators in Compile += buildInfo
