@@ -15,7 +15,7 @@ object Docs {
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "1.0"
-  lazy val targetSbtFullVersion = "1.0.0-M4"
+  lazy val targetSbtFullVersion = "1.0.0-M5"
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
     "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
