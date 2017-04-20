@@ -41,6 +41,7 @@ your plugin to the list.
 - sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
 - [Scripted plugin](Testing-sbt-plugins.html)
 - sbt-assembly 0.14.4: <https://github.com/sbt/sbt-assembly>
+- sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
 
 ### Plugins available for sbt 1.0.0-M4
 
