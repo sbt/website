@@ -4,6 +4,7 @@ out: Cross-Build.html
 
   [Command-Line-Reference]: Command-Line-Reference.html
   [Publishing]: Publishing.html
+  [Cross-Build-Plugins]: Cross-Build-Plugins.html
 
 Cross-building
 --------------
