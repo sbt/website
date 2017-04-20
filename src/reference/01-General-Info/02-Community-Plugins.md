@@ -38,8 +38,9 @@ Please feel free to
 [submit a pull request](https://github.com/sbt/website/pulls) that adds
 your plugin to the list.
 
-- sbt-bintray: <https://github.com/sbt/sbt-bintray>
+- sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
 - [Scripted plugin](Testing-sbt-plugins.html)
+- sbt-assembly 0.14.4: <https://github.com/sbt/sbt-assembly>
 
 ### Plugins available for sbt 1.0.0-M4
 
