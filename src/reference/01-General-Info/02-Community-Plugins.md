@@ -42,11 +42,4 @@ your plugin to the list.
 - [Scripted plugin](Testing-sbt-plugins.html)
 - sbt-assembly 0.14.4: <https://github.com/sbt/sbt-assembly>
 - sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
-
-### Plugins available for sbt 1.0.0-M4
-
-- bintray-sbt: <https://github.com/softprops/bintray-sbt>
-- [Scripted plugin](Testing-sbt-plugins.html)
-- sbt-assembly 0.14.3: <https://github.com/sbt/sbt-assembly>
-- sbt-doge 0.1.5: <https://github.com/sbt/sbt-doge>
-- sbt-buildinfo 0.6.1: <https://github.com/sbt/sbt-buildinfo>
+- sbt-contraband 0.3.0-M4: <http://www.scala-sbt.org/contraband/>
