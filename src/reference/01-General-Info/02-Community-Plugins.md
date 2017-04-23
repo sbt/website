@@ -272,6 +272,8 @@ your plugin to the list.
     <https://github.com/wookietreiber/sbt-scaliterate>
 -   sbt-dash (Creates a Dash docset from Scaladoc)
     <https://bintray.com/jastice/sbt-plugins/sbt-dash>
+-   sbt-gherkin-converter (Create html from gherkin feature files directly from sbt):
+    <https://github.com/randomcoder/sbt-gherkin-converter>
 
 #### Library dependency plugins
 
@@ -493,10 +495,10 @@ your plugin to the list.
 
 -   sbt-javacpp (JavaCPP is the missing bridge between Java and native C++; this lib helps you download platform-specific presets):
     <https://github.com/lloydmeta/sbt-javacpp>
--   sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs): 
+-   sbt-jni (Suite of sbt plugins for simplifying creation and distribution of JNI programs):
     <https://github.com/jodersky/sbt-jni>
 
-#### Benchmarking plugins 
+#### Benchmarking plugins
 
 -   sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala):
     <https://github.com/ktoso/sbt-jmh>
