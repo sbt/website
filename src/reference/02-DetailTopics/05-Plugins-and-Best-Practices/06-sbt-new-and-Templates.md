@@ -31,14 +31,32 @@ Template applied in ./hello
 
 This ran the template [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8) using [Giter8][giter8], prompted for values for "name" (which has a default value of "hello", which we accepted hitting `[Enter]`), and created a build under `./hello`.
 
-`scala-seed` is the official template for a "minimal" Scala project, but it's definitely not the only one out there. We expect other templates to emerge for other purposes, e.g. web or backend applications. 
+`scala-seed` is the official template for a "minimal" Scala project, but it's definitely not the only one out there.
 
 ### Giter8 support
 
 [Giter8][giter8] is a templating project originally started by Nathan Hamblen in 2010, and now maintained by the [foundweekends][foundweekends] project.
-The unique aspect of Giter8 is that it uses GitHub (or any other git repository) to host the templates, so it allows anyone to participate in template creation.
+The unique aspect of Giter8 is that it uses GitHub (or any other git repository) to host the templates, so it allows anyone to participate in template creation. Here are some of the templates provided by official sources:
 
-sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
+- [foundweekends/giter8.g8](https://github.com/foundweekends/giter8.g8)                 (A template for Giter8 templates)
+- [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8)                         (Seed template for Scala)
+- [scala/hello-world.g8](https://github.com/scala/hello-world.g8)                       (A template to demonstrate a minimal Scala application)
+- [akka/akka-scala-seed.g8](https://github.com/akka/akka-scala-seed.g8)                 (A minimal seed template for an Akka with Scala build
+)
+- [akka/akka-java-seed.g8](https://github.com/akka/akka-java-seed.g8)                   (A minimal seed template for an Akka in Java
+)
+- [akka/hello-akka.g8](https://github.com/akka/hello-akka.g8)                           (Simple Akka application)
+- [playframework/play-scala-seed.g8](https://github.com/playframework/play-scala-seed.g8) (Play Scala Seed Template)
+- [playframework/play-java-seed.g8](https://github.com/playframework/play-java-seed.g8)   (Play Java Seed template)
+- [lagom/lagom-scala.g8](https://github.com/lagom/lagom-scala.g8/)                      (A [Lagom](https://www.lagomframework.com/) Scala seed template for sbt)
+- [lagom/lagom-java.g8](https://github.com/lagom/lagom-java.g8/)                        (A [Lagom](https://www.lagomframework.com/) Java seed template for sbt)
+- [scala-native/scala-native.g8](https://github.com/scala-native/scala-native.g8)       (Scala Native)
+- [scala-native/sbt-crossproject.g8](https://github.com/scala-native/sbt-crossproject.g8) (sbt-crosspoject)
+- [http4s/http4s.g8](https://github.com/http4s/http4s.g8)                               (http4s services)
+- [unfiltered/unfiltered.g8](https://github.com/unfiltered/unfiltered.g8)               ([Unfiltered](http://unfiltered.ws/) application)
+- [scalatra/scalatra-sbt.g8](https://github.com/scalatra/scalatra-sbt.g8)               (Basic Scalatra template using SBT 0.13.x.)
+
+For more, see [Giter8 templates](https://github.com/foundweekends/giter8/wiki/giter8-templates) on the Giter8 wiki. sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
 
 #### How to create a Giter8 template
 
