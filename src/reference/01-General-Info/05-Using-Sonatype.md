@@ -30,41 +30,41 @@ In short, you need two publicly available URLs:
 
 The [OSSRH Guide][sonatype-ossrhguide] walks you through the required 
 process of setting up the account with Sonatype. It’s as simple as 
-[creating a Sonatype's JIRA account][sonatype-signup] and afterwards creating a 
-[New Project ticket][sonatype-new-project]. When creating the account try to 
-use the same domain in your email address as the project is hosted on. I guess 
-it makes it easier to validate the relationship with the groupId requested in 
-the ticket, but is not the only method used to confirm the ownership. 
+[creating a Sonatype's JIRA account][sonatype-signup] and then a 
+[New Project ticket][sonatype-new-project]. When creating the account, try to 
+use the same domain in your email address that the project is hosted on.
+It makes it easier for Sonatype to validate the relationship with the groupId requested in 
+the ticket, but it is not the only method used to confirm the ownership. 
 
-Creation of the New Project ticket is as simple as:
+Creation of the *New Project ticket* is as simple as:
 
 * providing the name of the library in the ticket’s subject,
-* naming the groupId you want to use for distributing the library (make sure 
-it is matching the root package of your code). Sonatype provides you with 
+* naming the groupId for distributing the library (make sure 
+it matches the root package of your code). Sonatype provides
 additional hints on choosing the right groupId for publishing your library in 
 [Choosing your coordinates guide][sonatype-coordinates].
 * providing the SCM and Project URLs to the source code and homepage of the 
 library.
 
-*Note:* After creating you Sonatype account (on their JIRA) you can login 
-using the same credentials to the [Nexus Repository Manager][sonatype-nexus] 
-which is not required to be used in this guide, but can be used later to check 
-on the published artifacts.
+After creating your Sonatype account on JIRA, you can log in 
+to the [Nexus Repository Manager][sonatype-nexus] using the same credentials,
+although this is not required in the guide, it can be helpful later to check 
+on published artifacts.
 
-Notice that Sonatype advises that responding to the New Project ticket might 
-take up to two business days, but in my case it was few minutes.
+> *Note:* Sonatype advises that responding to a **New Project ticket** might 
+take up to two business days, but in my case it was a few minutes.
 
 ### SBT setup
 
-To address [Sonatype's requirements for publishing to the central repository]
-[sonatype-requirements] and to simplify the publishing process I recommend you
-to use community plugins [sbt-pgp for signing the files with GPG/PGP][sbt-pgp] 
-and [sbt-sonatype for publishing to Sonatype repository][sbt-sonatype]. 
+To address Sonatype's [requirements]
+[sonatype-requirements] for publishing to the central repository and to simplify the publishing process, you can
+use two community plugins. The [sbt-pgp plugin][sbt-pgp] can sign the files with GPG/PGP
+and [sbt-sonatype][sbt-sonatype] can publish to a Sonatype repository. 
 
 #### First - PGP Signatures
 
-Having the PGP key that you want to use, you need to sign the artifacts 
-published to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
+With the PGP key you want to use, you can sign the artifacts 
+you want to publish to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
 the instructions for the plugin and you'll have PGP signed artifacts in no 
 time.
 
@@ -116,7 +116,7 @@ If it fails to run the `SendKey` command you can try another server (for
 example: hkp://keyserver.ubuntu.com). A list of servers can be found at 
 [the status page](https://sks-keyservers.net/status/) of sks-keyservers.net.
 
-### Second - configure sonatype integration 
+### Second - Configure Sonatype integration 
 
 The credentials for your Sonatype OSSRH account need to be stored
 somewhere safe (*e.g. NOT in the repository*). Common convention is a 
@@ -233,12 +233,12 @@ Jira account)
 After publishing you have to follow the
 [release workflow of Nexus](http://central.sonatype.org/pages/releasing-the-deployment.html).
 
-> *Note:* the sbt-sonatype plugin can be used also for other non-sonatype 
+> *Note:* the sbt-sonatype plugin can also be used to publish to other non-sonatype 
 repositories
 
 #### Publishing tips'n'tricks
 
-Use staged releases for testing across large projects of independent releases 
+Use staged releases to test across large projects of independent releases 
 before pushing the full project.
 
 > *Note:* An error message of `PGPException: checksum mismatch at 0 of 20`
@@ -252,9 +252,9 @@ passphrase.
 
 > *Note:* sbt-release is a third-party plugin meaning it is not covered by Lightbend subscription.
 
-To automate the above publishing approach with the [sbt-release plugin]
+To automate the publishing approach above with the [sbt-release plugin]
 [sbt-release], you should simply add the publishing commands as steps in the
-`releaseProcess` option:
+`releaseProcess` task:
 
 ```
 ...
