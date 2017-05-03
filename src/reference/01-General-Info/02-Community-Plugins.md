@@ -272,6 +272,8 @@ your plugin to the list.
     <https://github.com/wookietreiber/sbt-scaliterate>
 -   sbt-dash (Creates a Dash docset from Scaladoc)
     <https://bintray.com/jastice/sbt-plugins/sbt-dash>
+-   sbt-gherkin-converter (Create html from gherkin feature files directly from sbt):
+    <https://github.com/randomcoder/sbt-gherkin-converter>
 
 #### Library dependency plugins
 
