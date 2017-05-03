@@ -45,6 +45,8 @@ For example, the following task prints the current Scala version and
 then echoes the arguments passed to it on their own line.
 
 ```scala
+import complete.DefaultParsers._
+
 demo := {
   // get the result of parsing
   val args: Seq[String] = spaceDelimited("<arg>").parsed
