@@ -134,7 +134,7 @@ example the task axis can be filled in with a task), or the axis can be
 filled in with the special value `Global`, which is also written as `*`.
 
 `*` is a universal fallback for all scope axes,
-but its direct use should be reversed to sbt and plugin authors in most cases.
+but its direct use should be reserved to sbt and plugin authors in most cases.
 
 ### Referring to scopes in a build definition
 
