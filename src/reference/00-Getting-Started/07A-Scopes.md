@@ -7,6 +7,7 @@ out: Scopes.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
   [Inspecting-Settings]: ../docs/Inspecting-Settings.html
+  [Scope-Delegation]: Scope-Delegation.html
 
 Scopes
 ------
@@ -20,7 +21,7 @@ previous pages, [build definition][Basic-Def] and [task graph][Task-Graph].
 to one entry in sbt's map of key-value pairs. This was a simplification.
 
 In truth, each key can have an associated value in more than one
-context, called a "scope."
+context, called a *scope.*
 
 Some concrete examples:
 
@@ -54,24 +55,39 @@ keys).
 
 There are three scope axes:
 
-- Subprojects
-- Dependency configurations
-- Tasks
+- The subproject axis
+- The dependency configuration axis
+- The task axis
 
-#### Scoping by subproject axis
+If you're not familiar with the notion of *axis*, we can think of the RGB color cube
+as an example:
+
+![color cube](files/rgb_color_solid_cube.png)
+
+In the RGB color model, all colors are represented by a point in the cube whose axes
+correspond to red, green, and blue components encoded by a number.
+Similarly, a full scope in sbt is formed by a **tuple** of a subproject,
+a configuration, and a task value:
+
+```scala
+scalacOptions in (projA, Compile, console)
+```
+
+#### Scoping by the subproject axis
 
 If you [put multiple projects in a single build][Multi-Project], each
 project needs its own settings. That is, keys can be scoped according to
 the project.
 
-The project axis can also be set to "entire build", so a setting applies
-to the entire build rather than a single project. Build-level settings
-are often used as a fallback when a project doesn't define a
-project-specific setting.
+The project axis can also be set to `ThisBuild`, which means the "entire build",
+so a setting applies to the entire build rather than a single project.
+Build-level settings are often used as a fallback when a project doesn't define a
+project-specific setting. We will discuss more on build-level settings later in this page.
 
-#### Scoping by dependency configuration axis
+#### Scoping by the configuration axis
 
-A *dependency configuration* defines a graph of library dependencies, potentially with its own
+A *dependency configuration* (or "configuration" for short) defines
+a graph of library dependencies, potentially with its own
 classpath, sources, generated packages, etc. The dependency configuration concept
 comes from Ivy, which sbt uses for
 managed dependencies [Library Dependencies][Library-Dependencies], and from
@@ -84,13 +100,21 @@ Some configurations you'll see in sbt:
 - `Runtime` which defines the classpath for the `run` task.
 
 By default, all the keys associated with compiling, packaging, and
-running are scoped to a dependency configuration and therefore may work differently
-in each dependency configuration. The most obvious examples are the task keys
+running are scoped to a configuration and therefore may work differently
+in each configuration. The most obvious examples are the task keys
 `compile`, `package`, and `run`; but all the keys which *affect* those keys
 (such as `sourceDirectories` or `scalacOptions` or `fullClasspath`) are also
 scoped to the configuration.
 
-#### Scoping by task axis
+Another thing to note about a configuration is that it can extend other configurations.
+The following figure shows the extension relationship among the most common configurations.
+
+![dependency configurations](files/sbt-configurations.png)
+
+`Test` and `IntegrationTest` extends `Runtime`; `Runtime` extends `Compile`;
+`CompileInternal` extends `Compile`, `Optional`, and `Provided`.
+
+#### Scoping by Task axis
 
 Settings can affect how a task works. For example, the `packageSrc` task
 is affected by the `packageOptions` setting.
@@ -103,43 +127,90 @@ The various tasks that build a package (`packageSrc`, `packageBin`,
 and `packageOptions`. Those keys can have distinct values for each
 packaging task.
 
-### Global scope
+### Global scope component
 
 Each scope axis can be filled in with an instance of the axis type (for
 example the task axis can be filled in with a task), or the axis can be
-filled in with the special value `Global`.
+filled in with the special value `Global`, which is also written as `*`.
 
-`Global` means what you would expect: the setting's value applies to all
-instances of that axis. For example if the task axis is Global, then the
-setting would apply to all tasks.
+`*` is a universal fallback for all scope axes,
+but its direct use should be reversed to sbt and plugin authors in most cases.
 
-### Delegation
+### Referring to scopes in a build definition
 
-A scoped key may be undefined, if it has no value associated with it in
-its scope.
+If you create a setting in `build.sbt` with a bare key, it will be scoped
+to (current subproject, configuration `Global`, task `Global`):
 
-For each scope, sbt has a fallback search path made up of other scopes.
-Typically, if a key has no associated value in a more-specific scope,
-sbt will try to get a value from a more general scope, such as the
-`Global` scope or the entire-build scope.
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    name := "hello"
+  )
+```
 
-This feature allows you to set a value once in a more general scope,
-allowing multiple more-specific scopes to inherit the value.
+Run sbt and `inspect name` to see that it's provided by
+`{file:/home/hp/checkout/hello/}default-aea33a/*:name`, that is, the
+project is `{file:/home/hp/checkout/hello/}default-aea33a`, the
+configuration is `*` (means `Global`), and the task is not shown (which
+also means `Global`).
 
-You can see the fallback search path or "delegates" for a key using the
-`inspect` command, as described below. Read on.
+A bare key on the right hand side is also scoped to
+(current subproject, configuration `Global`, task `Global`):
 
-### Referring to scoped keys when running sbt
+```
+organization := name.value
+```
 
-On the command line and in interactive mode, sbt displays (and parses)
+Keys have an overloaded method called `.in` that is used to set the scope.
+The argument to `.in(...)` can be an instance of any of the scope axes. So for
+example, though there's no real reason to do this, you could set the
+`name` scoped to the `Compile` configuration:
+
+```scala
+name in Compile := "hello"
+```
+
+or you could set the name scoped to the `packageBin` task (pointless! just
+an example):
+
+```scala
+name in packageBin := "hello"
+```
+
+or you could set the `name` with multiple scope axes, for example in the
+`packageBin` task in the `Compile` configuration:
+
+```scala
+name in (Compile, packageBin) := "hello"
+```
+
+or you could use `Global` for all axes:
+
+```scala
+// same as concurrentRestrictions in (Global, Global, Global)
+concurrentRestrictions in Global := Seq(
+  Tags.limitAll(1)
+)
+```
+
+(`concurrentRestrictions in Global` implicitly converts to
+`concurrentRestrictions in (Global, Global, Global)`, setting
+all axes to `Global` scope component; the task and configuration are already
+`Global` by default, so here the effect is to make the project `Global`,
+that is, define `*/*:concurrentRestrictions` rather than
+`{file:/home/hp/checkout/hello/}default-aea33a/*:concurrentRestrictions`)
+
+### Referring to scoped keys from the sbt shell
+
+On the command line and in the sbt shell, sbt displays (and parses)
 scoped keys like this:
 
 ```
 {<build-uri>}<project-id>/config:intask::key
 ```
 
-- `{<build-uri>}<project-id>` identifies the project axis. The
-  `<project-id>` part will be missing if the project axis has "entire build" scope.
+- `{<build-uri>}<project-id>` identifies the subproject axis. The
+  `<project-id>` part will be missing if the subproject axis has "entire build" scope.
 - `config` identifies the configuration axis.
 - `intask` identifies the task axis.
 - `key` identifies the key being scoped.
@@ -234,25 +305,7 @@ is the `fullClasspath` key scoped to the `test` configuration and the
 
 "Dependencies" was discussed in detail in the [previous page][Task-Graph].
 
-You can also see the delegates; if the value were not defined, sbt would
-search through:
-
-- two other configurations (`runtime:fullClasspath`,
-  `compile:fullClasspath`). In these scoped keys, the project is
-  unspecified meaning "current project" and the task is unspecified
-  meaning `Global`
-- configuration set to `Global` (`*:fullClasspath`), since project is
-  still unspecified it's "current project" and task is still
-  unspecified so `Global`
-- project set to `{.}` or `ThisBuild` (meaning the entire build, no
-  specific project)
-- project axis set to `Global` (`*/test:fullClasspath`) (remember, an
-  unspecified project means current, so searching `Global` here is new;
-  i.e. `*` and "no project shown" are different for the project axis;
-  i.e. `*/test:fullClasspath` is not the same as `test:fullClasspath`)
-- both project and configuration set to `Global` (`*/*:fullClasspath`)
-  (remember that unspecified task means `Global` already, so
-  `*/*:fullClasspath` uses `Global` for all three axes)
+We'll discuss "Delegates" later.
 
 Try `inspect fullClasspath` (as opposed to the above example,
 inspect `test:fullClasspath`) to get a sense of the difference. Because
@@ -261,73 +314,9 @@ the configuration is omitted, it is autodetected as `compile`.
 `inspect fullClasspath`.
 
 Try `inspect *:fullClasspath` for another contrast. `fullClasspath` is not
-defined in the `Global` configuration by default.
+defined in the `Global` scope by default.
 
 Again, for more details, see [Interacting with the Configuration System][Inspecting-Settings].
-
-### Referring to scopes in a build definition
-
-If you create a setting in `build.sbt` with a bare key, it will be scoped
-to the current project, configuration `Global` and task `Global`:
-
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name := "hello"
-  )
-```
-
-Run sbt and `inspect name` to see that it's provided by
-`{file:/home/hp/checkout/hello/}default-aea33a/*:name`, that is, the
-project is `{file:/home/hp/checkout/hello/}default-aea33a`, the
-configuration is `*` (meaning global), and the task is not shown (which
-also means global).
-
-Keys have an overloaded method called in used to set the scope. The
-argument to in can be an instance of any of the scope axes. So for
-example, though there's no real reason to do this, you could set the
-`name` scoped to the `Compile` configuration:
-
-```scala
-name in Compile := "hello"
-```
-
-or you could set the name scoped to the `packageBin` task (pointless! just
-an example):
-
-```scala
-name in packageBin := "hello"
-```
-
-or you could set the `name` with multiple scope axes, for example in the
-`packageBin` task in the `Compile` configuration:
-
-```scala
-name in (Compile, packageBin) := "hello"
-```
-
-or you could use `Global` for all axes:
-
-```scala
-name in Global := "hello"
-```
-
-(`name in Global` implicitly converts the scope axis `Global` to a scope
-with all axes set to `Global`; the task and configuration are already
-`Global` by default, so here the effect is to make the project `Global`,
-that is, define `*/*:name` rather than
-`{file:/home/hp/checkout/hello/}default-aea33a/*:name`)
-
-If you aren't used to Scala, a reminder: it's important to understand
-that in and `:=` are just methods, not magic. Scala lets you write them in
-a nicer way, but you could also use the Java style:
-
-```scala
-name.in(Compile).:=("hello")
-```
-
-There's no reason to use this ugly syntax, but it illustrates that these
-are in fact methods.
 
 ### When to specify a scope
 
@@ -354,14 +343,14 @@ Simply `packageOptions` is also a key name, but a different one (for keys
 with no in, a scope is implicitly assumed: current project, global
 config, global task).
 
-#### Build-wide settings
+### Build-level settings
 
 An advanced technique for factoring out common settings
 across subprojects is to define the settings scoped to `ThisBuild`.
 
 If a key that is scoped to a particular subproject is not found,
 sbt will look for it in `ThisBuild` as a fallback.
-Using the mechanism, we can define a build-wide default setting for
+Using the mechanism, we can define a build-level default setting for
 frequently used keys such as `version`, `scalaVersion`, and `organization`.
 
 For convenience, there is `inThisBuild(...)` function that will
@@ -393,3 +382,19 @@ lazy val util = (project in file("util"))
     // other settings
   )
 ```
+
+Due to the nature of [scope delegation][Scope-Delegation] that we will cover later,
+we do not recommend using build-level settings beyond simple value assignments.
+
+### Scope delegation
+
+A scoped key may be undefined, if it has no value associated with it in
+its scope.
+
+For each scope axis, sbt has a fallback search path made up of other scope values.
+Typically, if a key has no associated value in a more-specific scope,
+sbt will try to get a value from a more general scope, such as the `ThisBuild` scope.
+
+This feature allows you to set a value once in a more general scope,
+allowing multiple more-specific scopes to inherit the value.
+We will disscuss [scope delegation][Scope-Delegation] in detail later.
