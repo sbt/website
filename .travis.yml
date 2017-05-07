@@ -1,10 +1,13 @@
 # Use Ubuntu 14.04
 dist: trusty
+# Can't use sudo: false because of travis-ci/travis-ci#7019
+sudo: required
 language: ruby
 rvm: 2.2.3
 cache:
-  apt: true
-  directories:
+  - apt
+  - bundler
+  - directories:
     - $HOME/.ivy2/cache
 script:
   - sbt makeSite
@@ -17,10 +20,15 @@ install:
   - gem install nanoc:4.0.2
   - gem install redcarpet
   - gem install nokogiri
-before_install:
- - echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
- - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
- - sudo apt-get update -qq
- - sudo apt-get install -qq sbt pandoc latex-cjk-all texlive-full
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb https://dl.bintray.com/sbt/debian /'
+        key_url: http://scala-sbt.org/gpg.key
+    packages:
+      - sbt
+      - pandoc
+      - latex-cjk-all
+      - texlive-full
 before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8"
