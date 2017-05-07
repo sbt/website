@@ -49,9 +49,8 @@ wrong, you'll need to mention the desired scope in `build.sbt`.
 
 ### Scope axes
 
-A *scope axis* is a type, where each instance of the type can define its
-own scope (that is, each instance can have its own unique values for
-keys).
+A *scope axis* is a type constructor similar to `Option[A]`,
+that is used to form a component in a scope.
 
 There are three scope axes:
 
@@ -71,6 +70,14 @@ a configuration, and a task value:
 
 ```scala
 scalacOptions in (projA, Compile, console)
+```
+
+To be more precise, it actually looks like this:
+
+```scala
+scalacOptions in (Select(projA: Reference),
+                  Select(Compile: ConfigKey),
+                  Select(console.key))
 ```
 
 #### Scoping by the subproject axis
@@ -127,14 +134,16 @@ The various tasks that build a package (`packageSrc`, `packageBin`,
 and `packageOptions`. Those keys can have distinct values for each
 packaging task.
 
-### Global scope component
+#### Global scope component
 
 Each scope axis can be filled in with an instance of the axis type (for
 example the task axis can be filled in with a task), or the axis can be
-filled in with the special value `Global`, which is also written as `*`.
+filled in with the special value `Global`, which is also written as `*`. So we can think of `Global` as `None`.
 
 `*` is a universal fallback for all scope axes,
 but its direct use should be reserved to sbt and plugin authors in most cases.
+
+To the make the matter confusing, `someKey in Global` appearing in build definition implicitly converts to `someKey in (Global, Global, Global)`.
 
 ### Referring to scopes in a build definition
 
