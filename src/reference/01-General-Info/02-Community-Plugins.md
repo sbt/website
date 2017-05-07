@@ -388,6 +388,8 @@ your plugin to the list.
     <https://github.com/ktoso/sbt-jol>
 -   sbt-hocon (operations on HOCON data against reference configuration aggregated from project dependencies):
     <https://github.com/aalleexxeeii/sbt-hocon>
+-   sbt-gitlab (SBT plugin for interacting with GitLab and GitLabCI through the available API's):
+    <https://gitlab.com/kpmeen/sbt-gitlab>
 
 #### Database plugins
 
