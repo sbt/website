@@ -392,7 +392,7 @@ your plugin to the list.
     <https://gitlab.com/kpmeen/sbt-gitlab>
 -   sbt-tmpfs (SBT plugin that automatically "tmpfsifies" directories to speed up development.)
     <https://github.com/cuzfrog/sbt-tmpfs>
-    
+
 #### Database plugins
 
 -   flyway-sbt (Flyway - The agile database migration framework):
