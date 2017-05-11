@@ -103,6 +103,12 @@ resourceGenerators in Compile += Def.task {
 }.taskValue
 ```
 
+Executing `run` (or `package`, not `compile`) will add a file `demo` to
+`resourceManaged`, which is `target/scala-*/resource_managed"`. By default,
+generated resources are not included in the packaged source artifact. To do so,
+add them as you would other mappings.
+See [Adding files to a package][modify-package-contents].
+
 As a specific example, the following generates a properties file
 `myapp.properties` containing the application name and version:
 
@@ -117,7 +123,3 @@ resourceGenerators in Compile += Def.task {
 
 Change `Compile` to `Test` to make it a test resource. Normally, you
 would only want to generate resources when necessary and not every run.
-
-By default, generated resources are not included in the packaged source
-artifact. To do so, add them as you would other mappings. See
-[Adding files to a package][modify-package-contents].
