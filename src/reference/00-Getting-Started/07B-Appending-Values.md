@@ -2,6 +2,8 @@
 out: Appending-Values.html
 ---
 
+  [Scopes]: Scopes.html
+
 Appending values
 ----------------
 
