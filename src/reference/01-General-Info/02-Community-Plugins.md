@@ -48,3 +48,4 @@ your plugin to the list.
 - Coursier 1.0.0-RC2 <https://github.com/coursier/coursier>
 - sbt-pgp 1.1.0-M1: http://www.scala-sbt.org/sbt-pgp/
 - sbt-sonatype 2.0.0-M1: <https://github.com/xerial/sbt-sonatype>
+- sbt-updates 0.3.1: <https://travis-ci.org/rtimush/sbt-updates>
