@@ -35,8 +35,7 @@ Here are some current plugin best practices.
 Make sure people can find your plugin. Here are some of the recommended steps:
 
 1. Mention [@scala_sbt](https://twitter.com/scala_sbt) in your announcement, and we will RT it.
-2. Accounce it on [implicit.ly](http://notes.implicit.ly/) using [n8han/herald](https://github.com/n8han/herald).
-3. Send a pull req to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
+2. Send a pull req to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
 
 ### Don't use default package
 
