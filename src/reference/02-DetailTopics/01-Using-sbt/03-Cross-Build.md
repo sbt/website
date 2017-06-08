@@ -69,7 +69,24 @@ the action to run with `+`. For example:
 
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
-and when releasing. The ultimate purpose of `+` is to cross-publish your
+and when releasing.
+
+You can use `++ <version>` to temporarily switch the Scala version currently
+being used to build.
+For example:
+
+```
+> ++ 2.12.2
+[info] Setting version to 2.12.2
+> ++ 2.11.11
+[info] Setting version to 2.11.11
+> compile
+```
+`<version>` should be either a version for Scala published to a repository or
+the path to a Scala home directory, as in `++ /path/to/scala/home`.
+See [Command Line Reference][Command-Line-Reference] for details.
+
+The ultimate purpose of `+` is to cross-publish your
 project. That is, by doing:
 
 ```
@@ -149,9 +166,3 @@ on the full Scala version:
 A custom function is mainly used when cross-building and a dependency
 isn't available for all Scala versions or it uses a different convention
 than the default.
-
-As a final note, you can use `++ <version>` to temporarily switch the
-Scala version currently being used to build. `<version>` should be
-either a version for Scala published to a repository, as in `++ 2.10.0`
-or the path to a Scala home directory, as in `++ /path/to/scala/home`.
-See [Command Line Reference][Command-Line-Reference] for details.
