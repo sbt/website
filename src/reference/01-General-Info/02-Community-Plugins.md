@@ -32,11 +32,15 @@ If you'd like to submit your plugin, please follow these instructions:
 
 See [Cross Build Plugins][Cross-Build-Plugins].
 
-### Plugins available for sbt 1.0.0-M5
+### Plugins available for sbt 1.0.0-M6
 
-Please feel free to
-[submit a pull request](https://github.com/sbt/website/pulls) that adds
+Please submit a pull request](https://github.com/sbt/website/pulls) that adds
 your plugin to the list.
+
+- sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
+- [Scripted plugin](Testing-sbt-plugins.html)
+
+### Plugins available for sbt 1.0.0-M5
 
 - sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
 - [Scripted plugin](Testing-sbt-plugins.html)
