@@ -45,7 +45,7 @@ c ++= cTaskDefs.value
 
 ### Migrating from the tuple enrichments
 
-As mentioned above, there are two tupe enrichments `.apply` and `.map`. The difference used to be for whether
+As mentioned above, there are two tuple enrichments `.apply` and `.map`. The difference used to be for whether
 you're defining a setting for a `SettingKey` or a `TaskKey`, you use `.apply` for the former and `.map` for the
 latter:
 
