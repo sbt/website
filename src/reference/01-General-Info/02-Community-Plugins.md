@@ -46,6 +46,7 @@ your plugin to the list.
 - sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
 - sbt-contraband 0.3.0-M5: <http://www.scala-sbt.org/contraband/>
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
+- sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
 
 ### Plugins available for sbt 1.0.0-M5
 
