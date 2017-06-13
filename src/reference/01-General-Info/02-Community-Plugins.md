@@ -34,7 +34,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 ### Plugins available for sbt 1.0.0-M6
 
-Please submit a pull request](https://github.com/sbt/website/pulls) that adds
+Please submit a [pull request](https://github.com/sbt/website/pulls) that adds
 your plugin to the list.
 
 - sbt-sonatype 2.0: <https://github.com/xerial/sbt-sonatype>
@@ -44,6 +44,8 @@ your plugin to the list.
 - [Scripted plugin](Testing-sbt-plugins.html)
 - sbt-assembly 0.14.5: <https://github.com/sbt/sbt-assembly>
 - sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
+- sbt-contraband 0.3.0-M5: <http://www.scala-sbt.org/contraband/>
+- sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 
 ### Plugins available for sbt 1.0.0-M5
 
