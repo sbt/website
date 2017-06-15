@@ -45,6 +45,7 @@ your plugin to the list.
 - sbt-assembly 0.14.5: <https://github.com/sbt/sbt-assembly>
 - sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
 - sbt-contraband 0.3.0-M5: <http://www.scala-sbt.org/contraband/>
+- sbt-docker 1.4.1: <https://github.com/marcuslonnberg/sbt-docker>
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
 
