@@ -223,8 +223,8 @@ forked JVMs allowed to run at the same time by setting the limit on
 actions cannot be provided with the actual test class loader when a
 group is forked.
 
-In addition, forked tests can optionally be run in parallel.  This feature
-is still considered experimental, and may be enabled with the following setting :
+In addition, forked tests can optionally be run in parallel within the
+forked JVM(s), using the following setting:
 
 ```scala
 testForkedParallel in Test := true
