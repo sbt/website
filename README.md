@@ -1,6 +1,7 @@
 scala-sbt.org
 =============
 
+
 This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
 
 scala-sbt.org is powered by two static site engines.
