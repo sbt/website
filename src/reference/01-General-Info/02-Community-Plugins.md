@@ -40,7 +40,7 @@ your plugin to the list.
 - sbt-sonatype 2.0: <https://github.com/xerial/sbt-sonatype>
 - sbt-class-diagram 0.2.1 <https://github.com/xuwei-k/sbt-class-diagram>
 - sbt-scalaprops 0.2.1 <https://github.com/scalaprops/sbt-scalaprops>
-- sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
+- sbt-bintray 0.5.0: <https://github.com/sbt/sbt-bintray>
 - [Scripted plugin](Testing-sbt-plugins.html)
 - sbt-assembly 0.14.5: <https://github.com/sbt/sbt-assembly>
 - sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
