@@ -48,6 +48,7 @@ your plugin to the list.
 - sbt-docker 1.4.1: <https://github.com/marcuslonnberg/sbt-docker>
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
+- sbt-protobuf 0.6.1 <https://github.com/sbt/sbt-protobuf>
 
 ### Plugins available for sbt 1.0.0-M5
 
