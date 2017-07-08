@@ -150,10 +150,12 @@ pomIncludeRepository := { _ => false }
 
 To publish to a maven repository, you'll need to configure a few
 settings so that the correct metadata is generated.
-Specifically, the build should provide data for `organization`, `url`,
+Specifically, the build should provide data for `organization` (which must be set to your groupId), `url`,
 `license`, `scm.url`, `scm.connection` and `developer` keys. For example:
 
 ```
+organization := "org.group.id"
+
 licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
 
 homepage := Some(url("http://example.com"))
