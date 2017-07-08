@@ -90,6 +90,8 @@ your plugin to the list.
     <https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin>
 -   sbt-flaky (detects flaky tests by running tests multiple times):
     <https://github.com/otrebski/sbt-flaky>
+-   sbt-jupiter-interface (test framework for JUnit Jupiter)
+    <https://github.com/maichler/sbt-jupiter-interface>
 
 #### Code coverage plugins
 
