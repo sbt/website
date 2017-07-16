@@ -49,6 +49,7 @@ your plugin to the list.
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
 - sbt-protobuf 0.6.1 <https://github.com/sbt/sbt-protobuf>
+- sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
 
 ### Plugins available for sbt 1.0.0-M5
 
