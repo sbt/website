@@ -50,6 +50,7 @@ your plugin to the list.
 - sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
 - sbt-protobuf 0.6.1 <https://github.com/sbt/sbt-protobuf>
 - sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
+- sbt-jmh 0.2.26 <https://github.com/ktoso/sbt-jmh>
 
 ### Plugins available for sbt 1.0.0-M5
 
