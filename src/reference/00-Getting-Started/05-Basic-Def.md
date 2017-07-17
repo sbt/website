@@ -55,6 +55,23 @@ lazy val root = (project in file("."))
   )
 ```
 
+`lazy val proj = (project in file("dir")` defines a subproject `proj` in the 
+directory **./dir**. 
+
+The build definition can contain a number of such subprojects: 
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    name := "Hello",
+  )
+
+lazy val projX = (project in file("x"))
+
+lazy val projY = (project in file("y"))
+```
+
+
 Each subproject is configured by key-value pairs.
 
 For example, one key is `name` and it maps to a string value, the name of
