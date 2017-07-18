@@ -38,6 +38,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-protobuf 0.6.2 <https://github.com/sbt/sbt-protobuf>
 - sbt-contraband 0.3.0-M9: <http://www.scala-sbt.org/contraband/>
+- sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
 
 ### Plugins available for sbt 1.0.0-M6
 
