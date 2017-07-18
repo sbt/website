@@ -13,12 +13,6 @@ cache:
   - directories:
     - $HOME/.ivy2/cache
 
-script:
-  - sbt makeSite
-  # Tricks to avoid unnecessary cache updates
-  - find $HOME/.sbt -name "*.lock" | xargs rm
-  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
-
 jdk:
   - openjdk7
 
@@ -40,6 +34,15 @@ addons:
 
 before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M -XX:MaxPermSize=512M"
+
+script:
+  - sbt makeSite
+  # Tricks to avoid unnecessary cache updates
+  - find $HOME/.sbt -name "*.lock" | xargs rm
+  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+
+after_success:
+ - ./publish-site.sh
 
 cache:
   directories:

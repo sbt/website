@@ -9,6 +9,7 @@ lazy val root = (project in file(".")).
   settings(
     organization := "org.scala-sbt",
     name := "website",
+    siteEmail := "eed3si9n" + "@gmail.com",
     // Reference
     sourceDirectory in Pamflet := baseDirectory.value / "src" / "reference",
     siteSubdirName in Pamflet := s"""$targetSbtBinaryVersion/docs""",
