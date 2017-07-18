@@ -16,6 +16,7 @@ object Docs {
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "1.0"
   lazy val targetSbtFullVersion = "1.0.0-M5"
+  lazy val siteEmail = settingKey[String]("")
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
     "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
@@ -162,6 +163,8 @@ object Docs {
     val git = GitKeys.gitRunner.value
     val s = streams.value
 
+    gitConfig(repo, siteEmail.value, git, s.log)
+
     // remove symlinks
     // uncomment after sbt 1.0
     // val apiLink = versioned / "api"
@@ -188,6 +191,14 @@ object Docs {
     // symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
   }
+
+  def gitConfig(dir: File, email: String, git: GitRunner, log: Logger): Unit =
+    sys.env.get("CI") match {
+      case Some(_) =>
+        git(("config" :: "user.name" :: "Travis CI" :: Nil) :_*)(dir, log)
+        git(("config" :: "user.email" :: email :: Nil) :_*)(dir, log)
+      case _           => ()
+    }
 
   def gitRemoveFiles(dir: File, files: List[File], git: GitRunner, s: TaskStreams): Unit = {
     if(!files.isEmpty)
