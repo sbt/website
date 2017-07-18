@@ -42,7 +42,13 @@ script:
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 
 after_success:
- - ./publish-site.sh
+  - export SBT_GHPAGES_COMMIT_MESSAGE="updated site https://github.com/sbt/website/commit/${TRAVIS_COMMIT}"
+  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "1.x" && "${TRAVIS_REPO_SLUG}" == "sbt/website" ]]; then export PUBLISH_SITE=true; fi
+  - test "${PUBLISH_SITE}" == "true" && eval "$(ssh-agent -s)" #start the ssh agent
+  - test "${PUBLISH_SITE}" == "true" && openssl aes-256-cbc -K $encrypted_e29f8a2ff2bf_key -iv $encrypted_e29f8a2ff2bf_iv -in deploy_rsa.enc -out deploy_rsa -d
+  - test "${PUBLISH_SITE}" == "true" && chmod 600 deploy_rsa
+  - test "${PUBLISH_SITE}" == "true" && ssh-add deploy_rsa
+  - test "${PUBLISH_SITE}" == "true" && sbt ghpagesPushSite
 
 cache:
   directories:
