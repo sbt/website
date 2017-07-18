@@ -35,6 +35,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 ### Plugins available for sbt 1.0 (including RC-x)
 
 - sbt-bintray 0.5.0: <https://github.com/sbt/sbt-bintray>
+- sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 
 ### Plugins available for sbt 1.0.0-M6
 
