@@ -42,6 +42,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 - [Scripted plugin](Testing-sbt-plugins.html)
 - sbt-class-diagram 0.2.1 <https://github.com/xuwei-k/sbt-class-diagram>
 - sbt-scalaprops 0.2.3 <https://github.com/scalaprops/sbt-scalaprops>
+- sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
 
 ### Plugins available for sbt 1.0.0-M6
 
