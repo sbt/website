@@ -34,11 +34,12 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 ### Plugins available for sbt 1.0 (including RC-x)
 
-- sbt-bintray 0.5.0: <https://github.com/sbt/sbt-bintray>
+- sbt-bintray 0.5.1: <https://github.com/sbt/sbt-bintray>
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-protobuf 0.6.2 <https://github.com/sbt/sbt-protobuf>
 - sbt-contraband 0.3.0-M9: <http://www.scala-sbt.org/contraband/>
 - sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
+- [Scripted plugin](Testing-sbt-plugins.html)
 
 ### Plugins available for sbt 1.0.0-M6
 
