@@ -34,15 +34,78 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 ### Plugins available for sbt 1.0 (including RC-x)
 
-- sbt-bintray 0.5.1: <https://github.com/sbt/sbt-bintray>
-- sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
-- sbt-protobuf 0.6.2 <https://github.com/sbt/sbt-protobuf>
-- sbt-contraband 0.3.0-M9: <http://www.scala-sbt.org/contraband/>
-- sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
+Please feel free to
+[submit a pull request](https://github.com/sbt/website/pulls) that adds
+your plugin to the list.
+
+
+#### Plugins for IDEs
+
+...
+
+#### One jar plugins
+
+...
+
+#### Release plugins
+
+- sbt-pgp (PGP signing plugin, can generate keys too):
+    <https://github.com/sbt/sbt-pgp>
+- sbt-bintray (Publish to Bintray):
+    <https://github.com/sbt/sbt-bintray>
+
+#### Deployment integration plugins
+
+...
+
+#### Utility and system plugins
+
+- sbt-git (executes git commands):
+    <https://github.com/sbt/sbt-git>
+- sbt-conscript (app distribution using GitHub and Maven Central):
+    <http://www.foundweekends.org/conscript/>
+
+### Test plugins
+
+- sbt-scalaprops (plugin for scalaprops):
+    <https://github.com/scalaprops/sbt-scalaprops>
 - [Scripted plugin](Testing-sbt-plugins.html)
-- sbt-class-diagram 0.2.1 <https://github.com/xuwei-k/sbt-class-diagram>
-- sbt-scalaprops 0.2.3 <https://github.com/scalaprops/sbt-scalaprops>
-- sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
+
+#### Library dependency plugins
+
+...
+
+#### Web and frontend development plugins
+
+...
+
+
+#### Database plugins
+
+...
+
+
+#### Code generator plugins
+
+- sbt-protobuf (Google Protocol Buffers):
+    <https://github.com/sbt/sbt-protobuf>
+- sbt-contraband (Generate pseudo-case class from GraphQL schema):
+   <http://www.scala-sbt.org/contraband/>
+
+#### Documentation plugins
+
+-   sbt-class-diagram (Create a class diagram):
+    <https://github.com/xuwei-k/sbt-class-diagram>
+
+
+#### Static code analysis plugins
+
+...
+
+
+#### Code coverage plugins
+
+...
 
 ### Plugins available for sbt 1.0.0-M6
 
