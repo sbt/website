@@ -1,24 +1,32 @@
 # Use Ubuntu 14.04
 dist: trusty
+
 sudo: false
+
 language: ruby
+
 rvm: 2.2.3
+
 cache:
   - apt
   - bundler
   - directories:
     - $HOME/.ivy2/cache
+
 script:
   - sbt makeSite
   # Tricks to avoid unnecessary cache updates
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+
 jdk:
   - openjdk7
+
 install:
   - gem install nanoc:4.0.2
   - gem install redcarpet
   - gem install nokogiri
+
 addons:
   apt:
     sources:
@@ -29,5 +37,15 @@ addons:
       - pandoc
       - latex-cjk-all
       - texlive-full
+
 before_script:
- - export JVM_OPTS="-Dfile.encoding=UTF-8"
+ - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M -XX:MaxPermSize=512M"
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt  -name "*.lock"               -print -delete
