@@ -36,6 +36,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 - sbt-bintray 0.5.0: <https://github.com/sbt/sbt-bintray>
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
+- sbt-protobuf 0.6.2 <https://github.com/sbt/sbt-protobuf>
 
 ### Plugins available for sbt 1.0.0-M6
 
