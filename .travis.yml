@@ -41,14 +41,12 @@ script:
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 
+env:
+  global:
+    secure: NgXdTWP61btJQZTHIe+gujk6ivJWbnTAV7X4SvQgzdK81f/DWjlVJN+WLUd58B5NAMK50KFmOPjTxFXtfm2IUzF0gwsjQICaXzAXgN0CuE8wvBf9a7CrVpCTHzOg9LEOyzm8CQHctuQk81gIyzZ0Nre8udvOb4oP2DqEcWbpKMa3iZFfZmthHWKJKtm1kAHYhw4+CJkxktIdTMmMXArnD+m9Kag20mnrIftcxTptkUaNmC8CyUhQpnfsH3fLcGzJjQbk2wux37MHh568Gvbtwe0WmqbVCeDl0zdglnq6ro5yRsAKcwghjSSqJ2cthZsHOdDy75oecM1fQAktmRXZMDhP/l5r2HWP7SSeMU6SET4VTOHe8Y7jYrMafi0AyrRtfbjQtteNeRPwH2ByZPNJC86z5lMaabmajbYuRQH9lPdu6TOsGdtq0bgd4uTc0/vDjxwmhX+zi9wHGMTY7c1sLPw77yCqNzotyScJG2GhVNVgpUgoEw7paKj/QbBgYoAL/Rkm0lUdwPy8z8C3mnR97C7jEbdpd7otVR5mvgIToHoQgiIvsSPHWbE2v+GDNuw0pWIB248Xx8WR+i39l5eUtlM1rizYb8sxKs6D+q4EiJy65n19Br5CkscvvzROwdtGerb0HboXoyTW/TGU/9cJvctqOsClOkFCdB9r5iE4HVs=
+
 after_success:
-  - export SBT_GHPAGES_COMMIT_MESSAGE="updated site https://github.com/sbt/website/commit/${TRAVIS_COMMIT}"
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "1.x" && "${TRAVIS_REPO_SLUG}" == "sbt/website" ]]; then export PUBLISH_SITE=true; fi
-  - test "${PUBLISH_SITE}" == "true" && eval "$(ssh-agent -s)" #start the ssh agent
-  - test "${PUBLISH_SITE}" == "true" && openssl aes-256-cbc -K $encrypted_e29f8a2ff2bf_key -iv $encrypted_e29f8a2ff2bf_iv -in deploy_rsa.enc -out deploy_rsa -d
-  - test "${PUBLISH_SITE}" == "true" && chmod 600 deploy_rsa
-  - test "${PUBLISH_SITE}" == "true" && ssh-add deploy_rsa
-  - test "${PUBLISH_SITE}" == "true" && sbt ghpagesPushSite
+  - .travis/publish-site.sh
 
 cache:
   directories:
