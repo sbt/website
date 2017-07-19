@@ -87,8 +87,7 @@ your plugin to the list.
 
 #### Code generator plugins
 
-- sbt-buildinfo (Generate Scala source for any settings)
-    ![version](https://img.shields.io/bintray/v/eed3si9n/sbt-plugins/sbt-buildinfo.svg):
+- sbt-buildinfo (Generate Scala source for any settings):
     <https://github.com/sbt/sbt-buildinfo>
 - sbt-protobuf (Google Protocol Buffers):
     <https://github.com/sbt/sbt-protobuf>
