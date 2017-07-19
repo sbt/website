@@ -37,18 +37,15 @@ before_script:
 
 script:
   - sbt makeSite
-  # Tricks to avoid unnecessary cache updates
-  - find $HOME/.sbt -name "*.lock" | xargs rm
-  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 
 after_success:
   - .travis/publish-site.sh
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt  -name "*.lock"               -print -delete
 
 cache:
   directories:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot
-
-before_cache:
-  - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
-  - find $HOME/.sbt  -name "*.lock"               -print -delete
