@@ -38,14 +38,14 @@ Please feel free to
 [submit a pull request](https://github.com/sbt/website/pulls) that adds
 your plugin to the list.
 
-
 #### Plugins for IDEs
 
 ...
 
 #### One jar plugins
 
-...
+- sbt-assembly (make fat JARs):
+    <https://github.com/sbt/sbt-assembly>
 
 #### Release plugins
 
