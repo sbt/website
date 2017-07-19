@@ -34,8 +34,8 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 ### Plugins available for sbt 1.0 (including RC-x)
 
-Please feel free to
-[submit a pull request](https://github.com/sbt/website/pulls) that adds
+[[Edit]](https://github.com/sbt/website/edit/1.x/src/reference/01-General-Info/02-Community-Plugins.md) this page to
+submit a pull request that adds
 your plugin to the list.
 
 #### Plugins for IDEs
