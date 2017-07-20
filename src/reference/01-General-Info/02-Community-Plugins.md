@@ -65,7 +65,7 @@ your plugin to the list.
 - sbt-conscript (app distribution using GitHub and Maven Central):
     <http://www.foundweekends.org/conscript/>
 
-### Test plugins
+#### Test plugins
 
 - sbt-scalaprops (plugin for scalaprops):
     <https://github.com/scalaprops/sbt-scalaprops>
@@ -108,6 +108,11 @@ your plugin to the list.
 #### Code coverage plugins
 
 ...
+
+#### In-house plugins
+
+- sbt-houserules (Settings used by sbt modules):
+  <https://github.com/sbt/sbt-houserules>
 
 ### Plugins available for sbt 1.0.0-M6
 
