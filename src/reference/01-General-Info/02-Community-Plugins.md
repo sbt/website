@@ -93,6 +93,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-buildinfo>
 - sbt-protobuf (Google Protocol Buffers):
     <https://github.com/sbt/sbt-protobuf>
+- sbt-protoc (SBT plugin for generating code from Protocol Buffer using protoc)
+    <https://github.com/thesamet/sbt-protoc>
 - sbt-contraband (Generate pseudo-case class from GraphQL schema):
    <http://www.scala-sbt.org/contraband/>
 
