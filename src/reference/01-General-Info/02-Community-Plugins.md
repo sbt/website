@@ -67,9 +67,11 @@ your plugin to the list.
 
 #### Test plugins
 
-- sbt-scalaprops (plugin for scalaprops):
+-   [Scripted plugin](Testing-sbt-plugins.html)
+-   sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala):
+    <https://github.com/ktoso/sbt-jmh>
+-   sbt-scalaprops (plugin for scalaprops):
     <https://github.com/scalaprops/sbt-scalaprops>
-- [Scripted plugin](Testing-sbt-plugins.html)
 
 #### Library dependency plugins
 
