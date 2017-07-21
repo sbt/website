@@ -58,6 +58,8 @@ lazy val root = (project in file("."))
   )
 ```
 
+\* Note that some tasks (ie. `testOnly`) will fail with trailing spaces, so a `trim` of the string built for `toTask` might be needed to handle empty `args`.
+
 The `actualRun in Compile`'s implementation was copy-pasted from `run` task's implementation in Defaults.scala.
 
 Now we can call `run foo` from the shell and it will evaluate `actualRun in Compile` with the passed in argument, and then evaluate the `openbrowser` task.
