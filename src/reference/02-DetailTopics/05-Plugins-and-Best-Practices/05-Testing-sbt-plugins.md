@@ -35,7 +35,7 @@ Add scripted-plugin to your plugin build. `project/scripted.sbt`:
 libraryDependencies += { "org.scala-sbt" % "scripted-plugin" % sbtVersion.value }
 ```
 
-Then add the following settings to `scripted.sbt`:
+Then add the following settings to `build.sbt`:
 
 ```scala
 ScriptedPlugin.scriptedSettings
