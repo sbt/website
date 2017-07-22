@@ -35,7 +35,7 @@ Add scripted-plugin to your plugin build. `project/scripted.sbt`:
 libraryDependencies += { "org.scala-sbt" % "scripted-plugin" % sbtVersion.value }
 ```
 
-Then add the following settings to `scripted.sbt`:
+Then add the following settings to `build.sbt`:
 
 ```scala
 ScriptedPlugin.scriptedSettings
@@ -145,7 +145,7 @@ lazy val root = (project in file("."))
     TaskKey[Unit]("check") := {
       val process = sbt.Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
       val out = (process!!)
-      if (out.trim != "bye") error("unexpected output: " + out)
+      if (out.trim != "bye") sys.error("unexpected output: " + out)
       ()
     }
   )
