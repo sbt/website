@@ -58,7 +58,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-\* Note that some tasks (ie. `testOnly`) will fail with trailing spaces, so a right trim (`.replaceAll("\\s+$", "")`) of the string built for `toTask` might be needed to handle empty `args`.\
+\* Note that some tasks (ie. `testOnly`) will fail with trailing spaces, so a right trim (`.replaceAll("\\s+\$", "")`) of the string built for `toTask` might be needed to handle empty `args`.\
 
 The `actualRun in Compile`'s implementation was copy-pasted from `run` task's implementation in Defaults.scala.
 
