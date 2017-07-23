@@ -65,7 +65,7 @@ compile will always provide full checking, however.
 The Scala compiler does not identify compile-time constant variables
 (Java specification [4.12.4](http://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.12.4))
 as such when parsing a Java file from source.
-This issue has several symptoms, described in the Scala ticket [SI-5333](https://issues.scala-lang.org/browse/SI-5333):
+This issue has several symptoms, described in the Scala ticket [SI-5333](https://github.com/scala/bug/issues/5333):
 
 1. The selection of a constant variable is rejected when used as an argument
 to a Java annotation (a compile-time constant expression is required).
@@ -74,12 +74,12 @@ as an actual field load (the
 [Scala specification 4.1](http://www.scala-lang.org/files/archive/spec/2.11/04-basic-declarations-and-definitions.html#value-declarations-and-definitions)
 defines that constant expressions should be replaced by their values).
 3. Exhaustiveness checking does not work when pattern matching on the values of a
-Java enumeration ([SI-8700](https://issues.scala-lang.org/browse/SI-8700)).
+Java enumeration ([SI-8700](https://github.com/scala/bug/issues/8700)).
 
 Since Scala 2.11.4, a similar issue arises when using a Java-defined annotation in
 a Scala class. The Scala compiler does not recognize `@Retention` annotations when
 parsing the annotation `@interface` from source and therefore emits the annotation
-with visibility `RUNTIME` ([SI-8928](https://issues.scala-lang.org/browse/SI-8928)).
+with visibility `RUNTIME` ([SI-8928](https://github.com/scala/bug/issues/8928)).
 
 ### Ignoring the Scala source directories
 

@@ -621,7 +621,7 @@ just to illustrate the ideas; this list is not intended to be complete.
     of pattern matching. Hence pattern matches using case classes must
     depend on the complete hierarchy - this is one reason why
     dependencies cannot be easily tracked at the class level (see Scala
-    issue [SI-2559](https://issues.scala-lang.org/browse/SI-2559) for an
+    issue [SI-2559](https://github.com/scala/bug/issues/2559) for an
     example.). Check [#1104][1104] for detailed discussion of tracking
     dependencies at class level.
 
