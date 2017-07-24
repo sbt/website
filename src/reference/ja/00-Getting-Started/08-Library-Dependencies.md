@@ -145,7 +145,7 @@ libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 もし `%%` が動かなくなったら、依存ライブラリが使っている実際のバージョンを確認して、
 動くだろうバージョン（それがあればの話だけど）に決め打ちすればいい。
 
-詳しくは、[Cross Build] を参照。
+詳しくは、[Cross Build][Cross-Build] を参照。
 
 #### Ivy revision
 
