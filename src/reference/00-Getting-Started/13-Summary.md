@@ -24,7 +24,7 @@ need to know.
 
 -   the basics of Scala. It's undeniably helpful to be familiar with
     Scala syntax. [Programming in
-    Scala](http://www.artima.com/shop/programming_in_scala_2ed) written
+    Scala](https://www.artima.com/shop/programming_in_scala_3ed) written
     by the creator of Scala is a great introduction.
 -   [.sbt build definition][Basic-Def]
 -   your build definition is a big DAG of tasks and their dependencies.

@@ -18,7 +18,7 @@ out: Summary.html
 
 ### sbt: 核心概念
 
--   Scala 基础。不可否认，熟悉 Scala 语法非常有帮助。[Programming in Scala](http://www.artima.com/shop/programming_in_scala_2ed)，Scala 的作者写的非常好的介绍。
+-   Scala 基础。不可否认，熟悉 Scala 语法非常有帮助。[Programming in Scala](https://www.artima.com/shop/programming_in_scala_3ed)，Scala 的作者写的非常好的介绍。
 -   [.sbt 构建定义][Basic-Def]
 -   你的构建定义是一个大的 `Setting` 对象列表，sbt 使用 `Setting` 转换之后的键值对执行 task。
 -   为了创建 `Setting`，在一个 key 上调用其中的一个方法：`:=`，`+=` 或者 `++=`。

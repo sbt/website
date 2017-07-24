@@ -23,8 +23,8 @@ sbt は、強力なコア・コンセプトだけを用いて全てを実現し�
 ### sbt: コア・コンセプト
 
  - Scala の基本。Scala の構文に慣れていると役立つのは言うまでもない。
-   Scala の設計者自身による [Scalaスケーラブルプログラミング](http://www.impressjapan.jp/books/3084)
-   （[原著](http://www.artima.com/shop/programming_in_scala_2ed)）は、素晴らしい入門書だ。
+   Scala の設計者自身による [Scalaスケーラブルプログラミング](http://book.impress.co.jp/books/1116101021)
+   （[原著](https://www.artima.com/shop/programming_in_scala_3ed)）は、素晴らしい入門書だ。
  - [.sbt ビルド定義][Basic-Def]  
    - ビルド定義はタスクとタスク間のそ依存性の大きな DAG だ。
    - `Setting` を作成するために `:=`、`+=`、`++=` のようなキーに定義されたメソッドを呼び出す。
