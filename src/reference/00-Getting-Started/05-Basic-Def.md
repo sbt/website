@@ -245,7 +245,6 @@ There are some implied default imports, as follows:
 
 ```scala
 import sbt._
-import Process._
 import Keys._
 ```
 

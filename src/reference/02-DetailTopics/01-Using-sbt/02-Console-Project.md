@@ -15,7 +15,6 @@ started up with these commands already executed:
 
 ```scala
 import sbt._
-import Process._
 import Keys._
 import <your-project-definition>._
 import currentState._

@@ -281,7 +281,6 @@ Hay algunos imports por default, como se indica a continuación:
 
 ```scala
 import sbt._
-import Process._
 import Keys._
 ```
 
