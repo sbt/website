@@ -64,6 +64,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-git>
 - sbt-conscript (app distribution using GitHub and Maven Central):
     <http://www.foundweekends.org/conscript/>
+- MiMa (Migration Manager - the Scala binary compatibility validation tool):
+    <https://github.com/typesafehub/migration-manager>
 
 #### Test plugins
 
