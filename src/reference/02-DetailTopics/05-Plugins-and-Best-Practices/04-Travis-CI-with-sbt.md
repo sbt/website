@@ -50,6 +50,8 @@ Setting up your build for Travis CI is mostly about setting up `.travis.yml`.
 ```yml
 language: scala
 
+jdk: oraclejdk8
+
 scala:
    - 2.10.4
    - $example_scala_version$
@@ -60,6 +62,8 @@ Let's specify that explicitly:
 
 ```yml
 language: scala
+
+jdk: oraclejdk8
 
 scala:
    - 2.10.4
@@ -80,6 +84,8 @@ For sbt plugins, there is no need for cross building on Scala, so the following 
 
 ```yml
 language: scala
+
+jdk: oraclejdk8
 
 script:
    - sbt scripted
@@ -120,7 +126,7 @@ After making the change, confirm on the Travis log to see if the flags are takin
 
 ```
 # Executing command line:
-/usr/lib/jvm/java-7-oracle/bin/java
+java
 -Dfile.encoding=UTF8
 -Xms2048M
 -Xmx2048M
@@ -128,7 +134,7 @@ After making the change, confirm on the Travis log to see if the flags are takin
 -XX:MaxPermSize=512M
 -XX:ReservedCodeCacheSize=256M
 -jar
-/home/travis/.sbt/launchers/0.13.6/sbt-launch.jar
+/home/travis/.sbt/launchers/$app_version$/sbt-launch.jar
 ```
 
 It seems to be working. One downside of setting all of the parameters is that we might be left behind when the environment updates and the default values gives us more memory in the future.
@@ -146,7 +152,7 @@ Again, let's check the Travis log to see if the flags are taking effect:
 
 ```
 # Executing command line:
-/usr/lib/jvm/java-7-oracle/bin/java
+java
 -Xms2048M
 -Xmx2048M
 -Xss6M
@@ -155,7 +161,7 @@ Again, let's check the Travis log to see if the flags are taking effect:
 -XX:ReservedCodeCacheSize=256M
 -Xms1024M
 -jar
-/home/travis/.sbt/launchers/0.13.6/sbt-launch.jar
+/home/travis/.sbt/launchers/$app_version$/sbt-launch.jar
 ```
 
 **Note**: This duplicates the `-Xms` flag as intended, which might not the best thing to do.
@@ -209,21 +215,14 @@ We've already seen the example of Scala cross building.
 ```yml
 language: scala
 
+jdk: oraclejdk8
+
 scala:
    - 2.10.4
    - $example_scala_version$
 
 script:
    - sbt ++\$TRAVIS_SCALA_VERSION test
-```
-
-This is a form of a build matrix. Travis CI comes with variety of the ways to run builds against different runtimes and parameters. Here's how to build on OpenJDK 6, OpenJDK 7, and Oracle JDK 8.
-
-```yml
-jdk:
-  - openjdk6
-  - openjdk7
-  - oraclejdk8
 ```
 
 We can also form a build matrix using environment variables:
@@ -304,18 +303,15 @@ sudo: false
 
 language: scala
 
+jdk: oraclejdk8
+
 # These directories are cached to S3 at the end of the build
 cache:
   directories:
     - \$HOME/.ivy2/cache
     - \$HOME/.sbt/boot/
 
-# This is an sbt plugin, so this section is for demo purpose
-scala:
-   - 2.10.4
-
-jdk:
-  - openjdk7
+jdk: oraclejdk8
 
 env:
   # This splits the build into two parts
@@ -324,7 +320,7 @@ env:
     - TEST_COMMAND="scripted merging/* caching/*"
 
 script:
-  - sbt ++\$TRAVIS_SCALA_VERSION -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M "\$TEST_COMMAND"
+  - sbt -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M "\$TEST_COMMAND"
 
 before_cache:
   # Tricks to avoid unnecessary cache updates
