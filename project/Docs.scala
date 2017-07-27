@@ -5,6 +5,8 @@ import com.typesafe.sbt.{SbtGhPages, SbtGit, SbtSite, site=>sbtsite}
 import SbtGhPages.{ghpages, GhPagesKeys => ghkeys}
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
+import SiteMap.{ Entry, LastModified }
+import java.util.{ Date, GregorianCalendar }
 
 object Docs {
   lazy val Redirect = config("redirect")
@@ -17,6 +19,9 @@ object Docs {
   lazy val targetSbtBinaryVersion = "1.x"
   lazy val targetSbtFullVersion = "1.0.0-RC2"
   lazy val siteEmail = settingKey[String]("")
+
+  val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
+  lazy val sbtSiteBase = uri("http://www.scala-sbt.org/")
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
     "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
@@ -184,12 +189,83 @@ object Docs {
     } yield (file, repo / target)
     IO.copy(mappings)
 
+   if (isGenerateSiteMap.value) {
+      val (index, siteMaps) = SiteMap.generate(repo, sbtSiteBase, gzip=true, siteEntry, lastModified, s.log)
+      s.log.info(s"Generated site map index: $index")
+      s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
+    }
+
     // symlink API and SXR
     // uncomment after sbt 1.0
     // symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
     // symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
     // symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
+  }
+
+  val SnapshotPath = "snapshot"
+  val ReleasePath = "release"
+  val DocsPath = "docs"
+  val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
+  val LandingPage = """(\w+)\.html""".r
+  val Zero13 = "0.13"
+  val OneX = "1.x"
+  val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
+  val Docs = """([^/]+)/docs/.*""".r
+  val OneStar = """1\.\d+\..*""".r
+  val Zero13Star = """0\.13\..*""".r
+  val Zero12Star = """0\.12\..*""".r
+  val Old077 = """0\.7\.7/.*""".r 
+  val ManualRedirects = """[^/]+\.html""".r
+  val Snapshot = """(.+-SNAPSHOT|snapshot)/.+/.*""".r
+
+  def siteEntry(file: File, relPath: String): Option[Entry] = {    
+    // highest priority is given to the landing pages.
+    // X/docs/ are higher priority than X/(api|sxr)/
+    // release/ is slighty higher priority than <releaseVersion>/
+    // non-current releases are low priority
+    // 0.12.x and 0.7.7 documentations are very low priority
+    // snapshots docs are very low priority
+    // the manual redirects from the old version of the site have no priority at all
+    relPath match {
+      case LandingPage(_)            => Some(Entry("weekly", 1.0))
+      case Docs(ReleasePath)         => Some(Entry("weekly", 0.9))
+      case Docs(OneX)                => Some(Entry("daily", 0.8))
+      case Docs(Zero13)              => Some(Entry("weekly", 0.7))
+      case ApiOrSxr(ReleasePath, _)  => Some(Entry("weekly", 0.6))
+      case ApiOrSxr(OneX, _)         => Some(Entry("weekly", 0.5))
+      case ApiOrSxr(Zero13, _)       => Some(Entry("weekly", 0.4))
+      case ApiOrSxr(OneStar, _)      => Some(Entry("weekly", 0.3))
+      case Snapshot(_)               => Some(Entry("weekly", 0.02))
+      case Zero13Star()              => Some(Entry("never", 0.01))
+      case Zero12Star()              => Some(Entry("never", 0.01))
+      case Old077()                  => Some(Entry("never", 0.01))
+      case Docs(_)                   => Some(Entry("never", 0.2))
+      case ApiOrSxr(_, _)            => Some(Entry("never", 0.1))
+      case _                         => Some(Entry("never", 0.0))
+    }
+  }
+
+  // git doesn't preserve dates on files, so we are going to hard-code
+  // some dates for old versions.
+  def lastModified(file: File, relPath: String): LastModified = {
+    relPath match {
+      case LandingPage(_)            => LastModified(new Date(file.lastModified))
+      case Docs(ReleasePath)         => LastModified(new Date(file.lastModified))
+      case Docs(OneX)                => LastModified(new Date(file.lastModified))
+      case Docs(Zero13)              => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(ReleasePath, _)  => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(OneX, _)         => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(Zero13, _)       => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(OneStar, _)      => LastModified(new Date(file.lastModified))
+      case Snapshot(_)               => LastModified(new Date(file.lastModified))
+      case Zero13Star()              => LastModified(new GregorianCalendar(2017, 7 - 1, 1).getTime)
+      case Zero12Star()              => LastModified(new GregorianCalendar(2013, 7 - 1, 1).getTime)
+      case Old077()                  => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case Docs(_)                   => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case ApiOrSxr(_, _)            => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case _                         => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+    }
   }
 
   def gitConfig(dir: File, email: String, git: GitRunner, log: Logger): Unit =
