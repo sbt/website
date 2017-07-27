@@ -207,7 +207,7 @@ object Docs {
   val ReleasePath = "release"
   val DocsPath = "docs"
   val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
-  val LandingPage = """(\w+)\.html""".r
+  val LandingPage = """(\w+)\.(html|xml\.gz)""".r
   val Zero13 = "0.13"
   val OneX = "1.x"
   val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
