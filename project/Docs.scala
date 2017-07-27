@@ -207,7 +207,7 @@ object Docs {
   val ReleasePath = "release"
   val DocsPath = "docs"
   val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
-  val LandingPage = """(\w+)\.(html|xml\.gz)""".r
+  val LandingPage = """(\w+)\.(html|xml|xml\.gz)""".r
   val Zero13 = "0.13"
   val OneX = "1.x"
   val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
@@ -228,7 +228,7 @@ object Docs {
     // snapshots docs are very low priority
     // the manual redirects from the old version of the site have no priority at all
     relPath match {
-      case LandingPage(_)            => Some(Entry("weekly", 1.0))
+      case LandingPage(_, _)         => Some(Entry("weekly", 1.0))
       case Docs(ReleasePath)         => Some(Entry("weekly", 0.9))
       case Docs(OneX)                => Some(Entry("daily", 0.8))
       case Docs(Zero13)              => Some(Entry("weekly", 0.7))
@@ -250,7 +250,7 @@ object Docs {
   // some dates for old versions.
   def lastModified(file: File, relPath: String): LastModified = {
     relPath match {
-      case LandingPage(_)            => LastModified(new Date(file.lastModified))
+      case LandingPage(_, _)         => LastModified(new Date(file.lastModified))
       case Docs(ReleasePath)         => LastModified(new Date(file.lastModified))
       case Docs(OneX)                => LastModified(new Date(file.lastModified))
       case Docs(Zero13)              => LastModified(new Date(file.lastModified))
