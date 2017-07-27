@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Mac.html
 ---
 
-  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
-  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
+  [ZIP]: $sbt_native_package_base$/$download_version_str$zip
+  [TGZ]: $sbt_native_package_base$/$download_version_str$tgz
   [Manual-Installation]: Manual-Installation.html
 
 Mac への sbt のインストール
