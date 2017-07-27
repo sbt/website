@@ -11,7 +11,7 @@ sbt 0.13 (stable)
 sbt 1.0 beta
 ------------
 
-- [sbt documentation](1.0/docs/index.html) ([pdf](1.0/docs/sbt-reference.pdf))
+- [sbt documentation](1.x/docs/index.html) ([pdf](1.x/docs/sbt-reference.pdf))
 
 sbt 0.12 (obsolete)
 -------------------
