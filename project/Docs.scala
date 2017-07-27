@@ -5,7 +5,8 @@ import com.typesafe.sbt.{SbtGhPages, SbtGit, SbtSite, site=>sbtsite}
 import SbtGhPages.{ghpages, GhPagesKeys => ghkeys}
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
-import SiteMap.Entry
+import SiteMap.{ Entry, LastModified }
+import java.util.{ Date, GregorianCalendar }
 
 object Docs {
   lazy val Redirect = config("redirect")
@@ -182,7 +183,7 @@ object Docs {
     IO.copy(mappings)
 
    if (isGenerateSiteMap.value) {
-      val (index, siteMaps) = SiteMap.generate(repo, sbtSiteBase, gzip=true, siteEntry, s.log)
+      val (index, siteMaps) = SiteMap.generate(repo, sbtSiteBase, gzip=true, siteEntry, lastModified, s.log)
       s.log.info(s"Generated site map index: $index")
       s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
     }
@@ -194,25 +195,23 @@ object Docs {
     repo
   }
 
-  def siteEntry(file: File, relPath: String): Option[Entry] = {
-    val SnapshotPath = "snapshot"
-    val ReleasePath = "release"
-    val DocsPath = "docs"
-    val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
-    val LandingPage = """(\w+)\.html""".r
+  val SnapshotPath = "snapshot"
+  val ReleasePath = "release"
+  val DocsPath = "docs"
+  val VersionPattern = """(\d+)\.(\d+)\.(\d+)(-.+)?""".r.pattern
+  val LandingPage = """(\w+)\.html""".r
+  val Zero13 = "0.13"
+  val OneX = "1.x"
+  val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
+  val Docs = """([^/]+)/docs/.*""".r
+  val OneStar = """1\.\d+\..*""".r
+  val Zero13Star = """0\.13\..*""".r
+  val Zero12Star = """0\.12\..*""".r
+  val Old077 = """0\.7\.7/.*""".r 
+  val ManualRedirects = """[^/]+\.html""".r
+  val Snapshot = """(.+-SNAPSHOT|snapshot)/.+/.*""".r
 
-    val Zero13 = "0.13"
-    val OneX = "1.x"
-
-    val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
-    val Docs = """([^/]+)/docs/.*""".r
-    val OneStar = """1\.\d+\..*""".r
-    val Zero13Star = """0\.13\..*""".r
-    val Zero12Star = """0\.12\..*""".r
-    val Old077 = """0\.7\.7/.*""".r 
-    val ManualRedirects = """[^/]+\.html""".r
-    val Snapshot = """(.+-SNAPSHOT|snapshot)/.+/.*""".r
-    
+  def siteEntry(file: File, relPath: String): Option[Entry] = {    
     // highest priority is given to the landing pages.
     // X/docs/ are higher priority than X/(api|sxr)/
     // release/ is slighty higher priority than <releaseVersion>/
@@ -236,6 +235,28 @@ object Docs {
       case Docs(_)                   => Some(Entry("never", 0.2))
       case ApiOrSxr(_, _)            => Some(Entry("never", 0.1))
       case _                         => Some(Entry("never", 0.0))
+    }
+  }
+
+  // git doesn't preserve dates on files, so we are going to hard-code
+  // some dates for old versions.
+  def lastModified(file: File, relPath: String): LastModified = {
+    relPath match {
+      case LandingPage(_)            => LastModified(new Date(file.lastModified))
+      case Docs(ReleasePath)         => LastModified(new Date(file.lastModified))
+      case Docs(OneX)                => LastModified(new Date(file.lastModified))
+      case Docs(Zero13)              => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(ReleasePath, _)  => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(OneX, _)         => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(Zero13, _)       => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(OneStar, _)      => LastModified(new Date(file.lastModified))
+      case Snapshot(_)               => LastModified(new Date(file.lastModified))
+      case Zero13Star()              => LastModified(new GregorianCalendar(2017, 7 - 1, 1).getTime)
+      case Zero12Star()              => LastModified(new GregorianCalendar(2013, 7 - 1, 1).getTime)
+      case Old077()                  => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case Docs(_)                   => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case ApiOrSxr(_, _)            => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
+      case _                         => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
     }
   }
 

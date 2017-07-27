@@ -1,14 +1,19 @@
 import sbt._
 
+import java.util.Date
+
 object SiteMap {
   // represents the configurable aspects of a sitemap entry
   final case class Entry(changeFreq: String, priority: Double) {
     assert(priority >= 0.0 && priority <= 1.0, s"Priority must be between 0.0 and 1.0:, was $priority")
   }
 
+  case class LastModified(modDate: Date)
 
   def generate(repoBase: File, remoteBase: URI, gzip: Boolean,
-    entry: (File, String) => Option[Entry], log: Logger): (File, Seq[File]) = {
+    entry: (File, String) => Option[Entry],
+    lastModified: (File, String) => LastModified,
+    log: Logger): (File, Seq[File]) = {
 
     def singleSiteMap(dir: File, files: PathFinder): Option[File] = {
       val es = entries(files)
@@ -33,7 +38,7 @@ object SiteMap {
     def entryXML(e: Entry, f: File, relPath: String) =
       <url>
         <loc>{remoteBase.resolve(relPath).toString}</loc>
-        <lastmod>{lastModifiedString(f)}</lastmod>
+        <lastmod>{lastModifiedString(lastModified(f, relPath).modDate)}</lastmod>
         <changefreq>{e.changeFreq}</changefreq>
         <priority>{e.priority.toString}</priority>
       </url>
@@ -41,7 +46,7 @@ object SiteMap {
     def indexEntryXML(sub: File, relPath: String): xml.Elem =
       <sitemap>
         <loc>{remoteBase.resolve(relPath).toString}</loc>
-        <lastmod>{lastModifiedString(sub)}</lastmod>
+        <lastmod>{lastModifiedString(lastModified(sub, relPath).modDate)}</lastmod>
       </sitemap>
 
     def indexEntriesXML(entries: Seq[xml.Node]): xml.Elem =
@@ -76,9 +81,9 @@ object SiteMap {
   }
 
   // generates a string suitable for a sitemap file representing the last modified time of the given File
-  private[this] def lastModifiedString(f: File): String = {
+  private[this] def lastModifiedString(lm: Date): String = {
     val formatter = new java.text.SimpleDateFormat("yyyy-MM-dd")
-    formatter.format(new java.util.Date(f.lastModified))
+    formatter.format(lm)
   }
   
   // writes the provided XML node to `output` and then gzips it to `gzipped` if `gzip` is true
