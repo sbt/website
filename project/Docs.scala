@@ -10,12 +10,12 @@ object Docs {
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
 
-  // New documents will live under /x.y/ instead of /x.y.z/.
+  // New documents will live under /1.x/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
-  lazy val targetSbtBinaryVersion = "1.0"
-  lazy val targetSbtFullVersion = "1.0.0-M5"
+  lazy val targetSbtBinaryVersion = "1.x"
+  lazy val targetSbtFullVersion = "1.0.0-RC2"
   lazy val siteEmail = settingKey[String]("")
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
