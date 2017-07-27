@@ -31,5 +31,6 @@ lazy val root = (project in file(".")).
         case "UTF-8" => "UTF-8"
         case x       => sys.error(s"Unexpected encoding $x")
       }
-    }
+    },
+    isGenerateSiteMap := true
   )
