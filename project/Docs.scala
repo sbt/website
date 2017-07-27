@@ -5,6 +5,7 @@ import com.typesafe.sbt.{SbtGhPages, SbtGit, SbtSite, site=>sbtsite}
 import SbtGhPages.{ghpages, GhPagesKeys => ghkeys}
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
+import SiteMap.Entry
 
 object Docs {
   lazy val Redirect = config("redirect")
@@ -16,6 +17,12 @@ object Docs {
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "0.13"
   lazy val targetSbtFullVersion = "0.13.5"
+
+  val rootFiles = SettingKey[Seq[File]]("root-files", "Location of file that will be copied to the website root.")
+  val latestRelease = SettingKey[Boolean]("latest-release")
+
+  def siteSourceBase(siteSourceVersion: String) = s"https://github.com/sbt/sbt/raw/$siteSourceVersion/src/sphinx/"
+  val sbtSiteBase = uri("http://www.scala-sbt.org/")
 
   val zeroTwelveGettingStarted = List("Setup.html", "Hello.html", "Directories.html", "Running.html", "Basic-Def.html",
     "Scopes.html", "More-About-Settings.html", "Library-Dependencies.html",
@@ -143,7 +150,11 @@ object Docs {
   def customGhPagesSettings: Seq[Setting[_]] = ghpages.settings ++ Seq(
     git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
     GitKeys.gitBranch in ghkeys.updatedRepository := Some("master"),
-    ghkeys.synchLocal := syncLocalImpl.value
+    ghkeys.synchLocal := syncLocalImpl.value,
+    rootFiles :=  {
+      val base = (sourceDirectory in SphinxSupport.Sphinx).value
+      Seq("CNAME", "robots.txt").map(base / _)
+    }
   )
 
   // This task is responsible for updating the gh-pages branch on some temp dir.
@@ -177,12 +188,54 @@ object Docs {
     } yield (file, repo / target)
     IO.copy(mappings)
 
+   if (latest.value) {
+      val (index, siteMaps) = SiteMap.generate(repo, sbtSiteBase, gzip=true, siteEntry(v), s.log)
+      s.log.info(s"Generated site map index: $index")
+      s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
+    }
+
     // symlink API and SXR
     symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
     symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
     symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
   }
+
+  def siteEntry(CurrentVersion: String)(file: File, relPath: String): Option[Entry] =
+  {
+    val apiOrSxr = """([^/]+)/(api|sxr)/.*""".r
+    val docs = """([^/]+)/docs/.*""".r
+    val old077 = """0\.7\.7/.*""".r 
+    val manualRedirects = """[^/]+\.html""".r
+    val snapshot = """(.+-SNAPSHOT|snapshot)/.+/.*""".r
+      // highest priority is the home page
+      // X/docs/ are higher priority than X/(api|sxr)/
+      // release/ is slighty higher priority than <releaseVersion>/
+      // non-current releases are low priority
+      // 0.7.7 documentation is very low priority
+      // snapshots docs are very low priority
+      // the manual redirects from the old version of the site have no priority at all
+    relPath match {
+      case "index.html" => Some(Entry("weekly", 1.0))
+      case docs(ReleasePath) => Some( Entry("weekly", 0.9) )
+      case docs(CurrentVersion) => Some( Entry("weekly", 0.8) )
+      case apiOrSxr(ReleasePath, _) => Some( Entry("weekly", 0.6) )
+      case apiOrSxr(CurrentVersion, _) => Some( Entry("weekly", 0.5) )
+      case snapshot(_) => Some( Entry("weekly", 0.02) )
+      case old077() =>  Some( Entry("never", 0.01) )
+      case docs(_) => Some( Entry("never", 0.2) )
+      case apiOrSxr(_, _) => Some( Entry("never", 0.1) )
+      case x => Some( Entry("never", 0.0) )
+    }
+  }
+
+  def gitConfig(dir: File, email: String, git: GitRunner, log: Logger): Unit =
+    sys.env.get("CI") match {
+      case Some(_) =>
+        git(("config" :: "user.name" :: "Travis CI" :: Nil) :_*)(dir, log)
+        git(("config" :: "user.email" :: email :: Nil) :_*)(dir, log)
+      case _           => ()
+    }
 
   def gitRemoveFiles(dir: File, files: List[File], git: GitRunner, s: TaskStreams): Unit = {
     if(!files.isEmpty)
