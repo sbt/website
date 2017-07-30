@@ -53,6 +53,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-pgp>
 - sbt-bintray (Publish to Bintray):
     <https://github.com/sbt/sbt-bintray>
+- sbt-release (customizable release process):
+    <https://github.com/sbt/sbt-release>
 
 #### Deployment integration plugins
 
