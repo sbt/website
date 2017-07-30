@@ -55,6 +55,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-bintray>
 - sbt-release (customizable release process):
     <https://github.com/sbt/sbt-release>
+- sbt-docker (Build and push Docker images):
+    <https://github.com/marcuslonnberg/sbt-docker>
 
 #### Deployment integration plugins
 
