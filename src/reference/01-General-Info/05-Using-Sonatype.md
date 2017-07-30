@@ -68,11 +68,11 @@ you want to publish to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp
 the instructions for the plugin and you'll have PGP signed artifacts in no 
 time.
 
-In short, add the following line to your `~/.sbt/0.13/plugins/gpg.sbt` file to 
+In short, add the following line to your `~/.sbt/1.0/plugins/gpg.sbt` file to 
 enable it globally for SBT projects:
 
 ```
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0-M1")
 ```
 
 > *Note:* The plugin is a jvm-only solution to generate PGP keys and sign 
