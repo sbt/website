@@ -70,6 +70,8 @@ your plugin to the list.
     <http://www.foundweekends.org/conscript/>
 - MiMa (Migration Manager - the Scala binary compatibility validation tool):
     <https://github.com/typesafehub/migration-manager>
+- sbt-updates (Display updated versions of your project dependencies):
+    <https://github.com/rtimush/sbt-updates>
 
 #### Test plugins
 
@@ -143,6 +145,7 @@ your plugin to the list.
 - sbt-protobuf 0.6.1 <https://github.com/sbt/sbt-protobuf>
 - sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
 - sbt-jmh 0.2.26 <https://github.com/ktoso/sbt-jmh>
+- sbt-updates 0.3.1: <https://github.com/rtimush/sbt-updates>
 
 ### Plugins available for sbt 1.0.0-M5
 
