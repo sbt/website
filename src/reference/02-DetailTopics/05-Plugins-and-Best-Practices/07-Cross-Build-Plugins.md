@@ -8,7 +8,7 @@ Cross building plugins
 Like we are able to cross build against multiple Scala versions, we can cross build sbt 1.0 plugins while staying on sbt 0.13. This is useful because we can port one plugin at a time.
 
 1. If the plugin depends on libraries, make sure there are Scala 2.12 artifacts for them.
-2. Use the latest sbt 0.13.15.
+2. Use the latest sbt 0.13.16.
 3. Append the following settings to your plugin project (and any other subprojects that it depends):
 
 ```scala
