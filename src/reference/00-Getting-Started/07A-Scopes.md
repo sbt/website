@@ -143,7 +143,7 @@ filled in with the special value `Global`, which is also written as `*`. So we c
 `*` is a universal fallback for all scope axes,
 but its direct use should be reserved to sbt and plugin authors in most cases.
 
-To the make the matter confusing, `someKey in Global` appearing in build definition implicitly converts to `someKey in (Global, Global, Global)`.
+To make the matter confusing, `someKey in Global` appearing in build definition implicitly converts to `someKey in (Global, Global, Global)`.
 
 ### Referring to scopes in a build definition
 
