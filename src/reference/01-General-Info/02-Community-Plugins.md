@@ -70,8 +70,6 @@ your plugin to the list.
     <http://www.foundweekends.org/conscript/>
 - MiMa (Migration Manager - the Scala binary compatibility validation tool):
     <https://github.com/typesafehub/migration-manager>
-- sbt-updates (Display updated versions of your project dependencies):
-    <https://github.com/rtimush/sbt-updates>
 
 #### Test plugins
 
@@ -83,7 +81,8 @@ your plugin to the list.
 
 #### Library dependency plugins
 
-...
+- sbt-updates (Display updated versions of your project dependencies):
+    <https://github.com/rtimush/sbt-updates>
 
 #### Web and frontend development plugins
 
@@ -104,13 +103,14 @@ your plugin to the list.
 - sbt-protoc (SBT plugin for generating code from Protocol Buffer using protoc)
     <https://github.com/thesamet/sbt-protoc>
 - sbt-contraband (Generate pseudo-case class from GraphQL schema):
-   <http://www.scala-sbt.org/contraband/>
+    <http://www.scala-sbt.org/contraband/>
 
 #### Documentation plugins
 
--   sbt-class-diagram (Create a class diagram):
+- sbt-unidoc (Create a unified API document across subprojects):
+    <https://github.com/sbt/sbt-unidoc>
+- sbt-class-diagram (Create a class diagram):
     <https://github.com/xuwei-k/sbt-class-diagram>
-
 
 #### Static code analysis plugins
 
