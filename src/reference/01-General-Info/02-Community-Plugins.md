@@ -83,6 +83,8 @@ your plugin to the list.
 
 - sbt-updates (Display updated versions of your project dependencies):
     <https://github.com/rtimush/sbt-updates>
+- sbt-dependency-check (Check your project dependencies for publicly know vulnerabilities/CVE):
+    <https://github.com/albuch/sbt-dependency-check>
 
 #### Web and frontend development plugins
 
