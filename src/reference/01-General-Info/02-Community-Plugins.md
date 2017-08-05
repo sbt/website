@@ -78,6 +78,8 @@ your plugin to the list.
     <https://github.com/ktoso/sbt-jmh>
 -   sbt-scalaprops (plugin for scalaprops):
     <https://github.com/scalaprops/sbt-scalaprops>
+-   tut (doc/tutorial generator for scala):
+    <https://github.com/tpolecat/tut>
 
 #### Library dependency plugins
 
