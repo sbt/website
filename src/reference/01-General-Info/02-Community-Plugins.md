@@ -129,6 +129,8 @@ your plugin to the list.
 
 - sbt-houserules (Settings used by sbt modules):
   <https://github.com/sbt/sbt-houserules>
+- sbt-reactific (Settings & plugins used by Reactific Software):
+  <https://github.com/reactific/sbt-reactific>
 
 ### Plugins available for sbt 1.0.0-M6
 
