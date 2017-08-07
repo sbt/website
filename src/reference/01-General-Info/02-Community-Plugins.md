@@ -518,3 +518,5 @@ your plugin to the list.
 
 -   tl-os-sbt-plugins (Version, Release, and Package Management, Play 2.0 and Git utilities):
     <https://github.com/trafficland/tl-os-sbt-plugins>
+-   sbt-reactific (Settings & plugins used by Reactific Software. Adds sbt-release, sbt-sonatype, sbt-pgp, sbt-git, sbt-buildinfo, sbt-unidoc sbt-compile-quick-plugin, sbt-license-report, sbt-site, sbt-native-packager, sbt-header, sbt-scoverage, and sbt-coveralls): https://github.com/reactific/sbt-reactific
+    
