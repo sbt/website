@@ -5,7 +5,7 @@ out: Credits.html
 Credits
 -------
 
-sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](http://www.scala-lang.org/old/node/392.html). By 2010 when sbt 0.7 came out, many of the OSS Scala projects used sbt as the build tool. Mark then joined Typsafe (current Lightbend) as the company was founded, and shipped sbt 0.10.0 in 2011. He remained the maintainer and most active contributor of sbt until March of 2014, making sbt 0.13.1 his last release. Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
+sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](http://www.scala-lang.org/old/node/392.html). By 2010 when sbt 0.7 came out, many of the OSS Scala projects used sbt as the build tool. Mark then joined Typesafe (current Lightbend) as the company was founded, and shipped sbt 0.10.0 in 2011. He remained the maintainer and most active contributor of sbt until March of 2014, making sbt 0.13.1 his last release. Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
 
 Josh Suereth ([@jsuereth][@jsuereth]) at Typesafe became the next maintainer of sbt.
 
