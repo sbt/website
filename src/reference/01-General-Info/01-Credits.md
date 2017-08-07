@@ -5,21 +5,27 @@ out: Credits.html
 Credits
 -------
 
-sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](http://www.scala-lang.org/old/node/392.html). By 2010 when sbt 0.7 came out, many of the OSS Scala projects used sbt as the build tool. Mark then joined Typesafe (current Lightbend) as the company was founded, and shipped sbt 0.10.0 in 2011. He remained the maintainer and most active contributor of sbt until March of 2014, making sbt 0.13.1 his last release. Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
+sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](http://www.scala-lang.org/old/node/392.html). Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
+
+By 2010, when sbt 0.7 came out, many open-source Scala projects were using sbt as their build tool.
+
+Mark joined Typesafe (now Lightbend) in 2011, the year the company was founded.  sbt 0.10.0 shipped that same year. Mark remained the maintainer and most active contributor until March 2014, with sbt 0.13.1 as his last release.
 
 Josh Suereth ([@jsuereth][@jsuereth]) at Typesafe became the next maintainer of sbt.
 
-In 2014, Eugene Yokota ([@eed3si9n][@eed3si9n]) joined Typesafe to co-lead sbt with Josh. The tag team jumped the 0.13 version number to 0.13.5, and started the trajectory to 1.0 as [technology previews][sbt-0.13-Tech-Previews]. Until Josh's departure in 0.13.9 (2015), they shipped `AutoPlugin`, kept sbt 0.13 in shape, and started ground work towards sbt server.
+In 2014, Eugene Yokota ([@eed3si9n][@eed3si9n]) joined Typesafe to co-lead sbt with Josh. This team carried the 0.13 series through 0.13.5 and started the trajectory to 1.0 as [technology previews][sbt-0.13-Tech-Previews]. By the time of Josh's departure in 2015, after sbt 0.13.9, they had shipped `AutoPlugin`, kept sbt 0.13 in shape, and laid groundwork for sbt server.
 
-Grzegorz Kossakowski ([@gkossakowski][@gkossakowski]) worked on a better incremental compiler algorithm called "name hashing" during his time in Typesafe's Scala team. Name hashing became the default incremental compiler in sbt 0.13.6 (2014). Lightbend later comissioned Grzegorz to work on further improvement to name hashing called class-based name hashing, which is adopted by Zinc 1. Another notable contribution was hosting series of [meetups](http://blog.japila.pl/2014/07/gkossakowski-on-warszawscala-about-how-to-patch-scalasbt/) with @WarszawScaLa, and guiding the Warszaw Scala community to [fix](http://blog.japila.pl/2014/07/hacking-scalasbt-with-gkossakowski-on-warszawscala-meetup-in-javeo_eu/) the infamous blank line problem with his arm in a sling.
+Grzegorz Kossakowski ([@gkossakowski][@gkossakowski]) worked on a better incremental compiler algorithm called "name hashing" during his time on the Scala team at Typesafe. Name hashing became the default incremental compiler in sbt 0.13.6 (2014). Lightbend later commissioned Grzegorz to refine name hashing using a technique called class-based name hashing, which was adopted by Zinc 1. Another notable contribution from Grzegorz was hosting a series of [meetups](http://blog.japila.pl/2014/07/gkossakowski-on-warszawscala-about-how-to-patch-scalasbt/) with @WarszawScaLa, and (with his arm in a sling!) guiding the Warszaw Scala community to [fix](http://blog.japila.pl/2014/07/hacking-scalasbt-with-gkossakowski-on-warszawscala-meetup-in-javeo_eu/) the infamous blank-line problem.
 
-In May 2015, Dale Wijnand ([@dwijnand][@dwijnand]) became a committer from the community after contributing a number of features such as `inThisBuild` and `-=`.
+In May 2015, Dale Wijnand ([@dwijnand][@dwijnand]) became a committer from the community after contributing features such as `inThisBuild` and `-=`.
 
-From June 2015 to 2016 spring, Martin Duhem ([@Duhemm][@Duhemm]) joined Typesafe as intern to work on sbt. At Typesafe Martin worked on crucial components such as making the compiler bridge configurable for Zinc, and code generation for pseudo case classes, which later became Contraband. Around this time, Eugene, Martin, and Dale started the sbt 1.x codebase, splitting the code base into multiple modules sbt/sbt, Zinc 1, sbt/librarymanagement, sbt/util, and sbt/io. The aim was to make Zinc 1, an incremental compiler for all build tools.
+From June 2015 to early 2016, Martin Duhem ([@Duhemm][@Duhemm]) joined Typesafe as an intern, working on sbt. During this time, Martin worked on crucial components such as making the compiler bridge configurable for Zinc, and code generation for pseudo case classes (which later became Contraband).
 
-In August 2016, Dale joined Tooling team at Lightbend. Dale and Eugene oversaw the releases 0.13.12 through 0.13.16, as well as the development of sbt 1.0.
+Around this time, Eugene, Martin, and Dale started the sbt 1.x codebase, splitting the code base into multiple modules: sbt/sbt, Zinc 1, sbt/librarymanagement, sbt/util, and sbt/io. The aim was to make Zinc 1, an incremental compiler usable by all build tools.
 
-In 2017 spring, Scala Center joined forces to Zinc 1 development. Jorge Vicente Cantero ([@jvican][@jvican]) contributed the fix to "As seen from" bug that blocked Zinc 1, and a number of other improvements.
+In August 2016, Dale joined the Tooling team at Lightbend. Dale and Eugene oversaw the releases 0.13.12 through 0.13.16, as well as the development of sbt 1.0.
+
+In spring 2017, the Scala Center joined the Zinc 1 development effort. Jorge Vicente Cantero ([@jvican][@jvican]) has contributed a number of improvements including the fix for the "as seen from" bug that had blocked Zinc 1.
 
 According to `git shortlog -sn --no-merges` on [sbt/sbt](https://github.com/sbt/sbt/graphs/contributors), [sbt/zinc](https://github.com/sbt/zinc/graphs/contributors), [sbt/librarymanagement](https://github.com/sbt/librarymanagement/graphs/contributors), [sbt/util](https://github.com/sbt/util/graphs/contributors), [sbt/io](https://github.com/sbt/io/graphs/contributors), [sbt/contraband](https://github.com/sbt/contraband/graphs/contributors), and [sbt/website](https://github.com/sbt/website/graphs/contributors) there were 9151 non-merge commits by 318 contributors.
 
@@ -341,9 +347,9 @@ According to `git shortlog -sn --no-merges` on [sbt/sbt](https://github.com/sbt/
 - Wiesław Popielarski 1
 - Łukasz Indykiewicz  1
 
-For the details on individual contribution, see [Changes][Changes].
+For the details on individual contributions, see [Changes][Changes].
 
-The following people have contributed ideas, documentation, or code to sbt but are not recorded in the above:
+The following people contributed ideas, documentation, or code to sbt but are not listed above:
 
 - Josh Cough
 - Nolan Darilek
@@ -360,7 +366,7 @@ The following people have contributed ideas, documentation, or code to sbt but a
 - Francisco Treacy
 - Vesa Vilhonen
 
-sbt ecosystem will not be the same without number of awesome plugins. Here are some of the plugins and their contributors:
+The sbt ecosystem would not be the same without so many awesome plugins. Here are some of the plugins and their contributors:
 
 - [Play Framework](https://playframework.com/) by Lightbend (James Roper, Peter Hausel, and many others)
 - [Scala.js](https://www.scala-js.org/) by Sébastien Doeraene, Tobias Schlatter, et al
@@ -445,7 +451,7 @@ sbt ecosystem will not be the same without number of awesome plugins. Here are s
 - [sbt-pom-reader](https://github.com/sbt/sbt-pom-reader) by Josh Suereth
 - [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram) by Kenji Yoshida (xuwei-k)
 
-Kudos to people who have answered questions on [Stack Overflow](https://stackoverflow.com/tags/sbt/topusers) (Jacek Laskowski, Lukasz Piepiora, et al) and [sbt Gitter channel](gitter.im/sbt/sbt), and many who have reported issues and contributed ideas on GitHub.
+Kudos also to people who have answered questions on [Stack Overflow](https://stackoverflow.com/tags/sbt/topusers) (Jacek Laskowski, Lukasz Piepiora, et al) and [sbt Gitter channel](gitter.im/sbt/sbt), and many who have reported issues and contributed ideas on GitHub.
 
 Thank you all.
 
