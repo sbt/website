@@ -9,10 +9,9 @@ External Processes
 
 ### Usage
 
-`sbt` includes a process library to simplify working with external
-processes. The library is available without import in build definitions
-and at the interpreter started by the [consoleProject][Console-Project]
-task.
+Scala includes a process library to simplify working with external
+processes. Use `import scala.sys.process._` to bring the implicit
+conversions into scope.
 
 To run an external command, follow it with an exclamation mark `!`:
 
@@ -20,33 +19,34 @@ To run an external command, follow it with an exclamation mark `!`:
 "find project -name *.jar" !
 ```
 
-An implicit converts the `String` to `sbt.ProcessBuilder`, which defines
-the `!` method. This method runs the constructed command, waits until
-the command completes, and returns the exit code. Alternatively, the
-`run` method defined on `ProcessBuilder` runs the command and returns an
-instance of `sbt.Process`, which can be used to `destroy` the process
-before it completes. With no arguments, the `!` method sends output to
-standard output and standard error. You can pass a `Logger` to the `!`
-method to send output to the `Logger`:
+An implicit converts the `String` to `scala.sys.process.ProcessBuilder`,
+which defines the `!` method. This method runs the constructed command,
+waits until the command completes, and returns the exit code.
+Alternatively, the `run` method defined on `ProcessBuilder` runs the
+command and returns an instance of `scala.sys.process.Process`, which
+can be used to `destroy` the process before it completes. With no
+arguments, the `!` method sends output to standard output and standard
+error. You can pass a `Logger` to the `!` method to send output to the
+`Logger`:
 
 ```scala
 "find project -name *.jar" ! log
 ```
 
 Two alternative implicit conversions are from `scala.xml.Elem` or
-`List[String]` to `sbt.ProcessBuilder`. These are useful for
-constructing commands. An example of the first variant from the android
-plugin:
+`List[String]` to `scala.sys.process.ProcessBuilder`. These are useful
+for constructing commands. An example of the first variant from the
+android plugin:
 
 ```scala
 <x> {dxPath.absolutePath} --dex --output={classesDexPath.absolutePath} {classesMinJarPath.absolutePath}</x> !
 ```
 
 If you need to set the working directory or modify the environment, call
-`sbt.Process` explicitly, passing the command sequence (command and
-argument list) or command string first and the working directory second.
-Any environment variables can be passed as a vararg list of key/value
-String pairs.
+`scala.sys.process.Process` explicitly, passing the command sequence
+(command and argument list) or command string first and the working
+directory second.  Any environment variables can be passed as a vararg
+list of key/value String pairs.
 
 ```scala
 Process("ls" :: "-l" :: Nil, Path.userHome, "key1" -> value1, "key2" -> value2) ! log
@@ -82,7 +82,7 @@ instance of `URL` and `file` is an instance of `File`.
 There are some additional methods to get the output from a forked
 process into a `String` or the output lines as a `Stream[String]`. Here
 are some examples, but see the
-[ProcessBuilder API](../api/sbt/ProcessBuilder.html) for details.
+[ProcessBuilder API](https://www.scala-lang.org/api/2.12.x/scala/sys/process/ProcessBuilder.html) for details.
 
 ```scala
 val listed: String = "ls" !!
