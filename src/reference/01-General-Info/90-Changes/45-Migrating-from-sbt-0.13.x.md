@@ -1,10 +1,10 @@
 ---
-out: Migrating-from-sbt-012x.html
+out: Migrating-from-sbt-013x.html
 ---
 
   [Organizing-Build]: Organizing-Build.html
 
-## Migrating from sbt 0.12.x
+## Migrating from sbt 0.13.x
 
 ### Introduction
 
@@ -22,8 +22,7 @@ Similarly, sbt 0.13's introduction of multi-project `build.sbt` made the `Build`
 In addition, the auto plugin feature that's now standard in sbt 0.13 enabled automatic sorting of plugin settings
 and auto import feature, but it made `Build.scala` more difficult to maintain.
 
-As they will be removed in upcoming release of sbt 1.0.0 we've deprecated them in sbt 0.13.13, and here we'll
-help guide you to how to migrate your code.
+As they are removed in sbt 1.0.0, and here we'll help guide you to how to migrate your code.
 
 ### Migrating simple expressions
 
