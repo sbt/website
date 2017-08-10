@@ -70,6 +70,8 @@ your plugin to the list.
     <http://www.foundweekends.org/conscript/>
 - MiMa (Migration Manager - the Scala binary compatibility validation tool):
     <https://github.com/typesafehub/migration-manager>
+- sbt-jshell (execute Java REPL)
+    <https://github.com/xuwei-k/sbt-jshell>
 
 #### Test plugins
 
