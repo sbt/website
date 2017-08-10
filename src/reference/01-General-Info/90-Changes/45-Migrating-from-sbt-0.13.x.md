@@ -1,12 +1,42 @@
 ---
-out: Migrating-from-sbt-012x.html
+out: Migrating-from-sbt-013x.html
 ---
 
   [Organizing-Build]: Organizing-Build.html
 
-## Migrating from sbt 0.12.x
+Migrating from sbt 0.13.x
+-------------------------
 
-### Introduction
+### Migrating case class `.copy(...)`
+
+Many of the case classes are replaced with pseudo case classes generated using Contraband. Migrate `.copy(foo = xxx)` to `withFoo(xxx)`.
+Suppose you have `m: ModuleID`, and you're currently calling `m.copy(revision = "1.0.1")`. Here how you can migrate it:
+
+```scala
+m.withRevision("1.0.1")
+```
+
+### sbt version specific source directory
+
+If you are cross building an sbt plugin, one escape hatch we have is sbt version specific source directory `src/main/scala-sbt-0.13` and `src/main/scala-sbt-1.0`. In there you can define an object named `PluginCompat` as follows:
+
+```scala
+package sbtfoo
+
+import sbt._
+import Keys._
+
+object PluginCompat {
+  type UpdateConfiguration = sbt.librarymanagement.UpdateConfiguration
+
+  def subMissingOk(c: UpdateConfiguration, ok: Boolean): UpdateConfiguration =
+    c.withMissingOk(ok)
+}
+```
+
+Now `subMissingOk(...)` function can be implemented in sbt version specific way.
+
+### Migrating from sbt 0.12 style
 
 Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage of three aspects of sbt:
 
@@ -22,10 +52,9 @@ Similarly, sbt 0.13's introduction of multi-project `build.sbt` made the `Build`
 In addition, the auto plugin feature that's now standard in sbt 0.13 enabled automatic sorting of plugin settings
 and auto import feature, but it made `Build.scala` more difficult to maintain.
 
-As they will be removed in upcoming release of sbt 1.0.0 we've deprecated them in sbt 0.13.13, and here we'll
-help guide you to how to migrate your code.
+As they are removed in sbt 1.0.0, and here we'll help guide you to how to migrate your code.
 
-### Migrating simple expressions
+#### Migrating sbt 0.12 style operators
 
 With simple expressions such as:
 
@@ -43,7 +72,7 @@ b += bTaskDef.value
 c ++= cTaskDefs.value
 ```
 
-### Migrating from the tuple enrichments
+#### Migrating from the tuple enrichments
 
 As mentioned above, there are two tuple enrichments `.apply` and `.map`. The difference used to be for whether
 you're defining a setting for a `SettingKey` or a `TaskKey`, you use `.apply` for the former and `.map` for the
@@ -84,7 +113,7 @@ task3 := { println(task1.value + task2.value); task1.value + task2.value }
 task4 := { println(sett1.value + sett2.value); sett1.value + sett2.value }
 ```
 
-### Migrating when using `.dependsOn`, `.triggeredBy` or `.runBefore`
+#### Migrating when using `.dependsOn`, `.triggeredBy` or `.runBefore`
 
 When instead calling `.dependsOn`, instead of:
 
@@ -101,7 +130,7 @@ a := (a dependsOn b).value
 **Note**: You'll need to use the `<<=` operator with `.triggeredBy` and `.runBefore` in sbt 0.13.13 and
 earlier due to issue [#1444](https://github.com/sbt/sbt/issues/1444).
 
-### Migrating when you need to set `Task`s
+#### Migrating when you need to set `Task`s
 
 For keys such as `sourceGenerators` and `resourceGenerators` which use sbt's Task type:
 
@@ -130,9 +159,7 @@ or in general,
 sourceGenerators in Compile += Def.task { List(file1, file2) }
 ```
 
-**Note**: In sbt 0.13.13 and earlier you'll need to write `sourceGenerators in Compile += buildInfo.taskValue`.
-
-### Migrating with `InputKey`
+#### Migrating with `InputKey`
 
 When using `InputKey` instead of:
 
