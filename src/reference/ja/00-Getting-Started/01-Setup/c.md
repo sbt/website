@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Linux.html
 ---
 
-  [ZIP]: $sbt_native_package_base$/$download_version_str$zip
-  [TGZ]: $sbt_native_package_base$/$download_version_str$tgz
+  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
+  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
@@ -26,7 +26,7 @@ Ubuntu 及びその他の Debian ベースのディストリビューション�
 (例: `apt-get`、`aptitude`、Synaptic など)、インストールはそれらから行う。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
-    echo "deb https://dl.bintray.com/sbt/debian-experimental /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
     sudo apt-get update
     sudo apt-get install sbt
@@ -50,7 +50,7 @@ sbt のバイナリは Bintray にて公開されており、都合の良いこ�
 Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューションは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
-    curl https://bintray.com/sbt/rpm/rpm-experimental | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
     sudo yum install sbt
 
 sbt のバイナリは Bintray にて公開されており、Bintray は RPM リポジトリを提供する。

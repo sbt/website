@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Mac.html
 ---
 
-  [ZIP]: $sbt_native_package_base$/$download_version_str$zip
-  [TGZ]: $sbt_native_package_base$/$download_version_str$tgz
+  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
+  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
 
 在 Mac 上安装 sbt
@@ -20,7 +20,7 @@ out: Installing-sbt-on-Mac.html
 #### 通过 [Homebrew](http://mxcl.github.com/homebrew/) 安装
 
 ```
-\$ brew install sbt -devel
+\$ brew install sbt@1
 ```
 
 #### 通过 [Macports](http://macports.org/) 安装

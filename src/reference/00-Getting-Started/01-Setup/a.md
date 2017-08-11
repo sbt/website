@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Mac.html
 ---
 
-  [ZIP]: $sbt_native_package_base$/$download_version_str$zip
-  [TGZ]: $sbt_native_package_base$/$download_version_str$tgz
+  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
+  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
 
 Installing sbt on Mac
@@ -22,7 +22,7 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
 #### [Homebrew](http://mxcl.github.com/homebrew/)
 
 ```
-\$ brew install sbt --devel
+\$ brew install sbt@1
 ```
 
 #### [Macports](http://macports.org/)

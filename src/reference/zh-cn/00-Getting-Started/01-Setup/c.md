@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Linux.html
 ---
 
-  [ZIP]: $sbt_native_package_base$/$download_version_str$zip
-  [TGZ]: $sbt_native_package_base$/$download_version_str$tgz
+  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
+  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
 
@@ -21,7 +21,7 @@ out: Installing-sbt-on-Linux.html
 Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本地的DEB文件安装软件。相反，他们由程序包管理器安装，通过命令行（如`apt-get`，`aptitude`）或图形用户界面 （如Synaptic）。
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
-    echo "deb https://dl.bintray.com/sbt/debian-experimental /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
     sudo apt-get update
     sudo apt-get install sbt
@@ -38,7 +38,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 红帽企业版Linux和其他基于RPM的发行版使用RPM格式。
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
-    curl https://bintray.com/sbt/rpm/rpm-experimental > bintray-sbt-rpm.repo
+    curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
     sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
     sudo yum install sbt
 

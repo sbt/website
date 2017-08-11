@@ -180,9 +180,7 @@ object Docs {
     // if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-
-    // uncomment afer sbt 1.0
-    // gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+    gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
 
     val mappings =  for {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
