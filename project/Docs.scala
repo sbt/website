@@ -176,7 +176,10 @@ object Docs {
     if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-    gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+    
+    // landing pages are now handled by 1.x branch
+    // gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+    
     val mappings =  for {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
     } yield (file, repo / target)

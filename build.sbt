@@ -5,7 +5,7 @@ lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
 
 lazy val root = (project in file(".")).
-  enablePlugins(NanocPlugin, PamfletPlugin).
+  enablePlugins(/* NanocPlugin, */ PamfletPlugin).
   settings(
     organization := "org.scala-sbt",
     name := "website",
