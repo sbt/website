@@ -6,6 +6,11 @@ sbt 1.0
 -------
 
 - [sbt documentation](1.x/docs/index.html) ([pdf](1.x/docs/sbt-reference.pdf))
+- [sbt API](<%= @config[:sbtVersionForScalaDoc] %>/api/sbt/Keys$.html) 
+
+<!--
+([source](<%= @config[:sbtVersionForScalaDoc] %>/sxr/index.html))
+-->
 
 sbt 0.13
 --------
