@@ -164,7 +164,3 @@ your plugin to the list.
 - sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
 - sbt-sonatype 2.0.0-M1: <https://github.com/xerial/sbt-sonatype>
 - sbt-updates 0.3.1: <https://github.com/rtimush/sbt-updates>
-
-### Plugins available for sbt 0.13 waiting for dependencies to upgrade to 1.0
--   sbt-reactific (Settings & plugins used by Reactific Software. Adds sbt-release, sbt-sonatype, sbt-pgp, sbt-git, sbt-buildinfo, sbt-unidoc sbt-compile-quick-plugin, sbt-license-report, sbt-site, sbt-native-packager, sbt-header, sbt-scoverage, and sbt-coveralls): https://github.com/reactific/sbt-reactific
-    
