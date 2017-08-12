@@ -7,7 +7,7 @@ scala-sbt.org is powered by two static site engines.
 
 [nanoc](http://nanoc.ws/) is used for the landing pages.
 
-[Pamflet](http://pamflet.databinder.net/Pamflet.html), a Scala-based documentation engine written by @n8han (and some contributions from @eed3si9n) generates 0.13+ documentations.
+[Pamflet](http://www.foundweekends.org/pamflet/), a Scala-based documentation engine written by @n8han (and some contributions from @eed3si9n) generates 0.13+ documentations.
 
 These two engines are driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages). We will shortly use pandoc to also generate pdf files.
 
