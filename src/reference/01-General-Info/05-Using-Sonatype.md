@@ -258,10 +258,10 @@ To automate the publishing approach above with the [sbt-release plugin]
 
 ```
 ...
-ReleaseStep(action = Command.process("sonatypeOpen \"your groupId\" \"Some staging name\"", _)),
+releaseStepCommand("sonatypeOpen \"your groupId\" \"Some staging name\""),
 ...
-ReleaseStep(action = Command.process("publishSigned", _)),
+releaseStepCommand("publishSigned"),
 ...
-ReleaseStep(action = Command.process("sonatypeRelease", _)),
+releaseStepCommand("sonatypeRelease"),
 ...
 ```
