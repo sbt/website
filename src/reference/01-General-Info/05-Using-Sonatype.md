@@ -214,7 +214,7 @@ To simplify the usage of the Sonatype's Nexus, add the following line to
 `build.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
 
 ```
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "1.1")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
 ```
 
 This plugin will facilitate the publishing process, but in short, these are 
