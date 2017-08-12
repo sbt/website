@@ -88,6 +88,7 @@ your plugin to the list.
     <https://github.com/sbt/sbt-groll>
 - sbt-jshell (execute Java REPL)
     <https://github.com/xuwei-k/sbt-jshell>
+- sbt-tmpfs (automatically utilize tmpfs to speed up development and save disks): https://github.com/cuzfrog/sbt-tmpfs
 
 #### Test plugins
 
