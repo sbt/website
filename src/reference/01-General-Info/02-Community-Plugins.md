@@ -38,25 +38,39 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 submit a pull request that adds
 your plugin to the list.
 
-#### Plugins for IDEs
+#### Code formatter plugins
 
-...
+- neo-sbt-scalafmt (Scalafmt):
+    <https://github.com/lucidsoftware/neo-sbt-scalafmt>
+
+#### Documentation plugins
+
+- tut (Scala literate programming):
+    <https://github.com/tpolecat/tut> <!-- 398 stars -->
+- sbt-unidoc (Create a unified API document across subprojects):
+    <https://github.com/sbt/sbt-unidoc> <!-- 83 stars -->
+- sbt-class-diagram (Create a class diagram):
+    <https://github.com/xuwei-k/sbt-class-diagram> <!-- 50 stars -->
 
 #### One jar plugins
 
 - sbt-assembly (make fat JARs):
-    <https://github.com/sbt/sbt-assembly>
+    <https://github.com/sbt/sbt-assembly> <!-- 1092 stars -->
 
 #### Release plugins
 
-- sbt-pgp (PGP signing plugin, can generate keys too):
-    <https://github.com/sbt/sbt-pgp>
-- sbt-bintray (Publish to Bintray):
-    <https://github.com/sbt/sbt-bintray>
-- sbt-release (customizable release process):
-    <https://github.com/sbt/sbt-release>
+- [sbt-native-packager](http://sbt-native-packager.readthedocs.io/en/stable/):
+    <https://github.com/sbt/sbt-native-packager> <!-- 869 stars -->
 - sbt-docker (Build and push Docker images):
-    <https://github.com/marcuslonnberg/sbt-docker>
+    <https://github.com/marcuslonnberg/sbt-docker> <!-- 468 stars -->
+- sbt-release (customizable release process):
+    <https://github.com/sbt/sbt-release> <!-- 393 stars -->
+- sbt-pack (generates packages with dependent jars and launch scripts):
+    <https://github.com/xerial/sbt-pack> <!-- 292 stars -->
+- sbt-bintray (Publish to Bintray):
+    <https://github.com/sbt/sbt-bintray> <!-- 134 stars -->
+- sbt-pgp (PGP signing plugin, can generate keys too):
+    <https://github.com/sbt/sbt-pgp> <!-- 72 stars -->
 
 #### Deployment integration plugins
 
@@ -65,11 +79,13 @@ your plugin to the list.
 #### Utility and system plugins
 
 - sbt-git (executes git commands):
-    <https://github.com/sbt/sbt-git>
+    <https://github.com/sbt/sbt-git> <!-- 223 stars -->
 - sbt-conscript (app distribution using GitHub and Maven Central):
     <http://www.foundweekends.org/conscript/>
 - MiMa (Migration Manager - the Scala binary compatibility validation tool):
     <https://github.com/typesafehub/migration-manager>
+- sbt-groll (sbt plugin to navigate the Git history):
+    <https://github.com/sbt/sbt-groll>
 - sbt-jshell (execute Java REPL)
     <https://github.com/xuwei-k/sbt-jshell>
 
@@ -77,7 +93,7 @@ your plugin to the list.
 
 -   [Scripted plugin](Testing-sbt-plugins.html)
 -   sbt-jmh (OpenJDK JMH (Java Microbenchmark Harness) integration for Scala):
-    <https://github.com/ktoso/sbt-jmh>
+    <https://github.com/ktoso/sbt-jmh> <!-- 382 stars -->
 -   sbt-scalaprops (plugin for scalaprops):
     <https://github.com/scalaprops/sbt-scalaprops>
 -   tut (doc/tutorial generator for scala):
@@ -85,38 +101,45 @@ your plugin to the list.
 
 #### Library dependency plugins
 
+- sbt-dependency-graph (Creates a graphml file of the dependency tree):
+    <https://github.com/jrudolph/sbt-dependency-graph>
 - sbt-updates (Display updated versions of your project dependencies):
-    <https://github.com/rtimush/sbt-updates>
+    <https://github.com/rtimush/sbt-updates>:
 - sbt-dependency-check (Check your project dependencies for publicly know vulnerabilities/CVE):
     <https://github.com/albuch/sbt-dependency-check>
 
 #### Web and frontend development plugins
 
-...
-
+- [Play Framework](https://www.playframework.com/) <!-- 9597 stars -->
+- [Scala.js](https://www.scala-js.org/) <!-- 3053 stars -->
 
 #### Database plugins
 
 ...
 
+#### Framework-specific plugins
+
+- sbt-newrelic:
+    <https://github.com/gilt/sbt-newrelic> <!-- 69 stars -->
+- sbt-spark (Configure Spark applications):
+    <https://github.com/alonsodomin/sbt-spark>
 
 #### Code generator plugins
 
 - sbt-buildinfo (Generate Scala source for any settings):
-    <https://github.com/sbt/sbt-buildinfo>
+    <https://github.com/sbt/sbt-buildinfo> <!-- 307 stars -->
 - sbt-protobuf (Google Protocol Buffers):
-    <https://github.com/sbt/sbt-protobuf>
-- sbt-protoc (SBT plugin for generating code from Protocol Buffer using protoc)
-    <https://github.com/thesamet/sbt-protoc>
+    <https://github.com/sbt/sbt-protobuf> <!-- 130 stars -->
+- sbt-header (creating file headers, e.g. copyright headers):
+    <https://github.com/sbt/sbt-header> <!-- 102 stars -->
+- sbt-avro (Apache Avro):
+    <https://github.com/cavorite/sbt-avro> <!-- 63 stars -->
+- sbt-protoc (SBT plugin for generating code from Protocol Buffer using protoc):
+    <https://github.com/thesamet/sbt-protoc> <!-- 29 stars -->
+- sbt-sql (Generate model classes from SQL files):
+    <https://github.com/xerial/sbt-sql> <!-- 15 stars -->
 - sbt-contraband (Generate pseudo-case class from GraphQL schema):
     <http://www.scala-sbt.org/contraband/>
-
-#### Documentation plugins
-
-- sbt-unidoc (Create a unified API document across subprojects):
-    <https://github.com/sbt/sbt-unidoc>
-- sbt-class-diagram (Create a class diagram):
-    <https://github.com/xuwei-k/sbt-class-diagram>
 
 #### Static code analysis plugins
 
@@ -127,42 +150,12 @@ your plugin to the list.
 
 ...
 
+#### Create new project plugins
+
+- sbt-fresh (create an opinionated fresh sbt project):
+    <https://github.com/sbt/sbt-fresh> <!-- 173 stars -->
+
 #### In-house plugins
 
 - sbt-houserules (Settings used by sbt modules):
   <https://github.com/sbt/sbt-houserules>
-
-### Plugins available for sbt 1.0.0-M6
-
-Please submit a [pull request](https://github.com/sbt/website/pulls) that adds
-your plugin to the list.
-
-- sbt-sonatype 2.0: <https://github.com/xerial/sbt-sonatype>
-- sbt-class-diagram 0.2.1 <https://github.com/xuwei-k/sbt-class-diagram>
-- sbt-scalaprops 0.2.1 <https://github.com/scalaprops/sbt-scalaprops>
-- sbt-bintray 0.5.0: <https://github.com/sbt/sbt-bintray>
-- [Scripted plugin](Testing-sbt-plugins.html)
-- sbt-assembly 0.14.5: <https://github.com/sbt/sbt-assembly>
-- sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
-- sbt-contraband 0.3.0-M5: <http://www.scala-sbt.org/contraband/>
-- sbt-docker 1.4.1: <https://github.com/marcuslonnberg/sbt-docker>
-- sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
-- sbt-git 0.9.3: <https://github.com/sbt/sbt-git>
-- sbt-protobuf 0.6.1 <https://github.com/sbt/sbt-protobuf>
-- sbt-conscript 0.5.2 <https://github.com/foundweekends/conscript>
-- sbt-jmh 0.2.26 <https://github.com/ktoso/sbt-jmh>
-- sbt-updates 0.3.1: <https://github.com/rtimush/sbt-updates>
-
-### Plugins available for sbt 1.0.0-M5
-
-- sbt-bintray 0.4.0: <https://github.com/sbt/sbt-bintray>
-- [Scripted plugin](Testing-sbt-plugins.html)
-- sbt-assembly 0.14.4: <https://github.com/sbt/sbt-assembly>
-- sbt-buildinfo 0.7.0: <https://github.com/sbt/sbt-buildinfo>
-- sbt-contraband 0.3.0-M4: <http://www.scala-sbt.org/contraband/>
-- Scalafmt 0.7.0-RC1 <http://scalameta.org/scalafmt/>
-- neo-sbt-scalafmt 0.3 <https://github.com/lucidsoftware/neo-sbt-scalafmt>
-- Coursier 1.0.0-RC2 <https://github.com/coursier/coursier>
-- sbt-pgp 1.1.0-M1: <http://www.scala-sbt.org/sbt-pgp/>
-- sbt-sonatype 2.0.0-M1: <https://github.com/xerial/sbt-sonatype>
-- sbt-updates 0.3.1: <https://github.com/rtimush/sbt-updates>
