@@ -134,18 +134,20 @@ Running sbt-assembly / simple
 
 ファイルコマンドは便利だけど、実際のコンテンツをテストしないため、それだけでは不十分だ。コンテンツをテストする簡単な方法は、テストビルドにカスタムのタスクを実装してしまうことだ。
 
-上記の hello プロジェクトを例に取ると、生成された jar が "hello" と表示するかを確認したいとする。`sbt.Process` を用いて jar を走らせることができる。失敗を表すには、単にエラーを投げればいい。以下に `build.sbt` を示す:
+上記の hello プロジェクトを例に取ると、生成された jar が "hello" と表示するかを確認したいとする。`scala.sys.process.Process` を用いて jar を走らせることができる。失敗を表すには、単にエラーを投げればいい。以下に `build.sbt` を示す:
 
 ```scala
+import scala.sys.process.Process
+
 lazy val root = (project in file("."))
   .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar",
     TaskKey[Unit]("check") := {
-      val process = sbt.Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
+      val process = Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
       val out = (process!!)
-      if (out.trim != "bye") error("unexpected output: " + out)
+      if (out.trim != "bye") sys.error("unexpected output: " + out)
       ()
     }
   )

@@ -133,18 +133,20 @@ Running sbt-assembly / simple
 
 The file commands are great, but not nearly enough because none of them test the actual contents. An easy way to test the contents is to implement a custom task in your test build.
 
-For my hello project, I'd like to check if the resulting jar prints out "hello". I can take advantage of `sbt.Process` to run the jar. To express a failure, just throw an error. Here's `build.sbt`:
+For my hello project, I'd like to check if the resulting jar prints out "hello". I can take advantage of `scala.sys.process.Process` to run the jar. To express a failure, just throw an error. Here's `build.sbt`:
 
 ```scala
+import scala.sys.process.Process
+
 lazy val root = (project in file("."))
   .settings(
     version := "0.1",
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar",
     TaskKey[Unit]("check") := {
-      val process = sbt.Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
+      val process = Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
       val out = (process!!)
-      if (out.trim != "bye") error("unexpected output: " + out)
+      if (out.trim != "bye") sys.error("unexpected output: " + out)
       ()
     }
   )
