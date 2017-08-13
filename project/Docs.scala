@@ -1,8 +1,9 @@
 import sbt._
 import Keys._
 import com.typesafe.sbt.git.GitRunner
-import com.typesafe.sbt.{SbtGhPages, SbtGit, SbtSite, site=>sbtsite}
-import SbtGhPages.{ghpages, GhPagesKeys => ghkeys}
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport._
+import com.typesafe.sbt.{SbtGit, SbtSite, site=>sbtsite}
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
 import SiteMap.{ Entry, LastModified }
@@ -146,10 +147,10 @@ object Docs {
   }
 
 
-  def customGhPagesSettings: Seq[Setting[_]] = ghpages.settings ++ Seq(
+  def customGhPagesSettings: Seq[Setting[_]] = GhpagesPlugin.ghpagesProjectSettings ++ Seq(
     git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
-    GitKeys.gitBranch in ghkeys.updatedRepository := Some("master"),
-    ghkeys.synchLocal := syncLocalImpl.value
+    GitKeys.gitBranch in ghpagesUpdatedRepository := Some("master"),
+    ghpagesSynchLocal := syncLocalImpl.value
   )
 
   // This task is responsible for updating the gh-pages branch on some temp dir.
@@ -162,7 +163,7 @@ object Docs {
   // and then copy over the newly generated files.
   val syncLocalImpl = Def.task {
     // sync the generated site
-    val repo = ghkeys.updatedRepository.value
+    val repo = ghpagesUpdatedRepository.value
     val fullVersioned = repo / targetSbtFullVersion
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
