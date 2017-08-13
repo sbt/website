@@ -4,9 +4,9 @@ import Docs._
 lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
 
-lazy val root = (project in file(".")).
-  enablePlugins(NanocPlugin, PamfletPlugin).
-  settings(
+lazy val root = (project in file("."))
+  .enablePlugins(NanocPlugin, PamfletPlugin)
+  .settings(
     organization := "org.scala-sbt",
     name := "website",
     siteEmail := "eed3si9n" + "@gmail.com",
@@ -26,7 +26,8 @@ lazy val root = (project in file(".")).
     // can't create a circular dpeendnecy by adding it back into the original mappings.
     Pdf.settings,
     Pdf.settingsFor(Pamflet, "sbt-reference"),
-    SiteHelpers.addMappingsToSiteDir(mappings in Pdf.generatePdf in Pamflet, siteSubdirName in Pamflet),
+    SiteHelpers.addMappingsToSiteDir(mappings in Pdf.generatePdf in Pamflet,
+                                     siteSubdirName in Pamflet),
     fileEncoding := {
       sys.props("file.encoding") match {
         case "UTF-8" => "UTF-8"
