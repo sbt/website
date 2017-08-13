@@ -4,6 +4,7 @@ import com.typesafe.sbt.git.GitRunner
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport._
 import com.typesafe.sbt.{SbtGit, SbtSite, site=>sbtsite}
+import scala.sys.process.Process
 import SbtGit.{git, GitKeys}
 import SbtSite.SiteKeys
 import SiteMap.{ Entry, LastModified }
@@ -48,7 +49,7 @@ object Docs {
             generateRedirect(s"../../docs/$lang/$x", output / lang / x, s.log)
           }
         }
-        output ** AllPassFilter --- output pair relativeTo(output)
+        output ** AllPassFilter --- output pair Path.relativeTo(output)
       }
     )
 
@@ -123,7 +124,7 @@ object Docs {
       generateRedirect("../Advanced-Configurations-Example.html", exp / "Advanced-Configurations-Example.html", s.log)
       generateRedirect("../Advanced-Command-Example.html", exp / "Advanced-Command-Example.html", s.log)
 
-      output ** AllPassFilter --- output pair relativeTo(output)
+      output ** AllPassFilter --- output pair Path.relativeTo(output)
     }
   )
 
@@ -234,7 +235,7 @@ object Docs {
       case ApiOrSxr(ReleasePath, _)  => Some(Entry("weekly", 0.6))
       case ApiOrSxr(OneX, _)         => Some(Entry("weekly", 0.5))
       case ApiOrSxr(Zero13, _)       => Some(Entry("weekly", 0.4))
-      case ApiOrSxr(OneStar, _)      => Some(Entry("weekly", 0.3))
+      case ApiOrSxr(OneStar(), _)    => Some(Entry("weekly", 0.3))
       case Snapshot(_)               => Some(Entry("weekly", 0.02))
       case Zero13Star()              => Some(Entry("never", 0.01))
       case Zero12Star()              => Some(Entry("never", 0.01))
@@ -256,7 +257,7 @@ object Docs {
       case ApiOrSxr(ReleasePath, _)  => LastModified(new Date(file.lastModified))
       case ApiOrSxr(OneX, _)         => LastModified(new Date(file.lastModified))
       case ApiOrSxr(Zero13, _)       => LastModified(new Date(file.lastModified))
-      case ApiOrSxr(OneStar, _)      => LastModified(new Date(file.lastModified))
+      case ApiOrSxr(OneStar(), _)    => LastModified(new Date(file.lastModified))
       case Snapshot(_)               => LastModified(new Date(file.lastModified))
       case Zero13Star()              => LastModified(new GregorianCalendar(2017, 7 - 1, 1).getTime)
       case Zero12Star()              => LastModified(new GregorianCalendar(2013, 7 - 1, 1).getTime)
@@ -285,7 +286,7 @@ object Docs {
 
   // TODO: platform independence/use symlink from Java 7
   def symlink(path: String, linkFile: File, log: Logger): Unit =
-    "ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil ! log match {
+    Process("ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil) ! log match {
       case 0 => ()
       case code => println(code) // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
     }
