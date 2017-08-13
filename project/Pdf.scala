@@ -1,6 +1,6 @@
 import sbt._
 import Keys._
-
+import scala.sys.process.Process
 
 object Pdf {
 	lazy val pandocLatexEngine = settingKey[String]("Engine to use when generating PDFs")
@@ -22,7 +22,7 @@ object Pdf {
 	  inConfig(config)(Seq(
         generatePdf := Pdf.makeCombinedPdf(config, pdfName).value,
         mappings in generatePdf := {
-        	generatePdf.value pair relativeTo(target.value)
+        	generatePdf.value pair Path.relativeTo(target.value)
         }
 	  ))
 

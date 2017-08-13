@@ -14,7 +14,7 @@ cache:
     - $HOME/.ivy2/cache
 
 jdk:
-  - openjdk8
+  - oraclejdk8
 
 install:
   - gem install nanoc:4.0.2
@@ -25,9 +25,9 @@ addons:
   apt:
     sources:
       - sourceline: 'deb https://dl.bintray.com/sbt/debian /'
-        key_url: 'https://bintray.com/user/downloadSubjectPublicKey?username=sbt'
+      - key_url: 'https://bintray.com/user/downloadSubjectPublicKey?username=sbt'
     packages:
-      - sbt=0.13.16
+      - sbt=1.0.0
       - pandoc
       - latex-cjk-all
       - texlive-full
@@ -36,7 +36,7 @@ before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M -XX:MaxPermSize=512M"
 
 script:
-  - sbt makeSite
+  - /usr/bin/sbt makeSite
   # Tricks to avoid unnecessary cache updates
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm

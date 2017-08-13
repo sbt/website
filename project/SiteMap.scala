@@ -21,7 +21,7 @@ object SiteMap {
       else Some( writeXMLgz(dir / "sitemap.xml", dir / "sitemap.xml.gz", gzip, entriesXML(es)) )
     }
 
-    def relativize(files: PathFinder): Seq[(File, String)] = files pair relativeTo(repoBase)
+    def relativize(files: PathFinder): Seq[(File, String)] = files pair Path.relativeTo(repoBase)
     def entries(files: PathFinder) =
       relativize(files) flatMap { case (f, path) =>
         entry(f, path).toList map { e =>
