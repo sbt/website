@@ -22,7 +22,7 @@ object Pdf {
 	  inConfig(config)(Seq(
         generatePdf := Pdf.makeCombinedPdf(config, pdfName).value,
         mappings in generatePdf := {
-        	generatePdf.value x relativeTo(target.value)
+        	generatePdf.value pair relativeTo(target.value)
         }
 	  ))
 

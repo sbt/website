@@ -48,7 +48,7 @@ object Docs {
             generateRedirect(s"../../docs/$lang/$x", output / lang / x, s.log)
           }
         }
-        output ** AllPassFilter --- output x relativeTo(output)
+        output ** AllPassFilter --- output pair relativeTo(output)
       }
     )
 
@@ -123,7 +123,7 @@ object Docs {
       generateRedirect("../Advanced-Configurations-Example.html", exp / "Advanced-Configurations-Example.html", s.log)
       generateRedirect("../Advanced-Command-Example.html", exp / "Advanced-Command-Example.html", s.log)
 
-      output ** AllPassFilter --- output x relativeTo(output)
+      output ** AllPassFilter --- output pair relativeTo(output)
     }
   )
 
