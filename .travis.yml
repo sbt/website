@@ -36,7 +36,7 @@ before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M -XX:MaxPermSize=512M"
 
 script:
-  - /usr/bin/sbt makeSite
+  - /usr/bin/sbt scalafmtTest makeSite
   # Tricks to avoid unnecessary cache updates
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
