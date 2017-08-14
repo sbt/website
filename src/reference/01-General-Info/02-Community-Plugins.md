@@ -53,6 +53,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-unidoc> <!-- 83 stars -->
 - sbt-class-diagram (Create a class diagram):
     <https://github.com/xuwei-k/sbt-class-diagram> <!-- 50 stars -->
+- sbt-api-mappings (Fill apiMappings for common Scala libraries):
+    <https://github.com/ThoughtWorksInc/sbt-api-mappings> <!-- 45 stars -->
 
 #### One jar plugins
 
