@@ -59,7 +59,7 @@ Here's an example config:
 This example configuration has three repositories configured for sbt.
 
 The first resolver is `local`, and is used so that artifacts pushed
-using `publish-local` will be seen in other sbt projects.
+using `publishLocal` will be seen in other sbt projects.
 
 The second resolver is `my-ivy-proxy-releases`. This repository is used
 to resolve sbt *itself* from the company proxy repository, as well as
