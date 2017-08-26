@@ -21,7 +21,7 @@ sbt.version=$app_version$
 #### project/style.sbt
 
 ```
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.8.0")
+addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
 ```
 
 #### build.sbt v1
