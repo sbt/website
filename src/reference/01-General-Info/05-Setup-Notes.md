@@ -31,7 +31,7 @@ low on memory, adjust the JVM configuration as you would for any
 application. For example a common set of memory-related options is:
 
 ```
-java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256m
+java -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
 ```
 
 ### Boot directory
