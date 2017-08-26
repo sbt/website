@@ -111,7 +111,6 @@ Because Travis is already using the environment variable `JVM_OPTS`, we can inst
 -Xms2048M
 -Xmx2048M
 -Xss6M
--XX:MaxPermSize=512M
 -XX:ReservedCodeCacheSize=256M
 ```
 
@@ -131,7 +130,6 @@ java
 -Xms2048M
 -Xmx2048M
 -Xss6M
--XX:MaxPermSize=512M
 -XX:ReservedCodeCacheSize=256M
 -jar
 /home/travis/.sbt/launchers/$app_version$/sbt-launch.jar
@@ -156,7 +154,6 @@ java
 -Xms2048M
 -Xmx2048M
 -Xss6M
--XX:MaxPermSize=512M
 -Dfile.encoding=UTF8
 -XX:ReservedCodeCacheSize=256M
 -Xms1024M

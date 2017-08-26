@@ -19,7 +19,7 @@ con el siguiente contenido:
 
 ```
 #!/bin/bash
-SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
 java \$SBT_OPTS -jar `dirname \$0`/sbt-launch.jar "\$@"
 ```
 
@@ -45,7 +45,7 @@ standard de Windows, cree un archivo batch `sbt.bat`:
 
 ```
 set SCRIPT_DIR=%~dp0
-java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -jar "%SCRIPT_DIR%sbt-launch.jar" %*
+java -Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -jar "%SCRIPT_DIR%sbt-launch.jar" %*
 ```
 
 y ponga el [sbt-launch.jar][sbt-launch.jar] que descargó en el mismo directorio que
@@ -57,7 +57,7 @@ Si utiliza Cygwin con la terminal standard de Windows, cree un
 script de bash `~/bin/sbt`:
 
 ```
-SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
 java \$SBT_OPTS -jar sbt-launch.jar "\$@"
 ```
 
@@ -76,7 +76,7 @@ escape Ansi y que sea configurable mediante `stty`), cree un script
 `~/bin/sbt`:
 
 ```
-SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
 stty -icanon min 1 -echo > /dev/null 2>&1
 java -Djline.terminal=jline.UnixTerminal -Dsbt.cygwin=true \$SBT_OPTS -jar sbt-launch.jar "\$@"
 stty icanon echo > /dev/null 2>&1
