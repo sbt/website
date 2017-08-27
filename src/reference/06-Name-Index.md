@@ -16,7 +16,6 @@ out: Name-Index.html
   [Mapping-Files]: Mapping-Files.html
   [Cross-Build]: Cross-Build.html
   [Parsing-Input]: Parsing-Input.html
-  [Process]: Process.html
   [Commands]: Commands.html
   [Input-Tasks]: Input-Tasks.html
   [Build-State]: Build-State.html
@@ -86,16 +85,6 @@ an sbt build definition. For command names, see
 -   [Task](../api/sbt/Task.html) is the type of a task. A task is an
     action that runs on demand. This is in contrast to a setting, which
     is run once at project initialization.
-
-#### Process
-
--   A [ProcessBuilder](../api/sbt/ProcessBuilder.html) is the type
-    used to define a process. It provides combinators for building up
-    processes from smaller processes.
--   A [Process](../api/sbt/Process.html) represents the actual forked
-    process.
--   The [Process companion object](../api/sbt/Process\$.html) provides
-    methods for constructing primitive processes.
 
 #### Build Structure
 
@@ -201,23 +190,3 @@ used for
 -   `examples`, `token` Tab completion
 -   `!!!` Provides an error message to use when the original parser
     doesn't match the input.
-
-#### Processes
-
-These methods are used to
-[fork external processes][Process]. Note that this API
-has been included in the Scala standard library for version 2.9.
-[ProcessBuilder](../api/sbt/ProcessBuilder.html) is the builder type
-and [Process](../api/sbt/Process.html) is the type representing the
-actual forked process. The methods to combine processes start with `#`
-so that they share the same precedence.
-
--   `run`, `!`, `!!`, `!<`, `lines`, `lines_!` are different ways to
-    start a process once it has been defined. The lines variants produce
-    a Stream[String] to obtain the output lines.
--   `#<`, `#<<`, `#>` are used to get input for a process from a source
-    or send the output of a process to a sink.
--   `#|` is used to pipe output from one process into the input of
-    another.
--   `#||`, `#&&`, `###` sequence processes in different ways.
-
