@@ -55,7 +55,7 @@ object Dependencies {
 
 These files can be used mange library dependencies in one place.
 
-### project/ShellPrompPlugin.scala
+### project/ShellPromptPlugin.scala
 
 When you want to implement custom commands or tasks, you can organize your build by defining an one-off auto plugin.
 
