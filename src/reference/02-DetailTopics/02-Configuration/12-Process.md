@@ -33,15 +33,6 @@ error. You can pass a `Logger` to the `!` method to send output to the
 "find project -name *.jar" ! log
 ```
 
-Two alternative implicit conversions are from `scala.xml.Elem` or
-`List[String]` to `scala.sys.process.ProcessBuilder`. These are useful
-for constructing commands. An example of the first variant from the
-android plugin:
-
-```scala
-<x> {dxPath.absolutePath} --dex --output={classesDexPath.absolutePath} {classesMinJarPath.absolutePath}</x> !
-```
-
 If you need to set the working directory or modify the environment, call
 `scala.sys.process.Process` explicitly, passing the command sequence
 (command and argument list) or command string first and the working
