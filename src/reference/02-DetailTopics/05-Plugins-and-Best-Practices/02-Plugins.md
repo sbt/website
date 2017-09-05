@@ -93,9 +93,9 @@ Specifically,
     definition for the build definition (worth to repeat it here again:
     "sbt is recursive", remember?).
 
-The build definition classpath is searched for `sbt/sbt.plugins`
+The build definition classpath is searched for `sbt/sbt.autoplugins`
 descriptor files containing the names of
-`sbt.AutoPlugin` or `sbt.Plugin` implementations.
+`sbt.AutoPlugin` implementations.
 
 The `reload plugins` command changes the current build to
 the (root) project's `project/` build definition. This allows manipulating
