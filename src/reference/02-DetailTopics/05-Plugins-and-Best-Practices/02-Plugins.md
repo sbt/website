@@ -482,7 +482,7 @@ Edit `project/plugins.sbt`
 ```scala
 lazy val root = (project in file(".")).dependsOn(assemblyPlugin)
 
-lazy val assemblyPlugin = uri("git://github.com/sbt/sbt-assembly")
+lazy val assemblyPlugin = RootProject(uri("git://github.com/sbt/sbt-assembly"))
 ```
 
 If sbt is running, run `reload`.
