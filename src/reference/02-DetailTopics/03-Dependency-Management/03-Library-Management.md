@@ -297,19 +297,15 @@ libraryDependencies +=
 See [ModuleID](../api/sbt/ModuleID.html) for API details.
 
 In certain cases a transitive dependency should be exluded from
-all dependencies. This can be achieved by setting up `SbtExclusionRules`
+all dependencies. This can be achieved by setting up `ExclusionRules`
 in `excludeDependencies`. 
 
 ```scala
 excludeDependencies ++= Seq(
   // commons-logging is replaced by jcl-over-slf4j
-  SbtExclusionRule("commons-logging", "commons-logging")
+  ExclusionRule("commons-logging", "commons-logging")
 )
 ```
-
-Available since sbt 0.13.9.
-
-See [SbtExclusionRule](../api/sbt/SbtExclusionRule.html) for API details.
 
 ##### Download Sources
 
