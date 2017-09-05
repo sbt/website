@@ -177,9 +177,9 @@ the command line followed by `shell`. For example,
 This runs `clean` and then `compile` before entering the interactive
 prompt. If either `clean` or `compile` fails, sbt will exit without
 going to the prompt. To enter the prompt whether or not these initial
-commands succeed, prepend `-shell`, which means to run `shell` if any
+commands succeed, prepend `"onFailure shell"`, which means to run `shell` if any
 command fails. For example,
 
 ```
-\$ sbt -shell clean compile shell
+\$ sbt "onFailure shell" clean compile shell
 ```
