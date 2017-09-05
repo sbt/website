@@ -61,7 +61,7 @@ allowed. For example, in a `.sbt` build definition:
 crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
 ```
 
-To build against all versions listed in `build.scala.versions`, prefix
+To build against all versions listed in `crossScalaVersions`, prefix
 the action to run with `+`. For example:
 
 ```
