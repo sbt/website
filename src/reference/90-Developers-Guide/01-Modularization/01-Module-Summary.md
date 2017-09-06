@@ -9,7 +9,7 @@ out: Module-Summary.html
   [pickling]: https://github.com/scala/pickling
   [utilrepo]: https://github.com/sbt/util
   [librarymanagementrepo]: https://github.com/sbt/librarymanagement
-  [incrementalcompilerrepo]: https://github.com/sbt/incrementalcompiler
+  [zincrepo]: https://github.com/sbt/zinc
   [launcherrepo]: https://github.com/sbt/launcher
   [conscriptrepo]: https://github.com/foundweekends/conscript
   [websiterepo]: https://github.com/sbt/website
@@ -42,7 +42,7 @@ the concepts and terminology around the library management system are also influ
 The responsibility of the library management API is to calculate the transitive dependency graph,
 and download artifacts from the given repositories.
 
-#### IncrementalCompiler API ([sbt/incrementalcompiler][incrementalcompilerrepo])
+#### IncrementalCompiler API ([sbt/zinc][zincrepo])
 
 Incremental compilation of Scala is so fundamental
 that we now seldom think of it as a feature of sbt.
