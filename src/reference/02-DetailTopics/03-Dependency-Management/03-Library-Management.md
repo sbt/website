@@ -586,11 +586,13 @@ not used on normal classpaths. For example, your project might use a
 it in your jar by modifying `resources`. For example:
 
 ```scala
-ivyConfigurations += config("js") hide
+val JS = config("js") hide
 
-libraryDependencies += "jquery" % "jquery" % "1.3.2" % "js->default" from "https://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js"
+ivyConfigurations += JS
 
-resources ++= update.value.select(configurationFilter("js"))
+libraryDependencies += "jquery" % "jquery" % "3.2.1" % "js->default" from "https://code.jquery.com/jquery-3.2.1.min.js"
+
+resources in Compile ++= update.value.select(configurationFilter("js"))
 ```
 
 The `config` method defines a new configuration with name `"js"` and
