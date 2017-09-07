@@ -131,6 +131,8 @@ your plugin to the list.
     <https://github.com/sbt/sbt-less> <!-- 34 stars -->
 - sbt-js-engine (Library for plugging node base asset compilers into sbt-web):
     <https://github.com/sbt/sbt-js-engine> <!-- 33 stars -->
+- sbt-typescript (sbt-web plugin for Typescript compilation):
+    <https://github.com/joost-de-vries/sbt-typescript> <!-- 23 stars -->
 - sbt-uglify (sbt-web plugin for uglify):
     <https://github.com/sbt/sbt-uglify> <!-- 21 stars -->
 - sbt-digest (sbt-web plugin for digesting assets):
