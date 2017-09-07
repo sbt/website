@@ -112,6 +112,8 @@ your plugin to the list.
 
 #### Library dependency plugins
 
+- fm-sbt-s3-resolver (SBT Plugin that adds support for resolving and publishing using Amazon S3):
+    <https://github.com/frugalmechanic/fm-sbt-s3-resolver>
 - sbt-dependency-graph (Creates a graphml file of the dependency tree):
     <https://github.com/jrudolph/sbt-dependency-graph>
 - sbt-updates (Display updated versions of your project dependencies):
