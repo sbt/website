@@ -470,6 +470,8 @@ your plugin to the list.
     <https://github.com/nyavro/spi-plugin>
 -   sbt-dsl-platform ([DSL Platform](https://dsl-platform.com/) compiler plugin. Code/library generation from various languages. Postgres/Oracle database migrations):
     <https://github.com/ngs-doo/dsl-compiler-client>
+-   sbt-json (Generates Scala case classes from JSON documents):
+    <https://github.com/battermann/sbt-json>
 
 #### Game development plugins
 
