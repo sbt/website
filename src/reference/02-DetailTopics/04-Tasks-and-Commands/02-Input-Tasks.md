@@ -84,8 +84,9 @@ get the setting values with the special `value` method:
 
 ```scala
 import complete.DefaultParsers._
+import complete.Parser
 
-val parser: Initialize[State => Parser[(String,String)]] =
+val parser: Def.Initialize[State => Parser[(String,String)]] =
 Def.setting {
   (state: State) =>
     ( token("scala" <~ Space) ~ token(scalaVersion.value) ) |
