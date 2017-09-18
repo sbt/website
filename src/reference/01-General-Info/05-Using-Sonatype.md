@@ -153,7 +153,7 @@ settings so that the correct metadata is generated.
 Specifically, the build should provide data for `organization`, `url`,
 `license`, `scm.url`, `scm.connection` and `developer` keys. For example:
 
-```
+```scala
 licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
 
 homepage := Some(url("http://example.com"))
