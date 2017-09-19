@@ -2,8 +2,8 @@
 out: Installing-sbt-on-Linux.html
 ---
 
-  [ZIP]: $sbt_native_package_base$/sbt-$app_version$.zip
-  [TGZ]: $sbt_native_package_base$/sbt-$app_version$.tgz
+  [ZIP]: $sbt_native_package_base$$app_version$/sbt-$app_version$.zip
+  [TGZ]: $sbt_native_package_base$$app_version$/sbt-$app_version$.tgz
   [RPM]: $sbt_rpm_package_base$sbt-$app_version$.rpm
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
 
