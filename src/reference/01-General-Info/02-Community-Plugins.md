@@ -112,6 +112,8 @@ your plugin to the list.
 
 #### Library dependency plugins
 
+- sbt-s3-resolver (Resolves from and publishes to Amazon S3):
+    <https://github.com/ohnosequences/sbt-s3-resolver>
 - fm-sbt-s3-resolver (SBT Plugin that adds support for resolving and publishing using Amazon S3):
     <https://github.com/frugalmechanic/fm-sbt-s3-resolver>
 - sbt-dependency-graph (Creates a graphml file of the dependency tree):
