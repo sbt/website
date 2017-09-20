@@ -58,6 +58,14 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 
 For more, see [Giter8 templates](https://github.com/foundweekends/giter8/wiki/giter8-templates) on the Giter8 wiki. sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
 
+#### Giter8 parameters
+
+You can append Giter8 parameters to the end of the command, so for example to specify a particular branch you can use:
+
+```
+\$ sbt new scala/scala-seed.g8 --branch myBranch
+```
+
 #### How to create a Giter8 template
 
 See [Making your own templates](http://www.foundweekends.org/giter8/template.html) for the details on how to create a new Giter8 template.
