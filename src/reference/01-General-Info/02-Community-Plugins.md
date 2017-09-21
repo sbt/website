@@ -40,7 +40,12 @@ your plugin to the list.
 
 #### Code formatter plugins
 
-- [neo-sbt-scalafmt](https://github.com/lucidsoftware/neo-sbt-scalafmt)
+- [neo-sbt-scalafmt](https://github.com/lucidsoftware/neo-sbt-scalafmt): code
+  formatting using Scalafmt.
+- [sbt-scalariform](https://github.com/sbt/sbt-scalariform): code
+  formatting using Scalariform.
+- [sbt-java-formatter](https://github.com/typesafehub/sbt-java-formatter):
+  code formatting for Java sources.
 
 #### Documentation plugins
 
@@ -52,6 +57,8 @@ your plugin to the list.
   class diagrams from Scala source code.
 - [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
   generate Scaladoc `apiMappings` for common Scala libraries.
+- [sbt-microsites](https://github.com/47deg/sbt-microsites): generate
+  and publish microsites using Jekyll.
 
 #### One jar plugins
 
@@ -76,10 +83,21 @@ your plugin to the list.
   manage signing keys.
 - [sbt-deploy](https://github.com/amanjpro/sbt-deploy-plugin): create
   deployable fat JARs.
+- [sbt-sonatype](https://github.com/xerial/sbt-sonatype): publish artefacts to
+  Maven Central.
+- [sbt-aether-deploy](https://github.com/arktekk/sbt-aether-deploy): publish
+  artefacts using Eclipse Aether.
+- [sbt-rig](https://github.com/Verizon/sbt-rig): opinionated common release
+  steps.
+- [sbt-s3](https://github.com/sbt/sbt-s3): manage objects on Amazon S3.
+- [sbt-osgi](https://github.com/sbt/sbt-osgi): create OSGi bundles.
 
 #### Deployment integration plugins
 
-...
+- [sbt-heroku](https://github.com/heroku/sbt-heroku): deploy applications
+  directly to Heroku.
+- [sbt-docker-compose](https://github.com/Tapad/sbt-docker-compose):
+  launch Docker images using docker compose.
 
 #### Utility and system plugins
 
@@ -94,6 +112,39 @@ your plugin to the list.
 - [sbt-sh](https://github.com/melezov/sbt-sh): run shell commands from sbt.
 - [sbt-tmpfs](https://github.com/cuzfrog/sbt-tmpfs): utilize tmpfs to speed
   up builds.
+- [sbt-revolver](https://github.com/spray/sbt-revolver): auto-restart forked
+  JVMs on update.
+- [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary): show a
+  summary of compilation errors.
+- [sbt-dynver](https://github.com/dwijnand/sbt-dynver): set project version
+  dynamically from git metadata.
+- [sbt-prompt](https://github.com/agemooij/sbt-prompt): add promptlets and
+  themes to your sbt prompt.
+- [sbt-crossproject](https://github.com/scala-native/sbt-crossproject):
+  cross-build Scala, Scala.js and Scala Native.
+- [sbt-proguard](https://github.com/sbt/sbt-proguard): run ProGuard on
+  compiled sources.
+- [sbt-structure](https://github.com/JetBrains/sbt-structure): extract project
+  structure in XML format.
+- [sbt-jni](https://github.com/jodersky/sbt-jni): helpers for working with
+  projects that use JNI.
+- [sbt-jol](https://github.com/ktoso/sbt-jol): inspect OpenJDK Java Object
+  Layout from sbt.
+- [sbt-musical](https://github.com/tototoshi/sbt-musical): control iTunes
+  from sbt (Mac only).
+- [sbt-travisci](https://github.com/dwijnand/sbt-travisci): integration
+  with Travis CI.
+- [horder](https://github.com/romanowski/hoarder): cache compilation
+  artefacts for future builds.
+- [sbt-javaagent](https://github.com/sbt/sbt-javaagent): add Java agents to
+  projects.
+
+#### IDE integration plugins
+
+- [sbteclipse](https://github.com/typesafehub/sbteclipse): Eclipse project
+  definition generator.
+- [sbt-sublime](https://github.com/orrsella/sbt-sublime): Sublime Text project
+  generator.
 
 #### Test plugins
 
@@ -102,6 +153,16 @@ your plugin to the list.
   (JMH) benchmarks from sbt.
 - [sbt-scalaprops](https://github.com/scalaprops/sbt-scalaprops): scalaprops
   property-based testing integration.
+- [sbt-doctest](https://github.com/tkawachi/sbt-doctest): generate and run
+  tests from Scaladoc comments.
+- [gatling-sbt](https://github.com/gatling/gatling-sbt): performance and
+  load-testing using Gatling.
+- [sbt-multi-jvm](https://github.com/sbt/sbt-multi-jvm): run tests using
+  multiple JVMs.
+- [sbt-testng](https://github.com/sbt/sbt-testng): TestNG framework
+  integration.
+- [sbt-jcstress](https://github.com/ktoso/sbt-jcstress): Java Concurrency
+  Stress Test (jcstress) integration.
 
 #### Library dependency plugins
 
@@ -115,6 +176,14 @@ your plugin to the list.
   of dependencies.
 - [sbt-dependency-check](https://github.com/albuch/sbt-dependency-check):
   check dependencies for known vulnerabilities/CVEs.
+- [coursier](https://github.com/coursier/coursier): pure Scala dependency
+  fetcher.
+- [sbt-s3-resolver](https://github.com/ohnosequences/sbt-s3-resolver): resolve
+  dependencies using Amazon S3.
+- [sbt-lock](https://github.com/tkawachi/sbt-lock): create a lock file
+  containing explicit sbt dependencies.
+- [sbt-license-report](https://github.com/sbt/sbt-license-report): generate
+  reports of licenses used by dependencies.
 
 #### Web and frontend development plugins
 
@@ -134,10 +203,17 @@ your plugin to the list.
   assets.
 - [sbt-gzip](https://github.com/sbt/sbt-gzip): gzip compressor for assets.
 - [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
+- [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin): build and
+  deploy JEE web applications.
+- [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs): use Scala.js
+  with any web server.
+- [sbt-scalatra](https://github.com/scalatra/sbt-scalatra): build and run
+  Scalatra apps.
 
 #### Database plugins
 
-...
+- [sbt-dynamodb](https://github.com/localytics/sbt-dynamodb): run a local
+  Amazon DynamoDB test instance from sbt.
 
 #### Framework-specific plugins
 
@@ -161,15 +237,36 @@ your plugin to the list.
   SQL.
 - [sbt-contraband](http://www.scala-sbt.org/contraband): generate pseudo-case
   classes from GraphQL schemas.
+- [sbt-scalaxb](https://github.com/eed3si9n/scalaxb): generate model classes
+  from XML schemas and WSDL.
+- [sbt-boilerplate](https://github.com/sbt/sbt-boilerplate): TupleX and FunctionX
+  boilerplate code generator.
+- [sbt-aspectj](https://github.com/sbt/sbt-aspectj): AspectJ weaving for sbt.
+- [sbt-antlr4](https://github.com/ihji/sbt-antlr4): run ANTLR v4 from sbt.
+- [sbt-partial-unification](https://github.com/fiadliel/sbt-partial-unification):
+  enable partial unification support in Scala (SI-2712).
 
 #### Static code analysis plugins
 
 - [sbt-taglist](https://github.com/johanandren/sbt-taglist): find tags within
   source files (such as TODO and FIXME).
+- [wartremover](https://github.com/wartremover/wartremover): flexible Scala
+  linting tool.
+- [scalastyle-sbt-plugin](https://github.com/scalastyle/scalastyle-sbt-plugin):
+  code style checking using Scalastyle.
+- [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat): static analysis
+  using Scapegoat.
+- [sbt-stats](https://github.com/orrsella/sbt-stats): generate source code
+  statistics (lines of code etc).
+- [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
+  style checking using Checkstyle.
 
 #### Code coverage plugins
 
-...
+- [sbt-scoverage](https://github.com/scoverage/sbt-scoverage): Scala code
+  coverage using Scoverage.
+- [sbt-jacoco](https://github.com/sbt/sbt-jacoco): Scala and Java code coverage
+  using JaCoCo.
 
 #### Create new project plugins
 
