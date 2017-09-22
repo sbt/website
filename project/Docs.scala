@@ -265,6 +265,10 @@ object Docs {
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+    gitRemoveFiles(repo, List(
+      repo / "asset" / "favicon.ico",
+      repo / "asset" / "stylesheet.css",
+    ), git, s)
 
     val mappings = for {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
