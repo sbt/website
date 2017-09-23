@@ -6,9 +6,10 @@ import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport._
 import com.typesafe.sbt.{ SbtGit, SbtSite, site => sbtsite }
 import scala.sys.process.Process
 import SbtGit.{ git, GitKeys }
-import SbtSite.SiteKeys
 import SiteMap.{ Entry, LastModified }
 import java.util.{ Date, GregorianCalendar }
+import com.typesafe.sbt.site.SitePlugin
+import SitePlugin.autoImport._
 
 object Docs {
   lazy val Redirect = config("redirect")
@@ -267,16 +268,16 @@ object Docs {
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
     gitRemoveFiles(repo,
                    List(
-                     repo / "asset" / "favicon.ico",
-                     repo / "asset" / "stylesheet.css",
+                     repo / "assets" / "favicon.ico",
+                     repo / "assets" / "stylesheet.css",
                    ),
                    git,
                    s)
 
-    val mappings = for {
-      (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
+    val ms = for {
+      (file, target) <- (mappings in makeSite).value if siteInclude(file)
     } yield (file, repo / target)
-    IO.copy(mappings)
+    IO.copy(ms)
 
     if (isGenerateSiteMap.value) {
       val (index, siteMaps) =
