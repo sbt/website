@@ -3,7 +3,7 @@ title: Get Involved
 ---
 
   [so]: https://stackoverflow.com/questions/tagged/sbt
-  [sub]: https://typesafe.com/how/subscription
+  [sub]: https://www.lightbend.com/subscription
   [ml]: https://groups.google.com/d/forum/sbt-dev
   [github]: https://github.com/sbt/sbt
   [twitter]: https://twitter.com/scala_sbt
