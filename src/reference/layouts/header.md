@@ -2,15 +2,15 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900,400italic,700italic" rel="stylesheet" type="text/css">
 <div class="container">
     <div class="logo">
-      <a href="../../index.html"><img src="files/sbt-logo-100x56.png" alt="sbt"></a>
+      <a href="../../index.html"><img src="files/sbt-logo.svg" alt="sbt"></a>
       <span class="versions"><select id="versions"></select></span>
     </div>
     <div class="nav">
       <a href="../../documentation.html">Documentation</a>
       <a href="../../download.html">Download</a>
       <a href="../../community.html">Get Involved</a>
-      <a id="source-code" href="https://github.com/sbt/sbt"><img src="files/github-logo-teal.png" alt="Source code"></a>
-      <a id="twitter" href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-teal.png" alt="sbt on Twitter"></a>
+      <a id="source-code" href="https://github.com/sbt/sbt"><img src="files/github-logo-teal.svg" alt="Source code" class="social"></a>
+      <a id="twitter" href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>
     </div>
     <script type="text/javascript" async>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
