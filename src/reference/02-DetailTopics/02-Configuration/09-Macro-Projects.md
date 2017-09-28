@@ -91,6 +91,12 @@ object Usage {
 
 This can be then be run at the console:
 
+```text
+$ sbt
+> macroSub/test:run
+scala.collection.immutable.List.apply[Int](1, 2, 3).reverse
+```
+
 Actual tests can be defined and run as usual with `macro/test`.
 
 The main project can use the macro in the same way that the tests do.
@@ -107,6 +113,12 @@ object Usage {
       println(s)
    }
 }
+```
+
+```text
+$ sbt
+> core/run
+scala.collection.immutable.List.apply[Int](6, 4, 5).sorted[Int](math.this.Ordering.Int)
 ```
 
 ### Common Interface
