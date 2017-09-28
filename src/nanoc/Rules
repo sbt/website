@@ -25,11 +25,17 @@ compile '*' do
     filter :erb
     filter :redcarpet
     layout item[:layout] || 'default'
-    filter :relativize_paths, :type => :html
+    # error layout pages can be served from anywhere so must have absolute paths
+    if (item[:layout] != 'error')
+      filter :relativize_paths, :type => :html
+    end
   else
     filter :erb
     layout item[:layout] || 'default'
-    filter :relativize_paths, :type => :html
+    # error layout pages can be served from anywhere so must have absolute paths
+    if (item[:layout] != 'error')
+      filter :relativize_paths, :type => :html
+    end
   end
 end
 
