@@ -2,7 +2,7 @@
 title: Documentation
 ---
 
-sbt 1.0
+sbt 1.x
 -------
 
 - [sbt documentation](1.x/docs/index.html) ([pdf](1.x/docs/sbt-reference.pdf))
