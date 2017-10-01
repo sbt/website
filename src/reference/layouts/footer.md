@@ -52,3 +52,4 @@
 </footer>
 <script src="/assets/versions.js"></script>
 <script src="/assets/set-versions.js"></script>
+<script src="/assets/warnOldDocs.js"></script>
