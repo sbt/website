@@ -220,6 +220,8 @@ your plugin to the list.
   <!-- 15 stars -->
 - [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
   <!-- 2 stars -->
+- [sbt-hepek](https://github.com/sake92/sbt-hepek): Render static websites directly from Scala code.
+  <!-- 5 stars -->
 
 #### Database plugins
 
