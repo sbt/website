@@ -89,10 +89,10 @@ object Usage {
 }
 ```
 
-This can be then be run at the console:
+This can be then run at the console:
 
-```text
-$ sbt
+```
+\$ sbt
 > macroSub/test:run
 scala.collection.immutable.List.apply[Int](1, 2, 3).reverse
 ```
@@ -115,8 +115,8 @@ object Usage {
 }
 ```
 
-```text
-$ sbt
+```
+\$ sbt
 > core/run
 scala.collection.immutable.List.apply[Int](6, 4, 5).sorted[Int](math.this.Ordering.Int)
 ```
