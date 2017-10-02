@@ -94,6 +94,10 @@ your plugin to the list.
   <!-- 36 stars -->
 - [sbt-osgi](https://github.com/sbt/sbt-osgi): create OSGi bundles.
   <!-- 32 stars -->
+- [sbt-github-release](https://github.com/ohnosequences/sbt-github-release): 
+  publish Github releases. <!-- 22 stars -->
+- [sbt-publish-more](https://github.com/laughedelic/sbt-publish-more):
+  publish artifacts to several repositories <!-- 1 star -->
 - [sbt-deploy](https://github.com/amanjpro/sbt-deploy-plugin): create
   deployable fat JARs. <!-- 1 star -->
 
