@@ -47,13 +47,7 @@ we often call it a *subproject* in this guide.
 For instance, in `build.sbt` you define
 the subproject located in the current directory like this:
 
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name := "Hello",
-    scalaVersion := "$example_scala_version$"
-  )
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
 
 Each subproject is configured by key-value pairs.
 
@@ -61,13 +55,7 @@ For example, one key is `name` and it maps to a string value, the name of
 your subproject.
 The key-value pairs are listed under the `.settings(...)` method as follows:
 
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name := "Hello",
-    scalaVersion := "$example_scala_version$"
-  )
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
 
 ### How build.sbt defines settings
 

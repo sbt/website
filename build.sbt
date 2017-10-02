@@ -5,7 +5,7 @@ lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
 
 lazy val root = (project in file("."))
-  .enablePlugins(NanocPlugin, PamfletPlugin)
+  .enablePlugins(NanocPlugin, LowTechSnippetPamfletPlugin)
   .settings(
     organization := "org.scala-sbt",
     name := "website",
@@ -34,5 +34,10 @@ lazy val root = (project in file("."))
         case x       => sys.error(s"Unexpected encoding $x")
       }
     },
+    scriptedLaunchOpts := {
+      scriptedLaunchOpts.value ++
+        Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false,
     isGenerateSiteMap := true
   )
