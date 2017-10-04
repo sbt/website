@@ -45,26 +45,14 @@ sbt.version=$app_version$
 
 例えば、カレントディレクトリにあるサブプロジェクトは `build.sbt` に以下のように定義できる：
 
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name := "Hello",
-    scalaVersion := "$example_scala_version$"
-  )
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
 
 それぞれのサブプロジェクトは、キーと値のペアによって詳細が設定される。
 
 例えば、`name` というキーがあるが、それはサブプロジェクト名という文字列の値に関連付けられる。
 キーと値のペア列は `.settings(...)` メソッド内に列挙される:
 
-```scala
-lazy val root = (project in file("."))
-  .settings(
-    name := "Hello",
-    scalaVersion := "$example_scala_version$"
-  )
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
 
 ### `build.sbt` はどのように settings を定義するか
 

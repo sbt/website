@@ -59,3 +59,23 @@ To push site, from sbt shell:
 ```
 
 Beware of https://github.com/sbt/sbt-ghpages/issues/25
+
+## Including code examples
+
+To include a validated code examples, create a scripted test under `src/sbt-test`,
+and in the markdown include as:
+
+```
+// This includes the entire file as Scala code snippet
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
+
+or
+
+// This includes snippet between a line containing #example another line with #example
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) { #example }
+
+or
+
+// This specifies syntax highlight
+@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) { #example type=text }
+```
