@@ -87,14 +87,14 @@ still be manually written out and run using `testOnly`.
 #### Other tasks
 
 Tasks that are available for main sources are generally available for
-test sources, but are prefixed with `test:` on the command line and are
-referenced in Scala code with `in Test`. These tasks include:
+test sources, but are prefixed with `Test /` on the command line and are
+referenced in Scala code with `Test /` as well. These tasks include:
 
--   `test:compile`
--   `test:console`
--   `test:consoleQuick`
--   `test:run`
--   `test:runMain`
+-   `Test / compile`
+-   `Test / console`
+-   `Test / consoleQuick`
+-   `Test / run`
+-   `Test / runMain`
 
 See [Running][Running] for details on these tasks.
 
@@ -105,7 +105,7 @@ tests for that file complete. This can be disabled by setting
 `logBuffered`:
 
 ```scala
-logBuffered in Test := false
+Test / logBuffered := false
 ```
 
 #### Test Reports
@@ -115,7 +115,7 @@ the build, located in the `target/test-reports` directory for a project.
 This can be disabled by disabling the `JUnitXmlReportPlugin`
 
 ```scala
-val myProject = (project in file(".")).disablePlugins(plugins.JUnitXmlReportPlugin)  
+val myProject = (project in file(".")).disablePlugins(plugins.JUnitXmlReportPlugin)
 ```
 
 ### Options
@@ -133,13 +133,13 @@ To specify test framework arguments as part of the build, add options
 constructed by `Tests.Argument`:
 
 ```scala
-testOptions in Test += Tests.Argument("-verbosity", "1")
+Test / testOptions += Tests.Argument("-verbosity", "1")
 ```
 
 To specify them for a specific test framework only:
 
 ```scala
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaCheck, "-verbosity", "1")
+Test / testOptions += Tests.Argument(TestFrameworks.ScalaCheck, "-verbosity", "1")
 ```
 
 #### Setup and Cleanup
@@ -158,13 +158,10 @@ framework classes.
 Examples:
 
 ```scala
-testOptions in Test += Tests.Setup( () => println("Setup") )
-
-testOptions in Test += Tests.Cleanup( () => println("Cleanup") )
-
-testOptions in Test += Tests.Setup( loader => ... )
-
-testOptions in Test += Tests.Cleanup( loader => ... )
+Test / testOptions += Tests.Setup( () => println("Setup") )
+Test / testOptions += Tests.Cleanup( () => println("Cleanup") )
+Test / testOptions += Tests.Setup( loader => ... )
+Test / testOptions += Tests.Cleanup( loader => ... )
 ```
 
 #### Disable Parallel Execution of Tests
@@ -174,7 +171,7 @@ Because each test is mapped to a task, tests are also run in parallel by default
 To make tests within a given project execute serially: :
 
 ```scala
-parallelExecution in Test := false
+Test / parallelExecution := false
 ```
 
 `Test` can be replaced with `IntegrationTest` to only execute
@@ -187,7 +184,7 @@ If you want to only run test classes whose name ends with "Test", use
 `Tests.Filter`:
 
 ```scala
-testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
+Test / testOptions := Seq(Tests.Filter(s => s.endsWith("Test")))
 ```
 
 #### Forking tests
@@ -195,7 +192,7 @@ testOptions in Test := Seq(Tests.Filter(s => s.endsWith("Test")))
 The setting:
 
 ```scala
-fork in Test := true
+Test / fork := true
 ```
 
 specifies that all tests will be executed in a single external JVM. See
@@ -229,7 +226,7 @@ In addition, forked tests can optionally be run in parallel within the
 forked JVM(s), using the following setting:
 
 ```scala
-testForkedParallel in Test := true
+Test / testForkedParallel := true
 ```
 
 <a name="additional-test-configurations"></a>
@@ -293,7 +290,7 @@ The standard testing tasks are available, but must be prefixed with
 `it:`. For example,
 
 ```
-> it:testOnly org.example.AnIntegrationTest
+> IntegrationTest / testOnly org.example.AnIntegrationTest
 ```
 
 Similarly the standard settings may be configured for the
@@ -302,7 +299,7 @@ Similarly the standard settings may be configured for the
 example, if test options are specified as:
 
 ```scala
-testOptions in Test += ...
+Test / testOptions += ...
 ```
 
 then these will be picked up by the `Test` configuration and in turn by
@@ -311,14 +308,14 @@ for integration tests by putting them in the `IntegrationTest`
 configuration:
 
 ```scala
-testOptions in IntegrationTest += ...
+IntegrationTest / testOptions += ...
 ```
 
 Or, use `:=` to overwrite any existing options, declaring these to be
 the definitive integration test options:
 
 ```scala
-testOptions in IntegrationTest := Seq(...)
+IntegrationTest / testOptions := Seq(...)
 ```
 
 #### Custom test configuration
@@ -368,13 +365,13 @@ The comments in the integration test section hold, except with
 `FunTest`:
 
 ```scala
-testOptions in FunTest += ...
+FunTest / testOptions += ...
 ```
 
 Test tasks are run by prefixing them with `fun:`
 
 ```
-> fun:test
+> FunTest / test
 ```
 
 #### Additional test configurations with shared sources
@@ -414,18 +411,18 @@ The key differences are:
     packaging tasks and settings.
 -   We filter the tests to be run for each configuration.
 
-To run standard unit tests, run `test` (or equivalently, `test:test`):
+To run standard unit tests, run `test` (or equivalently, `Test / test`):
 
 ```
 > test
 ```
 
-To run tests for the added configuration (here, `"fun"`), prefix it with
+To run tests for the added configuration (here, `"FunTest"`), prefix it with
 the configuration name as before:
 
 ```
-> fun:test
-> fun:testOnly org.example.AFunTest
+> FunTest / test
+> FunTest / testOnly org.example.AFunTest
 ```
 
 ##### Application to parallel execution

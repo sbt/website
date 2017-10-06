@@ -36,6 +36,59 @@ object PluginCompat {
 
 Now `subMissingOk(...)` function can be implemented in sbt version specific way.
 
+### Migrating to scope path notation
+
+In sbt 0.13, the same scoped keys were written in two different ways depending on whether you are
+on the sbt shell or in `build.sbt`.
+
+* sbt 0.13 shell: `<project-id>/config:intask::key`
+* sbt 0.13 `build.sbt`: `key in (<project-id>, Config, intask)`
+
+Starting sbt 1.1.0, the notation for the keys are unified in both the shell and the build definitions to the **scope path notation** as follows:
+
+* `<project-id> / Config / intask / key`
+
+Here are some examples:
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    name := "hello",
+    version in ThisBuild := "1.0.0-SNAPSHOT",
+    scalacOptions in Compile += "-Xlint",
+    scalacOptions in (Compile, console) --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
+    fork in Test := true
+  )
+```
+
+They are now written as:
+
+```scala
+lazy val root = (project in file("."))
+  .settings(
+    name := "hello",
+    ThisBuild / version := "1.0.0-SNAPSHOT",
+    Compile / scalacOptions += "-Xlint",
+    Compile / console / scalacOptions --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
+    Test / fork := true
+  )
+```
+
+The scope path notation works in the sbt shell as well.
+
+```
+sbt:hello> name
+[info] hello
+sbt:hello> ThisBuild / version
+[info] 1.0.0-SNAPSHOT
+sbt:hello> show Compile / scalacOptions
+[info] * -Xlint
+sbt:hello> show Compile / console / scalacOptions
+[info] * -Xlint
+sbt:hello> Test / fork
+[info] true
+```
+
 ### Migrating from sbt 0.12 style
 
 Before sbt 0.13 (sbt 0.9 to 0.12) it was very common to see in builds the usage of three aspects of sbt:
@@ -147,16 +200,16 @@ Where you previous would define things as:
 sourceGenerators in Compile <+= buildInfo
 ```
 
-for sbt 0.13.15+, you define them as:
+for sbt 1, you define them as:
 
 ```scala
-sourceGenerators in Compile += buildInfo
+Compile / sourceGenerators += buildInfo
 ```
 
 or in general,
 
 ```scala
-sourceGenerators in Compile += Def.task { List(file1, file2) }
+Compile / sourceGenerators += Def.task { List(file1, file2) }
 ```
 
 #### Migrating with `InputKey`

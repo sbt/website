@@ -66,7 +66,7 @@ directory of the build, irrespective of the project the setting is
 defined in:
 
 ```scala
-historyPath := Some( (baseDirectory in ThisBuild).value / ".history"),
+historyPath := Some( (ThisBuild / baseDirectory).value / ".history"),
 ```
 
 ### Path Finders

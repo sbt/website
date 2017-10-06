@@ -48,10 +48,10 @@ by configuration:
 
 ```scala
 // Java then Scala for main sources
-compileOrder in Compile := CompileOrder.JavaThenScala
+Compile / compileOrder := CompileOrder.JavaThenScala
 
 // allow circular dependencies for test sources
-compileOrder in Test := CompileOrder.Mixed
+Test / compileOrder := CompileOrder.Mixed
 ```
 
 Note that in an incremental compilation setting, it is not practical to
