@@ -100,6 +100,8 @@ your plugin to the list.
   publish artifacts to several repositories <!-- 1 star -->
 - [sbt-deploy](https://github.com/amanjpro/sbt-deploy-plugin): create
   deployable fat JARs. <!-- 1 star -->
+- [sbt-release-fossil](https://chiselapp.com/user/twenstar/repository/sbt-release-fossil):
+  enhances [sbt-release](https://github.com/sbt/sbt-release) to support [Fossil](https://fossil-scm.org) repositories
 
 #### Deployment integration plugins
 
