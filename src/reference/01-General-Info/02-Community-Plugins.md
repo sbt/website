@@ -63,6 +63,8 @@ your plugin to the list.
   class diagrams from Scala source code. <!-- 54 stars -->
 - [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
   generate Scaladoc `apiMappings` for common Scala libraries. <!-- 49 stars -->
+- [literator](https://github.com/laughedelic/literator):
+  generate literate-style markdown docs from your sources. <!-- 33 stars -->
 
 #### One jar plugins
 
