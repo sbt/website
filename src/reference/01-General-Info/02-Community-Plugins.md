@@ -302,3 +302,7 @@ your plugin to the list.
 
 - [sbt-houserules](https://github.com/sbt/sbt-houserules): houserules settings
   for sbt modules. <!-- 12 stars -->
+
+#### Verification plugins
+
+- [sbt-stainless](https://github.com/NiceKingWei/sbt-stainless): verify Scala or Dotty code using stainless. <!-- 1 star -->
