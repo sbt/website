@@ -111,6 +111,8 @@ your plugin to the list.
   directly to Heroku. <!-- 86 stars -->
 - [sbt-docker-compose](https://github.com/Tapad/sbt-docker-compose):
   launch Docker images using docker compose. <!-- 86 stars -->
+- [sbt-appengine](https://github.com/sbt/sbt-appengine)
+  deploy your webapp to Google App Engine. <!-- 65 stars -->
 
 #### Utility and system plugins
 
