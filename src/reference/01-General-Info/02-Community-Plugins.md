@@ -398,6 +398,8 @@ your plugin to the list.
     <https://gitlab.com/kpmeen/sbt-gitlab>
 -   sbt-tmpfs (SBT plugin that automatically "tmpfsifies" directories to speed up development.)
     <https://github.com/cuzfrog/sbt-tmpfs>
+-   sbt-check (compile up to, and including, the typer phase):
+    <https://github.com/jeffreyolchovy/sbt-check>
 
 #### Database plugins
 
