@@ -6,7 +6,7 @@ Update Report
 -------------
 
 `update` and related tasks produce a value of type
-[sbt.UpdateReport](../api/sbt/UpdateReport.html) This data
+[sbt.UpdateReport](../api/sbt/librarymanagement/UpdateReport.html) This data
 structure provides information about the resolved configurations,
 modules, and artifacts. At the top level, `UpdateReport` provides
 reports of type `ConfigurationReport` for each resolved configuration. A
@@ -24,10 +24,10 @@ A typical use of `UpdateReport` is to retrieve a list of files matching
 a filter. A conversion of type `UpdateReport => RichUpdateReport`
 implicitly provides these methods for `UpdateReport`. The filters are
 defined by the
-[DependencyFilter](../api/sbt/DependencyFilter.html),
-[ConfigurationFilter](../api/sbt/ConfigurationFilter.html),
-[ModuleFilter](../api/sbt/ModuleFilter.html), and
-[ArtifactFilter](../api/sbt/ArtifactFilter.html) types. Using
+[DependencyFilter](../api/sbt/librarymanagement/DependencyFilter.html),
+[ConfigurationFilter](../api/sbt/librarymanagement/ConfigurationFilter.html),
+[ModuleFilter](../api/sbt/librarymanagement/ModuleFilter.html), and
+[ArtifactFilter](../api/sbt/librarymanagement/ArtifactFilter.html) types. Using
 these filter types, you can filter by the configuration name, the module
 organization, name, or revision, and the artifact name, type, extension,
 or classifier.

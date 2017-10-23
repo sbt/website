@@ -468,7 +468,7 @@ task that provides an instance of
 [TaskStreams](../api/sbt/std/TaskStreams.html) for the defining
 task. This type provides access to named binary and text streams, named
 loggers, and a default logger. The default
-[Logger](../api/sbt/Logger.html), which is the most commonly used
+[Logger](../api/sbt/util/Logger.html), which is the most commonly used
 aspect, is obtained by the `log` method:
 
 ```scala

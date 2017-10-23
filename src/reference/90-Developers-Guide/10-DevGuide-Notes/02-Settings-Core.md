@@ -2,7 +2,7 @@
 out: Settings-Core.html
 ---
 
-  [Sdocs-Global]: ../api/sbt/Global\$.html
+  [Sdocs-Zero]: ../api/sbt/Zero\$.html
   [Sdocs-This]: ../api/sbt/This\$.html
   [Sdocs-Select]: ../api/sbt/Select.html
 
@@ -90,7 +90,7 @@ object SettingsExample extends Init[Scope]
 This part shows how to use the system we just defined. The end result is
 a `Settings[Scope]` value. This type is basically a mapping
 `Scope -> AttributeKey[T] -> Option[T]`. See the
-[Settings API documentation](../api/sbt/Settings.html) for
+[Settings API documentation](../api/sbt/internal/util/Settings.html) for
 details.
 
 `SettingsUsage.scala`:
@@ -171,12 +171,12 @@ sbt defines a more complicated scope than the one shown here for the
 standard usage of settings in a build. This scope has four components:
 the project axis, the configuration axis, the task axis, and the extra
 axis. Each component may be 
-[Global][Sdocs-Global] (no specific value),
+[Zero][Sdocs-Zero] (no specific value),
 [This][Sdocs-This]
 (current context), or
 [Select][Sdocs-Select] (containing a specific value). sbt
 resolves `This_` to either
-[Global][Sdocs-Global] or
+[Zero][Sdocs-Zero] or
 [Select][Sdocs-Select]
 depending on the context.
 
@@ -185,7 +185,7 @@ For example, in a project, a
 [Select][Sdocs-Select] referring to the defining project. All other axes that are
 [This][Sdocs-This] are
 translated to
-[Global][Sdocs-Global]. Functions like `inConfig` and `inTask` transform
+[Zero][Sdocs-Zero]. Functions like `inConfig` and `inTask` transform
 `This` into a
 [Select][Sdocs-Select] for a specific value. For example,
 `inConfig(Compile)(someSettings)` translates the configuration axis for

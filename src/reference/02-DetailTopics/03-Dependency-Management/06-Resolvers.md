@@ -80,32 +80,32 @@ configured identically except for the name of the factory. Use
     <td>Filesystem</td>
     <td><tt>Resolver.file</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
-    <td><a href="../api/sbt/Resolver\$\$file\$.html">filesystem factory</a></td>
-    <td><a href="../api/sbt/FileRepository.html">FileRepository API</a></td>
+    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$file\$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/FileRepository.html">FileRepository API</a></td>
   </tr>
 
   <tr>
     <td>SFTP</td>
     <td><tt>Resolver.sftp</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
-    <td><a href="../api/sbt/Resolver\$\$Define\$.html">sftp factory</a></td>
-    <td><a href="../api/sbt/SftpRepository.html">SftpRepository API</a></td>
+    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$sftp\$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/SftpRepository.html">SftpRepository API</a></td>
   </tr>
 
   <tr>
     <td>SSH</td>
     <td><tt>Resolver.ssh</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
-    <td><a href="../api/sbt/Resolver\$\$Define\$.html">ssh factory</a></td>
-    <td><a href="../api/sbt/SshRepository.html">SshRepository API</a></td>
+    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$ssh\$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/SshRepository.html">SshRepository API</a></td>
   </tr>
 
   <tr>
     <td>URL</td>
     <td><tt>Resolver.url</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
-    <td><a href="../api/sbt/Resolver\$\$url\$.html">url factory</a></td>
-    <td><a href="../api/sbt/URLRepository.html">URLRepository API</a></td>
+    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$url\$.html">url factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/URLRepository.html">URLRepository API</a></td>
   </tr>
 </table>
 
@@ -216,7 +216,7 @@ resolvers += Resolver.url("my-test-repo", url)( Patterns("[organisation]/[module
 You can specify multiple patterns or patterns for the metadata and
 artifacts separately. You can also specify whether the repository should
 be Maven compatible (as defined by Ivy). See the
-[patterns API](../api/sbt/Patterns\$.html) for the methods to use.
+[patterns API](../api/sbt/librarymanagement/Patterns\$.html) for the methods to use.
 
 For filesystem and URL repositories, you can specify absolute patterns
 by omitting the base URL, passing an empty `Patterns` instance, and

@@ -94,7 +94,7 @@ write code based on the HTML library, perhaps).
 
 sbt has some utility libraries and convenience functions, in particular
 you can often use the convenient APIs in
-[IO](../api/index.html#sbt.IO\$) to manipulate files and directories.
+[IO](../api/sbt/io/IO\$.html) to manipulate files and directories.
 
 ### Execution semantics of tasks
 
