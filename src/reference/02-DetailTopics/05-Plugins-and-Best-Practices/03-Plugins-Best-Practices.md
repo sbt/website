@@ -85,7 +85,7 @@ long-standing issues with plugins.
 
 ### Reuse existing keys
 
-sbt has a number of [predefined keys](../api/sbt/Keys%24.html).
+sbt has a number of [predefined keys](../api/sbt/Keys\$.html).
 Where possible, reuse them in your plugin. For instance, don't define:
 
 ```scala
@@ -120,7 +120,7 @@ obfuscateStylesheet := file("something.txt")
 
 ### Provide core feature in a plain old Scala object
 
-The core feature of sbt's `package` task, for example, is implemented in [sbt.Package](../api/#sbt.Package%24),
+The core feature of sbt's `package` task, for example, is implemented in [sbt.Package](../api/sbt/Package\$.html),
 which can be called via its `apply` method.
 This allows greater reuse of the feature from other plugins such as sbt-assembly,
 which in return implements `sbtassembly.Assembly` object to implement its core feature.

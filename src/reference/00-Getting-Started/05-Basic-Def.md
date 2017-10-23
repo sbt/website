@@ -87,9 +87,9 @@ A setting expression consists of three parts:
 
 On the left-hand side, `name`, `version`, and `scalaVersion` are *keys*.
 A key is an instance of
-[`SettingKey[T]`](../api/index.html#sbt.SettingKey),
-[`TaskKey[T]`](../api/index.html#sbt.TaskKey), or
-[`InputKey[T]`](../api/index.html#sbt.InputKey) where `T` is the
+[`SettingKey[T]`](../api/sbt/SettingKey.html),
+[`TaskKey[T]`](../api/sbt/TaskKey.html), or
+[`InputKey[T]`](../api/sbt/InputKey.html) where `T` is the
 expected value type. The kinds of key are explained below.
 
 Because key `name` is typed to `SettingKey[String]`,

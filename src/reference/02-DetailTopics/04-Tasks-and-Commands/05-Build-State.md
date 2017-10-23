@@ -128,7 +128,7 @@ val nameOpt: Option[String] = name in currentRef get structure.data
 val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
 ```
 
-[BuildStructure](../api/sbt/Load\$\$BuildStructure.html) contains
+[BuildStructure](../api/sbt/internal/BuildStructure.html) contains
 information about build and project relationships. Key members are:
 
 ```scala
@@ -137,7 +137,7 @@ root: URI
 ```
 
 A `URI` identifies a build and `root` identifies the initial build
-loaded. [LoadedBuildUnit](../api/sbt/Load\$\$LoadedBuildUnit.html)
+loaded. [LoadedBuildUnit](../api/sbt/internal/LoadedBuildUnit.html)
 provides information about a single build. The key members of
 `LoadedBuildUnit` are:
 

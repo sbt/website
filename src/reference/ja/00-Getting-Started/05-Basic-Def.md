@@ -83,9 +83,9 @@ build.sbt DSL を詳しくみてみよう:<br>
 
 左辺値の `name`、`version`、および `scalaVersion` は**キー**である。
 キーは
-[`SettingKey[T]`](../api/index.html#sbt.SettingKey)、
-[`TaskKey[T]`](../api/index.html#sbt.TaskKey)、もしくは
-[`InputKey[T]`]((../api/index.html#sbt.InputKey)) のインスタンスで、
+[`SettingKey[T]`](../api/sbt/SettingKey.html)、
+[`TaskKey[T]`](../api/sbt/TaskKey.html)、もしくは
+[`InputKey[T]`]((../api/sbt/InputKey.html)) のインスタンスで、
 `T` はその値の型である。キーの種類に関しては後述する。
 
 `name` キーは `SettingKey[String]` に型付けされているため、
