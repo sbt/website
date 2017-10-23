@@ -114,6 +114,9 @@ your plugin to the list.
   directly to Heroku. <!-- 86 stars -->
 - [sbt-docker-compose](https://github.com/Tapad/sbt-docker-compose):
   launch Docker images using docker compose. <!-- 86 stars -->
+- [sbt-marathon](https://github.com/Tapad/sbt-marathon): deploy applications
+  on Apache Mesos using the [Marathon](https://mesosphere.github.io/marathon)
+  framework. <!-- 19 stars -->
 
 #### Utility and system plugins
 
