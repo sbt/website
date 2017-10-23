@@ -203,6 +203,8 @@ your plugin to the list.
     <https://github.com/TailrecIO/sbt-aws-fun>
 -   sbt-aws-serverless (Deploy code to AWS Serverless Architecture):
     <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
+-   sbt-marathon (Deploy applications on Apache Mesos using the Marathon framework):
+    <https://github.com/Tapad/sbt-marathon>
 
 #### Monitoring integration plugins
 
