@@ -98,6 +98,9 @@ your plugin to the list.
   <!-- 32 stars -->
 - [sbt-github-release](https://github.com/ohnosequences/sbt-github-release): 
   publish Github releases. <!-- 22 stars -->
+- [sbt-hadoop](https://github.com/Tapad/sbt-hadoop-oss): publish artifacts
+  to the [Hadoop](https://hadoop.apache.org) Distributed File System (HDFS).
+  <!-- 6 stars -->
 - [sbt-publish-more](https://github.com/laughedelic/sbt-publish-more):
   publish artifacts to several repositories <!-- 1 star -->
 - [sbt-deploy](https://github.com/amanjpro/sbt-deploy-plugin): create
