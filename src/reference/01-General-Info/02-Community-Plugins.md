@@ -178,6 +178,8 @@ your plugin to the list.
     <https://github.com/ngocdaothanh/xitrum-package>
 -   sbt-dist-zip (Create a distributable zip file):
     <https://github.com/timt/sbt-dist-zip>
+-   sbt-hadoop (Publish artifacts to the Hadoop Distributed File System, HDFS):
+    <https://github.com/Tapad/sbt-hadoop-oss>
 
 #### Deployment integration plugins
 
