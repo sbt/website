@@ -178,6 +178,8 @@ your plugin to the list.
     <https://github.com/ngocdaothanh/xitrum-package>
 -   sbt-dist-zip (Create a distributable zip file):
     <https://github.com/timt/sbt-dist-zip>
+-   sbt-hadoop (Publish artifacts to the Hadoop Distributed File System, HDFS):
+    <https://github.com/Tapad/sbt-hadoop-oss>
 
 #### Deployment integration plugins
 
@@ -201,6 +203,8 @@ your plugin to the list.
     <https://github.com/TailrecIO/sbt-aws-fun>
 -   sbt-aws-serverless (Deploy code to AWS Serverless Architecture):
     <https://github.com/yoshiyoshifujii/sbt-aws-serverless>
+-   sbt-marathon (Deploy applications on Apache Mesos using the Marathon framework):
+    <https://github.com/Tapad/sbt-marathon>
 
 #### Monitoring integration plugins
 
@@ -394,6 +398,8 @@ your plugin to the list.
     <https://gitlab.com/kpmeen/sbt-gitlab>
 -   sbt-tmpfs (SBT plugin that automatically "tmpfsifies" directories to speed up development.)
     <https://github.com/cuzfrog/sbt-tmpfs>
+-   sbt-check (compile up to, and including, the typer phase):
+    <https://github.com/jeffreyolchovy/sbt-check>
 
 #### Database plugins
 
