@@ -67,7 +67,7 @@ lazy val library = (project in file("library"))
 
 有关任务实现最困难的部分往往不是 sbt 专用；任务只是 Scala 代码。困难的部分可能是写你的任务体，即做什么，或者说你正在试图做的。例如，你要格式化 HTML，在这种情况下，你可能需要使用一个 HTML 库（也许你将[为构建定义添加一个库的依赖][Using-Plugins]来编写基于 HTML 库代码）。
 
-sbt 具有一些实用工具库和方便的函数，特别是可以经常使用 API 中的 [IO](../../api/index.html#sbt.IO\$) 来操作文件和目录。
+sbt 具有一些实用工具库和方便的函数，特别是可以经常使用 API 中的 [IO](../../api/sbt/io/IO\$.html) 来操作文件和目录。
 
 ### 任务的执行语义
 

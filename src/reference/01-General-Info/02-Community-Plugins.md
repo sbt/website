@@ -98,6 +98,9 @@ your plugin to the list.
   <!-- 32 stars -->
 - [sbt-github-release](https://github.com/ohnosequences/sbt-github-release): 
   publish Github releases. <!-- 22 stars -->
+- [sbt-hadoop](https://github.com/Tapad/sbt-hadoop-oss): publish artifacts
+  to the [Hadoop](https://hadoop.apache.org) Distributed File System (HDFS).
+  <!-- 6 stars -->
 - [sbt-publish-more](https://github.com/laughedelic/sbt-publish-more):
   publish artifacts to several repositories <!-- 1 star -->
 - [sbt-deploy](https://github.com/amanjpro/sbt-deploy-plugin): create
@@ -113,6 +116,9 @@ your plugin to the list.
   launch Docker images using docker compose. <!-- 86 stars -->
 - [sbt-appengine](https://github.com/sbt/sbt-appengine)
   deploy your webapp to Google App Engine. <!-- 65 stars -->
+- [sbt-marathon](https://github.com/Tapad/sbt-marathon): deploy applications
+  on Apache Mesos using the [Marathon](https://mesosphere.github.io/marathon)
+  framework. <!-- 19 stars -->
 
 #### Utility and system plugins
 
@@ -153,6 +159,8 @@ your plugin to the list.
   projects. <!-- 13 stars -->
 - [sbt-jshell](https://github.com/xuwei-k/sbt-jshell): Java REPL for sbt.
   <!-- 10 stars -->
+- [sbt-check](https://github.com/jeffreyolchovy/sbt-check): compile up to,
+  and including, the typer phase. <!-- 10 stars -->
 - [sbt-tmpfs](https://github.com/cuzfrog/sbt-tmpfs): utilize tmpfs to speed
   up builds. <!-- 4 stars -->
 - [sbt-sh](https://github.com/melezov/sbt-sh): run shell commands from sbt.

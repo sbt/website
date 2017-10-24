@@ -10,10 +10,10 @@ base type used is
 [java.io.File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html),
 but several methods are augmented through implicits:
 
--   [RichFile](../api/sbt/RichFile.html) adds methods to File
--   [PathFinder](../api/sbt/PathFinder.html) adds methods to File
+-   [RichFile](../api/sbt/io/RichFile.html) adds methods to File
+-   [PathFinder](../api/sbt/io/PathFinder.html) adds methods to File
     and Seq[File]
--   [Path](../api/sbt/Path\$.html) and [IO](../api/sbt/IO\$.html)
+-   [Path](../api/sbt/io/Path\$.html) and [IO](../api/sbt/io/IO\$.html)
     provide general methods related to files and I/O.
 
 ### Constructing a File

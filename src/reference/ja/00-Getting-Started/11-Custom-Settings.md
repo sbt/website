@@ -11,7 +11,7 @@ out: Custom-Settings.html
   [Tasks]: ../../docs/Tasks.html
   [Keys]: ../../sxr/sbt/Keys.scala.html
   [Defaults]: ../../sxr/sbt/Defaults.scala.html
-  [Scaladocs-IO]: ../api/index.html#sbt.IO\$
+  [Scaladocs-IO]: ../api/sbt/io/IO\$.html
 
 カスタムセッティングとタスク
 ------------------------

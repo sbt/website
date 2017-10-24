@@ -52,8 +52,8 @@ object Demo extends Build {
 
 Relevant API documentation for custom resolvers:
 
--   [ResolveInfo](../api/index.html#sbt.BuildLoader\$\$ResolveInfo)
--   [BuildLoader](../api/sbt/BuildLoader\$.html)
+-   [ResolveInfo](../api/sbt/internal/BuildLoader\$\$ResolveInfo.html)
+-   [BuildLoader](../api/sbt/internal/BuildLoader\$.html)
 
 #### Full Example
 
@@ -139,9 +139,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom builders:
 
--   [BuildInfo](../api/sbt/BuildLoader\$\$BuildInfo.html)
--   [BuildLoader](../api/sbt/BuildLoader\$.html)
--   [BuildUnit](../api/index.html#sbt.Load\$\$BuildUnit)
+-   [BuildInfo](../api/sbt/internal/BuildLoader\$\$BuildInfo.html)
+-   [BuildLoader](../api/sbt/internal/BuildLoader\$.html)
+-   [BuildUnit](../api/sbt/internal/BuildUnit.html)
 
 #### Example
 
@@ -216,9 +216,9 @@ object Demo extends Build {
 
 Relevant API documentation for custom transformers:
 
--   [TransformInfo](../api/index.html#sbt.BuildLoader\$\$TransformInfo)
--   [BuildLoader](../api/sbt/BuildLoader\$.html)
--   [BuildUnit](../api/index.html#sbt.Load\$\$BuildUnit)
+-   [TransformInfo](../api/sbt/internal/BuildLoader\$\$TransformInfo.html)
+-   [BuildLoader](../api/sbt/internal/BuildLoader\$.html)
+-   [BuildUnit](../api/sbt/internal/BuildUnit.html)
 
 ##### Manipulating Project Dependencies in Settings
 
@@ -238,7 +238,7 @@ Build or referenced as the argument to `Project.aggregate` or
 ### The BuildDependencies type
 
 The type of the `buildDependencies` setting is
-[BuildDependencies](../api/sbt/BuildDependencies.html).
+[BuildDependencies](../api/sbt/internal/BuildDependencies.html).
 `BuildDependencies` provides mappings from a project to its aggregate or
 classpath dependencies. For classpath dependencies, a dependency has
 type `ClasspathDep[ProjectRef]`, which combines a `ProjectRef` with a

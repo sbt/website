@@ -17,7 +17,7 @@ In sbt 0.10 and later, classpaths now include the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
 settings and tasks typically provide a value of type `Classpath`. This
 is an alias for `Seq[Attributed[File]]`.
-[Attributed](../api/sbt/Attributed.html) is a type that associates
+[Attributed](../api/sbt/internal/util/Attributed.html) is a type that associates
 a heterogeneous map with each classpath entry. Currently, this allows
 sbt to associate the `Analysis` resulting from compilation with the
 corresponding classpath entry and for managed entries, the `ModuleID`
