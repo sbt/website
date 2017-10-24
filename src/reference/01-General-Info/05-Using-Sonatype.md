@@ -211,7 +211,7 @@ publishArtifact in Test := false
 > *Note:* sbt-sonatype is a third-party plugin meaning it is not covered by Lightbend subscription.
 
 To simplify the usage of the Sonatype's Nexus, add the following line to 
-`build.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
+`project/plugins.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
 
 ```
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
