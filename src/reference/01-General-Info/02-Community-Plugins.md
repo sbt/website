@@ -240,6 +240,7 @@ your plugin to the list.
   <!-- 2 stars -->
 - [sbt-hepek](https://github.com/sake92/sbt-hepek): Render static websites directly from Scala code.
   <!-- 5 stars -->
+- [sbt-puresass](https://chiselapp.com/user/twenstar/repository/sbt-puresass): [sbt-web](https://github.com/sbt/sbt-web) plugin for Sass styles compilation.
 
 #### Database plugins
 
