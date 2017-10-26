@@ -20,7 +20,7 @@ object Docs {
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "1.x"
-  lazy val targetSbtFullVersion = "1.0.0-RC2"
+  lazy val targetSbtFullVersion = "1.0.2"
   lazy val siteEmail = settingKey[String]("")
 
   val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
@@ -240,7 +240,6 @@ object Docs {
   // This task is responsible for updating the gh-pages branch on some temp dir.
   // On the branch there are files that was generated in some other ways such as:
   // - Scaladoc API doc
-  // - SXR hyperlinked source
   // - older documentation
   //
   // This task's job is to call "git rm" on files and directories that this project owns
@@ -248,7 +247,6 @@ object Docs {
   val syncLocalImpl = Def.task {
     // sync the generated site
     val repo = ghpagesUpdatedRepository.value
-    val fullVersioned = repo / targetSbtFullVersion
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value
@@ -256,13 +254,10 @@ object Docs {
     gitConfig(repo, siteEmail.value, git, s.log)
 
     // remove symlinks
-    // uncomment after sbt 1.0
-    // val apiLink = versioned / "api"
-    // val sxrLink = versioned / "sxr"
-    // val releaseLink = repo / "release"
-    // if (apiLink.exists) apiLink.delete
-    // if (sxrLink.exists) sxrLink.delete
-    // if (releaseLink.exists) releaseLink.delete
+    val apiLink = versioned / "api"
+    val releaseLink = repo / "release"
+    if (apiLink.exists) apiLink.delete
+    if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
@@ -286,11 +281,10 @@ object Docs {
       s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
     }
 
-    // symlink API and SXR
-    // uncomment after sbt 1.0
-    // symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
-    // symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
-    // symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
+    // symlink API
+    symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
+    symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
+
     repo
   }
 
