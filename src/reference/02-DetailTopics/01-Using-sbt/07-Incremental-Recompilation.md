@@ -660,7 +660,7 @@ curl -O https://java-diff-utils.googlecode.com/files/diffutils-1.2.1.jar
 sbt -Dsbt.extraClasspath=diffutils-1.2.1.jar
 [info] Loading project definition from /Users/grek/tmp/sbt-013/project
 [info] Set current project to sbt-013 (in build file:/Users/grek/tmp/sbt-013/)
-> set incOptions := incOptions.value.copy(apiDebug = true)
+> set incOptions := incOptions.value.withApiDebug(true)
 [info] Defining *:incOptions
 [info] The new value will be used by compile:incCompileSetup, test:incCompileSetup
 [info] Reapplying settings...
