@@ -59,7 +59,7 @@ To modify the type of the main artifact, for example:
 ```scala
 artifact in (Compile, packageBin) := {
   val previous: Artifact = (artifact in (Compile, packageBin)).value
-  previous.copy(`type` = "bundle")
+  previous.withType("bundle")
 }
 ```
 
@@ -170,7 +170,7 @@ publishArtifact in (Compile, packageBin) := false
 // create an Artifact for publishing the .war file 
 artifact in (Compile, packageWar) := {
   val previous: Artifact = (artifact in (Compile, packageWar)).value
-  previous.copy(`type` = "war", extension = "war") 
+  previous.withType("war").withExtension("war")
 } 
 
 // add the .war file to what gets published 
