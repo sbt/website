@@ -11,7 +11,7 @@ lazy val core = project.in(file("./core"))
 lazy val tools = project.in(file("./tools"))
 lazy val client = project.in(file("./client"))
 
-lazy val myTestTask = TaskKey[Unit]("my-test-task")
+lazy val myTestTask = taskKey[Unit]("my test task")
 
 myTestTask <<= Seq(
   test in (core, Test)
