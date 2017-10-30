@@ -90,7 +90,7 @@ libraryDependencies += groupID % artifactID % revision % configuration
 `libraryDependencies` は [Keys] で以下のように定義されている:
 
 ```scala
-val libraryDependencies = SettingKey[Seq[ModuleID]]("library-dependencies", "Declares managed dependencies.")
+val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependencies.")
 ```
 
 `%` メソッドは、文字列から `ModuleID` オブジェクトを作るので、君はその `ModuleID` を `libraryDependencies` に追加するだけでいい。
