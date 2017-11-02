@@ -6,10 +6,11 @@ $(document).ready(function() {
    var snapshotPath = 'snapshot/';
    var docsPath = "docs/";
 
+   // the selected version is in the pathname of the current url
+   var selected = document.location.pathname.split('/')[1];
+
    // get the version drop-down
    var select = $("#versions");
-   // the currently selected value is the current version
-   var selected = select.val();
    // clear the options, which should only include the current version
    select.html('');
 
