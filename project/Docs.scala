@@ -265,6 +265,8 @@ object Docs {
                    List(
                      repo / "assets" / "favicon.ico",
                      repo / "assets" / "stylesheet.css",
+                     repo / "assets" / "set-versions.js",
+                     repo / "assets" / "versions.js",
                    ),
                    git,
                    s)
