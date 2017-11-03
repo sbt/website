@@ -256,8 +256,8 @@ sbt シェルで試すとこうなるはずだ:
 [info] * -deprecation
 [info] * -unchecked
 [success] Total time: 0 s, completed Jan 2, 2017 11:44:44 PM
-> ++2.11.8
-[info] Setting version to 2.11.8
+> ++2.11.8!
+[info] Forcing Scala version to 2.11.8 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/xxx/)
 > show scalacOptions
