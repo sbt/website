@@ -17,7 +17,7 @@ object Docs {
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "0.13"
-  lazy val targetSbtFullVersion = "0.13.5"
+  lazy val targetSbtFullVersion = "0.13.15"
 
   val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
   lazy val sbtSiteBase = uri("http://www.scala-sbt.org/")
@@ -162,7 +162,6 @@ object Docs {
   val syncLocalImpl = Def.task {
     // sync the generated site
     val repo = ghkeys.updatedRepository.value
-    val fullVersioned = repo / targetSbtFullVersion
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value
@@ -170,22 +169,20 @@ object Docs {
     // remove symlinks
     val apiLink = versioned / "api"
     val sxrLink = versioned / "sxr"
-    val releaseLink = repo / "release"
     if (apiLink.exists) apiLink.delete
     if (sxrLink.exists) sxrLink.delete
-    if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-    
+
     // landing pages are now handled by 1.x branch
     // gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
-    
+
     val mappings =  for {
       (file, target) <- SiteKeys.siteMappings.value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(mappings)
 
-   if (isGenerateSiteMap.value) {
+    if (isGenerateSiteMap.value) {
       val (index, siteMaps) = SiteMap.generate(repo, sbtSiteBase, gzip=true, siteEntry, lastModified, s.log)
       s.log.info(s"Generated site map index: $index")
       s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
@@ -194,7 +191,6 @@ object Docs {
     // symlink API and SXR
     symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
     symlink(s"../$targetSbtFullVersion/sxr/", sxrLink, s.log)
-    symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     repo
   }
 
@@ -210,11 +206,11 @@ object Docs {
   val OneStar = """1\.\d+\..*""".r
   val Zero13Star = """0\.13\..*""".r
   val Zero12Star = """0\.12\..*""".r
-  val Old077 = """0\.7\.7/.*""".r 
+  val Old077 = """0\.7\.7/.*""".r
   val ManualRedirects = """[^/]+\.html""".r
   val Snapshot = """(.+-SNAPSHOT|snapshot)/.+/.*""".r
 
-  def siteEntry(file: File, relPath: String): Option[Entry] = {    
+  def siteEntry(file: File, relPath: String): Option[Entry] = {
     // highest priority is given to the landing pages.
     // X/docs/ are higher priority than X/(api|sxr)/
     // release/ is slighty higher priority than <releaseVersion>/
