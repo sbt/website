@@ -60,6 +60,13 @@ To push site, from sbt shell:
 
 Beware of https://github.com/sbt/sbt-ghpages/issues/25
 
+## Releasing new sbt
+
+- Update `project/build.properties`
+- Update `project/Docs.scala`
+- Update `src/nanoc/nanoc.yaml`
+- Update `src/reference/template.properties`
+
 ## Including code examples
 
 To include a validated code examples, create a scripted test under `src/sbt-test`,
