@@ -126,7 +126,7 @@ lazy val projB = (project in file("b"))
   )
 ```
 
-What is the value of `projB / name` in shell?
+What is the value of `projB / name`?
 
 1. `"abc-com.example"`
 2. `"abc-org.tempuri"`
@@ -188,9 +188,9 @@ sbt:projd> inspect projD / Compile / console / scalacOptions
 [info] Description:
 [info]  Options for the Scala compiler.
 [info] Provided by:
-[info]  ProjectRef(uri("file:/private/tmp/projd/"), "projD") / Compile / scalacOptions
+[info]  ProjectRef(uri("file:/tmp/projd/"), "projD") / Compile / scalacOptions
 [info] Defined at:
-[info]  /private/tmp/projd/build.sbt:9
+[info]  /tmp/projd/build.sbt:9
 [info] Reverse dependencies:
 [info]  projD / test
 [info]  projD / Compile / console

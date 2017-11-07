@@ -69,18 +69,17 @@ Similarly, a full scope in sbt is formed by a **tuple** of a subproject,
 a configuration, and a task value:
 
 ```scala
-Def.ScopedKey(Scope(
-    Select(projA),
-    Select(Compile: ConfigKey),
-    Select(console.key),
-    Zero),
-  scalacOptions.key)
+projA / Compile / console / scalacOptions
 ```
 
-Using the path notation introduced in sbt 1.1, we can write this as:
+Which is the slash syntax, introduced in sbt 1.1, for:
 
 ```scala
-projA / Compile / console / scalacOptions
+scalacOptions in (
+  Select(projA: Reference),
+  Select(Compile: ConfigKey),
+  Select(console.key)
+)
 ```
 
 #### Scoping by the subproject axis
@@ -168,24 +167,24 @@ neither configuration nor task scope are shown (which means `Zero`).
 A bare key on the right hand side is also scoped to
 (current subproject / configuration `Zero` / task `Zero`):
 
-@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #fig1 }
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #unscoped }
 
-Instances of any of the scope axes are set up with method injection for `/` operator.
+The types of any of the scope axes have been method enriched to have a `/` operator.
 The argument to `/` can be a key or another scope axis. So for
-example, though there's no real reason to do this, you could set the
-`name` scoped to the `Compile` configuration:
+example, though there's no good reason to do this, you could have an instance of the
+`name` key scoped to the `Compile` configuration:
 
-@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #fig2 }
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confScoped }
 
 or you could set the name scoped to the `packageBin` task (pointless! just
 an example):
 
-@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #fig3 }
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #taskScoped }
 
 or you could set the `name` with multiple scope axes, for example in the
 `packageBin` task in the `Compile` configuration:
 
-@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #fig4 }
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confAndTaskScoped }
 
 or you could use `Global`:
 
@@ -196,7 +195,7 @@ or you could use `Global`:
 all axes to `Zero` scope component; the task and configuration are already
 `Zero` by default, so here the effect is to make the project `Zero`,
 that is, define `Zero / Zero / Zero / concurrentRestrictions` rather than
-`ProjectRef(uri("file:/private/tmp/hello/"), "root") / Zero / Zero / concurrentRestrictions`)
+`ProjectRef(uri("file:/tmp/hello/"), "root") / Zero / Zero / concurrentRestrictions`)
 
 ### Referring to scoped keys from the sbt shell
 
@@ -236,8 +235,8 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
   specifies `Zero` for the configuration, rather than the default configuration.
 - `doc / fullClasspath` specifies the `fullClasspath` key scoped to the `doc`
   task, with the defaults for the project and configuration axes.
-- `ProjectRef(uri("file:/private/tmp/hello/"), "root") / Test / fullClasspath`
-  specifies a project `ProjectRef(uri("file:/private/tmp/hello/"), "root")`.
+- `ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath`
+  specifies a project `ProjectRef(uri("file:/tmp/hello/"), "root")`.
   Also specifies configurtion Test, leaves the default task axis.
 - `ThisBuild / version` sets the subproject axis to "entire build" where
   the build is `ThisBuild`, with the default configuration.
@@ -257,7 +256,7 @@ sbt:Hello> inspect Test / fullClasspath
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info]  ProjectRef(uri("file:/private/tmp/hello/"), "root") / Test / fullClasspath
+[info]  ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath
 [info] Defined at:
 [info]  (sbt.Classpaths.classpaths) Defaults.scala:1639
 [info] Dependencies:
@@ -291,9 +290,9 @@ resulting from the task will have type
 
 "Provided by" points you to the scoped key that defines the value, in
 this case
-`ProjectRef(uri("file:/private/tmp/hello/"), "root") / Test / fullClasspath` (which
+`ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath` (which
 is the `fullClasspath` key scoped to the `Test` configuration and the
-`ProjectRef(uri("file:/private/tmp/hello/"), "root")` project).
+`ProjectRef(uri("file:/tmp/hello/"), "root")` project).
 
 "Dependencies" was discussed in detail in the [previous page][Task-Graph].
 
@@ -305,8 +304,8 @@ the configuration is omitted, it is autodetected as `Compile`.
 `inspect Compile / fullClasspath` should therefore look the same as
 `inspect fullClasspath`.
 
-Try `inspect root / Zero / fullClasspath` for another contrast. `fullClasspath` is not
-defined in the `Global` scope by default.
+Try `inspect This / Zero / fullClasspath` for another contrast. `fullClasspath` is not
+defined in the `Zero` configuration scope by default.
 
 Again, for more details, see [Interacting with the Configuration System][Inspecting-Settings].
 
