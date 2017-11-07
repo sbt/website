@@ -184,16 +184,16 @@ exclusion, the following also ignores files containing `impl` in their
 name,
 
 ```scala
-excludeFilter in unmanagedSources := HiddenFileFilter || "*impl*"
+excludeFilter in unmanagedResources := HiddenFileFilter || "*impl*"
 ```
 
 To have different filters for main and test libraries, configure
 `Compile` and `Test` separately:
 
 ```scala
-includeFilter in (Compile, unmanagedSources) := "*.txt"
+includeFilter in (Compile, unmanagedResources) := "*.txt"
 
-includeFilter in (Test, unmanagedSources) := "*.html"
+includeFilter in (Test, unmanagedResources) := "*.html"
 ```
 
 > **Note**: By default, sbt includes all files that are not hidden.
