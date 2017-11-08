@@ -56,14 +56,14 @@ task, which ultimately provides the manual dependencies to sbt. The
 default implementation is roughly:
 
 ```scala
-unmanagedJars in Compile := (baseDirectory.value ** "*.jar").classpath
+Compile / unmanagedJars := (baseDirectory.value ** "*.jar").classpath
 ```
 
 If you want to add jars from multiple directories in addition to the
 default directory, you can do:
 
 ```scala
-unmanagedJars in Compile ++= {
+Compile / unmanagedJars ++= {
     val base = baseDirectory.value
     val baseDirectories = (base / "libA") +++ (base / "b" / "lib") +++ (base / "libC")
     val customJars = (baseDirectories ** "*.jar") +++ (base / "d" / "my.jar")
@@ -388,15 +388,15 @@ the *checksums* setting.
 To disable checksum checking during update:
 
 ```scala
-checksums in update := Nil
+update / checksums := Nil
 ```
 
 To disable checksum creation during artifact publishing:
 
 ```scala
-checksums in publishLocal := Nil
+publishLocal / checksums := Nil
 
-checksums in publish := Nil
+publish / checksums := Nil
 ```
 
 The default value is:
@@ -592,7 +592,7 @@ ivyConfigurations += JS
 
 libraryDependencies += "jquery" % "jquery" % "3.2.1" % "js->default" from "https://code.jquery.com/jquery-3.2.1.min.js"
 
-resources in Compile ++= update.value.select(configurationFilter("js"))
+Compile / resources ++= update.value.select(configurationFilter("js"))
 ```
 
 The `config` method defines a new configuration with name `"js"` and
@@ -652,7 +652,7 @@ classpaths. For example, to specify that the `Compile` classpath should
 use the 'default' configuration:
 
 ```scala
-classpathConfiguration in Compile := config("default")
+Compile / classpathConfiguration := config("default")
 ```
 
 ##### Maven pom (dependencies only)
@@ -673,14 +673,10 @@ For example, a `build.sbt` using external Ivy files might look like:
 
 ```scala
 externalIvySettings()
-
 externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
-
-classpathConfiguration in Compile := Compile
-
-classpathConfiguration in Test := Test
-
-classpathConfiguration in Runtime := Runtime
+Compile / classpathConfiguration := Compile
+Test / classpathConfiguration := Test
+Runtime / classpathConfiguration := Runtime
 ```
 
 ##### Forcing a revision (Not recommended)

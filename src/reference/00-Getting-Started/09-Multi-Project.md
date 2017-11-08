@@ -112,13 +112,13 @@ the `update` task:
 lazy val root = (project in file("."))
   .aggregate(util, core)
   .settings(
-    aggregate in update := false
+    update / aggregate := false
   )
 
 [...]
 ```
 
-`aggregate in update` is the aggregate key scoped to the `update` task. (See
+`update / aggregate` is the aggregate key scoped to the `update` task. (See
 [scopes][Scopes].)
 
 Note: aggregation will run the aggregated tasks in parallel and with no

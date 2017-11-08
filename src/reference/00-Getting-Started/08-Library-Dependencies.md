@@ -62,7 +62,7 @@ something else complex, you might need to replace the whole
 `Compile` configuration regardless of the files in `lib` directory:
 
 ```scala
-unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
+Compile / unmanagedJars := Seq.empty[sbt.Attributed[java.io.File]]
 ```
 
 ### Managed Dependencies
