@@ -1,18 +1,18 @@
-// #fig1
+// #unscoped
 organization := name.value
-// #fig1
+// #unscoped
 
-// #fig2
+// #confScoped
 Compile / name := "hello"
-// #fig2
+// #confScoped
 
-// #fig3
+// #taskScoped
 packageBin / name := "hello"
-// #fig3
+// #taskScoped
 
-// #fig4
+// #confAndTaskScoped
 Compile / packageBin / name := "hello"
-// #fig4
+// #confAndTaskScoped
 
 // #global
 // same as Zero / Zero / Zero / concurrentRestrictions

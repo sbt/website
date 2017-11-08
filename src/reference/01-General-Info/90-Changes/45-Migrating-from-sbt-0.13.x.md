@@ -36,15 +36,15 @@ object PluginCompat {
 
 Now `subMissingOk(...)` function can be implemented in sbt version specific way.
 
-### Migrating to scope path notation
+### Migrating to slash syntax
 
-In sbt 0.13, the same scoped keys were written in two different ways depending on whether you are
-on the sbt shell or in `build.sbt`.
+In sbt 0.13 keys were scoped with 2 different syntaxes: one for sbt's shell and one for in code.
 
 * sbt 0.13 shell: `<project-id>/config:intask::key`
-* sbt 0.13 `build.sbt`: `key in (<project-id>, Config, intask)`
+* sbt 0.13 code: `key in (<project-id>, Config, intask)`
 
-Starting sbt 1.1.0, the notation for the keys are unified in both the shell and the build definitions to the **scope path notation** as follows:
+Starting sbt 1.1.0, the syntax for scoping keys has been unified for both the shell and the build definitions to
+the **slash syntax** as follows:
 
 * `<project-id> / Config / intask / key`
 
@@ -74,7 +74,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-The scope path notation works in the sbt shell as well.
+And now the same syntax in sbt's shell:
 
 ```
 sbt:hello> name
