@@ -298,6 +298,8 @@ your plugin to the list.
   source files (such as TODO and FIXME). <!-- 11 stars -->
 - [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
   style checking using Checkstyle. <!-- 6 stars -->
+- [sbt-sonar](https://github.com/mwz/sbt-sonar): integration with
+  [SonarQube](https://www.sonarqube.org). <!-- 2 stars -->
 
 #### Code coverage plugins
 
