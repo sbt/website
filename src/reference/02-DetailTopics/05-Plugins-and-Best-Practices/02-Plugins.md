@@ -222,7 +222,7 @@ object SbtLessPlugin extends AutoPlugin {
 
 The `requires` method returns a value of type `Plugins`, which is a DSL for constructing the dependency list. The requires method typically contains one of the following values:
 
-- `empty` (No plugins, this is the default)
+- `empty` (No plugins)
 - other auto plugins
 - `&&` operator (for defining multiple dependencies)
 
@@ -236,7 +236,7 @@ Auto plugins also provide a way for plugins to automatically attach themselves t
 projects if their dependencies are met. We call these triggered plugins,
 and they are created by overriding the `trigger` method.
 
-For example, we might want to create a triggered plugin that can append commands automatically to the build. To do this, set the `requires` method to return `empty` (this is the default), and override the `trigger` method with `allRequirements`.
+For example, we might want to create a triggered plugin that can append commands automatically to the build. To do this, set the `requires` method to return `empty`, and override the `trigger` method with `allRequirements`.
 
 ```scala
 package sbthello
