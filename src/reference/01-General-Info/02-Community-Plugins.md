@@ -107,6 +107,8 @@ your plugin to the list.
   deployable fat JARs. <!-- 1 star -->
 - [sbt-release-fossil](https://chiselapp.com/user/twenstar/repository/sbt-release-fossil):
   enhances [sbt-release](https://github.com/sbt/sbt-release) to support [Fossil](https://fossil-scm.org) repositories
+- [sbt-autoversion](https://github.com/sbt/sbt-autoversion): automatically set your
+  next version bump based on patterns of your commit messase since last release. <!-- 2 stars -->
 
 #### Deployment integration plugins
 
@@ -209,6 +211,8 @@ your plugin to the list.
   containing explicit sbt dependencies. <!-- 33 stars -->
 - [sbt-license-report](https://github.com/sbt/sbt-license-report): generate
   reports of licenses used by dependencies. <!-- 25 stars -->
+- [sbt-duplicates-finder](https://github.com/sbt/sbt-duplicates-finder): detect
+  class and resources conflicting in your project's classpath. <!-- 13 stars -->
 
 #### Web and frontend development plugins
 
