@@ -86,7 +86,7 @@ unmanagedBase := baseDirectory.value / "jars"
 When set for `Compile`, `Runtime`, or `Test`, `unmanagedBase` is the
 directory containing libraries for that configuration, overriding the
 default. For example, the following declares `lib/main/` to contain jars
-only for `Compile` and not for running or testing: :
+only for `Compile` and not for running or testing:
 
 ```scala
 unmanagedBase in Compile := baseDirectory.value / "lib" / "main"
