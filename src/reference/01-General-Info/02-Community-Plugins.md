@@ -133,7 +133,7 @@ your plugin to the list.
   <!-- 233 stars -->
 - [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary): show a
   summary of compilation errors. <!-- 145 stars -->
-- [MiMa](https://github.com/typesafehub/migration-manager): binary
+- [MiMa](https://github.com/lightbend/migration-manager): binary
   compatibility management for Scala libraries. <!-- 134 stars -->
 - [sbt-groll](https://github.com/sbt/sbt-groll): navigate git history inside
   sbt. <!-- 100 stars -->

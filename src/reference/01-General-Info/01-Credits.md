@@ -397,7 +397,7 @@ The sbt ecosystem would not be the same without so many awesome plugins. Here ar
 - [sbt-sublime](https://github.com/orrsella/sbt-sublime) by Orr Sella
 - [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary) by Martin Duhem
 - [sbt-bintray](https://github.com/sbt/sbt-bintray) by Doug Tangren (softprops)
-- [Migration Manager](https://github.com/typesafehub/migration-manager/wiki) by Lightbend (Mirco Dotta, Seth Tisue, et al)
+- [Migration Manager](https://github.com/lightbend/migration-manager/wiki) by Lightbend (Mirco Dotta, Seth Tisue, et al)
 - [sbt-protobuf](https://github.com/sbt/sbt-protobuf) by Gerolf Seitz and Kenji Yoshida (xuwei-k)
 - [sbt-site](https://github.com/sbt/sbt-site) by Jonas Fonseca, Josh Suereth, et al
 - [sbt-doctest](https://github.com/tkawachi/sbt-doctest) by KAWACHI Takashi
