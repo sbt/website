@@ -57,14 +57,14 @@ sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
 #### 他のキーの値を基にしたタスク
 
 あるタスクの値を定義するために他のタスクの値を計算する必要があるかもしれない。
-そのような場合には、`:=` や `+=` や `++=` の引数に `Def.task` と `taskValue` を使えばよい。
+そのような場合には、`:=` や `+=` や `++=` の引数に `Def.task` を使えばよい。
 
 例として、`sourceGenerators` にプロジェクトのベースディレクトリやコンパイル時のクラスパスを加える設定をみてみよう。
 
 ```scala
 sourceGenerators in Compile += Def.task {
   myGenerator(baseDirectory.value, (managedClasspath in Compile).value)
-}.taskValue
+}
 ```
 
 ### 依存性を用いた追加: `+=` と `++=`
