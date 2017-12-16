@@ -9,7 +9,7 @@ out: Custom-Settings.html
   [Input-Tasks]: ../../docs/Input-Tasks.html
   [Plugins]: ../../docs/Plugins.html
   [Tasks]: ../../docs/Tasks.html
-  [Keys]: ../../sxr/sbt/Keys.scala.html
+  [Keys]: ../../api/sbt/Keys\$.html
   [Defaults]: ../../sxr/sbt/Defaults.scala.html
   [Scaladocs-IO]: ../api/sbt/io/IO\$.html
 

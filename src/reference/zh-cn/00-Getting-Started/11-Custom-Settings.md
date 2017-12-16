@@ -19,11 +19,11 @@ out: Custom-Settings.html
 
 ### 定义一个键
 
-[这里](../../sxr/sbt/Keys.scala.html)介绍了如何定义键。大多数的默认键定义在[这里](../../sxr/sbt/Defaults.scala.html)。
+[这里](../../api/sbt/Keys\$.html)介绍了如何定义键。大多数的默认键定义在[这里](../../sxr/sbt/Defaults.scala.html)。
 
 键有三种类型。`SettingKey` 和 `TaskKey` 在 [.sbt 构建定义][Basic-Def]讲解。关于 `InputKey` 的内容在[输入任务][Input-Tasks]页面。
 
-列举一些来自 [Keys](../../sxr/sbt/Keys.scala.html) 的例子：
+列举一些来自 [Keys](../../api/sbt/Keys\$.html) 的例子：
 
 ```scala
 val scalaVersion = settingKey[String]("scala的版本")

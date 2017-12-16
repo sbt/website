@@ -122,7 +122,7 @@ lazy val root = (project in file("."))
 
 #### 内置的 Keys
 
-内置的 keys 实际上是对象 [Keys](../../sxr/sbt/Keys.scala.html) 的字段。`build.sbt` 会隐式包含 `import sbt.Keys._`，所以可以通过 `name` 取到 `sbt.Keys.name`。
+内置的 keys 实际上是对象 [Keys](../../api/sbt/Keys\$.html) 的字段。`build.sbt` 会隐式包含 `import sbt.Keys._`，所以可以通过 `name` 取到 `sbt.Keys.name`。
 
 #### 自定义 Keys
 
