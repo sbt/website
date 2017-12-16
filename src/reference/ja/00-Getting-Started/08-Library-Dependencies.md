@@ -2,7 +2,7 @@
 out: Library-Dependencies.html
 ---
 
-  [Keys]: ../../sxr/sbt/Keys.scala.html
+  [Keys]: ../../api/sbt/Keys\$.html
   [Apache Ivy]: https://ant.apache.org/ivy/
   [Ivy revisions]: https://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
   [Extra attributes]: https://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra

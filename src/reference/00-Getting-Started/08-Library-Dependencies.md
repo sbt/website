@@ -94,7 +94,7 @@ libraryDependencies += groupID % artifactID % revision % configuration
 ```
 
 `libraryDependencies` is declared in
-[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.libraryDependencies) like
+[Keys](../api/sbt/Keys\$.html#libraryDependencies:sbt.SettingKey[Seq[sbt.librarymanagement.ModuleID]]) like
 this:
 
 ```scala
@@ -195,7 +195,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 ```
 
 The `resolvers` key is defined in
-[Keys](../sxr/sbt/Keys.scala.html#sbt.Keys.resolvers) like this:
+[Keys](../api/sbt/Keys\$.html#resolvers:sbt.SettingKey[Seq[sbt.librarymanagement.Resolver]]) like this:
 
 ```scala
 val resolvers = settingKey[Seq[Resolver]]("The user-defined additional resolvers for automatically managed dependencies.")

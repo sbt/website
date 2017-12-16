@@ -34,7 +34,7 @@ another task or setting. The value method is special and may only be
 called in the argument to `:=` (or, `+=` or `++=`, which we'll see later).
 
 As a first example, consider defining the `scalacOption` that depends on
-`update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../sxr/sbt/Keys.scala.html)).
+`update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../api/sbt/Keys\$.html)).
 
 **Note**: The values calculated below are nonsensical for `scalaOptions`,
 and it's just for demonstration purpose only:
@@ -277,7 +277,7 @@ Here's how it should look on the sbt shell:
 [success] Total time: 0 s, completed Jan 2, 2017 11:44:51 PM
 ```
 
-Next, take these two keys (from [Keys](../sxr/sbt/Keys.scala.html)):
+Next, take these two keys (from [Keys](../api/sbt/Keys\$.html)):
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
