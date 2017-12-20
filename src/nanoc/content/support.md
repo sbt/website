@@ -10,6 +10,8 @@ title: Support
 mission critical systems with confidence because Lightbend stands behind sbt with commercial support and
 services.
 
+<h2 id="how-can-I-get-help">How can I get help? <a href="#how-can-I-get-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
+
 [ask]: https://stackoverflow.com/questions/ask?tags=sbt
 
 For community support please [ask][] on StackOverflow with the tag "sbt".

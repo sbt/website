@@ -3,7 +3,6 @@ title: Get Involved
 ---
 
   [so]: https://stackoverflow.com/questions/tagged/sbt
-  [sub]: https://www.lightbend.com/subscription
   [ml]: https://groups.google.com/d/forum/sbt-dev
   [github]: https://github.com/sbt/sbt
   [twitter]: https://twitter.com/scala_sbt
@@ -19,19 +18,7 @@ title: Get Involved
 
 <h2 id="how-can-I-get-help">How can I get help? <a href="#how-can-I-get-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
-For community support use [StackOverflow's sbt tag][so]:
-
--   State the problem or question clearly and provide enough
-    context. Code examples and `build.sbt` are often useful when
-    appropriately edited.
-
-For professional support, [Lightbend](https://developer.lightbend.com/), the maintainer of Scala compiler and sbt, provides:
-
-- [Lightbend Subscription](https://www.lightbend.com/platform/subscription), which includes [Expert Support](https://www.lightbend.com/services/expert-support)
-- [Training](https://www.lightbend.com/services/training)
-- [Consulting](https://www.lightbend.com/services/consulting)
-
-There's also the [Gitter sbt/sbt][gitter1] channel, but the options above are recommended.
+For how to get help see [Support](http://www.scala-sbt.org/support.html#how-can-I-get-help).
 
 <h2 id="how-can-I-help">How can I help? <a href="#how-can-I-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
