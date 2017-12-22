@@ -406,4 +406,4 @@ sbt will try to get a value from a more general scope, such as the `ThisBuild` s
 
 This feature allows you to set a value once in a more general scope,
 allowing multiple more-specific scopes to inherit the value.
-We will disscuss [scope delegation][Scope-Delegation] in detail later.
+We will discuss [scope delegation][Scope-Delegation] in detail later.
