@@ -51,6 +51,9 @@ your plugin to the list.
 
 - [tut](https://github.com/tpolecat/tut): documentation and tutorial generator.
   <!-- 409  stars -->
+- [Laika](https://github.com/planet42/Laika): Transform Markdown or reStructuredText
+  into HTML or PDF with Templating.
+  <!-- 161 stars -->
 - [sbt-site](https://github.com/sbt/sbt-site): site generator.
   <!-- 131 stars -->
 - [sbt-microsites](https://github.com/47deg/sbt-microsites): generate
