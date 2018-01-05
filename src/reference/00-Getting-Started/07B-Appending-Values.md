@@ -17,19 +17,19 @@ replacing it.
 - `+=` will append a single element to the sequence.
 - `++=` will concatenate another sequence.
 
-For example, the key `sourceDirectories in Compile` has a `Seq[File]` as its
+For example, the key `Compile / sourceDirectories` has a `Seq[File]` as its
 value. By default this key's value would include `src/main/scala`. If you
 wanted to also compile source code in a directory called source (since
 you just have to be nonstandard), you could add that directory:
 
 ```scala
-sourceDirectories in Compile += new File("source")
+Compile / sourceDirectories += new File("source")
 ```
 
 Or, using the `file()` function from the sbt package for convenience:
 
 ```scala
-sourceDirectories in Compile += file("source")
+Compile / sourceDirectories += file("source")
 ```
 
 (`file()` just creates a new `File`.)
@@ -37,7 +37,7 @@ sourceDirectories in Compile += file("source")
 You could use `++=` to add more than one directory at a time:
 
 ```scala
-sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
+Compile / sourceDirectories ++= Seq(file("sources1"), file("sources2"))
 ```
 
 Where `Seq(a, b, c, ...)` is standard Scala syntax to construct a
@@ -47,7 +47,7 @@ To replace the default source directories entirely, you use `:=` of
 course:
 
 ```scala
-sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
+Compile / sourceDirectories := Seq(file("sources1"), file("sources2"))
 ```
 
 #### When settings are undefined
@@ -68,8 +68,8 @@ You can compute values of some tasks or settings to define or append a value for
 As a first example, consider appending a source generator using the project base directory and compilation classpath.
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  myGenerator(baseDirectory.value, (managedClasspath in Compile).value)
+Compile / sourceGenerators += Def.task {
+  myGenerator(baseDirectory.value, (Compile / managedClasspath).value)
 }
 ```
 

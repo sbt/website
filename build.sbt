@@ -15,10 +15,11 @@ lazy val root = (project in file("."))
     siteSubdirName in Pamflet := s"""$targetSbtBinaryVersion/docs""",
     tutorialSubDirName := s"""$targetSbtBinaryVersion/tutorial""",
     // Redirects
-    redirectSettings,
-    SiteHelpers.addMappingsToSiteDir(mappings in Redirect, siteSubdirName in Pamflet),
-    redirectTutorialSettings,
-    SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
+    // redirectSettings,
+    // SiteHelpers.addMappingsToSiteDir(mappings in Redirect, siteSubdirName in Pamflet),
+    // redirectTutorialSettings,
+    // SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
+
     // GitHub Pages. See project/Docs.scala
     customGhPagesSettings,
     // NOTE - PDF settings must be done externally like this because pdf generation generically looks

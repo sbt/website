@@ -56,7 +56,7 @@ Prior to sbt 0.12, user control over this process was restricted to:
 1.  Enabling or disabling all parallel execution
     (parallelExecution := false, for example).
 2.  Enabling or disabling mapping tests to their own tasks
-    (parallelExecution in Test := false, for example).
+    (Test / parallelExecution := false, for example).
 
 (Although never exposed as a setting, the maximum number of tasks
 running at a given time was internally configurable as well.)
@@ -116,10 +116,10 @@ download := downloadImpl.value
 Once tasks are tagged, the `concurrentRestrictions` setting sets
 restrictions on the tasks that may be concurrently executed based on the
 weighted tags of those tasks. This is necessarily a global set of rules,
-so it must be scoped `in Global`. For example,
+so it must be scoped `Global /`. For example,
 
 ```scala
-concurrentRestrictions in Global := Seq(
+Global / concurrentRestrictions := Seq(
   Tags.limit(Tags.CPU, 2),
   Tags.limit(Tags.Network, 10),
   Tags.limit(Tags.Test, 1),
@@ -230,7 +230,7 @@ tags to each child task created for each test class.
 The default rules provide the same behavior as previous versions of sbt:
 
 ```scala
-concurrentRestrictions in Global := {
+Global / concurrentRestrictions := {
   val max = Runtime.getRuntime.availableProcessors
   Tags.limitAll(if(parallelExecution.value) max else 1) :: Nil
 }
@@ -241,7 +241,7 @@ to separate tasks. To restrict the number of concurrently executing
 tests in all projects, use:
 
 ```scala
-concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
+Global / concurrentRestrictions += Tags.limit(Tags.Test, 1)
 ```
 
 #### Custom Tags
@@ -258,9 +258,9 @@ Then, use this tag as any other tag. For example:
 ```scala
 def aImpl = Def.task { ... } tag(Custom)
 
-aCustomTask := aImpl.value 
+aCustomTask := aImpl.value
 
-concurrentRestrictions in Global += 
+Global / concurrentRestrictions +=
   Tags.limit(Custom, 1)
 ```
 
@@ -280,7 +280,7 @@ def myCompileTask = Def.task { ... } tag(Tags.CPU, Tags.Compile)
 
 compile := myCompileTask.value
 
-compile := { 
+compile := {
   val result = compile.value
   ... do some post processing ...
 }
