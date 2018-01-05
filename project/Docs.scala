@@ -248,10 +248,7 @@ object Docs {
   val syncLocalImpl = Def.task {
     // sync the generated site
     val repo = ghpagesUpdatedRepository.value
-<<<<<<< HEAD
-=======
-    // val fullVersioned = repo / targetSbtFullVersion
->>>>>>> 1.x-beta
+
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value
@@ -265,7 +262,6 @@ object Docs {
     if (releaseLink.exists) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-<<<<<<< HEAD
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
     gitRemoveFiles(repo,
                    List(
@@ -276,16 +272,6 @@ object Docs {
                    ),
                    git,
                    s)
-=======
-    // gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
-    // gitRemoveFiles(repo,
-    //                List(
-    //                  repo / "assets" / "favicon.ico",
-    //                  repo / "assets" / "stylesheet.css",
-    //                ),
-    //                git,
-    //                s)
->>>>>>> 1.x-beta
 
     val ms = for {
       (file, target) <- (mappings in makeSite).value if siteInclude(file)
