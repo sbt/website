@@ -20,7 +20,7 @@ object Docs {
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "1.x"
-  lazy val targetSbtFullVersion = "1.0.4"
+  lazy val targetSbtFullVersion = "1.1.0"
 
   lazy val siteEmail = settingKey[String]("")
 
