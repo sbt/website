@@ -69,15 +69,17 @@ Similarly, a full scope in sbt is formed by a **tuple** of a subproject,
 a configuration, and a task value:
 
 ```scala
-scalacOptions in (projA, Compile, console)
+projA / Compile / console / scalacOptions
 ```
 
-To be more precise, it actually looks like this:
+Which is the slash syntax, introduced in sbt 1.1, for:
 
 ```scala
-scalacOptions in (Select(projA: Reference),
-                  Select(Compile: ConfigKey),
-                  Select(console.key))
+scalacOptions in (
+  Select(projA: Reference),
+  Select(Compile: ConfigKey),
+  Select(console.key)
+)
 ```
 
 #### Scoping by the subproject axis
@@ -134,21 +136,21 @@ The various tasks that build a package (`packageSrc`, `packageBin`,
 and `packageOptions`. Those keys can have distinct values for each
 packaging task.
 
-#### Global scope component
+#### Zero scope component
 
-Each scope axis can be filled in with an instance of the axis type (for
-example the task axis can be filled in with a task), or the axis can be
-filled in with the special value `Global`, which is also written as `*`. So we can think of `Global` as `None`.
+Each scope axis can be filled in with an instance of the axis type (analogous to `Some(_)`),
+or the axis can be filled in with the special value `Zero`.
+So we can think of `Zero` as `None`.
 
-`*` is a universal fallback for all scope axes,
+`Zero` is a universal fallback for all scope axes,
 but its direct use should be reserved to sbt and plugin authors in most cases.
 
-To make the matter confusing, `someKey in Global` appearing in build definition implicitly converts to `someKey in (Global, Global, Global)`.
+`Global` is a scope that sets `Zero` to all axes: `Zero / Zero / Zero`. In other words, `Global / someKey` is a shorthand for `Zero / Zero / Zero / someKey`.
 
 ### Referring to scopes in a build definition
 
 If you create a setting in `build.sbt` with a bare key, it will be scoped
-to (current subproject, configuration `Global`, task `Global`):
+to (current subproject / configuration `Zero` / task `Zero`):
 
 ```scala
 lazy val root = (project in file("."))
@@ -158,56 +160,42 @@ lazy val root = (project in file("."))
 ```
 
 Run sbt and `inspect name` to see that it's provided by
-`{file:/home/hp/checkout/hello/}default-aea33a/*:name`, that is, the
-project is `{file:/home/hp/checkout/hello/}default-aea33a`, the
-configuration is `*` (means `Global`), and the task is not shown (which
-also means `Global`).
+`ProjectRef(uri("file:/private/tmp/hello/"), "root") / name`, that is, the
+project is `ProjectRef(uri("file:/Users/xxx/hello/"), "root")`, and
+neither configuration nor task scope are shown (which means `Zero`).
 
 A bare key on the right hand side is also scoped to
-(current subproject, configuration `Global`, task `Global`):
+(current subproject / configuration `Zero` / task `Zero`):
 
-```
-organization := name.value
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #unscoped }
 
-Keys have an overloaded method called `.in` that is used to set the scope.
-The argument to `.in(...)` can be an instance of any of the scope axes. So for
-example, though there's no real reason to do this, you could set the
-`name` scoped to the `Compile` configuration:
+The types of any of the scope axes have been method enriched to have a `/` operator.
+The argument to `/` can be a key or another scope axis. So for
+example, though there's no good reason to do this, you could have an instance of the
+`name` key scoped to the `Compile` configuration:
 
-```scala
-name in Compile := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confScoped }
 
 or you could set the name scoped to the `packageBin` task (pointless! just
 an example):
 
-```scala
-name in packageBin := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #taskScoped }
 
 or you could set the `name` with multiple scope axes, for example in the
 `packageBin` task in the `Compile` configuration:
 
-```scala
-name in (Compile, packageBin) := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confAndTaskScoped }
 
-or you could use `Global` for all axes:
+or you could use `Global`:
 
-```scala
-// same as concurrentRestrictions in (Global, Global, Global)
-concurrentRestrictions in Global := Seq(
-  Tags.limitAll(1)
-)
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #global }
 
-(`concurrentRestrictions in Global` implicitly converts to
-`concurrentRestrictions in (Global, Global, Global)`, setting
-all axes to `Global` scope component; the task and configuration are already
-`Global` by default, so here the effect is to make the project `Global`,
-that is, define `*/*:concurrentRestrictions` rather than
-`{file:/home/hp/checkout/hello/}default-aea33a/*:concurrentRestrictions`)
+(`Global / concurrentRestrictions` implicitly converts to
+`Zero / Zero / Zero / concurrentRestrictions`, setting
+all axes to `Zero` scope component; the task and configuration are already
+`Zero` by default, so here the effect is to make the project `Zero`,
+that is, define `Zero / Zero / Zero / concurrentRestrictions` rather than
+`ProjectRef(uri("file:/tmp/hello/"), "root") / Zero / Zero / concurrentRestrictions`)
 
 ### Referring to scoped keys from the sbt shell
 
@@ -215,16 +203,15 @@ On the command line and in the sbt shell, sbt displays (and parses)
 scoped keys like this:
 
 ```
-{<build-uri>}<project-id>/config:intask::key
+ref / Config / intask / key
 ```
 
-- `{<build-uri>}<project-id>` identifies the subproject axis. The
-  `<project-id>` part will be missing if the subproject axis has "entire build" scope.
-- `config` identifies the configuration axis.
+- `ref` identifies the subproject axis. It could be `<project-id>`, `ProjectRef(uri("file:..."), "id")`, or `ThisBuild` that denotes the "entire build" scope.
+- `Config` identifies the configuration axis using the capitalized Scala identifier.
 - `intask` identifies the task axis.
 - `key` identifies the key being scoped.
 
-`*` can appear for each axis, referring to the `Global` scope.
+`Zero` can appear for each axis.
 
 If you omit part of the scoped key, it will be inferred as follows:
 
@@ -239,26 +226,23 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
 - `fullClasspath` specifies just a key, so the default scopes are used:
   current project, a key-dependent configuration, and global task
   scope.
-- `test:fullClasspath` specifies the configuration, so this is
-  `fullClasspath` in the `test` configuration, with defaults for the other
+- `Test / fullClasspath` specifies the configuration, so this is
+  `fullClasspath` in the `Test` configuration, with defaults for the other
   two scope axes.
-- `*:fullClasspath` specifies `Global` for the configuration, rather than
-  the default configuration.
-- `doc::fullClasspath` specifies the `fullClasspath` key scoped to the `doc`
+- `root / fullClasspath` specifies the project `root`, where the project is
+  identified with the project id.
+- `root / Zero / fullClasspath` specified the project `root`, and
+  specifies `Zero` for the configuration, rather than the default configuration.
+- `doc / fullClasspath` specifies the `fullClasspath` key scoped to the `doc`
   task, with the defaults for the project and configuration axes.
-- `{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath`
-  specifies a project, `{file:/home/hp/checkout/hello/}default-aea33a`,
-  where the project is identified with the build
-  `{file:/home/hp/checkout/hello/}` and then a project id inside that
-  build `default-aea33a`. Also specifies configuration `test`, but leaves
-  the default task axis.
-- `{file:/home/hp/checkout/hello/}/test:fullClasspath` sets the project
-  axis to "entire build" where the build is
-  `{file:/home/hp/checkout/hello/}`.
-- `{.}/test:fullClasspath` sets the project axis to "entire build" where
-  the build is `{.}`. `{.}` can be written `ThisBuild` in Scala code.
-- `{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath` sets all
-  three scope axes.
+- `ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath`
+  specifies a project `ProjectRef(uri("file:/tmp/hello/"), "root")`.
+  Also specifies configurtion Test, leaves the default task axis.
+- `ThisBuild / version` sets the subproject axis to "entire build" where
+  the build is `ThisBuild`, with the default configuration.
+- `Zero / fullClasspath` sets the subproject axis to `Zero`,
+  with the default configuration.
+- `root / Compile / doc / fullClasspath` sets all three scope axes.
 
 ### Inspecting scopes
 
@@ -267,38 +251,36 @@ keys and their scopes. Try `inspect test:fullClasspath`:
 
 ```
 \$ sbt
-> inspect test:fullClasspath
-[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+sbt:Hello> inspect Test / fullClasspath
+[info] Task: scala.collection.Seq[sbt.internal.util.Attributed[java.io.File]]
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info]  ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath
+[info] Defined at:
+[info]  (sbt.Classpaths.classpaths) Defaults.scala:1639
 [info] Dependencies:
-[info]  test:exportedProducts
-[info]  test:dependencyClasspath
+[info]  Test / dependencyClasspath
+[info]  Test / exportedProducts
+[info]  Test / fullClasspath / streams
 [info] Reverse dependencies:
-[info]  test:runMain
-[info]  test:run
-[info]  test:testLoader
-[info]  test:console
+[info]  Test / testLoader
 [info] Delegates:
-[info]  test:fullClasspath
-[info]  runtime:fullClasspath
-[info]  compile:fullClasspath
-[info]  *:fullClasspath
-[info]  {.}/test:fullClasspath
-[info]  {.}/runtime:fullClasspath
-[info]  {.}/compile:fullClasspath
-[info]  {.}/*:fullClasspath
-[info]  */test:fullClasspath
-[info]  */runtime:fullClasspath
-[info]  */compile:fullClasspath
-[info]  */*:fullClasspath
+[info]  Test / fullClasspath
+[info]  Runtime / fullClasspath
+[info]  Compile / fullClasspath
+[info]  fullClasspath
+[info]  ThisBuild / Test / fullClasspath
+[info]  ThisBuild / Runtime / fullClasspath
+[info]  ThisBuild / Compile / fullClasspath
+[info]  ThisBuild / fullClasspath
+[info]  Zero / Test / fullClasspath
+[info]  Zero / Runtime / fullClasspath
+[info]  Zero / Compile / fullClasspath
+[info]  Global / fullClasspath
 [info] Related:
-[info]  compile:fullClasspath
-[info]  compile:fullClasspath(for doc)
-[info]  test:fullClasspath(for doc)
-[info]  runtime:fullClasspath
+[info]  Compile / fullClasspath
+[info]  Runtime / fullClasspath
 ```
 
 On the first line, you can see this is a task (as opposed to a setting,
@@ -308,22 +290,22 @@ resulting from the task will have type
 
 "Provided by" points you to the scoped key that defines the value, in
 this case
-`{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath` (which
-is the `fullClasspath` key scoped to the `test` configuration and the
-`{file:/home/hp/checkout/hello/}default-aea33a` project).
+`ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath` (which
+is the `fullClasspath` key scoped to the `Test` configuration and the
+`ProjectRef(uri("file:/tmp/hello/"), "root")` project).
 
 "Dependencies" was discussed in detail in the [previous page][Task-Graph].
 
 We'll discuss "Delegates" later.
 
 Try `inspect fullClasspath` (as opposed to the above example,
-inspect `test:fullClasspath`) to get a sense of the difference. Because
-the configuration is omitted, it is autodetected as `compile`.
-`inspect compile:fullClasspath` should therefore look the same as
+inspect `Test / fullClasspath`) to get a sense of the difference. Because
+the configuration is omitted, it is autodetected as `Compile`.
+`inspect Compile / fullClasspath` should therefore look the same as
 `inspect fullClasspath`.
 
-Try `inspect *:fullClasspath` for another contrast. `fullClasspath` is not
-defined in the `Global` scope by default.
+Try `inspect This / Zero / fullClasspath` for another contrast. `fullClasspath` is not
+defined in the `Zero` configuration scope by default.
 
 Again, for more details, see [Interacting with the Configuration System][Inspecting-Settings].
 
@@ -334,7 +316,7 @@ For example, the `compile` task, by default, is scoped to `Compile` and `Test`
 configurations, and does not exist outside of those scopes.
 
 To change the value associated with the `compile` key, you need to write
-`compile in Compile` or `compile in Test`. Using plain `compile` would define
+`Compile / compile` or `Test / compile`. Using plain `compile` would define
 a new compile task scoped to the current project, rather than overriding
 the standard compile tasks which are scoped to a configuration.
 
@@ -342,12 +324,12 @@ If you get an error like *"Reference to undefined setting"*, often
 you've failed to specify a scope, or you've specified the wrong scope.
 The key you're using may be defined in some other scope. sbt will try to
 suggest what you meant as part of the error message; look for "Did you
-mean compile:compile?"
+mean Compile / compile?"
 
 One way to think of it is that a name is only *part* of a key. In
 reality, all keys consist of both a name, and a scope (where the scope
 has three axes). The entire expression
-`packageOptions in (Compile, packageBin)` is a key name, in other words.
+`Compile / packageBin / packageOptions` is a key name, in other words.
 Simply `packageOptions` is also a key name, but a different one (for keys
 with no in, a scope is implicitly assumed: current project, global
 config, global task).
@@ -371,7 +353,7 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(List(
       // Same as:
-      // organization in ThisBuild := "com.example"
+      // ThisBuild / organization := "com.example"
       organization := "com.example",
       scalaVersion := "$example_scala_version$",
       version      := "0.1.0-SNAPSHOT"

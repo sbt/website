@@ -115,10 +115,8 @@ For example,
 
 ```scala
 managedScalaInstance := false
-
 scalaInstance := ...
-
-unmanagedJars in Compile += scalaInstance.value.libraryJar
+Compile / unmanagedJars += scalaInstance.value.libraryJar
 ```
 
 #### Switching to a local Scala version
@@ -174,7 +172,7 @@ Scala distribution. For example, to add all jars in the Scala home
 ```scala
 scalaHome := Some(file("/home/user/scala-2.10/"))
 
-unmanagedJars in Compile ++= scalaInstance.value.jars
+Compile / unmanagedJars ++= scalaInstance.value.jars
 ```
 
 To add only some jars, filter the jars from `scalaInstance` before

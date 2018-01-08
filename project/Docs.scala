@@ -20,7 +20,8 @@ object Docs {
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = "1.x"
-  lazy val targetSbtFullVersion = "1.0.4"
+  lazy val targetSbtFullVersion = "1.1.0"
+
   lazy val siteEmail = settingKey[String]("")
 
   val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
@@ -247,6 +248,7 @@ object Docs {
   val syncLocalImpl = Def.task {
     // sync the generated site
     val repo = ghpagesUpdatedRepository.value
+
     val versioned = repo / targetSbtBinaryVersion
     val git = GitKeys.gitRunner.value
     val s = streams.value

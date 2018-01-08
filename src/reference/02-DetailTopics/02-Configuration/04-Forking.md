@@ -25,34 +25,31 @@ The `fork` setting controls whether forking is enabled (true) or not
 in the `test` scope to only fork `test` commands.
 
 To fork all test tasks (`test`, `testOnly`, and `testQuick`) and run
-tasks (`run`, `runMain`, `test:run`, and `test:runMain`),
+tasks (`run`, `runMain`, `Test / run`, and `Test / runMain`),
 
 ```scala
 fork := true
 ```
 
-To enable forking `run` tasks only, set `fork` to `true` in the `run`
-scope.
+To enable forking `run` tasks only, set `Comile / run / fork` to `true`.
 
 ```scala
-fork in run := true
+Compile / run / fork := true
 ```
 
-To only fork `test:run` and `test:runMain`:
+To only fork `Test / run` and `Test / runMain`:
 
 ```scala
-fork in (Test, run) := true
+Test / run / fork := true
 ```
 
-Similarly, set `fork in (Compile,run) := true` to only fork the main
-`run` tasks. `run` and `runMain` share the same configuration and cannot
-be configured separately.
+ `run` and `runMain` share the same configuration and cannot be configured separately.
 
 To enable forking all `test` tasks only, set `fork` to `true` in the
-`test` scope:
+`Test` scope:
 
 ```scala
-fork in test := true
+Test / fork := true
 ```
 
 See [Testing][Testing] for more control over how tests are assigned to JVMs and
@@ -65,16 +62,16 @@ or `baseDirectory in test`:
 
 ```scala
 // sets the working directory for all `run`-like tasks
-baseDirectory in run := file("/path/to/working/directory/")
+run / baseDirectory := file("/path/to/working/directory/")
 
 // sets the working directory for `run` and `runMain` only
-baseDirectory in (Compile,run) := file("/path/to/working/directory/")
+Compile / run / baseDirectory := file("/path/to/working/directory/")
 
-// sets the working directory for `test:run` and `test:runMain` only
-baseDirectory in (Test,run) := file("/path/to/working/directory/")
+// sets the working directory for `Test / run` and `Test / runMain` only
+Test / run / baseDirectory := file("/path/to/working/directory/")
 
 // sets the working directory for `test`, `testQuick`, and `testOnly`
-baseDirectory in test := file("/path/to/working/directory/")
+Test / baseDirectory := file("/path/to/working/directory/")
 ```
 
 ### Forked JVM options
@@ -82,20 +79,20 @@ baseDirectory in test := file("/path/to/working/directory/")
 To specify options to be provided to the forked JVM, set `javaOptions`:
 
 ```scala
-javaOptions in run += "-Xmx8G"
+run / javaOptions += "-Xmx8G"
 ```
 
 or specify the configuration to affect only the main or test `run`
 tasks:
 
 ```scala
-javaOptions in (Test,run) += "-Xmx8G"
+Test / run / javaOptions += "-Xmx8G"
 ```
 
 or only affect the `test` tasks:
 
 ```scala
-javaOptions in test += "-Xmx8G"
+Test / javaOptions += "-Xmx8G"
 ```
 
 ### Java Home
@@ -111,7 +108,7 @@ used to compile Java sources. You can restrict it to running only by
 setting it in the `run` scope:
 
 ```scala
-javaHome in run := Some(file("/path/to/jre/"))
+run / javaHome := Some(file("/path/to/jre/"))
 ```
 
 As with the other settings, you can specify the configuration to affect
@@ -148,7 +145,7 @@ the forked process. To enable this, configure the `connectInput`
 setting:
 
 ```scala
-connectInput in run := true
+run / connectInput := true
 ```
 
 ### Direct Usage
