@@ -16,6 +16,14 @@ Installing sbt on Linux
 
 Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 
+### Install JDK
+
+You must first install a JDK. We recommend Oracle JDK 8 or OpenJDK 8. The details around the package names differ from one distribution to another.
+
+For example, Ubuntu xenial (16.04LTS) has [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk).
+
+Redhat family calls it [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel).
+
 ### Ubuntu and other Debian-based distributions
 
 [DEB][DEB] package is officially supported by sbt.
