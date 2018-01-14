@@ -56,7 +56,7 @@ organizationHomepage := Some(url("http://example.org"))
 ### Set the project's homepage and other metadata
 
 ```scala
-homepage := Some(url("http://scala-sbt.org"))
+homepage := Some(url("https://www.scala-sbt.org"))
 
 startYear := Some(2008)
 

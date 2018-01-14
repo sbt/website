@@ -17,7 +17,7 @@ and its access. The goal of the sbt organization is to organize sbt
 software into one central location.
 
 A side benefit to using the sbt organization for projects is that you
-can use gh-pages to host websites under the http://scala-sbt.org domain.
+can use gh-pages to host websites under the https://www.scala-sbt.org domain.
 
 ### Community Ivy Repository
 
@@ -282,7 +282,7 @@ your plugin to the list.
 - [sbt-protoc](https://github.com/thesamet/sbt-protoc): protobuf code generator
   using protoc. <!-- 35 stars -->
 - [sbt-contraband](https://github.com/sbt/contraband)
-  ([docs](http://www.scala-sbt.org/contraband)): generate pseudo-case classes
+  ([docs](https://www.scala-sbt.org/contraband)): generate pseudo-case classes
   from GraphQL schemas. <!-- 34 stars -->
 - [sbt-antlr4](https://github.com/ihji/sbt-antlr4): run ANTLR v4 from sbt.
   <!-- 22 stars -->
