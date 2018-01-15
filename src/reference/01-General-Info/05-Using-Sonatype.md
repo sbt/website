@@ -9,7 +9,7 @@ out: Using-Sonatype.html
   [sonatype-coordinates]: http://central.sonatype.org/pages/choosing-your-coordinates.html
   [sonatype-nexus]: https://oss.sonatype.org/#welcome
   [sonatype-pgp]: http://central.sonatype.org/pages/working-with-pgp-signatures.html
-  [sbt-pgp]: http://scala-sbt.org/sbt-pgp/
+  [sbt-pgp]: https://www.scala-sbt.org/sbt-pgp/
   [sbt-sonatype]: https://github.com/xerial/sbt-sonatype
   [sbt-release]: https://github.com/sbt/sbt-release
   [gnupg]: https://www.gnupg.org/

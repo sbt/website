@@ -260,7 +260,7 @@ out: ChangeSummary_0.12.0.html
     by passing -Dsbt.resident.limit=n to sbt, where n is an integer
     indicating the maximum number of compilers to keep around.
 -   The [Howto pages](Howto.html) on the
-    [new site](http://www.scala-sbt.org) are at least readable now. There
+    [new site](https://www.scala-sbt.org) are at least readable now. There
     is more content to write and more formatting improvements are
     needed, so [pull requests are
     welcome](https://github.com/sbt/sbt.github.com).
