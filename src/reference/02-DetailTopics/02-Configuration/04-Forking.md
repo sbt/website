@@ -31,7 +31,7 @@ tasks (`run`, `runMain`, `Test / run`, and `Test / runMain`),
 fork := true
 ```
 
-To enable forking `run` tasks only, set `Comile / run / fork` to `true`.
+To only fork `Compile / run` and `Compile / runMain`:
 
 ```scala
 Compile / run / fork := true
@@ -43,7 +43,7 @@ To only fork `Test / run` and `Test / runMain`:
 Test / run / fork := true
 ```
 
- `run` and `runMain` share the same configuration and cannot be configured separately.
+_Note:_ `run` and `runMain` share the same configuration and cannot be configured separately.
 
 To enable forking all `test` tasks only, set `fork` to `true` in the
 `Test` scope:
