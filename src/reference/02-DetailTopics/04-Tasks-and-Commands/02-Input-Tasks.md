@@ -224,8 +224,8 @@ we:
 -   Define the initial arguments passed to the second `run`, but allow
     further input on the command line.
 
-> **Note**: the current implementation of `:=` doesn't actually support
-applying input derived from settings yet.
+> **Note**: if the input derives from settings you need to use, for
+example, `Def.taskDyn { ... }.value`
 
 ```scala
 lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
