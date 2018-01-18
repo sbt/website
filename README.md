@@ -62,10 +62,10 @@ Beware of https://github.com/sbt/sbt-ghpages/issues/25
 
 ## Releasing new sbt
 
-- Update `project/build.properties`
-- Update `project/Docs.scala`
-- Update `src/nanoc/nanoc.yaml`
-- Update `src/reference/template.properties`
+- Update `sbt.version` in `project/build.properties`
+- Update `targetSbtFullVersion` in `project/Docs.scala`
+- Add last release to "Previous releases" in `src/nanoc/nanoc.yaml`
+- Update `sbtVersion`, `windowsBuild` and `sbtVersionForScalaDoc` in `src/reference/template.properties`
 
 ## Including code examples
 
