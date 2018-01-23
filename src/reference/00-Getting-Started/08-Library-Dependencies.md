@@ -134,11 +134,11 @@ as well.
 
 If you use `groupID %% artifactID % revision` rather than
 `groupID % artifactID % revision` (the difference is the double `%%` after
-the `groupID`), sbt will add your project's Scala version to the artifact
+the `groupID`), sbt will add your project's binary Scala version to the artifact
 name. This is just a shortcut. You could write this without the `%%`:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
+libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
 ```
 
 Assuming the `scalaVersion` for your build is `2.11.1`, the following is
