@@ -21,9 +21,8 @@ how to use libraries that have done the same.
 The underlying mechanism used to indicate which version of Scala a
 library was compiled against is to append `_<scala-version>` to the
 library's name. For Scala 2.10.0 and later, the binary version is used.
-For example, `dispatch` becomes `dispatch_2.8.1` for the variant
-compiled against Scala 2.8.1 and `dispatch_2.10` when compiled against
-2.10.0, 2.10.0-M1 or any 2.10.x version. This fairly simple approach
+For example, `dispatch-core_2.10` when compiled against
+2.10.0, 2.10.1 or any 2.10.x version. This fairly simple approach
 allows interoperability with users of Maven, Ant and other build tools.
 
 The rest of this page describes how `sbt` handles this for you as part
@@ -37,28 +36,22 @@ should append the current version of Scala being used to build the
 library to the dependency's name. For example:
 
 ```scala
-libraryDependencies += "net.databinder" %% "dispatch" % "0.8.0"
+libraryDependencies += "net.databinder.dispatch" %% "dispatch-core" % "0.13.3"
 ```
 A nearly equivalent, manual alternative for a fixed version of Scala is:
 
 ```scala
-libraryDependencies += "net.databinder" % "dispatch_2.10" % "0.8.0"
-```
-
-or for Scala versions before 2.10:
-
-```scala
-libraryDependencies += "net.databinder" % "dispatch_2.8.1" % "0.8.0"
+libraryDependencies += "net.databinder.dispatch" % "dispatch-core_2.12" % "0.13.3"
 ```
 
 ### Cross-Building a Project
 
 Define the versions of Scala to build against in the
-`crossScalaVersions` setting. Versions of Scala 2.8.0 or later are
+`crossScalaVersions` setting. Versions of Scala 2.10.2 or later are
 allowed. For example, in a `.sbt` build definition:
 
 ```scala
-crossScalaVersions := Seq("2.8.2", "2.9.2", "2.10.0")
+crossScalaVersions := Seq("2.11.11", "2.12.2")
 ```
 
 To build against all versions listed in `crossScalaVersions`, prefix
@@ -99,10 +92,10 @@ Scala. See [Publishing][Publishing] for more details on publishing your project.
 
 In order to make this process as quick as possible, different output and
 managed dependency directories are used for different versions of Scala.
-For example, when building against Scala 2.10.0,
+For example, when building against Scala 2.12.4,
 
--   `./target/` becomes `./target/scala_2.10.0/`
--   `./lib_managed/` becomes `./lib_managed/scala_2.10/`
+-   `./target/` becomes `./target/scala_2.12/`
+-   `./lib_managed/` becomes `./lib_managed/scala_2.12/`
 
 Packaged jars, wars, and other artifacts have `_<scala-version>`
 appended to the normal artifact ID as mentioned in the Publishing
@@ -111,8 +104,8 @@ Conventions section above.
 This means that the outputs of each build against each version of Scala
 are independent of the others. `sbt` will resolve your dependencies for
 each version separately. This way, for example, you get the version of
-Dispatch compiled against 2.8.1 for your 2.8.1 build, the version
-compiled against 2.10 for your 2.10.x builds, and so on. You can have
+Dispatch compiled against 2.11 for your 2.11.x build, the version
+compiled against 2.12 for your 2.12.x builds, and so on. You can have
 fine-grained control over the behavior for different Scala versions
 by using the `cross` method on `ModuleID` These are equivalent:
 
