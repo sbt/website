@@ -12,7 +12,7 @@ available information in sbt. The key methods are:
 
 -   `definedCommands: Seq[Command]` returns all registered Command
     definitions
--   `remainingCommands: Seq[String]` returns the remaining commands to
+-   `remainingCommands: List[Exec]` returns the remaining commands to
     be run
 -   `attributes: AttributeMap` contains generic data.
 
