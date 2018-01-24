@@ -76,6 +76,7 @@ your plugin to the list.
 
 #### Release plugins
 
+- [sbt-google-cloud-storage](https://github.com/lightbend/sbt-google-cloud-storage): resolver and publisher for Google Cloud Storage.
 - [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
   ([docs](http://sbt-native-packager.readthedocs.io/en/stable/)): build
   native packages (RPM, .deb etc) for your projects. <!-- 303 stars -->
