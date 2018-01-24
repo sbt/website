@@ -152,14 +152,6 @@ The idea is that many dependencies are compiled for multiple Scala
 versions, and you'd like to get the one that matches your project
 to ensure binary compatibility.
 
-The complexity in practice is that often a dependency will work with a
-slightly different Scala version; but `%%` is not smart about that. So if
-the dependency is available for `2.10.1` but you're using
-`scalaVersion := "2.10.4"`, you won't be able to use `%%` even though the
-`2.10.1` dependency likely works. If `%%` stops working, just go see which
-versions the dependency is really built for, and hardcode the one you
-think will work (assuming there is one).
-
 See [Cross Building][Cross-Build] for some more detail on this.
 
 #### Ivy revisions
