@@ -63,16 +63,15 @@ well as the tasks/settings that depend on the it. For example,
 > inspect test:compile
 ...
 [info] Dependencies:
-[info]  test:compile::compileInputs
-[info]  test:compile::streams
+[info]  Test / manipulateBytecode
+[info]  Test / enableBinaryCompileAnalysis
+[info]  Test / compileIncSetup
 [info] Reverse dependencies:
-[info]  test:definedTestNames
-[info]  test:definedSbtPlugins
-[info]  test:printWarnings
-[info]  test:discoveredMainClasses
-[info]  test:definedTests
-[info]  test:exportedProducts
-[info]  test:products
+[info]  Test / products
+[info]  Test / discoveredMainClasses
+[info]  Test / printWarnings
+[info]  Test / definedTestNames
+[info]  Test / definedTests
 ...
 ```
 
@@ -87,15 +86,15 @@ full dependency tree for a task or setting. For example,
 
 ```
 > inspect tree clean
-[info] *:clean = Task[Unit]
-[info]   +-*:cleanFiles = List(<project>/lib_managed, <project>/target)
-[info]   | +-{.}/*:managedDirectory = lib_managed
-[info]   | +-*:target = target
-[info]   |   +-*:baseDirectory = <project>
-[info]   |     +-*:thisProject = Project(id: demo, base: <project>, ...
-[info]   |     
-[info]   +-*:cleanKeepFiles = List(<project>/target/.history)
-[info]     +-*:history = Some(<project>/target/.history)
+[info] clean = Task[Unit]
+[info]   +-clean / streams = Task[sbt.std.TaskStreams[sbt.internal.util.Init$ScopedKey[_ <: Any]]]
+[info]   | +-Global / streamsManager = Task[sbt.std.Streams[sbt.internal.util.Init$ScopedKey[_ <: Any]]]
+[info]   | 
+[info]   +-cleanFiles = Task[scala.collection.Seq[java.io.File]]
+[info]   | +-cleanKeepFiles = Vector(<project>/target/.history)
+[info]   | | +-history = Some(<project>/target/.history)
+[info]   | |   +-target = target
+[info]   | |     +-baseDirectory = 
 ...
 ```
 
@@ -114,7 +113,7 @@ task and the value of a setting. For example:
 
 ```
 > inspect update
-[info] Task: sbt.UpdateReport
+[info] Task: sbt.librarymanagement.UpdateReport
 [info] Description:
 [info]  Resolves and optionally retrieves dependencies, producing a report.
 ...
@@ -122,7 +121,7 @@ task and the value of a setting. For example:
 
 ```
 > inspect scalaVersion
-[info] Setting: java.lang.String = 2.9.2
+[info] Setting: java.lang.String = 2.12.4
 [info] Description:
 [info]  The version of Scala used for building.
 ...
@@ -147,10 +146,9 @@ specified to the Scala for testing and API documentation generation.
 > inspect scalacOptions
 ...
 [info] Related:
-[info]  compile:doc::scalacOptions
-[info]  test:scalacOptions
-[info]  */*:scalacOptions
-[info]  test:doc::scalacOptions
+[info]  Compile / scalacOptions
+[info]  Global / scalacOptions
+[info]  Test / scalacOptions
 ```
 
 See the [Inspecting Settings][Inspecting-Settings] page for details.
@@ -194,11 +192,11 @@ details, see `help session`.
 
 ```
 > about
-[info] This is sbt 0.12.0
+[info] This is sbt 1.1.0
 [info] The current project is {file:~/code/sbt.github.com/}default
-[info] The current project is built against Scala 2.9.2
-[info] Available Plugins: com.jsuereth.ghpages.GhPages, com.jsuereth.git.GitPlugin, com.jsuereth.sbtsite.SitePlugin
-[info] sbt, sbt plugins, and build definitions are using Scala 2.9.2
+[info] The current project is built against Scala 2.12.4
+[info] Available Plugins: sbt.plugins.IvyPlugin, sbt.plugins.JvmPlugin, sbt.plugins.CorePlugin, sbt.plugins.JUnitXmlReportPlugin, sbt.plugins.Giter8TemplatePlugin
+[info] sbt, sbt plugins, and build definitions are using Scala 2.12.4
 ```
 
 <a name="value"></a>
@@ -226,7 +224,9 @@ The `show` command also works for tasks, described next.
 [info] Update report:
 [info]  Resolve time: 122 ms, Download time: 5 ms, Download size: 0 bytes
 [info]  compile:
-[info]      org.scala-lang:scala-library:2.9.2: ...
+[info]      org.scala-lang:scala-library:
+[info]              - 2.12.4
+[info] ...
 ```
 
 The `show` command will execute the task provided as an argument and
@@ -238,7 +238,7 @@ value.
 ```
 > show compile:dependencyClasspath
 ...
-[info] ArrayBuffer(Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar))
+[info] ArrayBuffer(Attributed(/Users/foo/.sbt/boot/scala-2.12.4/lib/scala-library.jar))
 ```
 
 <a name="classpath"></a>
@@ -250,7 +250,8 @@ For the test classpath,
 ```
 > show test:dependencyClasspath
 ...
-[info] ArrayBuffer(Attributed(~/code/sbt.github.com/target/scala-2.9.2/classes), Attributed(~/.sbt/0.12.0/boot/scala-2.9.2/lib/scala-library.jar), Attributed(~/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
+[info] List(Attributed(/Users/foo/code/sbt.github.com/target/scala-2.12/classes), Attributed(~/.sbt/boot/scala-2.12.4/lib/scala-library.jar), Attributed(/Users/foo/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
+...
 ```
 
 <a name="applications"></a>
