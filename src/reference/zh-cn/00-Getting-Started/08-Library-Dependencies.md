@@ -103,7 +103,7 @@ libraryDependencies ++= Seq(
 这只是一种快捷方法。你可以这样写不用 `%%`：
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11.1" % "0.3"
+libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
 ```
 
 假设这个构建的 `scalaVersion` 是 `2.11.1`，下面这种方式是等效的（注意 `"org.scala-tools"` 后面是 `%%`）：
