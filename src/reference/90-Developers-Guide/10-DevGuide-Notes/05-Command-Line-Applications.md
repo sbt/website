@@ -52,7 +52,7 @@ name := "hello"
 
 version := "0.1-SNAPSHOT"
 
-libraryDependencies += "org.scala-sbt" % "command" % "0.12.0"
+libraryDependencies += "org.scala-sbt" %% "main" % "1.1.0"
 ```
 
 #### Application: Main.scala
@@ -76,6 +76,7 @@ package org.example
 
    import sbt._
    import java.io.{File, PrintWriter}
+   import sbt.internal.util.{AttributeMap, ConsoleOut, GlobalLogging, MainAppender}
 
 final class Main extends xsbti.AppMain
 {
@@ -90,9 +91,9 @@ final class Main extends xsbti.AppMain
    def initialState(configuration: xsbti.AppConfiguration): State =
    {
       val commandDefinitions = hello +: BasicCommands.allBasicCommands
-      val commandsToRun = Hello +: "iflast shell" +: configuration.arguments.map(_.trim)
+      val commandsToRun = (Hello +: "iflast oldshell" +: configuration.arguments.map(_.trim)).map(Exec(_, None)).toList
       State( configuration, commandDefinitions, Set.empty, None, commandsToRun, State.newHistory,
-         AttributeMap.empty, initialGlobalLogging, State.Continue )
+         AttributeMap.empty, initialGlobalLogging, None, State.Continue )
    }
 
    // defines an example command.  see the Commands page for details.
@@ -106,7 +107,7 @@ final class Main extends xsbti.AppMain
    * An application would need to do more here to customize the logging level and
    * provide access to the backing file (like sbt's last command and logLevel setting).*/
    def initialGlobalLogging: GlobalLogging =
-      GlobalLogging.initial(MainLogging.globalDefault _, File.createTempFile("hello", "log"))
+      GlobalLogging.initial(MainAppender.globalDefault(ConsoleOut.systemOut), File.createTempFile("hello", "log"), ConsoleOut.systemOut)
 }
 ```
 
@@ -117,18 +118,15 @@ application. `hello.build.properties`:
 
 ```
 [scala]
-  version: 2.9.1
+  version: 2.12.4
 
 [app]
   org: org.example
   name: hello
   version: 0.1-SNAPSHOT
   class: org.example.Main
-  components: xsbti
-  cross-versioned: true
 
 [repositories]
   local
   maven-central
-  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
 ```
