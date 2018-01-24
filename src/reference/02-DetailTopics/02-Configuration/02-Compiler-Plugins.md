@@ -40,13 +40,17 @@ scalacOptions += "-Xplugin:<path-to-sxr>/sxr-0.3.0.jar"
 
 ### Continuations Plugin Example
 
-Support for continuations in Scala 2.8 is implemented as a compiler
+Support for continuations in Scala 2.12 is implemented as a compiler
 plugin. You can use the compiler plugin support for this, as shown here.
 
 ```scala
+val continuationsVersion = "1.0.3"
+
 autoCompilerPlugins := true
 
-addCompilerPlugin("org.scala-lang.plugins" % "continuations" % "2.8.1")
+addCompilerPlugin("org.scala-lang.plugins" % "scala-continuations-plugin_2.12.2" % continuationsVersion)
+
+libraryDependencies += "org.scala-lang.plugins" %% "scala-continuations-library" % continuationsVersion
 
 scalacOptions += "-P:continuations:enable"
 ```
@@ -56,10 +60,14 @@ scalacOptions += "-P:continuations:enable"
 Adding a version-specific compiler plugin can be done as follows:
 
 ```scala
+val continuationsVersion = "1.0.3"
+
 autoCompilerPlugins := true
 
 libraryDependencies +=
-    compilerPlugin("org.scala-lang.plugins" % "continuations" % scalaVersion.value)
+    compilerPlugin("org.scala-lang.plugins" % ("scala-continuations-plugin_" + scalaVersion.value) % continuationsVersion)
+
+libraryDependencies += "org.scala-lang.plugins" %% "scala-continuations-library" % continuationsVersion
 
 scalacOptions += "-P:continuations:enable"
 ```
