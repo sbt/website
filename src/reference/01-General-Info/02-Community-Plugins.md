@@ -216,6 +216,7 @@ your plugin to the list.
   reports of licenses used by dependencies. <!-- 25 stars -->
 - [sbt-duplicates-finder](https://github.com/sbt/sbt-duplicates-finder): detect
   class and resources conflicting in your project's classpath. <!-- 13 stars -->
+- [sbt-google-cloud-storage](https://github.com/lightbend/sbt-google-cloud-storage): resolver and publisher for Google Cloud Storage.
 
 #### Web and frontend development plugins
 
