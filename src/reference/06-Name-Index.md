@@ -88,10 +88,7 @@ an sbt build definition. For command names, see
 
 #### Build Structure
 
--   [Build](../api/sbt/Build.html) is the trait implemented for a
-    [.scala build definition][Full-Def], which defines project
-    relationships and settings.
--   [Plugin](../api/sbt/Plugin.html) is the trait implemented for sbt
+-   [AutoPlugin](../api/sbt/AutoPlugin.html) is the trait implemented for sbt
     [plugins][Using-Plugins].
 -   [Project](../api/sbt/Project.html) is both a trait and a
     companion object that declares a single module in a build. See
