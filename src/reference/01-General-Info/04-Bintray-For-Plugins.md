@@ -53,21 +53,19 @@ Fill it out similarly to the above image, the settings are:
 Once this is done, you can begin to configure your sbt-plugins to
 publish to bintray.
 
-### Add the bintray-sbt plugin to your build.
+### Add the sbt-bintray plugin to your build.
 
-First, add the bintray-sbt to your plugin build.
+First, add the sbt-bintray to your plugin build.
 
 First, create a `project/bintray.sbt` file
 
 ```scala
-addSbtPlugin("me.lessis" % "bintray-sbt" % "$bintray_sbt_version$")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "$sbt_bintray_version$")
 ```
 
 Next, a make sure your `build.sbt` file has the following settings
 
 ```scala
-import bintray.Keys._
-
 lazy val commonSettings = Seq(
   version in ThisBuild := "<YOUR PLUGIN VERSION HERE>",
   organization in ThisBuild := "<INSERT YOUR ORG HERE>"
@@ -79,7 +77,7 @@ lazy val root = (project in file("."))
     sbtPlugin := true,
     name := "<YOUR PLUGIN HERE>",
     description := "<YOUR DESCRIPTION HERE>",
-    // This is an example.  bintray-sbt requires licenses to be specified 
+    // This is an example.  sbt-bintray requires licenses to be specified 
     // (using a canonical name).
     licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     publishMavenStyle := false,
@@ -110,7 +108,7 @@ they are, you can find them on [Bintray](https://bintray.com).
 3.  Click on edit profile
 4.  Click on API Key
 
-This will get you your password. The bintray-sbt plugin will save your
+This will get you your password. The sbt-bintray plugin will save your
 API key for future use.
 
 *NOTE: We have to do this before we can link our package to the sbt
