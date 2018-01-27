@@ -20,7 +20,7 @@ may become out of date quickly, so you may want to check on the
         -   Inter-project source dependencies
         -   Binary dependencies (jars + class files)
         -   data structure representing the
-            [API](https://github.com/sbt/sbt/tree/0.13/interface) of the
+            [API](https://github.com/sbt/zinc/tree/v1.1.0/internal/compiler-interface) of the
             source code There is some code already for generating dot
             files that isn't hooked up, but graphing dependencies and
             inheritance relationships is a general area of work.
