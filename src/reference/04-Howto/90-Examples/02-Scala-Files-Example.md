@@ -71,8 +71,8 @@ object ShellPromptPlugin extends AutoPlugin {
     shellPrompt := buildShellPrompt
   )
   val devnull: ProcessLogger = new ProcessLogger {
-    def out(s: => String) {}
-    def err(s: => String) { }
+    def out(s: => String): Unit = {}
+    def err(s: => String): Unit = {}
     def buffer[T] (f: => T): T = f
   }
   def currBranch =
