@@ -25,8 +25,8 @@ The reference process for configuring and publishing to Sonatype is
 described in their [OSSRH Guide][sonatype-ossrhguide].
 In short, you need two publicly available URLs: 
 
-* the website of the project e.g. https://github.com/sonatype/nexus-oss
-* the project's source code e.g. https://github.com/sonatype/nexus-oss.git
+* the website of the project e.g. https://github.com/sonatype/nexus-public
+* the project's source code e.g. https://github.com/sonatype/nexus-public.git
 
 The [OSSRH Guide][sonatype-ossrhguide] walks you through the required 
 process of setting up the account with Sonatype. It’s as simple as 
