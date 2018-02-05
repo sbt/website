@@ -72,6 +72,19 @@ proxy for all standard maven repositories, including maven central.
 
 This repositories file is all that's required to use a proxy repository.  These repositories will get included first in any sbt build, however you can add some additional configuration to force the use of the proxy repository instead of other configurations.
 
+### Using credentials for the proxy repository
+
+In case you need to define credentials to connect to your proxy repository, define en environment variable `SBT_CREDENTIALS` that points to the file containing your credentials:
+
+  export SBT_CREDENTIALS="$HOME/.ivy2/.credentials"
+
+with file contents
+
+  realm=My Nexus Repository Manager
+  host=my.artifact.repo.net
+  user=admin
+  password=admin123
+
 #### Launcher Script
 
 The sbt launcher supports two configuration options that allow the usage
