@@ -112,6 +112,7 @@ your plugin to the list.
   enhances [sbt-release](https://github.com/sbt/sbt-release) to support [Fossil](https://fossil-scm.org) repositories
 - [sbt-autoversion](https://github.com/sbt/sbt-autoversion): automatically set your
   next version bump based on patterns of your commit messase since last release. <!-- 2 stars -->
+- [sbt-gcs](https://github.com/saint1991/sbt-gcs): manage objects on Google Cloud Storage. <!-- 1 star -->
 
 #### Deployment integration plugins
 
