@@ -293,7 +293,7 @@ originally created by [Paul Phillips](https://gist.github.com/paulp/923154ab2d61
 It's a great demonstration of all the rules because `someKey += "x"` expands to
 
 ```scala
-someKey += {
+someKey := {
   val old = someKey.value
   old :+ "x"
 }
