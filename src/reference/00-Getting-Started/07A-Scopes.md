@@ -224,7 +224,7 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
 ### Examples of scoped key notation
 
 - `fullClasspath` specifies just a key, so the default scopes are used:
-  current project, a key-dependent configuration, and global task
+  current project, a key-dependent configuration, and `Zero` task
   scope.
 - `Test / fullClasspath` specifies the configuration, so this is
   `fullClasspath` in the `Test` configuration, with defaults for the other
@@ -331,8 +331,8 @@ reality, all keys consist of both a name, and a scope (where the scope
 has three axes). The entire expression
 `Compile / packageBin / packageOptions` is a key name, in other words.
 Simply `packageOptions` is also a key name, but a different one (for keys
-with no in, a scope is implicitly assumed: current project, global
-config, global task).
+with no in, a scope is implicitly assumed: current project, `Zero`
+config, `Zero` task).
 
 ### Build-level settings
 
