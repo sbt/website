@@ -73,5 +73,7 @@ watchSources += baseDirectory.value / "demo" / "examples.txt"
 milliseconds. The default value is `500 ms`. To change it to `1 s`,
 
 ```scala
-pollInterval := 1000 // in ms
+import scala.concurrent.duration._
+
+pollInterval := 1.second
 ```
