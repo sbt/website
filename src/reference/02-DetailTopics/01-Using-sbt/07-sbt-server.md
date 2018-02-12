@@ -184,7 +184,7 @@ Here's an example output (with JSON-RPC headers omitted):
 
 ### `textDocument/didSave` event
 
-As of sbt 1.1.0-M1, sbt will execute the `compile` task upon receiving a `textDocument/didSave` notification.
+As of sbt 1.1.0, sbt will execute the `compile` task upon receiving a `textDocument/didSave` notification.
 This behavior is subject to change.
 
 ### `sbt/exec` request
