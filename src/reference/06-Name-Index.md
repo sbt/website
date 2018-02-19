@@ -33,21 +33,21 @@ an sbt build definition. For command names, see
 
 #### Dependency Management
 
--   [ModuleID](../api/sbt/ModuleID.html) is the type of a dependency
+-   [ModuleID](../api/sbt/librarymanagement/ModuleID.html) is the type of a dependency
     definition. See
     [Library Management][Library-Management].
--   [Artifact](../api/sbt/Artifact.html) represents a single artifact
+-   [Artifact](../api/sbt/librarymanagement/Artifact.html) represents a single artifact
     (such as a jar or a pom) to be built and published. See
     [Library Management][Library-Management] and [Artifacts][Artifacts].
--   A [Resolver](../api/sbt/Resolver.html) can resolve and retrieve
+-   A [Resolver](../api/sbt/librarymanagement/Resolver.html) can resolve and retrieve
     dependencies. Many types of Resolvers can publish dependencies as
     well. A repository is a closely linked idea that typically refers to
     the actual location of the dependencies. However, sbt is not very
     consistent with this terminology and repository and resolver are
     occasionally used interchangeably.
--   A [ModuleConfiguration](../api/sbt/ModuleConfiguration.html) defines
+-   A [ModuleConfiguration](../api/sbt/librarymanagement/ModuleConfiguration.html) defines
     a specific resolver to use for a group of dependencies.
--   A [Configuration](../api/sbt/Configuration.html) is a useful Ivy
+-   A [Configuration](../api/sbt/librarymanagement/Configuration.html) is a useful Ivy
     construct for grouping dependencies. See ivy-configurations. It is
     also used for [scoping settings][Scopes].
 -   `Compile`, `Test`, `Runtime`, `Provided`, and `Optional` are
@@ -55,22 +55,22 @@ an sbt build definition. For command names, see
 
 #### Settings and Tasks
 
--   A [Setting](../api/sbt/Init\$Setting.html) describes how to
+-   A [Setting](../api/sbt/internal/util/Init\$Setting.html) describes how to
     initialize a specific setting in the build. It can use the values of
     other settings or the previous value of the setting being
     initialized.
--   A [SettingsDefinition](../api/sbt/Init\$SettingsDefinition.html)
+-   A [SettingsDefinition](../api/sbt/internal/util/Init\$SettingsDefinition.html)
     is the actual type of an expression in a build.sbt. This allows
-    either a single [Setting](../api/sbt/Init\$Setting.html) or a
+    either a single [Setting](../api/sbt/internal/util/Init\$Setting.html) or a
     sequence of settings
-    ([SettingList](../api/sbt/Init\$SettingList.html)) to be defined at
+    ([SettingList](../api/sbt/internal/util/Init\$SettingList.html)) to be defined at
     once. The types in a [.scala build definition][Full-Def] always use just a
-    plain [Setting](../api/sbt/Init\$Setting.html).
--   [Initialize](../api/sbt/Init\$Initialize.html) describes how to
+    plain [Setting](../api/sbt/internal/util/Init\$Setting.html).
+-   [Initialize](../api/sbt/internal/util/Init\$Initialize.html) describes how to
     initialize a setting using other settings, but isn't bound to a
     particular setting yet. Combined with an initialization method and a
     setting to initialize, it produces a full
-    [Setting](../api/sbt/Init\$Setting.html).
+    [Setting](../api/sbt/internal/util/Init\$Setting.html).
 -   [TaskKey](../api/sbt/TaskKey.html),
     [SettingKey](../api/sbt/SettingKey.html), and
     [InputKey](../api/sbt/InputKey.html) are keys that represent a task
@@ -107,7 +107,7 @@ See the [Getting Started Guide][Basic-Def] for
 details.
 
 -   `:=`, `+=`, `++=` These construct a
-    [Setting](../api/sbt/Init\$Setting.html), which is the fundamental
+    [Setting](../api/sbt/internal/util/Init\$Setting.html), which is the fundamental
     type in the [settings][Basic-Def] system.
 -   `value` This uses the value of another setting or task in the
     definition of a new setting or task. This method is special (it is a
@@ -122,8 +122,8 @@ details.
 
 #### File and IO
 
-See [RichFile](../api/sbt/RichFile.html),
-[PathFinder](../api/sbt/PathFinder.html), and
+See [RichFile](../api/sbt/io/RichFile.html),
+[PathFinder](../api/sbt/io/PathFinder.html), and
 [Paths][Paths] for the full documentation.
 
 -   `/` When called on a single File, this is `new File(x,y)`. For
@@ -132,14 +132,14 @@ See [RichFile](../api/sbt/RichFile.html),
     (`**`) of a File or Seq[File] that match a filter.
 -   `|`, `||`, `&&`, `&`, `-`, and `--` are methods for combining
     filters, which are often used for selecting Files. See
-    [NameFilter](../api/sbt/NameFilter.html) and
-    [FileFilter](../api/sbt/FileFilter.html). Note that methods with
+    [NameFilter](../api/sbt/io/NameFilter.html) and
+    [FileFilter](../api/sbt/io/FileFilter.html). Note that methods with
     these names also exist for other types, such as collections (like
-    Seq) and [Parser](../api/sbt/complete/Parser.html) (see
+    Seq) and [Parser](../api/sbt/internal/util/complete/Parser.html) (see
     [Parsing Input][Parsing-Input]).
 -   `pair` Used to construct mappings from a `File` to another `File` or
     to a String. See [Mapping Files][Mapping-Files].
--   `get` forces a [PathFinder](../api/sbt/PathFinder.html) (a
+-   `get` forces a [PathFinder](../api/sbt/io/PathFinder.html) (a
     call-by-name data structure) to a strict `Seq[File]` representation.
     This is a common name in Scala, used by types like Option.
 
@@ -147,23 +147,23 @@ See [RichFile](../api/sbt/RichFile.html),
 
 See [Library Management][Library-Management] for full documentation.
 
--   `%` This is used to build up a [ModuleID](../api/sbt/ModuleID.html).
+-   `%` This is used to build up a [ModuleID](../api/sbt/librarymanagement/ModuleID.html).
 -   `%%` This is similar to `%` except that it identifies a dependency
     that has been [cross built][Cross-Build].
 -   `from` Used to specify the fallback URL for a dependency
 -   `classifier` Used to specify the classifier for a dependency.
 -   `at` Used to define a Maven-style resolver.
--   `intransitive` Marks a [dependency](../api/sbt/ModuleID.html) or
-    [Configuration](../api/sbt/Configuration.html) as being
+-   `intransitive` Marks a [dependency](../api/sbt/librarymanagement/ModuleID.html) or
+    [Configuration](../api/sbt/librarymanagement/Configuration.html) as being
     intransitive.
--   `hide` Marks a [Configuration](../api/sbt/Configuration.html) as
+-   `hide` Marks a [Configuration](../api/sbt/librarymanagement/Configuration.html) as
     internal and not to be included in the published metadata.
 
 #### Parsing
 
 These methods are used to build up
-[Parser](../api/sbt/complete/Parser.html)s from smaller
-[Parser](../api/sbt/complete/Parser.html)s. They closely follow the
+[Parser](../api/sbt/internal/util/complete/Parser.html)s from smaller
+[Parser](../api/sbt/internal/util/complete/Parser.html)s. They closely follow the
 names of the standard library's parser combinators. See
 [Parsing Input][Parsing-Input] for the full documentation. These are
 used for
