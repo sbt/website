@@ -3,7 +3,6 @@ out: Contibuting-to-sbt.html
 ---
 
   [sbt-dev]: https://groups.google.com/d/forum/sbt-dev
-  [adept]: https://github.com/adept-dm/adept
   [Update-Report]: Update-Report.html
 
 Contributing to sbt
@@ -43,12 +42,11 @@ may become out of date quickly, so you may want to check on the
     the dependencies. It is also easy to extend this to other ways of
     retrieving projects. Support for svn and hg was a recent
     contribution, for example.
-3.  Dependency management: see [adept][adept]
-4.  If you like parsers, sbt commands and input tasks are written using
+3.  If you like parsers, sbt commands and input tasks are written using
     custom parser combinators that provide tab completion and error
     handling. Among other things, the efficiency could be improved.
-5.  The javap task hasn't been reintegrated
-6.  Implement enhanced 0.11-style warn/debug/info/error/trace commands.
+4.  The javap task hasn't been reintegrated
+5.  Implement enhanced 0.11-style warn/debug/info/error/trace commands.
     Currently, you set it like any other setting:
 
 ```
@@ -67,7 +65,7 @@ warn test:run
 Also, trace is currently an integer, but should really be an abstract
 data type.
 
-​7. Each sbt version has more aggressive incremental compilation and
+6. Each sbt version has more aggressive incremental compilation and
 reproducing bugs can be difficult. It would be helpful to have a mode
 that generates a diff between successive compilations and records the
 options passed to scalac. This could be replayed or inspected to try to
