@@ -121,7 +121,7 @@ configuration, :
 ```scala
 example := {
    val artifactTypes = Set("jar", "zip")
-   val files: Seq[File] =
+   val files =
       Classpaths.managedJars(Compile, artifactTypes, update.value)
    ...
 }
