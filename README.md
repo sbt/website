@@ -3,20 +3,27 @@ scala-sbt.org
 
 This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
 
-scala-sbt.org is powered by two static site engines.
+scala-sbt.org is powered by:
 
-[nanoc](http://nanoc.ws/) is used for the landing pages.
+* [nanoc](http://nanoc.ws/) to generate the landing pages.
 
-[Pamflet](http://www.foundweekends.org/pamflet/), a Scala-based documentation engine written by @n8han (and some contributions from @eed3si9n) generates 0.13+ documentations.
+* [Pamflet](http://www.foundweekends.org/pamflet/), a Scala-based documentation engine written by [@n8han][] (and some contributions from [@eed3si9n][]) generates the sbt 0.13/1.x documentation.
 
-These two engines are driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages). We will shortly use pandoc to also generate pdf files.
+* [Pandoc](https://pandoc.org/), to generate pdf files.
+
+[@n8han]: https://github.com/n8han
+[@eed3si9n]: https://github.com/eed3si9n
+
+The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages).
 
 ## Attention plugin authors
 
 The source for [Community plugins](https://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/edit/1.x/src/reference/01-General-Info/02-Community-Plugins.md).
-Fork this project, add your plugin and send us a pull request if your plugin is not already on it.
+Add your plugin to this page and send send us a pull request if your plugin is not already on it.
 
 ## Setup
+
+### Minimum setup
 
 Currently, nanoc requires Ruby 2.1 or greater.
 
@@ -28,13 +35,22 @@ $ gem install redcarpet
 $ gem install nokogiri
 ```
 
-If you're running ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet, and
-pandoc/latex for PDF generation:
+If you're running ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet:
+
+```
+$ sudo apt-get install ruby-dev
+```
+
+### Full setup
+
+The pdf generation is optional, and requires the following additional steps.
+
+On Ubuntu
 
 ```
 $ sudo add-apt-repository ppa:texlive-backports/ppa
 $ sudo apt-get update
-$ sudo apt-get install ruby-dev pandoc latex-cjk-all texlive-full
+$ sudo apt-get install pandoc latex-cjk-all texlive-full
 ```
 
 On Mac
@@ -46,11 +62,13 @@ On Mac
 
 ## Usage
 
-To make site locally, from sbt shell:
+To make the site locally, from sbt shell:
 
 ```
 > makeSite
 ```
+
+Then open `target/site/index.html`.
 
 To push site, from sbt shell:
 
@@ -58,10 +76,11 @@ To push site, from sbt shell:
 > ghpagesPushSite
 ```
 
-Beware of https://github.com/sbt/sbt-ghpages/issues/25
+Beware that sbt-ghpages interacts badly if your home directory is a git repository: https://github.com/sbt/sbt-ghpages/issues/25
 
 ## Releasing new sbt
 
+- Make sure you **enable** pdf generation: `sbt -Dsbt.website.generate_pdf`
 - Update `sbt.version` in `project/build.properties`
 - Update `targetSbtFullVersion` in `project/Docs.scala`
 - Add last release to "Previous releases" in `src/nanoc/nanoc.yaml`

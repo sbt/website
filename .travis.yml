@@ -12,9 +12,9 @@ cache:
   - bundler
   - directories:
     - $HOME/.ivy2/cache
+    - $HOME/.sbt
 
-jdk:
-  - oraclejdk8
+jdk: oraclejdk8
 
 install:
   - gem install nanoc:4.0.2
@@ -35,21 +35,10 @@ addons:
 before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M"
 
-script:
-  - /usr/bin/sbt scalafmtTest scripted makeSite
-  # Tricks to avoid unnecessary cache updates
-  - find $HOME/.sbt -name "*.lock" | xargs rm
-  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+script: sbt -Dsbt.website.generate_pdf scalafmtTest scripted makeSite
 
-after_success:
-  - .travis/publish-site.sh
-
-cache:
-  directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/ghpages
-    - $HOME/.sbt/boot
+after_success: .travis/publish-site.sh
 
 before_cache:
-  - find $HOME/.ivy2 -name "ivydata-*.properties" -print -delete
-  - find $HOME/.sbt  -name "*.lock"               -print -delete
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt  -name "*.lock"               -delete
