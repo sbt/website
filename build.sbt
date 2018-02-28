@@ -21,7 +21,8 @@ lazy val root = (project in file("."))
     SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
     // GitHub Pages. See project/Docs.scala
     customGhPagesSettings,
-    if (scala.sys.BooleanProp.keyExists("sbt.website.generate_pdf")) Def settings (
+    if (scala.sys.BooleanProp.keyExists("sbt.website.generate_pdf"))
+      Def settings (
         // NOTE - PDF settings must be done externally like this because pdf generation generically looks
         // through `mappings in Config` for Combined+Pages.md to generate PDF from, and therefore we
         // can't create a circular dependency by adding it back into the original mappings.
@@ -31,7 +32,8 @@ lazy val root = (project in file("."))
           mappings in Pdf.generatePdf in Pamflet,
           siteSubdirName in Pamflet,
         ),
-    ) else Nil,
+      )
+    else Nil,
     fileEncoding := {
       sys.props("file.encoding") match {
         case "UTF-8" => "UTF-8"
