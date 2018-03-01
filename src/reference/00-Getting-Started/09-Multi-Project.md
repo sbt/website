@@ -143,25 +143,25 @@ like `dependsOn(bar, baz)`.
 
 ##### Per-configuration classpath dependencies
 
-`foo dependsOn(bar)` means that the `compile` configuration in `foo` depends
-on the `compile` configuration in `bar`. You could write this explicitly as
-`dependsOn(bar % "compile->compile")`.
+`core dependsOn(util)` means that the `compile` configuration in `core` depends
+on the `compile` configuration in `util`. You could write this explicitly as
+`dependsOn(util % "compile->compile")`.
 
 The `->` in `"compile->compile"` means "depends on" so `"test->compile"`
-means the `test` configuration in `foo` would depend on the `compile`
-configuration in `bar`.
+means the `test` configuration in `core` would depend on the `compile`
+configuration in `util`.
 
 Omitting the `->config` part implies `->compile`, so
-`dependsOn(bar % "test")` means that the `test` configuration in `foo` depends
-on the `Compile` configuration in `bar`.
+`dependsOn(util % "test")` means that the `test` configuration in `core` depends
+on the `Compile` configuration in `util`.
 
 A useful declaration is `"test->test"` which means `test` depends on `test`.
-This allows you to put utility code for testing in `bar/src/test/scala`
-and then use that code in `foo/src/test/scala`, for example.
+This allows you to put utility code for testing in `util/src/test/scala`
+and then use that code in `core/src/test/scala`, for example.
 
 You can have multiple configurations for a dependency, separated by
 semicolons. For example,
-`dependsOn(bar % "test->test;compile->compile")`.
+`dependsOn(util % "test->test;compile->compile")`.
 
 ### Default root project
 
