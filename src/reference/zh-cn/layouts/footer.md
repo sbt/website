@@ -22,7 +22,6 @@
             <a href="https://www.lightbend.com/services/consulting">Consulting</a>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -34,7 +33,7 @@
       <div class="col-md-8 sbt">
         <nav>
           <a href="../../../index.html">
-            <img src="../files/typesafe_sbt_reverse_svg.svg" alt="sbt">
+            <img src="../files/sbt-logo-reverse.svg" alt="sbt">
           </a>
           <a href="../../../documentation.html">Documentation</a>
           <a href="../../../download.html">Download</a>
