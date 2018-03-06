@@ -284,10 +284,10 @@ What will `projF / test` show?
 
 1. `"bippy-D4"`
 2. `"bippy-D2-D4"`
-3. `"bippy-D0-D3-D4"`
+3. `"bippy-D0-D1-D3-D4"`
 4. something else?
 
-The answer is `"bippy-D0-D3-D4"`. This is a variation of an exercise
+The answer is `"bippy-D0-D1-D3-D4"`. This is a variation of an exercise
 originally created by [Paul Phillips](https://gist.github.com/paulp/923154ab2d61882195cdea47483592ca).
 
 It's a great demonstration of all the rules because `someKey += "x"` expands to
@@ -310,6 +310,7 @@ ThisBuild / scalacOptions := {
   old :+ "-D0"
 }
 
+// This bare key scopes to the current subproject. Thus the scoped key actually assigned here is ( projF / scalacOptions )
 scalacOptions := {
   // ThisBuild / scalacOptions <- Rule 4
   val old = scalacOptions.value
@@ -319,12 +320,12 @@ scalacOptions := {
 lazy val projF = (project in file("f"))
   .settings(
     compile / scalacOptions := {
-      // ThisBuild / scalacOptions <- Rules 2 and 4
+      // projF / scalacOptions <- Rules 2 and 4
       val old = (compile / scalacOptions).value
       old :+ "-D2"
     },
     Compile / scalacOptions := {
-      // ThisBuild / scalacOptions <- Rules 3 and 4
+      // projF / scalacOptions <- Rules 3 and 4
       val old = (Compile / scalacOptions).value
       old :+ "-D3"
     },
@@ -352,9 +353,9 @@ scalacOptions := {
 
 lazy val projF = (project in file("f"))
   .settings(
-    compile / scalacOptions := List("-D0") :+ "-D2",
-    Compile / scalacOptions := List("-D0") :+ "-D3",
-    Compile / compile / scalacOptions := List("-D0", "-D3") :+ "-D4",
+    compile / scalacOptions := List("-D0", "-D1") :+ "-D2",
+    Compile / scalacOptions := List("-D0", "-D1") :+ "-D3",
+    Compile / compile / scalacOptions := List("-D0", "-D1", "-D3") :+ "-D4",
     test := {
       println("bippy" + (Compile / compile / scalacOptions).value.mkString)
     }
