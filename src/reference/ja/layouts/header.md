@@ -4,7 +4,7 @@
     <div class="logo">
       <a href="../../../index.html"><img src="../files/sbt-logo-100x56.png" alt="sbt"></a>
     </div>
-    <div class="nav">
+    <div class="nav" id="topbar">
       <a href="../../../documentation.html">Documentation</a>
       <a href="../../../download.html">Download</a>
       <a href="../../../support.html">Support</a>

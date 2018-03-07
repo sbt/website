@@ -87,8 +87,8 @@ full dependency tree for a task or setting. For example,
 ```
 > inspect tree clean
 [info] clean = Task[Unit]
-[info]   +-clean / streams = Task[sbt.std.TaskStreams[sbt.internal.util.Init$ScopedKey[_ <: Any]]]
-[info]   | +-Global / streamsManager = Task[sbt.std.Streams[sbt.internal.util.Init$ScopedKey[_ <: Any]]]
+[info]   +-clean / streams = Task[sbt.std.TaskStreams[sbt.internal.util.Init\$ScopedKey[_ <: Any]]]
+[info]   | +-Global / streamsManager = Task[sbt.std.Streams[sbt.internal.util.Init\$ScopedKey[_ <: Any]]]
 [info]   | 
 [info]   +-cleanFiles = Task[scala.collection.Seq[java.io.File]]
 [info]   | +-cleanKeepFiles = Vector(<project>/target/.history)
