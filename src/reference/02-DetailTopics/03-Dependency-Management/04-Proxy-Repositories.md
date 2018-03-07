@@ -76,7 +76,7 @@ This repositories file is all that's required to use a proxy repository.  These 
 
 In case you need to define credentials to connect to your proxy repository, define en environment variable `SBT_CREDENTIALS` that points to the file containing your credentials:
 
-  export SBT_CREDENTIALS="$HOME/.ivy2/.credentials"
+  export SBT_CREDENTIALS="\$HOME/.ivy2/.credentials"
 
 with file contents
 

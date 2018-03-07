@@ -86,6 +86,21 @@ Beware that sbt-ghpages interacts badly if your home directory is a git reposito
 - Add last release to "Previous releases" in `src/nanoc/nanoc.yaml`
 - Update `sbtVersion`, `windowsBuild` and `sbtVersionForScalaDoc` in `src/reference/template.properties`
 
+## Dollar sign
+
+Pamflet uses dollar sign (`$`) as the template variable character.
+So if you use it in the document, use need to escape it with backslash: `\$`.
+
+Here's how to check for unescaped dollar signs.
+
+```
+$ brew install ripgrep
+$ rg '^([^\$]*)[^\\]\$([^\$]*)$' -g '*.md' src
+
+src/reference/02-DetailTopics/03-Dependency-Management/04-Proxy-Repositories.md
+79:  export SBT_CREDENTIALS="$HOME/.ivy2/.credentials"
+```
+
 ## Including code examples
 
 To include a validated code examples, create a scripted test under `src/sbt-test`,
