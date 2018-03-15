@@ -94,7 +94,7 @@ Content-Length: ...\r\n
 
 To discover a running server and to prevent unauthorized access to the sbt server, we use a *port file* and a *token file*.
 
-By default, sbt server will be running when a sbt shell session is active. When the server is up, it will create two files called the *port file* and the *token file*. The port file is located at `./project/target/active.json` relative to a build and contains something like:
+By default, sbt server will be running when a sbt shell session is active. When the server is up, it will create a file called the *port file*. The port file is located at `./project/target/active.json` relative to a build and contains something like:
 
 ```json
 {
@@ -104,13 +104,19 @@ By default, sbt server will be running when a sbt shell session is active. When 
 }
 ```
 
-This gives us three pieces of information:
+or 
 
-1. That the server is (likely) running.
-2. That the server is running on port 5010.
-3. The location of the token file.
+```json
+{
+  "uri":"local:sbt-server-0845deda85cb41abdb9f",
+}
+```
 
-The location of the token file uses a SHA-1 hash of the build path, so it will not change between the runs.
+In the first case, the server is running in TCP mode, and connections to it need to be made over TCP. The `uri` key contains a TCP Uri indicating where the server is running.
+
+In the second case, the server is running in named pipe mode, and connections to the server need to be made over Unix domain sockets when on Unix, and through named pipes on Windows. The key `uri` hold a value that starts with `"local:"`. The part after that is either the path to the socket on Unix or the name of the named pipe on Windows.
+
+In the first case, when the server is running in TCP mode, apart from the uri, there is also a link to the *token file*, in both path and uri form. The location of the token file uses a SHA-1 hash of the build path, so it will not change between the runs.
 The token file should contain JSON like the following:
 
 ```json
@@ -126,7 +132,7 @@ The `uri` field is the same, and the `token` field contains a 128-bits non-negat
 
 To initiate communication with sbt server, the client (such as a tool like VS Code) must first send an [`initialize` request][lsp_initialize]. This means that the client must send a request with method set to "initialize" and the `InitializeParams` datatype as the `params` field.
 
-To authenticate yourself, you must pass in the token in `initializationOptions` as follows:
+If the server is running in TCP mode, to authenticate yourself, you must pass in the token in `initializationOptions` as follows:
 
 ```
 type InitializationOptionsParams {
@@ -143,6 +149,8 @@ Content-Length: 149
 
 { "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "initializationOptions": { "token": "84046191245433876643612047032303751629" } } }
 ```
+
+If the server is running in named pipe mode, no token is needed, and the `initializationOptions` should be the empty object `{}`. Connections to the server when it's running in named pipe mode are exclusive to the first process that connects to the socket or pipe.
 
 After sbt receives the request, it will send an [`initialized` event][lsp_initialized].
 
