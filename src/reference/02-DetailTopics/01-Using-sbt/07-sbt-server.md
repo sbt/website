@@ -90,11 +90,35 @@ Content-Length: ...\r\n
 }
 ```
 
+### Server modes
+
+Sbt server can run in two modes, which differ in wire protocol and initialization. The default mode since sbt 1.1.x is *domain socket mode*, which uses either Unix domain sockets (on Unix) or named pipes (on Windows) for data transfer between server and client. In addition, there is a *TCP mode*, which uses TCP for data transfer.
+
+The mode which sbt server starts in is goverened by the key `serverConnectionType`, which can be set to `ConnectionType.Local` for domain socket/named pipe mode, or to `ConnectionType.Tcp` for TCP mode.
+
 ### Server discovery and authentication
 
-To discover a running server and to prevent unauthorized access to the sbt server, we use a *port file* and a *token file*.
+To discover a running server, we use a *port file*.
 
-By default, sbt server will be running when a sbt shell session is active. When the server is up, it will create two files called the *port file* and the *token file*. The port file is located at `./project/target/active.json` relative to a build and contains something like:
+By default, sbt server will be running when a sbt shell session is active. When the server is up, it will create a file called the port file. The port file is located at `./project/target/active.json`. The port file will look different depending on whether the server is running in TCP mode or domain socket/named pipe mode. They will look something like this:
+
+In domain socket/named pipe mode, on Unix:
+
+```json
+{"uri":"local:///Users/someone/.sbt/1.0/server/0845deda85cb41abdb9f/sock"}
+```
+
+where the `uri` key will contain a string starting with `local://` followed by the socket address sbt server is listening on.
+
+In domain socket/named pipe mode, on Windows, it will look something like
+
+```json
+{"uri":"local:sbt-server-0845deda85cb41abdb9f"}
+```
+
+where the `uri` key will contain a string starting with `local:` followed by the name of the named pipe. In this example, the path of the named pipe will be `\\.\pipe\sbt-server-0845deda85cb41abdb9f`.
+
+In TCP mode it will look something like the following:
 
 ```json
 {
@@ -104,14 +128,9 @@ By default, sbt server will be running when a sbt shell session is active. When 
 }
 ```
 
-This gives us three pieces of information:
+In this case, the `uri` key will hold a TCP uri with the address the server is listening on. In this mode, the port file will contain two additional keys, `tokenfilePath` and `tokenfileUri`. These point to the location of a *token file*.
 
-1. That the server is (likely) running.
-2. That the server is running on port 5010.
-3. The location of the token file.
-
-The location of the token file uses a SHA-1 hash of the build path, so it will not change between the runs.
-The token file should contain JSON like the following:
+The location of the token file will not change between runs. It's contents will look something like this:
 
 ```json
 {
@@ -126,7 +145,7 @@ The `uri` field is the same, and the `token` field contains a 128-bits non-negat
 
 To initiate communication with sbt server, the client (such as a tool like VS Code) must first send an [`initialize` request][lsp_initialize]. This means that the client must send a request with method set to "initialize" and the `InitializeParams` datatype as the `params` field.
 
-To authenticate yourself, you must pass in the token in `initializationOptions` as follows:
+If the server is running in TCP mode, to authenticate yourself, you must pass in the token in `initializationOptions` as follows:
 
 ```
 type InitializationOptionsParams {
@@ -143,6 +162,19 @@ Content-Length: 149
 
 { "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "initializationOptions": { "token": "84046191245433876643612047032303751629" } } }
 ```
+
+If the server is running in named pipe mode, no token is needed, and the `initializationOptions` should be the empty object `{}`.
+
+On Unix, using netcat, sending the initialize message in domain socket/named pipe mode will look something like this:
+
+```
+$ nc -U /Users/foo/.sbt/1.0/server/0845deda85cb41abcdef/sock
+Content-Length: 99^M
+^M
+{ "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "initializationOptions": { } } }^M
+```
+
+Connections to the server when it's running in named pipe mode are exclusive to the first process that connects to the socket or pipe.
 
 After sbt receives the request, it will send an [`initialized` event][lsp_initialized].
 
