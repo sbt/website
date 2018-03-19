@@ -168,7 +168,7 @@ If the server is running in named pipe mode, no token is needed, and the `initia
 On Unix, using netcat, sending the initialize message in domain socket/named pipe mode will look something like this:
 
 ```
-$ nc -U /Users/foo/.sbt/1.0/server/0845deda85cb41abcdef/sock
+\$ nc -U /Users/foo/.sbt/1.0/server/0845deda85cb41abcdef/sock
 Content-Length: 99^M
 ^M
 { "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "initializationOptions": { } } }^M
