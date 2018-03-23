@@ -69,7 +69,7 @@ your plugin to the list.
 - [literator](https://github.com/laughedelic/literator):
   generate literate-style markdown docs from your sources. <!-- 33 stars -->
 - [sbt-example](https://github.com/ThoughtWorksInc/sbt-example):
-  generate ScalaTest test suites from examples in Scaladoc. <!-- 33 stars -->
+  generate ScalaTest test suites from examples in Scaladoc. <!-- 8 stars -->
 
 #### One jar plugins
 
