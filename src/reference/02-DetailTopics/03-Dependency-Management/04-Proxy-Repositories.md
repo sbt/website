@@ -135,3 +135,8 @@ repositories, one for maven and one for ivy.
 Here's an example setup:
 
 ![image](files/proxy-ivy-mvn-setup.png)
+
+**NOTE**: If using Nexus as the proxy repository, then it is very important that you set the layout policy to
+"permissive" for the proxy mapping that you create to the upstream repository
+http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases. If you do not, Nexus will stop short of proxying the
+original request to this url and issue a HTTP 404 in its place and the dependency will not resolve.
