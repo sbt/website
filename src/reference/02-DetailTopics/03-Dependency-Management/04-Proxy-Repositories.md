@@ -80,10 +80,12 @@ In case you need to define credentials to connect to your proxy repository, defi
 
 with file contents
 
+```
   realm=My Nexus Repository Manager
   host=my.artifact.repo.net
   user=admin
   password=admin123
+```
 
 #### Launcher Script
 
