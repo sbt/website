@@ -36,7 +36,7 @@ before_script:
  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M"
 
 # Use `/usr/bin/sbt` that we manually installed
-script: /usr/bin/sbt -Dsbt.website.generate_pdf scalafmtTest scripted makeSite
+script: /usr/bin/sbt -Dsbt.website.generate_pdf Sbt/scalafmt/test scripted makeSite
 
 after_success: .travis/publish-site.sh
 
