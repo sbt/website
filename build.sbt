@@ -7,7 +7,11 @@ lazy val fileEncoding = settingKey[String]("check the file encoding")
 lazy val root = (project in file("."))
   .enablePlugins(NanocPlugin, LowTechSnippetPamfletPlugin)
   .settings(
-    organization := "org.scala-sbt",
+    inThisBuild(Seq(
+      organization := "org.scala-sbt",
+      scalafmtOnCompile := true,
+    )),
+
     name := "website",
     siteEmail := "eed3si9n" + "@gmail.com",
     // Reference
