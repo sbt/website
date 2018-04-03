@@ -266,6 +266,8 @@ your plugin to the list.
   artefacts built with sbt-native-packager. <!-- 73 stars -->
 - [sbt-spark](https://github.com/alonsodomin/sbt-spark): Spark application
   configurator. <!-- 7 stars -->
+- [sbt-api-builder](https://github.com/sirocchj/sbt-api-builder): support for
+  ApiBuilder from within sbt's shell. <!-- 1 star -->
 
 #### Code generator plugins
 
