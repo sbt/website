@@ -101,6 +101,8 @@ object Docs {
       generateRedirect("../Migrating-from-sbt-0.7.x.html",
                        dt / "Migrating-from-sbt-0.7.x-to-0.10.x.html",
                        s.log)
+      generateRedirect("Migrating-from-sbt-013x.html#Migrating+from+the+Build+trait",
+                       output / "Full-Def.html", s.log)
       generateRedirect("../Incremental-Recompilation.html",
                        dt / "Understanding-incremental-recompilation.html",
                        s.log)
