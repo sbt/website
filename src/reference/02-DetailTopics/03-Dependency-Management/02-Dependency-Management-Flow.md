@@ -61,7 +61,7 @@ about when it actually performs a resolution.
     repository.
 3.  `last update` contains more information about the most recent
     resolution and download. The amount of debugging output from Ivy is
-    high, so you may want to use lastGrep (run help lastGrep for usage).
+    high, so you may want to use last-grep (run help last-grep for usage).
 4.  Run `clean` and then `update`. If this works, it could indicate a
     bug in sbt, but the problem would need to be reproduced in order to
     diagnose and fix it.
