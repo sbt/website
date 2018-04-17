@@ -131,7 +131,7 @@ this, it's not recommended to do so.
 
 Even if your company does not use ivy, sbt uses a custom layout to
 handle binary compatibility constraints of its own plugins. To ensure
-that these are resolved correctly, simple set up two virtual/proxy
+that these are resolved correctly, simply set up two virtual/proxy
 repositories, one for maven and one for ivy.
 
 Here's an example setup:
