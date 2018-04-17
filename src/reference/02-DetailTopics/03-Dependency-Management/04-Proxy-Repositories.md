@@ -125,7 +125,7 @@ repository file.
 ### Proxying Ivy Repositories
 
 The most common mistake made when setting up a proxy repository for sbt
-is the attempting to *merge* both *maven* and *ivy* repositories into
+is attempting to *merge* both *maven* and *ivy* repositories into
 the *same* proxy repository. While some repository managers will allow
 this, it's not recommended to do so.
 
