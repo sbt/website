@@ -74,9 +74,9 @@ This repositories file is all that's required to use a proxy repository.  These 
 
 ### Using credentials for the proxy repository
 
-In case you need to define credentials to connect to your proxy repository, define en environment variable `SBT_CREDENTIALS` that points to the file containing your credentials:
+In case you need to define credentials to connect to your proxy repository, define an environment variable `SBT_CREDENTIALS` that points to the file containing your credentials:
 
-  export SBT_CREDENTIALS="\$HOME/.ivy2/.credentials"
+    export SBT_CREDENTIALS="$HOME/.ivy2/.credentials"
 
 with file contents
 
@@ -125,13 +125,13 @@ repository file.
 ### Proxying Ivy Repositories
 
 The most common mistake made when setting up a proxy repository for sbt
-is the attempting to *merge* both *maven* and *ivy* repositories into
+is attempting to *merge* both *maven* and *ivy* repositories into
 the *same* proxy repository. While some repository managers will allow
 this, it's not recommended to do so.
 
 Even if your company does not use ivy, sbt uses a custom layout to
 handle binary compatibility constraints of its own plugins. To ensure
-that these are resolved correctly, simple set up two virtual/proxy
+that these are resolved correctly, simply set up two virtual/proxy
 repositories, one for maven and one for ivy.
 
 Here's an example setup:
