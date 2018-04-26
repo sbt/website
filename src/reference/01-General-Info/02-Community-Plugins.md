@@ -297,7 +297,9 @@ your plugin to the list.
     <https://github.com/sksamuel/sbt-versions>
 -   sbt-bobby (Prevents outdated dependencies from being used by your project):
     <https://github.com/hmrc/sbt-bobby>
-
+-   sbt-trace (Finds traces of the client or library usage in other projects):
+    <https://github.com/delprks/sbt-trace>
+    
 #### Build interoperability plugins
 
 -   ant4sbt:
