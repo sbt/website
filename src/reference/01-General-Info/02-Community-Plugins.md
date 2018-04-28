@@ -246,6 +246,7 @@ your plugin to the list.
   assets. <!-- 18 stars -->
 - [sbt-scalatra](https://github.com/scalatra/sbt-scalatra): build and run
   Scalatra apps. <!-- 17 stars -->
+- [sbt-scala-js-map](https://github.com/ThoughtWorksInc/sbt-scala-js-map): Configure source mapping for Scala.js projects hosted on Github. <!-- 16 stars -->
 - [sbt-gzip](https://github.com/sbt/sbt-gzip): gzip compressor for assets.
   <!-- 15 stars -->
 - [sbt-stylus](https://github.com/sbt/sbt-stylus): Stylus stylesheet compiler.
