@@ -169,15 +169,7 @@ ThisBuild / scalaVersion := "2.12.6"
 
 Using an editor, change `build.sbt` to follows:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-lazy val hello = (project in file("."))
-  .settings(
-    name := "Hello"
-  )
-```
+@@snip [name]($root$/src/sbt-test/ref/example-name/build.sbt) {}
 
 ### Reload the build
 
@@ -197,16 +189,7 @@ Note that the prompt has now changed to `sbt:Hello>`.
 
 Using an editor, change `build.sbt` to follows:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-lazy val hello = (project in file("."))
-  .settings(
-    name := "Hello",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-  )
-```
+@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/build.sbt) {}
 
 Use `reload` command to reflect the change in `build.sbt`.
 
@@ -230,15 +213,7 @@ sbt:Hello> ~testQuick
 
 Using an editor, create a file named `src/test/scala/HelloSpec.scala`:
 
-```scala
-import org.scalatest._
-
-class HelloSpec extends FunSuite with DiagrammedAssertions {
-  test("Hello should start with H") {
-    assert("hello".startsWith("H"))
-  }
-}
-```
+@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/src/test/scala/HelloSpec.scala) {}
 
 `~testQuick` should've picked it up:
 
@@ -265,16 +240,7 @@ class HelloSpec extends FunSuite with DiagrammedAssertions {
 
 Using an editor, change `src/test/scala/HelloSpec.scala` to:
 
-```scala
-import org.scalatest._
-
-class HelloSpec extends FunSuite with DiagrammedAssertions {
-  test("Hello should start with H") {
-    // Hello, as opposed to hello
-    assert("Hello".startsWith("H"))
-  }
-}
-```
+@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/changes/HelloSpec.scala) {}
 
 Confirm that the test passes, then press `Enter` to exit the continuous test.
 
@@ -282,17 +248,7 @@ Confirm that the test passes, then press `Enter` to exit the continuous test.
 
 Using an editor, change `build.sbt` as follows:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-lazy val hello = (project in file("."))
-  .settings(
-    name := "Hello",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-  )
-```
+@@snip [example-library]($root$/src/sbt-test/ref/example-library/build.sbt) {}
 
 ### Use Scala REPL
 
@@ -340,23 +296,7 @@ scala> :q // to quit
 
 Change `build.sbt` as follows:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-lazy val hello = (project in file("."))
-  .settings(
-    name := "Hello",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % Test,
-  )
-
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-  )
-```
+@@snip [example-sub1]($root$/src/sbt-test/ref/example-sub1/build.sbt) {}
 
 Use `reload` command to reflect the change in `build.sbt`.
 
@@ -379,50 +319,13 @@ sbt:Hello> helloCore/compile
 
 Change `build.sbt` as follows:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-
-lazy val hello = (project in file("."))
-  .settings(
-    name := "Hello",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies += scalaTest % Test,
-  )
-```
+@@snip [example-sub2]($root$/src/sbt-test/ref/example-sub2/build.sbt) {}
 
 ### Broadcast commands
 
 Set aggregate so the command sent to `hello` is broadcasted to `helloCore` too:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-
-lazy val hello = (project in file("."))
-  .aggregate(helloCore)
-  .settings(
-    name := "Hello",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies += scalaTest % Test,
-  )
-```
+@@snip [example-sub3]($root$/src/sbt-test/ref/example-sub3/build.sbt) {}
 
 After `reload`, `~testQuick` now runs on both subprojects:
 
@@ -436,92 +339,17 @@ Press `Enter` to exit the continuous test.
 
 Use `.dependsOn(...)` to add dependency on other subprojects. Also let's move Gigahorse dependency to `helloCore`.
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-
-lazy val hello = (project in file("."))
-  .aggregate(helloCore)
-  .dependsOn(helloCore)
-  .settings(
-    name := "Hello",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1",
-    libraryDependencies += scalaTest % Test,
-  )
-```
+@@snip [example-sub4]($root$/src/sbt-test/ref/example-sub4/build.sbt) {}
 
 ### Parse JSON using Play JSON
 
 Let's add Play JSON to `helloCore`.
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
+@@snip [example-weather-build]($root$/src/sbt-test/ref/example-weather/build.sbt) {}
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.6.9"
+After `reload`, add `core/src/main/scala/example/core/Weather.scala`:
 
-lazy val hello = (project in file("."))
-  .aggregate(helloCore)
-  .dependsOn(helloCore)
-  .settings(
-    name := "Hello",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies ++= Seq(gigahorse, playJson),
-    libraryDependencies += scalaTest % Test,
-  )
-```
-
-After `reload`, add `core/main/scala/example/core/Weather.scala`:
-
-```scala
-package example.core
-
-import gigahorse._, support.okhttp.Gigahorse
-import scala.concurrent._
-import play.api.libs.json._
-
-object Weather {
-  lazy val http = Gigahorse.http(Gigahorse.config)
-  def weather: Future[String] = {
-    val r = Gigahorse.url("https://query.yahooapis.com/v1/public/yql").get.
-      addQueryString(
-        "q" -> """select item.condition
-                 |from weather.forecast where woeid in (select woeid from geo.places(1) where text='New York, NY')
-                 |and u='c'""".stripMargin,
-        "format" -> "json"
-      )
-
-    import ExecutionContext.Implicits._
-    for {
-      f <- http.run(r, Gigahorse.asString)
-      x <- parse(f)
-    } yield x
-  }
-
-  def parse(rawJson: String): Future[String] = {
-    val js = Json.parse(rawJson)
-    (js \\ "text").headOption match {
-      case Some(JsString(x)) => Future.successful(x.toLowerCase)
-      case _                 => Future.failed(sys.error(rawJson))
-    }
-  }
-}
-```
+@@snip [example-weather]($root$/src/sbt-test/ref/example-weather/core/src/main/scala/example/core/Weather.scala) {}
 
 Next, change `src/main/scala/example/Hello.scala` as follows:
 
@@ -558,36 +386,11 @@ Hello! The weather in New York is mostly cloudy.
 
 Using an editor, create `project/plugins.sbt`:
 
-```scala
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.3.4")
-```
+@@snip [example-weather-plugins]($root$/src/sbt-test/ref/example-weather/changes/plugins.sbt) {}
 
 Next change `build.sbt` as follows to add `JavaAppPackaging`:
 
-```scala
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.6.9"
-
-lazy val hello = (project in file("."))
-  .aggregate(helloCore)
-  .dependsOn(helloCore)
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    name := "Hello",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies ++= Seq(gigahorse, playJson),
-    libraryDependencies += scalaTest % Test,
-  )
-```
+@@snip [example-weather-build2]($root$/src/sbt-test/ref/example-weather/changes/build.sbt) {}
 
 ### Create .zip distribution
 
@@ -629,31 +432,7 @@ Hello! The weather in New York is mostly cloudy
 
 Change `build.sbt` as follows:
 
-```scala
-ThisBuild / version      := "0.1.0"
-ThisBuild / scalaVersion := "2.12.6"
-ThisBuild / organization := "com.example"
-
-val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
-val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.6.9"
-
-lazy val hello = (project in file("."))
-  .aggregate(helloCore)
-  .dependsOn(helloCore)
-  .enablePlugins(JavaAppPackaging)
-  .settings(
-    name := "Hello",
-    libraryDependencies += scalaTest % Test,
-  )
-
-lazy val helloCore = (project in file("core"))
-  .settings(
-    name := "Hello Core",
-    libraryDependencies ++= Seq(gigahorse, playJson),
-    libraryDependencies += scalaTest % Test,
-  )
-```
+@@snip [example-weather-build3]($root$/src/sbt-test/ref/example-weather/changes/build3.sbt) {}
 
 ### Inspect dist task
 
