@@ -44,7 +44,7 @@ sbt:foo-build> exit
 
 ### Compile a project
 
-As a convention, we will use `sbt:...>` or `>` prompt to mean that we're in the sbt interactive shell.
+As a convention, we will use the `sbt:...>` or `>` prompt to mean that we're in the sbt interactive shell.
 
 ```
 \$ sbt
@@ -52,6 +52,9 @@ sbt:foo-build> compile
 ```
 
 ### Recompile on code change
+
+Prefixing the `compile` command (or any other command) with `~` causes the command to be automatically
+re-executed whenever one of the source files within the project is modified. For example:
 
 ```
 sbt:foo-build> ~compile
@@ -61,7 +64,9 @@ sbt:foo-build> ~compile
 
 ### Create a source file
 
-Create a file named `src/main/scala/example/Hello.scala` using an editor:
+Leave the previous command running. From a different shell or in your file managed create in the project
+directory the following nested directories: `src/main/scala/example`. Then, create in the `example`
+directory the following file using your favorite editor:
 
 ```scala
 package example
@@ -71,7 +76,7 @@ object Hello extends App {
 }
 ```
 
-This should've been picked up..
+This new file should be picked up by the running command:
 
 ```
 [info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/classes ...
@@ -82,9 +87,11 @@ This should've been picked up..
 
 Press `Enter` to exit `~compile`.
 
-### Run previous command
+### Run a previous command
 
-From the sbt shell, press up-arrow twice to find `compile` that you previously executed.
+From the sbt shell, press up-arrow twice to find the `compile` command that you
+executed at the beginning. You can also type `Ctrl-R` and the first few letters
+of the command, just like in the Unix shell.
 
 ```
 sbt:foo-build> compile
@@ -108,7 +115,7 @@ sbt:foo-build> help
 ....
 ```
 
-Display description of a specific task:
+Display the description of a specific task:
 
 ```
 sbt:foo-build> help run
@@ -124,15 +131,6 @@ sbt:foo-build> run
 [info] Running example.Hello
 Hello
 [success] Total time: 1 s, completed May 6, 2018 4:10:44 PM
-```
-
-### Switch Scala version from shell
-
-```
-sbt:foo-build> ++2.13.0-M3!
-[info] Forcing Scala version to 2.13.0-M3 on all projects.
-[info] Reapplying settings...
-[info] Set current project to foo-build (in build file:/private/tmp/foo-build/)
 ```
 
 ### Set ThisBuild / scalaVersion
@@ -158,7 +156,7 @@ sbt:foo-build> session save
 [info] Reapplying settings...
 ```
 
-`build.sbt` file should now have:
+`build.sbt` file should now contain:
 
 ```scala
 ThisBuild / scalaVersion := "2.12.6"
@@ -167,13 +165,23 @@ ThisBuild / scalaVersion := "2.12.6"
 
 ### Name your project
 
-Using an editor, change `build.sbt` to follows:
+Using an editor, change `build.sbt` as follows:
 
 @@snip [name]($root$/src/sbt-test/ref/example-name/build.sbt) {}
 
+These lines set the `organization` and `scalaVersion` values
+for your entire build, and define one project within the build
+that has a given `name`; the `organization` and `scalaVersion` used
+by this project are taken from the values defined for the build.
+
+Within a single build you may define multiple projects, each with
+individual settings. In this example the project uses the build
+directory (`foo-build/`) as its base directory (the `"."`, above).
+
 ### Reload the build
 
-Use `reload` command to reload the build.
+Use the `reload` command to reload the build. The command causes the
+`build.sbt` file to be re-read, and its settings applied.
 
 ```
 sbt:foo-build> reload
@@ -187,11 +195,11 @@ Note that the prompt has now changed to `sbt:Hello>`.
 
 ### Add ScalaTest to libraryDependencies
 
-Using an editor, change `build.sbt` to follows:
+Using an editor, change `build.sbt` as follows:
 
 @@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/build.sbt) {}
 
-Use `reload` command to reflect the change in `build.sbt`.
+Use the `reload` command to reflect the change in `build.sbt`.
 
 ```
 sbt:Hello> reload
@@ -211,11 +219,12 @@ sbt:Hello> ~testQuick
 
 ### Write a test
 
-Using an editor, create a file named `src/test/scala/HelloSpec.scala`:
+Leaving the previous command running, create a file named `src/test/scala/HelloSpec.scala`
+using an editor:
 
 @@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/src/test/scala/HelloSpec.scala) {}
 
-`~testQuick` should've picked it up:
+`~testQuick` should pick up the change:
 
 ```
 2. Waiting for source changes... (press enter to interrupt)
@@ -298,7 +307,7 @@ Change `build.sbt` as follows:
 
 @@snip [example-sub1]($root$/src/sbt-test/ref/example-sub1/build.sbt) {}
 
-Use `reload` command to reflect the change in `build.sbt`.
+Use the `reload` command to reflect the change in `build.sbt`.
 
 ### List all subprojects
 
@@ -323,7 +332,7 @@ Change `build.sbt` as follows:
 
 ### Broadcast commands
 
-Set aggregate so the command sent to `hello` is broadcasted to `helloCore` too:
+Set aggregate so that the command sent to `hello` is broadcast to `helloCore` too:
 
 @@snip [example-sub3]($root$/src/sbt-test/ref/example-sub3/build.sbt) {}
 
@@ -337,7 +346,7 @@ Press `Enter` to exit the continuous test.
 
 ### Make hello depend on helloCore
 
-Use `.dependsOn(...)` to add dependency on other subprojects. Also let's move Gigahorse dependency to `helloCore`.
+Use `.dependsOn(...)` to a add dependency on other subprojects. Also let's move the Gigahorse dependency to `helloCore`.
 
 @@snip [example-sub4]($root$/src/sbt-test/ref/example-sub4/build.sbt) {}
 
@@ -392,7 +401,7 @@ Next change `build.sbt` as follows to add `JavaAppPackaging`:
 
 @@snip [example-weather-build2]($root$/src/sbt-test/ref/example-weather/changes/build.sbt) {}
 
-### Create .zip distribution
+### Create a .zip distribution
 
 ```
 sbt:Hello> dist
@@ -401,7 +410,7 @@ sbt:Hello> dist
 [info] Your package is ready in /private/tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
 ```
 
-Here's how you can run the pacakged app:
+Here's how you can run the packaged app:
 
 ```
 \$ /tmp/someother
@@ -434,7 +443,7 @@ Change `build.sbt` as follows:
 
 @@snip [example-weather-build3]($root$/src/sbt-test/ref/example-weather/changes/build3.sbt) {}
 
-### Inspect dist task
+### Inspect the dist task
 
 To find out more about `dist`, try `help` and `inspect`.
 
@@ -464,11 +473,11 @@ You can also run sbt in batch mode, passing sbt commands directly from the termi
 **Note**: Running in batch mode requires JVM spinup and JIT each time,
 so **your build will run much slower**.
 For day-to-day coding, we recommend using the sbt shell
-or continuous test like `~testQuick`.
+or a continuous test like `~testQuick`.
 
 ### sbt new command
 
-You can use sbt `new` command to quickly setup a simple Hello world build.
+You can use the sbt `new` command to quickly setup a simple "Hello world" build.
 
 ```
 \$ sbt new sbt/scala-seed.g8
@@ -486,4 +495,4 @@ This will create a new project under a directory named `hello`.
 
 ### Credits
 
-This page is based on [Essential sbt][essential-sbt] tutorial written by William "Scala William" Narmontas.
+This page is based on the [Essential sbt][essential-sbt] tutorial written by William "Scala William" Narmontas.
