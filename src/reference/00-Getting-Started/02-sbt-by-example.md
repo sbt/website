@@ -89,9 +89,8 @@ Press `Enter` to exit `~compile`.
 
 ### Run a previous command
 
-From the sbt shell, press up-arrow twice to find the `compile` command that you
-executed at the beginning. You can also type `Ctrl-R` and the first few letters
-of the command, just like in the Unix shell.
+From sbt shell, press up-arrow twice to find the `compile` command that you
+executed at the beginning.
 
 ```
 sbt:foo-build> compile
@@ -133,7 +132,7 @@ Hello
 [success] Total time: 1 s, completed May 6, 2018 4:10:44 PM
 ```
 
-### Set ThisBuild / scalaVersion
+### Set ThisBuild / scalaVersion from sbt shell
 
 ```
 sbt:foo-build> set ThisBuild / scalaVersion := "2.12.6"
@@ -168,15 +167,6 @@ ThisBuild / scalaVersion := "2.12.6"
 Using an editor, change `build.sbt` as follows:
 
 @@snip [name]($root$/src/sbt-test/ref/example-name/build.sbt) {}
-
-These lines set the `organization` and `scalaVersion` values
-for your entire build, and define one project within the build
-that has a given `name`; the `organization` and `scalaVersion` used
-by this project are taken from the values defined for the build.
-
-Within a single build you may define multiple projects, each with
-individual settings. In this example the project uses the build
-directory (`foo-build/`) as its base directory (the `"."`, above).
 
 ### Reload the build
 
@@ -442,6 +432,28 @@ Hello! The weather in New York is mostly cloudy
 Change `build.sbt` as follows:
 
 @@snip [example-weather-build3]($root$/src/sbt-test/ref/example-weather/changes/build3.sbt) {}
+
+### Switch scalaVersion temporarily
+
+```
+sbt:Hello> ++2.11.12!
+[info] Forcing Scala version to 2.11.12 on all projects.
+[info] Reapplying settings...
+[info] Set current project to Hello (in build file:/private/tmp/foo-build/)
+```
+
+Check the `scalaVersion` setting:
+
+```
+sbt:Hello> scalaVersion
+[info] helloCore / scalaVersion
+[info]  2.11.12
+[info] scalaVersion
+[info]  2.11.12 scalaVersion
+[info] 2.12.6
+```
+
+This setting will go away after `reload`.
 
 ### Inspect the dist task
 
