@@ -415,7 +415,7 @@ sbt:Hello> run
 Hello! The weather in New York is mostly cloudy.
 ```
 
-### Add sbt-native-packger plugin
+### Add sbt-native-packager plugin
 
 Using an editor, create `project/plugins.sbt`:
 
