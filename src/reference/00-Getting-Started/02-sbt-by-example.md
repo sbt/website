@@ -27,9 +27,9 @@ Let's start with examples rather than explaining how sbt works or why.
 ```
 \$ sbt
 [info] Updated file /tmp/foo-build/project/build.properties: set sbt.version to 1.1.4
-[info] Loading project definition from /private/tmp/foo-build/project
+[info] Loading project definition from /tmp/foo-build/project
 [info] Loading settings from build.sbt ...
-[info] Set current project to foo-build (in build file:/private/tmp/foo-build/)
+[info] Set current project to foo-build (in build file:/tmp/foo-build/)
 [info] sbt server started at local:///Users/eed3si9n/.sbt/1.0/server/abc4fb6c89985a00fd95/sock
 sbt:foo-build>
 ```
@@ -79,7 +79,7 @@ object Hello extends App {
 This new file should be picked up by the running command:
 
 ```
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/classes ...
+[info] Compiling 1 Scala source to /tmp/foo-build/target/scala-2.12/classes ...
 [info] Done compiling.
 [success] Total time: 2 s, completed May 6, 2018 3:53:42 PM
 2. Waiting for source changes... (press enter to interrupt)
@@ -125,7 +125,7 @@ Runs a main class, passing along arguments provided on the command line.
 
 ```
 sbt:foo-build> run
-[info] Packaging /private/tmp/foo-build/target/scala-2.12/foo-build_2.12-0.1.0-SNAPSHOT.jar ...
+[info] Packaging /tmp/foo-build/target/scala-2.12/foo-build_2.12-0.1.0-SNAPSHOT.jar ...
 [info] Done packaging.
 [info] Running example.Hello
 Hello
@@ -175,9 +175,9 @@ Use the `reload` command to reload the build. The command causes the
 
 ```
 sbt:foo-build> reload
-[info] Loading project definition from /private/tmp/foo-build/project
+[info] Loading project definition from /tmp/foo-build/project
 [info] Loading settings from build.sbt ...
-[info] Set current project to Hello (in build file:/private/tmp/foo-build/)
+[info] Set current project to Hello (in build file:/tmp/foo-build/)
 sbt:Hello>
 ```
 
@@ -218,7 +218,7 @@ using an editor:
 
 ```
 2. Waiting for source changes... (press enter to interrupt)
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/test-classes ...
+[info] Compiling 1 Scala source to /tmp/foo-build/target/scala-2.12/test-classes ...
 [info] Done compiling.
 [info] HelloSpec:
 [info] - Hello should start with H *** FAILED ***
@@ -303,7 +303,7 @@ Use the `reload` command to reflect the change in `build.sbt`.
 
 ```
 sbt:Hello> projects
-[info] In file:/private/tmp/foo-build/
+[info] In file:/tmp/foo-build/
 [info]   * hello
 [info]     helloCore
 ```
@@ -403,13 +403,13 @@ Let's run the app to see if it worked:
 
 ```
 sbt:Hello> run
-[info] Compiling 1 Scala source to /private/tmp/foo-build/core/target/scala-2.12/classes ...
+[info] Compiling 1 Scala source to /tmp/foo-build/core/target/scala-2.12/classes ...
 [info] Done compiling.
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/classes ...
-[info] Packaging /private/tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.jar ...
+[info] Compiling 1 Scala source to /tmp/foo-build/target/scala-2.12/classes ...
+[info] Packaging /tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.jar ...
 [info] Done packaging.
 [info] Done compiling.
-[info] Packaging /private/tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.jar ...
+[info] Packaging /tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.jar ...
 [info] Done packaging.
 [info] Running example.Hello
 Hello! The weather in New York is mostly cloudy.
@@ -429,9 +429,9 @@ Next change `build.sbt` as follows to add `JavaAppPackaging`:
 
 ```
 sbt:Hello> dist
-[info] Wrote /private/tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.pom
-[info] Wrote /private/tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.pom
-[info] Your package is ready in /private/tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
+[info] Wrote /tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.pom
+[info] Wrote /tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.pom
+[info] Your package is ready in /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
 ```
 
 Here's how you can run the packaged app:
@@ -473,7 +473,7 @@ Change `build.sbt` as follows:
 sbt:Hello> ++2.11.12!
 [info] Forcing Scala version to 2.11.12 on all projects.
 [info] Reapplying settings...
-[info] Set current project to Hello (in build file:/private/tmp/foo-build/)
+[info] Set current project to Hello (in build file:/tmp/foo-build/)
 ```
 
 Check the `scalaVersion` setting:
