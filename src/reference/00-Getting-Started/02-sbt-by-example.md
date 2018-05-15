@@ -103,13 +103,13 @@ Use the `help` command to get basic help about the available commands.
 ```
 sbt:foo-build> help
 
-  about                                          Displays basic information about sbt and the build.
-  tasks                                          Lists the tasks defined for the current project.
-  settings                                       Lists the settings defined for the current project.
-  reload                                         (Re)loads the current project or changes to plugins project or returns from it.
-  new                                            Creates a new sbt build.
-  projects                                       Lists the names of available projects or temporarily adds/removes extra builds to the session.
-  project                                        Displays the current project or changes to the provided `project`.
+  about      Displays basic information about sbt and the build.
+  tasks      Lists the tasks defined for the current project.
+  settings   Lists the settings defined for the current project.
+  reload     (Re)loads the current project or changes to plugins project or returns from it.
+  new        Creates a new sbt build.
+  projects   Lists the names of available projects or temporarily adds/removes extra builds to the session.
+  project    Displays the current project or changes to the provided `project`.
 
 ....
 ```
