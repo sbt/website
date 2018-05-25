@@ -92,7 +92,7 @@ Scala. See [Publishing][Publishing] for more details on publishing your project.
 
 In order to make this process as quick as possible, different output and
 managed dependency directories are used for different versions of Scala.
-For example, when building against Scala 2.12.4,
+For example, when building against Scala 2.12.6,
 
 -   `./target/` becomes `./target/scala_2.12/`
 -   `./lib_managed/` becomes `./lib_managed/scala_2.12/`

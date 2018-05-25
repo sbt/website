@@ -121,7 +121,7 @@ task and the value of a setting. For example:
 
 ```
 > inspect scalaVersion
-[info] Setting: java.lang.String = 2.12.4
+[info] Setting: java.lang.String = 2.12.6
 [info] Description:
 [info]  The version of Scala used for building.
 ...
@@ -192,11 +192,11 @@ details, see `help session`.
 
 ```
 > about
-[info] This is sbt 1.1.0
+[info] This is sbt 1.1.5
 [info] The current project is {file:~/code/sbt.github.com/}default
-[info] The current project is built against Scala 2.12.4
+[info] The current project is built against Scala 2.12.6
 [info] Available Plugins: sbt.plugins.IvyPlugin, sbt.plugins.JvmPlugin, sbt.plugins.CorePlugin, sbt.plugins.JUnitXmlReportPlugin, sbt.plugins.Giter8TemplatePlugin
-[info] sbt, sbt plugins, and build definitions are using Scala 2.12.4
+[info] sbt, sbt plugins, and build definitions are using Scala 2.12.6
 ```
 
 <a name="value"></a>
@@ -225,7 +225,7 @@ The `show` command also works for tasks, described next.
 [info]  Resolve time: 122 ms, Download time: 5 ms, Download size: 0 bytes
 [info]  compile:
 [info]      org.scala-lang:scala-library:
-[info]              - 2.12.4
+[info]              - 2.12.6
 [info] ...
 ```
 
@@ -238,7 +238,7 @@ value.
 ```
 > show compile:dependencyClasspath
 ...
-[info] ArrayBuffer(Attributed(/Users/foo/.sbt/boot/scala-2.12.4/lib/scala-library.jar))
+[info] ArrayBuffer(Attributed(/Users/foo/.sbt/boot/scala-2.12.6/lib/scala-library.jar))
 ```
 
 <a name="classpath"></a>
@@ -250,7 +250,7 @@ For the test classpath,
 ```
 > show test:dependencyClasspath
 ...
-[info] List(Attributed(/Users/foo/code/sbt.github.com/target/scala-2.12/classes), Attributed(~/.sbt/boot/scala-2.12.4/lib/scala-library.jar), Attributed(/Users/foo/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
+[info] List(Attributed(/Users/foo/code/sbt.github.com/target/scala-2.12/classes), Attributed(~/.sbt/boot/scala-2.12.6/lib/scala-library.jar), Attributed(/Users/foo/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
 ...
 ```
 
