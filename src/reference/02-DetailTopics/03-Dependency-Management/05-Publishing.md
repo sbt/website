@@ -19,9 +19,9 @@ repository. To use publishing, you need to specify the repository to
 publish to and the credentials to use. Once these are set up, you can
 run `publish`.
 
-The `publishLocal` action is used to publish your project to a local Ivy
-repository usually located at `~/.ivy2/local/`. You can then use this
-project from other projects on the same machine.
+The `publishLocal` action is used to publish your project to your Ivy local
+file respository, which is usually located at `~/.ivy2/local/`. You can
+then use this project from other projects on the same machine.
 
 ### Define the repository
 
