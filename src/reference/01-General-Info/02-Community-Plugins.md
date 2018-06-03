@@ -44,7 +44,7 @@ your plugin to the list.
   formatting using Scalariform. <!-- 218 stars -->
 - [neo-sbt-scalafmt](https://github.com/lucidsoftware/neo-sbt-scalafmt): code
   formatting using Scalafmt. <!-- 80 stars -->
-- [sbt-java-formatter](https://github.com/typesafehub/sbt-java-formatter):
+- [sbt-java-formatter](https://github.com/sbt/sbt-java-formatter):
   code formatting for Java sources. <!-- 8 stars -->
 
 #### Documentation plugins
@@ -178,7 +178,7 @@ your plugin to the list.
 
 #### IDE integration plugins
 
-- [sbteclipse](https://github.com/typesafehub/sbteclipse): Eclipse project
+- [sbteclipse](https://github.com/sbt/sbteclipse): Eclipse project
   definition generator. <!-- 672 stars -->
 - [sbt-sublime](https://github.com/orrsella/sbt-sublime): Sublime Text project
   generator. <!-- 145 stars -->

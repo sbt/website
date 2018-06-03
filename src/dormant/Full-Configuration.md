@@ -211,7 +211,7 @@ The fragment part of the git URI can be used to specify a specific
 branch or tag. For example:
 
 ```scala
-RootProject( uri("git://github.com/typesafehub/sbteclipse.git#v1.2") )
+RootProject( uri("git://github.com/sbt/sbteclipse.git#v1.2") )
 ```
 
 Ultimately, a `RootProject` is resolved to a `ProjectRef` once the
