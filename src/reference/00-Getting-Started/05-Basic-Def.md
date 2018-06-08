@@ -14,7 +14,7 @@ Build definition
 
 This page describes sbt build definitions, including some "theory" and
 the syntax of `build.sbt`.
-It assumes you have installed a recent version of sbt, such as sbt 0.13.13,
+It assumes you have installed a recent version of sbt, such as sbt $app_version$,
 know how to [use sbt][Running],
 and have read the previous pages in the Getting Started Guide.
 
