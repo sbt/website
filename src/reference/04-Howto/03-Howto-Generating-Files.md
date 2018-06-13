@@ -62,8 +62,10 @@ Executing `run` will print `"Hi"`.
 Hi
 ```
 
-Change `Compile` to `Test` to make it a test source. For efficiency, you
-would only want to generate sources when necessary and not every run.
+Change `Compile` to `Test` to make it a test source.
+
+**NOTE:** You should cache generated sources for efficiency to avoid regenerating them in every build.
+You can use `sbt.Tracked.{ inputChanged, outputChanged }` for it.
 
 By default, generated sources are not included in the packaged source
 artifact. To do so, add them as you would other mappings. See
@@ -121,5 +123,7 @@ resourceGenerators in Compile += Def.task {
 }.taskValue
 ```
 
-Change `Compile` to `Test` to make it a test resource. Normally, you
-would only want to generate resources when necessary and not every run.
+Change `Compile` to `Test` to make it a test resource.
+
+**NOTE:** You should cache generated resources for efficiency to avoid regenerating them in every build.
+You can use `sbt.Tracked.{ inputChanged, outputChanged }` for it.

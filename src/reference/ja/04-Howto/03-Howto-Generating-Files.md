@@ -7,7 +7,7 @@ out: Howto-Generating-Files.html
 ソースファイル/リソースファイルの生成
 ----------------
 
-sbt にはソースコードやリソースの生成を行うタスクを登録する標準的なフックがある。
+sbt にはソースコードやリソースの生成を行うタスクを登録する標準的なフックが用意されている。
 
 <a name="sources"></a>
 
@@ -24,8 +24,7 @@ def makeSomeSources(base: File): Seq[File]
 ソースを生成するタスクは `sourceGenerators` キーに追加する。
 ここでは、実行結果の値ではなくタスク自体を追加するため、通常の `value` ではなく、 `taskValue`を使う。
 `sourceGenerators` には生成するソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
-(このようにしておくと、main のコンパイル時に test のソースコードを生成しなくなり、効率的になる。)
-ここまでを総括すると、大まかな定義は次のようになる。
+大まかな定義は次のようになる。
 
 ```scala
 sourceGenerators in Compile += <task of type Seq[File]>.taskValue
@@ -59,7 +58,10 @@ Hi
 ```
 
 テスト用のソースコードを生成したい場合は、上記の `Compile` の部分を `Test` に変更する。
-(For efficiency, you would only want to generate sources when necessary and not every run.)
+
+**注意:** 
+ビルドを効率化するために、 `sourceGenerators` では、呼び出しの度にソースの生成を行うのではなく、
+`sbt.Tracked.{ inputChanged, outputChanged }` などを用いて、必ず入力値に基づいたキャッシングを行うべきである。
 
 デフォルトでは、生成したソースコードはビルド成果物のパッケージには含まれない。
 追加するには、別途 mappings への追加が必要になる。
@@ -82,8 +84,7 @@ def makeSomeResources(base: File): Seq[File]
 リソースを生成するタスクは `resourceGenerators` キーに追加する。
 ここでも、実行結果の値ではなくタスク自体を追加するため、通常の `value` ではなく、 `taskValue`を使う。
 `resourceGenerators` にも、生成するリソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
-(このようにしておくと、main のコンパイル時に test のリソースを生成しなくなるため、効率的になる。)
-ここまでを総括すると、大まかな定義は次のようになる。
+大まかな定義は次のようになる。
 
 ```scala
 resourceGenerators in Compile += <task of type Seq[File]>.taskValue
@@ -115,4 +116,7 @@ resourceGenerators in Compile += Def.task {
 ```
 
 テスト用のリソースとして扱いたい場合は `Compile` を `Test` に変更する。
-(Normally, you would only want to generate resources when necessary and not every run.)
+
+**注意:** 
+ビルドを効率化するために、 `resourceGenerators` では、呼び出しの度にリソースの生成を行うのではなく、
+`sbt.Tracked.{ inputChanged, outputChanged }` などを用いて、必ず入力値に基づいたキャッシングを行うべきである。
