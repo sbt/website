@@ -23,7 +23,7 @@ def makeSomeSources(base: File): Seq[File]
 
 ソースを生成するタスクは `sourceGenerators` キーに追加する。
 ここでは、実行結果の値ではなくタスク自体を追加するため、通常の `value` ではなく、 `taskValue`を使う。
-`sourceGenerators` には生成するソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
+`sourceGenerators` には生成するソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
 大まかな定義は次のようになる。
 
 ```scala
@@ -83,7 +83,7 @@ def makeSomeResources(base: File): Seq[File]
 
 リソースを生成するタスクは `resourceGenerators` キーに追加する。
 ここでも、実行結果の値ではなくタスク自体を追加するため、通常の `value` ではなく、 `taskValue`を使う。
-`resourceGenerators` にも、生成するリソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
+`resourceGenerators` にも、生成するリソースが main か test かに応じて、それぞれ `Compile`、 `Test`のスコープ付けをしておく。
 大まかな定義は次のようになる。
 
 ```scala
@@ -117,6 +117,6 @@ resourceGenerators in Compile += Def.task {
 
 テスト用のリソースとして扱いたい場合は `Compile` を `Test` に変更する。
 
-**注意:** 
+**注意:**
 ビルドを効率化するために、 `resourceGenerators` では、呼び出しの度にリソースの生成を行うのではなく、
 `sbt.Tracked.{ inputChanged, outputChanged }` などを用いて、必ず入力値に基づいたキャッシングを行うべきである。

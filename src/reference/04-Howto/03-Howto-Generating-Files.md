@@ -64,8 +64,8 @@ Hi
 
 Change `Compile` to `Test` to make it a test source.
 
-**NOTE:** You should cache generated sources for efficiency to avoid regenerating them in every build.
-You can use `sbt.Tracked.{ inputChanged, outputChanged }` for it.
+**NOTE:** For the efficiency of the build, `sourceGenerators` should avoid regenerating source files upon each call,
+and cache based on the input values using `sbt.Tracked.{ inputChanged, outputChanged }` etc instead.
 
 By default, generated sources are not included in the packaged source
 artifact. To do so, add them as you would other mappings. See
@@ -125,5 +125,5 @@ resourceGenerators in Compile += Def.task {
 
 Change `Compile` to `Test` to make it a test resource.
 
-**NOTE:** You should cache generated resources for efficiency to avoid regenerating them in every build.
-You can use `sbt.Tracked.{ inputChanged, outputChanged }` for it.
+**NOTE:** For the efficiency of the build, `resourceGenerators` should avoid regenerating resource files upon each call,
+and cache based on the input values using `sbt.Tracked.{ inputChanged, outputChanged }` etc instead.
