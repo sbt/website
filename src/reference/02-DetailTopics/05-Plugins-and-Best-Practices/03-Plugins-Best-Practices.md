@@ -151,11 +151,11 @@ object WhateverPlugin extends sbt.AutoPlugin {
   object autoImport {
     // BAD sample
     lazy val Whatever = config("whatever") extend(Compile)
-    lazy val dude = settingKey[String]("A plugin specific key")
+    lazy val specificKey = settingKey[String]("A plugin specific key")
   }
   import autoImport._
   override lazy val projectSettings = Seq(
-    dude in Whatever := "your opinion man" // DON'T DO THIS
+    specificKey in Whatever := "another opinion" // DON'T DO THIS
   )
 }
 ```
