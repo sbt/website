@@ -55,7 +55,7 @@ Tasks that produce managed files should be inserted as follows:
 
 ```scala
 sourceGenerators in Compile +=
-    generate( (sourceManaged in Compile).value / "some_directory")
+    generate( (managedSources in Compile).value / "some_directory")
 ```
 
 In this example, `generate` is some function of type `File => Seq[File]`
@@ -68,7 +68,7 @@ To insert a named task, which is the better approach for plugins:
 val mySourceGenerator = taskKey[Seq[File]](...)
 
 mySourceGenerator in Compile :=
-  generate( (sourceManaged in Compile).value / "some_directory")
+  generate( (managedSources in Compile).value / "some_directory")
 
 sourceGenerators in Compile += (mySourceGenerator in Compile)
 ```
@@ -77,7 +77,7 @@ The `task` method is used to refer to the actual task instead of the
 result of the task.
 
 For resources, there are similar keys `resourceGenerators` and
-`resourceManaged`.
+`managedResources`.
 
 ##### Excluding source files by name
 
@@ -119,7 +119,7 @@ For sources:
 -   `sources` Combines `managedSources` and `unmanagedSources`.
 -   `sourceGenerators` These are tasks that generate source files.
     Typically, these tasks will put sources in the directory provided by
-    sourceManaged.
+    managedSources.
 
 For resources
 
@@ -130,7 +130,7 @@ For resources
     sbt plugins will have a generated descriptor file here.
 -   `resourceGenerators` These are tasks that generate resource files.
     Typically, these tasks will put resources in the directory provided
-    by resourceManaged.
+    by managedResources.
 
 Use the [inspect command][Inspecting-Settings] for
 more details.
