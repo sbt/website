@@ -8,6 +8,7 @@ out: Installing-sbt-on-Linux.html
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
   [website127]: https://github.com/sbt/website/issues/127
+  [cert-bug]: https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/1739631
 
 Installing sbt on Linux
 -----------------------
@@ -41,6 +42,13 @@ Package managers will check a number of configured repositories for packages to 
 Once `sbt` is installed, you'll be able to manage the package in `aptitude` or Synaptic after you updated their package cache. You should also be able to see the added repository at the bottom of the list in System Settings -> Software & Updates -> Other Software:
 
 ![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
+
+**Note**: There's been reports about SSL error using Ubuntu: `Server access Error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty url=https://repo1.maven.org/maven2/org/scala-sbt/sbt/1.1.0/sbt-1.1.0.pom`, which apparently stems from OpenJDK 9 using PKCS12 format for `/etc/ssl/certs/java/cacerts` [cert-bug][cert-bug]. Supposedly the workaround is:
+
+```
+sudo dpkg --purge --force-depends ca-certificates-java
+sudo apt-get install ca-certificates-java
+```
 
 ### Red Hat Enterprise Linux and other RPM-based distributions
 
