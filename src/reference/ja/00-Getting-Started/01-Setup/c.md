@@ -8,6 +8,7 @@ out: Installing-sbt-on-Linux.html
   [DEB]: $sbt_deb_package_base$sbt-$app_version$.deb
   [Manual-Installation]: Manual-Installation.html
   [website127]: https://github.com/sbt/website/issues/12
+  [cert-bug]: https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/1739631
 
 Linux への sbt のインストール
 --------------------------
@@ -50,6 +51,13 @@ sbt のバイナリは Bintray にて公開されており、都合の良いこ�
 追加された APT リポジトリは「システム設定 -> ソフトウェアとアップデート -> 他のソフトウェア」 の一番下に表示されているはずだ:
 
 ![Ubuntu Software & Updates Screenshot](../files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
+
+**注意**: Ubuntu で  `Server access Error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty url=https://repo1.maven.org/maven2/org/scala-sbt/sbt/1.1.0/sbt-1.1.0.pom` という SSL エラーが多く報告されている。[cert-bug][cert-bug] などによると、これは OpenJDK 9 が `/etc/ssl/certs/java/cacerts` に PKCS12 フォーマットを採用したことに起因するらしい。回避策は以下らしい:
+
+```
+sudo dpkg --purge --force-depends ca-certificates-java
+sudo apt-get install ca-certificates-java
+```
 
 ### Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューション
 
