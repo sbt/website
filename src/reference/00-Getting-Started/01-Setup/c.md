@@ -43,12 +43,7 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 
 ![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-**Note**: There's been reports about SSL error using Ubuntu: `Server access Error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty url=https://repo1.maven.org/maven2/org/scala-sbt/sbt/1.1.0/sbt-1.1.0.pom`, which apparently stems from OpenJDK 9 using PKCS12 format for `/etc/ssl/certs/java/cacerts` [cert-bug][cert-bug]. Supposedly the workaround is:
-
-```
-sudo dpkg --purge --force-depends ca-certificates-java
-sudo apt-get install ca-certificates-java
-```
+**Note**: There's been reports about SSL error using Ubuntu: `Server access Error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty url=https://repo1.maven.org/maven2/org/scala-sbt/sbt/1.1.0/sbt-1.1.0.pom`, which apparently stems from OpenJDK 9 using PKCS12 format for `/etc/ssl/certs/java/cacerts` [cert-bug][cert-bug]. According to <https://stackoverflow.com/a/50103533/3827> it is fixed in Ubuntu Cosmic (18.10), but Ubuntu Bionic LTS (18.04) is still waiting for a release. See the answer for a woraround.
 
 ### Red Hat Enterprise Linux and other RPM-based distributions
 
