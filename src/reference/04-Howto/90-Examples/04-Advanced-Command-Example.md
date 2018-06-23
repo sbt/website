@@ -40,8 +40,7 @@ object Canon extends Plugin {
     val extracted = Project.extract(state)
     import extracted._
     val transformed = session.mergeSettings map ( s => f(s) )
-    val newStructure = Load.reapply(transformed, structure)
-    Project.setProject(session, newStructure, state)
+    appendWithSession(transformed, state)
   }
 
   // Transforms a Setting[_].
