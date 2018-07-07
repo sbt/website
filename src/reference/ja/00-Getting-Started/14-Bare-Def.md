@@ -13,7 +13,7 @@ out: Bare-Def.html
 
 ### bare .sbt ビルド定義とは何か
 
-明示的に [Project](../api/sbt/Project.html) を定義する
+明示的に [Project](../../api/sbt/Project.html) を定義する
 [マルチプロジェクト .sbt ビルド定義][Basic-Def]や [.scala ビルド定義][Full-Def]と違って
 bare ビルド定義は `.sbt` ファイルの位置から暗黙にプロジェクトが定義される。
 
