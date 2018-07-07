@@ -10,7 +10,7 @@ out: Scope-Delegation.html
 
 このページはスコープ委譲を説明する。前のページの
 [.sbt ビルド定義][Basic-Def]、
-[スコープ][Scopes-Graph]
+[スコープ][Scopes]
 を読んで理解したことを前提とする。
 
 スコープ付けの説明が全て終わったので、`.value` 照会の詳細を解説できる。
