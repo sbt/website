@@ -34,7 +34,7 @@ out: Task-Graph.html
 
 最初の例として、`update` と `clean` というタスクに依存した形で
 `scalacOption` を定義したいとする。
-（[Keys](../api/sbt/Keys\$.html) より）以下の二つのキーを例に説明する。
+（[Keys](../../api/sbt/Keys\$.html) より）以下の二つのキーを例に説明する。
 
 **注意**: ここで計算される `scalacOptions` の値はナンセンスなもので、説明のためだけのものだ:
 
@@ -267,7 +267,7 @@ sbt シェルで試すとこうなるはずだ:
 [success] Total time: 0 s, completed Jan 2, 2017 11:44:51 PM
 ```
 
-次に ([Keys](../api/sbt/Keys\$.html) より) 以下の二つのキーを例に説明する:
+次に ([Keys](../../api/sbt/Keys\$.html) より) 以下の二つのキーを例に説明する:
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
