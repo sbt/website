@@ -57,6 +57,11 @@ Run the following from the terminal to install `sbt` (You'll need superuser priv
 
 sbt binaries are published to Bintray, and conveniently Bintray provides an RPM repository. You just have to add the repository to the places your package manager will check.
 
+On Fedora, `sbt 0.13.1` [available on official repos](https://fedora.pkgs.org/28/fedora-i386/sbt-0.13.1-9.fc28.1.noarch.rpm.html). If you want to install `sbt 1.1.6` or above, you may need to uninstall `sbt 0.13` (if it's install) and indicate that you want to install the newest version of `sbt` (i.e. `sbt 1.1.6` or above) using `bintray-sbt-rpm.repo` then.
+    
+    sudo dnf remove sbt # uninstalling sbt if sbt 0.13 was installed (may not be necessary)
+    sudo dnf --enablerepo=bintray--sbt-rpm install sbt
+
 > **Note:** Please report any issues with these to the
 > [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
 > project.
