@@ -30,19 +30,58 @@ Here are some current plugin best practices.
 
 > **Note:** Best practices are evolving, so check back frequently.
 
-### Get your plugins known
+### Key naming convention: Use prefix
 
-Make sure people can find your plugin. Here are some of the recommended steps:
+Sometimes, you need a new key, because there is no existing sbt key. In
+this case, use a plugin-specific prefix.
 
-1. Mention [@scala_sbt](https://twitter.com/scala_sbt) in your announcement, and we will RT it.
-2. Send a pull req to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
+```scala
+package sbtassembly
 
-### Don't use default package
+import sbt._, Keys._
 
-Users who have their build files in some package will not be able to use
-your plugin if it's defined in default (no-name) package.
+object AssemblyPlugin extends sbt.AutoPlugin {
+  object autoImport {
+    lazy val assembly                  = taskKey[File]("Builds a deployable fat jar.")
+    lazy val assembleArtifact          = settingKey[Boolean]("Enables (true) or disables (false) assembling an artifact.")
+    lazy val assemblyOption            = taskKey[AssemblyOption]("Configuration for making a deployable fat jar.")
+    lazy val assembledMappings         = taskKey[Seq[MappingSet]]("Keeps track of jar origins for each source.")
 
-### Follow the naming conventions
+    lazy val assemblyPackageScala      = taskKey[File]("Produces the scala artifact.")
+    lazy val assemblyJarName           = taskKey[String]("name of the fat jar")
+    lazy val assemblyMergeStrategy     = settingKey[String => MergeStrategy]("mapping from archive member path to merge strategy")
+  }
+
+  import autoImport._
+
+  ....
+}
+```
+
+In this approach, every `lazy val` starts with `assembly`. A user of the
+plugin would refer to the settings like this in `build.sbt`:
+
+```scala
+assembly / assemblyJarName := "something.jar"
+```
+
+Inside sbt shell, the user can refer to the setting in the same way:
+
+```
+sbt:helloworld> show assembly/assemblyJarName
+[info] helloworld-assembly-0.1.0-SNAPSHOT.jar
+```
+
+Avoid sbt 0.12 style key names where the key's Scala identifier and shell uses kebab-casing:
+
+- BAD: `lazy val jarName = SettingKey[String]("assembly-jar-name")`
+- BAD: `lazy val jarName = SettingKey[String]("jar-name")`
+- GOOD: `lazy val assemblyJarName = taskKey[String]("name of the fat jar")`
+
+Because there's a single namespace for keys both in `build.sbt` and in sbt shell,
+if different plugins use generic sounding key names like `jarName` and `excludedFiles` they will cause name conflict.
+
+### Artifact naming convention
 
 Use the `sbt-\$projectname` scheme to name your library and artifact.
 A plugin ecosystem with a consistent naming convention makes it easier for users to tell whether a
@@ -58,30 +97,21 @@ If the project's name is `foobar` the following holds:
 If your plugin provides an obvious "main" task, consider naming it `foobar` or `foobar...` to make
 it more intuitive to explore the capabilities of your plugin within the sbt shell and tab-completion.
 
-### Use settings and tasks. Avoid commands.
+### (optional) Plugin naming convention
 
-Your plugin should fit in naturally with the rest of the sbt ecosystem.
-The first thing you can do is to avoid defining [commands][Commands],
-and use settings and [tasks][Tasks] and task-scoping instead (see below for more on task-scoping).
-Most of the interesting things in sbt like
-`compile`, `test` and `publish` are provided using tasks.
-Tasks can take advantage of duplication reduction and parallel execution by the task engine.
-With features like [ScopeFilter][ScopeFilter], many of the features that previously required
-commands are now possible using tasks. 
+Name your plugin as `FooBarPlugin`.
 
-Settings can be composed from other settings and tasks.
-Tasks can be composed from other tasks and input tasks.
-Commands, on the other hand, cannot be composed from any of the above.
-In general, use the minimal thing that you need.
-One legitimate use of commands may be using plugin to access the build definition itself not the code.
-sbt-inspectr was implemented using [a command][inspectr] before it became `inspect tree`.
+### Don't use default package
 
-### Use `sbt.AutoPlugin`
+Users who have their build files in some package will not be able to use
+your plugin if it's defined in default (no-name) package.
 
-sbt is in the process of migrating to `sbt.AutoPlugin` from `sbt.Plugin`.
-The new mechanism features a set of user-level
-controls and dependency declarations that cleans up a lot of
-long-standing issues with plugins.
+### Get your plugins known
+
+Make sure people can find your plugin. Here are some of the recommended steps:
+
+1. Mention [@scala_sbt](https://twitter.com/scala_sbt) in your announcement, and we will RT it.
+2. Send a pull req to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
 
 ### Reuse existing keys
 
@@ -92,31 +122,25 @@ Where possible, reuse them in your plugin. For instance, don't define:
 val sourceFiles = settingKey[Seq[File]]("Some source files")
 ```
 
-Instead, simply reuse sbt's existing `sources` key.
+Instead, reuse sbt's existing `sources` key.
 
-### Avoid namespace clashes
+### Use settings and tasks. Avoid commands.
 
-Sometimes, you need a new key, because there is no existing sbt key. In
-this case, use a plugin-specific prefix.
+Your plugin should fit in naturally with the rest of the sbt ecosystem.
+The first thing you can do is to avoid defining [commands][Commands],
+and use settings and [tasks][Tasks] and task-scoping instead (see below for more on task-scoping).
+Most of the interesting things in sbt like
+`compile`, `test` and `publish` are provided using tasks.
+Tasks can take advantage of duplication reduction and parallel execution by the task engine.
+With features like [ScopeFilter][ScopeFilter], many of the features that previously required
+commands are now possible using tasks.
 
-```scala
-package sbtobfuscate
-
-import sbt._, Keys._
-
-object ObfuscatePlugin extends sbt.AutoPlugin {
-  object autoImport {
-    lazy val obfuscateStylesheet = settingKey[File]("obfuscate stylesheet")
-  } 
-}
-```
-
-In this approach, every `lazy val` starts with `obfuscate`. A user of the
-plugin would refer to the settings like this:
-
-```scala
-obfuscateStylesheet := file("something.txt")
-```
+Settings can be composed from other settings and tasks.
+Tasks can be composed from other tasks and input tasks.
+Commands, on the other hand, cannot be composed from any of the above.
+In general, use the minimal thing that you need.
+One legitimate use of commands may be using plugin to access the build definition itself not the code.
+sbt-inspectr was implemented using [a command][inspectr] before it became `inspect tree`.
 
 ### Provide core feature in a plain old Scala object
 
@@ -194,7 +218,7 @@ object FuzzPlugin extends sbt.AutoPlugin {
     lazy val Fuzz = config("fuzz") extend(Compile)
   }
   import autoImport._
-  
+
   lazy val baseFuzzSettings: Seq[Def.Setting[_]] = Seq(
     test := {
       println("fuzz test")
@@ -270,6 +294,68 @@ lazy val app = (project in file("app"))
   .settings(inConfig(Test)(ObfuscatePlugin.baseObfuscateSettings))
 ```
 
+### Scoping advices
+
+In general, if a plugin provides keys (settings and tasks) with the widest scoping,
+and refer to them with the narrowest scoping, it will give the maximum flexibility to the build users.
+
+#### Provide default values in `globalSettings`
+
+If your settings or task do not transitively depend on a project-level settings
+(such as `baseDirectory`, `compile`, etc), provide default values in `globalSettings`.
+
+For example, in sbt's Defaults keys related to publishing such as `licenses`, `developers`,
+and `scmInfo` are all defined at the `Global` scope, typically to empty values like `Nil` and `None`.
+
+```scala
+package sbtobfuscate
+
+import sbt._, Keys._
+
+object ObfuscatePlugin extends sbt.AutoPlugin {
+  override def requires = plugins.JvmPlugin
+  override def trigger = allRequirements
+
+  object autoImport {
+    lazy val obfuscate = taskKey[Seq[File]]("obfuscate the source")
+    lazy val obfuscateOption = settingKey[ObfuscateOption]("options to configure obfuscate")
+  }
+  import autoImport._
+  override lazy val globalSettings = Seq(
+    obfuscateOption := ObfuscateOption()
+  )
+
+  override lazy val projectSettings = inConfig(Compile)(
+    obfuscate := {
+      Obfuscate(
+        (obfuscate / sources).value,
+        (obfuscate / obfuscateOption).value
+      )
+    },
+    obfuscate / sources := sources.value
+  )
+}
+
+// core feature implemented here
+object Obfuscate {
+  def apply(sources: Seq[File], opt: ObfuscateOption): Seq[File] = {
+    sources
+  }
+}
+```
+
+In the above, `obfuscateOption` is set a default made-up value in the `globalSettings`;
+but is used as `(obfuscate / obfuscateOption)` in the `projectSettings`.
+This lets the user either set `obfuscate / obfuscateOption` at a particular subproject level,
+or scoped to `ThisBuild` affecting all subprojects:
+
+```scala
+ThisBuild / obfuscate / obfuscateOption := ObfuscateOption().withX(true)
+```
+
+This requires in-depth knowledge to know that RHS are all contained in
+global scope (pure values and other global settings), but it's a useful technique.
+
 #### Using a "main" task scope for settings
 
 Sometimes you want to define some settings for a particular "main" task
@@ -286,13 +372,12 @@ task itself. See the `baseObfuscateSettings`:
 In the above example, `sources in obfuscate` is scoped under the main
 task, `obfuscate`.
 
-### Mucking with `globalSettings`
+#### Rewiring existing keys in `globalSettings`
 
-There may be times when you need to muck with `globalSettings`. The
-general rule is *be careful what you touch*.
+There may be times when you need to rewire an existing key in `globalSettings`.
+The general rule is *be careful what you touch*.
 
-When overriding global settings, care should be taken to ensure previous
-settings from other plugins are not ignored. e.g. when creating a new
+Care should be taken to ensure previous settings from other plugins are not ignored. e.g. when creating a new
 `onLoad` handler, ensure that the previous `onLoad` handler is not
 removed.
 
