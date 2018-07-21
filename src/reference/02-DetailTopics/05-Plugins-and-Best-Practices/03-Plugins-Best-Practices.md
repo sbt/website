@@ -353,8 +353,9 @@ or scoped to `ThisBuild` affecting all subprojects:
 ThisBuild / obfuscate / obfuscateOption := ObfuscateOption().withX(true)
 ```
 
-This requires in-depth knowledge to know that RHS are all contained in
-global scope (pure values and other global settings), but it's a useful technique.
+Giving keys default values in global scope requires knowing that every key (if any)
+used to define that key must _also_ be defined in global scope, otherwise it will
+fail at load time.
 
 #### Using a "main" task scope for settings
 
