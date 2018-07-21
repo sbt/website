@@ -187,7 +187,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 To use the local repository, but not the Maven Central repository:
 
 ```scala
-externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+externalResolvers := Resolver.combineDefaultResolvers(resolvers.value, mavenCentral = false)
 ```
 
 ##### Override all resolvers for all builds
