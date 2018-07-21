@@ -40,16 +40,16 @@ package sbtassembly
 
 import sbt._, Keys._
 
-object AssemblyPlugin extends sbt.AutoPlugin {
+object AssemblyPlugin extends AutoPlugin {
   object autoImport {
-    lazy val assembly                  = taskKey[File]("Builds a deployable fat jar.")
-    lazy val assembleArtifact          = settingKey[Boolean]("Enables (true) or disables (false) assembling an artifact.")
-    lazy val assemblyOption            = taskKey[AssemblyOption]("Configuration for making a deployable fat jar.")
-    lazy val assembledMappings         = taskKey[Seq[MappingSet]]("Keeps track of jar origins for each source.")
+    val assembly                  = taskKey[File]("Builds a deployable fat jar.")
+    val assembleArtifact          = settingKey[Boolean]("Enables (true) or disables (false) assembling an artifact.")
+    val assemblyOption            = taskKey[AssemblyOption]("Configuration for making a deployable fat jar.")
+    val assembledMappings         = taskKey[Seq[MappingSet]]("Keeps track of jar origins for each source.")
 
-    lazy val assemblyPackageScala      = taskKey[File]("Produces the scala artifact.")
-    lazy val assemblyJarName           = taskKey[String]("name of the fat jar")
-    lazy val assemblyMergeStrategy     = settingKey[String => MergeStrategy]("mapping from archive member path to merge strategy")
+    val assemblyPackageScala      = taskKey[File]("Produces the scala artifact.")
+    val assemblyJarName           = taskKey[String]("name of the fat jar")
+    val assemblyMergeStrategy     = settingKey[String => MergeStrategy]("mapping from archive member path to merge strategy")
   }
 
   import autoImport._
@@ -58,7 +58,7 @@ object AssemblyPlugin extends sbt.AutoPlugin {
 }
 ```
 
-In this approach, every `lazy val` starts with `assembly`. A user of the
+In this approach, every `val` starts with `assembly`. A user of the
 plugin would refer to the settings like this in `build.sbt`:
 
 ```scala
@@ -74,9 +74,9 @@ sbt:helloworld> show assembly/assemblyJarName
 
 Avoid sbt 0.12 style key names where the key's Scala identifier and shell uses kebab-casing:
 
-- BAD: `lazy val jarName = SettingKey[String]("assembly-jar-name")`
-- BAD: `lazy val jarName = SettingKey[String]("jar-name")`
-- GOOD: `lazy val assemblyJarName = taskKey[String]("name of the fat jar")`
+- BAD: `val jarName = SettingKey[String]("assembly-jar-name")`
+- BAD: `val jarName = SettingKey[String]("jar-name")`
+- GOOD: `val assemblyJarName = taskKey[String]("name of the fat jar")`
 
 Because there's a single namespace for keys both in `build.sbt` and in sbt shell,
 if different plugins use generic sounding key names like `jarName` and `excludedFiles` they will cause name conflict.
@@ -301,10 +301,10 @@ and refer to them with the narrowest scoping, it will give the maximum flexibili
 
 #### Provide default values in `globalSettings`
 
-If your settings or task do not transitively depend on a project-level settings
-(such as `baseDirectory`, `compile`, etc), provide default values in `globalSettings`.
+If the default value of your settings or task does not transitively depend on a project-level settings
+(such as `baseDirectory`, `compile`, etc), define it in `globalSettings`.
 
-For example, in sbt's Defaults keys related to publishing such as `licenses`, `developers`,
+For example, in `sbt.Defaults` keys related to publishing such as `licenses`, `developers`,
 and `scmInfo` are all defined at the `Global` scope, typically to empty values like `Nil` and `None`.
 
 ```scala
