@@ -58,6 +58,18 @@ so **your build will run much slower**.
 For day-to-day coding, we recommend using the sbt shell
 or Continuous build and test feature described below.
 
+Beginning in sbt 0.13.16, using batch mode in sbt will issue an
+informational startup message,
+
+```
+\$ sbt clean compile
+[info] Executing in batch mode. For better performance use sbt's shell
+...
+```
+
+It will only be triggered for `sbt compile`, and it can also be
+supressed with `suppressSbtShellNotification := true`.
+
 ### Continuous build and test
 
 To speed up your edit-compile-test cycle, you can ask sbt to

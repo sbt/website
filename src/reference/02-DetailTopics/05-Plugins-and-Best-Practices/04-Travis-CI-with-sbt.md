@@ -290,6 +290,20 @@ There's a function called `travis_wait` that can extend this to 20 minutes.
 
 There are more thing you can do, such as [set up databases][Travis-database], [installing Ubuntu packages][Travis-installing], and [deploy continuously][Travis-deploy].
 
+Travis offers the ability to run tests in parallel, and also imposes
+time limits on builds.  If you have an especially long-running suite
+of scripted tests for your plugin, you can run a subset of scripted
+tests in a directory, for example:
+
+```
+    - TEST_COMMAND="scripted tests/*1of3"
+    - TEST_COMMAND="scripted tests/*2of3"
+    - TEST_COMMAND="scripted tests/*3of3"
+```
+
+Will create three chunks and run each of the chunks separately for the
+directory `tests`.
+
 ### Sample setting
 
 Here's a sample that puts them all together. Remember, most of the sections are optional.
