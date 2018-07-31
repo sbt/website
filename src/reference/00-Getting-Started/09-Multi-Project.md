@@ -163,6 +163,57 @@ You can have multiple configurations for a dependency, separated by
 semicolons. For example,
 `dependsOn(util % "test->test;compile->compile")`.
 
+### Inter-project dependencies
+
+On extremely large projects with many files and many subprojects, sbt
+can perform less optimally at watching files have changed during
+interactively and using a lot of disk and system I/O.
+
+sbt has `trackInternalDependencies` and `exportToInternal`
+settings. These can be used to control whether to trigger compilation
+of a dependent subprojects when you call `compile`. Both keys will
+take one of three values: `TrackLevel.NoTracking`,
+`TrackLevel.TrackIfMissing`, and `TrackLevel.TrackAlways`. By default
+they are both set to `TrackLevel.TrackAlways`.
+
+When `trackInternalDependencies` is set to
+`TrackLevel.TrackIfMissing`, sbt will no longer try to compile
+internal (inter-project) dependencies automatically, unless there are
+no `*.class` files (or JAR file when `exportJars` is `true`) in the
+output directory.
+
+When the setting is set to `TrackLevel.NoTracking`, the compilation of
+internal dependencies will be skipped. Note that the classpath will
+still be appended, and dependency graph will still show them as
+dependencies. The motivation is to save the I/O overhead of checking
+for the changes on a build with many subprojects during
+development. Here's how to set all subprojects to `TrackIfMissing`.
+
+```scala
+lazy val root = (project in file(".")).
+  aggregate(....).
+  settings(
+    inThisBuild(Seq(
+      trackInternalDependencies := TrackLevel.TrackIfMissing,
+      exportJars := true
+    ))
+  )
+```
+
+The `exportToInternal` setting allows the dependee subprojects to opt
+out of the internal tracking, which might be useful if you want to
+track most subprojects except for a few. The intersection of the
+`trackInternalDependencies` and `exportToInternal` settings will be
+used to determine the actual track level. Here's an example to opt-out
+one project:
+
+```scala
+lazy val dontTrackMe = (project in file("dontTrackMe")).
+  settings(
+    exportToInternal := TrackLevel.NoTracking
+  )
+```
+
 ### Default root project
 
 If a project is not defined for the root directory in the build, sbt

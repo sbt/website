@@ -166,6 +166,20 @@ documentation for details.
 
 <!-- TODO: Add aliases -->
 
+Occasionally a Maven "version range" is used to specify a dependency
+(transitive or otherwise), such as `[1.3.0,)`.  If a specific version
+of the dependency is declared in the build, and it satisfies the
+range, then sbt will use the specified version.  Otherwise, Ivy could
+go out to the Internet to find the latest version.  This would result
+to a surprising behavior where the effective version keeps changing
+over time, even though there's a specified version of the library that
+satisfies the range condition.
+
+Maven version ranges will be replaced with its lower bound if the
+build so that when a satisfactory version is found in the dependency
+graph it will be used.  You can disable this behavior using the JVM
+flag `-Dsbt.modversionrange=false`.
+
 #### Resolvers
 
 Not all packages live on the same server; sbt uses the standard Maven2
