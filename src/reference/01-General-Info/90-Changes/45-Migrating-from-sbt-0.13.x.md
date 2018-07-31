@@ -306,3 +306,19 @@ def scalaXml = Def.setting {
 
 **Note**: `Build` traits is deprecated, but you can still use `project/*.scala` file to organize your build and/or define ad-hoc plugins. See [Organizing the build][Organizing-Build].
 
+### Migrating from Resolver.withDefaultResolvers
+
+In 0.13.x, you use other repositories instead of the Maven Central repository:
+
+```scala
+externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
+```
+
+After 1.x, `withDefaultResolvers` was renamed to `combineDefaultResolvers`. In the meantime, one of the parameters, `userResolvers`, was changed to `Vector` instead of `Seq`.
+
+* You can use `toVector` to help migration.
+
+    ```scala
+    externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = false)
+    ```
+* You can use `Vector` directly too.
