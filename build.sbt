@@ -4,14 +4,12 @@ import Docs._
 lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
 
-lazy val root = (project in file("."))
-  .enablePlugins(NanocPlugin, LowTechSnippetPamfletPlugin)
-  .settings(
-    inThisBuild(Seq(
-      organization := "org.scala-sbt",
-      scalafmtOnCompile := true,
-    )),
+ThisBuild / organization := "org.scala-sbt"
+ThisBuild / scalafmtOnCompile := true
 
+lazy val root = (project in file("."))
+  .enablePlugins(NanocPlugin, LowTechSnippetPamfletPlugin, ScriptedPlugin)
+  .settings(
     name := "website",
     siteEmail := "eed3si9n" + "@gmail.com",
     // Reference
