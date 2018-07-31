@@ -211,6 +211,16 @@ object Docs {
                        exp / "Advanced-Command-Example.html",
                        s.log)
 
+      Seq(
+        "sbt-0.13-Tech-Previews.html",
+        "ChangeSummary_0.13.0.html",
+        "ChangeSummary_0.12.0.html",
+        "Older-Changes.html",
+        "Migrating-from-sbt-07x.html"
+      ) foreach { x =>
+        generateRedirect(s"../../0.13/docs/$x", output / x, s.log)
+      }
+
       output ** AllPassFilter --- output pair Path.relativeTo(output)
     }
   )
