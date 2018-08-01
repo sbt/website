@@ -20,8 +20,8 @@ but several methods are augmented through implicits:
 
 sbt 0.10+ uses
 [java.io.File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html)
-to represent a file instead of the custom `sbt.Path` class that was in
-sbt 0.7 and earlier. sbt defines the alias `File` for `java.io.File` so
+to represent a file
+and defines the type alias `File` for `java.io.File` so
 that an extra import is not necessary. The `file` method is an alias for
 the single-argument `File` constructor to simplify constructing a new
 file from a String:
