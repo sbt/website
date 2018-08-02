@@ -156,7 +156,7 @@ to `ProjectRef`s.
 
 ### Classpaths
 
-Classpaths in sbt 0.10+ are of type `Seq[Attributed[File]]`. This allows
+Classpaths in sbt are of type `Seq[Attributed[File]]`. This allows
 tagging arbitrary information to classpath entries. sbt currently uses
 this to associate an `Analysis` with an entry. This is how it manages
 the information needed for multi-project incremental recompilation. It

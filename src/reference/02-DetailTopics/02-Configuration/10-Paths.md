@@ -18,7 +18,7 @@ but several methods are augmented through implicits:
 
 ### Constructing a File
 
-sbt 0.10+ uses
+sbt uses
 [java.io.File](https://docs.oracle.com/javase/8/docs/api/java/io/File.html)
 to represent a file
 and defines the type alias `File` for `java.io.File` so
