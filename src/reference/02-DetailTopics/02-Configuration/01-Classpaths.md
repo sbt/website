@@ -13,7 +13,7 @@ classpaths.
 
 ### Basics
 
-In sbt 0.10 and later, classpaths now include the Scala library and
+In sbt, the classpath includes the Scala library and
 (when declared as a dependency) the Scala compiler. Classpath-related
 settings and tasks typically provide a value of type `Classpath`. This
 is an alias for `Seq[Attributed[File]]`.
