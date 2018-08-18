@@ -300,6 +300,8 @@ your plugin to the list.
   SQL. <!-- 15 stars -->
 - [sbt-partial-unification](https://github.com/fiadliel/sbt-partial-unification):
   enable partial unification support in Scala (SI-2712). <!-- 2 stars -->
+- [sbt-i18n](https://github.com/ant8e/sbt-i18n):
+  transform your i18n bundles into Scala code. <!-- 1 stars -->
 
 #### Static code analysis plugins
 
