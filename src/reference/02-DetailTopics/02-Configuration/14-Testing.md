@@ -253,16 +253,15 @@ per project.
 The following full build configuration demonstrates integration tests.
 
 ```scala
-lazy val commonSettings = Seq(
-  scalaVersion := "$example_scala_version$",
-  organization := "com.example"
-)
 lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
+
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .configs(IntegrationTest)
   .settings(
-    commonSettings,
     Defaults.itSettings,
     libraryDependencies += scalatest % "it,test"
     // other settings here
@@ -323,17 +322,16 @@ IntegrationTest / testOptions := Seq(...)
 The previous example may be generalized to a custom test configuration.
 
 ```scala
-lazy val commonSettings = Seq(
-  scalaVersion := "$example_scala_version$",
-  organization := "com.example"
-)
 lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 lazy val FunTest = config("fun") extend(Test)
+
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .configs(FunTest)
   .settings(
-    commonSettings,
     inConfig(FunTest)(Defaults.testSettings),
     libraryDependencies += scalatest % FunTest
     // other settings here
@@ -382,12 +380,12 @@ compiled together using the same classpath and are packaged together.
 However, different tests are run depending on the configuration.
 
 ```scala
-lazy val commonSettings = Seq(
-  scalaVersion := "$example_scala_version$",
-  organization := "com.example"
-)
 lazy val scalatest = "org.scalatest" %% "scalatest" % "$example_scalatest_version$"
 lazy val FunTest = config("fun") extend(Test)
+
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 def itFilter(name: String): Boolean = name endsWith "ITest"
 def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name)
@@ -395,7 +393,6 @@ def unitFilter(name: String): Boolean = (name endsWith "Test") && !itFilter(name
 lazy val root = (project in file("."))
   .configs(FunTest)
   .settings(
-    commonSettings,
     inConfig(FunTest)(Defaults.testTasks),
     libraryDependencies += scalatest % FunTest,
     testOptions in Test := Seq(Tests.Filter(unitFilter)),

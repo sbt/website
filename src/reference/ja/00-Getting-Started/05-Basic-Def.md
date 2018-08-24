@@ -60,12 +60,13 @@ sbt.version=$app_version$
 このペアは**セッティング式** (setting expression) と呼ばれ、**build.sbt DSL** にて記述される。
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
-    name         := "hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT"
+    name := "hello"
   )
 ```
 
@@ -214,6 +215,19 @@ import Keys._
 
 (さらに、auto plugin があれば `autoImport` 以下の名前がインポートされる。)
 
+### Bare .sbt ビルド定義
+
+セッティングは、`.settings(...)` の呼び出しの中だけではなく `build.sbt` に直書きすることができ、
+これは 「bare style」と呼ばれる。
+
+```scala
+ThisBuild / version := "1.0"
+ThisBuild / scalaVersion := "$example_scala_version$"
+```
+
+この構文は `ThisBuild` にスコープ付けされたセッティングを書いたり、プラグインを追加するのに向いている。
+スコープやプラグインに関してはまた後ほど。
+
 ### ライブラリへの依存性を加える
 
 サードパーティのライブラリに依存するには二つの方法がある。
@@ -223,15 +237,12 @@ import Keys._
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0-SNAPSHOT",
-  scalaVersion := "$example_scala_version$"
-)
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     name := "Hello",
     libraryDependencies += derby
   )

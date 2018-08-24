@@ -344,23 +344,15 @@ sbt will look for it in `ThisBuild` as a fallback.
 Using the mechanism, we can define a build-level default setting for
 frequently used keys such as `version`, `scalaVersion`, and `organization`.
 
-For convenience, there is `inThisBuild(...)` function that will
-scope both the key and the body of the setting expression to `ThisBuild`.
-Putting setting expressions in there would be equivalent to appending `in ThisBuild` where possible.
-
 ```scala
+ThisBuild / organization := "com.example",
+ThisBuild / scalaVersion := "$example_scala_version$",
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
-    inThisBuild(List(
-      // Same as:
-      // ThisBuild / organization := "com.example"
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
     name := "Hello",
-    publish := (),
-    publishLocal := ()
+    publish / skip := true
   )
 
 lazy val core = (project in file("core"))
@@ -374,8 +366,12 @@ lazy val util = (project in file("util"))
   )
 ```
 
+For convenience, there is `inThisBuild(...)` function that will
+scope both the key and the body of the setting expression to `ThisBuild`.
+Putting setting expressions in there would be equivalent to prepending `ThisBuild /` where possible.
+
 Due to the nature of [scope delegation][Scope-Delegation] that we will cover later,
-we do not recommend using build-level settings beyond simple value assignments.
+build-level settings should be set only to a pure value or settings from either `Global` or `ThisBuild` scoping.
 
 ### Scope delegation
 

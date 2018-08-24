@@ -38,17 +38,14 @@ lazy val CustomCompile = config("compile") extend(Saxon, Common, Scalate)
 
 /********** Projects ************/
 
-// factor out common settings into a sequence
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "2.10.4"
-)
+// factor out common settings
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 // An example project that only uses the Scalate utilities.
 lazy val a = (project in file("a"))
   .dependsOn(utils % "compile->scalate")
-  .settings(commonSettings)
 
 // An example project that uses the Scalate and Saxon utilities.
 // For the configurations defined here, this is equivalent to doing dependsOn(utils),
@@ -56,13 +53,10 @@ lazy val a = (project in file("a"))
 //  dependencies.
 lazy val b = (project in file("b"))
   .dependsOn(utils % "compile->scalate,saxon")
-  .settings(commonSettings)
 
 // Defines the utilities project
 lazy val utils = (project in file("utils"))
   .settings(
-    commonSettings,
-
     inConfig(Common)(Defaults.configSettings),  // Add the src/common/scala/ compilation configuration.
     addArtifact(artifact in (Common, packageBin), packageBin in Common), // Publish the common artifact
 

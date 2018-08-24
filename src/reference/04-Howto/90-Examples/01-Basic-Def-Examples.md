@@ -15,13 +15,11 @@ See [.sbt build definition][Basic-Def] for details.
 ```scala
 import scala.concurrent.duration._
 
-// factor out common settings into a sequence
-lazy val commonSettings = Seq(
-  organization := "org.myproject",
-  version := "0.1.0",
-  // set the Scala version used for the project
-  scalaVersion := "$example_scala_version$"
-)
+// factor out common settings
+ThisBuild / organization := "org.myproject"
+ThisBuild / scalaVersion := "$example_scala_version$"
+// set the Scala version used for the project
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 // define ModuleID for library dependencies
 lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "$example_scalacheck_version$"
@@ -33,8 +31,6 @@ lazy val osmlib = ("net.sf.travelingsales" % "osmlib" % osmlibVersion from
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
-
     // set the name of the project
     name := "My Project",
 

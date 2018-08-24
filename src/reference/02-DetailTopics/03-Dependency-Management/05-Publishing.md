@@ -72,7 +72,7 @@ credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.ne
 The second and better way is to load them from a file, for example:
 
 ```scala
-credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 ```
 
 The credentials file is a properties file with keys `realm`, `host`,

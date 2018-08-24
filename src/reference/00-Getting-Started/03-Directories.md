@@ -2,7 +2,7 @@
 out: Directories.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
   [Organizing-Build]: Organizing-Build.html
 
@@ -10,14 +10,14 @@ Directory structure
 -------------------
 
 This page assumes you've [installed sbt][Setup] and seen the
-[Hello, World][Hello] example.
+[sbt by example][ByExample].
 
 ### Base directory
 
 In sbt's terminology, the "base directory" is the directory containing
 the project. So if you created a project `hello` containing
-`hello/build.sbt` as in the [Hello, World][Hello]
-example, `hello` is your base directory.
+`/tmp/foo-build/build.sbt` as in the [sbt by example][ByExample],
+`/tmp/foo-build` is your base directory.
 
 ### Source code
 

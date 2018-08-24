@@ -63,12 +63,13 @@ The key-value pairs are listed under the `.settings(...)` method as follows:
 called *setting expressions* using *build.sbt DSL*.
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
-    name         := "hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version      := "0.1.0-SNAPSHOT"
+    name := "hello"
   )
 ```
 
@@ -241,17 +242,16 @@ import Keys._
 
 ### Bare .sbt build definition
 
-Instead of defining `Project`s, bare `.sbt` build definition consists of
-a list of `Setting[_]` expressions.
+The settings can be written directly into the `build.sbt` file instead of
+putting them inside a `.settings(...)` call. We call this the "bare style."
 
 ```scala
-name := "hello"
-version := "1.0"
-scalaVersion := "$example_scala_version$"
+ThisBuild / version := "1.0"
+ThisBuild / scalaVersion := "$example_scala_version$"
 ```
 
-This syntax is recommended mostly for using plugins. See later section
-about the plugins.
+This syntax is recommended for `ThisBuild` scoped settings and adding plugins.
+See later section about the scoping and the plugins.
 
 ### Adding library dependencies
 
@@ -262,15 +262,12 @@ managed dependencies, which will look like this in `build.sbt`:
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0-SNAPSHOT",
-  scalaVersion := "$example_scala_version$"
-)
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     name := "Hello",
     libraryDependencies += derby
   )

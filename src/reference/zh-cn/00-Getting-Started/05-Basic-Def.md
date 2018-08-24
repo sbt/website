@@ -66,15 +66,12 @@ lazy val root = (project in file("."))
 下面是一个例子：
 
 ```scala
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     name := "hello"
   )
 ```
@@ -219,15 +216,12 @@ scalaVersion := "$example_scala_version$"
 ```scala
 val derby = "org.apache.derby" % "derby" % "10.4.1.3"
 
-lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     name := "hello",
     libraryDependencies += derby
   )

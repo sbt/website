@@ -105,14 +105,13 @@ To use the `val`s under it easier, import `Dependencies._`.
 ```scala
 import Dependencies._
 
-lazy val commonSettings = Seq(
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
-)
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := "$example_scala_version$"
 
 lazy val backend = (project in file("backend"))
   .settings(
-    commonSettings,
+    name := "backend",
     libraryDependencies ++= backendDeps
   )
 ```
