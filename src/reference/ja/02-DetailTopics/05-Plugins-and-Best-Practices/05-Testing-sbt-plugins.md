@@ -28,22 +28,33 @@ sbt は、scripted test framework というものが付いてきて、ビルド�
 
 scripted-plugin はプラグインをローカルに publish するため、まずは version を **-SNAPSHOT** なものに設定しよう。ここで SNAPSHOT を使わないと、あなたと世界のあなた以外の人が別々のアーティファクトを観測するといった酷い不整合な状態に入り込む場合があるからだ。
 
-### ステップ 2: scripted-plugin
+### ステップ 2: SbtPlugin
 
-次に、scripted-plugin をプラグインのビルドに加える。`project/scripted.sbt`:
-
-```scala
-libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
-```
-
-以下のセッティングを `scripted.sbt` に加える:
+`build.sbt` で `SbtPlugin` を enable する。
 
 ```scala
-scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
-}
-scriptedBufferLog := false
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something"
+  )
 ```
+
+以下のセッティングを `build.sbt` に加える:
+
+```scala
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something",
+    scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false
+  )
+```
+
+**注意**: `SbtPlugin` は sbt 1.2.1 以上を必要とする。
 
 ### ステップ 3: src/sbt-test
 

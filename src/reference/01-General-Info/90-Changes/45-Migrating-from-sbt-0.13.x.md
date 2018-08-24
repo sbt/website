@@ -16,6 +16,18 @@ Suppose you have `m: ModuleID`, and you're currently calling `m.copy(revision = 
 m.withRevision("1.0.1")
 ```
 
+### SbtPlugin
+
+sbt 0.13, sbt 1.0, and sbt 1.1 required `sbtPlugin` setting and scripted plugin to develop an sbt plugin.
+sbt 1.2.1 combined both into `SbtPlugin` plugin.
+
+Remove scripted-plugin from `project/plugins.sbt`, and just use:
+
+```scala
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+```
+
 ### sbt version specific source directory
 
 If you are cross building an sbt plugin, one escape hatch we have is sbt version specific source directory `src/main/scala-sbt-0.13` and `src/main/scala-sbt-1.0`. In there you can define an object named `PluginCompat` as follows:

@@ -27,22 +27,33 @@ The framework is made available via scripted-plugin. The rest of this page expla
 
 Before you start, set your version to a **-SNAPSHOT** one because scripted-plugin will publish your plugin locally. If you don't use SNAPSHOT, you could get into a horrible inconsistent state of you and the rest of the world seeing different artifacts.
 
-### step 2: scripted-plugin
+### step 2: SbtPlugin
 
-Add scripted-plugin to your plugin build. `project/scripted.sbt`:
+Enable `SbtPlugin` in `build.sbt`:
 
 ```scala
-libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something"
+  )
 ```
 
 Then add the following settings to `build.sbt`:
 
 ```scala
-scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
-}
-scriptedBufferLog := false
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something",
+    scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false
+  )
 ```
+
+**Note**: You must use sbt 1.2.1 and above to use `SbtPlugin`.
 
 ### step 3: src/sbt-test
 
