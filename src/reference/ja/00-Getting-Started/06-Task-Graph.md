@@ -67,12 +67,13 @@ scalacOptions := {
 具体例で説明しよう:
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "Hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val out = streams.value // streams タスクは scalacOptions よりも事前発生する
       val log = out.log
@@ -103,12 +104,13 @@ lazy val root = (project in file("."))
 もう一つの例:
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "Hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val ur = update.value  // update task happens-before scalacOptions
       if (false) {

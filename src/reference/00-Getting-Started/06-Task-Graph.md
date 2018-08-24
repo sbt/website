@@ -68,12 +68,13 @@ regardless of which line it appears in the body.**
 See the following example:
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "Hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val out = streams.value // streams task happens-before scalacOptions
       val log = out.log
@@ -104,12 +105,13 @@ either of them.
 Here's another example:
 
 ```scala
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "Hello",
-    organization := "com.example",
-    scalaVersion := "$example_scala_version$",
-    version := "0.1.0-SNAPSHOT",
     scalacOptions := {
       val ur = update.value  // update task happens-before scalacOptions
       if (false) {

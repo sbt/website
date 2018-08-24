@@ -2,7 +2,7 @@
 out: Running.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
   [Triggered-Execution]: ../docs/Triggered-Execution.html
   [Command-Line-Reference]: ../docs/Command-Line-Reference.html
@@ -11,8 +11,8 @@ Running
 -------
 
 This page describes how to use sbt once you have set up your project. It
-assumes you've [installed sbt][Setup] and created a
-[Hello, World][Hello] or other project.
+assumes you've [installed sbt][Setup] and went through
+[sbt by example][ByExample].
 
 ### sbt shell
 

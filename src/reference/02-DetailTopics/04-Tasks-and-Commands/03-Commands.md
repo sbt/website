@@ -119,13 +119,12 @@ Here's `build.sbt`:
 ```scala
 import CommandExample._
 
-lazy val commonSettings = Seq(
-  scalaVersion := "$example_scala_version$",
-)
+ThisBuild / organization := "com.example"
+ThisBuild / scalaVersion := "$example_scala_version$"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
   )
 ```

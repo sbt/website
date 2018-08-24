@@ -299,24 +299,15 @@ sbt はフォールバックとして `ThisBuild` 内を探す。
 `version`、 `scalaVersion`、 `organization`
 といったよく使われるキーに対してビルドレベルのデフォルトのセッティングを定義することができる。
 
-便宜のため、セッティング式のキーと本文の両方を `ThisBuild`
-にスコープ付けする
-`inThisBuild(...)` という関数が用意されている。
-セッティング式を渡すと、それに `in ThisBuild` を可能な所に追加したのと同じものが得られる。
-
 ```scala
+ThisBuild / organization := "com.example",
+ThisBuild / scalaVersion := "$example_scala_version$",
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
-    inThisBuild(List(
-      // Same as:
-      // organization in ThisBuild := "com.example"
-      organization := "com.example",
-      scalaVersion := "$example_scala_version$",
-      version      := "0.1.0-SNAPSHOT"
-    )),
     name := "Hello",
-    publish := (),
-    publishLocal := ()
+    publish / skip := true
   )
 
 lazy val core = (project in file("core"))
@@ -330,7 +321,13 @@ lazy val util = (project in file("util"))
   )
 ```
 
-ただし、後で説明する[スコープ委譲][Scope-Delegation]の性質上、ビルドレベル・セッティングを単純な値の代入以外に使うことは推奨しない。
+便宜のため、セッティング式のキーと本文の両方を `ThisBuild`
+にスコープ付けする
+`inThisBuild(...)` という関数が用意されている。
+セッティング式を渡すと、それに `ThisBuild /` を可能な所に追加したのと同じものが得られる。
+
+ただし、後で説明する[スコープ委譲][Scope-Delegation]の性質上、ビルドレベル・セッティングは
+純粋な値または `Global` か `ThisBuild` にスコープ付けされたセッティングのみを代入するべきだ。
 
 ### スコープ委譲
 

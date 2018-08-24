@@ -2,7 +2,7 @@
 out: Directories.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
   [Organizing-Build]: Organizing-Build.html
   [Maven]: https://maven.apache.org/
@@ -12,13 +12,13 @@ out: Directories.html
 
 このページは、
 [sbt をインストール][Setup]して、
-[Hello, World][Hello] を読んだことを前提とする。
+[例題でみる sbt][ByExample] を読んだことを前提とする。
 
 ### ベースディレクトリ
 
 sbt 用語では「ベースディレクトリ(base directory) 」はプロジェクトが入ったディレクトリを指す。
-[Hello, World][Hello] での例のように、`hello/build.sbt` が入った
-`hello` プロジェクトを作った場合、ベースディレクトリは `hello` となる。
+[例題でみる sbt][ByExample] での例のように、`/tmp/foo-build/build.sbt` が入った
+`hello` プロジェクトを作った場合、ベースディレクトリは `/tmp/foo-build` となる。
 
 ### ソースコード
 

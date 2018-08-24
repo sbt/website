@@ -2,7 +2,7 @@
 out: Running.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
   [Triggered-Execution]: ../../docs/Triggered-Execution.html
   [Command-Line-Reference]: ../../docs/Command-Line-Reference.html
@@ -11,7 +11,8 @@ out: Running.html
 ----
 
 このページではプロジェクトをセットアップした後の `sbt` の使い方を説明する。
-君が[sbt をインストール][Setup]して、[Hello, World][Hello]か他のプロジェクトを作ったことを前提とする。
+君が[sbt をインストール][Setup]して、
+[例題でみる sbt][ByExample]を実行したことを前提とする。
 
 ### sbt シェル
 

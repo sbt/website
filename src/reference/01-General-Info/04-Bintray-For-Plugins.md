@@ -66,20 +66,18 @@ addSbtPlugin("org.foundweekends" % "sbt-bintray" % "$sbt_bintray_version$")
 Next, a make sure your `build.sbt` file has the following settings
 
 ```scala
-lazy val commonSettings = Seq(
-  version in ThisBuild := "<YOUR PLUGIN VERSION HERE>",
-  organization in ThisBuild := "<INSERT YOUR ORG HERE>"
-)
+ThisBuild / version := "<YOUR PLUGIN VERSION HERE>"
+ThisBuild / organization := "<INSERT YOUR ORG HERE>"
+ThisBuild / description := "<YOUR DESCRIPTION HERE>"
+
+// This is an example.  sbt-bintray requires licenses to be specified
+// (using a canonical name).
+ThisBuild / licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 lazy val root = (project in file("."))
   .settings(
-    commonSettings,
     sbtPlugin := true,
     name := "<YOUR PLUGIN HERE>",
-    description := "<YOUR DESCRIPTION HERE>",
-    // This is an example.  sbt-bintray requires licenses to be specified 
-    // (using a canonical name).
-    licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     publishMavenStyle := false,
     bintrayRepository := "sbt-plugins",
     bintrayOrganization in bintray := None

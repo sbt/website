@@ -41,6 +41,33 @@ lazy val util = project
 lazy val core = project
 ```
 
+#### ビルドワイド・セッティング
+
+複数プロジェクトに共通なセッティングをくくり出す場合、
+セッティングを `ThisBuild` にスコープ付けする。
+ただし、右辺値には純粋な値か `Global` もしくは `ThisBuild`
+にスコープ付けされたセッティングしか置くことができない、
+またサブプロジェクトにスコープ付けされたセッティングがデフォルトで存在しない必要があるというという制約がある。
+（[スコープ][Scopes]参照）
+
+```scala
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := "$example_scala_version$"
+
+lazy val core = (project in file("core"))
+  .settings(
+    // other settings
+  )
+
+lazy val util = (project in file("util"))
+  .settings(
+    // other settings
+  )
+```
+
+これで `version` を一箇所で変更すれば、再読み込み後に全サブプロジェクトに反映されるようになる。
+
 #### 共通のセッティング
 
 複数プロジェクトに共通なセッティングをくくり出す場合、
@@ -49,9 +76,7 @@ lazy val core = project
 
 ```scala
 lazy val commonSettings = Seq(
-  organization := "com.example",
-  version := "0.1.0",
-  scalaVersion := "$example_scala_version$"
+  target := { baseDirectory.value / "target2" }
 )
 
 lazy val core = (project in file("core"))
@@ -67,12 +92,6 @@ lazy val util = (project in file("util"))
   )
 ```
 
-これで `version` を一箇所で変更すれば、再読み込み後に全サブプロジェクトに反映されるようになる。
-
-#### ビルドワイド・セッティング
-
-サブプロジェクト間に共通なセッティングを一度に定義するためのもう一つの方法として、
-`ThisBuild` にスコープ付けするという少し上級なテクニックがある。（[スコープ][Scopes]参照）
 
 ### 依存関係
 
