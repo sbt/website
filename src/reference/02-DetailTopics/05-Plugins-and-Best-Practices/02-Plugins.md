@@ -149,10 +149,14 @@ This kind of plugin may provide these settings
 automatically or make them available for the user to explicitly
 integrate.
 
-To make an auto plugin, create a project and configure `sbtPlugin` to `true`.
+To make an auto plugin, create a project and enable `SbtPlugin`.
 
 ```scala
-sbtPlugin := true
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something"
+  )
 ```
 
 Then, write the plugin code and publish your project to a repository.
