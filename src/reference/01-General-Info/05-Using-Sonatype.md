@@ -8,7 +8,7 @@ out: Using-Sonatype.html
   [sonatype-requirements]: http://central.sonatype.org/pages/requirements.html
   [sonatype-coordinates]: http://central.sonatype.org/pages/choosing-your-coordinates.html
   [sonatype-nexus]: https://oss.sonatype.org/#welcome
-  [sonatype-pgp]: http://central.sonatype.org/pages/working-with-pgp-signatures.html
+  [sonatype-pgp]: https://central.sonatype.org/pages/working-with-pgp-signatures.html
   [sbt-pgp]: https://www.scala-sbt.org/sbt-pgp/
   [sbt-sonatype]: https://github.com/xerial/sbt-sonatype
   [sbt-release]: https://github.com/sbt/sbt-release
@@ -54,14 +54,54 @@ on published artifacts.
 > *Note:* Sonatype advises that responding to a **New Project ticket** might 
 take up to two business days, but in my case it was a few minutes.
 
-### SBT setup
+### sbt setup
 
 To address Sonatype's [requirements]
 [sonatype-requirements] for publishing to the central repository and to simplify the publishing process, you can
-use two community plugins. The [sbt-pgp plugin][sbt-pgp] can sign the files with GPG/PGP
-and [sbt-sonatype][sbt-sonatype] can publish to a Sonatype repository. 
+use two community plugins. The [sbt-pgp plugin][sbt-pgp] can sign the files with GPG/PGP.
+(Optionally [sbt-sonatype][sbt-sonatype] can publish to a Sonatype repository nicer.)
 
-#### First - PGP Signatures
+#### step 1: PGP Signatures
+
+Follow [Working with PGP Signatures][sonatype-pgp].
+
+First, you should [install GnuGP](https://www.gnupg.org/download/), and verify the version:
+
+```
+\$ gpg --version
+gpg (GnuPG/MacGPG2) 2.2.8
+libgcrypt 1.8.3
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+```
+
+Next generate a key:
+
+```
+\$ gpg --gen-key
+```
+
+List the keys:
+
+```
+\$ gpg --list-keys
+
+/home/foo/.gnupg/pubring.gpg
+------------------------------
+
+pub   rsa4096 2018-08-22 [SC]
+      1234517530FB96F147C6A146A326F592D39AAAAA
+uid           [ultimate] your name <you@example.com>
+sub   rsa4096 2018-08-22 [E]
+```
+
+Distribute the key:
+
+```
+\$ gpg --keyserver hkp://pool.sks-keyservers.net --send-keys 1234517530FB96F147C6A146A326F592D39AAAAA
+```
+
+#### step 2: sbt-pgp
 
 With the PGP key you want to use, you can sign the artifacts 
 you want to publish to the Sonatype repository with the [sbt-pgp plugin][sbt-pgp]. Follow 
@@ -75,97 +115,52 @@ enable it globally for SBT projects:
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
 ```
 
-> *Note:* The plugin is a jvm-only solution to generate PGP keys and sign 
-artifacts. It can also work with the GPG command line tool.
+> *Note:* The plugin is a solution to sign artifacts. It works with the GPG command line tool.
 
-If you don't have the PGP keys to sign your code with, one of the ways to 
-achieve that is to install the [GNU Privacy Guard][gnupg] and:
-
-* use it to generate the keypair you will use to sign your library,
-* publish your certificate to enable remote verification of the signatures,
 * make sure that the `gpg` command is in PATH available to the sbt,
-* add `useGpg := true` to your `build.sbt` to make the plugin `gpg`-aware 
+* add `useGpg := true` to your `build.sbt` to make the plugin `gpg`-aware
 
-#### PGP Tips'n'tricks 
-
-If the command to generate your key fails, execute the following commands and 
-remove the displayed files:
-
-```
-> show */*:pgpSecretRing
-[info] /home/username/.sbt/.gnupg/secring.gpg
-> show */*:pgpPublicRing
-[info] /home/username/.sbt/.gnupg/pubring.gpg
-```
-
-If your PGP key has not yet been distributed to the keyserver pool, e.g., 
-you've just generated it, you'll need to publish it. You can do so using the 
-[sbt-pgp][sbt-pgp] plugin:
-
-```
-pgp-cmd send-key keyname hkp://pool.sks-keyservers.net
-```
-
-Where `keyname` is the name or email address used when creating the key or 
-hexadecimal identifier for the key.
-
-If you see no output from sbt-pgp then the key name specified was not
-found.
-
-If it fails to run the `SendKey` command you can try another server (for 
-example: hkp://keyserver.ubuntu.com). A list of servers can be found at 
-[the status page](https://sks-keyservers.net/status/) of sks-keyservers.net.
-
-### Second - Configure Sonatype integration 
+#### step 3: Credentials
 
 The credentials for your Sonatype OSSRH account need to be stored
 somewhere safe (*e.g. NOT in the repository*). Common convention is a 
 `$global_base$/sonatype.sbt` file, with the following:
 
 ```scala
-credentials += Credentials("Sonatype Nexus Repository Manager",
-                           "oss.sonatype.org",
-                           "<your username>",
-                           "<your password>")
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credential")
+```
+
+Next create a file `~/.sbt/sonatype_credential`:
+
+```
+realm=Sonatype Nexus Repository Manager
+host=oss.sonatype.org
+user=<your username>
+password=<your password>
 ```
 
 > *Note:* The first two strings must be `"Sonatype Nexus Repository Manager"`
 and `"oss.sonatype.org"` for Ivy to use the credentials.
 
-Now, we want to control what's available in the `pom.xml` file. This
-file describes our project in the maven repository and is used by
-indexing services for search and discover. This means it's important
-that `pom.xml` should have all information we wish to advertise as well
-as required info!
-
-First, let's make sure no repositories show up in the POM file. To
-publish on maven-central, all *required* artifacts must also be hosted
-on maven central. However, sometimes we have optional dependencies for
-special features. If that's the case, let's remove the repositories for
-optional dependencies in our artifact:
-
-```scala
-pomIncludeRepository := { _ => false }
-```
+#### step 4: Configure build.sbt
 
 To publish to a maven repository, you'll need to configure a few
 settings so that the correct metadata is generated.
-Specifically, the build should provide data for `organization`, `url`,
-`license`, `scm.url`, `scm.connection` and `developer` keys. For example:
+
+Add these settings at the end of `build.sbt` or a separate `publish.sbt`:
 
 ```scala
-licenses := Seq("BSD-style" -> url("http://www.opensource.org/licenses/bsd-license.php"))
+ThisBuild / organization := "com.example.project2"
+ThisBuild / organizationName := "example"
+ThisBuild / organizationHomepage := Some(url("http://example.com/"))
 
-homepage := Some(url("http://example.com"))
-
-scmInfo := Some(
+ThisBuild / scmInfo := Some(
   ScmInfo(
     url("https://github.com/your-account/your-project"),
     "scm:git@github.com:your-account/your-project.git"
   )
 )
-
-developers := List(
+ThisBuild / developers := List(
   Developer(
     id    = "Your identifier",
     name  = "Your Name",
@@ -173,40 +168,42 @@ developers := List(
     url   = url("http://your.url")
   )
 )
-```
 
-#### Maven configuration tips'n'tricks
+ThisBuild / description := "Some descripiton about your project."
+ThisBuild / licenses := List("Apache 2" -> new URL("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+ThisBuild / homepage := Some(url("https://github.com/example/project"))
+
+// Remove all additional repository other than Maven Central from POM
+ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
+  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+}
+ThisBuild / publishMavenStyle := true
+```
 
 The full format of a `pom.xml` (an end product of the project configuration 
 used by Maven) file is [outlined here](https://maven.apache.org/pom.html).
 You can add more data to it with the `pomExtra` option in `build.sbt`.
 
+#### step 5: Publishing
 
-To ensure the POMs are generated and pushed:
+From sbt shell run:
 
-```scala
-publishMavenStyle := true
+```
+> publishSigned
 ```
 
-Setting repositories to publish to:
+Check the published artifacts in the [Nexus Repository Manager][sonatype-nexus]
+(same login as Sonatype's Jira account).
 
-```scala
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
-```
+Close the staging repository and promote the release to central, by hitting
+"Close" button, then "Release" button.
 
-Not publishing the test artifacts (this is the default):
+### Optional steps
 
-```scala
-publishArtifact in Test := false
-```
-
-### Third - Publish to the staging repository
+#### sbt-sonatype
 
 > *Note:* sbt-sonatype is a third-party plugin meaning it is not covered by Lightbend subscription.
 
@@ -236,7 +233,7 @@ After publishing you have to follow the
 > *Note:* the sbt-sonatype plugin can also be used to publish to other non-sonatype 
 repositories
 
-#### Publishing tips'n'tricks
+#### Publishing tips
 
 Use staged releases to test across large projects of independent releases 
 before pushing the full project.
@@ -248,7 +245,7 @@ range (e.g. Umlauts). If you are absolutely sure that you typed the
 right phrase and the error doesn't disappear, try changing the
 passphrase.
 
-### Fourth - Integrate with the release process
+#### Integrate with the release process
 
 > *Note:* sbt-release is a third-party plugin meaning it is not covered by Lightbend subscription.
 
