@@ -87,6 +87,15 @@ with file contents
   password=admin123
 ```
 
+If the above does not work for your system, then another approach is to explicitly provide the boot credentials via:
+
+    -Dsbt.boot.credentials\$HOME/TO/.ivy2/credentials
+  
+As well as add the credentials to your build file directly:
+
+    credentials += Credentials(Path.userHome / ".ivy2" / "credentials")
+    
+
 #### Launcher Script
 
 The sbt launcher supports two configuration options that allow the usage
