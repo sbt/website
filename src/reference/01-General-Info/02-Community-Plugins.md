@@ -34,7 +34,7 @@ See [Cross Build Plugins][Cross-Build-Plugins].
 
 ### Plugins available for sbt 1.0 (including RC-x)
 
-[[Edit]](https://github.com/sbt/website/edit/1.x/src/reference/01-General-Info/02-Community-Plugins.md) this page to
+[[Edit]](https://github.com/sbt/website/edit/develop/src/reference/01-General-Info/02-Community-Plugins.md) this page to
 submit a pull request that adds
 your plugin to the list.
 
@@ -313,6 +313,8 @@ your plugin to the list.
   using Scapegoat. <!-- 63 stars -->
 - [sbt-stats](https://github.com/orrsella/sbt-stats): generate source code
   statistics (lines of code etc). <!-- 53 stars -->
+- [sbt-explicit-dependencies](https://github.com/cb372/sbt-explicit-dependencies):
+  check that you have declared all your library dependencies correctly <!-- 12 stars -->
 - [sbt-taglist](https://github.com/johanandren/sbt-taglist): find tags within
   source files (such as TODO and FIXME). <!-- 11 stars -->
 - [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
