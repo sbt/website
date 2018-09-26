@@ -9,7 +9,7 @@ out: Directories.html
 Directory structure
 -------------------
 
-This page assumes you've [installed sbt][Setup] and seen the
+This page assumes you've [installed sbt][Setup] and seen
 [sbt by example][ByExample].
 
 ### Base directory
