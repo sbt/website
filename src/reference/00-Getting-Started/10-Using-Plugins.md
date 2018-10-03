@@ -151,7 +151,7 @@ classpath is exported to all sbt build definition projects. Roughly
 speaking, any `.sbt` or `.scala` files in `$global_plugins_base$` behave as if
 they were in the `project/` directory for all projects.
 
-You can create `$global_plugins_base$/build.sbt` and put `addSbtPlugin()`
+You can create `$global_plugins_base$build.sbt` and put `addSbtPlugin()`
 expressions in there to add plugins to all your projects at once.
 Because doing so would increase the dependency on the machine environment, 
 this feature should be used sparingly. See
