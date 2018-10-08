@@ -132,7 +132,7 @@ Hello
 ### sbt シェルから ThisBuild / scalaVersion をセットする
 
 ```
-sbt:foo-build> set ThisBuild / scalaVersion := "2.12.6"
+sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
 [info] Defining ThisBuild / scalaVersion
 ```
 
@@ -140,7 +140,7 @@ sbt:foo-build> set ThisBuild / scalaVersion := "2.12.6"
 
 ```
 sbt:foo-build> scalaVersion
-[info] 2.12.6
+[info] 2.12.7
 ```
 
 ### セッションを build.sbt へと保存する
@@ -155,7 +155,7 @@ sbt:foo-build> session save
 `build.sbt` ファイルは以下のようになったはずだ:
 
 ```scala
-ThisBuild / scalaVersion := "2.12.6"
+ThisBuild / scalaVersion := "2.12.7"
 ```
 
 ### プロジェクトに名前を付ける
@@ -250,7 +250,7 @@ New York の現在の天気を調べてみる:
 ```scala
 sbt:Hello> console
 [info] Starting scala interpreter...
-Welcome to Scala 2.12.6 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_171).
+Welcome to Scala 2.12.7 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_171).
 Type in expressions for evaluation. Or try :help.
 
 scala> :paste
@@ -478,7 +478,7 @@ sbt:Hello> scalaVersion
 [info]  2.11.12
 [info] scalaVersion
 [info]  2.11.12 scalaVersion
-[info] 2.12.6
+[info] 2.12.7
 ```
 
 このセッティングは `reload` 後には無くなる。
