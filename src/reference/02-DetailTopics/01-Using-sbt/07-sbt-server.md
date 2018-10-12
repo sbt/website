@@ -269,6 +269,62 @@ Content-Type: application/vscode-jsonrpc; charset=utf-8
 
 Unlike the command execution, this will respond immediately.
 
+### `sbt/completion` request
+
+__(sbt 1.3.0+)__
+
+A `sbt/completion` request is used to emulate tab completions for sbt shell.
+
+- method: `sbt/completion`
+- params:
+```
+type CompletionParams {
+  query: String!
+}
+```
+
+On telnet it would look as follows:
+
+```
+Content-Length: 100
+
+{ "jsonrpc": "2.0", "id": 15, "method": "sbt/completion", "params": { "query": "testOnly org." } }
+Content-Length: 79
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc":"2.0","id":15,"result":{"items":["testOnly org.sbt.ExampleSpec"]}}
+```
+
+This will respond immediatly based on the last available state of sbt.
+
+### `sbt/cancelRequest`
+
+__(sbt 1.3.0+)__
+
+A `sbt/cancelRequest` request can be used to terminate the execution of an on-going task.
+
+- method: `sbt/cancelRequest`
+- params:
+```
+type CancelRequestParams {
+  id: String!
+}
+```
+
+On telnet it would look as follows (assuming a task with Id "foo" is currently running):
+
+```
+Content-Length: 93
+
+{ "jsonrpc": "2.0", "id": "bar", "method": "sbt/cancelRequest", "params": { "id": "foo" } }
+Content-Length: 126
+Content-Type: application/vscode-jsonrpc; charset=utf-8
+
+{"jsonrpc":"2.0","id":"bar","result":{"status":"Task cancelled","channelName":"network-1","execId":"foo","commandQueue":[]}}
+```
+
+This will respond back with the result of the action.
+
   [lsp]: https://github.com/Microsoft/language-server-protocol/blob/master/protocol.md
   [jsonrpc]: http://www.jsonrpc.org/specification
   [vscode-sbt-scala]: https://marketplace.visualstudio.com/items?itemName=lightbend.vscode-sbt-scala
