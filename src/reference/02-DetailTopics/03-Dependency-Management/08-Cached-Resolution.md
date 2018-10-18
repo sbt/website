@@ -15,7 +15,7 @@ Cached resolution is an **experimental** feature of sbt added since 0.13.7 to ad
 To set up cached resolution include the following setting in your project's build:
 
 ```scala
-updateOptions := updateOptions.value.withCachedResolution(true)
+updateOptions ~= { _.withCachedResolution(true) }
 ```
 
 ### Dependency as a graph
