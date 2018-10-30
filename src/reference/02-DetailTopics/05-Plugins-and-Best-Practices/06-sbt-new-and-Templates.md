@@ -46,7 +46,6 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 )
 - [akka/akka-java-seed.g8](https://github.com/akka/akka-java-seed.g8)                   (A minimal seed template for an Akka in Java
 )
-- [akka/hello-akka.g8](https://github.com/akka/hello-akka.g8)                           (Simple Akka application)
 - [playframework/play-scala-seed.g8](https://github.com/playframework/play-scala-seed.g8) (Play Scala Seed Template)
 - [playframework/play-java-seed.g8](https://github.com/playframework/play-java-seed.g8)   (Play Java Seed template)
 - [lagom/lagom-scala.g8](https://github.com/lagom/lagom-scala.g8/)                      (A [Lagom](https://www.lagomframework.com/) Scala seed template for sbt)
