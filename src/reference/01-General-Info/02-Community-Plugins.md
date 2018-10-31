@@ -46,6 +46,8 @@ your plugin to the list.
   formatting using Scalafmt. <!-- 80 stars -->
 - [sbt-java-formatter](https://github.com/sbt/sbt-java-formatter):
   code formatting for Java sources. <!-- 8 stars -->
+- [sbt-source-format](https://github.com/swoval/sbt-source-format):
+  code formatting for Java and clang (c/c++/objc) sources. <!-- 1 stars -->
 
 #### Documentation plugins
 
