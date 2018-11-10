@@ -50,9 +50,9 @@ lazy val core = project
 
 To factor out common settings across multiple projects,
 define the settings scoped to `ThisBuild`.
-The limitation is that the right-hand side needs to a pure value
+The limitation is that the right-hand side needs to be a pure value
 or settings scoped to `Global` or `ThisBuild`,
-and there are no defeault settings scoped to subprojects. (See [Scopes][Scopes])
+and there are no default settings scoped to subprojects. (See [Scopes][Scopes])
 
 ```scala
 ThisBuild / organization := "com.example"
