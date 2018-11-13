@@ -100,7 +100,7 @@ object Dependencies {
 ```
 
 The `Dependencies` object will be available in `build.sbt`.
-To use the `val`s under it easier, import `Dependencies._`.
+To make it easier to use the `val`s defined in it, import `Dependencies._` in your build.sbt file.
 
 ```scala
 import Dependencies._
@@ -117,7 +117,7 @@ lazy val backend = (project in file("backend"))
 ```
 
 This technique is useful when you have a multi-project build that's getting
-large, and you want to make sure that subprojects to have consistent dependencies.
+large, and you want to ensure that subprojects have consistent dependencies.
 
 ### When to use `.scala` files
 
