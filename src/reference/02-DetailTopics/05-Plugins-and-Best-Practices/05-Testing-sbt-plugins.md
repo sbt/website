@@ -118,7 +118,7 @@ File commands are:
 - **`newer`** `source target` checks if `source` is newer
 - **`must-mirror`** `source target` checks if `source` is identical
 - **`pause`** pauses until enter is pressed
-- **`sleep`** `time` sleeps
+- **`sleep`** `time` sleeps (in milliseconds)
 - **`exec`** `command args*` runs the command in another process
 - **`copy-file`** `fromPath toPath` copies the file
 - **`copy`** `fromPath+ toDir` copies the paths to `toDir` preserving relative structure
