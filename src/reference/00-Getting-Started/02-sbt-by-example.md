@@ -19,11 +19,42 @@ Let's start with examples rather than explaining how sbt works or why.
 ```
 \$ mkdir foo-build
 \$ cd foo-build
-\$ touch build.sbt
+\$ touch build.sbt  # on Windows \$ copy nul build.sbt
 ```
 
 ### Start sbt shell
+On Windows during the first invocation you will see hundreds of lines of output from sbt as it initializes for first run. Don't panic. 
+```
+C:\Users\YourName\foo-build\>sbt
+"about to robocopy"
 
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows
+-------------------------------------------------------------------------------
+
+  Started : Sunday, November 25, 2018 17:22:47
+   Source : C:\Program Files (x86)\sbt\lib\local-preloaded\
+     Dest : C:\Users\YourName\.sbt\preloaded\
+
+    Files : *.*
+
+  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30
+
+------------------------------------------------------------------------------
+```
+etcetera. Finally it winds down with something like this:
+```
+[info] Updated file C:\Users\YourName\foo-build\project\build.properties: set sbt.version to 1.2.6
+[info] Loading project definition from C:\YourName\foo-build\sbt1.2.6\project
+[info] Updating ProjectRef(uri("file:/C:/Users/YourName/foo-build/project/"), "sbt1-2-6-build")...
+[info] Done updating.
+[info] Loading settings for project sbt1-2-6 from build.sbt ...
+[info] Set current project to sbt1-2-6 (in build file:/C:/Users/YourName/foo-build/)
+[info] sbt server started at local:sbt-server-e8a7950547e38689222d
+sbt:sbt1-2-6>
+```
+
+Someone should update the Linux version to 1.2.6 at least.
 ```
 \$ sbt
 [info] Updated file /tmp/foo-build/project/build.properties: set sbt.version to 1.1.4
@@ -36,7 +67,7 @@ sbt:foo-build>
 
 ### Exit sbt shell
 
-To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows).
+To leave sbt shell, type `exit` or use Ctrl+D (Unix) or Ctrl+Z (Windows) {nope! Ctrl+Z fails, use `exit`}.
 
 ```
 sbt:foo-build> exit
