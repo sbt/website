@@ -5,7 +5,7 @@ out: Library-Dependencies.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Task-Graph]: Task-Graph.html
-  [external-maven-ivy]: ../docs/Library-Management.html#external-maven-ivy
+  [external-maven-ivy]: ../docs/Library-Management.html#External+Maven+or+Ivy
   [Cross-Build]: ../docs/Cross-Build.html
   [Resolvers]: ../docs/Resolvers.html
   [Library-Management]: ../docs/Library-Management.html
