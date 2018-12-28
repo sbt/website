@@ -16,7 +16,7 @@ maintaining source compatibility. This page describes how to use `sbt`
 to build and publish your project against multiple versions of Scala and
 how to use libraries that have done the same.
 
-### Publishing Conventions
+### Publishing conventions
 
 The underlying mechanism used to indicate which version of Scala a
 library was compiled against is to append `_<scala-version>` to the
@@ -28,7 +28,7 @@ allows interoperability with users of Maven, Ant and other build tools.
 The rest of this page describes how `sbt` handles this for you as part
 of cross-building.
 
-### Using Cross-Built Libraries
+### Using cross-built libraries
 
 To use a library built against multiple versions of Scala, double the
 first `%` in an inline dependency to be `%%`. This tells `sbt` that it
@@ -44,47 +44,157 @@ A nearly equivalent, manual alternative for a fixed version of Scala is:
 libraryDependencies += "net.databinder.dispatch" % "dispatch-core_2.12" % "0.13.3"
 ```
 
-### Cross-Building a Project
+### Cross building a project
 
 Define the versions of Scala to build against in the
 `crossScalaVersions` setting. Versions of Scala 2.10.2 or later are
 allowed. For example, in a `.sbt` build definition:
 
 ```scala
-crossScalaVersions := Seq("2.11.11", "2.12.2")
+lazy val scala212 = "$example_scala_version$"
+lazy val scala211 = "$example_scala211$"
+lazy val supportedScalaVersions = List(scala212, scala211)
+
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := scala212
+
+lazy val root = (project in file("."))
+  .aggregate(util, core)
+  .settings(
+    // crossScalaVersions must be set to Nil on the aggregating project
+    crossScalaVersions := Nil,
+    publish / skip := true
+  )
+
+lazy val core = (project in file("core"))
+  .settings(
+    crossScalaVersions := supportedScalaVersions,
+    // other settings
+  )
+
+lazy val util = (project in file("util"))
+  .settings(
+    crossScalaVersions := supportedScalaVersions,
+    // other settings
+  )
 ```
+
+**Note**: `crossScalaVersions` must be set to `Nil` on the root project to avoid double publishing.
 
 To build against all versions listed in `crossScalaVersions`, prefix
 the action to run with `+`. For example:
 
 ```
-> + package
+> + test
 ```
 
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
 and when releasing.
 
-You can use `++ <version>` to temporarily switch the Scala version currently
-being used to build.
+#### Cross building with a Java project
+
+A special care must be taken when cross building involves pure Java project.
+Let's say in the following example, `network` is a Java project, and `core` is
+a Scala project that depends on `network`.
+
+```scala
+lazy val scala212 = "$example_scala_version$"
+lazy val scala211 = "$example_scala211$"
+lazy val supportedScalaVersions = List(scala212, scala211)
+
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := scala212
+
+lazy val root = (project in file("."))
+  .aggregate(network, core)
+  .settings(
+    // crossScalaVersions must be set to Nil on the aggregating project
+    crossScalaVersions := Nil,
+    publish / skip := false
+  )
+
+// example Java project
+lazy val network = (project in file("network"))
+  .settings(
+    // set to exactly one Scala version
+    crossScalaVersions := List(scala212),
+    crossPaths := false,
+    autoScalaLibrary := false,
+    // other settings
+  )
+
+lazy val core = (project in file("core"))
+  .dependsOn(network)
+  .settings(
+    crossScalaVersions := supportedScalaVersions,
+    // other settings
+  )
+```
+
+1. `crossScalaVersions` must be set to `Nil` on the aggregating projects such as the root.
+2. Java subprojects should have exactly one Scala version in `crossScalaVersions` to avoid double publishing, typically `scala212`.
+3. Scala subprojects can have multiple Scala versions in `crossScalaVersions`, but must avoid aggregating Java subprojects.
+
+#### Switching Scala version
+
+You can use `++ <version> [command]` to temporarily switch the Scala version currently
+being used to build the subprojects given that `<version>` is listed in their `crossScalaVersions`.
+
 For example:
 
 ```
-> ++ 2.12.2
-[info] Setting version to 2.12.2
-> ++ 2.11.11
-[info] Setting version to 2.11.11
+> ++ $example_scala_version$
+[info] Setting version to $example_scala_version$
+> ++ $example_scala211$
+[info] Setting version to $example_scala211$
 > compile
 ```
+
 `<version>` should be either a version for Scala published to a repository or
 the path to a Scala home directory, as in `++ /path/to/scala/home`.
 See [Command Line Reference][Command-Line-Reference] for details.
+
+When a `[command]` is passed in to `++`, it will execute the command
+on the subprojects that supports the given `<version>`.
+
+For example:
+
+```
+> ++ $example_scala211$ -v test
+[info] Setting Scala version to $example_scala211$ on 1 projects.
+[info] Switching Scala version on:
+[info]     core ($example_scala_version$, $example_scala211$)
+[info] Excluding projects:
+[info]   * root ()
+[info]     network ($example_scala_version$)
+[info] Reapplying settings...
+[info] Set current project to core (in build file:/Users/xxx/hello/)
+```
+
+Sometimes you might want to force the Scala version switch regardless of the `crossScalaVersions` values.
+You can use `++ <version>!` with exclamation mark for that.
+
+For example:
+
+```
+> ++ 2.13.0-M5! -v
+[info] Forcing Scala version to 2.13.0-M5 on all projects.
+[info] Switching Scala version on:
+[info]   * root ()
+[info]     core ($example_scala_version$, $example_scala211$)
+[info]     network ($example_scala_version$)
+```
+
+#### Cross publishing
 
 The ultimate purpose of `+` is to cross-publish your
 project. That is, by doing:
 
 ```
-> + publish
+> + publishSigned
 ```
 
 you make your project available to users for different versions of
