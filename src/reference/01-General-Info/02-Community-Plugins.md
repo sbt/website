@@ -347,3 +347,8 @@ your plugin to the list.
 #### Verification plugins
 
 - [sbt-stainless](https://github.com/NiceKingWei/sbt-stainless): verify Scala or Dotty code using stainless. <!-- 1 star -->
+
+#### Language support plugins
+
+- [sbt-frege](https://github.com/earldouglas/sbt-frege): build Frege
+  code with sbt. <!-- 47 stars -->
