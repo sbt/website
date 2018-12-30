@@ -5,6 +5,7 @@ out: Cross-Build.html
   [Command-Line-Reference]: Command-Line-Reference.html
   [Publishing]: Publishing.html
   [Cross-Build-Plugins]: Cross-Build-Plugins.html
+  [playframework4520]: https://github.com/playframework/playframework/pull/4520
 
 Cross-building
 --------------
@@ -92,6 +93,48 @@ the action to run with `+`. For example:
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
 and when releasing.
+
+#### Note about sbt-release
+
+sbt-release implemented cross building support by copy-pasting sbt 0.13's `+` implementation,
+so at least as of sbt-release 1.0.10, it does not work correctly with sbt 1.x's cross building,
+which was prototyped originally as sbt-doge.
+
+To cross publish using sbt-release with sbt 1.x, use the following workaround:
+
+```scala
+ThisBuild / organization := "com.example"
+ThisBuild / version      := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion := scala212
+
+import ReleaseTransformations._
+lazy val root = (project in file("."))
+  .aggregate(util, core)
+  .settings(
+    // crossScalaVersions must be set to Nil on the aggregating project
+    crossScalaVersions := Nil,
+    publish / skip := true,
+
+    // don't use sbt-release's cross facility
+    releaseCrossBuild := false,
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      releaseStepCommandAndRemaining("+test"),
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepCommandAndRemaining("+publishSigned"),
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    )
+  )
+```
+
+This will then use the real cross (`+`) implementation for testing and publishing.
+Credit for this technique goes to James Roper at [playframework#4520][playframework4520] and later inventing `releaseStepCommandAndRemaining`.
 
 #### Cross building with a Java project
 
