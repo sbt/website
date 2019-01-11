@@ -72,6 +72,8 @@ your plugin to the list.
   generate literate-style markdown docs from your sources. <!-- 33 stars -->
 - [sbt-example](https://github.com/ThoughtWorksInc/sbt-example):
   generate ScalaTest test suites from examples in Scaladoc. <!-- 17 stars -->
+- [sbt-delombok](https://github.com/ThoughtWorksInc/sbt-delombok):
+  delombok Java sources files that contain Lombok annotations to make Javadoc contain Lombok-generated classes and methods. <!-- 2 stars -->
 
 #### One jar plugins
 
