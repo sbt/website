@@ -26,7 +26,7 @@
       <div class="col-md-4 text-right ts">
         &copy; 2016-2019 Lightbend Inc.
         <a href="https://www.lightbend.com">
-          <img src="files/lightbend-reverse.svg" alt="Lightbend, Inc.">
+          <img src="../files/lightbend-reverse.svg" alt="Lightbend, Inc.">
         </a>
       </div>
     </div>

@@ -4,7 +4,7 @@
   <div class="row w-100">
     <div class="col-md-4">
       <div class="logo">
-        <a href="../../../index.html"><img src="files/sbt-logo.svg" alt="sbt"></a>
+        <a href="../../../index.html"><img src="../files/sbt-logo.svg" alt="sbt"></a>
         <span class="versions"><select id="versions"></select></span>
       </div>
     </div>
@@ -14,9 +14,9 @@
         <a href="../../../download.html">Download</a>
         <a href="../../../support.html">Support</a>
         <a href="../../../community.html">Get Involved</a>
-        <a id="source-code" href="https://github.com/sbt/sbt"><img src="files/github-logo-teal.svg" alt="Source code" class="social"></a>
-        <a id="twitter" href="https://twitter.com/scala_sbt"><img src="files/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>
-        <a id="edit-on-github" href="https://github.com/sbt/website/edit/develop/src/reference/$page.localPath$"><img src="files/octicon-pencil.svg" alt="Edit on GitHub"></a>
+        <a id="source-code" href="https://github.com/sbt/sbt"><img src="../files/github-logo-teal.svg" alt="Source code" class="social"></a>
+        <a id="twitter" href="https://twitter.com/scala_sbt"><img src="../files/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>
+        <a id="edit-on-github" href="https://github.com/sbt/website/edit/develop/src/reference/$page.localPath$"><img src="../files/octicon-pencil.svg" alt="Edit on GitHub"></a>
       </div>
     </div>
   </div>
