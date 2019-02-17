@@ -304,7 +304,7 @@ the configuration is omitted, it is autodetected as `Compile`.
 `inspect Compile / fullClasspath` should therefore look the same as
 `inspect fullClasspath`.
 
-Try `inspect This / Zero / fullClasspath` for another contrast. `fullClasspath` is not
+Try `inspect ThisBuild / Zero / fullClasspath` for another contrast. `fullClasspath` is not
 defined in the `Zero` configuration scope by default.
 
 Again, for more details, see [Interacting with the Configuration System][Inspecting-Settings].
