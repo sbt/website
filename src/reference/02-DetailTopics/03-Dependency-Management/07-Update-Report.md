@@ -14,7 +14,7 @@ reports of type `ConfigurationReport` for each resolved configuration. A
 module resolved for a given configuration. Finally, a `ModuleReport`
 lists each successfully retrieved `Artifact` and the `File` it was
 retrieved to as well as the `Artifact`s that couldn't be downloaded.
-This missing `Arifact` list is always empty for `update`, which will
+This missing `Artifact` list is always empty for `update`, which will
 fail if it is non-empty. However, it may be non-empty for
 `updateClassifiers` and `updateSbtClassifers`.
 
