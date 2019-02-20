@@ -33,7 +33,7 @@ lazy val root = (project in file("."))
         SiteHelpers.addMappingsToSiteDir(
           mappings in Pdf.generatePdf in Pamflet,
           siteSubdirName in Pamflet,
-        ),
+        )
       )
     else Nil,
     fileEncoding := {
