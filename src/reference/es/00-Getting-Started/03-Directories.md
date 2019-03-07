@@ -2,93 +2,102 @@
 out: Directories.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
-  [Full-Def]: Full-Def.html
+  [Organizing-Build]: Organizing-Build.html
 
 Estructura de directorios
 -------------------------
 
-Esta página asume que usted ha [instalado sbt][Setup] y ha visto el
-ejemplo [Hello, World][Hello].
+Esta página supone que has [instalado sbt][Setup] y leído
+[sbt mediante ejemplos][ByExample].
 
 ### Directorio base
 
-En la terminología de sbt, el "directorio base" es el directorio que
-contiene al proyecto. De modo que si usted creó el proyecto `hello` que
-contiene `hello/build.sbt` y `hello/hw.scala` como se indicó en el
-ejemplo [Hello, World][Hello], `hello` es su directorio base.
+En la terminología de sbt, el "directorio base" es el directorio que contiene
+el proyecto. Así pues, si has creado un proyecto `hello` que contiene
+`/tmp/foo-build/build.sbt` tal y como se muestra en [sbt by example][ByExample],
+el directorio base será `/tmp/foo-build`.
 
-### Código fuente
+### Código fuente.
 
-El código fu8ente puede ponerse en el directorio base del proyecto como
-en el caso de `hello/hw.scala`. Sin embargo, la mayoría de las personas
-no hacen esto para proyectos reales; se traduce en mucho desorden.
-
-sbt utiliza la misma estructura de directorios que
-[Maven](https://maven.apache.org/) para el código fuente por default
-(todos las rutas son relativas al directorio base):
+sbt emplea de forma predeterminada la misma estructura de directorios utilizado
+por [Maven](https://maven.apache.org/) para ficheros fuente
+(todas las rutas son relativas al directorio base):
 
 ```
 src/
   main/
     resources/
-       <archivos que se incluyen en el jar principal van aquí>
+       <files to include in main jar here>
     scala/
-       <código fuente de Scala de main>
+       <main Scala sources>
     java/
-       <código fuente de Java de main>
+       <main Java sources>
   test/
     resources
-       <archivos que se incluyen en el jar de test van aquí>
+       <files to include in test jar here>
     scala/
-       <código fuente de Scala para test>
+       <test Scala sources>
     java/
-       <código fuente de Java para test>
+       <test Java sources>
 ```
 
-Otros directorios en `src/` serán ignorados. Adicionalmente, todos los
-directorios ocultos serán ignorados.
+Cualquier otro directorio en `src/` es ignorado.
+También son ignorados todos los directorios ocultos.
 
-### Archivos de definición de la construcción de sbt (sbt build definition files)
+El código fuente puede estar situado en el directorio base del proyecto como
+`hello/app.scala`, lo cual puede estar bien para proyectos pequeños,
+aunque para proyectos normales la gente suele estructurar los proyectos en el
+directorio `src/main/` para tener las cosas ordenadas.
 
-Ya ha visto `build.sbt` en el directorio base del proyecto. Otros
-archivos sbt aparecen en el subdirectorio `project`.
+El hecho de que se permita código fuente del tipo `*.scala` en el directorio
+base puede parecer algo raro, pero veremos que este hecho es relevante
+[más adelante][Organizing-Build].
 
-El subdirectorio `project` puede contener archivos `.scala`, que se
-combinan con los archivos `.sbt` para formar la definición completa de
-la construcción.
+### Ficheros de definición de construcción
 
-Vea [.scala build definition][Full-Def] para más información.
+La definición de construcción es descrita en `build.sbt`
+(en realidad cualquier fichero llamado `*.sbt`)
+en el directorio base del proyecto.
+
+```
+build.sbt
+```
+
+### Ficheros auxiliares
+
+Además de `build.sbt`, el directorio `project` puede contener ficheros `.scala`
+que definen objetos auxiliares y plugins puntuales.
+
+Para más información mira [organizando la construcción][Organizing-Build].
 
 ```
 build.sbt
 project/
-  Build.scala
+  Dependencies.scala
 ```
 
-Tal vez pueda ver archivos `.sbt` dentro de `project/` pero no son
-equivalentes a archivos `.sbt` en el directorio base del proyecto. La
-explicación de esto [viene después][Full-Def], dado que necesitará algo
-de antecedentes primero.
+Puede que veas ficheros `.sbt` dentro de `project/`
+pero no son equivalentes a los ficheros `.sbt` del directorio base del proyecto.
+La explicación a esto vendrá [más tarde][Organizing-Build],
+ya que primero necesitarás conocer algunos conceptos primero.
 
-### Productos de la construcción
+### Construir productos
 
-Los archivos generados (clases compiladas, paquetes en jars, archivos
-gestionados (*managed files*), caches, y documentación) será escrita al
-directorio `target` por default.
+Los ficheros generados (clases compiladas, jars empaquetados,
+ficheros gestionados, caches y documentación) son escritos en el directorio
+`target` de forma predeterminada.
 
-### Configurando el sistema de control de versiones
+### Configurar el control de versiones
 
-Su archivo `.gitignore` (o el equivalente para otro sistema de control
-de versiones) debe contener:
+Tu `.gitignore` (o el equivalente para otros sistemas de control de versiones)
+debería de contener:
 
 ```
 target/
 ```
 
-Note que el texto anterior tiene una `/` de forma deliberada (para que
-únicamente los directorios sean seleccionados) y de manera deliberada no
-tiene una `/` al inicio (para que el directorio `project/target/`
-también sea seleccionado, además de simplemente el directorio
-`target/`).
+Fíjate en que deliberadamente acaba con `/`
+(para coincidir sólo con directorios) y que deliberadamente no empieza con `/`
+(para coincidir con `project/target/` además del `target/` en la raíz).
