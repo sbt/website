@@ -12,7 +12,7 @@ sbt mediante ejemplos
 
 Esta página supone que has [instalado sbt 1][Setup].
 
-Empecemos haciendo algunos ejemplos en lugar de explicar cómo
+Empecemos mostrando algunos ejemplos en lugar de explicar cómo
 o por qué sbt funciona.
 
 ### Crear una construcción sbt mínima
@@ -35,7 +35,7 @@ o por qué sbt funciona.
 sbt:foo-build>
 ```
 
-### Salir del shell sbt
+### Salir del shell de sbt
 
 Para salir del shell de sbt, escribe `exit` o pulsa Ctrl+D (Unix)
 o Ctrl+Z (Windows).
@@ -58,7 +58,7 @@ sbt:foo-build> compile
 
 Si prefijas el comando `compile` (o cualquier otro comando) con `~` harás que
 dicho comando sea re-ejecutado automáticamente en cuanto uno de los ficheros
-fuente dentro del proyecto haya sido modificado. Por ejemplo:
+fuente dentro del proyecto sea modificado. Por ejemplo:
 
 ```
 sbt:foo-build> ~compile
@@ -69,7 +69,7 @@ sbt:foo-build> ~compile
 ### Crear un fichero fuente
 
 Deja el comando anterior ejecutándose.
-Desde un shell diferente (o en tu gestor de ficheros) crea la siguiente
+Desde un shell diferente (o desde tu gestor de ficheros) crea la siguiente
 estructura de directorios `src/main/scala/example` en el directorio del
 proyecto. Después, crea el fichero `Hello.scala` en el directorio `example`
 utilizando tu editor de texto favorito con este contenido:
@@ -82,7 +82,7 @@ object Hello extends App {
 }
 ```
 
-Este nuevo fichero debería de ser cogido por el comando en ejecución:
+Este nuevo fichero debería de ser detectado por el comando en ejecución:
 
 ```
 [info] Compiling 1 Scala source to /tmp/foo-build/target/scala-2.12/classes ...
@@ -120,7 +120,7 @@ sbt:foo-build> help
 ....
 ```
 
-### Mostrar la descripción de una tarea en concreto
+### Mostrar la descripción de una tarea específica
 
 ```
 sbt:foo-build> help run
@@ -138,7 +138,7 @@ Hello
 [success] Total time: 1 s, completed May 6, 2018 4:10:44 PM
 ```
 
-### Establecer ThisBuild / scalaVersion desde el shell de sbt
+### Establecer `ThisBuild / scalaVersion` desde el shell de sbt
 
 ```
 sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
@@ -152,7 +152,7 @@ sbt:foo-build> scalaVersion
 [info] 2.12.7
 ```
 
-### Save the session to build.sbt
+### Guardar la sesión actual en build.sbt
 
 Podemos guardar la configuración temporal utilizando `session save`.
 
@@ -165,12 +165,11 @@ El fichero `build.sbt` ahora debería de contener:
 
 ```scala
 ThisBuild / scalaVersion := "2.12.7"
-
 ```
 
 ### Dar un nombre a tu proyecto
 
-Utilizando un editor, modifica `build.sbt` tal que así:
+Utilizando un editor, modifica `build.sbt` con el siguiente contenido:
 
 @@snip [name]($root$/src/sbt-test/ref/example-name/build.sbt) {}
 
@@ -188,11 +187,11 @@ sbt:foo-build> reload
 sbt:Hello>
 ```
 
-Nota cómo el prompt ha cambiado a `sbt:Hello>`.
+Fíjate en cómo el prompt ha cambiado a `sbt:Hello>`.
 
-### Añadir ScalaTest a libraryDependencies
+### Añadir ScalaTest a `libraryDependencies`
 
-Utilizando un editor, modifica `build.sbt` tal que así:
+Utilizando un editor, modifica `build.sbt` de la siguiente manera:
 
 @@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/build.sbt) {}
 
@@ -252,7 +251,7 @@ Confirma que el test pasa, luego pulsa `Intro` para salir del test continuo.
 
 ### Añadir una dependencia de biblioteca
 
-Utilizando un editor, modifica `build.sbt` tal que así:
+Utilizando un editor, modifica `build.sbt` de esta forma:
 
 @@snip [example-library]($root$/src/sbt-test/ref/example-library/build.sbt) {}
 
@@ -493,7 +492,7 @@ Cambia `build.sbt` como sigue:
 
 @@snip [example-weather-build3]($root$/src/sbt-test/ref/example-weather/changes/build3.sbt) {}
 
-### Cambiar scalaVersion temporalmente
+### Cambiar `scalaVersion` temporalmente
 
 ```
 sbt:Hello> ++2.11.12!
@@ -515,7 +514,7 @@ sbt:Hello> scalaVersion
 
 Esta entrada se esfumará tras un `reload`.
 
-### Inspeccionar la tarea dist
+### Inspeccionar la tarea `dist`
 
 Para saber más acerca de `dist`, prueba `help` e `inspect`.
 
@@ -524,8 +523,7 @@ sbt:Hello> help dist
 Creates the distribution packages.
 sbt:Hello> inspect dist
 ```
-
-To call inspect recursively on the dependency tasks use `inspect tree`.
+Para llamar a `inspect` recursivamente en las tareas dependientes utiliza `inspect tree`.
 
 ```scala
 sbt:Hello> inspect tree dist
@@ -543,12 +541,12 @@ desde el terminal.
 \$ sbt clean "testOnly HelloSpec"
 ```
 
-**Note**: El modo por lotes implica levantar JVM y JIT cada vez, por lo que
-**la construcción es mucho más lenta**.
+**Note**: El modo por lotes implica levantar una JVM y JIT cada vez, por lo que
+**la construcción será mucho más lenta**.
 Para el desarrollo del día a día recomendamos utilizar el shell de sbt
 o tests continuos como `~testQuick`.
 
-### El comando new
+### El comando `new`
 
 Puedes utilizar el comando `new` para generar rápidamente una construcción
 para un simple "Hola mundo".
