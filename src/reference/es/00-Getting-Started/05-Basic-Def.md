@@ -9,13 +9,13 @@ out: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Input-Tasks]: ../docs/Input-Tasks.html
 
-Definición de construcción
---------------------------
+Definiciones de construcción
+----------------------------
 
 Esta página describe las definiciones de construcción (build definitions), 
 incluyendo algo de "teoría" y la sintaxis de `build.sbt`. Se supone que has 
-instalado una versión reciente de sbt, tal como sbt $app_version$, sabes cómo 
-[usar sbt][Running], y has leído las páginas anteriores de la Guía de inicio.
+instalado una versión reciente de sbt, como sbt $app_version$, que sabes cómo 
+[usar sbt][Running] y que has leído las páginas anteriores de la Guía de inicio.
 
 Esta página explica la definición de construcción de `build.sbt`.
 
@@ -35,15 +35,14 @@ sbt.version=$app_version$
 
 Si la versión requerida no está disponible localmente, el lanzador `sbt` se la 
 descargará por ti. Si este fichero no está presente, el lanzador `sbt` eligirá 
-una versión arbitraria, lo cual es desaconsejado debido a que hace que tu 
-construcción sea no-portable.
+una versión arbitraria, lo cual no es aconsejable debido a que hará que tu 
+construcción no sea portable.
 
 ### ¿Qué es una definición de construcción?
 
 Una *definición de construcción* es definida en `build.sbt` y consiste en un 
 conjunto de proyectos (de tipo [`Project`](../api/sbt/Project.html)). Debido a 
-que el término *project* puede ser ambiguo, con frecuencia nos referiremos a él 
-como un *subproyecto* en esta guía.
+que el término *project* puede ser ambiguo, con frecuencia utilizaremos el *subproyecto* para referirnos a ellos en esta guía.
 
 Por ejemplo, en `build.sbt` se define el subproyecto ubicado en el directorio 
 actual así:
@@ -52,13 +51,13 @@ actual así:
 
 Cada subproyecto es configurado como pares clave-valor.
 
-Por ejemplo, una clave es `nombre` y se mapea a una cadena de texto, el nombre 
+Por ejemplo, una clave es `name` y se mapea a una cadena de texto, el nombre 
 de tu subproyecto. Los pares clave-valor se listan bajo el método 
 `.settings(...)` de tal forma:
 
 @@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
 
-### Cómo build.sbt define configuraciones
+### Cómo define build.sbt configuraciones
 
 `build.sbt` define subproyectos, los cuales contienen una secuencia de pares 
 clave-valor llamados *expresiones de configuración* (expression settings) 
@@ -75,7 +74,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-Echemos un vistazo más cerca al DSL de build.sbt:
+Echemos un vistazo más de cerca al DSL de build.sbt:
 
 ![setting expression](files/setting-expression.png)<br>
 <br>
@@ -88,7 +87,7 @@ Una expresión de configuración consiste en tres partes:
 
 1. La parte izquierda, que es una *clave*.
 2. Un *operador*, que en este caso es `:=`
-3. La parte derecha es llamada el *cuerpo* o el *cuerpo de configuración*.
+3. La parte derecha es llamada *cuerpo* o *cuerpo de configuración*.
 
 A la izquierda, `name`, `version` y `scalaVersion` son *claves*. Una clave es 
 una instancia de
@@ -118,7 +117,7 @@ hacerlo deberían ir en el directorio `project/` como ficheros fuente de Scala.
 
 Hay tres sabores de claves:
 
-- `SettingKey[T]`: una clave para un valor calculado un única vez (el valor
+- `SettingKey[T]`: una clave para un valor calculado una única vez (el valor
   es calculado cuando se carga un subproyecto)
 - `TaskKey[T]`: una clave para un valor, llamado una *tarea* que ha de ser
   recalculado cada vez, potencialmente con efectos colaterales.
@@ -134,11 +133,9 @@ Las claves preconfiguradas son simplemente campos de un objeto llamado
 #### Claves personalizadas
 
 Las claves personalizadas pueden ser definidas con sus respectivos métodos de 
-creación:
-
-`settingKey`, `taskKey` e `inputKey`. Cada método espera el tipo del valor 
+creación: `settingKey`, `taskKey` e `inputKey`. Cada método espera el tipo del valor 
 asociado con la clave además de su descripción. El nombre de la clave es tomado 
-del val al cual la clave es asignada. Por ejemplo, para definir una clave para 
+del `val` al cual la clave es asignada. Por ejemplo, para definir una clave para 
 una nueva tarea llamada `hello`,
 
 ```scala
@@ -149,20 +146,19 @@ Aquí hemos usado el hecho de que un fichero `.sbt` puede contener `val` y `def`
 además de configuración. Todas estas definiciones son evaluadas antes de la 
 configuración sin importar en qué lugar del fichero han sido definidas.
 
-> **Nota:** Tipicamente, se usan lazy val en lugar de val para evitar problemas 
-de orden
+> **Nota:** Tipicamente, se usan `lazy val` en lugar de `val` para evitar problemas de orden
 > durante la inicialización.
 
-#### Claves Task vs claves Setting
+#### Claves de tarea vs claves de entradas
 
 Se dice de `TaskKey[T]` que define una *tarea*. Las tareas son operaciones 
 tales como `compile` o `package`. A su vez pueden devolver `Unit` (`Unit` es el 
-tipo de Scala para `void`) o puden devolver un valor relacionado con la tarea, 
-por ejemplo `package` es un `TaskKey[File]` y su valor es el fichero jar que 
+tipo de Scala para `void`) o pueden devolver un valor relacionado con la tarea, 
+por ejemplo el de `package` es un `TaskKey[File]` y su valor es el fichero jar que 
 crea.
 
 Cada vez que inicias la ejecución de una tarea, por ejemplo escribiendo 
-`compile`` en el prompt interactivo de sbt, sbt volverá a ejecutar cualesquiera 
+`compile` en el prompt interactivo de sbt, sbt volverá a ejecutar cualesquiera 
 tareas implicadas exactamente una vez.
 
 Los pares clave-valor de sbt que describen al subproyecto pueden ser 
@@ -178,7 +174,7 @@ valor.
 
 ### Definir tareas y entradas de configuración
 
-Utilizando `:=` puedes asignar un valor a una entrada y una computación a una 
+Utilizando `:=` se puede asignar un valor a una entrada y una computación a una 
 tarea. Para una entrada, el valor será computado una única vez durante la carga 
 del proyecto. Para una tarea, la computación será evaluada cada vez que la 
 tarea sea ejecutada.
@@ -206,7 +202,7 @@ lazy val root = (project in file("."))
 
 #### Tipos para tareas y entradas
 
-Desde una perspectiva de sistema de tipos, el `Setting` creado a partir de una 
+Desde una perspectiva del sistema de tipos, el `Setting` creado a partir de una 
 clave tarea es ligeramente diferente de la creada para una clave entrada. 
 `taskKey := 42` resulta en `Setting[Task[T]]` mientras que `settingKey := 42` 
 resulta en `Setting[T]`. En la mayoría de los casos esto no supone ninguna 
@@ -215,13 +211,13 @@ tarea es ejecutada.
 
 La diferencia de tipos entre `T` y `Task[T]` tiene la siguiente implicación: 
 una entrada no puede depender de una tarea, debido a que una entrada es 
-evaluada una única vez durante la carga de un proyecto y no es revaluada. Más 
-información sobre esto en [grafos de tareas][Task-Graph].
+evaluada una única vez durante la carga de un proyecto y no es re-evaluada. Más 
+información sobre esto en [Grafos de tareas][Task-Graph].
 
 ### Claves en el shell de sbt
 
 En el shell de sbt, puedes escribir el nombre de cualquier tarea para ejecutar 
-dicha tarea. Esto es por lo que escribir `compile` ejecuta la tarea `compile`. 
+dicha tarea. Esta es la razón por la que al escribir `compile` se ejecuta la tarea `compile`. 
 `compile` es una clave tarea.
 
 Si escribes el nombre de una clave entrada en lugar de una clave tarea el valor 
@@ -229,7 +225,7 @@ de la clave entrada será mostrado. Escribir el nombre de una clave tarea
 ejecuta la tarea pero muestra el valor resultante. Para ver el resultado de una 
 tarea utiliza `show <tarea>` en lugar de simplemente `<tarea>`. La convención 
 para nombres de claves es utilizar `camelCase` por lo que el nombre de linea de 
-comandos y los identificadores de Scala sean los mismos.
+comandos y los identificadores de Scala son los mismos.
 
 Para aprender más acerca de cualquier clave escribe `inspect <clave>` en el 
 prompt interactivo de sbt. Alguna de la información que `inspect` muestra no 
@@ -238,7 +234,7 @@ valor y una breve descripción de esa entrada.
 
 ### Importaciones en build.sbt
 
-Puedes poner sentencias `import` al principio de `build.sbt`. No necesitan 
+Puedes incluir sentencias `import` al principio de `build.sbt`. No necesitan 
 estar separadas por líneas en blanco.
 
 Existen algunas importaciones implícitas predeterminadas:
@@ -248,7 +244,7 @@ import sbt._
 import Keys._
 ```
 
-(Además, si tienes auto plugins, los nombres marcados bajo `autoImport` serán 
+(Además, si tienes autoplugins, los nombres marcados bajo `autoImport` serán 
 importados.)
 
 ### Definiciones de construcción .sbt planas
@@ -262,8 +258,8 @@ ThisBuild / version := "1.0"
 ThisBuild / scalaVersion := "$example_scala_version$"
 ```
 
-Esta sintaxis es la recomendada configuraciones en el ámbito `ThisBuild` y los 
-plugins añadidos. Mira secciones posteriores acerca del ámbito y los plugins.
+Esta sintaxis es la recomendada para configuraciones con ámbito `ThisBuild` plugins añadidos.
+Mira secciones posteriores acerca de los ámbitos y los plugins.
 
 ### Añadir dependencias de biblioteca
 
