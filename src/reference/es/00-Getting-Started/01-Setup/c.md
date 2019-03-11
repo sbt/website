@@ -33,8 +33,8 @@ La familia Redhat lo llama
 Los paquetes [DEB][DEB] son oficialmente soportados por sbt.
 
 Ubuntu y otras distribuciones basadas en Debian usan el formato DEB, pero por lo
-general no necesitas instalar tu software desde un fichero DEB local.
-En vez de eso se utilizan los gestores de paquetes tanto desde la línea de
+general no necesitas instalar software desde un fichero DEB local.
+En su lugar lo que se utiliza son los gestores de paquetes, tanto desde la línea de
 comandos (p.e. `apt-get`, `aptitude`) o con una interfaz gráfica de usuario
 (p.e. Synaptic).
 Ejecuta lo siguiente desde el terminal para instalar `sbt`
@@ -54,7 +54,7 @@ gestor de paquetes.
 Una vez `sbt` haya sido instalado podrás gestionar el paquete en `aptitude` o
 Synaptic después de que hayas actualizado la caché de paquetes. También podrás
 ver el repositorio recién añadido al final de la lista en
-Preferencias delsistema -> Software y actualizaciones -> Otro software:
+Preferencias del sistema -> Software y actualizaciones -> Otro software:
 
 ![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
@@ -80,13 +80,13 @@ formato RPM. Ejecuta lo siguiente desde el terminal para instalar `sbt`
     sudo yum install sbt
 
 Los binarios de sbt son publicados en Bintray y convenientemente Bintray
-proporciona un repositorio APT. Sólo tienes que añadir el repositorio en
+proporciona un repositorio RPM. Sólo tienes que añadir el repositorio en
 aquellos ficheros utilizados por tu gestor de paquetes.
 
 En Fedora, `sbt 0.13.1` está [disponible desde repos oficiales](https://fedora.pkgs.org/28/fedora-i386/sbt-0.13.1-9.fc28.1.noarch.rpm.html).
 Si quieres instalar `sbt 1.1.6` o superior tendrás que desinstalar `sbt 0.13`
 (si es que está instaladoo) e indicar que quieres instalar las nuevas versiones
-de `sbt`(p.e. `sbt 1.1.6` o superior) utilizando `bintray-sbt-rpm.repo`.
+de `sbt` (p.e. `sbt 1.1.6` o superior) utilizando `bintray-sbt-rpm.repo`.
 
     sudo dnf remove sbt # desinstalar sbt si sbt 0.13 estaba instalado (puede que no sea necesario)
     sudo dnf --enablerepo=bintray--sbt-rpm install sbt
