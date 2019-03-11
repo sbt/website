@@ -16,7 +16,7 @@ Esta página supone que has [instalado sbt][Setup] y leído
 
 En la terminología de sbt, el "directorio base" es el directorio que contiene
 el proyecto. Así pues, si has creado un proyecto `hello` que contiene
-`/tmp/foo-build/build.sbt` tal y como se muestra en [sbt by example][ByExample],
+`/tmp/foo-build/build.sbt` tal y como se muestra en [sbt mediante ejemplos][ByExample],
 el directorio base será `/tmp/foo-build`.
 
 ### Código fuente.
@@ -29,18 +29,18 @@ por [Maven](https://maven.apache.org/) para ficheros fuente
 src/
   main/
     resources/
-       <files to include in main jar here>
+       <ficheros del jar principal aquí>
     scala/
-       <main Scala sources>
+       <fuentes principales de Scala>
     java/
-       <main Java sources>
+       <fuentes principales de Java>
   test/
     resources
-       <files to include in test jar here>
+       <ficheros del jar de test aquí>
     scala/
-       <test Scala sources>
+       <fuentes de test de Scala>
     java/
-       <test Java sources>
+       <fuentes de test de Java>
 ```
 
 Cualquier otro directorio en `src/` es ignorado.
@@ -70,7 +70,7 @@ build.sbt
 Además de `build.sbt`, el directorio `project` puede contener ficheros `.scala`
 que definen objetos auxiliares y plugins puntuales.
 
-Para más información mira [organizando la construcción][Organizing-Build].
+Para más información mira [Organizar la construcción][Organizing-Build].
 
 ```
 build.sbt
@@ -80,8 +80,8 @@ project/
 
 Puede que veas ficheros `.sbt` dentro de `project/`
 pero no son equivalentes a los ficheros `.sbt` del directorio base del proyecto.
-La explicación a esto vendrá [más tarde][Organizing-Build],
-ya que primero necesitarás conocer algunos conceptos primero.
+La explicación a esto vendrá [más adelante][Organizing-Build],
+ya que primero necesitarás conocer algunos conceptos.
 
 ### Construir productos
 
