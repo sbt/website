@@ -22,7 +22,7 @@ Lanza sbt en el directorio de tu proyecto sin argumentos:
 ```
 
 Ejecutar sbt sin argumentos hace que se inicie un shell de sbt.
-El shell de sbt tiene un prompt de comandos (¡con autocompletado e historia!).
+El shell de sbt tiene un prompt de comandos (¡con autocompletado e historial!).
 
 Por ejemplo, podrías escribir `compile` en el shell:
 
@@ -40,7 +40,7 @@ Para salir del shell escribe `exit` o usa Ctrl+D (Unix) o Ctrl+Z (Windows).
 
 Puedes tambien ejecutar sbt en modo por lotes, proporcionando una lista de
 comandos sbt separados por espacio como argumentos. Aquellos comandos de sbt que
-necesitan argumentos pueden ser pasados como un único argumento entrecomillado,
+necesiten argumentos pueden ser pasados como un único argumento entrecomillado,
 por ejemplo:
 
 ```
@@ -51,8 +51,8 @@ En este ejemplo, `testOnly` tiene como argumentos `TestA` y `TestB`.
 Los comandos son ejecutados secuencialmente: (`clean`, `compile` y luego
 `testOnly`).
 
-**Note**: El modo por lotes implica levantar JVM y JIT cada vez, por lo que
-**la construcción es mucho más lenta**.
+**Note**: El modo por lotes implica levantar una JVM y JIT cada vez, por lo que
+**la construcción será mucho más lenta**.
 Para el desarrollo del día a día recomendamos utilizar el shell de sbt o
 construir y testear continuamente tal y como se explica más abajo.
 
@@ -65,8 +65,8 @@ en el modo por lotes.
 ...
 ```
 
-Solo será lanzado para `sbt compile`.
-Puede ser desactivado con`suppressSbtShellNotification := true`.
+Sólo será mostrado con `sbt compile`.
+Puede ser desactivado con `suppressSbtShellNotification := true`.
 
 ### Construir y testear continuamente
 
@@ -89,14 +89,14 @@ Para más información mira [Ejecución disparada][Triggered-Execution].
 
 ### Comandos comunes
 
-Aquí hay una lista con algunos de los comandos más comunes de sbt.
+A continuación presentamos una lista con algunos de los comandos más comunes de sbt.
 Para una lista más completa mira
 [Referencia de línea de comandos][Command-Line-Reference].
 
 <table>
   <tr>
     <td><tt>clean</tt></td>
-    <td>Borra todos los ficheros generados (en el directorio <tt>target</tt>)..</td>
+    <td>Borra todos los ficheros generados (en el directorio <tt>target</tt>).</td>
   </tr>
   <tr>
     <td><tt>compile</tt></td>
@@ -126,8 +126,7 @@ Para una lista más completa mira
   <tr>
     <td><tt>help &lt;comando&gt;</tt></td>
     <td>Muestra ayuda detallada para el comando especificado.
-    Si ningún comando es proporcionado, muestra una descripción breve
-    de todos los comandos.</td>
+    Si no se proporciona ningún comando entonces mostrará una breve descripción de cada comando.</td>
   </tr>
   <tr>
     <td><tt>reload</tt></td>
@@ -140,14 +139,14 @@ Para una lista más completa mira
 
 El shell de sbt tiene autocompletado, incluso con un prompt vacío.
 Una convención especial de sbt es que si se presiona tab una vez se se mostrarán
-las opciones más probables mientras que si se pulsa más veces mostrará aún más
+las opciones más probables mientras que si se pulsa más veces se mostrarán aún más
 opciones.
 
 ### Comandos históricos
 
 El shell de sbt recuerda el histórico de comandos, incluso si sales de sbt y lo
 reinicias. La forma más sencilla de acceder al histórico es con la tecla arriba.
-Los siguientes comandos son soportados:
+Los siguientes comandos están soportados:
 
 <table>
   <tr>
