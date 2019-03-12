@@ -41,7 +41,7 @@ construcción no sea portable.
 ### ¿Qué es una definición de construcción?
 
 Una *definición de construcción* es definida en `build.sbt` y consiste en un 
-conjunto de proyectos (de tipo [`Project`](../api/sbt/Project.html)). Debido a 
+conjunto de proyectos (de tipo [`Project`](../../api/sbt/Project.html)). Debido a 
 que el término *project* puede ser ambiguo, con frecuencia utilizaremos el *subproyecto* para referirnos a ellos en esta guía.
 
 Por ejemplo, en `build.sbt` se define el subproyecto ubicado en el directorio 
@@ -91,9 +91,9 @@ Una expresión de configuración consiste en tres partes:
 
 A la izquierda, `name`, `version` y `scalaVersion` son *claves*. Una clave es 
 una instancia de
-[`SettingKey[T]`](../api/sbt/SettingKey.html),
-[`TaskKey[T]`](../api/sbt/TaskKey.html) o
-[`InputKey[T]`](../api/sbt/InputKey.html)
+[`SettingKey[T]`](../../api/sbt/SettingKey.html),
+[`TaskKey[T]`](../../api/sbt/TaskKey.html) o
+[`InputKey[T]`](../../api/sbt/InputKey.html)
 donde `T` es el tipo esperado. Los tipos de claves son explicados más abajo.
 
 Debido a que la clave `name` tiene tipo `SettingsKey[String]`, el operador `:=` 
@@ -127,7 +127,7 @@ Hay tres sabores de claves:
 #### Claves preconfiguradas
 
 Las claves preconfiguradas son simplemente campos de un objeto llamado 
-[Keys](../api/sbt/Keys\$.html). Un `build.sbt` tiene de forma implícita un 
+[Keys](../../api/sbt/Keys\$.html). Un `build.sbt` tiene de forma implícita un 
 `import sbt.Keys._`, por lo que `sbt.Keys.name` puede ser accedido como `name`.
 
 #### Claves personalizadas

@@ -21,15 +21,15 @@ la Guía de inicio, en particular [Definiciones de construcción][Basic-Def] y
 
 ### Definir una clave
 
-[Keys](../api/sbt/Keys\$.html) está lleno de ejemplos que ilustran cómo definir
+[Keys](../../api/sbt/Keys\$.html) está lleno de ejemplos que ilustran cómo definir
 claves. La mayoría de las claves están implementadas en
-[Defaults](../sxr/sbt/Defaults.scala.html).
+[Defaults](../../sxr/sbt/Defaults.scala.html).
 
 Una clave tiene uno de tres posibles tipos: `SettingKey` y `TaskKey` son
 descritos en [Definiciones de construcción][Basic-Def]. Para saber más acerca de
 `InputKey` puedes ver la página [Tareas con entrada][Input-Tasks].
 
-Algunos ejemplos de [Keys](../api/sbt/Keys\$.html):
+Algunos ejemplos de [Keys](../../api/sbt/Keys\$.html):
 
 ```scala
 val scalaVersion = settingKey[String]("The version of Scala used for building.")
@@ -92,7 +92,7 @@ HTML para lo cual puede que requieras la utilización de una biblioteca de HTML
 y escribir código basado en dicha biblioteca).
 
 sbt tiene algunas bibliotecas útiles y funciones convenientes, en particular
-puedes utilizar la APIs de [IO](../api/sbt/io/IO\$.html) para manipular ficheros
+puedes utilizar la APIs de [IO](../../api/sbt/io/IO\$.html) para manipular ficheros
 y directorios.
 
 ### Semántica de ejecución de las tareas

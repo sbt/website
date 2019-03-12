@@ -27,7 +27,7 @@ fuente, genera su propio fichero jar cuando ejecutas `package` y en general
 funcionan como cualquier otro proyecto.
 
 Un proyecto se define declarando un `lazy val` de tipo
-[Project](../api/sbt/Project.html). Por ejemplo:
+[Project](../../api/sbt/Project.html). Por ejemplo:
 
 ```scala
 lazy val util = (project in file("util"))

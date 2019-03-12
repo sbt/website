@@ -88,13 +88,13 @@ libraryDependencies += groupID % artifactID % revision
 ```
 
 o a esto, donde `configuration` puede ser una cadena de caracters o una
-[Configuración](../sxr/sbt/Configuration.scala.html#sbt.Configuration):
+[Configuración](../../sxr/sbt/Configuration.scala.html#sbt.Configuration):
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration
 ```
 `libraryDependencies` está declarado en 
-[Keys](../api/sbt/Keys\$.html#libraryDependencies:sbt.SettingKey[Seq[sbt.librarymanagement.ModuleID]])
+[Keys](../../api/sbt/Keys\$.html#libraryDependencies:sbt.SettingKey[Seq[sbt.librarymanagement.ModuleID]])
 de esta forma:
 
 ```scala
@@ -200,7 +200,7 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 ```
 
 La clave `resolvers` está definida
-[Keys](../api/sbt/Keys\$.html#resolvers:sbt.SettingKey[Seq[sbt.librarymanagement.Resolver]])
+[Keys](../../api/sbt/Keys\$.html#resolvers:sbt.SettingKey[Seq[sbt.librarymanagement.Resolver]])
 de la siguiente forma:
 
 ```scala

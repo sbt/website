@@ -40,7 +40,7 @@ adelante).
 
 Como primer ejemplo supongamos que redefinimos `scalacOption` para que dependa de
 las tareas `update` y `clean`. A continuación se muestran las definiciones de
-estas claves (tal cual están definidas en [Keys](../api/sbt/Keys\$.html)).
+estas claves (tal cual están definidas en [Keys](../../api/sbt/Keys\$.html)).
 
 **Nota**: Los valores calculados abajo no tienen mucho sentido para
 `scalacOptions` pero sirven a modo de demostración.
@@ -285,7 +285,7 @@ A continuación se muestra cómo aparecería en el shell de sbt:
 [success] Total time: 0 s, completed Jan 2, 2017 11:44:51 PM
 ```
 
-Ahora, cojamos estas dos claves (desde [Keys](../api/sbt/Keys\$.html)):
+Ahora, cojamos estas dos claves (desde [Keys](../../api/sbt/Keys\$.html)):
 
 ```scala
 val scalacOptions = taskKey[Seq[String]]("Options for the Scala compiler.")
