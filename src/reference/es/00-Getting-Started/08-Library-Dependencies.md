@@ -87,7 +87,7 @@ Declarar una dependencia es parecido a esto, donde `groupId`, `artifactId` y
 libraryDependencies += groupID % artifactID % revision
 ```
 
-o a esto, donde `configuration` puede ser una cadena de caracters o una
+o a esto, donde `configuration` puede ser una cadena de caracteres o una
 [Configuración](../../sxr/sbt/Configuration.scala.html#sbt.Configuration):
 
 ```scala
