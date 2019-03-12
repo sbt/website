@@ -450,9 +450,11 @@ Después cambia `build.sbt` como sigue para añadir `JavaAppPackaging`:
 
 @@snip [example-weather-build2]($root$/src/sbt-test/ref/example-weather/changes/build.sbt) {}
 
-### Crear una distribución .zip
+### Recargar y crear una distribución .zip
 
 ```
+sbt:Hello> reload
+...
 sbt:Hello> dist
 [info] Wrote /tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.pom
 [info] Wrote /tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.pom
