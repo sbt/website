@@ -76,7 +76,7 @@ lazy val root = (project in file("."))
 
 Echemos un vistazo más de cerca al DSL de build.sbt:
 
-![setting expression](files/setting-expression.png)<br>
+![setting expression](../files/setting-expression.png)<br>
 <br>
 
 Cada entrada es llamada una *expresion de configuración*. De entre ellas, 

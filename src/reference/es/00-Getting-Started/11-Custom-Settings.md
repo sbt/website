@@ -170,7 +170,7 @@ sum: 3
 Para revisar qué ha sucedido vamos a mirar la notación gráfica de
 `sampleIntTask`:
 
-![task-dependency](files/task-dependency00.png)
+![task-dependency](../files/task-dependency00.png)
 
 A diferencia de las llamadas a métodos normales de Scala, el hecho de llamar al método
 `value` en tareas no hará que sea evaluado estrictamente. En su lugar,
@@ -207,7 +207,7 @@ veces, pero debido a que `value` se usa simplemente para indicar la
 dependencia de otra tarea, ésta es evaluada sólo una vez. A continuación se
 muestra una notación gráfica de la evaluación de `sampleStringTask`:
 
-![task-dependency](files/task-dependency01.png)
+![task-dependency](../files/task-dependency01.png)
 
 Si no hubiésemos deduplicado las dependencias de tareas habríamos acabado
 compilando el código fuente de los tests muchas veces cuando la tarea `test`
@@ -263,7 +263,7 @@ stopping...
 [success] Total time: 1 s, completed Dec 22, 2014 6:00:00 PM
 ```
 
-![task-dependency](files/task-dependency02.png)
+![task-dependency](../files/task-dependency02.png)
 
 #### Usar Scala
 

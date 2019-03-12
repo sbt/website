@@ -56,7 +56,7 @@ Synaptic después de que hayas actualizado la caché de paquetes. También podr�
 ver el repositorio recién añadido al final de la lista en
 Preferencias del sistema -> Software y actualizaciones -> Otro software:
 
-![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
+![Ubuntu Software & Updates Screenshot](../files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
 **Nota**: Se han reportado errores de SSL en Ubuntu: `Server access Error:
 java.lang.RuntimeException: Unexpected error:

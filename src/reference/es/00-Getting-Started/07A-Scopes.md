@@ -65,7 +65,7 @@ Existen tres ejes de ámbito:
 Si el concepto de *eje* no te resulta familiar podemos pensar en un cubo de
 color RGB como ejemplo:
 
-![color cube](files/rgb_color_solid_cube.png)
+![color cube](../files/rgb_color_solid_cube.png)
 
 En el modelo de color RGB todos los colores son representados por un punto en el
 cubo cuyos ejes corresponden a las componentes rojo, verde y azul codificadas
@@ -127,7 +127,7 @@ Otra cosa a tener en cuenta sobre una configuración es que puede extender otras
 configuraciones. La siguiente figura muestra la relación de extensión entre las
 configuraciones más comunes.
 
-![dependency configurations](files/sbt-configurations.png)
+![dependency configurations](../files/sbt-configurations.png)
 
 `Test` y `IntegrationTest` extienden `Runtime`; `Runtime` extiende `Compile`;
 `CompileInternal` extiende `Compile`, `Optional`, y `Provided`.
