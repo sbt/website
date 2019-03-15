@@ -2,7 +2,7 @@
 out: Running.html
 ---
 
-  [Hello]: Hello.html
+  [ByExample]: sbt-by-example.html
   [Setup]: Setup.html
   [Triggered-Execution]: ../docs/Triggered-Execution.html
   [Command-Line-Reference]: ../docs/Command-Line-Reference.html
@@ -10,86 +10,97 @@ out: Running.html
 Ejecución
 ---------
 
-Esta página describe cómo utilizar `sbt` una vez que usted a configurado
-su proyecto. Se asume que usted ha [instalado sbt][Setup] y que ha
-creado un proyecto [Hello, World][Hello] u otro proyecto.
+Esta página describe cómo usar sbt una vez has configurado tu proyecto.
+Se supone que has [instalado sbt][Setup] y leído [sbt mediante ejemplos][ByExample].
 
-### Modo interactivo
+### El shell de sbt
 
-Ejecute sbt en el directorio de su proyecto sin argumentos:
+Lanza sbt en el directorio de tu proyecto sin argumentos:
 
 ```
 \$ sbt
 ```
 
-Ejecutar sbt sin ningún argumento en la línea de comandos, inicia sbt en
-modo interactivo. El modo interactivo tiene una línea de comandos (¡con
-*tab completion* e historia!).
+Ejecutar sbt sin argumentos hace que se inicie un shell de sbt.
+El shell de sbt tiene un prompt de comandos (¡con autocompletado e historial!).
 
-Por ejemplo, usted puede teclear `compile` en el prompt de sbt:
+Por ejemplo, podrías escribir `compile` en el shell:
 
 ```
 > compile
 ```
 
-Para key:`compile` de nuevo, presione la tecla "arriba" y entonces
-enter.
+Para lanzar `compile` de nuevo pulsa la tecla arriba y pulsa `Intro`.
 
-Para ejecutar su programa nuevamente, teclee `run`.
+Para ejecutar tu programa, escribe `run`.
 
-Para dejar el modo interactivo, teclee `exit` o utilice Ctrl+D (Unix) o
-Ctrl+Z (Windows).
+Para salir del shell escribe `exit` o usa Ctrl+D (Unix) o Ctrl+Z (Windows).
 
-### Modo Batch (por lotes)
+### Modo por lotes
 
-También puede ejecutar sbt en modo batch, especificando una lista
-separada por espacios de comandos de sbt como argumentos. Para comandos
-de sbt que toman argumentos, pase el comando y los argumentos como uno
-solo a `sbt` mediante encerrarlos entre comillas. Por ejemplo:
+Puedes tambien ejecutar sbt en modo por lotes, proporcionando una lista de
+comandos sbt separados por espacio como argumentos. Aquellos comandos de sbt que
+necesiten argumentos pueden ser pasados como un único argumento entrecomillado,
+por ejemplo:
 
 ```
 \$ sbt clean compile "testOnly TestA TestB"
 ```
 
-En este ejemplo, la *key* `testOnly` tiene argumentos, `TestA` y
-`TestB`. Los comandos se ejecutarán en sequencia (`clean`, `compile`, y
-entonces `testOnly`).
+En este ejemplo, `testOnly` tiene como argumentos `TestA` y `TestB`.
+Los comandos son ejecutados secuencialmente: (`clean`, `compile` y luego
+`testOnly`).
 
-### Construcción y test continuos
+**Note**: El modo por lotes implica levantar una JVM y JIT cada vez, por lo que
+**la construcción será mucho más lenta**.
+Para el desarrollo del día a día recomendamos utilizar el shell de sbt o
+construir y testear continuamente tal y como se explica más abajo.
 
-Para acelerar el ciclo de edición-compilación-prueba, puede pedir a sbt
-que recompile automáticamente o que ejecute los tests siempre que se
-guarde un archivo de código fuente.
-
-Puede conseguir que un comando se ejecute siempre que uno o más archivos
-de código fuente cambien al agregar como prefijo `~`. Por ejemplo, en
-modo interactivo, intente:
+A partir de sbt 0.13.16, se lanza un mensaje informativo cuando sbt se utiliza
+en el modo por lotes.
 
 ```
-> ~ compile
+\$ sbt clean compile
+[info] Executing in batch mode. For better performance use sbt's shell
+...
 ```
 
-Presione enter para dejar de observar sus cambios.
+Sólo será mostrado con `sbt compile`.
+Puede ser desactivado con `suppressSbtShellNotification := true`.
 
-Usted puede usar el prefijo `~` ya sea en modo interactivo o en modo
-*batch*.
+### Construir y testear continuamente
 
-Vea [Triggered Execution][Triggered-Execution] para más detalles.
+Para acelerar el ciclo editar-compilar-testear puedes indicarle a sbt que
+recompile automáticamente o lance tests cada vez que guardes un fichero fuente.
+
+Haz que un comando se ejecute cuando uno o más ficheros fuente cambien
+prefijando dicho comando con `~`. Por ejemplo, prueba en el shell de sbt:
+
+```
+> ~testQuick
+```
+
+Pulsa `Intro` para dejar de observar los cambios.
+
+Puedes utilizar el prefijo `~` tanto en el shell de sbt como en modo por lotes.
+
+<!-- TODO: Triggered -> disparada?? -->
+Para más información mira [Ejecución disparada][Triggered-Execution].
 
 ### Comandos comunes
 
-Aquí encontrará algunos de los comandos de sbt más comunes. Para una
-lista más completa, vea [Command Line Reference][Command-Line-Reference].
+A continuación presentamos una lista con algunos de los comandos más comunes de sbt.
+Para una lista más completa mira
+[Referencia de línea de comandos][Command-Line-Reference].
 
 <table>
   <tr>
     <td><tt>clean</tt></td>
-    <td>Borra todos los archivos generados (en el directorio <tt>target</tt>).</td>
+    <td>Borra todos los ficheros generados (en el directorio <tt>target</tt>).</td>
   </tr>
   <tr>
     <td><tt>compile</tt></td>
-    <td>Compila los archivos de código fuente de main (en los
-    directorios <tt>src/main/scala</tt> y
+    <td>Compila los ficheros fuente principales (en los directorios <tt>src/main/scala</tt> y
    <tt>src/main/java</tt>).</td>
   </tr>
   <tr>
@@ -98,82 +109,76 @@ lista más completa, vea [Command Line Reference][Command-Line-Reference].
   </tr>
   <tr>
     <td><tt>console</tt></td>
-    <td>Inicia el interprete de Scala con un classpath que incluye
-    el código fuente compilado y todas las dependencias. Para regresar a
-    sbt, teclee :quit, Ctrl+D (Unix), o Ctrl+Z (Windows).</td>
+    <td>Inicia el intérprete de Scala con un classpath que incluye los ficheros fuente
+    compilados y todas sus dependencias. Para volver a sbt, escribe <tt>:quit</tt> o pulsa
+   Ctrl+D (Unix) o Ctrl+Z (Windows).</td>
   </tr>
   <tr>
     <td><nobr><tt>run &lt;argument&gt;*</tt></nobr></td>
-    <td>Ejecuta la clase principal para el proyecto en la
-    misma máquina virtual que sbt.</td>
+    <td>Ejecuta la clase principal del proyecto en la misma máquina virtual que sbt</td>
   </tr>
   <tr>
     <td><tt>package</tt></td>
-    <td>crea un archivo jar que contiene los archivos en
+    <td>Crea un fichero jar conteniendo los ficheros de
     <tt>src/main/resources</tt> y las clases compiladas de <tt>src/main/scala</tt> y
     <tt>src/main/java</tt>.</td>
   </tr>
   <tr>
-    <td><tt>help &lt;command&gt;</tt></td>
-    <td>Despliega ayuda detallada para el comando
-    especificado. Si no se proporciona ningún comando, despliega una
-    breve descripción de todos los comandos.</td>
+    <td><tt>help &lt;comando&gt;</tt></td>
+    <td>Muestra ayuda detallada para el comando especificado.
+    Si no se proporciona ningún comando entonces mostrará una breve descripción de cada comando.</td>
   </tr>
   <tr>
     <td><tt>reload</tt></td>
-    <td>Recarga la definición de la construcción (los archivos
-    <tt>build.sbt</tt>, <tt>project/*.scala</tt>,
-    <tt>project/*.sbt</tt>). Este comando es
-    necario si cambia la definición de la construcción.</td>
+    <td>Recarga la definición de construcción (los ficheros <tt>build.sbt</tt>, <tt>project/*.scala</tt>,
+    <tt>project/*.sbt</tt>). Necesario si cambias la definición de construcción.</td>
   </tr>
 </table>
 
-### Tab completion
+### Autocompletado
 
-El modo interactivo tiene *tab completion*, incluyendo el caso cuando se
-tiene un prompt vacio. Una convención especial de sbt es que presionar
-tab una vez puede mostrar únicamente un subconjunto de *completions* más
-probables, mientras que presionarlo más veces muestra opciones más
-verbosas.
+El shell de sbt tiene autocompletado, incluso con un prompt vacío.
+Una convención especial de sbt es que si se presiona tab una vez se se mostrarán
+las opciones más probables mientras que si se pulsa más veces se mostrarán aún más
+opciones.
 
-### Comandos de historia
+### Comandos históricos
 
-El modo interactivo recuerda la historia, incluso si usted sale de sbt y
-lo reinicia. La manera más simple de acceder a la historia es con la
-tecla "arriba". También se soportan los siguientes comandos:
+El shell de sbt recuerda el histórico de comandos, incluso si sales de sbt y lo
+reinicias. La forma más sencilla de acceder al histórico es con la tecla arriba.
+Los siguientes comandos están soportados:
 
 <table>
   <tr>
     <td><tt>!</tt></td>
-    <td>Muestra la ayuda para los comandos de historia.</td>
+    <td>Muestra la ayuda para comandos históricos.</td>
   </tr>
   <tr>
     <td><tt>!!</tt></td>
-    <td>Ejecuta el comando previo de nuevo.</td>
+    <td>Ejecuta el comando previo otra vez.</td>
   </tr>
   <tr>
     <td><tt>!:</tt></td>
-    <td>Muestra todos los comandos previos.</td>
-  </tr>  
+    <td>Muestra todos los comandos escritos hasta el momento.</td>
+  </tr>
   <tr>
     <td><tt>!:n</tt></td>
-    <td>Muestra los <tt>n</tt> comandos previos.</td>
+    <td>Muestra los últimos <tt>n</tt> comandos.</td>
   </tr>
   <tr>
     <td><tt>!n</tt></td>
-    <td>Ejecuta el comando con índice <tt>n</tt>, como se indica con el
-    comando <tt>!:</tt>.</td>
+    <td>Ejecuta el comando con índice <tt>n</tt>, como se muestra en el comando <tt>!:</tt>.</td>
   </tr>
   <tr>
     <td><tt>!-n</tt></td>
-    <td>Ejecuta el comando n-th previo a este.</td>
+    <td>Ejecuta el n-ésimo comando anterior a este.</td>
   </tr>
   <tr>
-    <td><tt>!cadena</tt></td>
-    <td>Ejecuta el comando más reciente que comienza con 'cadena'.</td>
+    <td><tt>!string</tt></td>
+    <td>Ejecuta el comando más reciente que empiece con 'string.'</td>
   </tr>
   <tr>
-    <td><tt>!?cadena</tt></td>
-    <td>Ejecuta el comando más reciente que contenga 'cadena'.</td>
+    <td><tt>!?string</tt></td>
+    <td>Ejecuta el comando más reciente que contenga 'string.'</td>
   </tr>
 </table>

@@ -5,18 +5,19 @@ out: Installing-sbt-on-Windows.html
   [MSI]: $sbt_native_package_base$/sbt-$windows_app_version$.msi
   [ZIP]: $sbt_native_package_base$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/sbt-$app_version$.tgz
+  [oraclejdk8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
-Installing sbt on Windows
--------------------------
+Instalar sbt en Windows
+-----------------------
 
-### Windows installer
+### Instalar JDK
 
-Download [msi installer][MSI] and install it.
+Sigue el link para instalar [Java SE Development Kit 8][oraclejdk8].
 
-### Installing from a universal package
+### Instalar desde un paquete universal
 
-Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
+Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 
-### Installing manually
+### Instalador Windows
 
-See instruction to install manually.
+Descarga el [instalador msi][MSI] e instálalo.
