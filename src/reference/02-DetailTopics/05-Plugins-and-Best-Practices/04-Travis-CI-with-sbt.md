@@ -165,33 +165,19 @@ java
 
 ### Caching
 
-In late 2014, thanks to Travis CI members sending pull requests on GitHub, we learned that Ivy cache can be shared across the Travis builds.
-The public availability of [caching][Travis-caching] is part of the benefit for trying the new [container-based infrastructure][Travis-container].
+You can speed up your `sbt` builds on Travis CI by using their [caching][Travis-caching] feature.
 
-> Jobs running on container-based infrastructure:
->
-> 1. start up faster
-> 2. allow the use of caches for public repositories
-> 3. disallow the use of `sudo`, setuid and setgid executables
-
-To opt into the container-based infrastructure, put the following in `.travis.yml`:
+Here's a sample `cache:` configuration that you can use:
 
 ```yml
-# Use container-based infrastructure
-sudo: false
-```
-
-Next, we can put `cache` section as follows:
-
-```yml
-# These directories are cached to S3 at the end of the build
+# These directories are cached to a cloud storage provider "close" to the infrastructure the builds run on.
 cache:
   directories:
     - \$HOME/.ivy2/cache
     - \$HOME/.sbt
 ```
 
-Finally, the following a few lines of cleanup script are added:
+You'll also need to following snippet to avoid unnecessary cache updates:
 
 ```yml
 before_cache:
@@ -201,10 +187,8 @@ before_cache:
   - find \$HOME/.sbt        -name "*.lock"               -print -delete
 ```
 
-With the above changes combined Travis CI will tar up the cached directories and uploads them to Amazon S3.
-Overall, the use of the new infrastructure and caching seems to shave off a few minutes of build time per job.
-
-**Note**: The Travis documentation states caching features are still experimental.
+With the above changes combined Travis CI will tar up the cached directories and uploads them to a cloud storage provider.
+Overall, the use of caching should shave off a few minutes of build time per job.
 
 ### Build matrix
 
