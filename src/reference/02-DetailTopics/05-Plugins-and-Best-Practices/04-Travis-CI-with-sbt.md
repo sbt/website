@@ -177,7 +177,7 @@ cache:
     - \$HOME/.sbt
 ```
 
-You'll also need to following snippet to avoid unnecessary cache updates:
+You'll also need the following snippet to avoid unnecessary cache updates:
 
 ```yml
 before_cache:
