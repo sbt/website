@@ -237,7 +237,7 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
   task, with the defaults for the project and configuration axes.
 - `ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath`
   specifies a project `ProjectRef(uri("file:/tmp/hello/"), "root")`.
-  Also specifies configurtion Test, leaves the default task axis.
+  Also specifies configuration Test, leaves the default task axis.
 - `ThisBuild / version` sets the subproject axis to "entire build" where
   the build is `ThisBuild`, with the default configuration.
 - `Zero / fullClasspath` sets the subproject axis to `Zero`,
