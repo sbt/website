@@ -21,7 +21,7 @@ can use gh-pages to host websites under the https://www.scala-sbt.org domain.
 
 The [sbt autoplugin giter8 template](https://github.com/sbt/sbt-autoplugin.g8) 
 is a good place to start. This sets up a new sbt plugin project appropriately. 
-The generated `README` will includes a summary of the steps for publishing a new 
+The generated `README` includes a summary of the steps for publishing a new 
 community plugin.
 
 ### Community Ivy Repository
