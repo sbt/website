@@ -79,6 +79,7 @@ your plugin to the list.
   generate ScalaTest test suites from examples in Scaladoc. <!-- 17 stars -->
 - [sbt-delombok](https://github.com/ThoughtWorksInc/sbt-delombok):
   delombok Java sources files that contain Lombok annotations to make Javadoc contain Lombok-generated classes and methods. <!-- 2 stars -->
+- [sbt-alldocs](https://github.com/glngn/sbt-alldocs): collect all the docs for a project and dependencies into a single folder.
 
 #### One jar plugins
 
