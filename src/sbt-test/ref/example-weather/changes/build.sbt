@@ -3,7 +3,7 @@ ThisBuild / organization := "com.example"
 
 val scalaTest = "org.scalatest" %% "scalatest" % "3.0.5"
 val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.3.1"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.6.9"
+val playJson  = "com.typesafe.play" %% "play-json_2.12" % "2.6.9"
 
 lazy val hello = (project in file("."))
   .aggregate(helloCore)
