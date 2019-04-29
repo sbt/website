@@ -8,7 +8,9 @@ ThisBuild / organization := "org.scala-sbt"
 ThisBuild / scalafmtOnCompile := true
 
 lazy val root = (project in file("."))
-  .enablePlugins(NanocPlugin, LowTechSnippetPamfletPlugin, ScriptedPlugin)
+  .enablePlugins(
+    (if (!isBetaBranch) Seq(NanocPlugin) else Seq()) ++
+    Seq(LowTechSnippetPamfletPlugin, ScriptedPlugin): _*)
   .settings(
     name := "website",
     siteEmail := "eed3si9n" + "@gmail.com",
