@@ -17,7 +17,8 @@ object Docs {
 
   lazy val isBetaBranch = {
     val branch = Process("git rev-parse --abbrev-ref HEAD").!!.linesIterator.toList.head
-    branch == "1.x-beta"
+    val travisBranch = sys.env.get("TRAVIS_BRANCH").getOrElse("")
+    branch == "1.x-beta" || travisBranch == "1.x-beta"
   }
 
   // New documents will live under /1.x/ instead of /x.y.z/.
