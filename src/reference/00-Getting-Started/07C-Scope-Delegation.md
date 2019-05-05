@@ -259,7 +259,7 @@ What will `projE / version` return?
 3. something else?
 
 The answer is `2.12.2_0.1.0`.
-`projD / version` delegates to `ThisBuild / version`,
+`projE / version` delegates to `ThisBuild / version`,
 which depends on `ThisBuild / scalaVersion`.
 Because of this reason, build level setting should be limited mostly to simple value assignments.
 
