@@ -65,7 +65,7 @@ use two community plugins. The [sbt-pgp plugin][sbt-pgp] can sign the files with
 
 Follow [Working with PGP Signatures][sonatype-pgp].
 
-First, you should [install GnuGP](https://www.gnupg.org/download/), and verify the version:
+First, you should [install GnuPG](https://www.gnupg.org/download/), and verify the version:
 
 ```
 \$ gpg --version
