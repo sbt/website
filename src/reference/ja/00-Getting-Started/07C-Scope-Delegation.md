@@ -302,7 +302,7 @@ lazy val projE = (project in file("e"))
 3. その他
 
 正解は `"2.12.2_0.1.0"`。
-`projD/version` は `version in ThisBuild` に委譲する。
+`projE/version` は `version in ThisBuild` に委譲する。
 一方 `version in ThisBuild` は `scalaVersion in ThisBuild` に依存する。
 このように振る舞うため、ビルドレベルのセッティングは単純な値の代入に限定するべきだ。
 
