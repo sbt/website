@@ -29,7 +29,7 @@ Some example usages are described below.
 The original use-case was continuous compilation:
 
 ```
-> ~ test:compile
+> ~ Test / compile
 
 > ~ compile
 ```
