@@ -56,5 +56,5 @@ triggered.
 The following will poll for source changes and run `clean` and `test`.
 
 ```
-> ~ ;clean ;test
+> ~ clean; test
 ```
