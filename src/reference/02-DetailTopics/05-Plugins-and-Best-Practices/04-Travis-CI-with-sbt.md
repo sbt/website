@@ -17,8 +17,8 @@ out: Travis-CI-with-sbt.html
   [Travis-deploy]: http://docs.travis-ci.com/user/deployment/
   [Travis-timeout]: http://docs.travis-ci.com/user/build-timeouts/
   [sbt-extras]: https://github.com/paulp/sbt-extras
-  [cookbook-sbt]: https://github.com/travis-ci/travis-cookbooks/blob/master/ci_environment/sbt-extras/templates/default/sbtopts.erb
-  [cookbook-jvm]: https://github.com/travis-ci/travis-cookbooks/blob/master/ci_environment/sbt-extras/templates/default/jvmopts.erb
+  [cookbook-sbt]: https://github.com/travis-ci/travis-cookbooks/blob/master/cookbooks/travis_sbt_extras/templates/default/sbtopts.erb
+  [cookbook-jvm]: https://github.com/travis-ci/travis-cookbooks/blob/master/cookbooks/travis_sbt_extras/templates/default/jvmopts.erb
 
 Setting up Travis CI with sbt
 -----------------------------
