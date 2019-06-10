@@ -28,12 +28,15 @@ addons:
         key_url: 'https://bintray.com/user/downloadSubjectPublicKey?username=sbt'
     packages:
       - sbt=1.1.6
-      - pandoc
+      - libgmp10
       - latex-cjk-all
       - texlive-full
 
 before_script:
- - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M"
+  - wget https://github.com/jgm/pandoc/releases/download/2.3.1/pandoc-2.3.1-1-amd64.deb
+  - sudo dpkg -i pandoc-2.3.1-1-amd64.deb
+  - rm pandoc-2.3.1-1-amd64.deb
+  - export JVM_OPTS="-Dfile.encoding=UTF-8 -Xmx1G -Xms1G -server -XX:ReservedCodeCacheSize=128M"
 
 # Use `/usr/bin/sbt` that we manually installed
 script: /usr/bin/sbt -Dsbt.website.generate_pdf Sbt/scalafmt/test scripted makeSite
