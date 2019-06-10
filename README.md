@@ -9,7 +9,7 @@ scala-sbt.org is powered by:
 
 * [Pamflet](http://www.foundweekends.org/pamflet/), a Scala-based documentation engine written by [@n8han][] (and some contributions from [@eed3si9n][]) generates the sbt 0.13/1.x documentation.
 
-* [Pandoc](https://pandoc.org/), to generate pdf files.
+* [Pandoc](https://pandoc.org/) [2.3.1](https://pandoc.org/releases.html#pandoc-2.3.1-28-september-2018), to generate pdf files.
 
 [@n8han]: https://github.com/n8han
 [@eed3si9n]: https://github.com/eed3si9n
