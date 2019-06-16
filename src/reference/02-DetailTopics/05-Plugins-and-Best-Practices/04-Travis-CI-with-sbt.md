@@ -321,8 +321,10 @@ script:
 before_cache:
   # Tricks to avoid unnecessary cache updates
   - find \$HOME/.sbt -name "*.lock" | xargs rm
-  - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
-  - rm -f \$HOME/.ivy2/.sbt.ivy.lock
+  # The below tricks are not required for sbt 1.3.x and later, since it no longer use ivy.
+  # You may comment out if using sbt 1.2.x and prior.
+  # - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+  # - rm -f \$HOME/.ivy2/.sbt.ivy.lock
 
 # Email specific recipient all the time
 notifications:
