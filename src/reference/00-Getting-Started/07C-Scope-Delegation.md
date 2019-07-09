@@ -21,7 +21,7 @@ To summarize what we've learned so far:
 - There's a special scope component `ThisBuild` for **the subprojects axis** only.
 - `Test` extends `Runtime`, and `Runtime` extends `Compile` configuration.
 - A key placed in build.sbt is scoped to `\${current subproject} / Zero / Zero` by default.
-- A key can scoped using `/` operator.
+- A key can be scoped using `/` operator.
 
 Now let's suppose we have the following build definition:
 
