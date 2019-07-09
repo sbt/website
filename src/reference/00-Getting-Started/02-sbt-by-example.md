@@ -64,7 +64,7 @@ sbt:foo-build> ~compile
 
 ### Create a source file
 
-Leave the previous command running. From a different shell or in your file manager create in the project
+Leave the previous command running. From a different shell or in your file manager create in the foo-build
 directory the following nested directories: `src/main/scala/example`. Then, create `Hello.scala`
 in the `example` directory using your favorite editor as follows:
 
