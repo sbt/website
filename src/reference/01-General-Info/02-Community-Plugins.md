@@ -53,6 +53,7 @@ your plugin to the list.
   code formatting for Java sources. <!-- 8 stars -->
 - [sbt-source-format](https://github.com/swoval/sbt-source-format):
   code formatting for Java and clang (c/c++/objc) sources. <!-- 1 stars -->
+- [safety-plugin](https://github.com/leobenkel/safety_plugin): Enforce the use of style rules across your company
 
 #### Documentation plugins
 
@@ -236,6 +237,7 @@ your plugin to the list.
   class and resources conflicting in your project's classpath. <!-- 13 stars -->
 - [sbt-google-cloud-storage](https://github.com/lightbend/sbt-google-cloud-storage): resolver and publisher for Google Cloud Storage.
 - [sbt-trace](https://github.com/delprks/sbt-trace): find traces of the client or library usage in other projects. <!-- 3 stars -->
+- [safety-plugin](https://github.com/leobenkel/safety_plugin): Enforce the use of specified versions of dependencies across your company
 
 #### Web and frontend development plugins
 
