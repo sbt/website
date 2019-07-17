@@ -153,7 +153,7 @@ future releases will be included in the sbt-plugin repository.
 If you choose not provide your plugin to the community and instead publish it to a private repository using the process described above, you will need to add an appropriate resolver to the project that utilizes this plugin so that the project is able to find the plugin. In your build settings under `project/plugins.sbt` add the following:
 
 ```scala
-resolvers += Resolver.bintrayIvyRepo("vitalfish", "sbt-plugins"),
+resolvers += Resolver.bintrayIvyRepo("org/user", "sbt-plugins"),
 
 addSbtPlugin("org.foundweekends" % "sbt-bintray" % "$sbt_bintray_version$")
 ```
