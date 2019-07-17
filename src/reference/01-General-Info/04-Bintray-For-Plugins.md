@@ -153,9 +153,9 @@ future releases will be included in the sbt-plugin repository.
 If you choose not provide your plugin to the community and instead publish it to a private repository using the process described above, you will need to add an appropriate resolver to the project that utilizes this plugin so that the project is able to find the plugin. In your build settings under `project/plugins.sbt` add the following:
 
 ```scala
-resolvers += Resolver.bintrayIvyRepo("org/user", "sbt-plugins"),
+resolvers += Resolver.bintrayIvyRepo("YOUR ORG", "sbt-plugins"),
 
-addSbtPlugin("org.foundweekends" % "sbt-bintray" % "$sbt_bintray_version$")
+addSbtPlugin("YOUR ORG" % "YOUR PLUGIN" % "YOUR PLUGIN VERSION")
 ```
 
 When publishing sbt plugins, Lightbend recommends using the default, Ivy-style repository formatting. This is automatically handled for you when referencing plugins from the community repository, but for private repositories, you need to explicitly add it using `Resolver.bintrayIvyRepo`...
