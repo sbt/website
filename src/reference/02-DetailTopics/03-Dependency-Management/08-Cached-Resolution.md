@@ -64,7 +64,7 @@ Therefore, if you have any SNAPSHOT in your graph, your experience may degrade.
 
 A setting key called `updateOptions` customizes the details of
 managed dependency resolution with the `update` task. One of its flags is
-called `lastestSnapshots`, which controls the behavior of the chained
+called `latestSnapshots`, which controls the behavior of the chained
 resolver. Up until 0.13.6, sbt was picking the first `-SNAPSHOT`
 revision it found along the chain.  When `latestSnapshots` is enabled
 (default: `true`), it will look into all resolvers on the chain, and
