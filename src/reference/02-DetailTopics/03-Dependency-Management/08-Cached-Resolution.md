@@ -78,22 +78,6 @@ here's how to disable it:
     updateOptions := updateOptions.value.withLatestSnapshots(false)
 ```
 
-### Consolidated resolution
-
-`updateOptions` can also be used to enable consolidated resolution for `update` task.
-
-```scala
-updateOptions := updateOptions.value.withConsolidatedResolution(true)
-```
-
-This feature is specifically designed to address Ivy resolution being
-slow for multi-module projects. Consolidated resolution aims to fix
-this issue by artificially constructing an Ivy dependency graph for
-the unique managed dependencies. If two subprojects introduce
-identical external dependencies, both subprojects should consolidate
-to the same graph, and therefore resolve immediately for the second
-`update`.
-
 <a name="motivation"></a>
 
 ### Motivation
