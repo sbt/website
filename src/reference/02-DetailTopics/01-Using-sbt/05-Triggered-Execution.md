@@ -137,8 +137,8 @@ number of iterations have been reached. By default, it just logs the
 result of `watchStartMessage`.
 
 - `watchForceTriggerOnAnyChange: Boolean` configures whether or not the
-contents of a source file must change in order to trigger a build. False
-by default.
+contents of a source file must change in order to trigger a build. The default
+value is false.
 
 - `watchPersistFilestamps: Boolean` toggles whether or not sbt will
 persist the file hashes computed for source files across multiple task
