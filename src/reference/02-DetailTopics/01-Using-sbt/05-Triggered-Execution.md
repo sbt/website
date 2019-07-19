@@ -76,7 +76,7 @@ The following will monitor for source file changes and run `clean` and `test`.
 If the build is configured to automatically reload when build source changes
 are made by setting `Global / onChangedBuildSource := ReloadOnSourceChanges`,
 then sbt will monitor the build sources (i.e. `*.sbt` and `*.{java,scala}`
-files in the `project` directory. When build source changes are detected,
+files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
@@ -141,4 +141,4 @@ persist the file hashes computed for source files across multiple task
 evaluation runs. This can improve performance for projects with many
 source files. Because the file hashes are cached, it is possible for the
 evaluated task to read an invalid hash if many source files are being
-concurrently modified. The default value is false.  is false.
+concurrently modified. The default value is false.
