@@ -14,9 +14,9 @@ Some example usages are described below:
 
 ### Compile
 
-The original use-case was continuous compilation. The following commands
-will make sbt watch for source changes in the Test and Compile (default)
-configurations respectively and re-run the compile command.
+A common use-case is continuous compilation. The following commands will make
+sbt watch for source changes in the Test and Compile (default) configurations
+respectively and re-run the compile command.
 
 ```
 > ~ Test / compile
@@ -29,11 +29,10 @@ of the test sources.
 
 ### Testing
 
-One of the common use cases for triggered execution is developing in a
-test driven development (TDD) style. The following command will monitor
-changes to both the main and test source sources for the build and
-re-run only the tests that reference classes that have been re-compiled
-since the last test run.
+Triggered execution is often used when developing in a test driven development
+(TDD) style. The following command will monitor changes to both the main and
+test source sources for the build and re-run only the tests that reference
+classes that have been re-compiled since the last test run.
 
 ```
 > ~ testQuick
