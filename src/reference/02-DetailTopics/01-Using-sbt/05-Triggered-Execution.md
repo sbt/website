@@ -126,9 +126,9 @@ return to the shell. By default this is automatically derived from the
 sets the banner that is printed while the watch process is waiting for
 file or input events. The inputs are the iteration count, the current
 project and the commands to run. The default message includes
-instructions for terminating the watch or manually triggering a rebuild.
-This banner is only displayed if `watchOnIteration` logs the result of
-`watchStartMessage`.
+instructions for terminating the watch or displaying all available
+options. This banner is only displayed if `watchOnIteration` logs the
+result of `watchStartMessage`.
 
 - `watchOnIteration: (Int, ProjectRef, Seq[String]) => Watch.Action` a
 function that is evaluated before waiting for source or input events. It
