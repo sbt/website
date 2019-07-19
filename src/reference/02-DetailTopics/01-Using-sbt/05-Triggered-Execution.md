@@ -146,3 +146,8 @@ evaluation runs. This can improve performance for projects with many
 source files. Because the file hashes are cached, it is possible for the
 evaluated task to read an invalid hash if many source files are being
 concurrently modified. The default value is false.
+
+- `watchAntiEntropy: FiniteDuration` controls the time that must elapse
+before a build is re-triggered by the same file that previously
+triggered the build. This is intended to prevent spurious builds that
+can occur when a file is modified in short bursts. The default value is 500ms.
