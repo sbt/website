@@ -44,7 +44,7 @@ complex reasons. This can happen in many scenarios, and running under
 SBT is just one of them. This is discussed for instance in issues
 #163 and #136. The reason is
 explained
-[here](https://jira.codehaus.org/browse/GROOVY-1627?focusedCommentId=85900#comment-85900).
+[here](https://issues.apache.org/jira/browse/GROOVY-1627).
 
 ### sbt's Solutions
 
