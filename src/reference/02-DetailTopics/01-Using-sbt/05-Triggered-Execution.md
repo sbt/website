@@ -97,6 +97,14 @@ be run. By default, it prints a message indicating what file triggered
 the build and what commands its going to run. No message is printed when
 the function returns `None`.
 
+- `watchInputOptions: Seq[Watch.InputOption]` allows the build to
+override the default watch options. For example, to add the ability to
+reload the build by typing the 'l' key, add
+`ThisBuild / watchInputOptions += Watch.InputOption('l', "reload",
+Watch.Reload)` to the `build.sbt` file. When using the default
+`watchStartMessage`, this will also add the option to the list displayed
+by the '?' option.
+
 - `watchBeforeCommand: () => Unit` provides a callback to run before
 evaluating the task.  It can be used to clear the console screen by
 adding `ThisBuild / watchBeforeCommand := Watch.clearScreen` to the
@@ -109,12 +117,10 @@ modifications to files that should not be monitored.
 
 - `watchInputParser: Parser[Watch.Action]` changes how the monitor
 handles input events. For example, setting `watchInputParser := 'l' ^^^
-Watch.Reload | '\n' ^^^ new Watch.Run("shell")` will make it so that
+Watch.Reload | '\r' ^^^ new Watch.Run("")` will make it so that
 typing the 'l' key will reload the build and typing a newline will
-return to the shell. By default, 'r' re-runs the watched tasks, 'x'
-exits sbt and a newline returns to the shell. See [Parsing and tab
-completion][Parsing-Input] for more details on parsers. Should generally
-used in conjunction with `watchStartMessage`
+return to the shell. By default this is automatically derived from the
+`watchInputOptions`.
 
 - `watchStartMessage: (Int, ProjectRef, Seq[String]) => Option[String]`
 sets the banner that is printed while the watch process is waiting for
