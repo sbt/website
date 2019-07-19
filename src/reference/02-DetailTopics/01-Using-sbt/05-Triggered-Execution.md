@@ -61,11 +61,9 @@ To run all of the tests in the project when any sources change, use
 
 ### Running Multiple Commands
 
-Occasionally, you may need to trigger the execution of multiple
-commands. You can use semicolons to separate the commands to be
-triggered.
-
-The following will monitor for source file changes and run `clean` and `test`.
+sbt supports watching multiple, semicolon separated, commands. For example, the
+following command will monitor for source file changes and run `clean` and
+`test`:
 
 ```
 > ~ clean; test
