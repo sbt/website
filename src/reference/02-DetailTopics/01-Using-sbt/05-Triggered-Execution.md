@@ -14,9 +14,9 @@ Some example usages are described below:
 
 ### Compile
 
-The original use-case was continuous compilation. The following commands
-will make sbt watch for source changes in the Test and Compile (default)
-configurations respectively and re-run the compile command.
+A common use-case is continuous compilation. The following commands will make
+sbt watch for source changes in the Test and Compile (default) configurations
+respectively and re-run the compile command.
 
 ```
 > ~ Test / compile
@@ -29,11 +29,10 @@ of the test sources.
 
 ### Testing
 
-One of the common use cases for triggered execution is developing in a
-test driven development (TDD) style. The following command will monitor
-changes to both the main and test source sources for the build and
-re-run only the tests that reference classes that have been re-compiled
-since the last test run.
+Triggered execution is often used when developing in a test driven development
+(TDD) style. The following command will monitor changes to both the main and
+test source sources for the build and re-run only the tests that reference
+classes that have been re-compiled since the last test run.
 
 ```
 > ~ testQuick
@@ -62,11 +61,9 @@ To run all of the tests in the project when any sources change, use
 
 ### Running Multiple Commands
 
-Occasionally, you may need to trigger the execution of multiple
-commands. You can use semicolons to separate the commands to be
-triggered.
-
-The following will monitor for source file changes and run `clean` and `test`.
+sbt supports watching multiple, semicolon separated, commands. For example, the
+following command will monitor for source file changes and run `clean` and
+`test`:
 
 ```
 > ~ clean; test
@@ -77,7 +74,7 @@ The following will monitor for source file changes and run `clean` and `test`.
 If the build is configured to automatically reload when build source changes
 are made by setting `Global / onChangedBuildSource := ReloadOnSourceChanges`,
 then sbt will monitor the build sources (i.e. `*.sbt` and `*.{java,scala}`
-files in the `project` directory. When build source changes are detected,
+files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
@@ -100,6 +97,14 @@ be run. By default, it prints a message indicating what file triggered
 the build and what commands its going to run. No message is printed when
 the function returns `None`.
 
+- `watchInputOptions: Seq[Watch.InputOption]` allows the build to
+override the default watch options. For example, to add the ability to
+reload the build by typing the 'l' key, add
+`ThisBuild / watchInputOptions += Watch.InputOption('l', "reload",
+Watch.Reload)` to the `build.sbt` file. When using the default
+`watchStartMessage`, this will also add the option to the list displayed
+by the '?' option.
+
 - `watchBeforeCommand: () => Unit` provides a callback to run before
 evaluating the task.  It can be used to clear the console screen by
 adding `ThisBuild / watchBeforeCommand := Watch.clearScreen` to the
@@ -112,20 +117,18 @@ modifications to files that should not be monitored.
 
 - `watchInputParser: Parser[Watch.Action]` changes how the monitor
 handles input events. For example, setting `watchInputParser := 'l' ^^^
-Watch.Reload | '\n' ^^^ new Watch.Run("shell")` will make it so that
+Watch.Reload | '\r' ^^^ new Watch.Run("")` will make it so that
 typing the 'l' key will reload the build and typing a newline will
-return to the shell. By default, 'r' re-runs the watched tasks, 'x'
-exits sbt and a newline returns to the shell. See [Parsing and tab
-completion][Parsing-Input] for more details on parsers. Should generally
-used in conjunction with `watchStartMessage`
+return to the shell. By default this is automatically derived from the
+`watchInputOptions`.
 
 - `watchStartMessage: (Int, ProjectRef, Seq[String]) => Option[String]`
 sets the banner that is printed while the watch process is waiting for
 file or input events. The inputs are the iteration count, the current
 project and the commands to run. The default message includes
-instructions for terminating the watch or manually triggering a rebuild.
-This banner is only displayed if `watchOnIteration` logs the result of
-`watchStartMessage`.
+instructions for terminating the watch or displaying all available
+options. This banner is only displayed if `watchOnIteration` logs the
+result of `watchStartMessage`.
 
 - `watchOnIteration: (Int, ProjectRef, Seq[String]) => Watch.Action` a
 function that is evaluated before waiting for source or input events. It
@@ -134,12 +137,17 @@ number of iterations have been reached. By default, it just logs the
 result of `watchStartMessage`.
 
 - `watchForceTriggerOnAnyChange: Boolean` configures whether or not the
-contents of a source file must change in order to trigger a build. False
-by default.
+contents of a source file must change in order to trigger a build. The default
+value is false.
 
 - `watchPersistFilestamps: Boolean` toggles whether or not sbt will
 persist the file hashes computed for source files across multiple task
 evaluation runs. This can improve performance for projects with many
 source files. Because the file hashes are cached, it is possible for the
 evaluated task to read an invalid hash if many source files are being
-concurrently modified. The default value is false.  is false.
+concurrently modified. The default value is false.
+
+- `watchAntiEntropy: FiniteDuration` controls the time that must elapse
+before a build is re-triggered by the same file that previously
+triggered the build. This is intended to prevent spurious builds that
+can occur when a file is modified in short bursts. The default value is 500ms.
