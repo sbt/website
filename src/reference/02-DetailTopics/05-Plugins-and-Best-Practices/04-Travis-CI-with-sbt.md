@@ -50,7 +50,7 @@ Setting up your build for Travis CI is mostly about setting up `.travis.yml`.
 ```yml
 language: scala
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 scala:
    - 2.10.4
@@ -63,7 +63,7 @@ Let's specify that explicitly:
 ```yml
 language: scala
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 scala:
    - 2.10.4
@@ -85,7 +85,7 @@ For sbt plugins, there is no need for cross building on Scala, so the following 
 ```yml
 language: scala
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 script:
    - sbt scripted
@@ -197,7 +197,7 @@ We've already seen the example of Scala cross building.
 ```yml
 language: scala
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 scala:
    - 2.10.4
@@ -299,15 +299,13 @@ sudo: false
 
 language: scala
 
-jdk: oraclejdk8
+jdk: openjdk8
 
 # These directories are cached to S3 at the end of the build
 cache:
   directories:
     - \$HOME/.ivy2/cache
     - \$HOME/.sbt/boot/
-
-jdk: oraclejdk8
 
 env:
   # This splits the build into two parts
