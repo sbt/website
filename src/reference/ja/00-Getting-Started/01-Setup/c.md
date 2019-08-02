@@ -68,7 +68,7 @@ sbt のバイナリは Bintray にて公開されており、Bintray は RPM リ
 そのため、このリポジトリをパッケージ・マネージャに追加する必要がある。
 
 > **注意:** これらのパッケージに問題があれば、
-> [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
+> [sbt](https://github.com/sbt/sbt)
 > プロジェクトに報告してほしい。
 
 ### Gentoo

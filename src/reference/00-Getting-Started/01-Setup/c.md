@@ -63,7 +63,7 @@ On Fedora, `sbt 0.13.1` [available on official repos](https://fedora.pkgs.org/28
     sudo dnf --enablerepo=bintray--sbt-rpm install sbt
 
 > **Note:** Please report any issues with these to the
-> [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
+> [sbt](https://github.com/sbt/sbt)
 > project.
 
 ### Gentoo
