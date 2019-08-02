@@ -92,7 +92,7 @@ de `sbt` (p.e. `sbt 1.1.6` o superior) utilizando `bintray-sbt-rpm.repo`.
     sudo dnf --enablerepo=bintray--sbt-rpm install sbt
 
 > **Nota:** Por favor, reporta cualquier problema con estos paquetes al proyecto
-> [sbt-launcher-package](https://github.com/sbt/sbt-launcher-package)
+> [sbt](https://github.com/sbt/sbt)
 
 ### Gentoo
 
