@@ -89,10 +89,10 @@ a build in a continuous build.
 
 Every time that `buildObjects` is invoked from the sbt shell, it will re-compile
 all of the source files. This becomes expensive as the number of source files
-increases. In addition to `fileInputs`, sbt also provides another api
-`fileInputReport` that provides information about what source files have changed
+increases. In addition to `fileInputs`, sbt also provides another api,
+`inputFileChanges`, that provides information about what source files have changed
 since the last time the task successfully completed. Using the
-`fileInputReport`, we can make the build above incremental:
+`inputFileChanges`, we can make the build above incremental:
 
 ```scala
 import scala.sys.process._
@@ -111,8 +111,7 @@ buildObjects := {
     Seq("gcc", "-fPIC", "-std=gnu99", "-c", s"\$path", "-o", s"\$output").!!
     output
   }
-  val report = buildObjects.inputFileReport
-  val sourceMap = report.all.view.map(p => outputPath(p) -> p).toMap
+  val sourceMap = buildObjects.inputFiles.view.map(p => outputPath(p) -> p).toMap
   val existingTargets = fileTreeView.value.list(outputDir.toGlob / **).flatMap { case (p, _) =>
     if (!sourceMap.contains(p)) {
       Files.deleteIfExists(p)
@@ -121,7 +120,8 @@ buildObjects := {
       Some(p)
     }
   }.toSet
-  val updatedPaths = (report.created ++ report.modified).toSet
+  val changes = buildObjects.inputFileChanges
+  val updatedPaths = (changes.created ++ changes.modified).toSet
   val needCompile = updatedPaths ++ sourceMap.filterKeys(!existingTargets(_)).values
   needCompile.foreach(compile)
   sourceMap.keys.toVector
@@ -136,15 +136,16 @@ manually tracking the input files. It is a sealed trait implemented by three cas
 run.
 3. `Fresh` -- there is no cache entry for the previous source file hashes.
 
-It is sometimes convenient to pattern match on the result of the `inputFileReport`.
+It is sometimes convenient to pattern match on the result of the
+`inputFileChanges`:
 
 ```scala
-foo.inputFileReport match {
-  case FileChangeReport.Changes(created, deleted, modified, unmodified) =>
-    build(modified ++ created)
-    delete(deleted)
-  case FileChangeReport.Unmodified(_) => // do nothing
-  case FileChangeReport.Fresh(files) => build(files)
+foo.inputFileChanges match {
+  case FileChanges(created, deleted, modified, unmodified)
+    if created.nonEmpty || modified.nonEmpty =>
+      build(created ++ modified)
+      delete(deleted)
+  case _ => // no changes
 }
 ```
 
@@ -154,7 +155,7 @@ outputs exist. In that example, there is a 1:1 mapping between inputs and
 outputs, but this need not be the case in general. An implementation of `buildObjects` may include header files in the `fileInputs`. These are not compiled themselves, but they may
 trigger re-compilation of one or more `*.c` source files.
 
-Note that calling `buildObjects.inputFileReport` also causes `buildObjects /
+Note that calling `buildObjects.inputFileChanges` also causes `buildObjects /
 fileInputs` to automatically be watched in a continuous build.
 
 ### File outputs
@@ -173,11 +174,11 @@ linkLibrary := {
   val logger = streams.value.log
   val isMac = scala.util.Properties.isMac
   val library = outputDir / s"mylib.\${if (isMac) "dylib" else "so"}"
-  val report = buildObjects.outputFileReport
   val linkOpts = if (isMac) Seq("-dynamiclib") else Seq("-shared", "-fPIC")
-  if (report.hasChanges || !Files.exists(library)) {
+  if (buildObjects.outputFileChanges.hasChanges || !Files.exists(library)) {
     logger.info(s"Linking \$library")
-    (Seq("gcc") ++ linkOpts ++ Seq("-o", s"\$library") ++ report.all.map(_.toString)).!!
+    (Seq("gcc") ++ linkOpts ++ Seq("-o", s"\$library") ++
+      buildObjects.outputFiles.map(_.toString)).!!
   } else {
     logger.debug(s"Skipping linking of \$library")
   }
@@ -237,7 +238,7 @@ generateSources / outputFileStamper := FileStamper.Hash
 
 #### Continuous build file monitoring
 In a continuous build, `~bar`, for an arbitrary task, `bar`, given some task,
-`foo`, any calls to `foo.inputFiles` and `foo.inputFileReport` within `bar`
+`foo`, any calls to `foo.inputFiles` and `foo.inputFileChanges` within `bar`
 will cause all of the globs specified by `foo / fileInputs` to be monitored in a
 continuous build.  Transitive file input dependencies are automatically
 monitored. For example, the `~linkLibrary` continuous build command will monitor
@@ -251,7 +252,7 @@ Global / watchForceTriggerOnAnyChange := true
 ```
 
 Changes to file outputs, which are gathered with either `foo.outputFiles` or
-`foo.outputFileReport`, do not trigger a re-build.
+`foo.outputFileChanges`, do not trigger a re-build.
 
 #### Partial pipeline evaluation / error handling
 
