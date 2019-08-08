@@ -6,6 +6,7 @@ out: Howto-Track-File-Inputs-and-Outputs.html
   [Triggered-Execution]: Triggered-Execution.html
   [generated-sources]: Howto-Generating-Files.html
   [Globs]: Globs.html
+  [Path-Filters]: Globs.html#path-filters
 
 
 Track file inputs and outputs
@@ -210,6 +211,47 @@ specified. When both `fileOutputs` is specified and the return type represents a
 file or collection of files, the result of `allOutputFiles` is the distinct
 union of the files returned by the task and the files described by `ouputFiles`.
 Calling `foo.outputFiles` is syntactic sugar for `(foo / allOutputFiles).value`.
+
+### Filters
+
+The `fileInputs` and `fileOutputs` can be filtered beyond what is specified by
+their `Glob` patterns. sbt provides four settings of type
+[sbt.nio.file.PathFilter][Path-Filters]:
+1. `fileInputIncludeFilter` -- only include file inputs that also match this
+filter
+2. `fileInputExcludeFilter`-- exclude any file inputs that also match this filter
+3. `fileOutputIncludeFilter` -- only include file inputs that also match this
+filter
+4. `fileOutputExcludeFilter` -- exclude any file output that also match this filter
+
+By default, sbt sets
+```scala
+fileInputExcludeFilter := HiddenFileFilter.toNio || DirectoryFilter
+```
+Both `fileInputIncludeFilter` and `fileInputOutputFilter` are set to
+`AllPassFilter.toNio`. The `fileOutputExcludeFilter` is set to
+`NothingFilter.toNio`.
+
+To exclude files matching with test in the name from `buildObjects`, write:
+
+```scala
+buildObjects / fileInputExcludeFilter := "*test*"
+```
+To preserve the previous excludes of hidden files and directories, write:
+
+```scala
+buildObjects / fileInputExcludeFilter :=
+  (buildObjects / fileInputExcludeFilter).value || "*test*"
+```
+or
+
+```scala
+buildObjects / fileInputExcludeFilter ~= { ef => ef || "*test*" }
+```
+
+In most cases, it shouldn't be necessary to set the `fileInputIncludeFilter`
+since the path name filtering it should be handled by `fileInputs` itself. It
+also shouldn't commonly be necessary to filter the outputs.
 
 #### Cleaning outputs
 

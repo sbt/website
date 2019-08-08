@@ -21,7 +21,7 @@ but `java.io.File` may also be used.
 The simplest Glob represents a single path. Explicitly create a single path glob
 with:
 
-```
+```scala
 val glob = Glob(Paths.get("foo/bar"))
 println(glob.matches(Paths.get("foo"))) // prints false
 println(glob.matches(Paths.get("foo/bar"))) // prints true
@@ -29,7 +29,7 @@ println(glob.matches(Paths.get("foo/bar/baz"))) // prints false
 ```
 It can also be created using the glob dsl with:
 
-```
+```scala
 val glob = Paths.get("foo/bar").toGlob
 ```
 
@@ -40,7 +40,7 @@ There are two special glob objects:
 Using `AnyPath`, we can explicitly construct a glob that matches all children of
 a directory:
 
-```
+```scala
 val path = Paths.get("/foo/bar")
 val children = Glob(path, AnyPath)
 println(children.matches(path)) // prints false
@@ -50,7 +50,7 @@ println(children.matches(path.resolve("baz").resolve("buzz") // prints false
 
 Using the dsl, the above becomes:
 
-```
+```scala
 val children    = Paths.get("/foo/bar").toGlob / AnyPath
 val dslChildren = Paths.get("/foo/bar").toGlob / *
 // these two definitions have identical results
@@ -58,7 +58,7 @@ val dslChildren = Paths.get("/foo/bar").toGlob / *
 
 Recursive globs are similar:
 
-```
+```scala
 val path = Paths.get("/foo/bar")
 val allDescendants = Glob(path, RescursiveGlob)
 println(allDescendants.matches(path)) // prints false
@@ -68,7 +68,7 @@ println(allDescendants.matches(path.resolve("baz").resolve("buzz") // prints tru
 
 or
 
-```
+```scala
 val allDescendants = Paths.get("/foo/bar").toGlob / **
 ```
 
@@ -77,7 +77,7 @@ val allDescendants = Paths.get("/foo/bar").toGlob / **
 Globs may also be constructed using path names. The following three globs are
 equivalent:
 
-```
+```scala
 val pathGlob = Paths.get("foo").resolve("bar")
 val glob = Glob("foo/bar")
 val altGlob = Glob("foo") / "bar"
@@ -90,7 +90,7 @@ on windows.
 
 Globs can apply name filters at each path level. For example,
 
-```
+```scala
 val scalaSources = Paths.get("/foo/bar").toGlob / ** / "src" / "*.scala"
 ```
 specifies all of the descendants of `/foo/bar` that have the `scala` file
@@ -98,7 +98,7 @@ extension whose parent directory is named `src`.
 
 More advanced queries are also possible:
 
-```
+```scala
 val scalaAndJavaSources =
   Paths.get("/foo/bar").toGlob / ** / "src" / "*.{scala,java}"
 ```
@@ -108,7 +108,7 @@ val scalaAndJavaSources =
 The `AnyPath` special glob can be used to control the depth of the query. For
 example, the glob
 
-```
+```scala
   val twoDeep = Glob("/foo/bar") / * / * / *
 ```
 
@@ -124,7 +124,7 @@ for details). [Regular
 expressions](https://www.scala-lang.org/api/2.12.8/scala/util/matching/Regex.html)
 can be used instead:
 
-```
+```scala
 val digitGlob = Glob("/foo/bar") / ".*-\\d{2,3}[.]txt".r
 digitGlob.matches(Paths.get("/foo/bar").resolve("foo-1.txt")) // false
 digitGlob.matches(Paths.get("/foo/bar").resolve("foo-23.txt")) // true
@@ -133,7 +133,7 @@ digitGlob.matches(Paths.get("/foo/bar").resolve("foo-123.txt")) // true
 
 It is possible to specify multiple path components in the regex:
 
-```
+```scala
 val multiRegex = Glob("/foo/bar") / "baz-\\d/.*/foo.txt"
 multiRegex.matches(Paths.get("/foo/bar/baz-1/buzz/foo.txt")) // true
 multiRegex.matches(Paths.get("/foo/bar/baz-12/buzz/foo.txt")) // false
@@ -210,7 +210,7 @@ both the file names and file node types are returned. This allows sbt to provide
 this information without making an extra system call. We can use this to
 efficiently filter paths:
 
-```
+```scala
 // No additional io is performed in the call to attributes.isRegularFile
 val scalaSourcePaths =
   FileTreeView.default.list(Glob("/foo/src/main/scala/**/*.scala")).collect {
@@ -218,6 +218,7 @@ val scalaSourcePaths =
   }
 ```
 
+<a name="path-filters"></a>
 #### Filtering
 
 In addition to the `list` methods described above, there two additional
