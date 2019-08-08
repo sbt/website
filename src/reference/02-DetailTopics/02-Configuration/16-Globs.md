@@ -3,7 +3,8 @@ out: Globs.html
 ---
   [Paths]: Paths.html#path-finder
 
-### Globs
+Globs
+-----
 
 sbt 1.3.0 introduces the `Glob` type which can be used to specify a file system
 query. The design is inspired by shell
@@ -115,8 +116,6 @@ matches any path that is a descendant of `/foo/bar` that has exactly two
 parents, e.g. `/foo/bar/a/b/c.txt` would be accepted but not `/foo/bar/a/b` or
 `/foo/bar/a/b/c/d.txt`.
 
-
-
 ### Regular expressions
 
 The `Glob` apis use glob syntax (see
@@ -163,6 +162,245 @@ val validRegex = Glob("/foo/bar") / "baz/Foo[.].txt".r
 val invalidRegex = Glob("/foo/bar") / "baz\\Foo[.].txt".r
 ```
 
+<a name="file-tree-view"></a>
+### Querying the file system with FileTreeView
+
+Querying the file system for the files that match one or more `Glob` patterns is
+done via the `sbt.nio.file.FileTreeView` trait. It provides two methods
+
+1. `def list(glob: Glob): Seq[(Path, FileAttributes)]`
+2. `def list(globs: Seq[Glob]): Seq[(Path, FileAttributes)]`
+
+that can be used to retrieve all of the paths matching the provided patterns.
+
+```scala
+val scalaSources: Glob = ** / "*.scala"
+val regularSources: Glob = "/foo/src/main/scala" / scalaSources
+val scala212Sources: Glob = "/foo/src/main/scala-2.12"
+val sources: Seq[Path] = FileTreeView.default.list(regularSources).map(_._1)
+val allSources: Seq[Path] =
+  FileTreeView.default.list(Seq(regularSources, scala212Sources)).map(_._1)
+```
+
+In the variant that takes `Seq[Glob]` as input, sbt will aggregate all of the
+globs in such a way that it will only ever list any directory on the file system
+once. It should return all of the files whose path name matches _any_ of the
+provided `Glob` patterns in the input `Seq[Glob]`.
+
+#### File attributes
+
+The `FileTreeView` trait is parameterized by a type, `T`, that is always
+`(java.nio.file.Path, sbt.nio.file.FileAttributes)` in sbt. The `FileAttributes`
+trait provides access to the following properties:
+
+1. `isDirectory` -- returns true if the `Path` represents a directory.
+2. `isRegularFile` -- returns true if the `Path` represents a regular file. This
+should usually be the inverse of `isDirectory`.
+3. `isSymbolicLink` -- returns true if the `Path` is a symbolic link. The
+default `FileTreeView` implementation always follows symbolic links. If the
+symbolic link targets a regular file, both `isSymbolicLink` and `isRegularFile`
+will be true. Similarly, if the link targets a directory, both `isSymbolicLink`
+and `isDirectory` will be true. If the link is broken, `isSymbolicLink` will be
+true but both `isDirectory` and `isRegularFile` will be false.
+
+The reason that the `FileTreeView` always provides the attributes is because
+checking they type of a file requires a system call, which can be slow. All of
+the major desktop operating systems provide apis for listing a directory where
+both the file names and file node types are returned. This allows sbt to provide
+this information without making an extra system call. We can use this to
+efficiently filter paths:
+
+```
+// No additional io is performed in the call to attributes.isRegularFile
+val scalaSourcePaths =
+  FileTreeView.default.list(Glob("/foo/src/main/scala/**/*.scala")).collect {
+    case (path, attributes) if attributes.isRegularFile => path
+  }
+```
+
+#### Filtering
+
+In addition to the `list` methods described above, there two additional
+overloads that take an `sbt.nio.file.PathFilter` argument:
+
+1. `def list(glob: Glob, filter: PathFilter): Seq[(Path, FileAttributes)]`
+2. `def list(globs: Seq[Glob], filter: PathFilter): Seq[(Path, FileAttributes)]`
+
+The `PathFilter` has a single abstract method:
+
+```scala
+def accept(path: Path, attributes: FileAttributes): Boolean
+```
+It can be used to further filter the query specified by the glob patterns:
+
+```scala
+val regularFileFilter: PathFilter = (_, a) => a.isRegularFile
+val scalaSourceFiles =
+  FileTreeView.list(Glob("/foo/bar/src/main/scala/**/*.scala"), regularFileFilter)
+```
+
+A `Glob` may be used as a `PathFilter`:
+
+```scala
+val filter: PathFilter = ** / "*include*"
+val scalaSourceFiles =
+  FileTreeView.default.list(Glob("/foo/bar/src/main/scala/**/*.scala"), filter)
+```
+Instances of `PathFilter` can be negated with the `!` unary operator:
+
+```scala
+val hiddenFileFilter: PathFilter = (p, _) => Try(Files.isHidden(p)).getOrElse(false)
+val notHiddenFileFilter: PathFilter = !hiddenFileFilter
+```
+They can be combined with the `&&` operator:
+
+```scala
+val regularFileFilter: PathFilter = (_, a) => a.isRegularFile
+val notHiddenFileFilter: PathFilter = (p, _) => Try(Files.isHidden(p)).getOrElse(false)
+val andFilter = regularFileFilter && notHiddenFileFilter
+val scalaSources =
+  FileTreeView.default.list(Glob("/foo/bar/src/main/scala/**/*.scala"), andFilter)
+```
+
+They can be combined with the `||` operator:
+
+```scala
+val scalaSources: PathFilter = ** / "*.scala"
+val javaSources: PathFilter = ** / "*.java"
+val jvmSourceFilter = scalaSources || javaSources
+val jvmSourceFiles =
+  FileTreeView.default.list(Glob("/foo/bar/src/**"), jvmSourceFilter)
+```
+
+There is also an implicit conversion from `String` to `PathFilter` that converts
+the `String` to a `Glob` and converts the `Glob` to a `PathFilter`:
+
+```scala
+val regularFileFilter: PathFilter = (p, a) => a.isRegularFile
+val regularScalaFiles: PathFilter = regularFileFilter && "**/*.scala"
+```
+
+In addition to the ad-hoc filters, there are some commonly used filters that are
+available in the default sbt scope:
+
+1. `sbt.io.HiddenFileFilter` -- accepts any file that is hidden according to
+`Files.isHidden`. On posix systems, this will just check if the name starts with
+`.` while on Windows, it will need to perform io to extract the `dos:hidden`
+attribute.
+2. `sbt.io.RegularFileFilter` -- equivalent to `(_, a: FileAttributes) =>
+a.isRegularFile`
+3. `sbt.io.DirectoryFilter` -- equivalent to `(_, a: FileAttributes) =>
+a.isDirectory`
+
+There is also a converter from `sbt.io.FileFilter` to `sbt.nio.file.PathFilter`
+that can be invoked by calling `toNio` on the `sbt.io.FileFilter` instance:
+
+```scala
+val excludeFilter: sbt.io.FileFilter = HiddenFileFilter || DirectoryFilter
+val excludePathFilter: sbt.nio.file.PathFilter = excludeFilter.toNio
+```
+
+The `HiddenFileFilter`, `RegularFileFilter` and `DirectoryFilter` inherit both
+`sbt.io.FileFilter` and `sbt.nio.file.PathFilter`. They typically can be treated
+like a `PathFilter`:
+
+```scala
+val regularScalaFiles: PathFilter = RegularFileFilter && (** / "*.scala")
+```
+
+This will not work when the implicit conversion from `String` to `PathFinder` is
+required.
+
+```scala
+ val regularScalaFiles = RegularFileFilter && "**/*.scala"
+// won't compile because it gets interpreted as
+// (RegularFileFilter: sbt.io.FileFilter).&&(("**/*.scala"): sbt.io.NameFilter)
+```
+
+In these siutations, use `toNio`:
+
+```scala
+ val regularScalaFiles = RegularFileFilter.toNio && "**/*.scala"
+```
+
+It is important to note that semantics of `Glob` are different from
+`NameFilter`. When using the `sbt.io.FileFilter`, in order to filter files
+ending with the `.scala` extension, one would write:
+
+```scala
+val scalaFilter: NameFilter = "*.scala"
+```
+
+An equivalent `PathFilter` is written
+
+```scala
+val scalaFilter: PathFilter = "**/*.scala"
+```
+The glob represented `"*.scala"` matches a path with a single component ending
+in scala. In general, when converting `sbt.io.NameFilter` to
+`sbt.nio.file.PathFilter`, it will be necessary to add a `"**/"` prefix.
+
+#### Streaming
+
+In addition to `FileTreeView.list`, there is also `FileTreeView.iterator`. The
+latter may be used to reduce memory pressure:
+
+```
+// Prints all of the files on the root file system
+FileTreeView.iterator(Glob("/**")).foreach { case (p, _) => println(p) }
+```
+
+In the context of sbt, the type parameter, `T`, is always `(java.nio.file.Path,
+sbt.nio.file.FileAttributes)`. An implementation of `FileTreeView` is provided in sbt with the `fileTreeView`
+key:
+
+```
+fileTreeView.value.list(baseDirectory.value / ** / "*.txt")
+```
+
+#### Implementation
+
+The `FileTreeView[+T]` trait has a single abstract method:
+
+```
+def list(path: Path): Seq[T]
+```
+
+sbt only provides implementations of `FileTreeView[(Path, FileAttributes)]`. In
+this context, the `list` method should return the `(Path, FileAttributes)` pairs
+for all of the direct children of the input `path`.
+
+There are two implementations of `FileTreeView[(Path, FileAttribute)]`
+provided by sbt:
+1. `FileTreeView.native` -- this uses a native jni library to efficiently
+extract the file names and attributes from the file system without performing
+additional io. Native implementations are available for 64 bit FreeBSD, Linux,
+Mac OS and Windows. If no native implementation is available, it falls back to a
+`java.nio.file` based implementation.
+2. `FileTreeView.nio` -- uses apis in `java.nio.file` to implement
+`FileTreeView`
+
+The `FileTreeView.default` method returns `FileTreeView.native`.
+
+The `list` and `iterator` methods that take `Glob` or `Seq[Glob]` as arguments
+are provided as extension methods to `FileTreeView[(Path, FileAttributes)]`.
+Since any implementation of `FileTreeView[(Path, FileAttributes)]` automatically
+receives these extensions, it is easy to write an alternative implementation
+that will still correctly work with `Glob` and `Seq[Glob]`:
+
+```scala
+val listedDirectories = mutable.Set.empty[Path]
+val trackingView: FileTreeView[(Path, FileAttributes)] = path => {
+  val results = FileTreeView.default.list(path)
+  listedDirectories += path
+  results
+}
+val scalaSources =
+  trackingView.list(Glob("/foo/bar/src/main/scala/**/*.scala")).map(_._1)
+println(listedDirectories) // prints all of the directories traversed by list
+```
+
+<a name="glob-vs-pathfinder"></a>
 ### Globs vs. PathFinder
 
 sbt has long had the [PathFinder][Paths] api which provides a dsl for collecting
