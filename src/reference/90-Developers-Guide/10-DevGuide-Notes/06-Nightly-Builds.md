@@ -3,33 +3,30 @@ out: Nightly-Builds.html
 ---
 
   [Manual-Installation]: Manual-Installation.html
+  [Setup]: Setup.html
 
 Nightly Builds
 --------------
 
 The latest development versions of $app_version$ are available as nightly
-builds on [Typesafe Snapshots]($typesafe_ivy_snapshots$).
+builds on sbt-maven-snapshots (<https://repo.scala-sbt.org/scalasbt/maven-snapshots>) repo.
 
-To use a nightly build, the instructions are the same for
-[normal manual setup][Manual-Installation] except:
+Note that currently following the URL would lead you to Bintray,
+but [/org/scala-sbt/sbt/](https://repo.scala-sbt.org/scalasbt/maven-snapshots/org/scala-sbt/sbt/) would actually point to a Jenkins server.
 
-1.  Download the launcher jar from one of the subdirectories of
-    |nightly-launcher|. They should be listed in chronological order, so
-    the most recent one will be last.
-2.  The version number is the name of the subdirectory and is of the
-    form `$app_version$.x-yyyyMMdd-HHmmss`. Use this in a build.properties
-    file.
-3.  Call your script something like `sbt-nightly` to retain access to a
-    stable sbt launcher. The documentation will refer to the script as
-    sbt, however.
+To use a nightly build:
 
-Related to the third point, remember that an `sbt.version` setting in
-`<build-base>/project/build.properties` determines the version of sbt to
-use in a project. If it is not present, the default version associated
-with the launcher is used. This means that you must set
-`sbt.version=yyyyMMdd-HHmmss` in an existing
-`<build-base>/project/build.properties`. You can verify the right
-version of sbt is being used to build a project by running `about`.
+1. Find out a version from [/org/scala-sbt/sbt/](https://repo.scala-sbt.org/scalasbt/maven-snapshots/org/scala-sbt/sbt/).
+2. Put the version, for example `sbt.version=1.3.0-bin-20190813T192012` in `project/build.properties`.
 
-To reduce problems, it is recommended to not use a launcher jar for one
-nightly version to launch a different nightly version of sbt.
+sbt launcher will resolve the sbt core artifacts based on the specification.
+
+Unless you're debugging the `sbt` script or the launcher JAR, you should be able to use any recent stable version of sbt installation as the launcher following the [Setup][Setup] instructions first.
+
+If you're overriding the repositories via `~/.sbt/repositories`, make sure that there's a following entry:
+
+```
+[repositories]
+  ...
+  sbt-maven-snapshots: https://repo.scala-sbt.org/scalasbt/maven-snapshots/, bootOnly
+```
