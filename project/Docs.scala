@@ -74,9 +74,11 @@ object Docs {
         generateRedirect(s"../docs/$x", output / x, s.log)
       }
       languages foreach { lang =>
-        generateRedirect(s"../../docs/$lang/Getting-Started.html",
-                         output / lang / "index.html",
-                         s.log)
+        generateRedirect(
+          s"../../docs/$lang/Getting-Started.html",
+          output / lang / "index.html",
+          s.log
+        )
         zeroThirteenGettingStarted foreach { x =>
           generateRedirect(s"../../docs/$lang/$x", output / lang / x, s.log)
         }
@@ -98,14 +100,21 @@ object Docs {
       generateRedirect("../Detailed-Topics.html", dt / "index.html", s.log)
       generateRedirect("../Tasks-and-Commands.html", dt / "Command-Details-Index.html", s.log)
       generateRedirect("../Sbt-Launcher.html", dt / "Launcher.html", s.log)
-      generateRedirect("../Migrating-from-sbt-0.7.x.html",
-                       dt / "Migrating-from-sbt-0.7.x-to-0.10.x.html",
-                       s.log)
-      generateRedirect("Migrating-from-sbt-013x.html#Migrating+from+the+Build+trait",
-                       output / "Full-Def.html", s.log)
-      generateRedirect("../Incremental-Recompilation.html",
-                       dt / "Understanding-incremental-recompilation.html",
-                       s.log)
+      generateRedirect(
+        "../Migrating-from-sbt-0.7.x.html",
+        dt / "Migrating-from-sbt-0.7.x-to-0.10.x.html",
+        s.log
+      )
+      generateRedirect(
+        "Migrating-from-sbt-013x.html#Migrating+from+the+Build+trait",
+        output / "Full-Def.html",
+        s.log
+      )
+      generateRedirect(
+        "../Incremental-Recompilation.html",
+        dt / "Understanding-incremental-recompilation.html",
+        s.log
+      )
       Seq(
         "Artifacts.html",
         "Best-Practices.html",
@@ -200,16 +209,22 @@ object Docs {
       generateRedirect("../Howto-Triggered.html", howto / "triggered.html", s.log)
       val exp = output / "Examples"
       generateRedirect("../Examples.html", exp / "index.html", s.log)
-      generateRedirect("../Basic-Def-Examples.html",
-                       exp / "Quick-Configuration-Examples.html",
-                       s.log)
+      generateRedirect(
+        "../Basic-Def-Examples.html",
+        exp / "Quick-Configuration-Examples.html",
+        s.log
+      )
       generateRedirect("../Full-Def-Example.html", exp / "Full-Configuration-Example.html", s.log)
-      generateRedirect("../Advanced-Configurations-Example.html",
-                       exp / "Advanced-Configurations-Example.html",
-                       s.log)
-      generateRedirect("../Advanced-Command-Example.html",
-                       exp / "Advanced-Command-Example.html",
-                       s.log)
+      generateRedirect(
+        "../Advanced-Configurations-Example.html",
+        exp / "Advanced-Configurations-Example.html",
+        s.log
+      )
+      generateRedirect(
+        "../Advanced-Command-Example.html",
+        exp / "Advanced-Command-Example.html",
+        s.log
+      )
 
       Seq(
         "sbt-0.13-Tech-Previews.html",
@@ -275,15 +290,17 @@ object Docs {
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
-    gitRemoveFiles(repo,
-                   List(
-                     repo / "assets" / "favicon.ico",
-                     repo / "assets" / "stylesheet.css",
-                     repo / "assets" / "set-versions.js",
-                     repo / "assets" / "versions.js",
-                   ),
-                   git,
-                   s)
+    gitRemoveFiles(
+      repo,
+      List(
+        repo / "assets" / "favicon.ico",
+        repo / "assets" / "stylesheet.css",
+        repo / "assets" / "set-versions.js",
+        repo / "assets" / "versions.js",
+      ),
+      git,
+      s
+    )
 
     val ms = for {
       (file, target) <- (mappings in makeSite).value if siteInclude(file)
@@ -379,8 +396,10 @@ object Docs {
 
   def gitRemoveFiles(dir: File, files: List[File], git: GitRunner, s: TaskStreams): Unit = {
     if (!files.isEmpty)
-      git(("rm" :: "-r" :: "-f" :: "--ignore-unmatch" :: files.map(_.getAbsolutePath)): _*)(dir,
-                                                                                            s.log)
+      git(("rm" :: "-r" :: "-f" :: "--ignore-unmatch" :: files.map(_.getAbsolutePath)): _*)(
+        dir,
+        s.log
+      )
     ()
   }
 

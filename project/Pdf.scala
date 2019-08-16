@@ -24,7 +24,8 @@ object Pdf {
         mappings in generatePdf := {
           generatePdf.value pair Path.relativeTo(target.value)
         }
-      ))
+      )
+    )
 
   def makeCombinedPdf(config: Configuration, name: String): Def.Initialize[Task[Seq[File]]] =
     Def.task {
@@ -46,16 +47,19 @@ object Pdf {
             case n =>
               if (failOnPdfError)
                 sys.error(
-                  s"Failed to run pandoc($cwd)($cleanedUp, $pdf, ${args mkString ", "}) - Exit code $n")
+                  s"Failed to run pandoc($cwd)($cleanedUp, $pdf, ${args mkString ", "}) - Exit code $n"
+                )
           }
           pdf
       }
     }
 
   private def getFirstTitle(lines: List[String]): (Option[String], List[String]) = {
-    def findTitle(title: Option[String],
-                  output: List[String],
-                  remaining: List[String]): (Option[String], List[String]) =
+    def findTitle(
+        title: Option[String],
+        output: List[String],
+        remaining: List[String]
+    ): (Option[String], List[String]) =
       remaining match {
         case Nil => (title, output.reverse)
         case t :: line :: rest if title.isEmpty && line.matches("[\\=]+") =>
@@ -70,8 +74,7 @@ object Pdf {
     val origLines = IO readLines file
     getFirstTitle(IO readLines file) match {
       case (Some(title), lines) =>
-        IO.write(cleanedUp,
-                 s"""---
+        IO.write(cleanedUp, s"""---
   title: ${title}
   ntags: [scala, sbt]
 ---
@@ -92,8 +95,8 @@ ${lines mkString "\n"}""".stripMargin)
 
   def latexArgs(language: String): Seq[String] =
     language match {
-      case "ja" => Seq("-V", "documentclass=ltjarticle", "--pdf-engine=lualatex") 
-      case _ => Seq("--pdf-engine=xelatex")
+      case "ja" => Seq("-V", "documentclass=ltjarticle", "--pdf-engine=lualatex")
+      case _    => Seq("--pdf-engine=xelatex")
     }
 
 }
