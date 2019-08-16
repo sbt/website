@@ -21,11 +21,13 @@ object LowTechSnippetPamfletPlugin extends AutoPlugin {
       )
     )
 
-  def generate(input: File,
-               generated: File,
-               output: File,
-               includeFilter: FileFilter,
-               fencePlugins: Seq[FencePlugin]): Seq[(File, String)] = {
+  def generate(
+      input: File,
+      generated: File,
+      output: File,
+      includeFilter: FileFilter,
+      fencePlugins: Seq[FencePlugin]
+  ): Seq[(File, String)] = {
     // this is the added step
     Snippet.processDirectory(input, generated)
     val storage = FileStorage(generated, fencePlugins.toList)

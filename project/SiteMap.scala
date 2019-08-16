@@ -5,18 +5,22 @@ import java.util.Date
 object SiteMap {
   // represents the configurable aspects of a sitemap entry
   final case class Entry(changeFreq: String, priority: Double) {
-    assert(priority >= 0.0 && priority <= 1.0,
-           s"Priority must be between 0.0 and 1.0:, was $priority")
+    assert(
+      priority >= 0.0 && priority <= 1.0,
+      s"Priority must be between 0.0 and 1.0:, was $priority"
+    )
   }
 
   case class LastModified(modDate: Date)
 
-  def generate(repoBase: File,
-               remoteBase: URI,
-               gzip: Boolean,
-               entry: (File, String) => Option[Entry],
-               lastModified: (File, String) => LastModified,
-               log: Logger): (File, Seq[File]) = {
+  def generate(
+      repoBase: File,
+      remoteBase: URI,
+      gzip: Boolean,
+      entry: (File, String) => Option[Entry],
+      lastModified: (File, String) => LastModified,
+      log: Logger
+  ): (File, Seq[File]) = {
 
     def singleSiteMap(dir: File, files: PathFinder): Option[File] = {
       val es = entries(files)
