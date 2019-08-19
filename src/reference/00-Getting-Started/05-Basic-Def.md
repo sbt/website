@@ -150,7 +150,7 @@ settings regardless of where they are defined in the file.
 #### Task vs Setting keys
 
 A `TaskKey[T]` is said to define a *task*. Tasks are operations such as
-`compile` or `package`. They may return `Unit` (`Unit` is Scala for `void`), or
+`compile` or `package`. They may return `Unit` (`Unit` is `void` for Scala), or
 they may return a value related to the task, for example `package` is a
 `TaskKey[File]` and its value is the jar file it creates.
 
