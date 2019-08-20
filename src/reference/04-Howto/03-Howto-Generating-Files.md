@@ -2,6 +2,7 @@
 out: Howto-Generating-Files.html
 ---
 
+  [track-file-inputs-and-outputs]: Howto-Track-File-Inputs-and-Outputs.html
   [modify-package-contents]: Howto-Package.html#modify-package-contents
 
 Generating files
@@ -64,8 +65,12 @@ Hi
 
 Change `Compile` to `Test` to make it a test source.
 
-**NOTE:** For the efficiency of the build, `sourceGenerators` should avoid regenerating source files upon each call,
-and cache based on the input values using `sbt.Tracked.{ inputChanged, outputChanged }` etc instead.
+**NOTE:** For the efficiency of the build, `sourceGenerators` should avoid
+regenerating source files upon each call. Instead, the outputs should be cached
+based on the input values either using the [File tracking
+system][track-file-inputs-and-outputs] or by manually
+tracking the input values using `sbt.Tracked.{ inputChanged, outputChanged }`
+etc.
 
 By default, generated sources are not included in the packaged source
 artifact. To do so, add them as you would other mappings. See

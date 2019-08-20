@@ -69,6 +69,7 @@ defined in:
 historyPath := Some( (ThisBuild / baseDirectory).value / ".history"),
 ```
 
+<a name="path-finder"></a>
 ### Path Finders
 
 A `PathFinder` computes a `Seq[File]` on demand. It is a way to build a
