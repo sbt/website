@@ -35,7 +35,7 @@ trait Cache[I, O] {
 
 We can derive the instances of `Cache[I, O]` from `sjsonnew.JsonFormat` instances for both `I` and `O` by importing `sbt.util.CacheImplicits._` (This also brings in `BasicJsonProtocol`).
 
-To use the cache, we can create a _cached_ function by calling `Cache.cached` with a `CacheStore` (or a file) and a function that does the actual work. Normally the cache store would be created using `streams.value.cacheStoreFactory / "something"`. In the following REPL example, I will create a cache store from a temp file.
+To use the cache, we can create a _cached_ function by calling `Cache.cached` with a `CacheStore` (or a file) and a function that does the actual work. Normally, the cache store would be created as `streams.value.cacheStoreFactory / "something"`. In the following REPL example, I will create a cache store from a temp file.
 
 ```scala
 scala> import sbt._, sbt.util.CacheImplicits._
@@ -72,12 +72,12 @@ working...
 res3: List[String] = List(foo)
 ```
 
-As you can see, `cachedWork(1)` is cached when it is called consequtively.
+As you can see, `cachedWork(1)` is cached when it is called consecutively.
 
 ### Previous value
 
 `TaskKey` has a method called `previous` that returns `Option[A]`, which can be used a lightweight tracker.
-Suppose we would want to create a task where it initially returns `"hi"`, and append `"!"` for subsequent calls.
+Suppose we would want to create a task where it initially returns `"hi"`, and append `"!"` for subsequent calls, you can define a `TaskKey[String]` called `hi`, and retrive its previous value, which would be typed `Option[String]`. The previous value would be `None` the first time, and `Some(x)` for the subsequent calls.
 
 ```scala
 lazy val hi = taskKey[String]("say hi again")
@@ -112,9 +112,9 @@ For each call `hi.previous` contains the previous result from evaluating `hi`.
 
 ### Tracked.lastOutput
 
-`sbt.util.Tracked` provides a faciliy for partial caching that can be mixed and matched with other trackers.
+`sbt.util.Tracked` provides a facility for partial caching that can be mixed and matched with other trackers.
 
-Similar to the previous value associated with task keys, `sbt.util.Tracked.lastOutput` creates a tracker for a last calculated value. `Tracked.lastOutput` offers more flexibility in terms of where to store the value. (This allows the value to be shared across multiple tasks).
+Similar to the previous value associated with task keys, `sbt.util.Tracked.lastOutput` creates a tracker for the last calculated value. `Tracked.lastOutput` offers more flexibility in terms of where to store the value. (This allows the value to be shared across multiple tasks).
 
 Suppose we would initially take an `Int` as the input, and turn it into a `String`, but for subsequent invocation we'd append `"!"`:
 
@@ -190,7 +190,7 @@ input changed
 res10: String = 1
 ```
 
-Now we can nest `Tracked.inputChanged` and `Tracked.lastOutput` to regain the cache invalidation.
+Now, we can nest `Tracked.inputChanged` and `Tracked.lastOutput` to regain the cache invalidation.
 
 ```scala
 // use streams.value.cacheStoreFactory
@@ -289,7 +289,7 @@ scala> FileInfo.full(file("/tmp/cache/last"))
 res26: sbt.util.HashModifiedFileInfo = FileHashModified(/tmp/cache/last,List(-89, -11, 75, 97, 65, -109, -74, -126, -124, 43, 37, -16, 9, -92, -70, -100, -82, 95, 93, -112),1565855326328)
 ```
 
-There's also `sbt.util.FilesInfo` that accepts a `Set` of `File`s (though this doesn't always work due to complicated abstract type that it uses).
+There is also `sbt.util.FilesInfo` that accepts a `Set` of `File`s (though this doesn't always work due to complicated abstract type that it uses).
 
 ```scala
 scala> FilesInfo.exists(Set(file("/tmp/cache/last"), file("/tmp/cache/nonexistent")))
@@ -345,7 +345,7 @@ This works out-of-box thanks to `sbt.util.FileInfo` implementing `JsonFormat` to
 
 ### Tracked.outputChanged
 
-The tracking works by stamping the files (collecting file attributes), storing the stamps in a cache, and comparing them later. Sometimes it's important to pay attention to the timing of when stamping happens. Suppose we want to format TypeScript files, and use SHA-1 hash to detect changes. If we stamped before we run the formatter, it would be invalidated the next time the task is called because the formatter itself may modify the TypeScript files.
+The tracking works by stamping the files (collecting file attributes), storing the stamps in a cache, and comparing them later. Sometimes, it's important to pay attention to the timing of when stamping happens. Suppose that we want to format TypeScript files, and use SHA-1 hash to detect changes. Stamping the files _before_ running the formatter would cause the cache to be invalidated in subsequent calls to the task. This is because the formatter itself may modify the TypeScript files.
 
 Use `Tracked.outputChanged` stamps _after_ your work is done to prevent this.
 
@@ -385,8 +385,8 @@ sbt:hello> formatTypeScript
 [success] Total time: 0 s, completed Aug 17, 2019 10:07:32 AM
 ```
 
-One potential drawback of this implementation is that we only have `true/false` information about any of the files have changed.
-This could result to reformatting _all_ of the files anytime one file gets changed.
+One potential drawback of this implementation is that we only have `true/false` information about the fact that any of the files have changed.
+This could result in a reformatting of _all_ of the files anytime one file gets changed.
 
 ```scala
 // make change to one file
@@ -546,7 +546,7 @@ sbt:hello> compileTypeScript
 [success] Total time: 0 s, completed Aug 16, 2019 10:23:03 PM
 ```
 
-Because we added a reference from `hello.ts` to `util.ts`, if we modified `src/util.ts`, it should trigger the complition of `src/util.ts` as well as `src/hello.ts`.
+Since we added a reference from `hello.ts` to `util.ts`, if we modified `src/util.ts`, it should trigger the compilation of `src/util.ts` as well as `src/hello.ts`.
 
 ```scala
 sbt:hello> show compileTypeScript
@@ -584,7 +584,7 @@ formatTypeScript := {
 }
 ```
 
-Here's how it looks like:
+Here's how `formatTypeScript` looks like in the shell:
 
 ```scala
 sbt:hello> formatTypeScript
@@ -600,7 +600,7 @@ sbt:hello> formatTypeScript
 sbt-scalafmt implements `scalafmt` and `scalafmtCheck` tasks that cooperate with each other.
 For example, if `scalafmt` ran successfully, and no changes have been made to the sources, it will skip `scalafmtCheck`'s checking.
 
-Here's a snippet from how that may be implemented:
+Here's a snippet of how that may be implemented:
 
 ```scala
 private def cachedCheckSources(
@@ -652,7 +652,7 @@ private def trackSourcesAndConfig(
 }
 ```
 
-In the above, `trackSourcesAndConfig` is a triple-nested tracker that tracks configuration file, source last modified stamps, and the previous value shared between two tasks. Since the previous value is shared, we are using `Tracked.lastOutput` as opposed to the `.previous` method.
+In the above, `trackSourcesAndConfig` is a triple-nested tracker that tracks configuration file, source last modified stamps, and the previous value shared between two tasks. To share the previous value across two different tasks, we are using `Tracked.lastOutput` instead of the `.previous` method associated with the keys.
 
 ### Summary
 
