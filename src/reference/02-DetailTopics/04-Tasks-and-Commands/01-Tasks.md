@@ -250,6 +250,9 @@ is:
 <setting-or-task>.all(<scope-filter>).value
 ```
 
+**NOTE!** Make sure to assign the `ScopeFilter` as a `val`!  This is an
+implementation detail requirement of the `.all` macro.
+
 The `all` method is implicitly added to tasks and settings. It accepts a
 `ScopeFilter` that will select the `Scopes`. The result has type
 `Seq[T]`, where `T` is the key's underlying type.
