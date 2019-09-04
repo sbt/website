@@ -402,6 +402,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.turbo</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Use additional layered class loaders.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.version</tt></td>
     <td>Version</td>
     <td><tt>$app_version$</tt></td>
