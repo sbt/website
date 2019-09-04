@@ -198,30 +198,6 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
-    <td><tt>sbt.log.noformat</tt></td>
-    <td>Boolean</td>
-    <td><tt>false</tt></td>
-    <td>If true, disable ANSI color
-        codes. Useful on build servers
-        or terminals that do not support
-        color.</td>
-  </tr>                
-
-  <tr>
-    <td><tt>sbt.global.base</tt></td>
-    <td>Directory</td>
-    <td><tt>$global_base$</tt></td>
-    <td>The directory containing global settings and plugins</td>
-  </tr>
-
-  <tr>
-    <td><tt>sbt.ivy.home</tt></td>
-    <td>Directory</td>
-    <td><tt>~/.ivy2</tt></td>
-    <td>The directory containing the local Ivy repository and artifact cache</td>
-  </tr>
-
-  <tr>
     <td><tt>sbt.boot.directory</tt></td>
     <td>Directory</td>
     <td><tt>~/.sbt/boot</tt></td>
@@ -229,17 +205,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
-    <td><tt>sbt.main.class</tt></td>
-    <td>String</td>
+    <td><tt>sbt.boot.properties</tt></td>
+    <td>File</td>
     <td><tt></tt></td>
-    <td></td>
-  </tr>
-
-  <tr>
-    <td><tt>xsbt.inc.debug</tt></td>
-    <td>Boolean</td>
-    <td><tt>false</tt></td>
-    <td></td>
+    <td>The path to find the sbt  boot properties file. This can be a
+        relative path, relative to the sbt base directory, the users
+        home directory or the location of the sbt jar file, or it can
+        be an absolute path or an absolute file URI.</td>
   </tr>
 
   <tr>
@@ -254,20 +226,41 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
-    <td><tt>sbt.version</tt></td>
-    <td>Version</td>
-    <td><tt>$app_version$</tt></td>
-    <td>sbt version to use, usually taken from <tt>project/build.properties</tt>.</td>
+    <td><tt>sbt.global.base</tt></td>
+    <td>Directory</td>
+    <td><tt>$global_base$</tt></td>
+    <td>The directory containing global settings and plugins</td>
   </tr>
 
   <tr>
-    <td><tt>sbt.boot.properties</tt></td>
-    <td>File</td>
+    <td><tt>xsbt.inc.debug</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.ivy.home</tt></td>
+    <td>Directory</td>
+    <td><tt>~/.ivy2</tt></td>
+    <td>The directory containing the local Ivy repository and artifact cache</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.log.noformat</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>If true, disable ANSI color
+        codes. Useful on build servers
+        or terminals that do not support
+        color.</td>
+  </tr>                
+
+  <tr>
+    <td><tt>sbt.main.class</tt></td>
+    <td>String</td>
     <td><tt></tt></td>
-    <td>The path to find the sbt  boot properties file. This can be a
-        relative path, relative to the sbt base directory, the users
-        home directory or the location of the sbt jar file, or it can
-        be an absolute path or an absolute file URI.</td>
+    <td></td>
   </tr>
 
   <tr>
@@ -292,5 +285,12 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         <tt>sbt.override.build.repos</tt> to
         <tt>true</tt> (see previous row and the
         <a href="Launcher.html">sbt launcher</a> documentation).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.version</tt></td>
+    <td>Version</td>
+    <td><tt>$app_version$</tt></td>
+    <td>sbt version to use, usually taken from <tt>project/build.properties</tt>.</td>
   </tr>
 </table>
