@@ -194,7 +194,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <th>Property</th>
     <th>Values</th>
     <th>Default</th>
-    <th>Meaning</th>    
+    <th>Meaning</th>
   </tr>
 
   <tr>
@@ -254,7 +254,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         codes. Useful on build servers
         or terminals that do not support
         color.</td>
-  </tr>                
+  </tr>
 
   <tr>
     <td><tt>sbt.main.class</tt></td>
