@@ -237,7 +237,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>xsbt.inc.debug</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt></td>
-    <td></td>
+    <td>Extra debugging for the incremental debugger.</td>
   </tr>
 
   <tr>
