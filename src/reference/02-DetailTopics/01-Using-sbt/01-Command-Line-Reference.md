@@ -247,6 +247,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.coursier</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in 1.3+)</td>
+    <td>Use coursier to retrieve packages. (See also <tt>sbt.ivy</tt>.)</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.extraClasspath</tt></td>
     <td>Classpath Entries</td>
     <td><tt></tt></td>
