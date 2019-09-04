@@ -272,6 +272,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.ivy</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in <1.3)</td>
+    <td>Use ivy to retrieve packages.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.ivy.home</tt></td>
     <td>Directory</td>
     <td><tt>~/.ivy2</tt></td>
