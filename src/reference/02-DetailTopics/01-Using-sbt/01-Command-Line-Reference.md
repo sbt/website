@@ -208,7 +208,8 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.boot.properties</tt></td>
     <td>File</td>
     <td><tt></tt></td>
-    <td>The path to find the sbt  boot properties file. This can be a
+    <td>The path to find the sbt <a href="Launcher-Configuration.html">boot
+        properties</a> file. This can be a
         relative path, relative to the sbt base directory, the users
         home directory or the location of the sbt jar file, or it can
         be an absolute path or an absolute file URI.</td>
@@ -221,7 +222,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td>(jar files or directories) that are added to sbt's classpath.
         Note that the entries are deliminted by comma, e.g.:
         <tt>entry1, entry2,..</tt>. See also <tt>resource</tt> in the
-        <a href="Launcher.html">sbt launcher</a> documentation.
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation.
         </td>
   </tr>
 
@@ -270,7 +271,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td>If true, repositories configured in a build definition
         are ignored and the repositories configured for the launcher are
         used instead. See <tt>sbt.repository.config</tt> and the
-        <a href="Launcher.html">sbt launcher</a> documentation.</td>
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation.</td>
   </tr>
 
   <tr>
@@ -280,11 +281,11 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td>A file containing the repositories to use for the
         launcher. The format is the same as a
         <tt>[repositories]</tt> section for a
-        <a href="Launcher.html">sbt launcher</a> configuration file.
+        <a href="Launcher-Configuration.html">sbt launcher</a> configuration file.
         This setting is typically used in conjunction with setting
         <tt>sbt.override.build.repos</tt> to
         <tt>true</tt> (see previous row and the
-        <a href="Launcher.html">sbt launcher</a> documentation).</td>
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation).</td>
   </tr>
 
   <tr>
