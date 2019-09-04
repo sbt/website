@@ -367,6 +367,34 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.task.timings</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Measure the time elapsed for running tasks.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.omit.paths</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Omit paths when reporting timings.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.on.shutdown</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Report timings at JVM shutdown (instead of at task completion).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.threshold</tt></td>
+    <td>String</td>
+    <td><tt>0</tt></td>
+    <td>Omit items from timing report if they are below this threshold.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.version</tt></td>
     <td>Version</td>
     <td><tt>$app_version$</tt></td>
