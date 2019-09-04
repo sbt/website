@@ -265,6 +265,14 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.genbuildprops</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt></td>
+    <td>Generate <tt>build.properties</tt> if missing.
+        If unset, this defers to <tt>sbt.skip.version.write</tt>.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.global.base</tt></td>
     <td>Directory</td>
     <td><tt>$global_base$</tt></td>
@@ -333,6 +341,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         <tt>sbt.override.build.repos</tt> to
         <tt>true</tt> (see <tt>sbt.override.build.repos</tt> and the
         <a href="Launcher-Configuration.html">sbt launcher</a> documentation).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.skip.version.write</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Generate <tt>build.properties</tt> if missing. See <tt>sbt.genbuildprops</tt>.</td>
   </tr>
 
   <tr>
