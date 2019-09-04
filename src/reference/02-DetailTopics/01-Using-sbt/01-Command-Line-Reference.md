@@ -351,6 +351,15 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.resident.limit</tt></td>
+    <td>Number</td>
+    <td><tt>0</tt></td>
+    <td>The number of scala compilers to keep around.
+        This experimental feature was intended to improve compilation time.
+        It does not appear to have succeeded and this flag will probably be removed.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.skip.version.write</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt></td>
