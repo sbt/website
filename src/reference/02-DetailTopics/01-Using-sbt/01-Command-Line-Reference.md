@@ -201,7 +201,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.boot.directory</tt></td>
     <td>Directory</td>
     <td><tt>~/.sbt/boot</tt></td>
-    <td>Path to shared boot directory</td>
+    <td>Path to shared boot directory.</td>
   </tr>
 
   <tr>
@@ -230,7 +230,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.global.base</tt></td>
     <td>Directory</td>
     <td><tt>$global_base$</tt></td>
-    <td>The directory containing global settings and plugins</td>
+    <td>The directory containing global settings and plugins.</td>
   </tr>
 
   <tr>
@@ -244,7 +244,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.ivy.home</tt></td>
     <td>Directory</td>
     <td><tt>~/.ivy2</tt></td>
-    <td>The directory containing the local Ivy repository and artifact cache</td>
+    <td>The directory containing the local Ivy repository and artifact cache.</td>
   </tr>
 
   <tr>
