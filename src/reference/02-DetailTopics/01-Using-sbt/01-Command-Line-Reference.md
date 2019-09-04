@@ -260,8 +260,10 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   <tr>
     <td><tt>sbt.main.class</tt></td>
     <td>String</td>
-    <td><tt></tt></td>
-    <td></td>
+    <td><tt>sbt.xMain</tt></td>
+    <td>The sbt class to use (<a
+        href="Scripts.html#Manual+Setup">alternatives</a> include
+        <tt>sbt.ConsoleMain</tt> and <tt>sbt.ScriptMain</tt>).</td>
   </tr>
 
   <tr>
