@@ -207,7 +207,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   <tr>
     <td><tt>sbt.boot.properties</tt></td>
     <td>File</td>
-    <td><tt></tt></td>
+    <td>Roughly <tt>sbt.boot.properties</tt> internal to the sbt launcher and specific to the sbt version.</td>
     <td>The path to find the sbt <a href="Launcher-Configuration.html">boot
         properties</a> file. This can be a
         relative path, relative to the sbt base directory, the users
