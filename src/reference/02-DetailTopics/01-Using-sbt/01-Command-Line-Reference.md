@@ -337,6 +337,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.progress</tt></td>
+    <td>String</td>
+    <td><tt>?</tt></td>
+    <td>Use <tt>always</tt> to show progress ("supershell").</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.repository.config</tt></td>
     <td>File</td>
     <td><tt>~/.sbt/repositories</tt></td>
@@ -364,6 +371,20 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td>Boolean</td>
     <td><tt>false</tt></td>
     <td>Generate <tt>build.properties</tt> if missing. See <tt>sbt.genbuildprops</tt>.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.supershell</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> if color is enabled</td>
+    <td>Use supershell (show progress at bottom of shell).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.supershell.sleep</tt></td>
+    <td>Number</td>
+    <td><tt>100</tt></td>
+    <td>Time to wait between updating the supershell progress area.</td>
   </tr>
 
   <tr>
