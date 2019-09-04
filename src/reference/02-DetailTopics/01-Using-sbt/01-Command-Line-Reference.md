@@ -223,6 +223,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.ci</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt> (unless then env var <tt>BUILD_NUMBER</tt> is set)</td>
+    <td>For continuous integration environments. Supress supershell and color.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.extraClasspath</tt></td>
     <td>Classpath Entries</td>
     <td><tt></tt></td>
