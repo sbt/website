@@ -198,6 +198,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.banner</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in 1.3+)</td>
+    <td>Show a welcome banner advertising new features.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.boot.directory</tt></td>
     <td>Directory</td>
     <td><tt>~/.sbt/boot</tt></td>
