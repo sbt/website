@@ -372,4 +372,11 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>$app_version$</tt></td>
     <td>sbt version to use, usually taken from <tt>project/build.properties</tt>.</td>
   </tr>
+
+  <tr>
+    <td><tt>sbt.watch.mode</tt></td>
+    <td>String</td>
+    <td><tt>auto</tt></td>
+    <td>If <tt>polling</tt>, check file system periodically for updates.</td>
+  </tr>
 </table>
