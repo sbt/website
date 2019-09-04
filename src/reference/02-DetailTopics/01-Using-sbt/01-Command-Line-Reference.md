@@ -284,7 +284,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         <a href="Launcher-Configuration.html">sbt launcher</a> configuration file.
         This setting is typically used in conjunction with setting
         <tt>sbt.override.build.repos</tt> to
-        <tt>true</tt> (see previous row and the
+        <tt>true</tt> (see <tt>sbt.override.build.repos</tt> and the
         <a href="Launcher-Configuration.html">sbt launcher</a> documentation).</td>
   </tr>
 
