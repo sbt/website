@@ -230,6 +230,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.client</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td></td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.extraClasspath</tt></td>
     <td>Classpath Entries</td>
     <td><tt></tt></td>
