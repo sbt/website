@@ -15,11 +15,20 @@ object Docs {
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
 
+  lazy val isBetaBranch = {
+    val branch = Process("git rev-parse --abbrev-ref HEAD").!!.linesIterator.toList.head
+    val travisBranch = sys.env.get("TRAVIS_BRANCH").getOrElse("")
+    branch == "1.x-beta" || travisBranch == "1.x-beta"
+  }
+
   // New documents will live under /1.x/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
   // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
-  lazy val targetSbtBinaryVersion = "1.x"
+  lazy val targetSbtBinaryVersion = {
+    if (isBetaBranch) "1.x-beta"
+    else "1.x"
+  }
   lazy val targetSbtFullVersion = "1.3.0"
 
   lazy val siteEmail = settingKey[String]("")
@@ -286,28 +295,30 @@ object Docs {
     val apiLink = versioned / "api"
     val releaseLink = repo / "release"
     if (apiLink.exists) apiLink.delete
-    if (releaseLink.exists) releaseLink.delete
+    if (releaseLink.exists && !isBetaBranch) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-    gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
-    gitRemoveFiles(
-      repo,
-      List(
-        repo / "assets" / "favicon.ico",
-        repo / "assets" / "stylesheet.css",
-        repo / "assets" / "set-versions.js",
-        repo / "assets" / "versions.js",
-      ),
-      git,
-      s
-    )
+    if (!isBetaBranch) {
+      gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
+      gitRemoveFiles(
+        repo,
+        List(
+          repo / "assets" / "favicon.ico",
+          repo / "assets" / "stylesheet.css",
+          repo / "assets" / "set-versions.js",
+          repo / "assets" / "versions.js",
+        ),
+        git,
+        s
+      )
+    }
 
     val ms = for {
       (file, target) <- (mappings in makeSite).value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(ms)
 
-    if (isGenerateSiteMap.value) {
+    if (isGenerateSiteMap.value && !isBetaBranch) {
       val (index, siteMaps) =
         SiteMap.generate(repo, sbtSiteBase, gzip = true, siteEntry, lastModified, s.log)
       s.log.info(s"Generated site map index: $index")
@@ -315,9 +326,10 @@ object Docs {
     }
 
     // symlink API
-    symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
-    symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
-
+    if (!isBetaBranch) {
+      symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
+      symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
+    }
     repo
   }
 
