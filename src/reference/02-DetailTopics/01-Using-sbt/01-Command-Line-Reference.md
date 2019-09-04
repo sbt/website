@@ -320,6 +320,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.offline</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Avoid retrieving classes from repositories.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.override.build.repos</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt></td>
