@@ -395,6 +395,13 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.traces</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Generate Chrome Trace Event Format log for tasks.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.version</tt></td>
     <td>Version</td>
     <td><tt>$app_version$</tt></td>
