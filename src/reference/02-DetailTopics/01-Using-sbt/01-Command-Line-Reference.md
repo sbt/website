@@ -194,7 +194,110 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <th>Property</th>
     <th>Values</th>
     <th>Default</th>
-    <th>Meaning</th>    
+    <th>Meaning</th>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.banner</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in 1.3+)</td>
+    <td>Show a welcome banner advertising new features.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.boot.directory</tt></td>
+    <td>Directory</td>
+    <td><tt>~/.sbt/boot</tt></td>
+    <td>Path to shared boot directory.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.boot.properties</tt></td>
+    <td>File</td>
+    <td>Roughly <tt>sbt.boot.properties</tt> internal to the sbt launcher and specific to the sbt version.</td>
+    <td>The path to find the sbt <a href="Launcher-Configuration.html">boot
+        properties</a> file. This can be a
+        relative path, relative to the sbt base directory, the users
+        home directory or the location of the sbt jar file, or it can
+        be an absolute path or an absolute file URI.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.ci</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt> (unless then env var <tt>BUILD_NUMBER</tt> is set)</td>
+    <td>For continuous integration environments. Supress supershell and color.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.client</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.color</tt></td>
+    <td>String</td>
+    <td><tt>auto</tt></td>
+    <td>Supercedes <tt>sbt.log.format</tt>.
+    To turn on color, use <tt>always</tt> or <tt>true</tt>.
+    To turn off color, use <tt>never</tt> or <tt>false>.
+    To use color if the output is a terminal (not a pipe) that supports color, use <tt>auto</tt>.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.coursier</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in 1.3+)</td>
+    <td>Use coursier to retrieve packages. (See also <tt>sbt.ivy</tt>.)</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.extraClasspath</tt></td>
+    <td>Classpath Entries</td>
+    <td><tt></tt></td>
+    <td>(jar files or directories) that are added to sbt's classpath.
+        Note that the entries are deliminted by comma, e.g.:
+        <tt>entry1, entry2,..</tt>. See also <tt>resource</tt> in the
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation.
+        </td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.genbuildprops</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt></td>
+    <td>Generate <tt>build.properties</tt> if missing.
+        If unset, this defers to <tt>sbt.skip.version.write</tt>.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.global.base</tt></td>
+    <td>Directory</td>
+    <td><tt>$global_base$</tt></td>
+    <td>The directory containing global settings and plugins.</td>
+  </tr>
+
+  <tr>
+    <td><tt>xsbt.inc.debug</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Extra debugging for the incremental debugger.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.ivy</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> (in <1.3)</td>
+    <td>Use ivy to retrieve packages.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.ivy.home</tt></td>
+    <td>Directory</td>
+    <td><tt>~/.ivy2</tt></td>
+    <td>The directory containing the local Ivy repository and artifact cache.</td>
   </tr>
 
   <tr>
@@ -205,52 +308,125 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
         codes. Useful on build servers
         or terminals that do not support
         color.</td>
-  </tr>                
-
-  <tr>
-    <td><tt>sbt.global.base</tt></td>
-    <td>Directory</td>
-    <td><tt>$global_base$</tt></td>
-    <td>The directory containing global settings and plugins</td>
-  </tr>
-
-  <tr>
-    <td><tt>sbt.ivy.home</tt></td>
-    <td>Directory</td>
-    <td><tt>~/.ivy2</tt></td>
-    <td>The directory containing the local Ivy repository and artifact cache</td>
-  </tr>
-
-  <tr>
-    <td><tt>sbt.boot.directory</tt></td>
-    <td>Directory</td>
-    <td><tt>~/.sbt/boot</tt></td>
-    <td>Path to shared boot directory</td>
   </tr>
 
   <tr>
     <td><tt>sbt.main.class</tt></td>
     <td>String</td>
-    <td><tt></tt></td>
-    <td></td>
+    <td><tt>sbt.xMain</tt></td>
+    <td>The sbt class to use (<a
+        href="Scripts.html#Manual+Setup">alternatives</a> include
+        <tt>sbt.ConsoleMain</tt> and <tt>sbt.ScriptMain</tt>).</td>
   </tr>
 
   <tr>
-    <td><tt>xsbt.inc.debug</tt></td>
+    <td><tt>sbt.offline</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt></td>
-    <td></td>
+    <td>Avoid retrieving classes from repositories.</td>
   </tr>
 
   <tr>
-    <td><tt>sbt.extraClasspath</tt></td>
-    <td>Classpath Entries</td>
-    <td><tt></tt></td>
-    <td>(jar files or directories) that are added to sbt's classpath.
-        Note that the entries are deliminted by comma, e.g.:
-        <tt>entry1, entry2,..</tt>. See also <tt>resource</tt> in the
-        <a href="Launcher.html">sbt launcher</a> documentation.
-        </td>
+    <td><tt>sbt.override.build.repos</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>If true, repositories configured in a build definition
+        are ignored and the repositories configured for the launcher are
+        used instead. See <tt>sbt.repository.config</tt> and the
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.progress</tt></td>
+    <td>String</td>
+    <td><tt>?</tt></td>
+    <td>Use <tt>always</tt> to show progress ("supershell").</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.repository.config</tt></td>
+    <td>File</td>
+    <td><tt>~/.sbt/repositories</tt></td>
+    <td>A file containing the repositories to use for the
+        launcher. The format is the same as a
+        <tt>[repositories]</tt> section for a
+        <a href="Launcher-Configuration.html">sbt launcher</a> configuration file.
+        This setting is typically used in conjunction with setting
+        <tt>sbt.override.build.repos</tt> to
+        <tt>true</tt> (see <tt>sbt.override.build.repos</tt> and the
+        <a href="Launcher-Configuration.html">sbt launcher</a> documentation).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.resident.limit</tt></td>
+    <td>Number</td>
+    <td><tt>0</tt></td>
+    <td>The number of scala compilers to keep around.
+        This experimental feature was intended to improve compilation time.
+        It does not appear to have succeeded and this flag will probably be removed.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.skip.version.write</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Generate <tt>build.properties</tt> if missing. See <tt>sbt.genbuildprops</tt>.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.supershell</tt></td>
+    <td>Boolean</td>
+    <td><tt>true</tt> if color is enabled</td>
+    <td>Use supershell (show progress at bottom of shell).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.supershell.sleep</tt></td>
+    <td>Number</td>
+    <td><tt>100</tt></td>
+    <td>Time to wait between updating the supershell progress area.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Measure the time elapsed for running tasks.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.omit.paths</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Omit paths when reporting timings.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.on.shutdown</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Report timings at JVM shutdown (instead of at task completion).</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.task.timings.threshold</tt></td>
+    <td>String</td>
+    <td><tt>0</tt></td>
+    <td>Omit items from timing report if they are below this threshold.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.traces</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Generate Chrome Trace Event Format log for tasks.</td>
+  </tr>
+
+  <tr>
+    <td><tt>sbt.turbo</tt></td>
+    <td>Boolean</td>
+    <td><tt>false</tt></td>
+    <td>Use additional layered class loaders.</td>
   </tr>
 
   <tr>
@@ -261,36 +437,9 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
-    <td><tt>sbt.boot.properties</tt></td>
-    <td>File</td>
-    <td><tt></tt></td>
-    <td>The path to find the sbt  boot properties file. This can be a
-        relative path, relative to the sbt base directory, the users
-        home directory or the location of the sbt jar file, or it can
-        be an absolute path or an absolute file URI.</td>
-  </tr>
-
-  <tr>
-    <td><tt>sbt.override.build.repos</tt></td>
-    <td>Boolean</td>
-    <td><tt>false</tt></td>
-    <td>If true, repositories configured in a build definition
-        are ignored and the repositories configured for the launcher are
-        used instead. See <tt>sbt.repository.config</tt> and the
-        <a href="Launcher.html">sbt launcher</a> documentation.</td>
-  </tr>
-
-  <tr>
-    <td><tt>sbt.repository.config</tt></td>
-    <td>File</td>
-    <td><tt>~/.sbt/repositories</tt></td>
-    <td>A file containing the repositories to use for the
-        launcher. The format is the same as a
-        <tt>[repositories]</tt> section for a
-        <a href="Launcher.html">sbt launcher</a> configuration file.
-        This setting is typically used in conjunction with setting
-        <tt>sbt.override.build.repos</tt> to
-        <tt>true</tt> (see previous row and the
-        <a href="Launcher.html">sbt launcher</a> documentation).</td>
+    <td><tt>sbt.watch.mode</tt></td>
+    <td>String</td>
+    <td><tt>auto</tt></td>
+    <td>If <tt>polling</tt>, check file system periodically for updates.</td>
   </tr>
 </table>
