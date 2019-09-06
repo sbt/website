@@ -215,7 +215,6 @@ object Docs {
       generateRedirect("../Howto-Running-Commands.html", howto / "runningcommands.html", s.log)
       generateRedirect("../Howto-Scala.html", howto / "scala.html", s.log)
       generateRedirect("../Howto-Scaladoc.html", howto / "scaladoc.html", s.log)
-      generateRedirect("../Howto-Triggered.html", howto / "triggered.html", s.log)
       val exp = output / "Examples"
       generateRedirect("../Examples.html", exp / "index.html", s.log)
       generateRedirect(
