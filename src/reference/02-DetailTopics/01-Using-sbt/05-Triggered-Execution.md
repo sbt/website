@@ -78,6 +78,22 @@ files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
+### Clearing the screen
+
+sbt can clear the console screen before it evaluates the task or after it
+triggers an event. To configure sbt to clear the screen after an event is
+triggered add
+
+```
+ThisBuild / watchTriggeredMessage := Watch.clearScreenOnTrigger
+```
+to the build settings. To clear the screen before running the task, add
+
+```
+ThisBuild  / watchBeforeCommand := Watch.clearScreen
+```
+to the build settings.
+
 ### Configuration
 
 The behavior of triggered execution can be configured via a number of settings.
@@ -95,7 +111,10 @@ new build. Its input parameters are the current watch iteration count,
 the file that triggered the build and the command(s) that are going to
 be run. By default, it prints a message indicating what file triggered
 the build and what commands its going to run. No message is printed when
-the function returns `None`.
+the function returns `None`. To clear the screen before printing the
+message, just add `Watch.clearScreen()` inside of the task definition.
+This will ensure that the screen is cleared and that the message, if
+any is defined, will be printed after the screen clearing.
 
 - `watchInputOptions: Seq[Watch.InputOption]` allows the build to
 override the default watch options. For example, to add the ability to
