@@ -45,6 +45,8 @@ your plugin to the list.
 
 #### Code formatter plugins
 
+- [sbt-scalafmt](https://scalameta.org/scalafmt/): code formatting using
+  Scalafmt. <!-- 829 stars -->
 - [sbt-scalariform](https://github.com/sbt/sbt-scalariform): code
   formatting using Scalariform. <!-- 218 stars -->
 - [neo-sbt-scalafmt](https://github.com/lucidsoftware/neo-sbt-scalafmt): code
