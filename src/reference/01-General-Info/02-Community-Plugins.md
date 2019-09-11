@@ -183,6 +183,7 @@ your plugin to the list.
   <!-- 10 stars -->
 - [sbt-check](https://github.com/jeffreyolchovy/sbt-check): compile up to,
   and including, the typer phase. <!-- 10 stars -->
+- [sbt-mima-version-check](https://github.com/ChristopherDavenport/sbt-mima-version-check): Automate which Mima Versions to Check <!-- 6 stars -->
 - [sbt-tmpfs](https://github.com/cuzfrog/sbt-tmpfs): utilize tmpfs to speed
   up builds. <!-- 4 stars -->
 - [sbt-sh](https://github.com/melezov/sbt-sh): run shell commands from sbt.
