@@ -67,8 +67,8 @@ Compile / unmanagedJars := Seq.empty[sbt.Attributed[java.io.File]]
 
 ### Managed Dependencies
 
-sbt uses [Apache Ivy](https://ant.apache.org/ivy/) to implement managed
-dependencies, so if you're familiar with Ivy or Maven, you won't have
+sbt uses [Coursier](https://get-coursier.io/) to implement managed
+dependencies, so if you're familiar with Coursier, Apache Ivy or Maven, you won't have
 much trouble.
 
 #### The `libraryDependencies` key
@@ -104,7 +104,7 @@ val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependenci
 The `%` methods create `ModuleID` objects from strings, then you add those
 `ModuleID` to `libraryDependencies`.
 
-Of course, sbt (via Ivy) has to know where to download the module. If
+Of course, sbt (via Coursier) has to know where to download the module. If
 your module is in one of the default repositories sbt comes with, this
 will just work. For example, Apache Derby is in the standard Maven2
 repository:
@@ -114,7 +114,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
 If you type that in `build.sbt` and then `update`, sbt should download Derby
-to `~/.ivy2/cache/org.apache.derby/`. (By the way, `update` is a dependency
+to [the Coursier cache](https://get-coursier.io/docs/cache). (By the way, `update` is a dependency
 of `compile` so there's no need to manually type `update` most of the time.)
 
 Of course, you can also use `++=` to add a list of dependencies all at
@@ -132,9 +132,9 @@ as well.
 
 #### Getting the right Scala version with `%%`
 
-If you use `groupID %% artifactID % revision` rather than
-`groupID % artifactID % revision` (the difference is the double `%%` after
-the `groupID`), sbt will add your project's binary Scala version to the artifact
+If you use `organization %% moduleName % version` rather than
+`organization % moduleName % version` (the difference is the double `%%` after
+the `organization`), sbt will add your project's binary Scala version to the artifact
 name. This is just a shortcut. You could write this without the `%%`:
 
 ```scala
@@ -156,7 +156,7 @@ See [Cross Building][Cross-Build] for some more detail on this.
 
 #### Ivy revisions
 
-The `revision` in `groupID % artifactID % revision` does not have to be a
+The `version` in `organization % moduleName % version` does not have to be a
 single fixed version. Ivy can select the latest revision of a module
 according to constraints you specify. Instead of a fixed revision like
 `"1.6.1"`, you specify `"latest.integration"`, `"2.9.+"`, or `"[1.0,)"`. See the
@@ -169,7 +169,7 @@ documentation for details.
 Occasionally a Maven "version range" is used to specify a dependency
 (transitive or otherwise), such as `[1.3.0,)`.  If a specific version
 of the dependency is declared in the build, and it satisfies the
-range, then sbt will use the specified version.  Otherwise, Ivy could
+range, then sbt will use the specified version.  Otherwise, Coursier could
 go out to the Internet to find the latest version.  This would result
 to a surprising behavior where the effective version keeps changing
 over time, even though there's a specified version of the library that

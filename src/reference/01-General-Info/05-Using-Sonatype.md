@@ -140,7 +140,7 @@ password=<your password>
 ```
 
 > *Note:* The first two strings must be `"Sonatype Nexus Repository Manager"`
-and `"oss.sonatype.org"` for Ivy to use the credentials.
+and `"oss.sonatype.org"` for Coursier to use the credentials.
 
 #### step 4: Configure build.sbt
 

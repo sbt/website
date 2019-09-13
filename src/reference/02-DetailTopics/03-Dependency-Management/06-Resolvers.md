@@ -5,19 +5,19 @@ out: Resolvers.html
 Resolvers
 ---------
 
-### Maven
+### Maven resolvers
 
 Resolvers for Maven2 repositories are added as follows:
 
 ```scala
-resolvers += 
+resolvers +=
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 ```
 
 This is the most common kind of user-defined resolvers. The rest of this
 page describes how to define other types of repositories.
 
-### Predefined
+### Predefined resolvers
 
 A few predefined repositories are available and are listed below
 
@@ -52,7 +52,7 @@ in one place:
 Resolver.sonatypeRepo("releases")  // Or "snapshots"
 ```
 
-### Custom
+### Custom resolvers
 
 sbt provides an interface to the repository types available in Ivy:
 file, URL, SSH, and SFTP. A key feature of repositories in Ivy is using
