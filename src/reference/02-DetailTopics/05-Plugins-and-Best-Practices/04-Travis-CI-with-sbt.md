@@ -175,6 +175,7 @@ cache:
   directories:
     - \$HOME/.ivy2/cache
     - \$HOME/.sbt
+    - \$HOME/.coursier
 ```
 
 You'll also need the following snippet to avoid unnecessary cache updates:
@@ -185,6 +186,7 @@ before_cache:
   - rm -fv \$HOME/.ivy2/.sbt.ivy.lock
   - find \$HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find \$HOME/.sbt        -name "*.lock"               -print -delete
+  - find \$HOME/.coursier   -name "*.lock"               -print -delete
 ```
 
 With the above changes combined Travis CI will tar up the cached directories and uploads them to a cloud storage provider.
@@ -305,7 +307,8 @@ jdk: openjdk8
 cache:
   directories:
     - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/
+    - \$HOME/.sbt
+    - \$HOME/.cousier
 
 env:
   # This splits the build into two parts
@@ -318,8 +321,9 @@ script:
 
 before_cache:
   # Tricks to avoid unnecessary cache updates
-  - find \$HOME/.sbt -name "*.lock" | xargs rm
-  - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
+  - find \$HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find \$HOME/.sbt        -name "*.lock"               -print -delete
+  - find \$HOME/.coursier   -name "*.lock"               -print -delete
   - rm -f \$HOME/.ivy2/.sbt.ivy.lock
 
 # Email specific recipient all the time
