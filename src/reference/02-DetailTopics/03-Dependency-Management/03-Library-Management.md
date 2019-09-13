@@ -29,10 +29,7 @@ the more advanced topics such as checksums and external Ivy files.
 There are two ways for you to manage libraries with sbt: manually or
 automatically. These two ways can be mixed as well. This page discusses
 the two approaches. All configurations shown here are settings that go
-either directly in a
-[.sbt file][Basic-Def] or are
-appended to the `settings` of a Project in a
-[.scala file][Full-Def].
+directly in a [.sbt file][Basic-Def].
 
 ### Manual Dependency Management
 
@@ -77,18 +74,16 @@ See [Paths][Paths] for more information on building up paths.
 
 This method of dependency management involves specifying the direct
 dependencies of your project and letting sbt handle retrieving and
-updating your dependencies. sbt supports three ways of specifying these
-dependencies:
+updating your dependencies.
 
--   Declarations in your project definition
--   Maven POM files (dependency definitions only: no repositories)
--   Ivy configuration and settings files
+sbt 1.3.0+ uses [Coursier](https://get-coursier.io/) to implement dependency management.
+Until sbt 1.3.0, sbt has used Apache Ivy for ten years. Coursier does a good job
+of keeping the compatibility, but some of the feature might be specific to Apache Ivy.
+In those cases, you can use the following setting to switch back to Ivy:
 
-sbt uses [Apache Ivy](https://ant.apache.org/ivy/) to implement
-dependency management in all three cases. The default is to use inline
-declarations, but external configuration can be explicitly selected. The
-following sections describe how to use each method of automatic
-dependency management.
+```scala
+ThisBuild / useCoursier := false
+```
 
 #### Inline Declarations
 
@@ -609,76 +604,6 @@ shortened to:
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
 ```
 
-#### External Maven or Ivy
-
-For this method, create the configuration files as you would for Maven
-(`pom.xml`) or Ivy (`ivy.xml` and optionally `ivysettings.xml`).
-External configuration is selected by using one of the following
-expressions.
-
-##### Ivy settings (resolver configuration)
-
-```scala
-externalIvySettings()
-```
-
-or
-
-```scala
-externalIvySettings(baseDirectory.value / "custom-settings-name.xml")
-```
-
-or
-
-```scala
-externalIvySettingsURL(url("your_url_here"))
-```
-
-##### Ivy file (dependency configuration)
-
-```scala
-externalIvyFile()
-```
-
-or
-
-```scala
-externalIvyFile(Def.setting(baseDirectory.value / "custom-name.xml"))
-```
-
-Because Ivy files specify their own configurations, sbt needs to know
-which configurations to use for the `compile`, `runtime`, and `test`
-classpaths. For example, to specify that the `Compile` classpath should
-use the 'default' configuration:
-
-```scala
-Compile / classpathConfiguration := config("default")
-```
-
-##### Maven pom (dependencies only)
-
-```scala
-externalPom()
-```
-
-or
-
-```scala
-externalPom(Def.setting(baseDirectory.value / "custom-name.xml"))
-```
-
-##### Full Ivy Example
-
-For example, a `build.sbt` using external Ivy files might look like:
-
-```scala
-externalIvySettings()
-externalIvyFile(Def.setting(baseDirectory.value / "ivyA.xml"))
-Compile / classpathConfiguration := Compile
-Test / classpathConfiguration := Test
-Runtime / classpathConfiguration := Runtime
-```
-
 ##### Forcing a revision (Not recommended)
 
 **Note**: Forcing can create logical inconsistencies so it's no longer recommended.
@@ -698,7 +623,7 @@ published pom.xml.
 
 ##### Known limitations
 
-Maven support is dependent on Ivy's support for Maven POMs. Known issues
+Maven support is dependent on Coursier or Ivy's support for Maven POMs. Known issues
 with this support:
 
 -   Specifying `relativePath` in the `parent` section of a POM will

@@ -98,7 +98,7 @@ project-specific setting. We will discuss more on build-level settings later in 
 A *dependency configuration* (or "configuration" for short) defines
 a graph of library dependencies, potentially with its own
 classpath, sources, generated packages, etc. The dependency configuration concept
-comes from Ivy, which sbt uses for
+comes from Ivy, which sbt used to use for
 managed dependencies [Library Dependencies][Library-Dependencies], and from
 [MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope).
 

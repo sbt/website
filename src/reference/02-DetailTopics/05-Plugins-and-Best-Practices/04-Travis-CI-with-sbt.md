@@ -170,18 +170,19 @@ You can speed up your `sbt` builds on Travis CI by using their [caching][Travis-
 Here's a sample `cache:` configuration that you can use:
 
 ```yml
-# These directories are cached to a cloud storage provider "close" to the infrastructure the builds run on.
 cache:
   directories:
+    - \$HOME/.cache/coursier
     - \$HOME/.ivy2/cache
     - \$HOME/.sbt
 ```
+
+**Note**: Coursier uses different [cache location](https://get-coursier.io/docs/cache) depending on the OS, so the above needs to be changed accordingly for macOS or Windows images.
 
 You'll also need the following snippet to avoid unnecessary cache updates:
 
 ```yml
 before_cache:
-  # Cleanup the cached directories to avoid unnecessary cache updates
   - rm -fv \$HOME/.ivy2/.sbt.ivy.lock
   - find \$HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find \$HOME/.sbt        -name "*.lock"               -print -delete
@@ -294,18 +295,9 @@ directory `tests`.
 Here's a sample that puts them all together. Remember, most of the sections are optional.
 
 ```yml
-# Use container-based infrastructure
-sudo: false
-
 language: scala
 
 jdk: openjdk8
-
-# These directories are cached to S3 at the end of the build
-cache:
-  directories:
-    - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/
 
 env:
   # This splits the build into two parts
@@ -322,10 +314,9 @@ before_cache:
   - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
   - rm -f \$HOME/.ivy2/.sbt.ivy.lock
 
-# Email specific recipient all the time
-notifications:
-  email:
-    recipients:
-      secure: "Some/BASE64/STUFF="
-    on_success: always # default: change
+cache:
+  directories:
+    - \$HOME/.cache/coursier
+    - \$HOME/.ivy2/cache
+    - \$HOME/.sbt/boot/
 ```
