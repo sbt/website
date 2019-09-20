@@ -19,7 +19,7 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 
 ### Install JDK
 
-You must first install a JDK. We recommend Oracle JDK 8 or OpenJDK 8. The details around the package names differ from one distribution to another.
+You must first install a JDK. We recommend AdoptOpenJDK JDK 8 or JDK 11. The details around the package names differ from one distribution to another.
 
 For example, Ubuntu xenial (16.04LTS) has [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk).
 

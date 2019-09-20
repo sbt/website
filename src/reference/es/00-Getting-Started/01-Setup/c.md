@@ -19,7 +19,7 @@ Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 
 ### Instalar JDK
 
-Primero desberás de instalar JDK. Recomendamos Oracle JDK 8 u OpenJDK 8.
+Primero desberás de instalar JDK. Recomendamos AdoptOpenJDK JDK 8 u AdoptOpenJDK JDK 11.
 Los detalles sobre el nombre de los paquetes cambian de una distribución a otra.
 
 Por ejemplo, Ubuntu xenial (16.04LTS) usa

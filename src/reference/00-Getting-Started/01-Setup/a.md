@@ -5,14 +5,14 @@ out: Installing-sbt-on-Mac.html
   [ZIP]: $sbt_native_package_base$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
-  [oraclejdk8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+  [AdoptOpenJDK]: https://adoptopenjdk.net/
 
 Installing sbt on Mac
 ---------------------
 
 ### Install JDK
 
-Follow the link to install [Java SE Development Kit 8][oraclejdk8].
+Follow the link to install [JDK 8 or 11][AdoptOpenJDK].
 
 ### Installing from a universal package
 

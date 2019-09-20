@@ -5,14 +5,14 @@ out: Installing-sbt-on-Windows.html
   [MSI]: $sbt_native_package_base$/sbt-$windows_app_version$.msi
   [ZIP]: $sbt_native_package_base$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/sbt-$app_version$.tgz
-  [oraclejdk8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+  [AdoptOpenJDK]: https://adoptopenjdk.net/
 
 Windows への sbt のインストール
 ----------------------------
 
-### Install JDK
+### JDK のインストール
 
-Follow the link to install [Java SE Development Kit 8][oraclejdk8].
+リンクをたどって [JDK 8 もしくは JDK 11][AdoptOpenJDK] をインストールする。
 
 ### ユニバーサルパッケージからのインストール
 
