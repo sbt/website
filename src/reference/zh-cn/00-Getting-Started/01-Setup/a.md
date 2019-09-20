@@ -23,8 +23,8 @@ out: Installing-sbt-on-Mac.html
 \$ brew install sbt
 ```
 
-#### 通过 [Macports](http://macports.org/) 安装
+#### 通过 [SDKMAN!](https://sdkman.io/) 安装
 
 ```
-\$ port install sbt
+\$ sdk install sbt
 ```

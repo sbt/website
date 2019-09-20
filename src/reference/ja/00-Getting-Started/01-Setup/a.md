@@ -14,6 +14,13 @@ macOS への sbt のインストール
 
 リンクをたどって [JDK 8 もしくは JDK 11][AdoptOpenJDK] をインストールする。
 
+もしくは [SDKMAN!](https://sdkman.io/) を使う:
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+```
+
 ### ユニバーサルパッケージからのインストール
 
 [ZIP][ZIP] か [TGZ][TGZ] をダウンロードしてきて解凍する。
@@ -29,8 +36,8 @@ macOS への sbt のインストール
 \$ brew install sbt
 ```
 
-#### [Macports](http://macports.org/)
+#### [SDKMAN!](https://sdkman.io/)
 
 ```
-\$ port install sbt
+\$ sdk install sbt
 ```

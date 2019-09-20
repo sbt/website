@@ -14,6 +14,13 @@ Instalar sbt on macOS
 
 Sigue el link para instalar [JDK 8 u 11][AdoptOpenJDK].
 
+Or use [SDKMAN!](https://sdkman.io/):
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+```
+
 ### Instalar desde un paquete universal
 
 Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
@@ -30,8 +37,8 @@ Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 \$ brew install sbt
 ```
 
-#### [Macports](http://macports.org/)
+#### [SDKMAN!](https://sdkman.io/)
 
 ```
-\$ port install sbt
+\$ sdk install sbt
 ```
