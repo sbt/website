@@ -7,8 +7,8 @@ out: Installing-sbt-on-Mac.html
   [Manual-Installation]: Manual-Installation.html
   [AdoptOpenJDK]: https://adoptopenjdk.net/
 
-Installing sbt on Mac
----------------------
+Installing sbt on macOS
+-----------------------
 
 ### Install JDK
 
@@ -24,10 +24,10 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
 > sure to report any issues with these packages to the relevant
 > maintainers.
 
-#### [Homebrew](http://mxcl.github.com/homebrew/)
+#### [Homebrew](https://brew.sh/)
 
 ```
-\$ brew install sbt@1
+\$ brew install sbt
 ```
 
 #### [Macports](http://macports.org/)

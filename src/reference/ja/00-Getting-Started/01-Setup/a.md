@@ -7,8 +7,8 @@ out: Installing-sbt-on-Mac.html
   [Manual-Installation]: Manual-Installation.html
   [AdoptOpenJDK]: https://adoptopenjdk.net/
 
-Mac への sbt のインストール
--------------------------
+macOS への sbt のインストール
+--------------------------
 
 ### JDK のインストール
 
@@ -23,10 +23,10 @@ Mac への sbt のインストール
 > **注意:** サードパーティが提供するパッケージは最新版を使っているとは限らない。
 > 何か問題があれば、パッケージメンテナに報告してほしい。
 
-#### [Homebrew](http://mxcl.github.com/homebrew/)
+#### [Homebrew](https://brew.sh/)
 
 ```
-\$ brew install sbt@1
+\$ brew install sbt
 ```
 
 #### [Macports](http://macports.org/)
