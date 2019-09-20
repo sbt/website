@@ -5,14 +5,21 @@ out: Installing-sbt-on-Mac.html
   [ZIP]: $sbt_native_package_base$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
-  [oraclejdk8]: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+  [AdoptOpenJDK]: https://adoptopenjdk.net/
 
-Mac への sbt のインストール
--------------------------
+macOS への sbt のインストール
+--------------------------
 
-### Install JDK
+### JDK のインストール
 
-Follow the link to install [Java SE Development Kit 8][oraclejdk8].
+リンクをたどって [JDK 8 もしくは JDK 11][AdoptOpenJDK] をインストールする。
+
+もしくは [SDKMAN!](https://sdkman.io/) を使う:
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+```
 
 ### ユニバーサルパッケージからのインストール
 
@@ -23,14 +30,14 @@ Follow the link to install [Java SE Development Kit 8][oraclejdk8].
 > **注意:** サードパーティが提供するパッケージは最新版を使っているとは限らない。
 > 何か問題があれば、パッケージメンテナに報告してほしい。
 
-#### [Homebrew](http://mxcl.github.com/homebrew/)
+#### [Homebrew](https://brew.sh/)
 
 ```
-\$ brew install sbt@1
+\$ brew install sbt
 ```
 
-#### [Macports](http://macports.org/)
+#### [SDKMAN!](https://sdkman.io/)
 
 ```
-\$ port install sbt
+\$ sdk install sbt
 ```

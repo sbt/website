@@ -119,7 +119,7 @@ parents, e.g. `/foo/bar/a/b/c.txt` would be accepted but not `/foo/bar/a/b` or
 ### Regular expressions
 
 The `Glob` apis use glob syntax (see
-[PathMatcher](https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html#getPathMatcher-java.lang.String-)
+[PathMatcher](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/FileSystem.html#getPathMatcher(java.lang.String))
 for details). [Regular
 expressions](https://www.scala-lang.org/api/2.12.8/scala/util/matching/Regex.html)
 can be used instead:
