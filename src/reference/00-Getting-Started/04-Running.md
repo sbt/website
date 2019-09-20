@@ -144,11 +144,29 @@ special sbt convention is that pressing tab once may show only a subset
 of most likely completions, while pressing it more times shows more
 verbose choices.
 
-### History Commands
+<a name="history"></a>
 
-sbt shell remembers history, even if you exit sbt and restart it.
-The simplest way to access history is with the up arrow key. The
-following commands are also supported:
+### sbt shell history
+
+sbt shell remembers history even if you exit sbt and restart it.
+The easiest way to access history is to press the up arrow key to cycle
+through previously entered commands.
+
+**Note**: `Ctrl-R` incrementally _searches_ the history backwards.
+
+Through JLine's integration with the terminal environment,
+you can customize sbt shell by changing `\$HOME/.inputrc` file.
+For example, the following settings in `\$HOME/.inputrc` will allow up- and down-arrow to perform
+prefix-based search of the history.
+
+```
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[C": forward-char
+"\e[D": backward-char
+```
+
+sbt shell also supports the following commands:
 
 <table>
   <tr>

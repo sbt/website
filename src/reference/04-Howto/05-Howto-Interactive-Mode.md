@@ -3,6 +3,7 @@ out: Howto-Interactive-Mode.html
 ---
 
   [Build-State]: Build-State.html
+  [ShellHistory]: Running.html#history
 
 Interactive mode
 ----------------
@@ -98,20 +99,7 @@ shellPrompt := { state => System.getProperty("user.name") + "> " }
 
 ### Use history
 
-Interactive mode remembers history even if you exit sbt and restart it.
-The simplest way to access history is to press the up arrow key to cycle
-through previously entered commands. Use `Ctrl+r` to incrementally
-search history backwards. The following commands are supported:
-
--   `!` Show history command help.
--   `!!` Execute the previous command again.
--   `!:` Show all previous commands.
--   `!:n` Show the last n commands.
--   `!n` Execute the command with index `n`, as shown by the `!:`
-    command.
--   `!-n` Execute the nth command before this one.
--   `!string` Execute the most recent command starting with 'string'
--   `!?string` Execute the most recent command containing 'string'
+See [sbt shell history][ShellHistory].
 
 <a name="history_file"></a>
 
