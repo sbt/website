@@ -29,7 +29,7 @@ object Docs {
     if (isBetaBranch) "1.x-beta"
     else "1.x"
   }
-  lazy val targetSbtFullVersion = "1.3.0"
+  lazy val targetSbtFullVersion = "1.3.1"
 
   lazy val siteEmail = settingKey[String]("")
 
