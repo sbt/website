@@ -21,3 +21,15 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 ### Windows installer
 
 Download [msi installer][MSI] and install it.
+
+### Installing from a third-party package
+
+> **Note:** Third-party packages may not provide the latest version. Please make
+> sure to report any issues with these packages to the relevant
+> maintainers.
+
+#### [Scoop](https://scoop.sh/)
+
+```
+\$ scoop install sbt
+```

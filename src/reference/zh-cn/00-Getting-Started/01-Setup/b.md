@@ -16,3 +16,13 @@ out: Installing-sbt-on-Windows.html
 ### 通过 Windows 安装包安装
 
 下载 [msi 安装包][MSI] 并安装。
+
+### 通过第三方的包安装
+
+> **注意：** 第三方的包可能没有提供最新的版本，请记得将任何问题反馈给这些包相关的维护者。
+
+#### 通过 [Scoop](https://scoop.sh/) 安装
+
+```
+\$ scoop install sbt
+```

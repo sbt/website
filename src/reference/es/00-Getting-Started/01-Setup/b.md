@@ -21,3 +21,15 @@ Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 ### Instalador Windows
 
 Descarga el [instalador msi][MSI] e instálalo.
+
+### Instalar desde un paquete de terceros
+
+> **Nota:** Puede que algunos paquetes de terceros no proporcionen la última versión.
+> Por favor, asegúrate de reportar cualquier problema con dichos paquetes a sus
+> respectivos mantenedores.
+
+#### [Scoop](https://scoop.sh/)
+
+```
+\$ scoop install sbt
+```
