@@ -27,6 +27,8 @@ src/
        <files to include in main jar here>
     scala/
        <main Scala sources>
+    scala-2.12/
+       <main Scala 2.12 specific sources>
     java/
        <main Java sources>
   test/
@@ -34,6 +36,8 @@ src/
        <files to include in test jar here>
     scala/
        <test Scala sources>
+    scala-2.12/
+       <test Scala 2.12 specific sources>
     java/
        <test Java sources>
 ```
