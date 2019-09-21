@@ -32,6 +32,8 @@ src/
        <ficheros del jar principal aquí>
     scala/
        <fuentes principales de Scala>
+    scala-2.12/
+       <main Scala 2.12 specific sources>
     java/
        <fuentes principales de Java>
   test/
@@ -39,6 +41,8 @@ src/
        <ficheros del jar de test aquí>
     scala/
        <fuentes de test de Scala>
+    scala-2.12/
+       <test Scala 2.12 specific sources>
     java/
        <fuentes de test de Java>
 ```
