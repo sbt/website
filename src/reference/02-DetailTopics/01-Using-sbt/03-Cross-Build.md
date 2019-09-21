@@ -17,6 +17,8 @@ maintaining source compatibility. This page describes how to use `sbt`
 to build and publish your project against multiple versions of Scala and
 how to use libraries that have done the same.
 
+For cross building sbt plugins see also [Cross building plugins][Cross-Build-Plugins].
+
 ### Publishing conventions
 
 The underlying mechanism used to indicate which version of Scala a
@@ -28,7 +30,7 @@ allows interoperability with users of Maven, Ant and other build tools.
 For pre-prelease versions of Scala such as 2.13.0-RC1 and for versions prior to 2.10.x,
 full version is used as the suffix.
 
-The rest of this page describes how `sbt` handles this for you as part
+The rest of this page describes how sbt handles this for you as part
 of cross-building.
 
 ### Using cross-built libraries
@@ -249,7 +251,7 @@ depending on the value of `crossPaths`.
 Because (unlike Scala library) Scala compiler is not forward compatible among
 the patch releases, compiler plugins should use `CrossVersion.full`.
 
-#### Depending on cross-built libraries
+#### More about using cross-built libraries
 
 You can have fine-grained control over the behavior for different Scala versions
 by using the `cross` method on `ModuleID` These are equivalent:

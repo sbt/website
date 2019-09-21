@@ -8,6 +8,7 @@ out: Plugins.html
   [Plugins-Best-Practices]: Plugins-Best-Practices.html
   [Use-Settings-And-Tasks]: Plugins-Best-Practices.html#Use+settings+and+tasks.+Avoid+commands.
   [Commands]: Commands.html
+  [Cross-Build-Plugins]: Cross-Build-Plugins.html
 
 Plugins
 -------
@@ -537,3 +538,5 @@ libraryDependencies ++=
 If you're a plugin writer, please consult the [Plugins Best Practices][Plugins-Best-Practices]
 page; it contains a set of guidelines to help you ensure that your
 plugin is consistent and plays well with other plugins.
+
+For cross building sbt plugins see also [Cross building plugins][Cross-Build-Plugins].
