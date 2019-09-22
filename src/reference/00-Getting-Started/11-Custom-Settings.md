@@ -23,7 +23,7 @@ Getting Started Guide, especially [build.sbt][Basic-Def] and
 
 [Keys](../api/sbt/Keys\$.html) is packed with examples
 illustrating how to define keys. Most of the keys are implemented in
-[Defaults](../sxr/sbt/Defaults.scala.html).
+[Defaults](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala).
 
 Keys have one of three types. `SettingKey` and `TaskKey` are described in
 [.sbt build definition][Basic-Def]. Read about `InputKey` on the

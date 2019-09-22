@@ -86,8 +86,7 @@ Declaring a dependency looks like this, where `groupId`, `artifactId`, and
 libraryDependencies += groupID % artifactID % revision
 ```
 
-or like this, where `configuration` can be a string or
-[Configuration](../sxr/sbt/Configuration.scala.html#sbt.Configuration) val:
+or like this, where `configuration` can be a string or a `Configuration` value (such as `Test`):
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration

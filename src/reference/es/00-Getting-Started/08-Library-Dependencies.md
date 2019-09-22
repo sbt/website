@@ -88,7 +88,7 @@ libraryDependencies += groupID % artifactID % revision
 ```
 
 o a esto, donde `configuration` puede ser una cadena de caracteres o una
-[Configuración](../../sxr/sbt/Configuration.scala.html#sbt.Configuration):
+`Configuration` (such as `Test`):
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration
