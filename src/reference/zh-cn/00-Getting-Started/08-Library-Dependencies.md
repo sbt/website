@@ -63,7 +63,7 @@ sbt 使用 [Apache Ivy](http://ant.apache.org/ivy/) 来实现托管依赖，所�
 libraryDependencies += groupID % artifactID % revision
 ```
 
-或者像这样， 用字符串或者 [Configuration](../../sxr/sbt/Configuration.scala.html#sbt.Configuration) val 当做 `configuration`：
+或者像这样， 用字符串或者 `Configuration` val (`Test`) 当做 `configuration`：
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration

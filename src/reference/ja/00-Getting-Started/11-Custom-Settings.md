@@ -10,7 +10,7 @@ out: Custom-Settings.html
   [Plugins]: ../../docs/Plugins.html
   [Tasks]: ../../docs/Tasks.html
   [Keys]: ../../api/sbt/Keys\$.html
-  [Defaults]: ../../sxr/sbt/Defaults.scala.html
+  [Defaults]: https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala
   [Scaladocs-IO]: ../../api/sbt/io/IO\$.html
 
 カスタムセッティングとタスク

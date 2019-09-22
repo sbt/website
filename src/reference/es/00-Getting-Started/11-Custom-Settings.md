@@ -23,7 +23,7 @@ la Guía de inicio, en particular [Definiciones de construcción][Basic-Def] y
 
 [Keys](../../api/sbt/Keys\$.html) está lleno de ejemplos que ilustran cómo definir
 claves. La mayoría de las claves están implementadas en
-[Defaults](../../sxr/sbt/Defaults.scala.html).
+[Defaults](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/Defaults.scala).
 
 Una clave tiene uno de tres posibles tipos: `SettingKey` y `TaskKey` son
 descritos en [Definiciones de construcción][Basic-Def]. Para saber más acerca de

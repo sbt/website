@@ -81,7 +81,7 @@ sbt にその外部コンフィギュレーションファイルを使わせる�
 libraryDependencies += groupID % artifactID % revision
 ```
 
-もしくは、以下のようになる。このときの `configuration` は文字列もしくは [Configuration](../../sxr/sbt/Configuration.scala.html#sbt.Configuration) の値だ。
+もしくは、以下のようになる。このときの `configuration` は文字列もしくは `Configuration` の値だ (`Test` など)。
 
 ```scala
 libraryDependencies += groupID % artifactID % revision % configuration

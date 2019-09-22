@@ -153,6 +153,3 @@ REPL classpath:
 ```
 \$ screpl "sonatype-releases at https://oss.sonatype.org/content/repositories/snapshots/" "org.scalaz%%scalaz-core%7.0-SNAPSHOT"
 ```
-
-This syntax was a quick hack. Feel free to improve it. The relevant
-class is [IvyConsole](../sxr/sbt/IvyConsole.scala.html).

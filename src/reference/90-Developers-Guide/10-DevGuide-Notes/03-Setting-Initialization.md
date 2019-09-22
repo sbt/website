@@ -17,7 +17,7 @@ value for a particular build key. sbt converts all registered
 into a task graph. This task graph is then used to execute your build.
 
 All of sbt's loading semantics are contained within the
-[Load.scala](../sxr/sbt/Load.scala.html) file. It is approximately
+[Load.scala](https://github.com/sbt/sbt/blob/develop/main/src/main/scala/sbt/internal/Load.scala) file. It is approximately
 the following:
 
 ![image](files/settings-initialization-load-ordering.png)
