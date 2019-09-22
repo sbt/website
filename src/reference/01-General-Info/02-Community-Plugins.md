@@ -141,7 +141,10 @@ your plugin to the list.
 - [sbt-marathon](https://github.com/Tapad/sbt-marathon): deploy applications
   on Apache Mesos using the [Marathon](https://mesosphere.github.io/marathon)
   framework. <!-- 19 stars -->
-
+- [sbt-riotctl](https://github.com/riot-framework/sbt-riotctl): deploy 
+  applications as systemd services directly to a Raspberry Pi, ensuring 
+  dependencies (e.g. wiringpi) are met.
+  
 #### Utility and system plugins
 
 - [sbt-revolver](https://github.com/spray/sbt-revolver): auto-restart forked
