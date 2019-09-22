@@ -10,6 +10,20 @@ out: Installing-sbt-on-Linux.html
 在 Linux 上安装 sbt
 -----------------------
 
+### Installing from SDKMAN
+
+To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install sbt
+```
+
+This has two advantages.
+1. It will install the official packaging by AdoptOpenJDK, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
+2. It will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
+
 ### 通过通用的安装包安装
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。
@@ -22,7 +36,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
 
     echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
     sudo apt-get update
     sudo apt-get install sbt
 

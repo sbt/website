@@ -13,20 +13,33 @@ out: Installing-sbt-on-Linux.html
 Installing sbt on Linux
 -----------------------
 
-### Instalar desde un paquete universal
+### Installing from SDKMAN
 
-Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
+To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install sbt
+```
+
+This has two advantages.
+1. It will install the official packaging by AdoptOpenJDK, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
+2. It will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
 
 ### Instalar JDK
 
 Primero desberás de instalar JDK. Recomendamos AdoptOpenJDK JDK 8 u AdoptOpenJDK JDK 11.
-Los detalles sobre el nombre de los paquetes cambian de una distribución a otra.
 
+Los detalles sobre el nombre de los paquetes cambian de una distribución a otra.
 Por ejemplo, Ubuntu xenial (16.04LTS) usa
 [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk).
-
 La familia Redhat lo llama
 [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel).
+
+### Instalar desde un paquete universal
+
+Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 
 ### Ubuntu y otras distribuciones basadas en Debian
 
@@ -41,7 +54,7 @@ Ejecuta lo siguiente desde el terminal para instalar `sbt`
 (necesitarás tener privilegios de administrador para hacerlo, de ahí el `sudo`).
 
     echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
     sudo apt-get update
     sudo apt-get install sbt
 

@@ -13,13 +13,25 @@ out: Installing-sbt-on-Linux.html
 Linux への sbt のインストール
 --------------------------
 
+### SDKMAN からのインストール
+
+JDK と sbt をするのに、[SDKMAN](https://sdkman.io/) の導入を検討してほしい。
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install sbt
+```
+
+この方法は 2つの利点がある。
+1. [「闇鍋 OpenJDK ビルド」](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html)と揶揄されているディストロ管理の JDK ではなく、AdoptOpenJDK が出している公式のパッケージをインストールできる。
+2. sbt の全ての JAR ファイルを含んだ `tgz` パッケージをインストールできる (DEB と RPM版は帯域の節約のために JAR ファイルが含まれていない)。
+
 ### JDK のインストール
 
-まず JDK をインストールする必要がある。AdoptOpenJDK JDK 8 もしくは AdoptOpenJDK JDK 11 を推奨する。パッケージ名はディストリビューションによって異なる。
+まず JDK をインストールする必要がある。AdoptOpenJDK JDK 8 もしくは AdoptOpenJDK JDK 11 を推奨する。
 
-例えば、Ubuntu xenial (16.04LTS) には [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk) がある。
-
-Redhat 系は [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel) と呼んでいる。
+パッケージ名はディストリビューションによって異なる。例えば、Ubuntu xenial (16.04LTS) には [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk) がある。Redhat 系は [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel) と呼んでいる。
 
 ### ユニバーサルパッケージからのインストール
 
@@ -36,15 +48,13 @@ Ubuntu 及びその他の Debian ベースのディストリビューション�
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
 
     echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
     sudo apt-get update
     sudo apt-get install sbt
 
 パッケージ・マネージャは設定されたリポジトリに指定されたパッケージがあるか確認しにいく。
 sbt のバイナリは Bintray にて公開されており、都合の良いことに Bintray は APT リポジトリを提供している。
 そのため、このリポジトリをパッケージ・マネージャに追加しさえすればよい。
-
->**注意** [sbt/website#127][website127] で報告されている通り、https を使用するとセグメンテーション違反が発生する場合がある。
 
 `sbt` を最初にインストールした後は、このパッケージは `aptitude` や Synaptic
 上から管理することができる (パッケージ・キャッシュの更新を忘れずに)。
