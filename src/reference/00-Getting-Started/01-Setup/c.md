@@ -13,17 +13,29 @@ out: Installing-sbt-on-Linux.html
 Installing sbt on Linux
 -----------------------
 
-### Installing from a universal package
+### Installing from SDKMAN
 
-Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
+To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
+
+```
+\$ sdk list java
+\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install sbt
+```
+
+This has two advantages.
+1. It will install the official packaging by AdoptOpenJDK, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
+2. It will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
 
 ### Install JDK
 
-You must first install a JDK. We recommend AdoptOpenJDK JDK 8 or JDK 11. The details around the package names differ from one distribution to another.
+You must first install a JDK. We recommend **AdoptOpenJDK JDK 8** or **JDK 11**.
 
-For example, Ubuntu xenial (16.04LTS) has [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk).
+The details around the package names differ from one distribution to another. For example, Ubuntu xenial (16.04LTS) has [openjdk-8-jdk](https://packages.ubuntu.com/hu/xenial/openjdk-8-jdk). Redhat family calls it [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel).
 
-Redhat family calls it [java-1.8.0-openjdk-devel](https://apps.fedoraproject.org/packages/java-1.8.0-openjdk-devel).
+### Installing from a universal package
+
+Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 
 ### Ubuntu and other Debian-based distributions
 
@@ -33,7 +45,7 @@ Ubuntu and other Debian-based distributions use the DEB format, but usually you 
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
     echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
     sudo apt-get update
     sudo apt-get install sbt
 
@@ -44,6 +56,8 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 ![Ubuntu Software & Updates Screenshot](files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
 **Note**: There's been reports about SSL error using Ubuntu: `Server access Error: java.lang.RuntimeException: Unexpected error: java.security.InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty url=https://repo1.maven.org/maven2/org/scala-sbt/sbt/1.1.0/sbt-1.1.0.pom`, which apparently stems from OpenJDK 9 using PKCS12 format for `/etc/ssl/certs/java/cacerts` [cert-bug][cert-bug]. According to <https://stackoverflow.com/a/50103533/3827> it is fixed in Ubuntu Cosmic (18.10), but Ubuntu Bionic LTS (18.04) is still waiting for a release. See the answer for a woraround.
+
+**Note**: `sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823` may not work on Ubuntu Bionic LTS (18.04) since it's using a buggy GnuPG, so we are advising to use web API to download the public key in the above.
 
 ### Red Hat Enterprise Linux and other RPM-based distributions
 
