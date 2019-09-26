@@ -42,18 +42,10 @@ shows the two most important:
 
 -   `buildSettings` - These are settings defined to be `in ThisBuild` or
     directly against the `Build` object. They are initialized *once* for
-    the build. You can add these, e.g. in `project/build.scala` :
+    the build. You can add these, e.g. in `build.sbt` file:
 
     ```scala
-    object MyBuild extends Build {
-      override val settings = Seq(foo := "hi")
-    }
-    ```
-
-    or in a `build.sbt` file:
-
-    ```scala
-    foo in ThisBuild := "hi"
+    ThisBuild / foo := "hi"
     ```
 
 -   `projectSettings` - These are settings specific to a project. They
@@ -63,9 +55,7 @@ shows the two most important:
     specific settings, eg. in `project/build.scala`:
 
     ```scala
-    object MyBuild extends Build {
-      val test = project.in(file(".")).settings(...)
-    }
+    lazy val root = (project in file(".")).settings(...)
     ```
 
 After loading/compiling all the build definitions, sbt has a series of
@@ -73,83 +63,6 @@ After loading/compiling all the build definitions, sbt has a series of
 default inclusion order for sbt is:
 
 1.  All AutoPlugin settings
-2.  All settings defined in `project/Build.scala`
-3.  All settings defined in the user directory
+2.  All settings defined in the user directory
     (`~/.sbt/<version>/*.sbt`)
-4.  All local configurations (`build.sbt`)
-
-### Controlling Initialization
-
-The order which sbt uses to load settings is configurable at a *project*
-level. This means that we can't control the order of settings added to
-Build/Global namespace, but we can control how each project loads, e.g.
-plugins and `.sbt` files. To do so, use the `AddSettings` class:
-
-```scala
-import sbt._
-import Keys._
-
-import AddSettings._
-
-object MyOwnOrder extends Build {
-  // here we load config from a txt file.
-  lazy val root = project.in(file(".")).settingSets( autoPlugins, buildScalaFiles, sbtFiles(file("silly.txt")) )
-}
-```
-
-In the above project, we've modified the order of settings to be:
-
-1.  All AutoPlugin settings.
-2.  All settings defined in the `project/Build.scala` file (shown
-    above).
-3.  All settings found in the `silly.txt` file.
-
-What we've excluded:
-
--   All settings from the user directory (`~/.sbt/<version>`)
--   All `*.sbt` settings.
-
-The `AddSettings` object provides the following "groups" of settings you
-can use for ordering:
-
-- `autoPlugins` All the ordered settings of plugins after they've gone through
-   dependency resolution
-- `buildScalaFiles` The full sequence of settings defined directly in `project/*.scala`
-    builds.
-- `sbtFiles(*)` Specifies the exact setting DSL files to include (files must use the
-    `.sbt` file format)
-- `userSettings` All the settings defined in the user directory `~/.sbt/<version>/`.
-- `defaultSbtFiles` Include all local `*.sbt` file settings.
-
-> *Note: Be very careful when reordering settings. It's easy to
-> accidentally remove core functionality.*
-
-For example, let's see what happens if we move the `build.sbt` files
-*before* the `buildScalaFile`.
-
-Let's create an example project the following definition. `project/build.scala`:
-
-```scala
-object MyTestBuild extends Build {
-  val testProject = project.in(file(".")).settingSets(autoPlugins, defaultSbtFiles, buildScalaFile).settings(
-    version := scalaBinaryVersion.value match {
-      case "2.10" => "1.0-SNAPSHOT"
-      case v => "1.0-for-\${v}-SNAPSHOT"
-    }
-  )
-}
-```
-
-This build defines a version string which appends the Scala version if
-the current Scala version is not the in the `2.10.x` series. Now, when
-issuing a release we want to lock down the version. Most tools assume
-this can happen by writing a `version.sbt` file. `version.sbt`:
-
-```scala
-version := "1.0.0"
-```
-
-However, when we load this new build, we find that the `version` in
-`version.sbt` has been **overridden** by the one defined in
-`project/Build.scala` because of the order we defined for settings, so
-the new `version.sbt` file has no effect.
+3.  All local configurations (`build.sbt`)
