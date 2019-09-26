@@ -207,14 +207,11 @@ for the changes on a build with many subprojects during
 development. Here's how to set all subprojects to `TrackIfMissing`.
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(....).
-  settings(
-    inThisBuild(Seq(
-      trackInternalDependencies := TrackLevel.TrackIfMissing,
-      exportJars := true
-    ))
-  )
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+ThisBuild / exportJars := true
+
+lazy val root = (project in file("."))
+  .aggregate(....)
 ```
 
 The `exportToInternal` setting allows the dependee subprojects to opt
@@ -225,8 +222,8 @@ used to determine the actual track level. Here's an example to opt-out
 one project:
 
 ```scala
-lazy val dontTrackMe = (project in file("dontTrackMe")).
-  settings(
+lazy val dontTrackMe = (project in file("dontTrackMe"))
+  .settings(
     exportToInternal := TrackLevel.NoTracking
   )
 ```

@@ -175,6 +175,49 @@ lazy val core = project.dependsOn(util)
 複数のコンフィギュレーション依存性を宣言する場合は、セミコロンで区切る。
 例えば、`dependsOn(bar % "test->test;compile->compile")` と書ける。
 
+### サブプロジェクト間の依存性
+
+多くのファイルとサブプロジェクトを持った巨大なビルドでは
+sbt は全てのファイルを監視したり、大量に発生するディスクやシステム I/O
+によって高性能とは言えない反応になるかもしれない。
+
+一つの対策として sbt は `compile` を呼び出した時に依存するサブプロジェクトのコンパイルを
+行うかどうかを制御する `trackInternalDependencies` と `exportToInternal`
+というセッティングがある。両者とも
+`TrackLevel.NoTracking`、`TrackLevel.TrackIfMissing`、`TrackLevel.TrackAlways`
+という 3つの値を取ることができる。デフォルトは両方とも `TrackLevel.TrackAlways` だ。
+
+`trackInternalDependencies` が `TrackLevel.TrackIfMissing`
+に設定されると、sbt は `*.class` ファイル
+(`exportJars` が `true` の場合は JAR ファイル)
+が一切無い場合を除き自動的に内部 (サブプロジェクト) 依存性をコンパイルすることを止める。
+
+`TrackLevel.NoTracking` に設定すると内部依存性のコンパイルは無視される。
+ただし、クラスパスは通常どおり追加されるため、依存性グラフは依存性だと表示する。
+この動機は開発時に大量のサブプロジェクトの変更の確認に伴う I/O
+オーバーヘッドを回避することにある。全てのサブプロジェクトを `TrackIfMissing`
+に設定する方法を以下に示す。
+
+```scala
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+ThisBuild / exportJars := true
+
+lazy val root = (project in file("."))
+  .aggregate(....)
+```
+
+`exportToInternal` セッティングは依存された側から内部トラッキングをオプトアウトすることを可能にして、
+これを使うことでほとんどのサブプロジェクトは追跡したいが、一部を抜きたいという時に使える。
+`trackInternalDependencies` と `exportToInternal` の交叉が実際の追跡レベルを決定する。
+以下が 1つのサブプロジェクトをオプトアウトさせる例だ:
+
+```scala
+lazy val dontTrackMe = (project in file("dontTrackMe"))
+  .settings(
+    exportToInternal := TrackLevel.NoTracking
+  )
+```
+
 ### デフォルトルートプロジェクト
 
 もしプロジェクトがルートディレクトリに定義されてなかったら、 sbt はビルド時に他のプロジェクトを集約するデフォルトプロジェクトを勝手に生成する。
