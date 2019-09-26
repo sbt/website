@@ -175,6 +175,49 @@ lazy val core = project.dependsOn(util)
 複数のコンフィギュレーション依存性を宣言する場合は、セミコロンで区切る。
 例えば、`dependsOn(bar % "test->test;compile->compile")` と書ける。
 
+### サブプロジェクト間の依存性
+
+多くのファイルとサブプロジェクトを持った巨大なビルドでは
+sbt は全てのファイルを監視したり、大量に発生するディスクやシステム I/O
+によって高性能とは言えない反応になるかもしれない。
+
+一つの対策として sbt は `compile` を呼び出した時に依存するサブプロジェクトのコンパイルを
+行うかどうかを制御する `trackInternalDependencies` と `exportToInternal`
+というセッティングがある。両者とも
+`TrackLevel.NoTracking`、`TrackLevel.TrackIfMissing`、`TrackLevel.TrackAlways`
+という 3つの値を取ることができる。デフォルトは両方とも `TrackLevel.TrackAlways` だ。
+
+`trackInternalDependencies` が `TrackLevel.TrackIfMissing`
+に設定されると、sbt は `*.class` ファイル
+(`exportJars` が `true` の場合は JAR ファイル)
+が一切無い場合を除き自動的に内部 (サブプロジェクト) 依存性をコンパイルすることを止める。
+
+`TrackLevel.NoTracking` に設定すると内部依存性のコンパイルは無視される。
+ただし、クラスパスは通常どおり追加されるため、依存性グラフは依存性だと表示する。
+この動機は開発時に大量のサブプロジェクトの変更の確認に伴う I/O
+オーバーヘッドを回避することにある。全てのサブプロジェクトを `TrackIfMissing`
+に設定する方法を以下に示す。
+
+```scala
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+ThisBuild / exportJars := true
+
+lazy val root = (project in file("."))
+  .aggregate(....)
+```
+
+`exportToInternal` セッティングは依存された側から内部トラッキングをオプトアウトすることを可能にして、
+これを使うことでほとんどのサブプロジェクトは追跡したいが、一部を抜きたいという時に使える。
+`trackInternalDependencies` と `exportToInternal` の交叉が実際の追跡レベルを決定する。
+以下が 1つのサブプロジェクトをオプトアウトさせる例だ:
+
+```scala
+lazy val dontTrackMe = (project in file("dontTrackMe"))
+  .settings(
+    exportToInternal := TrackLevel.NoTracking
+  )
+```
+
 ### デフォルトルートプロジェクト
 
 もしプロジェクトがルートディレクトリに定義されてなかったら、 sbt はビルド時に他のプロジェクトを集約するデフォルトプロジェクトを勝手に生成する。
@@ -184,44 +227,6 @@ lazy val core = project.dependsOn(util)
 そのソースは、`foo/Foo.scala` のように `foo` の直下に置かれるか、
 `foo/src/main/scala` 内に置かれる。
 ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造][Directories]が `foo` 以下に適用される。
-
-`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
-`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
-
-ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
-`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
-次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
-以下のように表示されるはずだ（定義したバージョンによるが）:
-
-```
-> show version
-[info] hello-foo/*:version
-[info] 	0.7
-[info] hello-bar/*:version
-[info] 	0.9
-[info] hello/*:version
-[info] 	0.5
-```
-
-`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
-`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
-`hello/*:version` は、`hello/build.sbt` 内で定義される。
-[スコープ付けされたキーの構文][Scopes]を復習しておこう。
-それぞれの `version` キーは、`build.sbt` の場所により、
-特定のプロジェクトにスコープ付けされている。
-だが、三つの `build.sbt` とも同じビルド定義の一部だ。
-
-`.scala` ファイルは、上に示したように、単にプロジェクトとそのベースディレクトリを列挙するだけの簡単なものにして、
-_それぞれのプロジェクトのセッティングは、そのプロジェクトのベースディレクトリ直下の
-`.sbt` ファイル内で宣言することができる_。
-_全てのセッティングを `.scala` ファイル内で宣言することは義務付けられいるわけではない。_
-
-ビルド定義の全てを単一の `project` ディレクトリ内の場所にまとめるために、
-`.scala` ファイル内にセッティングも含めてしまうほうが洗練されていると思うかもしれない。
-ただし、これは好みの問題だから、好きにやっていい。
-
-サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
-`foo/project/Build.scala` は無視される。
 
 ### プロジェクトの切り替え
 
@@ -237,3 +242,39 @@ sbt インタラクティブプロンプトから、`projects` と入力する�
 `.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間でコードを共有するためには、 ベースディレクトリにある `project/` 配下に Scala ファイルを用意すればよい。
 
 詳細は[ビルドの整理][Organizing-Build]を参照。
+
+### 補足: サプブロジェクトビルド定義ファイル
+
+`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
+`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
+
+ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
+`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
+次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
+以下のように表示されるはずだ（定義したバージョンによるが）:
+
+```
+> show version
+[info] hello-foo/*:version
+[info]  0.7
+[info] hello-bar/*:version
+[info]  0.9
+[info] hello/*:version
+[info]  0.5
+```
+
+`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
+`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
+`hello/*:version` は、`hello/build.sbt` 内で定義される。
+[スコープ付けされたキーの構文][Scopes]を復習しておこう。
+それぞれの `version` キーは、`build.sbt` の場所により、
+特定のプロジェクトにスコープ付けされている。
+だが、三つの `build.sbt` とも同じビルド定義の一部だ。
+
+スタイルの選択:
+
+- 各サブプロジェクトのセッティングはそのベースディレクトリ直下の `*.sbt` ファイル内で宣言することができる。その場合、`build.sbt` は `lazy val foo = (project in file("foo"))` といった形で最小の project 宣言のみを行いセッティングは書かない。
+- 全てのプロジェクト宣言とセッティングをルートの `build.sbt` に書けば全てのビルド定義を 1つのファイルにまとめることができるので、その方法を推奨する。ただし、これは好みの問題だから、好きにやっていい。
+
+**注意**: サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
+`foo/project/Build.scala` は無視される。

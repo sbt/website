@@ -128,6 +128,21 @@ lazy val core = project.dependsOn(util)
 因为 `hello-foo` 项目定义了 `base = file("foo")`，它将会被包含在 foo 子目录中。
 它的源文件可以直接放在 `foo` 下，像 `foo/Foo.scala`，或者在 `foo/src/main/scala` 中。通常 sbt 的 [目录结构][Directories] 应用在 `foo` 目录下除了构建定义文件。
 
+### 交互式引导项目
+
+在 sbt 的命令行中，输入 `projects` 列出你的项目，执行 `project <projectname>` 可以选择当前项目。当你执行 task 像 `compile`，它会在当前项目上执行。
+所以你没有必要去编译 root 项目，你可以只编译子项目。
+
+你可以通过显示的指定项目 ID 在另一个项目上执行一个 task，例如 `subProjectID/compile`。
+
+### 通用代码
+
+在一个 `.sbt` 文件中的定义对于其他的 `.sbt` 文件不可见。为了在不同的 `.sbt` 文件中共享代码，在构建根目录下的 `project/` 目录下定义一个或多个 Scala 文件。
+
+参见 [组织构建][Organizing-Build] 获取详细内容。
+
+### Appendix: Subproject build definition files
+
 `foo` 中的任何 `.sbt` 文件，比如说 `foo/build.sbt`，将会和整个构建合并，但是在 `hello-foo` 项目的 scope 中。
 
 如果你的的整个项目都在 hello 中，尝试在 `hello/build.sbt`，`hello/bar/build.sbt` 和 `hello/foo/build.sbt` 中定义一个不同的版本（`version := "0.6"`）。
@@ -146,21 +161,11 @@ lazy val core = project.dependsOn(util)
 `hello-foo/*:version` 定义在 `hello/foo/build.sbt` 中，`hello-bar/*:version` 定义在 `hello/bar/build.sbt` 中，`hello/*:version` 定义在 `hello/build.sbt` 中。
 记住 [scoped keys 的语法][Scopes]。每个 `version` key 在对应的项目的 scope 中，基于 `build.sbt` 文件的位置。但是所有的三个 `build.sbt` 文件都只是整个构建定义的一部分。
 
-*每个项目的设置都可以放该项目基目录下的 `.sbt` 文件中*，然而 `.scala` 文件可以和上面展示的一样简单，列出项目和基目录。*没必要将设置放到 `.scala` 文件中。*
+Style choices:
 
-然而，为了将所有构建定义都放在一个项目目录下，你会发现将所有的设置都放在 `.scala` 中会干净很多。由你做主。
+- Each subproject's settings can go into `*.sbt` files in the base directory of that project,
+  while the root `build.sbt` declares only minimum project declarations in the form of `lazy val foo = (project in file("foo"))` without the settings.
+- We recommend putting all project declarations and settings in the root `build.sbt` file
+  in order to keep all build definition under a single file. However, it up to you.
 
 在子项目中，你不能有项目的子目录或者 `project/*.scala` 文件。`foo/project/Build.scala` 将会被忽略。
-
-### 交互式引导项目
-
-在 sbt 的命令行中，输入 `projects` 列出你的项目，执行 `project <projectname>` 可以选择当前项目。当你执行 task 像 `compile`，它会在当前项目上执行。
-所以你没有必要去编译 root 项目，你可以只编译子项目。
-
-你可以通过显示的指定项目 ID 在另一个项目上执行一个 task，例如 `subProjectID/compile`。
-
-### 通用代码
-
-在一个 `.sbt` 文件中的定义对于其他的 `.sbt` 文件不可见。为了在不同的 `.sbt` 文件中共享代码，在构建根目录下的 `project/` 目录下定义一个或多个 Scala 文件。
-
-参见 [组织构建][Organizing-Build] 获取详细内容。

@@ -207,14 +207,11 @@ for the changes on a build with many subprojects during
 development. Here's how to set all subprojects to `TrackIfMissing`.
 
 ```scala
-lazy val root = (project in file(".")).
-  aggregate(....).
-  settings(
-    inThisBuild(Seq(
-      trackInternalDependencies := TrackLevel.TrackIfMissing,
-      exportJars := true
-    ))
-  )
+ThisBuild / trackInternalDependencies := TrackLevel.TrackIfMissing
+ThisBuild / exportJars := true
+
+lazy val root = (project in file("."))
+  .aggregate(....)
 ```
 
 The `exportToInternal` setting allows the dependee subprojects to opt
@@ -225,8 +222,8 @@ used to determine the actual track level. Here's an example to opt-out
 one project:
 
 ```scala
-lazy val dontTrackMe = (project in file("dontTrackMe")).
-  settings(
+lazy val dontTrackMe = (project in file("dontTrackMe"))
+  .settings(
     exportToInternal := TrackLevel.NoTracking
   )
 ```
@@ -241,6 +238,26 @@ contained in the subdirectory foo. Its sources could be directly under
 `foo`, like `foo/Foo.scala`, or in `foo/src/main/scala`. The usual sbt
 [directory structure][Directories] applies underneath `foo` with the
 exception of build definition files.
+
+### Navigating projects interactively
+
+At the sbt interactive prompt, type `projects` to list your projects and
+`project <projectname>` to select a current project. When you run a task
+like `compile`, it runs on the current project. So you don't necessarily
+have to compile the root project, you could compile only a subproject.
+
+You can run a task in another project by explicitly specifying the
+project ID, such as `subProjectID/compile`.
+
+### Common code
+
+The definitions in `.sbt` files are not visible in other `.sbt` files. In
+order to share code between `.sbt` files, define one or more Scala files
+in the `project/` directory of the build root.
+
+See [organizing the build][Organizing-Build] for details.
+
+### Appendix: Subproject build definition files
 
 Any `.sbt` files in `foo`, say `foo/build.sbt`, will be merged with the build
 definition for the entire build, but scoped to the `hello-foo` project.
@@ -267,32 +284,12 @@ should get something like this (with whatever versions you defined):
 project, based on the location of the `build.sbt`. But all three `build.sbt`
 are part of the same build definition.
 
-*Each project's settings can go in `.sbt` files in the base directory of
-that project*, while the `.scala` file can be as simple as the one shown
-above, listing the projects and base directories. *There is no need to
-put settings in the `.scala` file.*
+Style choices:
 
-You may find it cleaner to put everything including settings in `.scala`
-files in order to keep all build definition under a single project
-directory, however. It's up to you.
+- Each subproject's settings can go into `*.sbt` files in the base directory of that project,
+  while the root `build.sbt` declares only minimum project declarations in the form of `lazy val foo = (project in file("foo"))` without the settings.
+- We recommend putting all project declarations and settings in the root `build.sbt` file
+  in order to keep all build definition under a single file. However, it up to you.
 
-You cannot have a project subdirectory or `project/*.scala` files in the
+**Note**: You cannot have a project subdirectory or `project/*.scala` files in the
 sub-projects. `foo/project/Build.scala` would be ignored.
-
-### Navigating projects interactively
-
-At the sbt interactive prompt, type `projects` to list your projects and
-`project <projectname>` to select a current project. When you run a task
-like `compile`, it runs on the current project. So you don't necessarily
-have to compile the root project, you could compile only a subproject.
-
-You can run a task in another project by explicitly specifying the
-project ID, such as `subProjectID/compile`.
-
-### Common code
-
-The definitions in `.sbt` files are not visible in other `.sbt` files. In
-order to share code between `.sbt` files, define one or more Scala files
-in the `project/` directory of the build root.
-
-See [organizing the build][Organizing-Build] for details.
