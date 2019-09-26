@@ -228,44 +228,6 @@ lazy val dontTrackMe = (project in file("dontTrackMe"))
 `foo/src/main/scala` 内に置かれる。
 ビルド定義ファイルを除いては、通常の sbt [ディレクトリ構造][Directories]が `foo` 以下に適用される。
 
-`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
-`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
-
-ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
-`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
-次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
-以下のように表示されるはずだ（定義したバージョンによるが）:
-
-```
-> show version
-[info] hello-foo/*:version
-[info] 	0.7
-[info] hello-bar/*:version
-[info] 	0.9
-[info] hello/*:version
-[info] 	0.5
-```
-
-`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
-`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
-`hello/*:version` は、`hello/build.sbt` 内で定義される。
-[スコープ付けされたキーの構文][Scopes]を復習しておこう。
-それぞれの `version` キーは、`build.sbt` の場所により、
-特定のプロジェクトにスコープ付けされている。
-だが、三つの `build.sbt` とも同じビルド定義の一部だ。
-
-`.scala` ファイルは、上に示したように、単にプロジェクトとそのベースディレクトリを列挙するだけの簡単なものにして、
-_それぞれのプロジェクトのセッティングは、そのプロジェクトのベースディレクトリ直下の
-`.sbt` ファイル内で宣言することができる_。
-_全てのセッティングを `.scala` ファイル内で宣言することは義務付けられいるわけではない。_
-
-ビルド定義の全てを単一の `project` ディレクトリ内の場所にまとめるために、
-`.scala` ファイル内にセッティングも含めてしまうほうが洗練されていると思うかもしれない。
-ただし、これは好みの問題だから、好きにやっていい。
-
-サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
-`foo/project/Build.scala` は無視される。
-
 ### プロジェクトの切り替え
 
 sbt インタラクティブプロンプトから、`projects` と入力することでプロジェクトの全リストが表示され、
@@ -280,3 +242,39 @@ sbt インタラクティブプロンプトから、`projects` と入力する�
 `.sbt` ファイルで定義された値は、他の `.sbt` ファイルからは見えない。 `.sbt` ファイル間でコードを共有するためには、 ベースディレクトリにある `project/` 配下に Scala ファイルを用意すればよい。
 
 詳細は[ビルドの整理][Organizing-Build]を参照。
+
+### 補足: サプブロジェクトビルド定義ファイル
+
+`foo` 内の全ての `.sbt` ファイル、例えば `foo/build.sbt` は、
+`hello-foo` プロジェクトにスコープ付けされた上で、ビルド全体のビルド定義に取り込まれる。
+
+ルートプロジェクトが `hello` にあるとき、`hello/build.sbt`、`hello/foo/build.sbt`、
+`hello/bar/build.sbt` においてそれぞれ別々のバージョンを定義してみよう（例: `version := "0.6"`）。
+次に、インタラクティブプロンプトで `show version` と打ち込んでみる。
+以下のように表示されるはずだ（定義したバージョンによるが）:
+
+```
+> show version
+[info] hello-foo/*:version
+[info]  0.7
+[info] hello-bar/*:version
+[info]  0.9
+[info] hello/*:version
+[info]  0.5
+```
+
+`hello-foo/*:version` は、`hello/foo/build.sbt` 内で定義され、
+`hello-bar/*:version` は、`hello/bar/build.sbt` 内で定義され、
+`hello/*:version` は、`hello/build.sbt` 内で定義される。
+[スコープ付けされたキーの構文][Scopes]を復習しておこう。
+それぞれの `version` キーは、`build.sbt` の場所により、
+特定のプロジェクトにスコープ付けされている。
+だが、三つの `build.sbt` とも同じビルド定義の一部だ。
+
+スタイルの選択:
+
+- 各サブプロジェクトのセッティングはそのベースディレクトリ直下の `*.sbt` ファイル内で宣言することができる。その場合、`build.sbt` は `lazy val foo = (project in file("foo"))` といった形で最小の project 宣言のみを行いセッティングは書かない。
+- 全てのプロジェクト宣言とセッティングをルートの `build.sbt` に書けば全てのビルド定義を 1つのファイルにまとめることができるので、その方法を推奨する。ただし、これは好みの問題だから、好きにやっていい。
+
+**注意**: サブプロジェクトは、`project` サブディレクトリや、`project/*.scala` ファイルを持つことができない。
+`foo/project/Build.scala` は無視される。

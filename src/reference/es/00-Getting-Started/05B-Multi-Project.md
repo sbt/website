@@ -242,6 +242,27 @@ Debido a que el proyecto `hello-foo` ha sido definido con `base = file("foo")`,
 [estructura de directorios][Directories] habitual se aplica a `foo` a excepción
 de los ficheros de definición de construcción.
 
+### Navegando por los proyectos interactivamente
+
+En el prompt interactivo de sbt, escribe `proyectos` para listar tus proyectos y
+`project <projectname>` para seleccionar el proyecto actual. Al ejecutar una
+tarea como `compile` ésta se ejecutará sobre el proyecto actual. Por eso no hay
+por qué compilar el proyecto raíz necesariamente, es posible compilar solamente
+un subproyecto.
+
+Puedes ejecutar una tarea en otro proyecto especificando explícitamente el ID de
+proyecto, como en `subproyecto/compile`.
+
+### Código común
+
+Las definiciones en los ficheros `.sbt` no son visibles en otros ficheros
+`.sbt`. Para poder compartir código entre ficheros `.sbt` hay que definir uno o
+más ficheros de Scala en el directorio `project/` en la construcción raíz.
+
+Para más información ver [Organizando la construcción][Organizing-Build].
+
+### Appendix: Subproject build definition files
+
 Cualquier fichero `.sbt` en `foo`, por ejemplo `foo/build.sbt`, será mezclado
 con la definición de construcción para la construcción principal, pero con
 ámbito del proyecto `hello-foo`.
@@ -268,33 +289,12 @@ debería de tener este aspecto (respetando las versiones que hayas definido):
 ámbito de un proyecto, basado en la ubicación de `build.sbt`. Pero los tres
 `build.sbt` forman parte de la misma definición de construcción.
 
-La configuración de cada proyecto puede ir en ficheros `.sbt` en el directorio
-base de dicho proyecto*, mientras que los ficheros `.scala` pueden ser tan
-simples como el mostrado anteriormente, listando los proyectos y los directorios
-base. *No hay necesidad de poner ninguna configuración en ficheros `.scala`.*
+Style choices:
 
-Puede que quede más claro ponerlo todo, incluyendo la configuración, en ficheros
-`.scala` para dejar la definición de construcción bajo un único directorio de
-proyecto. Sin embargo, tú decides.
+- Each subproject's settings can go into `*.sbt` files in the base directory of that project,
+  while the root `build.sbt` declares only minimum project declarations in the form of `lazy val foo = (project in file("foo"))` without the settings.
+- We recommend putting all project declarations and settings in the root `build.sbt` file
+  in order to keep all build definition under a single file. However, it up to you.
 
 No puedes tener un subdirectorio de proyecto o ficheros `project/*.scala` en los
 subproyectos. `foo/project/Build.scala` sería ignorado.
-
-### Navegando por los proyectos interactivamente
-
-En el prompt interactivo de sbt, escribe `proyectos` para listar tus proyectos y
-`project <projectname>` para seleccionar el proyecto actual. Al ejecutar una
-tarea como `compile` ésta se ejecutará sobre el proyecto actual. Por eso no hay
-por qué compilar el proyecto raíz necesariamente, es posible compilar solamente
-un subproyecto.
-
-Puedes ejecutar una tarea en otro proyecto especificando explícitamente el ID de
-proyecto, como en `subproyecto/compile`.
-
-### Código común
-
-Las definiciones en los ficheros `.sbt` no son visibles en otros ficheros
-`.sbt`. Para poder compartir código entre ficheros `.sbt` hay que definir uno o
-más ficheros de Scala en el directorio `project/` en la construcción raíz.
-
-Para más información ver [Organizando la construcción][Organizing-Build].
