@@ -7,7 +7,7 @@ Resolvers
 
 ### Maven resolvers
 
-Resolvers for Maven2 repositories are added as follows:
+Resolvers for Maven repositories are added as follows:
 
 ```scala
 resolvers +=
@@ -17,10 +17,25 @@ resolvers +=
 This is the most common kind of user-defined resolvers. The rest of this
 page describes how to define other types of repositories.
 
+### Local Maven resolvers
+
+Following adds a resolver to the Maven local repository:
+
+```scala
+resolvers += Resolver.mavenLocal
+```
+
+To add a resolver for a custom location:
+
+```scala
+resolvers += MavenCache("local-maven", file("path/to/maven-repo/releases"))
+```
+
 ### Predefined resolvers
 
 A few predefined repositories are available and are listed below
 
+-   `Resolver.mavenLocal` This is the local Maven repository.
 -   `DefaultMavenRepository` This is the main Maven repository at
     <https://repo1.maven.org/maven2/> and is included by default
 -   `JavaNet1Repository` This is the Maven 1 repository at
