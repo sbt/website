@@ -15,6 +15,7 @@ object SiteMap {
 
   def generate(
       repoBase: File,
+      documentationBase: File,
       remoteBase: URI,
       gzip: Boolean,
       entry: (File, String) => Option[Entry],
@@ -72,16 +73,12 @@ object SiteMap {
 
     def isSymlink(f: File) = f.getCanonicalFile != f.getAbsoluteFile
 
-    // 1. First, split up top-level directories into symlinks and normal directories.
-    val (symlinks, normal) = (repoBase * DirectoryFilter).get.partition(dir => isSymlink(dir))
-    log.debug("Detected symlinks: " + symlinks.mkString("\n\t", "\n\t", ""))
-
-    // 2. For each top-level directory, generate a sub-sitemap.
+    // generate a sub-sitemap for landing pages and /1.x/
     val subMaps =
-      singleSiteMap(repoBase, (repoBase * "*.html") +++ (symlinks ** "*.html")).toList ++
-        normal.flatMap(dir => singleSiteMap(dir, dir ** "*.html").toList)
+      singleSiteMap(repoBase, repoBase * "*.html").toList ++
+        singleSiteMap(documentationBase, documentationBase ** "*.html").toList
 
-    // 3. The resulting sub-sitemaps are aggregated as the root sitemap.
+    // The resulting sub-sitemaps are aggregated as the root sitemap.
     val index = siteMapIndex(repoBase, subMaps)
     (index, subMaps)
   }
