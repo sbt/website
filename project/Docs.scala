@@ -31,6 +31,9 @@ object Docs {
   }
   lazy val targetSbtFullVersion = "1.3.2"
 
+  // to avoid duplicates, tell Google to only index /1.x/**
+  lazy val siteMapDirectoryName = "1.x"
+
   lazy val siteEmail = settingKey[String]("")
 
   val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
@@ -319,7 +322,15 @@ object Docs {
 
     if (isGenerateSiteMap.value && !isBetaBranch) {
       val (index, siteMaps) =
-        SiteMap.generate(repo, sbtSiteBase, gzip = true, siteEntry, lastModified, s.log)
+        SiteMap.generate(
+          repo,
+          repo / siteMapDirectoryName,
+          sbtSiteBase,
+          gzip = true,
+          siteEntry,
+          lastModified,
+          s.log
+        )
       s.log.info(s"Generated site map index: $index")
       s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
     }
@@ -357,6 +368,7 @@ object Docs {
     // snapshots docs are very low priority
     // the manual redirects from the old version of the site have no priority at all
     relPath match {
+      case OneX                     => Some(Entry("daily", 0.9))
       case LandingPage(_, _)        => Some(Entry("weekly", 1.0))
       case Docs(ReleasePath)        => Some(Entry("weekly", 0.9))
       case Docs(OneX)               => Some(Entry("daily", 0.8))
@@ -379,6 +391,7 @@ object Docs {
   // some dates for old versions.
   def lastModified(file: File, relPath: String): LastModified = {
     relPath match {
+      case OneX                     => LastModified(new Date(file.lastModified))
       case LandingPage(_, _)        => LastModified(new Date(file.lastModified))
       case Docs(ReleasePath)        => LastModified(new Date(file.lastModified))
       case Docs(OneX)               => LastModified(new Date(file.lastModified))
