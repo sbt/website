@@ -350,6 +350,7 @@ object Docs {
   val LandingPage = """(\w+)\.(html|xml|xml\.gz)""".r
   val Zero13 = "0.13"
   val OneX = "1.x"
+  val OneXStar = """1\.x(/.*)?""".r
   val ApiOrSxr = """([^/]+)/(api|sxr)/.*""".r
   val Docs = """([^/]+)/docs/.*""".r
   val OneStar = """1\.\d+\..*""".r
@@ -368,7 +369,7 @@ object Docs {
     // snapshots docs are very low priority
     // the manual redirects from the old version of the site have no priority at all
     relPath match {
-      case OneX                     => Some(Entry("daily", 0.9))
+      case OneXStar(_)              => Some(Entry("daily", 0.9))
       case LandingPage(_, _)        => Some(Entry("weekly", 1.0))
       case Docs(ReleasePath)        => Some(Entry("weekly", 0.9))
       case Docs(OneX)               => Some(Entry("daily", 0.8))
@@ -389,25 +390,10 @@ object Docs {
 
   // git doesn't preserve dates on files, so we are going to hard-code
   // some dates for old versions.
+  // TODO: look into https://stackoverflow.com/questions/2179722/checking-out-old-file-with-original-create-modified-timestamps
   def lastModified(file: File, relPath: String): LastModified = {
-    relPath match {
-      case OneX                     => LastModified(new Date(file.lastModified))
-      case LandingPage(_, _)        => LastModified(new Date(file.lastModified))
-      case Docs(ReleasePath)        => LastModified(new Date(file.lastModified))
-      case Docs(OneX)               => LastModified(new Date(file.lastModified))
-      case Docs(Zero13)             => LastModified(new Date(file.lastModified))
-      case ApiOrSxr(ReleasePath, _) => LastModified(new Date(file.lastModified))
-      case ApiOrSxr(OneX, _)        => LastModified(new Date(file.lastModified))
-      case ApiOrSxr(Zero13, _)      => LastModified(new Date(file.lastModified))
-      case ApiOrSxr(OneStar(), _)   => LastModified(new Date(file.lastModified))
-      case Snapshot(_)              => LastModified(new Date(file.lastModified))
-      case Zero13Star()             => LastModified(new GregorianCalendar(2017, 7 - 1, 1).getTime)
-      case Zero12Star()             => LastModified(new GregorianCalendar(2013, 7 - 1, 1).getTime)
-      case Old077()                 => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
-      case Docs(_)                  => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
-      case ApiOrSxr(_, _)           => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
-      case _                        => LastModified(new GregorianCalendar(2012, 10 - 1, 1).getTime)
-    }
+    if (file.exists) LastModified(new Date(file.lastModified))
+    else LastModified(new GregorianCalendar(2017, 7 - 1, 1).getTime)
   }
 
   def gitConfig(dir: File, email: String, git: GitRunner, log: Logger): Unit =
