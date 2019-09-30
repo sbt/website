@@ -289,7 +289,7 @@ Style choices:
 - Each subproject's settings can go into `*.sbt` files in the base directory of that project,
   while the root `build.sbt` declares only minimum project declarations in the form of `lazy val foo = (project in file("foo"))` without the settings.
 - We recommend putting all project declarations and settings in the root `build.sbt` file
-  in order to keep all build definition under a single file. However, it up to you.
+  in order to keep all build definition under a single file. However, it's up to you.
 
 **Note**: You cannot have a project subdirectory or `project/*.scala` files in the
 sub-projects. `foo/project/Build.scala` would be ignored.
