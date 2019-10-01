@@ -4,7 +4,7 @@ out: Howto-Dynamic-Input-Task.html
 
 ### Defining a dynamic input task with Def.inputTaskDyn
 
-Let's suppose that there's a task already that does the bowser opening called `openbrowser` because of a plugin. Here's how we can sequence a task after an input tasks.
+Let's suppose that there's a task already that does the browser opening called `openbrowser` because of a plugin. Here's how we can sequence a task after an input tasks.
 
 #### build.sbt v1
 
