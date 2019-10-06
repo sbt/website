@@ -61,6 +61,8 @@ simple implementation of `buildObjects`:
 ```scala
 import scala.sys.process._
 import java.nio.file.{ Files, Path }
+import sbt.nio._
+import sbt.nio.Keys._
 
 val buildObjects = taskKey[Seq[Path]]("Compiles c files into object files.")
 buildObjects / fileInputs += baseDirectory.value.toGlob / "src" / "*.c"
@@ -98,6 +100,8 @@ since the last time the task successfully completed. Using the
 ```scala
 import scala.sys.process._
 import java.nio.file.{ Files, Path }
+import sbt.nio._
+import sbt.nio.Keys._
 
 val buildObjects = taskKey[Seq[Path]]("Generate object files from c sources")
 buildObjects / fileInputs += baseDirectory.value.toGlob / "src" / "*.c"
