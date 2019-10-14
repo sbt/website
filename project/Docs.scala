@@ -29,7 +29,7 @@ object Docs {
     if (isBetaBranch) "1.x-beta"
     else "1.x"
   }
-  lazy val targetSbtFullVersion = "1.3.2"
+  lazy val targetSbtFullVersion = "1.3.3"
 
   // to avoid duplicates, tell Google to only index /1.x/**
   lazy val siteMapDirectoryName = "1.x"
