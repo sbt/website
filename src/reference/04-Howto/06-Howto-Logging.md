@@ -288,7 +288,7 @@ extraLoggers := {
 
   def loggerNameForKey( key : sbt.Def.ScopedKey[_] ) = s"""reverse.${key.scope.task.toOption.getOrElse("<unknown>")}"""
 
-  class ReverseConsoleAppender( key : ScopedKey[_] ) extends AbstractAppender(
+  class ReverseConsoleAppender( key : ScopedKey[_] ) extends AbstractAppender (
     loggerNameForKey( key ), // name : String
     null,                    // filter : org.apache.logging.log4j.core.Filter
     null,                    // layout : org.apache.logging.log4j.core.Layout[ _ <: Serializable]
@@ -298,7 +298,7 @@ extraLoggers := {
     this.start() // the log4j2 Appender must be started, or it will fail with an Exception
 
     override def append( event : LogEvent ) : Unit = {
-      val stringToLog = {
+      val output = {
         def forUnexpected( message : Message ) = s"[${this.getName()}] Unexpected: ${message.getFormattedMessage()}"
         event.getMessage() match {
 	   case om : ObjectMessage => { // what we expect
@@ -311,7 +311,7 @@ extraLoggers := {
 	}
       }
       System.out.synchronized { // sbt adopts a convention of acquiring System.out's monitor printing to the console
-         println( stringToLog )
+         println( output )
       }
     }
   }
