@@ -50,7 +50,7 @@ shows the two most important:
 
 -   `projectSettings` - These are settings specific to a project. They
     are specific to a *particular subproject* in the build. A plugin
-    may be contributing its settings to more than on project, in which
+    may be contributing its settings to more than one project, in which
     case the values are duplicated for each project. You add project
     specific settings, eg. in `project/build.scala`:
 
