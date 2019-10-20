@@ -12,6 +12,10 @@ import com.typesafe.sbt.site.SitePlugin
 import SitePlugin.autoImport._
 
 object Docs {
+  lazy val targetSbtFullVersion = "1.3.3"
+  lazy val sbtVersionForScalaDoc = "1.3.3"
+  lazy val sbtWindowsBuild = "1.3.3"
+
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
 
@@ -29,7 +33,6 @@ object Docs {
     if (isBetaBranch) "1.x-beta"
     else "1.x"
   }
-  lazy val targetSbtFullVersion = "1.3.3"
 
   // to avoid duplicates, tell Google to only index /1.x/**
   lazy val siteMapDirectoryName = "1.x"
@@ -337,7 +340,7 @@ object Docs {
 
     // symlink API
     if (!isBetaBranch) {
-      symlink(s"../$targetSbtFullVersion/api/", apiLink, s.log)
+      symlink(s"../$sbtVersionForScalaDoc/api/", apiLink, s.log)
       symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     }
     repo

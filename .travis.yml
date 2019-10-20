@@ -1,25 +1,8 @@
 # Use Ubuntu 14.04
 dist: trusty
-
 sudo: false
-
 language: ruby
-
-rvm: 2.4.4
-
-cache:
-  - apt
-  - bundler
-  - directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt
-
 jdk: openjdk8
-
-install:
-  - gem install nanoc:4.0.2
-  - gem install redcarpet
-  - gem install nokogiri
 
 addons:
   apt:
@@ -46,3 +29,10 @@ after_success: .travis/publish-site.sh
 before_cache:
   - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
   - find $HOME/.sbt  -name "*.lock"               -delete
+
+cache:
+  - apt
+  - directories:
+    - $HOME/.cache/coursier/v1
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt

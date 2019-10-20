@@ -3,33 +3,42 @@ layout: defaultIBMbranded
 title: Download
 ---
 
-<div class="arc_mac">
-<h2>macOS</h2>
+@@@ div { .arc_mac}
 
-<h3>Homebrew</h3>
-<pre>
+macOS
+-----
+
+### Homebrew
+
+```
 $ brew install sbt
-</pre>
+```
 
-<h3>SDKMAN!</h3>
-<pre>
+### SDKMAN!
+
+```
 $ sdk install sbt
-</pre>
-</div>
+```
 
-<div class="arc_windows">
-<h2>Windows</h2>
+@@@
 
-<a href="https://piccolo.link/sbt-<%= @config[:windowsBuild] %>.msi" class="btn" role="button">sbt-<%= @config[:windowsBuild] %>.msi</a>
+@@@ div { .arc_windows }
 
-<h3>Scoop</h3>
-<pre>
+Windows
+-------
+
+- [sbt-$windowsBuild$.msi](https://piccolo.link/sbt-$windowsBuild$.msi)
+
+### Scoop
+
+```
 > scoop install sbt
-</pre>
+```
 
-</div>
+@@@
 
-<div class="arc_linux">
+@@@ div { .arc_linux }
+
   <div class="distro_debian">
   	<h2>Linux (deb)</h2>
 <pre>
@@ -49,21 +58,19 @@ sudo yum install sbt
 </pre>
   </div>
 
-  <div class="distro_gentoo">
-  	<h2>Gentoo</h2>
-  	See <a href="<%= @config[:sbtBinaryVersion] %>/docs/Installing-sbt-on-Linux.html#Gentoo">instruction for ebuilds</a> (third-party package).
-  </div>
-</div>
+@@@
 
-<div class="arc_all">
-<h2>All platforms</h2>
+All platforms
+-------------
 
-<a href="https://piccolo.link/sbt-<%= @config[:sbtVersion] %>.zip" class="btn" role="button">sbt-<%= @config[:sbtVersion] %>.zip</a>
+@@@vars
 
-<a href="https://piccolo.link/sbt-<%= @config[:sbtVersion] %>.tgz" class="btn" role="button">sbt-<%= @config[:sbtVersion] %>.tgz</a>
-</div>
+- [sbt-$sbtVersion$.zip](https://piccolo.link/sbt-$sbtVersion$.zip)
+- [sbt-$sbtVersion$.tgz](https://piccolo.link/sbt-$sbtVersion$.tgz)
 
-<h3>Previous releases</h3>
+@@@
+
+### Previous releases
 
 <h4>1.x</h4>
 <ul>
