@@ -7,7 +7,7 @@ Documentation
 
 - [sbt by Example](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) inspired by William Narmontas's tutorial
 - [sbt documentation](1.x/docs/index.html) ([pdf](1.x/docs/sbt-reference.pdf))
-- [sbt API](<%= @config[:sbtVersionForScalaDoc] %>/api/sbt/index.html)
+- [sbt API]($sbtVersionForScalaDoc$/api/sbt/index.html)
 
 Talks
 -----

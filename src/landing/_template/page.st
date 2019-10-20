@@ -2,79 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>sbt - The interactive build tool</title>
+    <title>sbt - $title$</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<%= @items['/bootstrap_style/'].path %>">
-    <link rel="stylesheet" href="<%= @items['/bootstrap-theme/'].path %>">
-    <link rel="stylesheet" href="<%= @items['/stylesheet/'].path %>?v2019-10-15">
+    <link rel="stylesheet" href="assets/bootstrap_style.min.css">
+    <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="assets/stylesheet.css?v2019-10-15">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link rel='shortcut icon' href="<%= @items['/favicon/'].path %>" />
-    <link rel="icon" type="image/png" sizes="32x32" href="<%= @items['/favicon-32x32/'].path %>">
-    <link rel="icon" type="image/png" sizes="96x96" href="<%= @items['/favicon-96x96/'].path %>">
-    <link rel="icon" type="image/png" sizes="16x16" href="<%= @items['/favicon-16x16/'].path %>">
-    <!-- you don't need to keep this, but it's cool for stats! -->
-    <meta name="generator" content="nanoc <%= Nanoc::VERSION %>">
-    <meta name="google-site-verification" content="I28z-8Rg5JifsOR9NpTD9C9dFYutH_Dz8QWOHUDs6lg">
+    <link rel='shortcut icon' href="assets/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
 
     <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) start -->
     <script src="https://optanon.blob.core.windows.net/consent/d759c5db-6821-46e0-a988-6bc699efb74e.js" type="text/javascript" charset="UTF-8"></script>
     <script type="text/javascript">
-      function OptanonWrapper() { 
+      function OptanonWrapper() {
         //callback when OneTrust is loaded and ready
       }
     </script>
     <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) end -->
-    
   </head>
-  <body class="landing">
+  <body class="default">
     <header>
       <nav>
         <div class="container">
           <div class="row">
             <div class="col-md-3">
               <div class="logo">
-                <a href="<%= @items['/'].path %>index.html">
-                  <img src="<%= @items['/sbt-logo/'].path %>" alt="sbt">
+                <a href="/index.html">
+                  <img src="assets/sbt-logo.svg" alt="sbt">
                 </a>
               </div>
             </div>
             <div class="col-md-9">
               <div class="nav" id="topbar">
-                <a href="<%= @items['/learn/'].path %>">Learn</a>
-                <a href="<%= @items['/download/'].path %>">Download</a>
-                <a href="<%= @items['/support/'].path %>">Support</a>
-                <a href="<%= @items['/community/'].path %>">Get Involved</a>
-                <a id="source-code" href="https://github.com/sbt/sbt"><img src="<%= @items['/github-logo-teal/'].path %>" alt="Source code" class="social"></a>
-                <a id="twitter" href="https://twitter.com/scala_sbt"><img src="<%= @items['/twitter-logo-teal/'].path %>" alt="sbt on Twitter" class="social"></a>
+                <a href="/learn.html">Learn</a>
+                <a href="/download.html">Download</a>
+                <a href="/support.html">Support</a>
+                <a href="/community.html">Get Involved</a>
+                <a id="source-code" href="https://github.com/sbt/sbt"><img src="assets/github-logo-teal.svg" alt="Source code" class="social"></a>
+                <a id="twitter" href="https://twitter.com/scala_sbt"><img src="assets/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>
               </div>
             </div>
           </div>
         </div>
       </nav>
-      <div class="header-content">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div id="main" class="text-center">
-                <h1>The interactive build tool</h1>
-                <span class="statement">
-                Define your tasks in Scala. Run them in parallel from sbt's interactive shell.
-                </span><br><br>
-                <a href="download.html" class="btn" role="button" style="margin-right: 2em">Download</a>
+    </header>
 
-                <a href="/1.x/docs/" class="btn" role="button" style="margin-left: 2em">Documentation</a>
-              </div>
-            </div>
+    <div class="page-title">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>$title$</h1>
           </div>
         </div>
       </div>
-    </header>
+    </div>
     <div class="fw-wrapper white">
       <div class="container content">
         <div class="row">
-          <div class="col-md-12">
-            <div id="main" class="text-center">
-              <%= yield %>
+          <div class="col-md-8">
+            <div id="main">
+              $page.content$
             </div>
           </div>
         </div>
@@ -116,25 +105,25 @@
         <div class="row">
           <div class="col-md-8 sbt">
             <nav>
-              <a href="<%= @items['/'].path %>index.html">
-                <img src="<%= @items['/sbt-logo-reverse/'].path %>" alt="sbt">
+              <a href="/index.html">
+                <img src="assets/sbt-logo-reverse.svg" alt="sbt">
               </a>
-              <a href="<%= @items['/learn/'].path %>">Learn</a>
-              <a href="<%= @items['/download/'].path %>">Download</a>
-              <a href="<%= @items['/community/'].path %>">Get Involved</a>
+              <a href="/learn.html">Learn</a>
+              <a href="/download.html">Download</a>
+              <a href="/community.html">Get Involved</a>
             </nav>
             <p class="legal">
               &copy; 2016-2018 Lightbend, Inc. |
-              <a href="https://www.lightbend.com/legal/licenses" target="_blank">Licenses</a> | 
-              <a href="https://www.lightbend.com/legal/terms" target="_blank">Terms</a> | 
-              <a href="https://www.lightbend.com/legal/privacy" target="_blank">Privacy Policy</a> | 
-              <a href="<%= @items['/cookie/'].path %>">Cookie Listing</a> | 
+              <a href="https://www.lightbend.com/legal/licenses" target="_blank">Licenses</a> |
+              <a href="https://www.lightbend.com/legal/terms" target="_blank">Terms</a> |
+              <a href="https://www.lightbend.com/legal/privacy" target="_blank">Privacy Policy</a> |
+              <a href="cookie.html">Cookie Listing</a> |
               <a class="optanon-toggle-display">Cookie Settings</a>
             </p>
           </div>
           <div class="col-md-4 text-right ts">
             <a href="https://www.lightbend.com">
-              <img src="<%= @items['/lightbend_reverse/'].path %>" alt="Lightbend, Inc.">
+              <img src="assets/lightbend_reverse.png" alt="Lightbend, Inc.">
             </a>
 
           </div>
@@ -142,8 +131,9 @@
       </div>
     </footer>
     <!-- Placed at the end -->
-    <script src="<%= @items['/jquery/'].path %>" type="text/javascript"></script>
-    <script src="<%= @items['/bootstrap/'].path %>" type="text/javascript"></script>
+    <script src="assets/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/arc.js"></script>
     <script type="text/plain" class="optanon-category-2" async>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -157,9 +147,9 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-23127719-1', 'typesafe.com', {'allowLinker': true, 'name': 'tsTracker'});
+      ga('create', 'UA-23127719-1', 'lightbend.com', {'allowLinker': true, 'name': 'tsTracker'});
       ga('tsTracker.require', 'linker');
-      ga('tsTracker.linker:autoLink', ['typesafe.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
+      ga('tsTracker.linker:autoLink', ['lightbend.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
       ga('tsTracker.send', 'pageview');
     </script>
   </body>

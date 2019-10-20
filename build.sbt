@@ -9,12 +9,30 @@ ThisBuild / scalafmtOnCompile := true
 
 lazy val root = (project in file("."))
   .enablePlugins(
-    (if (!isBetaBranch) Seq(NanocPlugin) else Seq()) ++
+    (if (!isBetaBranch) Seq(ParadoxSitePlugin) else Seq()) ++
       Seq(LowTechSnippetPamfletPlugin, ScriptedPlugin): _*
   )
   .settings(
     name := "website",
     siteEmail := "eed3si9n" + "@gmail.com",
+    // Landing
+    Compile / paradox / sourceDirectory := baseDirectory.value / "src" / "landing",
+    Compile / paradoxTheme / sourceDirectory := (Compile / paradox / sourceDirectory).value / "_template",
+    paradoxProperties ++= Map(
+      "sbtVersion" -> Docs.targetSbtFullVersion,
+      "windowsBuild" -> Docs.sbtWindowsBuild,
+      "sbtVersionForScalaDoc" -> Docs.sbtVersionForScalaDoc,
+    ),
+    Compile / paradoxRoots := List(
+      "404.html",
+      "community.html",
+      "cookie.html",
+      "documentation.html",
+      "download.html",
+      "index.html",
+      "learn.html",
+      "support.html",
+    ),
     // Reference
     sourceDirectory in Pamflet := baseDirectory.value / "src" / "reference",
     siteSubdirName in Pamflet := s"""$targetSbtBinaryVersion/docs""",
