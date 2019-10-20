@@ -246,9 +246,13 @@ logBuffered := false
 ### Add a custom logger
 
 
-The setting `extraLoggers` can be used to add custom loggers. A custom
-logger should implement [AbstractLogger]. `extraLoggers` is a function
-`ScopedKey[_] => Seq[AbstractLogger]`. This means that it can provide
+The setting `extraLoggers` can be used to add custom loggers. Internally, sbt
+makes use of the [log4j2 library](https://logging.apache.org/log4j/2.x/), so a custom
+logger should implement [`org.apache.logging.log4j.core.Appender`](https://logging.apache.org/log4j/2.x/log4j-core/apidocs/org/apache/logging/log4j/core/Appender.html),
+usually by extending [`AbstractAppender`](https://logging.apache.org/log4j/2.x/log4j-core/apidocs/org/apache/logging/log4j/core/appender/AbstractAppender.html).
+
+`extraLoggers` is a function
+`ScopedKey[_] => Seq[Appender]`. This means that it can provide
 different logging based on the task that requests the logger.
 
 ```scala
@@ -263,6 +267,72 @@ extraLoggers := {
 Here, we take the current function `currentFunction` for the setting and
 provide a new function. The new function prepends our custom logger to
 the ones provided by the old function.
+
+An `Appender` in log4j2 appends a [`LogEvent`](https://logging.apache.org/log4j/2.x/log4j-core/apidocs/org/apache/logging/log4j/core/LogEvent.html),
+whose core internally is a [`Message`](https://logging.apache.org/log4j/2.x/log4j-api/apidocs/org/apache/logging/log4j/message/Message.html). There can
+be many types of Message, but sbt generates events containing instances of [`ObjectMessage`](https://logging.apache.org/log4j/2.x/log4j-api/apidocs/org/apache/logging/log4j/message/ObjectMessage.html),
+containing a payload that can be retrieved by calling [`getParameter()`](https://logging.apache.org/log4j/2.x/log4j-api/apidocs/org/apache/logging/log4j/message/ObjectMessage.html#getParameter--).
+
+The payload emitted by sbt logging is an instance of [`StringEvent`](https://github.com/sbt/util/blob/develop/internal/util-logging/src/main/contraband-scala/sbt/internal/util/StringEvent.scala),
+which contains `String` fields including `message` and `level`.
+
+Putting all that together, here's a (completely useless!) example of an extra logger that logs messages from tasks in reverse to the console:
+
+```scala
+extraLoggers := {
+  import org.apache.logging.log4j.core.LogEvent;
+  import org.apache.logging.log4j.core.appender.AbstractAppender
+  import org.apache.logging.log4j.message.{Message,ObjectMessage}
+
+  import sbt.internal.util.StringEvent
+
+  def loggerNameForKey( key : sbt.Def.ScopedKey[_] ) = s"""reverse.${key.scope.task.toOption.getOrElse("<unknown>")}"""
+
+  class ReverseConsoleAppender( key : ScopedKey[_] ) extends AbstractAppender (
+    loggerNameForKey( key ), // name : String
+    null,                    // filter : org.apache.logging.log4j.core.Filter
+    null,                    // layout : org.apache.logging.log4j.core.Layout[ _ <: Serializable]
+    false                    // ignoreExceptions : Boolean
+  ) {
+
+    this.start() // the log4j2 Appender must be started, or it will fail with an Exception
+
+    override def append( event : LogEvent ) : Unit = {
+      val output = {
+        def forUnexpected( message : Message ) = s"[${this.getName()}] Unexpected: ${message.getFormattedMessage()}"
+        event.getMessage() match {
+	   case om : ObjectMessage => { // what we expect
+	     om.getParameter() match {
+	       case se : StringEvent => s"[${this.getName()} - ${se.level}] ${se.message.reverse}"
+	       case other            => forUnexpected( om )
+	     }
+	   }
+	   case unexpected : Message => forUnexpected( unexpected )
+	}
+      }
+      System.out.synchronized { // sbt adopts a convention of acquiring System.out's monitor printing to the console
+         println( output )
+      }
+    }
+  }
+
+  val currentFunction = extraLoggers.value
+  (key: ScopedKey[_]) => {
+     new ReverseConsoleAppender(key) +: currentFunction(key)
+  }
+}
+```
+
+Now, if we execute a task that logs messages, we should see our logger invoked:
+
+```
+sbt:sbt-logging-example> update
+[info] Updating ...
+[reverse.update - info] ... gnitadpU
+[info] Done updating.
+[reverse.update - info] .gnitadpu enoD
+[success] Total time: 0 s, completed Oct 16, 2019 5:22:22 AM
+```
 
 <a name="log"></a>
 
