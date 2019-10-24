@@ -25,10 +25,11 @@ increased speed across a team.
 ![image](files/proxy-cloud-setup.png)
 
 There are many good proxy repository solutions out there, with the big
-three being (in alphabetical order):
+four being (in alphabetical order):
 
 -   [Archiva](http://archiva.apache.org/)
 -   [Artifactory](http://www.jfrog.com/home/v_artifactory_opensource_overview)
+-   [CloudRepo](https://www.cloudrepo.io)
 -   [Nexus](http://www.sonatype.org/nexus/)
 
 Once you have a proxy repository installed and configured, then it's
