@@ -546,7 +546,7 @@ or a continuous test like `~testQuick`.
 You can use the sbt `new` command to quickly setup a simple "Hello world" build.
 
 ```
-\$ sbt new sbt/scala-seed.g8
+\$ sbt new scala/scala-seed.g8
 ....
 A minimal Scala project.
 
