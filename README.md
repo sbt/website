@@ -41,6 +41,18 @@ If you're running ubuntu, you'll need to also install ruby-dev for the native-co
 $ sudo apt-get install ruby-dev
 ```
 
+Also, if you're on ubuntu you might see an error like this:
+
+```
+zlib is missing; necessary for building libxml2
+```
+
+If this is the case, run this:
+
+```
+$ sudo apt-get install zlib1g-dev
+```
+
 ### Full setup
 
 The pdf generation is optional, and requires the following additional steps.
