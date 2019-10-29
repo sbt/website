@@ -41,21 +41,21 @@ Windows
 
   <div class="distro_debian">
   	<h2>Linux (deb)</h2>
-<pre>
+```
 echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
 curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
 sudo apt-get update
 sudo apt-get install sbt
-</pre>
+```
   </div>
 
   <div class="distro_redhat">
   	<h2>Linux (rpm)</h2>
-<pre>
+```
 curl https://bintray.com/sbt/rpm/rpm &gt; bintray-sbt-rpm.repo
 sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
 sudo yum install sbt
-</pre>
+```
   </div>
 
 @@@
