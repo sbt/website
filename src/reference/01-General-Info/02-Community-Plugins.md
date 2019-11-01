@@ -129,6 +129,7 @@ your plugin to the list.
   next version bump based on patterns of your commit messase since last release. <!-- 2 stars -->
 - [sbt-gcs](https://github.com/saint1991/sbt-gcs): manage objects on Google Cloud Storage. <!-- 1 star -->
 - [sbt-sourcebundler](https://github.com/kotobotov/sbt-sourcebundler): merge all source code into one scala file. <!-- 1 star -->
+- [sbt-kubeyml](https://github.com/vaslabs/sbt-kubeyml): Create a typesafe kubernetes Deployment based on your project settings
 
 #### Deployment integration plugins
 
