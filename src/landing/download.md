@@ -52,7 +52,7 @@ sudo apt-get install sbt
   <div class="distro_redhat">
   	<h2>Linux (rpm)</h2>
 ```
-curl https://bintray.com/sbt/rpm/rpm &gt; bintray-sbt-rpm.repo
+curl https://bintray.com/sbt/rpm/rpm > bintray-sbt-rpm.repo
 sudo mv bintray-sbt-rpm.repo /etc/yum.repos.d/
 sudo yum install sbt
 ```
