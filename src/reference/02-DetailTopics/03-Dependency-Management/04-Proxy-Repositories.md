@@ -90,11 +90,11 @@ with file contents
 
 If the above does not work for your system, then another approach is to explicitly provide the boot credentials via:
 
-    -Dsbt.boot.credentials="\$HOME/.ivy2/credentials"
+    -Dsbt.boot.credentials="\$HOME/.ivy2/.credentials"
   
 As well as add the credentials to your build file directly:
 
-    credentials += Credentials(Path.userHome / ".ivy2" / "credentials")
+    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
     
 
 #### Launcher Script
