@@ -318,7 +318,7 @@ libraryDependencies +=
   "org.apache.felix" % "org.apache.felix.framework" % "1.8.0" withSources() withJavadoc()
 ```
 
-Note that this is not transitive. Use the `update-*classifiers` tasks
+Note that this is not transitive. Use the `update*Classifiers` tasks
 for that.
 
 ##### Extra Attributes
