@@ -208,7 +208,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.boot.directory</tt></td>
     <td>Directory</td>
     <td><tt>~/.sbt/boot</tt></td>
-    <td>Path to shared boot directory.</td>
+    <td>Path to shared boot directory.  You should define <tt>sbt.boot.directory</tt> explicitly if you are using sbt in a CI environment and want to cache sbt boot classes between runs.</td>
   </tr>
 
   <tr>
@@ -226,7 +226,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.ci</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt> (unless then env var <tt>BUILD_NUMBER</tt> is set)</td>
-    <td>For continuous integration environments. Supress supershell and color.</td>
+    <td>For continuous integration environments. Suppress supershell and color.</td>
   </tr>
 
   <tr>
@@ -254,11 +254,19 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
   </tr>
 
   <tr>
+    <td><tt>sbt.coursier.home</tt></td>
+    <td>Directory</td>
+    <!-- https://github.com/sbt/sbt/blob/v1.3.1/main/src/main/scala/sbt/coursierint/LMCoursier.scala#L40-L44 -->
+    <td><tt>CoursierDependencyResolution.defaultCacheLocation</tt> (in 1.3+)</td>
+    <td>Location of coursier artifact cache, where the default is defined by <a href="https://get-coursier.io/docs/cache.html#default-location">Coursier cache resolution logic</a>.  You should define <tt>sbt.coursier.home</tt> explicitly if you are using coursier in a CI environment and want to cache artifacts between runs.</td>
+  </tr>
+
+  <tr>
     <td><tt>sbt.extraClasspath</tt></td>
     <td>Classpath Entries</td>
     <td><tt></tt></td>
     <td>(jar files or directories) that are added to sbt's classpath.
-        Note that the entries are deliminted by comma, e.g.:
+        Note that the entries are delimited by comma, e.g.:
         <tt>entry1, entry2,..</tt>. See also <tt>resource</tt> in the
         <a href="Launcher-Configuration.html">sbt launcher</a> documentation.
         </td>
@@ -297,7 +305,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.ivy.home</tt></td>
     <td>Directory</td>
     <td><tt>~/.ivy2</tt></td>
-    <td>The directory containing the local Ivy repository and artifact cache.</td>
+    <td>The directory containing the local Ivy repository and artifact cache.  You should define <tt>sbt.ivy.home</tt> explicitly if you are using sbt in a CI environment and want to cache ivy artifacts between runs.</td>
   </tr>
 
   <tr>
