@@ -267,7 +267,7 @@ Gigahorse.withHttp(Gigahorse.config) { http =>
   val fLoc = http.run(rLoc, Gigahorse.asString)
   val loc = Await.result(fLoc, 10.seconds)
   val woeid = (Json.parse(loc) \ 0 \ "woeid").get
-  val rWeather = Gigahorse.url(baseUrl + s"/$woeid/").get
+  val rWeather = Gigahorse.url(baseUrl + s"/\$woeid/").get
   val fWeather = http.run(rWeather, Gigahorse.asString)
   val weather = Await.result(fWeather, 10.seconds)
   ({Json.parse(_: String)} andThen Json.prettyPrint)(weather)
