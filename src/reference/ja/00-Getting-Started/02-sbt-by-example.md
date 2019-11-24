@@ -256,31 +256,55 @@ Type in expressions for evaluation. Or try :help.
 scala> :paste
 // Entering paste mode (ctrl-D to finish)
 
-import gigahorse._, support.okhttp.Gigahorse
 import scala.concurrent._, duration._
+import gigahorse._, support.okhttp.Gigahorse
+import play.api.libs.json._
+
 Gigahorse.withHttp(Gigahorse.config) { http =>
-  val r = Gigahorse.url("https://query.yahooapis.com/v1/public/yql").get.
-    addQueryString(
-      "q" -> """select item.condition
-                from weather.forecast where woeid in (select woeid from geo.places(1) where text='New York, NY')
-                and u='c'""",
-      "format" -> "json"
-    )
-  val f = http.run(r, Gigahorse.asString)
-  Await.result(f, 10.seconds)
+  val baseUrl = "https://www.metaweather.com/api/location"
+  val rLoc = Gigahorse.url(baseUrl + "/search/").get.
+    addQueryString("query" -> "New York")
+  val fLoc = http.run(rLoc, Gigahorse.asString)
+  val loc = Await.result(fLoc, 10.seconds)
+  val woeid = (Json.parse(loc) \ 0 \ "woeid").get
+  val rWeather = Gigahorse.url(baseUrl + s"/\$woeid/").get
+  val fWeather = http.run(rWeather, Gigahorse.asString)
+  val weather = Await.result(fWeather, 10.seconds)
+  ({Json.parse(_: String)} andThen Json.prettyPrint)(weather)
 }
 
 // Ctrl+D を押してペーストモードを抜ける
 
 // Exiting paste mode, now interpreting.
 
-import gigahorse._
-import support.okhttp.Gigahorse
 import scala.concurrent._
 import duration._
-res0: String = {"query":{"count":1,"created":"2018-05-06T22:49:55Z","lang":"en-US",
-"results":{"channel":{"item":{"condition":{"code":"26","date":"Sun, 06 May 2018 06:00 PM EDT",
-"temp":"16","text":"Cloudy"}}}}}}
+import gigahorse._
+import support.okhttp.Gigahorse
+import play.api.libs.json._
+res0: String =
+{
+  "consolidated_weather" : [ {
+    "id" : 5325278131781632,
+    "weather_state_name" : "Light Rain",
+    "weather_state_abbr" : "lr",
+    "wind_direction_compass" : "W",
+    "created" : "2019-11-23T09:16:43.892336Z",
+    "applicable_date" : "2019-11-23",
+    "min_temp" : 0.36,
+    "max_temp" : 8.375,
+    "the_temp" : 3.98,
+    "wind_speed" : 4.813710565158143,
+    "wind_direction" : 266.48254020294627,
+    "air_pressure" : 1017,
+    "humidity" : 58,
+    "visibility" : 15.37583015191283,
+    "predictability" : 75
+  }, {
+    "id" : 6428406054912000,
+    "weather_state_name" : "Heavy Rain",
+    "weather_state_abbr" : "hr",
+  ...
 
 scala> :q // これで REPL を抜ける
 ```
@@ -346,36 +370,29 @@ sbt:Hello> ~testQuick
 package example.core
 
 import gigahorse._, support.okhttp.Gigahorse
-import scala.concurrent._
+import scala.concurrent._, duration._
 import play.api.libs.json._
 
 object Weather {
   lazy val http = Gigahorse.http(Gigahorse.config)
+
   def weather: Future[String] = {
-    val r = Gigahorse.url("https://query.yahooapis.com/v1/public/yql").get.
-      addQueryString(
-        "q" -> """select item.condition
-                 |from weather.forecast where woeid in (select woeid from geo.places(1) where text='New York, NY')
-                 |and u='c'""".stripMargin,
-        "format" -> "json"
-      )
-
-    import ExecutionContext.Implicits._
+    val baseUrl = "https://www.metaweather.com/api/location"
+    val locUrl = baseUrl + "/search/"
+    val weatherUrl = baseUrl + "/%s/"
+    val rLoc = Gigahorse.url(locUrl).get.
+      addQueryString("query" -> "New York")
+    import ExecutionContext.Implicits.global
     for {
-      f <- http.run(r, Gigahorse.asString)
-      x <- parse(f)
-    } yield x
+      loc <- http.run(rLoc, parse)
+      woeid = (loc \ 0  \ "woeid").get
+      rWeather = Gigahorse.url(weatherUrl format woeid).get
+      weather <- http.run(rWeather, parse)
+    } yield (weather \\ "weather_state_name")(0).as[String].toLowerCase
   }
 
-  def parse(rawJson: String): Future[String] = {
-    val js = Json.parse(rawJson)
-    (js \\\\ "text").headOption match {
-      case Some(JsString(x)) => Future.successful(x.toLowerCase)
-      case _                 => Future.failed(sys.error(rawJson))
-    }
-  }
+  private def parse = Gigahorse.asString andThen Json.parse
 }
-
 ```
 
 次に `src/main/scala/example/Hello.scala` を以下のように変更する:
