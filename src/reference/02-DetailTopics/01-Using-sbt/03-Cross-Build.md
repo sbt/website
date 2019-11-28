@@ -277,7 +277,7 @@ of the binary Scala version:
 
 `CrossVersion.patch` sits between `CrossVersion.binary` and `CrossVersion.full`
 in that it strips off any trailing `-bin-...` suffix which is used to
-distinguish varaint but binary compatible Scala toolchain builds.
+distinguish variant but binary compatible Scala toolchain builds.
 
 ```scala
 ("a" % "b" % "1.0").cross(CrossVersion.patch)
