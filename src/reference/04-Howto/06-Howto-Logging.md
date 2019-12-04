@@ -341,11 +341,11 @@ sbt:sbt-logging-example> update
 The special task `streams` provides per-task logging and I/O via a
 [Streams](../api/sbt/std/Streams.html) instance. To log, a task uses
 the `log` member from the `streams` task. Calling `log` provides
-a [Logger](../api/sbt/util/Logger.html).
-
-:
+a [Logger](../api/sbt/util/Logger.html):
 
 ```scala
+import sbt.Keys.streams
+
 myTask := {
   val log = streams.value.log
   log.warn("A warning.")
