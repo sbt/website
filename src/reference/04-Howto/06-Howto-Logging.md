@@ -286,7 +286,7 @@ extraLoggers := {
 
   import sbt.internal.util.StringEvent
 
-  def loggerNameForKey( key : sbt.Def.ScopedKey[_] ) = s"""reverse.${key.scope.task.toOption.getOrElse("<unknown>")}"""
+  def loggerNameForKey( key : sbt.Def.ScopedKey[_] ) = s"""reverse.\${key.scope.task.toOption.getOrElse("<unknown>")}"""
 
   class ReverseConsoleAppender( key : ScopedKey[_] ) extends AbstractAppender (
     loggerNameForKey( key ), // name : String
@@ -299,11 +299,11 @@ extraLoggers := {
 
     override def append( event : LogEvent ) : Unit = {
       val output = {
-        def forUnexpected( message : Message ) = s"[${this.getName()}] Unexpected: ${message.getFormattedMessage()}"
+        def forUnexpected( message : Message ) = s"[\${this.getName()}] Unexpected: \${message.getFormattedMessage()}"
         event.getMessage() match {
 	   case om : ObjectMessage => { // what we expect
 	     om.getParameter() match {
-	       case se : StringEvent => s"[${this.getName()} - ${se.level}] ${se.message.reverse}"
+	       case se : StringEvent => s"[\${this.getName()} - \${se.level}] \${se.message.reverse}"
 	       case other            => forUnexpected( om )
 	     }
 	   }
