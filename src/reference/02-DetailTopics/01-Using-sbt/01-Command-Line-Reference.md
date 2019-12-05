@@ -226,7 +226,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td><tt>sbt.ci</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt> (unless then env var <tt>BUILD_NUMBER</tt> is set)</td>
-    <td>For continuous integration environments. Suppress supershell and color.</td>
+    <td>For continuous integration environments. Suppresses supershell and enables color.</td>
   </tr>
 
   <tr>
