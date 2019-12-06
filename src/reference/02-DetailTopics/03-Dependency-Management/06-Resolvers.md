@@ -40,7 +40,7 @@ A few predefined repositories are available and are listed below
     <https://repo1.maven.org/maven2/> and is included by default
 -   `JavaNet1Repository` This is the Maven 1 repository at
     <http://download.java.net/maven/1/>
--   `Resolver.sonatypeRepo("public")` (or "snapshots", "releases") This is Sonatype OSS Maven Repository at
+-   `Resolver.sonatypeRepo("public")` (or "snapshots", "staging", "releases") This is Sonatype OSS Maven Repository at
     <https://oss.sonatype.org/content/repositories/public>
 -   `Resolver.typesafeRepo("releases")` (or "snapshots") This is Typesafe Repository at
     <https://repo.typesafe.com/typesafe/releases>
