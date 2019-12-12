@@ -245,6 +245,8 @@ your plugin to the list.
 - [sbt-google-cloud-storage](https://github.com/lightbend/sbt-google-cloud-storage): resolver and publisher for Google Cloud Storage.
 - [sbt-trace](https://github.com/delprks/sbt-trace): find traces of the client or library usage in other projects. <!-- 3 stars -->
 - [safety-plugin](https://github.com/leobenkel/safety_plugin): Enforce the use of specified versions of dependencies across your company
+- [sbt-dependency-lock](https://stringbean.github.io/sbt-dependency-lock):
+generate dependency lockfiles and check for changes at build time.
 
 #### Web and frontend development plugins
 
