@@ -66,7 +66,11 @@ All platforms
 @@@vars
 
 - [sbt-$sbtVersion$.zip](https://piccolo.link/sbt-$sbtVersion$.zip)
+- [sbt-$sbtVersion$.zip.sha256](https://piccolo.link/sbt-$sbtVersion$.zip.sha256)
+- [sbt-$sbtVersion$.zip.asc](https://piccolo.link/sbt-$sbtVersion$.zip.asc)
 - [sbt-$sbtVersion$.tgz](https://piccolo.link/sbt-$sbtVersion$.tgz)
+- [sbt-$sbtVersion$.tgz.sha256](https://piccolo.link/sbt-$sbtVersion$.tgz.sha256)
+- [sbt-$sbtVersion$.tgz.asc](https://piccolo.link/sbt-$sbtVersion$.tgz.asc)
 
 @@@
 
@@ -74,6 +78,13 @@ All platforms
 
 <h4>1.x</h4>
 <ul>
+
+<li>
+  sbt 1.3.5
+  (<a href="https://piccolo.link/sbt-1.3.5.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.5.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.5.msi">.msi</a>)
+</li>
 
 <li>
   sbt 1.3.4
