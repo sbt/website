@@ -230,7 +230,7 @@ lazy val library = (project in file("library"))
       println("s: " + s)
       s
     },
-    sampleStringTask := {
+    stopServer := {
       val old = sampleStringTask.value
       println("stopping...")
       Thread.sleep(500)
