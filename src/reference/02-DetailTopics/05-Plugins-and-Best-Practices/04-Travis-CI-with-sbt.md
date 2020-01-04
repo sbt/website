@@ -309,14 +309,13 @@ script:
   - sbt -Dfile.encoding=UTF8 -J-XX:ReservedCodeCacheSize=256M "\$TEST_COMMAND"
 
 before_cache:
-  # Tricks to avoid unnecessary cache updates
-  - find \$HOME/.sbt -name "*.lock" | xargs rm
-  - find \$HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
-  - rm -f \$HOME/.ivy2/.sbt.ivy.lock
+  - rm -fv \$HOME/.ivy2/.sbt.ivy.lock
+  - find \$HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find \$HOME/.sbt        -name "*.lock"               -print -delete
 
 cache:
   directories:
     - \$HOME/.cache/coursier
     - \$HOME/.ivy2/cache
-    - \$HOME/.sbt/boot/
+    - \$HOME/.sbt
 ```
