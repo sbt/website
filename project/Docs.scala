@@ -12,9 +12,9 @@ import com.typesafe.sbt.site.SitePlugin
 import SitePlugin.autoImport._
 
 object Docs {
-  lazy val targetSbtFullVersion = "1.3.5"
-  lazy val sbtVersionForScalaDoc = "1.3.5"
-  lazy val sbtWindowsBuild = "1.3.5"
+  lazy val targetSbtFullVersion = "1.3.6"
+  lazy val sbtVersionForScalaDoc = "1.3.6"
+  lazy val sbtWindowsBuild = "1.3.6"
 
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
