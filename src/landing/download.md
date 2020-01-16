@@ -80,6 +80,20 @@ All platforms
 <ul>
 
 <li>
+  sbt 1.3.7
+  (<a href="https://piccolo.link/sbt-1.3.7.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.7.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.7.msi">.msi</a>)
+</li>
+
+<li>
+  sbt 1.3.6
+  (<a href="https://piccolo.link/sbt-1.3.6.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.6.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.6.msi">.msi</a>)
+</li>
+
+<li>
   sbt 1.3.5
   (<a href="https://piccolo.link/sbt-1.3.5.zip">.zip</a>)
   (<a href="https://piccolo.link/sbt-1.3.5.tgz">.tgz</a>)
