@@ -54,23 +54,23 @@ retrieved dependencies and compiled classes.
 Tasks that produce managed files should be inserted as follows:
 
 ```scala
-sourceGenerators in Compile +=
-    generate( (sourceManaged in Compile).value / "some_directory")
+Compile / sourceGenerators +=
+    generate( (Comile / sourceManaged).value / "some_directory")
 ```
 
 In this example, `generate` is some function of type `File => Seq[File]`
 that actually does the work. So, we are appending a new task to the list
-of main source generators (`sourceGenerators in Compile`).
+of main source generators (`Compile / sourceGenerators`).
 
 To insert a named task, which is the better approach for plugins:
 
 ```scala
 val mySourceGenerator = taskKey[Seq[File]](...)
 
-mySourceGenerator in Compile :=
-  generate( (sourceManaged in Compile).value / "some_directory")
+Compile / mySourceGenerator :=
+  generate( (Compile / sourceManaged).value / "some_directory")
 
-sourceGenerators in Compile += (mySourceGenerator in Compile)
+Compile / sourceGenerators += (Compile / mySourceGenerator)
 ```
 
 The `task` method is used to refer to the actual task instead of the
@@ -86,7 +86,7 @@ to `src/main/scala`. You can exclude source files by name
 (`butler.scala` in the example below) like:
 
 ```scala
-excludeFilter in unmanagedSources := "butler.scala" 
+unmanagedSources / excludeFilter := "butler.scala"
 ```
 
 Read more on
@@ -146,5 +146,5 @@ directory "config". When you run "sbt run", you want the directory to be
 in classpath.
 
 ```scala
-unmanagedClasspath in Runtime += baseDirectory.value / "config"
+Runtime / unmanagedClasspath += baseDirectory.value / "config"
 ```

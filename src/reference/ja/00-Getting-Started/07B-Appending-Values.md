@@ -15,19 +15,19 @@ out: Appending-Values.html
  - `+=` は、列に単一要素を追加する。
  - `++=` は、別の列を連結する。
 
-例えば、`sourceDirectories in Compile` というキーの値の型は `Seq[File]` だ。
+例えば、`Compile / sourceDirectories` というキーの値の型は `Seq[File]` だ。
 デフォルトで、このキーの値は `src/main/scala` を含む。
 （どうしても標準的なやり方では気が済まない君が）`source` という名前のディレクトリに入ったソースもコンパイルしたい場合、
 以下のようにして設定できる:
 
 ```scala
-sourceDirectories in Compile += new File("source")
+Compile / sourceDirectories += new File("source")
 ```
 
 もしくは、sbt パッケージに入っている `file()` 関数を使って:
 
 ```scala
-sourceDirectories in Compile += file("source")
+Compile / sourceDirectories += file("source")
 ```
 
 （`file()` は、単に新しい `File` 作る）
@@ -35,7 +35,7 @@ sourceDirectories in Compile += file("source")
 `++=` を使って複数のディレクトリを一度に加える事もできる:
 
 ```scala
-sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
+Compile / sourceDirectories ++= Seq(file("sources1"), file("sources2"))
 ```
 
 ここでの `Seq(a, b, c, ...)` は、列を構築する標準的な Scala の構文だ。
@@ -43,7 +43,7 @@ sourceDirectories in Compile ++= Seq(file("sources1"), file("sources2"))
 デフォルトのソースディレクトリを完全に置き換えてしまいたい場合は、当然 `:=` を使えばいい:
 
 ```scala
-sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
+Compile / sourceDirectories := Seq(file("sources1"), file("sources2"))
 ```
 
 #### セッティングが未定義の場合
@@ -62,8 +62,8 @@ sourceDirectories in Compile := Seq(file("sources1"), file("sources2"))
 例として、`sourceGenerators` にプロジェクトのベースディレクトリやコンパイル時のクラスパスを加える設定をみてみよう。
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  myGenerator(baseDirectory.value, (managedClasspath in Compile).value)
+Compile / sourceGenerators += Def.task {
+  myGenerator(baseDirectory.value, (Compile / managedClasspath).value)
 }
 ```
 

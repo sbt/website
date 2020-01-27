@@ -29,7 +29,7 @@ out: Library-Dependencies.html
 你也可以将测试依赖的 jar 文件放在 `lib` 目录下，比如 [ScalaCheck](http://scalacheck.org/)，[Specs2](http://specs2.org)，[ScalaTest](http://www.scalatest.org/)。
 
 `lib` 目录下的所有依赖都会在 classpaths（对 `compile`， `test`， `run` 和 `console` 都成立）。如果你想对其中的一个改变 classpath，
-你需要做适当调整，例如 `dependencyClasspath in Compile` 或者 `dependencyClasspath in Runtime`。
+你需要做适当调整，例如 `Compile / dependencyClasspath` 或者 `Runtime / dependencyClasspath`。
 
 如果用非托管依赖的话，不用往 `build.sbt` 文件中添加任何内容，不过你可以改变 `unmanagedBase` key，如果你想用一个不同的目录而非 `lib`。
 
@@ -45,7 +45,7 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 例如清空 `Compile` configuration 的列表，不考虑 `lib` 目录下的文件：
 
 ```scala
-unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
+Compile / unmanagedJars := Seq.empty[sbt.Attributed[java.io.File]]
 ```
 
 ### 托管依赖

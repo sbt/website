@@ -88,10 +88,10 @@ unnecessary Scala directories can be ignored by modifying
 
 ```scala
 // Include only src/main/java in the compile configuration
-unmanagedSourceDirectories in Compile := (javaSource in Compile).value :: Nil
+Compile / unmanagedSourceDirectories := (Compile / javaSource).value :: Nil
 
 // Include only src/test/java in the test configuration
-unmanagedSourceDirectories in Test := (javaSource in Test).value :: Nil
+Test / unmanagedSourceDirectories := (Test / javaSource).value :: Nil
 ```
 
 However, there should not be any harm in leaving the Scala directories

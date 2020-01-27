@@ -41,14 +41,14 @@ String value.
 For example,
 
 ```scala
-packageOptions in (Compile, packageBin) += 
-  Package.ManifestAttributes( java.util.jar.Attributes.Name.SEALED -> "true" )
+Compile / packageBin / packageOptions +=
+  Package.ManifestAttributes(java.util.jar.Attributes.Name.SEALED -> "true")
 ```
 
 Other attributes may be added with `Package.JarManifest`.
 
 ```scala
-packageOptions in (Compile, packageBin) +=  {
+Compile / packageBin / packageOptions +=  {
   import java.util.jar.{Attributes, Manifest}
   val manifest = new Manifest
   manifest.getAttributes("foo/bar/").put(Attributes.Name.SEALED, "false")
@@ -59,7 +59,7 @@ packageOptions in (Compile, packageBin) +=  {
 Or, to read the manifest from a file:
 
 ```scala
-packageOptions in (Compile, packageBin) +=  {
+Compile / packageBin / packageOptions +=  {
   val file = new java.io.File("META-INF/MANIFEST.MF")
   val manifest = Using.fileInputStream(file)( in => new java.util.jar.Manifest(in) )
   Package.JarManifest( manifest )
@@ -85,11 +85,11 @@ generating these mappings. For example, to add the file `in/example.txt`
 to the main binary jar with the path "out/example.txt",
 
 ```scala
-mappings in (Compile, packageBin) += {
+Compile / packageBin / mappings += {
   (baseDirectory.value / "in" / "example.txt") -> "out/example.txt"
 }
 ```
 
 Note that `mappings` is scoped by the configuration and the specific
 package task. For example, the mappings for the test source package are
-defined by the `mappings in (Test, packageSrc)` task.
+defined by the `Test / packageSrc / mappings` task.

@@ -9,7 +9,7 @@ out: Howto-Dynamic-Task.html
 
 If [sequential task][Howto-Sequential-Task] is not enough, another step up is [the dynamic task][Tasks]. Unlike `Def.task` which expects you to return pure value `A`, with a `Def.taskDyn` you return a task `sbt.Def.Initialize[sbt.Task[A]]` which the task engine can continue the rest of the computation with.
 
-Let's try implementing a custom task called `compilecheck` that runs `compile in Compile` and then `scalastyle in Compile` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
+Let's try implementing a custom task called `compilecheck` that runs `Compile / compile` and then `Compile / scalastyle` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
 
 
 #### project/build.properties
@@ -32,9 +32,9 @@ lazy val compilecheck = taskKey[sbt.inc.Analysis]("compile and then scalastyle")
 lazy val root = (project in file("."))
   .settings(
     compilecheck := (Def.taskDyn {
-      val c = (compile in Compile).value
+      val c = (Compile / compile).value
       Def.task {
-        val x = (scalastyle in Compile).toTask("").value
+        val x = (Compile / scalastyle).toTask("").value
         c
       }
     }).value
@@ -45,19 +45,19 @@ Now we have the same thing as the sequential task, except we can now return the 
 
 #### build.sbt v2
 
-If we can return the same return type as `compile in Compile`, might actually rewire the key to our dynamic task.
+If we can return the same return type as `Compile / compile`, might actually rewire the key to our dynamic task.
 
 ```scala
 lazy val root = (project in file("."))
   .settings(
-    compile in Compile := (Def.taskDyn {
-      val c = (compile in Compile).value
+    Compile / compile := (Def.taskDyn {
+      val c = (Compile / compile).value
       Def.task {
-        val x = (scalastyle in Compile).toTask("").value
+        val x = (Compile / scalastyle).toTask("").value
         c
       }
     }).value
   )
 ```
 
-Now we can actually call `compile in Compile` from the shell and make it do what we want it to do.
+Now we can actually call `Compile / compile` from the shell and make it do what we want it to do.

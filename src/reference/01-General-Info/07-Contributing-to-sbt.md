@@ -54,12 +54,12 @@ set logLevel := Level.Warn
 ```
 
 > or
-> :   set logLevel in Test := Level.Warn
+> :   set Test / logLevel := Level.Warn
 >
 You could make commands that wrap this, like:
 
 ```
-warn test:run
+warn Test/run
 ```
 
 Also, trace is currently an integer, but should really be an abstract

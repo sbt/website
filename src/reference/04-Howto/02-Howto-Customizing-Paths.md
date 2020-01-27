@@ -21,9 +21,9 @@ change this, modify `scalaSource` in the `Compile` (for main sources) or
 `Test` (for test sources). For example,
 
 ```scala
-scalaSource in Compile := baseDirectory.value / "src"
+Compile / scalaSource := baseDirectory.value / "src"
 
-scalaSource in Test := baseDirectory.value / "test-src"
+Test / scalaSource := baseDirectory.value / "test-src"
 ```
 
 > **Note**: The Scala source directory can be the same as the Java source
@@ -41,9 +41,9 @@ this, modify `javaSource` in the `Compile` (for main sources) or `Test`
 For example,
 
 ```scala
-javaSource in Compile := baseDirectory.value / "src"
+Compile / javaSource := baseDirectory.value / "src"
 
-javaSource in Test := baseDirectory.value / "test-src"
+Test / javaSource := baseDirectory.value / "test-src"
 ```
 
 > **Note**: The Scala source directory can be the same as the Java source
@@ -61,9 +61,9 @@ change this, modify `resourceDirectory` in either the `Compile` or
 For example,
 
 ```scala
-resourceDirectory in Compile := baseDirectory.value / "resources"
+Compile / resourceDirectory := baseDirectory.value / "resources"
 
-resourceDirectory in Test := baseDirectory.value / "test-resources"
+Test / resourceDirectory := baseDirectory.value / "test-resources"
 ```
 
 <a name="unmanaged-base-directory"></a>
@@ -89,7 +89,7 @@ default. For example, the following declares `lib/main/` to contain jars
 only for `Compile` and not for running or testing:
 
 ```scala
-unmanagedBase in Compile := baseDirectory.value / "lib" / "main"
+Compile / unmanagedBase := baseDirectory.value / "lib" / "main"
 ```
 
 <a name="disable-base-sources"></a>
@@ -115,7 +115,7 @@ source directory. For example, to add `extra-src` to be an additional
 directory containing main sources,
 
 ```scala
-unmanagedSourceDirectories in Compile += baseDirectory.value / "extra-src"
+Compile / unmanagedSourceDirectories += baseDirectory.value / "extra-src"
 ```
 
 > **Note**: This directory should only contain unmanaged sources, which are
@@ -133,7 +133,7 @@ another resource directory. For example, to add `extra-resources` to be
 an additional directory containing main resources,
 
 ```scala
-unmanagedResourceDirectories in Compile += baseDirectory.value / "extra-resources"
+Compile / unmanagedResourceDirectories += baseDirectory.value / "extra-resources"
 ```
 
 > **Note**: This directory should only contain unmanaged resources, which are
@@ -155,16 +155,15 @@ exclusion, the following also ignores files containing `impl` in their
 name,
 
 ```scala
-excludeFilter in unmanagedSources := HiddenFileFilter || "*impl*"
+unmanagedSources / excludeFilter := HiddenFileFilter || "*impl*"
 ```
 
 To have different filters for main and test libraries, configure
 `Compile` and `Test` separately:
 
 ```scala
-includeFilter in (Compile, unmanagedSources) := "*.scala" || "*.java"
-
-includeFilter in (Test, unmanagedSources) := HiddenFileFilter || "*impl*"
+Compile / unmanagedSources / includeFilter := "*.scala" || "*.java"
+Test / unmanagedSources / includeFilter := HiddenFileFilter || "*impl*"
 ```
 
 > **Note**: By default, sbt includes `.scala` and `.java` sources, excluding hidden
@@ -184,16 +183,15 @@ exclusion, the following also ignores files containing `impl` in their
 name,
 
 ```scala
-excludeFilter in unmanagedResources := HiddenFileFilter || "*impl*"
+unmanagedResources / excludeFilter := HiddenFileFilter || "*impl*"
 ```
 
 To have different filters for main and test libraries, configure
 `Compile` and `Test` separately:
 
 ```scala
-includeFilter in (Compile, unmanagedResources) := "*.txt"
-
-includeFilter in (Test, unmanagedResources) := "*.html"
+Compile / unmanagedResources / includeFilter := "*.txt"
+Test / unmanagedResources / includeFilter := "*.html"
 ```
 
 > **Note**: By default, sbt includes all files that are not hidden.
@@ -211,16 +209,15 @@ directories and files that match `includeFilter` and do not match
 exclusion, the following also ignores zips,
 
 ```scala
-excludeFilter in unmanagedJars := HiddenFileFilter || "*.zip"
+unmanagedJars / excludeFilter := HiddenFileFilter || "*.zip"
 ```
 
 To have different filters for main and test libraries, configure
 `Compile` and `Test` separately:
 
 ```scala
-includeFilter in (Compile, unmanagedJars) := "*.jar"
-
-includeFilter in (Test, unmanagedJars) := "*.jar" || "*.zip"
+Compile / unmanagedJars / includeFilter := "*.jar"
+Test / unmanagedJars / includeFilter := "*.jar" || "*.zip"
 ```
 
 > **Note**: By default, sbt includes jars, zips, and native dynamic libraries,

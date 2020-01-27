@@ -307,12 +307,12 @@ organization := name.value
 ```
 
 実用的な例もみてみる。
-これは `scalaSource in Compile` というキーを `scalaBinaryVersion` が `"2.11"`
+これは `Compile / scalaSource` というキーを `scalaBinaryVersion` が `"2.11"`
 の場合のみ別のディレクトリに再配線する。
 
 ```scala
-scalaSource in Compile := {
-  val old = (scalaSource in Compile).value
+Compile / scalaSource := {
+  val old = (Compile / scalaSource).value
   scalaBinaryVersion.value match {
     case "2.11" => baseDirectory.value / "src-2.11" / "main" / "scala"
     case _      => old
@@ -391,7 +391,7 @@ Rake でのブレークスルーは、アクションをシステムコマンド
 ビルドをこのように構成する動機がいくつかある。
 
 第一は非重複化だ。フローベースプログラミングではあるタスクが複数のタスクから依存されていても一度だけしか実行されない。
-例えば、タスクグラフ上の複数のタスクが `compile in Compile` に依存していたとしても、実際のコンパイルは唯一一回のみ実行される。
+例えば、タスクグラフ上の複数のタスクが `Compile / compile` に依存していたとしても、実際のコンパイルは唯一一回のみ実行される。
 
 第二は並列処理だ。タスクグラフを用いることでタスクエンジンは相互に非依存なタスクを並列にスケジュールすることができる。
 

@@ -24,7 +24,7 @@ for `compile`. Scope to `Compile` for main sources or to `Test` for test
 sources. For example,
 
 ```scala
-scalacOptions in (Compile,doc) := Seq("-groups", "-implicits")
+Compile / doc / scalacOptions := Seq("-groups", "-implicits")
 ```
 
 <a name="additional-doc-options"></a>
@@ -37,7 +37,7 @@ option, use `+=`. To append a `Seq[String]`, use `++=`. Scope to
 `Compile` for main sources or to `Test` for test sources. For example,
 
 ```scala
-scalacOptions in (Compile,doc) ++= Seq("-groups", "-implicits")
+Compile / doc / scalacOptions ++= Seq("-groups", "-implicits")
 ```
 
 <a name="definitive-javadoc-options"></a>
@@ -60,7 +60,7 @@ option, use `+=`. To append a `Seq[String]`, use `++=`. Scope to
 `Compile` for main sources or to `Test` for test sources. For example,
 
 ```scala
-javacOptions in (Compile,doc) ++= Seq("-notimestamp", "-linksource")
+Compile / doc / javacOptions ++= Seq("-notimestamp", "-linksource")
 ```
 
 <a name="auto-link"></a>

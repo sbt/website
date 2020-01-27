@@ -163,21 +163,21 @@ As an example, we'll look at `console`:
 > inspect console
 ...
 [info] Dependencies:
-[info]  compile:console::fullClasspath
-[info]  compile:console::scalacOptions
-[info]  compile:console::initialCommands
-[info]  compile:console::cleanupCommands
-[info]  compile:console::compilers
-[info]  compile:console::taskTemporary-directory
-[info]  compile:console::scalaInstance
-[info]  compile:console::streams
+[info]  Compile / console / initialCommands
+[info]  Compile / console / streams
+[info]  Compile / console / compilers
+[info]  Compile / console / cleanupCommands
+[info]  Compile / console / taskTemporaryDirectory
+[info]  Compile / console / scalaInstance
+[info]  Compile / console / scalacOptions
+[info]  Compile / console / fullClasspath
 
 ...
 ```
 
 This shows the inputs to the `console` task. We can see that it gets its
-classpath and options from `fullClasspath` and
-`scalacOptions(for console)`. The information provided by the `inspect`
+classpath and options from `Compile / console / fullClasspath` and
+`Compile / console / scalacOptions`. The information provided by the `inspect`
 command can thus assist in finding the right setting to change. The
 convention for keys, like `console` and `fullClasspath`, is that the
 Scala identifier is camel case, while the String representation is
@@ -187,7 +187,7 @@ and `test`. For example, we can infer from the previous example how to
 add code to be run when the Scala interpreter starts up:
 
 ```
-> set initialCommands in Compile in console := "import mypackage._"
+> set Compile / console / initialCommands := "import mypackage._"
 > console
 ...
 import mypackage._
@@ -195,9 +195,9 @@ import mypackage._
 ```
 
 `inspect` showed that `console` used the setting
-`compile:console::initialCommands`. Translating the `initialCommands`
+`Compile / console / initialCommands`. Translating the `initialCommands`
 string to the Scala identifier gives us `initialCommands`. `compile`
-indicates that this is for the main sources. `console::` indicates that
+indicates that this is for the main sources. `console /` indicates that
 the setting is specific to `console`. Because of this, we can set the
 initial commands on the `console` task without affecting the
 `consoleQuick` task, for example.
@@ -216,23 +216,23 @@ Dependencies,
 > inspect actual console
 ...
 [info] Dependencies:
-[info]  compile:scalacOptions
-[info]  compile:fullClasspath
-[info]  *:scalaInstance
-[info]  */*:initialCommands
-[info]  */*:cleanupCommands
-[info]  */*:taskTemporaryDirectory
-[info]  *:console::compilers
-[info]  compile:console::streams
+[info]  Compile / console / streams
+[info]  Global / taskTemporaryDirectory
+[info]  scalaInstance
+[info]  Compile / scalacOptions
+[info]  Global / initialCommands
+[info]  Global / cleanupCommands
+[info]  Compile / fullClasspath
+[info]  console / compilers
 ...
 ```
 
 For `initialCommands`, we see that it comes from the global scope
-(`*/*:`). Combining this with the relevant output from
+(`Global`). Combining this with the relevant output from
 `inspect console`:
 
 ```
-compile:console::initialCommands
+Compile / console / initialCommands
 ```
 
 we know that we can set `initialCommands` as generally as the global
@@ -253,11 +253,11 @@ looking at the reverse dependencies output of `inspect actual`:
 > inspect actual initialCommands
 ...
 [info] Reverse dependencies:
-[info]  test:console
-[info]  compile:consoleQuick
-[info]  compile:console
-[info]  test:consoleQuick
-[info]  *:consoleProject
+[info]  Compile / console
+[info]  Test / console
+[info]  consoleProject
+[info]  Test / consoleQuick
+[info]  Compile / consoleQuick
 ...
 ```
 
@@ -268,15 +268,15 @@ doesn't have our project's classpath available, we could use the more
 specific task axis:
 
 ```
-> set initialCommands in console := "import mypackage._"
-> set initialCommands in consoleQuick := "import mypackage._"`
+> set console / initialCommands := "import mypackage._"
+> set consoleQuick / initialCommands := "import mypackage._"`
 ```
 
 or configuration axis:
 
 ```
-> set initialCommands in Compile := "import mypackage._"
-> set initialCommands in Test := "import mypackage._"
+> set Compile/　initialCommands := "import mypackage._"
+> set Test / initialCommands := "import mypackage._"
 ```
 
 The next part describes the Delegates section, which shows the chain of
@@ -294,18 +294,18 @@ requested key.
 As an example, consider the initial commands for `console` again:
 
 ```
-> inspect console::initialCommands
+> inspect console/initialCommands
 ...
 [info] Delegates:
-[info]  *:console::initialCommands
-[info]  *:initialCommands
-[info]  {.}/*:console::initialCommands
-[info]  {.}/*:initialCommands
-[info]  */*:console::initialCommands
-[info]  */*:initialCommands
+[info]  console / initialCommands
+[info]  initialCommands
+[info]  ThisBuild / console / initialCommands
+[info]  ThisBuild / initialCommands
+[info]  Zero / console / initialCommands
+[info]  Global / initialCommands
 ...
 ```
 
 This means that if there is no value specifically for
-`*:console::initialCommands`, the scopes listed under Delegates will be
+`console/initialCommands`, the scopes listed under Delegates will be
 searched in order until a defined value is found.

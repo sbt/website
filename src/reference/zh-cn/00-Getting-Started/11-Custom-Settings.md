@@ -158,7 +158,7 @@ s: 3
 
 ![task-dependency](../files/task-dependency01.png)
 
-如果我们不做重复任务相关项的去重，则当我们执行`test`时最终会编译测试源代码很多次，因为`compile in Test`作为`test in Test`的依赖项出现了很多次。
+如果我们不做重复任务相关项的去重，则当我们执行`test`时最终会编译测试源代码很多次，因为`Test / compile`作为`Test / test`的依赖项出现了很多次。
 
 #### 清理任务
 

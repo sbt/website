@@ -14,7 +14,7 @@ lazy val client = project.in(file("./client"))
 lazy val myTestTask = taskKey[Unit]("my test task")
 
 myTestTask := {
-  (test in (core, Test)).value
-  (test in (tools, Test)).value
+  (core / Test / test).value
+  (tools / Test / test).value
 }
 ```

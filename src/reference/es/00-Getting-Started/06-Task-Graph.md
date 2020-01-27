@@ -332,12 +332,12 @@ organization := name.value
 ```
 
 A continuación se muestra un ejemplo más realista.
-Esto cambia el valor de la clave `scalaSource in Compile` a un directorio
+Esto cambia el valor de la clave `Compile / scalaSource` a un directorio
 diferente sólo cuando `scalaBinaryVersion` es `"2.11"`.
 
 ```scala
-scalaSource in Compile := {
-  val old = (scalaSource in Compile).value
+Compile / scalaSource := {
+  val old = (Compile / scalaSource).value
   scalaBinaryVersion.value match {
     case "2.11" => baseDirectory.value / "src-2.11" / "main" / "scala"
     case _      => old

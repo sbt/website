@@ -122,10 +122,10 @@ val extracted: Extracted
 import extracted._
 
 // get name of current project
-val nameOpt: Option[String] = name in currentRef get structure.data
+val nameOpt: Option[String] = (currentRef / name).get(structure.data)
 
 // get the package options for the `test:packageSrc` task or Nil if none are defined
-val pkgOpts: Seq[PackageOption] = packageOptions in (currentRef, Test, packageSrc) get structure.data getOrElse Nil
+val pkgOpts: Seq[PackageOption] = (currentRef / Test / packageSrc / packageOptions).get(structure.data).getOrElse(Nil)
 ```
 
 [BuildStructure](../api/sbt/internal/BuildStructure.html) contains
@@ -191,7 +191,7 @@ val eval: State => State = (state: State) => {
     // This selects the main 'compile' task for the current project.
     //   The value produced by 'compile' is of type inc.Analysis,
     //   which contains information about the compiled code.
-    val taskKey = Keys.compile in Compile
+    val taskKey = Compile / Keys.compile
 
     // Evaluate the task
     // None if the key is not defined
@@ -213,7 +213,7 @@ For getting the test classpath of a specific project, use this key:
 ```scala
 val projectRef: ProjectRef = ...
 val taskKey: Task[Seq[Attributed[File]]] =
-  Keys.fullClasspath in (projectRef, Test)
+  (projectRef / Test / Keys.fullClasspath)
 ```
 
 ### Using State in a task

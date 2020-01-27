@@ -112,9 +112,9 @@ task.
 
 ```scala
 zip := {
-    val bin: File = (packageBin in Compile).value
-    val src: File = (packageSrc in Compile).value
-    val doc: File = (packageDoc in Compile).value
+    val bin: File = (Compile / packageBin).value
+    val src: File = (Compile / packageSrc).value
+    val doc: File = (Compile / packageDoc).value
     val out: File = zipPath.value
     val inputs: Seq[(File,String)] = Seq(bin, src, doc) x Path.flat
     IO.zip(inputs, out)

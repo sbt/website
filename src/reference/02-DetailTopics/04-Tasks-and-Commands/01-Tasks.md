@@ -151,7 +151,7 @@ following example, `test:sampleTask` uses the result of
 `compile:intTask`.
 
 ```scala
-sampleTask in Test := (intTask in Compile).value * 3
+Test / sampleTask := (Compile / intTask).value * 3
 ```
 
 ##### On precedence
@@ -172,7 +172,7 @@ Therefore, the previous example is equivalent to the following:
 
 
 ```scala
-(sampleTask in Test).:=( (intTask in Compile).value * 3 )
+(Test / sampleTask).:=( (Compile / intTask).value * 3 )
 ```
 
 Additionally, the braces in the following are necessary:
@@ -548,16 +548,16 @@ on `intTask` is only introduced in non-dev mode.
 
 sbt 0.13.8 added `Def.sequential` function to run tasks under semi-sequential semantics.
 This is similar to the dynamic task, but easier to define.
-To demonstrate the sequential task, let's create a custom task called `compilecheck` that runs `compile in Compile` and then `scalastyle in Compile` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
+To demonstrate the sequential task, let's create a custom task called `compilecheck` that runs `Compile / compile` and then `Compile / scalastyle` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
 
 ```scala
 lazy val compilecheck = taskKey[Unit]("compile and then scalastyle")
 
 lazy val root = (project in file("."))
   .settings(
-    compilecheck in Compile := Def.sequential(
-      compile in Compile,
-      (scalastyle in Compile).toTask("")
+    Compile / compilecheck := Def.sequential(
+      Compile / compile,
+      (Compile / scalastyle).toTask("")
     ).value
   )
 ```
