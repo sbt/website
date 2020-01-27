@@ -821,8 +821,8 @@ Here's an example of how to hook the new `manipulateBytecode` key in
 your own plugin:
 
 ```scala
-    manipulateBytecode in Compile := {
-      val previous = (manipulateBytecode in Compile).value
+    Compile / manipulateBytecode := {
+      val previous = (Compile / manipulateBytecode).value
       // Note: This must return a new Compiler.CompileResult with our changes.
       doManipulateBytecode(previous)
     }

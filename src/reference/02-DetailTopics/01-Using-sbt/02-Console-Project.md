@@ -43,19 +43,19 @@ about what you pass to `IO.delete`, for example.
 To get a particular setting, use the form:
 
 ```scala
-> val value = (<key> in <scope>).eval
+> val value = (<scope> / <key>).eval
 ```
 
 #### Examples
 
 ```scala
-> IO.delete( (classesDirectory in Compile).eval )
+> IO.delete( (Compile / classesDirectory).eval )
 ```
 
 Show current compile options:
 
 ```scala
-> (scalacOptions in Compile).eval foreach println
+> (Compile / scalacOptions).eval foreach println
 ```
 
 Show additionally configured repositories.
@@ -69,7 +69,7 @@ Show additionally configured repositories.
 To evaluate a task (and its dependencies), use the same form:
 
 ```scala
-> val value = (<key> in <scope>).eval
+> val value = (<scope> / <key>).eval
 ```
 
 #### Examples
@@ -83,8 +83,8 @@ Show all repositories, including defaults.
 Show the classpaths used for compilation and testing:
 
 ```scala
-> (fullClasspath in Compile).eval.files foreach println
-> (fullClasspath in Test).eval.files foreach println
+> (Compile / fullClasspath).eval.files foreach println
+> (Test / fullClasspath).eval.files foreach println
 ```
 
 ### State

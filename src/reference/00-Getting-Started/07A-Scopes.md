@@ -72,7 +72,7 @@ a configuration, and a task value:
 projA / Compile / console / scalacOptions
 ```
 
-Which is the slash syntax, introduced in sbt 1.1, for:
+This is the slash syntax, introduced in sbt 1.1, for:
 
 ```scala
 scalacOptions in (
@@ -221,7 +221,7 @@ If you omit part of the scoped key, it will be inferred as follows:
 
 For more details, see [Interacting with the Configuration System][Inspecting-Settings].
 
-### Examples of scoped key notation
+### Examples of scoped key notation in the sbt shell
 
 - `fullClasspath` specifies just a key, so the default scopes are used:
   current project, a key-dependent configuration, and `Zero` task
@@ -247,7 +247,7 @@ For more details, see [Interacting with the Configuration System][Inspecting-Set
 ### Inspecting scopes
 
 In sbt shell, you can use the `inspect` command to understand
-keys and their scopes. Try `inspect test:fullClasspath`:
+keys and their scopes. Try `inspect Test/fullClasspath`:
 
 ```
 \$ sbt
@@ -331,7 +331,7 @@ reality, all keys consist of both a name, and a scope (where the scope
 has three axes). The entire expression
 `Compile / packageBin / packageOptions` is a key name, in other words.
 Simply `packageOptions` is also a key name, but a different one (for keys
-with no in, a scope is implicitly assumed: current project, `Zero`
+with no slashes, a scope is implicitly assumed: current project, `Zero`
 config, `Zero` task).
 
 ### Build-level settings

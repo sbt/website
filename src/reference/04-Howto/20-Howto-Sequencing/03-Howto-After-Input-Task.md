@@ -7,9 +7,9 @@ out: Howto-After-Input-Task.html
 ### Doing something after an input task
 
 Thus far we've mostly looked at tasks. There's another kind of tasks called input tasks that accepts user input from the shell.
-A typical example for this is the `run in Compile` task. The `scalastyle` task is actually an input task too. See [input task][Input-Tasks] for the details of the input tasks.
+A typical example for this is the `Compile / run` task. The `scalastyle` task is actually an input task too. See [input task][Input-Tasks] for the details of the input tasks.
 
-Now suppose we want to call `run in Compile` task and then open the browser for testing purposes.
+Now suppose we want to call `Compile / run` task and then open the browser for testing purposes.
 
 #### src/main/scala/Greeting.scala
 
@@ -27,7 +27,7 @@ lazy val runopen = inputKey[Unit]("run and then open the browser")
 lazy val root = (project in file("."))
   .settings(
     runopen := {
-      (run in Compile).evaluated
+      (Compile / run).evaluated
       println("open browser!")
     }
   )
@@ -45,13 +45,13 @@ open browser!
 
 #### build.sbt v2
 
-We can actually remove `runopen` key, by rewriting the new input task to `run in Compile`:
+We can actually remove `runopen` key, by rewriting the new input task to `Compile / run`:
 
 ```scala
 lazy val root = (project in file("."))
   .settings(
-    run in Compile := {
-      (run in Compile).evaluated
+    Compile / run := {
+      (Compile / run).evaluated
       println("open browser!")
     }
   )

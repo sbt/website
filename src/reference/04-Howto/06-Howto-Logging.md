@@ -176,7 +176,7 @@ task. For example, to change the logging level for compilation to only
 show warnings and errors:
 
 ```scala
-> set logLevel in compile := Level.Warn
+> set Compile / compile / logLevel := Level.Warn
 ```
 
 To enable debug logging for all tasks in the current project,
@@ -223,9 +223,9 @@ the trace printing behavior for a single project, configuration, or
 task, scope `traceLevel` appropriately:
 
 ```scala
-> set traceLevel in Test := 5
-> set traceLevel in update := 0
-> set traceLevel in ThisProject := -1
+> set Test / traceLevel := 5
+> set update / traceLevel := 0
+> set ThisProject / traceLevel := -1
 ```
 
 <a name="nobuffer"></a>

@@ -38,8 +38,8 @@ También puedes copiar jars para tests como
 [ScalaTest](http://www.scalatest.org/) en `lib`.
 
 Las dependencias en `lib` aparecen en todos los classpaths (para `compile`,
-`test`, `run` y `console`). Si quieres cambiar el classpath para una sola de esas tareas deberías de ajustar `dependencyClasspath in Compile` o
-`dependencyClasspath in Runtime`, por ejemplo.
+`test`, `run` y `console`). Si quieres cambiar el classpath para una sola de esas tareas deberías de ajustar `Compile / dependencyClasspath` o
+`Runtime / dependencyClasspath`, por ejemplo.
 
 No hay que añadir nada en `build.sbt` para empezar a utilizar dependencias no
 gestionadas, aunque puedes cambiar la clave `unmanagedBase` si quisieras

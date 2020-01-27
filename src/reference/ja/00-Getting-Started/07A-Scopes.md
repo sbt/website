@@ -61,15 +61,17 @@ RGB 色モデルにおいて、全ての色は赤、緑、青の成分を軸と�
 同様に、sbt におけるスコープはサブプロジェクト、コンフィギュレーション、タスクの**タプル**により成り立つ:
 
 ```scala
-scalacOptions in (projA, Compile, console)
+projA / Compile / console / scalacOptions
 ```
 
-より正確には、以下のようになっている:
+これは以下のスコープ付きキーを sbt 1.1 で導入されたスラッシュ構文で書いたものだ:
 
 ```scala
-scalacOptions in (Select(projA: Reference),
-                  Select(Compile: ConfigKey),
-                  Select(console.key))
+scalacOptions in (
+  Select(projA: Reference),
+  Select(Compile: ConfigKey),
+  Select(console.key)
+)
 ```
 
 #### サブプロジェクト軸によるスコープ付け
@@ -113,18 +115,18 @@ sbt で使われる代表的なコンフィギュレーションには以下の�
 
 パッケージを構築するさまざまなタスク（`packageSrc`、`packageBin`、`packageDoc`）は、`artifactName` や `packageOption` などのパッケージ関連のキーを共有することができる。これらのキーはそれぞれのパッケージタスクに対して独自の値を取ることができる。
 
-#### グローバルスコープ成分
+#### Zero スコープ成分
 
-それぞれのスコープ軸は、その軸の型のインスタンスを代入する（例えば、タスク軸にはタスクを代入する）か、
-もしくは、`Global` という特殊な値を代入することができる。これは `*` とも表記される。つまり、`Global` は `None` と同様だと考えることができる。
+各スコープ軸は、`Some(_)` のようにその軸の型のインスタンスを持つか、`Zero` という特殊な値を持つことができる。
+つまり、`Zero` は `None` と同様だと考えることができる。
 
-`*` は全てのスコープ軸に対応する普遍的なフォールバックであるが、多くの場合直接それを使うのは sbt 本体もしくはプラグインの作者に限定されるべきだ。
+`Zero` は全てのスコープ軸に対応する普遍的なフォールバックであるが、多くの場合直接それを使うのは sbt 本体もしくはプラグインの作者に限定されるべきだ。
 
-分かりづらいことに、ビルド定義内で `someKey in Global` と書いた場合、暗黙の変換によってこれは `someKey in (Global, Global, Global)` に変換される。
+`Global` は、全ての軸を `Zero` とするスコープ、`Zero / Zero / Zero` だ。そのため、`Global / someKey` は `Zero / Zero / Zero / someKey` を略記したものだと考えることができる。
 
 ### ビルド定義からスコープを参照する
 
-`build.sbt` で裸のキーを使ってセッティングを作った場合は、(現プロジェクト, `Global` コンフィグレーション, `Global` タスク) にスコープ付けされる:
+`build.sbt` で裸のキーを使ってセッティングを作った場合は、(現プロジェクト / コンフィグレーション `Zero` / タスク `Zero`) にスコープ付けされる:
 
 ```scala
 lazy val root = (project in file("."))
@@ -133,139 +135,126 @@ lazy val root = (project in file("."))
   )
 ```
 
-sbt を実行して、`inspect name` と入力して、キーが　`{file:/home/hp/checkout/hello/}default-aea33a/*:name` により提供されていることを確認しよう。つまり、プロジェクトは、`{file:/home/hp/checkout/hello/}default-aea33a` で、コンフィギュレーションは `*` で、タスクは表示されていない（グローバルを指す）ということだ。
+sbt を実行して、`inspect name` と入力して、キーが
+`ProjectRef(uri("file:/private/tmp/hello/"), "root") / name` により提供されていることを確認しよう。つまり、プロジェクトは、
+`ProjectRef(uri("file:/private/tmp/hello/"), "root")` で、コンフィギュレーション軸もタスク軸も表示されない (これは `Zero` を意味する)。
 
-右辺項に置かれた裸のキーも (現プロジェクト, `Global` コンフィグレーション, `Global` タスク) にスコープ付けされる:
+右辺項に置かれた裸のキーも (現プロジェクト / コンフィグレーション `Zero` / タスク `Zero`) にスコープ付けされる:
 
-```scala
-organization := name.value
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #unscoped }
 
-
-キーにはオーバーロードされた `.in` メソッドがあり、それによりスコープを設定できる。
-`.in(...)` への引数として、どのスコープ軸のインスタンスでも渡すことができる。
+全てのスコープ軸の型には `/` 演算子が導入されている。
+`/` は引数としてキーもしくは別のスコープ軸を受け取ることができる。
 これをやる意味は全くないけど、例として `Compile` コンフィギュレーションでスコープ付けされた `name` の設定を以下に示す:
 
-```scala
-name in Compile := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confScoped }
 
 また、`packageBin` タスクでスコープ付けされた `name` の設定（これも意味なし！ただの例だよ）:
 
-```scala
-name in packageBin := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #taskScoped }
 
 もしくは、例えば `Compile` コンフィギュレーションの `packageBin` の `name` など、複数のスコープ軸でスコープ付けする:
 
-```scala
-name in (Compile, packageBin) := "hello"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #confAndTaskScoped }
 
 もしくは、全ての軸に対して `Global` を使う:
 
-```scala
-// concurrentRestrictions in (Global, Global, Global) と同じ
-concurrentRestrictions in Global := Seq(
-  Tags.limitAll(1)
-)
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/scopes/build.sbt) { #global }
 
-（`concurrentRestrictions in Global` は、`concurrentRestrictions in (Global, Global, Global)` へと暗黙の変換が行われ、全ての軸を `Global` に設定する。
-タスクとコンフィギュレーションは既にデフォルトで `Global` であるため、事実上行なっているのはプロジェクトを `Global` に指定することだ。つまり、`{file:/home/hp/checkout/hello/}default-aea33a/*:concurrentRestrictions` ではなく、`*/*:concurrentRestrictions` が定義される。）
+（`Global / concurrentRestrictions` は、`Zero / Zero / Zero / concurrentRestrictions` へと暗黙の変換が行われ、全ての軸を `Zero` に設定する。
+タスクとコンフィギュレーションは既にデフォルトで `Zero` であるため、事実上行なっているのはプロジェクトを `Zero` に指定することだ。つまり、`ProjectRef(uri("file:/tmp/hello/"), "root") / Zero / Zero / concurrentRestrictions` ではなく、`Zero / Zero / Zero / concurrentRestrictions` が定義される。）
 
 ### sbt シェルからのスコープ付きキーの参照方法
 
 コマンドラインと sbt シェルにおいて、sbt はスコープ付きキーを以下のように表示する（そして、パースする）:
 
 ```
-{<ビルド-uri>}<プロジェクト-id>/コンフィギュレーション:タスクキー::キー
+ref / Config / intask / キー
 ```
 
- - `{<ビルド-uri>}<プロジェクト-id>` は、サブプロジェクト軸を特定する。<プロジェクト-id> がなければ、サブプロジェクト軸は「ビルド全体」スコープとなる。
- - `コンフィギュレーション` は、コンフィギュレーション軸を特定する。
- - `タスクキー` は、タスク軸を特定する。
+ - `ref` は、サブプロジェクト軸を特定する。これは `<プロジェクト-id>`、`ProjectRef(uri("file:..."), "id")`、もしくは「ビルド全体」を意味する `ThisBuild` という値を取ることができる。
+ - `Config` は、コンフィギュレーション軸を特定し、大文字から始まる Scala 識別子を使う。
+ - `intask` は、タスク軸を特定する。
  - `キー` は、スコープ付けされるキーを特定する。
 
-全ての軸において、`*` を使って `Global` スコープを表すことができる。
+全ての軸において、`Zero` を使うことができる。
 
 スコープ付きキーの一部を省略すると、以下の手順で推論される:
 
  - プロジェクトを省略した場合は、カレントプロジェクトが使われる。
- - コンフィグレーションを省略した場合は、キーに依存したコンフィギュレーションが自動検知される。
- - タスクを省略した場合は、`Global` タスクが使われる。
+ - `Config` もしくは `intask` を省略した場合は、キーに依存したコンフィギュレーションが自動検知される。
 
 さらに詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
 
-### スコープ付きキーの表記例
+### sbt シェルでのスコープ付きキーの表記例
 
-- `fullClasspath` はキーのみを指定し、デフォルトスコープを用いる。ここでは、カレントプロジェクト、キーに依存したコンフィギュレーション、グローバルタスクスコープとなる。
-- `test:fullClasspath` はコンフィギュレーションを指定する。つまりプロジェクト軸とタスク軸はデフォルトを用いつつも `test`コンフィギュレーションにおける `fullClasspath` というキーを表す。
-- `*:fullClasspath` はデフォルトコンフィギュレーションを用いずに `Global` コンフィギュレーションを用いる事を明示している。
-- `doc::fullClasspath` はプロジェクト軸とコンフィギュレーション軸はデフォルトを用いつつ、 `doc` タスクスコープにおける `fullClasspath` というキーを表す。
-- `{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath` は `{file:/home/hp/checkout/hello/}` をルートディレクトリにビルドした際に含まれる `default-aea33a` というプロジェクトを指定している。さらにこのプロジェクト内の `test` コンフィギュレーションを用いる事も明示している。
-- `{file:/home/hp/checkout/hello/}/test:fullClasspath` は `{file:/home/hp/checkout/hello/}` のビルド全体をプロジェクトの軸とする。
-- `{.}/test:fullClasspath` は `{.}` で指定されたルートディレクトリのビルド全体をプロジェクト軸に取る。`{.}` は Scala code において `ThisBuild` と記述できる。
-- `{file:/home/hp/checkout/hello/}/compile:doc::fullClasspath` は3つのスコープ軸全てを指定している。
+- `fullClasspath` はキーのみを指定し、デフォルトスコープを用いる。ここでは、カレントプロジェクト、キーに依存したコンフィギュレーション、`Zero` タスクスコープとなる。
+- `Test / fullClasspath` はコンフィギュレーションを指定する。つまりプロジェクト軸とタスク軸はデフォルトを用いつつも `Test`コンフィギュレーションにおける `fullClasspath` というキーを表す。
+- `root / fullClasspath` は `root` というプロジェクトid によって特定されるプロジェクトをプロジェクト軸に指定する。
+- `root / Zero / fullClasspath` は `root` プロジェクトと、デフォルトのコンフィギュレーションの代わりに `Zero` をコンフィギュレーション軸に指定する。
+- `doc / fullClasspath` は `fullClasspath` キーを `doc` タスク、プロジェクト軸とコンフィギュレーション軸はデフォルト値へと指定する。
+- `ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath`
+  はプロジェクト `ProjectRef(uri("file:/tmp/hello/"), "root")`、Test コンフィギュレーション、デフォルトのタスク軸を指定する。
+- `ThisBuild / version` はプロジェクト軸をこの「ビルド全体」である `ThisBuild`、デフォルトのコンフィギュレーション軸へと指定する。
+- `Zero / fullClasspath` はプロジェクト軸を `Zero`、コンフィギュレーション軸をデフォルト値へと指定する。
+- `root / Compile / doc / fullClasspath` は 3つ全てのスコープ軸を指定する。
 
 ### スコープの検査
 
 sbt シェルで `inspect` コマンドを使ってキーとそのスコープを把握することができる。
-例えば、`inspect test:full-classpath` と試してみよう:
+例えば、`inspect Test/fullClasspath` と試してみよう:
 
 ```
 \$ sbt
-> inspect test:fullClasspath
-[info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
+sbt:Hello> inspect Test / fullClasspath
+[info] Task: scala.collection.Seq[sbt.internal.util.Attributed[java.io.File]]
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
 [info] Provided by:
-[info]  {file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath
+[info]  ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath
+[info] Defined at:
+[info]  (sbt.Classpaths.classpaths) Defaults.scala:1639
 [info] Dependencies:
-[info]  test:exportedProducts
-[info]  test:dependencyClasspath
+[info]  Test / dependencyClasspath
+[info]  Test / exportedProducts
+[info]  Test / fullClasspath / streams
 [info] Reverse dependencies:
-[info]  test:runMain
-[info]  test:run
-[info]  test:testLoader
-[info]  test:console
+[info]  Test / testLoader
 [info] Delegates:
-[info]  test:fullClasspath
-[info]  runtime:fullClasspath
-[info]  compile:fullClasspath
-[info]  *:fullClasspath
-[info]  {.}/test:fullClasspath
-[info]  {.}/runtime:fullClasspath
-[info]  {.}/compile:fullClasspath
-[info]  {.}/*:fullClasspath
-[info]  */test:fullClasspath
-[info]  */runtime:fullClasspath
-[info]  */compile:fullClasspath
-[info]  */*:fullClasspath
+[info]  Test / fullClasspath
+[info]  Runtime / fullClasspath
+[info]  Compile / fullClasspath
+[info]  fullClasspath
+[info]  ThisBuild / Test / fullClasspath
+[info]  ThisBuild / Runtime / fullClasspath
+[info]  ThisBuild / Compile / fullClasspath
+[info]  ThisBuild / fullClasspath
+[info]  Zero / Test / fullClasspath
+[info]  Zero / Runtime / fullClasspath
+[info]  Zero / Compile / fullClasspath
+[info]  Global / fullClasspath
 [info] Related:
-[info]  compile:fullClasspath
-[info]  compile:fullClasspath(for doc)
-[info]  test:fullClasspath(for doc)
-[info]  runtime:fullClasspath
+[info]  Compile / fullClasspath
+[info]  Runtime / fullClasspath
 ```
 
 一行目からこれが（[.sbt ビルド定義][Basic-Def]で説明されているとおり、セッティングではなく）タスクであることが分かる。
 このタスクの戻り値は `scala.collection.Seq[sbt.Attributed[java.io.File]]` の型をとる。
 
 "Provided by" は、この値を定義するスコープ付きキーを指し、この場合は、
-`{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath`
-（`test` コンフィギュレーションと `{file:/home/hp/checkout/hello/}default-aea33a` プロジェクトにスコープ付けされた `fullClasspath` キー）。
+`ProjectRef(uri("file:/tmp/hello/"), "root") / Test / fullClasspath`
+（`Test` コンフィギュレーションと `ProjectRef(uri("file:/tmp/hello/"), "root")` プロジェクトにスコープ付けされた `fullClasspath` キー）。
 
 "Dependencies" に関しては、[前のページ][Task-Graph]で解説した。
 
 "Delegates" (委譲) に関してはまた後で。
 
-今度は、（`inspect test:full-class` のかわりに）`inspect fullClasspath` を試してみて、違いをみてみよう。
-コンフィグレーションが省略されたため、`compile` だと自動検知される。
-そのため、`inspect compile:fullClasspath` は `inspect fullClasspath` と同じになるはずだ。
+今度は、（`inspect Test/fullClasspath` のかわりに）`inspect fullClasspath` を試してみて、違いをみてみよう。
+コンフィグレーションが省略されたため、`Compile` だと自動検知される。
+そのため、`inspect Compile/fullClasspath` は `inspect fullClasspath` と同じになるはずだ。
 
-次に、`inspect *:fullClasspath` も実行して違いを比べてみよう。
-`fullClasspath` はデフォルトでは、`Global` スコープには定義されていない。
+次に、`inspect ThisBuild / Zero / fullClasspath` も実行して違いを比べてみよう。
+`fullClasspath` はデフォルトでは、`Zero` スコープには定義されていない。
 
 より詳しくは、[Interacting with the Configuration System][Inspecting-Settings] 参照。
 
@@ -275,18 +264,18 @@ sbt シェルで `inspect` コマンドを使ってキーとそのスコープ�
 例えば、`compile` タスクは、デフォルトで `Compile` と `Test` コンフィギュレーションにスコープ付けされているけど、
 これらのスコープ外には存在しない。
 
-そのため、`compile` キーに関連付けられた値を変更するには、`compile in Compile` か `compile in Test` のどちらかを書く必要がある。
+そのため、`compile` キーに関連付けられた値を変更するには、`Compile / compile` か `Test / compile` のどちらかを書く必要がある。
 素の `compile` を使うと、コンフィグレーションにスコープ付けされた標準のコンパイルタスクをオーバーライドするかわりに、カレントプロジェクトにスコープ付けされた新しいコンパイルタスクを定義してしまう。
 
 _"Reference to undefined setting"_ のようなエラーに遭遇した場合は、スコープを指定していないか、間違ったスコープを指定したことによることが多い。
 君が使っているキーは何か別のスコープの中で定義されている可能性がある。
-エラーメッセージの一部として sbt は、君が意味したであろうものを推測してくれるから、"Did you mean compile:compile?" を探そう。
+エラーメッセージの一部として sbt は、意味したであろうものを推測してくれるから、"Did you mean Compile / compile?" を探そう。
 
-キーの名前はキーの_一部_であると考えることもできる。
+キーの名前はキーの**一部**でしかないと考えることもできる。
 実際の所は、全てのキーは名前と（三つの軸を持つ）スコープによって構成される。
-つまり、`packageOptions in (Compile, packageBin)` という式全体でキー名だということだ。
+つまり、`Compile / packageBin / packageOptions` という式全体でキー名だということだ。
 単に `packageOptions` と言っただけでもキー名だけど、それは別のキーだ
-（`in` 無しのキーのスコープは暗黙で決定され、現プロジェクト、`Global` コンフィグレーション、`Global` タスクとなる）。
+（スラッシュ無しのキーのスコープは暗黙で決定され、現プロジェクト、`Zero` コンフィグレーション、`Zero` タスクとなる）。
 
 ### ビルドレベル・セッティング
 

@@ -176,9 +176,9 @@ lazy val core = (project in file("core"))
   .settings(
     commonSettings,
     // include the macro classes and resources in the main jar
-    mappings in (Compile, packageBin) ++= mappings.in(macroSub, Compile, packageBin).value,
+    Compile / packageBin / mappings ++= (macroSub / Compile / packageBin / mappings).value,
     // include the macro sources in the main source jar
-    mappings in (Compile, packageSrc) ++= mappings.in(macroSub, Compile, packageSrc).value
+    Compile / packageSrc / mappings ++= (macroSub / Compile / packageSrc / mappings).value
   )
 ```
 

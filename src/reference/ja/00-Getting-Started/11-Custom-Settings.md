@@ -184,7 +184,7 @@ s: 3
 
 ![task-dependency](../files/task-dependency01.png)
 
-もしタスク依存性を非重複化しなければ、`test in Test` のタスク依存性として `compile in Test`
+もしタスク依存性を非重複化しなければ、`Test / test` のタスク依存性として `Test / compile`
 が何度も現れるため、テストのソースコードを何度もコンパイルすることになる。
 
 #### 終了処理タスク

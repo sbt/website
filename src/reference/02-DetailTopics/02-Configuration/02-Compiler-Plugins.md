@@ -29,7 +29,7 @@ X-Ray requires the extra option:
 ```scala
 // declare the main Scala source directory as the base directory
 scalacOptions :=
-    scalacOptions.value :+ ("-Psxr:base-directory:" + (scalaSource in Compile).value.getAbsolutePath)
+    scalacOptions.value :+ ("-Psxr:base-directory:" + (Compile / scalaSource).value.getAbsolutePath)
 ```
 
 You can still specify compiler plugins manually. For example:

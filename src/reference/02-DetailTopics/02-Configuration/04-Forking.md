@@ -57,8 +57,8 @@ what options to pass to each group.
 
 ### Change working directory
 
-To change the working directory when forked, set `baseDirectory in run`
-or `baseDirectory in test`:
+To change the working directory when forked, set `Compile / run / baseDirectory`
+or `Test / baseDirectory`:
 
 ```scala
 // sets the working directory for all `run`-like tasks

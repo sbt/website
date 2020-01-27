@@ -7,9 +7,9 @@ out: Howto-After-Input-Task.html
 ### インプットタスクの後で何かする
 
 ここまでタスクに焦点を当ててみてきた。タスクには他にインプットタスクというものがあって、これはユーザからの入力をシェル上で受け取る。
-典型的な例としては `run in Compile` タスクがある。`scalastyle` タスクも実はインプットタスクだ。インプットタスクの詳細は [Input Task][Input-Tasks] 参照。
+典型的な例としては `Compile / run` タスクがある。`scalastyle` タスクも実はインプットタスクだ。インプットタスクの詳細は [Input Task][Input-Tasks] 参照。
 
-ここで、`run in Compile` タスクの実行後にテスト用にブラウザを開く方法を考えてみる。
+ここで、`Compile / run` タスクの実行後にテスト用にブラウザを開く方法を考えてみる。
 
 #### src/main/scala/Greeting.scala
 
@@ -27,7 +27,7 @@ lazy val runopen = inputKey[Unit]("run and then open the browser")
 lazy val root = (project in file("."))
   .settings(
     runopen := {
-      (run in Compile).evaluated
+      (Compile / run).evaluated
       println("open browser!")
     }
   )
@@ -45,7 +45,7 @@ open browser!
 
 #### build.sbt v2
 
-この新しいインプットタスクを `run in Compile` に再配線することで、実は `runopen` キーを外すことができる:
+この新しいインプットタスクを `Compile / run` に再配線することで、実は `runopen` キーを外すことができる:
 
 ```scala
 lazy val root = (project in file("."))

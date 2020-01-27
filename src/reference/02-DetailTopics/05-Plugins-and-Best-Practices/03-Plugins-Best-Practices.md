@@ -198,9 +198,9 @@ the same *key*, but they represent distinct *values*. So, in a user's
 `build.sbt`, we might see:
 
 ```scala
-scalaSource in Fuzz := baseDirectory.value / "source" / "fuzz" / "scala"
+Fuzz / scalaSource := baseDirectory.value / "source" / "fuzz" / "scala"
 
-scalaSource in Compile := baseDirectory.value / "source" / "main" / "scala"
+Compile / scalaSource := baseDirectory.value / "source" / "main" / "scala"
 ```
 
 In the fuzzing plugin, this is achieved with an `inConfig` definition:

@@ -31,15 +31,15 @@ scoped according to whether the generated files are main (`Compile`) or
 test (`Test`) sources. This basic structure looks like:
 
 ```scala
-sourceGenerators in Compile += <task of type Seq[File]>.taskValue
+Compile / sourceGenerators += <task of type Seq[File]>.taskValue
 ```
 
 For example, assuming a method
 `def makeSomeSources(base: File): Seq[File]`,
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  makeSomeSources((sourceManaged in Compile).value / "demo")
+Compile / sourceGenerators += Def.task {
+  makeSomeSources((Compile / sourceManaged).value / "demo")
 }.taskValue
 ```
 
@@ -48,8 +48,8 @@ As a specific example, the following source generator generates
 console:
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  val file = (sourceManaged in Compile).value / "demo" / "Test.scala"
+Compile / sourceGenerators += Def.task {
+  val file = (Compile / sourceManaged).value / "demo" / "Test.scala"
   IO.write(file, """object Test extends App { println("Hi") }""")
   Seq(file)
 }.taskValue
@@ -98,15 +98,15 @@ to whether the generated files are main (`Compile`) or test (`Test`)
 resources. This basic structure looks like:
 
 ```scala
-resourceGenerators in Compile += <task of type Seq[File]>.taskValue
+Compile / resourceGenerators += <task of type Seq[File]>.taskValue
 ```
 
 For example, assuming a method
 `def makeSomeResources(base: File): Seq[File]`,
 
 ```scala
-resourceGenerators in Compile += Def.task {
-  makeSomeResources((resourceManaged in Compile).value / "demo")
+Compile / resourceGenerators += Def.task {
+  makeSomeResources((Compile / resourceManaged).value / "demo")
 }.taskValue
 ```
 
@@ -120,8 +120,8 @@ As a specific example, the following generates a properties file
 `myapp.properties` containing the application name and version:
 
 ```scala
-resourceGenerators in Compile += Def.task {
-  val file = (resourceManaged in Compile).value / "demo" / "myapp.properties"
+Compile / resourceGenerators += Def.task {
+  val file = (Compile / resourceManaged).value / "demo" / "myapp.properties"
   val contents = "name=%s\\nversion=%s".format(name.value,version.value)
   IO.write(file, contents)
   Seq(file)

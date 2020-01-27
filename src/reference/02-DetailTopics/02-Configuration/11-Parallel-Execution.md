@@ -236,7 +236,7 @@ Global / concurrentRestrictions := {
 }
 ```
 
-As before, `parallelExecution in Test` controls whether tests are mapped
+As before, `Test / parallelExecution` controls whether tests are mapped
 to separate tasks. To restrict the number of concurrently executing
 tests in all projects, use:
 

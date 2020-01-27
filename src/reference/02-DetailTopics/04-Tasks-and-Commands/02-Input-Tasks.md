@@ -179,9 +179,9 @@ val run2 = inputKey[Unit](
 val separator: Parser[String] = "--"
 
 run2 := {
-   val one = (run in Compile).evaluated
+   val one = (Compile / run).evaluated
    val sep = separator.parsed
-   val two = (run in Compile).evaluated
+   val two = (Compile / run).evaluated
 }
 ```
 
@@ -240,8 +240,8 @@ lazy val firstInput: Initialize[String] =
 lazy val secondInput: String = " red blue"
 
 run2 := {
-   val one = (run in Compile).fullInput(firstInput.value).evaluated
-   val two = (run in Compile).partialInput(secondInput).evaluated
+   val one = (Compile / run).fullInput(firstInput.value).evaluated
+   val two = (Compile / run).partialInput(secondInput).evaluated
 }
 ```
 
@@ -272,7 +272,7 @@ tasks or run directly without providing any input:
 lazy val runFixed = taskKey[Unit]("A task that hard codes the values to `run`")
 
 runFixed := {
-   val _ = (run in Compile).toTask(" blue green").value
+   val _ = (Compile / run).toTask(" blue green").value
    println("Done!")
 }
 ```
@@ -299,8 +299,8 @@ lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
 fork in run := true
 
 runFixed2 := {
-   val x = (run in Compile).toTask(" blue green").value
-   val y = (run in Compile).toTask(" red orange").value
+   val x = (Compile / run).toTask(" blue green").value
+   val y = (Compile / run).toTask(" red orange").value
    println("Done!")
 }
 ```

@@ -27,14 +27,14 @@ def makeSomeSources(base: File): Seq[File]
 大まかな定義は次のようになる。
 
 ```scala
-sourceGenerators in Compile += <task of type Seq[File]>.taskValue
+Compile / sourceGenerators += <task of type Seq[File]>.taskValue
 ```
 
 これは、 `def makeSomeSources(base: File): Seq[File]` を用いて次のように書ける。
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  makeSomeSources((sourceManaged in Compile).value / "demo")
+Compile / sourceGenerators += Def.task {
+  makeSomeSources((Compile / sourceManaged).value / "demo")
 }.taskValue
 ```
 
@@ -42,8 +42,8 @@ sourceGenerators in Compile += Def.task {
 次の例では、 source generator は、実行するとコンソールに `"Hi"` と表示する `Test.scala` というアプリケーションオブジェクトを生成する。
 
 ```scala
-sourceGenerators in Compile += Def.task {
-  val file = (sourceManaged in Compile).value / "demo" / "Test.scala"
+Compile / sourceGenerators += Def.task {
+  val file = (Compile / sourceManaged).value / "demo" / "Test.scala"
   IO.write(file, """object Test extends App { println("Hi") }""")
   Seq(file)
 }.taskValue
@@ -87,14 +87,14 @@ def makeSomeResources(base: File): Seq[File]
 大まかな定義は次のようになる。
 
 ```scala
-resourceGenerators in Compile += <task of type Seq[File]>.taskValue
+Compile / resourceGenerators += <task of type Seq[File]>.taskValue
 ```
 
 これは、 `def makeSomeResources(base: File): Seq[File]` を用いて次のように書ける。
 
 ```scala
-resourceGenerators in Compile += Def.task {
-  makeSomeResources((resourceManaged in Compile).value / "demo")
+Compile / resourceGenerators += Def.task {
+  makeSomeResources((Compile / resourceManaged).value / "demo")
 }.taskValue
 ```
 
@@ -107,8 +107,8 @@ resourceGenerators in Compile += Def.task {
 次の例では、アプリケーション名とバージョンが書かれた `myapp.properties`というプロパティファイルが生成される。
 
 ```scala
-resourceGenerators in Compile += Def.task {
-  val file = (resourceManaged in Compile).value / "demo" / "myapp.properties"
+Compile / resourceGenerators += Def.task {
+  val file = (Compile / resourceManaged).value / "demo" / "myapp.properties"
   val contents = "name=%s\\nversion=%s".format(name.value,version.value)
   IO.write(file, contents)
   Seq(file)

@@ -21,6 +21,9 @@ ThisBuild / scalaVersion := "$example_scala_version$"
 // set the Scala version used for the project
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 
+// set the prompt (for this build) to include the project id.
+ThisBuild / shellPrompt := { state => Project.extract(state).currentRef.project + "> " }
+
 // define ModuleID for library dependencies
 lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "$example_scalacheck_version$"
 
@@ -35,10 +38,10 @@ lazy val root = (project in file("."))
     name := "My Project",
 
     // set the main Scala source directory to be <base>/src
-    scalaSource in Compile := baseDirectory.value / "src",
+    Compile / scalaSource := baseDirectory.value / "src",
 
     // set the Scala test source directory to be <base>/test
-    scalaSource in Test := baseDirectory.value / "test",
+    Test / scalaSource := baseDirectory.value / "test",
 
     // add a test dependency on ScalaCheck
     libraryDependencies += scalacheck % Test,
@@ -67,16 +70,16 @@ lazy val root = (project in file("."))
       |}""".stripMargin,
 
     // set the initial commands when entering 'console' or 'consoleQuick', but not 'consoleProject'
-    initialCommands in console := "import myproject._",
+    console / initialCommands := "import myproject._",
 
     // set the main class for packaging the main jar
     // 'run' will still auto-detect and prompt
     // change Compile to Test to set it for the test jar
-    mainClass in (Compile, packageBin) := Some("myproject.MyMain"),
+    Comile / packageBin / mainClass := Some("myproject.MyMain"),
 
     // set the main class for the main 'run' task
     // change Compile to Test to set it for 'test:run'
-    mainClass in (Compile, run) := Some("myproject.MyMain"),
+    Compile / run / mainClass := Some("myproject.MyMain"),
 
     // add <base>/input to the files that '~' triggers on
     watchSources += baseDirectory.value / "input",
@@ -96,9 +99,6 @@ lazy val root = (project in file("."))
     // disable updating dynamic revisions (including -SNAPSHOT versions)
     offline := true,
 
-    // set the prompt (for this build) to include the project id.
-    shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " },
-
     // set the prompt (for the current project) to include the username
     shellPrompt := { state => System.getProperty("user.name") + "> " },
 
@@ -117,11 +117,11 @@ lazy val root = (project in file("."))
     // disable using the Scala version in output paths and artifacts
     crossPaths := false,
 
-    // fork a new JVM for 'run' and 'test:run'
+    // fork a new JVM for 'run' and 'Test/run'
     fork := true,
 
-    // fork a new JVM for 'test:run', but not 'run'
-    fork in Test := true,
+    // fork a new JVM for 'Test/run', but not 'run'
+    Test / fork := true,
 
     // add a JVM option to use when forking a JVM for 'run'
     javaOptions += "-Xmx2G",
@@ -131,7 +131,7 @@ lazy val root = (project in file("."))
 
     // Execute tests in the current project serially
     //   Tests from other projects may still run concurrently.
-    parallelExecution in Test := false,
+    Test / parallelExecution := false,
 
     // set the location of the JDK to use for compiling Java code.
     // if 'fork' is true, this is used for 'run' as well
@@ -141,11 +141,11 @@ lazy val root = (project in file("."))
     scalaHome := Some(file("/home/user/scala/trunk/")),
 
     // don't aggregate clean (See FullConfiguration for aggregation details)
-    aggregate in clean := false,
+    clean / aggregate := false,
 
     // only show warnings and errors on the screen for compilations.
     //  this applies to both test:compile and compile and is Info by default
-    logLevel in compile := Level.Warn,
+    compile / logLevel := Level.Warn,
 
     // only show warnings and errors on the screen for all tasks (the default is Info)
     //  individual tasks can then be more verbose using the previous setting
@@ -162,16 +162,16 @@ lazy val root = (project in file("."))
     traceLevel := 0,
 
     // add SWT to the unmanaged classpath
-    unmanagedJars in Compile += Attributed.blank(file("/usr/share/java/swt.jar")),
+    Compile / unmanagedJars += Attributed.blank(file("/usr/share/java/swt.jar")),
 
     // publish test jar, sources, and docs
-    publishArtifact in Test := true,
+    Test / publishArtifact := true,
 
     // disable publishing of main docs
-    publishArtifact in (Compile, packageDoc) := false,
+    Compile / packageDoc / publishArtifact := false,
 
     // change the classifier for the docs artifact
-    artifactClassifier in packageDoc := Some("doc"),
+    packageDoc / artifactClassifier := Some("doc"),
 
     // Copy all managed dependencies to <build-root>/lib_managed/
     //   This is essentially a project-local cache.  There is only one

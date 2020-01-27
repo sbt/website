@@ -212,7 +212,7 @@ import Tests._
         new Group(letter.toString, tests, SubProcess(options))
     } toSeq
 
-    testGrouping in Test := groupByFirst( (definedTests in Test).value )
+    Test / testGrouping := groupByFirst( (Test / definedTests).value )
 }
 ```
 
@@ -395,8 +395,8 @@ lazy val root = (project in file("."))
   .settings(
     inConfig(FunTest)(Defaults.testTasks),
     libraryDependencies += scalatest % FunTest,
-    testOptions in Test := Seq(Tests.Filter(unitFilter)),
-    testOptions in FunTest := Seq(Tests.Filter(itFilter))
+    Test / testOptions := Seq(Tests.Filter(unitFilter)),
+    FunTest / testOptions := Seq(Tests.Filter(itFilter))
     // other settings here
   )
 ```

@@ -211,8 +211,8 @@ muestra una notación gráfica de la evaluación de `sampleStringTask`:
 
 Si no hubiésemos deduplicado las dependencias de tareas habríamos acabado
 compilando el código fuente de los tests muchas veces cuando la tarea `test`
-hubiese sido invocada, ya que `compile in Test` aparece muchas veces como
-dependencia de `test in Test`.
+hubiese sido invocada, ya que `Test / compile` aparece muchas veces como
+dependencia de `Test / test`.
 
 #### Tarea de limpieza
 

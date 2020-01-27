@@ -34,7 +34,7 @@ to use the files for the compilation classpath in another task, :
 
 ```scala
 example := {
-  val cp: Seq[File] = (dependencyClasspath in Compile).value.files
+  val cp: Seq[File] = (Compile / dependencyClasspath).value.files
   ...
 }
 ```
@@ -79,7 +79,7 @@ the test classpath in another task, :
 
 ```scala
 example := {
-  val cp: Seq[File] = (fullClasspath in Test).value.files
+  val cp: Seq[File] = (Test / fullClasspath).value.files
   ...
 }
 ```

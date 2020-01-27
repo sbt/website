@@ -17,49 +17,58 @@ API or you can disable some of the main artifacts.
 To add all test artifacts:
 
 ```scala
-publishArtifact in Test := true
+lazy val app = (project in file("app"))
+  .settings(
+    Test / publishArtifact := true,
+  )
 ```
 
 To add them individually:
 
 ```scala
-// enable publishing the jar produced by `test:package`
-publishArtifact in (Test, packageBin) := true
+lazy val app = (project in file("app"))
+  .settings(
+    // enable publishing the jar produced by `Test/package`
+    Test / packageBin / publishArtifact := true,
 
-// enable publishing the test API jar
-publishArtifact in (Test, packageDoc) := true
+    // enable publishing the test API jar
+    Test / packageDoc / publishArtifact := true,
 
-// enable publishing the test sources jar
-publishArtifact in (Test, packageSrc) := true
+    // enable publishing the test sources jar
+    Test / packageSrc / publishArtifact := true,
+  )
 ```
 
 To disable main artifacts individually:
 
 ```scala
-// disable publishing the main jar produced by `package`
-publishArtifact in (Compile, packageBin) := false
+lazy val app = (project in file("app"))
+  .settings(
+    // disable publishing the main jar produced by `package`
+    Compile / packageBin / publishArtifact := false,
 
-// disable publishing the main API jar
-publishArtifact in (Compile, packageDoc) := false
+    // disable publishing the main API jar
+    Compile / packageDoc / publishArtifact := false,
 
-// disable publishing the main sources jar
-publishArtifact in (Compile, packageSrc) := false
+    // disable publishing the main sources jar
+    Compile / packageSrc / publishArtifact := false,
+  )
 ```
 
 ### Modifying default artifacts
 
 Each built-in artifact has several configurable settings in addition to
 `publishArtifact`. The basic ones are `artifact` (of type
-`SettingKey[Artifact]`), `mappings` (of type `TaskKey[(File,String)]`),
-and `artifactPath` (of type `SettingKey[File]`). They are scoped by
-`(<config>, <task>)` as indicated in the previous section.
+`SettingKey[Artifact]`), `mappings` (of type `TaskKey[(File, String)]`),
+and `artifactPath` (of type `SettingKey[File]`).
+They are scoped by `(Config / <task>)` as indicated in the previous section.
 
 To modify the type of the main artifact, for example:
 
 ```scala
-artifact in (Compile, packageBin) := {
-  val previous: Artifact = (artifact in (Compile, packageBin)).value
-  previous.withType("bundle")
+Compile / packageBin / artifact := {
+  val prev: Artifact = (Compile / packageBin / artifact).value
+  prev.withType("bundle")
 }
 ```
 
@@ -97,7 +106,7 @@ For example:
 val myTask = taskKey[Unit]("My task.")
 
 myTask :=  {
-  val (art, file) = packagedArtifact.in(Compile, packageBin).value
+  val (art, file) = (Compile / packageBin / packagedArtifact).value
   println("Artifact definition: " + art)
   println("Packaged file: " + file.getAbsolutePath)
 }
@@ -144,7 +153,7 @@ myImageTask := {
   artifact
 }
 
-addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
+addArtifact(Artifact("myproject", "image", "jpg"), myImageTask)
 ```
 
 `addArtifact` returns a sequence of settings (wrapped in a
@@ -152,10 +161,10 @@ addArtifact( Artifact("myproject", "image", "jpg"), myImageTask )
 full build configuration, usage looks like:
 
 ```scala
-...
-lazy val proj = Project(...)
-  .settings( addArtifact(...).settings )
-...
+lazy val app = (project in file("app"))
+  .settings(
+    addArtifact(...)
+  )
 ```
 
 ### Publishing .war files
@@ -164,18 +173,21 @@ A common use case for web applications is to publish the `.war` file
 instead of the `.jar` file.
 
 ```scala
-// disable .jar publishing 
-publishArtifact in (Compile, packageBin) := false 
+lazy val app = (project in file("app"))
+  .settings(
+    // disable .jar publishing
+    Compile / packageBin / publishArtifact := false,
 
-// create an Artifact for publishing the .war file 
-artifact in (Compile, packageWar) := {
-  val previous: Artifact = (artifact in (Compile, packageWar)).value
-  previous.withType("war").withExtension("war")
-} 
+    // create an Artifact for publishing the .war file
+    Compile / packageWar / artifact := {
+      val prev: Artifact = (Compile / packageWar / artifact).value
+      prev.withType("war").withExtension("war")
+    },
 
-// add the .war file to what gets published 
-addArtifact(artifact in (Compile, packageWar), packageWar) 
-``` 
+    // add the .war file to what gets published
+    addArtifact(Compile / packageWar / artifact, packageWar),
+  )
+```
 
 ### Using dependencies with artifacts
 
@@ -184,7 +196,7 @@ multiple artifacts, use the `artifacts` method on your dependencies. For
 example:
 
 ```scala
-libraryDependencies += "org" % "name" % "rev" artifacts(Artifact("name", "type", "ext"))
+libraryDependencies += ("org" % "name" % "rev").artifacts(Artifact("name", "type", "ext"))
 ```
 
 The `from` and `classifer` methods (described on the
@@ -192,14 +204,14 @@ The `from` and `classifer` methods (described on the
 methods that translate to `artifacts`:
 
 ```scala
-def from(url: String) = artifacts( Artifact(name, new URL(url)) )
-def classifier(c: String) = artifacts( Artifact(name, c) )
+def from(url: String) = artifacts(Artifact(name, new URL(url)))
+def classifier(c: String) = artifacts(Artifact(name, c))
 ```
 
 That is, the following two dependency declarations are equivalent:
 
 ```scala
-libraryDependencies += "org.testng" % "testng" % "5.7" classifier "jdk15"
+libraryDependencies += ("org.testng" % "testng" % "5.7").classifier("jdk15")
 
-libraryDependencies += "org.testng" % "testng" % "5.7" artifacts(Artifact("testng", "jdk15") )
+libraryDependencies += ("org.testng" % "testng" % "5.7").artifacts(Artifact("testng", "jdk15"))
 ```

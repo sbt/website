@@ -5,7 +5,7 @@ out: Howto-Sequential-Task.html
 ### Defining a sequential task with Def.sequential
 
 sbt 0.13.8 added `Def.sequential` function to run tasks under semi-sequential semantics.
-To demonstrate the sequential task, let's create a custom task called `compilecheck` that runs `compile in Compile` and then `scalastyle in Compile` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
+To demonstrate the sequential task, let's create a custom task called `compilecheck` that runs `Compile / compile` and then `Compile / scalastyle` task added by [scalastyle-sbt-plugin](http://www.scalastyle.org/sbt.html).
 
 Here's how to set it up
 
@@ -28,9 +28,9 @@ lazy val compilecheck = taskKey[Unit]("compile and then scalastyle")
 
 lazy val root = (project in file("."))
   .settings(
-    compilecheck in Compile := Def.sequential(
-      compile in Compile,
-      (scalastyle in Compile).toTask("")
+    Compile / compilecheck := Def.sequential(
+      Compile / compile,
+      (Compile / scalastyle).toTask("")
     ).value
   )
 ```

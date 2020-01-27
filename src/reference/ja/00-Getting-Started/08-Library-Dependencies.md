@@ -41,8 +41,8 @@ out: Library-Dependencies.html
 [ScalaCheck][ScalaCheck]、[Specs2][Specs2]、[ScalaTest][ScalaTest] のようなテスト用の jar ファイルも `lib` に配置できる。
 
 `lib` 配下の依存ライブラリは（`compile`、`test`、`run`、そして `console` の）全てのクラスパスに追加される。
-もし、どれか一つのクラスパスを変えたい場合は、例えば `dependencyClasspath in Compile` や
-`dependencyClasspath in Runtime` などを適宜調整する必要がある。
+もし、どれか一つのクラスパスを変えたい場合は、例えば `Compile / dependencyClasspath` や
+`Runtime / dependencyClasspath` などを適宜調整する必要がある。
 
 アンマネージ依存性を利用するのに、`build.sbt` には何も書く必要はないが、デフォルトの `lib` 以外のディレクトリを使いたい場合は `unmanagedBase` キーで変更することができる。
 
@@ -61,7 +61,7 @@ unmanagedBase := baseDirectory.value / "custom_lib"
 例えば `Compile` コンフィギュレーション時に `lib`ディレクトリのファイルを無視したい、など。
 
 ```scala
-unmanagedJars in Compile := Seq.empty[sbt.Attributed[java.io.File]]
+Compile / unmanagedJars := Seq.empty[sbt.Attributed[java.io.File]]
 ```
 
 ### マネージ依存性（Managed Dependencies）
