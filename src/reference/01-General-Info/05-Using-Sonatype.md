@@ -127,10 +127,10 @@ somewhere safe (*e.g. NOT in the repository*). Common convention is a
 `$global_base$/sonatype.sbt` file, with the following:
 
 ```scala
-credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credential")
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credentials")
 ```
 
-Next create a file `~/.sbt/sonatype_credential`:
+Next create a file `~/.sbt/sonatype_credentials`:
 
 ```
 realm=Sonatype Nexus Repository Manager
