@@ -53,3 +53,65 @@ Test / classLoaderLayeringStrategy := ClassLoaderLayeringStrategy.AllLibraryJars
 
 to the `build.sbt` file. Assuming no other changes to the `build.sbt` file, The
 `run` task will still use `ScalaLibrary` strategy.
+
+
+### Troubleshooting
+
+Java reflection may cause issues when used with layered classloaders because it
+is possible that the class method that loads another class via reflection may
+not have access to that class to be loaded. This is particularly likely if the
+class is loaded using `Class.forName` or
+`Thread.currentThread.getContextClassLoader.loadClass`. Consider the following
+example:
+
+```scala
+package example
+
+import scala.concurrent.{ Await, Future }
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
+
+object ReflectionExample {
+  def main(args: Array[String]): Unit = Await.result(Future {
+      val cl = Thread.currentThread.getContextClassLoader
+      println(cl.loadClass("example.Foo"))
+  }, Duration.Inf)
+}
+class Foo
+```
+
+If one runs `ReflectionExample` with `sbt run` using the sbt default `ScalaLibrary`
+strategy, it will fail with a `ClassNotFoundException` because the context
+classloader of the thread that backs the future is the scala library classloader
+which is not able to load project classes. To work around this limitation
+without changing the layering strategy to `Flat`, one can do the following:
+
+1. Use `Class.forName` instead of `ClassLoader.loadClass`. The jvm implicitly
+uses the loader of the calling class for loading classes using `Class.forName`.
+In this case, `ReflectionExample` is the calling class and it will be in the
+same classloader as `Foo` since they are both part of the project classpath.
+
+2. Provide a classloader for loading. In the example above, this can be done by
+replacing `val cl = Thread.currentThread.getContextClassLoader` with `val cl =
+getClass.getClassLoader`.
+
+For case (2), if the name lookup is performed by a library, then a
+`ClassLoader` parameter could be added to the library method that does the
+lookup. For example,
+
+```scala
+object Library {
+  def lookup(name: String): Class[_] =
+    Thread.currentThread.getContextClassLoader.loadClass(name)
+}
+```
+could be rewritten to
+
+```scala
+object Library {
+  def lookup(name: String): Class[_] =
+    lookup(name, Thread.currentThread.getContextClassLoader)
+  def lookup(name: String, loader: ClassLoader): Class[_] =
+    loader.loadClass(name)
+}
+```
