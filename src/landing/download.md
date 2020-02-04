@@ -80,6 +80,13 @@ All platforms
 <ul>
 
 <li>
+  sbt 1.3.8
+  (<a href="https://piccolo.link/sbt-1.3.8.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.8.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.8.msi">.msi</a>)
+</li>
+
+<li>
   sbt 1.3.7
   (<a href="https://piccolo.link/sbt-1.3.7.zip">.zip</a>)
   (<a href="https://piccolo.link/sbt-1.3.7.tgz">.tgz</a>)
