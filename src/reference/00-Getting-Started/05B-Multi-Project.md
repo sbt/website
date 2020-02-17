@@ -183,8 +183,8 @@ semicolons. For example,
 ### Inter-project dependencies
 
 On extremely large projects with many files and many subprojects, sbt
-can perform less optimally at watching files have changed during
-interactively and using a lot of disk and system I/O.
+can perform less optimally at continuously watching files that have
+changed and use a lot of disk and system I/O.
 
 sbt has `trackInternalDependencies` and `exportToInternal`
 settings. These can be used to control whether to trigger compilation
