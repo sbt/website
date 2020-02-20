@@ -55,7 +55,7 @@ Tasks that produce managed files should be inserted as follows:
 
 ```scala
 Compile / sourceGenerators +=
-    generate( (Comile / sourceManaged).value / "some_directory")
+    generate( (Compile / sourceManaged).value / "some_directory")
 ```
 
 In this example, `generate` is some function of type `File => Seq[File]`
