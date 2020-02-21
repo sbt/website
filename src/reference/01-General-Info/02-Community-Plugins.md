@@ -287,6 +287,8 @@ generate dependency lockfiles and check for changes at build time.
   Scala code generator from database schema. <!-- 802 stars -->
 - [sbt-dynamodb](https://github.com/localytics/sbt-dynamodb): run a local
   Amazon DynamoDB test instance from sbt. <!-- 41 stars -->
+- [sbt-migrations](https://github.com/LeonhardtDavid/migrations): database
+  migrations manager.
 
 #### Framework-specific plugins
 
