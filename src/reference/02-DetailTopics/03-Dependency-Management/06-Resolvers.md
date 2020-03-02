@@ -38,8 +38,8 @@ A few predefined repositories are available and are listed below
 -   `Resolver.mavenLocal` This is the local Maven repository.
 -   `DefaultMavenRepository` This is the main Maven repository at
     <https://repo1.maven.org/maven2/> and is included by default
--   `JavaNet1Repository` This is the Maven 1 repository at
-    <http://download.java.net/maven/1/>
+-   `JavaNet2Repository` This is the java.net Maven2 Repository at
+    <https://maven.java.net/content/repositories/public/>
 -   `Resolver.sonatypeRepo("public")` (or "snapshots", "staging", "releases") This is Sonatype OSS Maven Repository at
     <https://oss.sonatype.org/content/repositories/public>
 -   `Resolver.typesafeRepo("releases")` (or "snapshots") This is Typesafe Repository at
@@ -57,7 +57,7 @@ For example, to use the `java.net` repository, use the following setting
 in your build definition:
 
 ```scala
-resolvers += JavaNet1Repository
+resolvers += JavaNet2Repository
 ```
 
 Predefined repositories will go under Resolver going forward so they are
