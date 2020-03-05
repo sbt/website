@@ -103,6 +103,10 @@ successful parse (assuming the current Scala version is $scala_version$,
 the current sbt version is $app_version$, and there are 3 commands left to
 run):
 
+* (scala,$scala_version$)
+* (sbt,$app_version$)
+* (commands,3)
+
 Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
 parser.
