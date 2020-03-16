@@ -19,7 +19,7 @@ To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
 
 ```
 \$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java 11.0.6.hs-adpt
 \$ sdk install sbt
 ```
 
