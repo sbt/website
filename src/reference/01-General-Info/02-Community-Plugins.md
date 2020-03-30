@@ -220,6 +220,7 @@ your plugin to the list.
 - [sbt-jcstress](https://github.com/ktoso/sbt-jcstress): Java Concurrency
   Stress Test (jcstress) integration. <!-- 8 stars -->
 - [sbt-stryker4s](https://github.com/stryker-mutator/stryker4s): Test your tests with mutation testing. <!-- 40 stars -->
+- [sbt-cached-ci](https://github.com/OlegYch/sbt-cached-ci): Incremental sbt builds for CI environments. <!-- 0 stars -->
 
 
 #### Library dependency plugins
