@@ -5,8 +5,14 @@ title: Download
 
 @@@ div { .arc_mac}
 
-macOS
+ Mac
 -----
+
+### SDKMAN!
+
+```
+$ sdk install sbt
+```
 
 ### Homebrew
 
@@ -14,11 +20,7 @@ macOS
 $ brew install sbt
 ```
 
-### SDKMAN!
-
-```
-$ sdk install sbt
-```
+⚠️ Homebrew maintainers have added a dependency to JDK 13 because they want to use more brew dependencies ([brew#50649](https://github.com/Homebrew/homebrew-core/issues/50649)). This causes sbt to use JDK 13 even when `java` available on PATH is JDK 8 or 11. To prevent `sbt` from running on JDK 13, install [jEnv](https://www.jenv.be/) or switch to using [SDKMAN](https://sdkman.io/).
 
 @@@
 
@@ -78,6 +80,13 @@ All platforms
 
 <h4>1.x</h4>
 <ul>
+
+<li>
+  sbt 1.3.9
+  (<a href="https://piccolo.link/sbt-1.3.9.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.9.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.9.msi">.msi</a>)
+</li>
 
 <li>
   sbt 1.3.8
