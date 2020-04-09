@@ -33,7 +33,7 @@ In `build.sbt` DSL, we use `.value` method to express the dependency to
 another task or setting. The value method is special and may only be
 called in the argument to `:=` (or, `+=` or `++=`, which we'll see later).
 
-As a first example, consider defining the `scalacOption` that depends on
+As a first example, consider defining the `scalacOptions` that depends on
 `update` and `clean` tasks. Here are the definitions of these keys (from [Keys](../api/sbt/Keys\$.html)).
 
 **Note**: The values calculated below are nonsensical for `scalaOptions`,
