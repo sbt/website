@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col-md-4 text-right ts">
-        &copy; 2016-2019 Lightbend Inc.
+        &copy; 2016-<script>document.write(new Date().getFullYear())</script>Lightbend Inc.
         <a href="https://www.lightbend.com">
           <img src="../files/lightbend-reverse.svg" alt="Lightbend, Inc.">
         </a>

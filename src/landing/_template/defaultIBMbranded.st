@@ -121,7 +121,7 @@
               <a href="/community.html">Get Involved</a>
             </nav>
             <p class="legal">
-              &copy; 2016-2018 Lightbend, Inc. |
+              &copy; 2016-<script>document.write(new Date().getFullYear())</script> Lightbend, Inc. |
               <a href="https://www.lightbend.com/legal/licenses" target="_blank">Licenses</a> |
               <a href="https://www.lightbend.com/legal/terms" target="_blank">Terms</a> |
               <a href="https://www.lightbend.com/legal/privacy" target="_blank">Privacy Policy</a> |
