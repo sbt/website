@@ -273,7 +273,7 @@ object SbtLessPlugin extends AutoPlugin {
 }
 ```
 
-As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of it required plugins. So, if we define a `build.sbt` with:
+As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of its required plugins. So, if we define a `build.sbt` with:
 
 ```scala
 lazy val root = (project in file("."))
