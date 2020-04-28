@@ -273,7 +273,7 @@ object SbtLessPlugin extends AutoPlugin {
 }
 ```
 
-As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of it required plugins. So, if we define a `build.sbt` with:
+As it turns out, `PlayScala` plugin (in case you didn't know, the Play framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of its required plugins. So, if we define a `build.sbt` with:
 
 ```scala
 lazy val root = (project in file("."))
@@ -492,7 +492,7 @@ lazy val assemblyPlugin = RootProject(uri("git://github.com/sbt/sbt-assembly"))
 
 If sbt is running, run `reload`.
 
-Note that this approach can be useful used when developing a plugin. A
+Note that this approach can be useful when developing a plugin. A
 project that uses the plugin will rebuild the plugin on `reload`. This
 saves the intermediate steps of `publishLocal` and `update`. It can also
 be used to work with the development version of a plugin from its
