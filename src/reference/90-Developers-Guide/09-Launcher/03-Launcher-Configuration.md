@@ -40,7 +40,7 @@ The default configuration file for sbt as an application looks like:
 
 [repositories]
   local
-  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
+  typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
   maven-central
   sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
 
