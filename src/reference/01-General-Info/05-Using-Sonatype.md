@@ -112,7 +112,7 @@ In short, add the following line to your `~/.sbt/1.0/plugins/gpg.sbt` file to
 enable it globally for SBT projects:
 
 ```
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.1")
 ```
 
 > *Note:* The plugin is a solution to sign artifacts. It works with the GPG command line tool.
