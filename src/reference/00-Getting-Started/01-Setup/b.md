@@ -33,3 +33,9 @@ Download [msi installer][MSI] and install it.
 ```
 \$ scoop install sbt
 ```
+
+#### [Chocolatey](https://chocolatey.org)
+
+```
+\$ choco install sbt
+```
