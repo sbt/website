@@ -282,7 +282,7 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-hepek](https://github.com/sake92/sbt-hepek): Render static websites directly from Scala code.
   <!-- 5 stars -->
 - [sbt-puresass](https://chiselapp.com/user/twenstar/repository/sbt-puresass): [sbt-web](https://github.com/sbt/sbt-web) plugin for Sass styles compilation.
-
+- [sbt-scala-ts](https://github.com/swachter/scala-ts); generates TypeScript declaration files from ScalaJS sources and outputs Node modules.
 #### Database plugins
 
 - [scalikejdbc-mapper-generator](https://github.com/scalikejdbc/scalikejdbc):
