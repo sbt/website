@@ -122,7 +122,7 @@ The credentials file is a properties file with keys `realm`, `host`,
 `user`, and `password`. For example:
 
 ```
-realm=My Nexus Repository Manager
+realm=Sonatype Nexus Repository Manager
 host=my.artifact.repo.net
 user=admin
 password=admin123
@@ -131,7 +131,17 @@ password=admin123
 The second way is to specify them inline:
 
 ```scala
-credentials += Credentials("Some Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
+credentials += Credentials("Sonatype Nexus Repository Manager", "my.artifact.repo.net", "admin", "admin123")
+```
+
+**NOTE**: Credentials matching is done using both: `realm` and `host` keys.
+The `realm` key is the HTTP WWW-Authenticate header's realm directive, which is
+part of the response of HTTP servers for [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication#Server_side).
+For a given repository, this can be found by reading all the headers received.
+For example:
+
+```bash
+curl -D - my.artifact.repo.net
 ```
 
 ### Cross-publishing
