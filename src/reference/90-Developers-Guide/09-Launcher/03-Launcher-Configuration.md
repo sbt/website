@@ -116,7 +116,7 @@ repositories:
 Besides built in repositories, other repositories can be configured
 using the following syntax:
 
-> name: url(, pattern)(,descriptorOptional)(,skipConsistencyCheck)
+> name: url(, pattern)(,bootOnly)(,descriptorOptional)(,skipConsistencyCheck)(,allowInsecureProtocol)
 
 The `name` property is an identifier which Ivy uses to cache modules
 resolved from this location. The `name` should be unique across all
@@ -128,8 +128,12 @@ The `pattern` property is an optional specification of *how* Ivy should
 look for modules. By default, the launcher assumes repositories are in
 the maven style format.
 
+The `bootOnly` string is used to tell Ivy to only use this repository during startup. i.e. To find sbt's own JARs and the JARs of any plugins. Repositories with the `bootOnly` string will not be used for build-time dependency resolution.
+
 The `skipConsistencyCheck` string is used to tell Ivy not to validate
 checksums and signatures of files it resolves.
+
+The `allowInsecureProtocol` string tells SBT not to output a warning about this repository being `http://`. Please think carefully before using HTTP repositories as they can present a significant [security risk](https://github.com/sbt/sbt/issues/4905).
 
 #### 4. The Boot section
 
