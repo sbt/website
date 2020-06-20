@@ -84,7 +84,9 @@ your plugin to the list.
   delombok Java sources files that contain Lombok annotations to make Javadoc contain Lombok-generated classes and methods. <!-- 2 stars -->
 - [sbt-alldocs](https://github.com/glngn/sbt-alldocs): collect all the docs for a project and dependencies into a single folder.
 - [sbt-apidoc](https://github.com/valydia/sbt-apidoc): A port of [apidocjs](https://apidocjs.com) to sbt, to document REST Api. <!-- 1 star -->
-
+- [sbt-github-pages](https://github.com/Kevin-Lee/sbt-github-pages)
+  ([docs](https://kevin-lee.github.io/sbt-github-pages)): publish a website to GitHub Pages with minimum effort - works well with GitHub Actions.
+  
 #### One jar plugins
 
 - [sbt-assembly](https://github.com/sbt/sbt-assembly): create fat JARs.
