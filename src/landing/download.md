@@ -82,6 +82,13 @@ All platforms
 <ul>
 
 <li>
+  sbt 1.3.13
+  (<a href="https://piccolo.link/sbt-1.3.13.zip">.zip</a>)
+  (<a href="https://piccolo.link/sbt-1.3.13.tgz">.tgz</a>)
+  (<a href="https://piccolo.link/sbt-1.3.13.msi">.msi</a>)
+</li>
+
+<li>
   sbt 1.3.12
   (<a href="https://piccolo.link/sbt-1.3.12.zip">.zip</a>)
   (<a href="https://piccolo.link/sbt-1.3.12.tgz">.tgz</a>)
