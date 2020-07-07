@@ -132,11 +132,11 @@ Hello
 [success] Total time: 1 s, completed May 6, 2018 4:10:44 PM
 ```
 
-### Set ThisBuild / scalaVersion from sbt shell
+### Set scalaVersion from sbt shell
 
 ```
-sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
-[info] Defining ThisBuild / scalaVersion
+sbt:foo-build> set scalaVersion := "2.12.7"
+[info] Defining *:scalaVersion
 ```
 
 Check the `scalaVersion` setting:
