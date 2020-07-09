@@ -347,6 +347,8 @@ generate dependency lockfiles and check for changes at build time.
   using Scapegoat. <!-- 63 stars -->
 - [sbt-stats](https://github.com/orrsella/sbt-stats): generate source code
   statistics (lines of code etc). <!-- 53 stars -->
+- [sbt-scalafix](https://scalacenter.github.io/scalafix/): refactoring and 
+  linting tool for Scala using Scalafix. <!-- 24 stars --> 
 - [sbt-explicit-dependencies](https://github.com/cb372/sbt-explicit-dependencies):
   check that you have declared all your library dependencies correctly <!-- 12 stars -->
 - [sbt-taglist](https://github.com/johanandren/sbt-taglist): find tags within
