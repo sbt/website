@@ -13,7 +13,7 @@ When a command is run, more detailed logging output is sent to a file
 than to the screen (by default). This output can be recalled for the
 command just executed by running `last`.
 
-For example, the output of `run` when the sources are uptodate is:
+For example, the output of `run` when the sources are up to date is:
 
 ```
 > run

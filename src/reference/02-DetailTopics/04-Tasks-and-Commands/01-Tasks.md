@@ -349,7 +349,7 @@ The `all` method applies to both settings (values of type
 returns a setting or task that provides a `Seq[T]`, as shown in this
 table:
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Target</th>
     <th>Result</th>
@@ -375,7 +375,7 @@ Some scopes might not define a setting or task. The `?` and `??` methods
 can help in this case. They are both defined on settings and tasks and
 indicate what to do when a key is undefined.
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>?</tt></td>
     <td><tt>On a setting or task with underlying type T, this accepts no
@@ -620,7 +620,7 @@ cTask := aTask.value + bTask.value
 The following table lists the results of each task depending on the
 initially invoked task:
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>invoked task</th>

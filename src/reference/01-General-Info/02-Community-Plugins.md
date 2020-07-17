@@ -131,7 +131,7 @@ your plugin to the list.
 - [sbt-release-fossil](https://chiselapp.com/user/twenstar/repository/sbt-release-fossil):
   enhances [sbt-release](https://github.com/sbt/sbt-release) to support [Fossil](https://fossil-scm.org) repositories
 - [sbt-autoversion](https://github.com/sbt/sbt-autoversion): automatically set your
-  next version bump based on patterns of your commit messase since last release. <!-- 2 stars -->
+  next version bump based on patterns of your commit message since last release. <!-- 2 stars -->
 - [sbt-gcs](https://github.com/saint1991/sbt-gcs): manage objects on Google Cloud Storage. <!-- 1 star -->
 - [sbt-sourcebundler](https://github.com/kotobotov/sbt-sourcebundler): merge all source code into one scala file. <!-- 1 star -->
 - [sbt-kubeyml](https://github.com/vaslabs/sbt-kubeyml): Create a typesafe kubernetes Deployment based on your project settings

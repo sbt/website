@@ -77,7 +77,7 @@ As you can see, `cachedWork(1)` is cached when it is called consecutively.
 ### Previous value
 
 `TaskKey` has a method called `previous` that returns `Option[A]`, which can be used a lightweight tracker.
-Suppose we would want to create a task where it initially returns `"hi"`, and append `"!"` for subsequent calls, you can define a `TaskKey[String]` called `hi`, and retrive its previous value, which would be typed `Option[String]`. The previous value would be `None` the first time, and `Some(x)` for the subsequent calls.
+Suppose we would want to create a task where it initially returns `"hi"`, and append `"!"` for subsequent calls, you can define a `TaskKey[String]` called `hi`, and retrieve its previous value, which would be typed `Option[String]`. The previous value would be `None` the first time, and `Some(x)` for the subsequent calls.
 
 ```scala
 lazy val hi = taskKey[String]("say hi again")

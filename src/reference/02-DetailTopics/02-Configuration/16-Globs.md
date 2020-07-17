@@ -318,7 +318,7 @@ required.
 // (RegularFileFilter: sbt.io.FileFilter).&&(("**/*.scala"): sbt.io.NameFilter)
 ```
 
-In these siutations, use `toNio`:
+In these situations, use `toNio`:
 
 ```scala
  val regularScalaFiles = RegularFileFilter.toNio && "**/*.scala"

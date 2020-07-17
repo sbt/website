@@ -93,7 +93,7 @@ A continuación presentamos una lista con algunos de los comandos más comunes d
 Para una lista más completa mira
 [Referencia de línea de comandos][Command-Line-Reference].
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>clean</tt></td>
     <td>Borra todos los ficheros generados (en el directorio <tt>target</tt>).</td>
@@ -148,7 +148,7 @@ El shell de sbt recuerda el histórico de comandos, incluso si sales de sbt y lo
 reinicias. La forma más sencilla de acceder al histórico es con la tecla arriba.
 Los siguientes comandos están soportados:
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>!</tt></td>
     <td>Muestra la ayuda para comandos históricos.</td>
