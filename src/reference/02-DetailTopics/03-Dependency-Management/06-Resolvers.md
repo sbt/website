@@ -82,7 +82,7 @@ factory and repository class. The SSH and SFTP repositories are
 configured identically except for the name of the factory. Use
 `Resolver.ssh` for SSH and `Resolver.sftp` for SFTP.
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Type</th>
     <th>Factory</th>

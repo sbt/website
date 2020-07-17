@@ -93,7 +93,11 @@ See [Triggered Execution][Triggered-Execution] for more details.
 Here are some of the most common sbt commands. For a more complete list,
 see [Command Line Reference][Command-Line-Reference].
 
-<table>
+<table class="table table-striped">
+  <tr>
+    <th>Command</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td><tt>clean</tt></td>
     <td>Deletes all generated files (in the <tt>target</tt> directory).</td>
@@ -168,7 +172,11 @@ prefix-based search of the history.
 
 sbt shell also supports the following commands:
 
-<table>
+<table class="table table-striped">
+  <tr>
+    <th>Command</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td><tt>!</tt></td>
     <td>Show history command help.</td>

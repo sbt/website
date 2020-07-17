@@ -76,7 +76,7 @@ sbt に自動的に再コンパイルを実行させることができる。
 
 最もよく使われる sbt コマンドを紹介する。全ての一覧は [Command Line Reference][Command-Line-Reference] を参照。
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>clean</tt></td>
     <td>（<tt>target</tt> ディレクトリにある）全ての生成されたファイルを削除する。</td>
@@ -145,7 +145,7 @@ sbt シェルをカスタマイズすることが可能だ。
 
 sbt シェルはその他にも以下のコマンドをサポートする:
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>!</tt></td>
     <td>履歴コマンドのヘルプを表示する。</td>

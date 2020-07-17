@@ -189,7 +189,7 @@ System properties can be provided either as JVM options, or as SBT
 arguments, in both cases as `-Dprop=value`. The following properties
 influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Property</th>
     <th>Values</th>

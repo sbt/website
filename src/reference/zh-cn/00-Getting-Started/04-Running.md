@@ -59,7 +59,7 @@ out: Running.html
 
 下面是一些非常常用的的 sbt 命令。更加详细的列表请参见 [命令行参考][Command-Line-Reference]。
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>clean</tt></td>
     <td>删除所有生成的文件 （在 <tt>target</tt> 目录下）。</td>
@@ -104,7 +104,7 @@ out: Running.html
 
 交互模式有历史记录，即使你退出 sbt 然后重新进入。最简单的访问历史记录的方法时用上方向键。还支持以下一些命令：
 
-<table>
+<table class="table table-striped">
   <tr>
     <td><tt>!</tt></td>
     <td>显示历史记录命令帮助。</td>
