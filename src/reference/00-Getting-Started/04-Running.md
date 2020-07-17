@@ -68,7 +68,7 @@ informational startup message,
 ```
 
 It will only be triggered for `sbt compile`, and it can also be
-supressed with `suppressSbtShellNotification := true`.
+suppressed with `suppressSbtShellNotification := true`.
 
 ### Continuous build and test
 

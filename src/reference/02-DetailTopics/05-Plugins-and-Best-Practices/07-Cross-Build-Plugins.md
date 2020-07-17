@@ -21,8 +21,7 @@ and `src/main/scala-sbt-1.0`. To switch between the sbt versions use
 [info] Set current project to sbt-something (in build file:/xxx/sbt-something/)
 ```
 
-or `^compile` to coss compile.
-
+or `^compile` to cross compile.
 
 ### Mixing libraries and sbt plugins in a build
 

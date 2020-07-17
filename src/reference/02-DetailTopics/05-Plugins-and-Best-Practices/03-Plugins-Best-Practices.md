@@ -111,7 +111,7 @@ your plugin if it's defined in default (no-name) package.
 Make sure people can find your plugin. Here are some of the recommended steps:
 
 1. Mention [@scala_sbt](https://twitter.com/scala_sbt) in your announcement, and we will RT it.
-2. Send a pull req to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
+2. Send a pull request to [sbt/website](https://github.com/sbt/website) and add your plugin on [the plugins list][Community-Plugins].
 
 ### Reuse existing keys
 
@@ -151,7 +151,7 @@ which in return implements `sbtassembly.Assembly` object to implement its core f
 
 Follow their lead, and provide core feature in a plain old Scala object.
 
-### Configuration advices
+### Configuration advice
 
 If your plugin introduces either a new set of source code or
 its own library dependencies, only then you want your own configuration.
@@ -294,7 +294,7 @@ lazy val app = (project in file("app"))
   .settings(inConfig(Test)(ObfuscatePlugin.baseObfuscateSettings))
 ```
 
-### Scoping advices
+### Scoping advice
 
 In general, if a plugin provides keys (settings and tasks) with the widest scoping,
 and refer to them with the narrowest scoping, it will give the maximum flexibility to the build users.

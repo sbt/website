@@ -94,7 +94,7 @@ Content-Length: ...\r\n
 
 Sbt server can run in two modes, which differ in wire protocol and initialization. The default mode since sbt 1.1.x is *domain socket mode*, which uses either Unix domain sockets (on Unix) or named pipes (on Windows) for data transfer between server and client. In addition, there is a *TCP mode*, which uses TCP for data transfer.
 
-The mode which sbt server starts in is goverened by the key `serverConnectionType`, which can be set to `ConnectionType.Local` for domain socket/named pipe mode, or to `ConnectionType.Tcp` for TCP mode.
+The mode which sbt server starts in is governed by the key `serverConnectionType`, which can be set to `ConnectionType.Local` for domain socket/named pipe mode, or to `ConnectionType.Tcp` for TCP mode.
 
 ### Server discovery and authentication
 
@@ -295,7 +295,7 @@ Content-Type: application/vscode-jsonrpc; charset=utf-8
 {"jsonrpc":"2.0","id":15,"result":{"items":["testOnly org.sbt.ExampleSpec"]}}
 ```
 
-This will respond immediatly based on the last available state of sbt.
+This will respond immediately based on the last available state of sbt.
 
 ### `sbt/cancelRequest`
 

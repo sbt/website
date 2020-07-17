@@ -1,5 +1,5 @@
 ---
-out: Contibuting-to-sbt.html
+out: Contributing-to-sbt.html
 ---
 
   [sbt-dev]: https://groups.google.com/d/forum/sbt-dev
@@ -77,7 +77,7 @@ find the cause.
     from git, there's a directory called Dormant with some content that
     needs going through.
 2.  the main page mentions external project references (e.g.
-    to a git repo) but doesn't have anything to link to that explains
+    to a git repository) but doesn't have anything to link to that explains
     how to use those.
 3.  API docs are much needed.
 4.  Find useful answers or types/methods/values in the other docs, and
