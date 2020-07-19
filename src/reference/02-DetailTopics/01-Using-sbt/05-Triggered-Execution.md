@@ -78,6 +78,8 @@ files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
+[This snippet](https://github.com/pdalpra/jvm-based-vcsh/blob/53acef1e95c8c9ebd86cbfbf1f51efa07fd13d1e/.sbt/1.0/auto-reload.sbt) can be added as a [global setting](../api/sbt/Global-Settings.html) to `~/.sbt/1.0/config.sbt` to enable `ReloadOnSourceChanges` for all sbt 1.3+ builds without breaking earlier versions.
+
 ### Clearing the screen
 
 sbt can clear the console screen before it evaluates the task or after it
