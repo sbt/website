@@ -274,6 +274,8 @@ generate dependency lockfiles and check for changes at build time.
   TypeScript compilation support. <!-- 25 stars -->
 - [sbt-uglify](https://github.com/sbt/sbt-uglify): JavaScript minifier using
   UglifyJS. <!-- 22 stars -->
+- [sbt-terser](https://github.com/andriimartynov/sbt-terser): JavaScript (ES6+) minifier 
+  using terser. <!-- 0 stars -->
 - [sbt-digest](https://github.com/sbt/sbt-digest): generate checksums of
   assets. <!-- 18 stars -->
 - [sbt-scalatra](https://github.com/scalatra/sbt-scalatra): build and run
