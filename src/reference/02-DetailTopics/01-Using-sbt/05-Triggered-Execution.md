@@ -78,6 +78,23 @@ files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
+The following snippet can be added as a [global setting](../api/sbt/Global-Settings.html) to `~/.sbt/1.0/config.sbt` to enable `ReloadOnSourceChanges` for all sbt 1.3+ builds without breaking earlier versions:
+```
+Def.settings {
+  try {
+    val value = Class.forName("sbt.nio.Keys$ReloadOnSourceChanges$").getDeclaredField("MODULE$").get(null)
+    val clazz = Class.forName("sbt.nio.Keys$WatchBuildSourceOption")
+    val manifest = new scala.reflect.Manifest[AnyRef]{ def runtimeClass = clazz }
+    Seq(
+      SettingKey[AnyRef]("onChangedBuildSource")(manifest, sbt.util.NoJsonWriter()) in Global := value
+    )
+  } catch {
+    case e: Throwable =>
+      Nil
+  }
+}
+```
+
 ### Clearing the screen
 
 sbt can clear the console screen before it evaluates the task or after it
