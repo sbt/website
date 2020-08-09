@@ -197,7 +197,7 @@ your plugin to the list.
   up builds. <!-- 4 stars -->
 - [sbt-sh](https://github.com/melezov/sbt-sh): run shell commands from sbt.
   <!-- 2 stars -->
-- [sbt-ammonite-classpath](https://github.com/ThoughtWorksInc/sbt-ammonite-classpath): export classpath for Ammonite and Jupyter Scala.
+- [sbt-ammonite-classpath](https://github.com/ThoughtWorksInc/sbt-ammonite-classpath): export classpath for [Ammonite](https://ammonite.io/) and [Almond](https://almond.sh/).
   <!-- 2 stars -->
 
 #### IDE integration plugins
