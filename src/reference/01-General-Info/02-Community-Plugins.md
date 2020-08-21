@@ -355,6 +355,8 @@ generate dependency lockfiles and check for changes at build time.
   check that you have declared all your library dependencies correctly <!-- 12 stars -->
 - [sbt-taglist](https://github.com/johanandren/sbt-taglist): find tags within
   source files (such as TODO and FIXME). <!-- 11 stars -->
+- [sbt-rewarn](https://github.com/rtimush/sbt-rewarn): always display compilation warnings,
+  despite the incremental compilation. <!-- 11 stars -->
 - [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
   style checking using Checkstyle. <!-- 6 stars -->
 - [sbt-sonar](https://github.com/mwz/sbt-sonar): integration with
