@@ -308,6 +308,32 @@ A custom function is mainly used when cross-building and a dependency
 isn't available for all Scala versions or it uses a different convention
 than the default.
 
+#### Conditional sbt statements depending on binary version
+
+Sometimes you might need to change your sbt settings at runtime, depending on which binary
+version of scala you're running.
+
+This can be useful for instance if you include a dependency that requires the `org.scalamacros.paradise`
+compiler plugin for scala 2.12 and the `-Ymacro-annotations` compiler option for scala 2.13.
+
+To include on or the other depdending on binary version you can do:
+
+```scala
+scalacOptions ++= {
+  (ThisBuild / scalaVersion) {
+    case v if v startsWith "2.12" => task(Seq[String]())
+    case v if v startsWith "2.13" => task(Seq("-Ymacro-annotations"))
+  }
+}.value
+
+libraryDependencies ++= {
+  (ThisBuild / scalaVersion) {
+    case v if v startsWith "2.12" => Seq(compilerPlugin("org.scalamacros" % "paradise_2.12.10" % "2.1.0"))
+    case v if v startsWith "2.13" => Seq[ModuleID]()
+  }
+}.value
+```
+
 #### Note about sbt-release
 
 sbt-release implemented cross building support by copy-pasting sbt 0.13's `+` implementation,
