@@ -49,7 +49,12 @@ A nearly equivalent, manual alternative for a fixed version of Scala is:
 libraryDependencies += "net.databinder.dispatch" % "dispatch-core_2.12" % "0.13.3"
 ```
 
-### Cross building a project
+### Cross building a project using sbt-projectmatrix
+
+Consider using [sbt-projectmatrix](https://github.com/sbt/sbt-projectmatrix) that
+is capable of cross building across Scala versions and different platforms in parallel.
+
+### Cross building a project statefully
 
 Define the versions of Scala to build against in the
 `crossScalaVersions` setting. Versions of Scala 2.10.2 or later are
@@ -97,6 +102,35 @@ the action to run with `+`. For example:
 A typical way to use this feature is to do development on a single Scala
 version (no `+` prefix) and then cross-build (using `+`) occasionally
 and when releasing.
+
+### Change settings depending on the Scala version
+
+Here's how we can change some settings depending on the Scala version.
+`CrossVersion.partialVersion(scalaVersion.value)` returns `Option[(Int, Int)]` containing
+the first two segments of the Scala version.
+
+This can be useful for instance if you include a dependency that requires the macro paradise
+compiler plugin for Scala 2.12 and the `-Ymacro-annotations` compiler option for Scala 2.13.
+
+```scala
+lazy val core = (project in file("core"))
+  .settings(
+    crossScalaVersions := supportedScalaVersions,
+    libraryDependencies ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, n)) if n <= 12 =>
+          List(compilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full))
+        case _                       => Nil
+      }
+    },
+    Compile / scalacOptions ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, n)) if n <= 12 => Nil
+        case _                       => List("-Ymacro-annotations")
+      }
+    },
+  )
+```
 
 <a name="crossPaths"></a>
 #### Scala-version specific source directory
