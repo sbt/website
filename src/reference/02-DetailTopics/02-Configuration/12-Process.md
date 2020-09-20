@@ -33,6 +33,12 @@ error. You can pass a `Logger` to the `!` method to send output to the
 "find project -name *.jar" ! log
 ```
 
+You can get a `Logger` with:
+
+```scala
+val log = streams.value.log
+```
+
 If you need to set the working directory or modify the environment, call
 `scala.sys.process.Process` explicitly, passing the command sequence
 (command and argument list) or command string first and the working
