@@ -74,7 +74,7 @@
   <h2 class="text-center">Why sbt?</h2>
   <div class="col-md-3">
 <h3>For Scala and Java</h3>
-sbt is built for Scala and Java projects. It is the build tool of choice for <a href="https://scalacenter.github.io/scala-developer-survey-2019/#which-build-tools-do-you-use">93.6%</a> of the Scala developers (2019). One of the examples of Scala-spefic feature is the ability to <i>cross build</i> your project against multiple Scala versions.
+sbt is built for Scala and Java projects. It is the build tool of choice for <a href="https://scalacenter.github.io/scala-developer-survey-2019/#which-build-tools-do-you-use">93.6%</a> of the Scala developers (2019). One of the examples of Scala-specific feature is the ability to <i>cross build</i> your project against multiple Scala versions.
   </div>
 
   <div class="col-md-3">
@@ -101,7 +101,7 @@ Previously 21% of the developer's time was spent in redeploying WebLogic applica
   </div>
 
   <div class="col-md-6 testimonial">
-sbt is a core critical component of Tapad's tech stack. Its use beyond the build tool is largely responsible for the massive efficiency gains that the engineering organization has come to appreciate. sbt and its interactive shell comprise the interface to the standardized application testing, release, and deployment platform. Artifacts and appliations are delivered, updated, and scaled across four global data centers.<br>
+sbt is a core critical component of Tapad's tech stack. Its use beyond the build tool is largely responsible for the massive efficiency gains that the engineering organization has come to appreciate. sbt and its interactive shell comprise the interface to the standardized application testing, release, and deployment platform. Artifacts and applications are delivered, updated, and scaled across four global data centers.<br>
 <i>— Jeffrey Olchovy, CTO, Tapad</i>
   </div>
 
