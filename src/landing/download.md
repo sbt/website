@@ -1,5 +1,4 @@
 ---
-layout: defaultIBMbranded
 title: Download
 ---
 
@@ -29,7 +28,9 @@ $ brew install sbt
 Windows
 -------
 
-- [sbt-$windowsBuild$.msi](https://piccolo.link/sbt-$windowsBuild$.msi)
+- [sbt-$windowsBuild$.msi](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.msi)
+- [sbt-$sbtVersion$.msi.sha256](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.msi.sha256)
+- [sbt-$sbtVersion$.msi.asc](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.msi.asc)
 
 ### Scoop
 
@@ -67,12 +68,12 @@ All platforms
 
 @@@vars
 
-- [sbt-$sbtVersion$.zip](https://piccolo.link/sbt-$sbtVersion$.zip)
-- [sbt-$sbtVersion$.zip.sha256](https://piccolo.link/sbt-$sbtVersion$.zip.sha256)
-- [sbt-$sbtVersion$.zip.asc](https://piccolo.link/sbt-$sbtVersion$.zip.asc)
-- [sbt-$sbtVersion$.tgz](https://piccolo.link/sbt-$sbtVersion$.tgz)
-- [sbt-$sbtVersion$.tgz.sha256](https://piccolo.link/sbt-$sbtVersion$.tgz.sha256)
-- [sbt-$sbtVersion$.tgz.asc](https://piccolo.link/sbt-$sbtVersion$.tgz.asc)
+- [sbt-$sbtVersion$.zip](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.zip)
+- [sbt-$sbtVersion$.zip.sha256](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.zip.sha256)
+- [sbt-$sbtVersion$.zip.asc](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.zip.asc)
+- [sbt-$sbtVersion$.tgz](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.tgz)
+- [sbt-$sbtVersion$.tgz.sha256](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.tgz.sha256)
+- [sbt-$sbtVersion$.tgz.asc](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.tgz.asc)
 
 @@@
 
@@ -83,219 +84,219 @@ All platforms
 
 <li>
   sbt 1.3.13
-  (<a href="https://piccolo.link/sbt-1.3.13.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.13.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.13.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.13/sbt-1.3.13.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.13/sbt-1.3.13.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.13/sbt-1.3.13.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.12
-  (<a href="https://piccolo.link/sbt-1.3.12.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.12.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.12.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.12/sbt-1.3.12.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.12/sbt-1.3.12.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.12/sbt-1.3.12.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.10
-  (<a href="https://piccolo.link/sbt-1.3.10.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.10.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.10.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.10/sbt-1.3.10.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.10/sbt-1.3.10.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.10/sbt-1.3.10.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.9
-  (<a href="https://piccolo.link/sbt-1.3.9.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.9.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.9.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.9/sbt-1.3.9.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.9/sbt-1.3.9.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.9/sbt-1.3.9.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.8
-  (<a href="https://piccolo.link/sbt-1.3.8.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.8.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.8.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.8/sbt-1.3.8.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.8/sbt-1.3.8.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.8/sbt-1.3.8.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.7
-  (<a href="https://piccolo.link/sbt-1.3.7.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.7.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.7.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.7/sbt-1.3.7.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.7/sbt-1.3.7.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.7/sbt-1.3.7.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.6
-  (<a href="https://piccolo.link/sbt-1.3.6.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.6.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.6.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.6/sbt-1.3.6.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.6/sbt-1.3.6.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.6/sbt-1.3.6.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.5
-  (<a href="https://piccolo.link/sbt-1.3.5.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.5.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.5.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.5/sbt-1.3.5.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.5/sbt-1.3.5.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.5/sbt-1.3.5.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.4
-  (<a href="https://piccolo.link/sbt-1.3.4.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.4.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.4.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.4/sbt-1.3.4.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.4/sbt-1.3.4.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.4/sbt-1.3.4.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.3
-  (<a href="https://piccolo.link/sbt-1.3.3.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.3.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.3.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.3/sbt-1.3.3.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.3/sbt-1.3.3.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.3/sbt-1.3.3.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.2
-  (<a href="https://piccolo.link/sbt-1.3.2.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.2.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.2.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.2/sbt-1.3.2.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.2/sbt-1.3.2.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.2/sbt-1.3.2.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.1
-  (<a href="https://piccolo.link/sbt-1.3.1.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.1.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.1.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.1/sbt-1.3.1.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.1/sbt-1.3.1.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.1/sbt-1.3.1.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.3.0
-  (<a href="https://piccolo.link/sbt-1.3.0.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.3.0.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.3.0.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.0/sbt-1.3.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.0/sbt-1.3.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.3.0/sbt-1.3.0.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.8
-  (<a href="https://piccolo.link/sbt-1.2.8.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.8.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.8.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.8/sbt-1.2.8.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.8/sbt-1.2.8.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.8/sbt-1.2.8.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.7
-  (<a href="https://piccolo.link/sbt-1.2.7.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.7.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.7.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.7/sbt-1.2.7.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.7/sbt-1.2.7.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.7/sbt-1.2.7.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.6
-  (<a href="https://piccolo.link/sbt-1.2.6.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.6.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.6.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.6/sbt-1.2.6.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.6/sbt-1.2.6.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.6/sbt-1.2.6.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.4
-  (<a href="https://piccolo.link/sbt-1.2.4.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.4.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.4.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.4/sbt-1.2.4.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.4/sbt-1.2.4.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.4/sbt-1.2.4.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.3
-  (<a href="https://piccolo.link/sbt-1.2.3.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.3.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.3.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.3/sbt-1.2.3.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.3/sbt-1.2.3.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.3/sbt-1.2.3.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.1
-  (<a href="https://piccolo.link/sbt-1.2.1.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.1.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.1.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.1/sbt-1.2.1.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.1/sbt-1.2.1.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.1/sbt-1.2.1.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.2.0
-  (<a href="https://piccolo.link/sbt-1.2.0.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.2.0.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.2.0.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.0/sbt-1.2.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.0/sbt-1.2.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.2.0/sbt-1.2.0.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.6
-  (<a href="https://piccolo.link/sbt-1.1.6.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.6.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.6.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.6/sbt-1.1.6.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.6/sbt-1.1.6.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.6/sbt-1.1.6.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.5
-  (<a href="https://piccolo.link/sbt-1.1.5.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.5.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.5.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.5/sbt-1.1.5.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.5/sbt-1.1.5.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.5/sbt-1.1.5.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.4
-  (<a href="https://piccolo.link/sbt-1.1.4.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.4.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.4.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.4/sbt-1.1.4.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.4/sbt-1.1.4.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.4/sbt-1.1.4.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.2
-  (<a href="https://piccolo.link/sbt-1.1.2.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.2.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.2.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.2/sbt-1.1.2.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.2/sbt-1.1.2.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.2/sbt-1.1.2.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.1
-  (<a href="https://piccolo.link/sbt-1.1.1.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.1.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.1.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.1/sbt-1.1.1.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.1/sbt-1.1.1.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.1/sbt-1.1.1.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.1.0
-  (<a href="https://piccolo.link/sbt-1.1.0.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.1.0.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.1.0.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.0/sbt-1.1.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.0/sbt-1.1.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.1.0/sbt-1.1.0.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.0.4
-  (<a href="https://piccolo.link/sbt-1.0.4.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.0.4.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.0.4.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.4/sbt-1.0.4.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.4/sbt-1.0.4.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.4/sbt-1.0.4.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.0.3
-  (<a href="https://piccolo.link/sbt-1.0.3.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.0.3.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.0.3.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.3/sbt-1.0.3.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.3/sbt-1.0.3.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.3/sbt-1.0.3.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.0.2
-  (<a href="https://piccolo.link/sbt-1.0.2.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.0.2.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.0.2.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.2/sbt-1.0.2.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.2/sbt-1.0.2.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.2/sbt-1.0.2.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.0.1
-  (<a href="https://piccolo.link/sbt-1.0.1.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.0.1.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.0.1.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.1/sbt-1.0.1.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.1/sbt-1.0.1.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.1/sbt-1.0.1.msi">.msi</a>)
 </li>
 
 <li>
   sbt 1.0.0
-  (<a href="https://piccolo.link/sbt-1.0.0.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-1.0.0.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-1.0.0.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.0/sbt-1.0.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.0/sbt-1.0.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.0.0/sbt-1.0.0.msi">.msi</a>)
 </li>
 
 </ul>
@@ -304,30 +305,9 @@ All platforms
 <ul>
 <li>
   sbt 0.13.18
-  (<a href="https://piccolo.link/sbt-0.13.18.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-0.13.18.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-0.13.18.msi">.msi</a>)
-</li>
-
-<li>
-  sbt 0.13.17
-  (<a href="https://piccolo.link/sbt-0.13.17.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-0.13.17.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-0.13.17.msi">.msi</a>)
-</li>
-
-<li>
-  sbt 0.13.16
-  (<a href="https://piccolo.link/sbt-0.13.16.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-0.13.16.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-0.13.16.msi">.msi</a>)
-</li>
-
-<li>
-  sbt 0.13.15
-  (<a href="https://piccolo.link/sbt-0.13.15.zip">.zip</a>)
-  (<a href="https://piccolo.link/sbt-0.13.15.tgz">.tgz</a>)
-  (<a href="https://piccolo.link/sbt-0.13.15.msi">.msi</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.msi">.msi</a>)
 </li>
 
 </ul>
