@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>sbt - The interactive build tool</title>
+    <meta name="description" content="sbt is the intereactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the intereactive shell.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/bootstrap_style.min.css">
     <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="assets/stylesheet.css?v2019-10-15">
+    <link rel="stylesheet" href="assets/stylesheet.css?2020-09-26">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel='shortcut icon' href="assets/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -66,18 +67,53 @@
         </div>
       </div>
     </header>
+
     <div class="fw-wrapper white">
       <div class="container content">
-        <div class="row">
-          <div class="col-md-12">
-            <div id="main" class="text-center">
-              $page.content$
-            </div>
-          </div>
-        </div>
+<div class="row">
+  <h2 class="text-center">Why sbt?</h2>
+  <div class="col-md-3">
+<h3>For Scala and Java</h3>
+sbt is built for Scala and Java projects. It is the build tool of choice for <a href="https://scalacenter.github.io/scala-developer-survey-2019/#which-build-tools-do-you-use">93.6%</a> of the Scala developers (2019). One of the examples of Scala-specific feature is the ability to <i>cross build</i> your project against multiple Scala versions.
+  </div>
+
+  <div class="col-md-3">
+<h3>Typesafe and parallel</h3>
+<code>build.sbt</code> is a Scala-based DSL to express parallel processing task graph. Typos in <code>build.sbt</code> will be caught as a compilation error.
+  </div>
+
+  <div class="col-md-3">
+<h3>Speedy iteration</h3>
+With Zinc incremental compiler and file watch (<code>~</code>), edit-compile-test loop is fast and incremental.
+  </div>
+
+  <div class="col-md-3">
+<h3>Extensible</h3>
+Adding support for new tasks and plaforms (like Scala.js) is as easy as writing <code>build.sbt</code>. Join <a href="https://www.scala-sbt.org/1.x/docs/Community-Plugins.html">100+ community-maintained plugins</a> to share and reuse sbt tasks.
+  </div>
+</div> <!-- row -->
+
+<div class="row">
+  <h2 class="text-center">Beyond the build tool</h2>
+  <div class="col-md-6 testimonial">
+Previously 21% of the developer's time was spent in redeploying WebLogic application, which was unacceptable. We had to find a solution: some way of productivity to go high. This is one of the reasons why we have Play and Akka. We were really impressed with the hot reload. Now the developers are clearly more productive.<br>
+<i>— Keyur Shah, Associate Fellow, Verizon</i>
+  </div>
+
+  <div class="col-md-6 testimonial">
+sbt is a core critical component of Tapad's tech stack. Its use beyond the build tool is largely responsible for the massive efficiency gains that the engineering organization has come to appreciate. sbt and its interactive shell comprise the interface to the standardized application testing, release, and deployment platform. Artifacts and applications are delivered, updated, and scaled across four global data centers.<br>
+<i>— Jeffrey Olchovy, CTO, Tapad</i>
+  </div>
+
+  <div class="col-md-6 testimonial">
+You can use sbt-native-packager to build native formats like Docker, sbt-release has nice steps to take care of versioning, sbt-bintray can be used to release to Bintray. There's a pattern: You bring in a plugin. It has some settings. You read the documentations to learn about the setting. And it does its jobs.<br>
+<i>— Gabriel Asman, Software Developer, Ovo Energy</i>
+  </div>
+</div> <!-- row -->
+
+        $page.contents$
       </div>
     </div>
-
     <div class="fw-wrapper navy-ltr support-strip">
       <div class="container">
         <div class="row">
