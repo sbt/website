@@ -15,6 +15,7 @@ scala-sbt.org is powered by:
 [@eed3si9n]: https://github.com/eed3si9n
 
 The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages).
+* [nanoc](http://nanoc.ws/) to generate the landing pages.
 
 ## Attention plugin authors
 
