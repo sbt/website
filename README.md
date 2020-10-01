@@ -1,7 +1,7 @@
 scala-sbt.org
 =============
 
-This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
+This awesome project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
 
 scala-sbt.org is powered by:
 
@@ -16,14 +16,14 @@ scala-sbt.org is powered by:
 
 The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages).
 
-## Attention plugin authors
+## Attention! plugin authors
 
 The source for [Community plugins](https://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/edit/develop/src/reference/01-General-Info/02-Community-Plugins.md).
 Add your plugin to this page and send send us a pull request if your plugin is not already on it.
 
 ## Setup
 
-### Minimum setup
+### Short setup
 
 Currently, nanoc requires Ruby 2.1 or greater.
 
