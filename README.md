@@ -1,4 +1,5 @@
-scala-sbt.org
+scala-sbt.org an amazing project
+
 =============
 
 This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
