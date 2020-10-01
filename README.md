@@ -16,6 +16,16 @@ scala-sbt.org is powered by:
 
 The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and [sbt-ghpages](https://github.com/sbt/sbt-ghpages).
 
+
+If you look at project/plugins.sbt, you will see that it expects play.version system property to be set:
+
+addSbtPlugin("play" % "sbt-plugin" % Option(System.getProperty("play.version")).getOrElse("2.0"))
+So, you should either provide necessary play.version property
+
+$ sbt -Dplay.version=2.1-RC1
+or simply change plugins.sbt as
+
+addSbtPlugin("play" % "sbt-plugin" % "2.1-RC1")
 ## Attention plugin authors
 
 The source for [Community plugins](https://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/edit/develop/src/reference/01-General-Info/02-Community-Plugins.md).
