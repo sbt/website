@@ -1,4 +1,5 @@
-scala-sbt.org
+
+scala-sbt.org : Tell More About Your Project So Any One Can Easly Understand About Your Project . like How's It work and Whats Functions and all .
 =============
 
 This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
