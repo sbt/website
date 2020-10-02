@@ -1,4 +1,4 @@
-scala-sbt.org
+ Website :scala-sbt.org
 =============
 
 This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
@@ -21,9 +21,9 @@ The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and
 The source for [Community plugins](https://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/edit/develop/src/reference/01-General-Info/02-Community-Plugins.md).
 Add your plugin to this page and send send us a pull request if your plugin is not already on it.
 
-## Setup
+## Setting Up Lab:
 
-### Minimum setup
+### 1st} Minimum setup
 
 Currently, nanoc requires Ruby 2.1 or greater.
 
@@ -72,7 +72,7 @@ On Mac
 - follow https://oku.edu.mie-u.ac.jp/~okumura/texwiki/?TeX%20Live%2FMac#bcb0d462
 - `brew install pandoc`
 
-## Usage
+## USAGE
 
 To make the site locally, from sbt shell:
 
@@ -98,7 +98,7 @@ Beware that sbt-ghpages interacts badly if your home directory is a git reposito
 - Add last release to "Previous releases" in `src/nanoc/nanoc.yaml`
 - Update `sbtVersion`, `windowsBuild` and `sbtVersionForScalaDoc` in `src/reference/template.properties`
 
-## Dollar sign
+## Why a Dollar Sign??
 
 Pamflet uses dollar sign (`$`) as the template variable character.
 So if you use it in the document, use need to escape it with backslash: `\$`.
