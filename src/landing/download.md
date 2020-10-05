@@ -83,6 +83,13 @@ All platforms
 <ul>
 
 <li>
+  sbt 1.4.0
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.4.0/sbt-1.4.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.4.0/sbt-1.4.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.4.0/sbt-1.4.0.msi">.msi</a>)
+</li>
+
+<li>
   sbt 1.3.13
   (<a href="https://github.com/sbt/sbt/releases/download/v1.3.13/sbt-1.3.13.zip">.zip</a>)
   (<a href="https://github.com/sbt/sbt/releases/download/v1.3.13/sbt-1.3.13.tgz">.tgz</a>)
