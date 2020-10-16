@@ -68,7 +68,7 @@ build.sbt
 ### Build support files
 
 In addition to `build.sbt`, `project` directory can contain `.scala` files
-that defines helper objects and one-off plugins.
+that define helper objects and one-off plugins.
 See [organizing the build][Organizing-Build] for more.
 
 ```
