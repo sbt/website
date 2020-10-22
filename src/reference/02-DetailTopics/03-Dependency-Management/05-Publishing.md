@@ -188,3 +188,21 @@ pomIncludeRepository := { (repo: MavenRepository) =>
   repo.root.startsWith("file:")
 }
 ```
+
+### Version scheme
+
+sbt 1.4.0 adds a new setting called `ThisBuild / versionScheme` to track version scheme of the build:
+
+```
+ThisBuild / versionScheme := Some("early-semver")
+```
+
+The supported values are `"early-semver"`, `"pvp"`, `"semver-spec"`, and `"strict"`. sbt will include this information into `pom.xml` and `ivy.xml` as a property.
+
+<table>
+<tr><th>versionScheme</th><th>description</th></tr>
+<tr><td><nobr><code>Some("early-semver")</code></nobr></td><td>Early Semantic Versioning that would keep binary compatibility across patch updates within 0.Y.z (for instance 0.13.0 and 0.13.2). Once it goes 1.0.0, it follows the regular Semantic Versioning where 1.1.0 is bincompat with 1.0.0.</td></tr>
+<tr><td><nobr><code>Some("semver-spec")</code></nobr></td><td><a href="https://semver.org/">Semantic Versioning</a> where all 0.y.z are treated as initial development (no bincompat guarantees)</td></tr>
+<tr><td><code>Some("pvp")</code></td><td><a href="https://pvp.haskell.org/">Haskell Package Versioning Policy</a> where X.Y are treated as major version</td></tr>
+<tr><td><code>Some("strict")</code></td><td>Requires exact match of version</td></tr>
+</table>
