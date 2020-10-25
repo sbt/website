@@ -76,3 +76,13 @@ java -Dhttp.proxyHost=myproxy -Dhttp.proxyPort=8080 -Dhttp.proxyUser=username -D
 
 Replace `http` with `https` or `ftp` in the above command line to
 configure HTTPS or FTP.
+
+### Path encoding
+
+If you have files on your system that have non-ascii characters in them on a
+posix system, e.g. Linux or macOS, it may be necessary to set the `LC_CTYPE`
+environment variable. If this environment variable is not set to a UTF-8
+compatible locale, e.g. `LC_TYPE=en_US.UTF-8`, then sbt may crash with a
+`java.nio.file.InvalidPathException`. To see a list of available locales, run
+`locale -a`. For more information about locales, see
+[International Language Environments Guide](https://docs.oracle.com/cd/E19455-01/806-0169/6j9hsml3j/index.html).
