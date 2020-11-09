@@ -33,19 +33,19 @@ jobs:
         find $HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
         find $HOME/.sbt                              -name "*.lock"               -delete || true
     - name: Pandoc English
-      uses: Ender-events/pandoc@master
+      uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/sbt-reference.pdf target/pamflet/Combined+Pages+Pdf.md'
     - name: Pandoc Japanese
-      uses: Ender-events/pandoc@master
+      uses: eed3si9n/pandoc@master
       with:
-        args: '--pdf-engine=lualatex documentclass=ltjarticle --toc -s -o target/pamflet/ja/sbt-reference.pdf target/pamflet/ja/Combined+Pages+Pdf.md'
+        args: '--pdf-engine=lualatex -V CJKmainfont=NotoSansJP -V documentclass=ltjarticle --toc -s -o target/pamflet/ja/sbt-reference.pdf target/pamflet/ja/Combined+Pages+Pdf.md'
     - name: Pandoc Chinese
-      uses: Ender-events/pandoc@master
+      uses: eed3si9n/pandoc@master
       with:
-        args: '--pdf-engine=xelatex --toc -s -o target/pamflet/zh-cn/sbt-reference.pdf target/pamflet/zh-cn/Combined+Pages+Pdf.md'
+        args: '--pdf-engine=xelatex -V CJKmainfont=NotoSansSC --toc -s -o target/pamflet/zh-cn/sbt-reference.pdf target/pamflet/zh-cn/Combined+Pages+Pdf.md'
     - name: Pandoc Spanish
-      uses: Ender-events/pandoc@master
+      uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/es/sbt-reference.pdf target/pamflet/es/Combined+Pages+Pdf.md'
 
