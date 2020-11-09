@@ -27,6 +27,15 @@ object Pdf {
       )
     )
 
+  def cleanupCombinedPages(xs: Seq[(File, String)]): Seq[(File, String)] =
+    xs collect {
+      case (file, fname) if (fname contains "Combined+Pages.md") && !(fname contains "offline/") =>
+        cleanupHeader(file) -> fname.replaceAllLiterally(
+          "Combined+Pages.md",
+          "Combined+Pages+Pdf.md"
+        )
+    }
+
   def makeCombinedPdf(config: Configuration, name: String): Def.Initialize[Task[Seq[File]]] =
     Def.task {
       val log = streams.value.log
