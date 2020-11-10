@@ -48,24 +48,9 @@ jobs:
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/es/sbt-reference.pdf target/pamflet/es/Combined+Pages+Pdf.md'
-
-    - name: Archive English PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbt-reference.pdf
-        path: target/pamflet/sbt-reference.pdf
-    - name: Archive Japanese PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbt-reference-ja.pdf
-        path: target/pamflet/ja/sbt-reference.pdf
-    - name: Archive Chinese PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbt-reference-zh-cn.pdf
-        path: target/pamflet/zh-cn/sbt-reference.pdf
-    - name: Archive Spanish PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbt-reference-es.pdf
-        path: target/pamflet/es/sbt-reference.pdf
+    - name: Deploy to GH Pages
+      if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/1.x-beta') }}
+      run: |
+        git config user.name "Eugene Yokota"
+        git config user.email "eed3si9n@gmail.com"
+        sbt -v ghpagesPushSite
