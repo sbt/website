@@ -7,6 +7,7 @@ object Pdf {
   lazy val pandocCommand = settingKey[String]("Location of pandoc for running.")
   lazy val pandoc = settingKey[Pandoc]("A runner to execute Pandoc")
   lazy val generatePdf = taskKey[Seq[File]]("Create the tutorial pdf file")
+  lazy val detectPdf = taskKey[Seq[File]]("Detect the tutorial pdf file")
 
   def failOnPdfError: Boolean = sys.props("ignore.pdf") != "true"
 
@@ -26,6 +27,15 @@ object Pdf {
         }
       )
     )
+
+  def cleanupCombinedPages(xs: Seq[(File, String)]): Seq[(File, String)] =
+    xs collect {
+      case (file, fname) if (fname contains "Combined+Pages.md") && !(fname contains "offline/") =>
+        cleanupHeader(file) -> fname.replaceAllLiterally(
+          "Combined+Pages.md",
+          "Combined+Pages+Pdf.md"
+        )
+    }
 
   def makeCombinedPdf(config: Configuration, name: String): Def.Initialize[Task[Seq[File]]] =
     Def.task {

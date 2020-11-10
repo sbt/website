@@ -44,6 +44,10 @@ lazy val root = (project in file("."))
     SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
     // GitHub Pages. See project/Docs.scala
     customGhPagesSettings,
+    mappings in Pamflet := {
+      val xs = (mappings in Pamflet).value
+      Pdf.cleanupCombinedPages(xs) ++ xs
+    },
     if (scala.sys.BooleanProp.keyExists("sbt.website.generate_pdf"))
       Def settings (
         // NOTE - PDF settings must be done externally like this because pdf generation generically looks
@@ -53,6 +57,18 @@ lazy val root = (project in file("."))
         Pdf.settingsFor(Pamflet, "sbt-reference"),
         SiteHelpers.addMappingsToSiteDir(
           mappings in Pdf.generatePdf in Pamflet,
+          siteSubdirName in Pamflet,
+        )
+      )
+    else if (scala.sys.BooleanProp.keyExists("sbt.website.detect_pdf"))
+      Def.settings(
+        // assume PDF files were created in another Docker container
+        Pdf.detectPdf in Pamflet := ((target in Pamflet).value ** "*.pdf").get,
+        mappings in Pdf.detectPdf in Pamflet := {
+          (Pdf.detectPdf in Pamflet).value pair Path.relativeTo((target in Pamflet).value)
+        },
+        SiteHelpers.addMappingsToSiteDir(
+          mappings in Pdf.detectPdf in Pamflet,
           siteSubdirName in Pamflet,
         )
       )
