@@ -48,9 +48,9 @@ jobs:
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/es/sbt-reference.pdf target/pamflet/es/Combined+Pages+Pdf.md'
+    # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
     - name: Deploy to GH Pages
       if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/1.x-beta') }}
-      run: |
-        git config user.name "Eugene Yokota"
-        git config user.email "eed3si9n@gmail.com"
-        sbt -v -Dsbt.website.detect_pdf ghpagesPushSite
+      run: .github/publish-site.sh
+      env:
+        DEPLOY_KEY_PASSPHRASE: ${{ secrets.DEPLOY_KEY_PASSPHRASE }}
