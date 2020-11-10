@@ -60,6 +60,18 @@ lazy val root = (project in file("."))
           siteSubdirName in Pamflet,
         )
       )
+    else if (scala.sys.BooleanProp.keyExists("sbt.website.detect_pdf"))
+      Def.settings(
+        // assume PDF files were created in another Docker container
+        Pdf.detectPdf in Pamflet := ((target in Pamflet).value ** "*.pdf").get,
+        mappings in Pdf.detectPdf in Pamflet := {
+          (Pdf.detectPdf in Pamflet).value pair Path.relativeTo((target in Pamflet).value)
+        },
+        SiteHelpers.addMappingsToSiteDir(
+          mappings in Pdf.detectPdf in Pamflet,
+          siteSubdirName in Pamflet,
+        )
+      )
     else Nil,
     fileEncoding := {
       sys.props("file.encoding") match {
