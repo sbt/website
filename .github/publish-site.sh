@@ -1,5 +1,6 @@
 #!/bin/bash -ex
 
+mkdir -p $HOME/.ssh/
 echo -e "Host github.com\n\tStrictHostKeyChecking no\nIdentityFile ~/.ssh/deploy_rsa\n" >> ~/.ssh/config
 
 gpg --quiet --batch --yes --decrypt --passphrase="$DEPLOY_KEY_PASSPHRASE" \
