@@ -28,7 +28,7 @@ Your build will now use $app_version$.
 
 ### Read the GitHub Actions manual
 
-A treasure trove of Travis tricks can be found in the Travis's [official documentation][GA], including the [Reference][GA-Reference].
+A treasure trove of Github Actions tricks can be found in the Github Actions [official documentation][GA], including the [Reference][GA-Reference].
 Use this guide as an inspiration, but consult the official source for more details.
 
 ### Basic setup
