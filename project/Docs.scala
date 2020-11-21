@@ -250,6 +250,12 @@ object Docs {
         generateRedirect(s"../../0.13/docs/$x", output / x, s.log)
       }
 
+      generateRedirect(
+        "https://github.com/sbt/sbt/blob/develop/DEVELOPING.md#nightly-builds",
+        output / "Nightly-Builds.html",
+        s.log
+      )
+
       output ** AllPassFilter --- output pair Path.relativeTo(output)
     }
   )
