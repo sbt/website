@@ -270,9 +270,10 @@ lazy val core = project
 
 lazy val util = project
 
+val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
+
 lazy val root = project.settings(
    sources := {
-      val filter = ScopeFilter( inProjects(core, util), inConfigurations(Compile) )
       // each sources definition is of type Seq[File],
       //   giving us a Seq[Seq[File]] that we then flatten to Seq[File]
       val allSources: Seq[Seq[File]] = sources.all(filter).value
@@ -396,10 +397,11 @@ The following contrived example sets the maximum errors to be the
 maximum of all aggregates of the current project.
 
 ```scala
+// select the transitive aggregates for this project, but not the project itself
+val filter: ScopeFilter =
+   ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
+
 maxErrors := {
-   // select the transitive aggregates for this project, but not the project itself
-   val filter: ScopeFilter =
-      ScopeFilter( inAggregates(ThisProject, includeRoot=false) )
    // get the configured maximum errors in each selected scope,
    // using 0 if not defined in a scope
    val allVersions: Seq[Int] =
@@ -722,13 +724,15 @@ For example:
 ```scala
 intTask := sys.error("Failed.")
 
-intTask := intTask.result.value match {
-   case Inc(inc: Incomplete) =>
-      println("Ignoring failure: " + inc)
-      3
-   case Value(v) =>
-      println("Using successful result: " + v)
-      v
+intTask := {
+   intTask.result.value match {
+      case Inc(inc: Incomplete) =>
+         println("Ignoring failure: " + inc)
+         3
+      case Value(v) =>
+         println("Using successful result: " + v)
+         v
+   }
 }
 ```
 
