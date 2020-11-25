@@ -30,4 +30,4 @@ To abstract machine-specific paths such as your working directory and Coursier c
 
 #### remoteCacheId
 
-As of sbt 1.4.0, `remoteCacheId` uses Git commit id. A better implementation might be to use the sum of content hash for all inputs to avoid unnecessary network IO.
+As of sbt 1.4.2, `remoteCacheId` uses hash of content hashes for input sources.
