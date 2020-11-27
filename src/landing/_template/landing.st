@@ -23,6 +23,8 @@
       }
     </script>
     <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) end -->
+
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
   </head>
   <body class="landing">
     <header>
@@ -37,6 +39,10 @@
               </div>
             </div>
             <div class="col-md-9">
+              <div class="docsearch">
+                <input type="text" id="doc-search-bar" placeholder="Search...">
+                <ul class="result-container" id="result-container" style="display: none;"></ul>
+              </div>
               <div class="nav" id="topbar">
                 <a href="learn.html">Learn</a>
                 <a href="download.html">Download</a>
@@ -194,6 +200,15 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
       ga('tsTracker.require', 'linker');
       ga('tsTracker.linker:autoLink', ['typesafe.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
       ga('tsTracker.send', 'pageview');
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <script type="text/javascript"> docsearch({
+      apiKey: 'fbc439670f5d4e3730cdcb715c359391',
+      indexName: 'scala-lang',
+      inputSelector: '#doc-search-bar',
+      algoliaOptions: { 'facetFilters': ["language:en"] },
+      debug: true // Set debug to true if you want to inspect the dropdown
+    });
     </script>
   </body>
 </html>

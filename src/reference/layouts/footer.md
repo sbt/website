@@ -34,3 +34,12 @@
 </footer>
 <script src="/assets/versions.js"></script>
 <script src="/assets/set-versions.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+  apiKey: 'fbc439670f5d4e3730cdcb715c359391',
+  indexName: 'scala-lang',
+  inputSelector: '#doc-search-bar',
+  algoliaOptions: { 'facetFilters': ["language:en"] },
+  debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script>
