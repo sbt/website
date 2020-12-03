@@ -34,3 +34,11 @@
 </footer>
 <script src="/assets/versions.js"></script>
 <script src="/assets/set-versions.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script type="text/javascript"> docsearch({
+  apiKey: 'e47ee877a07ea1c48722f08430d54913',
+  indexName: 'scala-sbt',
+  inputSelector: '#doc-search-bar',
+  debug: false // Set debug to true if you want to inspect the dropdown
+});
+</script>

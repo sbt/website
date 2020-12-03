@@ -21,6 +21,8 @@
       }
     </script>
     <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) end -->
+
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
   </head>
   <body class="default">
     <header>
@@ -35,6 +37,10 @@
               </div>
             </div>
             <div class="col-md-9">
+              <div class="docsearch">
+                <input type="text" class = "ds-input" id="doc-search-bar" placeholder="Search...">
+                <ul class="result-container" id="result-container" style="display: none;"></ul>
+              </div>
               <div class="nav" id="topbar">
                 <a href="/learn.html">Learn</a>
                 <a href="/download.html">Download</a>
@@ -152,5 +158,13 @@
       ga('tsTracker.linker:autoLink', ['lightbend.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
       ga('tsTracker.send', 'pageview');
     </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+    <script type="text/javascript"> docsearch({
+      apiKey: 'e47ee877a07ea1c48722f08430d54913',
+      indexName: 'scala-sbt',
+      inputSelector: '#doc-search-bar',
+      debug: false // Set debug to true if you want to inspect the dropdown
+    });
+    </script>    
   </body>
 </html>
