@@ -88,6 +88,8 @@ your plugin to the list.
   ([docs](https://kevin-lee.github.io/sbt-github-pages)): publish a website to GitHub Pages with minimal effort - works well with GitHub Actions.
 - [sbt-docusaur](https://github.com/Kevin-Lee/sbt-docusaur)
   ([docs](https://kevin-lee.github.io/sbt-docusaur)): build a website using Docusaurus and publish to GitHub Pages with minimal effort - works well with GitHub Actions.
+- [sbt-hl-compiler](https://github.com/cchantep/sbt-hl-compiler/): compile the code snippets from documentation (to keep it consistent). <!-- 1 star -->
+- [sbt-scaladoc-compiler](https://github.com/cchantep/sbt-scaladoc-compiler/): compile the code snippets included in Scaladoc comments. <!-- 2 stars -->
   
 #### One jar plugins
 
