@@ -63,7 +63,7 @@ For more, see [Giter8 templates](https://github.com/foundweekends/giter8/wiki/gi
 You can append Giter8 parameters to the end of the command, so for example to specify a particular branch you can use:
 
 ```
-\$ sbt new scala/scala-seed.g8 --branch=myBranch
+\$ sbt new scala/scala-seed.g8 --branch myBranch
 ```
 
 #### How to create a Giter8 template
