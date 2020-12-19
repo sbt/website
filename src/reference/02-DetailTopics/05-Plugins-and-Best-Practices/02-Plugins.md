@@ -35,14 +35,7 @@ the currently evolving guidelines to writing sbt plugins. See also the general
 ### Using an auto plugin
 
 A common situation is when using a binary plugin published to a repository.
-If you're adding sbt-assembly, create `project/assembly.sbt` with the following:
-
-```scala
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
-```
-
-Alternatively, you can create `project/plugins.sbt` with
-all of the desired sbt plugins, any general dependencies, and any necessary repositories:
+You can create `project/plugins.sbt` with all of the desired sbt plugins, any general dependencies, and any necessary repositories:
 
 ```scala
 addSbtPlugin("org.example" % "plugin" % "1.0")
@@ -87,12 +80,8 @@ Specifically,
     are compiled using the classpath built from the managed and
     unmanaged dependencies.
 4.  Project dependencies can be declared in `project/plugins.sbt`
-    (similarly to `build.sbt` file in a normal project) or
-    `project/project/Build.scala` (similarly to `project/Build.scala` in 
-    a normal project) and will be available to the build
-    definition sources. Think of project/project/ as the build
-    definition for the build definition (worth to repeat it here again:
-    "sbt is recursive", remember?).
+    (similarly to `build.sbt` file in a normal project) and will be available to the build
+    definitions.
 
 The build definition classpath is searched for `sbt/sbt.autoplugins`
 descriptor files containing the names of
@@ -153,10 +142,19 @@ integrate.
 To make an auto plugin, create a project and enable `SbtPlugin`.
 
 ```scala
+ThisBuild / version := "0.1.0-SNAPSHOT"
+ThisBuild / organization := "com.example"
+ThisBuild / homepage := Some(url("https://github.com/sbt/sbt-hello"))
+
 lazy val root = (project in file("."))
   .enablePlugins(SbtPlugin)
   .settings(
-    name := "sbt-something"
+    name := "sbt-hello",
+    pluginCrossBuild / sbtVersion := {
+      scalaBinaryVersion.value match {
+        case "2.12" => "1.2.8" // set minimum sbt version
+      }
+    }
   )
 ```
 
@@ -168,30 +166,9 @@ by extending `sbt.AutoPlugin`.
 
 #### projectSettings and buildSettings
 
-With auto plugins, all provided settings (e.g. `assemblySettings`) are provided by the plugin directly via the `projectSettings` method. Here’s an example plugin that adds a command named hello to sbt projects:
+With auto plugins, all provided settings (e.g. `assemblySettings`) are provided by the plugin directly via the `projectSettings` method. Here’s an example plugin that adds a task named hello to sbt projects:
 
-```scala
-package sbthello
-
-import sbt._
-import Keys._
-
-object HelloPlugin extends AutoPlugin {
-  override lazy val projectSettings = Seq(commands += helloCommand)
-  lazy val helloCommand =
-    Command.command("hello") { (state: State) =>
-      println("Hi!")
-      state
-    }
-}
-```
-
-This example demonstrates how to take a `Command` (here, `helloCommand`) and
-distribute it in a plugin. Note that multiple commands can be included
-in one plugin (for example, use `commands ++= Seq(a,b)`). See
-[Commands][Commands]
-for defining more useful commands, including ones that accept arguments
-and affect the execution state.
+@@snip [HelloPlugin]($root$/src/sbt-test/ref/plugins-hello/project/HelloPlugin.scala) {}
 
 If the plugin needs to append settings at the build-level (that is, in `ThisBuild`) there's a `buildSettings` method. The settings returned here are guaranteed to be added to a given build scope only once
 regardless of how many projects for that build activate this AutoPlugin.
@@ -324,13 +301,7 @@ An example of a typical plugin:
 
 `build.sbt`:
 
-```scala
-sbtPlugin := true
-
-name := "sbt-obfuscate"
-
-organization := "org.example"
-```
+@@snip [build.sbt]($root$/src/sbt-test/ref/plugins-obfuscate/build.sbt) {}
 
 `ObfuscatePlugin.scala`:
 
