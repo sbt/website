@@ -39,7 +39,6 @@ You can create `project/plugins.sbt` with all of the desired sbt plugins, any ge
 
 ```scala
 addSbtPlugin("org.example" % "plugin" % "1.0")
-
 addSbtPlugin("org.example" % "another-plugin" % "2.0")
 
 // plain library (not an sbt plugin) for use in the build definition
@@ -157,6 +156,10 @@ lazy val root = (project in file("."))
     }
   )
 ```
+
+Some details to note:
+- sbt plugins must be compiled with Scala 2.12.x that sbt itself is compiled in. By NOT specifying `scalaVersion`, sbt will default to the Scala version suited for a plugin.
+- By default sbt plugin is compiled with whichever the sbt version you are using. Because sbt does NOT keep forward compatibility, that would typically require all of your plugin users to upgrade to the latest too. `pluginCrossBuild / sbtVersion` is an optional setting to compile your plugin against an _older_ version of sbt, which allows the plugin users to choose from a range of sbt versions.
 
 Then, write the plugin code and publish your project to a repository.
 The plugin can be used as described in the previous section.
