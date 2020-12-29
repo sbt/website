@@ -263,7 +263,7 @@ generate dependency lockfiles and check for changes at build time.
 - [Scala.js](https://www.scala-js.org): Scala to JavaScript compiler.
   <!-- 3113 stars -->
 - [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin): build and
-  deploy JEE web applications. <!-- 352 stars -->
+  Servlet support. <!-- 380 stars -->
 - [sbt-web](https://github.com/sbt/sbt-web): library for building sbt plugins
   for the web. <!-- 314 stars -->
 - [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs): use Scala.js
