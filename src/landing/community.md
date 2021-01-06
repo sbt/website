@@ -10,6 +10,7 @@ title: Get Involved
   [issues]: https://github.com/sbt/sbt/issues
   [website]: https://github.com/sbt/website
   [gitter]: https://gitter.im/sbt/sbt
+  [github-discussions]: https://github.com/sbt/sbt/discussions
   [waffle]: https://waffle.io/sbt/sbt
   [community-label]: https://github.com/sbt/sbt/labels/Community
   [327]: https://github.com/sbt/sbt/issues/327
@@ -71,7 +72,7 @@ Writing a new plugin is often easier than patching sbt's core code.
 Check out the list of [community plugins][Community-Plugins].
 
 plugin and sbt core development is discussed on the [sbt-dev list][ml] and
-on [Gitter sbt/sbt][gitter].
+on [GitHub Discussions][github-discussions].
 You can ask on the list or the chat if you have any questions regarding
 plugin and sbt core development.
 
@@ -84,4 +85,4 @@ You are welcome to work on any feature you like, but if you'd like some good ide
 
 - look for issues tagged with the [Community label][community-label]
 - check out [waffle sbt/sbt][waffle]'s Ready or Backlogs list
-- talk to us on [Gitter sbt/sbt][gitter]
+- talk to us on [GitHub Discussions][github-discussions]
