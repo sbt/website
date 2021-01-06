@@ -335,7 +335,7 @@ Compile / scalaSource := {
 
 ### What's the point of the build.sbt DSL?
 
-The `build.sbt` DSL is a domain-specific language used construct a DAG of settings and tasks.
+We use the `build.sbt` domain-specific language(DSL) to construct a DAG of settings and tasks.
 The setting expressions encode settings, tasks and the dependencies among them.
 
 This structure is common to [Make][Make] (1976), [Ant][Ant] (2000), and [Rake][Rake] (2003).
