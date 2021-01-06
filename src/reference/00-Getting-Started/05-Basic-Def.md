@@ -60,7 +60,7 @@ The key-value pairs are listed under the `.settings(...)` method as follows:
 ### How build.sbt defines settings
 
 `build.sbt` defines subprojects, which holds a sequence of key-value pairs
-called *setting expressions* using *build.sbt DSL*.
+called *setting expressions* using *build.sbt domain-specific language(DSL)*.
 
 ```scala
 ThisBuild / organization := "com.example"
