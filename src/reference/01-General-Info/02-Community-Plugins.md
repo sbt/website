@@ -340,6 +340,8 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-i18n](https://github.com/ant8e/sbt-i18n):
   transform your i18n bundles into Scala code. <!-- 1 stars -->
 - [sbt-lit](https://github.com/earldouglas/sbt-lit): build literate code with sbt.
+- [sbt-embedded-files](https://github.com/yurique/embedded-files): 
+  generate Scala objects containing the contents of glob-specified files as strings or byte-arrays. 
 
 #### Static code analysis plugins
 
