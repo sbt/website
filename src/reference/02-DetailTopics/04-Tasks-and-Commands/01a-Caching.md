@@ -4,6 +4,7 @@ out: Caching.html
 
   [Basic-Def]: Basic-Def.html
   [Tasks]: Tasks.html
+  [apidoc-FileFunction-cached]: $apidoc_base$/api/sbt/util/FileFunction\$.html#cached(cacheBaseDirectory:java.io.File)(action:Set[java.io.File]=>Set[java.io.File]):Set[java.io.File]=>Set[java.io.File]
 
 Caching
 -------
@@ -266,9 +267,25 @@ sbt:hello> hi
 [success] Total time: 1 s, completed Aug 17, 2019 10:36:40 AM
 ```
 
+<a name="filefunction"></a>
 ### Tracking file attributes
 
-Files often come up as caching targets, but `java.io.File` just carries the file name, so it's not very useful on its own for the purpose of caching. For caching, sbt provides a facility called `sbt.util.FileInfo` to extract useful file attributes.
+Files often come up as caching targets, but `java.io.File` just carries the file name, so it's not very useful on its own for the purpose of caching.
+
+For file caching, sbt provides a facility called [sbt.util.FileFunction.cached(...)][apidoc-FileFunction-cached]
+to cache file inputs and outputs. The following example implements a cached task
+that counts the number of lines in `*.md` and outputs `*.md` under cross target
+directory with the number of lines as their contents.
+
+@@snip [build.sbt]($root$/src/sbt-test/ref/caching-file-function/build.sbt) {}
+
+There are two additional arguments for the first parameter list that
+allow the file tracking style to be explicitly specified. By default,
+the input tracking style is `FilesInfo.lastModified`, based on a file's
+last modified time, and the output tracking style is `FilesInfo.exists`,
+based only on whether the file exists.
+
+### FileInfo
 
 - `FileInfo.exists` tracks if the file exists
 - `FileInfo.lastModified` track the last modified timestamp
@@ -295,6 +312,8 @@ There is also `sbt.util.FilesInfo` that accepts a `Set` of `File`s (though this 
 scala> FilesInfo.exists(Set(file("/tmp/cache/last"), file("/tmp/cache/nonexistent")))
 res31: sbt.util.FilesInfo[_1.F] forSome { val _1: sbt.util.FileInfo.Style } = FilesInfo(Set(PlainFile(/tmp/cache/last,true), PlainFile(/tmp/cache/nonexistent,false)))
 ```
+
+### Tracked.inputChanged
 
 The following example implements a cached task that counts the number of lines in `README.md`.
 
@@ -658,7 +677,7 @@ In the above, `trackSourcesAndConfig` is a triple-nested tracker that tracks con
 
 Depending on the level of control you need, sbt offers a flexible set of utilities to cache and track values and files.
 
-- `.previous` and `Cache.cached` are the basic cache to get started.
+- `.previous`, `FileFunction.cached`, and `Cache.cached` are the basic cache to get started.
 - To invalidate some result based on a change to its input parameters, use `Tracked.inputChanged`.
 - File attributes can be tracked as values by using `FileInfo.exists`, `FileInfo.lastModified`, and `FileInfo.hash`.
 - `Tracked` offers trackers that are often nested to track input invalidation, output invalidation, and diffing.
