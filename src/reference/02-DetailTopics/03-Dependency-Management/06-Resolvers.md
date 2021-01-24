@@ -95,7 +95,7 @@ configured identically except for the name of the factory. Use
     <td>Filesystem</td>
     <td><tt>Resolver.file</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/filesystem.html">Ivy filesystem</a></td>
-    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$file\$.html">filesystem factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/Resolver\$.html#file">filesystem factory</a></td>
     <td><a href="../api/sbt/librarymanagement/FileRepository.html">FileRepository API</a></td>
   </tr>
 
@@ -103,7 +103,7 @@ configured identically except for the name of the factory. Use
     <td>SFTP</td>
     <td><tt>Resolver.sftp</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/sftp.html">Ivy sftp</a></td>
-    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$sftp\$.html">sftp factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/Resolver\$.html#sftp">sftp factory</a></td>
     <td><a href="../api/sbt/librarymanagement/SftpRepository.html">SftpRepository API</a></td>
   </tr>
 
@@ -111,7 +111,7 @@ configured identically except for the name of the factory. Use
     <td>SSH</td>
     <td><tt>Resolver.ssh</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/ssh.html">Ivy ssh</a></td>
-    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$ssh\$.html">ssh factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/Resolver\$.html#ssh">ssh factory</a></td>
     <td><a href="../api/sbt/librarymanagement/SshRepository.html">SshRepository API</a></td>
   </tr>
 
@@ -119,7 +119,7 @@ configured identically except for the name of the factory. Use
     <td>URL</td>
     <td><tt>Resolver.url</tt></td>
     <td><a href="https://ant.apache.org/ivy/history/latest-milestone/resolver/url.html">Ivy url</a></td>
-    <td><a href="../api/sbt/librarymanagement/ResolverFunctions\$url\$.html">url factory</a></td>
+    <td><a href="../api/sbt/librarymanagement/Resolver\$.html#url">url factory</a></td>
     <td><a href="../api/sbt/librarymanagement/URLRepository.html">URLRepository API</a></td>
   </tr>
 </table>
