@@ -4,6 +4,7 @@ out: Caching.html
 
   [Basic-Def]: Basic-Def.html
   [Tasks]: Tasks.html
+  [apidoc-FileFunction-cached]: $apidoc_base$/api/sbt/util/FileFunction\$.html#cached(cacheBaseDirectory:java.io.File)(action:Set[java.io.File]=>Set[java.io.File]):Set[java.io.File]=>Set[java.io.File]
 
 Caching
 -------
@@ -271,7 +272,10 @@ sbt:hello> hi
 
 Files often come up as caching targets, but `java.io.File` just carries the file name, so it's not very useful on its own for the purpose of caching.
 
-For file caching, sbt provides a facility called `sbt.util.FileFunction.cached(...)` to cache file inputs and outputs. The following example implements a cached task that counts the number of lines in `*.md` and outputs `*.md` under cross target directory with the number of lines as their contents.
+For file caching, sbt provides a facility called [sbt.util.FileFunction.cached(...)][apidoc-FileFunction-cached]
+to cache file inputs and outputs. The following example implements a cached task
+that counts the number of lines in `*.md` and outputs `*.md` under cross target
+directory with the number of lines as their contents.
 
 @@snip [build.sbt]($root$/src/sbt-test/ref/caching-file-function/build.sbt) {}
 
