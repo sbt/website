@@ -21,15 +21,23 @@ Here is how to use sbt server as Metals backend.
 1. Delete existing `.bsp`, `.metals`, `.bloop` directories if any
 2. Open VS Code in the working directory
 3. Ignore the prompt to import the project
-4. Start `sbt` in the View > Terminal tab. Wait till it displays "sbt server started"
-5. `clean`, and `Test/compile` to generate SemanticDB for sources
+4. Add `Global / semanticdbEnabled := true` in `build.sbt`
+5. Start `sbt` in the View > Terminal tab. Wait till it displays "sbt server started"
 6. From command palette (Cmd-Shift-P in VS Code) issue "Metals: Switch Build Server", and select "sbt"
-7. Navigate to Metals view, and select "Connect to build server"
-8. Once Metals finishes indexing, it should be able to perform code completion etc
+7. Reload the sbt session to make sure `project/metals.sbt` gets loaded
+8. Navigate to Metals view, and select "Connect to build server"
+9. It should start compiling all your subprojects automatically
+10. Once Metals finishes indexing, it should be able to perform code completion etc
 
 <img src="files/metals-switch-build-server.png" style="margin-bottom: 1em">
 
 <img src="files/metals-completion.png" style="width: 100%; height: 100%; margin-bottom: 1em">
+
+Use the following setting to opt-out some of the subprojects from BSP.
+
+```scala
+bspEnabled := false
+```
 
 ### Language Server Protocol 3.0
 
