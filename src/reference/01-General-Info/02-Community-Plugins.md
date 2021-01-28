@@ -342,6 +342,8 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-lit](https://github.com/earldouglas/sbt-lit): build literate code with sbt.
 - [sbt-embedded-files](https://github.com/yurique/embedded-files): 
   generate Scala objects containing the contents of glob-specified files as strings or byte-arrays. 
+- [sbt-scala-ts](https://github.com/scala-ts/scala-ts/):
+  generate TypeScript code according compiled Scala types (case class, trait, object, ...). <!-- 149 stars -->
 
 #### Static code analysis plugins
 
