@@ -23,7 +23,7 @@ Some configurations you'll see in sbt:
 
 ### Cautions on custom dependency configurations
 
-A custom configuration shoul be considered only when you are
+A custom configuration should be considered only when you are
 introducing either a new set of source code or its own
 library dependencies (like `Test`).
 
