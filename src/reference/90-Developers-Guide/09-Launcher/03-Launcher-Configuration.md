@@ -111,7 +111,7 @@ repositories:
 
 -   `local` - the local Ivy repository `~/.ivy2/local`.
 -   `maven-local` - The local Maven repository `~/.m2/repository`.
--   `maven-central` - The Maven Central repository `repo.maven.org`.
+-   `maven-central` - The Maven Central repository `repo1.maven.org`.
 
 Besides built in repositories, other repositories can be configured
 using the following syntax:
