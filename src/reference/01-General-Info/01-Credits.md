@@ -461,7 +461,7 @@ Thank you all.
   [@harrah]: https://github.com/harrah
   [@jsuereth]: https://github.com/jsuereth
   [@eed3si9n]: https://github.com/eed3si9n
-  [@dwijnand]: http://github.com/dwijnand
+  [@dwijnand]: https://github.com/dwijnand
   [@gkossakowski]: https://github.com/gkossakowski
   [@Duhemm]: https://github.com/Duhemm
   [@jvican]: https://github.com/jvican

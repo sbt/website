@@ -34,7 +34,7 @@ val processLine: String => String = {
   case s => preprocessRest(s)
 }
  
-// http://www.scala-lang.org/api/2.10.4/index.html#scala.sys.process.ProcessBuilder
+// https://www.scala-lang.org/api/2.10.4/index.html#scala.sys.process.ProcessBuilder
 def runPandoc(f: File): Seq[String] =
   Seq("pandoc", "-f", "rst", "-t", "markdown", f.toString).lines.toSeq
  
