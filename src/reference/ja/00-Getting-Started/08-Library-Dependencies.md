@@ -7,9 +7,9 @@ out: Library-Dependencies.html
   [Ivy revisions]: https://ant.apache.org/ivy/history/2.3.0-rc1/ivyfile/dependency.html#revision
   [Extra attributes]: https://ant.apache.org/ivy/history/2.3.0-rc1/concept.html#extra
   [through Ivy]: https://ant.apache.org/ivy/history/latest-milestone/concept.html#checksum
-  [ScalaCheck]: http://scalacheck.org
+  [ScalaCheck]: https://scalacheck.org
   [Specs2]: http://specs2.org
-  [ScalaTest]: http://scalatest.org
+  [ScalaTest]: https://scalatest.org
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Task-Graph]: Task-Graph.html

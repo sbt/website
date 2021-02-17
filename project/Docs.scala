@@ -40,7 +40,7 @@ object Docs {
   lazy val siteEmail = settingKey[String]("")
 
   val isGenerateSiteMap = settingKey[Boolean]("generates site map or not")
-  lazy val sbtSiteBase = uri("http://www.scala-sbt.org/")
+  lazy val sbtSiteBase = uri("https://www.scala-sbt.org/")
 
   val zeroTwelveGettingStarted = List(
     "Setup.html",

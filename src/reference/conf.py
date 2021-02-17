@@ -49,7 +49,7 @@ home_site = True
 
 # Passed to Google as site:<site_search_base>
 # If empty, no search box is included
-site_search_base = 'http://www.scala-sbt.org/' + site_version + '/docs'
+site_search_base = 'https://www.scala-sbt.org/' + site_version + '/docs'
 
 # passes variables to the template
 html_context = {'home_site': home_site, 'site_search_base': site_search_base}

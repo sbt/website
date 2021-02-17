@@ -32,9 +32,9 @@ Unmanaged dependencies work like this: add jars to `lib` and they will be
 placed on the project classpath. Not much else to it!
 
 You can place test jars such as
-[ScalaCheck](http://scalacheck.org/),
+[ScalaCheck](https://scalacheck.org/),
 [Specs2](http://specs2.org), and
-[ScalaTest](http://www.scalatest.org/) in `lib` as well.
+[ScalaTest](https://www.scalatest.org/) in `lib` as well.
 
 Dependencies in `lib` go on all the classpaths (for `compile`, `test`, `run`,
 and `console`). If you wanted to change the classpath for just one of
@@ -258,9 +258,9 @@ prompt, you should not see the derby jar. But if you type
 `show test:dependencyClasspath`, you should see the derby jar in the list.
 
 Typically, test-related dependencies such as
-[ScalaCheck](http://scalacheck.org/),
+[ScalaCheck](https://scalacheck.org/),
 [Specs2](http://specs2.org), and
-[ScalaTest](http://www.scalatest.org/) would be defined with `% "test"`.
+[ScalaTest](https://www.scalatest.org/) would be defined with `% "test"`.
 
 There are more details and tips-and-tricks related to library
 dependencies on [this page][Library-Management].

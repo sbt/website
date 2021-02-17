@@ -26,7 +26,7 @@ out: Library-Dependencies.html
 
 非托管依赖像这样工作：将 jar 文件放在 `lib` 文件夹下，然后它们将会被添加到项目的 classpath 中。没有更多的事情了！
 
-你也可以将测试依赖的 jar 文件放在 `lib` 目录下，比如 [ScalaCheck](http://scalacheck.org/)，[Specs2](http://specs2.org)，[ScalaTest](http://www.scalatest.org/)。
+你也可以将测试依赖的 jar 文件放在 `lib` 目录下，比如 [ScalaCheck](https://scalacheck.org/)，[Specs2](http://specs2.org)，[ScalaTest](https://www.scalatest.org/)。
 
 `lib` 目录下的所有依赖都会在 classpaths（对 `compile`， `test`， `run` 和 `console` 都成立）。如果你想对其中的一个改变 classpath，
 你需要做适当调整，例如 `Compile / dependencyClasspath` 或者 `Runtime / dependencyClasspath`。
@@ -50,7 +50,7 @@ Compile / unmanagedJars := Seq.empty[sbt.Attributed[java.io.File]]
 
 ### 托管依赖
 
-sbt 使用 [Apache Ivy](http://ant.apache.org/ivy/) 来实现托管依赖，所以如果你对 Ivy 或者 Maven 比较熟悉的话，你不会有太多的麻烦。
+sbt 使用 [Apache Ivy](https://ant.apache.org/ivy/) 来实现托管依赖，所以如果你对 Ivy 或者 Maven 比较熟悉的话，你不会有太多的麻烦。
 
 #### `libraryDependencies` Key
 
@@ -119,7 +119,7 @@ libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
 #### Ivy 修正
 
 `groupID % artifactID % revision` 中的 `revision` 不需要是一个固定的版本号。Ivy 能够根据你指定的约束选择一个模块的最新版本。你指定 `"latest.integration"`，`"2.9.+"` 或者 `"[1.0,)"`，而不是
-一个固定的版本号，像 `"1.6.1"`。参看 [Ivy 修订](http://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision) 文档获取详细内容。
+一个固定的版本号，像 `"1.6.1"`。参看 [Ivy 修订](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency.html#revision) 文档获取详细内容。
 
 #### 解析器
 
@@ -188,7 +188,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 现在，如果你在 sbt 的命令提示行里输入 `show compile:dependencyClasspath`，你不应该看到 derby jar。但是如果你输入 `show test:dependencyClasspath`，
 你应该在列表中看到 derby jar。
 
-通常，测试相关的依赖，如 [ScalaCheck](http://scalacheck.org/)，
-[Specs2](http://specs2.org) 和 [ScalaTest](http://www.scalatest.org/) 将会被定义为 `% "test"`。
+通常，测试相关的依赖，如 [ScalaCheck](https://scalacheck.org/)，
+[Specs2](http://specs2.org) 和 [ScalaTest](https://www.scalatest.org/) 将会被定义为 `% "test"`。
 
 库依赖更详细的内容和技巧在[这里][Library-Management]。
