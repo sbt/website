@@ -112,7 +112,7 @@ In short, add the following line to your `~/.sbt/1.0/plugins/gpg.sbt` file to
 enable it globally for SBT projects:
 
 ```
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.1")
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.1.2")
 ```
 
 > *Note:* The plugin is a solution to sign artifacts. It works with the GPG command line tool.
@@ -210,7 +210,7 @@ To simplify the usage of the Sonatype's Nexus, add the following line to
 `project/plugins.sbt` to import the [sbt-sonatype plugin][sbt-sonatype] to your project:
 
 ```
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.9.5")
 ```
 
 This plugin will facilitate the publishing process, but in short, these are 
