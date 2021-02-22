@@ -48,6 +48,7 @@ object PluginCompat {
 
 Now `subMissingOk(...)` function can be implemented in sbt version specific way.
 
+<a name="slash"></a>
 ### Migrating to slash syntax
 
 In sbt 0.13 keys were scoped with 2 different syntaxes: one for sbt's shell and one for in code.
@@ -63,10 +64,11 @@ the **slash syntax** as follows:
 Here are some examples:
 
 ```scala
+version in ThisBuild := "1.0.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "hello",
-    version in ThisBuild := "1.0.0-SNAPSHOT",
     scalacOptions in Compile += "-Xlint",
     scalacOptions in (Compile, console) --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
     fork in Test := true
@@ -76,10 +78,11 @@ lazy val root = (project in file("."))
 They are now written as:
 
 ```scala
+ThisBuild / version := "1.0.0-SNAPSHOT"
+
 lazy val root = (project in file("."))
   .settings(
     name := "hello",
-    ThisBuild / version := "1.0.0-SNAPSHOT",
     Compile / scalacOptions += "-Xlint",
     Compile / console / scalacOptions --= Seq("-Ywarn-unused", "-Ywarn-unused-import"),
     Test / fork := true
@@ -99,6 +102,14 @@ sbt:hello> show Compile / console / scalacOptions
 [info] * -Xlint
 sbt:hello> Test / fork
 [info] true
+```
+
+There's a [syntactic Scalafix rule for unified slash syntax](https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax)
+to semi-automatically rewrite existing sbt 0.13 syntax to the slash syntax. Currently it requires the use of scalafix CLI
+and it's not very precise (because it's a syntactic rule that only looks at the shape of the code) but it gets most of the job done.
+
+```
+\$ scalafix --rules=https://gist.githubusercontent.com/eed3si9n/57e83f5330592d968ce49f0d5030d4d5/raw/7f576f16a90e432baa49911c9a66204c354947bb/Sbt0_13BuildSyntax.scala *.sbt project/*.scala
 ```
 
 ### Migrating from sbt 0.12 style
