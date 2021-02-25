@@ -204,7 +204,7 @@ and `isDirectory` will be true. If the link is broken, `isSymbolicLink` will be
 true but both `isDirectory` and `isRegularFile` will be false.
 
 The reason that the `FileTreeView` always provides the attributes is because
-checking they type of a file requires a system call, which can be slow. All of
+checking the type of a file requires a system call, which can be slow. All of
 the major desktop operating systems provide apis for listing a directory where
 both the file names and file node types are returned. This allows sbt to provide
 this information without making an extra system call. We can use this to
@@ -421,7 +421,7 @@ sources in the project. By contrast,
 
 ```
 val paths =
-    (baseDirectory.value ** "*.scala" ++
+    (baseDirectory.value ** "*.scala" +++
      baseDirectory.value ** "*.java").allPaths
 ```
 
