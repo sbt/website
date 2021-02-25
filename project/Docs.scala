@@ -81,7 +81,7 @@ object Docs {
   val languages = List("ja", "zh-cn", "es")
 
   def redirectTutorialSettings: Seq[Setting[_]] = Seq(
-    mappings in RedirectTutorial := {
+    RedirectTutorial / mappings := {
       val output = target.value / RedirectTutorial.name
       val s = streams.value
       generateRedirect("../docs/Getting-Started.html", output / "index.html", s.log)
@@ -103,7 +103,7 @@ object Docs {
   )
 
   def redirectSettings: Seq[Setting[_]] = Seq(
-    mappings in Redirect := {
+    Redirect / mappings := {
       val output = target.value / Redirect.name
       val s = streams.value
       val gettingStarted = output / "Getting-Started"
@@ -281,7 +281,7 @@ object Docs {
 
   def customGhPagesSettings: Seq[Setting[_]] = GhpagesPlugin.ghpagesProjectSettings ++ Seq(
     git.remoteRepo := "git@github.com:sbt/sbt.github.com.git",
-    GitKeys.gitBranch in ghpagesUpdatedRepository := Some("master"),
+    ghpagesUpdatedRepository / GitKeys.gitBranch := Some("master"),
     ghpagesSynchLocal := syncLocalImpl.value
   )
 
@@ -325,7 +325,7 @@ object Docs {
     }
 
     val ms = for {
-      (file, target) <- (mappings in makeSite).value if siteInclude(file)
+      (file, target) <- (makeSite / mappings).value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(ms)
 

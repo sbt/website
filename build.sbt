@@ -34,18 +34,18 @@ lazy val root = (project in file("."))
       "support.html",
     ),
     // Reference
-    sourceDirectory in Pamflet := baseDirectory.value / "src" / "reference",
-    siteSubdirName in Pamflet := s"""$targetSbtBinaryVersion/docs""",
+    Pamflet / sourceDirectory := baseDirectory.value / "src" / "reference",
+    Pamflet / siteSubdirName := s"""$targetSbtBinaryVersion/docs""",
     tutorialSubDirName := s"""$targetSbtBinaryVersion/tutorial""",
     // Redirects
     redirectSettings,
-    SiteHelpers.addMappingsToSiteDir(mappings in Redirect, siteSubdirName in Pamflet),
+    SiteHelpers.addMappingsToSiteDir(Redirect / mappings, Pamflet / siteSubdirName),
     redirectTutorialSettings,
-    SiteHelpers.addMappingsToSiteDir(mappings in RedirectTutorial, tutorialSubDirName),
+    SiteHelpers.addMappingsToSiteDir(RedirectTutorial / mappings, tutorialSubDirName),
     // GitHub Pages. See project/Docs.scala
     customGhPagesSettings,
-    mappings in Pamflet := {
-      val xs = (mappings in Pamflet).value
+    Pamflet / mappings := {
+      val xs = (Pamflet / mappings).value
       Pdf.cleanupCombinedPages(xs) ++ xs
     },
     if (scala.sys.BooleanProp.keyExists("sbt.website.generate_pdf"))
@@ -56,20 +56,20 @@ lazy val root = (project in file("."))
         Pdf.settings,
         Pdf.settingsFor(Pamflet, "sbt-reference"),
         SiteHelpers.addMappingsToSiteDir(
-          mappings in Pdf.generatePdf in Pamflet,
-          siteSubdirName in Pamflet,
+          Pamflet / Pdf.generatePdf / mappings,
+          Pamflet / siteSubdirName,
         )
       )
     else if (scala.sys.BooleanProp.keyExists("sbt.website.detect_pdf"))
       Def.settings(
         // assume PDF files were created in another Docker container
-        Pdf.detectPdf in Pamflet := ((target in Pamflet).value ** "*.pdf").get,
-        mappings in Pdf.detectPdf in Pamflet := {
-          (Pdf.detectPdf in Pamflet).value pair Path.relativeTo((target in Pamflet).value)
+        Pamflet / Pdf.detectPdf := ((Pamflet / target).value ** "*.pdf").get,
+        Pamflet / Pdf.detectPdf / mappings := {
+          (Pamflet / Pdf.detectPdf).value pair Path.relativeTo((Pamflet / target).value)
         },
         SiteHelpers.addMappingsToSiteDir(
-          mappings in Pdf.detectPdf in Pamflet,
-          siteSubdirName in Pamflet,
+          Pamflet / Pdf.detectPdf / mappings,
+          Pamflet / siteSubdirName,
         )
       )
     else Nil,

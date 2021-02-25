@@ -13,16 +13,16 @@ object Pdf {
 
   def settings: Seq[Setting[_]] =
     Seq(
-      pandocLatexEngine in Global := "xelatex",
-      pandocCommand in Global := "pandoc",
-      pandoc in Global := new Pandoc((pandocCommand in Global).value)
+      Global / pandocLatexEngine := "xelatex",
+      Global / pandocCommand := "pandoc",
+      Global / pandoc := new Pandoc((Global / pandocCommand).value)
     )
 
   def settingsFor(config: Configuration, pdfName: String): Seq[Setting[_]] =
     inConfig(config)(
       Seq(
         generatePdf := Pdf.makeCombinedPdf(config, pdfName).value,
-        mappings in generatePdf := {
+        generatePdf / mappings := {
           generatePdf.value pair Path.relativeTo(target.value)
         }
       )
@@ -40,10 +40,10 @@ object Pdf {
   def makeCombinedPdf(config: Configuration, name: String): Def.Initialize[Task[Seq[File]]] =
     Def.task {
       val log = streams.value.log
-      (mappings in config).value collect {
+      (config / mappings).value collect {
         case (file, fname)
             if (fname contains "Combined+Pages.md") && !(fname contains "offline/") =>
-          val t = (target in config).value
+          val t = (config / target).value
           val language = getPdfLanguage(file, t)
           // TODO - Create front matter for the file.
           log.info(s"Generating pdf $language/$name...")
