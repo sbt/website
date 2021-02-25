@@ -12,12 +12,12 @@ object LowTechSnippetPamfletPlugin extends AutoPlugin {
 
   def pamfletSettings: Seq[Setting[_]] =
     Seq(
-      mappings in Pamflet := generate(
-        (sourceDirectory in Pamflet).value,
-        (target.value / "lowtech_generated"),
-        (target in Pamflet).value,
-        (includeFilter in Pamflet).value,
-        (pamfletFencePlugins in Pamflet).value
+      Pamflet / mappings := generate(
+        (Pamflet / sourceDirectory).value,
+        target.value / "lowtech_generated",
+        (Pamflet / target).value,
+        (Pamflet / includeFilter).value,
+        (Pamflet / pamfletFencePlugins).value
       )
     )
 
