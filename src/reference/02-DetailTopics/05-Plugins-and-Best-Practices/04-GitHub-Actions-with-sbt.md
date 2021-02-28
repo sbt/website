@@ -33,7 +33,7 @@ Use this guide as an inspiration, but consult the official source for more detai
 
 ### Basic setup
 
-Setting up your build for GitHub Actions is mostly about setting up `.github/worflows/ci.yml`. Here's what a minimal CI workflow could look like using Olaf's [setup-scala][Olafurpg-Setup-Scala]:
+Setting up your build for GitHub Actions is mostly about setting up `.github/workflows/ci.yml`. Here's what a minimal CI workflow could look like using Olaf's [setup-scala][Olafurpg-Setup-Scala]:
 
 ```yml
 name: CI
@@ -227,7 +227,7 @@ jobs:
       shell: bash
 ```
 
-### Sample .github/worflows/ci.yml setting
+### Sample .github/workflows/ci.yml setting
 
 Here's a sample that puts them all together. Remember, most of the sections are optional.
 
