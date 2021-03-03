@@ -177,7 +177,7 @@ result of `watchStartMessage`.
 contents of a source file must change in order to trigger a build. The default
 value is false.
 
-- `watchPersistFilestamps: Boolean` toggles whether or not sbt will
+- `watchPersistFileStamps: Boolean` toggles whether or not sbt will
 persist the file hashes computed for source files across multiple task
 evaluation runs. This can improve performance for projects with many
 source files. Because the file hashes are cached, it is possible for the
