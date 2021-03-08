@@ -16,8 +16,7 @@ out: Installing-sbt-on-Linux.html
 To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
 
 ```
-\$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
 \$ sdk install sbt
 ```
 
@@ -31,7 +30,7 @@ This has two advantages.
 
 ### Ubuntu和其他基于Debian的发行版
 
-[DEB][DEB] 安装包由sbt官方支持。
+[DEB][DEB] 安装包由sbt官方支持。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本地的DEB文件安装软件。相反，他们由程序包管理器安装，通过命令行（如`apt-get`，`aptitude`）或图形用户界面 （如Synaptic）。
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。
@@ -48,7 +47,7 @@ Ubuntu和其他基于Debian的发行版使用DEB格式，但通常你不从本�
 
 ### 红帽企业版Linux和其他基于RPM的发行版
 
-[RPM][RPM] 安装包由sbt官方支持。
+[RPM][RPM] 安装包由sbt官方支持。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 红帽企业版Linux和其他基于RPM的发行版使用RPM格式。
 从终端运行下面的命令安装`sbt`（你需要超级用户权限，因此需要`sudo`）。

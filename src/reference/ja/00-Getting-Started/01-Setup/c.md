@@ -19,8 +19,7 @@ Linux への sbt のインストール
 JDK と sbt をするのに、[SDKMAN](https://sdkman.io/) の導入を検討してほしい。
 
 ```
-\$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
 \$ sdk install sbt
 ```
 
@@ -40,7 +39,7 @@ JDK と sbt をするのに、[SDKMAN](https://sdkman.io/) の導入を検討し
 
 ### Ubuntu 及びその他の Debian ベースの Linux ディストリビューション
 
-[DEB][DEB] は sbt による公式パッケージだ。
+[DEB][DEB] は sbt による公式パッケージだ。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 Ubuntu 及びその他の Debian ベースのディストリビューションは DEB フォーマットを用いるが、
 ローカルの DEB ファイルからソフトウェアをインストールすることは稀だ。
@@ -67,7 +66,7 @@ sbt のバイナリは Bintray にて公開されており、都合の良いこ�
 
 ### Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューション
 
-[RPM][RPM] は sbt による公式パッケージだ。
+[RPM][RPM] は sbt による公式パッケージだ。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューションは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
