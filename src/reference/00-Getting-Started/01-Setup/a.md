@@ -17,8 +17,13 @@ Follow the link to install [JDK 8 or 11][AdoptOpenJDK].
 Or use [SDKMAN!](https://sdkman.io/):
 
 ```
-\$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
+```
+
+#### [SDKMAN!](https://sdkman.io/)
+
+```
+\$ sdk install sbt
 ```
 
 ### Installing from a universal package
@@ -35,10 +40,4 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package, and expand it.
 
 ```
 \$ brew install sbt
-```
-
-#### [SDKMAN!](https://sdkman.io/)
-
-```
-\$ sdk install sbt
 ```

@@ -19,8 +19,7 @@ Installing sbt on Linux
 To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
 
 ```
-\$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
 \$ sdk install sbt
 ```
 
@@ -44,7 +43,7 @@ Descarga el paquete [ZIP][ZIP] o [TGZ][TGZ] y descomprímelo.
 
 ### Ubuntu y otras distribuciones basadas en Debian
 
-Los paquetes [DEB][DEB] son oficialmente soportados por sbt.
+Los paquetes [DEB][DEB] son oficialmente soportados por sbt. (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 Ubuntu y otras distribuciones basadas en Debian usan el formato DEB, pero por lo
 general no necesitas instalar software desde un fichero DEB local.
@@ -84,7 +83,7 @@ release. Mira las respuesta para encontrar soluciones.
 
 ### Red Hat Enterprise Linux y otras distribuciones basadas en RPM
 
-Los paquetes [RPM][RPM] son oficialmente soportados por sbt.
+Los paquetes [RPM][RPM] son oficialmente soportados por sbt. (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
 
 Red Hat Enterprise Linux y otras distribuciones basadas en RPM utilizan el
 formato RPM. Ejecuta lo siguiente desde el terminal para instalar `sbt`

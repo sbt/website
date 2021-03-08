@@ -18,8 +18,13 @@ macOS への sbt のインストール
 もしくは [SDKMAN!](https://sdkman.io/) を使う:
 
 ```
-\$ sdk list java
-\$ sdk install java 11.0.4.hs-adpt
+\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
+```
+
+#### [SDKMAN!](https://sdkman.io/)
+
+```
+\$ sdk install sbt
 ```
 
 ### ユニバーサルパッケージからのインストール
@@ -35,10 +40,4 @@ macOS への sbt のインストール
 
 ```
 \$ brew install sbt
-```
-
-#### [SDKMAN!](https://sdkman.io/)
-
-```
-\$ sdk install sbt
 ```
