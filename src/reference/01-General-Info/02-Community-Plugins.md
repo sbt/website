@@ -367,6 +367,8 @@ generate dependency lockfiles and check for changes at build time.
   style checking using Checkstyle. <!-- 6 stars -->
 - [sbt-sonar](https://github.com/mwz/sbt-sonar): integration with
   [SonarQube](https://www.sonarqube.org). <!-- 2 stars -->
+- [sbt-scala2plantuml](https://github.com/BotTech/scala2plantuml):
+  generates [PlantUML](https://plantuml.com/) diagrams from Scala code.
 
 #### Code coverage plugins
 
