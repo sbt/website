@@ -1,9 +1,11 @@
 scala-sbt.org
 =============
 
-This project is the source for scala-sbt.org. See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
+This project is the source for [scala-sbt.org](https://www.scala-sbt.org). It generates the contents of the site in [sbt/sbt.github.com](@ghRepo) for delivery via GitHub Pages.
 
-scala-sbt.org is powered by:
+See [contributors](https://github.com/sbt/website/graphs/contributors) for the list of documentation contributors.
+
+[scala-sbt.org](https://www.scala-sbt.org) is powered by:
 
 * [nanoc](http://nanoc.ws/) to generate the landing pages.
 
@@ -35,13 +37,13 @@ $ gem install redcarpet
 $ gem install nokogiri
 ```
 
-If you're running ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet:
+If you're running Ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet:
 
 ```
 $ sudo apt-get install ruby-dev
 ```
 
-Also, if you're on ubuntu you might see an error like this:
+Also, if you're on Ubuntu you might see an error like this:
 
 ```
 zlib is missing; necessary for building libxml2
@@ -55,9 +57,10 @@ $ sudo apt-get install zlib1g-dev
 
 ### Full setup
 
-The pdf generation is optional, and requires the following additional steps.
+The PDF generation is optional, and requires the following additional steps to install 
+[TeX Live](https://www.tug.org/texlive/) and [Pandoc](https://pandoc.org/).
 
-On Ubuntu
+#### On Ubuntu
 
 ```
 $ sudo add-apt-repository ppa:texlive-backports/ppa
@@ -65,11 +68,15 @@ $ sudo apt-get update
 $ sudo apt-get install pandoc latex-cjk-all texlive-full
 ```
 
-On Mac
+#### On Mac
 
-- download and install MacTEX
-- `sudo tlmgr update --self --all`
-- follow https://oku.edu.mie-u.ac.jp/~okumura/texwiki/?TeX%20Live%2FMac#bcb0d462
+These steps are derived from Haruhiko Okumura's instructions at
+[TeX Live/Mac](https://texwiki.texjp.org/?TeX%20Live%2FMac#bcb0d462 (in Japanese).
+
+- install [MacTEX](http://www.tug.org/mactex), either via 
+  [downloaded pkg](http://www.tug.org/mactex/mactex-download.html) or 
+  [homebrew mactex formulae](https://formulae.brew.sh/cask/mactex)
+- update TeX Live package manager with `sudo tlmgr update --self --all` (this may take a while)
 - `brew install pandoc`
 
 ## Usage
