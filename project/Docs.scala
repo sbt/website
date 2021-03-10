@@ -427,9 +427,9 @@ object Docs {
   // TODO: platform independence/use symlink from Java 7
   def symlink(path: String, linkFile: File, log: Logger): Unit =
     Process("ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil) ! log match {
-      case 0 => ()
+      case 0    => ()
       case code =>
-        println(code)
         // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
+        println(code)
     }
 }
