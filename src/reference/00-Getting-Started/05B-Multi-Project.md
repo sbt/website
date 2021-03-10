@@ -54,7 +54,7 @@ define the settings scoped to `ThisBuild`.
 `ThisBuild` acts as a special subproject name that you can use to define default
 value for the build.
 When you define one or more subprojects, and when the subproject does not define
-`scalaVersion` key, it will look for `ThisBuild / scalaVerion`.
+`scalaVersion` key, it will look for `ThisBuild / scalaVersion`.
 
 The limitation is that the right-hand side needs to be a pure value
 or settings scoped to `Global` or `ThisBuild`,
