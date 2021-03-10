@@ -255,6 +255,7 @@ your plugin to the list.
 - [safety-plugin](https://github.com/leobenkel/safety_plugin): Enforce the use of specified versions of dependencies across your company
 - [sbt-dependency-lock](https://stringbean.github.io/sbt-dependency-lock):
 generate dependency lockfiles and check for changes at build time.
+- [sbt-unzip](https://github.com/djice/sbt-unzip-plugin): Extract zip dependencies where you want in your project.
 
 #### Web and frontend development plugins
 
