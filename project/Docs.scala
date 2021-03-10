@@ -429,6 +429,7 @@ object Docs {
     Process("ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil) ! log match {
       case 0 => ()
       case code =>
-        println(code) // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
+        println(code)
+        // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
     }
 }

@@ -84,14 +84,17 @@ object Pdf {
     val origLines = IO readLines file
     getFirstTitle(IO readLines file) match {
       case (Some(title), lines) =>
-        IO.write(cleanedUp, s"""---
+        IO.write(
+          cleanedUp,
+          s"""---
   title: ${title}
   ntags: [scala, sbt]
 ---
 
 Preface
 -------
-${lines mkString "\n"}""".stripMargin)
+${lines mkString "\n"}""".stripMargin
+        )
       case _ => sys.error(s"Could not find title in document ${file}")
     }
     cleanedUp
