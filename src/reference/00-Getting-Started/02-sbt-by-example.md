@@ -10,7 +10,7 @@ out: sbt-by-example.html
 sbt by example
 --------------
 
-This page assumes you've [installed sbt 1][Setup].
+This page assumes you've [installed sbt 1][Setup] and you are running a Bash/UNIX shell on macOS, Linux or WSL ([Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)).
 
 Let's start with examples rather than explaining how sbt works or why.
 
