@@ -32,7 +32,13 @@ Windows
 - [sbt-$sbtVersion$.msi.sha256](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.msi.sha256)
 - [sbt-$sbtVersion$.msi.asc](https://github.com/sbt/sbt/releases/download/v$sbtVersion$/sbt-$sbtVersion$.msi.asc)
 
-### Scoop
+### [Chocolatey](https://chocolatey.org/packages/sbt)
+
+```
+> choco install sbt
+```
+
+### [Scoop](https://scoop.sh/)
 
 ```
 > scoop install sbt
