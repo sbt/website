@@ -505,6 +505,22 @@ The verbosity with which logging is persisted is controlled using the
 displays what was logged according to these levels. The levels do not
 affect already logged information.
 
+### Conditional task
+
+(Requires sbt 1.4.0+)
+
+When `Def.task { ... }` consists of an `if`-expression at the top-level, a conditional task (or Selective task) is automatically created:
+
+```scala
+bar := {
+  if (number.value < 0) negAction.value
+  else if (number.value == 0) zeroAction.value
+  else posAction.value
+}
+```
+
+Unlike the regular (Applicative) task composition, conditional tasks delays the evaluation of then-clause and else-clause as naturally expected of an `if`-expression. This is already possible with `Def.taskDyn { ... }`, but unlike dynamic tasks, conditional task works with `inspect` command.
+
 ### Dynamic Computations with `Def.taskDyn`
 
 It can be useful to use the result of a task to determine the next tasks
