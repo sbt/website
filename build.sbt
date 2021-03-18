@@ -32,6 +32,7 @@ lazy val root = (project in file("."))
       "index.html",
       "learn.html",
       "support.html",
+      "thank-you.html",
     ),
     // Reference
     Pamflet / sourceDirectory := baseDirectory.value / "src" / "reference",

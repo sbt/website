@@ -160,7 +160,9 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
               </a>
               <a href="learn.html">Learn</a>
               <a href="download.html">Download</a>
+              <a href="support.html">Support</a>
               <a href="community.html">Get Involved</a>
+              <a href="thank-you.html">Thank You</a>
             </nav>
             <p class="legal">
               &copy; 2016-<script>document.write(new Date().getFullYear())</script> Lightbend, Inc. |
