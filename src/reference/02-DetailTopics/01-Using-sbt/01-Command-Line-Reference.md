@@ -258,7 +258,7 @@ influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
     <td>Directory</td>
     <!-- https://github.com/sbt/sbt/blob/v1.3.1/main/src/main/scala/sbt/coursierint/LMCoursier.scala#L40-L44 -->
     <td><tt>CoursierDependencyResolution.defaultCacheLocation</tt> (in 1.3+)</td>
-    <td>Location of coursier artifact cache, where the default is defined by <a href="https://get-coursier.io/docs/cache.html#default-location">Coursier cache resolution logic</a>.  You should define <tt>sbt.coursier.home</tt> explicitly if you are using coursier in a CI environment and want to cache artifacts between runs.</td>
+    <td>Location of coursier artifact cache, where the default is defined by <a href="https://get-coursier.io/docs/cache.html#default-location">Coursier cache resolution logic</a>. You can verify the value with the command `csrCacheDirectory`.  You should define <tt>sbt.coursier.home</tt> explicitly if you are using coursier in a CI environment and want to cache artifacts between runs.</td>
   </tr>
 
   <tr>
