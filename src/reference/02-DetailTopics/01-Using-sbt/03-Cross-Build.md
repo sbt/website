@@ -317,30 +317,30 @@ distinguish variant but binary compatible Scala toolchain builds.
 ("a" % "b" % "1.0").cross(CrossVersion.patch)
 ```
 
-This uses a custom function to determine the Scala version to use based
-on the binary Scala version:
+`CrossVersion.constant` fixes a constant value:
 
 ```scala
-("a" % "b" % "1.0") cross CrossVersion.binaryMapped {
-  case "2.9.1" => "2.9.0" // remember that pre-2.10, binary=full
-  case "2.10" => "2.10.0" // useful if a%b was released with the old style
-  case x => x
-}
+("a" % "b" % "1.0") cross CrossVersion.constant("2.9.1")
 ```
 
-This uses a custom function to determine the Scala version to use based
-on the full Scala version:
+It is equivalent to:
 
 ```scala
-("a" % "b" % "1.0") cross CrossVersion.fullMapped {
-  case "2.9.1" => "2.9.0"
-  case x => x
-}
+"a" % "b_2.9.1" % "1.0"
 ```
 
-A custom function is mainly used when cross-building and a dependency
+A constant cross version is mainly used when cross-building and a dependency
 isn't available for all Scala versions or it uses a different convention
 than the default.
+
+```scala
+("a" % "b" % "1.0") cross CrossVersion.constant {
+  scalaVersion.value match {
+    case "2.9.1" => "2.9.0"
+    case x => x
+  }
+}
+```
 
 #### Note about sbt-release
 
