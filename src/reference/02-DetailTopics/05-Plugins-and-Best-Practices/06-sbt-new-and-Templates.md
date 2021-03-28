@@ -40,6 +40,7 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 
 - [foundweekends/giter8.g8](https://github.com/foundweekends/giter8.g8)                 (A template for Giter8 templates)
 - [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8)                         (Seed template for Scala)
+- [scala/scala3.g8](https://github.com/scala/scala3.g8)                                 (A template for Scala 3 projects)
 - [scala/hello-world.g8](https://github.com/scala/hello-world.g8)                       (A template to demonstrate a minimal Scala application)
 - [scala/scalatest-example.g8](https://github.com/scala/scalatest-example.g8)           (A template for trying out ScalaTest)
 - [akka/akka-scala-seed.g8](https://github.com/akka/akka-scala-seed.g8)                 (A minimal seed template for an Akka with Scala build
