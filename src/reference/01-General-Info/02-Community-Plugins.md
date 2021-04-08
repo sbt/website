@@ -201,6 +201,7 @@ your plugin to the list.
   <!-- 2 stars -->
 - [sbt-ammonite-classpath](https://github.com/ThoughtWorksInc/sbt-ammonite-classpath): export classpath for [Ammonite](https://ammonite.io/) and [Almond](https://almond.sh/).
   <!-- 2 stars -->
+- [sbt-version-scheme-enforcer-plugin](https://github.com/isomarcte/sbt-version-scheme-enforcer): Derive Mima settings for your library from your declared `versionScheme`. This supports Early SemVer, Strict SemVer, and Package Versioning Policy (PVP).
 
 #### IDE integration plugins
 
