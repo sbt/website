@@ -44,12 +44,12 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 Ubuntu and other Debian-based distributions use the DEB format, but usually you don't install your software from a local DEB file. Instead they come with package managers both for the command line (e.g. `apt-get`, `aptitude`) or with a graphical user interface (e.g. Synaptic).
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
-    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
     sudo apt-get update
     sudo apt-get install sbt
 
-Package managers will check a number of configured repositories for packages to offer for installation. sbt binaries are published to Bintray, and conveniently Bintray provides an APT repository. You just have to add the repository to the places your package manager will check.
+Package managers will check a number of configured repositories for packages to offer for installation. You just have to add the repository to the places your package manager will check.
 
 Once `sbt` is installed, you'll be able to manage the package in `aptitude` or Synaptic after you updated their package cache. You should also be able to see the added repository at the bottom of the list in System Settings -> Software & Updates -> Other Software:
 
@@ -66,14 +66,18 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
 
-    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    # remove old Bintray repo file
+    sudo rm -f /etc/yum.repos.d/bintray-rpm.repo
+    curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
+    sudo mv sbt-rpm.repo /etc/yum.repos.d/
     sudo yum install sbt
 
-sbt binaries are published to Bintray, and conveniently Bintray provides an RPM repository. You just have to add the repository to the places your package manager will check.
+On Fedora (31 and above), use `sbt-rpm.repo`:
 
-On Fedora (31 and above), use `bintray-sbt-rpm.repo` 
-
-    curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
+    # remove old Bintray repo file
+    sudo rm -f /etc/yum.repos.d/bintray-rpm.repo
+    curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
+    sudo mv sbt-rpm.repo /etc/yum.repos.d/
     sudo dnf install sbt
 
 > **Note:** Please report any issues with these to the
