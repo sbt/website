@@ -109,7 +109,7 @@ to semi-automatically rewrite existing sbt 0.13 syntax to the slash syntax. Curr
 and it's not very precise (because it's a syntactic rule that only looks at the shape of the code) but it gets most of the job done.
 
 ```
-\$ scalafix --rules=https://gist.githubusercontent.com/eed3si9n/57e83f5330592d968ce49f0d5030d4d5/raw/7f576f16a90e432baa49911c9a66204c354947bb/Sbt0_13BuildSyntax.scala *.sbt project/*.scala
+\$ scalafix --rules=https://gist.githubusercontent.com/eed3si9n/57e83f5330592d968ce49f0d5030d4d5/raw/7f576f16a90e432baa49911c9a66204c354947bb/Sbt0_13BuildSyntax.scala --files=*.sbt project/*.scala
 ```
 
 ### Migrating from sbt 0.12 style
