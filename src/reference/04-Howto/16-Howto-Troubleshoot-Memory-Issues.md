@@ -23,7 +23,7 @@ To automatically increase the heap to 2GB in a project, create or edit the file
 When sbt is run in interactive mode or as a server (i.e. it was started
 with `sbt --client` or `sbtn`), it is important that each task in the build
 clean up all of its resources or the memory footprint of sbt may grow over time.
-For example, the run task starts an Akka
+For example, if the run task starts an Akka
 [ActorSystem](https://doc.akka.io/docs/akka/current/general/actor-systems.html#terminating-actorsystem),
 it is necessary to shutdown the ActorSystem before run exits or else the
 memory utilization of the sbt process will increase each time run is invoked.
