@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>sbt - The interactive build tool</title>
-    <meta name="description" content="sbt is the intereactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the intereactive shell.">
+    <meta name="description" content="sbt is the interactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the interactive shell.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/bootstrap_style.min.css">
     <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
@@ -95,7 +95,7 @@ With Zinc incremental compiler and file watch (<code>~</code>), edit-compile-tes
 
   <div class="col-md-3">
 <h3>Extensible</h3>
-Adding support for new tasks and plaforms (like Scala.js) is as easy as writing <code>build.sbt</code>. Join <a href="https://www.scala-sbt.org/1.x/docs/Community-Plugins.html">100+ community-maintained plugins</a> to share and reuse sbt tasks.
+Adding support for new tasks and platforms (like Scala.js) is as easy as writing <code>build.sbt</code>. Join <a href="https://www.scala-sbt.org/1.x/docs/Community-Plugins.html">100+ community-maintained plugins</a> to share and reuse sbt tasks.
   </div>
 </div> <!-- row -->
 
