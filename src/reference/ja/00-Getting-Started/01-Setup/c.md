@@ -39,7 +39,7 @@ JDK と sbt をするのに、[SDKMAN](https://sdkman.io/) の導入を検討し
 
 ### Ubuntu 及びその他の Debian ベースの Linux ディストリビューション
 
-[DEB][DEB] は sbt による公式パッケージだ。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
+[DEB][DEB] は sbt による公式パッケージだ。
 
 Ubuntu 及びその他の Debian ベースのディストリビューションは DEB フォーマットを用いるが、
 ローカルの DEB ファイルからソフトウェアをインストールすることは稀だ。
@@ -66,7 +66,7 @@ Ubuntu 及びその他の Debian ベースのディストリビューション�
 
 ### Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューション
 
-[RPM][RPM] は sbt による公式パッケージだ。 (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
+[RPM][RPM] は sbt による公式パッケージだ。
 
 Red Hat Enterprise Linux 及びその他の RPM ベースのディストリビューションは RPM フォーマットを用いる。
 ターミナル上から以下を実行すると `sbt` をインストールできる (superuser 権限を必要とするため、`sudo` を使っている)。
