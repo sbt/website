@@ -39,7 +39,7 @@ Download [ZIP][ZIP] or [TGZ][TGZ] package and expand it.
 
 ### Ubuntu and other Debian-based distributions
 
-[DEB][DEB] package is officially supported by sbt. (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
+[DEB][DEB] package is officially supported by sbt.
 
 Ubuntu and other Debian-based distributions use the DEB format, but usually you don't install your software from a local DEB file. Instead they come with package managers both for the command line (e.g. `apt-get`, `aptitude`) or with a graphical user interface (e.g. Synaptic).
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
@@ -62,7 +62,7 @@ Once `sbt` is installed, you'll be able to manage the package in `aptitude` or S
 
 ### Red Hat Enterprise Linux and other RPM-based distributions
 
-[RPM][RPM] package is officially supported by sbt. (sbt 1.4.8 and onwards do not have DEB packaging yet due to Bintray going away)
+[RPM][RPM] package is officially supported by sbt.
 
 Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
