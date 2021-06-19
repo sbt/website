@@ -132,7 +132,7 @@ Hello
 ### sbt シェルから ThisBuild / scalaVersion をセットする
 
 ```
-sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
+sbt:foo-build> set ThisBuild / scalaVersion := "$example_scala213$"
 [info] Defining ThisBuild / scalaVersion
 ```
 
@@ -140,7 +140,7 @@ sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
 
 ```
 sbt:foo-build> scalaVersion
-[info] 2.12.7
+[info] $example_scala213$
 ```
 
 ### セッションを build.sbt へと保存する
@@ -155,7 +155,7 @@ sbt:foo-build> session save
 `build.sbt` ファイルは以下のようになったはずだ:
 
 ```scala
-ThisBuild / scalaVersion := "2.12.7"
+ThisBuild / scalaVersion := "$example_scala213$"
 ```
 
 ### プロジェクトに名前を付ける
@@ -481,8 +481,8 @@ Hello! The weather in New York is mostly cloudy
 ### Switch scalaVersion temporarily
 
 ```
-sbt:Hello> ++2.11.12!
-[info] Forcing Scala version to 2.11.12 on all projects.
+sbt:Hello> ++2.12.14!
+[info] Forcing Scala version to 2.12.14 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/private/tmp/foo-build/)
 ```
@@ -492,10 +492,9 @@ sbt:Hello> ++2.11.12!
 ```
 sbt:Hello> scalaVersion
 [info] helloCore / scalaVersion
-[info]  2.11.12
+[info]  2.12.14
 [info] scalaVersion
-[info]  2.11.12 scalaVersion
-[info] 2.12.7
+[info]  2.12.14
 ```
 
 このセッティングは `reload` 後には無くなる。

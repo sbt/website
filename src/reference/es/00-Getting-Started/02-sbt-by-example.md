@@ -141,7 +141,7 @@ Hello
 ### Establecer `ThisBuild / scalaVersion` desde el shell de sbt
 
 ```
-sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
+sbt:foo-build> set ThisBuild / scalaVersion := "$example_scala213$"
 [info] Defining ThisBuild / scalaVersion
 ```
 
@@ -149,7 +149,7 @@ sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
 
 ```
 sbt:foo-build> scalaVersion
-[info] 2.12.7
+[info] $example_scala213$
 ```
 
 ### Guardar la sesión actual en build.sbt
@@ -164,7 +164,7 @@ sbt:foo-build> session save
 El fichero `build.sbt` ahora debería de contener:
 
 ```scala
-ThisBuild / scalaVersion := "2.12.7"
+ThisBuild / scalaVersion := "$example_scala213$"
 ```
 
 ### Dar un nombre a tu proyecto
@@ -497,8 +497,8 @@ Cambia `build.sbt` como sigue:
 ### Cambiar `scalaVersion` temporalmente
 
 ```
-sbt:Hello> ++2.11.12!
-[info] Forcing Scala version to 2.11.12 on all projects.
+sbt:Hello> ++2.12.14!
+[info] Forcing Scala version to 2.12.14 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/tmp/foo-build/)
 ```
@@ -508,10 +508,9 @@ Comprueba la entrada `scalaVersion`:
 ```
 sbt:Hello> scalaVersion
 [info] helloCore / scalaVersion
-[info]  2.11.12
+[info]  2.12.14
 [info] scalaVersion
-[info]  2.11.12 scalaVersion
-[info] 2.12.7
+[info]  2.12.14
 ```
 
 Esta entrada se esfumará tras un `reload`.
