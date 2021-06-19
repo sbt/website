@@ -135,7 +135,7 @@ Hello
 ### Set ThisBuild / scalaVersion from sbt shell
 
 ```
-sbt:foo-build> set ThisBuild / scalaVersion := "2.12.7"
+sbt:foo-build> set ThisBuild / scalaVersion := "$example_scala213$"
 [info] Defining ThisBuild / scalaVersion
 ```
 
@@ -143,7 +143,7 @@ Check the `scalaVersion` setting:
 
 ```
 sbt:foo-build> scalaVersion
-[info] 2.12.7
+[info] $example_scala213$
 ```
 
 ### Save the session to build.sbt
@@ -158,7 +158,7 @@ sbt:foo-build> session save
 `build.sbt` file should now contain:
 
 ```scala
-ThisBuild / scalaVersion := "2.12.7"
+ThisBuild / scalaVersion := "$example_scala213$"
 
 ```
 
@@ -490,8 +490,8 @@ Change `build.sbt` as follows:
 ### Switch scalaVersion temporarily
 
 ```
-sbt:Hello> ++2.11.12!
-[info] Forcing Scala version to 2.11.12 on all projects.
+sbt:Hello> ++2.12.14!
+[info] Forcing Scala version to 2.12.14 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/tmp/foo-build/)
 ```
@@ -501,10 +501,9 @@ Check the `scalaVersion` setting:
 ```
 sbt:Hello> scalaVersion
 [info] helloCore / scalaVersion
-[info]  2.11.12
+[info]  2.12.14
 [info] scalaVersion
-[info]  2.11.12 scalaVersion
-[info] 2.12.7
+[info]  2.12.14
 ```
 
 This setting will go away after `reload`.
