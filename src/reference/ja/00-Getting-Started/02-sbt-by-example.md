@@ -266,7 +266,7 @@ Gigahorse.withHttp(Gigahorse.config) { http =>
     addQueryString("query" -> "New York")
   val fLoc = http.run(rLoc, Gigahorse.asString)
   val loc = Await.result(fLoc, 10.seconds)
-  val woeid = (Json.parse(loc) \ 0 \ "woeid").get
+  val woeid = (Json.parse(loc) \\ 0 \\ "woeid").get
   val rWeather = Gigahorse.url(baseUrl + s"/\$woeid/").get
   val fWeather = http.run(rWeather, Gigahorse.asString)
   val weather = Await.result(fWeather, 10.seconds)
@@ -385,10 +385,10 @@ object Weather {
     import ExecutionContext.Implicits.global
     for {
       loc <- http.run(rLoc, parse)
-      woeid = (loc \ 0  \ "woeid").get
+      woeid = (loc \\ 0 \\ "woeid").get
       rWeather = Gigahorse.url(weatherUrl format woeid).get
       weather <- http.run(rWeather, parse)
-    } yield (weather \\ "weather_state_name")(0).as[String].toLowerCase
+    } yield (weather \\\\ "weather_state_name")(0).as[String].toLowerCase
   }
 
   private def parse = Gigahorse.asString andThen Json.parse
