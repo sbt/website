@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/bootstrap_style.min.css">
     <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="assets/stylesheet.css?2020-09-26">
+    <link rel="stylesheet" href="assets/stylesheet.css?2021-07-04">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel='shortcut icon' href="assets/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
@@ -31,18 +31,14 @@
       <nav>
         <div class="container">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2 col-xs-3">
               <div class="logo">
                 <a href="index.html">
                   <img src="assets/sbt-logo.svg" alt="sbt">
                 </a>
               </div>
             </div>
-            <div class="col-md-9">
-              <div class="docsearch">
-                <input type="text" id="doc-search-bar" placeholder="Search...">
-                <ul class="result-container" id="result-container" style="display: none;"></ul>
-              </div>
+            <div class="col-md-7 col-xs-9">
               <div class="nav" id="topbar">
                 <a href="learn.html">Learn</a>
                 <a href="download.html">Download</a>
@@ -50,6 +46,12 @@
                 <a href="community.html">Get Involved</a>
                 <a id="source-code" href="https://github.com/sbt/sbt"><img src="assets/github-logo-teal.svg" alt="Source code" class="social"></a>
                 <a id="twitter" href="https://twitter.com/scala_sbt"><img src="assets/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="docsearch">
+                <input type="text" id="doc-search-bar" placeholder="Search...">
+                <ul class="result-container" id="result-container" style="display: none;"></ul>
               </div>
             </div>
           </div>

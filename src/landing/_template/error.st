@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/bootstrap_style.min.css">
     <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="assets/stylesheet.css?v2019-10-15">
+    <link rel="stylesheet" href="assets/stylesheet.css?v2021-07-04">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel='shortcut icon' href="assets/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
