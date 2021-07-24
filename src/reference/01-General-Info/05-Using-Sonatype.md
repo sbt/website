@@ -244,6 +244,9 @@ range (e.g. Umlauts). If you are absolutely sure that you typed the
 right phrase and the error doesn't disappear, try changing the
 passphrase.
 
+> *Note:* If you are using a new OSSRH account created after February 2021,
+ please use `"s01.oss.sonatype.org"` instead of `"oss.sonatype.org"`
+
 #### Integrate with the release process
 
 > *Note:* sbt-release is a third-party plugin meaning it is not covered by Lightbend subscription.
