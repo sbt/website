@@ -13,7 +13,7 @@ There's a
 library management, which you may want to read first.
 
 This page explains the relationship between the `compile` task
-and libray dependency management.
+and library dependency management.
 
 #### Background
 
