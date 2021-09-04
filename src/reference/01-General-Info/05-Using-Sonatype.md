@@ -98,7 +98,7 @@ sub   rsa4096 2018-08-22 [E]
 Distribute the key:
 
 ```
-\$ gpg --keyserver hkp://pool.sks-keyservers.net --send-keys 1234517530FB96F147C6A146A326F592D39AAAAA
+\$ gpg --keyserver keyserver.ubuntu.com --send-keys 1234517530FB96F147C6A146A326F592D39AAAAA
 ```
 
 #### step 2: sbt-pgp
