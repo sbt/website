@@ -28,6 +28,9 @@ In the future, we might consider simpler cache server like plain HTTP server tha
 
 To abstract machine-specific paths such as your working directory and Coursier cache directory, sbt keeps a map of root paths in `ThisBuild / rootPaths`. If your build adds special paths for your source or output directory, add them to `ThisBuild / rootPaths`.
 
+If you need to guarantee that `ThisBuild / rootPaths` contains all necessary paths you can set  `ThisBuild / allowMachinePath` to `false`.
+
+
 #### remoteCacheId
 
 As of sbt 1.4.2, `remoteCacheId` uses hash of content hashes for input sources.
