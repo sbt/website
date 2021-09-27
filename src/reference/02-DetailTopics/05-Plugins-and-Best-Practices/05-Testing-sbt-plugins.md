@@ -2,7 +2,7 @@
 out: Testing-sbt-plugins.html
 ---
 
-  [sbtScriptedTests]: https://github.com/sbt/sbt/tree/develop/sbt/src/sbt-test
+  [sbtScriptedTests]: https://github.com/sbt/sbt/tree/develop/sbt-app/src/sbt-test
   [xsbt-web-plugin]: https://github.com/earldouglas/xsbt-web-plugin/tree/master/src/sbt-test
   [sbt-assembly]: https://github.com/sbt/sbt-assembly/tree/master/src/sbt-test/sbt-assembly
   [feabb2]: https://github.com/earldouglas/xsbt-web-plugin/commit/feabb2eb554940d9b28049bd0618b6a790d9e141
