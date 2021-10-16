@@ -4,7 +4,7 @@ out: GitHub-Actions-with-sbt.html
 
   [GA]: https://docs.github.com/en/free-pro-team@latest/actions
   [GA-Reference]: https://docs.github.com/en/free-pro-team@latest/actions/reference
-  [Olafurpg-Setup-Scala]: https://github.com/olafurpg/setup-scala
+  [Setup-Java]: https://github.com/actions/setup-java
   [GA-Matrix]: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategy
   [sbt-github-actions]: https://github.com/djspiewak/sbt-github-actions
 
@@ -33,7 +33,7 @@ Use this guide as an inspiration, but consult the official source for more detai
 
 ### Basic setup
 
-Setting up your build for GitHub Actions is mostly about setting up `.github/workflows/ci.yml`. Here's what a minimal CI workflow could look like using Olaf's [setup-scala][Olafurpg-Setup-Scala]:
+Setting up your build for GitHub Actions is mostly about setting up `.github/workflows/ci.yml`. Here's what a minimal CI workflow could look like using [setup-java][Setup-Java]:
 
 ```yml
 name: CI
@@ -45,29 +45,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup Scala
-      uses: olafurpg/setup-scala@v10
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: "adopt@1.8"
+        distribution: temurin
+        java-version: 8
     - name: Build and Test
-      run: sbt -v -Dfile.encoding=UTF-8 +test
+      run: sbt -v +test
 ```
 
 ### Custom JVM options
 
-The default JVM options are provided by the unofficial sbt-extras script adopted by [setup-scala][Olafurpg-Setup-Scala], and it should work for most cases. If you do decide to customize it, use `-v` option to let the script output the current options first:
+The default JVM options are provided by the official sbt runner adopted by [setup-java][Setup-Java], and it should work for most cases. If you do decide to customize it, use `-v` option to let the script output the current options first:
 
 ```
-Detected Java version: 8
 # Executing command line:
 java
--Xms512m
--Xss2m
--XX:MaxInlineLevel=18
--Dfile.encoding=UTF8
+-Dfile.encoding=UTF-8
+-Xms1024m
+-Xmx1024m
+-Xss4M
+-XX:ReservedCodeCacheSize=128m
 -jar
-/home/runner/.sbt/launchers/1.4.0-RC2/sbt-launch.jar
+/usr/share/sbt/bin/sbt-launch.jar
 ```
 
 We can define `JAVA_OPTS` and `JVM_OPTS` environment variables to override this.
@@ -86,11 +87,12 @@ jobs:
       JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup Scala
-      uses: olafurpg/setup-scala@v10
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: "adopt@1.8"
+        distribution: temurin
+        java-version: 8
     - name: Build and Test
       run: sbt -v +test
 ```
@@ -98,16 +100,16 @@ jobs:
 Again, let's check the log to see if the flags are taking effect:
 
 ```
-Using jvm options defined in \$JVM_OPTS variable
 # Executing command line:
+[process_args] java_version = '8'
 java
 -Xms2048M
 -Xmx2048M
 -Xss6M
 -XX:ReservedCodeCacheSize=256M
--Dfile.encoding=UTF8
+-Dfile.encoding=UTF-8
 -jar
-/home/runner/.sbt/launchers/1.4.0-RC2/sbt-launch.jar
+/usr/share/sbt/bin/sbt-launch.jar
 +test
 ```
 
@@ -119,10 +121,12 @@ Here are sample caching steps that you can use:
 
 ```yml
     - name: Coursier cache
-      uses: coursier/cache-action@v5
+      uses: coursier/cache-action@v6
     - name: Build and test
+      run: sbt -v +test
+    - name: Cleanup before cache
+      shell: bash
       run: |
-        sbt -v +test
         rm -rf "\$HOME/.ivy2/local" || true
         find \$HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
         find \$HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
@@ -158,20 +162,21 @@ jobs:
           - os: ubuntu-latest
             java: 8
           - os: ubuntu-latest
-            java: 11
+            java: 17
           - os: windows-latest
-            java: 11
+            java: 17
     runs-on: \${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup
-      uses: olafurpg/setup-scala@v10
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: "adopt@1.\${{ matrix.java }}"
+        distribution: temurin
+        java-version: \${{ matrix.java }}
     - name: Build and test
-      run: sbt -v -Dfile.encoding=UTF8 +test
       shell: bash
+      run: sbt -v +test
 ```
 
 Note that there's nothing magical about the `os` or `java` keys in the build matrix.
@@ -192,39 +197,38 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 1
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 2
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 3
     runs-on: \${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup
-      uses: olafurpg/setup-scala@v10
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: "adopt@1.\${{ matrix.java }}"
-    - name: Build and test
-      run: |
-        case \${{ matrix.jobtype }} in
-          1)
-            sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
-            ;;
-          2)
-            sbt -v "scripted actions/*"
-            ;;
-          3)
-            sbt -v "dependency-management/*"
-            ;;
-          *)
-            echo unknown jobtype
-            exit 1
-        esac
+        distribution: temurin
+        java-version: \${{ matrix.java }}
+    - name: Build and test (1)
+      if: \${{ matrix.jobtype == 1 }}
       shell: bash
+      run: |
+        sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
+    - name: Build and test (2)
+      if: \${{ matrix.jobtype == 2 }}
+      shell: bash
+      run: |
+        sbt -v "scripted actions/*"
+    - name: Build and test (3)
+      if: \${{ matrix.jobtype == 3 }}
+      shell: bash
+      run: |
+        sbt -v "dependency-management/*"
 ```
 
 ### Sample .github/workflows/ci.yml setting
@@ -243,16 +247,16 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 1
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 2
           - os: windows-latest
-            java: 11
+            java: 17
             jobtype: 2
           - os: ubuntu-latest
-            java: 11
+            java: 17
             jobtype: 3
     runs-on: \${{ matrix.os }}
     env:
@@ -261,35 +265,37 @@ jobs:
       JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup
-      uses: olafurpg/setup-scala@v10
+      uses: actions/checkout@v2
+    - name: Setup JDK
+      uses: actions/setup-java@v2
       with:
-        java-version: "adopt@1.\${{ matrix.java }}"
+        distribution: temurin
+        java-version: \${{ matrix.java }}
     - name: Coursier cache
-      uses: coursier/cache-action@v5
-    - name: Build and test
+      uses: coursier/cache-action@v6
+    - name: Build and test (1)
+      if: \${{ matrix.jobtype == 1 }}
+      shell: bash
       run: |
-        case \${{ matrix.jobtype }} in
-          1)
-            sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
-            ;;
-          2)
-            sbt -v "scripted actions/*"
-            ;;
-          3)
-            sbt -v "dependency-management/*"
-            ;;
-          *)
-            echo unknown jobtype
-            exit 1
-        esac
+        sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
+    - name: Build and test (2)
+      if: \${{ matrix.jobtype == 2 }}
+      shell: bash
+      run: |
+        sbt -v "scripted actions/*"
+    - name: Build and test (3)
+      if: \${{ matrix.jobtype == 3 }}
+      shell: bash
+      run: |
+        sbt -v "dependency-management/*"
+    - name: Cleanup before cache
+      shell: bash
+      run: |
         rm -rf "\$HOME/.ivy2/local" || true
         find \$HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
         find \$HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
         find \$HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
         find \$HOME/.sbt                              -name "*.lock"               -delete || true
-      shell: bash
 ```
 
 ### sbt-github-actions
