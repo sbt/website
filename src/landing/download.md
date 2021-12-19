@@ -2,8 +2,6 @@
 title: Download
 ---
 
-@@@ div { .arc_mac}
-
  Mac
 -----
 
@@ -20,10 +18,6 @@ $ brew install sbt
 ```
 
 ⚠️ Homebrew maintainers have added a dependency to JDK 13 because they want to use more brew dependencies ([brew#50649](https://github.com/Homebrew/homebrew-core/issues/50649)). This causes sbt to use JDK 13 even when `java` available on PATH is JDK 8 or 11. To prevent `sbt` from running on JDK 13, install [jEnv](https://www.jenv.be/) or switch to using [SDKMAN](https://sdkman.io/).
-
-@@@
-
-@@@ div { .arc_windows }
 
 Windows
 -------
@@ -43,10 +37,6 @@ Windows
 ```
 > scoop install sbt
 ```
-
-@@@
-
-@@@ div { .arc_linux }
 
   <div class="distro_debian">
   	<h2>Linux (deb)</h2>
@@ -69,8 +59,6 @@ sudo mv sbt-rpm.repo /etc/yum.repos.d/
 sudo yum install sbt
 ```
   </div>
-
-@@@
 
 All platforms
 -------------
