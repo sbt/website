@@ -53,7 +53,7 @@ sudo apt-get install sbt
   	<h2>Linux (rpm)</h2>
 ```
 # remove old Bintray repo file
-sudo rm -f /etc/yum.repos.d/bintray-rpm.repo
+sudo rm -f /etc/yum.repos.d/bintray-rpm.repo || true
 curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
 sudo mv sbt-rpm.repo /etc/yum.repos.d/
 sudo yum install sbt
@@ -78,6 +78,13 @@ All platforms
 
 <h4>1.x</h4>
 <ul>
+
+<li>
+  sbt 1.6.0
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.6.0/sbt-1.6.0.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.6.0/sbt-1.6.0.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.6.0/sbt-1.6.0.msi">.msi</a>)
+</li>
 
 <li>
   sbt 1.5.8
