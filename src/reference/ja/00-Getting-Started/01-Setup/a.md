@@ -6,14 +6,14 @@ out: Installing-sbt-on-Mac.html
   [ZIP]: $sbt_native_package_base$/v$app_version$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/v$app_version$/sbt-$app_version$.tgz
   [Manual-Installation]: Manual-Installation.html
-  [AdoptOpenJDK]: https://adoptopenjdk.net/
+  [AdoptiumOpenJDK]: https://adoptium.net
 
 macOS への sbt のインストール
 --------------------------
 
 ### JDK のインストール
 
-リンクをたどって [JDK 8 もしくは JDK 11][AdoptOpenJDK] をインストールする。
+リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする。
 
 もしくは [SDKMAN!](https://sdkman.io/) を使う:
 

@@ -5,14 +5,14 @@ out: Installing-sbt-on-Windows.html
   [MSI]: $sbt_native_package_base$/v$app_version$/sbt-$windows_app_version$.msi
   [ZIP]: $sbt_native_package_base$/v$app_version$/sbt-$app_version$.zip
   [TGZ]: $sbt_native_package_base$/v$app_version$/sbt-$app_version$.tgz
-  [AdoptOpenJDK]: https://adoptopenjdk.net/
+  [AdoptiumOpenJDK]: https://adoptium.net
 
 Instalar sbt en Windows
 -----------------------
 
 ### Instalar JDK
 
-Sigue el link para instalar [JDK 8 u 11][AdoptOpenJDK].
+Sigue el link para instalar [JDK 8 u 11][AdoptiumOpenJDK].
 
 ### Instalar desde un paquete universal
 
