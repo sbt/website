@@ -200,7 +200,7 @@ The following is a graphical notation of `sampleStringTask`'s evaluation:
 
 If we did not deduplicate the task dependencies, we will end up
 compiling test source code many times when `test` task is invoked
-since `compile in Test` appears many times as a task dependency of `test in Test`.
+since `Test / compile` appears many times as a task dependency of `Test / test`.
 
 #### Cleanup task
 

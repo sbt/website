@@ -117,7 +117,7 @@ lazy val projA = (project in file("a"))
 **練習問題 B**: 以下のビルド定義を考える:
 
 ```scala
-organization in ThisBuild := "com.example"
+ThisBuild / organization := "com.example"
 
 lazy val projB = (project in file("b"))
   .settings(

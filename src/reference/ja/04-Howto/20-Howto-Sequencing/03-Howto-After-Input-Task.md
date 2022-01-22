@@ -50,8 +50,8 @@ open browser!
 ```scala
 lazy val root = (project in file("."))
   .settings(
-    run in Compile := {
-      (run in Compile).evaluated
+    Compile / run := {
+      (Compile / run).evaluated
       println("open browser!")
     }
   )

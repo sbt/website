@@ -392,7 +392,7 @@ object MyPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
   override val globalSettings: Seq[Def.Setting[_]] = Seq(
-    onLoad in Global := (onLoad in Global).value andThen { state =>
+    Global / onLoad := (Global / onLoad).value andThen { state =>
       ... return new state ...
     }
   )

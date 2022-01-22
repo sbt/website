@@ -87,7 +87,7 @@ Def.settings {
     val clazz = Class.forName("sbt.nio.Keys\$WatchBuildSourceOption")
     val manifest = new scala.reflect.Manifest[AnyRef]{ def runtimeClass = clazz }
     Seq(
-      SettingKey[AnyRef]("onChangedBuildSource")(manifest, sbt.util.NoJsonWriter()) in Global := value
+      Global / SettingKey[AnyRef]("onChangedBuildSource")(manifest, sbt.util.NoJsonWriter()) := value
     )
   } catch {
     case e: Throwable =>

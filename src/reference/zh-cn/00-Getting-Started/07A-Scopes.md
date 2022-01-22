@@ -199,7 +199,7 @@ configuration 是 `*`（表示全局），task 没有显示出来（实际上也
 Keys 会调用一个重载的 in 方法设置 scope。传给 in 方法的参数可以是任何 scope 轴的实例。比如说，你可以将 `name` 局限在 `Compile` configuration 中，尽管没有真实的理由要这样做：
 
 ```scala
-name in Compile := "hello"
+Compile / name := "hello"
 ```
 
 或者你可以把 `name` 局限在 `packageBin` task 中（没有什么意义！仅仅是个例子）：
@@ -235,7 +235,7 @@ name.in(Compile).:=("hello")
 
 如果一个 key 通常的作用域有问题，你需要指定 scope。例如，`compile` task 默认是在 `Compile` 和 `Test` configuration 的 scope 中，而且在这些 scope 之外它并不存在。
 
-为了改变 key `compile` 的值，你需要写成 `compile in Compile` 或者 `compile in Test`。用普通的 `compile` 会在当前 project 的 scope 中定义一个新的 task，而不是覆盖 configuration 的 scope 标准的 `compile` task。
+为了改变 key `compile` 的值，你需要写成 `Compile / compile` 或者 `Test / compile`。用普通的 `compile` 会在当前 project 的 scope 中定义一个新的 task，而不是覆盖 configuration 的 scope 标准的 `compile` task。
 
 如果你遇到像 *“引用未定义的设置”* 这样的错误，通常是你指定 scope 失败了，或者你指定了一个错误的 scope。你使用的 key 可能定义在其他的 scope 中。sbt 会尝试在错误消息里面提示你的想法是什么；如 “你是指 compile:compile？”
 

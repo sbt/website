@@ -294,12 +294,12 @@ organization := name.value
 ```
 
 Here's a realistic example.
-This rewires `scalaSource in Compile` key to a different directory
+This rewires `Compile / scalaSource` key to a different directory
 only when `scalaBinaryVersion` is `"2.11"`.
 
 ```scala
-scalaSource in Compile := {
-  val old = (scalaSource in Compile).value
+Compile / scalaSource := {
+  val old = (Compile / scalaSource).value
   scalaBinaryVersion.value match {
     case "2.11" => baseDirectory.value / "src-2.11" / "main" / "scala"
     case _      => old

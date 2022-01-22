@@ -21,14 +21,14 @@ lazy val startupTransition: State => State = { s: State =>
 
 lazy val root = (project in file("."))
   .settings(
-    scalaVersion in ThisBuild := "2.12.6",
-    organization in ThisBuild := "com.example",
+    ThisBuild / scalaVersion := "2.12.6",
+    ThisBuild / organization := "com.example",
     name := "helloworld",
     dependencyUpdates := { println("hi") },
 
     // onLoad is scoped to Global because there's only one.
-    onLoad in Global := {
-      val old = (onLoad in Global).value
+    Global / onLoad := {
+      val old = (Global / onLoad).value
       // compose the new transition on top of the existing one
       // in case your plugins are using this hook.
       startupTransition compose old
