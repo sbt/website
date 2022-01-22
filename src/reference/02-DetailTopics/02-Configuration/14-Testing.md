@@ -24,7 +24,7 @@ methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
 The main Scala testing frameworks (
 [ScalaCheck](https://scalacheck.org/),
-[ScalaTest](https://scalatest.org/), and
+[ScalaTest](https://www.scalatest.org/), and
 [specs2](http://specs2.org/)) provide an implementation of the
 common test interface and only need to be added to the classpath to work
 with sbt. For example, ScalaCheck may be used by declaring it as a
