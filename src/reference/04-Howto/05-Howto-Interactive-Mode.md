@@ -89,7 +89,7 @@ Examples:
 
 ```scala
 // set the prompt (for this build) to include the project id.
-shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
+ThisBuild / shellPrompt := { state => Project.extract(state).currentRef.project + "> " }
 
 // set the prompt (for the current project) to include the username
 shellPrompt := { state => System.getProperty("user.name") + "> " }

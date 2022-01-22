@@ -15,7 +15,7 @@ out: Appending-Values.html
 - `+=` 会追加单个元素到列表中。
 - `++=` 会连接两个列表。
 
-例如，一个 key `sourceDirectories in Compile` 的值是 `Seq[File]`。默认情况下该 key 的值会包含 `src/main/scala`。如果你也想编译叫做 source 的目录下的源代码（因为你不得不成为非标准的），你可以添加该目录：
+例如，一个 key `Compile / sourceDirectories` 的值是 `Seq[File]`。默认情况下该 key 的值会包含 `src/main/scala`。如果你也想编译叫做 source 的目录下的源代码（因为你不得不成为非标准的），你可以添加该目录：
 
 ```scala
 Compile / sourceDirectories += new File("source")
@@ -58,7 +58,7 @@ Compile / sourceDirectories := Seq(file("sources1"), file("sources2"))
 
 ```scala
 Compile / sourceGenerators += Def.task {
-  myGenerator(baseDirectory.value, (managedClasspath in Compile).value)
+  myGenerator(baseDirectory.value, (Compile / managedClasspath).value)
 }
 ```
 

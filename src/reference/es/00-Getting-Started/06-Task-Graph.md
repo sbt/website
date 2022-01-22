@@ -428,7 +428,7 @@ La primera es evitar la duplicación. Con la programación basada en flujo una
 tarea es ejecutada una única vez incluso cuando de ella dependen múltiples
 tareas.
 Por ejemplo, incluso cuando múltiples tareas a lo largo del grafo de tareas
-dependen de `compile in Compile` la compilación será ejecutada exactamente una
+dependen de `Compile / compile` la compilación será ejecutada exactamente una
 única vez.
 
 La segunda es la paralelización. Utilizando el grafo de tareas el motor
