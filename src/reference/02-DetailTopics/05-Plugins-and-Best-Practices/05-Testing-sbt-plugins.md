@@ -85,8 +85,10 @@ This a trick I picked up from [earldouglas/xsbt-web-plugin@feabb2][feabb2], whic
 I also have `src/main/scala/hello.scala`:
 
 ```scala
-object Main extends App {
-  println("hello")
+object Main {
+  def main(args: Array[String]): Unit = {
+    println("hello")
+  }
 }
 ```
 

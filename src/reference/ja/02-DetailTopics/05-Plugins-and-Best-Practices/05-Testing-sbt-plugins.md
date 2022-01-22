@@ -86,8 +86,10 @@ sys.props.get("plugin.version") match {
 他に、`src/main/scala/hello.scala` も用意した:
 
 ```scala
-object Main extends App {
-  println("hello")
+object Main {
+  def main(args: Array[String]): Unit = {
+    println("hello")
+  }
 }
 ```
 
