@@ -14,8 +14,10 @@ out: Howto-After-Input-Task.html
 #### src/main/scala/Greeting.scala
 
 ```scala
-object Greeting extends App {
-  println("hello " + args.toList)
+object Greeting {
+  def main(args: Array[String]): Unit = {
+    println("hello " + args.toList)
+  }
 }
 ```
 

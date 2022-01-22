@@ -14,8 +14,10 @@ Now suppose we want to call `Compile / run` task and then open the browser for t
 #### src/main/scala/Greeting.scala
 
 ```scala
-object Greeting extends App {
-  println("hello " + args.toList)
+object Greeting {
+  def main(args: Array[String]): Unit = {
+    println("hello " + args.toList)
+  }
 }
 ```
 
