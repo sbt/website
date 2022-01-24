@@ -30,9 +30,10 @@ external builds.
 import sbt._
 import Keys._
 
-object Canon extends Plugin {
+object Canon extends AutoPlugin {
   // Registers the canonicalize command in every project
-  override def settings = Seq(commands += canonicalize)
+  override def trigger = allRequirements
+  override def projectSettings = Seq(commands += canonicalize)
 
   // Define the command.  This takes the existing settings (including any session settings)
   // and applies 'f' to each Setting[_]
