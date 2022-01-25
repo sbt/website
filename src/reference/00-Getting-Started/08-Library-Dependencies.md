@@ -129,6 +129,42 @@ libraryDependencies ++= Seq(
 In rare cases you might find reasons to use `:=` with `libraryDependencies`
 as well.
 
+#### Exclusions
+
+Sometimes, library dependencies can get a bit out of hand. This is especially true when the libraries you depend on have additional dependencies of their own, and they share different versions of the same dependencies.
+
+There are two ways in which you can exclude dependencies that were included unintentionally: per-project, or per-module.
+
+For project level settings, use `excludeDependencies`:
+
+```scala
+excludeDependencies ++= Seq(
+  ExclusionRule("groupID", "artifactID"),
+  ExclusionRule("groupID", "otherID")
+)
+```
+
+`excludeDependencies` is defined in `Keys` like this:
+
+```scala
+val excludeDependencies = settingKey[Seq[InclExclRule]]("Declares managed dependency exclusions.")
+```
+
+For more fine-grained control, you could also fine-tune each `ModuleID` in `libraryDependencies`. In addition to `groupID % artifactID % revision % configuration`, you simply append one or more `exclude`/`excludeAll` clauses to them, like this:
+
+```scala
+libraryDependencies ++= Seq(
+  groupID % artifactID % revision % configuration
+    exclude("someGroupID", "someArtifactID")
+    exclude("someGroupID", "someOtherID")
+    excludeAll(
+      ExclusionRule("someGroupID", "someOtherID"),
+      ExclusionRule("someGroupID", "someOtherID")
+    )
+  ...
+)
+```
+
 #### Getting the right Scala version with `%%`
 
 If you use `organization %% moduleName % version` rather than
