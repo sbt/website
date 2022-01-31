@@ -94,14 +94,13 @@ val color: Parser[String] = "blue" | "green"
 val select: Parser[String] = "fg" | "bg"
 
 // A parser that matches "fg" or "bg", a space, and then the color, returning the matched values.
-//   ~ is an alias for Tuple2.
-val setColor: Parser[String ~ Char ~ String] =
+val setColor: Parser[(String, Char, String)] =
   select ~ ' ' ~ color
 
 // Often, we don't care about the value matched by a parser, such as the space above
 //  For this, we can use ~> or <~, which keep the result of
 //  the parser on the right or left, respectively
-val setColor2: Parser[String ~ String]  =  select ~ (' ' ~> color)
+val setColor2: Parser[(String, String)]  =  select ~ (' ' ~> color)
 
 // Match one or more digits, returning a list of the matched characters
 val digits: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").+
