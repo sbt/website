@@ -38,7 +38,6 @@
               <div class="nav" id="topbar">
                 <a href="/learn.html">Learn</a>
                 <a href="/download.html">Download</a>
-                <a href="/support.html">Support</a>
                 <a href="/community.html">Get Involved</a>
                 <a id="source-code" href="https://github.com/sbt/sbt"><img src="assets/github-logo-teal.svg" alt="Source code" class="social"></a>
                 <a id="twitter" href="https://twitter.com/scala_sbt"><img src="assets/twitter-logo-teal.svg" alt="sbt on Twitter" class="social"></a>

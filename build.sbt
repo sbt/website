@@ -3,6 +3,7 @@ import Docs._
 
 lazy val tutorialSubDirName = settingKey[String]("subdir name for old tutorial")
 lazy val fileEncoding = settingKey[String]("check the file encoding")
+lazy val landingSubDirName = settingKey[String]("subdir name for landing")
 
 ThisBuild / organization := "org.scala-sbt"
 ThisBuild / scalafmtOnCompile := true
@@ -31,16 +32,17 @@ lazy val root = (project in file("."))
       "download.html",
       "index.html",
       "learn.html",
-      "support.html",
       "thank-you.html",
     ),
     // Reference
     Pamflet / sourceDirectory := baseDirectory.value / "src" / "reference",
     Pamflet / siteSubdirName := s"""$targetSbtBinaryVersion/docs""",
     tutorialSubDirName := s"""$targetSbtBinaryVersion/tutorial""",
+    landingSubDirName := "",
     // Redirects
     redirectSettings,
     SiteHelpers.addMappingsToSiteDir(Redirect / mappings, Pamflet / siteSubdirName),
+    SiteHelpers.addMappingsToSiteDir(RedirectLanding / mappings, landingSubDirName),
     redirectTutorialSettings,
     SiteHelpers.addMappingsToSiteDir(RedirectTutorial / mappings, tutorialSubDirName),
     // GitHub Pages. See project/Docs.scala
