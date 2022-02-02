@@ -4,6 +4,7 @@ import com.typesafe.sbt.git.GitRunner
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport._
 import com.typesafe.sbt.{ SbtGit, SbtSite, site => sbtsite }
+import com.typesafe.sbt.site.paradox.ParadoxSitePlugin.autoImport._
 import scala.sys.process.Process
 import SbtGit.{ git, GitKeys }
 import SiteMap.{ Entry, LastModified }
@@ -18,6 +19,7 @@ object Docs {
 
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
+  lazy val RedirectLanding = config("redirect-landing")
 
   lazy val isBetaBranch = {
     val branch = Process("git rev-parse --abbrev-ref HEAD").!!.linesIterator.toList.head
@@ -256,6 +258,16 @@ object Docs {
         s.log
       )
 
+      output ** AllPassFilter --- output pair Path.relativeTo(output)
+    },
+    RedirectLanding / mappings := {
+      val s = streams.value
+      val output = target.value / RedirectLanding.name
+      generateRedirect(
+        "community.html",
+        output / "support.html",
+        s.log
+      )
       output ** AllPassFilter --- output pair Path.relativeTo(output)
     }
   )
