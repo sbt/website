@@ -16,6 +16,7 @@ object Docs {
   lazy val targetSbtFullVersion = "1.6.2"
   lazy val sbtVersionForScalaDoc = targetSbtFullVersion
   lazy val sbtWindowsBuild = targetSbtFullVersion
+  lazy val scala3ExampleVersion = "3.1.1"
 
   lazy val Redirect = config("redirect")
   lazy val RedirectTutorial = config("redirect-tutorial")
