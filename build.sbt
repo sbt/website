@@ -23,6 +23,7 @@ lazy val root = (project in file("."))
       "sbtVersion" -> Docs.targetSbtFullVersion,
       "windowsBuild" -> Docs.sbtWindowsBuild,
       "sbtVersionForScalaDoc" -> Docs.sbtVersionForScalaDoc,
+      "scala3ExampleVersion" -> Docs.scala3ExampleVersion,
     ),
     Compile / paradoxRoots := List(
       "404.html",

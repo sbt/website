@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/bootstrap_style.min.css">
     <link rel="stylesheet" href="assets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="assets/github-theme.css">
     <link rel="stylesheet" href="assets/stylesheet.css?2021-07-04">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link rel='shortcut icon' href="assets/favicon.ico" />
@@ -77,6 +78,26 @@
 
     <div class="fw-wrapper white">
       <div class="container content">
+<div class="row">
+  <h2>Simple things easy</h2>
+  <div class="col-md-9">
+<h3>Hello, world!</h3>
+<pre><code class="language-scala prettyprint"><span class="typ">ThisBuild</span> / scalaVersion := <span class="str">"$scala3ExampleVersion$"</span>
+</code></pre>
+You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="1.x/docs/sbt-by-example.html">sbt by Example</a> page.
+
+<h3>sbt new</h3>
+Choose from community-maintained <a href="https://github.com/search?o=desc&p=1&q=g8&s=stars&type=Repositories">Giter8 templates</a> to jump start your project:
+
+<pre><code class="prettyprint">\$ sbt new scala/scala-seed.g8
+\$ sbt new playframework/play-scala-seed.g8
+\$ sbt new akka/akka-http-quickstart-scala.g8
+\$ sbt new http4s/http4s.g8
+\$ sbt new holdenk/sparkProjectTemplate.g8
+</code></pre>
+  </div>
+</div> <!-- row -->
+
 <div class="row">
   <h2 class="text-center">Why sbt?</h2>
   <div class="col-md-3">
