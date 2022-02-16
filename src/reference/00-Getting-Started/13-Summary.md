@@ -5,7 +5,7 @@ out: Summary.html
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Using-Plugins]: Using-Plugins.html
-  [getting-help]: ../docs/faq.html#getting-help
+  [getting-help]:  https://www.scala-sbt.org/community.html#how-can-I-get-help
 
 Getting Started summary
 -----------------------
