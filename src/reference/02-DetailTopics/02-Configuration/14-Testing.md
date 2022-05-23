@@ -453,14 +453,14 @@ run in serial would be run with `serial:test`.
 
 Support for JUnit5 is provided by
 [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface). To add
-JUnit Jupiter support into your project, add the sbt-jupiter-interface dependency in
+JUnit Jupiter support into your project, add the jupiter-interface dependency in
 your project's main build.sbt file.
 
 ```scala
 libraryDependencies += "net.aichler" % "jupiter-interface" % "0.9.0" % Test
 ```
 
-and the plugin to your project/plugins.sbt
+and the sbt-jupiter-interface plugin to your project/plugins.sbt
 
 ```scala
 addSbtPlugin("net.aichler" % "sbt-jupiter-interface" % "0.9.0")
