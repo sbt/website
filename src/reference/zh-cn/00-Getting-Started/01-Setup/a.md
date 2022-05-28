@@ -12,19 +12,12 @@ out: Installing-sbt-on-Mac.html
 
 ### Install JDK
 
-Follow the link to install [JDK 8 or 11][AdoptOpenJDK].
+Follow the link to install [JDK 8 or 11][AdoptOpenJDK], or use SDKMAN!
 
-Or use [SDKMAN!](https://sdkman.io/):
-
-```
-\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
-```
 
 #### 通过 [SDKMAN!](https://sdkman.io/) 安装
 
-```
-\$ sdk install sbt
-```
+@@snip [install.sh]($root$/src/includes/install.sh) {}
 
 ### 通过通用的包安装
 

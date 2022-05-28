@@ -13,19 +13,12 @@ macOS への sbt のインストール
 
 ### JDK のインストール
 
-リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする。
-
-もしくは [SDKMAN!](https://sdkman.io/) を使う:
-
-```
-\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
-```
+リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする、
+もしくは [SDKMAN!](https://sdkman.io/) を使う。
 
 #### [SDKMAN!](https://sdkman.io/)
 
-```
-\$ sdk install sbt
-```
+@@snip [install.sh]($root$/src/includes/install.sh) {}
 
 ### ユニバーサルパッケージからのインストール
 
