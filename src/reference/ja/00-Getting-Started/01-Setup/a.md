@@ -11,21 +11,18 @@ out: Installing-sbt-on-Mac.html
 macOS への sbt のインストール
 --------------------------
 
+### **cs setup** を用いた sbt のインストール
+
+[Install](https://www.scala-lang.org/download/) に従い Coursier を用いて Scala をインストールする。これは最新の安定版の `sbt` を含む。
+
 ### JDK のインストール
 
-リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする。
-
-もしくは [SDKMAN!](https://sdkman.io/) を使う:
-
-```
-\$ sdk install java \$(sdk list java | grep -o "8\.[0-9]*\.[0-9]*\.hs-adpt" | head -1)
-```
+リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする、
+もしくは [SDKMAN!](https://sdkman.io/) を使う。
 
 #### [SDKMAN!](https://sdkman.io/)
 
-```
-\$ sdk install sbt
-```
+@@snip [install.sh]($root$/src/includes/install.sh) {}
 
 ### ユニバーサルパッケージからのインストール
 
