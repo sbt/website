@@ -10,6 +10,10 @@ out: Installing-sbt-on-Windows.html
 Windows への sbt のインストール
 ----------------------------
 
+### **cs setup** を用いた sbt のインストール
+
+[Install](https://www.scala-lang.org/download/) に従い Coursier を用いて Scala をインストールする。これは最新の安定版の `sbt` を含む。
+
 ### JDK のインストール
 
 リンクをたどって [JDK 8 もしくは JDK 11][AdoptiumOpenJDK] をインストールする。

@@ -15,16 +15,20 @@ out: Installing-sbt-on-Linux.html
 Installing sbt on Linux
 -----------------------
 
+### Install sbt with **cs setup**
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier. This should install the latest stable version of `sbt`.
+
 ### Installing from SDKMAN
 
 To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
 
 @@snip [install.sh]($root$/src/includes/install.sh) {}
 
-This has two advantages.
+Using Coursier or SDKMAN has two advantages.
 
-1. It will install the official packaging by Eclipse Adoptium, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
-2. It will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
+1. They will install the official packaging by Eclipse Adoptium, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
+2. They will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
 
 ### Install JDK
 

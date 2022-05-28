@@ -2,6 +2,18 @@
 title: Download
 ---
 
+Install sbt with **cs setup**
+-----------------------------
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier.
+
+```
+cs setup
+sbt --script-version
+```
+
+This should install the latest stable version of `sbt`.
+
  Mac
 -----
 
@@ -60,8 +72,8 @@ sudo yum install sbt
 ```
   </div>
 
-All platforms
--------------
+Universal packages
+------------------
 
 @@@vars
 

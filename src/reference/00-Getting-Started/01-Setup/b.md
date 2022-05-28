@@ -10,6 +10,10 @@ out: Installing-sbt-on-Windows.html
 Installing sbt on Windows
 -------------------------
 
+### Install sbt with **cs setup**
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier. This should install the latest stable version of `sbt`.
+
 ### Install JDK
 
 Follow the link to install [JDK 8 or 11][AdoptiumOpenJDK].

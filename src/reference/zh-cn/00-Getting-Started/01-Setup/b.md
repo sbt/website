@@ -9,6 +9,10 @@ out: Installing-sbt-on-Windows.html
 在 Windows 上安装 sbt
 -------------------------
 
+### Install sbt with **cs setup**
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier. This should install the latest stable version of `sbt`.
+
 ### 通过通用的安装包安装
 
 下载 [ZIP][ZIP] 或者 [TGZ][TGZ] 包并解压。

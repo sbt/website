@@ -10,10 +10,13 @@ out: Installing-sbt-on-Mac.html
 在 macOS 上安装 sbt
 ---------------------
 
+### Install sbt with **cs setup**
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier. This should install the latest stable version of `sbt`.
+
 ### Install JDK
 
 Follow the link to install [JDK 8 or 11][AdoptOpenJDK], or use SDKMAN!
-
 
 #### 通过 [SDKMAN!](https://sdkman.io/) 安装
 
