@@ -147,8 +147,8 @@ stringTask := "Sample: " + sampleTask.value + ", int: " + intTask.value
 As with settings, tasks can be defined in a specific scope. For example,
 there are separate `compile` tasks for the `compile` and `test` scopes.
 The scope of a task is defined the same as for a setting. In the
-following example, `test:sampleTask` uses the result of
-`compile:intTask`.
+following example, `Test/sampleTask` uses the result of
+`Compile/intTask`.
 
 ```scala
 Test / sampleTask := (Compile / intTask).value * 3

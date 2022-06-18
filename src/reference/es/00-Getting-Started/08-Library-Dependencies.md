@@ -259,7 +259,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 
 Ahora, si escribes `show compile:dependencyClasspath` en el prompt interactivo
 de sbt no deberías ver listado el jar de Derby. Pero si escribes
-`show test:dependencyClasspath` sí que deberías de verlo.
+`show Test/dependencyClasspath` sí que deberías de verlo.
 
 Habitualmente, las dependencias relacionadas con tests tales como 
 [ScalaCheck](https://scalacheck.org/),

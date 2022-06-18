@@ -47,23 +47,23 @@ in the build in `/home/user/sample/`:
 
 ```
 > compile
-> compile:compile
+> Compile/compile
 > root/compile
-> root/compile:compile
-> {file:/home/user/sample/}root/compile:compile
+> root/Compile/compile
+> {file:/home/user/sample/}root/Compile/compile
 ```
 
-As another example, `run` by itself refers to `compile:run` because
+As another example, `run` by itself refers to `Compile/run` because
 there is no global `run` task and the first configuration searched,
 `compile`, defines a `run`. Therefore, to reference the `run` task for
 the `Test` configuration, the configuration axis must be specified like
-`test:run`. Some other examples that require the explicit `test:` axis:
+`Test/run`. Some other examples that require the explicit `Test/` axis:
 
 ```
-> test:consoleQuick
-> test:console
-> test:doc
-> test:package
+> Test/consoleQuick
+> Test/console
+> Test/doc
+> Test/package
 ```
 
 #### Task-specific Settings
@@ -142,8 +142,8 @@ of a key. For example,
 [info]  test:compile
 ```
 
-This shows that in addition to the requested `compile:compile` task,
-there is also a `test:compile` task.
+This shows that in addition to the requested `Compile/compile` task,
+there is also a `Test/compile` task.
 
 #### Dependencies
 
