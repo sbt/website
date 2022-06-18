@@ -451,13 +451,27 @@ run in serial would be run with `serial:test`.
 
 ### JUnit
 
-Support for JUnit is provided by
-[junit-interface](https://github.com/sbt/junit-interface). To add
-JUnit support into your project, add the junit-interface dependency in
+Support for JUnit5 is provided by
+[sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface). To add
+JUnit Jupiter support into your project, add the jupiter-interface dependency in
 your project's main build.sbt file.
 
 ```scala
-libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % Test
+libraryDependencies += "net.aichler" % "jupiter-interface" % "0.9.0" % Test
+```
+
+and the sbt-jupiter-interface plugin to your project/plugins.sbt
+
+```scala
+addSbtPlugin("net.aichler" % "sbt-jupiter-interface" % "0.9.0")
+```
+
+Support for JUnit4 is provided by
+[junit-interface](https://github.com/sbt/junit-interface).
+Add the junit-interface dependency in your project's main build.sbt file.
+
+```scala
+libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % Test
 ```
 
 ### Extensions
