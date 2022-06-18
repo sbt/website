@@ -114,7 +114,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
 Si escribes eso en `build.sbt` y luego ejecutas `update`, sbt debería descargar
-Derby en `~/.ivy2/cache/org.apache.derby/`. (Por cierto, `update` es una
+Derby en `\$COURSIER_CACHE/https/repo1.maven.org/maven2/org/apache/derby/`. (Por cierto, `update` es una
 dependencia de `compile` por lo que no hay necesidad de estar escribiendo 
 `update` todo el rato.)
 

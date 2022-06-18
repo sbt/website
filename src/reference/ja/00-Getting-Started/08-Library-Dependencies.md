@@ -103,7 +103,7 @@ val libraryDependencies = settingKey[Seq[ModuleID]]("Declares managed dependenci
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3"
 ```
 
-これを `build.sbt` に記述して `update` を実行すると、sbt は Derby を `~/.ivy2/cache/org.apache.derby/` にダウンロードするはずだ。
+これを `build.sbt` に記述して `update` を実行すると、sbt は Derby を `\$COURSIER_CACHE/https/repo1.maven.org/maven2/org/apache/derby/` にダウンロードするはずだ。
 （ちなみに、`update` は `compile` の依存性であるため、ほとんどの場合、手動で `update` と入力する必要はないだろう）
 
 もちろん `++=` を使って依存ライブラリのリストを一度に追加することもできる:
