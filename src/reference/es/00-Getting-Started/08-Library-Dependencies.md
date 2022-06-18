@@ -138,14 +138,14 @@ Si usas `groupID %% artifactID % revision` en lugar de
 del artefacto. Esto simplemente es un atajo. Podrías escribir esto sin el `%%`:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
+libraryDependencies += "org.scala-stm" % "scala-stm_2.13" % "$example_scala_stm_version$"
 ```
 
-Si asumimos que `scalaVersion` para tu construcción es `2.11.1` lo siguiente es
-idéntico a lo anterior (fíjate en el doble `%%` tras `"org.scala-tools"`):
+Si asumimos que `scalaVersion` para tu construcción es `$example_scala213$` lo siguiente es
+idéntico a lo anterior (fíjate en el doble `%%` tras `"org.scala-stm"`):
 
 ```scala
-libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
+libraryDependencies += "org.scala-stm" %% "scala-stm" % "$example_scala_stm_version$"
 ```
 
 La idea es que muchas dependencias son compiladas para múltiples versiones de

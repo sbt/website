@@ -40,7 +40,7 @@ chmod u+x script.scala
 #!/usr/bin/env sbt -Dsbt.version=1.6.1 -Dsbt.main.class=sbt.ScriptMain -error
 
 /***
-ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "$example_scala213$"
 libraryDependencies += "org.scala-sbt" %% "io" % "1.6.0"
 */
 
@@ -56,7 +56,7 @@ like reading a text file.
 #!/usr/bin/env sbt -Dsbt.version=1.6.1 -Dsbt.main.class=sbt.ScriptMain -error
 
 /***
-ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "$example_scala213$"
 libraryDependencies += "org.scala-sbt" %% "io" % "1.6.0"
 */
 

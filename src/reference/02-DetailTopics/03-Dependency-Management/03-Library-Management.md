@@ -566,7 +566,7 @@ dependency's configuration `B`. The mapping for this looks like
 your dependency definition:
 
 ```scala
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test->compile"
+libraryDependencies += "org.scalatest" %% "scalatest" % "$example_scalatest_version$" % "test->compile"
 ```
 
 This says that your project's `"test"` configuration uses `ScalaTest`'s
@@ -601,7 +601,7 @@ configuration than those. The ScalaTest dependency above can then be
 shortened to:
 
 ```scala
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.3" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "$example_scalatest_version$" % "test"
 ```
 
 ##### Forcing a revision (Not recommended)
