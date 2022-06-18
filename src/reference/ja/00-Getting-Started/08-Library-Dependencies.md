@@ -125,13 +125,13 @@ sbt はプロジェクトの Scala のバイナリバージョンをアーティ
 これはただの略記法なので `%%` 無しで書くこともできる:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
+libraryDependencies += "org.scala-stm" % "scala-stm_2.13" % "$example_scala_stm_version$"
 ```
 
-君のビルドの Scala バージョンが `2.11.1` だとすると、以下の設定は上記と等価だ（"org.scala-tools" の後ろの二つ連なった %% に注意）:
+君のビルドの Scala バージョンが `$example_scala213$` だとすると、以下の設定は上記と等価だ（"org.scala-stm" の後ろの二つ連なった %% に注意）:
 
 ```scala
-libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
+libraryDependencies += "org.scala-stm" %% "scala-stm" % "$example_scala_stm_version$"
 ```
 
 多くの依存ライブラリは複数の Scala バイナリバージョンに対してコンパイルされており、

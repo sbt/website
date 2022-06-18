@@ -262,7 +262,7 @@ object HelloBuild extends Build {
   val shared = Defaults.defaultSettings ++ xyz.XyzPlugin.projectSettings ++ Seq(
     organization := "com.example",
     version      := "0.1.0",
-    scalaVersion := "2.12.1")
+    scalaVersion := "$example_scala_version$")
 
   lazy val hello =
     Project("Hello", file("."),
@@ -292,7 +292,7 @@ You can migrate to `build.sbt`:
 val shared = Seq(
   organization := "com.example",
   version      := "0.1.0",
-  scalaVersion := "2.12.1"
+  scalaVersion := "$example_scala_version$"
 )
 
 lazy val helloRoot = (project in file("."))

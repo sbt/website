@@ -137,14 +137,14 @@ the `organization`), sbt will add your project's binary Scala version to the art
 name. This is just a shortcut. You could write this without the `%%`:
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
+libraryDependencies += "org.scala-stm" % "scala-stm_2.13" % "$example_scala_stm_version$"
 ```
 
-Assuming the `scalaVersion` for your build is `2.11.1`, the following is
-identical (note the double `%%` after `"org.scala-tools"`):
+Assuming the `scalaVersion` for your build is `$example_scala213$`, the following is
+identical (note the double `%%` after `"org.scala-stm"`):
 
 ```scala
-libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
+libraryDependencies += "org.scala-stm" %% "scala-stm" % "$example_scala_stm_version$"
 ```
 
 The idea is that many dependencies are compiled for multiple Scala

@@ -103,13 +103,13 @@ libraryDependencies ++= Seq(
 这只是一种快捷方法。你可以这样写不用 `%%`：
 
 ```scala
-libraryDependencies += "org.scala-tools" % "scala-stm_2.11" % "0.3"
+libraryDependencies += "org.scala-stm" % "scala-stm_2.13" % "$example_scala_stm_version$"
 ```
 
-假设这个构建的 `scalaVersion` 是 `2.11.1`，下面这种方式是等效的（注意 `"org.scala-tools"` 后面是 `%%`）：
+假设这个构建的 `scalaVersion` 是 `$example_scala213$`，下面这种方式是等效的（注意 `"org.scala-stm"` 后面是 `%%`）：
 
 ```scala
-libraryDependencies += "org.scala-tools" %% "scala-stm" % "0.3"
+libraryDependencies += "org.scala-stm" %% "scala-stm" % "$example_scala_stm_version$"
 ```
 
 这个想法是很多依赖都会被编译给多个 Scala 版本，而你想确保和项目匹配的jar是二进制兼容的。
