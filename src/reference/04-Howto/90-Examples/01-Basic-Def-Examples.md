@@ -78,7 +78,7 @@ lazy val root = (project in file("."))
     Comile / packageBin / mainClass := Some("myproject.MyMain"),
 
     // set the main class for the main 'run' task
-    // change Compile to Test to set it for 'test:run'
+    // change Compile to Test to set it for 'Test/run'
     Compile / run / mainClass := Some("myproject.MyMain"),
 
     // add <base>/input to the files that '~' triggers on
@@ -144,7 +144,7 @@ lazy val root = (project in file("."))
     clean / aggregate := false,
 
     // only show warnings and errors on the screen for compilations.
-    //  this applies to both test:compile and compile and is Info by default
+    //  this applies to both Test/compile and compile and is Info by default
     compile / logLevel := Level.Warn,
 
     // only show warnings and errors on the screen for all tasks (the default is Info)

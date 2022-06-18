@@ -185,7 +185,7 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 ```
 
-现在，如果你在 sbt 的命令提示行里输入 `show compile:dependencyClasspath`，你不应该看到 derby jar。但是如果你输入 `show test:dependencyClasspath`，
+现在，如果你在 sbt 的命令提示行里输入 `show Compile/dependencyClasspath`，你不应该看到 derby jar。但是如果你输入 `show Test/dependencyClasspath`，
 你应该在列表中看到 derby jar。
 
 通常，测试相关的依赖，如 [ScalaCheck](https://scalacheck.org/)，

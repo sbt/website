@@ -124,7 +124,7 @@ import extracted._
 // get name of current project
 val nameOpt: Option[String] = (currentRef / name).get(structure.data)
 
-// get the package options for the `test:packageSrc` task or Nil if none are defined
+// get the package options for the `Test/packageSrc` task or Nil if none are defined
 val pkgOpts: Seq[PackageOption] = (currentRef / Test / packageSrc / packageOptions).get(structure.data).getOrElse(Nil)
 ```
 

@@ -93,7 +93,7 @@ This can be then run at the console:
 
 ```
 \$ sbt
-> macroSub/test:run
+> macroSub/Test/run
 scala.collection.immutable.List.apply[Int](1, 2, 3).reverse
 ```
 

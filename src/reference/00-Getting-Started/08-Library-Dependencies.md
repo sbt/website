@@ -253,9 +253,9 @@ You may also use the type-safe version of `Test` configuration as follows:
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 ```
 
-Now, if you type `show compile:dependencyClasspath` at the sbt interactive
+Now, if you type `show Compile/dependencyClasspath` at the sbt interactive
 prompt, you should not see the derby jar. But if you type
-`show test:dependencyClasspath`, you should see the derby jar in the list.
+`show Test/dependencyClasspath`, you should see the derby jar in the list.
 
 Typically, test-related dependencies such as
 [ScalaCheck](https://scalacheck.org/),

@@ -76,7 +76,7 @@ The `consoleQuick` action retrieves dependencies and puts them on the
 classpath of the Scala REPL. The project's sources are not compiled, but
 sources of any source dependencies are compiled. To enter the REPL with
 test dependencies on the classpath but without compiling test sources,
-run `test:consoleQuick`. This will force compilation of main sources.
+run `Test/consoleQuick`. This will force compilation of main sources.
 
 <a name="console"></a>
 
@@ -85,7 +85,7 @@ run `test:consoleQuick`. This will force compilation of main sources.
 The `console` action retrieves dependencies and compiles sources and
 puts them on the classpath of the Scala REPL. To enter the REPL with
 test dependencies and compiled test sources on the classpath, run
-`test:console`.
+`Test/console`.
 
 <a name="consoleProject"></a>
 

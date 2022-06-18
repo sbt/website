@@ -190,7 +190,7 @@ more information than was shown by default. A `logLevel` based solution
 typically requires changing the logging level and running a task again.
 However, there are two cases where this is unnecessary. First, warnings
 from a previous compilation may be displayed using `printWarnings` for
-the main sources or `test:printWarnings` for test sources. Second,
+the main sources or `Test/printWarnings` for test sources. Second,
 output from the previous execution is available either for a single task
 or for in its entirety. See the section on
 [printWarnings](#printwarnings) and the sections on

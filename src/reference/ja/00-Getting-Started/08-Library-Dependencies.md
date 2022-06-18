@@ -215,8 +215,8 @@ libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % "test"
 libraryDependencies += "org.apache.derby" % "derby" % "10.4.1.3" % Test
 ```
 
-この状態で sbt のインタラクティブモードで `show compile:dependency-classpath` と入力しても Derby は出てこないはずだ。
-だが、`show test:dependency-classpath` と入力すると、Derby の jar がリストに含まれていることを確認できるだろう。
+この状態で sbt のインタラクティブモードで `show Compile/dependencyClasspath` と入力しても Derby は出てこないはずだ。
+だが、`show Test/dependencyClasspath` と入力すると、Derby の jar がリストに含まれていることを確認できるだろう。
 
 普通は、[ScalaCheck][ScalaCheck]、[Specs2][Specs2]、[ScalaTest][ScalaTest] などのテスト関連の依存ライブラリは `% "test"` と共に定義される。
 

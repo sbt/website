@@ -79,7 +79,7 @@ one of the following conditions are run:
 ##### Tab completion
 
 Tab completion is provided for test names based on the results of the
-last `test:compile`. This means that a new sources aren't available for
+last `Test/compile`. This means that a new sources aren't available for
 tab completion until they are compiled and deleted sources won't be
 removed from tab completion until a recompile. A new test source can
 still be manually written out and run using `testOnly`.

@@ -60,7 +60,7 @@ given setting or task, including the dependencies of a task/setting as
 well as the tasks/settings that depend on the it. For example,
 
 ```
-> inspect test:compile
+> inspect Test/compile
 ...
 [info] Dependencies:
 [info]  Test / manipulateBytecode
@@ -248,7 +248,7 @@ value.
 For the test classpath,
 
 ```
-> show test:dependencyClasspath
+> show Test/dependencyClasspath
 ...
 [info] List(Attributed(/Users/foo/code/sbt.github.com/target/scala-2.12/classes), Attributed(~/.sbt/boot/scala-2.12.6/lib/scala-library.jar), Attributed(/Users/foo/.ivy2/cache/junit/junit/jars/junit-4.8.2.jar))
 ...
@@ -279,7 +279,7 @@ The `definedTestNames` task provides as its result the list of test
 names detected in this way. For example,
 
 ```
-> show test:definedTestNames
+> show Test/definedTestNames
 ... < runs test:compile if out of date > ...
 [info] List(org.example.TestA, org.example.TestB)
 ```

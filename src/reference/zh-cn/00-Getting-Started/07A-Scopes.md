@@ -112,7 +112,7 @@ Settings 可以影响一个 task 如何工作。例如，task `packageSrc` 就�
 ### 使用 scoped key 标识的例子
 
 - `fullClasspath` 仅仅指定了一个 key，所以会使用默认的 scope：当前的 project，key 所依赖的 configuration 和全局 task 的 scope。
-- `test:fullClasspath` 指定为 configuration，所以这个 `fullClasspath` 就在 `test` configuration scope 下，其他两个 scope 轴均为默认值。
+- `Test/fullClasspath` 指定为 configuration，所以这个 `fullClasspath` 就在 `test` configuration scope 下，其他两个 scope 轴均为默认值。
 - `*:fullClasspath` 将 configuration 指定为 `Global`，而不是默认的 configuration。
 - `doc::fullClasspath` 将 key `fullClasspath` 局限在 `doc` task 下，project 轴和 configuration 轴还是默认的。
 - `{file:/home/hp/checkout/hello/}default-aea33a/test:fullClasspath` 指定了一个 project，在 `{file:/home/hp/checkout/hello/}default-aea33a` 中，`{file:/home/hp/checkout/hello/}` 标识 project，
@@ -123,11 +123,11 @@ Settings 可以影响一个 task 如何工作。例如，task `packageSrc` 就�
 
 ### 审查 scope
 
-在 sbt 的交互模式下，你可以使用 inspect 命令来理解 key 和它对应的 scope。尝试 `inspect test:fullClasspath`，
+在 sbt 的交互模式下，你可以使用 inspect 命令来理解 key 和它对应的 scope。尝试 `inspect Test/fullClasspath`，
 
 ```
 \$ sbt
-> inspect test:fullClasspath
+> inspect Test/fullClasspath
 [info] Task: scala.collection.Seq[sbt.Attributed[java.io.File]]
 [info] Description:
 [info]  The exported classpath, consisting of build products and unmanaged and managed, internal and external dependencies.
@@ -169,14 +169,14 @@ Settings 可以影响一个 task 如何工作。例如，task `packageSrc` 就�
 
 你也可以看到一些代理；如果没有定义，sbt 会通过以下途径查找：
 
-- 其他两个 configuration（`runtime:fullClasspath` 和 `compile:fullClasspath`）。在这些 scoped key中，project 没有指定的话就意味着是 “当前 project” 而且 task 没有指定的话就意味着是 `Global`。
+- 其他两个 configuration（`Runtime/fullClasspath` 和 `Compile/fullClasspath`）。在这些 scoped key中，project 没有指定的话就意味着是 “当前 project” 而且 task 没有指定的话就意味着是 `Global`。
 - 当 project 没有指定 “当前 project” 并且 task 没有指定为 `Global` 时，configuration 会被设置成 `Global`（`*:fullClasspath`）。
 - 当全局构建中没有指定特定的 project 时，project 会被设置成 `{.}` 或者 `ThisBuild`。
 - 将 project 轴设置成 `Global`（`*/test:fullClasspath`）（记住，不指定 project 表示用当前的 current，所以这里查找 `Global` 是一个新的方式；例如：`*` 和 “显示没有 project” 对于 project 轴是不一样的；例如：`*/test:fullClasspath` 和 `test:fullClasspath` 不是一回事）。
 - project 轴和 configuration 轴都会被设置成 `Global`（`*/*:fullClasspath`）（还记得我们已经说过不指定 task 表示用 `Global`，所以 `*/*:fullClasspath` 表示三个轴都用 `Global`）。
 
 尝试用 `inspect fullClasspath`（和上面例子中的 inspect `test:fullClasspath` 相对）来查看它们的不同。因为 configuration 被省略了，sbt 自动检测并设置为 `compile`。
-因此 `inspect compile:fullClasspath` 得到的结果看起来应该和 `inspect fullClasspath` 得到的结果一样。
+因此 `inspect Compile/fullClasspath` 得到的结果看起来应该和 `inspect fullClasspath` 得到的结果一样。
 
 尝试用 `inspect *:fullClasspath` 作为对比。默认情况下，`fullClasspath` 没有定义在 `Global` configuration 中。
 
@@ -237,7 +237,7 @@ name.in(Compile).:=("hello")
 
 为了改变 key `compile` 的值，你需要写成 `Compile / compile` 或者 `Test / compile`。用普通的 `compile` 会在当前 project 的 scope 中定义一个新的 task，而不是覆盖 configuration 的 scope 标准的 `compile` task。
 
-如果你遇到像 *“引用未定义的设置”* 这样的错误，通常是你指定 scope 失败了，或者你指定了一个错误的 scope。你使用的 key 可能定义在其他的 scope 中。sbt 会尝试在错误消息里面提示你的想法是什么；如 “你是指 compile:compile？”
+如果你遇到像 *“引用未定义的设置”* 这样的错误，通常是你指定 scope 失败了，或者你指定了一个错误的 scope。你使用的 key 可能定义在其他的 scope 中。sbt 会尝试在错误消息里面提示你的想法是什么；如 “你是指 Compile/compile？”
 
 一种方式是你可以这样认为，name 只是 key 的 *一部分*。实际上，所有的 key 都有 name 和 scope 组成（scope 有三个轴）。换句话说，`packageOptions in (Compile, packageBin)` 是表示 key name 的完整的表达式。
 其简写 `packageOptions` 也是一个 key name，但是是不同的（对于没有 in 方法的 key，会隐式的假设一个 scope：当前的 project，global
