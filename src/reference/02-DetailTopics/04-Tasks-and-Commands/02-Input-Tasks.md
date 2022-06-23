@@ -300,7 +300,7 @@ different input applied. For example:
 ```scala
 lazy val runFixed2 = taskKey[Unit]("A task that hard codes the values to `run`")
 
-fork in run := true
+run / fork := true
 
 runFixed2 := {
    val x = (Compile / run).toTask(" blue green").value
