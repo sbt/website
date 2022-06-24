@@ -324,9 +324,9 @@ object ObfuscatePlugin extends AutoPlugin {
     // default values for the tasks and settings
     lazy val baseObfuscateSettings: Seq[Def.Setting[_]] = Seq(
       obfuscate := {
-        Obfuscate(sources.value, (obfuscateLiterals in obfuscate).value)
+        Obfuscate(sources.value, (obfuscate / obfuscateLiterals).value)
       },
-      obfuscateLiterals in obfuscate := false
+      obfuscate / obfuscateLiterals := false
     )
   }
 
@@ -355,7 +355,7 @@ object Obfuscate {
 A build definition that uses the plugin might look like. `obfuscate.sbt`:
 
 ```scala
-obfuscateLiterals in obfuscate := true
+obfuscate / obfuscateLiterals := true
 ```
 
 #### Global plugins example

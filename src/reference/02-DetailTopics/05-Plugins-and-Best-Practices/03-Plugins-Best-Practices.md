@@ -179,7 +179,7 @@ object WhateverPlugin extends sbt.AutoPlugin {
   }
   import autoImport._
   override lazy val projectSettings = Seq(
-    specificKey in Whatever := "another opinion" // DON'T DO THIS
+    Whatever / specificKey := "another opinion" // DON'T DO THIS
   )
 }
 ```
@@ -266,8 +266,8 @@ object ObfuscatePlugin extends sbt.AutoPlugin {
   }
   import autoImport._
   lazy val baseObfuscateSettings: Seq[Def.Setting[_]] = Seq(
-    obfuscate := Obfuscate((sources in obfuscate).value),
-    sources in obfuscate := sources.value
+    obfuscate := Obfuscate((obfuscate / sources).value),
+    obfuscate / sources := sources.value
   )
   override lazy val projectSettings = inConfig(Compile)(baseObfuscateSettings)
 }
@@ -365,12 +365,12 @@ task itself. See the `baseObfuscateSettings`:
 
 ```scala
   lazy val baseObfuscateSettings: Seq[Def.Setting[_]] = Seq(
-    obfuscate := Obfuscate((sources in obfuscate).value),
-    sources in obfuscate := sources.value
+    obfuscate := Obfuscate((obfuscate / sources).value),
+    obfuscate / sources := sources.value
   )
 ```
 
-In the above example, `sources in obfuscate` is scoped under the main
+In the above example, `obfuscate / sources` is scoped under the main
 task, `obfuscate`.
 
 #### Rewiring existing keys in `globalSettings`

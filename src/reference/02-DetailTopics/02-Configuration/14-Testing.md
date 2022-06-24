@@ -443,11 +443,11 @@ Then, we can disable parallel execution in just that configuration
 using:
 
 ```scala
-parallelExecution in Serial := false
+Serial / parallelExecution := false
 ```
 
 The tests to run in parallel would be run with `test` and the ones to
-run in serial would be run with `serial:test`.
+run in serial would be run with `Serial/test`.
 
 ### JUnit
 

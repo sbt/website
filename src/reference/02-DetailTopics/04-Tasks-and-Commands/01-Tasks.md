@@ -487,9 +487,9 @@ myTask := {
 You can scope logging settings by the specific task's scope:
 
 ```scala
-logLevel in myTask := Level.Debug
+myTask / logLevel := Level.Debug
 
-traceLevel in myTask := 5
+myTask / traceLevel := 5
 ```
 
 To obtain the last logging output from a task, use the `last` command:

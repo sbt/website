@@ -102,46 +102,46 @@ page.
 
 ### Define the initial commands evaluated when entering the Scala REPL
 
-Set `initialCommands in console` to set the initial statements to
+Set `console / initialCommands` to set the initial statements to
 evaluate when `console` and `consoleQuick` are run. To configure
-`consoleQuick` separately, use `initialCommands in consoleQuick`. For
+`consoleQuick` separately, use `consoleQuick / initialCommands`. For
 example,
 
 ```scala
-initialCommands in console := """println("Hello from console")"""
+console / initialCommands := """println("Hello from console")"""
 
-initialCommands in consoleQuick := """println("Hello from consoleQuick")"""
+consoleQuick / initialCommands := """println("Hello from consoleQuick")"""
 ```
 
 The `consoleProject` command is configured separately by
-`initialCommands in consoleProject`. It does not use the value from
-`initialCommands in console` by default. For example,
+`consoleProject / initialCommands`. It does not use the value from
+`console / initialCommands` by default. For example,
 
 ```scala
-initialCommands in consoleProject := """println("Hello from consoleProject")"""
+consoleProject / initialCommands := """println("Hello from consoleProject")"""
 ```
 
 <a name="cleanup"></a>
 
 ### Define the commands evaluated when exiting the Scala REPL
 
-Set `cleanupCommands in console` to set the statements to evaluate after
+Set `console / cleanupCommands` to set the statements to evaluate after
 exiting the Scala REPL started by `console` and `consoleQuick`. To
 configure `consoleQuick` separately, use
-`cleanupCommands in consoleQuick`. For example,
+`consoleQuick / cleanupCommands`. For example,
 
 ```scala
-cleanupCommands in console := """println("Bye from console")"""
+console / cleanupCommands := """println("Bye from console")"""
 
-cleanupCommands in consoleQuick := """println("Bye from consoleQuick")"""
+consoleQuick / cleanupCommands := """println("Bye from consoleQuick")"""
 ```
 
 The `consoleProject` command is configured separately by
-`cleanupCommands in consoleProject`. It does not use the value from
-`cleanupCommands in console` by default. For example,
+`consoleProject / cleanupCommands`. It does not use the value from
+`console / cleanupCommands` by default. For example,
 
 ```scala
-cleanupCommands in consoleProject := """println("Bye from consoleProject")"""
+consoleProject / cleanupCommands := """println("Bye from consoleProject")"""
 ```
 
 <a name="embed"></a>
