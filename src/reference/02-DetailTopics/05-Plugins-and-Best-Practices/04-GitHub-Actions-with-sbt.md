@@ -47,7 +47,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: temurin
         java-version: 8
@@ -89,7 +89,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: temurin
         java-version: 8
@@ -117,24 +117,24 @@ java
 
 You can speed up your `sbt` builds on GitHub Actions by caching various artifacts in-between the jobs.
 
-Here are sample caching steps that you can use:
+The action `setup-java` has built-in support for caching artifacts downloaded by
+sbt when loading the build or when building the project.
+
+To use it, set the input parameter `cache` of the action `setup-java` to the value `"sbt"`:
 
 ```yml
-    - name: Coursier cache
-      uses: coursier/cache-action@v6
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 8
+        cache: sbt
     - name: Build and test
       run: sbt -v +test
-    - name: Cleanup before cache
-      shell: bash
-      run: |
-        rm -rf "\$HOME/.ivy2/local" || true
-        find \$HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
-        find \$HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
-        find \$HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
-        find \$HOME/.sbt                              -name "*.lock"               -delete || true
 ```
 
-With the above changes combined GitHub Actions will tar up the cached directories and uploads them to a cloud storage provider.
+Note the added line `cache: sbt`.
+
 Overall, the use of caching should shave off a few minutes of build time per job.
 
 ### Build matrix
@@ -170,7 +170,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: temurin
         java-version: \${{ matrix.java }}
@@ -210,7 +210,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: temurin
         java-version: \${{ matrix.java }}
@@ -267,12 +267,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Setup JDK
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         distribution: temurin
         java-version: \${{ matrix.java }}
-    - name: Coursier cache
-      uses: coursier/cache-action@v6
+        cache: sbt
     - name: Build and test (1)
       if: \${{ matrix.jobtype == 1 }}
       shell: bash
@@ -288,14 +287,6 @@ jobs:
       shell: bash
       run: |
         sbt -v "dependency-management/*"
-    - name: Cleanup before cache
-      shell: bash
-      run: |
-        rm -rf "\$HOME/.ivy2/local" || true
-        find \$HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
-        find \$HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
-        find \$HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
-        find \$HOME/.sbt                              -name "*.lock"               -delete || true
 ```
 
 ### sbt-github-actions
