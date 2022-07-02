@@ -2,11 +2,11 @@
 out: Using-Sonatype.html
 ---
 
-  [sonatype-ossrhguide]: http://central.sonatype.org/pages/ossrh-guide.html
+  [sonatype-ossrhguide]: https://central.sonatype.org/publish/publish-guide/
   [sonatype-signup]: https://issues.sonatype.org/secure/Signup!default.jspa
   [sonatype-new-project]: https://issues.sonatype.org/secure/CreateIssue.jspa?issuetype=21&pid=10134
-  [sonatype-requirements]: http://central.sonatype.org/pages/requirements.html
-  [sonatype-coordinates]: http://central.sonatype.org/pages/choosing-your-coordinates.html
+  [sonatype-requirements]: https://central.sonatype.org/publish/requirements/
+  [sonatype-coordinates]: https://central.sonatype.org/publish/requirements/coordinates/
   [sonatype-nexus]: https://oss.sonatype.org/#welcome
   [sonatype-pgp]: https://central.sonatype.org/pages/working-with-pgp-signatures.html
   [sbt-pgp]: https://github.com/sbt/sbt-pgp#sbt-pgp
@@ -227,7 +227,7 @@ Jira account)
 `sonatypeRelease`
 
 After publishing you have to follow the
-[release workflow of Nexus](http://central.sonatype.org/pages/releasing-the-deployment.html).
+[release workflow of Nexus](https://central.sonatype.org/publish/release/).
 
 > *Note:* the sbt-sonatype plugin can also be used to publish to other non-sonatype 
 repositories

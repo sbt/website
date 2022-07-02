@@ -52,7 +52,7 @@ Project 轴可以设置成构建全局的，因此一个 setting 可以应用到
 #### 通过 Configuration 轴划分 Scope
 
 一个 *configuration* 定义一种特定的构建，可能包含它自己的 classpath，源文件和生成的包等。Configuration 的概念来自于它用来管理 [库依赖][Library-Dependencies] 的 Ivy 
-和 [MavenScopes](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope)。
+和 [MavenScopes](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Dependency_Scope)。
 
 在 sbt 中你可以看到这些 configurations：
 

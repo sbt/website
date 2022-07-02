@@ -351,7 +351,7 @@ Content-Type: application/vscode-jsonrpc; charset=utf-8
 This will respond back with the result of the action.
 
   [lsp]: https://github.com/Microsoft/language-server-protocol/blob/master/protocol.md
-  [jsonrpc]: http://www.jsonrpc.org/specification
+  [jsonrpc]: https://www.jsonrpc.org/specification
   [vscode-sbt-scala]: https://marketplace.visualstudio.com/items?itemName=lightbend.vscode-sbt-scala
   [lsp_initialize]: https://github.com/Microsoft/language-server-protocol/blob/master/protocol.md#initialize
   [lsp_initialized]: https://github.com/Microsoft/language-server-protocol/blob/master/protocol.md#initialized

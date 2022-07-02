@@ -5,7 +5,7 @@ out: Credits.html
 Credits
 -------
 
-sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](http://www.scala-lang.org/old/node/392.html). Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
+sbt was originally created by Mark Harrah ([@harrah][@harrah]) in [2008](https://www.scala-lang.org/old/node/392.html). Most of the fundamental aspects of sbt, such as the Scala incremental compiler, integration with Maven and Ivy dependencies, and parallel task processing were conceived and initially implemented by Mark.
 
 By 2010, when sbt 0.7 came out, many open-source Scala projects were using sbt as their build tool.
 
@@ -374,9 +374,9 @@ The sbt ecosystem would not be the same without so many awesome plugins. Here ar
 - [Scala.js](https://www.scala-js.org/) by Sébastien Doeraene, Tobias Schlatter, et al
 - [sbt-assembly](https://github.com/sbt/sbt-assembly) by Eugene Yokota (eed3si9n)
 - [coursier](https://github.com/coursier/coursier) by Alexandre Archambault
-- [sbt Native Packager](http://sbt-native-packager.readthedocs.io/en/stable/) by Nepomuk Seiler (muuki88) and Josh Suereth
+- [sbt Native Packager](https://sbt-native-packager.readthedocs.io/en/stable/) by Nepomuk Seiler (muuki88) and Josh Suereth
 - [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph) by Johannes Rudolph
-- [WartRemover](http://www.wartremover.org/) by Claire Neveu and Brian McKenna
+- [WartRemover](https://www.wartremover.org/) by Claire Neveu and Brian McKenna
 - [sbt-android](https://github.com/scala-android/sbt-android) by Perry (pfn)
 - [sbt-revolver](https://github.com/spray/sbt-revolver) by Johannes Rudolph and Mathias (sirthias)
 - [sbt-docker](https://github.com/marcuslonnberg/sbt-docker) by Marcus Lönnberg
