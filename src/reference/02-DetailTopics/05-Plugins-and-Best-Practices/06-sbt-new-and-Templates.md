@@ -2,8 +2,8 @@
 out: sbt-new-and-Templates.html
 ---
 
-  [giter8]: http://www.foundweekends.org/giter8/
-  [foundweekends]: http://www.foundweekends.org/
+  [giter8]: https://www.foundweekends.org/giter8/
+  [foundweekends]: https://www.foundweekends.org/
   [CC0]: https://creativecommons.org/publicdomain/zero/1.0/
 
 sbt new and Templates
@@ -54,7 +54,7 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 - [scala-native/scala-native.g8](https://github.com/scala-native/scala-native.g8)       (Scala Native)
 - [scala-native/sbt-crossproject.g8](https://github.com/scala-native/sbt-crossproject.g8) (sbt-crosspoject)
 - [http4s/http4s.g8](https://github.com/http4s/http4s.g8)                               (http4s services)
-- [unfiltered/unfiltered.g8](https://github.com/unfiltered/unfiltered.g8)               ([Unfiltered](http://unfiltered.ws/) application)
+- [unfiltered/unfiltered.g8](https://github.com/unfiltered/unfiltered.g8)               ([Unfiltered](https://unfiltered.ws/) application)
 - [scalatra/scalatra-sbt.g8](https://github.com/scalatra/scalatra-sbt.g8)               (Basic Scalatra template using SBT 0.13.x.)
 
 For more, see [Giter8 templates](https://github.com/foundweekends/giter8/wiki/giter8-templates) on the Giter8 wiki. sbt provides out-of-the-box support for Giter8 templates by shipping with a template resolver for Giter8.
@@ -69,7 +69,7 @@ You can append Giter8 parameters to the end of the command, so for example to sp
 
 #### How to create a Giter8 template
 
-See [Making your own templates](http://www.foundweekends.org/giter8/template.html) for the details on how to create a new Giter8 template.
+See [Making your own templates](https://www.foundweekends.org/giter8/template.html) for the details on how to create a new Giter8 template.
 
 ```
 \$ sbt new foundweekends/giter8.g8
@@ -93,7 +93,7 @@ License
 Written in <YEAR> by <AUTHOR NAME> <AUTHOR E-MAIL ADDRESS>
 [other author/contributor lines as appropriate]
 To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
-You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>.
 ```
 
 ### How to extend sbt new

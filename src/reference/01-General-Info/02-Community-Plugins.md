@@ -99,7 +99,7 @@ your plugin to the list.
 #### Release plugins
 
 - [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
-  ([docs](http://sbt-native-packager.readthedocs.io/en/stable/)): build
+  ([docs](https://sbt-native-packager.readthedocs.io/en/stable/)): build
   native packages (RPM, .deb etc) for your projects. <!-- 303 stars -->
 - [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
   for your projects. <!-- 302 stars -->
@@ -158,7 +158,7 @@ your plugin to the list.
 - [sbt-revolver](https://github.com/spray/sbt-revolver): auto-restart forked
   JVMs on update. <!-- 563 stars -->
 - [sbt-conscript](https://github.com/foundweekends/conscript)
-  ([docs](http://www.foundweekends.org/conscript/)): distribute apps using
+  ([docs](https://www.foundweekends.org/conscript/)): distribute apps using
   GitHub and Maven Central. <!-- 467 stars -->
 - [sbt-git](https://github.com/sbt/sbt-git): run git commands from sbt.
   <!-- 233 stars -->

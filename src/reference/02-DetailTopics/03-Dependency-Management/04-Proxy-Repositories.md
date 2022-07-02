@@ -29,7 +29,7 @@ There are many good proxy repository solutions out there:
 -   [JFrog Artifactory Open Source](https://jfrog.com/open-source/)
 -   [JFrog Artifactory Pro](https://jfrog.com/artifactory/)
 -   [Sonatype Nexus Repository Manager](http://www.sonatype.org/nexus/)
--   [Apache Archiva](http://archiva.apache.org/)
+-   [Apache Archiva](https://archiva.apache.org/)
 -   [CloudRepo](https://www.cloudrepo.io)
 
 Once you have a proxy repository installed and configured, then it's
@@ -150,5 +150,5 @@ Here's an example setup:
 
 **NOTE**: If using Nexus as the proxy repository, then it is very important that you set the layout policy to
 "permissive" for the proxy mapping that you create to the upstream repository
-http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases. If you do not, Nexus will stop short of proxying the
+https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases. If you do not, Nexus will stop short of proxying the
 original request to this url and issue a HTTP 404 in its place and the dependency will not resolve.

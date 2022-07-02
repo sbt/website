@@ -45,16 +45,16 @@ Blog posts
 ----------
 
 - [Awesome sbt plugins for everyone](https://tech.ovoenergy.com/awesome-sbt-plugins-for-everyone/), 2017, Michael Wizner
-- [parallel cross building using sbt-projectmatrix](http://eed3si9n.com/parallel-cross-building-using-sbt-projectmatrix), 2019, Eugene Yokota
-- [hot source dependencies using sbt-sriracha](http://eed3si9n.com/hot-source-dependencies-using-sbt-sriracha), 2018, Eugene Yokota
-- [removing commas with sbt-nocomma](http://eed3si9n.com/removing-commas-with-sbt-nocomma), 2018, Eugene Yokota
-- [semantics of dependency resolvers](http://eed3si9n.com/dependency-resolver-semantics), 2019, Eugene Yokota
+- [parallel cross building using sbt-projectmatrix](https://eed3si9n.com/parallel-cross-building-using-sbt-projectmatrix), 2019, Eugene Yokota
+- [hot source dependencies using sbt-sriracha](https://eed3si9n.com/hot-source-dependencies-using-sbt-sriracha), 2018, Eugene Yokota
+- [removing commas with sbt-nocomma](https://eed3si9n.com/removing-commas-with-sbt-nocomma), 2018, Eugene Yokota
+- [semantics of dependency resolvers](https://eed3si9n.com/dependency-resolver-semantics), 2019, Eugene Yokota
 - [Introducing sbt-make](https://www.ethanatkins.com/2019/09/11/introducing-sbt-make.html), 2019, Ethan Atkins
 - [How to compile, run, and package a Scala project with sbt](https://alvinalexander.com/scala/sbt-how-to-compile-run-package-scala-project), 2019, Alvin Alexander
-- [sjson-new](http://eed3si9n.com/sjson-new), 2016, Eugene Yokota
+- [sjson-new](https://eed3si9n.com/sjson-new), 2016, Eugene Yokota
 - [sbt - A task engine](https://jazzy.id.au/2015/03/03/sbt-task-engine.html), 2015, James Roper
 - [sbt - A declarative DSL](https://jazzy.id.au/2015/03/04/sbt-declarative-dsl.html), 2015, James Roper
-- [testing sbt plugins](http://eed3si9n.com/testing-sbt-plugins), 2011, Eugene Yokota
+- [testing sbt plugins](https://eed3si9n.com/testing-sbt-plugins), 2011, Eugene Yokota
 
 Old documentation
 -----------------
