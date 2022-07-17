@@ -2,6 +2,8 @@
 out: sbt-server.html
 ---
 
+  [IDE]: IDE.html
+
 sbt Server
 ----------
 
@@ -11,33 +13,7 @@ You might at first imagine server to be something that runs on remote servers, a
 Actually, sbt server just adds network access to sbt's shell command so,
 in addition to accepting input from the terminal, server also to accepts input from the network.
 This allows multiple clients to connect to a _single session_ of sbt.
-The primary use case we have in mind for the client is tooling integration such as editors and IDEs.
-
-### Metals integration
-
-As of sbt 1.4.x, sbt server implements [Build Server Protocol](https://build-server-protocol.github.io/) used by Metals.
-Here is how to use sbt server as Metals backend.
-
-1. Delete existing `.bsp`, `.metals`, `.bloop` directories if any
-2. Open VS Code in the working directory
-3. Ignore the prompt to import the project
-4. Add `Global / semanticdbEnabled := true` in `build.sbt`
-5. Start `sbt` in the View > Terminal tab. Wait till it displays "sbt server started"
-6. From command palette (Cmd-Shift-P in VS Code) issue "Metals: Switch Build Server", and select "sbt"
-7. Reload the sbt session to make sure `project/metals.sbt` gets loaded
-8. Navigate to Metals view, and select "Connect to build server"
-9. It should start compiling all your subprojects automatically
-10. Once Metals finishes indexing, it should be able to perform code completion etc
-
-<img src="files/metals-switch-build-server.png" style="margin-bottom: 1em">
-
-<img src="files/metals-completion.png" style="width: 100%; height: 100%; margin-bottom: 1em">
-
-Use the following setting to opt-out some of the subprojects from BSP.
-
-```scala
-bspEnabled := false
-```
+The primary use case we have in mind for the client is tooling integration such as editors and IDEs. See [IDE Integration][IDE] page.
 
 ### Language Server Protocol 3.0
 
