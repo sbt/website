@@ -17,8 +17,8 @@ IDE との統合
 Scala の IDE は [Metals][metals] と [IntelliJ IDEA][intellij] の二強で、それぞれ sbt ビルドとの統合をサポートする。
 
 - [Metals のビルドサーバとして sbt を用いる](#metals)
-- [IntelliJ IDEA のビルドサーバとして sbt を用いる](#intellij-bsp)
 - [IntelliJ IDEA へのインポート](#intellij-import)
+- [IntelliJ IDEA のビルドサーバとして sbt を用いる](#intellij-bsp)
 
 <a id="metals"></a>
 ### Metals のビルドサーバとして sbt を用いる
@@ -29,12 +29,12 @@ Scala の IDE は [Metals][metals] と [IntelliJ IDEA][intellij] の二強で、
 
 VS Code で Metals を使うには:
 
-1. Extensions タブから Metals をインストールする:
+1. Extensions タブから Metals をインストールする:<br>
    ![Metals](../files/metals0.png)
 2. `build.sbt` ファイルを含むディレクトリを開く。
-3. メニューバーより View > Command Palette... (macOS だと `Cmd-Shift-P`) を開き Metals: Switch build server と打ち込み、「sbt」を選択する。
+3. メニューバーより View > Command Palette... (macOS だと `Cmd-Shift-P`) を開き Metals: Switch build server と打ち込み、「sbt」を選択する。<br>
    ![Metals](../files/metals2.png)
-4. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する:
+4. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する:<br>
    ![Metals](../files/metals3.png)
 
 一部のサブプロジェクトを BSP へ入れたく無い場合は、以下のセッティングを使うことができる。
@@ -49,10 +49,10 @@ Igal Tabachnik さんの [Using BSP effectively in IntelliJ and Scala](https://h
 
 #### VS Code でのインタラクティブ・デバッグ
 
-1. コードにブレークポイントを設定することで、Metals はインタラクティブ・デバッグをサポートする:
+1. コードにブレークポイントを設定することで、Metals はインタラクティブ・デバッグをサポートする:<br>
    ![Metals](../files/metals4.png)
 2. 単体テストを右クリックして「Debug Test」を選ぶことでインタラクティブ・デバッグを開始する。
-   テストがブレークポイントに当たると、変数の値を検査することができる。
+   テストがブレークポイントに当たると、変数の値を検査することができる。<br>
    ![Metals](../files/metals5.png)
 
 インタラクティブ・デバッグが開始してからの操作方法の詳細は VS Code ドキュメンテーションの [Debugging][vscode-debugging] ページ参照。
@@ -61,30 +61,59 @@ Igal Tabachnik さんの [Using BSP effectively in IntelliJ and Scala](https://h
 
 Metals がビルドサーバとして sbt を使う間、シンクライアントを使って同じ sbt セッションにログインすることができる。
 
-- Terminal セクションから `sbt --client` と打ち込む。
+- Terminal セクションから `sbt --client` と打ち込む。<br>
   ![Metals](../files/metals6.png)
 
 これで Metals が開始した sbt セッションにログインすることができた。その中でコードが既にコンパイルされた状態から `testOnly` その他のタスクを実行できる。
 
-<a id="intellij-bsp"></a>
-### IntelliJ IDEA のビルドサーバとして sbt を用いる
+<a id="intellij-import"></a>
+### IntelliJ IDEA へのインポート
 
 [IntelliJ IDEA][intellij] は JetBrains社が開発した IDE で、Community Edition は Apache v2 ライセンスの元でオープンソース化されている。
+IntelliJ は sbt を含む多くのビルドツールと統合して、プロジェクトをインポートすることができる。
+これは従来の方法で、BSP よりも多くの場合安定性が高い。
+
+IntelliJ IDEA にビルドをインポートするには:
+
+1. Plugins タブから Scala プラグインをインストールする:<br>
+   ![IntelliJ](../files/intellij1.png)
+2. Projects から `build.sbt` ファイルを含んだディレクトリを開く:<br>
+   ![IntelliJ](../files/intellij2.png)
+3. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する。
+
+IntelliJ Scala プラグインは独自の軽量コンパイラエンジンを用いてエラーの検知を行うが、これは高速であるが正しくないこともある。[Compiler-based highlighting][intellij-scala-plugin-2021-2] といって、 IntelliJ を Scala コンパイラを使ってエラー・ハイライトを行うように設定することも可能だ。
+
+#### IntelliJ IDEA でのインタラクティブ・デバッグ
+
+1. コードにブレークポイントを設定することで、IntelliJ はインタラクティブ・デバッグをサポートする:<br>
+   ![IntelliJ](../files/intellij4.png)
+2. 単体テストを右クリックして「Debug &lt;テスト名&gt;」を選ぶことでインタラクティブ・デバッグを開始する。
+   もしくは、単体テストの左側にある緑色の「実行」アイコンをクリックする。
+   テストがブレークポイントに当たると、変数の値を検査することができる。<br>
+   ![IntelliJ](../files/intellij5.png)
+
+インタラクティブ・デバッグが開始してからの操作方法の詳細は IntelliJ ドキュメンテーションの [Debug code][intellij-debugging] ページ参照。
+
+<a id="intellij-bsp"></a>
+### IntelliJ IDEA のビルドサーバとして sbt を用いる (上級者向け)
+
 独自のコンパイラエンジンの他に IntelliJ は [Build Server Protocol][bsp] (BSP) 経由で sbt を含む異なる**ビルドサーバ**をサポートする。
+IntelliJ の BSP サポートは従来のインポートと比較すると安定性が低く、バグや UX 問題などに引っかかるかもしれない。
+
+IntelliJ において BSP を使う利点は、実際のビルド作業を sbt を用いて行うため、今までも sbt セッションを立ち上げながら IntelliJ を使っていた人は、二重でコンパイルしなくてもよくなるという利点がある。
 
 IntelliJ のビルドサーバとして sbt を用いるには:
 
-1. Plugins タブから Scala プラグインをインストールする:
-   ![IntelliJ](../files/intellij1.png)
-2. BSP を使うには、Project タブの Open ボタンは使ってはいけない:
+1. Plugins タブから Scala プラグインをインストールする。
+2. BSP を使うには、Project タブの Open ボタンは使ってはいけない:<br>
    ![IntelliJ](../files/intellij7.png)
-3. メニューバーより New > "Project From Existing Sources" をクリックするか、Find Action (macOS だと `Cmd-Shift-P`) より「Existing」 と打ち込んで「Import Project From Existing Sources」を探す:
+3. メニューバーより New > "Project From Existing Sources" をクリックするか、Find Action (macOS だと `Cmd-Shift-P`) より「Existing」 と打ち込んで「Import Project From Existing Sources」を探す:<br>
    ![IntelliJ](../files/intellij8.png)
-4. `build.sbt` ファイルを開く。ダイアログが表示されたら **BSP** を選択する:
+4. `build.sbt` ファイルを開く。ダイアログが表示されたら **BSP** を選択する:<br>
    ![IntelliJ](../files/intellij9.png)
-5. 「tool to import the BSP workspace」として **sbt (recommended)** を選択する:
+5. 「tool to import the BSP workspace」として **sbt (recommended)** を選択する:<br>
    ![IntelliJ](../files/intellij10.png)
-6. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する:
+6. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する:<br>
    ![IntelliJ](../files/intellij11.png)
 
 一部のサブプロジェクトを BSP へ入れたく無い場合は、以下のセッティングを使うことができる。
@@ -93,39 +122,16 @@ IntelliJ のビルドサーバとして sbt を用いるには:
 bspEnabled := false
 ```
 
-- Preferences より BSP と検索して、「build automatically on file save」を選択し、「export sbt projects to Bloop before import」を外す:
+- Preferences より BSP と検索して、「build automatically on file save」を選択し、「export sbt projects to Bloop before import」を外す:<br>
   ![IntelliJ](../files/intellij12.png)
 
 コードに変更を加えて保存 (macOS だと `Cmd-S`) すると、IntelliJ は sbt を呼び出して実際のビルド作業を行う。
-
-#### IntelliJ IDEA でのインタラクティブ・デバッグ
-
-1. コードにブレークポイントを設定することで、IntelliJ はインタラクティブ・デバッグをサポートする:
-   ![IntelliJ](../files/intellij4.png)
-2. 単体テストを右クリックして「Debug &lt;テスト名&gt;」を選ぶことでインタラクティブ・デバッグを開始する。
-   テストがブレークポイントに当たると、変数の値を検査することができる。
-   ![IntelliJ](../files/intellij5.png)
-
-インタラクティブ・デバッグが開始してからの操作方法の詳細は IntelliJ ドキュメンテーションの [Debug code][intellij-debugging] ページ参照。
 
 #### sbt セッションへのログイン
 
 シンクライアントを使って既存の sbt セッションにログインすることができる。
 
-- Terminal セクションから `sbt --client` と打ち込む。
+- Terminal セクションから `sbt --client` と打ち込む。<br>
   ![IntelliJ](../files/intellij6.png)
 
 これで IntelliJ が開始した sbt セッションにログインすることができた。その中でコードが既にコンパイルされた状態から `testOnly` その他のタスクを実行できる。
-
-<a id="intellij-import"></a>
-### IntelliJ IDEA へのインポート
-
-IntelliJ は sbt を含む多くのビルドツールと統合して、プロジェクトをインポートすることができる。
-これは従来の方法で、この方法が安定している場合もある。
-
-IntelliJ IDEA にビルドをインポートするには:
-
-1. Plugins タブから Scala プラグインをインストールする:
-2. Projects から `build.sbt` ファイルを含んだディレクトリを開く:
-   ![IntelliJ](../files/intellij2.png)
-3. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する。
