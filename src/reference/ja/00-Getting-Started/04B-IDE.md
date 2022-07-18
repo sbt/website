@@ -17,8 +17,8 @@ IDE との統合
 Scala の IDE は [Metals][metals] と [IntelliJ IDEA][intellij] の二強で、それぞれ sbt ビルドとの統合をサポートする。
 
 - [Metals のビルドサーバとして sbt を用いる](#metals)
-- [IntelliJ IDEA のビルドサーバとして sbt を用いる](#intellij-bsp)
 - [IntelliJ IDEA へのインポート](#intellij-import)
+- [IntelliJ IDEA のビルドサーバとして sbt を用いる](#intellij-bsp)
 
 <a id="metals"></a>
 ### Metals のビルドサーバとして sbt を用いる
@@ -66,16 +66,45 @@ Metals がビルドサーバとして sbt を使う間、シンクライアン�
 
 これで Metals が開始した sbt セッションにログインすることができた。その中でコードが既にコンパイルされた状態から `testOnly` その他のタスクを実行できる。
 
-<a id="intellij-bsp"></a>
-### IntelliJ IDEA のビルドサーバとして sbt を用いる
+<a id="intellij-import"></a>
+### IntelliJ IDEA へのインポート
 
 [IntelliJ IDEA][intellij] は JetBrains社が開発した IDE で、Community Edition は Apache v2 ライセンスの元でオープンソース化されている。
-独自のコンパイラエンジンの他に IntelliJ は [Build Server Protocol][bsp] (BSP) 経由で sbt を含む異なる**ビルドサーバ**をサポートする。
+IntelliJ は sbt を含む多くのビルドツールと統合して、プロジェクトをインポートすることができる。
+これは従来の方法で、BSP よりも多くの場合安定性が高い。
 
-IntelliJ のビルドサーバとして sbt を用いるには:
+IntelliJ IDEA にビルドをインポートするには:
 
 1. Plugins タブから Scala プラグインをインストールする:<br>
    ![IntelliJ](../files/intellij1.png)
+2. Projects から `build.sbt` ファイルを含んだディレクトリを開く:<br>
+   ![IntelliJ](../files/intellij2.png)
+3. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する。
+
+IntelliJ Scala プラグインは独自の軽量コンパイラエンジンを用いてエラーの検知を行うが、これは高速であるが正しくないこともある。[Compiler-based highlighting][intellij-scala-plugin-2021-2] といって、 IntelliJ を Scala コンパイラを使ってエラー・ハイライトを行うように設定することも可能だ。
+
+#### IntelliJ IDEA でのインタラクティブ・デバッグ
+
+1. コードにブレークポイントを設定することで、IntelliJ はインタラクティブ・デバッグをサポートする:<br>
+   ![IntelliJ](../files/intellij4.png)
+2. 単体テストを右クリックして「Debug &lt;テスト名&gt;」を選ぶことでインタラクティブ・デバッグを開始する。
+   もしくは、単体テストの左側にある緑色の「実行」アイコンをクリックする。
+   テストがブレークポイントに当たると、変数の値を検査することができる。<br>
+   ![IntelliJ](../files/intellij5.png)
+
+インタラクティブ・デバッグが開始してからの操作方法の詳細は IntelliJ ドキュメンテーションの [Debug code][intellij-debugging] ページ参照。
+
+<a id="intellij-bsp"></a>
+### IntelliJ IDEA のビルドサーバとして sbt を用いる (上級者向け)
+
+独自のコンパイラエンジンの他に IntelliJ は [Build Server Protocol][bsp] (BSP) 経由で sbt を含む異なる**ビルドサーバ**をサポートする。
+IntelliJ の BSP サポートは従来のインポートと比較すると安定性が低く、バグや UX 問題などに引っかかるかもしれない。
+
+IntelliJ において BSP を使う利点は、実際のビルド作業を sbt を用いて行うため、今までも sbt セッションを立ち上げながら IntelliJ を使っていた人は、二重でコンパイルしなくてもよくなるという利点がある。
+
+IntelliJ のビルドサーバとして sbt を用いるには:
+
+1. Plugins タブから Scala プラグインをインストールする。
 2. BSP を使うには、Project タブの Open ボタンは使ってはいけない:<br>
    ![IntelliJ](../files/intellij7.png)
 3. メニューバーより New > "Project From Existing Sources" をクリックするか、Find Action (macOS だと `Cmd-Shift-P`) より「Existing」 と打ち込んで「Import Project From Existing Sources」を探す:<br>
@@ -98,16 +127,6 @@ bspEnabled := false
 
 コードに変更を加えて保存 (macOS だと `Cmd-S`) すると、IntelliJ は sbt を呼び出して実際のビルド作業を行う。
 
-#### IntelliJ IDEA でのインタラクティブ・デバッグ
-
-1. コードにブレークポイントを設定することで、IntelliJ はインタラクティブ・デバッグをサポートする:<br>
-   ![IntelliJ](../files/intellij4.png)
-2. 単体テストを右クリックして「Debug &lt;テスト名&gt;」を選ぶことでインタラクティブ・デバッグを開始する。
-   テストがブレークポイントに当たると、変数の値を検査することができる。<br>
-   ![IntelliJ](../files/intellij5.png)
-
-インタラクティブ・デバッグが開始してからの操作方法の詳細は IntelliJ ドキュメンテーションの [Debug code][intellij-debugging] ページ参照。
-
 #### sbt セッションへのログイン
 
 シンクライアントを使って既存の sbt セッションにログインすることができる。
@@ -116,16 +135,3 @@ bspEnabled := false
   ![IntelliJ](../files/intellij6.png)
 
 これで IntelliJ が開始した sbt セッションにログインすることができた。その中でコードが既にコンパイルされた状態から `testOnly` その他のタスクを実行できる。
-
-<a id="intellij-import"></a>
-### IntelliJ IDEA へのインポート
-
-IntelliJ は sbt を含む多くのビルドツールと統合して、プロジェクトをインポートすることができる。
-これは従来の方法で、この方法が安定している場合もある。
-
-IntelliJ IDEA にビルドをインポートするには:
-
-1. Plugins タブから Scala プラグインをインストールする:
-2. Projects から `build.sbt` ファイルを含んだディレクトリを開く:<br>
-   ![IntelliJ](../files/intellij2.png)
-3. インポート処理が完了したら、Scala のファイルを開いてみてコード補完が機能していることを確認する。
