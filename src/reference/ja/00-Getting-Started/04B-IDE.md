@@ -102,10 +102,44 @@ IntelliJ Scala プラグインは独自の軽量コンパイラエンジンを�
 <a id="intellij-bsp"></a>
 ### IntelliJ IDEA のビルドサーバとして sbt を用いる (上級者向け)
 
-独自のコンパイラエンジンの他に IntelliJ は [Build Server Protocol][bsp] (BSP) 経由で sbt を含む異なる**ビルドサーバ**をサポートする。
-IntelliJ の BSP サポートは従来のインポートと比較すると安定性が低く、バグや UX 問題などに引っかかるかもしれない。
+IntelliJ へビルドをインポートするということは、事実上 IntelliJ をビルドツールやコンパイラとして採用してコードを書いているということだ ([compiler-based highlighting][intellij-scala-plugin-2021-2] も参照)。
+多くのユーザはそのエキスペリエンスで満足しているが、一方でコードベースによってはコンパイラエラーが間違っていたり、ソース生成を行うプラグインと動作しなかったり、sbt と同一のビルド意味論を用いてコードを書きたいと思う人もいる。
+幸いなことに、現代の IntelliJ は [Build Server Protocol][bsp] (BSP) 経由で sbt を含む異なる**ビルドサーバ**をサポートする。
 
 IntelliJ において BSP を使う利点は、実際のビルド作業を sbt を用いて行うため、今までも sbt セッションを立ち上げながら IntelliJ を使っていた人は、二重でコンパイルしなくてもよくなるという利点がある。
+
+<table class="table table-striped">
+  <tr>
+    <th><nobr></th>
+    <th>IntelliJ へインポート</th>
+    <th>BSP を使った IntelliJ</th>
+  </tr>
+  <tr>
+    <td>信頼性</td>
+    <td>✅ 安定した動作</td>
+    <td>⚠️ 技術的に枯れていないため、UX 問題などにあう可能性がある</td>
+  </tr>
+  <tr>
+    <td>応答性</td>
+    <td>✅</td>
+    <td>⚠️</td>
+  </tr>
+  <tr>
+    <td>正確性</td>
+    <td>⚠️ 独自のコンパイラを用いた型検査。scalac に設定することも可能。</td>
+    <td>✅ Zinc + Scala コンパイラを用いた型検査</td>
+  </tr>
+  <tr>
+    <td><nobr>ソース生成</nobr></td>
+    <td>❌ ソース生成するごとに再同期が必要</td>
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td>ビルド</td>
+    <td>❌ sbt を併用すると二重ビルドが必要になる</td>
+    <td>✅</td>
+  </tr>
+</table>
 
 IntelliJ のビルドサーバとして sbt を用いるには:
 

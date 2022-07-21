@@ -104,10 +104,44 @@ See [Debug Code][intellij-debugging] page on IntelliJ documentation for more det
 <a id="intellij-bsp"></a>
 ### Using sbt as IntelliJ IDEA build server (advanced)
 
-In addition to its own compilation engine, IntelliJ supports different _build servers_ including sbt via the [Build Server Protocol][bsp] (BSP).
-BSP support in IntelliJ is less matured compared to the import approach, and you might encounter bugs and UX issues.
+Importing the build to IntelliJ means that you're effectively using IntelliJ as the build tool and the compiler while you code (see also [compiler-based highlighting][intellij-scala-plugin-2021-2]).
+While many users are happy with the experience, depending on the code base some of the compilation errors may be false, it may not work well with plugins that generate sources, and generally you might want to code with the identical build semantics as sbt.
+Thankfully, modern IntelliJ supports alternative _build servers_ including sbt via the [Build Server Protocol][bsp] (BSP).
 
 The benefit of using BSP with IntelliJ is that you're using sbt to do the actual build work, so if you are the kind of programmer who had sbt session up on the side, this avoids double compilation.
+
+<table class="table table-striped">
+  <tr>
+    <th><nobr></th>
+    <th>Import to IntelliJ</th>
+    <th>BSP with IntelliJ</th>
+  </tr>
+  <tr>
+    <td>Reliability</td>
+    <td>✅ Reliable behavior</td>
+    <td>⚠️ Less mature. Might encounter UX issues.</td>
+  </tr>
+  <tr>
+    <td>Responsiveness</td>
+    <td>✅</td>
+    <td>⚠️</td>
+  </tr>
+  <tr>
+    <td>Correctness</td>
+    <td>⚠️ Uses its own compiler for type checking, but can be configured to use scalac</td>
+    <td>✅ Uses Zinc + Scala compiler for type checking</td>
+  </tr>
+  <tr>
+    <td>Generated source</td>
+    <td>❌ Generated source requires resync</td>
+    <td>✅</td>
+  </tr>
+  <tr>
+    <td>Build reuse</td>
+    <td>❌ Using sbt side-by-side requires double build</td>
+    <td>✅</td>
+  </tr>
+</table>
 
 To use sbt as build server on IntelliJ:
 
