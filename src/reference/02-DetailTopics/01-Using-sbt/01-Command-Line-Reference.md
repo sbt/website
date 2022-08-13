@@ -174,10 +174,10 @@ configuration that can be run using a `Test/` prefix.
     reloaded, or the setting is overridden by another set command or
     removed by the session command. See
     [.sbt build definition][Basic-Def] and
-    [inspecting settings][Inspecting-Settings] for details.
+    [Inspecting Settings][Inspecting-Settings] for details.
 -   `session <command>` Manages session settings defined by the `set`
     command. It can persist settings configured at the prompt. See
-    Inspecting-Settings for details.
+    [Inspecting Settings][Inspecting-Settings] for details.
 -   `inspect <setting-key>` Displays information about settings, such as
     the value, description, defining scope, dependencies, delegation
     chain, and related settings. See
