@@ -23,7 +23,7 @@ The default value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`.
 
 You can also specify JVM system properties and command line options 
 directly as `sbt` arguments: any `-Dkey=val` argument will be passed 
-as-is to the JVM, and any `-J-Xfoo` will be passed as `-Xfoo` to the JVM.
+as-is to the JVM, and any `-J-Xfoo` will be passed as `-Xfoo`.
 
 See also `sbt --help` for more details. 
 
