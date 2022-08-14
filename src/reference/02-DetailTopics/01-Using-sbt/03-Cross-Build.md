@@ -51,8 +51,9 @@ libraryDependencies += "net.databinder.dispatch" % "dispatch-core_2.12" % "0.13.
 
 ### Cross building a project using sbt-projectmatrix
 
-Consider using [sbt-projectmatrix](https://github.com/sbt/sbt-projectmatrix) that
-is capable of cross building across Scala versions and different platforms in parallel.
+No plugin is required to enable cross-building in sbt, although consider using 
+[sbt-projectmatrix](https://github.com/sbt/sbt-projectmatrix) that is capable of 
+cross building across Scala versions and different platforms in parallel.
 
 ### Cross building a project statefully
 
@@ -140,7 +141,7 @@ directory is included as a source directory.
 For, example if the current subproject's `scalaVersion` is 2.12.10, then
 `src/main/scala-2.12` is included as a Scala-version specific source.
 
-By `crossPaths` setting to `false` you can opt out of both Scala-version source directory
+By setting `crossPaths` to `false`, you can opt out of both Scala-version source directory
 and the `_<scala-binary-version>` publishing convention. This might be useful for non-Scala projects.
 
 Similarly, the build products such as `*.class` files are written into
