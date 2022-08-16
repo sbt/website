@@ -3,6 +3,7 @@ out: Command-Line-Reference.html
 ---
 
   [Console-Project]: Console-Project.html
+  [Basic-Def]: Basic-Def.html
   [Full-Def]: Full-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -12,7 +13,7 @@ out: Command-Line-Reference.html
   [Commands]: Commands.html
   [Running-Project-Code]: Running-Project-Code.html
   [Testing]: Testing.html
-  [Sbt-Launcher]: Sbt-Launcher.html
+  [Setup-Notes]: Setup-Notes.html
 
 Command Line Reference
 ----------------------
@@ -165,7 +166,7 @@ configuration that can be run using a `Test/` prefix.
 -   `reload [plugins|return]` If no argument is specified, reloads the
     build, recompiling any build or plugin definitions as necessary.
     reload plugins changes the current project to the build definition
-    project (in project/). This can be useful to directly manipulate the
+    project (in `project/`). This can be useful to directly manipulate the
     build definition. For example, running clean on the build definition
     project will force snapshots to be updated and the build definition
     to be recompiled. reload return changes back to the main project.
@@ -185,9 +186,10 @@ configuration that can be run using a `Test/` prefix.
 
 ### Command Line Options
 
-System properties can be provided either as JVM options, or as SBT
-arguments, in both cases as `-Dprop=value`. The following properties
-influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
+SBT behavior can be influenced by specifying system properties, either 
+as `-Dproperty=value` command line arguments, or via environment 
+variables. See [Setup Notes][Setup-Notes] for details of the configuration
+mechanism. 
 
 <table class="table table-striped">
   <tr>
