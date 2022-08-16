@@ -8,6 +8,7 @@ out: Basic-Def.html
   [Running]: Running.html
   [Library-Dependencies]: Library-Dependencies.html
   [Input-Tasks]: ../docs/Input-Tasks.html
+  [Command-Line-Reference]: Command-Line-Reference.html
 
 Build definition
 ----------------
@@ -115,10 +116,11 @@ directory as Scala source files.
 
 There are three flavors of key:
 
-- `SettingKey[T]`: a key for a value computed once (the value is
+- `SettingKey[T]`: a key for a value evaluated only once (the value is
   computed when loading the subproject, and kept around).
-- `TaskKey[T]`: a key for a value, called a *task*, that has to be
-  recomputed each time, potentially with side effects.
+- `TaskKey[T]`: a key for a value, called a *task*, that is evaluated 
+  each time it's referred to (similarly to a scala function),
+  potentially with side effects.
 - `InputKey[T]`: a key for a task that has command line arguments as
   input. Check out [Input Tasks][Input-Tasks] for more details.
 
@@ -166,6 +168,24 @@ eventually returns a string, it has to be re-run every time.
 *A given key always refers to either a task or a plain setting.* That
 is, "taskiness" (whether to re-run each time) is a property of the key,
 not the value.
+
+#### Listing all available setting keys and task keys
+
+The list of settings keys that currently exist in your build definition 
+can be obtained by typing `settings` or `settings -v` at the sbt prompt. 
+
+Likewise, the list of tasks keys currently defined can be obtained by typing 
+`tasks` or `tasks -v`. You can also have a  look at 
+[Command Line Reference][Command-Line-Reference] for a discussion on built-in 
+tasks commonly used at the sbt prompt.  
+
+A key will be printed in the resulting list if:
+
+* it's built-in sbt (like `name` or `scalaVersion` in the examples above)
+* you created it as a custom key 
+* you imported a plugin that brought it into the build definition.  
+
+You can also type `help <key>` at the sbt prompt for more information. 
 
 ### Defining tasks and settings
 
@@ -238,7 +258,6 @@ import Keys._
 ```
 
 (In addition, if you have auto plugins, the names marked under `autoImport` will be imported.)
-
 
 ### Bare .sbt build definition
 
