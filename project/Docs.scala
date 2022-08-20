@@ -315,6 +315,12 @@ object Docs {
 
     gitConfig(repo, siteEmail.value, git, s.log)
 
+    // remove symlinks
+    val apiLink = versioned / "api"
+    val releaseLink = repo / "release"
+    if (apiLink.exists) apiLink.delete
+    if (releaseLink.exists && !isBetaBranch) releaseLink.delete
+
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     if (!isBetaBranch) {
       gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
@@ -335,7 +341,6 @@ object Docs {
       (file, target) <- (makeSite / mappings).value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(ms)
-    IO.copyDirectory(repo / sbtVersionForScalaDoc / "api", versioned / "api")
 
     if (isGenerateSiteMap.value && !isBetaBranch) {
       val (index, siteMaps) =
@@ -350,6 +355,12 @@ object Docs {
         )
       s.log.info(s"Generated site map index: $index")
       s.log.debug(s"Generated site maps: ${siteMaps.mkString("\n\t", "\n\t", "")}")
+    }
+
+    // symlink API
+    if (!isBetaBranch) {
+      symlink(s"../$sbtVersionForScalaDoc/api/", apiLink, s.log)
+      symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     }
     repo
   }
@@ -410,7 +421,7 @@ object Docs {
   def gitConfig(dir: File, email: String, git: GitRunner, log: Logger): Unit =
     sys.env.get("CI") match {
       case Some(_) =>
-        git(("config" :: "user.name" :: "sbt/website bot" :: Nil): _*)(dir, log)
+        git(("config" :: "user.name" :: "Travis CI" :: Nil): _*)(dir, log)
         git(("config" :: "user.email" :: email :: Nil): _*)(dir, log)
       case _ => ()
     }
@@ -425,4 +436,13 @@ object Docs {
   }
 
   def siteInclude(f: File) = true
+
+  // TODO: platform independence/use symlink from Java 7
+  def symlink(path: String, linkFile: File, log: Logger): Unit =
+    Process("ln" :: "-s" :: path :: linkFile.getAbsolutePath :: Nil) ! log match {
+      case 0    => ()
+      case code =>
+        // sys.error("Could not create symbolic link '" + linkFile.getAbsolutePath + "' with path " + path)
+        println(code)
+    }
 }
