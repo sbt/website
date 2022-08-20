@@ -3,6 +3,7 @@ out: Command-Line-Reference.html
 ---
 
   [Console-Project]: Console-Project.html
+  [Basic-Def]: Basic-Def.html
   [Full-Def]: Full-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -12,7 +13,6 @@ out: Command-Line-Reference.html
   [Commands]: Commands.html
   [Running-Project-Code]: Running-Project-Code.html
   [Testing]: Testing.html
-  [Sbt-Launcher]: Sbt-Launcher.html
 
 Command Line Reference
 ----------------------
@@ -165,7 +165,7 @@ configuration that can be run using a `Test/` prefix.
 -   `reload [plugins|return]` If no argument is specified, reloads the
     build, recompiling any build or plugin definitions as necessary.
     reload plugins changes the current project to the build definition
-    project (in project/). This can be useful to directly manipulate the
+    project (in `project/`). This can be useful to directly manipulate the
     build definition. For example, running clean on the build definition
     project will force snapshots to be updated and the build definition
     to be recompiled. reload return changes back to the main project.
@@ -183,11 +183,105 @@ configuration that can be run using a `Test/` prefix.
     chain, and related settings. See
     [Inspecting Settings][Inspecting-Settings] for details.
 
-### Command Line Options
 
-System properties can be provided either as JVM options, or as SBT
-arguments, in both cases as `-Dprop=value`. The following properties
-influence SBT execution. Also see [sbt launcher][Sbt-Launcher].
+Sbt runner arguments
+-----------------
+
+When launching the `sbt` runner from the OS shell, various system properties
+or JVM extra options can be specified to influence its behaviour.
+
+#### sbt JVM options and system properties
+
+If the `JAVA_OPTS` and/or `SBT_OPTS` environment variables are defined when 
+`sbt` starts, their content is passed as command line arguments to the JVM 
+running sbt. 
+
+If a file named `.jvmopt` exists in the  current directory, its content 
+is appended to `JAVA_OPTS` at sbt startup. Similarly, if `.sbtopts` 
+and/or `/etc/sbt/sbtopts` exit, their content is appended to `SBT_OPTS`.
+The default value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`.
+
+You can also specify JVM system properties and command line options 
+directly as `sbt` arguments: any `-Dkey=val` argument will be passed 
+as-is to the JVM, and any `-J-Xfoo` will be passed as `-Xfoo`.
+
+See also `sbt --help` for more details. 
+
+
+#### sbt JVM heap, permgen, and stack sizes
+
+If you find yourself running out of permgen space or your workstation is
+low on memory, adjust the JVM configuration as you would for any java
+application. 
+
+For example a common set of memory-related options is:
+
+```
+export SBT_OPTS="-Xmx2048M -Xss2M"
+sbt
+```
+
+Or if you prefer to specify them just for this session:
+
+```
+sbt -J-Xmx2048M -J-Xss2M
+```
+
+#### Boot directory
+
+`sbt` is just a bootstrap, the actual meat of sbt, the Scala compiler 
+and standard library are by default downloaded to the shared directory 
+`\$HOME/.sbt/boot/`.
+
+To change the location of this directory, set the `sbt.boot.directory`
+system property. A relative path will be resolved
+against the current working directory, which can be useful if you want
+to avoid sharing the boot directory between projects. For example, the
+following uses the pre-0.11 style of putting the boot directory in
+`project/boot/`:
+
+```
+sbt -Dsbt.boot.directory=project/boot/
+```
+
+#### Terminal encoding
+
+The character encoding used by your terminal may differ from Java's
+default encoding for your platform. In this case, you will need to specify
+the `file.encoding=<encoding>` system property, which might look like:
+
+```
+export JAVA_OPTS="-Dfile.encoding=Cp1252"
+sbt
+```
+
+#### HTTP/HTTPS/FTP Proxy
+
+On Unix, sbt will pick up any HTTP, HTTPS, or FTP proxy settings from
+the standard `http_proxy`, `https_proxy`, and `ftp_proxy` environment
+variables. If you are behind a proxy requiring authentication, you
+need to pass some supplementary flags at sbt startup. See 
+[JVM networking system properties](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/doc-files/net-properties.html) for more details. 
+
+For example:
+
+```
+sbt -Dhttp.proxyUser=username -Dhttp.proxyPassword=mypassword
+```
+
+On Windows, your script should set properties for proxy host, port, and
+if applicable, username and password. For example, for HTTP:
+
+```
+sbt -Dhttp.proxyHost=myproxy -Dhttp.proxyPort=8080 -Dhttp.proxyUser=username -Dhttp.proxyPassword=mypassword
+```
+
+Replace `http` with `https` or `ftp` in the above command line to
+configure HTTPS or FTP.
+
+#### Other system properties
+
+The following system properties can also be passed to `sbt`:
 
 <table class="table table-striped">
   <tr>
