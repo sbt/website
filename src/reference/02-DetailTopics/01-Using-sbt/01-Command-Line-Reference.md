@@ -279,7 +279,6 @@ sbt -Dhttp.proxyHost=myproxy -Dhttp.proxyPort=8080 -Dhttp.proxyUser=username -Dh
 Replace `http` with `https` or `ftp` in the above command line to
 configure HTTPS or FTP.
 
-
 #### Other system properties
 
 The following system properties can also be passed to `sbt`:
