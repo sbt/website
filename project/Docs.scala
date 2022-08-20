@@ -335,7 +335,6 @@ object Docs {
       (file, target) <- (makeSite / mappings).value if siteInclude(file)
     } yield (file, repo / target)
     IO.copy(ms)
-    IO.copyDirectory(repo / sbtVersionForScalaDoc / "api", versioned / "api")
 
     if (isGenerateSiteMap.value && !isBetaBranch) {
       val (index, siteMaps) =
