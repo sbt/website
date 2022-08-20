@@ -14,7 +14,7 @@ out: Command-Line-Reference.html
   [Running-Project-Code]: Running-Project-Code.html
   [Testing]: Testing.html
 
-Sbt prompt command Line Reference
+Command Line Reference
 ----------------------
 
 This page is a relatively complete list of command line options,
