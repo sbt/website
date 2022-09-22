@@ -336,7 +336,7 @@ The following system properties can also be passed to `sbt`:
     <td><tt>auto</tt></td>
     <td>Supercedes <tt>sbt.log.format</tt>.
     To turn on color, use <tt>always</tt> or <tt>true</tt>.
-    To turn off color, use <tt>never</tt> or <tt>false>.
+    To turn off color, use <tt>never</tt> or <tt>false</tt>.
     To use color if the output is a terminal (not a pipe) that supports color, use <tt>auto</tt>.</td>
   </tr>
 
