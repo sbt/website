@@ -152,6 +152,7 @@ your plugin to the list.
 - [sbt-riotctl](https://github.com/riot-framework/sbt-riotctl): deploy 
   applications as systemd services directly to a Raspberry Pi, ensuring 
   dependencies (e.g. wiringpi) are met.
+- [sbt-kind](https://github.com/tirithel/sbt-kind): load built docker images into a [kind](https://kind.sigs.k8s.io/) cluster.
   
 #### Utility and system plugins
 
