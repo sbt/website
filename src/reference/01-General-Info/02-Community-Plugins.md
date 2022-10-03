@@ -137,6 +137,7 @@ your plugin to the list.
 - [sbt-gcs](https://github.com/saint1991/sbt-gcs): manage objects on Google Cloud Storage. <!-- 1 star -->
 - [sbt-sourcebundler](https://github.com/kotobotov/sbt-sourcebundler): merge all source code into one scala file. <!-- 1 star -->
 - [sbt-kubeyml](https://github.com/vaslabs/sbt-kubeyml): Create a typesafe kubernetes Deployment based on your project settings
+- [sbt-k8s](https://github.com/hnaderi/sbt-k8s): Create any manifest or use provided cookbooks using [scala-k8s](https://github.com/hnaderi/scala-k8s) library
 
 #### Deployment integration plugins
 
