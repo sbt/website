@@ -280,7 +280,7 @@ compiled against 2.12 for your 2.12.x builds, and so on.
 - `CrossVersion.binary` (`_<scala-binary-version>`)
 - `CrossVersion.full` (`_<scala-version>`)
 
-The default is either `CrossVersion.binary` or `CrossVersion.diabled`
+The default is either `CrossVersion.binary` or `CrossVersion.disabled`
 depending on the value of `crossPaths`.
 
 Because (unlike Scala library) Scala compiler is not forward compatible among
