@@ -66,7 +66,7 @@
                 <span class="statement">
                 Define your tasks in Scala. Run them in parallel from sbt's interactive shell.
                 </span><br><br>
-                <a href="download.html" class="btn" role="button" style="margin-right: 2em">Download</a>
+                <a href="download.html" class="btn" role="button" style="margin-right: 2em">Get sbt $sbtVersion$ (latest stable)</a>
 
                 <a href="/1.x/docs/" class="btn" role="button" style="margin-left: 2em">Documentation</a>
               </div>
