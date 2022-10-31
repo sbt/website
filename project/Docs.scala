@@ -317,9 +317,7 @@ object Docs {
 
     // remove symlinks
     val apiLink = versioned / "api"
-    val releaseLink = repo / "release"
     if (apiLink.exists) apiLink.delete
-    if (releaseLink.exists && !isBetaBranch) releaseLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
     if (!isBetaBranch) {
@@ -360,7 +358,6 @@ object Docs {
     // symlink API
     if (!isBetaBranch) {
       symlink(s"../$sbtVersionForScalaDoc/api/", apiLink, s.log)
-      symlink(s"$targetSbtBinaryVersion/", releaseLink, s.log)
     }
     repo
   }
