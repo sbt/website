@@ -64,7 +64,7 @@ Predefined repositories will go under Resolver going forward so they are
 in one place:
 
 ```scala
-Resolver.sonatypeRepo("releases")  // Or "snapshots"
+Resolver.sonatypeOssRepos("releases")  // Or "snapshots"
 ```
 
 ### Custom resolvers
