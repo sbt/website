@@ -75,7 +75,7 @@ lazy val root = (project in file("."))
     // set the main class for packaging the main jar
     // 'run' will still auto-detect and prompt
     // change Compile to Test to set it for the test jar
-    Comile / packageBin / mainClass := Some("myproject.MyMain"),
+    Compile / packageBin / mainClass := Some("myproject.MyMain"),
 
     // set the main class for the main 'run' task
     // change Compile to Test to set it for 'Test/run'
