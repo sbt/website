@@ -36,7 +36,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
 No todos los plugins están ubicados en uno de los repositorios predeterminados. La documentación del plugin te puede instar a que añadas el repositorio donde se encuentra:
 
 ```scala
-resolvers += Resolver.sonatypeRepo("public")
+resolvers ++= Resolver.sonatypeOssRepos("public")
 ```
 
 Por lo general los plugins proporcionan configuraciones que son añadidas a la del proyecto para habilitar la funcionalidad del plugin. Esto es explicado en la siguiente sección:

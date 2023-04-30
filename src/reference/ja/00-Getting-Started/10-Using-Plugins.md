@@ -45,7 +45,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
 プラグインのドキュメントでそのプラグインが見つかるリポジトリを resolvers に追加するよう指示されていることもあるだろう。
 
 ```scala
-resolvers += Resolver.sonatypeRepo("public")
+resolvers ++= Resolver.sonatypeOssRepos("public")
 ```
 
 プラグインは普通、プロジェクトでそのプラグインの機能を有効にするためのセッティング群を提供している。

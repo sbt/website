@@ -47,7 +47,7 @@ plugin's documentation may instruct you to also add the repository where
 it can be found:
 
 ```scala
-resolvers += Resolver.sonatypeRepo("public")
+resolvers ++= Resolver.sonatypeOssRepos("public")
 ```
 
 Plugins usually provide settings that get added to a project to enable
