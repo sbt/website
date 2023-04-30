@@ -36,7 +36,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.11.2")
 不是所有的插件都在同一个默认的仓库中，而且一个插件的文档会指导你添加能够找到它的仓库：
 
 ```scala
-resolvers += Resolver.sonatypeRepo("public")
+resolvers ++= Resolver.sonatypeOssRepos("public")
 ```
 
 插件通常提供设置将它添加到项目并且开启插件功能。这些将在下一小节描述。
