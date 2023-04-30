@@ -63,8 +63,6 @@ The PDF generation is optional, and requires the following additional steps to i
 #### On Ubuntu
 
 ```
-$ sudo add-apt-repository ppa:texlive-backports/ppa
-$ sudo apt-get update
 $ sudo apt-get install pandoc latex-cjk-all texlive-full
 ```
 
