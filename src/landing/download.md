@@ -14,7 +14,7 @@ sbt --script-version
 
 This should install the latest stable version of `sbt`.
 
- Mac
+Mac
 -----
 
 ### SDKMAN!
