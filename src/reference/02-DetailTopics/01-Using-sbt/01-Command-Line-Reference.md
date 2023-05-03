@@ -198,7 +198,7 @@ running sbt.
 
 If a file named `.jvmopt` exists in the  current directory, its content 
 is appended to `JAVA_OPTS` at sbt startup. Similarly, if `.sbtopts` 
-and/or `/etc/sbt/sbtopts` exit, their content is appended to `SBT_OPTS`.
+and/or `/etc/sbt/sbtopts` exist, their content is appended to `SBT_OPTS`.
 The default value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`.
 
 You can also specify JVM system properties and command line options 
