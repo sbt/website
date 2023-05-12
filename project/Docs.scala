@@ -13,7 +13,7 @@ import com.typesafe.sbt.site.SitePlugin
 import SitePlugin.autoImport._
 
 object Docs {
-  lazy val targetSbtFullVersion = "1.8.2"
+  lazy val targetSbtFullVersion = "1.8.3"
   lazy val sbtVersionForScalaDoc = targetSbtFullVersion
   lazy val sbtWindowsBuild = targetSbtFullVersion
   lazy val scala3ExampleVersion = "3.2.2"
