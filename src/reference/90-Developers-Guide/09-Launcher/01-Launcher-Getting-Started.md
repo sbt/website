@@ -30,7 +30,7 @@ launcher configuration.
 
 Alternatively, you can repackage the launcher with a launcher configuration file.
 For example, [sbt/sbt](https://github.com/sbt/sbt) pulls in the raw JAR and
-[injects the appropriate boot.properties files for sbt](launcher-inject).
+[injects the appropriate boot.properties files for sbt][launcher-inject].
 
 #### Applications
 
