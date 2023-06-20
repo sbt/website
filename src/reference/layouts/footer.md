@@ -11,23 +11,9 @@
             <a href="https://stackoverflow.com/questions/tagged/sbt">StackOverflow</a>
           </div>
         </div>
-        <div class="support-item">
-          <div class="support-icon">
-            <svg id="lightbend-icon-reverse" class="svg-icon svg-icon-lightbend-reverse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 302 262"><title>lightbend-icon</title><g id="icon"><path d="M1,195v56a10,10,0,0,0,10,10H291a10,10,0,0,0,10-10V195a557.85,557.85,0,0,1-150,20A557.85,557.85,0,0,1,1,195Z" style="fill:#fff"/><path d="M291,1H11A10,10,0,0,0,1,11V176a539.94,539.94,0,0,0,150,21,539.94,539.94,0,0,0,150-21V11A10,10,0,0,0,291,1Z" style="fill:#fff"/></g></svg>
-          </div>
-          <div class="support-detail">
-            <h2>Commercial Support</h2>
-            <a href="https://www.lightbend.com/services/expert-support">Lightbend Subscription</a>
-            <a href="https://www.lightbend.com/services/training">Training</a>
-            <a href="https://www.lightbend.com/services/consulting">Consulting</a>
-          </div>
-        </div>
       </div>
       <div class="col-md-4 text-right ts">
-        &copy; 2016-<script>document.write(new Date().getFullYear())</script> Lightbend Inc.
-        <a href="https://www.lightbend.com">
-          <img src="files/lightbend-reverse.svg" alt="Lightbend, Inc.">
-        </a>
+        &copy; 2023-<script>document.write(new Date().getFullYear())</script> Scala Center
       </div>
     </div>
   </div>
