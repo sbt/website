@@ -1,10 +1,9 @@
 import sbt._
 import Keys._
-import com.typesafe.sbt.git.GitRunner
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport._
-import com.typesafe.sbt.{ SbtGit, SbtSite, site => sbtsite }
-import com.typesafe.sbt.site.paradox.ParadoxSitePlugin.autoImport._
+import com.github.sbt.git.GitRunner
+import com.github.sbt.sbtghpages.GhpagesPlugin
+import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport._
+import com.github.sbt.git.SbtGit
 import scala.sys.process.Process
 import SbtGit.{ git, GitKeys }
 import SiteMap.{ Entry, LastModified }
