@@ -14,17 +14,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
-    <meta name="google-site-verification" content="I28z-8Rg5JifsOR9NpTD9C9dFYutH_Dz8QWOHUDs6lg">
-
-    <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) start -->
-    <script src="https://optanon.blob.core.windows.net/consent/d759c5db-6821-46e0-a988-6bc699efb74e.js" type="text/javascript" charset="UTF-8"></script>
-    <script type="text/javascript">
-      function OptanonWrapper() {
-        //callback when OneTrust is loaded and ready
-      }
-    </script>
-    <!-- OneTrust Cookies Consent Notice (Production Standard, scala-sbt.org, en-GB) end -->
-
+    <script defer data-domain="scala-sbt.org" src="https://plausible.scala-lang.org/js/script.js"></script>
     <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
   </head>
   <body class="landing">
@@ -155,17 +145,6 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
                 <a href="https://stackoverflow.com/questions/tagged/sbt">StackOverflow</a>
               </div>
             </div>
-            <div class="support-item">
-              <div class="support-icon">
-                <svg id="lightbend-icon-reverse" class="svg-icon svg-icon-lightbend-reverse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 302 262"><title>lightbend-icon</title><g id="icon"><path d="M1,195v56a10,10,0,0,0,10,10H291a10,10,0,0,0,10-10V195a557.85,557.85,0,0,1-150,20A557.85,557.85,0,0,1,1,195Z" style="fill:#fff"/><path d="M291,1H11A10,10,0,0,0,1,11V176a539.94,539.94,0,0,0,150,21,539.94,539.94,0,0,0,150-21V11A10,10,0,0,0,291,1Z" style="fill:#fff"/></g></svg>
-              </div>
-              <div class="support-detail">
-                <h2>Commercial Support</h2>
-                <a href="https://www.lightbend.com/services/expert-support">Lightbend Subscription</a>
-                <a href="https://www.lightbend.com/services/training">Training</a>
-                <a href="https://www.lightbend.com/services/consulting">Consulting</a>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -175,7 +154,7 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
     <footer>
       <div class="container footer">
         <div class="row">
-          <div class="col-md-8 sbt">
+          <div class="col-md-12 sbt">
             <nav>
               <a href="index.html">
                 <img src="assets/sbt-logo-reverse.svg" alt="sbt">
@@ -186,19 +165,8 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
               <a href="thank-you.html">Thank You</a>
             </nav>
             <p class="legal">
-              &copy; 2016-<script>document.write(new Date().getFullYear())</script> Lightbend, Inc. |
-              <a href="https://www.lightbend.com/legal/licenses" target="_blank">Licenses</a> |
-              <a href="https://www.lightbend.com/legal/terms" target="_blank">Terms</a> |
-              <a href="https://www.lightbend.com/legal/privacy" target="_blank">Privacy Policy</a> |
-              <a href="cookie.html">Cookie Listing</a> |
-              <a class="optanon-toggle-display">Cookie Settings</a>
+              &copy; 2023-<script>document.write(new Date().getFullYear())</script> Scala Center
             </p>
-          </div>
-          <div class="col-md-4 text-right ts">
-            <a href="https://www.lightbend.com">
-              <img src="assets/lightbend_reverse.png" alt="Lightbend, Inc.">
-            </a>
-
           </div>
         </div>
       </div>
@@ -206,24 +174,6 @@ You can use sbt-native-packager to build native formats like Docker, sbt-release
     <!-- Placed at the end -->
     <script src="assets/jquery.min.js" type="text/javascript"></script>
     <script src="assets/bootstrap.min.js" type="text/javascript"></script>
-    <script type="text/plain" class="optanon-category-2" async>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-41449189-1', 'scala-sbt.org');
-    ga('send', 'pageview');
-    </script>
-    <script type="text/plain" class="optanon-category-2" async>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-23127719-1', 'typesafe.com', {'allowLinker': true, 'name': 'tsTracker'});
-      ga('tsTracker.require', 'linker');
-      ga('tsTracker.linker:autoLink', ['typesafe.com','playframework.com','scala-lang.org','scaladays.org','spray.io','akka.io','scala-sbt.org']);
-      ga('tsTracker.send', 'pageview');
-    </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
     <script type="text/javascript"> docsearch({
       apiKey: 'e47ee877a07ea1c48722f08430d54913',
