@@ -21,7 +21,7 @@ The site generation is driven by [sbt-site](https://github.com/sbt/sbt-site) and
 ## Attention plugin authors
 
 The source for [Community plugins](https://www.scala-sbt.org/release/docs/Community-Plugins.html) page is at [src/reference/01-General-Info/02-Community-Plugins.md](https://github.com/sbt/website/edit/develop/src/reference/01-General-Info/02-Community-Plugins.md).
-Add your plugin to this page and send send us a pull request if your plugin is not already on it.
+Add your plugin to this page and send us a pull request if your plugin is not already on it.
 
 ## Setup
 
