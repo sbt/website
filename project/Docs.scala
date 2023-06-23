@@ -29,7 +29,6 @@ object Docs {
 
   // New documents will live under /1.x/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
-  // - src/nanoc/nanoc.yaml
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = {
     if (isBetaBranch) "1.x-beta"
