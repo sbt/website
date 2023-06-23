@@ -66,7 +66,7 @@ your plugin to the list.
   <!-- 161 stars -->
 - [sbt-site](https://github.com/sbt/sbt-site): site generator.
   <!-- 131 stars -->
-- [sbt-microsites](https://github.com/47deg/sbt-microsites): generate
+- [sbt-microsites](https://github.com/47degrees/sbt-microsites): generate
   and publish microsites using Jekyll. <!-- 125 stars -->
 - [sbt-unidoc](https://github.com/sbt/sbt-unidoc): create unified API
   documentation across subprojects. <!-- 86 stars -->
@@ -141,7 +141,7 @@ your plugin to the list.
 
 #### Deployment integration plugins
 
-- [sbt-heroku](https://github.com/heroku/sbt-heroku): deploy applications
+- [sbt-heroku](https://github.com/heroku/heroku-sbt-plugin): deploy applications
   directly to Heroku. <!-- 86 stars -->
 - [sbt-docker-compose](https://github.com/Tapad/sbt-docker-compose):
   launch Docker images using docker compose. <!-- 86 stars -->
@@ -166,21 +166,21 @@ your plugin to the list.
   <!-- 233 stars -->
 - [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary): show a
   summary of compilation errors. <!-- 145 stars -->
-- [MiMa](https://github.com/lightbend/migration-manager): binary
+- [MiMa](https://github.com/lightbend/mima): binary
   compatibility management for Scala libraries. <!-- 134 stars -->
 - [sbt-groll](https://github.com/sbt/sbt-groll): navigate git history inside
   sbt. <!-- 100 stars -->
-- [sbt-dynver](https://github.com/dwijnand/sbt-dynver): set project version
+- [sbt-dynver](https://github.com/sbt/sbt-dynver): set project version
   dynamically from git metadata. <!-- 87 stars -->
 - [sbt-prompt](https://github.com/agemooij/sbt-prompt): add promptlets and
   themes to your sbt prompt. <!-- 75 stars -->
-- [sbt-crossproject](https://github.com/scala-native/sbt-crossproject):
+- [sbt-crossproject](https://github.com/portable-scala/sbt-crossproject):
   cross-build Scala, Scala.js and Scala Native. <!-- 66 stars -->
 - [sbt-proguard](https://github.com/sbt/sbt-proguard): run ProGuard on
   compiled sources. <!-- 63 stars -->
 - [sbt-structure](https://github.com/JetBrains/sbt-structure): extract project
   structure in XML format. <!-- 53 stars -->
-- [sbt-jni](https://github.com/jodersky/sbt-jni): helpers for working with
+- [sbt-jni](https://github.com/sbt/sbt-jni): helpers for working with
   projects that use JNI. <!-- 51 stars -->
 - [sbt-jol](https://github.com/ktoso/sbt-jol): inspect OpenJDK Java Object
   Layout from sbt. <!-- 48 stars -->
