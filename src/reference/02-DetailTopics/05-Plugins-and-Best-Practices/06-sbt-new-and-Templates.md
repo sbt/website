@@ -43,7 +43,7 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 - [scala/scala3.g8](https://github.com/scala/scala3.g8)                                 (A template for Scala 3 projects)
 - [scala/hello-world.g8](https://github.com/scala/hello-world.g8)                       (A template to demonstrate a minimal Scala application)
 - [scala/scalatest-example.g8](https://github.com/scala/scalatest-example.g8)           (A template for trying out ScalaTest)
-- [akka/akka-scala-seed.g8](https://github.com/akka/akka-scala-seed.g8)                 (A minimal seed template for an Akka with Scala build
+- [akka-quickstart-scala.g8](https://github.com/akka/akka-quickstart-scala.g8)          (A minimal seed template for an Akka with Scala build
 )
 - [akka/akka-java-seed.g8](https://github.com/akka/akka-java-seed.g8)                   (A minimal seed template for an Akka in Java
 )
@@ -52,7 +52,7 @@ The unique aspect of Giter8 is that it uses GitHub (or any other git repository)
 - [lagom/lagom-scala.g8](https://github.com/lagom/lagom-scala.g8/)                      (A [Lagom](https://www.lagomframework.com/) Scala seed template for sbt)
 - [lagom/lagom-java.g8](https://github.com/lagom/lagom-java.g8/)                        (A [Lagom](https://www.lagomframework.com/) Java seed template for sbt)
 - [scala-native/scala-native.g8](https://github.com/scala-native/scala-native.g8)       (Scala Native)
-- [scala-native/sbt-crossproject.g8](https://github.com/scala-native/sbt-crossproject.g8) (sbt-crosspoject)
+- [portable-scala/sbt-crossproject.g8](https://github.com/portable-scala/sbt-crossproject.g8) (sbt-crosspoject)
 - [http4s/http4s.g8](https://github.com/http4s/http4s.g8)                               (http4s services)
 - [unfiltered/unfiltered.g8](https://github.com/unfiltered/unfiltered.g8)               ([Unfiltered](https://unfiltered.ws/) application)
 - [scalatra/scalatra-sbt.g8](https://github.com/scalatra/scalatra-sbt.g8)               (Basic Scalatra template using SBT 0.13.x.)

@@ -399,19 +399,19 @@ The sbt ecosystem would not be the same without so many awesome plugins. Here ar
 - [sbt-sublime](https://github.com/orrsella/sbt-sublime) by Orr Sella
 - [sbt-errors-summary](https://github.com/Duhemm/sbt-errors-summary) by Martin Duhem
 - [sbt-bintray](https://github.com/sbt/sbt-bintray) by Doug Tangren (softprops)
-- [Migration Manager](https://github.com/lightbend/migration-manager/wiki) by Lightbend (Mirco Dotta, Seth Tisue, et al)
+- [Migration Manager](https://github.com/lightbend/mima/wiki) by Lightbend (Mirco Dotta, Seth Tisue, et al)
 - [sbt-protobuf](https://github.com/sbt/sbt-protobuf) by Gerolf Seitz and Kenji Yoshida (xuwei-k)
 - [sbt-site](https://github.com/sbt/sbt-site) by Jonas Fonseca, Josh Suereth, et al
 - [sbt-doctest](https://github.com/tkawachi/sbt-doctest) by KAWACHI Takashi
 - [sbt-robovm](https://github.com/roboscala/sbt-robovm) by Jan Polák
 - [scalastyle-sbt-plugin](https://github.com/scalastyle/scalastyle-sbt-plugin) by Matthew Farwell
-- [sbt-microsites](https://github.com/47deg/sbt-microsites) by 47 Degrees (Juan Pedro Moreno, Javier de Silóniz Sandino, et al)
+- [sbt-microsites](https://github.com/47degrees/sbt-microsites) by 47 Degrees (Juan Pedro Moreno, Javier de Silóniz Sandino, et al)
 - [sbt-header](https://github.com/sbt/sbt-header) by Heiko Seeberger and Benedikt Ritter
 - [sbt-groll](https://github.com/sbt/sbt-groll) by Heiko Seeberger
 - [sbt-ctags](https://github.com/ceedubs/sbt-ctags) by Cody Allen
 - [sbt-aws-lambda](https://github.com/gilt/sbt-aws-lambda) by Gilt (Brendan St John, et al)
-- [sbt-heroku](https://github.com/heroku/sbt-heroku) by Heroku (Joe Kutner)
-- [sbt-dynver](https://github.com/dwijnand/sbt-dynver) by Dale Wijnand
+- [sbt-heroku](https://github.com/heroku/heroku-sbt-plugin) by Heroku (Joe Kutner)
+- [sbt-dynver](https://github.com/sbt/sbt-dynver) by Dale Wijnand
 - [sbt-unidoc](https://github.com/sbt/sbt-unidoc) by Eugene Yokota and Peter Vlugter
 - [sbt-docker-compose](https://github.com/Tapad/sbt-docker-compose) by Tapad (Kurt Kopchik et al)
 - [sbt-coveralls](https://github.com/scoverage/sbt-coveralls) by Ian Forsey and Stephen Samuel
@@ -434,7 +434,7 @@ The sbt ecosystem would not be the same without so many awesome plugins. Here ar
 - [kotlin-plugin](https://github.com/pfn/kotlin-plugin) by Perry (pfn)
 - [sbt-avro](https://github.com/sbt/sbt-avro) by Juan Manuel Caicedo Carvajal (cavorite), Ben McCann, et al
 - [sbt-aspectj](https://github.com/sbt/sbt-aspectj) by Lightbend (Peter Vlugter et al)
-- [sbt-crossproject](https://github.com/scala-native/sbt-crossproject) Denys Shabalin and Guillaume Massé
+- [sbt-crossproject](https://github.com/portable-scala/sbt-crossproject) Denys Shabalin and Guillaume Massé
 - [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) by Stephen Samuel
 - [sbt-dependency-graph-sugar](https://github.com/gilt/sbt-dependency-graph-sugar) by Gilt (Brendan St John et al)
 - [sbt-aether-deploy](https://github.com/arktekk/sbt-aether-deploy) by Arktekk (Erlend Hamnaberg et al)
