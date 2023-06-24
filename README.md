@@ -7,8 +7,6 @@ See [contributors](https://github.com/sbt/website/graphs/contributors) for the l
 
 [scala-sbt.org](https://www.scala-sbt.org) is powered by:
 
-* [nanoc](http://nanoc.ws/) to generate the landing pages.
-
 * [Pamflet](http://www.foundweekends.org/pamflet/), a Scala-based documentation engine written by [@n8han][] (and some contributions from [@eed3si9n][]) generates the sbt 0.13/1.x documentation.
 
 * [Pandoc](https://pandoc.org/) [2.3.1](https://pandoc.org/releases.html#pandoc-2.3.1-28-september-2018), to generate pdf files.
@@ -24,36 +22,6 @@ The source for [Community plugins](https://www.scala-sbt.org/release/docs/Commun
 Add your plugin to this page and send us a pull request if your plugin is not already on it.
 
 ## Setup
-
-### Minimum setup
-
-Currently, nanoc requires Ruby 2.1 or greater.
-
-You'll need the following gems for running nanoc:
-
-```
-$ gem install nanoc:4.0.2
-$ gem install redcarpet
-$ gem install nokogiri
-```
-
-If you're running Ubuntu, you'll need to also install ruby-dev for the native-code in redcarpet:
-
-```
-$ sudo apt-get install ruby-dev
-```
-
-Also, if you're on Ubuntu you might see an error like this:
-
-```
-zlib is missing; necessary for building libxml2
-```
-
-If this is the case, run this:
-
-```
-$ sudo apt-get install zlib1g-dev
-```
 
 ### Full setup
 
@@ -100,7 +68,6 @@ Beware that sbt-ghpages interacts badly if your home directory is a git reposito
 - Make sure you **enable** pdf generation: `sbt -Dsbt.website.generate_pdf`
 - Update `sbt.version` in `project/build.properties`
 - Update `targetSbtFullVersion` in `project/Docs.scala`
-- Add last release to "Previous releases" in `src/nanoc/nanoc.yaml`
 - Update `sbtVersion`, `windowsBuild` and `sbtVersionForScalaDoc` in `src/reference/template.properties`
 
 ## Dollar sign
