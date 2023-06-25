@@ -6,7 +6,7 @@ out: GitHub-Actions-with-sbt.html
   [GA-Reference]: https://docs.github.com/en/free-pro-team@latest/actions/reference
   [Setup-Java]: https://github.com/actions/setup-java
   [GA-Matrix]: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategy
-  [sbt-github-actions]: https://github.com/djspiewak/sbt-github-actions
+  [sbt-github-actions]: https://github.com/sbt/sbt-github-actions
 
 Setting up GitHub Actions with sbt
 ----------------------------------
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup JDK
       uses: actions/setup-java@v3
       with:
@@ -87,7 +87,7 @@ jobs:
       JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup JDK
       uses: actions/setup-java@v3
       with:
@@ -168,7 +168,7 @@ jobs:
     runs-on: \${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup JDK
       uses: actions/setup-java@v3
       with:
@@ -208,7 +208,7 @@ jobs:
     runs-on: \${{ matrix.os }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup JDK
       uses: actions/setup-java@v3
       with:
@@ -265,7 +265,7 @@ jobs:
       JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Setup JDK
       uses: actions/setup-java@v3
       with:
