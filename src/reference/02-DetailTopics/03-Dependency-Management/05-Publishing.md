@@ -155,7 +155,7 @@ supported repository types.
 By default sbt will publish your artifact with the binary version of Scala
 you're using. For example if your project is using Scala 2.13.x your example
 artifact would be published under `example_2.13`. This is often what you want,
-but if you're publishing a pure java artifact or a compiler plugin you'll want
+but if you're publishing a pure Java artifact or a compiler plugin you'll want
 to change the `CrossVersion`. See the [Cross Build][Cross-Build] page for more
 details under the _Overriding the publishing convention_ section.
 
