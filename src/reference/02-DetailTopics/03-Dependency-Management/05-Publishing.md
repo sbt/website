@@ -150,6 +150,15 @@ To support multiple incompatible Scala versions, enable cross building
 and do `+ publish` (see [Cross Build][Cross-Build]). See [Resolvers] for other
 supported repository types.
 
+### Overriding the publishing convention
+
+By default sbt will publish your artifact with the binary version of Scala
+you're using. For example if your project is using Scala 2.13.x your example
+artifact would be published under `example_2.13`. This is often what you want,
+but if you're publishing a pure Java artifact or a compiler plugin you'll want
+to change the `CrossVersion`. See the [Cross Build][Cross-Build] page for more
+details under the _Overriding the publishing convention_ section.
+
 ### Published artifacts
 
 By default, the main binary jar, a sources jar, and a API documentation
