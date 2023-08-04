@@ -1,23 +1,28 @@
-ThisBuild / version      := "0.1.0"
+ThisBuild / version := "0.1.0"
 ThisBuild / scalaVersion := "2.13.6"
 ThisBuild / organization := "com.example"
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.2.7"
-val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.5.0"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.9.2"
+val scalaTest = "org.scalatest" %% "scalatest" % "3.2.16"
+val sttp = "com.softwaremill.sttp.client4" %% "core" % "4.0.0-M2"
+val ujson = "com.lihaoyi" %% "ujson" % "3.1.2"
 
-lazy val hello = (project in file("."))
+lazy val hello = project
+  .in(file("."))
   .aggregate(helloCore)
   .dependsOn(helloCore)
   .enablePlugins(JavaAppPackaging)
   .settings(
     name := "Hello",
-    libraryDependencies += scalaTest % Test,
+    libraryDependencies += scalaTest % Test
   )
 
-lazy val helloCore = (project in file("core"))
+lazy val helloCore = project
+  .in(file("core"))
   .settings(
     name := "Hello Core",
-    libraryDependencies ++= Seq(gigahorse, playJson),
-    libraryDependencies += scalaTest % Test,
+    libraryDependencies ++= Seq(
+      scalaTest % Test,
+      sttp,
+      ujson
+    )
   )

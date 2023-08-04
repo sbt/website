@@ -1,26 +1,19 @@
 package example.core
 
-import gigahorse._, support.okhttp.Gigahorse
-import scala.concurrent._, duration._
-import play.api.libs.json._
+import sttp.client4.quick._
+import sttp.client4.Response
 
 object Weather {
-  lazy val http = Gigahorse.http(Gigahorse.config)
-
-  def weather: Future[String] = {
-    val baseUrl = "https://www.metaweather.com/api/location"
-    val locUrl = baseUrl + "/search/"
-    val weatherUrl = baseUrl + "/%s/"
-    val rLoc = Gigahorse.url(locUrl).get.
-      addQueryString("query" -> "New York")
-    import ExecutionContext.Implicits.global
-    for {
-      loc <- http.run(rLoc, parse)
-      woeid = (loc \ 0  \ "woeid").get
-      rWeather = Gigahorse.url(weatherUrl format woeid).get
-      weather <- http.run(rWeather, parse)
-    } yield (weather \\ "weather_state_name")(0).as[String].toLowerCase
+  def weather() = {
+    val response: Response[String] = quickRequest
+      .get(
+        uri"https://api.open-meteo.com/v1/forecast?latitude=$newYorkLatitude&longitude=$newYorkLongitude&current_weather=true"
+      )
+      .send()
+    val json = ujson.read(response.body)
+    json.obj("current_weather")("temperature").num
   }
 
-  private def parse = Gigahorse.asString andThen Json.parse
+  private val newYorkLatitude: Double = 40.7143
+  private val newYorkLongitude: Double = -74.006
 }
