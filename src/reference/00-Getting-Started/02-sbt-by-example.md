@@ -274,7 +274,7 @@ We can find out the current weather in New York.
 ```scala
 sbt:Hello> console
 [info] Starting scala interpreter...
-Welcome to Scala 2.13.6 (OpenJDK 64-Bit Server VM, Java 17).
+Welcome to Scala 2.13.11 (OpenJDK 64-Bit Server VM, Java 17).
 Type in expressions for evaluation. Or try :help.
 
 scala> :paste
