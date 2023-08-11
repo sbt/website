@@ -195,11 +195,11 @@ sbt:Hello>
 
 プロンプトが `sbt:Hello>` に変わったことに注目してほしい。
 
-### libraryDependencies に ScalaTest を追加する
+### libraryDependencies に toolkit-test を追加する
 
 エディタを使って、`build.sbt` を以下のように変更する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/build.sbt) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/build.sbt) {}
 
 `reload` コマンドを使って、`build.sbt` の変更を反映させる。
 
@@ -221,35 +221,35 @@ sbt:Hello> ~testQuick
 
 ### テストを書く
 
-上のコマンドを走らせたままで、エディタから `src/test/scala/example/HelloSpec.scala` という名前のファイルを作成する:
+上のコマンドを走らせたままで、エディタから `src/test/scala/example/HelloSuite.scala` という名前のファイルを作成する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/src/test/scala/example/HelloSpec.scala) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/src/test/scala/example/HelloSuite.scala) {}
 
 `~testQuick` が検知したはずだ:
 
 ```
 [info] 2. Monitoring source files for hello/testQuick...
 [info]    Press <enter> to interrupt or '?' for more options.
-[info] Build triggered by /private/tmp/foo-build/src/test/scala/HelloSpec.scala. Running 'testQuick'.
-[info] compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.13/test-classes ...
-[info] HelloSpec:
-[info] - Hello should start with H *** FAILED ***
-[info]   "hello" did not start with "H" (HelloSpec.scala:5)
-[info] Run completed in 44 milliseconds.
-[info] Total number of tests run: 1
-[info] Suites: completed 1, aborted 0
-[info] Tests: succeeded 0, failed 1, canceled 0, ignored 0, pending 0
-[info] *** 1 TEST FAILED ***
+[info] Build triggered by /tmp/foo-build/src/test/scala/example/HelloSuite.scala. Running 'testQuick'.
+[info] compiling 1 Scala source to /tmp/foo-build/target/scala-2.13/test-classes ...
+HelloSuite:
+==> X HelloSuite.Hello should start with H  0.004s munit.FailException: /tmp/foo-build/src/test/scala/example/HelloSuite.scala:4 assertion failed
+3:  test("Hello should start with H") {
+4:    assert("hello".startsWith("H"))
+5:  }
+at munit.FunSuite.assert(FunSuite.scala:11)
+at HelloSuite.\$anonfun\$new\$1(HelloSuite.scala:4)
+[error] Failed: Total 1, Failed 1, Errors 0, Passed 0
 [error] Failed tests:
-[error]         HelloSpec
-[error] (Test / testQuick) sbt.TestsFailedException: Tests unsuccessfull
+[error]         HelloSuite
+[error] (Test / testQuick) sbt.TestsFailedException: Tests unsuccessful
 ```
 
 ### テストが通るようにする
 
-エディタを使って `src/test/scala/example/HelloSpec.scala` を以下のように変更する:
+エディタを使って `src/test/scala/example/HelloSuite.scala` を以下のように変更する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/changes/HelloSpec.scala) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/changes/HelloSuite.scala) {}
 
 テストが通過したことを確認して、`Enter` を押して継続的テストを抜ける。
 
@@ -338,7 +338,7 @@ sbt:Hello> projects
 sbt:Hello> helloCore/compile
 ```
 
-### サブプロジェクトに ScalaTest を追加する
+### サブプロジェクトに toolkit-test を追加する
 
 `build.sbt` を以下のように変更する:
 
@@ -380,18 +380,15 @@ import sttp.client4.quick._
 import sttp.client4.Response
 
 object Weather {
-    def weather() = {
+    def temp() = {
         val response: Response[String] = quickRequest
             .get(
-                uri"https://api.open-meteo.com/v1/forecast?latitude=\$newYorkLatitude&longitude=\$newYorkLongitude&current_weather=true"
+                uri"https://api.open-meteo.com/v1/forecast?latitude=40.7143&longitude=-74.006&current_weather=true"
             )
             .send()
         val json = ujson.read(response.body)
         json.obj("current_weather")("temperature").num
     }
-
-    private val newYorkLatitude: Double = 40.7143
-    private val newYorkLongitude: Double = -74.006
 }
 ```
 
@@ -404,7 +401,7 @@ import example.core.Weather
 
 object Hello {
     def main(args: Array[String]): Unit = {
-        val temp = Weather.weather()
+        val temp = Weather.temp()
         println(s"Hello! The current temperature in New York is \$temp C.")
     }
 }
@@ -443,9 +440,6 @@ sbt:Hello> dist
 [info] Main Scala API documentation to /tmp/foo-build/core/target/scala-2.13/api...
 [info] Wrote /tmp/foo-build/core/target/scala-2.13/hello-core_2.13-0.1.0-SNAPSHOT.pom
 [info] Main Scala API documentation successful.
-[warn] [1] The maintainer is empty
-[warn] Add this to your build.sbt
-[warn]   maintainer := "your.name@company.org"
 [success] All package validations passed
 [info] Your package is ready in /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
 ```
@@ -526,7 +520,7 @@ sbt:Hello> inspect tree dist
 sbt のコマンドをターミナルから直接渡して sbt をバッチモードで実行することができる。
 
 ```
-\$ sbt clean "testOnly HelloSpec"
+\$ sbt clean "testOnly HelloSuite"
 ```
 
 **Note**: バッチモードでの実行は JVM のスピンアップと JIT を毎回行うため、**ビルドかなり遅くなる。**

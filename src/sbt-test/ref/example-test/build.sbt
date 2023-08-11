@@ -5,5 +5,5 @@ lazy val hello = project
   .in(file("."))
   .settings(
     name := "Hello",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % Test
+    libraryDependencies += "org.scala-lang" %% "toolkit-test" % "0.1.7" % Test
   )

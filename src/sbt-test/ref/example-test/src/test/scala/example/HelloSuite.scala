@@ -1,6 +1,5 @@
-import org.scalatest.funsuite._
 
-class HelloSpec extends AnyFunSuite {
+class HelloSuite extends munit.FunSuite {
   test("Hello should start with H") {
     assert("hello".startsWith("H"))
   }

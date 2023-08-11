@@ -1,7 +1,7 @@
 ThisBuild / scalaVersion := "2.13.11"
 ThisBuild / organization := "com.example"
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.2.16"
+val toolkitTest = "org.scala-lang" %% "toolkit-test" % "0.1.7"
 
 lazy val hello = project
   .in(file("."))
@@ -9,9 +9,8 @@ lazy val hello = project
   .settings(
     name := "Hello",
     libraryDependencies ++= Seq(
-      "com.softwaremill.sttp.client4" %% "core" % "4.0.0-M2",
-      "com.lihaoyi" %% "ujson" % "3.1.2",
-      scalaTest % Test
+      "org.scala-lang" %% "toolkit" % "0.1.7",
+      toolkitTest % Test
     )
   )
 
@@ -19,5 +18,5 @@ lazy val helloCore = project
   .in(file("core"))
   .settings(
     name := "Hello Core",
-    libraryDependencies += scalaTest % Test
+    libraryDependencies += toolkitTest % Test
   )

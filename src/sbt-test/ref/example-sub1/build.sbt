@@ -6,9 +6,8 @@ lazy val hello = project
   .settings(
     name := "Hello",
     libraryDependencies ++= Seq(
-      "com.softwaremill.sttp.client4" %% "core" % "4.0.0-M2",
-      "com.lihaoyi" %% "ujson" % "3.1.2",
-      "org.scalatest" %% "scalatest" % "3.2.16" % Test
+      "org.scala-lang" %% "toolkit" % "0.1.7",
+      "org.scala-lang" %% "toolkit-test" % "0.1.7" % Test
     )
   )
 
