@@ -17,38 +17,32 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
-    - name: Coursier cache
-      uses: coursier/cache-action@v6
-    - name: Cache sbt
-      uses: actions/cache@v3
-      with:
-        path: ~/.sbt
-        key: ${{ runner.os }}-sbt-cache-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}-c
+        cache: 'sbt'
+
     - name: Build and test
       run: |
         sbt -v scalafmtSbtCheck scalafmtCheckAll scripted makeSite
-        rm -rf "$HOME/.ivy2/local" || true
-        rm -r $(find $HOME/.sbt/boot -name "*-SNAPSHOT") || true
-        find $HOME/Library/Caches/Coursier/v1        -name "ivydata-*.properties" -delete || true
-        find $HOME/.ivy2/cache                       -name "ivydata-*.properties" -delete || true
-        find $HOME/.cache/coursier/v1                -name "ivydata-*.properties" -delete || true
-        find $HOME/.sbt                              -name "*.lock"               -delete || true
+
     - name: Pandoc English
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/sbt-reference.pdf target/pamflet/Combined+Pages+Pdf.md'
+
     - name: Pandoc Japanese
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex -V CJKmainfont="Noto Sans JP" --toc -s -o target/pamflet/ja/sbt-reference.pdf target/pamflet/ja/Combined+Pages+Pdf.md'
+
     - name: Pandoc Chinese
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex -V CJKmainfont="Noto Sans SC" --toc -s -o target/pamflet/zh-cn/sbt-reference.pdf target/pamflet/zh-cn/Combined+Pages+Pdf.md'
+
     - name: Pandoc Spanish
       uses: eed3si9n/pandoc@master
       with:
         args: '--pdf-engine=xelatex --toc -s -o target/pamflet/es/sbt-reference.pdf target/pamflet/es/Combined+Pages+Pdf.md'
+
     # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
     - name: Deploy to GH Pages
       if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/1.x-beta') }}
