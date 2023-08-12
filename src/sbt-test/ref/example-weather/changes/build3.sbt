@@ -1,23 +1,24 @@
-ThisBuild / version      := "0.1.0"
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / version := "0.1.0"
+ThisBuild / scalaVersion := "2.13.11"
 ThisBuild / organization := "com.example"
 
-val scalaTest = "org.scalatest" %% "scalatest" % "3.2.7"
-val gigahorse = "com.eed3si9n" %% "gigahorse-okhttp" % "0.5.0"
-val playJson  = "com.typesafe.play" %% "play-json" % "2.9.2"
+val toolkitTest = "org.scala-lang" %% "toolkit-test" % "0.1.7"
 
-lazy val hello = (project in file("."))
+lazy val hello = project
+  .in(file("."))
   .aggregate(helloCore)
   .dependsOn(helloCore)
   .enablePlugins(JavaAppPackaging)
   .settings(
     name := "Hello",
-    libraryDependencies += scalaTest % Test,
+    libraryDependencies += toolkitTest % Test,
+    maintainer := "A Scala Dev!"
   )
 
-lazy val helloCore = (project in file("core"))
+lazy val helloCore = project
+  .in(file("core"))
   .settings(
     name := "Hello Core",
-    libraryDependencies ++= Seq(gigahorse, playJson),
-    libraryDependencies += scalaTest % Test,
+    libraryDependencies += "org.scala-lang" %% "toolkit" % "0.1.7",
+    libraryDependencies += toolkitTest % Test
   )

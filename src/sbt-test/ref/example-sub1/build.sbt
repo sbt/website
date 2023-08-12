@@ -1,14 +1,18 @@
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / scalaVersion := "2.13.11"
 ThisBuild / organization := "com.example"
 
-lazy val hello = (project in file("."))
+lazy val hello = project
+  .in(file("."))
   .settings(
     name := "Hello",
-    libraryDependencies += "com.eed3si9n" %% "gigahorse-okhttp" % "0.5.0",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % Test,
+    libraryDependencies ++= Seq(
+      "org.scala-lang" %% "toolkit" % "0.1.7",
+      "org.scala-lang" %% "toolkit-test" % "0.1.7" % Test
+    )
   )
 
-lazy val helloCore = (project in file("core"))
+lazy val helloCore = project
+  .in(file("core"))
   .settings(
-    name := "Hello Core",
+    name := "Hello Core"
   )

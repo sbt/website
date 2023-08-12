@@ -27,11 +27,13 @@ sbt の内部がどうなっているかや理由みたいなことを解説す�
 
 ```
 \$ sbt
-[info] Updated file /tmp/foo-build/project/build.properties: set sbt.version to 1.1.4
-[info] Loading project definition from /private/tmp/foo-build/project
-[info] Loading settings from build.sbt ...
-[info] Set current project to foo-build (in build file:/private/tmp/foo-build/)
+[info] Updated file /tmp/foo-build/project/build.properties: set sbt.version to 1.9.3
+[info] welcome to sbt 1.9.3 (Eclipse Adoptium Java 17.0.8)
+[info] Loading project definition from /tmp/foo-build/project
+[info] loading settings for project foo-build from build.sbt ...
+[info] Set current project to foo-build (in build file:/tmp/foo-build/)
 [info] sbt server started at local:///Users/eed3si9n/.sbt/1.0/server/abc4fb6c89985a00fd95/sock
+[info] started sbt server
 sbt:foo-build>
 ```
 
@@ -58,8 +60,9 @@ sbt:foo-build> compile
 
 ```
 sbt:foo-build> ~compile
-[success] Total time: 0 s, completed May 6, 2018 3:52:08 PM
-1. Waiting for source changes... (press enter to interrupt)
+[success] Total time: 0 s, completed 28 Jul 2023, 13:32:35
+[info] 1. Monitoring source files for foo-build/compile...
+[info]    Press <enter> to interrupt or '?' for more options.
 ```
 
 ### ソース・ファイルを書く
@@ -79,10 +82,11 @@ object Hello {
 この新しいファイルは実行中のコマンドが自動的に検知したはずだ:
 
 ```
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/classes ...
-[info] Done compiling.
-[success] Total time: 2 s, completed May 6, 2018 3:53:42 PM
-2. Waiting for source changes... (press enter to interrupt)
+[info] Build triggered by /tmp/foo-build/src/main/scala/example/Hello.scala. Running 'compile'.
+[info] compiling 1 Scala source to /tmp/foo-build/target/scala-2.12/classes ...
+[success] Total time: 0 s, completed 28 Jul 2023, 13:38:55
+[info] 2. Monitoring source files for foo-build/compile...
+[info]    Press <enter> to interrupt or '?' for more options.
 ```
 
 `~compile` を抜けるには `Enter` を押す。
@@ -102,13 +106,14 @@ sbt:foo-build> compile
 ```
 sbt:foo-build> help
 
-  about                                          Displays basic information about sbt and the build.
-  tasks                                          Lists the tasks defined for the current project.
-  settings                                       Lists the settings defined for the current project.
-  reload                                         (Re)loads the current project or changes to plugins project or returns from it.
-  new                                            Creates a new sbt build.
-  projects                                       Lists the names of available projects or temporarily adds/removes extra builds to the session.
-  project                                        Displays the current project or changes to the provided `project`.
+<command> (; <command>)*                       Runs the provided semicolon-separated commands.
+about                                          Displays basic information about sbt and the build.
+tasks                                          Lists the tasks defined for the current project.
+settings                                       Lists the settings defined for the current project.
+reload                                         (Re)loads the current project or changes to plugins project or returns from it.
+new                                            Creates a new sbt build.
+new                                            Creates a new sbt build.
+projects                                       Lists the names of available projects or temporarily adds/removes extra builds to the session.
 
 ....
 ```
@@ -124,11 +129,9 @@ Runs a main class, passing along arguments provided on the command line.
 
 ```
 sbt:foo-build> run
-[info] Packaging /private/tmp/foo-build/target/scala-2.12/foo-build_2.12-0.1.0-SNAPSHOT.jar ...
-[info] Done packaging.
-[info] Running example.Hello
+[info] running example.Hello
 Hello
-[success] Total time: 1 s, completed May 6, 2018 4:10:44 PM
+[success] Total time: 0 s, completed 28 Jul 2023, 13:40:31
 ```
 
 ### sbt シェルから ThisBuild / scalaVersion をセットする
@@ -136,6 +139,10 @@ Hello
 ```
 sbt:foo-build> set ThisBuild / scalaVersion := "$example_scala213$"
 [info] Defining ThisBuild / scalaVersion
+[info] The new value will be used by Compile / bspBuildTarget, Compile / dependencyTreeCrossProjectId and 50 others.
+[info]  Run `last` for details.
+[info] Reapplying settings...
+[info] set current project to foo-build (in build file:/tmp/foo-build/)
 ```
 
 `scalaVersion` セッティングを確認する:
@@ -152,6 +159,13 @@ sbt:foo-build> scalaVersion
 ```
 sbt:foo-build> session save
 [info] Reapplying settings...
+[info] set current project to foo-build (in build file:/tmp/foo-build/)
+[warn] build source files have changed
+[warn] modified files:
+[warn]   /tmp/foo-build/build.sbt
+[warn] Apply these changes by running `reload`.
+[warn] Automatically reload the build when source changes are detected by setting `Global / onChangedBuildSource := ReloadOnSourceChanges`.
+[warn] Disable this warning by setting `Global / onChangedBuildSource := IgnoreSourceChanges`.
 ```
 
 `build.sbt` ファイルは以下のようになったはずだ:
@@ -172,19 +186,20 @@ ThisBuild / scalaVersion := "$example_scala213$"
 
 ```
 sbt:foo-build> reload
-[info] Loading project definition from /private/tmp/foo-build/project
-[info] Loading settings from build.sbt ...
-[info] Set current project to Hello (in build file:/private/tmp/foo-build/)
+[info] welcome to sbt 1.9.3 (Eclipse Adoptium Java 17.0.8)
+[info] loading project definition from /tmp/foo-build/project
+[info] loading settings for project hello from build.sbt ...
+[info] set current project to Hello (in build file:/tmp/foo-build/)
 sbt:Hello>
 ```
 
 プロンプトが `sbt:Hello>` に変わったことに注目してほしい。
 
-### libraryDependencies に ScalaTest を追加する
+### libraryDependencies に toolkit-test を追加する
 
 エディタを使って、`build.sbt` を以下のように変更する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/build.sbt) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/build.sbt) {}
 
 `reload` コマンドを使って、`build.sbt` の変更を反映させる。
 
@@ -206,36 +221,35 @@ sbt:Hello> ~testQuick
 
 ### テストを書く
 
-上のコマンドを走らせたままで、エディタから `src/test/scala/HelloSpec.scala` という名前のファイルを作成する:
+上のコマンドを走らせたままで、エディタから `src/test/scala/example/HelloSuite.scala` という名前のファイルを作成する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/src/test/scala/HelloSpec.scala) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/src/test/scala/example/HelloSuite.scala) {}
 
 `~testQuick` が検知したはずだ:
 
 ```
-2. Waiting for source changes... (press enter to interrupt)
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/test-classes ...
-[info] Done compiling.
-[info] HelloSpec:
-[info] - Hello should start with H *** FAILED ***
-[info]   assert("hello".startsWith("H"))
-[info]          |       |          |
-[info]          "hello" false      "H" (HelloSpec.scala:5)
-[info] Run completed in 135 milliseconds.
-[info] Total number of tests run: 1
-[info] Suites: completed 1, aborted 0
-[info] Tests: succeeded 0, failed 1, canceled 0, ignored 0, pending 0
-[info] *** 1 TEST FAILED ***
+[info] 2. Monitoring source files for hello/testQuick...
+[info]    Press <enter> to interrupt or '?' for more options.
+[info] Build triggered by /tmp/foo-build/src/test/scala/example/HelloSuite.scala. Running 'testQuick'.
+[info] compiling 1 Scala source to /tmp/foo-build/target/scala-2.13/test-classes ...
+HelloSuite:
+==> X HelloSuite.Hello should start with H  0.004s munit.FailException: /tmp/foo-build/src/test/scala/example/HelloSuite.scala:4 assertion failed
+3:  test("Hello should start with H") {
+4:    assert("hello".startsWith("H"))
+5:  }
+at munit.FunSuite.assert(FunSuite.scala:11)
+at HelloSuite.\$anonfun\$new\$1(HelloSuite.scala:4)
+[error] Failed: Total 1, Failed 1, Errors 0, Passed 0
 [error] Failed tests:
-[error]   HelloSpec
+[error]         HelloSuite
 [error] (Test / testQuick) sbt.TestsFailedException: Tests unsuccessful
 ```
 
 ### テストが通るようにする
 
-エディタを使って `src/test/scala/HelloSpec.scala` を以下のように変更する:
+エディタを使って `src/test/scala/example/HelloSuite.scala` を以下のように変更する:
 
-@@snip [scalatest]($root$/src/sbt-test/ref/example-scalatest/changes/HelloSpec.scala) {}
+@@snip [example-test]($root$/src/sbt-test/ref/example-test/changes/HelloSuite.scala) {}
 
 テストが通過したことを確認して、`Enter` を押して継続的テストを抜ける。
 
@@ -252,63 +266,53 @@ New York の現在の天気を調べてみる:
 ```scala
 sbt:Hello> console
 [info] Starting scala interpreter...
-Welcome to Scala 2.12.7 (Java HotSpot(TM) 64-Bit Server VM, Java 1.8.0_171).
+Welcome to Scala 2.13.11 (OpenJDK 64-Bit Server VM, Java 17).
 Type in expressions for evaluation. Or try :help.
 
 scala> :paste
 // Entering paste mode (ctrl-D to finish)
 
-import scala.concurrent._, duration._
-import gigahorse._, support.okhttp.Gigahorse
-import play.api.libs.json._
+import sttp.client4.quick._
+import sttp.client4.Response
 
-Gigahorse.withHttp(Gigahorse.config) { http =>
-  val baseUrl = "https://www.metaweather.com/api/location"
-  val rLoc = Gigahorse.url(baseUrl + "/search/").get.
-    addQueryString("query" -> "New York")
-  val fLoc = http.run(rLoc, Gigahorse.asString)
-  val loc = Await.result(fLoc, 10.seconds)
-  val woeid = (Json.parse(loc) \\ 0 \\ "woeid").get
-  val rWeather = Gigahorse.url(baseUrl + s"/\$woeid/").get
-  val fWeather = http.run(rWeather, Gigahorse.asString)
-  val weather = Await.result(fWeather, 10.seconds)
-  ({Json.parse(_: String)} andThen Json.prettyPrint)(weather)
-}
+val newYorkLatitude: Double = 40.7143
+val newYorkLongitude: Double = -74.006
+val response: Response[String] = quickRequest
+.get(
+    uri"https://api.open-meteo.com/v1/forecast?latitude=\$newYorkLatitude&longitude=\$newYorkLongitude&current_weather=true"
+)
+.send()
 
-// Ctrl+D を押してペーストモードを抜ける
+println(ujson.read(response.body).render(indent = 2))
+
+// press Ctrl+D
 
 // Exiting paste mode, now interpreting.
 
-import scala.concurrent._
-import duration._
-import gigahorse._
-import support.okhttp.Gigahorse
-import play.api.libs.json._
-res0: String =
 {
-  "consolidated_weather" : [ {
-    "id" : 5325278131781632,
-    "weather_state_name" : "Light Rain",
-    "weather_state_abbr" : "lr",
-    "wind_direction_compass" : "W",
-    "created" : "2019-11-23T09:16:43.892336Z",
-    "applicable_date" : "2019-11-23",
-    "min_temp" : 0.36,
-    "max_temp" : 8.375,
-    "the_temp" : 3.98,
-    "wind_speed" : 4.813710565158143,
-    "wind_direction" : 266.48254020294627,
-    "air_pressure" : 1017,
-    "humidity" : 58,
-    "visibility" : 15.37583015191283,
-    "predictability" : 75
-  }, {
-    "id" : 6428406054912000,
-    "weather_state_name" : "Heavy Rain",
-    "weather_state_abbr" : "hr",
-  ...
+    "latitude": 40.710335,
+    "longitude": -73.99307,
+    "generationtime_ms": 0.36704540252685547,
+    "utc_offset_seconds": 0,
+    "timezone": "GMT",
+    "timezone_abbreviation": "GMT",
+    "elevation": 51,
+    "current_weather": {
+        "temperature": 21.3,
+        "windspeed": 16.7,
+        "winddirection": 205,
+        "weathercode": 3,
+        "is_day": 1,
+        "time": "2023-08-04T10:00"
+    }
+}
+import sttp.client4.quick._
+import sttp.client4.Response
+val newYorkLatitude: Double = 40.7143
+val newYorkLongitude: Double = -74.006
+val response: sttp.client4.Response[String] = Response({"latitude":40.710335,"longitude":-73.99307,"generationtime_ms":0.36704540252685547,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":51.0,"current_weather":{"temperature":21.3,"windspeed":16.7,"winddirection":205.0,"weathercode":3,"is_day":1,"time":"2023-08-04T10:00"}},200,,List(:status: 200, content-encoding: deflate, content-type: application/json; charset=utf-8, date: Fri, 04 Aug 2023 10:09:11 GMT),List(),RequestMetadata(GET,https://api.open-meteo.com/v1/forecast?latitude=40.7143&longitude...
 
-scala> :q // これで REPL を抜ける
+scala> :q // to quit
 ```
 
 ### サブプロジェクトを作成する
@@ -334,7 +338,7 @@ sbt:Hello> projects
 sbt:Hello> helloCore/compile
 ```
 
-### サブプロジェクトに ScalaTest を追加する
+### サブプロジェクトに toolkit-test を追加する
 
 `build.sbt` を以下のように変更する:
 
@@ -360,40 +364,31 @@ sbt:Hello> ~testQuick
 
 @@snip [example-sub4]($root$/src/sbt-test/ref/example-sub4/build.sbt) {}
 
-### Play JSON を使って JSON をパースする
+### uJson を使って JSON をパースする
 
-`helloCore` に Play JSON を追加しよう。
+`helloCore` に uJson を追加しよう。
 
 @@snip [example-weather-build]($root$/src/sbt-test/ref/example-weather/build.sbt) {}
 
 `reload` 後、`core/src/main/scala/example/core/Weather.scala` を追加する:
 
 ```scala
+
 package example.core
 
-import gigahorse._, support.okhttp.Gigahorse
-import scala.concurrent._, duration._
-import play.api.libs.json._
+import sttp.client4.quick._
+import sttp.client4.Response
 
 object Weather {
-  lazy val http = Gigahorse.http(Gigahorse.config)
-
-  def weather: Future[String] = {
-    val baseUrl = "https://www.metaweather.com/api/location"
-    val locUrl = baseUrl + "/search/"
-    val weatherUrl = baseUrl + "/%s/"
-    val rLoc = Gigahorse.url(locUrl).get.
-      addQueryString("query" -> "New York")
-    import ExecutionContext.Implicits.global
-    for {
-      loc <- http.run(rLoc, parse)
-      woeid = (loc \\ 0 \\ "woeid").get
-      rWeather = Gigahorse.url(weatherUrl format woeid).get
-      weather <- http.run(rWeather, parse)
-    } yield (weather \\\\ "weather_state_name")(0).as[String].toLowerCase
-  }
-
-  private def parse = Gigahorse.asString andThen Json.parse
+    def temp() = {
+        val response: Response[String] = quickRequest
+            .get(
+                uri"https://api.open-meteo.com/v1/forecast?latitude=40.7143&longitude=-74.006&current_weather=true"
+            )
+            .send()
+        val json = ujson.read(response.body)
+        json.obj("current_weather")("temperature").num
+    }
 }
 ```
 
@@ -402,15 +397,13 @@ object Weather {
 ```scala
 package example
 
-import scala.concurrent._, duration._
-import core.Weather
+import example.core.Weather
 
 object Hello {
-  def main(args: Array[String]): Unit = {
-    val w = Await.result(Weather.weather, 10.seconds)
-    println(s"Hello! The weather in New York is \$w.")
-    Weather.http.close()
-  }
+    def main(args: Array[String]): Unit = {
+        val temp = Weather.temp()
+        println(s"Hello! The current temperature in New York is \$temp C.")
+    }
 }
 ```
 
@@ -418,16 +411,10 @@ object Hello {
 
 ```
 sbt:Hello> run
-[info] Compiling 1 Scala source to /private/tmp/foo-build/core/target/scala-2.12/classes ...
-[info] Done compiling.
-[info] Compiling 1 Scala source to /private/tmp/foo-build/target/scala-2.12/classes ...
-[info] Packaging /private/tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.jar ...
-[info] Done packaging.
-[info] Done compiling.
-[info] Packaging /private/tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.jar ...
-[info] Done packaging.
-[info] Running example.Hello
-Hello! The weather in New York is mostly cloudy.
+[info] compiling 1 Scala source to /tmp/foo-build/core/target/scala-2.13/classes ...
+[info] compiling 1 Scala source to /tmp/foo-build/target/scala-2.13/classes ...
+[info] running example.Hello
+Hello! The current temperature in New York is 22.7 C.
 ```
 
 ### sbt-native-packger プラグインを追加する
@@ -442,11 +429,19 @@ Hello! The weather in New York is mostly cloudy.
 
 ### 配布用の .zip ファイルを作る
 
+
 ```
+sbt:Hello> reload
+...
 sbt:Hello> dist
-[info] Wrote /private/tmp/foo-build/target/scala-2.12/hello_2.12-0.1.0-SNAPSHOT.pom
-[info] Wrote /private/tmp/foo-build/core/target/scala-2.12/hello-core_2.12-0.1.0-SNAPSHOT.pom
-[info] Your package is ready in /private/tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
+[info] Wrote /private/tmp/foo-build/target/scala-2.13/hello_2.13-0.1.0-SNAPSHOT.pom
+[info] Main Scala API documentation to /tmp/foo-build/target/scala-2.13/api...
+[info] Main Scala API documentation successful.
+[info] Main Scala API documentation to /tmp/foo-build/core/target/scala-2.13/api...
+[info] Wrote /tmp/foo-build/core/target/scala-2.13/hello-core_2.13-0.1.0-SNAPSHOT.pom
+[info] Main Scala API documentation successful.
+[success] All package validations passed
+[info] Your package is ready in /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
 ```
 
 パッケージ化されたアプリの実行は以下のように行う:
@@ -456,25 +451,23 @@ sbt:Hello> dist
 \$ cd /tmp/someother
 \$ unzip -o -d /tmp/someother /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
 \$ ./hello-0.1.0-SNAPSHOT/bin/hello
-Hello! The weather in New York is mostly cloudy.
-```
+Hello! The current temperature in New York is 22.7 C.
+``
 
 ### アプリを Docker化させる
 
 ```
 sbt:Hello> Docker/publishLocal
 ....
-[info] Successfully built b6ce1b6ab2c0
-[info] Successfully tagged hello:0.1.0-SNAPSHOT
-[info] Built image hello:0.1.0-SNAPSHOT
+[info] Built image hello with tags [0.1.0-SNAPSHOT]
 ```
 
 Docker化されたアプリは以下のように実行する:
 
 ```
 \$ docker run hello:0.1.0-SNAPSHOT
-Hello! The weather in New York is mostly cloudy
-```
+Hello! The current temperature in New York is 22.7 C.
+``
 
 ### version を設定する
 
@@ -485,8 +478,8 @@ Hello! The weather in New York is mostly cloudy
 ### Switch scalaVersion temporarily
 
 ```
-sbt:Hello> ++2.12.14!
-[info] Forcing Scala version to 2.12.14 on all projects.
+sbt:Hello> ++3.3.0!
+[info] Forcing Scala version to 3.3.0 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/private/tmp/foo-build/)
 ```
@@ -496,9 +489,9 @@ sbt:Hello> ++2.12.14!
 ```
 sbt:Hello> scalaVersion
 [info] helloCore / scalaVersion
-[info]  2.12.14
+[info]  3.3.0
 [info] scalaVersion
-[info]  2.12.14
+[info]  3.3.0
 ```
 
 このセッティングは `reload` 後には無くなる。
@@ -527,7 +520,7 @@ sbt:Hello> inspect tree dist
 sbt のコマンドをターミナルから直接渡して sbt をバッチモードで実行することができる。
 
 ```
-\$ sbt clean "testOnly HelloSpec"
+\$ sbt clean "testOnly HelloSuite"
 ```
 
 **Note**: バッチモードでの実行は JVM のスピンアップと JIT を毎回行うため、**ビルドかなり遅くなる。**
