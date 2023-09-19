@@ -281,7 +281,7 @@ Podemos averiguar qué tiempo hace actualmente en Nueva York.
 ```scala
 sbt:Hello> console
 [info] Starting scala interpreter...
-Welcome to Scala 2.13.11 (OpenJDK 64-Bit Server VM, Java 17).
+Welcome to Scala 2.13.12 (OpenJDK 64-Bit Server VM, Java 17).
 Type in expressions for evaluation. Or try :help.
 
 scala> :paste
@@ -494,8 +494,8 @@ Cambia `build.sbt` como sigue:
 ### Cambiar `scalaVersion` temporalmente
 
 ```
-sbt:Hello> ++3.3.0!
-[info] Forcing Scala version to 3.3.0 on all projects.
+sbt:Hello> ++3.3.1!
+[info] Forcing Scala version to 3.3.1 on all projects.
 [info] Reapplying settings...
 [info] Set current project to Hello (in build file:/tmp/foo-build/)
 ```
@@ -505,9 +505,9 @@ Comprueba la entrada `scalaVersion`:
 ```
 sbt:Hello> scalaVersion
 [info] helloCore / scalaVersion
-[info]  3.3.0
+[info]  3.3.1
 [info] scalaVersion
-[info]  3.3.0
+[info]  3.3.1
 ```
 
 Esta entrada se esfumará tras un `reload`.
