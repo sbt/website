@@ -580,5 +580,35 @@ Universal packages
 
 </ul>
 
+Release Timeline
+----------------
 
+| sbt series&nbsp; | Initial Release&nbsp;    | Current Release&nbsp; | Status      |
+|------------|-------------------------:|:---------------:|-------------|
+| 1.x        | [2017-08-11][sbt_1.0.0]  |        ✅        | On-going for 6 years and more |
+| 0.13.x     | [2013-08-26][sbt_0.13.0] |        No        | [End of Life on 2018-11-30][sbt_0.13.18] after 5 years |
+| 0.12.x     | [2012-08-01][sbt_0.12.0] |        No        | Last released on [2013-06-27][sbt_0.12.4] |
+| 0.11.x     | [2011-09-24][sbt_0.11.0] |        No        | Last released on [2012-05-06][sbt_0.11.3] |
+| 0.10.x     | [2011-06-02][sbt_0.10.0] |        No        | Last released on [2011-07-14][sbt_0.10.1] |
+| 0.9.x      | [2011-02-17][sbt_0.9.0]  |        No        | Last released on [2011-06-01][sbt_0.9.10] |
+| 0.7.x      | [2010-02-15][sbt_0.7.0]  |        No        | Last released on [2011-05-12][sbt_0.7.7] |
+| 0.5.x      | [2009-07-01][sbt_0.5.1]  |        No        | |
+| 0.4.x      | [2009-03-27][sbt_0.4.0]  |        No        | |
+| 0.3.x      | [2008-12-17][sbt_0.3.1]  |        No        | |
 
+  [sbt_0.3.1]: https://groups.google.com/g/simple-build-tool/c/lZqxMItxap8/m/dZiVsgNW3EwJ
+  [sbt_0.4.0]: https://groups.google.com/g/simple-build-tool/c/MkJPTm60OvU/m/bDhV1u2I1BIJ
+  [sbt_0.5.1]: https://groups.google.com/g/simple-build-tool/c/oN5vhhDigqI/m/Zzb0Vmq5xiYJ
+  [sbt_0.7.7]: https://groups.google.com/g/simple-build-tool/c/HBCDjeV1JzA/m/JcOrutMlClAJ
+  [sbt_0.7.0]: https://groups.google.com/g/simple-build-tool/c/zgegHD8zJzY/m/tyWIALFGiSQJ
+  [sbt_0.11.3]: https://groups.google.com/g/simple-build-tool/c/6QyKHMczG3I/m/PnhiJVZSlloJ
+  [sbt_0.11.0]: https://groups.google.com/g/simple-build-tool/c/PiRxuWiuyic/m/vAt18ooouNsJ
+  [sbt_0.10.1]: https://github.com/sbt/sbt/releases/tag/v0.10.1
+  [sbt_0.10.0]: https://github.com/sbt/sbt/releases/tag/v0.10.0
+  [sbt_0.9.10]: https://github.com/sbt/sbt/releases/tag/v0.9.10
+  [sbt_0.9.0]: https://vimeo.com/20263617
+  [sbt_0.12.4]: https://groups.google.com/g/simple-build-tool/c/UHlEuuIg0Xo/m/RzRYphp3lDwJ
+  [sbt_0.12.0]: https://groups.google.com/g/simple-build-tool/c/XDTrQL-PcYo/m/DK74LZeqr14J
+  [sbt_0.13.0]: https://groups.google.com/g/simple-build-tool/c/0AGST5qPbzw/m/s75DMBYanwoJ
+  [sbt_0.13.18]: https://web.archive.org/web/20210918065807/https://www.lightbend.com/blog/scala-sbt-127-patchnotes
+  [sbt_1.0.0]: https://web.archive.org/web/20220624215309/https://www.lightbend.com/blog/scala-sbt-100-release
