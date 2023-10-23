@@ -92,6 +92,13 @@ Universal packages
 <ul>
 
 <li>
+  sbt 1.9.7
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.9.7/sbt-1.9.7.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.9.7/sbt-1.9.7.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v1.9.7/sbt-1.9.7.msi">.msi</a>)
+</li>
+
+<li>
   sbt 1.9.6
   (<a href="https://github.com/sbt/sbt/releases/download/v1.9.6/sbt-1.9.6.zip">.zip</a>)
   (<a href="https://github.com/sbt/sbt/releases/download/v1.9.6/sbt-1.9.6.tgz">.tgz</a>)
