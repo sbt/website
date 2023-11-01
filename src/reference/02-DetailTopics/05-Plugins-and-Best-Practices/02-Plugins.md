@@ -508,6 +508,29 @@ libraryDependencies ++=
         Seq.empty
 ```
 
+### Publishing a plugin
+
+Sbt plugins can be published as any other projects. 
+
+However, there is one caveat if you attempt to publish your plugin to a repository that follows the Maven scheme.
+For many years, Sbt plugins have utilized an artifact layout that is incompatible with Maven-based repositories, and rectifying this in a fully compatible manner has proven to be quite challenging.
+
+If your artifacts repository expect artifacts to be compliant with maven scheme and rejects artifacts that does no adhere to it you can:
+1. If you and consumers of your plugin use sbt 1.9.x
+   
+   Since sbt 1.9, it tries to publish any plugin with the new and legacy Maven style (for backward compatibility). The legacy Maven style is not fully compatible with Maven scheme.
+   You need to disable it with:
+   `sbtPluginPublishLegacyMavenStyle := false`
+   Notice that you won't be able to consume this plugin with sbt older than 1.9, as it can only resolve the legacy Maven style (or you need to use the trick described in [sbt-vspp](https://github.com/esbeetee/sbt-vspp)).
+3. If you use sbt < 1.9.x
+   
+   You can use https://github.com/esbeetee/sbt-vspp/
+5. If you cannot use sbt 1.9.x and you cannot/don't want to use sbt-vspp
+   
+   There should be an option like `Suppress POM Consistency Checks` in your artifactory settings that will allow you to submit artifacts even if they don't fully follow maven scheme.
+
+You can find more details about this in the [following issue](https://github.com/sbt/sbt/issues/3410).
+
 ### Best Practices
 
 If you're a plugin writer, please consult the [Plugins Best Practices][Plugins-Best-Practices]
