@@ -196,7 +196,7 @@ If the `JAVA_OPTS` and/or `SBT_OPTS` environment variables are defined when
 `sbt` starts, their content is passed as command line arguments to the JVM 
 running sbt. 
 
-If a file named `.jvmopt` exists in the  current directory, its content 
+If a file named `.jvmopts` exists in the  current directory, its content
 is appended to `JAVA_OPTS` at sbt startup. Similarly, if `.sbtopts` 
 and/or `/etc/sbt/sbtopts` exist, their content is appended to `SBT_OPTS`.
 The default value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`.
@@ -334,7 +334,7 @@ The following system properties can also be passed to `sbt`:
     <td><tt>sbt.color</tt></td>
     <td>String</td>
     <td><tt>auto</tt></td>
-    <td>Supercedes <tt>sbt.log.format</tt>.
+    <td>Supersedes <tt>sbt.log.format</tt>.
     To turn on color, use <tt>always</tt> or <tt>true</tt>.
     To turn off color, use <tt>never</tt> or <tt>false>.
     To use color if the output is a terminal (not a pipe) that supports color, use <tt>auto</tt>.</td>
