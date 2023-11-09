@@ -9,38 +9,38 @@ out: sbt-new-and-Templates.html
 sbt new and Templates
 ---------------------
 
-sbt 0.13.13 adds a new command called new, to create new build definitions from a template.
+sbt has a command called new, to create new build definitions from a template.
 The `new` command is extensible via a mechanism called the [template resolver](#Template+Resolver).
 
 ### Trying new command
 
-First, you need sbt's launcher version 0.13.13 or above.
-Normally the exact version for the `sbt` launcher does not matter
-because it will use the version specified by `sbt.version` in `project/build.properties`;
-however for new sbt's launcher 0.13.13 or above is required as the command functions without a `project/build.properties` present.
+First, you need a recent sbt launcher.
 
-Next, run:
+Next run `sbt new scala/scala3.g8` (for Scala 3) or
+`sbt new scala/scala-seed.g8` (for Scala 2).
+
+When asked for a project name, you can put `hello` or anything else
+you want:
 
 ```
-\$ sbt new scala/scala-seed.g8
 ....
 name [hello]:
 
 Template applied in ./hello
 ```
 
-This ran the template [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8) using [Giter8][giter8], prompted for values for "name" (which has a default value of "hello", which we accepted hitting `[Enter]`), and created a build under `./hello`.
+This ran the template using [Giter8][giter8], prompted for a value for "name" (which has a default value of "hello", which we accepted hitting `[Enter]`), and created a build under `./hello`.
 
-`scala-seed` is the official template for a "minimal" Scala project, but it's definitely not the only one out there.
+These are the standard templates for a "minimal" Scala project, but there are many other templates out there.
 
 ### Giter8 support
 
 [Giter8][giter8] is a templating project originally started by Nathan Hamblen in 2010, and now maintained by the [foundweekends][foundweekends] project.
 The unique aspect of Giter8 is that it uses GitHub (or any other git repository) to host the templates, so it allows anyone to participate in template creation. Here are some of the templates provided by official sources:
 
-- [foundweekends/giter8.g8](https://github.com/foundweekends/giter8.g8)                 (A template for Giter8 templates)
-- [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8)                         (Seed template for Scala)
 - [scala/scala3.g8](https://github.com/scala/scala3.g8)                                 (A template for Scala 3 projects)
+- [scala/scala-seed.g8](https://github.com/scala/scala-seed.g8)                         (Seed template for Scala)
+- [foundweekends/giter8.g8](https://github.com/foundweekends/giter8.g8)                 (A template for Giter8 templates)
 - [scala/hello-world.g8](https://github.com/scala/hello-world.g8)                       (A template to demonstrate a minimal Scala application)
 - [scala/scalatest-example.g8](https://github.com/scala/scalatest-example.g8)           (A template for trying out ScalaTest)
 - [akka-quickstart-scala.g8](https://github.com/akka/akka-quickstart-scala.g8)          (A minimal seed template for an Akka with Scala build
@@ -64,7 +64,7 @@ For more, see [Giter8 templates](https://github.com/foundweekends/giter8/wiki/gi
 You can append Giter8 parameters to the end of the command, so for example to specify a particular branch you can use:
 
 ```
-\$ sbt new scala/scala-seed.g8 --branch myBranch
+\$ sbt new scala/scala3.g8 --branch myBranch
 ```
 
 #### How to create a Giter8 template
