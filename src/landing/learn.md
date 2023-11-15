@@ -44,7 +44,7 @@ Book(s)
 Blog posts
 ----------
 
-- [Awesome sbt plugins for everyone](https://tech.ovoenergy.com/awesome-sbt-plugins-for-everyone/), 2017, Michael Wizner
+- [Awesome sbt plugins for everyone](https://tech.ovoenergy.com/awesome-sbt-plugins-for-everyone/) ([Internet Archive](https://web.archive.org/web/20230604200723/https://tech.ovoenergy.com/awesome-sbt-plugins-for-everyone/)), 2017, Michael Wizner
 - [parallel cross building using sbt-projectmatrix](https://eed3si9n.com/parallel-cross-building-using-sbt-projectmatrix), 2019, Eugene Yokota
 - [hot source dependencies using sbt-sriracha](https://eed3si9n.com/hot-source-dependencies-using-sbt-sriracha), 2018, Eugene Yokota
 - [removing commas with sbt-nocomma](https://eed3si9n.com/removing-commas-with-sbt-nocomma), 2018, Eugene Yokota
