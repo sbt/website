@@ -510,7 +510,7 @@ libraryDependencies ++=
 
 ### Publishing a plugin
 
-Sbt plugins can be published as any other projects. 
+Plugins can be published like any other projects. When publishing your plugin to a Maven-layout repository, use sbt 1.9.x or above.
 
 However, there is one caveat if you attempt to publish your plugin to a repository that follows the Maven scheme.
 For many years, Sbt plugins have utilized an artifact layout that is incompatible with Maven-based repositories, and rectifying this in a fully compatible manner has proven to be quite challenging.
