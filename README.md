@@ -45,6 +45,28 @@ These steps are derived from Haruhiko Okumura's instructions at
 - update TeX Live package manager with `sudo tlmgr update --self --all` (this may take a while)
 - `brew install pandoc`
 
+## Docusaurus
+
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+
+### Local Development
+
+```
+$ npm start
+```
+
+This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+
+### Build
+
+```
+$ npm run build
+```
+
+This command generates static content into the `build` directory and can be served using any static contents hosting service.
+
+
+
 ## Usage
 
 To make the site locally, from sbt shell:
