@@ -4,44 +4,53 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'For Scala and Java',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        sbt is built for Scala and Java projects. It is the build tool of choice
+        for <a href="https://scalasurvey2023.virtuslab.com/">84.7%</a> of the Scala developers (2023).
+        One of the examples of Scala-specific feature is the ability to <i>cross build</i> your
+        project against multiple Scala versions.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Typesafe and parallel',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        <code>build.sbt</code> is a Scala-based DSL to express parallel processing task graph.
+        Typos in <code>build.sbt</code> will be caught as a compilation error.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Speedy iteration',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        With Zinc incremental compiler and file watch (<code>~</code>),
+        edit-compile-test loop is fast and incremental.
+      </>
+    ),
+  },
+  {
+    title: 'Extensible',
+    description: (
+      <>
+        Adding support for new tasks and platforms (like Scala.js) is
+        as easy as writing <code>build.sbt</code>.
+        Join <a href="https://www.scala-sbt.org/1.x/docs/Community-Plugins.html">100+ community-maintained plugins</a> to
+        share and reuse sbt tasks.
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({title, description}) {
   return (
-    <div className={clsx('col col--4')}>
+    <div className={clsx('col col--3')}>
       <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
       </div>
-      <div className="text--center padding-horiz--md">
+      <div className="text--left padding-horiz--md">
         <Heading as="h3">{title}</Heading>
         <p>{description}</p>
       </div>
@@ -53,6 +62,7 @@ export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       <div className="container">
+        <h2>Why sbt?</h2>
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />

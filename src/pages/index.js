@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
 
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
@@ -20,7 +21,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            Docusaurus Tutorial
           </Link>
         </div>
       </div>
@@ -28,15 +29,40 @@ function HomepageHeader() {
   );
 }
 
+function SimpleThings() {
+  const {siteConfig} = useDocusaurusContext();
+  return (
+<div className="container">
+<h2>Simple things easy</h2>
+<h3>Hello, world!</h3>
+<pre><code class="language-scala prettyprint"><span class="typ">ThisBuild</span> / scalaVersion := <span class="str">"3.3.1"</span>
+</code></pre>
+You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="1.x/docs/sbt-by-example.html">sbt by Example</a> page.
+
+<h3>sbt new</h3>
+Choose from community-maintained <a href="https://github.com/search?o=desc&p=1&q=g8&s=stars&type=Repositories">Giter8 templates</a> to jump start your project:
+
+<pre><code class="prettyprint">$ sbt new scala/scala-seed.g8<br></br>
+$ sbt new playframework/play-scala-seed.g8<br></br>
+$ sbt new akka/akka-http-quickstart-scala.g8<br></br>
+$ sbt new http4s/http4s.g8<br></br>
+$ sbt new holdenk/sparkProjectTemplate.g8<br></br>
+</code></pre>
+</div>
+  );
+}
+
 export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title}, the simple build tool`}
+      description="sbt is the interactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the interactive shell.">
       <HomepageHeader />
       <main>
+        <SimpleThings />
         <HomepageFeatures />
+        <HomepageTestimonials />
       </main>
     </Layout>
   );
