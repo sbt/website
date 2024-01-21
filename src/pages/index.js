@@ -35,14 +35,14 @@ function SimpleThings() {
 <div className="container">
 <h2>Simple things easy</h2>
 <h3>Hello, world!</h3>
-<pre><code class="language-scala prettyprint"><span class="typ">ThisBuild</span> / scalaVersion := <span class="str">"3.3.1"</span>
+<pre><code className="language-scala prettyprint"><span className="typ">ThisBuild</span> / scalaVersion := <span className="str">"3.3.1"</span>
 </code></pre>
 You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="1.x/docs/sbt-by-example.html">sbt by Example</a> page.
 
 <h3>sbt new</h3>
 Choose from community-maintained <a href="https://github.com/search?o=desc&p=1&q=g8&s=stars&type=Repositories">Giter8 templates</a> to jump start your project:
 
-<pre><code class="prettyprint">$ sbt new scala/scala-seed.g8<br></br>
+<pre><code className="prettyprint">$ sbt new scala/scala-seed.g8<br></br>
 $ sbt new playframework/play-scala-seed.g8<br></br>
 $ sbt new akka/akka-http-quickstart-scala.g8<br></br>
 $ sbt new http4s/http4s.g8<br></br>
