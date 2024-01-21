@@ -17,6 +17,9 @@ title: Get Involved
   [831]: https://github.com/sbt/sbt/issues/831
   [discord]: https://discord.com/channels/632150470000902164/922600050989875282
 
+Get Involved
+============
+
 <h2 id="how-can-I-get-help">How can I get help? <a href="#how-can-I-get-help" class="header-link"><span class="header-link-content">&nbsp;</span></a></h2>
 
 For community support we recommend [StackOverflow's sbt tag][so]:

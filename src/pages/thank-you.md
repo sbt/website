@@ -1,5 +1,5 @@
 ---
-title: Thank You
+title: Thank you
 ---
 
 Thank You
@@ -10,7 +10,7 @@ Thanks to everyone who's helped improve sbt and Zinc 1 by using them, reporting 
 <table>
 <tr>
 <td>
-<img src="assets/artifactory_black_green.png" style="width:200px;">
+<img src="assets/artifactory_black_green.png" style={{width: '200px' }}></img>
 </td>
 <td>
 sbt team serves plugins and other artifacts on Artifactory at repo.scala-sbt.org, which is sponsored by JFrog.

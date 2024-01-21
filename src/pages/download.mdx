@@ -1,0 +1,144 @@
+---
+title: Download
+---
+
+import { sbtVersion, windowsBuild, downloadUrl } from '@site/variables';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import HomepageVersions from '@site/src/components/HomepageVersions';
+
+Download
+========
+
+Install sbt with **cs setup**
+-----------------------------
+
+Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier.
+
+```bash
+cs setup
+sbt --script-version
+```
+
+This should install the latest stable version of `sbt`.
+
+<Tabs groupId="operating-systems">
+  <TabItem value="mac" label="macOS">
+### SDKMAN!
+
+```bash
+$ sdk install sbt
+```
+
+### Homebrew
+
+```bash
+$ brew install sbt
+```
+
+:::warning
+Homebrew maintainers have added a dependency to JDK 13 because they want to use more brew dependencies ([brew#50649](https://github.com/Homebrew/homebrew-core/issues/50649)). This causes sbt to use JDK 13 even when `java` available on PATH is JDK 8 or 11. To prevent `sbt` from running on JDK 13, install [jEnv](https://www.jenv.be/) or switch to using [SDKMAN](https://sdkman.io/).
+:::
+  </TabItem>
+  <TabItem value="win" label="Windows">
+
+- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi") }>sbt-{windowsBuild}.msi</a>
+- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi.sha256") }>sbt-{windowsBuild}.msi.sha256</a>
+- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi.asc") }>sbt-{windowsBuild}.msi.asc</a>
+
+### [Chocolatey](https://chocolatey.org/packages/sbt)
+
+```
+> choco install sbt
+```
+
+### [Scoop](https://scoop.sh/)
+
+```
+> scoop install sbt
+```
+  </TabItem>
+  <TabItem value="linux" label="Linux">
+  <div class="distro_debian">
+    <h3>Linux (deb)</h3>
+```bash
+echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
+sudo apt-get update
+sudo apt-get install sbt
+```
+  </div>
+
+  <div class="distro_redhat">
+    <h3>Linux (rpm)</h3>
+```bash
+# remove old Bintray repo file
+sudo rm -f /etc/yum.repos.d/bintray-rpm.repo || true
+curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
+sudo mv sbt-rpm.repo /etc/yum.repos.d/
+sudo yum install sbt
+```
+  </div>
+  </TabItem>
+</Tabs>
+
+Universal packages
+------------------
+
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip") }>sbt-{sbtVersion}.zip</a>
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip.sha256") }>sbt-{sbtVersion}.zip.sha256</a>
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip.asc") }>sbt-{sbtVersion}.zip.asc</a>
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz") }>sbt-{sbtVersion}.tgz</a>
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz.sha256") }>sbt-{sbtVersion}.tgz.sha256</a>
+- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz.asc") }>sbt-{sbtVersion}.tgz.asc</a>
+
+### Previous releases
+
+<h4>1.x</h4>
+
+<HomepageVersions />
+
+<h4>0.13</h4>
+<ul>
+<li>
+  sbt 0.13.18
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.zip">.zip</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.tgz">.tgz</a>)
+  (<a href="https://github.com/sbt/sbt/releases/download/v0.13.18/sbt-0.13.18.msi">.msi</a>)
+</li>
+
+</ul>
+
+Release Timeline
+----------------
+
+| sbt series&nbsp; | Initial Release&nbsp;    | Current Release&nbsp; | Status      |
+|------------|-------------------------:|:---------------:|-------------|
+| 1.x        | [2017-08-11][sbt_1.0.0]  |        ✅        | On-going for 6 years and more |
+| 0.13.x     | [2013-08-26][sbt_0.13.0] |        No        | [End of Life on 2018-11-30][sbt_0.13.18] after 5 years |
+| 0.12.x     | [2012-08-01][sbt_0.12.0] |        No        | Last released on [2013-06-27][sbt_0.12.4] |
+| 0.11.x     | [2011-09-24][sbt_0.11.0] |        No        | Last released on [2012-05-06][sbt_0.11.3] |
+| 0.10.x     | [2011-06-02][sbt_0.10.0] |        No        | Last released on [2011-07-14][sbt_0.10.1] |
+| 0.9.x      | [2011-02-17][sbt_0.9.0]  |        No        | Last released on [2011-06-01][sbt_0.9.10] |
+| 0.7.x      | [2010-02-15][sbt_0.7.0]  |        No        | Last released on [2011-05-12][sbt_0.7.7] |
+| 0.5.x      | [2009-07-01][sbt_0.5.1]  |        No        | |
+| 0.4.x      | [2009-03-27][sbt_0.4.0]  |        No        | |
+| 0.3.x      | [2008-12-17][sbt_0.3.1]  |        No        | |
+
+  [sbt_0.3.1]: https://groups.google.com/g/simple-build-tool/c/lZqxMItxap8/m/dZiVsgNW3EwJ
+  [sbt_0.4.0]: https://groups.google.com/g/simple-build-tool/c/MkJPTm60OvU/m/bDhV1u2I1BIJ
+  [sbt_0.5.1]: https://groups.google.com/g/simple-build-tool/c/oN5vhhDigqI/m/Zzb0Vmq5xiYJ
+  [sbt_0.7.7]: https://groups.google.com/g/simple-build-tool/c/HBCDjeV1JzA/m/JcOrutMlClAJ
+  [sbt_0.7.0]: https://groups.google.com/g/simple-build-tool/c/zgegHD8zJzY/m/tyWIALFGiSQJ
+  [sbt_0.11.3]: https://groups.google.com/g/simple-build-tool/c/6QyKHMczG3I/m/PnhiJVZSlloJ
+  [sbt_0.11.0]: https://groups.google.com/g/simple-build-tool/c/PiRxuWiuyic/m/vAt18ooouNsJ
+  [sbt_0.10.1]: https://github.com/sbt/sbt/releases/tag/v0.10.1
+  [sbt_0.10.0]: https://github.com/sbt/sbt/releases/tag/v0.10.0
+  [sbt_0.9.10]: https://github.com/sbt/sbt/releases/tag/v0.9.10
+  [sbt_0.9.0]: https://vimeo.com/20263617
+  [sbt_0.12.4]: https://groups.google.com/g/simple-build-tool/c/UHlEuuIg0Xo/m/RzRYphp3lDwJ
+  [sbt_0.12.0]: https://groups.google.com/g/simple-build-tool/c/XDTrQL-PcYo/m/DK74LZeqr14J
+  [sbt_0.13.0]: https://groups.google.com/g/simple-build-tool/c/0AGST5qPbzw/m/s75DMBYanwoJ
+  [sbt_0.13.18]: https://web.archive.org/web/20210918065807/https://www.lightbend.com/blog/scala-sbt-127-patchnotes
+  [sbt_1.0.0]: https://web.archive.org/web/20220624215309/https://www.lightbend.com/blog/scala-sbt-100-release

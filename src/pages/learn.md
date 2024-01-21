@@ -2,6 +2,9 @@
 title: Learn
 ---
 
+Learn
+=====
+
 Documentation
 -------------
 
@@ -14,12 +17,11 @@ Talks
 
 - [sbt core concepts](https://www.youtube.com/watch?v=-shamsTC7rQ), Scala Days 2019, Eugene Yokota
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-shamsTC7rQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left: 2em"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-shamsTC7rQ" frameborder="0"></iframe>
 
 - [sbt: Beyond the Build Tool](https://www.youtube.com/watch?v=zWh4kFX63Gc), Scala Days 2017, Jeff Olchovy
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/zWh4kFX63Gc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="margin-left: 2em"></iframe>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/zWh4kFX63Gc" frameborder="0"></iframe>
 
 - [sbt 1](https://www.youtube.com/watch?v=rjW-H8hY7BM), Scala Days Berlin 2018, Dale Wijnand and Eugene Yokota
 - [sbt-native-packager - package all the things](https://www.youtube.com/watch?v=ID-EqTOgwKY), Scala Days 2018, Nepomuk Seiler

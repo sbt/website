@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'sbt',
-  tagline: 'The simple build tool',
+  tagline: 'A simple build tool',
   favicon: 'assets/favicon.ico',
 
   // Set the production url of your site here
@@ -40,6 +40,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '2.x/docs/',
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -66,10 +67,25 @@ const config = {
         },
         items: [
           {
+            href: '/learn',
+            label: 'Learn',
+            position: 'left',
+          },
+          {
+            href: '/download',
+            label: 'Download',
+            position: 'left',
+          },
+          {
+            href: '/community',
+            label: 'Get Involved',
+            position: 'left',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            label: 'Doc Beta',
+            position: 'right',
           },
           {
             href: 'https://github.com/sbt/website',
@@ -85,8 +101,8 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'sbt 1.x docs',
+                to: 'https://www.scala-sbt.org/1.x/docs/',
               },
             ],
           },

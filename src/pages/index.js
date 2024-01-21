@@ -5,9 +5,9 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import HomepageTestimonials from '@site/src/components/HomepageTestimonials';
-
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
+import { sbtVersion, scala3ExampleVersion } from '@site/variables';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -21,8 +21,13 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial
+            to="/download/">
+            Get sbt { sbtVersion } (latest stable)
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="https://www.scala-sbt.org/1.x/docs/">
+            Documentation
           </Link>
         </div>
       </div>
@@ -36,7 +41,7 @@ function SimpleThings() {
 <div className="container">
 <h2>Simple things easy</h2>
 <h3>Hello, world!</h3>
-<pre><code className="language-scala prettyprint"><span className="typ">ThisBuild</span> / scalaVersion := <span className="str">"3.3.1"</span>
+<pre><code className="language-scala prettyprint"><span className="typ">ThisBuild</span> / scalaVersion := <span className="str">{ '"' + scala3ExampleVersion + '"' }</span>
 </code></pre>
 You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="1.x/docs/sbt-by-example.html">sbt by Example</a> page.
 
