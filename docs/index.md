@@ -1,0 +1,71 @@
+---
+sidebar_position: 1
+title: sbt User Guide
+---
+
+  [Getting-Started]: category/getting-started-with-sbt
+  [setup]: setup
+  [Basic-Def]: Basic-Def.html
+  [Library-Dependencies]: Library-Dependencies.html
+  [Multi-Project]: Multi-Project.html
+  [Name-Index]: Name-Index.html
+  [Triggered-Execution]: Triggered-Execution.html
+  [Java-Sources]: Java-Sources.html
+  [Testing]: Testing.html
+  [Parallel-Execution]: Parallel-Execution.html
+  [Discussions]: https://github.com/sbt/sbt/discussions
+  [Faq]: Faq.html
+  [Apidoc]: $apidoc_base$/api/sbt/index.html
+  [Get-Help]: https://www.scala-sbt.org/community.html#how-can-I-get-help
+
+sbt User Guide
+==============
+
+sbt is a build tool for Scala, Java, and more.
+It requires JDK 8 or later.
+
+### Install
+
+See [Installing sbt][setup] for the setup instructions.
+
+### Getting Started
+
+To get started, *please read* the
+[Getting Started Guide][Getting-Started]. You will save
+yourself a *lot* of time if you have the right understanding of the big
+picture up-front.
+All documentation may be found via the table of contents included on the left of every page.
+
+See [How can I get help?][Get-Help] for where you can get help about sbt.
+For discussing sbt development, use [Discussions][Discussions].
+
+### Features of sbt
+
+-   Little or no configuration required for simple projects
+-   Scala-based [build definition][Basic-Def] that can
+    use the full flexibility of Scala code
+-   Accurate incremental recompilation using information extracted from
+    the compiler
+-   [Library management support][Library-Dependencies] using Coursier
+-   Continuous compilation and testing with
+    [triggered execution][Triggered-Execution]
+-   Supports mixed Scala/[Java][Java-Sources] projects
+-   Supports [testing][Testing] with ScalaCheck,
+    specs, and ScalaTest. JUnit is supported by a plugin.
+-   Starts the Scala REPL with project classes and dependencies on the
+    classpath
+-   Modularization supported with
+    [sub-projects][Multi-Project]
+-   External project support (list a git repository as a dependency!)
+-   [Parallel task execution][Parallel-Execution],
+    including parallel test execution
+
+### Also
+
+This documentation can be forked
+on [GitHub](https://github.com/sbt/website/). Feel free to make
+corrections and add documentation.
+
+Documentation for 0.13.x has been
+[archived here](https://www.scala-sbt.org/0.13/docs/index.html). This
+documentation applies to sbt $app_version$.
