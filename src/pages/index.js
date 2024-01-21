@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
@@ -58,6 +59,13 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title}, the simple build tool`}
       description="sbt is the interactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the interactive shell.">
+      <Head>
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"></link>
+        <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png"></link>
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"></link>
+        <script defer data-domain="scala-sbt.org" src="https://plausible.scala-lang.org/js/script.js"></script>
+        <script src="assets/jquery.min.js" type="text/javascript"></script>
+      </Head>
       <HomepageHeader />
       <main>
         <SimpleThings />
