@@ -360,7 +360,7 @@ sbt:Hello> ~testQuick
 
 ### hello が helloCore に依存するようにする
 
-サブプロジェクト間の依存関係を定義するには `.dependsOn(...)` を使う。ついでに、Gigahorse への依存性も `helloCore` に移そう。
+サブプロジェクト間の依存関係を定義するには `.dependsOn(...)` を使う。ついでに、toolkit への依存性も `helloCore` に移そう。
 
 @@snip [example-sub4]($root$/src/sbt-test/ref/example-sub4/build.sbt) {}
 
