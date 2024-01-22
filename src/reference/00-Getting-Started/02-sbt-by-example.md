@@ -368,7 +368,7 @@ Press `Enter` to exit the continuous test.
 
 ### Make hello depend on helloCore
 
-Use `.dependsOn(...)` to add a dependency on other subprojects. Also let's move the Gigahorse dependency to `helloCore`.
+Use `.dependsOn(...)` to add a dependency on other subprojects. Also let's move the toolkit dependency to `helloCore`.
 
 @@snip [example-sub4]($root$/src/sbt-test/ref/example-sub4/build.sbt) {}
 
