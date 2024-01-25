@@ -142,6 +142,9 @@ const config = {
         apiKey: '45ef8a0285275e68a1c09ecdfff2be0f',
         indexName: 'scala-sbt',
         contextualSearch: false,
+        // treat scala-sbt.org as an external site until
+        // we index 2.x documentations
+        externalUrlRegex: 'www\.scala\-sbt\.org|scala\-sbt\.org',
       },
 
     }),
