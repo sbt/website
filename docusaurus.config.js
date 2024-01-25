@@ -139,7 +139,7 @@ const config = {
         // The application ID provided by Algolia
         appId: 'U55AU5GMCN',
         // Public API key: it is safe to commit it
-        apiKey: 'e47ee877a07ea1c48722f08430d54913',
+        apiKey: '45ef8a0285275e68a1c09ecdfff2be0f',
         indexName: 'scala-sbt',
         contextualSearch: false,
       },
