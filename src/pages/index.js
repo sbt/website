@@ -62,8 +62,8 @@ export default function Home() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`${siteConfig.title}, the simple build tool`}
-      description="sbt is the interactive build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the interactive shell.">
+      title={`${siteConfig.title}, a simple build tool`}
+      description="sbt is a simple build tool for Scala, Java, and more. Define your tasks in Scala. Run them in parallel from the interactive shell.">
       <Head>
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"></link>
         <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png"></link>
