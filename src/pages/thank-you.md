@@ -1,5 +1,6 @@
 ---
 title: Thank you
+slug: /thank-you.html
 ---
 
 Thank You

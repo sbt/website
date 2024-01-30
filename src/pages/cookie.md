@@ -1,5 +1,6 @@
 ---
 title: Cookie
+slug: /cookie.html
 ---
 
 Your Privacy
