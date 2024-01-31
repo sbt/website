@@ -8,12 +8,36 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 import fs from 'fs';
 
-/** the routes of pages in src/pages dir */
-const srcPagesRoutes =
-  fs.readdirSync('src/pages')
-    .filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
-    .map(f => f.replace(/\.mdx?$/, ''))
-    .map(f => '/' + f);
+import { parseFileContentFrontMatter } from '@docusaurus/utils/lib/markdownUtils';
+
+/** Return a Map of routes to directs, derived from `slug` field in front-matter.*/
+const slugsInDir = (dir) => {
+  /** the routes of pages in dir, array of [route, path] */
+  const _srcPagesRoutes =
+    fs.readdirSync(dir)
+      .filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+      .map(f => [`/${f.replace(/\.mdx?$/, '')}`, `${dir}/${f}`])
+
+  /** the slugs of routes in dir, array of [route, slug?] */
+  const _routeSlugs = _srcPagesRoutes.map(r => {
+    const [route, path] = r;
+    const {frontMatter} = parseFileContentFrontMatter(fs.readFileSync(path, 'utf8'));
+    return [route, frontMatter['slug']];
+  });
+
+  /** the map of routes to valid slugs */
+  const routeSlugsMap = new Map();
+  _routeSlugs.forEach(r => {
+    const [route, slug] = r;
+    if (slug !== undefined) {
+      routeSlugsMap.set(route, slug);
+    }
+  });
+  return routeSlugsMap;
+}
+
+const pagesRedirects = slugsInDir('src/pages');
+
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -164,8 +188,8 @@ const config = {
       {
         createRedirects(existingPath) {
           // create download.html, learn.html, community.html
-          if (srcPagesRoutes.includes(existingPath)) {
-            return [existingPath + '.html'];
+          if (pagesRedirects.has(existingPath)) {
+            return [pagesRedirects.get(existingPath)];
           }
           return undefined;
         }
