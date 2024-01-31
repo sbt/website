@@ -1,5 +1,6 @@
 ---
 title: Learn
+slug: /learn.html
 ---
 
 Learn

@@ -43,7 +43,7 @@ function SimpleThings() {
 <h3>Hello, world!</h3>
 <pre><code className="language-scala prettyprint"><span className="typ">ThisBuild</span> / scalaVersion := <span className="str">{ '"' + scala3ExampleVersion + '"' }</span>
 </code></pre>
-You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="1.x/docs/sbt-by-example.html">sbt by Example</a> page.
+You just need one line of <code>build.sbt</code> to get started with Scala. Learn more on <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">sbt by Example</a> page.
 
 <h3>sbt new</h3>
 Choose from community-maintained <a href="https://github.com/search?o=desc&p=1&q=g8&s=stars&type=Repositories">Giter8 templates</a> to jump start your project:
