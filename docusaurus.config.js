@@ -6,6 +6,15 @@
 
 import {themes as prismThemes} from 'prism-react-renderer';
 
+import fs from 'fs';
+
+/** the routes of pages in src/pages dir */
+const srcPagesRoutes =
+  fs.readdirSync('src/pages')
+    .filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+    .map(f => f.replace(/\.mdx?$/, ''))
+    .map(f => '/' + f);
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'sbt',
@@ -148,6 +157,21 @@ const config = {
       },
 
     }),
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        createRedirects(existingPath) {
+          // create download.html, learn.html, community.html
+          if (srcPagesRoutes.includes(existingPath)) {
+            return [existingPath + '.html'];
+          }
+          return undefined;
+        }
+      },
+    ]
+  ]
 };
 
 export default config;
