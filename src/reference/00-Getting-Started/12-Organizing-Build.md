@@ -86,7 +86,7 @@ import sbt._
 
 object Dependencies {
   // Versions
-  lazy val akkaVersion = "$example_akka_version$"
+  val akkaVersion = "$example_akka_version$"
 
   // Libraries
   val akkaActor = "com.typesafe.akka" %% "akka-actor" % akkaVersion
