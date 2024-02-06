@@ -541,13 +541,14 @@ or a continuous test like `~testQuick`.
 You can use the sbt `new` command to quickly setup a simple "Hello world" build.
 
 ```
+\$ sbt new scala/scala3.g8
+```
+
+This will create a Scala 3 project. If you want to use Scala 2,
+use this command instead:
+
+```
 \$ sbt new scala/scala-seed.g8
-....
-A minimal Scala project.
-
-name [My Something Project]: hello
-
-Template applied in ./hello
 ```
 
 When prompted for the project name, type `hello`.

@@ -79,7 +79,8 @@ You just need one line of <code>build.sbt</code> to get started with Scala. Lear
 <h3>sbt new</h3>
 Choose from community-maintained <a href="https://github.com/search?o=desc&p=1&q=g8&s=stars&type=Repositories">Giter8 templates</a> to jump start your project:
 
-<pre><code class="prettyprint">\$ sbt new scala/scala-seed.g8
+<pre><code class="prettyprint">\$ sbt new scala/scala3.g8
+\$ sbt new scala/scala-seed.g8
 \$ sbt new playframework/play-scala-seed.g8
 \$ sbt new akka/akka-http-quickstart-scala.g8
 \$ sbt new http4s/http4s.g8
