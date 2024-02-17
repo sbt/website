@@ -22,34 +22,18 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
+    - name: Setup Rust
+      uses: actions-rust-lang/setup-rust-toolchain@v1
+    - name: Install mdbook
+      run: |
+        cargo install mdbook --no-default-features --features search --vers "^0.4" --locked
+        cargo install mdbook-variables --vers "^0.2" --locked
+        export PATH="$PATH:$HOME/.cargo/bin"
+        mdbook --version
 
     - name: Build and test
       run: |
         sbt -v scalafmtSbtCheck scalafmtCheckAll scripted makeSite
-
-    - name: Pandoc English
-      if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && github.ref == 'refs/heads/1.x' }}
-      uses: eed3si9n/pandoc@master
-      with:
-        args: '--pdf-engine=xelatex --toc -s -o target/pamflet/sbt-reference.pdf target/pamflet/Combined+Pages+Pdf.md'
-
-    - name: Pandoc Japanese
-      if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && github.ref == 'refs/heads/1.x' }}
-      uses: eed3si9n/pandoc@master
-      with:
-        args: '--pdf-engine=xelatex -V CJKmainfont="Noto Sans JP" --toc -s -o target/pamflet/ja/sbt-reference.pdf target/pamflet/ja/Combined+Pages+Pdf.md'
-
-    - name: Pandoc Chinese
-      if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && github.ref == 'refs/heads/1.x' }}
-      uses: eed3si9n/pandoc@master
-      with:
-        args: '--pdf-engine=xelatex -V CJKmainfont="Noto Sans SC" --toc -s -o target/pamflet/zh-cn/sbt-reference.pdf target/pamflet/zh-cn/Combined+Pages+Pdf.md'
-
-    - name: Pandoc Spanish
-      if: ${{ github.event_name == 'push' && github.repository == 'sbt/website' && github.ref == 'refs/heads/1.x' }}
-      uses: eed3si9n/pandoc@master
-      with:
-        args: '--pdf-engine=xelatex --toc -s -o target/pamflet/es/sbt-reference.pdf target/pamflet/es/Combined+Pages+Pdf.md'
 
     # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
     - name: Deploy to GH Pages

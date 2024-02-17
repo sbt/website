@@ -34,7 +34,8 @@ object Docs {
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = {
     if (isBetaBranch) "1.x-beta"
-    else "1.x"
+    else if (is1xBranch) "1.x"
+    else "2.x"
   }
 
   // to avoid duplicates, tell Google to only index /1.x/**
