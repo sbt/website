@@ -21,13 +21,15 @@ object Docs {
   lazy val RedirectTutorial = config("redirect-tutorial")
   lazy val RedirectLanding = config("redirect-landing")
 
-  lazy val isBetaBranch = {
-    val branch = Process("git rev-parse --abbrev-ref HEAD").!!.linesIterator.toList.head
-    val travisBranch = sys.env.get("TRAVIS_BRANCH").getOrElse("")
-    branch == "1.x-beta" || travisBranch == "1.x-beta"
-  }
+  lazy val branch = Process("git rev-parse --abbrev-ref HEAD").!!.linesIterator.toList.head
+  lazy val githubRefName = sys.env.get("GITHUB_REF_NAME").getOrElse("")
+  // check the environment variable first
+  def isBranch(b: String): Boolean = (githubRefName == b || branch == b)
+  def isBetaBranch = isBranch("1.x-beta")
+  def is1xBranch = isBranch("1.x")
+  def isDevelopBranch = isBranch("develop")
 
-  // New documents will live under /1.x/ instead of /x.y.z/.
+  // 1.x documents will live under /1.x/ instead of /x.y.z/.
   // Currently the following files needs to be manually updated:
   // - src/reference/template.properties
   lazy val targetSbtBinaryVersion = {
@@ -318,7 +320,8 @@ object Docs {
     if (apiLink.exists) apiLink.delete
 
     gitRemoveFiles(repo, IO.listFiles(versioned).toList, git, s)
-    if (!isBetaBranch) {
+
+    if (isDevelopBranch) {
       gitRemoveFiles(repo, (repo * "*.html").get.toList, git, s)
       gitRemoveFiles(
         repo,
@@ -338,7 +341,7 @@ object Docs {
     } yield (file, repo / target)
     IO.copy(ms)
 
-    if (isGenerateSiteMap.value && !isBetaBranch) {
+    if (isGenerateSiteMap.value && isDevelopBranch) {
       val (index, siteMaps) =
         SiteMap.generate(
           repo,
