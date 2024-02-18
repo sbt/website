@@ -1,37 +1,32 @@
----
-out: sbt-by-example.html
----
 
   [Basic-Def]: Basic-Def.html
-  [Setup]: Setup.html
+  [Setup]: Setup.md
   [Running]: Running.html
   [Essential-sbt]: https://www.scalawilliam.com/essential-sbt/
 
 sbt by example
 --------------
 
-This page assumes you've [installed sbt 1][Setup].
+This page assumes you've [installed sbt runner][Setup].
 
 Let's start with examples rather than explaining how sbt works or why.
 
 ### Create a minimum sbt build
 
-```
-\$ mkdir foo-build
-\$ cd foo-build
-\$ touch build.sbt
+```bash
+mkdir foo-build
+cd foo-build
+touch build.sbt
+mkdir project
+echo "sbt.version={{sbt_version}}" > project/build.properties
 ```
 
 ### Start sbt shell
 
-```
-\$ sbt
-[info] Updated file /tmp/foo-build/project/build.properties: set sbt.version to 1.9.3
-[info] welcome to sbt 1.9.3 (Eclipse Adoptium Java 17.0.8)
-[info] Loading project definition from /tmp/foo-build/project
-[info] loading settings for project foo-build from build.sbt ...
-[info] Set current project to foo-build (in build file:/tmp/foo-build/)
-[info] sbt server started at local:///Users/eed3si9n/.sbt/1.0/server/abc4fb6c89985a00fd95/sock
+```bash
+$ sbt
+[info] welcome to sbt {{sbt_version}} (Azul Systems, Inc. Java 1.8.0_352)
+....
 [info] started sbt server
 sbt:foo-build>
 ```
@@ -48,8 +43,8 @@ sbt:foo-build> exit
 
 As a convention, we will use the `sbt:...>` or `>` prompt to mean that we're in the sbt interactive shell.
 
-```
-\$ sbt
+```bash
+$ sbt
 sbt:foo-build> compile
 ```
 
@@ -453,10 +448,10 @@ sbt:Hello> dist
 Here's how you can run the packaged app:
 
 ```
-\$ /tmp/someother
-\$ cd /tmp/someother
-\$ unzip -o -d /tmp/someother /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
-\$ ./hello-0.1.0-SNAPSHOT/bin/hello
+$ /tmp/someother
+$ cd /tmp/someother
+$ unzip -o -d /tmp/someother /tmp/foo-build/target/universal/hello-0.1.0-SNAPSHOT.zip
+$ ./hello-0.1.0-SNAPSHOT/bin/hello
 Hello! The current temperature in New York is 22.7 C.
 ```
 
@@ -473,7 +468,7 @@ sbt:Hello> Docker/publishLocal
 Here's how to run the Dockerized app:
 
 ```
-\$ docker run hello:0.1.0-SNAPSHOT
+$ docker run hello:0.1.0-SNAPSHOT
 Hello! The current temperature in New York is 22.7 C.
 ```
 
@@ -528,7 +523,7 @@ sbt:Hello> inspect tree dist
 You can also run sbt in batch mode, passing sbt commands directly from the terminal.
 
 ```
-\$ sbt clean "testOnly HelloSuite"
+$ sbt clean "testOnly HelloSuite"
 ```
 
 **Note**: Running in batch mode requires JVM spinup and JIT each time,
@@ -541,7 +536,7 @@ or a continuous test like `~testQuick`.
 You can use the sbt `new` command to quickly setup a simple "Hello world" build.
 
 ```
-\$ sbt new scala/scala-seed.g8
+$ sbt new scala/scala-seed.g8
 ....
 A minimal Scala project.
 

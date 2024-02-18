@@ -1,66 +1,19 @@
----
-sidebar_position: 1
-title: Installing sbt runner
-slug: /setup
----
+Setup Notes
+===========
 
-import { sbtVersion, windowsBuild, downloadUrl } from '@site/variables';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
-Installing sbt runner
-=====================
-
-To build an sbt project, you'll need to take these steps:
-
-- Install JDK (We recommend Eclipse Adoptium Temurin JDK 8, 11, or 17, or Zulu JDK 8 for macOS with ARM chips).
-- Install sbt runner.
-
-sbt runner is a script that invokes a declared version of sbt, downloading it beforehand if necessary. This allows build authors to precisely control
-the sbt version, instead of relying on users' machine environment.
-
-Prerequisites
--------------
-
-sbt runs on all major operating systems. It requires JDK 8 or higher to run.
-
-```bash
-$ java -version
-openjdk version "1.8.0_352"
-```
-
-Install sbt with **cs setup**
------------------------------
-
-Follow [Install](https://www.scala-lang.org/download/) page, and install Scala using Coursier.
-
-```bash
-cs setup
-```
-
-This should install the latest stable version of `sbt`.
-
-Installing from SDKMAN
-----------------------
-
-To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
-
-```
-$ sdk install java $(sdk list java | grep -o "\b8\.[0-9]*\.[0-9]*\-tem" | head -1)
-$ sdk install sbt
-```
-
-Using Coursier or SDKMAN has two advantages.
+See [Installing sbt runner](Setup.md) for the instruction on general setup. Using Coursier or SDKMAN has two advantages.
 
 1. They will install the official packaging by Eclipse Adoptium etc, as opposed to the ["mystery meat OpenJDK builds"](https://mail.openjdk.java.net/pipermail/jdk8u-dev/2019-May/009330.html).
 2. They will install `tgz` packaging of sbt that contains all JAR files. (DEB and RPM packages do not to save bandwidth)
 
+This page describes alternative ways of installing the sbt runner. Note that some of the third-party packages may not provide the latest version.
+
 OS specific setup
 -----------------
 
-<Tabs groupId="operating-systems">
-  <TabItem value="mac" label="macOS">
-### Homebrew
+### macOS
+
+#### Homebrew
 
 ```bash
 $ brew install sbt
@@ -69,35 +22,28 @@ $ brew install sbt
 :::warning
 Homebrew maintainers have added a dependency to JDK 13 because they want to use more brew dependencies ([brew#50649](https://github.com/Homebrew/homebrew-core/issues/50649)). This causes sbt to use JDK 13 even when `java` available on PATH is JDK 8 or 11. To prevent `sbt` from running on JDK 13, install [jEnv](https://www.jenv.be/) or switch to using [SDKMAN](https://sdkman.io/).
 :::
-  </TabItem>
-  <TabItem value="win" label="Windows">
 
-- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi") }>sbt-{windowsBuild}.msi</a>
-- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi.sha256") }>sbt-{windowsBuild}.msi.sha256</a>
-- <a href={ downloadUrl(sbtVersion, windowsBuild, ".msi.asc") }>sbt-{windowsBuild}.msi.asc</a>
+### Windows
 
-:::note
-Third-party packages may not provide the latest version. Please make
-sure to report any issues with these packages to the relevant maintainers.
-:::
+- [sbt-{{sbtRunnerVersion}}.msi](https://github.com/sbt/sbt/releases/download/v{{sbtRunnerVersion}}/sbt-{{sbtRunnerVersion}}.msi)
 
-### [Chocolatey](https://chocolatey.org/packages/sbt)
+#### [Chocolatey](https://chocolatey.org/packages/sbt)
 
 ```
 > choco install sbt
 ```
 
-### [Scoop](https://scoop.sh/)
+#### [Scoop](https://scoop.sh/)
 
 ```
 > scoop install sbt
 ```
-  </TabItem>
-  <TabItem value="linux" label="Linux">
 
-### Ubuntu and other Debian-based distributions
+### Linux
 
-[DEB][DEB] package is officially supported by sbt.
+#### Ubuntu and other Debian-based distributions
+
+[DEB][DEB] package is officially supported by sbt, but it does not contain JAR files to save bandwidth.
 
 Ubuntu and other Debian-based distributions use the DEB format, but usually you don't install your software from a local DEB file. Instead they come with package managers both for the command line (e.g. `apt-get`, `aptitude`) or with a graphical user interface (e.g. Synaptic).
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
@@ -117,15 +63,13 @@ Package managers will check a number of configured repositories for packages to 
 
 Once `sbt` is installed, you'll be able to manage the package in `aptitude` or Synaptic after you updated their package cache. You should also be able to see the added repository at the bottom of the list in System Settings -> Software & Updates -> Other Software:
 
-![Ubuntu Software & Updates Screenshot](/img/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
+![Ubuntu Software & Updates Screenshot](/files/ubuntu-sources.png "Ubuntu Software & Updates Screenshot")
 
-:::note
 `sudo apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823` may not work on Ubuntu Bionic LTS (18.04) since it's using a buggy GnuPG, so we are advising to use web API to download the public key in the above.
-:::
 
-### Red Hat Enterprise Linux and other RPM-based distributions
+#### Red Hat Enterprise Linux and other RPM-based distributions
 
-[RPM][RPM] package is officially supported by sbt.
+[RPM][RPM] package is officially supported by sbt, but it does not contain JAR files to save bandwidth.
 
 Red Hat Enterprise Linux and other RPM-based distributions use the RPM format.
 Run the following from the terminal to install `sbt` (You'll need superuser privileges to do so, hence the `sudo`).
@@ -146,26 +90,6 @@ sudo rm -f /etc/yum.repos.d/bintray-rpm.repo
 curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo
 sudo mv sbt-rpm.repo /etc/yum.repos.d/
 sudo dnf install sbt
-```
-
-  </TabItem>
-</Tabs>
-
-Universal packages
-------------------
-
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip") }>sbt-{sbtVersion}.zip</a>
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip.sha256") }>sbt-{sbtVersion}.zip.sha256</a>
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".zip.asc") }>sbt-{sbtVersion}.zip.asc</a>
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz") }>sbt-{sbtVersion}.tgz</a>
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz.sha256") }>sbt-{sbtVersion}.tgz.sha256</a>
-- <a href={ downloadUrl(sbtVersion, sbtVersion, ".tgz.asc") }>sbt-{sbtVersion}.tgz.asc</a>
-
-Verify the sbt runner
----------------------
-
-```bash
-$ sbt --script-version
 ```
 
   [MSI]: $sbt_native_package_base$/v$app_version$/sbt-$windows_app_version$.msi

@@ -72,14 +72,6 @@ const config = {
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
-        docs: {
-          routeBasePath: '2.x/docs/',
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/sbt/website/tree/develop',
-        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -115,8 +107,7 @@ const config = {
             position: 'left',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            href: 'https://www.scala-sbt.org/2.x/docs/en/',
             label: 'Doc Beta',
             position: 'right',
           },
