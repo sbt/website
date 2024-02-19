@@ -38,26 +38,6 @@ the `sbt` launcher will download it for you.
 If this file is not present, the `sbt` launcher will choose an arbitrary version,
 which is discouraged because it makes your build non-portable.
 
-### What is a build definition?
-
-A *build definition* is defined in `build.sbt`,
-and it consists of a set of projects (of type [`Project`](../api/sbt/Project.html)).
-Because the term *project* can be ambiguous,
-we often call it a *subproject* in this guide.
-
-For instance, in `build.sbt` you define
-the subproject located in the current directory like this:
-
-@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
-
-Each subproject is configured by key-value pairs.
-
-For example, one key is `name` and it maps to a string value, the name of
-your subproject.
-The key-value pairs are listed under the `.settings(...)` method as follows:
-
-@@snip [build.sbt]($root$/src/sbt-test/ref/basic/build.sbt) {}
-
 ### How build.sbt defines settings
 
 `build.sbt` defines subprojects, which holds a sequence of key-value pairs

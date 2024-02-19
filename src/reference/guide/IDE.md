@@ -1,6 +1,3 @@
----
-out: IDE.html
----
 
   [metals]: https://scalameta.org/metals/
   [intellij]: https://www.jetbrains.com/idea/
@@ -14,8 +11,8 @@ out: IDE.html
   [nvim-metals]: https://github.com/scalameta/nvim-metals
   [lsp.lua]: https://github.com/scalameta/nvim-metals/discussions/39#discussion-82302
 
-IDE Integration
----------------
+sbt with IDEs
+=============
 
 While it's possible to code Scala with just an editor and sbt,
 most programmers today use an Integrated Development Environment, or IDE for short.
@@ -37,12 +34,12 @@ Metals in turn supports different _build servers_ including sbt via the [Build S
 To use Metals on VS Code:
 
 1. Install Metals from Extensions tab:<br>
-   ![Metals](files/metals0.png)
+   ![Metals](../files/metals0.png)
 2. Open a directory containing a `build.sbt` file.
 3. From the menubar, run View > Command Palette... (`Cmd-Shift-P` on macOS) "Metals: Switch build server", and select "sbt"<br>
-   ![Metals](files/metals2.png)
+   ![Metals](../files/metals2.png)
 4. Once the import process is complete, open a Scala file to see that code completion works:<br>
-   ![Metals](files/metals3.png)
+   ![Metals](../files/metals3.png)
 
 Use the following setting to opt-out some of the subprojects from BSP.
 
@@ -56,10 +53,10 @@ the actual building work.
 #### Interactive debugging on VS Code
 
 1. Metals supports interactive debugging by setting break points in the code:<br>
-  ![Metals](files/metals4.png)
+  ![Metals](../files/metals4.png)
 2. Interactive debugging can be started by right-clicking on an unit test, and selecting "Debug Test."
    When the test hits a break point, you can inspect the values of the variables:<br>
-   ![Metals](files/metals5.png)
+   ![Metals](../files/metals5.png)
 
 See [Debugging][vscode-debugging] page on VS Code documentation for more details on how to navigate an interactive debugging session.
 
@@ -68,7 +65,7 @@ See [Debugging][vscode-debugging] page on VS Code documentation for more details
 While Metals uses sbt as the build server, we can also log into the same sbt session using a thin client.
 
 - From Terminal section, type in `sbt --client`<br>
-  ![Metals](files/metals6.png)
+  ![Metals](../files/metals6.png)
 
 This lets you log into the sbt session Metals has started. In there you can call `testOnly` and other tasks with
 the code already compiled.
@@ -83,9 +80,9 @@ This is a more traditional approach that might be more reliable than using BSP a
 To import a build to IntelliJ IDEA:
 
 1. Install Scala plugin on the Plugins tab:<br>
-   ![IntelliJ](files/intellij1.png)
+   ![IntelliJ](../files/intellij1.png)
 2. From Projects, open a directory containing a `build.sbt` file.<br>
-   ![IntelliJ](files/intellij2.png)
+   ![IntelliJ](../files/intellij2.png)
 3. Once the import process is complete, open a Scala file to see that code completion works.
 
 IntelliJ Scala plugin uses its own lightweight compilation engine to detect errors, which is fast but sometimes incorrect. Per [compiler-based highlighting][intellij-scala-plugin-2021-2], IntelliJ can be configured to use the Scala compiler for error highlighting.
@@ -93,11 +90,11 @@ IntelliJ Scala plugin uses its own lightweight compilation engine to detect erro
 #### Interactive debugging with IntelliJ IDEA
 
 1. IntelliJ supports interactive debugging by setting break points in the code:<br>
-   ![IntelliJ](files/intellij4.png)
+   ![IntelliJ](../files/intellij4.png)
 2. Interactive debugging can be started by right-clicking on an unit test, and selecting "Debug '&lt;test name&gt;'."
 　　Alternatively, you can click the green "run" icon on the left part of the editor near the unit test.
    When the test hits a break point, you can inspect the values of the variables:<br>
-   ![IntelliJ](files/intellij5.png)
+   ![IntelliJ](../files/intellij5.png)
 
 See [Debug Code][intellij-debugging] page on IntelliJ documentation for more details on how to navigate an interactive debugging session.
 
@@ -147,16 +144,16 @@ To use sbt as build server on IntelliJ:
 
 1. Install Scala plugin on the Plugins tab.
 2. To use the BSP approach, do not use Open button on the Project tab:<br>
-   ![IntelliJ](files/intellij7.png)
+   ![IntelliJ](../files/intellij7.png)
 3. From menubar, click New > "Project From Existing Sources", or Find Action (`Cmd-Shift-P` on macOS) and
    type "Existing" to find "Import Project From Existing Sources":<br>
-   ![IntelliJ](files/intellij8.png)
+   ![IntelliJ](../files/intellij8.png)
 4. Open a `build.sbt` file. Select **BSP** when prompted:<br>
-   ![IntelliJ](files/intellij9.png)
+   ![IntelliJ](../files/intellij9.png)
 5. Select **sbt (recommended)** as the tool to import the BSP workspace:<br>
-   ![IntelliJ](files/intellij10.png)
+   ![IntelliJ](../files/intellij10.png)
 6. Once the import process is complete, open a Scala file to see that code completion works:<br>
-   ![IntelliJ](files/intellij11.png)
+   ![IntelliJ](../files/intellij11.png)
 
 Use the following setting to opt-out some of the subprojects from BSP.
 
@@ -165,7 +162,7 @@ bspEnabled := false
 ```
 
 - Open Preferences, search BSP and check "build automatically on file save", and uncheck "export sbt projects to Bloop before import":<br>
-  ![IntelliJ](files/intellij12.png)
+  ![IntelliJ](../files/intellij12.png)
 
 When you make changes to the code and save them (`Cmd-S` on macOS), IntelliJ will invoke sbt to do
 the actual building work.
@@ -177,7 +174,7 @@ See also Igal Tabachnik's [Using BSP effectively in IntelliJ and Scala](https://
 We can also log into the existing sbt session using the thin client.
 
 - From Terminal section, type in `sbt --client`
-  ![IntelliJ](files/intellij6.png)
+  ![IntelliJ](../files/intellij6.png)
 
 This lets you log into the sbt session IntelliJ has started. In there you can call `testOnly` and other tasks with
 the code already compiled.
@@ -204,40 +201,40 @@ Per `lsp.lua`, `g:metals_status` should be displayed on the status line, which c
 2. Run `:MetalsInstall` when prompted.
 3. Run `:MetalsStartServer`.
 4. If the status line is set up, you should see something like "Connecting to sbt" or "Indexing."<br>
-   <img src="files/nvim0.png" width="900">
+   <img src="../files/nvim0.png" width="900">
 5. Code completion works when you're in Insert mode, and you can tab through the candidates:<br>
-   <img src="files/nvim1.png" width="900">
+   <img src="../files/nvim1.png" width="900">
 
 - A build is triggered upon saving changes, and compilation errors are displayed inline:<br>
-  <img src="files/nvim2.png" width="900">
+  <img src="../files/nvim2.png" width="900">
 
 #### Go to definition
 
 1. You can jump to definition of the symbol under cursor by using `gD` (exact keybinding can be customized):<br>
-   <img src="files/nvim3.png" width="900">
+   <img src="../files/nvim3.png" width="900">
 2. Use `Ctrl-O` to return to the old buffer.
 
 #### Hover
 
 - To display the type information of the symbol under cursor, like hovering, use `K` in Normal mode:<br>
-   <img src="files/nvim4.png" width="900">
+   <img src="../files/nvim4.png" width="900">
 
 #### Listing diagnostics
 
 1. To list all compilation errors and warnings, use `<leader>aa`:<br>
-   <img src="files/nvim5.png" width="900">
+   <img src="../files/nvim5.png" width="900">
 2. Since this is in the standard quickfix list, you can use the command such as `:cnext` and `:cprev` to nagivate through the errors and warnings.
 3. To list just the errors, use `<leader>ae`.
 
 #### Interactive debugging with Neovim
 
 1. Thanks to nvim-dap, Neovim supports interactive debugging. Set break points in the code using `<leader>dt`:<br>
-   <img src="files/nvim6.png" width="900">
+   <img src="../files/nvim6.png" width="900">
 2. Nagivate to a unit test, confirm that it's built by hovering (`K`), and then
    "debug continue" (`<leader>dc`) to start a debugger.
    Choose "1: RunOrTest" when prompted.
 3. When the test hits a break point, you can inspect the values of the variables by debug hovering (`<leader>dK`):<br>
-   <img src="files/nvim7.png" width="900">
+   <img src="../files/nvim7.png" width="900">
 4. "debug continue" (`<leader>dc`) again to end the session.
 
 See [nvim-metals][nvim-metals] regarding further details.
@@ -248,6 +245,6 @@ We can also log into the existing sbt session using the thin client.
 
 1. In a new vim window type `:terminal` to start the built-in terminal.
 2. Type in `sbt --client`<br>
-   <img src="files/nvim8.png" width="900">
+   <img src="../files/nvim8.png" width="900">
 
 Even though it's inside Neovim, tab completion etc works fine inside.
