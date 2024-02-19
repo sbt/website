@@ -1,7 +1,3 @@
----
-out: Getting-Started.html
----
-
   [Basic-Def]: Basic-Def.html
   [Scopes]: Scopes.html
   [Task-Graph]: Task-Graph.html
@@ -18,13 +14,3 @@ The Getting Started Guide covers the concepts you need to know to create
 and maintain an sbt build definition.
 
 It is *highly recommended* to read the Getting Started Guide!
-
-If you are in a huge hurry, the most important conceptual background can
-be found in [build definition][Basic-Def], [scopes][Scopes], and
-[task graph][Task-Graph]. But we don't promise that
-it's a good idea to skip the other pages in the guide.
-
-It's best to read in order, as later pages in the Getting Started Guide
-build on concepts introduced earlier.
-
-Thanks for trying out sbt and *have fun*!
