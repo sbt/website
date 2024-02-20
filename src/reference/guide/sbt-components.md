@@ -4,11 +4,11 @@ sbt components
 sbt runner
 ----------
 
-An sbt build is executed using the `sbt` runner, also called "sbt-the-shell-script" to distinguish from other components. Important thing to note is that sbt runner is designed to run **any version** of sbt.
+An sbt build is executed using the `sbt` runner, also called "sbt-the-shell-script" to distinguish from other components. It's important to note is that sbt runner is designed to run **any version** of sbt.
 
 ### Specifying sbt version with project/build.properties
 
-The sbt runner executes a subcomponent called sbt launcher, which reads `project/build.properties` to determine the sbt version for the build, and downloads the artifacts if needed:
+The sbt runner executes a subcomponent called sbt launcher, which reads `project/build.properties` to determine the sbt version for the build, and downloads the artifacts if they haven't been cached:
 
 ```
 sbt.version={{sbt_version}}
@@ -30,12 +30,12 @@ The sbt server is the actual build tool whose version is specified using `projec
 
 ### Coursier
 
-The sbt server runs [Couriser][coursier] as a subcomponent to resolve Scala libary, Scala compiler, and any other library dependencies your build needs.
+The sbt server runs [Couriser][coursier] as a subcomponent to resolve Scala library, Scala compiler, and any other library dependencies your build needs.
 
 ### Zinc
 
 Zinc is the incremental compiler for Scala, developed and maintained by sbt project.
-An often overlooked aspect of Zinc is that Zinc provides a stable API to invoke **any modern versions** of Scala compiler. Combined with the fact that Coursier can resolve any Scala versions, by installing the sbt runner, you can invoke any modern versions of Scala just by writing a single line `build.sbt`:
+An often overlooked aspect of Zinc is that Zinc provides a stable API to invoke **any modern versions** of Scala compiler. Combined with the fact that Coursier can resolve any Scala version, with sbt we can invoke any modern versions of Scala just by writing a single line `build.sbt`:
 
 ```scala
 scalaVersion := "{{scala3_example_version}}"
@@ -46,8 +46,8 @@ scalaVersion := "{{scala3_example_version}}"
 The sbt server supports [Build Server Protocol (BSP)](https://build-server-protocol.github.io/) to list build targets, build them, etc.
 This allows IDEs like IntelliJ and Metals to communicate with a running sbt server programmatically.
 
-Connecting with sbt server
---------------------------
+Connecting to sbt server
+------------------------
 
 Let's look at three ways of connecting to the sbt server.
 
