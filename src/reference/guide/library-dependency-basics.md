@@ -87,3 +87,26 @@ name := "something"
 libraryDependencies += toolkit
 libraryDependencies += toolkitTest % Test
 ```
+
+Viewing library dependencies
+----------------------------
+
+Type in `Compile/dependencyTree` in the sbt shell to show the library dependency tree, including the transitive dependencies:
+
+```
+> Compile/dependencyTree
+```
+
+This should display something like the following:
+
+```
+sbt:bar> Compile/dependencyTree
+[info] default:bar_3:0.1.0-SNAPSHOT
+[info]   +-org.scala-lang:scala3-library_3:3.3.1 [S]
+[info]   +-org.scala-lang:toolkit_3:0.2.0
+[info]     +-com.lihaoyi:os-lib_3:0.9.1
+[info]     | +-com.lihaoyi:geny_3:1.0.0
+[info]     | | +-org.scala-lang:scala3-library_3:3.1.3 (evicted by: 3.3.1)
+[info]     | | +-org.scala-lang:scala3-library_3:3.3.1 [S]
+....
+```
