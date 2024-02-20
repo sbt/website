@@ -234,6 +234,30 @@ In this way, all build dependencies in sbt are *automatic* rather than
 explicitly declared. If you use a key's value in another computation,
 then the computation depends on that key.
 
+#### Defining a task that depends on other keys
+
+`scalacOptions` is a task key used for compiler options.
+Here's an example of appending a compiler option based on the `version` setting.
+
+```scala
+name := "hello"
+version := "0.1.0-SNAPSHOT"
+Compile / scalacOptions += {
+  val v = version.value
+  s"-Dversion=$v"
+}
+```
+
+Here's how it should look on the sbt shell:
+
+```
+sbt:bar> show Compile/scalacOptions
+[info] * -Dversion=0.1.0-SNAPSHOT
+```
+
+This demonstrates that the right-hand side doesn't just take
+hard-coded string values.
+
 #### Defining a task that depends on other settings
 
 `scalacOptions` is a task key.

@@ -12,6 +12,7 @@
   - [Working with an existing build](guide/running.md)
   - [Build definition basics](guide/build-definition-basics.md)
   - [Library dependency basics](guide/library-dependency-basics.md)
+  - [Multi project basics](guide/multi-project-basics.md)
   - [Build layout](guide/build-layout.md)
   - [sbt with IDEs](guide/IDE.md)
 - [sbt Reference]()
