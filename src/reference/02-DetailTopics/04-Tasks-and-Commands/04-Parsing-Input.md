@@ -88,13 +88,13 @@ a parser.
 ```scala
 // A parser that succeeds if the input is "blue" or "green",
 //  returning the matched input
-val color: Parser[String] = "blue" | "green"
+val color: Parser[String] = literal("blue") | "green"
 
 // A parser that matches either "fg" or "bg"
-val select: Parser[String] = "fg" | "bg"
+val select: Parser[String] = literal("fg") | "bg"
 
 // A parser that matches "fg" or "bg", a space, and then the color, returning the matched values.
-val setColor: Parser[(String, Char, String)] =
+val setColor: Parser[((String, Char), String)] =
   select ~ ' ' ~ color
 
 // Often, we don't care about the value matched by a parser, such as the space above
