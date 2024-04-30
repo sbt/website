@@ -8,7 +8,7 @@ out: Community-Plugins.html
 Community Plugins
 -----------------
 
-### sbt Organization
+### INTNET Organization
 
 The [sbt organization](https://github.com/sbt) is available for use by
 any sbt plugin. Developers who contribute their plugins into the
