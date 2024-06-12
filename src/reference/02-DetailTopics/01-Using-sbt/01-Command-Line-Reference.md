@@ -320,7 +320,7 @@ The following system properties can also be passed to `sbt`:
     <td><tt>sbt.ci</tt></td>
     <td>Boolean</td>
     <td><tt>false</tt> (unless then env var <tt>BUILD_NUMBER</tt> is set)</td>
-    <td>For continuous integration environments. Suppress supershell and color.</td>
+    <td>For continuous integration environments. Suppresses supershell and enables color.</td>
   </tr>
 
   <tr>
