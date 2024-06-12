@@ -420,6 +420,47 @@ conflictManager := ConflictManager.strict
 With this set, any conflicts will generate an error. To resolve a
 conflict, you must configure a dependency override, which is explained in a later section.
 
+<a name="reconciliation"></a>
+
+##### Reconciliation strategy
+
+Coursier provides a more fine-tuned way of resolving conflicts called _reconciliation_, which is a wrapper around `Seq[String] => Option[String]` function. This function can be called when Coursier comes across a version conflict, and needs to select a winning version. By default we use an implementation called `Reconciliation.Relaxed` that mimics the behavior of Apache Ivy.
+
+In addition Coursier provides two special values of reconciliation that can be used to enforce stricter dependency resolution per module:
+
+```scala
+object Reconciliation {
+  /** Semantic versioning version reconciliation. */
+  case object SemVer extends Reconciliation
+  /** Strict version reconciliation. */
+  case object Strict extends Reconciliation
+}
+```
+
+If we want to fail the dependency resolution when the major version (the first segment in version number) is different for cats-effect for example, we can tell Coursier to use `Reconciliation.SemVer` as follows:
+
+```scala
+ThisBuild / scalaVersion := "2.13.3"
+
+lazy val root = (project in file("."))
+  .settings(
+    name := "demo",
+    libraryDependencies ++= List(
+      "org.http4s" %% "http4s-blaze-server" % "0.21.11",
+      "org.typelevel" %% "cats-effect" % "3.0-8096649",
+    ),
+    csrReconciliations ++= {
+      import lmcoursier.{ definitions => C }
+      val sbv = scalaBinaryVersion.value
+      val m = C.Module(C.Organization("org.typelevel"),
+        C.ModuleName(s"cats-effect_$sbv"), Map())
+      List(C.ModuleMatchers.only(m) -> C.Reconciliation.SemVer)
+    }
+  )
+```
+
+This will resolve cats-effect 3.x, but will fail the resolution if 2.x gets into the mix.
+
 <a name="eviction-warning"></a>
 
 ##### Eviction warning
