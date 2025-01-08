@@ -5,6 +5,7 @@ out: GitHub-Actions-with-sbt.html
   [GA]: https://docs.github.com/en/free-pro-team@latest/actions
   [GA-Reference]: https://docs.github.com/en/free-pro-team@latest/actions/reference
   [Setup-Java]: https://github.com/actions/setup-java
+  [Setup-sbt]: https://github.com/sbt/setup-sbt
   [GA-Matrix]: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategy
   [sbt-github-actions]: https://github.com/sbt/sbt-github-actions
 
@@ -33,7 +34,8 @@ Use this guide as an inspiration, but consult the official source for more detai
 
 ### Basic setup
 
-Setting up your build for GitHub Actions is mostly about setting up `.github/workflows/ci.yml`. Here's what a minimal CI workflow could look like using [setup-java][Setup-Java]:
+To build an sbt project on GitHub Actions you will need to config Java (using [actions/setup-java][Setup-Java]) and an sbt launcher
+(using [actions/setup-sbt][Setup-sbt]). A minimal CI workflow for running tests would look something like:
 
 ```yml
 name: CI
@@ -44,20 +46,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 8
-    - name: Build and Test
-      run: sbt -v +test
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and Test
+        run: sbt +test
 ```
 
 ### Custom JVM options
 
-The default JVM options are provided by the official sbt runner adopted by [setup-java][Setup-Java], and it should work for most cases. If you do decide to customize it, use `-v` option to let the script output the current options first:
+The default JVM options provided by the sbt runner installed by actions/setup-sbt should work for most cases. If you do decide to customize it,
+add the `-v` parameter to your sbt call to enable verbose output:
+
+```yml
+    - name: Build and Test (with debug)
+      run: sbt -v +test
+```
+
+This will cause the Java command line to be logged along with the JVM arguments:
 
 ```
 # Executing command line:
@@ -82,26 +94,27 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      # define Java options for both official sbt and sbt-extras
       JAVA_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
-      JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+      JVM_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 8
-    - name: Build and Test
-      run: sbt -v +test
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and Test
+        run: sbt -v +test
 ```
 
 Again, let's check the log to see if the flags are taking effect:
 
 ```
 # Executing command line:
-[process_args] java_version = '8'
+[process_args] java_version = '11'
 java
 -Xms2048M
 -Xmx2048M
@@ -124,11 +137,13 @@ To use it, set the input parameter `cache` of the action `setup-java` to the val
 
 ```yml
     - name: Setup JDK
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: 8
         cache: sbt
+    - name: Setup sbt launcher
+      uses: sbt/setup-sbt@v1
     - name: Build and test
       run: sbt -v +test
 ```
@@ -167,16 +182,18 @@ jobs:
             java: 17
     runs-on: \${{ matrix.os }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: \${{ matrix.java }}
-    - name: Build and test
-      shell: bash
-      run: sbt -v +test
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: \${{ matrix.java }}
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and test
+        shell: bash
+        run: sbt -v +test
 ```
 
 Note that there's nothing magical about the `os` or `java` keys in the build matrix.
@@ -207,28 +224,30 @@ jobs:
             jobtype: 3
     runs-on: \${{ matrix.os }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: \${{ matrix.java }}
-    - name: Build and test (1)
-      if: \${{ matrix.jobtype == 1 }}
-      shell: bash
-      run: |
-        sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
-    - name: Build and test (2)
-      if: \${{ matrix.jobtype == 2 }}
-      shell: bash
-      run: |
-        sbt -v "scripted actions/*"
-    - name: Build and test (3)
-      if: \${{ matrix.jobtype == 3 }}
-      shell: bash
-      run: |
-        sbt -v "dependency-management/*"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: \${{ matrix.java }}
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and test (1)
+        if: \${{ matrix.jobtype == 1 }}
+        shell: bash
+        run: |
+          sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
+      - name: Build and test (2)
+        if: \${{ matrix.jobtype == 2 }}
+        shell: bash
+        run: |
+          sbt -v "scripted actions/*"
+      - name: Build and test (3)
+        if: \${{ matrix.jobtype == 3 }}
+        shell: bash
+        run: |
+          sbt -v "dependency-management/*"
 ```
 
 ### Sample .github/workflows/ci.yml setting
@@ -260,33 +279,34 @@ jobs:
             jobtype: 3
     runs-on: \${{ matrix.os }}
     env:
-      # define Java options for both official sbt and sbt-extras
       JAVA_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
-      JVM_OPTS:  -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
+      JVM_OPTS: -Xms2048M -Xmx2048M -Xss6M -XX:ReservedCodeCacheSize=256M -Dfile.encoding=UTF-8
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: \${{ matrix.java }}
-        cache: sbt
-    - name: Build and test (1)
-      if: \${{ matrix.jobtype == 1 }}
-      shell: bash
-      run: |
-        sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
-    - name: Build and test (2)
-      if: \${{ matrix.jobtype == 2 }}
-      shell: bash
-      run: |
-        sbt -v "scripted actions/*"
-    - name: Build and test (3)
-      if: \${{ matrix.jobtype == 3 }}
-      shell: bash
-      run: |
-        sbt -v "dependency-management/*"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: \${{ matrix.java }}
+          cache: sbt
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Build and test (1)
+        if: \${{ matrix.jobtype == 1 }}
+        shell: bash
+        run: |
+          sbt -v "mimaReportBinaryIssues; scalafmtCheckAll; +test;"
+      - name: Build and test (2)
+        if: \${{ matrix.jobtype == 2 }}
+        shell: bash
+        run: |
+          sbt -v "scripted actions/*"
+      - name: Build and test (3)
+        if: \${{ matrix.jobtype == 3 }}
+        shell: bash
+        run: |  
+          sbt -v "dependency-management/*"
 ```
 
 ### sbt-github-actions
