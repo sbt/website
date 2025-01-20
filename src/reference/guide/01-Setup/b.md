@@ -49,6 +49,3 @@ Download [msi installer][MSI] and install it.
 ```
 \$ winget install sbt.sbt
 ```
-
-
-
