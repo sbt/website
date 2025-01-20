@@ -43,3 +43,12 @@ Download [msi installer][MSI] and install it.
 ```
 \$ choco install sbt
 ```
+
+#### [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
+
+```
+\$ winget install sbt.sbt
+```
+
+
+
