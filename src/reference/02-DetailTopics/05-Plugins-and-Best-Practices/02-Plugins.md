@@ -353,7 +353,7 @@ object Obfuscate {
 
 #### Usage example
 
-A build definition that uses the plugin might look like. `obfuscate.sbt`:
+A build definition that uses the plugin might look like `obfuscate.sbt`:
 
 ```scala
 obfuscate / obfuscateLiterals := true
