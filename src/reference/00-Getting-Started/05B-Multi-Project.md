@@ -193,8 +193,8 @@ can perform less optimally at continuously watching files that have
 changed and use a lot of disk and system I/O.
 
 sbt has `trackInternalDependencies` and `exportToInternal`
-settings. These can be used to control whether to trigger compilation
-of a dependent subprojects when you call `compile`. Both keys will
+settings. These can be used to control whether a dependent subproject should
+trigger compilation of its dependencies when you call `compile`. Both keys will
 take one of three values: `TrackLevel.NoTracking`,
 `TrackLevel.TrackIfMissing`, and `TrackLevel.TrackAlways`. By default
 they are both set to `TrackLevel.TrackAlways`.
