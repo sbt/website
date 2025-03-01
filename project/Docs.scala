@@ -130,6 +130,11 @@ object Docs {
         s.log
       )
       generateRedirect(
+        "sbt-by-example.html",
+        output / "Hello.html",
+        s.log
+      )
+      generateRedirect(
         "../Incremental-Recompilation.html",
         dt / "Understanding-incremental-recompilation.html",
         s.log
