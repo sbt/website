@@ -135,6 +135,9 @@ To run the scripts, go back to your plugin project, and run:
 > scripted
 ```
 
+**Note**: `scripted` runs all your tests, you can execute single scripted test with `scripted sbt-assembly/simple`
+
+
 This will copy your test build into a temporary dir, and executes the `test` script. If everything works out, you'd see `publishLocal` running, then:
 
 ```
