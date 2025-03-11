@@ -23,13 +23,17 @@ Add your plugin to this page and send us a pull request if your plugin is not al
 
 The Book of sbt is written using [mdBook](https://rust-lang.github.io/mdBook/index.html) a command line tool to create books with Markdown.
 
+```bash
+$ mdbook serve
+```
+
 ## Docusaurus (Landing Page)
 
 The landing page is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
 ### Local Development
 
-```
+```bash
 $ yarn start
 ```
 
@@ -37,7 +41,7 @@ This command starts a local development server and opens up a browser window. Mo
 
 ### Build
 
-```
+```bash
 $ yarn run build
 ```
 
@@ -50,7 +54,7 @@ The PDF generation is optional, and requires the following additional steps to i
 
 #### On Ubuntu
 
-```
+```bash
 $ sudo apt-get install pandoc latex-cjk-all texlive-full
 ```
 

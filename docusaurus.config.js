@@ -108,7 +108,7 @@ const config = {
           },
           {
             href: 'https://www.scala-sbt.org/2.x/docs/en/',
-            label: 'Doc Beta',
+            label: 'sbt 2.x docs',
             position: 'right',
           },
           {
@@ -136,6 +136,14 @@ const config = {
               {
                 label: 'Discord',
                 href: 'https://discord.com/invite/scala',
+              },
+              {
+                label: 'Mastodon',
+                href: 'https://floss.social/@scala_sbt',
+              },
+              {
+                label: 'Bluesky',
+                href: 'https://bsky.app/profile/scala-sbt.org',
               },
               {
                 label: 'Stack Overflow',
