@@ -24,6 +24,7 @@
 - [Reference](reference/index.md)
   - [sbt](reference/sbt.md)
   - [sbt update](reference/sbt-update.md)
+  - [sbt run](reference/sbt-run.md)
   - [Cross building setup](reference/cross-building-setup.md)
   - [Remote cache setup](reference/remote-cache-setup.md)
 - [Recipes](recipes/index.md)
