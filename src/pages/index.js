@@ -12,23 +12,25 @@ import { sbtVersion, scala3ExampleVersion } from '@site/variables';
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/download/">
-            Get sbt { sbtVersion } (latest stable)
-          </Link>
-          <Link
-            className="button button--secondary button--lg"
-            to="https://www.scala-sbt.org/1.x/docs/">
-            Documentation
-          </Link>
+    <header>
+      <div className={clsx('hero hero--primary', styles.heroBanner)}>
+        <div className="container">
+          <Heading as="h1" className="hero__title">
+            {siteConfig.title}
+          </Heading>
+          <p className="hero__subtitle">{siteConfig.tagline}</p>
+          <div className={styles.buttons}>
+            <Link
+              className="button button--secondary button--lg"
+              to="/download/">
+              Get sbt { sbtVersion } (latest stable)
+            </Link>
+            <Link
+              className="button button--secondary button--lg"
+              to="https://www.scala-sbt.org/1.x/docs/">
+              Documentation
+            </Link>
+          </div>
         </div>
       </div>
     </header>
