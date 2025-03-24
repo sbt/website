@@ -20,6 +20,7 @@
 - [Concepts](concepts/index.md)
   - [Command](concepts/command.md)
   - [Cross building](concepts/cross-building.md)
+  - [sbt query](concepts/sbt-query.md)
   - [Caching](concepts/caching.md)
 - [Reference](reference/index.md)
   - [sbt](reference/sbt.md)
