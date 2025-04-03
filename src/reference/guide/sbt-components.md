@@ -23,8 +23,8 @@ This means that:
 
 sbtn (native thin client) is a subcomponent of sbt runner, called when you pass `--client` flag to sbt runner, and is used to send commands to sbt server. It is called sbtn because it is compiled to native code using GraalVM native-image. The protocol between sbtn and sbt server is stable enough that it should work between **most recent versions** of sbt.
 
-sbt server
-----------
+sbt server (`sbt --server`)
+---------------------------
 
 sbt server is the actual build tool whose version is specified using `project/build.properties`. sbt server acts as a cashier to take commands from sbtn and editors.
 
@@ -53,16 +53,20 @@ Let's look at three ways of connecting to sbt server.
 
 ### sbt shell using sbtn
 
-Run `sbt --client` in the working directory of your build:
+Run `sbt` in the working directory of your build:
 
 ```bash
-sbt --client
+sbt
+```
+
+```admonish note
+In sbt 1.x, equivalent command was `sbt --client`
 ```
 
 This should display something like the following:
 
 ```bash
-$ sbt --client
+$ sbt
 [info] server was not detected. starting an instance
 [info] welcome to sbt 2.0.0-alpha7 (Azul Systems, Inc. Java 1.8.0_352)
 [info] loading project definition from /private/tmp/bar/project
@@ -92,12 +96,12 @@ To leave sbt shell, type `exit` or use `Ctrl-D` (Unix) or `Ctrl-Z` (Windows).
 You can also run sbt in batch mode:
 
 ```bash
-sbt --client compile
-sbt --client testOnly TestA
+sbt compile
+sbt testOnly TestA
 ```
 
 ```bash
-$ sbt --client compile
+$ sbt compile
 > compile
 ```
 
@@ -112,7 +116,7 @@ sbt shutdownall
 Or the following to shutdown just the current one:
 
 ```bash
-sbt --client shutdown
+sbt shutdown
 ```
 
   [coursier]: https://get-coursier.io/
