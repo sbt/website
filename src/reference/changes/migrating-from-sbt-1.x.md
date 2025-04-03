@@ -59,7 +59,7 @@ lazy val plugin = (projectMatrix in file("plugin"))
   .settings(
     name := "sbt-vimquit",
   )
-  .jvmPlatform(scalaVersions = Seq("3.3.3", "2.12.20"))
+  .jvmPlatform(scalaVersions = Seq("3.6.2", "2.12.20"))
 ```
 
 If you use `projectMatrix`, make sure to move the plugin to a subdirectory like `plugin/`. Otherwise, the synthetic root project will also pick up the `src/`.
@@ -71,7 +71,7 @@ Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x.
 ```scala
 // using sbt 1.x
 lazy val scala212 = "2.12.20"
-lazy val scala3 = "3.3.4"
+lazy val scala3 = "3.6.2"
 ThisBuild / crossScalaVersions := Seq(scala212, scala3)
 
 lazy val plugin = (project in file("plugin"))
@@ -102,6 +102,23 @@ libraryDependencies += "org.scala-js" %% "scalajs-dom" % "2.8.0"
 
 Use `.platform(Platform.jvm)` in case where JVM libraries are needed.
 
+Changes to `target`
+-------------------
+
+In sbt 2.x, the `target` directory is unified to be a single `target/` directory in the working directory, and each subproject creates a subdirectory encoding platform, Scala version, and the subproject id. To absorb this change in scripted tests, `exists`, `absent`, and `delete` now supports glob expression `**`, as well as `||`.
+
+```bash
+# before
+$ absent target/out/jvm/scala-3.3.1/clean-managed/src_managed/foo.txt
+$ exists target/out/jvm/scala-3.3.1/clean-managed/src_managed/bar.txt
+
+# after
+$ absent target/**/src_managed/foo.txt
+$ exists target/**/src_managed/bar.txt
+
+# either is ok
+$ exists target/**/proj/src_managed/bar.txt || proj/target/**/src_managed/bar.txt
+```
 
 The PluginCompat technique
 --------------------------
