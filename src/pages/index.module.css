@@ -4,35 +4,29 @@
  */
 
 header {
-  background-color: #222222;
+  background-color: #222;
   margin-bottom: 5em;
 }
 
 .heroBanner {
   height: 530px;
-  max-width: 2000px;
-  padding: 4rem 0;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-  background-image: url("/assets/ryoanji-2000x548.jpg");
-  margin-bottom: 0.1em;
-}
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+  background: url("/assets/ryoanji-2000x548.jpg") center no-repeat;
+  /* Prevent header text from turning dark.
+   * Insufficient contrast due to the background image */
+  --ifm-hero-text-color: #fff;
 }
 
 .buttons {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (max-width: 600px) {
   .buttons {
-    justify-content: center;
+    flex-direction: column;
   }
 }
