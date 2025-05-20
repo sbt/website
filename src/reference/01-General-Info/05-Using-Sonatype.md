@@ -150,7 +150,7 @@ password=<your password>
 To publish to a Maven repository, you'll need to configure a few
 settings so that the correct metadata is generated.
 
-**Note**: To publish to the Central Portal, set `ThisBuild / publishTo`
+**Note**: To publish to the Central Portal, `ThisBuild / publishTo`
 must be set to the `localStaging` repository:
 
 ```scala
