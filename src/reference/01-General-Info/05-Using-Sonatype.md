@@ -9,6 +9,7 @@ out: Using-Sonatype.html
   [sonatype-coordinates]: https://central.sonatype.org/publish/requirements/coordinates/
   [sonatype-nexus]: https://oss.sonatype.org/#welcome
   [sonatype-pgp]: https://central.sonatype.org/publish/requirements/gpg/
+  [publish-portal-snapshots]: https://central.sonatype.org/publish/publish-portal-snapshots/
   [sbt-pgp]: https://github.com/sbt/sbt-pgp#sbt-pgp
   [sbt-sonatype]: https://github.com/xerial/sbt-sonatype
   [sbt-release]: https://github.com/sbt/sbt-release
@@ -154,7 +155,11 @@ must be set to the `localStaging` repository:
 
 ```scala
 // new setting for the Central Portal
-ThisBuild / publishTo := localStaging.value
+ThisBuild / publishTo := {
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+  else localStaging.value
+}
 ```
 
 Add these settings at the end of `build.sbt` or a separate `publish.sbt`:
@@ -188,7 +193,13 @@ ThisBuild / homepage := Some(url("https://github.com/example/project"))
 // Remove all additional repository other than Maven Central from POM
 ThisBuild / pomIncludeRepository := { _ => false }
 ThisBuild / publishMavenStyle := true
-ThisBuild / publishTo := localStaging.value
+
+// new setting for the Central Portal
+ThisBuild / publishTo := {
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+  else localStaging.value
+}
 ```
 
 The full format of a `pom.xml` (an end product of the project configuration
@@ -224,6 +235,13 @@ It might take 10 minutes to a few hours for the published artifacts to be
 visible on the Central Repository <https://repo1.maven.org/maven2/>.
 
 ### Optional steps
+
+#### Publishing SNAPSHOTs
+
+In general, the use of SNAPSHOT artifacts should be limited to short-term testing,
+and we do not recommend publishing SNAPSHOTs publicly.
+However, should you decide to publish SNAPSHOTs, you can enable it from the Central Portal per namespace.
+See Sonatype's [Publishing -SNAPSHOT Releases][publish-portal-snapshots] guide for details.
 
 #### Tag-based publishing via sbt-ci-release
 
