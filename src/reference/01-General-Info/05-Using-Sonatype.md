@@ -131,7 +131,19 @@ Make sure that the `gpg` command is in PATH available to the sbt.
 
 Generate a user token from the portal to be used for the credentials.
 The token must be stored somewhere safe (*e.g. NOT in the repository*).
-A common convention is a `$global_base$/credentials.sbt` file, with the following:
+
+sbt 1.11.x reads from the environment variables `SONATYPE_USERNAME` and `SONATYPE_PASSWORD` and appends a credential for `central.sonatype.com` out-of-box, which might be useful for automatic publishing from the CI environment, such as GitHub Actions.
+
+```yaml
+- run: sbt ci-release
+  env:
+    PGP_PASSPHRASE: \${{ secrets.PGP_PASSPHRASE }}
+    PGP_SECRET: \${{ secrets.PGP_SECRET }}
+    SONATYPE_PASSWORD: \${{ secrets.SONATYPE_PASSWORD }}
+    SONATYPE_USERNAME: \${{ secrets.SONATYPE_USERNAME }}
+```
+
+On a local machine, a common convention is a `$global_base$/credentials.sbt` file, with the following:
 
 ```scala
 credentials += Credentials(Path.userHome / ".sbt" / "sonatype_central_credentials")
