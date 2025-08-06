@@ -15,10 +15,12 @@ Changes with compatibility implications
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
-- sbt 2.x uses Scala 3.x (currently **{{scala3_metabuild_version}}**) for build definitions and plugins (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
-- Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
-- `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
-- Default settings and tasks keys typed to `URL` `apiMappings`, `apiURL`, `homepage`, `organizationHomepage`, `releaseNotesURL` were changed to `URI` in [#7927](https://github.com/sbt/sbt/pull/7927).
+- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **{{scala3_metabuild_version}}**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
+- **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
+- **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
+- `test` task type is changed from `Unit` to `TestResult` by [@eed3si9n][@eed3si9n] in [#8181][8181]
+- Default settings and tasks keys typed to `URL` (i.e. `apiMappings`, `apiURL`, `homepage`, `organizationHomepage`, `releaseNotesURL`) were changed to `URI` in [#7927](https://github.com/sbt/sbt/pull/7927).
 - `licenses` key is changed from `Seq[(String, URL)]` to `Seq[License]` in [#7927](https://github.com/sbt/sbt/pull/7927).
 - sbt 2.x plugins are published with `_sbt2_3` suffix by [@eed3si9n][@eed3si9n] in [#7671][7671]
 - sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross build on JVM as well as JS and Native, as opposed to `%%%` operator that was created in a plugin to workaround this issue, by [@eed3si9n][@eed3si9n] in [#6746][6746]
@@ -28,7 +30,8 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
 ### Dropped dreprecations
 
-- sbt 0.13 style shell syntax by [@eed3si9n][@eed3si9n] in [#7700][7700]
+- Removed `IntegrationTest` configuration in [#8184][8184]
+- Removed sbt 0.13 style shell syntax in [#7700][7700]
 
 Features
 --------
@@ -55,7 +58,6 @@ hi := name.value + "!"
 In sbt 1.x `hi` task will capture the name of the root project, but in sbt 2.x it will return the `name` of each subproject with `!`:
 
 ```scala
-$ export SBT_NATIVE_CLIENT=true
 $ sbt show hi
 [info] entering *experimental* thin client - BEEP WHIRR
 [info] terminate the server with `shutdown`
@@ -73,7 +75,6 @@ Contributed by [@eed3si9n][@eed3si9n] in [#6746][6746]
 To filter down the subprojects, sbt 2.x introduces sbt query.
 
 ```bash
-$ export SBT_NATIVE_CLIENT=true
 $ sbt foo.../test
 ```
 
@@ -87,14 +88,12 @@ The above runs all subprojects whose `scalaBinaryVersion` is `3`. Contributed by
 
 ### Local/remote cache system
 
-sbt 2.x implements cached task, which can automatically cache the task results to local disk and Bazel-compatible remote cache.
+sbt 2.x implements cached task by default, which can automatically cache the task results to local disk and Bazel-compatible remote cache.
 
 ```scala
 lazy val task1 = taskKey[String]("doc for task1")
 
-task1 := (Def.cachedTask {
-  name.value + version.value + "!"
-}).value
+task1 := name.value + version.value + "!"
 ```
 
 This tracks the inputs into the `task1` and creates a machine-wide disk cache, which can also be configured to also use a remote cache. Since it's common for sbt tasks to also produce files on the side, we also provide a mechanism to cache file contents:
@@ -102,16 +101,16 @@ This tracks the inputs into the `task1` and creates a machine-wide disk cache, w
 ```scala
 lazy val task1 = taskKey[String]("doc for task1")
 
-task1 := (Def.cachedTask {
+task1 := {
   val converter = fileConverter.value
   ....
   val output = converter.toVirtualFile(somefile)
   Def.declareOutput(output)
   name.value + version.value + "!"
-}).value
+}
 ```
 
-Contributed by [@eed3si9n][@eed3si9n] in [#7464][7464] / [#7525][7525]
+See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n][@eed3si9n] in [#7464][7464] / [#7525][7525].
 
 Previously on sbt
 -----------------
@@ -128,5 +127,7 @@ See also:
   [7699]: https://github.com/sbt/sbt/pull/7699
   [7700]: https://github.com/sbt/sbt/pull/7700
   [7712]: https://github.com/sbt/sbt/pull/7712
+  [8181]: https://github.com/sbt/sbt/pull/8181
+  [8184]: https://github.com/sbt/sbt/pull/8184
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2

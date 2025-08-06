@@ -26,6 +26,7 @@
   - [sbt](reference/sbt.md)
   - [sbt update](reference/sbt-update.md)
   - [sbt run](reference/sbt-run.md)
+  - [Cached task](reference/cached-task.md)
   - [Cross building setup](reference/cross-building-setup.md)
   - [Remote cache setup](reference/remote-cache-setup.md)
 - [Recipes](recipes/index.md)
