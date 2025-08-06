@@ -24,16 +24,12 @@ Automatic caching
 Here's a demonstration of the automatic caching:
 
 ```scala
-import sbt.util.CacheImplicits.given
-
 val someKey = taskKey[String]("something")
 
-someKey := (Def.cachedTask {
-  name.value + version.value + "!"
-}).value
+someKey := name.value + version.value + "!"
 ```
 
-The task will be automatically cached based on the two settings `name` and `version`. The first time we run the task it will be executed onsite, but the second time onward, it will use the disk cache:
+In sbt 2.x, the task result will be automatically cached based on the two settings `name` and `version`. The first time we run the task it will be executed onsite, but the second time onward, it will use the disk cache:
 
 ```
 sbt:demo> show someKey
@@ -73,7 +69,7 @@ There are many tasks that generate file that do not use `VirtualFile` as the ret
 To participate in caching, we need to declare these effects as something we care about.
 
 ```scala
-someKey := Def.cachedTask {
+someKey := {
   val conv = fileConverter.value
   val out: java.nio.file.Path = createFile(...)
   val vf: xsbti.VirtualFile = conv.toVirtualFile(out)
@@ -89,4 +85,9 @@ You can optionally extend the build to use remote cache in addition to the local
 
 Imagine you have a dozen people in your project or a company. Each morning, you will `git pull` the changes the dozen people made, and you need to build their code. If you have a successful project, the code size will only get bigger over time, and the % of the time you spend building someone else's in your day increases. This becomes the limiting factor of your team size and code size. Remote caching reverses this tide by CI systems hydrate the cache and you can download the artifacts and task outputs.
 
-sbt 2.x implements Bazel-compatible gRPC interface, which works with number of backend both open source and commercial.
+sbt 2.x implements Bazel-compatible gRPC interface, which works with number of backend both open source and commercial. See [Remote cache setup](../reference/remote-cache-setup.md) for more details.
+
+Reference
+---------
+
+See also [Cached task](../reference/cached-task.md) reference guide.

@@ -6,7 +6,7 @@ Changing `build.sbt` DSL to Scala 3.x
 
 As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.x.
 
-This means that if you implement custom tasks or sbt plugins for sbt 2.x, it must be done using Scala 3.x. See [Scala 3.x incompatibility table][scala-incompatibility-table] and [Scala 2 with -Xsource:3][tooling-scala2-xsource3].
+This means that if you implement custom tasks or sbt plugins for sbt 2.x, it must be done using Scala 3.x. Consult [Scala 3.x incompatibility table][scala-incompatibility-table] and [Scala 2 with -Xsource:3][tooling-scala2-xsource3] for details about Scala 3.x.
 
 ```scala
 // This works on Scala 2.12.20 under -Xsource:3
@@ -36,6 +36,16 @@ publish / skip := true
 
 In sbt 2.x, bare settings settings should no longer be scoped to `ThisBuild`. One benefit of the new _common settings_ over `ThisBuild` is that it would act in a more predictable delegation. These settings are inserted between plugins settings and those defined in `settings(...)`, meaning they can be used to define settings like `Compile / scalacOptions`, which was not possible with `ThisBuild`.
 
+Migrating to cached tasks
+-------------------------
+
+See [Cached task](../reference/cached-task.md) reference for details, including the way to opt out of caching.
+
+Migration away from IntegrationTest
+-----------------------------------
+
+To migrate away from the `IntegrationTest` configuration, create a separate subproject and implement it as normal test.
+
 Migrating to slash syntax
 -------------------------
 
@@ -46,6 +56,10 @@ sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt 2.x r
 ```
 
 For example, `test:compile` will no longer work on the shell. Use `Test/compile` instead. See [syntactic Scalafix rule for unified slash syntax][syntactic-scalafix-rule-for-unified-slash-syntax] for semi-automated migration of `build.sbt` files.
+
+```bash
+scalafix --rules=https://gist.githubusercontent.com/eed3si9n/57e83f5330592d968ce49f0d5030d4d5/raw/7f576f16a90e432baa49911c9a66204c354947bb/Sbt0_13BuildSyntax.scala *.sbt project/*.scala
+```
 
 Cross building sbt plugins
 --------------------------
