@@ -19,7 +19,7 @@ See [library depdency basics][Library-Dependencies] in the Getting Started guide
 Synopsis
 --------
 
-`sbt --client update`
+`sbt` \[_query_ / \] `update`
 
 Description
 -----------
