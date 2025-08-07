@@ -1,17 +1,22 @@
----
-out: Testing.html
----
+sbt test
+========
 
-  [Running]: Running.html
-  [Plugins]: Plugins.html
-  [Library-Dependencies]: ../tutorial/Library-Dependencies.html
-  [ivy-configurations]: Library-Management.html#ivy-configurations
-  [Forking]: Forking.html
+Synopsis
+--------
 
-Testing
--------
+`sbt` \[_query_ / \] `test` \[_testname1_ _testname2_\] \[ -- _options_ \]
 
-### Basics
+Description
+-----------
+
+The `test` task provides a means for compiling and running the tests.
+
+By default, the `test` task in sbt 2.x:
+
+1. **Subproject parallelism**. Performs compilation of the relevant subprojects in parallel, specified by the [query](../concepts/sbt-query.md).
+2. **Test suite parallelism**. Maps discovered test suites, to tasks and executes them in parallel.
+3. **Incremental test**. Runs only the tests that either failed in the previous run, never run, or if sbt detects changes in the test or its dependencies.
+4. **Cached**. The test result is cached machine-wide, and optionally remote cached.
 
 The standard source locations for testing are:
 
@@ -22,53 +27,76 @@ The standard source locations for testing are:
 The resources may be accessed from tests by using the `getResource`
 methods of `java.lang.Class` or `java.lang.ClassLoader`.
 
-The main Scala testing frameworks (
-[ScalaCheck](https://scalacheck.org/),
-[ScalaTest](https://www.scalatest.org/), and
-[specs2](http://specs2.org/)) provide an implementation of the
-common test interface and only need to be added to the classpath to work
-with sbt. For example, ScalaCheck may be used by declaring it as a
-[managed dependency][Library-Dependencies]:
+### Test interfaces
+
+sbt defines the common interface for JVM-based test frameworks, allowing automatic test suite discovery and parallel execution. By default sbt integrates with [MUnit](https://scalameta.org/munit/), [ScalaTest](https://www.scalatest.org/), [Hedgehog](https://hedgehogqa.github.io/scala-hedgehog/), [ScalaCheck](https://scalacheck.org/), [Specs2](https://etorreborre.github.io/specs2/), [Weaver](https://typelevel.org/weaver-test/), [ZIO Test](https://zio.dev/reference/test/), and [JUnit 4](https://github.com/sbt/junit-interface); this means you only need to add the test framework to the classpath to work with sbt. For example, MUnit may be used by declaring it as a `libraryDependency`:
 
 ```scala
-lazy val scalacheck = "org.scalacheck" %% "scalacheck" % "$example_scalacheck_version$"
-libraryDependencies += scalacheck % Test
+lazy val munit = "org.scalameta" %% "munit" % "{{example_munit_version}}"
+
+libraryDependencies += munit % Test
 ```
 
-`Test` is the [configuration][ivy-configurations] and means that ScalaCheck will
+In the above, `Test` denotes the `Test` configuration, and means that MUnit will
 only be on the test classpath and it isn't needed by the main sources.
-This is generally good practice for libraries because your users don't
-typically need your test dependencies to use your library.
 
-With the library dependency defined, you can then add test sources in
-the locations listed above and compile and run tests. The tasks for
-running tests are `test` and `testOnly`. The `test` task accepts no
-command line arguments and runs all tests:
+#### JUnit
 
+Support for JUnit 5 is provided by
+[sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface). To add
+JUnit Jupiter support into your project, add the jupiter-interface dependency in
+your project's main build.sbt file.
+
+```scala
+libraryDependencies += "com.github.sbt.junit" % "jupiter-interface" % "0.15.1" % Test
 ```
-> test
+
+and the sbt-jupiter-interface plugin to your `project/plugins.sbt`:
+
+```scala
+addSbtPlugin("com.github.sbt.junit" % "sbt-jupiter-interface" % "0.15.1")
 ```
 
-#### testOnly
+Support for JUnit 4 is provided by
+[junit-interface](https://github.com/sbt/junit-interface).
+Add the junit-interface dependency in your project's main build.sbt file.
 
-The `testOnly` task accepts a whitespace separated list of test names to
+```scala
+libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % Test
+```
+
+### Test filtering
+
+In sbt 2.x, the `test` task accepts a whitespace separated list of test names to
 run. For example:
 
+```bash
+> test example.ExampleSuite example.ExampleSuite2
 ```
-> testOnly org.example.MyTest1 org.example.MyTest2
+
+Here's an example output:
+
+```bash
+> test example.ExampleSuite example.ExampleSuite2
+[info] compiling 1 Scala source to /tmp/foo/target/out/jvm/scala-3.7.2/foo/backend ...
+[info] compiling 2 Scala sources to /tmp/foo/target/out/jvm/scala-3.7.2/foo/test-backend ...
+example.ExampleSuite:
+  + addition 0.003s
+example.ExampleSuite2:
+  + subtraction 0.003s
+[info] Passed: Total 2, Failed 0, Errors 0, Passed 2
+[success] elapsed time: 3 s, cache 49%, 25 disk cache hits, 26 onsite tasks
 ```
 
 It supports wildcards as well:
 
 ```
-> testOnly org.example.*Slow org.example.MyTest1
+> test *Example*
 ```
 
-#### testQuick
+### Incremental testing
 
-The `testQuick` task, like `testOnly`, allows to filter the tests to run
-to specific tests or wildcards using the same syntax to indicate the
-filters. In addition to the explicit filter, only the tests that satisfy
+In addition to the explicit filter, the `test` task runs only the tests that satisfy
 one of the following conditions are run:
 
 -   The tests that failed in the previous run
@@ -76,15 +104,21 @@ one of the following conditions are run:
 -   The tests that have one or more transitive dependencies, maybe in a
     different project, recompiled.
 
-##### Tab completion
+### Full testing
+
+To run, uncached full tests, like sbt 1.x, use the `testFull` task.
+
+<!--
+### Tab completion
 
 Tab completion is provided for test names based on the results of the
 last `Test/compile`. This means that a new sources aren't available for
 tab completion until they are compiled and deleted sources won't be
 removed from tab completion until a recompile. A new test source can
-still be manually written out and run using `testOnly`.
+still be manually written out and run using `test`.
+-->
 
-#### Other tasks
+### Other tasks
 
 Tasks that are available for main sources are generally available for
 test sources, but are prefixed with `Test /` on the command line and are
@@ -96,7 +130,7 @@ referenced in Scala code with `Test /` as well. These tasks include:
 -   `Test / run`
 -   `Test / runMain`
 
-See [Running][Running] for details on these tasks.
+See [sbt run](./sbt-run.md) for details on these tasks.
 
 ### Output
 
@@ -120,13 +154,13 @@ val myProject = (project in file(".")).disablePlugins(plugins.JUnitXmlReportPlug
 
 ### Options
 
-#### Test Framework Arguments
+#### Test framework arguments
 
 Arguments to the test framework may be provided on the command line to
-the `testOnly` tasks following a `--` separator. For example:
+the `test` tasks following a `--` separator. For example:
 
 ```
-> testOnly org.example.MyTest -- -verbosity 1
+> test org.example.MyTest -- -verbosity 1
 ```
 
 To specify test framework arguments as part of the build, add options
@@ -151,9 +185,11 @@ ClassLoader is passed the class loader that is (or was) used for running
 the tests. It provides access to the test classes as well as the test
 framework classes.
 
-> **Note**: When forking, the ClassLoader containing the test classes cannot be
-> provided because it is in another JVM. Only use the () => Unit
-> variants in this case.
+```admonish note
+When forking, the `ClassLoader` containing the test classes cannot be
+provided because it is in another JVM. Only use the `() => Unit`
+variants in this case.
+```
 
 Examples:
 
@@ -164,18 +200,17 @@ Test / testOptions += Tests.Setup( loader => ... )
 Test / testOptions += Tests.Cleanup( loader => ... )
 ```
 
-#### Disable Parallel Execution of Tests
+#### Disable parallel execution of test suites
 
-By default, sbt runs all tasks in parallel and within the same JVM as sbt itself. 
-Because each test is mapped to a task, tests are also run in parallel by default. 
-To make tests within a given project execute serially: :
+By default, sbt runs all tasks in parallel and within the same JVM as sbt itself.
+Because each test suite is mapped to a task, tests are also run in parallel by default.
+To make tests within a given project execute serially:
 
 ```scala
 Test / parallelExecution := false
 ```
 
-`Test` can be replaced with `IntegrationTest` to only execute
-integration tests serially. Note that tests from different projects may
+Note that tests from different projects may
 still execute concurrently.
 
 #### Filter classes
@@ -195,11 +230,17 @@ The setting:
 Test / fork := true
 ```
 
-specifies that all tests will be executed in a single external JVM. See
-[Forking][Forking] for configuring standard options for forking. By default,
-tests executed in a forked JVM are executed *sequentially*.   More control
-over how tests are assigned to JVMs and what options to pass to those is
-available with `testGrouping` key. For example in build.sbt:
+specifies that all tests will be executed in a single external JVM. <!-- See
+[Forking][Forking] for configuring standard options for forking.
+By default,
+tests executed in a forked JVM are executed *sequentially*.
+-->
+
+More control over how tests are assigned to JVMs and what options to pass to those is
+available with `testGrouping` key.
+
+<!--
+For example in build.sbt:
 
 ```scala
 import Tests._
@@ -216,12 +257,18 @@ import Tests._
 }
 ```
 
-The tests in a single group are run sequentially. Control the number of
+
+The tests in a single group are run sequentially.
+-->
+
+Control the number of
 forked JVMs allowed to run at the same time by setting the limit on
 `Tags.ForkedTestGroup` tag, which is 1 by default. `Setup` and `Cleanup`
 actions cannot be provided with the actual test class loader when a
 group is forked.
 
+
+<!--
 In addition, forked tests can optionally be run in parallel within the
 forked JVM(s), using the following setting:
 
@@ -374,31 +421,6 @@ Serial / parallelExecution := false
 The tests to run in parallel would be run with `test` and the ones to
 run in serial would be run with `Serial/test`.
 
-### JUnit
-
-Support for JUnit5 is provided by
-[sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-interface). To add
-JUnit Jupiter support into your project, add the jupiter-interface dependency in
-your project's main build.sbt file.
-
-```scala
-libraryDependencies += "net.aichler" % "jupiter-interface" % "0.9.0" % Test
-```
-
-and the sbt-jupiter-interface plugin to your project/plugins.sbt
-
-```scala
-addSbtPlugin("net.aichler" % "sbt-jupiter-interface" % "0.9.0")
-```
-
-Support for JUnit4 is provided by
-[junit-interface](https://github.com/sbt/junit-interface).
-Add the junit-interface dependency in your project's main build.sbt file.
-
-```scala
-libraryDependencies += "com.github.sbt" % "junit-interface" % "0.13.3" % Test
-```
-
 ### Extensions
 
 This page describes adding support for additional testing libraries and
@@ -440,3 +462,4 @@ testListeners += customTestListener
 ```
 
 where `customTestListener` is of type `sbt.TestReportListener`.
+-->

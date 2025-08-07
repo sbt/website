@@ -20,7 +20,9 @@ Synopsis
 --------
 
 `sbt`<br>
-`sbt --client` *command* *args*
+`sbt` *command* *args*<br>
+`sbt --server`<br>
+`sbt --script-version`
 
 Description
 -----------
@@ -29,10 +31,10 @@ sbt is a simple build tool created originally for Scala and Java. It lets us dec
 ### sbt runner and sbt server
 
 - sbt runner is a system shell script named `sbt`, or `sbt.bat` on Windows. That is capable of running *any version of sbt*. This is sometimes called "sbt-the-shell-script".
-  - When executed with `--client`, sbt runner executes sbtn, a client program compiled a native code using GraalVM native image.
+  - When sbt 2.x is detected, sbt runner executes in a client mode, typically using sbtn, a GraalVM native implementation of the thin client program.
   - sbt runner also executes sbt launcher, a launcher that is capable of running *any verions of sbt*.
   - When you install sbt from a installer, what you're installing is the sbt runner.
-- sbt server is the actual build tool.
+- sbt server is sbt's main artifact, and the actual build tool.
   - The sbt version is determined by `project/build.properties` in each working directory.
   - sbt server accepts commands from sbtn, network API, or via its own sbt shell.
 
