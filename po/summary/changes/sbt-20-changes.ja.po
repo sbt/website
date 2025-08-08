@@ -1,23 +1,23 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-08-08T01:31:07-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2025-08-08T04:29:03-04:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.5\n"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:4
 msgid "sbt 2.0 changes (draft)"
-msgstr ""
+msgstr "sbt 2.0 の変更点"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:13
 msgid "Changes with compatibility implications"
-msgstr ""
+msgstr "互換性に影響のある変更点"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:16
 msgid "See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md)."
@@ -27,9 +27,14 @@ msgstr ""
 msgid ""
 "**Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions "
 "and plugins, is based on Scala 3.x (currently **3.7.2**)  (Both sbt 1.x and "
-"2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n](https://"
-"github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and others."
+"2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n](https://github."
+"com/eed3si9n), [@adpi2](https://github.com/adpi2), and others."
 msgstr ""
+"**Scala 3 を用いたメタビルド**。ビルド定義やプラグインに使われる sbt 2.x "
+"build.sbt DSL は Scala 3.x ベースとなった (現行では **3.7.2**)  (sbt 1.x 並び"
+"に 2.x は、Scala 2.x と 3.x の両方をビルドすることが可能) by [@eed3si9n]"
+"(https://github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and "
+"others."
 
 #: src/reference/changes/sbt-2.0-change-summary.md:19
 msgid ""
@@ -37,12 +42,17 @@ msgid ""
 "to just the root subproject, and thus replacing the role that `ThisBuild` "
 "has played."
 msgstr ""
+"**コモン・セッティング**。build.sbt に直書きされたセッティングは、ルートサブ"
+"プロジェクトだけではなく、全てのサブプロジェクトに追加され、これまで "
+"`ThisBuild` が受け持ってきた役目を果たすことができる。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:20
 msgid ""
 "**Cached task**. All tasks are cached by default. Details in [Caching](../"
 "concepts/caching.md)."
 msgstr ""
+"**キャッシュ化されたタスク**。全てのタスクはデフォルトで、キャッシュ化されて"
+"いる。詳細は[キャッシュ](../concepts/caching.md)参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:21
 msgid ""
@@ -50,13 +60,19 @@ msgid ""
 "cache test results. Use `testFull` for full test by [@eed3si9n](https://"
 "github.com/eed3si9n) in [\\#7686](https://github.com/sbt/sbt/pull/7686)"
 msgstr ""
+"**差分テスト**。`test` は、テスト結果をキャッシュする差分テストへと変更され"
+"た。全テストを走らせたい場合は `testFull` を使う by [@eed3si9n](https://"
+"github.com/eed3si9n) in [\\#7686](https://github.com/sbt/sbt/pull/7686)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:22
 msgid ""
 "`test` task type is changed from `Unit` to `TestResult` by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/pull/"
-"8181)"
+"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/"
+"pull/8181)"
 msgstr ""
+"`test` タスクの形が `Unit` から `TestResult` へと変更された by [@eed3si9n]"
+"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/"
+"pull/8181)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:23
 msgid ""
@@ -64,41 +80,57 @@ msgid ""
 "`apiURL`, `homepage`, `organizationHomepage`, `releaseNotesURL`) were "
 "changed to `URI` in [\\#7927](https://github.com/sbt/sbt/pull/7927)."
 msgstr ""
+"以前 `URL` に型付けされていたデフォルトのセッティングやタスクキー "
+"(`apiMappings`, `apiURL`, `homepage`, `organizationHomepage`, "
+"`releaseNotesURL` など) は `URI` に変更された in [\\#7927](https://github."
+"com/sbt/sbt/pull/7927)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:24
 msgid ""
 "`licenses` key is changed from `Seq[(String, URL)]` to `Seq[License]` in "
 "[\\#7927](https://github.com/sbt/sbt/pull/7927)."
 msgstr ""
+"`license` キーの型が `Seq[(String, URL)]` から `Seq[License]` へと変更された "
+"in  [\\#7927](https://github.com/sbt/sbt/pull/7927)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:25
 msgid ""
 "sbt 2.x plugins are published with `_sbt2_3` suffix by [@eed3si9n](https://"
 "github.com/eed3si9n) in [\\#7671](https://github.com/sbt/sbt/pull/7671)"
 msgstr ""
+"sbt 2.x プラグインは `_sbt2_3` という suffix を用いて公開される by "
+"[@eed3si9n](https://github.com/eed3si9n) in [\\#7671](https://github.com/sbt/"
+"sbt/pull/7671)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:26
 msgid ""
 "sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross "
 "build on JVM as well as JS and Native, as opposed to `%%%` operator that was "
-"created in a plugin to workaround this issue, by [@eed3si9n](https://"
-"github.com/eed3si9n) in [\\#6746](https://github.com/sbt/sbt/pull/6746)"
+"created in a plugin to workaround this issue, by [@eed3si9n](https://github."
+"com/eed3si9n) in [\\#6746](https://github.com/sbt/sbt/pull/6746)"
 msgstr ""
+"sbt 2.x は、`platform` セッティングを追加して、`ModuleID` の `%%%` 演算子を使"
+"わなくても、`%%` 演算子だけで JVM、JS、Native のクロスビルドができるようにし"
+"た by [@eed3si9n](https://github.com/eed3si9n) in [\\#6746](https://github."
+"com/sbt/sbt/pull/6746)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:27
 msgid ""
 "Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#7712](https://github.com/sbt/sbt/pull/"
-"7712)"
+"(https://github.com/eed3si9n) in [\\#7712](https://github.com/sbt/sbt/"
+"pull/7712)"
 msgstr ""
+"`useCoursier` セッティングを廃止して、Coursier をオプトアウトできないようにし"
+"た by [@eed3si9n](https://github.com/eed3si9n) in [\\#7712](https://github."
+"com/sbt/sbt/pull/7712)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:28
 msgid ""
-"`Key.Classpath` is changed to be an alias of the "
-"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of "
-"`Seq[Attributed[File]]`. Similarly, some task keys that used to return "
-"`File` have changed to return `HashedVirtualFileRef` instead. See [Caching "
-"Files](../concepts/caching.md#caching-files)."
+"`Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti."
+"HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, "
+"some task keys that used to return `File` have changed to return "
+"`HashedVirtualFileRef` instead. See [Caching Files](../concepts/caching."
+"md#caching-files)."
 msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:29
@@ -109,7 +141,7 @@ msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:31
 msgid "Dropped dreprecations"
-msgstr ""
+msgstr "勧告どおり廃止された機能"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:33
 msgid ""
@@ -173,8 +205,8 @@ msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:58
 msgid ""
-"In sbt 1.x `hi` task will capture the name of the root project, but in sbt "
-"2.x it will return the `name` of each subproject with `!`:"
+"In sbt 1.x `hi` task will capture the name of the root project, but in sbt 2."
+"x it will return the `name` of each subproject with `!`:"
 msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:71
@@ -228,8 +260,8 @@ msgstr ""
 #: src/reference/changes/sbt-2.0-change-summary.md:113
 msgid ""
 "See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#7464](https://github.com/sbt/sbt/pull/"
-"7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525)."
+"(https://github.com/eed3si9n) in [\\#7464](https://github.com/sbt/sbt/"
+"pull/7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525)."
 msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:115
@@ -242,6 +274,6 @@ msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:120
 msgid ""
-"[sbt 1.0 changes](https://www.scala-sbt.org/1.x/docs/sbt-1.0-Release-"
-"Notes.html)"
+"[sbt 1.0 changes](https://www.scala-sbt.org/1.x/docs/sbt-1.0-Release-Notes."
+"html)"
 msgstr ""

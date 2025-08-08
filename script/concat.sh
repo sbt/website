@@ -28,10 +28,10 @@ output_file="po/$locale.po"
 cat po/summary/summary.$locale.po > "$output_file"
 echo -e "\n" >> "$output_file"
 
-for file in po/**/*.$locale.po; do
+for file in $(find po -name "*.$locale.po" -print | sort); do
     if [[ $file != "po/summary/summary.$locale.po" ]]; then
         # Append each file's content to the output file, starting from line 13
-        tail -n +13 "$file" >> "$output_file"
+        tail -n +14 "$file" >> "$output_file"
         echo -e "\n" >> "$output_file"
     fi
 done
