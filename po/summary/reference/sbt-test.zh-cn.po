@@ -1,0 +1,390 @@
+#: src/reference/reference/sbt-test.md:1
+msgid "sbt test"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:4
+msgid "Synopsis"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:7
+msgid ""
+"`sbt` \\[_query_ / \\] `test` \\[_testname1_ _testname2_\\] \\[ -- _options_ "
+"\\]"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:9
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:12
+msgid "The `test` task provides a means for compiling and running the tests."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:14
+msgid "By default, the `test` task in sbt 2.x:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:16
+msgid ""
+"**Subproject parallelism**. Performs compilation of the relevant subprojects "
+"in parallel, specified by the [query](../concepts/sbt-query.md)."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:17
+msgid ""
+"**Test suite parallelism**. Maps discovered test suites, to tasks and "
+"executes them in parallel."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:18
+msgid ""
+"**Incremental test**. Runs only the tests that either failed in the previous "
+"run, never run, or if sbt detects changes in the test or its dependencies."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:19
+msgid ""
+"**Cached**. The test result is cached machine-wide, and optionally remote "
+"cached."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:21
+msgid "The standard source locations for testing are:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:23
+msgid "Scala sources in `src/test/scala/`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:24
+msgid "Java sources in `src/test/java/`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:25
+msgid "Resources for the test classpath in `src/test/resources/`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:27
+msgid ""
+"The resources may be accessed from tests by using the `getResource` methods "
+"of `java.lang.Class` or `java.lang.ClassLoader`."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:30
+msgid "Test interfaces"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:32
+msgid ""
+"sbt defines the common interface for JVM-based test frameworks, allowing "
+"automatic test suite discovery and parallel execution. By default sbt "
+"integrates with [MUnit](https://scalameta.org/munit/), [ScalaTest](https://"
+"www.scalatest.org/), [Hedgehog](https://hedgehogqa.github.io/scala-"
+"hedgehog/), [ScalaCheck](https://scalacheck.org/), [Specs2](https://"
+"etorreborre.github.io/specs2/), [Weaver](https://typelevel.org/weaver-"
+"test/), [ZIO Test](https://zio.dev/reference/test/), and [JUnit 4](https://"
+"github.com/sbt/junit-interface); this means you only need to add the test "
+"framework to the classpath to work with sbt. For example, MUnit may be used "
+"by declaring it as a `libraryDependency`:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:35
+msgid "\"org.scalameta\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:35
+msgid "\"munit\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:35
+msgid "\"1.1.1\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:40
+msgid ""
+"In the above, `Test` denotes the `Test` configuration, and means that MUnit "
+"will only be on the test classpath and it isn't needed by the main sources."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:43
+msgid "JUnit"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:45
+msgid ""
+"Support for JUnit 5 is provided by [sbt-jupiter-interface](https://"
+"github.com/sbt/sbt-jupiter-interface). To add JUnit Jupiter support into "
+"your project, add the jupiter-interface dependency in your project's main "
+"build.sbt file."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:51
+#: src/reference/reference/sbt-test.md:57
+msgid "\"com.github.sbt.junit\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:51
+msgid "\"jupiter-interface\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:51
+#: src/reference/reference/sbt-test.md:57
+msgid "\"0.15.1\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:54
+msgid "and the sbt-jupiter-interface plugin to your `project/plugins.sbt`:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:57
+msgid "\"sbt-jupiter-interface\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:60
+msgid ""
+"Support for JUnit 4 is provided by [junit-interface](https://github.com/sbt/"
+"junit-interface). Add the junit-interface dependency in your project's main "
+"build.sbt file."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:65
+msgid "\"com.github.sbt\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:65
+msgid "\"junit-interface\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:65
+msgid "\"0.13.3\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:68
+msgid "Test filtering"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:70
+msgid ""
+"In sbt 2.x, the `test` task accepts a whitespace separated list of test "
+"names to run. For example:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:77
+msgid "Here's an example output:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:91
+msgid "It supports wildcards as well:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:97
+msgid "Incremental testing"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:99
+msgid ""
+"In addition to the explicit filter, the `test` task runs only the tests that "
+"satisfy one of the following conditions are run:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:102
+msgid "The tests that failed in the previous run"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:103
+msgid "The tests that were not run before"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:104
+msgid ""
+"The tests that have one or more transitive dependencies, maybe in a "
+"different project, recompiled."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:107
+msgid "Full testing"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:109
+msgid "To run, uncached full tests, like sbt 1.x, use the `testFull` task."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:121
+msgid "Other tasks"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:123
+msgid ""
+"Tasks that are available for main sources are generally available for test "
+"sources, but are prefixed with `Test /` on the command line and are "
+"referenced in Scala code with `Test /` as well. These tasks include:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:127
+msgid "`Test / compile`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:128
+msgid "`Test / console`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:129
+msgid "`Test / consoleQuick`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:130
+msgid "`Test / run`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:131
+msgid "`Test / runMain`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:133
+msgid "See [sbt run](./sbt-run.md) for details on these tasks."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:135
+msgid "Output"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:137
+msgid ""
+"By default, logging is buffered for each test source file until all tests "
+"for that file complete. This can be disabled by setting `logBuffered`:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:145
+msgid "Test Reports"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:147
+msgid ""
+"By default, sbt will generate JUnit XML test reports for all tests in the "
+"build, located in the `target/test-reports` directory for a project. This "
+"can be disabled by disabling the `JUnitXmlReportPlugin`"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:152
+msgid "\".\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:155
+msgid "Options"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:157
+msgid "Test framework arguments"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:159
+msgid ""
+"Arguments to the test framework may be provided on the command line to the "
+"`test` tasks following a `--` separator. For example:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:166
+msgid ""
+"To specify test framework arguments as part of the build, add options "
+"constructed by `Tests.Argument`:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:170
+#: src/reference/reference/sbt-test.md:176
+msgid "\"-verbosity\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:170
+#: src/reference/reference/sbt-test.md:176
+msgid "\"1\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:173
+msgid "To specify them for a specific test framework only:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:179
+msgid "Setup and Cleanup"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:181
+msgid ""
+"Specify setup and cleanup actions using `Tests.Setup` and `Tests.Cleanup`. "
+"These accept either a function of type `() => Unit` or a function of type "
+"`ClassLoader => Unit`. The variant that accepts a ClassLoader is passed the "
+"class loader that is (or was) used for running the tests. It provides access "
+"to the test classes as well as the test framework classes."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:194
+msgid "Examples:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:197
+msgid "\"Setup\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:198
+msgid "\"Cleanup\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:203
+msgid "Disable parallel execution of test suites"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:205
+msgid ""
+"By default, sbt runs all tasks in parallel and within the same JVM as sbt "
+"itself. Because each test suite is mapped to a task, tests are also run in "
+"parallel by default. To make tests within a given project execute serially:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:213
+msgid "Note that tests from different projects may still execute concurrently."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:216
+msgid "Filter classes"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:218
+msgid ""
+"If you want to only run test classes whose name ends with \"Test\", use "
+"`Tests.Filter`:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:222
+msgid "\"Test\""
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:225
+msgid "Forking tests"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:227
+msgid "The setting:"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:233
+msgid ""
+"specifies that all tests will be executed in a single external JVM. <!-- "
+"See\n"
+"[Forking][Forking] for configuring standard options for forking.\n"
+"By default,\n"
+"tests executed in a forked JVM are executed *sequentially*.\n"
+"-->"
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:239
+msgid ""
+"More control over how tests are assigned to JVMs and what options to pass to "
+"those is available with `testGrouping` key."
+msgstr ""
+
+#: src/reference/reference/sbt-test.md:264
+msgid ""
+"Control the number of forked JVMs allowed to run at the same time by setting "
+"the limit on `Tags.ForkedTestGroup` tag, which is 1 by default. `Setup` and "
+"`Cleanup` actions cannot be provided with the actual test class loader when "
+"a group is forked."
+msgstr ""

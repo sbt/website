@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2024-10-30T03:08:34-04:00\n"
+"POT-Creation-Date: 2025-08-08T01:31:08-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -90,26 +90,26 @@ msgstr ""
 msgid "Here's a demonstration of the automatic caching:"
 msgstr ""
 
-#: src/reference/concepts/caching.md:29
+#: src/reference/concepts/caching.md:27
 msgid "\"something\""
 msgstr ""
 
-#: src/reference/concepts/caching.md:32
+#: src/reference/concepts/caching.md:29
 msgid "\"!\""
 msgstr ""
 
-#: src/reference/concepts/caching.md:36
+#: src/reference/concepts/caching.md:32
 msgid ""
-"The task will be automatically cached based on the two settings `name` and "
-"`version`. The first time we run the task it will be executed onsite, but "
-"the second time onward, it will use the disk cache:"
+"In sbt 2.x, the task result will be automatically cached based on the two "
+"settings `name` and `version`. The first time we run the task it will be "
+"executed onsite, but the second time onward, it will use the disk cache:"
 msgstr ""
 
-#: src/reference/concepts/caching.md:47
+#: src/reference/concepts/caching.md:43
 msgid "Caching is serialization-hard"
 msgstr ""
 
-#: src/reference/concepts/caching.md:49
+#: src/reference/concepts/caching.md:45
 msgid ""
 "To participate in the automatic caching, the input keys (e.g. `name` and "
 "`version`) must provide a given for `sjsonnew.HashWriter` typeclass and "
@@ -118,11 +118,11 @@ msgid ""
 "codecs."
 msgstr ""
 
-#: src/reference/concepts/caching.md:51
+#: src/reference/concepts/caching.md:47
 msgid "Caching files"
 msgstr ""
 
-#: src/reference/concepts/caching.md:54
+#: src/reference/concepts/caching.md:50
 msgid ""
 "Caching files (e.g. `java.io.File`) requires its own consideration, not "
 "because it's technically difficult, but mostly because of the ambiguity and "
@@ -130,19 +130,19 @@ msgid ""
 "actually mean:"
 msgstr ""
 
-#: src/reference/concepts/caching.md:56
+#: src/reference/concepts/caching.md:52
 msgid "Relative path from a well-known location"
 msgstr ""
 
-#: src/reference/concepts/caching.md:57
+#: src/reference/concepts/caching.md:53
 msgid "Materialized actual file"
 msgstr ""
 
-#: src/reference/concepts/caching.md:58
+#: src/reference/concepts/caching.md:54
 msgid "A unique proof of a file, or a content hash"
 msgstr ""
 
-#: src/reference/concepts/caching.md:60
+#: src/reference/concepts/caching.md:56
 msgid ""
 "Technically speaking, a `File` just means the file path, so we can "
 "deserialize just the filename such as `target/a/b.jar`. This will fail the "
@@ -151,19 +151,19 @@ msgid ""
 "sbt 2.x provides three separate types for the three cases."
 msgstr ""
 
-#: src/reference/concepts/caching.md:62
+#: src/reference/concepts/caching.md:58
 msgid ""
 "`xsbti.VirtualFileRef` is used to mean just the relative path, which is "
 "equivalent to passing a string"
 msgstr ""
 
-#: src/reference/concepts/caching.md:63
+#: src/reference/concepts/caching.md:59
 msgid ""
 "`xsbti.VirtualFile` represents a materialized file with contents, which "
 "could be a virtual file or a file in your disk"
 msgstr ""
 
-#: src/reference/concepts/caching.md:65
+#: src/reference/concepts/caching.md:61
 msgid ""
 "However, for the purpose of hermetic build, neither is great to represent a "
 "list of files. Having just the filename alone doesn't guarantee that the "
@@ -171,7 +171,7 @@ msgid ""
 "inefficient in a JSON etc."
 msgstr ""
 
-#: src/reference/concepts/caching.md:67
+#: src/reference/concepts/caching.md:63
 msgid ""
 "This is where the mysterious third option, a unique proof of file comes in "
 "handy. In addition to the relative path, `HashedVirtualFileRef` tracks the "
@@ -179,35 +179,35 @@ msgid ""
 "JSON yet we can reference the exact file."
 msgstr ""
 
-#: src/reference/concepts/caching.md:69
+#: src/reference/concepts/caching.md:65
 msgid "The effect of file creation"
 msgstr ""
 
-#: src/reference/concepts/caching.md:71
+#: src/reference/concepts/caching.md:67
 msgid ""
 "There are many tasks that generate file that do not use `VirtualFile` as the "
-"return type. For example, `compile` returns `Analysis` instead, and `*."
-"class` file generation happens as a _side effect_ in sbt 1.x."
+"return type. For example, `compile` returns `Analysis` instead, and "
+"`*.class` file generation happens as a _side effect_ in sbt 1.x."
 msgstr ""
 
-#: src/reference/concepts/caching.md:73
+#: src/reference/concepts/caching.md:69
 msgid ""
 "To participate in caching, we need to declare these effects as something we "
 "care about."
 msgstr ""
 
-#: src/reference/concepts/caching.md:85
+#: src/reference/concepts/caching.md:81
 msgid "Remote caching"
 msgstr ""
 
-#: src/reference/concepts/caching.md:88
+#: src/reference/concepts/caching.md:84
 msgid ""
 "You can optionally extend the build to use remote cache in addition to the "
 "local disk cache. Remote caching could improve build performance by allowing "
 "multiple machines to share build artifacts and outputs."
 msgstr ""
 
-#: src/reference/concepts/caching.md:90
+#: src/reference/concepts/caching.md:86
 msgid ""
 "Imagine you have a dozen people in your project or a company. Each morning, "
 "you will `git pull` the changes the dozen people made, and you need to build "
@@ -218,8 +218,17 @@ msgid ""
 "and you can download the artifacts and task outputs."
 msgstr ""
 
-#: src/reference/concepts/caching.md:92
+#: src/reference/concepts/caching.md:88
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
-"of backend both open source and commercial."
+"of backend both open source and commercial. See [Remote cache setup](../"
+"reference/remote-cache-setup.md) for more details."
+msgstr ""
+
+#: src/reference/concepts/caching.md:90
+msgid "Reference"
+msgstr ""
+
+#: src/reference/concepts/caching.md:93
+msgid "See also [Cached task](../reference/cached-task.md) reference guide."
 msgstr ""
