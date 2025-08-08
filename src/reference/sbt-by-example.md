@@ -124,13 +124,13 @@ Runs a main class, passing along arguments provided on the command line.
 ### Run your app
 
 ```
-sbt:foo> run
+sbt:foo-build> run
 [info] running example.main
 Hello
 [success] elapsed time: 0 s, cache 50%, 1 disk cache hit, 1 onsite task
 ```
 
-### Set ThisBuild / scalaVersion from sbt shell
+### Set scalaVersion from sbt shell
 
 ```
 sbt:foo-build> set scalaVersion := "{{scala3_example_version}}"
@@ -535,11 +535,6 @@ You can also run sbt in batch mode, passing sbt commands directly from the termi
 ```
 $ sbt clean "testOnly HelloSuite"
 ```
-
-**Note**: Running in batch mode requires JVM spinup and JIT each time,
-so **your build will run much slower**.
-For day-to-day coding, we recommend using the sbt shell
-or a continuous test like `~test`.
 
 ### sbt new command
 

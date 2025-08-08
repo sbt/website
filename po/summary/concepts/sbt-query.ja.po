@@ -1,0 +1,99 @@
+#: src/reference/concepts/sbt-query.md:1
+msgid "sbt query"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:4
+msgid "sbt 2.x extends the slash syntax to enable aggregation of subprojects:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:6
+msgid ""
+"_act_ `::=` \\[ _query_ `/` \\] \\[ _config_ `/` \\] \\[ _in-task_ `/` \\] "
+"( _taskKey_ | _settingKey_ )"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:8
+msgid "In other words, sbt query is a new way of writing the subproject-axis."
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:10
+msgid "Subproject reference"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:12
+msgid "A subproject reference works a query to select the subproject:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:14
+msgid ""
+"````admonish example title='build.sbt example 1'\n"
+"```scala\n"
+"scalaVersion := \"3.7.2\"\n"
+"\n"
+"lazy val foo = project\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:22
+msgid ""
+"Given the above build, we can run tests on `foo` subproject as follows, "
+"which is the same syntax as it was in sbt 1.x:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:28
+msgid "`...` wildcard"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:30
+msgid ""
+"`...` wildcard matches to any characters, and can be combined with other "
+"letters and numbers to filter down the root aggregate list. For example, we "
+"can run tests on all subproject that starts with `foo` as follows:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:40
+msgid "`@scalaBinaryVersion` parameter"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:42
+msgid ""
+"`@scalaBinaryVersion` parameter matches to the subproject's "
+"`scalaBinaryVersion` setting."
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:44
+msgid ""
+"````admonish example\n"
+"```scala\n"
+"val toolkitV = \"0.5.0\"\n"
+"val toolkit = \"org.scala-lang\" %% \"toolkit\" % toolkitV\n"
+"\n"
+"lazy val foo = projectMatrix\n"
+"  .settings(\n"
+"    libraryDependencies += toolkit,\n"
+"  )\n"
+"  .jvmPlatform(scalaVersions = Seq(\"3.7.2\", \"2.13.16\"))\n"
+"\n"
+"lazy val bar = projectMatrix\n"
+"  .settings(\n"
+"    libraryDependencies += toolkit,\n"
+"  )\n"
+"  .jvmPlatform(scalaVersions = Seq(\"3.7.2\", \"2.13.16\"))\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:63
+msgid "For example, we can run tests on all 3.x subprojects as follows:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:69
+msgid "This can be used from a terminal as follows:"
+msgstr ""
+
+#: src/reference/concepts/sbt-query.md:86
+msgid ""
+"This lets us filter down the aggregated subprojects, which could be a lot "
+"using `projectMatrix`."
+msgstr ""

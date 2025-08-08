@@ -19,13 +19,12 @@ To serve the po files, run the following:
 script/serve.sh xx
 ```
 
-then run:
+When you changed a `*.po` file, run:
 
 ```bash
 script/concat.sh xx
 ```
 
-when you change a `*.po` file
 
 Diataxis
 --------

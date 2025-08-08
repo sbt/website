@@ -1,0 +1,107 @@
+#: src/reference/reference/cached-task.md:1
+msgid "Cached task"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:4
+msgid ""
+"This page covers the cached task details. See [Caching](../concepts/"
+"caching.md) for a general explanation."
+msgstr ""
+
+#: src/reference/reference/cached-task.md:6
+msgid "Automatic caching"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:10
+#: src/reference/reference/cached-task.md:68
+#: src/reference/reference/cached-task.md:76
+msgid "\"something\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:12
+#: src/reference/reference/cached-task.md:79
+msgid "\"!\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:15
+msgid ""
+"In sbt 2.x, the task result will be automatically cached based on the two "
+"settings `name` and `version`. The first time we run the task it will be "
+"executed onsite, but the second time onward, it will use the disk cache:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:26
+msgid "Caching is serialization-hard"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:28
+msgid ""
+"To participate in the automatic caching, the input keys (e.g. `name` and "
+"`version`) must provide a given for `sjsonnew.HashWriter` typeclass and "
+"return type must provide a given for `sjsonnew.JsonFormat`. [Contraband]"
+"(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
+"codecs."
+msgstr ""
+
+#: src/reference/reference/cached-task.md:30
+msgid "Effect tracking"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:33
+msgid "The effect of file creation"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:35
+msgid ""
+"To cache the effect of file creation, not just returning the name of the "
+"file, we need to track the effect of file creation using "
+"`Def.declareOutput(vf)`."
+msgstr ""
+
+#: src/reference/reference/cached-task.md:47
+msgid "Opting out from caching"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:50
+msgid "Build-wide opt-out"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:52
+msgid ""
+"To opt out of by-default custom task caching, add the following to `project/"
+"plugins.sbt`:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:55
+msgid "\"-Xmacro-settings:sbt:no-default-task-cache\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:62
+msgid "Per-task-key opt-out"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:64
+msgid ""
+"Next, if you want to opt some task keys from caching, you can set the cache "
+"level as follows:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:71
+msgid "Per-task opt-out"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:73
+msgid ""
+"To opt out of the cache individually, use `Def.uncached(...)` as follows:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:83
+msgid "Remote caching"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:86
+msgid ""
+"sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
+"of backend both open source and commercial. See [Remote cache setup](./"
+"remote-cache-setup.md) for more details."
+msgstr ""
