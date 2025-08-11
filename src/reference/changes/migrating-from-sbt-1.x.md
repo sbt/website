@@ -28,8 +28,15 @@ In sbt 1.x bare settings were project settings that applied only to the root sub
 ```
 
 ```scala
-name := "root" // every subprojects will be named root!
-publish / skip := true
+name := "root"         // all subprojects will be named root!
+publish / skip := true // all subprojects will be skipped!
+```
+
+To apply some settings to the root subproject only, either define it using multi-project build, or scope the setting under `LocalRootProject`:
+
+```scala
+LocalRootProject / name := "root"
+LocalRootProject / publish / skip := true
 ```
 
 ### Migrating ThisBuild

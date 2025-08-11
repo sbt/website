@@ -4,12 +4,6 @@
 sbt 2.0 changes (draft)
 =======================
 
-```admonish warning
-This is a draft documentation of sbt 2.x that is yet to be released.
-While the general concept translates to sbt 1.x,
-details of both 2.x and this doc are subject to change.
-```
-
 Changes with compatibility implications
 ---------------------------------------
 
@@ -17,8 +11,9 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
 - **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **{{scala3_metabuild_version}}**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
-- **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
+- **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
+- **Depedency tree**. `dependencyTree` tasks are unified to one input task by [@eed3si9n][@eed3si9n] in [#8199](https://github.com/sbt/sbt/pull/8199)
 - `test` task type is changed from `Unit` to `TestResult` by [@eed3si9n][@eed3si9n] in [#8181][8181]
 - Default settings and tasks keys typed to `URL` (i.e. `apiMappings`, `apiURL`, `homepage`, `organizationHomepage`, `releaseNotesURL`) were changed to `URI` in [#7927](https://github.com/sbt/sbt/pull/7927).
 - `licenses` key is changed from `Seq[(String, URL)]` to `Seq[License]` in [#7927](https://github.com/sbt/sbt/pull/7927).
@@ -36,9 +31,10 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 Features
 --------
 
-- Project matrix, which was available via plugin in sbt 1.x, is in-sourced.
-- sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
-- Local/remote cache system. Details below
+- **Project matrix**. Project matrix, which was available via plugin in sbt 1.x, is in-sourced to provide parallel cross build support.
+- **sbt query**. sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
+- **Local/remote cache system**. Details below
+- **Client-side run**. Details below.
 
 ### Common settings
 
@@ -86,6 +82,18 @@ $ sbt ...@scalaBinaryVersion=3/test
 
 The above runs all subprojects whose `scalaBinaryVersion` is `3`. Contributed by [@eed3si9n][@eed3si9n] in [#7699][7699]
 
+### Incremental test
+
+In sbt 2.x, `test` task became an input task that accept arguments that can filter the test suites to run:
+
+```bash
+> test *Example*
+```
+
+In addition, `test` is incremental and cached. This means, the test will not run unless it previously failed or something changed since the last run.
+
+See [test](../reference/sbt-test.md) for details.
+
 ### Local/remote cache system
 
 sbt 2.x implements cached task by default, which can automatically cache the task results to local disk and Bazel-compatible remote cache.
@@ -111,6 +119,25 @@ task1 := {
 ```
 
 See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n][@eed3si9n] in [#7464][7464] / [#7525][7525].
+
+### Client-side run
+
+The sbt runner 1.10.10 and later script defaults to using sbtn (GraalVM native-image client) for sbt 2.x. In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a fresh JVM. All you have to do is:
+
+```bash
+sbt run
+```
+
+This avoids blocking the sbt server, and you can have multiple runs. Contributed by [@eed3si9n][@eed3si9n] in [#8060](https://github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) documentation.
+
+### Performance improvements
+
+Adrien Piquerez contributed a series of changes to improve performance while he was at Scala Center.
+
+* perf: Reduces number of long-living instances to speed up startup by 20% relative to 2.0.0-M2 by [@adpi2][@adpi2] in [#7866](https://github.com/sbt/sbt/pull/7866)
+* perf: Reduces creation of `Setting` and `Initialize`  by [@adpi2][@adpi2] in [#7880](https://github.com/sbt/sbt/pull/7880)
+* perf: Refactors `Settings` and optimize indexing of aggregate keys by [@adpi2][@adpi2] in [#7879](https://github.com/sbt/sbt/pull/7879)
+* perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2][@adpi2] in [#7882](https://github.com/sbt/sbt/pull/7882)
 
 Previously on sbt
 -----------------
