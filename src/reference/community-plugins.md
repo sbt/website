@@ -195,18 +195,20 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match, fail build if they don't.
 
 </div>
-<div style="display: none;">
 
 ### Web and frontend development plugins
 
-- [Play Framework](https://www.playframework.com): reactive web framework for
+- [sbt-web](https://github.com/sbt/sbt-web): library for building sbt plugins
+  for the web. <!-- 314 stars -->
+
+<div style="display: none;">
+
+  - [Play Framework](https://www.playframework.com): reactive web framework for
   Scala and Java. <!-- 9727 stars -->
 - [Scala.js](https://www.scala-js.org): Scala to JavaScript compiler.
   <!-- 3113 stars -->
 - [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin): Servlet
   support. <!-- 379 stars -->
-- [sbt-web](https://github.com/sbt/sbt-web): library for building sbt plugins
-  for the web. <!-- 314 stars -->
 - [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs): use Scala.js
   with any web server. <!-- 148 stars -->
 - [sbt-less](https://github.com/sbt/sbt-less): Less CSS compilation support.
