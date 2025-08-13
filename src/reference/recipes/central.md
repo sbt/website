@@ -19,8 +19,8 @@ Publishing to the Central Repo
 ==============================
 
 ~~~admonish note
-This is the recipe section of the documentation.
-We generally assume that you are familar with the sbt concepts, and focus on how-tos.
+The recipe section of the documentation focuses on the objectives
+with minimal explanations.
 
 See also Sonatype's [Publish guides][sonatype-central-portal-register] for general concepts around publishing to the Central Portal.
 ~~~

@@ -69,15 +69,11 @@ _thing you can type at the sbt prompt_, which may be a setting, task, or command
 ### Project-level tasks
 
 -   `clean` Deletes all generated files (the `target` directory).
--   `publishLocal` Publishes artifacts (such as JARs) to the local Ivy
-    repository as described in Publishing.
--   `publish` Publishes artifacts (such as JARs) to the repository
+-   [`publish`](./sbt-publish.md) Publishes artifacts (such as JARs) to the repository
     defined by the publishTo setting, described in Publishing.
-
-<!--
--   `update` Resolves and retrieves external dependencies as described
-    in [library dependencies][Library-Dependencies].
--->
+-   [`publishLocal`](./sbt-publish.md) Publishes artifacts (such as JARs) to the local Ivy
+    repository as described in Publishing.
+-   [`update`](./sbt-update.md) Resolves and retrieves external dependencies.
 
 ### Configuration-level tasks
 
@@ -88,7 +84,7 @@ compiles the test source code (the `Test` configuration). Most tasks
 for the `Compile` configuration have an equivalent in the `Test`
 configuration that can be run using a `Test/` prefix.
 
--   `compile` Compiles the main sources (in the `src/main/scala`
+-   [`compile`](./sbt-compile.md) Compiles the main sources (in the `src/main/scala`
     directory). `Test/compile` compiles test sources (in the
     src/test/scala/ directory).
 -   `console` Starts the Scala interpreter with a classpath including
@@ -111,12 +107,9 @@ configuration that can be run using a `Test/` prefix.
     and resources. The packaged paths are relative to src/main/scala and
     src/main/resources. Similarly, Test/packageSrc operates on test
     source files and resources.
--   `run <argument>*` Runs the main class for the project in the same
+-   [`run <argument>*`](./sbt-run.md) Runs the main class for the project in the same
     virtual machine as sbt. The main class is passed the arguments
     provided.
-    <!-- See [Running Project Code][Running-Project-Code] for details on the use of
-    System.exit and multithreading (including GUIs) in code run by this
-    action. `Test/run` runs a main class in the test code. -->
 -   `runMain <main-class> <argument>*` Runs the specified main class for
     the project in the same virtual machine as sbt. The main class is
     passed the arguments provided.
@@ -125,19 +118,15 @@ configuration that can be run using a `Test/` prefix.
     details on the use of System.exit and multithreading (including
     GUIs) in code run by this action. `Test/runMain` runs the specified
     main class in the test code. -->
--   `testFull` Runs all tests detected during test compilation.
-    <!-- See [Testing][Testing] for details. -->
--   `testOnly <test>*` Runs the tests provided as arguments. `*` (will
-    be) interpreted as a wildcard in the test name.
-    <!-- See [Testing][Testing] for details. -->
--   `test <test>*` Runs the tests specified as arguments (or all
+-   [`test <test>*`](./sbt-tes.md) Runs the tests specified as arguments (or all
     tests if no arguments are given) that:
     1.  have not been run yet OR
     2.  failed the last time they were run OR
     3.  had any transitive dependencies recompiled since the last
-        successful run `*` (will be) interpreted as a wildcard in the
+        successful run `*` is interpreted as a wildcard in the
         test name.
-        <!-- See [Testing][Testing] for details. -->
+-   [`testFull`](./sbt-test.md) Runs all tests detected during test compilation.
+-   [`testOnly <test>*`](./sbt-test.md) Runs the tests provided as arguments.
 
 <!--
 -   `consoleQuick` Starts the Scala interpreter with the project's
@@ -171,9 +160,8 @@ configuration that can be run using a `Test/` prefix.
     context of the given project.
     <!-- (See [multi-project builds][Multi-Project] for
     details on multiple project builds.) -->
--   `~ <command>` Executes the project specified action or method
+-   [Watch command](./watch.md) `~ <command>` Executes the project specified action or method
     whenever source files change.
-    <!-- See [Triggered Execution][Triggered-Execution] for details. -->
 -   `< filename` Executes the commands in the given file. Each command
     should be on its own line. Empty lines and lines beginning with '#'
     are ignored
