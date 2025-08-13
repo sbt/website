@@ -1,14 +1,18 @@
----
-out: Triggered-Execution.html
----
+Watch command
+=============
 
-[Full-Def]: Full-Def.html
+Synopsis
+--------
 
-Triggered Execution
--------------------
+`sbt` `~` *command1*<br>
+`sbt` `~` *command1* \[ `;` *command2* `;` ... \]
 
-sbt provides the ability to monitor the input files for a particular task
-and repeat the task when changes to those files occur.
+Descrption
+----------
+
+The watch command is denoted by `~` (tilde), and it provides the ability
+to monitor the input files for particular tasks
+and repeat the tasks when changes to those files occur.
 
 Some example usages are described below:
 
@@ -18,7 +22,7 @@ A common use-case is continuous compilation. The following commands will make
 sbt watch for source changes in the Test and Compile (default) configurations
 respectively and re-run the compile command.
 
-```
+```bash
 > ~ Test / compile
 
 > ~ compile
@@ -34,38 +38,38 @@ Triggered execution is often used when developing in a test driven development
 test source sources for the build and re-run only the tests that reference
 classes that have been re-compiled since the last test run.
 
-```
-> ~ testQuick
+```bash
+> ~ test
 ```
 
 It is also possible to re-run only a particular test if its dependencies
 have changed.
 
-```
-> ~ testQuick foo.BarTest
+```bash
+> ~ test foo.BarTest
 ```
 
 It is possible to always re-run a test when source changes are
 detected regardless of whether the test depends on any of the updated
 source files.
 
-```
+```bash
 > ~ testOnly foo.BarTest
 ```
 
 To run all of the tests in the project when any sources change, use
 
-```
-> ~test
+```bash
+> ~ testFull
 ```
 
 ### Running Multiple Commands
 
-sbt supports watching multiple, semicolon separated, commands. For example, the
-following command will monitor for source file changes and run `clean` and
+The watch command supports watching multiple, semicolon separated, tasks.
+For example, the following command will monitor for source file changes and run `clean` and
 `test`:
 
-```
+```bash
 > ~ clean; test
 ```
 
@@ -78,6 +82,7 @@ files in the `project` directory). When build source changes are detected,
 the build will be reloaded and sbt will re-enter triggered execution mode
 when the reload completes.
 
+<!--
 The following snippet can be added as a [global setting](../api/sbt/Global-Settings.html) to `~/.sbt/1.0/config.sbt` to enable `ReloadOnSourceChanges` for all sbt 1.3+ builds without breaking earlier versions:
 
 ```
@@ -95,6 +100,7 @@ Def.settings {
   }
 }
 ```
+-->
 
 ### Clearing the screen
 
@@ -102,14 +108,16 @@ sbt can clear the console screen before it evaluates the task or after it
 triggers an event. To configure sbt to clear the screen after an event is
 triggered add
 
-```
+```scala
 ThisBuild / watchTriggeredMessage := Watch.clearScreenOnTrigger
 ```
+
 to the build settings. To clear the screen before running the task, add
 
-```
+```scala
 ThisBuild  / watchBeforeCommand := Watch.clearScreen
 ```
+
 to the build settings.
 
 ### Configuration
