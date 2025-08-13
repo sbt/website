@@ -34,6 +34,7 @@
   - [Cross building setup](reference/cross-building-setup.md)
   - [Remote cache setup](reference/remote-cache-setup.md)
   - [Artifact](reference/artifact.md)
+- [Community plugins](community-plugins.md)
 - [Recipes](recipes/index.md)
   - [Write hello world](recipes/hello-world.md)
   - [Publishing to the Central Repo](recipes/central.md)
