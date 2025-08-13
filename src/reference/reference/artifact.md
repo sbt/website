@@ -1,20 +1,46 @@
----
-out: Artifacts.html
----
 
   [Library-Management]: Library-Management.html
 
-Artifacts
----------
+Artifact
+========
+
+Description
+-----------
+
+An artifact is a single file ready for publishing a specific version of a subproject. This is a concept that originated in [Apache Maven](https://maven.apache.org/ref/3.9.11/maven-core/artifact-handlers.html) and [Ivy](https://ant.apache.org/ivy/history/2.3.0/terminology.html#artifact).
+
+In the JVM ecosystem, common artifacts are Java archives, or JAR files.
+Compressed package formats are often preferred because they are easier to manage, download, and store.
+
+To illustrate, the following is a list of artifacts for a library, enumerated in an `ivy.xml` file:
+
+```xml
+  <publications>
+    <artifact name="core_3" type="jar" ext="jar" conf="compile"/>
+    <artifact e:classifier="sources" name="core_3" type="src" ext="jar" conf="sources"/>
+    <artifact e:classifier="javadoc" name="core_3" type="doc" ext="jar" conf="docs"/>
+    <artifact name="core_3" type="pom" ext="pom" conf="pom"/>
+  </publications>
+```
+
+This shows that an artifact has a name, a type, and an extention, and optionally a classifier.
+
+- **name**. This is going to be the same as the subproject's module name.
+- **type**. The functional category of the artifact, such as `jar`, `src`, and `doc`.
+- **extension**. The file extention, such as `jar`, `war`, `zip`, `xml` etc.
+- **classifier**. In Maven, classifier is an arbitrary string that can be appended for an alternative or secondary artifact.
 
 ### Selecting default artifacts
 
-By default, the published artifacts are the main binary jar, a jar
-containing the main sources and resources, and a jar containing the API
-documentation. You can add artifacts for the test classes, sources, or
+By default, the published artifacts are:
+1. The main binary JAR
+2. The JAR containing the main sources and resources
+3. The JAR containing the API documentation
+
+You can add artifacts for the test classes, sources, or
 API or you can disable some of the main artifacts.
 
-To add all test artifacts:
+To add all `Test` artifacts:
 
 ```scala
 lazy val app = (project in file("app"))
@@ -200,7 +226,7 @@ libraryDependencies += ("org" % "name" % "rev").artifacts(Artifact("name", "type
 ```
 
 The `from` and `classifer` methods (described on the
-[Library Management][Library-Management] page) are actually convenience
+[sbt update](./sbt-update.md) page) are actually convenience
 methods that translate to `artifacts`:
 
 ```scala
