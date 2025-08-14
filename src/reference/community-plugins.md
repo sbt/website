@@ -251,12 +251,14 @@ generate dependency lockfiles and check for changes at build time.
   migrations manager.
 
 </div>
-<div style="display: none;">
 
 ### Code generator plugins
 
 - [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo): generate Scala code
-  from SBT setting keys. <!-- 318 stars -->
+  from sbt setting keys. <!-- 318 stars -->
+
+<div style="display: none;">
+
 - [sbt-scalaxb](https://github.com/eed3si9n/scalaxb): generate model classes
   from XML schemas and WSDL. <!-- 243 stars -->
 - [sbt-protobuf](https://github.com/sbt/sbt-protobuf): protobuf code generator.
