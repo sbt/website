@@ -75,7 +75,7 @@ your plugin to the list.
   release process. <!-- 113 stars -->
 </div>
 
-- [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artefacts using PGP/GPG and
+- [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
   manage signing keys. <!-- 79 stars -->
 
 <div style="display: none;">
@@ -128,9 +128,13 @@ your plugin to the list.
 - [sbt-kind](https://github.com/tirithel/sbt-kind): load built docker images into a [kind](https://kind.sigs.k8s.io/) cluster.
 
 </div>
-<div style="display: none;">
 
 ### IDE integration plugins
+
+- [sbt-structure](https://github.com/JetBrains/sbt-structure): extract project
+  structure in XML for IntelliJ Scala plugin. <!-- 74 stars -->
+
+<div style="display: none;">
 
 - [sbteclipse](https://github.com/sbt/sbteclipse): Eclipse project
   definition generator. <!-- 672 stars -->
@@ -219,7 +223,7 @@ generate dependency lockfiles and check for changes at build time.
   TypeScript compilation support. <!-- 25 stars -->
 - [sbt-uglify](https://github.com/sbt/sbt-uglify): JavaScript minifier using
   UglifyJS. <!-- 22 stars -->
-- [sbt-terser](https://github.com/andriimartynov/sbt-terser): JavaScript (ES6+) minifier 
+- [sbt-terser](https://github.com/andriimartynov/sbt-terser): JavaScript (ES6+) minifier
   using terser. <!-- 0 stars -->
 - [sbt-digest](https://github.com/sbt/sbt-digest): generate checksums of
   assets. <!-- 18 stars -->
@@ -240,6 +244,7 @@ generate dependency lockfiles and check for changes at build time.
 ### Database plugins
 
 - [flyway-sbt](https://github.com/sbt/flyway-sbt) Flyway database migration. <!-- 131 stars -->
+- [sbt-dao-generator](https://github.com/sbt-dao-generator/sbt-dao-generator) generate code for O/R Mapper Free <!-- 14 stars -->
 
 <div style="display: none;">
 
@@ -286,7 +291,7 @@ generate dependency lockfiles and check for changes at build time.
   transform your i18n bundles into Scala code. <!-- 1 stars -->
 - [sbt-lit](https://github.com/earldouglas/sbt-lit): build literate code with sbt.
 - [sbt-embedded-files](https://github.com/yurique/embedded-files): 
-  generate Scala objects containing the contents of glob-specified files as strings or byte-arrays. 
+  generate Scala objects containing the contents of glob-specified files as strings or byte-arrays.
 - [sbt-scala-ts](https://github.com/scala-ts/scala-ts/):
   generate TypeScript code according compiled Scala types (case class, trait, object, ...). <!-- 149 stars -->
 </div>
@@ -304,8 +309,7 @@ generate dependency lockfiles and check for changes at build time.
   using Scapegoat. <!-- 63 stars -->
 - [sbt-stats](https://github.com/orrsella/sbt-stats): generate source code
   statistics (lines of code etc). <!-- 53 stars -->
-- [sbt-scalafix](https://scalacenter.github.io/scalafix/): refactoring and 
-  linting tool for Scala using Scalafix. <!-- 24 stars --> 
+- [sbt-scalafix](https://scalacenter.github.io/scalafix/): refactoring and linting tool for Scala using Scalafix. <!-- 24 stars -->
 - [sbt-explicit-dependencies](https://github.com/cb372/sbt-explicit-dependencies):
   check that you have declared all your library dependencies correctly <!-- 12 stars -->
 - [sbt-taglist](https://github.com/johanandren/sbt-taglist): find tags within
@@ -346,8 +350,6 @@ generate dependency lockfiles and check for changes at build time.
   cross-build Scala, Scala.js and Scala Native. <!-- 66 stars -->
 - [sbt-proguard](https://github.com/sbt/sbt-proguard): run ProGuard on
   compiled sources. <!-- 63 stars -->
-- [sbt-structure](https://github.com/JetBrains/sbt-structure): extract project
-  structure in XML format. <!-- 53 stars -->
 - [sbt-jni](https://github.com/sbt/sbt-jni): helpers for working with
   projects that use JNI. <!-- 51 stars -->
 - [sbt-jol](https://github.com/ktoso/sbt-jol): inspect OpenJDK Java Object
@@ -375,8 +377,13 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-dotenv](https://github.com/philippus/sbt-dotenv): load environment variables from .env into the JVM System Environment for local development.
 
 </div>
-<div style="display: none;">
+
 ### Documentation plugins
+
+- [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram): generate
+  class diagrams from Scala source code. <!-- 54 stars -->
+
+<div style="display: none;">
 
 - [tut](https://github.com/tpolecat/tut): documentation and tutorial generator.
   <!-- 409  stars -->
@@ -391,16 +398,12 @@ generate dependency lockfiles and check for changes at build time.
   documentation across subprojects. <!-- 86 stars -->
 - [sbt-ghpages](https://github.com/sbt/sbt-ghpages): publish generated
   sites to GitHub pages. <!-- 71 stars -->
-- [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram): generate
-  class diagrams from Scala source code. <!-- 54 stars -->
 - [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
   generate Scaladoc `apiMappings` for common Scala libraries. <!-- 49 stars -->
 - [literator](https://github.com/laughedelic/literator):
   generate literate-style markdown docs from your sources. <!-- 33 stars -->
-- [sbt-example](https://github.com/ThoughtWorksInc/sbt-example):
-  generate ScalaTest test suites from examples in Scaladoc. <!-- 17 stars -->
-- [sbt-delombok](https://github.com/ThoughtWorksInc/sbt-delombok):
-  delombok Java sources files that contain Lombok annotations to make Javadoc contain Lombok-generated classes and methods. <!-- 2 stars -->
+- [sbt-example](https://github.com/ThoughtWorksInc/sbt-example): generate ScalaTest test suites from examples in Scaladoc. <!-- 17 stars -->
+- [sbt-delombok](https://github.com/ThoughtWorksInc/sbt-delombok): delombok Java sources files that contain Lombok annotations to make Javadoc contain Lombok-generated classes and methods. <!-- 2 stars -->
 - [sbt-alldocs](https://github.com/glngn/sbt-alldocs): collect all the docs for a project and dependencies into a single folder.
 - [sbt-apidoc](https://github.com/valydia/sbt-apidoc): A port of [apidocjs](https://apidocjs.com) to sbt, to document REST Api. <!-- 1 star -->
 - [sbt-github-pages](https://github.com/Kevin-Lee/sbt-github-pages)
