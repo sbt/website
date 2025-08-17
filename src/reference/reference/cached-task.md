@@ -64,6 +64,13 @@ This applies only to the custom tasks introduced in the build. Any cached tasks 
 Next, if you want to opt some task keys from caching, you can set the cache level as follows:
 
 ```scala
+@transient
+val someKey = taskKey[String]("something")
+```
+
+or
+
+```scala
 @cacheLevel(include = Array.empty)
 val someKey = taskKey[String]("something")
 ```
