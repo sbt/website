@@ -181,6 +181,8 @@ and here's for sbt 1.x:
 
 package sbtfoo
 
+import sbt.*
+
 private[sbtfoo] object PluginCompat {
   type FileRef = java.io.File
   type Out = java.io.File
@@ -193,6 +195,11 @@ private[sbtfoo] object PluginCompat {
     cp.map(_.data.toPath()).toVector
   def toFiles(cp: Seq[Attributed[File]])(implicit conv: FileConverter): Vector[File] =
     cp.map(_.data).toVector
+
+  // This adds `Def.uncached(...)`
+  implicit class DefOp(singleton: Def.type) {
+    def uncached[A1](a: A1): A1 = a
+  }
 }
 ```
 
