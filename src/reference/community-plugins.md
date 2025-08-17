@@ -65,6 +65,10 @@ your plugin to the list.
 
 ### Release plugins
 
+- [sbt-ci-release](https://github.com/sbt/sbt-ci-release): automate Central Repo releases from GitHub Actions. <!-- 302 stars -->
+- [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
+  manage signing keys. <!-- 149 stars -->
+
 <div style="display: none;">
 - [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
   ([docs](https://sbt-native-packager.readthedocs.io/en/stable/)): build
@@ -73,12 +77,6 @@ your plugin to the list.
   for your projects. <!-- 302 stars -->
 - [sbt-release](https://github.com/sbt/sbt-release): create a customizable
   release process. <!-- 113 stars -->
-</div>
-
-- [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
-  manage signing keys. <!-- 79 stars -->
-
-<div style="display: none;">
 - [sbt-docker](https://github.com/marcuslonnberg/sbt-docker): create and
   push Docker images. <!-- 72 stars -->
 - [sbt-aether-deploy](https://github.com/arktekk/sbt-aether-deploy): publish
@@ -328,6 +326,9 @@ generate dependency lockfiles and check for changes at build time.
 
 - [sbt-git](https://github.com/sbt/sbt-git): run git commands from sbt.
   <!-- 233 stars -->
+- [sbt-dynver](https://github.com/sbt/sbt-dynver): set project version
+  dynamically from git metadata. <!-- 87 stars -->
+- [sbt-nocomma](https://github.com/sbt/sbt-nocomma): reduce commas. <!-- 13 stars -->
 - [sbt-vimquit](https://github.com/sbt/sbt-vimquit): adds `:q` command. <!-- 6 stars -->
 
 <div style="display: none;">
@@ -342,8 +343,6 @@ generate dependency lockfiles and check for changes at build time.
   compatibility management for Scala libraries. <!-- 134 stars -->
 - [sbt-groll](https://github.com/sbt/sbt-groll): navigate git history inside
   sbt. <!-- 100 stars -->
-- [sbt-dynver](https://github.com/sbt/sbt-dynver): set project version
-  dynamically from git metadata. <!-- 87 stars -->
 - [sbt-prompt](https://github.com/agemooij/sbt-prompt): add promptlets and
   themes to your sbt prompt. <!-- 75 stars -->
 - [sbt-crossproject](https://github.com/portable-scala/sbt-crossproject):
