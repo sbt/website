@@ -295,7 +295,6 @@ generate dependency lockfiles and check for changes at build time.
 
 - [wartremover](https://github.com/wartremover/wartremover): flexible Scala
   linting tool. <!-- 728 stars -->
-- [sbt-findsecbugs](https://github.com/code-star/sbt-findsecbugs): Run Spotbugs with FindSecBugs plugin from sbt.
 
 <div style="display: none;">
 
