@@ -28,6 +28,7 @@
   - [sbt compile](reference/sbt-compile.md)
   - [sbt run](reference/sbt-run.md)
   - [sbt test](reference/sbt-test.md)
+  - [sbt inspect](reference/sbt-inspect.md)
   - [sbt publish](reference/sbt-publish.md)
   - [Watch command](reference/watch.md)
   - [Cached task](reference/cached-task.md)
