@@ -16,9 +16,9 @@ software into one central location.
 A side benefit to using the sbt organization for projects is that you
 can use gh-pages to host websites under the https://www.scala-sbt.org domain.
 
-The [sbt autoplugin giter8 template](https://github.com/sbt/sbt-autoplugin.g8) 
-is a good place to start. This sets up a new sbt plugin project appropriately. 
-The generated `README` includes a summary of the steps for publishing a new 
+The [sbt autoplugin giter8 template](https://github.com/sbt/sbt-autoplugin.g8)
+is a good place to start. This sets up a new sbt plugin project appropriately.
+The generated `README` includes a summary of the steps for publishing a new
 community plugin.
 
 ~~~admonish note title="Plugins available for sbt 2.x"
@@ -65,14 +65,15 @@ your plugin to the list.
 
 ### Release plugins
 
+- [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
+  ([docs](https://sbt-native-packager.readthedocs.io/en/stable/)): build
+  native packages (RPM, .deb etc) for your projects. <!-- 1602 stars -->
 - [sbt-ci-release](https://github.com/sbt/sbt-ci-release): automate Central Repo releases from GitHub Actions. <!-- 302 stars -->
 - [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
   manage signing keys. <!-- 149 stars -->
 
 <div style="display: none;">
-- [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
-  ([docs](https://sbt-native-packager.readthedocs.io/en/stable/)): build
-  native packages (RPM, .deb etc) for your projects. <!-- 303 stars -->
+
 - [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
   for your projects. <!-- 302 stars -->
 - [sbt-release](https://github.com/sbt/sbt-release): create a customizable
@@ -258,7 +259,9 @@ generate dependency lockfiles and check for changes at build time.
 ### Code generator plugins
 
 - [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo): generate Scala code
-  from sbt setting keys. <!-- 318 stars -->
+  from sbt setting keys. <!-- 559 stars -->
+- [sbt-github-actions](https://github.com/sbt/sbt-github-actions): generate GitHub Actions YAML <!-- 197 stars -->
+- [sbt-teavm](https://github.com/sbt-teavm/sbt-teavm): generate JavaScript and WebAssembly from Java bytecode <!-- 11 stars -->
 
 <div style="display: none;">
 
