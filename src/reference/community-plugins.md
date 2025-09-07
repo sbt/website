@@ -68,6 +68,8 @@ your plugin to the list.
 - [sbt-native-packager](https://github.com/sbt/sbt-native-packager)
   ([docs](https://sbt-native-packager.readthedocs.io/en/stable/)): build
   native packages (RPM, .deb etc) for your projects. <!-- 1602 stars -->
+- [sbt-release](https://github.com/sbt/sbt-release): create a customizable
+  release process. <!-- 652 stars -->
 - [sbt-ci-release](https://github.com/sbt/sbt-ci-release): automate Central Repo releases from GitHub Actions. <!-- 302 stars -->
 - [sbt-pgp](https://github.com/sbt/sbt-pgp): sign artifacts using PGP/GPG and
   manage signing keys. <!-- 149 stars -->
@@ -76,8 +78,6 @@ your plugin to the list.
 
 - [sbt-pack](https://github.com/xerial/sbt-pack): create runnable distributions
   for your projects. <!-- 302 stars -->
-- [sbt-release](https://github.com/sbt/sbt-release): create a customizable
-  release process. <!-- 113 stars -->
 - [sbt-docker](https://github.com/marcuslonnberg/sbt-docker): create and
   push Docker images. <!-- 72 stars -->
 - [sbt-aether-deploy](https://github.com/arktekk/sbt-aether-deploy): publish
@@ -147,6 +147,7 @@ your plugin to the list.
 - [sbt-stryker4s](https://github.com/stryker-mutator/stryker4s): Test your tests with mutation testing. <!-- 202 stars -->
 - [sbt-doctest](https://github.com/tkawachi/sbt-doctest): generate and run
   tests from Scaladoc comments. <!-- 120 stars -->
+- [test-times-reporter](https://github.com/xuwei-k/test-times-reporter): report slow tests. <!-- 3 stars -->
 
 <div style="display: none;">
 
@@ -166,14 +167,16 @@ your plugin to the list.
 - [sbt-cached-ci](https://github.com/OlegYch/sbt-cached-ci): Incremental sbt builds for CI environments. <!-- 0 stars -->
 
 </div>
-<div style="display: none;">
 
 ### Library dependency plugins
 
-- [coursier](https://github.com/coursier/coursier): pure Scala dependency
-  fetcher. <!-- 1021 stars -->
-- [sbt-dependency-graph](https://github.com/jrudolph/sbt-dependency-graph):
-  create dependency graphs using GraphML, graphviz or ASCII. <!-- 821 stars -->
+- [sbt-conflict-classes](https://github.com/xuwei-k/sbt-conflict-classes): show conflict classes in the classpath. <!-- 16 stars -->
+- [sbt-license-check](https://github.com/philippus/sbt-license-check): check and report on licenses used, fail build for disallowed licenses. <!-- 9 stars -->
+- [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match. <!-- 5 stars -->
+- [sbt-jackson-version-check](https://github.com/philippus/sbt-jackson-version-check): check if the Jackson modules match. <!-- 3 stars -->
+
+<div style="display: none;">
+
 - [sbt-updates](https://github.com/rtimush/sbt-updates): list updated versions
   of dependencies. <!-- 361 stars -->
 - [fm-sbt-s3-resolver](https://github.com/frugalmechanic/fm-sbt-s3-resolver):
@@ -194,13 +197,12 @@ your plugin to the list.
 - [sbt-dependency-lock](https://stringbean.github.io/sbt-dependency-lock):
 generate dependency lockfiles and check for changes at build time.
 - [sbt-unzip](https://github.com/djice/sbt-unzip-plugin): Extract zip dependencies where you want in your project.
-- [sbt-license-check](https://github.com/philippus/sbt-license-check): check and report on licenses used, fail build for disallowed licenses.
-- [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match, fail build if they don't.
 
 </div>
 
 ### Web and frontend development plugins
 
+- [sbt-war](https://github.com/earldouglas/sbt-war): package and run WAR files <!-- 381 stars -->
 - [sbt-web](https://github.com/sbt/sbt-web): library for building sbt plugins
   for the web. <!-- 314 stars -->
 
@@ -261,14 +263,14 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo): generate Scala code
   from sbt setting keys. <!-- 559 stars -->
 - [sbt-github-actions](https://github.com/sbt/sbt-github-actions): generate GitHub Actions YAML <!-- 197 stars -->
+- [sbt-protobuf](https://github.com/sbt/sbt-protobuf): protobuf code generator.
+  <!-- 173 stars -->
 - [sbt-teavm](https://github.com/sbt-teavm/sbt-teavm): generate JavaScript and WebAssembly from Java bytecode <!-- 11 stars -->
 
 <div style="display: none;">
 
 - [sbt-scalaxb](https://github.com/eed3si9n/scalaxb): generate model classes
   from XML schemas and WSDL. <!-- 243 stars -->
-- [sbt-protobuf](https://github.com/sbt/sbt-protobuf): protobuf code generator.
-  <!-- 132 stars -->
 - [sbt-header](https://github.com/sbt/sbt-header): auto-generate source code
   file headers (such as copyright notices). <!-- 111 stars -->
 - [sbt-boilerplate](https://github.com/sbt/sbt-boilerplate): TupleX and FunctionX
@@ -329,9 +331,12 @@ generate dependency lockfiles and check for changes at build time.
 
 - [sbt-git](https://github.com/sbt/sbt-git): run git commands from sbt.
   <!-- 233 stars -->
+- [sbt-dotenv](https://github.com/philippus/sbt-dotenv): load environment variables from .env into the JVM System Environment for local development. <!-- 189 stars -->
 - [sbt-dynver](https://github.com/sbt/sbt-dynver): set project version
   dynamically from git metadata. <!-- 87 stars -->
 - [sbt-nocomma](https://github.com/sbt/sbt-nocomma): reduce commas. <!-- 13 stars -->
+- [sbt-jshell](https://github.com/xuwei-k/sbt-jshell): Java REPL for sbt.
+  <!-- 10 stars -->
 - [sbt-vimquit](https://github.com/sbt/sbt-vimquit): adds `:q` command. <!-- 6 stars -->
 
 <div style="display: none;">
@@ -364,8 +369,7 @@ generate dependency lockfiles and check for changes at build time.
   artefacts for future builds. <!-- 31 stars -->
 - [sbt-javaagent](https://github.com/sbt/sbt-javaagent): add Java agents to
   projects. <!-- 13 stars -->
-- [sbt-jshell](https://github.com/xuwei-k/sbt-jshell): Java REPL for sbt.
-  <!-- 10 stars -->
+
 - [sbt-check](https://github.com/jeffreyolchovy/sbt-check): compile up to,
   and including, the typer phase. <!-- 10 stars -->
 - [sbt-mima-version-check](https://github.com/ChristopherDavenport/sbt-mima-version-check): Automate which Mima Versions to Check <!-- 6 stars -->
@@ -376,14 +380,15 @@ generate dependency lockfiles and check for changes at build time.
 - [sbt-ammonite-classpath](https://github.com/ThoughtWorksInc/sbt-ammonite-classpath): export classpath for [Ammonite](https://ammonite.io/) and [Almond](https://almond.sh/).
   <!-- 2 stars -->
 - [sbt-version-scheme-enforcer-plugin](https://github.com/isomarcte/sbt-version-scheme-enforcer): Derive Mima settings for your library from your declared `versionScheme`. This supports Early SemVer, Strict SemVer, and Package Versioning Policy (PVP).
-- [sbt-dotenv](https://github.com/philippus/sbt-dotenv): load environment variables from .env into the JVM System Environment for local development.
 
 </div>
 
 ### Documentation plugins
 
+- [sbt-unidoc](https://github.com/sbt/sbt-unidoc): create unified API
+  documentation across subprojects. <!-- 126 stars -->
 - [sbt-class-diagram](https://github.com/xuwei-k/sbt-class-diagram): generate
-  class diagrams from Scala source code. <!-- 54 stars -->
+  class diagrams from Scala source code. <!-- 100 stars -->
 
 <div style="display: none;">
 
@@ -396,8 +401,6 @@ generate dependency lockfiles and check for changes at build time.
   <!-- 131 stars -->
 - [sbt-microsites](https://github.com/47degrees/sbt-microsites): generate
   and publish microsites using Jekyll. <!-- 125 stars -->
-- [sbt-unidoc](https://github.com/sbt/sbt-unidoc): create unified API
-  documentation across subprojects. <!-- 86 stars -->
 - [sbt-ghpages](https://github.com/sbt/sbt-ghpages): publish generated
   sites to GitHub pages. <!-- 71 stars -->
 - [sbt-api-mappings](https://github.com/ThoughtWorksInc/sbt-api-mappings):
