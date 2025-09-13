@@ -171,6 +171,7 @@ your plugin to the list.
 ### Library dependency plugins
 
 - [sbt-conflict-classes](https://github.com/xuwei-k/sbt-conflict-classes): show conflict classes in the classpath. <!-- 16 stars -->
+- [sbt-akka-version-check](https://github.com/johanandren/sbt-akka-version-check): detect Akka module mismatches and fail build. <!-- 10 stars -->
 - [sbt-license-check](https://github.com/philippus/sbt-license-check): check and report on licenses used, fail build for disallowed licenses. <!-- 9 stars -->
 - [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match. <!-- 5 stars -->
 - [sbt-jackson-version-check](https://github.com/philippus/sbt-jackson-version-check): check if the Jackson modules match. <!-- 3 stars -->
