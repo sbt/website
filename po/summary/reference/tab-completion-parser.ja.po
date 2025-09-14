@@ -1,0 +1,346 @@
+#: src/reference/reference/tab-completion-parser.md:5
+msgid "Tab-completion parser"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:8
+msgid ""
+"This page describes the parser combinators in sbt. These parsers are used to "
+"parse user input and provide tab completion for [input tasks](input-task.md) "
+"and [commands](../concepts/command.md)."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:19
+msgid ""
+"Parser combinators build up a parser from smaller parsers. A `Parser[A]` in "
+"its most basic usage is a function `String => Option[A]`. It accepts a "
+"`String` to parse and produces a value wrapped in `Some` if parsing succeeds "
+"or `None` if it fails. Error handling and tab completion make this picture "
+"more complicated, but we'll stick with `Option` for this discussion."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:26
+msgid "Basic parsers"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:28
+msgid "The simplest parser combinators match exact inputs:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:33
+msgid "// A parser that succeeds if the input is 'x', returning the Char 'x'"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:34
+msgid "//  and failing otherwise"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:37
+msgid ""
+"// A parser that succeeds if the input is \"blue\", returning the String "
+"\"blue\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:38
+msgid "//   and failing otherwise"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:40
+#: src/reference/reference/tab-completion-parser.md:91
+#: src/reference/reference/tab-completion-parser.md:137
+#: src/reference/reference/tab-completion-parser.md:140
+#: src/reference/reference/tab-completion-parser.md:162
+#: src/reference/reference/tab-completion-parser.md:172
+msgid "\"blue\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:43
+msgid ""
+"In these examples, implicit conversions produce a literal `Parser` from a "
+"`Char` or `String`. Other basic parser constructors are the `charClass`, "
+"`success` and `failure` methods:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:50
+msgid ""
+"// A parser that succeeds if the character is a digit, returning the matched "
+"Char"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:51
+msgid ""
+"//   The second argument, \"digit\", describes the parser and is used in "
+"error messages"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:53
+#: src/reference/reference/tab-completion-parser.md:106
+#: src/reference/reference/tab-completion-parser.md:109
+#: src/reference/reference/tab-completion-parser.md:112
+#: src/reference/reference/tab-completion-parser.md:129
+#: src/reference/reference/tab-completion-parser.md:133
+#: src/reference/reference/tab-completion-parser.md:153
+msgid "\"digit\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:54
+msgid ""
+"// A parser that produces the value 3 for an empty input string, fails "
+"otherwise"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:57
+msgid "// Represents failure (always returns None for an input String)."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:58
+msgid "//  The argument is the error message."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:60
+msgid "\"Invalid input.\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:63
+msgid "Built-in parsers"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:65
+msgid ""
+"sbt comes with several built-in parsers defined in "
+"`sbt.complete.DefaultParsers`. <!-- ../api/sbt/internal/util/complete/"
+"DefaultParsers$.html -->"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:68
+msgid "Some commonly used built-in parsers are:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:70
+msgid ""
+"`Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing spaces or non-"
+"spaces, required or not."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:72
+msgid "`StringBasic` for parsing text that may be quoted."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:73
+msgid "`IntBasic` for parsing a signed Int value."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:74
+msgid ""
+"`Digit` and `HexDigit` for parsing a single decimal or hexadecimal digit."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:76
+msgid "`Bool` for parsing a `Boolean` value"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:78
+msgid ""
+"See the [DefaultParsers API](../api/sbt/internal/util/complete/"
+"DefaultParsers$.html) for details."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:82
+msgid "Combining parsers"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:84
+msgid ""
+"We build on these basic parsers to construct more interesting parsers. We "
+"can combine parsers in a sequence, choose between parsers, or repeat a "
+"parser."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:89
+msgid "// A parser that succeeds if the input is \"blue\" or \"green\","
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:89
+msgid "//  returning the matched input"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:91
+#: src/reference/reference/tab-completion-parser.md:162
+#: src/reference/reference/tab-completion-parser.md:172
+msgid "\"green\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:92
+msgid "// A parser that matches either \"fg\" or \"bg\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:94
+#: src/reference/reference/tab-completion-parser.md:162
+#: src/reference/reference/tab-completion-parser.md:172
+msgid "\"fg\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:94
+#: src/reference/reference/tab-completion-parser.md:162
+#: src/reference/reference/tab-completion-parser.md:172
+msgid "\"bg\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:95
+msgid ""
+"// A parser that matches \"fg\" or \"bg\", a space, and then the color, "
+"returning the matched values."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:99
+msgid ""
+"// Often, we don't care about the value matched by a parser, such as the "
+"space above"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:100
+msgid "//  For this, we can use ~> or <~, which keep the result of"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:101
+msgid "//  the parser on the right or left, respectively"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:104
+msgid "// Match one or more digits, returning a list of the matched characters"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:107
+msgid ""
+"// Match zero or more digits, returning a list of the matched characters"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:110
+msgid "// Optionally match a digit"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:115
+msgid "Transforming results"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:117
+msgid ""
+"A key aspect of parser combinators is transforming results along the way "
+"into more useful data structures. The fundamental methods for this are `map` "
+"and `flatMap`. Here are examples of `map` and some convenience methods "
+"implemented on top of `map`."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:123
+msgid ""
+"// Apply the `digits` parser and apply the provided function to the matched"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:123
+msgid "//   character sequence"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:127
+msgid ""
+"// Match a digit character, returning the matched character or return '0' if "
+"the input is not a digit"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:130
+msgid "// The previous example is equivalent to:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:135
+msgid "// Succeed if the input is \"blue\" and return the value 4"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:138
+msgid "// The above is equivalent to:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:143
+msgid "Controlling tab completion"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:145
+msgid ""
+"Most parsers have reasonable default tab completion behavior. For example, "
+"the string and character literal parsers will suggest the underlying literal "
+"for an empty input string. However, it is impractical to determine the valid "
+"completions for `charClass`, since it accepts an arbitrary predicate. The "
+"`examples` method defines explicit completions for such a parser:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:153
+msgid "\"0\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:153
+msgid "\"1\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:153
+msgid "\"2\""
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:156
+msgid ""
+"Tab completion will use the examples as suggestions. The other method "
+"controlling tab completion is `token`. The main purpose of `token` is to "
+"determine the boundaries for suggestions. For example, if your parser is:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:165
+msgid ""
+"then the potential completions on empty input are: `console fg green fg blue "
+"bg green bg blue`"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:168
+msgid ""
+"Typically, you want to suggest smaller segments or the number of suggestions "
+"becomes unmanageable. A better parser is:"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:175
+msgid ""
+"Now, the initial suggestions would be (with `_` representing a space): "
+"`console fg_ bg_`"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:178
+msgid ""
+"Be careful not to overlap or nest tokens, as in `token(\"green\" ~ "
+"token(\"blue\"))`. The behavior is unspecified (and should generate an error "
+"in the future), but typically the outer most token definition will be used."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:184
+msgid "Dependent parsers"
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:186
+msgid ""
+"Sometimes a parser must analyze some data and then more data needs to be "
+"parsed, and it is dependent on the previous one. The key for obtaining this "
+"behaviour is to use the `flatMap` function."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:190
+msgid ""
+"As an example, it will shown how to select several items from a list of "
+"valid ones with completion, but no duplicates are possible.  A space is used "
+"to separate the different items."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:207
+msgid ""
+"As you can see, the `flatMap` function provides the previous value.  With "
+"this info, a new parser is constructed for the remaining items.  The `map` "
+"combinator is also used in order to transform the output of the parser."
+msgstr ""
+
+#: src/reference/reference/tab-completion-parser.md:211
+msgid ""
+"The parser is called recursively, until it is found the trivial case of no "
+"possible choices."
+msgstr ""

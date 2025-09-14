@@ -1,0 +1,420 @@
+#: src/reference/reference/artifact.md:4
+msgid "Artifact"
+msgstr ""
+
+#: src/reference/reference/artifact.md:7
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/artifact.md:10
+msgid ""
+"An artifact is a single file ready for publishing a specific version of a "
+"subproject. This is a concept that originated in [Apache Maven](https://"
+"maven.apache.org/ref/3.9.11/maven-core/artifact-handlers.html) and [Ivy]"
+"(https://ant.apache.org/ivy/history/2.3.0/terminology.html#artifact)."
+msgstr ""
+
+#: src/reference/reference/artifact.md:12
+msgid ""
+"In the JVM ecosystem, common artifacts are Java archives, or JAR files. "
+"Compressed package formats are often preferred because they are easier to "
+"manage, download, and store."
+msgstr ""
+
+#: src/reference/reference/artifact.md:15
+msgid ""
+"To illustrate, the following is a list of artifacts for a library, "
+"enumerated in an `ivy.xml` file:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:19
+#: src/reference/reference/artifact.md:20
+#: src/reference/reference/artifact.md:21
+#: src/reference/reference/artifact.md:22
+msgid "\"core_3\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:19
+#: src/reference/reference/artifact.md:20
+#: src/reference/reference/artifact.md:21
+msgid "\"jar\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:19
+msgid "\"compile\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:20
+msgid "\"sources\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:20
+msgid "\"src\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:21
+msgid "\"javadoc\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:21
+msgid "\"doc\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:21
+msgid "\"docs\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:22
+msgid "\"pom\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:26
+msgid ""
+"This shows that an artifact has a name, a type, and an extention, and "
+"optionally a classifier."
+msgstr ""
+
+#: src/reference/reference/artifact.md:28
+msgid "**name**. This is going to be the same as the subproject's module name."
+msgstr ""
+
+#: src/reference/reference/artifact.md:29
+msgid ""
+"**type**. The functional category of the artifact, such as `jar`, `src`, and "
+"`doc`."
+msgstr ""
+
+#: src/reference/reference/artifact.md:30
+msgid ""
+"**extension**. The file extention, such as `jar`, `war`, `zip`, `xml` etc."
+msgstr ""
+
+#: src/reference/reference/artifact.md:31
+msgid ""
+"**classifier**. In Maven, classifier is an arbitrary string that can be "
+"appended for an alternative or secondary artifact."
+msgstr ""
+
+#: src/reference/reference/artifact.md:33
+msgid "Selecting default artifacts"
+msgstr ""
+
+#: src/reference/reference/artifact.md:35
+msgid "By default, the published artifacts are:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:36
+msgid "The main binary JAR"
+msgstr ""
+
+#: src/reference/reference/artifact.md:37
+msgid "The JAR containing the main sources and resources"
+msgstr ""
+
+#: src/reference/reference/artifact.md:38
+msgid "The JAR containing the API documentation"
+msgstr ""
+
+#: src/reference/reference/artifact.md:40
+msgid ""
+"You can add artifacts for the test classes, sources, or API or you can "
+"disable some of the main artifacts."
+msgstr ""
+
+#: src/reference/reference/artifact.md:43
+msgid "To add all `Test` artifacts:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:46
+#: src/reference/reference/artifact.md:55
+#: src/reference/reference/artifact.md:71
+#: src/reference/reference/artifact.md:190
+#: src/reference/reference/artifact.md:202
+msgid "\"app\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:52
+msgid "To add them individually:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:57
+msgid "// enable publishing the jar produced by `Test/package`"
+msgstr ""
+
+#: src/reference/reference/artifact.md:60
+msgid "// enable publishing the test API jar"
+msgstr ""
+
+#: src/reference/reference/artifact.md:63
+msgid "// enable publishing the test sources jar"
+msgstr ""
+
+#: src/reference/reference/artifact.md:68
+msgid "To disable main artifacts individually:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:73
+msgid "// disable publishing the main jar produced by `package`"
+msgstr ""
+
+#: src/reference/reference/artifact.md:76
+msgid "// disable publishing the main API jar"
+msgstr ""
+
+#: src/reference/reference/artifact.md:79
+msgid "// disable publishing the main sources jar"
+msgstr ""
+
+#: src/reference/reference/artifact.md:84
+msgid "Modifying default artifacts"
+msgstr ""
+
+#: src/reference/reference/artifact.md:86
+msgid ""
+"Each built-in artifact has several configurable settings in addition to "
+"`publishArtifact`. The basic ones are `artifact` (of type "
+"`SettingKey[Artifact]`), `mappings` (of type `TaskKey[(File, String)]`), and "
+"`artifactPath` (of type `SettingKey[File]`). They are scoped by `(Config / "
+"<task>)` as indicated in the previous section."
+msgstr ""
+
+#: src/reference/reference/artifact.md:92
+msgid "To modify the type of the main artifact, for example:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:97
+msgid "\"bundle\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:101
+msgid ""
+"The generated artifact name is determined by the `artifactName` setting. "
+"This setting is of type `(ScalaVersion, ModuleID, Artifact) => String`. The "
+"ScalaVersion argument provides the full Scala version String and the binary "
+"compatible part of the version String. The String result is the name of the "
+"file to produce. The default implementation is `Artifact.artifactName _`. "
+"The function may be modified to produce different local names for artifacts "
+"without affecting the published name, which is determined by the `artifact` "
+"definition combined with the repository pattern."
+msgstr ""
+
+#: src/reference/reference/artifact.md:111
+msgid ""
+"For example, to produce a minimal name without a classifier or cross path:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:116
+msgid "\"-\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:116
+msgid "\".\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:120
+msgid "(Note that in practice you rarely want to drop the classifier.)"
+msgstr ""
+
+#: src/reference/reference/artifact.md:122
+msgid ""
+"Finally, you can get the `(Artifact, File)` pair for the artifact by mapping "
+"the `packagedArtifact` task. Note that if you don't need the `Artifact`, you "
+"can get just the File from the package task (`package`, `packageDoc`, or "
+"`packageSrc`). In both cases, mapping the task to get the file ensures that "
+"the artifact is generated first and so the file is guaranteed to be up-to-"
+"date."
+msgstr ""
+
+#: src/reference/reference/artifact.md:129
+#: src/reference/reference/artifact.md:157
+msgid "For example:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:132
+msgid "\"My task.\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:136
+msgid "\"Artifact definition: \""
+msgstr ""
+
+#: src/reference/reference/artifact.md:137
+msgid "\"Packaged file: \""
+msgstr ""
+
+#: src/reference/reference/artifact.md:141
+msgid "Defining custom artifacts"
+msgstr ""
+
+#: src/reference/reference/artifact.md:143
+msgid ""
+"In addition to configuring the built-in artifacts, you can declare other "
+"artifacts to publish. Multiple artifacts are allowed when using Ivy "
+"metadata, but a Maven POM file only supports distinguishing artifacts based "
+"on classifiers and these are not recorded in the POM."
+msgstr ""
+
+#: src/reference/reference/artifact.md:148
+msgid "Basic `Artifact` construction look like:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:151
+#: src/reference/reference/artifact.md:152
+#: src/reference/reference/artifact.md:153
+#: src/reference/reference/artifact.md:154
+#: src/reference/reference/artifact.md:225
+msgid "\"name\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:151
+#: src/reference/reference/artifact.md:225
+msgid "\"type\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:151
+msgid "\"extension\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:152
+msgid "\"classifier\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:154
+msgid "\"extra1\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:154
+msgid "\"value1\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:154
+msgid "\"extra2\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:154
+msgid "\"value2\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:160
+#: src/reference/reference/artifact.md:161
+#: src/reference/reference/artifact.md:162
+#: src/reference/reference/artifact.md:182
+msgid "\"myproject\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:160
+msgid "\"zip\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:161
+#: src/reference/reference/artifact.md:182
+msgid "\"image\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:161
+#: src/reference/reference/artifact.md:182
+msgid "\"jpg\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:162
+#: src/reference/reference/artifact.md:240
+#: src/reference/reference/artifact.md:242
+msgid "\"jdk15\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:165
+msgid ""
+"See the [Ivy documentation](https://ant.apache.org/ivy/history/2.3.0/ivyfile/"
+"dependency-artifact.html) for more details on artifacts. See the [Artifact "
+"API](../api/sbt/librarymanagement/Artifact$.html) for combining the "
+"parameters above and specifying \\[Configurations\\] and extra attributes."
+msgstr ""
+
+#: src/reference/reference/artifact.md:171
+msgid ""
+"To declare these artifacts for publishing, map them to the task that "
+"generates the artifact:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:185
+msgid ""
+"`addArtifact` returns a sequence of settings (wrapped in a "
+"[SettingsDefinition](../api/sbt/internal/util/"
+"Init$SettingsDefinition.html)). In a full build configuration, usage looks "
+"like:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:196
+msgid "Publishing .war files"
+msgstr ""
+
+#: src/reference/reference/artifact.md:198
+msgid ""
+"A common use case for web applications is to publish the `.war` file instead "
+"of the `.jar` file."
+msgstr ""
+
+#: src/reference/reference/artifact.md:204
+msgid "// disable .jar publishing"
+msgstr ""
+
+#: src/reference/reference/artifact.md:207
+msgid "// create an Artifact for publishing the .war file"
+msgstr ""
+
+#: src/reference/reference/artifact.md:210
+msgid "\"war\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:213
+msgid "// add the .war file to what gets published"
+msgstr ""
+
+#: src/reference/reference/artifact.md:218
+msgid "Using dependencies with artifacts"
+msgstr ""
+
+#: src/reference/reference/artifact.md:220
+msgid ""
+"To specify the artifacts to use from a dependency that has custom or "
+"multiple artifacts, use the `artifacts` method on your dependencies. For "
+"example:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:225
+msgid "\"org\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:225
+msgid "\"rev\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:225
+msgid "\"ext\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:228
+msgid ""
+"The `from` and `classifer` methods (described on the [sbt update](./sbt-"
+"update.md) page) are actually convenience methods that translate to "
+"`artifacts`:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:237
+msgid "That is, the following two dependency declarations are equivalent:"
+msgstr ""
+
+#: src/reference/reference/artifact.md:240
+#: src/reference/reference/artifact.md:242
+msgid "\"org.testng\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:240
+#: src/reference/reference/artifact.md:242
+msgid "\"testng\""
+msgstr ""
+
+#: src/reference/reference/artifact.md:240
+#: src/reference/reference/artifact.md:242
+msgid "\"5.7\""
+msgstr ""
