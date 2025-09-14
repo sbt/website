@@ -35,6 +35,8 @@
   - [Cross building setup](reference/cross-building-setup.md)
   - [Remote cache setup](reference/remote-cache-setup.md)
   - [Artifact](reference/artifact.md)
+  - [Input task](reference/input-task.md)
+  - [Tab-completion parser](reference/tab-completion-parser.md)
 - [Community plugins](community-plugins.md)
 - [Recipes](recipes/index.md)
   - [Write hello world](recipes/hello-world.md)

@@ -1,40 +1,36 @@
----
-out: Parsing-Input.html
----
 
-  [Commands]: Commands.html
-  [Input-Tasks]: Input-Tasks.html
+  [command]: ../concepts/command.md
+  [input-task]: input-task.md
 
-Parsing and tab completion
---------------------------
+Tab-completion parser
+=====================
 
-This page describes the parser combinators in sbt. These parser
-combinators are typically used to parse user input and provide tab
-completion for [Input Tasks][Input-Tasks] and [Commands][Commands]. If
-you are already familiar with Scala's parser combinators, the methods
+This page describes the parser combinators in sbt.
+These parsers are used to parse user input and provide tab completion for
+[input tasks][input-task] and [commands][command].
+
+<!--
+If you are already familiar with Scala's parser combinators, the methods
 are mostly the same except that their arguments are strict. There are
 two additional methods for controlling tab completion that are discussed
 at the end of the section.
+-->
 
-Parser combinators build up a parser from smaller parsers. A `Parser[T]`
-in its most basic usage is a function `String => Option[T]`. It accepts
-a `String` to parse and produces a value wrapped in `Some` if parsing
+Parser combinators build up a parser from smaller parsers.
+A `Parser[A]` in its most basic usage is a function `String => Option[A]`.
+It accepts a `String` to parse and produces a value wrapped in `Some` if parsing
 succeeds or `None` if it fails. Error handling and tab completion make
 this picture more complicated, but we'll stick with `Option` for this
 discussion.
 
-The following examples assume the imports: :
-
-```scala
-import sbt._
-import complete.DefaultParsers._
-```
-
-### Basic parsers
+## Basic parsers
 
 The simplest parser combinators match exact inputs:
 
 ```scala
+import sbt.{ *, given }
+import sbt.complete.DefaultParsers.{ *, given }
+
 // A parser that succeeds if the input is 'x', returning the Char 'x'
 //  and failing otherwise
 val singleChar: Parser[Char] = 'x'
@@ -49,37 +45,41 @@ a `Char` or `String`. Other basic parser constructors are the
 `charClass`, `success` and `failure` methods:
 
 ```scala
-// A parser that succeeds if the character is a digit, returning the matched Char 
+import sbt.{ *, given }
+import sbt.complete.DefaultParsers.{ *, given }
+
+// A parser that succeeds if the character is a digit, returning the matched Char
 //   The second argument, "digit", describes the parser and is used in error messages
-val digit: Parser[Char] = charClass( (c: Char) => c.isDigit, "digit")
+val digit: Parser[Char] = charClass((c: Char) => c.isDigit, "digit")
 
 // A parser that produces the value 3 for an empty input string, fails otherwise
-val alwaysSucceed: Parser[Int] = success( 3 )
+val alwaysSucceed: Parser[Int] = success(3)
 
 // Represents failure (always returns None for an input String).
 //  The argument is the error message.
 val alwaysFail: Parser[Nothing] = failure("Invalid input.")
 ```
 
-### Built-in parsers
+## Built-in parsers
 
 sbt comes with several built-in parsers defined in
-[sbt.complete.DefaultParsers](../api/sbt/internal/util/complete/DefaultParsers\$.html).
+`sbt.complete.DefaultParsers`. <!-- ../api/sbt/internal/util/complete/DefaultParsers$.html -->
+
 Some commonly used built-in parsers are:
 
-> -   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
->     spaces or non-spaces, required or not.
-> -   `StringBasic` for parsing text that may be quoted.
-> -   `IntBasic` for parsing a signed Int value.
-> -   `Digit` and `HexDigit` for parsing a single decimal or hexadecimal
->     digit.
-> -   `Bool` for parsing a `Boolean` value
+-   `Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing
+     spaces or non-spaces, required or not.
+-   `StringBasic` for parsing text that may be quoted.
+-   `IntBasic` for parsing a signed Int value.
+-   `Digit` and `HexDigit` for parsing a single decimal or hexadecimal
+     digit.
+-   `Bool` for parsing a `Boolean` value
 
 See the
 [DefaultParsers API](../api/sbt/internal/util/complete/DefaultParsers\$.html) for
 details.
 
-### Combining parsers
+## Combining parsers
 
 We build on these basic parsers to construct more interesting parsers.
 We can combine parsers in a sequence, choose between parsers, or repeat
@@ -103,16 +103,16 @@ val setColor: Parser[(String, Char, String)] =
 val setColor2: Parser[(String, String)]  =  select ~ (' ' ~> color)
 
 // Match one or more digits, returning a list of the matched characters
-val digits: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").+
+val digits: Parser[Seq[Char]] = charClass(_.isDigit, "digit").+
 
 // Match zero or more digits, returning a list of the matched characters
-val digits0: Parser[Seq[Char]]  =  charClass(_.isDigit, "digit").*
+val digits0: Parser[Seq[Char]] = charClass(_.isDigit, "digit").*
 
 // Optionally match a digit
-val optDigit: Parser[Option[Char]]  =  charClass(_.isDigit, "digit").?
+val optDigit: Parser[Option[Char]] = charClass(_.isDigit, "digit").?
 ```
 
-### Transforming results
+## Transforming results
 
 A key aspect of parser combinators is transforming results along the way
 into more useful data structures. The fundamental methods for this are
@@ -122,26 +122,28 @@ methods implemented on top of `map`.
 ```scala
 // Apply the `digits` parser and apply the provided function to the matched
 //   character sequence
-val num: Parser[Int] = digits map { (chars: Seq[Char]) => chars.mkString.toInt }
+val num: Parser[Int] = digits.map: (chars: Seq[Char]) =>
+  chars.mkString.toInt }
 
 // Match a digit character, returning the matched character or return '0' if the input is not a digit
-val digitWithDefault: Parser[Char]  =  charClass(_.isDigit, "digit") ?? '0'
+val digitWithDefault: Parser[Char] = charClass(_.isDigit, "digit") ?? '0'
 
 // The previous example is equivalent to:
 val digitDefault: Parser[Char] =
-  charClass(_.isDigit, "digit").? map { (d: Option[Char]) => d getOrElse '0' }
+  charClass(_.isDigit, "digit").?.map: (d: Option[Char]) =>
+    d.getOrElse('0')
 
 // Succeed if the input is "blue" and return the value 4
 val blue = "blue" ^^^ 4
 
 // The above is equivalent to:
-val blueM = "blue" map { (s: String) => 4 }
+val blueM = "blue".map((s: String) => 4)
 ```
 
-### Controlling tab completion
+## Controlling tab completion
 
-Most parsers have reasonable default tab completion behavior. For
-example, the string and character literal parsers will suggest the
+Most parsers have reasonable default tab completion behavior.
+For example, the string and character literal parsers will suggest the
 underlying literal for an empty input string. However, it is impractical
 to determine the valid completions for `charClass`, since it accepts an
 arbitrary predicate. The `examples` method defines explicit completions
@@ -179,14 +181,14 @@ should generate an error in the future), but typically the outer most
 token definition will be used.
 
 
-### Dependent parsers
+## Dependent parsers
 
-Sometimes a parser must analyze some data and then more data needs to be parsed, 
-and it is dependent on the previous one.  
+Sometimes a parser must analyze some data and then more data needs to be parsed,
+and it is dependent on the previous one.
 The key for obtaining this behaviour is to use the `flatMap` function.
 
-As an example, it will shown how to select several items from a list of valid ones 
-with completion, but no duplicates are possible.  A space is used to separate the 
+As an example, it will shown how to select several items from a list of valid ones
+with completion, but no duplicates are possible.  A space is used to separate the
 different items.
 
 
@@ -195,17 +197,15 @@ def select1(items: Iterable[String]) =
   token(Space ~> StringBasic.examples(FixedSetExamples(items)))
 
 def selectSome(items: Seq[String]): Parser[Seq[String]] = {
-   select1(items).flatMap { v =>
-   val remaining = items filter { _ != v }
-   if (remaining.size == 0)
-     success(v :: Nil)
-   else
-     selectSome(remaining).?.map(v +: _.getOrElse(Seq()))
- } 
+   select1(items).flatMap: v =>
+     val remaining = items.filter(_ != v)
+     if remaining.size == 0 then success(v :: Nil)
+     else selectSome(remaining).?.map(v +: _.getOrElse(Seq()))
+ }
 ```
- 
+
  As you can see, the `flatMap` function provides the previous value.  With this info, a new
  parser is constructed for the remaining items.  The `map` combinator is also used in order
  to transform the output of the parser.
- 
+
  The parser is called recursively, until it is found the trivial case of no possible choices.

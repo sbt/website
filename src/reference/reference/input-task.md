@@ -1,20 +1,18 @@
----
-out: Input-Tasks.html
----
+Input task
+==========
 
-  [Parsing-Input]: Parsing-Input.html
+  [tab-completion-parser]: tab-completion-parser.md
   [Build-State]: Build-State.html
 
-Input Tasks
------------
+sbt provides a capability to define custom tasks that can parse
+user inputs and offer tab completion.
+The details of the parser will be covered in [tab-completion parser][tab-completion-parser] later.
 
-Input Tasks parse user input and produce a task to run.
-[Parsing Input][Parsing-Input] describes how to use the parser
-combinators that define the input syntax and tab completion. This page
-describes how to hook those parser combinators into the input task
+This page describes how to hook those parser combinators into the input task
 system.
 
-### Input Keys
+Input keys
+----------
 
 A key for an input task is of type `InputKey` and represents the input
 task like a `SettingKey` represents a setting or a `TaskKey` represents
@@ -29,11 +27,12 @@ val demo = inputKey[Unit]("A demo input task.")
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
 
-[Parser][Parsing-Input] applied to user input. Just as
+[Parser][tab-completion-parser] applied to user input. Just as
 the special `value` method gets the value of a setting or task, the
 special `parsed` method gets the result of a `Parser`.
 
-### Basic Input Task Definition
+Basic input task definition
+---------------------------
 
 The simplest input task accepts a space-delimited sequence of arguments.
 It does not provide useful tab completion and parsing is basic. The
@@ -45,7 +44,7 @@ For example, the following task prints the current Scala version and
 then echoes the arguments passed to it on their own line.
 
 ```scala
-import complete.DefaultParsers._
+import complete.DefaultParsers.{ *, given }
 
 demo := {
   // get the result of parsing
@@ -53,26 +52,27 @@ demo := {
   // Here, we also use the value of the `scalaVersion` setting
   println("The current Scala version is " + scalaVersion.value)
   println("The arguments to demo were:")
-  args foreach println
+  args.foreach(println(_))
 }
 ```
 
-### Input Task using Parsers
+Input task using Parsers
+------------------------
 
 The Parser provided by the `spaceDelimited` method does not provide any
 flexibility in defining the input syntax. Using a custom parser is just
 a matter of defining your own `Parser` as described on the
-[Parsing Input][Parsing-Input] page.
+[Parsing Input][tab-completion-parser] page.
 
-#### Constructing the Parser
+### Constructing the Parser
 
 The first step is to construct the actual `Parser` by defining a value
 of one of the following types:
 
--   `Parser[I]`: a basic parser that does not use any settings
--   `Initialize[Parser[I]]`: a parser whose definition depends on one or
+1. `Parser[I]`: a basic parser that does not use any settings
+2. `Initialize[Parser[I]]`: a parser whose definition depends on one or
     more settings
--   `Initialize[State => Parser[I]]`: a parser that is defined using
+3. `Initialize[State => Parser[I]]`: a parser that is defined using
     both settings and the current [state][Build-State]
 
 We already saw an example of the first case with `spaceDelimited`, which
@@ -83,8 +83,8 @@ settings, we need to wrap the Parser construction in `Def.setting` and
 get the setting values with the special `value` method:
 
 ```scala
-import complete.DefaultParsers._
-import complete.Parser
+import sbt.complete.DefaultParsers.{ *, given }
+import sbt.complete.Parser
 
 val parser: Def.Initialize[State => Parser[(String,String)]] =
 Def.setting {
@@ -99,19 +99,19 @@ Def.setting {
 This Parser definition will produce a value of type `(String,String)`.
 The input syntax defined isn't very flexible; it is just a
 demonstration. It will produce one of the following values for a
-successful parse (assuming the current Scala version is $scala_version$,
-the current sbt version is $app_version$, and there are 3 commands left to
+successful parse (assuming the current Scala version is {{scala3_metabuild_version}},
+the current sbt version is {{sbt_version}}, and there are 3 commands left to
 run):
 
-* (scala,$scala_version$)
-* (sbt,$app_version$)
+* (scala,{{scala3_metabuild_version}})
+* (sbt,{{sbt_version}})
 * (commands,3)
 
 Again, we were able to access the current Scala and sbt version for the
 project because they are settings. Tasks cannot be used to define the
 parser.
 
-#### Constructing the Task
+### Constructing the Task
 
 Next, we construct the actual task to execute from the result of the
 `Parser`. For this, we define a task as usual, but we can access the
@@ -130,17 +130,18 @@ demo := {
 }
 ```
 
-### The InputTask type
+The InputTask type
+------------------
 
 It helps to look at the `InputTask` type to understand more advanced
 usage of input tasks. The core input task type is:
 
 ```scala
-class InputTask[T](val parser: State => Parser[Task[T]])
+class InputTask[A1](val parser: State => Parser[Task[A1]])
 ```
 
 Normally, an input task is assigned to a setting and you work with
-`Initialize[InputTask[T]]`.
+`Initialize[InputTask[A1]]`.
 
 Breaking this down,
 
@@ -155,16 +156,17 @@ an input task's command line syntax. This was described in the previous
 section. You can then use settings, `State`, or user input to construct
 the task to run. This is implicit in the input task syntax.
 
-### Using other input tasks
+Using other input tasks
+-----------------------
 
 The types involved in an input task are composable, so it is possible to
 reuse input tasks. The `.parsed` and `.evaluated` methods are defined on
 InputTasks to make this more convenient in common situations:
 
--   Call `.parsed` on an `InputTask[T]` or `Initialize[InputTask[T]]`
-    to get the `Task[T]` created after parsing the command line
--   Call `.evaluated` on an `InputTask[T]` or
-    `Initialize[InputTask[T]]` to get the value of type `T` from
+-   Call `.parsed` on an `InputTask[A1]` or `Initialize[InputTask[A1]]`
+    to get the `Task[A1]` created after parsing the command line
+-   Call `.evaluated` on an `InputTask[A1]` or
+    `Initialize[InputTask[A1]]` to get the value of type `A1` from
     evaluating that task
 
 In both situations, the underlying `Parser` is sequenced with other
@@ -191,8 +193,8 @@ run2 := {
 
 For a main class Demo that echoes its arguments, this looks like:
 
-```
-\$ sbt
+```bash
+$ sbt
 > run2 a b -- c d
 [info] Running Demo c d
 [info] Running Demo a b
@@ -202,7 +204,8 @@ a
 b
 ```
 
-### Preapplying input
+Preapplying input
+-----------------
 
 Because `InputTasks` are built from `Parsers`, it is possible to
 generate a new `InputTask` by applying some input programmatically. (It
@@ -228,8 +231,10 @@ we:
 -   Define the initial arguments passed to the second `run`, but allow
     further input on the command line.
 
-> **Note**: if the input derives from settings you need to use, for
+~~~admonish note
+If the input derives from settings you need to use, for
 example, `Def.taskDyn { ... }.value`
+~~~
 
 ```scala
 lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
@@ -238,7 +243,7 @@ lazy val run2 = inputKey[Unit]("Runs the main class twice: " +
 
 // The argument string for the first run task is ' <name> <version>'
 lazy val firstInput: Initialize[String] =
-   Def.setting(s" \${name.value} \${version.value}")
+   Def.setting(s" ${name.value} ${version.value}")
 
 // Make the first arguments to the second run task ' red blue'
 lazy val secondInput: String = " red blue"
@@ -251,8 +256,8 @@ run2 := {
 
 For a main class Demo that echoes its arguments, this looks like:
 
-```
-\$ sbt
+```bash
+$ sbt
 > run2 green
 [info] Running Demo demo 1.0
 [info] Running Demo red blue green
@@ -263,11 +268,12 @@ blue
 green
 ```
 
-### Get a Task from an InputTask
+Get a Task from an InputTask
+----------------------------
 
 The previous section showed how to derive a new `InputTask` by applying
 input. In this section, applying input produces a `Task`. The `toTask`
-method on `Initialize[InputTask[T]]` accepts the `String` input to apply
+method on `Initialize[InputTask[A1]]` accepts the `String` input to apply
 and produces a task that can be used normally. For example, the
 following defines a plain task `runFixed` that can be used by other
 tasks or run directly without providing any input:
@@ -284,8 +290,8 @@ runFixed := {
 For a main class Demo that echoes its arguments, running `runFixed`
 looks like:
 
-```
-\$ sbt
+```bash
+$ sbt
 > runFixed
 [info] Running Demo blue green
 blue
@@ -316,8 +322,8 @@ class. However, each task passes different arguments to the main class.
 For a main class Demo that echoes its arguments, the output of running
 `runFixed2` might look like:
 
-```
-\$ sbt
+```bash
+$ sbt
 > runFixed2
 [info] Running Demo blue green
 [info] Running Demo red orange
