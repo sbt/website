@@ -1,0 +1,303 @@
+#: src/reference/recipes/central.md:18
+msgid "Publishing to the Central Repo"
+msgstr ""
+
+#: src/reference/recipes/central.md:28
+msgid "Objective"
+msgstr ""
+
+#: src/reference/recipes/central.md:31
+msgid "I want to publish my project to the Central Repository."
+msgstr ""
+
+#: src/reference/recipes/central.md:34
+msgid "Steps"
+msgstr ""
+
+#: src/reference/recipes/central.md:37
+msgid "Preliminary 1: Central Portal registration"
+msgstr ""
+
+#: src/reference/recipes/central.md:39
+msgid ""
+"Create a Central Portal account, following Sonatype's [Publish guides]"
+"(https://central.sonatype.org/register/central-portal/)."
+msgstr ""
+
+#: src/reference/recipes/central.md:41
+msgid ""
+"If you had an OSSRH account, use **Forgot password** flow to convert the "
+"account to the new Central Portal, which lets you keep the previous "
+"namespace associations."
+msgstr ""
+
+#: src/reference/recipes/central.md:42
+msgid ""
+"If you authenticate via GitHub, `io.github.<user_name>` will automatically "
+"be associated with the account."
+msgstr ""
+
+#: src/reference/recipes/central.md:44
+msgid ""
+"Follow the steps described in [register a namespace](https://"
+"central.sonatype.org/register/namespace/) guide to associate a domain name "
+"with your account."
+msgstr ""
+
+#: src/reference/recipes/central.md:47
+msgid "Preliminary 2: PGP key pair"
+msgstr ""
+
+#: src/reference/recipes/central.md:49
+msgid ""
+"Follow the Sonatype's [GPG guide](https://central.sonatype.org/publish/"
+"requirements/gpg/) to generate a PGP key pair."
+msgstr ""
+
+#: src/reference/recipes/central.md:51
+msgid ""
+"[Install GnuPG](https://www.gnupg.org/download/), and verify the version:"
+msgstr ""
+
+#: src/reference/recipes/central.md:61
+msgid "Next generate a key:"
+msgstr ""
+
+#: src/reference/recipes/central.md:67
+msgid "List the keys:"
+msgstr ""
+
+#: src/reference/recipes/central.md:81
+msgid "Distribute the key:"
+msgstr ""
+
+#: src/reference/recipes/central.md:87
+msgid "Step 1: sbt-pgp"
+msgstr ""
+
+#: src/reference/recipes/central.md:89
+msgid ""
+"The [sbt-pgp plugin](https://github.com/sbt/sbt-pgp#sbt-pgp) can sign the "
+"published artifacts with GPG/PGP. (Optionally [sbt-ci-release](https://"
+"github.com/sbt/sbt-ci-release) can automate the publishing process.)"
+msgstr ""
+
+#: src/reference/recipes/central.md:92
+msgid ""
+"Add the following line to your `project/plugins.sbt` file to enable it for "
+"your build:"
+msgstr ""
+
+#: src/reference/recipes/central.md:96
+msgid "\"com.github.sbt\""
+msgstr ""
+
+#: src/reference/recipes/central.md:96
+msgid "\"sbt-pgp\""
+msgstr ""
+
+#: src/reference/recipes/central.md:96
+msgid "\"2.3.1\""
+msgstr ""
+
+#: src/reference/recipes/central.md:103
+msgid "Step 2: Credentials"
+msgstr ""
+
+#: src/reference/recipes/central.md:105
+msgid ""
+"Generate a user token from the portal to be used for the credentials. The "
+"token must be stored somewhere safe (NOT in the repository)."
+msgstr ""
+
+#: src/reference/recipes/central.md:108
+msgid ""
+"sbt 2.x can also reads from the environment variables `SONATYPE_USERNAME` "
+"and `SONATYPE_PASSWORD` and appends a credential for `central.sonatype.com` "
+"out-of-box, which might be useful for automatic publishing from the CI "
+"environment, such as GitHub Actions."
+msgstr ""
+
+#: src/reference/recipes/central.md:111
+msgid "run"
+msgstr ""
+
+#: src/reference/recipes/central.md:111
+msgid "sbt ci-release"
+msgstr ""
+
+#: src/reference/recipes/central.md:112
+msgid "env"
+msgstr ""
+
+#: src/reference/recipes/central.md:113
+msgid "PGP_PASSPHRASE"
+msgstr ""
+
+#: src/reference/recipes/central.md:113
+msgid "${{ secrets.PGP_PASSPHRASE }}"
+msgstr ""
+
+#: src/reference/recipes/central.md:114
+msgid "PGP_SECRET"
+msgstr ""
+
+#: src/reference/recipes/central.md:114
+msgid "${{ secrets.PGP_SECRET }}"
+msgstr ""
+
+#: src/reference/recipes/central.md:115
+msgid "SONATYPE_PASSWORD"
+msgstr ""
+
+#: src/reference/recipes/central.md:115
+msgid "${{ secrets.SONATYPE_PASSWORD }}"
+msgstr ""
+
+#: src/reference/recipes/central.md:116
+msgid "SONATYPE_USERNAME"
+msgstr ""
+
+#: src/reference/recipes/central.md:116
+msgid "${{ secrets.SONATYPE_USERNAME }}"
+msgstr ""
+
+#: src/reference/recipes/central.md:119
+msgid ""
+"On a local machine, a common convention is a `$HOME/.sbt/2/credentials.sbt` "
+"file, with the following:"
+msgstr ""
+
+#: src/reference/recipes/central.md:122
+msgid "\".sbt\""
+msgstr ""
+
+#: src/reference/recipes/central.md:122
+msgid "\"sonatype_central_credentials\""
+msgstr ""
+
+#: src/reference/recipes/central.md:125
+msgid "Next create a file `$HOME/.sbt/sonatype_central_credentials`:"
+msgstr ""
+
+#: src/reference/recipes/central.md:133
+msgid "Step 3: Configure build.sbt"
+msgstr ""
+
+#: src/reference/recipes/central.md:135
+msgid ""
+"To publish to a Maven repository, you'll need to configure a few settings so "
+"that the correct metadata is generated."
+msgstr ""
+
+#: src/reference/recipes/central.md:138
+msgid ""
+"**Note**: To publish to the Central Portal, `publishTo` must be set to the "
+"`localStaging` repository:"
+msgstr ""
+
+#: src/reference/recipes/central.md:142 src/reference/recipes/central.md:179
+msgid "// new setting for the Central Portal"
+msgstr ""
+
+#: src/reference/recipes/central.md:144 src/reference/recipes/central.md:182
+msgid "\"https://central.sonatype.com/repository/maven-snapshots/\""
+msgstr ""
+
+#: src/reference/recipes/central.md:145 src/reference/recipes/central.md:183
+msgid "\"-SNAPSHOT\""
+msgstr ""
+
+#: src/reference/recipes/central.md:145 src/reference/recipes/central.md:183
+msgid "\"central-snapshots\""
+msgstr ""
+
+#: src/reference/recipes/central.md:150
+msgid ""
+"Add these settings at the end of `build.sbt` or a separate `publish.sbt`:"
+msgstr ""
+
+#: src/reference/recipes/central.md:153
+msgid "\"com.example.project2\""
+msgstr ""
+
+#: src/reference/recipes/central.md:154
+msgid "\"example\""
+msgstr ""
+
+#: src/reference/recipes/central.md:155
+msgid "\"http://example.com/\""
+msgstr ""
+
+#: src/reference/recipes/central.md:159
+msgid "\"https://github.com/your-account/your-project\""
+msgstr ""
+
+#: src/reference/recipes/central.md:160
+msgid "\"scm:git@github.com:your-account/your-project.git\""
+msgstr ""
+
+#: src/reference/recipes/central.md:165
+msgid "\"Your identifier\""
+msgstr ""
+
+#: src/reference/recipes/central.md:166
+msgid "\"Your Name\""
+msgstr ""
+
+#: src/reference/recipes/central.md:167
+msgid "\"your@email\""
+msgstr ""
+
+#: src/reference/recipes/central.md:168
+msgid "\"http://your.url\""
+msgstr ""
+
+#: src/reference/recipes/central.md:172
+msgid "\"Some description about your project.\""
+msgstr ""
+
+#: src/reference/recipes/central.md:174
+msgid "\"https://github.com/example/project\""
+msgstr ""
+
+#: src/reference/recipes/central.md:175
+msgid "// Remove all additional repository other than Maven Central from POM"
+msgstr ""
+
+#: src/reference/recipes/central.md:188
+msgid ""
+"The full format of a `pom.xml` (an end product of the project configuration "
+"used by Maven) file is outlined in [POM Reference](https://maven.apache.org/"
+"pom.html). You can add more data to it with the `pomExtra` option in "
+"`build.sbt`."
+msgstr ""
+
+#: src/reference/recipes/central.md:192
+msgid "Step 4: Stage the artifacts"
+msgstr ""
+
+#: src/reference/recipes/central.md:194 src/reference/recipes/central.md:202
+msgid "From sbt shell run:"
+msgstr ""
+
+#: src/reference/recipes/central.md:200
+msgid "Step 5: Upload or release the bundle"
+msgstr ""
+
+#: src/reference/recipes/central.md:208
+msgid ""
+"This will upload the bundle to the [Central Portal](https://"
+"central.sonatype.com/). Hit the \"Publish\" button to publish to the Central "
+"Repository."
+msgstr ""
+
+#: src/reference/recipes/central.md:211
+msgid "If you want to automate the publishing, run:"
+msgstr ""
+
+#: src/reference/recipes/central.md:217
+msgid ""
+"It might take 10 minutes to a few hours for the published artifacts to be "
+"visible on the Central Repository <https://repo1.maven.org/maven2/>."
+msgstr ""

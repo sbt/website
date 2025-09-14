@@ -28,5 +28,8 @@ MDBOOK_OUTPUT='{"xgettext": { "depth": 3 }}' mdbook build -d po
 
 find po -type f -name "*.pot" | while read -r potfile; do
     pofile="${potfile%.pot}.$locale.po"
+    if ! [[ -f "$pofile" ]]; then
+        touch "$pofile"
+    fi
     msgmerge --update "$pofile" "$potfile"
 done

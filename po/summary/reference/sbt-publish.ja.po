@@ -1,0 +1,362 @@
+#: src/reference/reference/sbt-publish.md:6
+msgid "sbt publish"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:9
+msgid "Synopsis"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:12
+msgid ""
+"`sbt` \\[_query_ / \\] `publish`<br> `sbt` \\[_query_ / \\] "
+"`publishSigned`<br> `sbt` \\[_query_ / \\] `publishLocal`<br> `sbt` \\"
+"[_query_ / \\] `publishM2`"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:17
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:20
+msgid ""
+"The publish family of tasks provide means for compiling and publishing your "
+"project. _Publishing_ in this context consists of uploading a descriptor, "
+"such as a Maven POM or `ivy.xml`, and artifacts, such as a JAR or `war` "
+"file, to a repository so that other projects can specify your project as a "
+"dependency."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:26
+msgid ""
+"The `publish` task publishes your project to a remote repository, such as "
+"JFrog Artifactory or Sonatype Nexus instance."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:28
+msgid ""
+"The `publishSigned` task, enabled using [sbt-pgp plugin](https://github.com/"
+"sbt/sbt-pgp), is used to publish GPG-signed artifacts."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:30
+msgid ""
+"The `publishLocal` task publishes your project to the Ivy local file "
+"repository, which is usually located at `$HOME/.ivy2/local/`. You can then "
+"use this project from other projects on the same machine."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:32
+msgid ""
+"The `publishM2` task publishes your project to the local Maven repository."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:34
+msgid ""
+"There's a specific recipe for [publishing to the Central Repo](../recipes/"
+"central.md)."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:36
+msgid "Skip publishing"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:38
+msgid ""
+"To avoid publishing a project, add the following setting to the subprojects "
+"that you want to skip:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:44
+msgid "Common use case is to prevent publishing of the root project."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:46
+msgid "Define the repository"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:48
+msgid ""
+"To specify the repository, assign a repository to `publishTo` and optionally "
+"set the publishing style. For example, to upload to Nexus:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:52
+msgid "\"Sonatype Snapshots Nexus\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:52
+msgid "\"https://oss.sonatype.org/content/repositories/snapshots\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:55
+msgid "To publish to a local maven repository:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:58
+msgid "\"local-maven\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:58
+msgid "\"path/to/maven-repo/releases\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:61
+msgid "To publish to a local Ivy repository:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:64
+msgid "\"local-ivy\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:64
+msgid "\"path/to/ivy-repo/releases\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:67
+msgid ""
+"If you're publishing the Central Repository, you will also have to select "
+"the right repository depending on your artifacts: SNAPSHOT versions go to "
+"the central-snapshots repository while other versions go to the local "
+"staging repository. Doing this selection can be done by using the value of "
+"the `version` setting:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:75
+msgid "\"https://central.sonatype.com/repository/maven-snapshots/\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:76
+msgid "\"-SNAPSHOT\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:76
+msgid "\"central-snapshots\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:81
+msgid "Publishing locally"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:83
+msgid ""
+"The `publishLocal` task will publish to the \"local\" Ivy repository. By "
+"default, this is at `$HOME/.ivy2/local/`. Other builds on the same machine "
+"can then list the project as a dependency. For example, if the project you "
+"are publishing has configuration parameters like:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:89
+#: src/reference/reference/sbt-publish.md:97
+msgid "\"com.example\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:90
+#: src/reference/reference/sbt-publish.md:97
+msgid "\"0.1-SNAPSHOT\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:91
+#: src/reference/reference/sbt-publish.md:97
+msgid "\"hello\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:94
+msgid "Then another build on the same machine can depend on it:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:100
+msgid ""
+"The version number you select must end with `SNAPSHOT`, or you must change "
+"the version number each time you publish to indicate that it's a changing "
+"artifact."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:109
+msgid ""
+"Similar to `publishLocal`, `publishM2` task will publish the user's Maven "
+"local repository. This is at the location specified by `$HOME/.m2/"
+"settings.xml` or at `$HOME/.m2/repository/` by default. Another build would "
+"require `Resolver.mavenLocal` to resolve out of it:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:122
+msgid "Credentials"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:124
+msgid "There are two ways to specify credentials for such a repository."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:126
+msgid "The first and better way is to load them from a file, for example:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:129
+msgid "\".sbt\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:129
+msgid "\".credentials\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:132
+msgid ""
+"The credentials file is a properties file with keys `realm`, `host`, `user`, "
+"and `password`. For example:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:142
+msgid "The second way is to specify them inline:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:145
+msgid "\"Sonatype Nexus Repository Manager\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:145
+msgid "\"my.artifact.repo.net\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:145
+msgid "\"admin\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:145
+msgid "\"admin123\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:148
+msgid ""
+"````admonish note\n"
+"Credentials matching is done using both: `realm` and `host` keys.\n"
+"The `realm` key is the HTTP `WWW-Authenticate` header's realm directive, "
+"which is\n"
+"part of the response of HTTP servers for [HTTP Basic Authentication](https://"
+"en.wikipedia.org/wiki/Basic_access_authentication#Server_side).\n"
+"For a given repository, this can be found by reading all the headers "
+"received.\n"
+"For example:\n"
+"\n"
+"```bash\n"
+"curl -D - my.artifact.repo.net\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:160
+msgid "Cross-publishing"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:162
+msgid ""
+"To support multiple incompatible Scala versions, use projectMatrix and "
+"publish (see [Cross building setup](./cross-building-setup.md))."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:165
+msgid "Overriding the publishing convention"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:167
+msgid ""
+"By default sbt will publish your artifact with the binary version of Scala "
+"you're using. For example if your project is using Scala 2.13.x your example "
+"artifact would be published under `example_2.13`. This is often what you "
+"want, but if you're publishing a pure Java artifact or a compiler plugin "
+"you'll want to change the `CrossVersion`. See the [Cross building setup](./"
+"cross-building-setup.md) page for more details under the _Publishing "
+"convention_ section."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:175
+msgid "Published artifacts"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:177
+msgid ""
+"By default, the main binary JAR, a sources JAR, and a API documentation JAR "
+"are published. You can declare other types of artifacts to publish and "
+"disable or modify the default artifacts. See the [Artifact](./artifact.md) "
+"page for details."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:182
+msgid "Version scheme"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:184
+msgid "`versionScheme` setting tracks the version scheme of the build:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:187
+msgid "\"early-semver\""
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:190
+msgid ""
+"The supported values are `\"early-semver\"`, `\"pvp\"`, `\"semver-spec\"`, "
+"and `\"strict\"`. sbt will include this information into `pom.xml` and "
+"`ivy.xml` as a property."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:193
+msgid ""
+"`Some(\"early-semver\")`: Early Semantic Versioning that would keep binary "
+"compatibility across patch updates within 0.Y.z (for instance 0.13.0 and "
+"0.13.2). Once it goes 1.0.0, it follows the regular Semantic Versioning "
+"where 1.1.0 is bincompat with 1.0.0."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:194
+msgid ""
+"`Some(\"semver-spec\")`: Semantic Versioning where all 0.y.z are treated as "
+"initial development (no bincompat guarantees)."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:195
+msgid ""
+"`Some(\"pvp\")`. Haskell Package Versioning Policy where X.Y are treated as "
+"major version."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:196
+msgid "`Some(\"strict\")`. Requires exact match of version."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:198
+msgid ""
+"This information will be annotated into the `pom.xml` file, which helps "
+"downstream projects determine whether a version conflict is safe to resolve "
+"or not. See [Preventing version conflicts with versionScheme](https://"
+"www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-"
+"versionscheme.html) (2021)."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:202
+msgid "Modifying the generated POM"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:204
+msgid ""
+"When `publishMavenStyle` is `true`, a POM is generated by the `makePom` "
+"action and published to the repository instead of an Ivy file. This POM file "
+"may be altered by changing a few settings. Set `pomExtra` to provide XML "
+"(`scala.xml.NodeSeq`) to insert directly into the generated pom. For example:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:214
+msgid ""
+"There is also a `pomPostProcess` setting that can be used to manipulate the "
+"final XML before it is written. It's type is `Node => Node`."
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:223
+msgid ""
+"`makePom` adds to the POM any Maven-style repositories you have declared. "
+"You can filter these by modifying `pomRepositoryFilter`, which by default "
+"excludes local repositories. To instead only include local repositories:"
+msgstr ""
+
+#: src/reference/reference/sbt-publish.md:230
+msgid "\"file:\""
+msgstr ""

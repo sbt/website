@@ -1,0 +1,119 @@
+#: src/reference/reference/sbt-compile.md:1
+msgid "sbt compile"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:4
+msgid "Synopsis"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:7
+msgid ""
+"`sbt` \\[_query_ / \\] `compile`<br> `sbt` \\[_query_ / \\] `Test` / "
+"`compile`<br>"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:10
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:13
+msgid ""
+"The `compile` task compiles the selected subprojects and their subproject "
+"dependencies. Since sbt 2.x, the compiled artifacts are cached automatically."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:15
+msgid ""
+"Compiling Scala code with the raw Scala compiler has been slow, so "
+"significant poriton of sbt's development efforts deal with various "
+"strategies for speeding up compilation."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:17
+msgid "Reduce the overhead of restarting the compiler"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:19
+msgid ""
+"sbt server stays up in the background, allowing Scala compilation to run the "
+"same Java virtual machine (JVM). Keeping the JVM warm makes compilation "
+"significantly faster because it takes a long time to classload the compiler "
+"and for the Just-in-Time compiler to optimize it."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:21
+msgid "Incremental compilation"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:23
+msgid ""
+"When a source file `A.scala` is modified, sbt goes to great effort to "
+"minimize the other source files recompiled due to `A.scala`'s change. This "
+"process of tracking dependencies between the language constructs and "
+"recompiling only the required sources is called _incremental compilation_."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:26
+msgid "(Remote) caching"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:28
+msgid ""
+"In sbt 2.x, compiled artifacts are not only cached across the sessions and "
+"builds, but can optionally be cached across different machines using Bazel-"
+"compatible remote cache. See [Caching](../concepts/caching.md) for details."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:30
+msgid "Test / compile"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:32
+msgid ""
+"Scoping the `compile` task with a configuration, like `Test / compile` will "
+"compile the test sources and their source dependencies."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:34
+msgid "Compilation settings"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:36
+msgid "scalaVersion"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:38
+msgid "The version of Scala used for compilation."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:41
+msgid "\"3.7.2\""
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:44
+msgid "scalacOptions"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:46
+msgid "Options for the Scala compiler."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:49
+msgid "\"-Werror\""
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:52
+msgid "javacOptions"
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:54
+msgid "Options for the Java compiler."
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:57
+msgid "\"-Xlint\""
+msgstr ""
+
+#: src/reference/reference/sbt-compile.md:57
+msgid "\"-Xlint:-serial\""
+msgstr ""

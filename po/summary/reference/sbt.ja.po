@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-08-08T03:18:41-04:00\n"
+"POT-Creation-Date: 2025-09-14T16:10:31-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -113,21 +113,26 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:72
 msgid ""
-"`publishLocal` Publishes artifacts (such as JARs) to the local Ivy "
-"repository as described in Publishing."
+"[`publish`](./sbt-publish.md) Publishes artifacts (such as JARs) to the "
+"repository defined by the publishTo setting, described in Publishing."
 msgstr ""
 
 #: src/reference/reference/sbt.md:74
 msgid ""
-"`publish` Publishes artifacts (such as JARs) to the repository defined by "
-"the publishTo setting, described in Publishing."
+"[`publishLocal`](./sbt-publish.md) Publishes artifacts (such as JARs) to the "
+"local Ivy repository as described in Publishing."
 msgstr ""
 
-#: src/reference/reference/sbt.md:82
+#: src/reference/reference/sbt.md:76
+msgid ""
+"[`update`](./sbt-update.md) Resolves and retrieves external dependencies."
+msgstr ""
+
+#: src/reference/reference/sbt.md:78
 msgid "Configuration-level tasks"
 msgstr ""
 
-#: src/reference/reference/sbt.md:84
+#: src/reference/reference/sbt.md:80
 msgid ""
 "Configuration-level tasks are tasks associated with a configuration. For "
 "example, `compile`, which is equivalent to `Compile/compile`, compiles the "
@@ -137,13 +142,14 @@ msgid ""
 "using a `Test/` prefix."
 msgstr ""
 
-#: src/reference/reference/sbt.md:91
+#: src/reference/reference/sbt.md:87
 msgid ""
-"`compile` Compiles the main sources (in the `src/main/scala` directory). "
-"`Test/compile` compiles test sources (in the src/test/scala/ directory)."
+"[`compile`](./sbt-compile.md) Compiles the main sources (in the `src/main/"
+"scala` directory). `Test/compile` compiles test sources (in the src/test/"
+"scala/ directory)."
 msgstr ""
 
-#: src/reference/reference/sbt.md:94
+#: src/reference/reference/sbt.md:90
 msgid ""
 "`console` Starts the Scala interpreter with a classpath including the "
 "compiled sources, all JARs in the lib directory, and managed libraries. To "
@@ -151,14 +157,14 @@ msgid ""
 "Test/console starts the interpreter with the test classes and classpath."
 msgstr ""
 
-#: src/reference/reference/sbt.md:99
+#: src/reference/reference/sbt.md:95
 msgid ""
 "`doc` Generates API documentation for Scala source files in `src/main/scala` "
 "using scaladoc. `Test/doc` generates API documentation for source files in "
 "`src/test/scala`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:102
+#: src/reference/reference/sbt.md:98
 msgid ""
 "`package` Creates a JAR file containing the files in `src/main/resources` "
 "and the classes compiled from `src/main/scala`. `Test/package` creates a JAR "
@@ -166,14 +172,14 @@ msgid ""
 "`src/test/scala`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:106
+#: src/reference/reference/sbt.md:102
 msgid ""
 "`packageDoc` Creates a JAR file containing API documentation generated from "
 "Scala source files in src/main/scala. Test/packageDoc creates a JAR "
 "containing API documentation for test sources files in src/test/scala."
 msgstr ""
 
-#: src/reference/reference/sbt.md:110
+#: src/reference/reference/sbt.md:106
 msgid ""
 "`packageSrc`: Creates a JAR file containing all main source files and "
 "resources. The packaged paths are relative to src/main/scala and src/main/"
@@ -181,60 +187,60 @@ msgid ""
 "resources."
 msgstr ""
 
-#: src/reference/reference/sbt.md:114
+#: src/reference/reference/sbt.md:110
 msgid ""
-"`run <argument>*` Runs the main class for the project in the same virtual "
-"machine as sbt. The main class is passed the arguments provided."
+"[`run <argument>*`](./sbt-run.md) Runs the main class for the project in the "
+"same virtual machine as sbt. The main class is passed the arguments provided."
 msgstr ""
 
-#: src/reference/reference/sbt.md:120
+#: src/reference/reference/sbt.md:113
 msgid ""
 "`runMain <main-class> <argument>*` Runs the specified main class for the "
 "project in the same virtual machine as sbt. The main class is passed the "
 "arguments provided."
 msgstr ""
 
-#: src/reference/reference/sbt.md:128
-msgid "`testFull` Runs all tests detected during test compilation."
-msgstr ""
-
-#: src/reference/reference/sbt.md:130
+#: src/reference/reference/sbt.md:121
 msgid ""
-"`testOnly <test>*` Runs the tests provided as arguments. `*` (will be) "
-"interpreted as a wildcard in the test name."
+"[`test <test>*`](./sbt-tes.md) Runs the tests specified as arguments (or all "
+"tests if no arguments are given) that:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:133
-msgid ""
-"`test <test>*` Runs the tests specified as arguments (or all tests if no "
-"arguments are given) that:"
-msgstr ""
-
-#: src/reference/reference/sbt.md:135
+#: src/reference/reference/sbt.md:123
 msgid "have not been run yet OR"
 msgstr ""
 
-#: src/reference/reference/sbt.md:136
+#: src/reference/reference/sbt.md:124
 msgid "failed the last time they were run OR"
 msgstr ""
 
-#: src/reference/reference/sbt.md:137
+#: src/reference/reference/sbt.md:125
 msgid ""
 "had any transitive dependencies recompiled since the last successful run `*` "
-"(will be) interpreted as a wildcard in the test name."
+"is interpreted as a wildcard in the test name."
 msgstr ""
 
-#: src/reference/reference/sbt.md:154
+#: src/reference/reference/sbt.md:128
+msgid ""
+"[`testFull`](./sbt-test.md) Runs all tests detected during test compilation."
+msgstr ""
+
+#: src/reference/reference/sbt.md:129
+msgid ""
+"[`testOnly <test>*`](./sbt-test.md) Runs the tests provided as arguments."
+msgstr ""
+
+#: src/reference/reference/sbt.md:143
 msgid "General commands"
 msgstr ""
 
-#: src/reference/reference/sbt.md:156
+#: src/reference/reference/sbt.md:145
 msgid ""
 "`exit` or `quit` End the current interactive session or build. Additionally, "
 "Ctrl+D (Unix) or Ctrl+Z (Windows) will exit the interactive prompt."
 msgstr ""
 
-#: src/reference/reference/sbt.md:159
+#: src/reference/reference/sbt.md:148
 msgid ""
 "`help <command>` Displays detailed help for the specified command. If the "
 "command does not exist, help lists detailed help for commands whose name or "
@@ -243,45 +249,45 @@ msgid ""
 "main commands. Related commands are tasks and settings."
 msgstr ""
 
-#: src/reference/reference/sbt.md:165
+#: src/reference/reference/sbt.md:154
 msgid ""
 "`projects [add|remove <URI>]` List all available projects if no arguments "
 "provided or adds/removes the build at the provided URI."
 msgstr ""
 
-#: src/reference/reference/sbt.md:169
+#: src/reference/reference/sbt.md:158
 msgid ""
 "`project <project-id>` Change the current project to the project with ID "
 "`<project-id>`. Further operations will be done in the context of the given "
 "project."
 msgstr ""
 
-#: src/reference/reference/sbt.md:174
+#: src/reference/reference/sbt.md:163
 msgid ""
-"`~ <command>` Executes the project specified action or method whenever "
-"source files change."
+"[Watch command](./watch.md) `~ <command>` Executes the project specified "
+"action or method whenever source files change."
 msgstr ""
 
-#: src/reference/reference/sbt.md:177
+#: src/reference/reference/sbt.md:165
 msgid ""
 "`< filename` Executes the commands in the given file. Each command should be "
 "on its own line. Empty lines and lines beginning with '#' are ignored"
 msgstr ""
 
-#: src/reference/reference/sbt.md:180
+#: src/reference/reference/sbt.md:168
 msgid ""
 "`A ; B` Execute A and if it succeeds, run B. Note that the leading semicolon "
 "is required."
 msgstr ""
 
-#: src/reference/reference/sbt.md:182
+#: src/reference/reference/sbt.md:170
 msgid ""
 "`eval <Scala-expression>` Evaluates the given Scala expression and returns "
 "the result and inferred type. This can be used to set system properties, as "
 "a calculator, to fork processes, etc ... For example:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:186
+#: src/reference/reference/sbt.md:174
 msgid ""
 "    > eval System.setProperty(\"demo\", \"true\")\n"
 "    > eval 1+1\n"
@@ -289,11 +295,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: src/reference/reference/sbt.md:203
+#: src/reference/reference/sbt.md:191
 msgid "Commands for managing the build definition"
 msgstr ""
 
-#: src/reference/reference/sbt.md:205
+#: src/reference/reference/sbt.md:193
 msgid ""
 "`reload [plugins|return]` If no argument is specified, reloads the build, "
 "recompiling any build or plugin definitions as necessary. reload plugins "
@@ -304,7 +310,7 @@ msgid ""
 "back to the main project."
 msgstr ""
 
-#: src/reference/reference/sbt.md:212
+#: src/reference/reference/sbt.md:200
 msgid ""
 "`set <setting-expression>` Evaluates and applies the given setting "
 "definition. The setting applies until sbt is restarted, the build is "
@@ -312,41 +318,41 @@ msgid ""
 "the session command."
 msgstr ""
 
-#: src/reference/reference/sbt.md:218
+#: src/reference/reference/sbt.md:206
 msgid ""
 "`session <command>` Manages session settings defined by the `set` command. "
 "It can persist settings configured at the prompt."
 msgstr ""
 
-#: src/reference/reference/sbt.md:221
+#: src/reference/reference/sbt.md:209
 msgid ""
 "`inspect <setting-key>` Displays information about settings, such as the "
 "value, description, defining scope, dependencies, delegation chain, and "
 "related settings."
 msgstr ""
 
-#: src/reference/reference/sbt.md:226
+#: src/reference/reference/sbt.md:214
 msgid "sbt runner and launcher"
 msgstr ""
 
-#: src/reference/reference/sbt.md:229
+#: src/reference/reference/sbt.md:217
 msgid ""
 "When launching the `sbt` runner from the system shell, various system "
 "properties or JVM extra options can be specified to influence its behaviour."
 msgstr ""
 
-#: src/reference/reference/sbt.md:232
+#: src/reference/reference/sbt.md:220
 msgid "sbt JVM options and system properties"
 msgstr ""
 
-#: src/reference/reference/sbt.md:234
+#: src/reference/reference/sbt.md:222
 msgid ""
 "If the `JAVA_OPTS` and/or `SBT_OPTS` environment variables are defined when "
 "`sbt` starts, their content is passed as command line arguments to the JVM "
 "running sbt server."
 msgstr ""
 
-#: src/reference/reference/sbt.md:238
+#: src/reference/reference/sbt.md:226
 msgid ""
 "If a file named `.jvmopts` exists in the  current directory, its content is "
 "appended to `JAVA_OPTS` at sbt startup. Similarly, if `.sbtopts` and/or `/"
@@ -354,52 +360,52 @@ msgid ""
 "value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:243
+#: src/reference/reference/sbt.md:231
 msgid ""
 "You can also specify JVM system properties and command line options directly "
 "as `sbt` arguments: any `-Dkey=val` argument will be passed as-is to the "
 "JVM, and any `-J-Xfoo` will be passed as `-Xfoo`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:247
+#: src/reference/reference/sbt.md:235
 msgid "See also `sbt --help` for more details."
 msgstr ""
 
-#: src/reference/reference/sbt.md:250
+#: src/reference/reference/sbt.md:238
 msgid "sbt JVM heap, permgen, and stack sizes"
 msgstr ""
 
-#: src/reference/reference/sbt.md:252
+#: src/reference/reference/sbt.md:240
 msgid ""
 "If you find yourself running out of permgen space or your workstation is low "
 "on memory, adjust the JVM configuration as you would for any java "
 "application."
 msgstr ""
 
-#: src/reference/reference/sbt.md:256
+#: src/reference/reference/sbt.md:244
 msgid "For example a common set of memory-related options is:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:259
+#: src/reference/reference/sbt.md:247
 msgid "\"-Xmx2048M -Xss2M\""
 msgstr ""
 
-#: src/reference/reference/sbt.md:263
+#: src/reference/reference/sbt.md:251
 msgid "Or if you prefer to specify them just for this session:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:269
+#: src/reference/reference/sbt.md:257
 msgid "Boot directory"
 msgstr ""
 
-#: src/reference/reference/sbt.md:271
+#: src/reference/reference/sbt.md:259
 msgid ""
 "`sbt` runner is just a bootstrap, the actual sbt server, Scala compiler and "
 "standard library are by default downloaded to the shared directory  `\\"
 "$HOME/.sbt/boot/`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:275
+#: src/reference/reference/sbt.md:263
 msgid ""
 "To change the location of this directory, set the `sbt.boot.directory` "
 "system property. A relative path will be resolved against the current "
@@ -408,26 +414,26 @@ msgid ""
 "style of putting the boot directory in `project/boot/`:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:286
+#: src/reference/reference/sbt.md:274
 msgid "Terminal encoding"
 msgstr ""
 
-#: src/reference/reference/sbt.md:288
+#: src/reference/reference/sbt.md:276
 msgid ""
 "The character encoding used by your terminal may differ from Java's default "
 "encoding for your platform. In this case, you will need to specify the "
 "`file.encoding=<encoding>` system property, which might look like:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:293
+#: src/reference/reference/sbt.md:281
 msgid "\"-Dfile.encoding=Cp1252\""
 msgstr ""
 
-#: src/reference/reference/sbt.md:297
+#: src/reference/reference/sbt.md:285
 msgid "HTTP/HTTPS/FTP Proxy"
 msgstr ""
 
-#: src/reference/reference/sbt.md:299
+#: src/reference/reference/sbt.md:287
 msgid ""
 "On Unix, sbt will pick up any HTTP, HTTPS, or FTP proxy settings from the "
 "standard `http_proxy`, `https_proxy`, and `ftp_proxy` environment variables. "
@@ -437,79 +443,79 @@ msgid ""
 "files/net-properties.html) for more details."
 msgstr ""
 
-#: src/reference/reference/sbt.md:305
+#: src/reference/reference/sbt.md:293
 msgid "For example:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:311
+#: src/reference/reference/sbt.md:299
 msgid ""
 "On Windows, your script should set properties for proxy host, port, and if "
 "applicable, username and password. For example, for HTTP:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:318
+#: src/reference/reference/sbt.md:306
 msgid ""
 "Replace `http` with `https` or `ftp` in the above command line to configure "
 "HTTPS or FTP."
 msgstr ""
 
-#: src/reference/reference/sbt.md:321
+#: src/reference/reference/sbt.md:309
 msgid "Other system properties"
 msgstr ""
 
-#: src/reference/reference/sbt.md:323
+#: src/reference/reference/sbt.md:311
 msgid "The following system properties can also be passed to `sbt` runner:"
 msgstr ""
 
-#: src/reference/reference/sbt.md:325
+#: src/reference/reference/sbt.md:313
 msgid "`-Dsbt.banner=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:327
+#: src/reference/reference/sbt.md:315
 msgid "Show a welcome banner advertising new features."
 msgstr ""
 
-#: src/reference/reference/sbt.md:329
+#: src/reference/reference/sbt.md:317
 msgid "`-Dsbt.ci=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:331
+#: src/reference/reference/sbt.md:319
 msgid ""
 "Default `false` (unless then env var `BUILD_NUMBER` is set). For continuous "
 "integration environments. Suppress supershell and color."
 msgstr ""
 
-#: src/reference/reference/sbt.md:333
+#: src/reference/reference/sbt.md:321
 msgid "`-Dsbt.client=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:335
+#: src/reference/reference/sbt.md:323
 msgid "Run the sbt client."
 msgstr ""
 
-#: src/reference/reference/sbt.md:337
+#: src/reference/reference/sbt.md:325
 msgid "`-Dsbt.color=auto`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:339
+#: src/reference/reference/sbt.md:327
 msgid "To turn on color, use `always` or `true`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:340
+#: src/reference/reference/sbt.md:328
 msgid "To turn off color, use `never` or `false`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:341
+#: src/reference/reference/sbt.md:329
 msgid ""
 "To use color if the output is a terminal (not a pipe) that supports color, "
 "use `auto`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:343
+#: src/reference/reference/sbt.md:331
 msgid "`-Dsbt.coursier.home=$HOME/.cache/coursier/v1`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:345
+#: src/reference/reference/sbt.md:333
 msgid ""
 "Location of the Coursier artifact cache, where the default is defined by "
 "[Coursier cache resolution logic](https://get-coursier.io/docs/"
@@ -517,39 +523,39 @@ msgid ""
 "`csrCacheDirectory`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:347
+#: src/reference/reference/sbt.md:335
 msgid "`-Dsbt.genbuildprops=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:349
+#: src/reference/reference/sbt.md:337
 msgid ""
 "Generate `build.properties` if missing. If unset, this defers to "
 "`sbt.skip.version.write`."
 msgstr ""
 
-#: src/reference/reference/sbt.md:351
+#: src/reference/reference/sbt.md:339
 msgid "`-Dsbt.global.base=$HOME/.sbt/`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:353
+#: src/reference/reference/sbt.md:341
 msgid "The directory containing global settings and plugins."
 msgstr ""
 
-#: src/reference/reference/sbt.md:355
+#: src/reference/reference/sbt.md:343
 msgid "`-Dsbt.override.build.repos=true`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:357
+#: src/reference/reference/sbt.md:345
 msgid ""
 "If true, repositories configured in a build definition are ignored and the "
 "repositories configured for the launcher are used instead."
 msgstr ""
 
-#: src/reference/reference/sbt.md:361
+#: src/reference/reference/sbt.md:349
 msgid "`-Dsbt.repository.config=$HOME/.sbt/repositories`"
 msgstr ""
 
-#: src/reference/reference/sbt.md:363
+#: src/reference/reference/sbt.md:351
 msgid ""
 "A file containing the repositories to use for the launcher. The format is "
 "the same as a `[repositories]` section for a sbt launcher configuration "

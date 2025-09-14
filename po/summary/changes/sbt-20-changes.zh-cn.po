@@ -2,15 +2,15 @@
 msgid "sbt 2.0 changes (draft)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:13
+#: src/reference/changes/sbt-2.0-change-summary.md:7
 msgid "Changes with compatibility implications"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:16
+#: src/reference/changes/sbt-2.0-change-summary.md:10
 msgid "See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md)."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:18
+#: src/reference/changes/sbt-2.0-change-summary.md:12
 msgid ""
 "**Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions "
 "and plugins, is based on Scala 3.x (currently **3.7.2**)  (Both sbt 1.x and "
@@ -18,53 +18,60 @@ msgid ""
 "github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and others."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:19
+#: src/reference/changes/sbt-2.0-change-summary.md:13
 msgid ""
 "**Common settings**. Bare settings are added to all subprojects, as opposed "
 "to just the root subproject, and thus replacing the role that `ThisBuild` "
 "has played."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:20
-msgid ""
-"**Cached task**. All tasks are cached by default. Details in [Caching](../"
-"concepts/caching.md)."
-msgstr ""
-
-#: src/reference/changes/sbt-2.0-change-summary.md:21
+#: src/reference/changes/sbt-2.0-change-summary.md:14
 msgid ""
 "**Incremental test**. `test` task is changed to be incremental test that can "
 "cache test results. Use `testFull` for full test by [@eed3si9n](https://"
 "github.com/eed3si9n) in [\\#7686](https://github.com/sbt/sbt/pull/7686)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:22
+#: src/reference/changes/sbt-2.0-change-summary.md:15
+msgid ""
+"**Cached task**. All tasks are cached by default. Details in [Caching](../"
+"concepts/caching.md)."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:16
+msgid ""
+"**Depedency tree**. `dependencyTree` tasks are unified to one input task by "
+"[@eed3si9n](https://github.com/eed3si9n) in [\\#8199](https://github.com/sbt/"
+"sbt/pull/8199)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:17
 msgid ""
 "`test` task type is changed from `Unit` to `TestResult` by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/pull/"
 "8181)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:23
+#: src/reference/changes/sbt-2.0-change-summary.md:18
 msgid ""
 "Default settings and tasks keys typed to `URL` (i.e. `apiMappings`, "
 "`apiURL`, `homepage`, `organizationHomepage`, `releaseNotesURL`) were "
 "changed to `URI` in [\\#7927](https://github.com/sbt/sbt/pull/7927)."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:24
+#: src/reference/changes/sbt-2.0-change-summary.md:19
 msgid ""
 "`licenses` key is changed from `Seq[(String, URL)]` to `Seq[License]` in "
 "[\\#7927](https://github.com/sbt/sbt/pull/7927)."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:25
+#: src/reference/changes/sbt-2.0-change-summary.md:20
 msgid ""
 "sbt 2.x plugins are published with `_sbt2_3` suffix by [@eed3si9n](https://"
 "github.com/eed3si9n) in [\\#7671](https://github.com/sbt/sbt/pull/7671)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:26
+#: src/reference/changes/sbt-2.0-change-summary.md:21
 msgid ""
 "sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross "
 "build on JVM as well as JS and Native, as opposed to `%%%` operator that was "
@@ -72,14 +79,14 @@ msgid ""
 "github.com/eed3si9n) in [\\#6746](https://github.com/sbt/sbt/pull/6746)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:27
+#: src/reference/changes/sbt-2.0-change-summary.md:22
 msgid ""
 "Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#7712](https://github.com/sbt/sbt/pull/"
 "7712)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:28
+#: src/reference/changes/sbt-2.0-change-summary.md:23
 msgid ""
 "`Key.Classpath` is changed to be an alias of the "
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of "
@@ -88,123 +95,155 @@ msgid ""
 "Files](../concepts/caching.md#caching-files)."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:29
+#: src/reference/changes/sbt-2.0-change-summary.md:24
 msgid ""
 "In sbt 2.x `target` defaults to `target/out/jvm/scala-3.7.2/<subproject>/`, "
 "as opposed to `<subproject>/target/`."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:31
+#: src/reference/changes/sbt-2.0-change-summary.md:25
+msgid ""
+"sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n]"
+"(https://github.com/eed3si9n) in [\\#8211](https://github.com/sbt/sbt/pull/"
+"8211)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:27
 msgid "Dropped dreprecations"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:33
+#: src/reference/changes/sbt-2.0-change-summary.md:29
 msgid ""
 "Removed `IntegrationTest` configuration in [\\#8184](https://github.com/sbt/"
 "sbt/pull/8184)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:34
+#: src/reference/changes/sbt-2.0-change-summary.md:30
 msgid ""
 "Removed sbt 0.13 style shell syntax in [\\#7700](https://github.com/sbt/sbt/"
 "pull/7700)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:36
+#: src/reference/changes/sbt-2.0-change-summary.md:32
 msgid "Features"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:39
+#: src/reference/changes/sbt-2.0-change-summary.md:35
 msgid ""
-"Project matrix, which was available via plugin in sbt 1.x, is in-sourced."
+"**Project matrix**. Project matrix, which was available via plugin in sbt "
+"1.x, is in-sourced to provide parallel cross build support."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:36
+msgid ""
+"**sbt query**. sbt 2.x extends the unified slash syntax to support query of "
+"subprojects. Details below."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:37
+msgid "**Local/remote cache system**. Details below"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:38
+msgid "**Client-side run**. Details below."
 msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:40
-msgid ""
-"sbt 2.x extends the unified slash syntax to support query of subprojects. "
-"Details below."
-msgstr ""
-
-#: src/reference/changes/sbt-2.0-change-summary.md:41
-msgid "Local/remote cache system. Details below"
-msgstr ""
-
-#: src/reference/changes/sbt-2.0-change-summary.md:43
 msgid "Common settings"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:45
+#: src/reference/changes/sbt-2.0-change-summary.md:42
 msgid ""
 "In sbt 2.x, the bare settings in `build.sbt` are interpreted to be common "
 "settings, and are injected to all subprojects. This means we can now set "
 "`scalaVersion` without using `ThisBuild` scoping:"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:48
+#: src/reference/changes/sbt-2.0-change-summary.md:45
 msgid "\"3.7.2\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:51
+#: src/reference/changes/sbt-2.0-change-summary.md:48
 msgid "This also fixes the so-called dynamic dispatch problem:"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:54
+#: src/reference/changes/sbt-2.0-change-summary.md:51
 msgid "\"\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:55
-#: src/reference/changes/sbt-2.0-change-summary.md:96
-#: src/reference/changes/sbt-2.0-change-summary.md:109
+#: src/reference/changes/sbt-2.0-change-summary.md:52
+#: src/reference/changes/sbt-2.0-change-summary.md:105
+#: src/reference/changes/sbt-2.0-change-summary.md:118
 msgid "\"!\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:58
+#: src/reference/changes/sbt-2.0-change-summary.md:55
 msgid ""
 "In sbt 1.x `hi` task will capture the name of the root project, but in sbt "
 "2.x it will return the `name` of each subproject with `!`:"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:71
+#: src/reference/changes/sbt-2.0-change-summary.md:68
 msgid ""
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#6746](https://"
 "github.com/sbt/sbt/pull/6746)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:73
+#: src/reference/changes/sbt-2.0-change-summary.md:70
 msgid "sbt query"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:75
+#: src/reference/changes/sbt-2.0-change-summary.md:72
 msgid "To filter down the subprojects, sbt 2.x introduces sbt query."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:81
+#: src/reference/changes/sbt-2.0-change-summary.md:78
 msgid "The above runs all subprojects that begins with `foo`."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:87
+#: src/reference/changes/sbt-2.0-change-summary.md:84
 msgid ""
 "The above runs all subprojects whose `scalaBinaryVersion` is `3`. "
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#7699](https://"
 "github.com/sbt/sbt/pull/7699)"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:89
+#: src/reference/changes/sbt-2.0-change-summary.md:86
+msgid "Incremental test"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:88
+msgid ""
+"In sbt 2.x, `test` task became an input task that accept arguments that can "
+"filter the test suites to run:"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:94
+msgid ""
+"In addition, `test` is incremental and cached. This means, the test will not "
+"run unless it previously failed or something changed since the last run."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:96
+msgid "See [test](../reference/sbt-test.md) for details."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:98
 msgid "Local/remote cache system"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:91
+#: src/reference/changes/sbt-2.0-change-summary.md:100
 msgid ""
 "sbt 2.x implements cached task by default, which can automatically cache the "
 "task results to local disk and Bazel-compatible remote cache."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:94
-#: src/reference/changes/sbt-2.0-change-summary.md:102
+#: src/reference/changes/sbt-2.0-change-summary.md:103
+#: src/reference/changes/sbt-2.0-change-summary.md:111
 msgid "\"doc for task1\""
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:99
+#: src/reference/changes/sbt-2.0-change-summary.md:108
 msgid ""
 "This tracks the inputs into the `task1` and creates a machine-wide disk "
 "cache, which can also be configured to also use a remote cache. Since it's "
@@ -212,22 +251,77 @@ msgid ""
 "mechanism to cache file contents:"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:113
+#: src/reference/changes/sbt-2.0-change-summary.md:122
 msgid ""
 "See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#7464](https://github.com/sbt/sbt/pull/"
 "7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525)."
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:115
+#: src/reference/changes/sbt-2.0-change-summary.md:124
+msgid "Client-side run"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:126
+msgid ""
+"The sbt runner 1.10.10 and later script defaults to using sbtn (GraalVM "
+"native-image client) for sbt 2.x. In sbt 2.0, sbt server sends the `run` "
+"task back to sbtn, which will fork a fresh JVM. All you have to do is:"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:132
+msgid ""
+"This avoids blocking the sbt server, and you can have multiple runs. "
+"Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#8060](https://"
+"github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) "
+"documentation."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:134
+msgid "Performance improvements"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:136
+msgid ""
+"Adrien Piquerez contributed a series of changes to improve performance while "
+"he was at Scala Center."
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:138
+msgid ""
+"perf: Reduces number of long-living instances to speed up startup by 20% "
+"relative to 2.0.0-M2 by [@adpi2](https://github.com/adpi2) in [\\#7866]"
+"(https://github.com/sbt/sbt/pull/7866)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:139
+msgid ""
+"perf: Reduces creation of `Setting` and `Initialize`  by [@adpi2](https://"
+"github.com/adpi2) in [\\#7880](https://github.com/sbt/sbt/pull/7880)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:140
+msgid ""
+"perf: Refactors `Settings` and optimize indexing of aggregate keys by "
+"[@adpi2](https://github.com/adpi2) in [\\#7879](https://github.com/sbt/sbt/"
+"pull/7879)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:141
+msgid ""
+"perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2]"
+"(https://github.com/adpi2) in [\\#7882](https://github.com/sbt/sbt/pull/7882)"
+msgstr ""
+
+#: src/reference/changes/sbt-2.0-change-summary.md:143
 msgid "Previously on sbt"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:118
+#: src/reference/changes/sbt-2.0-change-summary.md:146
 msgid "See also:"
 msgstr ""
 
-#: src/reference/changes/sbt-2.0-change-summary.md:120
+#: src/reference/changes/sbt-2.0-change-summary.md:148
 msgid ""
 "[sbt 1.0 changes](https://www.scala-sbt.org/1.x/docs/sbt-1.0-Release-"
 "Notes.html)"
