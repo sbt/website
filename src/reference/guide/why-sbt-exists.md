@@ -43,10 +43,10 @@ To a large extent, sbt standardizes the commands needed to build a given program
 Why build.sbt DSL?
 ------------------
 
-build.sbt DSL makes sbt a unique build tool,
-as opposed to other tools that use configuration file formats like YAML, TOML, and XML.
-Originally developed beween 2010 and 2013, `build.sbt` can start almost like a YAML file, declaring just `scalaVersion` and `libraryDependencies`,
-but it can supports more features to keep the build definition organized as the build grows larger:
+sbt adopts Scala-based build.sbt DSL to declare the subproject and task graph. Nowadays, using a DSL as opposed to configuration formats like YAML and XML hardly makes sbt unique. Many of the build tools such as Gradle, Google's Bazel, Meta's Buck, and Apple's SwiftPM use DSL to define the subproject.
+
+`build.sbt` can start almost like a YAML file, declaring just `scalaVersion` and `libraryDependencies`,
+but it can scale as your need for the build system grows:
 
 - To avoid repeating the same information, like the version number for a library, `build.sbt` can declare variables using `val`.
 - Uses Scala language constructs like `if` to define settings and tasks, when needed.
