@@ -368,6 +368,7 @@ generate dependency lockfiles and check for changes at build time.
   source files (such as TODO and FIXME). <!-- 11 stars -->
 - [sbt-rewarn](https://github.com/rtimush/sbt-rewarn): always display compilation warnings,
   despite the incremental compilation. <!-- 11 stars -->
+- [sbt-findsecbugs](https://github.com/code-star/sbt-findsecbugs): Run Spotbugs with FindSecBugs plugin from sbt.  <!-- 7 stars -->
 - [sbt-jcheckstyle](https://github.com/xerial/sbt-jcheckstyle): Java code
   style checking using Checkstyle. <!-- 6 stars -->
 - [sbt-sonar](https://github.com/mwz/sbt-sonar): integration with
