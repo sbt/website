@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
 "POT-Creation-Date: 2024-10-30T03:08:34-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"PO-Revision-Date: 2025-09-15 00:47-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -10,14 +10,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
 
 #: src/reference/guide/why-sbt-exists.md:1
 msgid "Why sbt exists"
-msgstr ""
+msgstr "sbt の存在理由"
 
 #: src/reference/guide/why-sbt-exists.md:4
 msgid "Preliminaries"
-msgstr ""
+msgstr "背景"
 
 #: src/reference/guide/why-sbt-exists.md:7
 msgid ""
@@ -25,6 +26,9 @@ msgid ""
 "`scalac`, as documented in the [Scala 3 Book](https://docs.scala-lang.org/"
 "scala3/book/taste-hello-world.html):"
 msgstr ""
+"[Scala 3 Book](https://docs.scala-lang.org/scala3/book/taste-hello-"
+"world.html) に書かれてある通り、Scala においてライブラリやプログラムは Scala "
+"コンパイラ `scalac` によってコンパイルされる:"
 
 #: src/reference/guide/why-sbt-exists.md:10
 msgid "\"Hello, World!\""
@@ -35,6 +39,8 @@ msgid ""
 "This process gets tedious and slow if we were to invoke `scalac` directly "
 "since we'd have to pass all the Scala source file names."
 msgstr ""
+"いちいち毎回 `scalac` に全ての Scala ソースファイル名を直接渡すのは面倒だし遅"
+"い。"
 
 #: src/reference/guide/why-sbt-exists.md:21
 msgid ""
@@ -44,12 +50,19 @@ msgid ""
 "Scala 2.12, 2.13 ecosystem, Scala 3.x ecosystem, JVM, JS, and Native "
 "platforms."
 msgstr ""
+"さらに、例題的なプログラム以外のものを書こうとすると普通はライブラリ依存性を"
+"持つことになり、つまり間接的なライブラリ依存を持つことにもなる。Scala エコシ"
+"ステムは、Scala 2.12系、2.13系、3.x系、JVMプラットフォーム、 JSプラットフォー"
+"ム、 Native プラットフォームなどがあるため二重、三重に複雑な問題だ。"
 
 #: src/reference/guide/why-sbt-exists.md:24
 msgid ""
 "Rather than working with JAR files and `scalac`, we can avoid manual toil by "
 "introducing a higher-level subproject abstraction and by using a build tool."
 msgstr ""
+"JAR ファイルや `scalac` を直接用いるという代わりに、サブプロジェクトという抽"
+"象概念とビルドツールを導入することで、無意味に非効率的な苦労を回避することが"
+"できる。"
 
 #: src/reference/guide/why-sbt-exists.md:26
 msgid "sbt"
@@ -61,48 +74,58 @@ msgid ""
 "subprojects and their various dependencies and custom tasks to ensure that "
 "we'll always get a fast, repeatable build."
 msgstr ""
+"**sbt** は主に Scala と Java のためのシンプルなビルド・ツールだ。sbt を使うこ"
+"とで、サブプロジェクトおよびそれらの依存性、カスタム・タスクを宣言することが"
+"でき、高速かつ再現性のあるビルドを得ることができる。"
 
 #: src/reference/guide/why-sbt-exists.md:32
 msgid "To accomplish this goal, sbt does several things:"
-msgstr ""
+msgstr "この目標のため、sbt はいくつかのことを行う:"
 
 #: src/reference/guide/why-sbt-exists.md:34
 msgid "The version of sbt itself is tracked in `project/build.properties`."
-msgstr ""
+msgstr "sbt 自身のバージョンは `project/build.properties` にて指定される。"
 
 #: src/reference/guide/why-sbt-exists.md:35
 msgid ""
 "Defines a domain-specific language (DSL) called **build.sbt DSL** that can "
 "declare the Scala version and other subproject information in `build.sbt`."
 msgstr ""
+"**build.sbt DSL** という DSL (ドメイン特定言語) を定義し、`build.sbt` にて "
+"Scala バージョンその他のサブプロジェクトに関する情報を宣言できるようにする。"
 
 #: src/reference/guide/why-sbt-exists.md:36
 msgid "Uses Coursier to fetch subprojects dependencies and their dependencies."
 msgstr ""
+"Cousier を用いてサブプロジェクトのライブラリ依存性や間接的依存性を取得する。"
 
 #: src/reference/guide/why-sbt-exists.md:37
 msgid "Invokes Zinc to incrementally compile Scala and Java sources."
-msgstr ""
+msgstr "Zinc を呼び出して Scala や Java ソースの差分コンパイルを行う。"
 
 #: src/reference/guide/why-sbt-exists.md:38
 msgid "Automatically runs tasks in parallel whenever possible."
-msgstr ""
+msgstr "可能な限り、タスクを並列実行する。"
 
 #: src/reference/guide/why-sbt-exists.md:39
 msgid ""
 "Defines conventions on how packages are published to Maven repositories to "
 "interoperate with the wider JVM ecosystem."
 msgstr ""
+"JVM エコシステム全般と相互乗り入れが可能なように、パッケージが Maven リポジト"
+"リにどのように公開されるべきかの慣習を定義する。"
 
 #: src/reference/guide/why-sbt-exists.md:41
 msgid ""
 "To a large extent, sbt standardizes the commands needed to build a given "
 "program or library."
 msgstr ""
+"sbt は、プログラムやライブラリのビルドに必要なコマンド実装の大部分を標準化し"
+"ていると言っても過言ではない。"
 
 #: src/reference/guide/why-sbt-exists.md:43
 msgid "Why build.sbt DSL?"
-msgstr ""
+msgstr "build.sbt DSL の必要性"
 
 #: src/reference/guide/why-sbt-exists.md:46
 msgid ""
@@ -119,12 +142,16 @@ msgid ""
 "To avoid repeating the same information, like the version number for a "
 "library, `build.sbt` can declare variables using `val`."
 msgstr ""
+"ライブラリのためのバージョン番号など同じ情報の繰り返しを回避するため、"
+"`build.sbt` は `val` を使って変数を宣言できる。"
 
 #: src/reference/guide/why-sbt-exists.md:52
 msgid ""
 "Uses Scala language constructs like `if` to define settings and tasks, when "
 "needed."
 msgstr ""
+"セッティングやタスクの定義内で必要に応じて `if` のような Scala 言語の言語構文"
+"を使うことができる。"
 
 #: src/reference/guide/why-sbt-exists.md:53
 msgid ""
@@ -132,15 +159,23 @@ msgid ""
 "the build starts. The type also helps passing data from one task from "
 "another."
 msgstr ""
+"セッティングやタスクが静的型付けされているため、ビルドが始まる前にタイポミス"
+"や型の間違いなどをキャッチできる。型は、タスク間でのデータの受け渡しにも役立"
+"つ。"
 
 #: src/reference/guide/why-sbt-exists.md:54
 msgid ""
 "Provides **structured concurrency** via `Initialized[Task[A]]`. The DSL uses "
 "_direct style_ `.value` syntax to concisely define task graphs."
 msgstr ""
+"`Initialized[Task[A]]` を用いた**構造的並行性**を提供する。この DSL はいわゆ"
+"る「直接スタイル」な `.value` 構文を用いて簡潔にタスクグラフを定義することが"
+"できる。"
 
 #: src/reference/guide/why-sbt-exists.md:55
 msgid ""
 "Enpowers the community to extend sbt with plugins that provide custom tasks "
 "or language extensions like Scala.JS."
 msgstr ""
+"プラグインを通して sbt の機能を拡張して、カスタム・タスクや Scala.JS といった"
+"言語拡張を行うという強力な権限をコミュニティーに与えている。"
