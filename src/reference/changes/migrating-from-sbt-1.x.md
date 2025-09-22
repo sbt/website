@@ -4,13 +4,51 @@ Migrating from sbt 1.x
 Changing `build.sbt` DSL to Scala 3.x
 -------------------------------------
 
-As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.x.
+As a reminder, users can build either Scala 2.x or Scala 3.x programs using either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala 3.7.x.
 
 This means that if you implement custom tasks or sbt plugins for sbt 2.x, it must be done using Scala 3.x. Consult [Scala 3.x incompatibility table][scala-incompatibility-table] and [Scala 2 with -Xsource:3][tooling-scala2-xsource3] for details about Scala 3.x.
 
 ```scala
 // This works on Scala 2.12.20 under -Xsource:3
 import sbt.{ given, * }
+```
+
+### Import given
+
+One of the differences between Scala 2.x and 3.x is the way typeclass instances are imported into scope. In Scala 2.x `import FooCodec._` was used whereas Scala 3 uses `import FooCodec.given`. Writing:
+
+```scala
+// The following works for both sbt 1.x and 2.x
+import sbt.librarymanagement.LibraryManagementCodec.{ given, * }
+```
+
+### Avoid postfix
+
+It wasn't uncommon for sbt 0.13 and 1.x examples to use postfix notations, especially with `ModuleID`:
+
+```scala
+// BAD
+libraryDependencies +=
+  "com.github.sbt" % "junit-interface" % "0.13.2" withSources() withJavadoc()
+```
+
+The above will fail to load on sbt 2.x:
+
+```scala
+-- Error: /private/tmp/foo/build.sbt:9:61 --------------------------------------
+9 |  "com.github.sbt" % "junit-interface" % "0.13.2" withSources() withJavadoc()
+  |                                                             ^^
+  |can't supply unit value with infix notation because nullary method withSources
+   in class ModuleIDExtra: (): sbt.librarymanagement.ModuleID takes no arguments;
+   use dotted invocation instead: (...).withSources()
+```
+
+To fix this, use the normal (dotted) function call notation:
+
+```scala
+// GOOD
+libraryDependencies +=
+  ("com.github.sbt" % "junit-interface" % "0.13.2").withSources().withJavadoc()
 ```
 
 Bare settings changes

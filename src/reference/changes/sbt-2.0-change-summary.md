@@ -23,6 +23,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
 - In sbt 2.x `target` defaults to `target/out/jvm/scala-{{scala3_metabuild_version}}/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
+- `Project#autoAggregate` is added for automatic aggregation, by [@eed3si9n][@eed3si9n] in [#8290][8290]
 
 ### Dropped dreprecations
 
@@ -158,5 +159,6 @@ See also:
   [8181]: https://github.com/sbt/sbt/pull/8181
   [8184]: https://github.com/sbt/sbt/pull/8184
   [8211]: https://github.com/sbt/sbt/pull/8211
+  [8290]: https://github.com/sbt/sbt/pull/8290
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2

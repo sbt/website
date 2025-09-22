@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-09-14T16:10:21-04:00\n"
+"POT-Creation-Date: 2025-09-21T23:40:49-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -24,7 +24,7 @@ msgid ""
 "As a reminder, users can build either Scala 2.x or Scala 3.x programs using "
 "either sbt 1.x or sbt 2.x. However, the Scala that underlies the `build.sbt` "
 "DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala "
-"3.x."
+"3.7.x."
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:9
@@ -41,46 +41,105 @@ msgid "// This works on Scala 2.12.20 under -Xsource:3"
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:16
-msgid "Bare settings changes"
+msgid "Import given"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:20
-msgid "\"0.1.0\""
+#: src/reference/changes/migrating-from-sbt-1.x.md:18
+msgid ""
+"One of the differences between Scala 2.x and 3.x is the way typeclass "
+"instances are imported into scope. In Scala 2.x `import FooCodec._` was used "
+"whereas Scala 3 uses `import FooCodec.given`. Writing:"
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:21
+msgid "// The following works for both sbt 1.x and 2.x"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:25
+msgid "Avoid postfix"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:27
+msgid ""
+"It wasn't uncommon for sbt 0.13 and 1.x examples to use postfix notations, "
+"especially with `ModuleID`:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:30
+msgid "// BAD"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:32
+#: src/reference/changes/migrating-from-sbt-1.x.md:39
+#: src/reference/changes/migrating-from-sbt-1.x.md:51
+msgid "\"com.github.sbt\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:32
+#: src/reference/changes/migrating-from-sbt-1.x.md:39
+#: src/reference/changes/migrating-from-sbt-1.x.md:51
+msgid "\"junit-interface\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:32
+#: src/reference/changes/migrating-from-sbt-1.x.md:39
+#: src/reference/changes/migrating-from-sbt-1.x.md:51
+msgid "\"0.13.2\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:35
+msgid "The above will fail to load on sbt 2.x:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:46
+msgid "To fix this, use the normal (dotted) function call notation:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:49
+msgid "// GOOD"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:54
+msgid "Bare settings changes"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:58
+msgid "\"0.1.0\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:59
 msgid "\"3.7.2\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:24
+#: src/reference/changes/migrating-from-sbt-1.x.md:62
 msgid ""
 "_Bare settings_, like the example above, are settings written directly in "
 "`build.sbt` without `settings(...)`."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:31
+#: src/reference/changes/migrating-from-sbt-1.x.md:69
 msgid "\"root\"         // all subprojects will be named root!"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:32
+#: src/reference/changes/migrating-from-sbt-1.x.md:70
 msgid "// all subprojects will be skipped!"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:35
+#: src/reference/changes/migrating-from-sbt-1.x.md:73
 msgid ""
 "To apply some settings to the root subproject only, either define it using "
 "multi-project build, or scope the setting under `LocalRootProject`:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:38
+#: src/reference/changes/migrating-from-sbt-1.x.md:76
 msgid "\"root\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:42
+#: src/reference/changes/migrating-from-sbt-1.x.md:80
 msgid "Migrating ThisBuild"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:44
+#: src/reference/changes/migrating-from-sbt-1.x.md:82
 msgid ""
 "In sbt 2.x, bare settings settings should no longer be scoped to "
 "`ThisBuild`. One benefit of the new _common settings_ over `ThisBuild` is "
@@ -90,38 +149,38 @@ msgid ""
 "which was not possible with `ThisBuild`."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:46
+#: src/reference/changes/migrating-from-sbt-1.x.md:84
 msgid "Migrating to cached tasks"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:49
+#: src/reference/changes/migrating-from-sbt-1.x.md:87
 msgid ""
 "See [Cached task](../reference/cached-task.md) reference for details, "
 "including the way to opt out of caching."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:51
+#: src/reference/changes/migrating-from-sbt-1.x.md:89
 msgid "Migration away from IntegrationTest"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:54
+#: src/reference/changes/migrating-from-sbt-1.x.md:92
 msgid ""
 "To migrate away from the `IntegrationTest` configuration, create a separate "
 "subproject and implement it as normal test."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:56
+#: src/reference/changes/migrating-from-sbt-1.x.md:94
 msgid "Migrating to slash syntax"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:59
+#: src/reference/changes/migrating-from-sbt-1.x.md:97
 msgid ""
 "sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt "
 "2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for "
 "both sbt shell and in `build.sbt`:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:65
+#: src/reference/changes/migrating-from-sbt-1.x.md:103
 msgid ""
 "For example, `test:compile` will no longer work on the shell. Use `Test/"
 "compile` instead. See [syntactic Scalafix rule for unified slash syntax]"
@@ -129,114 +188,114 @@ msgid ""
 "semi-automated migration of `build.sbt` files."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:71
+#: src/reference/changes/migrating-from-sbt-1.x.md:109
 msgid "Cross building sbt plugins"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:74
+#: src/reference/changes/migrating-from-sbt-1.x.md:112
 msgid ""
 "In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it "
 "will automatically cross build against sbt 1.x and sbt 2.x:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:77
+#: src/reference/changes/migrating-from-sbt-1.x.md:115
 msgid "// using sbt 2.x"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:78
-#: src/reference/changes/migrating-from-sbt-1.x.md:98
+#: src/reference/changes/migrating-from-sbt-1.x.md:116
+#: src/reference/changes/migrating-from-sbt-1.x.md:136
 msgid "\"plugin\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:81
-#: src/reference/changes/migrating-from-sbt-1.x.md:101
+#: src/reference/changes/migrating-from-sbt-1.x.md:119
+#: src/reference/changes/migrating-from-sbt-1.x.md:139
 msgid "\"sbt-vimquit\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:83
-#: src/reference/changes/migrating-from-sbt-1.x.md:95
+#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:133
 msgid "\"3.6.2\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:83
-#: src/reference/changes/migrating-from-sbt-1.x.md:94
+#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:132
 msgid "\"2.12.20\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:86
+#: src/reference/changes/migrating-from-sbt-1.x.md:124
 msgid ""
 "If you use `projectMatrix`, make sure to move the plugin to a subdirectory "
 "like `plugin/`. Otherwise, the synthetic root project will also pick up the "
 "`src/`."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:88
+#: src/reference/changes/migrating-from-sbt-1.x.md:126
 msgid "Cross building sbt plugin with sbt 1.x"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:90
+#: src/reference/changes/migrating-from-sbt-1.x.md:128
 msgid "Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:93
+#: src/reference/changes/migrating-from-sbt-1.x.md:131
 msgid "// using sbt 1.x"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:104
+#: src/reference/changes/migrating-from-sbt-1.x.md:142
 msgid "\"2.12\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:104
+#: src/reference/changes/migrating-from-sbt-1.x.md:142
 msgid "\"1.5.8\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:105
-msgid "\"2.0.0-RC4\""
+#: src/reference/changes/migrating-from-sbt-1.x.md:143
+msgid "\"2.0.0-RC5\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:111
+#: src/reference/changes/migrating-from-sbt-1.x.md:149
 msgid "Changes to `%%`"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:114
+#: src/reference/changes/migrating-from-sbt-1.x.md:152
 msgid ""
 "In sbt 2.x, `ModuleID`'s `%%` operator has become platform-aware. For JVM "
 "subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) "
 "on Maven repositories."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:116
+#: src/reference/changes/migrating-from-sbt-1.x.md:154
 msgid "Migrating `%%%` operator"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:118
+#: src/reference/changes/migrating-from-sbt-1.x.md:156
 msgid ""
 "When Scala.JS or Scala Native becomes available on sbt 2.x, `%%` will encode "
 "both the Scala version (such as `_3`) and the platform suffix (`_sjs1` etc). "
 "As a result, `%%%` can be replaced with `%%`:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"org.scala-js\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"scalajs-dom\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"2.8.0\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:124
+#: src/reference/changes/migrating-from-sbt-1.x.md:162
 msgid "Use `.platform(Platform.jvm)` in case where JVM libraries are needed."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:126
+#: src/reference/changes/migrating-from-sbt-1.x.md:164
 msgid "Changes to `target`"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:129
+#: src/reference/changes/migrating-from-sbt-1.x.md:167
 msgid ""
 "In sbt 2.x, the `target` directory is unified to be a single `target/` "
 "directory in the working directory, and each subproject creates a "
@@ -245,57 +304,57 @@ msgid ""
 "supports glob expression `**`, as well as `||`."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:132
+#: src/reference/changes/migrating-from-sbt-1.x.md:170
 msgid "# before\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:135
+#: src/reference/changes/migrating-from-sbt-1.x.md:173
 msgid "# after\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:139
+#: src/reference/changes/migrating-from-sbt-1.x.md:177
 msgid "# either is ok\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:144
+#: src/reference/changes/migrating-from-sbt-1.x.md:182
 msgid "The PluginCompat technique"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:147
+#: src/reference/changes/migrating-from-sbt-1.x.md:185
 msgid ""
 "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
 "scala-2.12/` and `src/main/scala-3/`."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:149
+#: src/reference/changes/migrating-from-sbt-1.x.md:187
 msgid "Migrating Classpath type"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:151
+#: src/reference/changes/migrating-from-sbt-1.x.md:189
 msgid ""
 "sbt 2.x changed the `Classpath` type to be an alias of the "
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a shim "
 "created to work with classpaths from both sbt 1.x and 2.x."
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:154
+#: src/reference/changes/migrating-from-sbt-1.x.md:192
 msgid "// src/main/scala-3/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:177
+#: src/reference/changes/migrating-from-sbt-1.x.md:215
 msgid "and here's for sbt 1.x:"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:180
+#: src/reference/changes/migrating-from-sbt-1.x.md:218
 msgid "// src/main/scala-2.12/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:199
+#: src/reference/changes/migrating-from-sbt-1.x.md:237
 msgid "// This adds `Def.uncached(...)`"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:206
+#: src/reference/changes/migrating-from-sbt-1.x.md:244
 msgid ""
 "Now we can import `PluginCompat.*` and use `toNioPaths(...)` etc to absorb "
 "the differences between sbt 1.x and 2.x. The above demonstrates how we can "
