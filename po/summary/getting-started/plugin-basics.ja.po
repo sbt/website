@@ -1,0 +1,185 @@
+#: src/reference/guide/plugin-basics.md:12
+msgid "Plugin basics"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:22
+msgid "What is a plugin?"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:25
+msgid ""
+"A plugin extends the build definition, most commonly by adding new settings "
+"and tasks. For example, a plugin could add `githubWorkflowGenerate` task to "
+"generate GitHub Actions YAML."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:33
+msgid "Finding the plugin versions using Scaladex"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:36
+msgid ""
+"You can use [Scaladex](https://index.scala-lang.org/search?platform=sbt2) to "
+"search for plugins, and find out the latest version of the plugin."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:38
+msgid "Declaring a plugin"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:41
+msgid ""
+"If your project is in directory `hello`, and if you are adding sbt-github-"
+"actions to the build definition, create `hello/project/plugins.sbt` and "
+"declare the plugin dependency by passing the plugin's module ID to "
+"`addSbtPlugin(...)`:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:48
+#: src/reference/guide/plugin-basics.md:56
+msgid "// In project/plugins.sbt"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:50
+msgid "\"com.github.sbt\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:50
+msgid "\"sbt-github-actions\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:50
+msgid "\"0.28.0\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:53
+msgid "If you're adding sbt-assembly, add the following:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:58
+msgid "\"com.eed3si9n\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:58
+msgid "\"sbt-assembly\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:58
+msgid "\"2.3.1\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:61
+msgid ""
+"See [Source dependency plugin](../recipes/source-dependency-plugin.md) "
+"recipe for an experimental technique of using plugins hosted on git repos."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:63
+msgid ""
+"Plugins usually provide settings and tasks that get added to a subproject to "
+"enable the plugin's functionality. This is described in the next section."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:66
+msgid "Enabling and disabling auto plugins"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:69
+msgid ""
+"A plugin can declare that its settings be automatically added to the build "
+"definition, in which case you don't have to do anything to add them."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:72
+msgid ""
+"The <!-- [auto plugins][Plugins] --> auto plugins feature enables plugins to "
+"automatically, and safely, ensure their settings and dependencies are on a "
+"project. Many auto plugins should have their default settings automatically."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:77
+msgid ""
+"If you're using an auto plugin that requires explicit enablement, then you "
+"have to add the following to your `build.sbt`:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:81
+#: src/reference/guide/plugin-basics.md:96
+msgid "\"util\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:84
+#: src/reference/guide/plugin-basics.md:100
+msgid "\"hello-util\""
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:88
+msgid ""
+"The `enablePlugins` method allows projects to explicitly define the auto "
+"plugins they wish to consume."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:91
+msgid ""
+"Projects can also exclude plugins using the `disablePlugins` method. For "
+"example, if we wish to remove the `IvyPlugin` settings from `util`, we "
+"modify our `build.sbt` as follows:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:104
+msgid ""
+"Auto plugins should document whether they need to be explicitly enabled. If "
+"you're curious which auto plugins are enabled for a given project, just run "
+"the `plugins` command on the sbt console."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:108
+msgid "For example:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:126
+msgid ""
+"Here, the `plugins` output is showing that the sbt default plugins are all "
+"enabled. sbt's default settings are provided via 7 plugins:"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:129
+msgid "`CorePlugin`: Provides the core parallelism controls for tasks."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:130
+msgid "`DependencyTreePlugin`: Provides dependency tree tasks."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:131
+msgid "`Giter8TemplatePlugin`: Provides `sbt new` support."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:132
+msgid "`IvyPlugin`: Provides the mechanisms to publish/resolve modules."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:133
+msgid "`JUnitXmlReportPlugin`: Provides support for generating junit-xml."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:134
+msgid ""
+"`JvmPlugin`: Provides the mechanisms to compile/test/run/package Java/Scala "
+"projects."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:136
+msgid "`SemanticdbPlugin`: Provides support for generating SemanticDB."
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:154
+msgid "Available plugins"
+msgstr ""
+
+#: src/reference/guide/plugin-basics.md:157
+msgid ""
+"In addition to [Scaladex](https://index.scala-lang.org/search?"
+"platform=sbt2), there's also [a list of available plugins](../community-"
+"plugins.md)."
+msgstr ""
