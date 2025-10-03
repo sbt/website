@@ -31,7 +31,8 @@ jobs:
         cargo install mdbook --no-default-features --features search --vers "^0.4" --locked
         cargo install mdbook-variables --vers "^0.2" --locked
         cargo install mdbook-admonish --vers "^1" --locked
-        cargo install mdbook-i18n-helpers --locked
+        # TODO use normal version once 0.3.7 comes out
+        cargo install --git https://github.com/google/mdbook-i18n-helpers --rev 53cf5518b380a9e49b0834823a9b8e3a6446a3b4 mdbook-i18n-helpers
         export PATH="$PATH:$HOME/.cargo/bin"
         mdbook --version
 

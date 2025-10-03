@@ -14,18 +14,22 @@ $ git clone https://github.com/scalanlp/breeze.git
 $ cd breeze
 ```
 
+```admonish note
+scalanlp/breeze is on sbt 1.x, but we'll write this section as if it is an sbt 2.x build.
+```
+
 ### sbt shell with sbtn
 
 As mentioned in [sbt components][sbt-components], start an sbt shell:
 
 ```
-$ sbt --client
+$ sbt
 ```
 
 This should display something like the following:
 
 ```bash
-$ sbt --client
+$ sbt
 [info] entering *experimental* thin client - BEEP WHIRR
 [info] server was not detected. starting an instance
 [info] welcome to sbt 1.5.5 (Azul Systems, Inc. Java 1.8.0_352)
@@ -140,12 +144,12 @@ Enter number:
 
 Enter `1` at the prompt.
 
-### testQuick
+### test
 
-The `testQuick` task tests either the tests that failed before, were not run, or whose transitive dependencies changed.
+The `test` task tests either the tests that failed before, were not run, or whose transitive dependencies changed.
 
 ```
-> math/testQuick
+> math/test
 ```
 
 This should display something like the following:
@@ -177,7 +181,7 @@ Make a command run when one or more source files change by prefixing the
 command with `~`. For example, in sbt shell try:
 
 ```
-> ~testQuick
+> ~test
 ```
 
 Press enter to stop watching for changes.
