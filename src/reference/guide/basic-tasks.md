@@ -14,9 +14,9 @@ $ git clone https://github.com/scalanlp/breeze.git
 $ cd breeze
 ```
 
-~~~admonish note
+```admonish note
 scalanlp/breeze is on sbt 1.x, but we'll write this section as if it is an sbt 2.x build.
-~~~
+```
 
 ### sbt shell with sbtn
 
