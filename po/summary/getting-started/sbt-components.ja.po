@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
 "POT-Creation-Date: 2025-08-08T01:31:07-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"PO-Revision-Date: 2025-10-03 02:14-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -10,10 +10,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
 
 #: src/reference/guide/sbt-components.md:1
 msgid "sbt components"
-msgstr ""
+msgstr "sbt のコンポーネント"
 
 #: src/reference/guide/sbt-components.md:4
 msgid "sbt runner"
@@ -25,10 +26,12 @@ msgid ""
 "script\" to distinguish from other components. It's important to note is "
 "that sbt runner is designed to run **any version** of sbt."
 msgstr ""
+"sbt のビルドは、「`sbt` という名前のシェルスクリプト」によって実行され、この"
+"スクリプトは sbt runner と呼ばれる。"
 
 #: src/reference/guide/sbt-components.md:9
 msgid "Specifying sbt version with project/build.properties"
-msgstr ""
+msgstr "project/build.properties による sbt バージョンの指定"
 
 #: src/reference/guide/sbt-components.md:11
 msgid ""
@@ -36,22 +39,29 @@ msgid ""
 "build.properties` to determine the sbt version for the build, and downloads "
 "the artifacts if they haven't been cached:"
 msgstr ""
+"sbt runner は、そのサブコンポーネントである sbt launcher を実行し、sbt "
+"launcher は `project/build.properties` を読み込んで、そのビルドに使われる "
+"sbt のバージョンを決定し、キャッシュに無ければ sbt 本体をダウンロードする:"
 
 #: src/reference/guide/sbt-components.md:17
 msgid "This means that:"
-msgstr ""
+msgstr "これは、つまり"
 
 #: src/reference/guide/sbt-components.md:19
 msgid ""
 "Anyone who checkouts your build would get the same sbt version, regardless "
 "of _sbt runner_ they may have installed on their machines."
 msgstr ""
+"ビルドをチェックアウトした人が、各々の sbt runner のバージョンに関わらわず、"
+"同一の sbt のバージョンを実行し"
 
 #: src/reference/guide/sbt-components.md:20
 msgid ""
 "The change of sbt version can be tracked in a version control system, like "
 "git."
 msgstr ""
+"sbt 本体のバージョンは git のようなバージョン管理システムによって管理されるこ"
+"とを意味する"
 
 #: src/reference/guide/sbt-components.md:22
 msgid "sbtn (`sbt --client`)"
@@ -65,6 +75,11 @@ msgid ""
 "GraalVM native-image. The protocol between sbtn and sbt server is stable "
 "enough that it should work between **most recent versions** of sbt."
 msgstr ""
+"sbtn (native thin client) は sbt runner のサブコンポーネントの一つで、sbt "
+"runner に `--client` フラグを渡すと呼ばれ、sbt server にコマンドを送信するの"
+"に使われる。名前に n が付いているのは、それが GraalVM native-image によって"
+"ネーティブ・コードにコンパイルされていることに由来する。sbtn と sbt server は"
+"安定しているため、最近の sbt のバージョンなら大体動作するようになっている。"
 
 #: src/reference/guide/sbt-components.md:26
 msgid "sbt server (`sbt --server`)"
@@ -76,6 +91,9 @@ msgid ""
 "`project/build.properties`. sbt server acts as a cashier to take commands "
 "from sbtn and editors."
 msgstr ""
+"sbt server は、ビルドツール本体で、そのバージョンは `project/"
+"build.properties` によって指定される。sbt server は、sbtn やエディタから注文"
+"を受け取るレジ係の役割を持つ。"
 
 #: src/reference/guide/sbt-components.md:31
 msgid "Coursier"
@@ -87,6 +105,9 @@ msgid ""
 "resolve Scala library, Scala compiler, and any other library dependencies "
 "your build needs."
 msgstr ""
+"sbt server は、そのサブコンポーネントとして [Couriser](https://get-"
+"coursier.io/) を実行して、Scala 標準ライブラリ、Scala コンパイラ、ビルドで使"
+"われるその他のライブラリ依存性の解決を行う。"
 
 #: src/reference/guide/sbt-components.md:35
 msgid "Zinc"
@@ -100,6 +121,12 @@ msgid ""
 "fact that Coursier can resolve any Scala version, with sbt we can invoke any "
 "modern versions of Scala just by writing a single line `build.sbt`:"
 msgstr ""
+"Zinc は、sbt プロジェクトにより開発、メンテされている、Scala の差分コンパイラ"
+"だ。Zinc の側面として見落とされがちなのは、Zinc は**ここ数年に出た全てのバー"
+"ジョン**の Scala コンパイラに対する安定した API を提供しているということがあ"
+"る。Coursier がどんな Scala バージョンでも解決できることと合わせると、sbt は "
+"`build.sbt` に一行書くだけで、ここ数年に出たどのバージョンの Scala でも走らせ"
+"ることができる:"
 
 #: src/reference/guide/sbt-components.md:41
 msgid "\"3.7.2\""
@@ -116,62 +143,71 @@ msgid ""
 "IDEs like IntelliJ and Metals to communicate with a running sbt server "
 "programmatically."
 msgstr ""
+"sbt server は [Build Server Protocol (BSP)](https://build-server-"
+"protocol.github.io/) をサポートして、ビルド対象の列挙、ビルドの実行、その他を"
+"行うことができる。これにより、IntelliJ や Metals といった IDE が既に実行中の "
+"sbt server  とコードを用いて通信することが可能となる。"
 
 #: src/reference/guide/sbt-components.md:49
 msgid "Connecting to sbt server"
-msgstr ""
+msgstr "sbt server との接続"
 
 #: src/reference/guide/sbt-components.md:52
 msgid "Let's look at three ways of connecting to sbt server."
-msgstr ""
+msgstr "sbt server との接続方法を 3通りみていく。"
 
 #: src/reference/guide/sbt-components.md:54
 msgid "sbt shell using sbtn"
-msgstr ""
+msgstr "sbtn を用いた sbt シェル"
 
 #: src/reference/guide/sbt-components.md:56
 msgid "Run `sbt` in the working directory of your build:"
-msgstr ""
+msgstr "ビルドのワーキング・ディレクトリ内で `sbt` を実行する:"
 
 #: src/reference/guide/sbt-components.md:66
 msgid "This should display something like the following:"
-msgstr ""
+msgstr "これは以下のように表示されるはずだ:"
 
 #: src/reference/guide/sbt-components.md:82
 msgid ""
 "Running sbt with no command line arguments starts sbt shell. sbt shell has a "
 "command prompt (with tab completion and history!)."
 msgstr ""
+"sbt をコマンドラインの引数無しで実行すると、sbt シェルが起動する。sbt シェル"
+"は、コマンド打ち込むためのプロンプトを持つが、タブ補完が効き、履歴も持ってい"
+"る。"
 
 #: src/reference/guide/sbt-components.md:84
 msgid "For example, you could type `compile` at the sbt shell:"
-msgstr ""
+msgstr "例えば、sbt シェルに `compile` と打ち込むことができる:"
 
 #: src/reference/guide/sbt-components.md:90
 msgid "To `compile` again, press up arrow and then enter."
-msgstr ""
+msgstr "`compile` を再実行するには、上矢印を押下して、リターンキーを押す。"
 
 #: src/reference/guide/sbt-components.md:92
 msgid ""
 "To leave sbt shell, type `exit` or use `Ctrl-D` (Unix) or `Ctrl-Z` (Windows)."
 msgstr ""
+"sbt シェルを中止するには、`exit` と打ち込むか、 `Ctrl-D` (Unix) もしくは "
+"`Ctrl-Z` (Windows) を使う。"
 
 #: src/reference/guide/sbt-components.md:94
 msgid "Batch mode using sbtn"
-msgstr ""
+msgstr "sbtn を用いたバッチ・モード"
 
 #: src/reference/guide/sbt-components.md:96
 msgid "You can also run sbt in batch mode:"
-msgstr ""
+msgstr "sbt をバッチ・モードで使うことも可能だ:"
 
 #: src/reference/guide/sbt-components.md:108
 msgid "Shutting down sbt server"
-msgstr ""
+msgstr "sbt server のシャットダウン"
 
 #: src/reference/guide/sbt-components.md:110
 msgid "Run the following to shutdown all sbt servers on your machine:"
-msgstr ""
+msgstr "マシン上の sbt server を全てシャットダウンするには以下を実行する:"
 
 #: src/reference/guide/sbt-components.md:116
 msgid "Or the following to shutdown just the current one:"
-msgstr ""
+msgstr "現行のものだけをシャットダウンするには以下を実行する:"
