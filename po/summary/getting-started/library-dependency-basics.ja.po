@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-03T02:39:05-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"POT-Creation-Date: 2025-10-04T15:42:25-04:00\n"
+"PO-Revision-Date: 2025-10-04 15:50-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -10,15 +10,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
 
 #: src/reference/guide/library-dependency-basics.md:1
 msgid "Library dependency basics"
-msgstr ""
+msgstr "ライブラリ依存性の基本"
 
 #: src/reference/guide/library-dependency-basics.md:4
 msgid ""
 "This page explains the basics of library dependency management using sbt."
-msgstr ""
+msgstr "このページは、sbt を使ったライブラリ依存性管理の基本を説明する。"
 
 #: src/reference/guide/library-dependency-basics.md:6
 msgid ""
@@ -26,37 +27,65 @@ msgid ""
 "dependencies, so if you're familiar with package managers like Coursier, "
 "npm, PIP, etc you won't have much trouble."
 msgstr ""
+"sbt はマネージ依存性 (managed dependency) を実装するのに内部で [Coursier]"
+"(https://get-coursier.io/) を採用していて、Coursier、npm、PIP などのパッケー"
+"ジ管理を使った事がある人は違和感無く入り込めるだろう。"
 
 #: src/reference/guide/library-dependency-basics.md:10
-msgid "The `libraryDependencies` key"
+msgid ""
+"```admonish note title=\"What's a managed dependency?\"\n"
+"As opposed to downloading required JAR files by hand (_unmanaged_ "
+"dependencies), a _managed_ dependency system automates fetching external "
+"libraries for a subproject. Tools like Coursier interpret the declared "
+"`ModuleID`, perform dependency resolution (expand all the transitive "
+"dependencies, and resolve any version conflicts to determine the exact "
+"versions), and download and cache the resulting artifacts, ensuring "
+"consistent JAR management.\n"
+"```"
 msgstr ""
+"```admonish note title=\"マネージ依存性とは何か\"\n"
+"JAR ファイルを 1つ 1つ手でダウンロードする (アンマネージ依存性) 代わりに、マ"
+"ネージ依存性システムはサブプロジェクトで使われる外部ライブラリの取得を自動化"
+"する。Coursier のようなツールは宣言された `ModuleID` 列を解釈して、依存性解"
+"決 (全ての間接的依存性を展開して、バージョン衝突を解決して、正確なバージョン"
+"を決定する) を行い、結果となったアーティファクトをダウンロードしキャッシュし"
+"て、一貫性のある JAR 管理を保証する。\n"
+"```"
 
-#: src/reference/guide/library-dependency-basics.md:13
+#: src/reference/guide/library-dependency-basics.md:14
+msgid "The `libraryDependencies` key"
+msgstr "`libraryDependencies` キー"
+
+#: src/reference/guide/library-dependency-basics.md:17
 msgid ""
 "Declaring a dependency looks like this, where `groupId`, `artifactId`, and "
 "`revision` are strings:"
 msgstr ""
+"依存性の宣言は、以下のようになる。ここで、`groupId`、`artifactId`、と "
+"`revision` は文字列だ:"
 
-#: src/reference/guide/library-dependency-basics.md:20
+#: src/reference/guide/library-dependency-basics.md:24
 msgid ""
 "or like this, where `configuration` can be a string or a `Configuration` "
 "value (such as `Test`):"
 msgstr ""
+"もしくは、以下のようになる。このときの `configuration` は文字列もしくは "
+"`Configuration` の値だ (`Test` など)。"
 
-#: src/reference/guide/library-dependency-basics.md:26
+#: src/reference/guide/library-dependency-basics.md:30
 msgid "When you run:"
-msgstr ""
-
-#: src/reference/guide/library-dependency-basics.md:32
-msgid ""
-"sbt will automatically resolve the dependencies and download the JAR files."
-msgstr ""
-
-#: src/reference/guide/library-dependency-basics.md:34
-msgid "Getting the right Scala version with `%%`"
-msgstr ""
+msgstr "コンパイルを実行すると:"
 
 #: src/reference/guide/library-dependency-basics.md:36
+msgid ""
+"sbt will automatically resolve the dependencies and download the JAR files."
+msgstr "sbt は自動的に依存性を解決して、JAR ファイルをダウンロードする。"
+
+#: src/reference/guide/library-dependency-basics.md:38
+msgid "Getting the right Scala version with `%%`"
+msgstr "`%%` を使って正しい Scala バージョンを入手する"
+
+#: src/reference/guide/library-dependency-basics.md:40
 msgid ""
 "If you use `organization %% moduleName % version` rather than `organization "
 "% moduleName % version` (the difference is the double `%%` after the "
@@ -64,94 +93,110 @@ msgid ""
 "artifact name. This is just a shortcut. You could write this without the `%"
 "%`:"
 msgstr ""
+"`groupID % artifactID % revision` のかわりに、 `groupID %% artifactID % "
+"revision` を使うと（違いは `groupID` の後ろの二つ連なった `%%`）、 sbt はプロ"
+"ジェクトの Scala のバイナリバージョンをアーティファクト名に追加する。これはた"
+"だの略記法なので `%%` 無しで書くこともできる:"
 
-#: src/reference/guide/library-dependency-basics.md:42
-#: src/reference/guide/library-dependency-basics.md:49
-#: src/reference/guide/library-dependency-basics.md:74
-#: src/reference/guide/library-dependency-basics.md:75
+#: src/reference/guide/library-dependency-basics.md:46
+#: src/reference/guide/library-dependency-basics.md:53
+#: src/reference/guide/library-dependency-basics.md:78
+#: src/reference/guide/library-dependency-basics.md:79
 msgid "\"org.scala-lang\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:42
+#: src/reference/guide/library-dependency-basics.md:46
 msgid "\"toolkit_3\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:42
-#: src/reference/guide/library-dependency-basics.md:49
-#: src/reference/guide/library-dependency-basics.md:71
+#: src/reference/guide/library-dependency-basics.md:46
+#: src/reference/guide/library-dependency-basics.md:53
+#: src/reference/guide/library-dependency-basics.md:75
 msgid "\"0.2.0\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:45
+#: src/reference/guide/library-dependency-basics.md:49
 msgid ""
 "Assuming the `scalaVersion` for your build is 3.x, the following is "
-"identical (note the double `%%` after `\"toolkit\"`):"
+"identical (note the double `%%` after `\"org.scala-lang\"`):"
 msgstr ""
+"ビルドの Scala バージョンが 3.x だとすると、以下の設定は上記と等価だ"
+"（`\"org.scala-lang\"` の後ろの二つ連なった `%%` に注意）:"
 
-#: src/reference/guide/library-dependency-basics.md:49
-#: src/reference/guide/library-dependency-basics.md:74
+#: src/reference/guide/library-dependency-basics.md:53
+#: src/reference/guide/library-dependency-basics.md:78
 msgid "\"toolkit\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:52
+#: src/reference/guide/library-dependency-basics.md:56
 msgid ""
 "The idea is that many dependencies are compiled for multiple Scala versions, "
 "and you'd like to get the one that matches your project to ensure binary "
 "compatibility."
 msgstr ""
+"多くの依存ライブラリは複数の Scala バイナリバージョンに対してコンパイルされて"
+"おり、この機構はそのうちの中からプロジェクトとバイナリ互換性のある正しいもの"
+"を選択する便利機能だ。"
 
-#: src/reference/guide/library-dependency-basics.md:56
+#: src/reference/guide/library-dependency-basics.md:60
 msgid "Tracking dependencies in one place"
-msgstr ""
+msgstr "ライブラリ依存性を一箇所にまとめる"
 
-#: src/reference/guide/library-dependency-basics.md:59
+#: src/reference/guide/library-dependency-basics.md:63
 msgid ""
 "`.scala` files under `project` becomes part of the build definition, which "
 "we can use to track dependencies in one place by creating a file named "
 "`project/Dependencies.scala`."
 msgstr ""
+"`project` 内の任意の `.scala` ファイルがビルド定義の一部となることを利用する"
+"一つの例として `project/Dependencies.scala` というファイルを作ってライブラリ"
+"依存性を一箇所にまとめるということができる。"
 
-#: src/reference/guide/library-dependency-basics.md:65
+#: src/reference/guide/library-dependency-basics.md:69
 msgid "// place this file at project/Dependencies.scala"
-msgstr ""
+msgstr "// project/Dependencies.scala にこのファイルを置く"
 
-#: src/reference/guide/library-dependency-basics.md:70
+#: src/reference/guide/library-dependency-basics.md:74
 msgid "// versions"
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:73
+#: src/reference/guide/library-dependency-basics.md:77
 msgid "// libraries"
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:75
+#: src/reference/guide/library-dependency-basics.md:79
 msgid "\"toolkit-test\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:79
+#: src/reference/guide/library-dependency-basics.md:83
 msgid ""
 "The `Dependencies` object will be available in `build.sbt`. To make it "
 "easier to use the `val`s defined in it, import `Dependencies.*` in your "
 "build.sbt file."
 msgstr ""
+"この `Dependencies` オブジェクトは `build.sbt` 内で利用可能となる。 定義され"
+"ている `val` が使いやすいように `Dependencies.*` を import しておこう。"
 
-#: src/reference/guide/library-dependency-basics.md:85
+#: src/reference/guide/library-dependency-basics.md:89
 msgid "\"3.7.3\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:86
+#: src/reference/guide/library-dependency-basics.md:90
 msgid "\"something\""
 msgstr ""
 
-#: src/reference/guide/library-dependency-basics.md:91
+#: src/reference/guide/library-dependency-basics.md:95
 msgid "Viewing library dependencies"
-msgstr ""
+msgstr "ライブラリ依存性の可視化"
 
-#: src/reference/guide/library-dependency-basics.md:94
+#: src/reference/guide/library-dependency-basics.md:98
 msgid ""
 "Type in `Compile/dependencyTree` in the sbt shell to show the library "
 "dependency tree, including the transitive dependencies:"
 msgstr ""
+"sbt シェルに `Compile/dependencyTree` と入力すると、ライブラリ依存性の間接的"
+"依存性を含むツリーが表示される:"
 
-#: src/reference/guide/library-dependency-basics.md:100
+#: src/reference/guide/library-dependency-basics.md:104
 msgid "This should display something like the following:"
 msgstr ""

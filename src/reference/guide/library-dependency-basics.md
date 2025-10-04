@@ -7,6 +7,10 @@ sbt uses [Coursier](https://get-coursier.io/) to implement managed
 dependencies, so if you're familiar with package managers like Coursier,
 npm, PIP, etc you won't have much trouble.
 
+~~~admonish note title="What's a managed dependency?"
+As opposed to downloading required JAR files by hand (_unmanaged_ dependencies), a _managed_ dependency system automates fetching external libraries for a subproject. Tools like Coursier interpret the declared `ModuleID`, perform dependency resolution (expand all the transitive dependencies, and resolve any version conflicts to determine the exact versions), and download and cache the resulting artifacts, ensuring consistent JAR management.
+~~~
+
 The `libraryDependencies` key
 -----------------------------
 
@@ -43,7 +47,7 @@ libraryDependencies += "org.scala-lang" % "toolkit_3" % "0.2.0"
 ```
 
 Assuming the `scalaVersion` for your build is 3.x, the following is
-identical (note the double `%%` after `"toolkit"`):
+identical (note the double `%%` after `"org.scala-lang"`):
 
 ```scala
 libraryDependencies += "org.scala-lang" %% "toolkit" % "0.2.0"
