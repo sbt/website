@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
 "POT-Creation-Date: 2025-10-03T03:05:38-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"PO-Revision-Date: 2025-10-04 01:35-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -10,18 +10,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
 
 #: src/reference/guide/build-definition-basics.md:1
 msgid "Build definition basics"
-msgstr ""
+msgstr "ビルド定義の基本"
 
 #: src/reference/guide/build-definition-basics.md:4
 msgid "This page discusses the `build.sbt` build definition."
-msgstr ""
+msgstr "このページは `build.sbt` のビルド定義を解説する。"
 
 #: src/reference/guide/build-definition-basics.md:6
 msgid "What is a build definition?"
-msgstr ""
+msgstr "ビルド定義とは何か"
 
 #: src/reference/guide/build-definition-basics.md:8
 msgid ""
@@ -29,12 +30,17 @@ msgid ""
 "projects (of type [`Project`](../api/sbt/Project.html)). Because the term "
 "_project_ can be ambiguous, we often call it a _subproject_ in this guide."
 msgstr ""
+"**ビルド定義**は、`build.sbt` にて定義され、プロジェクト (型は `Project`) の"
+"集合によって構成される。 **プロジェクト**という用語が曖昧であることがあるた"
+"め、このガイドではこれらを**サブプロジェクト**と呼ぶことが多い。"
 
 #: src/reference/guide/build-definition-basics.md:13
 msgid ""
 "For instance, in `build.sbt` you define the subproject located in the "
 "current directory like this:"
 msgstr ""
+"例えば、カレントディレクトリにあるサブプロジェクトは `build.sbt` に以下のよう"
+"に定義できる："
 
 #: src/reference/guide/build-definition-basics.md:17
 #: src/reference/guide/build-definition-basics.md:26
@@ -48,7 +54,7 @@ msgstr ""
 
 #: src/reference/guide/build-definition-basics.md:21
 msgid "or more explicitly:"
-msgstr ""
+msgstr "より明示的に書くと:"
 
 #: src/reference/guide/build-definition-basics.md:24
 msgid "\".\""
@@ -60,6 +66,9 @@ msgid ""
 "`name` and it maps to a string value, the name of your subproject. The key-"
 "value pairs are listed under the `.settings(...)` method."
 msgstr ""
+"それぞれのサブプロジェクトは、キーと値のペアによって詳細が設定される。例え"
+"ば、`name` というキーがあるが、それはサブプロジェクト名という文字列の値に関連"
+"付けられる。キーと値のペア列は `.settings(...)` メソッド内に列挙される。"
 
 #: src/reference/guide/build-definition-basics.md:36
 msgid "build.sbt DSL"
@@ -73,14 +82,19 @@ msgid ""
 "more features to keep the build definition organized as the build grows "
 "larger."
 msgstr ""
+"`build.sbt` は、Scala に基づいた build.sbt DSL と呼ばれるドメイン特定言語 "
+"(DSL) を用いてサブプロジェクトを定義する。まずは `scalaVersion` と "
+"`libraryDependencies` のみを宣言して、YAML ファイルのように `build.sbt` を使"
+"うことができるが、ビルドの成長に応じてその他の機能を使ってビルド定義を整理す"
+"ることができる。"
 
 #: src/reference/guide/build-definition-basics.md:43
 msgid "Typed setting expression"
-msgstr ""
+msgstr "型付けされたセッティング式"
 
 #: src/reference/guide/build-definition-basics.md:45
 msgid "Let's take a closer look at the `build.sbt` DSL:"
-msgstr ""
+msgstr "`build.sbt` DSL をより詳しくみていこう:"
 
 #: src/reference/guide/build-definition-basics.md:48
 msgid "\"com.example\""
@@ -91,22 +105,24 @@ msgid ""
 "Each entry is called a _setting expression_. Some among them are also called "
 "task expressions. We will see more on the difference later in this page."
 msgstr ""
+"それぞれのエントリーは**セッティング式**と呼ばれる。セッティング式にはタスク"
+"式と呼ばれるものもある。この違いは後で説明する。"
 
 #: src/reference/guide/build-definition-basics.md:57
 msgid "A setting expression consists of three parts:"
-msgstr ""
+msgstr "セッティング式は以下の 3部から構成される:"
 
 #: src/reference/guide/build-definition-basics.md:59
 msgid "Left-hand side is a _key_."
-msgstr ""
+msgstr "左辺項を**キー** (key) という。"
 
 #: src/reference/guide/build-definition-basics.md:60
 msgid "_Operator_, which in this case is `:=`"
-msgstr ""
+msgstr "**演算子**。この場合は `:=`。"
 
 #: src/reference/guide/build-definition-basics.md:61
 msgid "Right-hand side is called the _body_, or the _setting/task body_."
-msgstr ""
+msgstr "右辺項は**本文** (body)、もしくはセッティング本文という。"
 
 #: src/reference/guide/build-definition-basics.md:63
 msgid ""
@@ -115,6 +131,10 @@ msgid ""
 "[`TaskKey[A]`](../../api/sbt/TaskKey.html), or [`InputKey[A]`](../../api/sbt/"
 "InputKey.html) where `A` is the expected value type."
 msgstr ""
+"左辺値の `name`、`version`、および `scalaVersion` はキーである。 キーは "
+"[`SettingKey[A]`](../../api/sbt/SettingKey.html)、 [`TaskKey[A]`](../../api/"
+"sbt/TaskKey.html)、もしくは [`InputKey[A]`](../../api/sbt/InputKey.html) のイ"
+"ンスタンスで、 `A` はその値の型である。キーの種類に関しては後述する。"
 
 #: src/reference/guide/build-definition-basics.md:70
 msgid ""
@@ -122,14 +142,17 @@ msgid ""
 "`name` is also typed specifically to `String`. If you use the wrong value "
 "type, the build definition will not compile:"
 msgstr ""
+"`name` キーは `SettingKey[String]` に型付けされているため、 `name` の `:=` 演"
+"算子も `String` に型付けされている。これにより、誤った型の値を使おうとすると"
+"ビルド定義はコンパイルエラーになる:"
 
 #: src/reference/guide/build-definition-basics.md:75
 msgid "// will not compile"
-msgstr ""
+msgstr "// コンパイルできない"
 
 #: src/reference/guide/build-definition-basics.md:78
 msgid "`val`s and `lazy val`s"
-msgstr ""
+msgstr "`val` と `lazy val`"
 
 #: src/reference/guide/build-definition-basics.md:80
 msgid ""
@@ -137,6 +160,8 @@ msgid ""
 "library, `build.sbt` may be interspersed with `val`s, `lazy val`s, and "
 "`def`s."
 msgstr ""
+"ライブラリのバージョン番号など同じ情報の繰り返しを避けるために、`build.sbt` "
+"内の任意の行に `val`、`lazy val`、`def` を書くことができる。"
 
 #: src/reference/guide/build-definition-basics.md:84
 #: src/reference/guide/build-definition-basics.md:102
@@ -175,19 +200,21 @@ msgid ""
 "to bottom. This means that `toolkitV` must be defined before it is "
 "referenced."
 msgstr ""
+"上の例で `val` は変数を定義し、上の行から順に初期化される。そのため、"
+"`toolkitV` が参照される前に定義される必要がある。"
 
 #: src/reference/guide/build-definition-basics.md:96
 msgid "Here's a bad example:"
-msgstr ""
+msgstr "以下は悪い例:"
 
 #: src/reference/guide/build-definition-basics.md:99
 msgid "// bad example"
-msgstr ""
+msgstr "// 悪い例"
 
 #: src/reference/guide/build-definition-basics.md:100
 #: src/reference/guide/build-definition-basics.md:101
 msgid "// uninitialized reference!"
-msgstr ""
+msgstr "// 未初期化の参照!"
 
 #: src/reference/guide/build-definition-basics.md:105
 msgid ""
@@ -196,12 +223,19 @@ msgid ""
 "reference. One way to let the compiler fix this is to define the variables "
 "as `lazy`:"
 msgstr ""
+"`build.sbt` に未初期化の事前参照を含む場合、sbt は `NullPointerException` に"
+"よる `java.lang.ExceptionInInitializerError` を投げて起動に失敗する。これをコ"
+"ンパイラに直させる方法の 1つとして、変数に `lazy` を付けて遅延変数として定義"
+"するという方法がある:"
 
 #: src/reference/guide/build-definition-basics.md:114
 msgid ""
 "Some frown upon gratuitous `lazy val`s, but Scala 3 lazy vals are efficient, "
 "and we think it makes the build definition more robust for copy-pasting."
 msgstr ""
+"何でも `lazy val` を付けるのに渋い顔をする人もいるかもしれないが、僕たちは "
+"Scala 3 の `lazy val` は効率が良く、ビルド定義をコピー・ペーストに対して堅牢"
+"にすると思っている。"
 
 #: src/reference/guide/build-definition-basics.md:117
 msgid ""
@@ -210,3 +244,7 @@ msgid ""
 "Those should go in the `project/` directory as Scala source files.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"`build.sbt` トップレベルでのクラスやオブジェクトの定義は禁止されている。\n"
+"それらは、`project/` ディレクトリ内の Scala ソース内に書かれる。\n"
+"```"
