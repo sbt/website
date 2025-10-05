@@ -105,8 +105,6 @@ Auto plugins should document whether they need to be explicitly enabled. If you'
 curious which auto plugins are enabled for a given project, just run the
 `plugins` command on the sbt console.
 
-For example:
-
 ```scala
 sbt:hello> plugins
 In build /tmp/hello/:

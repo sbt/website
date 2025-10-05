@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2025-10-05T02:02:23-04:00\n"
+"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/guide/plugin-basics.md:12
 msgid "Plugin basics"
-msgstr ""
+msgstr "プラグインの基本"
 
 #: src/reference/guide/plugin-basics.md:22
 msgid "What is a plugin?"
-msgstr ""
+msgstr "プラグインとは何か"
 
 #: src/reference/guide/plugin-basics.md:25
 msgid ""
@@ -12,20 +25,25 @@ msgid ""
 "and tasks. For example, a plugin could add `githubWorkflowGenerate` task to "
 "generate GitHub Actions YAML."
 msgstr ""
+"プラグインは、新しいセッティングやタスクを追加することでビルド定義を拡張す"
+"る。例えば、プラグインを使って `githubWorkflowGenerate` というタスクを追加し"
+"て、GitHub Actions のための YAML を自動生成することができる。"
 
 #: src/reference/guide/plugin-basics.md:33
 msgid "Finding the plugin versions using Scaladex"
-msgstr ""
+msgstr "Scaladex を使ったプラグイン・バージョンの検索"
 
 #: src/reference/guide/plugin-basics.md:36
 msgid ""
 "You can use [Scaladex](https://index.scala-lang.org/search?platform=sbt2) to "
 "search for plugins, and find out the latest version of the plugin."
 msgstr ""
+"[Scaladex](https://index.scala-lang.org/search?platform=sbt2) を用いてプラグ"
+"インを検索して、そのプラグインの最新バージョンを探すことができる。"
 
 #: src/reference/guide/plugin-basics.md:38
 msgid "Declaring a plugin"
-msgstr ""
+msgstr "プラグインの宣言"
 
 #: src/reference/guide/plugin-basics.md:41
 msgid ""
@@ -34,6 +52,10 @@ msgid ""
 "declare the plugin dependency by passing the plugin's module ID to "
 "`addSbtPlugin(...)`:"
 msgstr ""
+"ビルドが `hello` というディレクトリにあるとして、sbt-github-actions をビルド"
+"定義に追加したい場合、`hello/project/plugins.sbt` というファイルを作成して、"
+"プラグインの ModuleID を `addSbtPlugin(...)` に渡すことで、プラグイン依存性を"
+"宣言する:"
 
 #: src/reference/guide/plugin-basics.md:48
 #: src/reference/guide/plugin-basics.md:56
@@ -54,7 +76,7 @@ msgstr ""
 
 #: src/reference/guide/plugin-basics.md:53
 msgid "If you're adding sbt-assembly, add the following:"
-msgstr ""
+msgstr "ビルドに sbt-assembly を追加する場合、以下を追加する:"
 
 #: src/reference/guide/plugin-basics.md:58
 msgid "\"com.eed3si9n\""
@@ -73,22 +95,30 @@ msgid ""
 "See [Source dependency plugin](../recipes/source-dependency-plugin.md) "
 "recipe for an experimental technique of using plugins hosted on git repos."
 msgstr ""
+"[ソース依存性プラグイン](../recipes/source-dependency-plugin.md)レシピには "
+"git リポジトリにホスティングされたプラグインを直接使う実験的技法が書かれて"
+"る。"
 
 #: src/reference/guide/plugin-basics.md:63
 msgid ""
 "Plugins usually provide settings and tasks that get added to a subproject to "
 "enable the plugin's functionality. This is described in the next section."
 msgstr ""
+"プラグインは、通常サブプロジェクトに追加されるセッティングやタスクを提供する"
+"ことでその機能を実現する。次のセクションでその仕組みをもう少し詳しくみてい"
+"く。"
 
 #: src/reference/guide/plugin-basics.md:66
 msgid "Enabling and disabling auto plugins"
-msgstr ""
+msgstr "auto plugin の有効化と無効化"
 
 #: src/reference/guide/plugin-basics.md:69
 msgid ""
 "A plugin can declare that its settings be automatically added to the build "
 "definition, in which case you don't have to do anything to add them."
 msgstr ""
+"プラグインは、自身が持つセッティング群がビルド定義に自動的に追加されるよう宣"
+"言することができ、 その場合、プラグインの利用者は何もしなくてもいい。"
 
 #: src/reference/guide/plugin-basics.md:72
 msgid ""
@@ -96,12 +126,17 @@ msgid ""
 "automatically, and safely, ensure their settings and dependencies are on a "
 "project. Many auto plugins should have their default settings automatically."
 msgstr ""
+"auto plugin 機能は、セッティング群とその依存関係がサブプロジェクトに自動的、"
+"かつ安全に設定されることを保証する。auto plugin の多くはデフォルトのセッティ"
+"ング群を自動的に追加するが、中には明示的な有効化を必要とするものもある。"
 
 #: src/reference/guide/plugin-basics.md:77
 msgid ""
 "If you're using an auto plugin that requires explicit enablement, then you "
 "have to add the following to your `build.sbt`:"
 msgstr ""
+"明示的な有効化が必要な auto plugin を使っている場合は、以下を `build.sbt` に"
+"追加する必要がある:"
 
 #: src/reference/guide/plugin-basics.md:81
 #: src/reference/guide/plugin-basics.md:96
@@ -118,6 +153,8 @@ msgid ""
 "The `enablePlugins` method allows projects to explicitly define the auto "
 "plugins they wish to consume."
 msgstr ""
+"`enablePlugins` メソッドを使って、そのサブプロジェクトで使用したい auto "
+"plugin を明示的に定義できる。"
 
 #: src/reference/guide/plugin-basics.md:91
 msgid ""
@@ -125,6 +162,9 @@ msgid ""
 "example, if we wish to remove the `IvyPlugin` settings from `util`, we "
 "modify our `build.sbt` as follows:"
 msgstr ""
+"逆に `disablePlugins` メソッドを使ってプラグインを除外することもできる。例え"
+"ば、`util` から `IvyPlugin` のセッティングを除外したいとすると、`build.sbt` "
+"を以下のように変更する:"
 
 #: src/reference/guide/plugin-basics.md:104
 msgid ""
@@ -132,54 +172,59 @@ msgid ""
 "you're curious which auto plugins are enabled for a given project, just run "
 "the `plugins` command on the sbt console."
 msgstr ""
+"明示的な有効化が必要か否かは、それぞれの auto plugin がドキュメントで明記して"
+"おくべきだ。あるプロジェクトでどんな auto plugin が有効化されているか気になっ"
+"たら、 sbt シェルから `plugins` コマンドを実行してみよう。"
 
-#: src/reference/guide/plugin-basics.md:108
-msgid "For example:"
-msgstr ""
-
-#: src/reference/guide/plugin-basics.md:126
+#: src/reference/guide/plugin-basics.md:124
 msgid ""
 "Here, the `plugins` output is showing that the sbt default plugins are all "
 "enabled. sbt's default settings are provided via 7 plugins:"
 msgstr ""
+"ここでは、`plugins` の表示によって sbt のデフォルトのプラグインが全て有効化さ"
+"れていることが分かる。 sbt のデフォルトセッティングは 7つのプラグインによって"
+"提供される:"
+
+#: src/reference/guide/plugin-basics.md:127
+msgid "`CorePlugin`: Provides the core parallelism controls for tasks."
+msgstr "`CorePlugin`: タスクの並列実行などのコア機能。"
+
+#: src/reference/guide/plugin-basics.md:128
+msgid "`DependencyTreePlugin`: Provides dependency tree tasks."
+msgstr "`DependencyTreePlugin`: 依存性のツリー表示タスク。"
 
 #: src/reference/guide/plugin-basics.md:129
-msgid "`CorePlugin`: Provides the core parallelism controls for tasks."
-msgstr ""
+msgid "`Giter8TemplatePlugin`: Provides `sbt new` support."
+msgstr "`Giter8TemplatePlugin`: `sbt new` 機能の提供。"
 
 #: src/reference/guide/plugin-basics.md:130
-msgid "`DependencyTreePlugin`: Provides dependency tree tasks."
-msgstr ""
+msgid "`IvyPlugin`: Provides the mechanisms to publish/resolve modules."
+msgstr "`IvyPlugin`: モジュールの依存性解決と公開機能。"
 
 #: src/reference/guide/plugin-basics.md:131
-msgid "`Giter8TemplatePlugin`: Provides `sbt new` support."
-msgstr ""
+msgid "`JUnitXmlReportPlugin`: Provides support for generating junit-xml."
+msgstr "`JUnitXmlReportPlugin`: junit-xml の生成。"
 
 #: src/reference/guide/plugin-basics.md:132
-msgid "`IvyPlugin`: Provides the mechanisms to publish/resolve modules."
-msgstr ""
-
-#: src/reference/guide/plugin-basics.md:133
-msgid "`JUnitXmlReportPlugin`: Provides support for generating junit-xml."
-msgstr ""
-
-#: src/reference/guide/plugin-basics.md:134
 msgid ""
 "`JvmPlugin`: Provides the mechanisms to compile/test/run/package Java/Scala "
 "projects."
 msgstr ""
+"`JvmPlugin`: Java/Scala サブプロジェクトのコンパイル、テスト、実行、パッケージ化の機構。"
 
-#: src/reference/guide/plugin-basics.md:136
+#: src/reference/guide/plugin-basics.md:134
 msgid "`SemanticdbPlugin`: Provides support for generating SemanticDB."
-msgstr ""
+msgstr "`SemanticdbPlugin`: SemanticDB の生成。"
 
-#: src/reference/guide/plugin-basics.md:154
+#: src/reference/guide/plugin-basics.md:152
 msgid "Available plugins"
-msgstr ""
+msgstr "利用可能なプラグイン"
 
-#: src/reference/guide/plugin-basics.md:157
+#: src/reference/guide/plugin-basics.md:155
 msgid ""
 "In addition to [Scaladex](https://index.scala-lang.org/search?"
 "platform=sbt2), there's also [a list of available plugins](../community-"
 "plugins.md)."
 msgstr ""
+"[Scaladex](https://index.scala-lang.org/search?platform=sbt2) の他に"
+"[プラグインのリスト](../community-plugins.md)がある。"
