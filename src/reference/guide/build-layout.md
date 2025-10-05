@@ -48,7 +48,10 @@ and documentation) will be written to the `target` directory by default.
 
 In addition to `build.sbt`, `project` directory can contain `.scala` files
 that define helper objects and one-off plugins.
+
+<!--
 See [organizing the build][Organizing-Build] for more.
+-->
 
 ```
 .
@@ -60,9 +63,8 @@ See [organizing the build][Organizing-Build] for more.
 ....
 ```
 
-You may see `.sbt` files inside `project/` but they are not equivalent to
-`.sbt` files in the project's base directory. Explaining this will
-come [later][Organizing-Build], since you'll need some background information first.
+You may see `.sbt` files inside `project/`, which is typically used to declare plugins.
+See [Plugin basics](./plugin-basics.md).
 
 ### Source code
 
@@ -93,8 +95,11 @@ Source code can be placed in the project's base directory as
 `hello/app.scala`, which may be OK for small projects,
 though for normal projects people tend to keep the projects in
 the `src/main/` directory to keep things neat.
+
+<!--
 The fact that you can place `*.scala` source code in the base directory might seem like
 an odd trick, but this fact becomes relevant [later][Organizing-Build].
+-->
 
 ### Configuring version control
 
@@ -105,8 +110,8 @@ contain:
 target/
 ```
 
+~~~admonish note
 Note that this deliberately has a trailing `/` (to match only directories)
 and it deliberately has no leading `/` (to match `project/target/` in
 addition to plain `target/`).
-
-sbt automates building, testing, and deployment of your subprojects from information in the build definition.
+~~~
