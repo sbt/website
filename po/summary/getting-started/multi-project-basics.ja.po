@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-03T02:39:05-04:00\n"
+"POT-Creation-Date: 2025-10-04T21:43:31-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -30,26 +30,136 @@ msgstr ""
 
 #: src/reference/guide/multi-project-basics.md:17
 msgid ""
-"A project is defined by declaring a lazy val of type [Project](../../api/sbt/"
-"Project.html). For example, :"
+"A **subproject** is defined by declaring a `lazy val` of type [Project]"
+"(../../api/sbt/Project.html). For example, :"
 msgstr ""
 
 #: src/reference/guide/multi-project-basics.md:21
+#: src/reference/guide/multi-project-basics.md:59
+#: src/reference/guide/multi-project-basics.md:88
+#: src/reference/guide/multi-project-basics.md:101
+#: src/reference/guide/multi-project-basics.md:115
 msgid "\"3.7.3\""
 msgstr ""
 
-#: src/reference/guide/multi-project-basics.md:23
-#: src/reference/guide/multi-project-basics.md:25
+#: src/reference/guide/multi-project-basics.md:24
+#: src/reference/guide/multi-project-basics.md:26
+#: src/reference/guide/multi-project-basics.md:69
+#: src/reference/guide/multi-project-basics.md:90
+#: src/reference/guide/multi-project-basics.md:103
+#: src/reference/guide/multi-project-basics.md:117
 msgid "\"core\""
 msgstr ""
 
-#: src/reference/guide/multi-project-basics.md:28
-#: src/reference/guide/multi-project-basics.md:31
+#: src/reference/guide/multi-project-basics.md:29
+#: src/reference/guide/multi-project-basics.md:32
+#: src/reference/guide/multi-project-basics.md:49
+#: src/reference/guide/multi-project-basics.md:67
 msgid "\"util\""
 msgstr ""
 
-#: src/reference/guide/multi-project-basics.md:35
+#: src/reference/guide/multi-project-basics.md:36
 msgid ""
-"The name of the val is used as the subproject's ID, which is used to refer "
-"to the subproject at the sbt shell."
+"The name of the `val` is used as the subproject's ID, which is used to refer "
+"to the subproject in the sbt shell."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:39
+msgid ""
+"sbt will always define a root project, so in the above build definition, we "
+"will have total of three subprojects."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:42
+msgid "Subproject dependency"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:45
+msgid ""
+"A subproject may depend on the code from another subproject. This is done by "
+"declaring `dependsOn(...)`. For example, if `util` needed `util` on its "
+"classpath, you would define `util` as:"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:53
+msgid "Task aggregation"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:56
+msgid ""
+"Task aggregation means that running a task on the aggregate subproject will "
+"also run on the aggregated subprojects."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:61
+msgid "\".\""
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:72
+msgid ""
+"In the above example, the root sublproject aggregates `util` and `core`. "
+"When you type `compile` in the sbt shell, all tree subprojects are compiled "
+"in parallel."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:74
+msgid "Root project"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:77
+msgid ""
+"The subproject at the root of the build is called a **root project**, and "
+"often plays a special role in the build. If a subproject is not defined at "
+"the root directory of the build, sbt automatically creates a default one "
+"that aggregates all other subprojects in the build."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:82
+msgid "Common settings"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:85
+msgid ""
+"In sbt 2.x, bare settings that are written directly in `build.sbt` without "
+"`settings(...)` are **common settings** that are injected to all subprojects."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:92
+#: src/reference/guide/multi-project-basics.md:105
+#: src/reference/guide/multi-project-basics.md:119
+msgid "\"app\""
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:96
+msgid ""
+"In the above, the `scalaVersion` setting is applied to the default root "
+"subproject, `core`, and `util`."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:98
+msgid ""
+"One exception to this rule is settings that are already scoped to a "
+"subproject."
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:107
+msgid "// This is applied only to app"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:109
+msgid "\"app1\""
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:112
+msgid ""
+"We can take advantage of this exception to add some settings that only apply "
+"to the default root project as follows:"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:121
+msgid "// These are applied only to root"
+msgstr ""
+
+#: src/reference/guide/multi-project-basics.md:123
+msgid "\"root\""
 msgstr ""
