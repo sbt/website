@@ -21,10 +21,9 @@ msgstr "互換性に影響のある変更点"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:10
 msgid "See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md)."
-msgstr ""
+msgstr "[sbt 1.x からのマイグレーション](./migrating-from-sbt-1.x.md)も参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:12
-#, fuzzy
 msgid ""
 "**Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions "
 "and plugins, is based on Scala 3.x (currently **3.7.3**)  (Both sbt 1.x and "
@@ -32,7 +31,7 @@ msgid ""
 "github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and others."
 msgstr ""
 "**Scala 3 を用いたメタビルド**。ビルド定義やプラグインに使われる sbt 2.x "
-"build.sbt DSL は Scala 3.x ベースとなった (現行では **3.7.2**)  (sbt 1.x 並び"
+"build.sbt DSL は Scala 3.x ベースとなった (現行では **3.7.3**)  (sbt 1.x 並び"
 "に 2.x は、Scala 2.x と 3.x の両方をビルドすることが可能) by [@eed3si9n]"
 "(https://github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and "
 "others."
@@ -66,15 +65,14 @@ msgstr ""
 "いる。詳細は[キャッシュ](../concepts/caching.md)参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:16
-#, fuzzy
 msgid ""
 "**Depedency tree**. `dependencyTree` tasks are unified to one input task by "
 "[@eed3si9n](https://github.com/eed3si9n) in [\\#8199](https://github.com/sbt/"
 "sbt/pull/8199)"
 msgstr ""
-"`test` タスクの形が `Unit` から `TestResult` へと変更された by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/pull/"
-"8181)"
+"**依存性のツリー表示**。`dependencyTree` 関連のタスク群は 1つのインプット・タスクに統一された by "
+"[@eed3si9n](https://github.com/eed3si9n) in [\\#8199](https://github.com/sbt/"
+"sbt/pull/8199)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:17
 msgid ""
@@ -144,34 +142,39 @@ msgid ""
 "`File` have changed to return `HashedVirtualFileRef` instead. See [Caching "
 "Files](../concepts/caching.md#caching-files)."
 msgstr ""
+"`Key.Classpath` 型は、`Seq[Attributed[File]]` から"
+"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` 型のへのエイリアスへと変更された。"
+"同様に、以前 `File` を返していたタスクキーのいくつかは"
+"`HashedVirtualFileRef` を返すように変更された。"
+"[ファイルのキャッシュ化](../concepts/caching.md#caching-files)も参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:24
 msgid ""
 "In sbt 2.x `target` defaults to `target/out/jvm/scala-3.7.3/<subproject>/`, "
 "as opposed to `<subproject>/target/`."
 msgstr ""
+"sbt 2.x では、`target` のデフォルトが `<subproject>/target/` から "
+"`target/out/jvm/scala-3.7.3/<subproject>/` へと変更された。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:25
-#, fuzzy
 msgid ""
 "sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#8211](https://github.com/sbt/sbt/pull/"
 "8211)"
 msgstr ""
-"sbt 2.x プラグインは `_sbt2_3` という suffix を用いて公開される by "
-"[@eed3si9n](https://github.com/eed3si9n) in [\\#7671](https://github.com/sbt/"
-"sbt/pull/7671)"
+"sbt 2.x は `build.sbt` に変更があると、デフォルトで自動的リロードされるようになった "
+"[@eed3si9n](https://github.com/eed3si9n) in [\\#8211](https://github.com/sbt/sbt/pull/"
+"8211)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:26
-#, fuzzy
 msgid ""
 "`Project#autoAggregate` is added for automatic aggregation, by [@eed3si9n]"
 "(https://github.com/eed3si9n) in [\\#8290](https://github.com/sbt/sbt/pull/"
 "8290)"
 msgstr ""
-"sbt 2.x プラグインは `_sbt2_3` という suffix を用いて公開される by "
-"[@eed3si9n](https://github.com/eed3si9n) in [\\#7671](https://github.com/sbt/"
-"sbt/pull/7671)"
+"自動的タスク集約を行う `Project#autoAggregate` が追加された [@eed3si9n]"
+"(https://github.com/eed3si9n) in [\\#8290](https://github.com/sbt/sbt/pull/"
+"8290)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:28
 msgid "Dropped dreprecations"
@@ -182,40 +185,48 @@ msgid ""
 "Removed `IntegrationTest` configuration in [\\#8184](https://github.com/sbt/"
 "sbt/pull/8184)"
 msgstr ""
+"`IntegrationTest` コンフィギュレーションは廃止された in "
+"[\\#8184](https://github.com/sbt/sbt/pull/8184)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:31
 msgid ""
 "Removed sbt 0.13 style shell syntax in [\\#7700](https://github.com/sbt/sbt/"
 "pull/7700)"
 msgstr ""
+"sbt 0.13 スタイルのシェル構文は廃止された in "
+"[\\#7700](https://github.com/sbt/sbt/pull/7700)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:33
 msgid "Features"
-msgstr ""
+msgstr "新機能"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:36
 msgid ""
 "**Project matrix**. Project matrix, which was available via plugin in sbt "
 "1.x, is in-sourced to provide parallel cross build support."
 msgstr ""
+"**project matrix**。sbt 1.x からプラグインで使用可能だった project matrix が"
+"本体に取り込まれ、並列クロスビルドができるようになった。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:37
 msgid ""
 "**sbt query**. sbt 2.x extends the unified slash syntax to support query of "
 "subprojects. Details below."
 msgstr ""
+"**sbt クエリ**。sbt 2.x は統一スラッシュ構文を拡張してサブプロジェクトのクエリを可能とする。"
+"詳細は下記参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:38
 msgid "**Local/remote cache system**. Details below"
-msgstr ""
+msgstr "**ローカル/リモート兼用のキャッシュ・システム**。詳細は下記参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:39
 msgid "**Client-side run**. Details below."
-msgstr ""
+msgstr "**クライアントサイド・ラン**。詳細は下記参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:41
 msgid "Common settings"
-msgstr ""
+msgstr "コモン・セッティング"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:43
 msgid ""
@@ -223,6 +234,9 @@ msgid ""
 "settings, and are injected to all subprojects. This means we can now set "
 "`scalaVersion` without using `ThisBuild` scoping:"
 msgstr ""
+"sbt 2.x では、`build.sbt` に直書きされたセッティングは"
+"コモン・セッティングとして解釈され、全サブプロジェクトに注入される。"
+"そのため、`ThisBuild` スコープ付けを使わずに `scalaVersion` を設定できる:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:46
 msgid "\"3.7.3\""
@@ -230,7 +244,7 @@ msgstr ""
 
 #: src/reference/changes/sbt-2.0-change-summary.md:49
 msgid "This also fixes the so-called dynamic dispatch problem:"
-msgstr ""
+msgstr "さらに、これはいわゆる動的ディスパッチ問題を解決する:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:52
 msgid "\"\""
@@ -247,24 +261,28 @@ msgid ""
 "In sbt 1.x `hi` task will capture the name of the root project, but in sbt "
 "2.x it will return the `name` of each subproject with `!`:"
 msgstr ""
+"sbt 1.x では `hi` タスクはルートプロジェクトの名前を捕捉してしまっていたが、"
+"sbt 2.x は各サブプロジェクトの `name` に `!` を追加する:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:69
 msgid ""
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#6746](https://"
 "github.com/sbt/sbt/pull/6746)"
 msgstr ""
+"これは、[@eed3si9n](https://github.com/eed3si9n) によって "
+"[\\#6746](https://github.com/sbt/sbt/pull/6746) としてコントリされた。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:71
 msgid "sbt query"
-msgstr ""
+msgstr "sbt クエリ"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:73
 msgid "To filter down the subprojects, sbt 2.x introduces sbt query."
-msgstr ""
+msgstr "サブプロジェクトが複数あるとき、選択範囲を狭めるのに sbt 2.x は sbt クエリを導入する。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:79
 msgid "The above runs all subprojects that begins with `foo`."
-msgstr ""
+msgstr "上の例では、`foo` から始まる全てのサブプロジェクトを実行する。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:85
 msgid ""
@@ -272,36 +290,45 @@ msgid ""
 "Contributed by [@eed3si9n](https://github.com/eed3si9n) in [\\#7699](https://"
 "github.com/sbt/sbt/pull/7699)"
 msgstr ""
+"上の例では、`scalaBinaryVersion` が `3` の全てのサブプロジェクトを実行する。"
+"これは、[@eed3si9n](https://github.com/eed3si9n) によって "
+"[\\#7699](https://github.com/sbt/sbt/pull/7699) としてコントリされた。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:87
 msgid "Incremental test"
-msgstr ""
+msgstr "差分テスト"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:89
 msgid ""
 "In sbt 2.x, `test` task became an input task that accept arguments that can "
 "filter the test suites to run:"
 msgstr ""
+"sbt 2.x では、`test` タスクはインプット・タスクとなって、"
+"実行するテスト・スイートをフィルターできるようになった:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:95
 msgid ""
 "In addition, `test` is incremental and cached. This means, the test will not "
 "run unless it previously failed or something changed since the last run."
 msgstr ""
+"さらに、`test` はキャッシュ化された差分テストとなった。"
+"そのため、以前にテストが失敗したか、前回の実行から何かが変更されないと実行されないようになった。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:97
 msgid "See [test](../reference/sbt-test.md) for details."
-msgstr ""
+msgstr "詳細は [test](../reference/sbt-test.md) 参照"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:99
 msgid "Local/remote cache system"
-msgstr ""
+msgstr "ローカル/リモート兼用のキャッシュ・システム"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:101
 msgid ""
 "sbt 2.x implements cached task by default, which can automatically cache the "
 "task results to local disk and Bazel-compatible remote cache."
 msgstr ""
+"sbt 2.x は、デフォルトでキャッシュ化されたタスクを実装するため、"
+"自動的にタスクの結果をローカルのディスクもしくは Bazel 互換のリモートキャッシュにてキャッシュ化することができる。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:104
 #: src/reference/changes/sbt-2.0-change-summary.md:112
@@ -315,6 +342,9 @@ msgid ""
 "common for sbt tasks to also produce files on the side, we also provide a "
 "mechanism to cache file contents:"
 msgstr ""
+"これは `task1` への入力を追跡してマシン・ワイドなディスクキャッシュを作成する。"
+"これはリモート・キャッシュとしても設定できるようになっている。"
+"sbt タスクはファイルを生成することがよくあるので、ファイルのコンテンツをキャッシュ化できる仕組みも提供する。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:123
 msgid ""
@@ -322,10 +352,13 @@ msgid ""
 "(https://github.com/eed3si9n) in [\\#7464](https://github.com/sbt/sbt/pull/"
 "7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525)."
 msgstr ""
+"詳細は[キャッシュ化](../concepts/caching.md)を参照。"
+"これは [@eed3si9n](https://github.com/eed3si9n) によって "
+"[\\#7464](https://github.com/sbt/sbt/pull/7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525) としてコントリされた。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:125
 msgid "Client-side run"
-msgstr ""
+msgstr "クライアントサイド・ラン"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:127
 msgid ""
@@ -333,6 +366,10 @@ msgid ""
 "native-image client) for sbt 2.x. In sbt 2.0, sbt server sends the `run` "
 "task back to sbtn, which will fork a fresh JVM. All you have to do is:"
 msgstr ""
+"sbt runner 1.10.10 以降は sbt 2.x を起動するのに、デフォルトで "
+"sbtn (GraalVM native-image のクライアント) を使う。"
+"sbt 2.0 は `run` タスクを sbtn に送り返して、sbtn 側で新しい JVM にフォークさせる。"
+"以下のように実行するだけでいい:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:133
 msgid ""
@@ -341,66 +378,67 @@ msgid ""
 "github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) "
 "documentation."
 msgstr ""
+"これは、sbt server をブロックしてしまうことを回避し、"
+"かつ複数の実行を行うことができる。"
+"これは [@eed3si9n](https://github.com/eed3si9n) によって"
+"[\\#8060](https://github.com/sbt/sbt/pull/8060) としてコントリされた。"
+"[run](../reference/sbt-run.md) ドキュメンテーション参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:135
 msgid "Performance improvements"
-msgstr ""
+msgstr "性能の改善"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:137
 msgid ""
 "Adrien Piquerez contributed a series of changes to improve performance while "
 "he was at Scala Center."
 msgstr ""
+"Adrien Piquerez さんが Scala Center に在籍していたときに、"
+"性能改善に関連するコントリをいくつか行った。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:139
-#, fuzzy
 msgid ""
 "perf: Reduces number of long-living instances to speed up startup by 20% "
 "relative to 2.0.0-M2 by [@adpi2](https://github.com/adpi2) in [\\#7866]"
 "(https://github.com/sbt/sbt/pull/7866)"
 msgstr ""
-"`useCoursier` セッティングを廃止して、Coursier をオプトアウトできないようにし"
-"た by [@eed3si9n](https://github.com/eed3si9n) in [\\#7712](https://"
-"github.com/sbt/sbt/pull/7712)"
+"perf: 長生きするオブジェクトの数を削減して、2.0.0-M2 比較で起動を 20% 高速化した "
+"by [@adpi2](https://github.com/adpi2) in [\\#7866]"
+"(https://github.com/sbt/sbt/pull/7866)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:140
-#, fuzzy
 msgid ""
 "perf: Reduces creation of `Setting` and `Initialize`  by [@adpi2](https://"
 "github.com/adpi2) in [\\#7880](https://github.com/sbt/sbt/pull/7880)"
 msgstr ""
-"`test` タスクの形が `Unit` から `TestResult` へと変更された by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/pull/"
-"8181)"
+"perf: `Setting` と `Initialize` が作成される数を削減した by [@adpi2](https://"
+"github.com/adpi2) in [\\#7880](https://github.com/sbt/sbt/pull/7880)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:141
-#, fuzzy
 msgid ""
 "perf: Refactors `Settings` and optimize indexing of aggregate keys by "
 "[@adpi2](https://github.com/adpi2) in [\\#7879](https://github.com/sbt/sbt/"
 "pull/7879)"
 msgstr ""
-"`useCoursier` セッティングを廃止して、Coursier をオプトアウトできないようにし"
-"た by [@eed3si9n](https://github.com/eed3si9n) in [\\#7712](https://"
-"github.com/sbt/sbt/pull/7712)"
+"perf: `Settings` をリファクタリングして、集約キーのインデックス化を最適化した "
+"[@adpi2](https://github.com/adpi2) in [\\#7879](https://github.com/sbt/sbt/"
+"pull/7879)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:142
-#, fuzzy
 msgid ""
 "perf: Removes instances of `Info` and `BasicAttributeMap` by [@adpi2]"
 "(https://github.com/adpi2) in [\\#7882](https://github.com/sbt/sbt/pull/7882)"
 msgstr ""
-"`test` タスクの形が `Unit` から `TestResult` へと変更された by [@eed3si9n]"
-"(https://github.com/eed3si9n) in [\\#8181](https://github.com/sbt/sbt/pull/"
-"8181)"
+"perf: `Info` と `BasicAttributeMap` のインスタンスを削除した by [@adpi2]"
+"(https://github.com/adpi2) in [\\#7882](https://github.com/sbt/sbt/pull/7882)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:144
 msgid "Previously on sbt"
-msgstr ""
+msgstr "過去の変更点"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:147
 msgid "See also:"
-msgstr ""
+msgstr "以下も参照:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:149
 msgid ""
