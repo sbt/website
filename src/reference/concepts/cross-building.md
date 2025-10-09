@@ -3,8 +3,8 @@ Cross building
 
 _Cross building_ refers to the idea of building multiple targets from the same set of source file. This includes Scala cross building, targeting multiple versions of Scala releases; platform cross building, targeting JVM, Scala.JS, and Scala Native; and custom virtual axes like Spark versions.
 
-Using cross-built libraries 
----------------------------
+Using the cross-built libraries
+-------------------------------
 
 To use a library built against multiple versions of Scala, double the first `%` in a ModuleID to be `%%`. This tells sbt that it should append the Scala ABI (application binary interface) suffix to the dependency's name. For example:
 
