@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-03T02:39:05-04:00\n"
+"POT-Creation-Date: 2025-10-08T00:32:14-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: src/reference/concepts/cross-building.md:1
 msgid "Cross building"
-msgstr ""
+msgstr "クロスビルド"
 
 #: src/reference/concepts/cross-building.md:4
 msgid ""
@@ -22,10 +22,14 @@ msgid ""
 "multiple versions of Scala releases; platform cross building, targeting JVM, "
 "Scala.JS, and Scala Native; and custom virtual axes like Spark versions."
 msgstr ""
+"同じソースファイルの集合から複数のターゲットに対してビルドすることを**クロス"
+"ビルド**と呼ぶ。これは、複数の Scala リリースを対象とする Scala クロスビル"
+"ド、JVM、Scala.JS、Scala Native を対象とするプラットフォーム・クロスビルド、"
+"Spark バージョンのような仮想軸を含む。"
 
 #: src/reference/concepts/cross-building.md:6
-msgid "Using cross-built libraries"
-msgstr ""
+msgid "Using the cross-built libraries"
+msgstr "クロスビルドされたライブラリの使用"
 
 #: src/reference/concepts/cross-building.md:9
 msgid ""
@@ -34,6 +38,9 @@ msgid ""
 "ABI (application binary interface) suffix to the dependency's name. For "
 "example:"
 msgstr ""
+"複数の Scala バージョンに対してビルドされたライブラリを使うには "
+"ModuleID の最初の `%` を 2重に `%%` とする。"
+"これは、依存性の名前に Scala ABI (アプリケーション・バイナリ・インターフェイス) サフィックスを付随するという sbt への指示となる。具体例を用いて説明すると:"
 
 #: src/reference/concepts/cross-building.md:12
 #: src/reference/concepts/cross-building.md:18
@@ -54,6 +61,7 @@ msgid ""
 "When the current Scala version is Scala 3.x, the above is equivalent to the "
 "following:"
 msgstr ""
+"現行 Scala バージョンが Scala 3.x であるならば、上の例は以下と等価となる:"
 
 #: src/reference/concepts/cross-building.md:18
 msgid "\"cats-effect_3\""
@@ -65,10 +73,11 @@ msgid ""
 "See [cross building setup](../reference/cross-building-setup.html) for more "
 "details on the setup."
 msgstr ""
+"セットアップに関しては、[cross building setup](../reference/cross-building-setup.html) 参照。"
 
 #: src/reference/concepts/cross-building.md:23
 msgid "Historical context"
-msgstr ""
+msgstr "歴史的経緯"
 
 #: src/reference/concepts/cross-building.md:26
 msgid ""
@@ -78,6 +87,12 @@ msgid ""
 "new version of Scala. This meant that a library user needed to pick a "
 "specific version that was compatible with the Scala version they were using."
 msgstr ""
+"Scala の初期時代 (Scala 2.9 以前) は、Scala 標準ライブラリが"
+"パッチレベルでもバイナリ互換性を保たなかったため、"
+"新しい Scala バージョンがリリースされるたびに"
+"全ライブラリが、新しい Scala バージョンに対して再リリースされる必要があった。"
+"そのため、ライブラリのユーザ側は、自分が使う Scala バージョンに"
+"互換の特定のライブラリのバージョンを選ぶ必要があった。"
 
 #: src/reference/concepts/cross-building.md:28
 msgid ""
@@ -85,27 +100,34 @@ msgid ""
 "compatibility at minor version level, so the libraries compiled against "
 "Scala 2.10.x was not compatible with 2.11.x."
 msgstr ""
+"Scala 2.9.x 以降も Scala 標準ライブラリはマイナーレベルでの"
+"互換性を持たなかったため、Scala 2.10.x に対してコンパイルされた"
+"ライブラリは 2.11.x と互換性を持たなかった。"
 
 #: src/reference/concepts/cross-building.md:30
 msgid ""
 "To workaround this problem, sbt developed cross building mechanism such that:"
 msgstr ""
+"これらの問題の対策として、sbt は以下の特徴を持つクロスビルド機構を開発した:"
 
 #: src/reference/concepts/cross-building.md:32
 msgid ""
 "Same set of source files can be compiled against multiple versions of Scala"
 msgstr ""
+"同じソース・ファイルの集合から、複数の Scala バージョンに対してコンパイルできる"
 
 #: src/reference/concepts/cross-building.md:33
 msgid ""
 "Define a convention to append ABI version (e.g. `_2.12`) to the Maven "
 "artifact"
 msgstr ""
+"Maven のアーティファクト名に ABI バージョン (`_2.12` など) を付随するという慣例を定義した"
 
 #: src/reference/concepts/cross-building.md:34
 msgid ""
 "Later this mechanism was extended to support Scala.JS and other platforms"
 msgstr ""
+"この機構は Scala.JS その他のプラットフォームもサポートするよう拡張された"
 
 #: src/reference/concepts/cross-building.md:36
 msgid "Project matrix"
@@ -115,7 +137,7 @@ msgstr ""
 msgid ""
 "sbt 2.x introduces project matrix, which enables cross building to happen in "
 "parallel."
-msgstr ""
+msgstr "sbt 2.x は project matrix を導入して、並列クロスビルドを可能とする。"
 
 #: src/reference/concepts/cross-building.md:42
 msgid "\"com.example\""
