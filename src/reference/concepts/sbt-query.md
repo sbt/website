@@ -9,7 +9,7 @@ In other words, sbt query is a new way of writing the subproject-axis.
 
 ### Subproject reference
 
-A subproject reference works a query to select the subproject:
+A subproject reference works as a query to select the subproject:
 
 ~~~admonish example title='build.sbt example 1'
 ```scala
