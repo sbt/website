@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-08-08T01:31:08-04:00\n"
+"POT-Creation-Date: 2025-10-09T05:09:49-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -13,7 +13,7 @@ msgstr ""
 
 #: src/reference/concepts/caching.md:1
 msgid "Caching"
-msgstr ""
+msgstr "キャッシュ化"
 
 #: src/reference/concepts/caching.md:4
 msgid ""
@@ -23,6 +23,11 @@ msgid ""
 "compilation, but sbt 2.x's cache is a significant step change for a few "
 "reasons:"
 msgstr ""
+"sbt 2.0 は、ローカル/リモートの両方で使えるハイブリッドなキャッシュ・システム"
+"を導入し、タスク結果をローカルのディスクもしくは、Bazel 互換のリモート・"
+"キャッシュにキャッシュ化することができる。 過去のリリースを通じて、sbt は "
+"`update` のキャッシュ、差分コンパイルなど、様々なキャッシュ化を実装してきた"
+"が、sbt 2.x のキャッシュはいくつかの理由により、大きな変化となる:"
 
 #: src/reference/concepts/caching.md:6
 msgid ""
@@ -30,23 +35,43 @@ msgid ""
 "the task macro unlike sbt 1.x wherein the plugin author called the cache "
 "functions manually in the task implementation."
 msgstr ""
+"**自動化**。sbt 1.x ではプラグイン作者がタスク実装内でキャッシュ化関数を呼び"
+"出す必要があったが、sbt 2.x キャッシュはタスク・マクロに組み込まれているた"
+"め、自動化されている。"
 
 #: src/reference/concepts/caching.md:7
 msgid ""
 "**Machine-wide**. sbt 2.x disk cache is shared among all builds on a machine."
 msgstr ""
+"**マシン・ワイド**。sbt 2.x のディスク・キャッシュはマシン上の全ビルドから共"
+"有されている。"
 
 #: src/reference/concepts/caching.md:8
 msgid ""
 "**Remote-ready**. In sbt 2.x, the cache storage is configured separately "
 "such that all cacheable tasks are automatically remote-cache-ready."
 msgstr ""
+"**リモート対応**。sbt 2.x では、キャッシュのストレージは独立して設定可能なた"
+"め、全てのキャッシュ可能なタスクは自動的にリモート・キャッシュに対応してい"
+"る。"
 
 #: src/reference/concepts/caching.md:10
-msgid "Basics of caching"
+msgid ""
+"The overall objective of caching is to flatten the build and test time "
+"growth as the code size increases compared to the status quo. For this "
+"reason, speedup ratio would depend on the code size etc, but aiming for 5x "
+"to 20x is achievable for builds that currently takes 10+ minutes to test."
 msgstr ""
+"キャッシュ化の全体目標は、コード量が増えるにつれて増加していくビルドとテスト"
+"時間の成長率を現状よりも平たく抑えることにある。そのため、高速化の比率はコー"
+"ド量などにもよるが、現行のテストに 10分以上かかるようなビルドの場合、5倍から "
+"20倍を狙っていくことも可能となってくる。"
 
 #: src/reference/concepts/caching.md:13
+msgid "Basics of caching"
+msgstr "キャッシュ化の基本"
+
+#: src/reference/concepts/caching.md:16
 msgid ""
 "The basic idea is treat as if the build process is a pure function that "
 "takes input `(A1, A2, A3, ...)` and return some outputs `(R1, List(O1, O2, "
@@ -56,12 +81,19 @@ msgid ""
 "in this technique because using the memorized output JAR would be faster "
 "than performing the actual task like Scala compilation etc."
 msgstr ""
+"ビルドプロセスがあたかも `(A1, A2, A3, ...)` というインプットを受け取り、 "
+"`(R1, List(O1, O2, O3, ...))` というアウトプットを返す純粋関数であるかのよう"
+"に扱うというのがキャッシュ化の基本的な考えだ。例えば、ソース・ファイルのリス"
+"トと Scala バージョンを受け取って、`*.jar` ファイルを生成することができる。も"
+"し仮定が成立するなら、同一のインプットに対してはアウトプットの JAR を全員に対"
+"してメモ化できる。メモ化された JAR を使うほうが、Scala コンパイルのような実際"
+"のタスクを実行するよりも高速であることがこのような技法を使うメリットとなる。"
 
-#: src/reference/concepts/caching.md:15
+#: src/reference/concepts/caching.md:18
 msgid "Hermetic build"
-msgstr ""
+msgstr "密閉ビルド"
 
-#: src/reference/concepts/caching.md:17
+#: src/reference/concepts/caching.md:20
 msgid ""
 "As a mental model of the _build as a pure function_, build engineers "
 "sometimes use the term _hermetic build_, which is a build that takes place "
@@ -72,8 +104,16 @@ msgid ""
 "each time. To avoid this, hermetic build tools overwrite the timestamp to a "
 "fixed date 2010-01-01 regardless of when the build took place."
 msgstr ""
+"「純粋関数としてのビルド」のメンタルモデルとして、ビルド界隈のエンジニアは密"
+"閉ビルド (_hermetic build_)、つまり砂漠の真ん中に置かれたコンテナの中で時計"
+"も Internet も無い状態で行われるビルドという用語を使うことがある。そのような"
+"状態で JAR ファイルを生成することができれば、その JAR ファイルはどのマシンと"
+"共有しても大丈夫なはずだ。何故時計の話が出てきたのだろうか? それは、JAR ファ"
+"イルが仕様としてタイムスタンプを捕捉するため、毎回少しづつ違った JAR を生成す"
+"るからだ。これを回避するために、「密閉な」ビルドツールはいつビルドが実行され"
+"てもタイムスタンプを 2010-01-01 に上書きする慣習がある。"
 
-#: src/reference/concepts/caching.md:19
+#: src/reference/concepts/caching.md:22
 msgid ""
 "A build that ends up capturing ephemeral inputs, are said to _break the "
 "hermeticity_ or _non-hermetic_. Another common way the hermeticity is broken "
@@ -81,68 +121,85 @@ msgid ""
 "gets embedded into the JAR via a macro, you might not know until you inspect "
 "the bytecode."
 msgstr ""
-
-#: src/reference/concepts/caching.md:21
-msgid "Automatic caching"
-msgstr ""
+"逆に、不安定なインプットを捕捉してしまったビルドは「密閉性を壊した」、または"
+"「非密閉である」という。密閉性が壊れるもう 1つのよくあるパターンは、インプッ"
+"トもしくはアウトプットで絶対パスを捕捉してしまうことだ。時としてはパスはマク"
+"ロ経由で JAR に入ってしまう事があるので、バイトコードの差を検査しないと発見で"
+"きないかもしれない。"
 
 #: src/reference/concepts/caching.md:24
-msgid "Here's a demonstration of the automatic caching:"
-msgstr ""
+msgid "Automatic caching"
+msgstr "自動的キャッシュ化"
 
 #: src/reference/concepts/caching.md:27
+msgid "Here's a demonstration of the automatic caching:"
+msgstr "以下に、自動的キャッシュ化を具体例を用いて解説する:"
+
+#: src/reference/concepts/caching.md:30
 msgid "\"something\""
 msgstr ""
 
-#: src/reference/concepts/caching.md:29
+#: src/reference/concepts/caching.md:32
 msgid "\"!\""
 msgstr ""
 
-#: src/reference/concepts/caching.md:32
+#: src/reference/concepts/caching.md:35
 msgid ""
-"In sbt 2.x, the task result will be automatically cached based on the two "
-"settings `name` and `version`. The first time we run the task it will be "
-"executed onsite, but the second time onward, it will use the disk cache:"
+"In sbt 2.x, the task result will be cached based on the values of two "
+"settings `name` and `version`. The first time we run the task, it will be "
+"executed onsite, but it will use the disk cache from the second time onwards:"
 msgstr ""
+"sbt 2.x では、このタスクの結果は、`name` と `version` という 2つのセッティン"
+"グの値に基づいて自動的にキャッシュ化される。最初にこのタスクが実行されたとき"
+"には、オンサイトで実行され、2回目以降はディスク・キャッシュの値が用いられる:"
 
-#: src/reference/concepts/caching.md:43
-msgid "Caching is serialization-hard"
-msgstr ""
+#: src/reference/concepts/caching.md:47
+msgid "Caching is just as hard as serialization"
+msgstr "キャッシュ化はシリアライゼーション問題と同等に困難だ"
 
-#: src/reference/concepts/caching.md:45
+#: src/reference/concepts/caching.md:49
 msgid ""
 "To participate in the automatic caching, the input keys (e.g. `name` and "
-"`version`) must provide a given for `sjsonnew.HashWriter` typeclass and "
+"`version`) must provide a given　for `sjsonnew.HashWriter` typeclass and "
 "return type must provide a given for `sjsonnew.JsonFormat`. [Contraband]"
 "(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
 "codecs."
 msgstr ""
+"キャッシュの自動化に参加するためには、(`name` や `version` などの) インプット"
+"キーは `sjsonnew.HashWriter` 型クラスの given、戻り値は "
+"`sjsonnew.JsonFormat` 型クラスの given を提供する必要がある。[Contraband]"
+"(https://www.scala-sbt.org/contraband/) を使って sjson-new のコーデックを生成"
+"することができる。"
 
-#: src/reference/concepts/caching.md:47
+#: src/reference/concepts/caching.md:55
 msgid "Caching files"
-msgstr ""
+msgstr "ファイルのキャッシュ化"
 
-#: src/reference/concepts/caching.md:50
+#: src/reference/concepts/caching.md:58
 msgid ""
 "Caching files (e.g. `java.io.File`) requires its own consideration, not "
 "because it's technically difficult, but mostly because of the ambiguity and "
 "assumptions when files are involved. When we say a \"file\" it could "
 "actually mean:"
 msgstr ""
+"ファイル (`java.io.File` など) のキャッシュ化は特別な配慮を必要とするが、それ"
+"は技術的に難しいからというよりは、ファイルが関わったときに発生する曖昧さと思"
+"い込みによる所が大きい。一言に「ファイル」といっても、実は様々なことを意味す"
+"る:"
 
-#: src/reference/concepts/caching.md:52
+#: src/reference/concepts/caching.md:60
 msgid "Relative path from a well-known location"
-msgstr ""
+msgstr "取り決められた場所からの相対パス"
 
-#: src/reference/concepts/caching.md:53
+#: src/reference/concepts/caching.md:61
 msgid "Materialized actual file"
-msgstr ""
+msgstr "現物化された実際のファイル"
 
-#: src/reference/concepts/caching.md:54
+#: src/reference/concepts/caching.md:62
 msgid "A unique proof of a file, or a content hash"
-msgstr ""
+msgstr "コンテンツ・ハッシュ値などの一意的なファイルの証明"
 
-#: src/reference/concepts/caching.md:56
+#: src/reference/concepts/caching.md:64
 msgid ""
 "Technically speaking, a `File` just means the file path, so we can "
 "deserialize just the filename such as `target/a/b.jar`. This will fail the "
@@ -150,64 +207,87 @@ msgid ""
 "file system. For clarity, and also for avoiding to capture absolute paths, "
 "sbt 2.x provides three separate types for the three cases."
 msgstr ""
+"厳密には、`File` はファイルパスのみを指すため、`target/a/b.jar` というような"
+"ファイル名のみを復元すればいい。これは、下流のタスクが `target/a/b.jar` とい"
+"うファイルがファイル・システムに存在すると思い込んでいた場合失敗してしまう。"
+"これを明瞭化しつつ、絶対パスを回避するために、sbt 2.x は 3つのそれぞれの場合"
+"に対して別々の型を提供する。"
 
-#: src/reference/concepts/caching.md:58
+#: src/reference/concepts/caching.md:66
 msgid ""
 "`xsbti.VirtualFileRef` is used to mean just the relative path, which is "
 "equivalent to passing a string"
 msgstr ""
+"`xsbti.VirtualFileRef` は、ただの相対パスのみを表すのに用いられ、これは文字列"
+"を渡すのと等価だ"
 
-#: src/reference/concepts/caching.md:59
+#: src/reference/concepts/caching.md:67
 msgid ""
 "`xsbti.VirtualFile` represents a materialized file with contents, which "
 "could be a virtual file or a file in your disk"
 msgstr ""
+"`xsbti.VirtualFile` は、コンテンツを持つ現物化されたファイルを表し、仮想ファ"
+"イルもしくはディスク上のファイルであってもいい"
 
-#: src/reference/concepts/caching.md:61
+#: src/reference/concepts/caching.md:69
 msgid ""
 "However, for the purpose of hermetic build, neither is great to represent a "
 "list of files. Having just the filename alone doesn't guarantee that the "
 "file will be the same, and carrying the entire content of the files is too "
 "inefficient in a JSON etc."
 msgstr ""
+"しかしながら、密閉ビルドという観点から見ると、ファイルのリストを表すのにどち"
+"らも優れていない。ファイル名のみを持っていてもファイルが同一性を保証できない"
+"し、ファイルの全コンテンツを持ち回すのは JSON などに使うには非効率的だ。"
 
-#: src/reference/concepts/caching.md:63
+#: src/reference/concepts/caching.md:71
 msgid ""
 "This is where the mysterious third option, a unique proof of file comes in "
 "handy. In addition to the relative path, `HashedVirtualFileRef` tracks the "
 "SHA-256 content hash and the file size. This can easily be serialized to "
 "JSON yet we can reference the exact file."
 msgstr ""
+"ここで謎の 3つ目方法、ファイルの一意的な証明が便利になる。"
+"`HashedVirtualFileRef` は、相対パスの他にも SHA-256 コンテンツ・ハッシュと"
+"ファイル・サイズを追跡する。これは、JSON に簡単にシリアライズできるが、特定の"
+"ファイルを参照することもできる。"
 
-#: src/reference/concepts/caching.md:65
-msgid "The effect of file creation"
-msgstr ""
+#: src/reference/concepts/caching.md:73
+msgid "The effect of file"
+msgstr "ファイル作成の作用"
 
-#: src/reference/concepts/caching.md:67
+#: src/reference/concepts/caching.md:75
 msgid ""
 "There are many tasks that generate file that do not use `VirtualFile` as the "
 "return type. For example, `compile` returns `Analysis` instead, and "
 "`*.class` file generation happens as a _side effect_ in sbt 1.x."
 msgstr ""
+"ファイルを生成するが、`VirtualFile` を戻り値の型として使わないタスクがたくさ"
+"んある。例えば、sbt 1.x では `compile` は `Analysis` を返し、`*.class` ファイ"
+"ルの生成は「副作用」として行われる。"
 
-#: src/reference/concepts/caching.md:69
+#: src/reference/concepts/caching.md:77
 msgid ""
 "To participate in caching, we need to declare these effects as something we "
 "care about."
 msgstr ""
+"キャッシュ化に参加するためには、これらの作用も後に残しておきたいものとして宣言する必要がある。"
 
-#: src/reference/concepts/caching.md:81
+#: src/reference/concepts/caching.md:89
 msgid "Remote caching"
-msgstr ""
+msgstr "リモート・キャッシュ"
 
-#: src/reference/concepts/caching.md:84
+#: src/reference/concepts/caching.md:92
 msgid ""
 "You can optionally extend the build to use remote cache in addition to the "
 "local disk cache. Remote caching could improve build performance by allowing "
 "multiple machines to share build artifacts and outputs."
 msgstr ""
+"オプションとして、ビルドを拡張してローカルでのディスク・キャッシュの他に"
+"リモート・キャッシュも使うことができる。"
+"リモート・キャッシュは、複数のマシンがビルドの成果物やアウトプットを共有することでビルドの性能を向上できる。"
 
-#: src/reference/concepts/caching.md:86
+#: src/reference/concepts/caching.md:94
 msgid ""
 "Imagine you have a dozen people in your project or a company. Each morning, "
 "you will `git pull` the changes the dozen people made, and you need to build "
@@ -217,18 +297,29 @@ msgid ""
 "code size. Remote caching reverses this tide by CI systems hydrate the cache "
 "and you can download the artifacts and task outputs."
 msgstr ""
+"自分のプロジェクトもしくは会社に 10名ぐらいのメンバーがいると想像してほしい。"
+"毎朝、その 10名の書いた変更を `git pull` で取り込んで、書かれたコードをビルドする必要がある。"
+"プロジェクトが順調にいけば、コード量は時間とともに増加していき、"
+"一日のうち他人のコードをビルドする時間の割合も増えていく。"
+"これは、いずれチーム規模とコード量の制限要因となる。"
+"リモート・キャッシュは、CI システムにキャッシュを補給させ"
+"自分たちは成果物やタスクのアウトプットをダウンロードできるようにすることで"
+"この傾向を逆転させる。"
 
-#: src/reference/concepts/caching.md:88
+#: src/reference/concepts/caching.md:96
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](../"
 "reference/remote-cache-setup.md) for more details."
 msgstr ""
+"sbt 2.x は、Bazel 互換の gRPC インターフェイスを実装するため、"
+"オープンソース及び商用の複数のバックエンド・システムと統合する。"
+"詳細は、[リモート・キャッシュのセットアップ](../reference/remote-cache-setup.md)参照。"
 
-#: src/reference/concepts/caching.md:90
+#: src/reference/concepts/caching.md:98
 msgid "Reference"
-msgstr ""
+msgstr "参照リンク"
 
-#: src/reference/concepts/caching.md:93
+#: src/reference/concepts/caching.md:101
 msgid "See also [Cached task](../reference/cached-task.md) reference guide."
-msgstr ""
+msgstr "[キャッシュ・タスク](../reference/cached-task.md)のレファレンスガイドも参照。"

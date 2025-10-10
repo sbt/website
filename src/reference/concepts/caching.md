@@ -7,6 +7,9 @@ sbt 2.0 introduces hybrid local/remote cache system, which can cache the task re
 2. **Machine-wide**. sbt 2.x disk cache is shared among all builds on a machine.
 3. **Remote-ready**. In sbt 2.x, the cache storage is configured separately such that all cacheable tasks are automatically remote-cache-ready.
 
+The overall objective of caching is to flatten the build and test time growth as the code size increases compared to the status quo.
+For this reason, speedup ratio would depend on the code size etc, but aiming for 5x to 20x is achievable for builds that currently takes 10+ minutes to test.
+
 Basics of caching
 -----------------
 
@@ -29,7 +32,8 @@ val someKey = taskKey[String]("something")
 someKey := name.value + version.value + "!"
 ```
 
-In sbt 2.x, the task result will be automatically cached based on the two settings `name` and `version`. The first time we run the task it will be executed onsite, but the second time onward, it will use the disk cache:
+In sbt 2.x, the task result will be cached based on the values of two settings `name` and `version`.
+The first time we run the task, it will be executed onsite, but it will use the disk cache from the second time onwards:
 
 ```
 sbt:demo> show someKey
@@ -40,9 +44,13 @@ sbt:demo> show someKey
 [success] elapsed time: 0 s, cache 100%, 1 disk cache hit
 ```
 
-### Caching is serialization-hard
+### Caching is just as hard as serialization
 
-To participate in the automatic caching, the input keys (e.g. `name` and `version`) must provide a given for `sjsonnew.HashWriter` typeclass and return type must provide a given for `sjsonnew.JsonFormat`. [Contraband](https://www.scala-sbt.org/contraband/) can be used to generate sjson-new codecs.
+To participate in the automatic caching,
+the input keys (e.g. `name` and `version`) must provide a given　for
+`sjsonnew.HashWriter` typeclass and return type must provide a given for
+`sjsonnew.JsonFormat`.
+[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate sjson-new codecs.
 
 Caching files
 -------------
@@ -62,7 +70,7 @@ However, for the purpose of hermetic build, neither is great to represent a list
 
 This is where the mysterious third option, a unique proof of file comes in handy. In addition to the relative path, `HashedVirtualFileRef` tracks the SHA-256 content hash and the file size. This can easily be serialized to JSON yet we can reference the exact file.
 
-### The effect of file creation
+### The effect of file
 
 There are many tasks that generate file that do not use `VirtualFile` as the return type. For example, `compile` returns `Analysis` instead, and `*.class` file generation happens as a _side effect_ in sbt 1.x.
 
