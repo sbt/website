@@ -49,12 +49,11 @@ This also means that some features are implemented at sbt runner or sbtn level, 
 sbt commands
 -------------------
 
-```admonish note
-There is a technical distinction in sbt between *tasks*, which are
-_inside_ the build definition, and *commands*, which often manipulate the
-build definition itself.
-This specific sbt meaning of _command_ means there's no good general term for
-_thing you can type at the sbt prompt_, which may be a setting, task, or command.
+```admonish note title="Note on commands"
+In sbt, there are _tasks_ that operate at the subproject level (like `compile`), and _commands_ in the narrow sense (like `set`), which is capable of manipulating the build definition itself.
+
+Given that settings and tasks are lifted into the `act` command, we can consider _all things that can be typed into the sbt shell_ as commands in the wide sense.
+See the [Command](../concepts/command.md) concept page for details.
 ```
 
 <!--
@@ -66,11 +65,11 @@ _thing you can type at the sbt prompt_, which may be a setting, task, or command
     [multi-project builds][Multi-Project].
 -->
 
-### Project-level tasks
+### Subproject-level tasks
 
 -   `clean` Deletes all generated files (the `target` directory).
 -   [`publish`](./sbt-publish.md) Publishes artifacts (such as JARs) to the repository
-    defined by the publishTo setting, described in Publishing.
+    defined by the `publishTo` setting.
 -   [`publishLocal`](./sbt-publish.md) Publishes artifacts (such as JARs) to the local Ivy
     repository as described in Publishing.
 -   [`update`](./sbt-update.md) Resolves and retrieves external dependencies.
@@ -120,15 +119,16 @@ configuration that can be run using a `Test/` prefix.
     main class in the test code. -->
 -   [`test <test>*`](./sbt-tes.md) Runs the tests specified as arguments (or all
     tests if no arguments are given) that:
-    1.  have not been run yet OR
-    2.  failed the last time they were run OR
-    3.  had any transitive dependencies recompiled since the last
-        successful run `*` is interpreted as a wildcard in the
+      1.  have not been run yet OR
+      2.  failed the last time they were run OR
+      3.  had any transitive dependencies recompiled since the last successful run<br>
+    `*` is interpreted as a wildcard in the
         test name.
 -   [`testFull`](./sbt-test.md) Runs all tests detected during test compilation.
--   [`testOnly <test>*`](./sbt-test.md) Runs the tests provided as arguments.
 
 <!--
+-   [`testOnly <test>*`](./sbt-test.md) Runs the tests provided as arguments.
+
 -   `consoleQuick` Starts the Scala interpreter with the project's
     compile-time dependencies on the classpath. Test/consoleQuick uses
     the test dependencies. This task differs from console in that it
@@ -142,6 +142,7 @@ configuration that can be run using a `Test/` prefix.
 
 ### General commands
 
+-   `shutdown` Shuts down the sbt server to end the current sbt session.
 -   `exit` or `quit` End the current interactive session or build.
     Additionally, Ctrl+D (Unix) or Ctrl+Z (Windows) will exit the
     interactive prompt.
@@ -155,11 +156,13 @@ configuration that can be run using a `Test/` prefix.
     arguments provided or adds/removes the build at the provided URI.
     <!-- (See [multi-project builds][Multi-Project] for details on multi-project
     builds.) -->
+<!--
 -   `project <project-id>` Change the current project to the project
     with ID `<project-id>`. Further operations will be done in the
     context of the given project.
-    <!-- (See [multi-project builds][Multi-Project] for
-    details on multiple project builds.) -->
+    (See [multi-project builds][Multi-Project] for
+    details on multiple project builds.)
+-->
 -   [Watch command](./watch.md) `~ <command>` Executes the project specified action or method
     whenever source files change.
 -   `< filename` Executes the commands in the given file. Each command
