@@ -260,6 +260,7 @@ your plugin to the list.
 - [sbt-dependency-lock](https://stringbean.github.io/sbt-dependency-lock):
 generate dependency lockfiles and check for changes at build time.
 - [sbt-unzip](https://github.com/djice/sbt-unzip-plugin): Extract zip dependencies where you want in your project.
+- [sbt-dependency-rules](https://github.com/evolution-gaming/sbt-dependency-rules-plugin): Enforce user-defined rules on project dependencies.
 
 #### Web and frontend development plugins
 
