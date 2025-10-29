@@ -175,6 +175,7 @@ your plugin to the list.
 - [sbt-license-check](https://github.com/philippus/sbt-license-check): check and report on licenses used, fail build for disallowed licenses. <!-- 9 stars -->
 - [sbt-pekko-version-check](https://github.com/philippus/sbt-pekko-version-check): check if the Apache Pekko modules match. <!-- 5 stars -->
 - [sbt-jackson-version-check](https://github.com/philippus/sbt-jackson-version-check): check if the Jackson modules match. <!-- 3 stars -->
+- [sbt-dependency-rules](https://github.com/evolution-gaming/sbt-dependency-rules-plugin): enforce user-defined rules on project dependencies. <!-- 3 stars -->
 
 <div style="display: none;">
 
