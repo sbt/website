@@ -185,8 +185,8 @@ your plugin to the list.
   resolve and publish artefacts using Amazon S3. <!-- 79 stars -->
 - [sbt-s3-resolver](https://github.com/ohnosequences/sbt-s3-resolver): resolve
   dependencies using Amazon S3. <!-- 73 stars -->
-- [sbt-dependency-check](https://github.com/albuch/sbt-dependency-check):
-  check dependencies for known vulnerabilities/CVEs. <!-- 56 stars -->
+- [sbt-dependency-check](https://github.com/nMoncho/sbt-dependency-check):
+  check dependencies for known vulnerabilities/CVEs. <!-- 25 stars -->
 - [sbt-lock](https://github.com/tkawachi/sbt-lock): create a lock file
   containing explicit sbt dependencies. <!-- 33 stars -->
 - [sbt-license-report](https://github.com/sbt/sbt-license-report): generate
