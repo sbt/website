@@ -81,6 +81,11 @@ LocalRootProject / publish / skip := true
 
 In sbt 2.x, bare settings settings should no longer be scoped to `ThisBuild`. One benefit of the new _common settings_ over `ThisBuild` is that it would act in a more predictable delegation. These settings are inserted between plugins settings and those defined in `settings(...)`, meaning they can be used to define settings like `Compile / scalacOptions`, which was not possible with `ThisBuild`.
 
+Changes to `exportJars`
+-----------------------
+
+`exportJars` defaults to `true`, was `false`. This might break `getResource("/")` and `resource.toURI`. Set `exportJars := false` if this logic is broken in your build, producing `NullPointerException`s and `FileSystemNotFoundException`s. Set `exportJars := false` in your build if you want to keep the old behavior. The change was introduced by [sbt/sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://eed3si9n.com/sbt-remote-cache/).
+
 Migrating to cached tasks
 -------------------------
 
