@@ -1,6 +1,6 @@
 ---
 title: Thank you
-slug: /thank-you.html
+slug: /thank-you
 ---
 
 Thank You

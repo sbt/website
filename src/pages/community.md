@@ -1,6 +1,6 @@
 ---
 title: Get Involved
-slug: /community.html
+slug: /community
 ---
 
   [so]: https://stackoverflow.com/questions/tagged/sbt
