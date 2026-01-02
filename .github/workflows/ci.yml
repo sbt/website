@@ -36,6 +36,11 @@ jobs:
         export PATH="$PATH:$HOME/.cargo/bin"
         mdbook --version
 
+    - name: Build landing page
+      run: |
+        yarn install
+        yarn run build
+
     - name: Build and test
       run: |
         sbt -v scalafmtSbtCheck scalafmtCheckAll makeSite

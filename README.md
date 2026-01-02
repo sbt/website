@@ -31,6 +31,13 @@ $ mdbook serve
 
 The landing page is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
+### Bump dependencies
+
+```bash
+$ yarn outdated
+$ yarn upgrade
+```
+
 ### Local Development
 
 ```bash
