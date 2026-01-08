@@ -6,11 +6,6 @@ Import to IntelliJ IDEA
   [intellij-scala-plugin-2021-2]: https://blog.jetbrains.com/scala/2021/07/27/intellij-scala-plugin-2021-2/#Compiler-based_highlighting
   [bsp]: https://build-server-protocol.github.io/
 
-```admonish warning
-This is a draft documentation of sbt 2.x that is yet to be released.
-This is a placeholder, copied from sbt 1.x.
-```
-
 Objective
 ---------
 
@@ -50,7 +45,7 @@ Importing the build to IntelliJ means that you're effectively using IntelliJ as 
 While many users are happy with the experience, depending on the code base some of the compilation errors may be false, it may not work well with plugins that generate sources, and generally you might want to code with the identical build semantics as sbt.
 Thankfully, modern IntelliJ supports alternative _build servers_ including sbt via the [Build Server Protocol][bsp] (BSP).
 
-The benefit of using BSP with IntelliJ is that you're using sbt to do the actual build work, so if you are the kind of programmer who had sbt session up on the side, this avoids double compilation.
+The benefit of using Build Server Protocol (BSP) with IntelliJ is that you're using sbt to do the actual build work, so if you are the kind of programmer who had sbt session up on the side, this avoids double compilation.
 
 <table class="table table-striped">
   <tr>
@@ -88,16 +83,11 @@ The benefit of using BSP with IntelliJ is that you're using sbt to do the actual
 To use sbt as build server on IntelliJ:
 
 1. Install Scala plugin on the Plugins tab.
-2. To use the BSP approach, do not use Open button on the Project tab:<br>
-   ![IntelliJ](../files/intellij7.png)
-3. From menubar, click New > "Project From Existing Sources", or Find Action (`Cmd-Shift-P` on macOS) and
-   type "Existing" to find "Import Project From Existing Sources":<br>
-   ![IntelliJ](../files/intellij8.png)
-4. Open a `build.sbt` file. Select **BSP** when prompted:<br>
-   ![IntelliJ](../files/intellij9.png)
-5. Select **sbt (recommended)** as the tool to import the BSP workspace:<br>
-   ![IntelliJ](../files/intellij10.png)
-6. Once the import process is complete, open a Scala file to see that code completion works:<br>
+2. To use the BSP approach, close IntelliJ, and remove exising `.idea` directory, if any.
+3. From the terminal, run `sbt bspConfig` to generate `.bsp` directory.
+4. Open IntelliJ, and open a `build.sbt` file. Select **BSP project** when prompted:<br>
+   ![IntelliJ](../files/intellij_bsp.png)
+5. Once the import process is complete, open a Scala file to see that code completion works:<br>
    ![IntelliJ](../files/intellij11.png)
 
 Use the following setting to opt-out some of the subprojects from BSP.

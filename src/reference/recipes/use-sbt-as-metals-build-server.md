@@ -4,12 +4,6 @@ Use sbt as Metals build server
   [metals]: https://scalameta.org/metals/
   [vscode-debugging]: https://code.visualstudio.com/docs/editor/debugging
 
-
-```admonish warning
-This is a draft documentation of sbt 2.x that is yet to be released.
-This is a placeholder, copied from sbt 1.x.
-```
-
 Objective
 ---------
 
@@ -37,16 +31,6 @@ bspEnabled := false
 When you make changes to the code and save them (`Cmd-S` on macOS), Metals will invoke sbt to do
 the actual building work.
 
-#### Interactive debugging on VS Code
-
-1. Metals supports interactive debugging by setting break points in the code:<br>
-  ![Metals](../files/metals4.png)
-2. Interactive debugging can be started by right-clicking on an unit test, and selecting "Debug Test."
-   When the test hits a break point, you can inspect the values of the variables:<br>
-   ![Metals](../files/metals5.png)
-
-See [Debugging][vscode-debugging] page on VS Code documentation for more details on how to navigate an interactive debugging session.
-
 #### Logging into sbt session
 
 While Metals uses sbt as the build server, we can also log into the same sbt session using a thin client.
@@ -56,3 +40,15 @@ While Metals uses sbt as the build server, we can also log into the same sbt ses
 
 This lets you log into the sbt session Metals has started. In there you can call `testOnly` and other tasks with
 the code already compiled.
+
+<!--
+#### Interactive debugging on VS Code
+
+1. Metals supports interactive debugging by setting break points in the code:<br>
+  ![Metals](../files/metals4.png)
+2. Interactive debugging can be started by right-clicking on an unit test, and selecting "Debug Test."
+   When the test hits a break point, you can inspect the values of the variables:<br>
+   ![Metals](../files/metals5.png)
+
+See [Debugging][vscode-debugging] page on VS Code documentation for more details on how to navigate an interactive debugging session.
+-->
