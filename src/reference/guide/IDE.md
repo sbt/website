@@ -22,4 +22,3 @@ Here are a few recipes on how to configure the IDEs to integrate with sbt:
 
 - [Use sbt as Metals build server](../recipes/use-sbt-as-metals-build-server.md)
 - [Import to IntelliJ IDEA](../recipes/import-to-intellij.md)
-- [Use Neovim](../recipes/use-neovim.md)
