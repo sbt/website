@@ -134,7 +134,7 @@ and then discusses design choices that led to the current implementation.
 The goal of incremental compilation is detect changes to source files or to the classpath and
 determine a small set of files to be recompiled in such a way that it'll yield the final result
 identical to the result from a full, batch compilation. When reacting to changes the incremental
-compiler has to goals that are at odds with each other:
+compiler has two goals that are at odds with each other:
 
   * recompile as little source files as possible cover all changes to type checking and produced
   * byte code triggered by changed source files and/or classpath
