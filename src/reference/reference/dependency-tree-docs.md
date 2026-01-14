@@ -1,4 +1,5 @@
-# Dependency Tree
+sbt dependencyTree
+==================
 
 The `dependencyTree` task displays the dependency graph of your project in various formats, helping you visualize and analyze transitive dependencies. It is provided by the `DependencyTreePlugin`, which is enabled by default in sbt (since version 1.4.0).
 
