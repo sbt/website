@@ -26,6 +26,7 @@
 - [Reference](reference/index.md)
   - [sbt](reference/sbt.md)
   - [sbt update](reference/sbt-update.md)
+  - [Dependency tree](reference/dependency-tree.md)
   - [sbt compile](reference/sbt-compile.md)
   - [sbt run](reference/sbt-run.md)
   - [sbt test](reference/sbt-test.md)
