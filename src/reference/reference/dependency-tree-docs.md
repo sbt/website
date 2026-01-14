@@ -1,17 +1,28 @@
 sbt dependencyTree
 ==================
 
-The `dependencyTree` task displays the dependency graph of your project in various formats, helping you visualize and analyze transitive dependencies. It is provided by the `DependencyTreePlugin`, which is enabled by default in sbt (since version 1.4.0).
+Synopsis
+--------
 
-## Usage
+`sbt` `dependencyTree` \[_subcommand_\] \[_options_\]<br>
+`sbt` `dependencyTree` `list` \[_options_\]<br>
+`sbt` `dependencyTree` `graph` \[_options_\]<br>
+`sbt` `dependencyTree` `html` \[_options_\]<br>
+`sbt` `dependencyTree` `html-graph` \[_options_\]<br>
+`sbt` `dependencyTree` `json` \[_options_\]<br>
+`sbt` `dependencyTree` `xml` \[_options_\]<br>
+`sbt` `dependencyTree` `stats` \[_options_\]
 
-```
-dependencyTree [subcommand] [options]
-```
+Description
+-----------
 
-Run this in the sbt shell. The task resolves dependencies before generating output, so it may trigger downloads if needed.
+The `dependencyTree` task displays the dependency graph of your project in various formats, helping you visualize and analyze transitive dependencies. It is provided by the `DependencyTreePlugin`, which has been a built-in feature since sbt 1.4.0. The task resolves dependencies before generating output, so it may trigger downloads if needed.
 
-### Subcommands
+### Usage
+
+Run this in the sbt shell. The default subcommand is `tree`, which prints an ASCII tree.
+
+#### Subcommands
 
 - `tree` (default): Prints an ASCII tree of dependencies, showing hierarchical relationships. Useful for quick overviews.
 - `list`: Prints a flat list of all dependencies, one per line. Ideal for scripting or grepping.
@@ -23,7 +34,7 @@ Run this in the sbt shell. The task resolves dependencies before generating outp
 - `stats`: Prints summary statistics, such as total dependencies and versions.
 - `help`: Displays the usage help (same as running `dependencyTree` without arguments).
 
-### Options
+#### Options
 
 - `--quiet`: Suppresses console output and returns the result as a task value (e.g., for use in other tasks).
 - `--out <file>`: Writes output to the specified file instead of stdout. The file extension determines the default subcommand:
@@ -34,13 +45,13 @@ Run this in the sbt shell. The task resolves dependencies before generating outp
   - `.xml`: `xml`
 - `--browse`: Automatically opens the output file in your default browser (only works with `graph` or `html` subcommands).
 
-## Examples
+### Examples
 
-### ASCII Tree (Default)
+#### ASCII Tree (Default)
 
 Displays a hierarchical view of dependencies, with `[S]` indicating Scala library dependencies.
 
-```
+```bash
 > Compile/dependencyTree
 [info] default:example_3:0.1.0-SNAPSHOT
 [info]   +-org.scala-lang:scala3-library_3:3.3.1 [S]
@@ -53,9 +64,9 @@ Displays a hierarchical view of dependencies, with `[S]` indicating Scala librar
 
 Evicted dependencies (older versions replaced by newer ones) are shown in parentheses.
 
-### List of Dependencies
+#### List of Dependencies
 
-```
+```bash
 > Compile/dependencyTree list
 org.scala-lang:scala3-library_3:3.3.1
 com.example:library_3:1.0.0
@@ -64,11 +75,11 @@ org.typelevel:cats-kernel_3:2.9.0
 org.typelevel:cats-effect_3:3.4.0
 ```
 
-### GraphViz DOT File
+#### GraphViz DOT File
 
 Generates a DOT file for rendering graphs (e.g., with `dot` command).
 
-```
+```bash
 > Compile/dependencyTree graph --out dependencies.dot
 ```
 
@@ -87,25 +98,25 @@ digraph "dependency-graph" {
 
 Render to PNG: `dot -Tpng dependencies.dot -o dependencies.png`
 
-### HTML Output
+#### HTML Output
 
-```
+```bash
 > Compile/dependencyTree html --out deps.html --browse
 ```
 
 Creates `deps.html` with a text-based graph and opens it in the browser.
 
-### HTML with Embedded Graph
+#### HTML with Embedded Graph
 
-```
+```bash
 > Compile/dependencyTree html-graph --browse
 ```
 
 Requires GraphViz installed. Embeds a visual graph in the HTML.
 
-### JSON Output
+#### JSON Output
 
-```
+```bash
 > Compile/dependencyTree json --out deps.json
 ```
 
@@ -129,17 +140,17 @@ Sample output:
 }
 ```
 
-### XML (GraphML) Output
+#### XML (GraphML) Output
 
-```
+```bash
 > Compile/dependencyTree xml --out deps.graphml
 ```
 
 Suitable for import into graph visualization tools like yEd.
 
-### Statistics
+#### Statistics
 
-```
+```bash
 > Compile/dependencyTree stats
 Total dependencies: 15
 Unique organizations: 5
@@ -147,7 +158,7 @@ Versions: 10 distinct
 Evictions: 2
 ```
 
-## Configuration Keys
+### Configuration Keys
 
 Customize behavior with these settings in `build.sbt`:
 
@@ -156,12 +167,26 @@ Customize behavior with these settings in `build.sbt`:
 - `dependencyDotNodeLabel := (org: String, name: String, version: String) => s"$org:$name:$version"`: Customize DOT node labels.
 - `dependencyDotHeader := """digraph "custom" { rankdir="TB"; }"""`: Set a custom DOT header.
 
-## Related Tasks
+### Related Tasks
 
 - `whatDependsOn <module>`: Shows what depends on a specific module (e.g., `whatDependsOn org.example:lib:1.0`).
 - `dependencyLicenseInfo`: Displays license information for dependencies.
 
-## Scopes
+### Scopes
 
 Available in `Compile` and `Test` configurations. Use `Global/` for cross-configuration views if needed.
 
+### Summary of Changes in the Proposal
+- **Added `Synopsis`**: Mirrors the template with command syntax variations.
+- **Restructured intro as `Description`**: Moved the brief overview here, keeping it concise.
+- **Adjusted headings**: Used `###` for subsections under main sections (e.g., under `Usage`, `Examples`).
+- **Maintained content**: All original details (usage, examples, etc.) are preserved, just reorganized for consistency.
+- **Formatting**: Aligned code blocks, lists, and examples to match the template's style.
+
+This should satisfy the reviewer's request. If you apply these changes to your PR branch, it will align with the `sbt-inspect.md` template.
+
+Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-01-14 01:26:07
+Current User's Login: Dairus01
+
+Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-01-14 01:27:55
+Current User's Login: Dairus01
