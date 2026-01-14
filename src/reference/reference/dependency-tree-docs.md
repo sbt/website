@@ -176,17 +176,3 @@ Customize behavior with these settings in `build.sbt`:
 
 Available in `Compile` and `Test` configurations. Use `Global/` for cross-configuration views if needed.
 
-### Summary of Changes in the Proposal
-- **Added `Synopsis`**: Mirrors the template with command syntax variations.
-- **Restructured intro as `Description`**: Moved the brief overview here, keeping it concise.
-- **Adjusted headings**: Used `###` for subsections under main sections (e.g., under `Usage`, `Examples`).
-- **Maintained content**: All original details (usage, examples, etc.) are preserved, just reorganized for consistency.
-- **Formatting**: Aligned code blocks, lists, and examples to match the template's style.
-
-This should satisfy the reviewer's request. If you apply these changes to your PR branch, it will align with the `sbt-inspect.md` template.
-
-Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-01-14 01:26:07
-Current User's Login: Dairus01
-
-Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-01-14 01:27:55
-Current User's Login: Dairus01
