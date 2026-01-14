@@ -16,7 +16,7 @@ Synopsis
 Description
 -----------
 
-The `dependencyTree` task displays the dependency graph of your project in various formats, helping you visualize and analyze transitive dependencies. It is provided by the `DependencyTreePlugin`, which has been a built-in feature since sbt 1.4.0. The task resolves dependencies before generating output, so it may trigger downloads if needed.
+The `dependencyTree` task displays the dependency graph of your project in various formats, helping you visualize and analyze transitive dependencies. It is provided by the `DependencyTreePlugin`, which was in-sourced from Johannes Rudolph's sbt-dependency-graph in sbt 1.4.0. The task resolves dependencies before generating output, so it may trigger downloads if needed.
 
 ### Usage
 
