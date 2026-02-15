@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-03T03:05:38-04:00\n"
+"POT-Creation-Date: 2026-02-15T14:17:14-05:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,10 +26,10 @@ msgid ""
 "DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala "
 "3.7.x."
 msgstr ""
-"念の為書いておくと、sbt 1.x 系 2.x 系のどちらを使っても"
-"Scala 2.x および Scala 3.x 両方のプログラムをビルドすることが可能だ。"
-"ただし、`build.sbt` DSL を裏付ける Scala は sbt のバージョンによって決定される。"
-"sbt 2.0 では、Scala 3.7.x 系に移行する。"
+"念の為書いておくと、sbt 1.x 系 2.x 系のどちらを使ってもScala 2.x および "
+"Scala 3.x 両方のプログラムをビルドすることが可能だ。ただし、`build.sbt` DSL "
+"を裏付ける Scala は sbt のバージョンによって決定される。sbt 2.0 では、Scala "
+"3.7.x 系に移行する。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:9
 msgid ""
@@ -39,11 +39,11 @@ msgid ""
 "table.html) and [Scala 2 with -Xsource:3](https://docs.scala-lang.org/scala3/"
 "guides/migration/tooling-scala2-xsource3.html) for details about Scala 3.x."
 msgstr ""
-"そのため、sbt 2.x 用のカスタムタスクや sbt プラグインを実装する場合、"
-"それは Scala 3.x を用いて行われることとなる。"
-"Scala 3.x に関する詳細は"
-"[Scala 3.x incompatibility table](https://docs.scala-lang.org/scala3/guides/migration/incompatibility-table.html) や "
-"[Scala 2 with -Xsource:3](https://docs.scala-lang.org/scala3/guides/migration/tooling-scala2-xsource3.html) なども参照。"
+"そのため、sbt 2.x 用のカスタムタスクや sbt プラグインを実装する場合、それは "
+"Scala 3.x を用いて行われることとなる。Scala 3.x に関する詳細は[Scala 3.x "
+"incompatibility table](https://docs.scala-lang.org/scala3/guides/migration/"
+"incompatibility-table.html) や [Scala 2 with -Xsource:3](https://docs.scala-"
+"lang.org/scala3/guides/migration/tooling-scala2-xsource3.html) なども参照。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:12
 msgid "// This works on Scala 2.12.20 under -Xsource:3"
@@ -59,8 +59,8 @@ msgid ""
 "instances are imported into scope. In Scala 2.x `import FooCodec._` was used "
 "whereas Scala 3 uses `import FooCodec.given`. Writing:"
 msgstr ""
-"Scala 2.x と 3.x の違いの 1つとして、型クラスのインスタンスの言語スコープへの取り込み方の違いが挙げられる。"
-"Scala 2.x では `import FooCodec._` と書いたが、"
+"Scala 2.x と 3.x の違いの 1つとして、型クラスのインスタンスの言語スコープへの"
+"取り込み方の違いが挙げられる。Scala 2.x では `import FooCodec._` と書いたが、"
 "Scala 3 は、`import FooCodec.given` と書く。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:21
@@ -76,8 +76,8 @@ msgid ""
 "It wasn't uncommon for sbt 0.13 and 1.x examples to use postfix notations, "
 "especially with `ModuleID`:"
 msgstr ""
-"特に `ModuleID` 関連で、 "
-"sbt 0.13 や 1.x のコード例で後置記法を見ることは珍しく無かった:"
+"特に `ModuleID` 関連で、 sbt 0.13 や 1.x のコード例で後置記法を見ることは珍し"
+"く無かった:"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:30
 msgid "// BAD"
@@ -107,7 +107,8 @@ msgstr "これは、sbt 2.x では起動に失敗する:"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:46
 msgid "To fix this, use the normal (dotted) function call notation:"
-msgstr "これを修正するには、普通の (ピリオドを使った) 関数呼び出しの記法で書く:"
+msgstr ""
+"これを修正するには、普通の (ピリオドを使った) 関数呼び出しの記法で書く:"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:49
 msgid "// GOOD"
@@ -130,8 +131,8 @@ msgid ""
 "_Bare settings_, like the example above, are settings written directly in "
 "`build.sbt` without `settings(...)`."
 msgstr ""
-"`settings(...)` を介さず、上の例のように `build.sbt` "
-"に直書きされたセッティングを**ベア・セッティング** (bare settings) と呼ぶ。"
+"`settings(...)` を介さず、上の例のように `build.sbt` に直書きされたセッティン"
+"グを**ベア・セッティング** (bare settings) と呼ぶ。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:64
 msgid ""
@@ -142,9 +143,9 @@ msgid ""
 "```"
 msgstr ""
 "```admonish warning\n"
-"sbt 1.x において、ベア・セッティングはルートプロジェクトにのみ適用されるセッティングだった。"
-"sbt 2.x においては、`build.sbt` のベア・セッティングは"
-"**全サブプロジェクト**に注入されるコモン・セッティングとして解釈される。\n"
+"sbt 1.x において、ベア・セッティングはルートプロジェクトにのみ適用されるセッ"
+"ティングだった。sbt 2.x においては、`build.sbt` のベア・セッティングは**全サ"
+"ブプロジェクト**に注入されるコモン・セッティングとして解釈される。\n"
 "```"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:69
@@ -160,9 +161,9 @@ msgid ""
 "To apply some settings to the root subproject only, either define it using "
 "multi-project build, or scope the setting under `LocalRootProject`:"
 msgstr ""
-"ルートプロジェクトにのみセッティングを適用させるためには、"
-"マルチ・プロジェクトなビルドを定義するか、"
-"セッティングを `LocalRootProject` にスコープ付けさせる:"
+"ルートプロジェクトにのみセッティングを適用させるためには、マルチ・プロジェク"
+"トなビルドを定義するか、セッティングを `LocalRootProject` にスコープ付けさせ"
+"る:"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:76
 msgid "\"root\""
@@ -181,184 +182,199 @@ msgid ""
 "meaning they can be used to define settings like `Compile / scalacOptions`, "
 "which was not possible with `ThisBuild`."
 msgstr ""
-"sbt 2.x においては、ベア・セッティングが "
-"`ThisBuild` にスコープ付けされる場面は無くなったはずだ。"
-"コモン・セッティングの `ThisBuild` に対する利点として"
-"委譲の振る舞いが、分かりやすくなるということがある。"
-"これらのセッティングはプラグインのセッティングと、"
-"`settings(...)` の間に入るため、 "
-"`Compile / scalacOptions` といったセッティングを定義するのに使える。 "
-"`ThisBuild` ではそれは不可能だった。"
+"sbt 2.x においては、ベア・セッティングが `ThisBuild` にスコープ付けされる場面"
+"は無くなったはずだ。コモン・セッティングの `ThisBuild` に対する利点として委譲"
+"の振る舞いが、分かりやすくなるということがある。これらのセッティングはプラグ"
+"インのセッティングと、`settings(...)` の間に入るため、 `Compile / "
+"scalacOptions` といったセッティングを定義するのに使える。 `ThisBuild` ではそ"
+"れは不可能だった。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:84
+#, fuzzy
+msgid "Changes to `exportJars`"
+msgstr "`target` に関する変更"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:87
+msgid ""
+"`exportJars` defaults to `true`, was `false`. This might break "
+"`getResource(\"/\")` and `resource.toURI`. Set `exportJars := false` if this "
+"logic is broken in your build, producing `NullPointerException`s and "
+"`FileSystemNotFoundException`s. Set `exportJars := false` in your build if "
+"you want to keep the old behavior. The change was introduced by [sbt/"
+"sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://"
+"eed3si9n.com/sbt-remote-cache/)."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:89
 msgid "Migrating to cached tasks"
 msgstr "キャッシュ・タスクへのマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:87
+#: src/reference/changes/migrating-from-sbt-1.x.md:92
 msgid ""
 "See [Cached task](../reference/cached-task.md) reference for details, "
 "including the way to opt out of caching."
 msgstr ""
-"キャッシュ化のオプトアウトを含め"
-"[キャッシュ・タスク](../reference/cached-task.md)参照。"
+"キャッシュ化のオプトアウトを含め[キャッシュ・タスク](../reference/cached-"
+"task.md)参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:89
+#: src/reference/changes/migrating-from-sbt-1.x.md:94
 msgid "Migration away from IntegrationTest"
 msgstr "IntegrationTest の廃止"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:92
+#: src/reference/changes/migrating-from-sbt-1.x.md:97
 msgid ""
 "To migrate away from the `IntegrationTest` configuration, create a separate "
 "subproject and implement it as normal test."
 msgstr ""
-"`IntegrationTest` コンフィギュレーションの廃止に対応するためには、"
-"別のサブプロジェクトを定義して、普通のテストとして実装するのが推奨される。"
+"`IntegrationTest` コンフィギュレーションの廃止に対応するためには、別のサブプ"
+"ロジェクトを定義して、普通のテストとして実装するのが推奨される。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:94
+#: src/reference/changes/migrating-from-sbt-1.x.md:99
 msgid "Migrating to slash syntax"
 msgstr "スラッシュ構文へのマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:97
+#: src/reference/changes/migrating-from-sbt-1.x.md:102
 msgid ""
 "sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt "
 "2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for "
 "both sbt shell and in `build.sbt`:"
 msgstr ""
 "sbt 1.x は sbt 0.13 スタイル構文とスラッシュ構文の両方をサポートしたきた。"
-"2.x で sbt 0.13 構文のサポートが無くなるので、"
-"sbt シェルと `build.sbt` の両方で統一スラッシュ構文を使う:"
+"2.x で sbt 0.13 構文のサポートが無くなるので、sbt シェルと `build.sbt` の両方"
+"で統一スラッシュ構文を使う:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:103
+#: src/reference/changes/migrating-from-sbt-1.x.md:108
 msgid ""
 "For example, `test:compile` will no longer work on the shell. Use `Test/"
 "compile` instead. See [syntactic Scalafix rule for unified slash syntax]"
 "(https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/) for "
 "semi-automated migration of `build.sbt` files."
 msgstr ""
-"具体的には、`test:compile` という表記はシェルからは使えなくなる。"
-"代わりに `Test/compile` と書く。"
-"`build.sbt` ファイルの半自動的なマイグレーションには"
-"[統一スラッシュ構文のための syntactic Scalafix rule](https://eed3si9n.com/ja/syntactic-scalafix-rule-for-unified-slash-syntax/) 参照。"
+"具体的には、`test:compile` という表記はシェルからは使えなくなる。代わりに "
+"`Test/compile` と書く。`build.sbt` ファイルの半自動的なマイグレーションには"
+"[統一スラッシュ構文のための syntactic Scalafix rule](https://eed3si9n.com/ja/"
+"syntactic-scalafix-rule-for-unified-slash-syntax/) 参照。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:109
+#: src/reference/changes/migrating-from-sbt-1.x.md:114
 msgid "Cross building sbt plugins"
 msgstr "sbt プラグインのクロスビルド"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:112
+#: src/reference/changes/migrating-from-sbt-1.x.md:117
 msgid ""
 "In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it "
 "will automatically cross build against sbt 1.x and sbt 2.x:"
 msgstr ""
-"sbt 2.x では、sbt プラグインを Scala 3.x と 2.12.x "
-"に対してクロスビルドすると自動的に "
-"sbt 1.x 向けと sbt 2.x 向けにクロスビルドするようになっている。"
+"sbt 2.x では、sbt プラグインを Scala 3.x と 2.12.x に対してクロスビルドすると"
+"自動的に sbt 1.x 向けと sbt 2.x 向けにクロスビルドするようになっている。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:115
+#: src/reference/changes/migrating-from-sbt-1.x.md:120
 msgid "// using sbt 2.x"
 msgstr "// sbt 2.x を使った場合"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:116
-#: src/reference/changes/migrating-from-sbt-1.x.md:136
+#: src/reference/changes/migrating-from-sbt-1.x.md:121
+#: src/reference/changes/migrating-from-sbt-1.x.md:141
 msgid "\"plugin\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:119
-#: src/reference/changes/migrating-from-sbt-1.x.md:139
+#: src/reference/changes/migrating-from-sbt-1.x.md:124
+#: src/reference/changes/migrating-from-sbt-1.x.md:144
 msgid "\"sbt-vimquit\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
-#: src/reference/changes/migrating-from-sbt-1.x.md:133
+#: src/reference/changes/migrating-from-sbt-1.x.md:126
+#: src/reference/changes/migrating-from-sbt-1.x.md:138
 msgid "\"3.6.2\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
-#: src/reference/changes/migrating-from-sbt-1.x.md:132
+#: src/reference/changes/migrating-from-sbt-1.x.md:126
+#: src/reference/changes/migrating-from-sbt-1.x.md:137
 msgid "\"2.12.20\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:124
+#: src/reference/changes/migrating-from-sbt-1.x.md:129
 msgid ""
 "If you use `projectMatrix`, make sure to move the plugin to a subdirectory "
 "like `plugin/`. Otherwise, the synthetic root project will also pick up the "
 "`src/`."
 msgstr ""
-"`projectMatrix` を使った場合、プラグインを `plugin/` のような"
-"サブディレクトリに移動させる必要がある。"
-"そうしないと、デフォルトのルートプロジェクトも `src/` を拾ってしまうからだ。"
+"`projectMatrix` を使った場合、プラグインを `plugin/` のようなサブディレクトリ"
+"に移動させる必要がある。そうしないと、デフォルトのルートプロジェクトも `src/"
+"` を拾ってしまうからだ。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:126
+#: src/reference/changes/migrating-from-sbt-1.x.md:131
 msgid "Cross building sbt plugin with sbt 1.x"
 msgstr "sbt 1.x を使った sbt プラグインのクロスビルド"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:128
+#: src/reference/changes/migrating-from-sbt-1.x.md:133
 msgid "Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x."
 msgstr "sbt 1.x を使ってクロスビルドする場合 sbt 1.10.2 以降を使う必要がある。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:131
+#: src/reference/changes/migrating-from-sbt-1.x.md:136
 msgid "// using sbt 1.x"
 msgstr "// sbt 1.x を使った場合"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:142
+#: src/reference/changes/migrating-from-sbt-1.x.md:147
 msgid "\"2.12\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:142
+#: src/reference/changes/migrating-from-sbt-1.x.md:147
 msgid "\"1.5.8\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:143
+#: src/reference/changes/migrating-from-sbt-1.x.md:148
 msgid "\"2.0.0-RC6\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:149
+#: src/reference/changes/migrating-from-sbt-1.x.md:154
 msgid "Changes to `%%`"
 msgstr "`%%` の変更点"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:152
+#: src/reference/changes/migrating-from-sbt-1.x.md:157
 msgid ""
 "In sbt 2.x, `ModuleID`'s `%%` operator has become platform-aware. For JVM "
 "subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) "
 "on Maven repositories."
 msgstr ""
-"sbt 2.x において `ModuleID` の `%%` 演算子は多プラットフォームに対応するようになった。"
-"JVM系のサブプロジェクトは、`%%` は以前同様に Maven リポジトリにおける (`_3` のような) Scala バージョンの接尾辞をエンコードする。"
+"sbt 2.x において `ModuleID` の `%%` 演算子は多プラットフォームに対応するよう"
+"になった。JVM系のサブプロジェクトは、`%%` は以前同様に Maven リポジトリにおけ"
+"る (`_3` のような) Scala バージョンの接尾辞をエンコードする。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:154
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "Migrating `%%%` operator"
 msgstr "`%%%` 演算子のマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:156
+#: src/reference/changes/migrating-from-sbt-1.x.md:161
 msgid ""
 "When Scala.JS or Scala Native becomes available on sbt 2.x, `%%` will encode "
 "both the Scala version (such as `_3`) and the platform suffix (`_sjs1` etc). "
 "As a result, `%%%` can be replaced with `%%`:"
 msgstr ""
-"Scala.JS や Scala Native の sbt 2.x の対応ができるようになった場合、"
-"`%%` は (`_3` のような) Scala バージョンと (`_sjs1` その他の) プラットフォーム接尾辞をエンコードできるようになっている。"
-"そのため、`%%%` は `%%` に置き換えれるようになるはずだ:"
+"Scala.JS や Scala Native の sbt 2.x の対応ができるようになった場合、`%%` は "
+"(`_3` のような) Scala バージョンと (`_sjs1` その他の) プラットフォーム接尾辞"
+"をエンコードできるようになっている。そのため、`%%%` は `%%` に置き換えれるよ"
+"うになるはずだ:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:159
+#: src/reference/changes/migrating-from-sbt-1.x.md:164
 msgid "\"org.scala-js\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:159
+#: src/reference/changes/migrating-from-sbt-1.x.md:164
 msgid "\"scalajs-dom\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:159
+#: src/reference/changes/migrating-from-sbt-1.x.md:164
 msgid "\"2.8.0\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:162
+#: src/reference/changes/migrating-from-sbt-1.x.md:167
 msgid "Use `.platform(Platform.jvm)` in case where JVM libraries are needed."
 msgstr "JVM ライブラリが必要な場合は `.platform(Platform.jvm)` を使う。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:164
+#: src/reference/changes/migrating-from-sbt-1.x.md:169
 msgid "Changes to `target`"
 msgstr "`target` に関する変更"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:167
+#: src/reference/changes/migrating-from-sbt-1.x.md:172
 msgid ""
 "In sbt 2.x, the `target` directory is unified to be a single `target/` "
 "directory in the working directory, and each subproject creates a "
@@ -366,75 +382,75 @@ msgid ""
 "absorb this change in scripted tests, `exists`, `absent`, and `delete` now "
 "supports glob expression `**`, as well as `||`."
 msgstr ""
-"sbt 2.x では、`target` ディレクトリが単一の `target/` ディレクトリ"
-"に統一され、それぞれのサブプロジェクトがプラットフォーム、Scala バージョン、"
-"id をエンコードしたサブディレクトリを作る。"
-"scripted test でこの変更点を吸収するために、"
-"`exists`、`absent`、`delete` のコマンドは glob式 `**` および `||` をサポートする。"
+"sbt 2.x では、`target` ディレクトリが単一の `target/` ディレクトリに統一さ"
+"れ、それぞれのサブプロジェクトがプラットフォーム、Scala バージョン、id をエン"
+"コードしたサブディレクトリを作る。scripted test でこの変更点を吸収するため"
+"に、`exists`、`absent`、`delete` のコマンドは glob式 `**` および `||` をサ"
+"ポートする。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:170
+#: src/reference/changes/migrating-from-sbt-1.x.md:175
 msgid "# before\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:173
+#: src/reference/changes/migrating-from-sbt-1.x.md:178
 msgid "# after\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:177
+#: src/reference/changes/migrating-from-sbt-1.x.md:182
 msgid "# either is ok\n"
 msgstr "# どちらでも ok\n"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:182
+#: src/reference/changes/migrating-from-sbt-1.x.md:187
 msgid "The PluginCompat technique"
 msgstr "PluginCompat 技法"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:185
+#: src/reference/changes/migrating-from-sbt-1.x.md:190
 msgid ""
 "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
 "scala-2.12/` and `src/main/scala-3/`."
 msgstr ""
-"同じ `*.scala` ソースから sbt 1.x と 2.x 向けのプラグインを作るには"
-"「詰め木」的なコードとして `PluginCompat` という名前のオブジェクトを"
-"`src/main/scala-2.12/` と `src/main/scala-3/` の両方に入れて"
-"違いを吸収することができる。"
+"同じ `*.scala` ソースから sbt 1.x と 2.x 向けのプラグインを作るには「詰め木」"
+"的なコードとして `PluginCompat` という名前のオブジェクトを`src/main/"
+"scala-2.12/` と `src/main/scala-3/` の両方に入れて違いを吸収することができ"
+"る。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:187
+#: src/reference/changes/migrating-from-sbt-1.x.md:192
 msgid "Migrating Classpath type"
 msgstr "Classpath 型のマイグレーション"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:189
+#: src/reference/changes/migrating-from-sbt-1.x.md:194
 msgid ""
 "sbt 2.x changed the `Classpath` type to be an alias of the "
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a shim "
 "created to work with classpaths from both sbt 1.x and 2.x."
 msgstr ""
-"sbt 2.x からは `Classpath` 型が"
-"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` 型のエイリアスとなった。"
-"以下は、sbt 1.x と 2.x の両方のクラスパスに対応するための詰め木だ。"
+"sbt 2.x からは `Classpath` 型が`Seq[Attributed[xsbti.HashedVirtualFileRef]]` "
+"型のエイリアスとなった。以下は、sbt 1.x と 2.x の両方のクラスパスに対応するた"
+"めの詰め木だ。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:192
+#: src/reference/changes/migrating-from-sbt-1.x.md:197
 msgid "// src/main/scala-3/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:215
+#: src/reference/changes/migrating-from-sbt-1.x.md:220
 msgid "and here's for sbt 1.x:"
 msgstr "これが sbt 1.x 用だ:"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:218
+#: src/reference/changes/migrating-from-sbt-1.x.md:223
 msgid "// src/main/scala-2.12/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:237
+#: src/reference/changes/migrating-from-sbt-1.x.md:242
 msgid "// This adds `Def.uncached(...)`"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:244
+#: src/reference/changes/migrating-from-sbt-1.x.md:249
 msgid ""
 "Now we can import `PluginCompat.*` and use `toNioPaths(...)` etc to absorb "
 "the differences between sbt 1.x and 2.x. The above demonstrates how we can "
 "absorb the classpath type change, and convert it into a vector of NIO Paths."
 msgstr ""
-"これで `PluginCompat.*` を import して "
-"`toNioPaths(...)` などを使って sbt 1.x と 2.x の違いを吸収できる。"
-"特にこれは、クラスパス型の違いを吸収して NIO Path ベクトルに変換できることを示している。"
+"これで `PluginCompat.*` を import して `toNioPaths(...)` などを使って sbt "
+"1.x と 2.x の違いを吸収できる。特にこれは、クラスパス型の違いを吸収して NIO "
+"Path ベクトルに変換できることを示している。"
