@@ -11,11 +11,11 @@ the sbt version, instead of relying on users' machine environment.
 
 ### Prerequisites
 
-sbt runs on all major operating systems; however, it requires JDK 8 or higher to run.
+sbt runs on all major operating systems; however, sbt 2.x requires JDK 17 or higher to run.
 
 ```bash
-java -version
-# openjdk version "1.8.0_352"
+java --version
+# openjdk 17.0.12 2024-07-16 LTS
 ```
 
 ### Installing from SDKMAN
@@ -23,7 +23,7 @@ java -version
 To install both JDK and sbt, consider using [SDKMAN](https://sdkman.io/).
 
 ```bash
-sdk install java $(sdk list java | grep -o "\b8\.[0-9]*\.[0-9]*\-tem" | head -1)
+sdk install java $(sdk list java | grep -o "\b17\.[0-9]*\.[0-9]*\-zulu" | head -1)
 sdk install sbt
 ```
 
