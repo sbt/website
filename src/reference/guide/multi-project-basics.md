@@ -50,6 +50,14 @@ lazy val util = (project in file("util"))
   .dependsOn(core)
 ```
 
+Root project
+------------
+
+The subproject at the root of the build is called a **root project**,
+and often plays a special role in the build.
+If a subproject is not defined at the root directory of the build,
+sbt automatically creates a default one that aggregates all other subprojects in the build.
+
 Task aggregation
 ----------------
 
@@ -58,7 +66,7 @@ Task aggregation means that running a task on the aggregate subproject will also
 ```scala
 scalaVersion := "{{scala3_example_version}}"
 
-lazy val root = (project in file("."))
+lazy val root = rootProject
   .autoAggregate
   .settings(
     publish / skip := true
@@ -70,14 +78,6 @@ lazy val core = (project in file("core"))
 ```
 
 In the above example, the root subproject aggregates `util` and `core`. When you type `compile` in the sbt shell, all tree subprojects are compiled in parallel.
-
-Root project
-------------
-
-The subproject at the root of the build is called a **root project**,
-and often plays a special role in the build.
-If a subproject is not defined at the root directory of the build,
-sbt automatically creates a default one that aggregates all other subprojects in the build.
 
 Common settings
 ---------------

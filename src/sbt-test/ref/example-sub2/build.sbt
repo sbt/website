@@ -3,19 +3,17 @@ organization := "com.example"
 
 val toolkitTest = "org.scala-lang" %% "toolkit-test" % "0.1.7"
 
-lazy val hello = project
-  .in(file("."))
+lazy val hello = rootProject
   .settings(
     name := "Hello",
     libraryDependencies ++= Seq(
       "org.scala-lang" %% "toolkit" % "0.1.7",
-      toolkitTest % Test
-    )
+      toolkitTest % Test,
+    ),
   )
 
-lazy val helloCore = project
-  .in(file("core"))
+lazy val helloCore = (project in file("core"))
   .settings(
     name := "Hello Core",
-    libraryDependencies += toolkitTest % Test
+    libraryDependencies += toolkitTest % Test,
   )

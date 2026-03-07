@@ -3,19 +3,19 @@ organization := "com.example"
 
 val toolkitTest = "org.scala-lang" %% "toolkit-test" % "0.1.7"
 
-lazy val hello = project
-  .in(file("."))
-  .aggregate(helloCore)
+lazy val hello = rootProject
+  .autoAggregate
   .dependsOn(helloCore)
   .settings(
     name := "Hello",
-    libraryDependencies += toolkitTest % Test
+    libraryDependencies ++= Seq(
+      "org.scala-lang" %% "toolkit" % "0.1.7",
+      toolkitTest % Test,
+    ),
   )
 
-lazy val helloCore = project
-  .in(file("core"))
+lazy val helloCore = (project in file("core"))
   .settings(
     name := "Hello Core",
-    libraryDependencies += "org.scala-lang" %% "toolkit" % "0.1.7",
-    libraryDependencies += toolkitTest % Test
+    libraryDependencies += toolkitTest % Test,
   )
