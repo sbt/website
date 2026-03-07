@@ -39,7 +39,7 @@ object Docs {
   }
 
   // to avoid duplicates, tell Google to only index /1.x/**
-  lazy val siteMapDirectoryName = "1.x"
+  lazy val siteMapDirectoryName = "2.x"
 
   lazy val siteEmail = settingKey[String]("")
 
