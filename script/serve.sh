@@ -27,4 +27,4 @@ done
 script/concat.sh "$locale"
 # MDBOOK_BOOK__LANGUAGE="$locale" mdbook serve -d "book/$locale"
 MDBOOK_BOOK__LANGUAGE="$locale" mdbook build -d "book/$locale"
-python3 -m http.server 3000 --directory "book/$locale"
+python3 -m http.server 3000 --directory "book/$locale" &> /dev/null

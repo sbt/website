@@ -13,25 +13,27 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:14
 msgid "sbt update"
-msgstr ""
+msgstr "sbt update"
 
 #: src/reference/reference/sbt-update.md:17
 msgid ""
 "See [library depdency basics](../guide/library-dependency-basics.md) in the "
 "Getting Started guide to learn about the basics."
 msgstr ""
+"基本的な導入としては、入門ガイドの[ライブラリ依存性の基礎](../guide/library-"
+"dependency-basics.md)をまずは読んでみてほしい。"
 
 #: src/reference/reference/sbt-update.md:19
 msgid "Synopsis"
-msgstr ""
+msgstr "書式"
 
 #: src/reference/reference/sbt-update.md:22
 msgid "`sbt` \\[_query_ / \\] `update`"
-msgstr ""
+msgstr "`sbt` [_query_ / ] `update`"
 
 #: src/reference/reference/sbt-update.md:24
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-update.md:27
 msgid ""
@@ -41,46 +43,52 @@ msgid ""
 "would like to use in your subprojects, and the library management system "
 "would:"
 msgstr ""
+"sbt は [Coursier](https://get-coursier.io/) を使ってライブラリ管理（他エコシステ"
+"ムではパッケージマネージャーとも呼ばれる）を実装している。ライブラリ管理の一"
+"般的な考え方は、<nobr>サブプロジェクト</nobr>が使用する外部ライブラリを宣言するだけで、"
+"ライブラリ管理システムが以下を行うことである:"
 
 #: src/reference/reference/sbt-update.md:31
 msgid "Check if such versions exists in the listed repositories"
-msgstr ""
+msgstr "指定リポジトリにそのバージョンが存在するか確認する"
 
 #: src/reference/reference/sbt-update.md:32
 msgid ""
 "Look for the transitive dependencies (i.e. the libraries used by the "
 "libraries)"
 msgstr ""
+"間接依存ライブラリ（つまり、ライブラリが使用しているライブラリ）を検索する"
 
 #: src/reference/reference/sbt-update.md:33
 msgid "Attempt to resolve version conflicts, if any"
-msgstr ""
+msgstr "バージョン競合があれば解決を試みる"
 
 #: src/reference/reference/sbt-update.md:34
 msgid "Download the artifacts, such as JAR files, from the repositories"
-msgstr ""
+msgstr "リポジトリから JAR ファイルなどのアーティファクトをダウンロードする"
 
 #: src/reference/reference/sbt-update.md:36
 msgid "Dependencies"
-msgstr ""
+msgstr "ライブラリ依存性"
 
 #: src/reference/reference/sbt-update.md:38
 msgid "Declaring a dependency looks like:"
-msgstr ""
+msgstr "ライブラリ依存性の宣言は以下のようになる:"
 
 #: src/reference/reference/sbt-update.md:44
 msgid "or"
-msgstr ""
+msgstr "または"
 
 #: src/reference/reference/sbt-update.md:55
 msgid "Also, several dependencies can be declared together:"
-msgstr ""
+msgstr "複数のライブラリ依存性をまとめて宣言することもできる:"
 
 #: src/reference/reference/sbt-update.md:64
 msgid ""
 "If you are using a dependency that was built with sbt, double the first `%` "
 "to be `%%`:"
 msgstr ""
+"sbt でビルドされたライブラリ依存性を使用する場合、最初の `%` を `%%` にする:"
 
 #: src/reference/reference/sbt-update.md:71
 msgid ""
@@ -90,20 +98,26 @@ msgid ""
 "version of Scala you are using. See [Cross building](../concepts/cross-"
 "building.md) for details."
 msgstr ""
+"これにより、現在使用している Scala のバージョンでビルドされたライブラリ依存性に正し"
+"い JAR が使用される。この種のライブラリ依存性の解決中にエラーが発生した場合、そのライブラリ依"
+"存性は使用している Scala のバージョン用に公開されていない可能性がある。詳細"
+"は[クロスビルド](../concepts/cross-building.md)を参照。"
 
 #: src/reference/reference/sbt-update.md:84
 msgid "`versionScheme` and eviction errors"
-msgstr ""
+msgstr "`versionScheme` と eviction エラー"
 
 #: src/reference/reference/sbt-update.md:86
 msgid ""
 "sbt allows library authors to declare the version semantics using the "
 "`versionScheme` setting:"
 msgstr ""
+"sbt では、ライブラリ作者が `versionScheme` セッティングを使ってバージョン意味"
+"論を宣言できる:"
 
 #: src/reference/reference/sbt-update.md:89
 msgid "// Semantic Versioning applied to 0.x, as well as 1.x, 2.x, etc"
-msgstr ""
+msgstr "// 0.x および 1.x、2.x などにセマンティックバージョニングを適用"
 
 #: src/reference/reference/sbt-update.md:93
 msgid ""
@@ -112,6 +126,10 @@ msgid ""
 "older version from the graph. This process is colloquially called eviction, "
 "like \"Cats Effect 2.2.0 was evicted.\""
 msgstr ""
+"Coursier がライブラリの複数バージョン（例えば Cats Effect 2.x と Cats Effect "
+"3.0.0-M4）を検出すると、グラフから古いバージョンを削除して競合を解決することが"
+"多い。このプロセスは eviction（退去）と呼ばれ、「Cats Effect 2.2.0 "
+"evict された」のように表現される。"
 
 #: src/reference/reference/sbt-update.md:97
 msgid ""
@@ -121,6 +139,11 @@ msgid ""
 "would cause runtime issues such as `ClassNotFoundException`. Instead "
 "Coursier should've failed to resolve."
 msgstr ""
+"新しいバージョンが Cats Effect 2.2.0 とバイナリ互換性がある場合は問題ない。今"
+"回のケースでは、ライブラリ作者がバイナリ互換性がないと宣言しているため、"
+"eviction は実際には安全ではない。\n"
+"安全でない eviction は `ClassNotFoundException` などのランタイム問題を引き起こすため、"
+"Coursier は解決に失敗すべきだった。"
 
 #: src/reference/reference/sbt-update.md:104
 msgid "\"use\""
@@ -155,14 +178,15 @@ msgid ""
 "sbt performs this secondary compatibility check after Coursier returns a "
 "candidate:"
 msgstr ""
+"sbt は Coursier が候補を返した後に、この二次互換性チェックを行う:"
 
 #: src/reference/reference/sbt-update.md:129
 msgid "This mechanism is called the _eviction error_."
-msgstr ""
+msgstr "この機構は _eviction エラー_ と呼ばれる。"
 
 #: src/reference/reference/sbt-update.md:131
 msgid "Opting out of the the eviction error"
-msgstr ""
+msgstr "eviction エラーを無効にする"
 
 #: src/reference/reference/sbt-update.md:133
 msgid ""
@@ -170,6 +194,9 @@ msgid ""
 "want to ignore the strict check (often for `scala-xml`), you can write this "
 "in `project/plugins.sbt` and `build.sbt`:"
 msgstr ""
+"ライブラリ作者が互換性の破壊を宣言している場合でも、厳格なチェックを無視したい"
+"場合（`scala-xml` でよくある）は、`project/plugins.sbt` と `build.sbt` に以下"
+"を記述する:"
 
 #: src/reference/reference/sbt-update.md:137
 msgid "\"org.scala-lang.modules\""
@@ -181,21 +208,23 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:140
 msgid "To ignore all eviction errors:"
-msgstr ""
+msgstr "全ての eviction エラーを無視するには:"
 
 #: src/reference/reference/sbt-update.md:146
 msgid "Resolvers"
-msgstr ""
+msgstr "リゾルバ"
 
 #: src/reference/reference/sbt-update.md:148
 msgid ""
 "sbt uses the standard Maven Central repository by default. Declare "
 "additional repositories with the form:"
 msgstr ""
+"sbt はデフォルトで標準の Maven Central リポジトリを使用する。追加のリポジトリ"
+"は以下の形式で宣言する:"
 
 #: src/reference/reference/sbt-update.md:154
 msgid "For example:"
-msgstr ""
+msgstr "例:"
 
 #: src/reference/reference/sbt-update.md:158
 msgid "\"org.apache.derby\""
@@ -235,10 +264,11 @@ msgstr ""
 msgid ""
 "sbt can search your local Maven repository if you add it as a repository:"
 msgstr ""
+"リポジトリとして追加すれば、sbt はローカルの Maven リポジトリを検索できる:"
 
 #: src/reference/reference/sbt-update.md:176
 msgid "Override default resolvers"
-msgstr ""
+msgstr "デフォルトのリゾルバを上書きする"
 
 #: src/reference/reference/sbt-update.md:178
 msgid ""
@@ -248,20 +278,27 @@ msgid ""
 "repositories, set `externalResolvers` directly. To only specify repositories "
 "in addition to the usual defaults, configure `resolvers`."
 msgstr ""
+"`resolvers` は追加のインラインユーザーリゾルバを設定する。デフォルトでは、`sbt` "
+"はこれらのリゾルバとデフォルトリポジトリ（Maven Central とローカル Ivy リポジ"
+"トリ）を組み合わせて `externalResolvers` を形成する。リポジトリをより細かく制御"
+"するには、`externalResolvers` を直接設定する。通常のデフォルトに加えてリポジト"
+"リを指定するだけの場合は、`resolvers` を設定する。"
 
 #: src/reference/reference/sbt-update.md:185
 msgid ""
 "For example, to use the Sonatype OSS Snapshots repository in addition to the "
 "default repositories,"
 msgstr ""
+"例えば、デフォルトのリポジトリに加えて Sonatype OSS Snapshots リポジトリを使用"
+"するには、"
 
 #: src/reference/reference/sbt-update.md:192
 msgid "To use the local repository, but not the Maven Central repository:"
-msgstr ""
+msgstr "ローカルリポジトリを使用し、Maven Central は使用しない場合:"
 
 #: src/reference/reference/sbt-update.md:198
 msgid "Override all resolvers for all builds"
-msgstr ""
+msgstr "全てのビルドのリゾルバを上書きする"
 
 #: src/reference/reference/sbt-update.md:200
 msgid ""
@@ -269,15 +306,19 @@ msgid ""
 "dependencies can be configured globally and declared to override the "
 "resolvers configured in a build or plugin definition. There are two parts:"
 msgstr ""
+"sbt、Scala、プラグイン、アプリケーションのライブラリ依存依存性の取得に使用するリポジトリ"
+"は、グローバルに設定し、ビルドまたはプラグイン定義で設定されたリゾルバを上書"
+"きするように宣言できる。以下の 2つの手順を踏む:"
 
 #: src/reference/reference/sbt-update.md:205
 msgid "Define the repositories used by the launcher."
-msgstr ""
+msgstr "ランチャー用のリポジトリを定義する。"
 
 #: src/reference/reference/sbt-update.md:206
 msgid ""
 "Specify that these repositories should override those in build definitions."
 msgstr ""
+"これらのリポジトリがビルド定義のリポジトリを上書きすることを指定する。"
 
 #: src/reference/reference/sbt-update.md:209
 msgid ""
@@ -285,6 +326,9 @@ msgid ""
 "repositories`, which must contain a `[repositories]` section with the same "
 "format as the `Launcher` configuration file. For example:"
 msgstr ""
+"ランチャーが使用するリポジトリは、`~/.sbt/repositories` を定義することで上書き"
+"できる。このファイルには `Launcher` 設定ファイルと同じ形式の `[repositories]` "
+"セクションを含める必要がある。例:"
 
 #: src/reference/reference/sbt-update.md:213
 msgid ""
@@ -304,10 +348,13 @@ msgid ""
 "step is to set `sbt.override.build.repos` to true to use these repositories "
 "for dependency resolution and retrieval."
 msgstr ""
+"リポジトリファイルの別の場所は、sbt 起動スクリプトの `sbt.repository.config` シ"
+"ステムプロパティで指定できる。最後に、ライブラリ依存性の解決と取得にこれらのリポジト"
+"リを使用するには、`sbt.override.build.repos` を true に設定する。"
 
 #: src/reference/reference/sbt-update.md:225
 msgid "Exclude Transitive Dependencies"
-msgstr ""
+msgstr "間接依存ライブラリを除外する"
 
 #: src/reference/reference/sbt-update.md:227
 msgid ""
@@ -315,10 +362,12 @@ msgid ""
 "dependencies. This can be achieved by setting up `ExclusionRules` in "
 "`excludeDependencies`."
 msgstr ""
+"特定のケースでは、間接依存ライブラリを全てのライブラリ依存性から除外する必要がある。"
+"`excludeDependencies` で `ExclusionRules` を設定することで実現できる。"
 
 #: src/reference/reference/sbt-update.md:233
 msgid "// commons-logging is replaced by jcl-over-slf4j"
-msgstr ""
+msgstr "// commons-logging は jcl-over-slf4j で置き換えられる"
 
 #: src/reference/reference/sbt-update.md:234
 msgid "\"commons-logging\""
@@ -331,6 +380,9 @@ msgid ""
 "a pom will be published for the project. It requires the organization and "
 "module name to exclude. For example,"
 msgstr ""
+"ライブラリ依存性の特定の間接依存ライブラリを除外するには、`excludeAll` または `exclude` メ"
+"ソッドを使用する。プロジェクト用の POM を公開する場合は `exclude` メソッドを使"
+"用する。除外するには組織名とモジュール名が必要である。例:"
 
 #: src/reference/reference/sbt-update.md:245
 msgid "\"log4j\""
@@ -350,13 +402,15 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:265
 msgid "Explicit URL"
-msgstr ""
+msgstr "明示的な URL"
 
 #: src/reference/reference/sbt-update.md:267
 msgid ""
 "If your project requires a dependency that is not present in a repository, a "
 "direct URL to its jar can be specified as follows:"
 msgstr ""
+"プロジェクトにリポジトリに存在しないライブラリ依存性が必要な場合、その jar への直接 "
+"URL を以下のように指定できる:"
 
 #: src/reference/reference/sbt-update.md:271
 msgid "\"slinky\""
@@ -376,10 +430,13 @@ msgid ""
 "the configured repositories. Also, the explicit URL is not included in "
 "published metadata (that is, the pom or ivy.xml)."
 msgstr ""
+"URL は、設定されたリポジトリでライブラリ依存性が見つからない場合のフォールバックとして"
+"のみ使用される。また、明示的な URL は公開メタデータ（pom や ivy.xml）には含"
+"まれない。"
 
 #: src/reference/reference/sbt-update.md:278
 msgid "Disable Transitivity"
-msgstr ""
+msgstr "推移性を無効にする"
 
 #: src/reference/reference/sbt-update.md:280
 msgid ""
@@ -390,6 +447,11 @@ msgid ""
 "fetching artifact dependencies with either `intransitive()` or "
 "`notTransitive()`, as in this example:"
 msgstr ""
+"デフォルトでは、これらの宣言は全てのプロジェクトライブラリ依存性を推移的に取得する。"
+"場合によっては、プロジェクトにリストされたライブラリ依存性がビルドに不要なことがある。"
+"例えば、Felix OSGI フレームワークを使用するプロジェクトでは、コンパイルと実行"
+"にメイン jar のみが明示的に必要である。この例のように `intransitive()` または"
+"`notTransitive()` でアーティファクトのライブラリ依存性の取得を避ける:"
 
 #: src/reference/reference/sbt-update.md:288
 #: src/reference/reference/sbt-update.md:330
@@ -408,13 +470,15 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:291
 msgid "Classifiers"
-msgstr ""
+msgstr "クラシファイア"
 
 #: src/reference/reference/sbt-update.md:293
 msgid ""
 "You can specify the classifier for a dependency using the `classifier` "
 "method. For example, to get the jdk15 version of TestNG:"
 msgstr ""
+"`classifier` メソッドでライブラリ依存性のクラシファイアを指定できる。例えば、TestNG "
+"の jdk15 バージョンを取得するには:"
 
 #: src/reference/reference/sbt-update.md:297
 msgid "\"org.testng\""
@@ -434,7 +498,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:300
 msgid "For multiple classifiers, use multiple `classifier` calls:"
-msgstr ""
+msgstr "複数のクラシファイアには、複数回 `classifier` を呼び出す:"
 
 #: src/reference/reference/sbt-update.md:304
 msgid "\"org.lwjgl.lwjgl\""
@@ -464,6 +528,10 @@ msgid ""
 "configuring the `transitiveClassifiers` setting. For example, to only "
 "retrieve sources:"
 msgstr ""
+"全てのライブラリ依存性の特定クラシファイアを推移的に取得するには、`updateClassifiers` "
+"タスクを実行する。デフォルトでは、`sources` または `javadoc` クラシファイアを持つ"
+"全アーティファクトを解決する。取得するクラシファイアは `transitiveClassifiers` "
+"セッティングで選択する。例えば、ソースのみを取得するには:"
 
 #: src/reference/reference/sbt-update.md:314
 msgid "\"sources\""
@@ -471,7 +539,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:317
 msgid "Download Sources"
-msgstr ""
+msgstr "ソースのダウンロード"
 
 #: src/reference/reference/sbt-update.md:319
 msgid ""
@@ -479,6 +547,9 @@ msgid ""
 "plugin. These plugins use the `updateClassifiers` and `updateSbtClassifiers` "
 "tasks, which produce an `Update-Report` referencing these jars."
 msgstr ""
+"ソースと API ドキュメントの JAR ファイルのダウンロードは通常 IDE プラグインが行う。"
+"これらのプラグインは `updateClassifiers` と `updateSbtClassifiers` タスクを使用"
+"し、これらの JAR を参照する `UpdateReport` を生成する。"
 
 #: src/reference/reference/sbt-update.md:324
 msgid ""
@@ -486,9 +557,14 @@ msgid ""
 "add `withSources()` to the dependency definition. For API jars, add "
 "`withJavadoc()`. For example:"
 msgstr ""
+"IDE プラグインを使わずに sbt にライブラリ依存性のソースをダウンロードさせるには、ライブラリ依"
+"存性の定義に `withSources()` を追加する。"
+"API JAR をダウンロードするには `withJavadoc()` を追加する。例:"
 
 #: src/reference/reference/sbt-update.md:333
 msgid ""
 "Note that this is not transitive. Use the `update*Classifiers` tasks for "
 "that."
 msgstr ""
+"これは推移的ではないことに注意。その場合は `update*Classifiers` タスクを使用す"
+"る。"
