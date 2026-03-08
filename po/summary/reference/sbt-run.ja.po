@@ -14,23 +14,23 @@ msgstr ""
 
 #: src/reference/reference/sbt-run.md:1
 msgid "sbt run"
-msgstr ""
+msgstr "sbt run"
 
 #: src/reference/reference/sbt-run.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "書式"
 
 #: src/reference/reference/sbt-run.md:7
 msgid "`sbt` \\[_query_ / \\] `run` \\[_args_\\]"
-msgstr ""
+msgstr "`sbt` [_query_ / ] `run` [_args_]"
 
 #: src/reference/reference/sbt-run.md:9
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-run.md:12
 msgid "The `run` task provides a means for running the user program."
-msgstr ""
+msgstr "`run` タスクはユーザープログラムを実行する手段を提供する。"
 
 #: src/reference/reference/sbt-run.md:14
 msgid ""
@@ -40,14 +40,19 @@ msgid ""
 "program, sends the information back to sbtn, and sbtn launches the user "
 "program in a fresh JVM."
 msgstr ""
+"sbt 1.x 以前では、`run` タスクはユーザープログラムを sbt server と同じ Java "
+"仮想マシン (JVM) 上で実行していた。"
+"sbt 2.x では**クライアントサイド run**を実装している。"
+"`run` タスクはプログラムを含むサンドボックス環境を作成し、情報を sbtn に送り返す。"
+"ユーザープログラムは、sbtn が起動する新しい JVM 内で実行されるという仕組みだ。"
 
 #: src/reference/reference/sbt-run.md:16
 msgid "Motivations"
-msgstr ""
+msgstr "特長"
 
 #: src/reference/reference/sbt-run.md:18
 msgid "There are several motivations for the client-side run."
-msgstr ""
+msgstr "クライアントサイド run にはいくつかの特長がある。"
 
 #: src/reference/reference/sbt-run.md:20
 msgid ""
@@ -58,6 +63,12 @@ msgid ""
 "17 deprecated SecurityManager feature. Because client-side run runs the user "
 "program in its own JVM, it can call `sys.exit`."
 msgstr ""
+"**sys.exit のサポート**。ユーザーコードは `sys.exit` を呼び出せる。通常これは "
+"JVM をシャットダウンする。sbt 1.x では、JDK の SecurityManager を使ってこれらの "
+"`sys.exit` 呼び出しをトラップし、`run` が sbt セッションをシャットダウンするのを"
+"防ぐ必要があった。しかし JDK 17 で SecurityManager が非推奨になったため、"
+"TrapExit は sbt 1.6.0 (2021) で削除された。クライアントサイド run はユーザー"
+"プログラムを専用の JVM で実行するため、`sys.exit` を呼び出せる。"
 
 #: src/reference/reference/sbt-run.md:22
 msgid ""
@@ -66,6 +77,9 @@ msgid ""
 "user code in a separate JVM gives isolation between the sbt server and the "
 "user code."
 msgstr ""
+"**分離**。ユーザーコードはスレッドを開始したり、main メソッドが戻った後も動作"
+"し続けるリソースを割り当てたりできる。別の JVM でユーザーコードを実行することで、"
+"sbt server とユーザーコードの間の分離が得られる。"
 
 #: src/reference/reference/sbt-run.md:23
 msgid ""
@@ -73,3 +87,5 @@ msgid ""
 "server, it can become available to the more requests by other clients, for "
 "example test or IDE integration."
 msgstr ""
+"**sbt server の可用性**。プログラムは sbt server の外で実行されるため、テスト"
+"や IDE 連携など、他のクライアントからのより多くのリクエストに対応できる。"
