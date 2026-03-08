@@ -40,6 +40,8 @@ Tips for Japanese translation
 - Use だ/である tone.
 - Use さん suffix after a name of a person.
 - Keep whitespaces before and after English words and proper nouns, such as Coursier
+- X setup (in header titles) → Xの設定
+- See X for details → 詳細はXを参照
 - current interactive session → 現行の sbt セッション
 - current project → カレント・プロジェクト
 - transitive dependencies → 間接依存ライブラリ
@@ -51,6 +53,7 @@ Tips for Japanese translation
 - equivalent → 等価
 - full Scala version → Scala のフルバージョン
 - binary Scala version → Scala のバイナリバージョン
+- caching → キャッシュ化
 
 Tips for Chinese translation
 -----------------------------

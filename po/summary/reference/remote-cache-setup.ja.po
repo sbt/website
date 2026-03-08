@@ -13,17 +13,19 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:1
 msgid "Remote cache setup"
-msgstr ""
+msgstr "リモート・キャッシュの設定"
 
 #: src/reference/reference/remote-cache-setup.md:4
 msgid ""
 "This page covers remote caching setup. See [Caching](../concepts/caching."
 "html) for general explanation of the caching system."
 msgstr ""
+"このページではリモート・キャッシュの設定を説明する。"
+"キャッシュシステムの導入として[キャッシュ化](../concepts/caching.html)をまず読んでみてほしい。"
 
 #: src/reference/reference/remote-cache-setup.md:6
 msgid "gRPC remote cache"
-msgstr ""
+msgstr "gRPC リモート・キャッシュ"
 
 #: src/reference/reference/remote-cache-setup.md:9
 msgid ""
@@ -32,6 +34,9 @@ msgid ""
 "cache backends. To configure sbt 2.x, add the following to `project/plugins."
 "sbt`"
 msgstr ""
+"将来的に別のリモートキャッシュストア実装が出てくる可能性はあるが、"
+"sbt 2.0 は Bazel リモートキャッシュバックエンドと互換性のある gRPC クライアントを採用して"
+"いる。sbt 2.x を設定するには、`project/plugins.sbt` に以下を追加する:"
 
 #: src/reference/reference/remote-cache-setup.md:15
 msgid ""
@@ -40,54 +45,63 @@ msgid ""
 "remote cache implementations, hopefully it shows how sbt 2.x can be set up "
 "for wide array of them."
 msgstr ""
+"Bazel リモートキャッシュバックエンドにはオープンソースおよび商用の多くの実装が"
+"ある。このページは全ての Bazel リモートキャッシュ実装を網羅する訳ではないが、"
+"多角的に様々な実装向けにセットアップする方法を示す。"
 
 #: src/reference/reference/remote-cache-setup.md:17
 msgid "Authentication"
-msgstr ""
+msgstr "認証"
 
 #: src/reference/reference/remote-cache-setup.md:19
 msgid ""
 "There are a few flavors of [gRPC authentication](https://grpc.io/docs/guides/"
 "auth/), and Bazel remote cache backends use various kind of them:"
 msgstr ""
+"[gRPC 認証](https://grpc.io/docs/guides/auth/)にはいくつかの種類があり、Bazel "
+"リモートキャッシュバックエンドは様々な方式を使用する:"
 
 #: src/reference/reference/remote-cache-setup.md:21
 msgid "Unauthenticated. Useful for testing."
-msgstr ""
+msgstr "認証なし。テストに有用。"
 
 #: src/reference/reference/remote-cache-setup.md:22
 msgid "Default TLS/SSL."
-msgstr ""
+msgstr "デフォルト TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:23
 msgid "TLS/SSL with custom server certificate."
-msgstr ""
+msgstr "カスタムサーバー証明書付き TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:24
 msgid "TTL/SSL with custom server and client certificate, mTLS."
-msgstr ""
+msgstr "カスタムサーバー・クライアント証明書付き TLS/SSL、mTLS。"
 
 #: src/reference/reference/remote-cache-setup.md:25
 msgid "Default TLS/SSL with API token header."
-msgstr ""
+msgstr "API トークンヘッダー付きデフォルト TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:27
 msgid "bazel-remote without authentication"
-msgstr ""
+msgstr "認証なしの bazel-remote"
 
 #: src/reference/reference/remote-cache-setup.md:29
 msgid ""
 "You can grab the code from [buchgr/bazel-remote](https://github.com/buchgr/"
 "bazel-remote) and run it on a laptop using Bazel:"
 msgstr ""
+"[buchgr/bazel-remote](https://github.com/buchgr/bazel-remote) からコードを取得し、"
+"Bazel を使ってラップトップで実行できる:"
 
 #: src/reference/reference/remote-cache-setup.md:37
 msgid "To configure sbt 2.x, add the following to `project/plugins.sbt`"
 msgstr ""
+"sbt 2.x を設定するには、`project/plugins.sbt` に以下を追加する:"
 
 #: src/reference/reference/remote-cache-setup.md:43
 msgid "and append the following to `build.sbt`:"
 msgstr ""
+"`build.sbt` に以下を追加する:"
 
 #: src/reference/reference/remote-cache-setup.md:46
 msgid "\"grpc://localhost:2024\""
@@ -95,7 +109,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:49
 msgid "bazel-remote with mTLS"
-msgstr ""
+msgstr "mTLS 付き bazel-remote"
 
 #: src/reference/reference/remote-cache-setup.md:51
 msgid ""
@@ -103,10 +117,13 @@ msgid ""
 "mutually authenticated. bazel-remote can be started with something like the "
 "follows:"
 msgstr ""
+"本番環境では、mTLS によりトランスポートの暗号化と相互認証を保証できる。"
+"bazel-remote は以下のように起動できる:"
 
 #: src/reference/reference/remote-cache-setup.md:62
 msgid "sbt 2.x setting would look like this in this scenario:"
 msgstr ""
+"このシナリオでは sbt 2.x のセッティングは以下のようになる:"
 
 #: src/reference/reference/remote-cache-setup.md:65
 msgid "\"grpcs://localhost:2024\""
@@ -127,10 +144,11 @@ msgstr ""
 #: src/reference/reference/remote-cache-setup.md:71
 msgid "Note the `grpcs://`, as opposed to `grpc://`."
 msgstr ""
+"`grpc://` ではなく `grpcs://` である点に注意。"
 
 #: src/reference/reference/remote-cache-setup.md:73
 msgid "EngFlow"
-msgstr ""
+msgstr "EngFlow"
 
 #: src/reference/reference/remote-cache-setup.md:75
 msgid ""
@@ -138,6 +156,9 @@ msgid ""
 "in 2020 by core members of Bazel team, providing build analytics and remote "
 "execution backend for Bazel, which includes remote cache."
 msgstr ""
+"[EngFlow GmbH](https://www.engflow.com/) は Bazel チームのコアメンバーが 2020 年に"
+"設立した<nobr>ビルドソリューション</nobr>企業で、Bazel 向けのビルド分析とリモート実行バック"
+"エンド（リモートキャッシュを含む）を提供する。"
 
 #: src/reference/reference/remote-cache-setup.md:77
 msgid ""
@@ -146,6 +167,9 @@ msgid ""
 "instruction, this should start a remote cache service on port 8080. The sbt "
 "2.x configuration would look like this for the trial cluster:"
 msgstr ""
+"<https://my.engflow.com/> でトライアルに登録すると、ページの指示に従って Docker "
+"で試用クラスターを起動する。指示に従っていれば、ポート 8080 でリモートキャッシュ"
+"サービスが起動する。試用クラスター用の sbt 2.x の設定は以下のようになる:"
 
 #: src/reference/reference/remote-cache-setup.md:80
 msgid "\"grpc://localhost:8080\""
@@ -153,7 +177,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:83
 msgid "BuildBuddy"
-msgstr ""
+msgstr "BuildBuddy"
 
 #: src/reference/reference/remote-cache-setup.md:85
 msgid ""
@@ -162,34 +186,44 @@ msgid ""
 "backend for Bazel. It's also available open source as [buildbuddy-io/"
 "buildbuddy](https://github.com/buildbuddy-io/buildbuddy)."
 msgstr ""
+"[BuildBuddy](https://www.buildbuddy.io/) は元 Google エンジニアが設立したビルド"
+"ソリューション企業で、Bazel 向けのビルド分析とリモート実行バックエンドを提供する。"
+"[buildbuddy-io/buildbuddy](https://github.com/buildbuddy-io/buildbuddy) として"
+"オープンソースでも利用可能である。"
 
 #: src/reference/reference/remote-cache-setup.md:87
 msgid ""
 "After signing up, BuildBuddy Personal plan lets you use BuildBuddy across "
 "the Internet."
 msgstr ""
+"登録後、BuildBuddy Personal プランでインターネット経由で BuildBuddy を利用できる。"
 
 #: src/reference/reference/remote-cache-setup.md:89
 msgid ""
 "From <https://app.buildbuddy.io/>, go to Settings, and change the "
 "Organization URL to `<something>.buildbuddy.io`."
 msgstr ""
+"<https://app.buildbuddy.io/> から Settings を開いて、Organization URL を "
+"`<something>.buildbuddy.io` に変更する。"
 
 #: src/reference/reference/remote-cache-setup.md:90
 msgid ""
 "Next, go to Quickstart and take note of the URLs and `--remote_headers`."
 msgstr ""
+"次に Quickstart を開いて、URL と `--remote_headers` をメモする。"
 
 #: src/reference/reference/remote-cache-setup.md:91
 msgid ""
 "Create a file called `$HOME/.sbt/buildbuddy_credential.txt` and put in the "
 "API key:"
 msgstr ""
+"`$HOME/.sbt/buildbuddy_credential.txt` というファイルを作成し、API キーを記述する:"
 
 #: src/reference/reference/remote-cache-setup.md:97
 #: src/reference/reference/remote-cache-setup.md:115
 msgid "The sbt 2.x configuration would look like this:"
 msgstr ""
+"sbt 2.x の設定は以下のようになる:"
 
 #: src/reference/reference/remote-cache-setup.md:100
 msgid "\"grpcs://something.buildbuddy.io\""
@@ -201,7 +235,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:104
 msgid "NativeLink"
-msgstr ""
+msgstr "NativeLink"
 
 #: src/reference/reference/remote-cache-setup.md:106
 msgid ""
@@ -209,18 +243,24 @@ msgid ""
 "execution backend implementated in Rust with emphasis on performance. As of "
 "June 2024, there's NativeLink Cloud in beta."
 msgstr ""
+"[NativeLink](https://docs.nativelink.dev/) は Rust で実装されたオープンソースの "
+"Bazel リモート実行バックエンドで、パフォーマンスを重視している。2024 年 6 月時点"
+"で NativeLink Cloud がベータ提供されている。"
 
 #: src/reference/reference/remote-cache-setup.md:108
 msgid ""
 "From <https://app.nativelink.com/>, go to Quickstart and take note of the "
 "URLs and `--remote_header`."
 msgstr ""
+"<https://app.nativelink.com/> から Quickstart を開いて、URL と <nobr>`--remote_header`</nobr> "
+"をメモする。"
 
 #: src/reference/reference/remote-cache-setup.md:109
 msgid ""
 "Create a file called `$HOME/.sbt/nativelink_credential.txt` and put in the "
 "API key:"
 msgstr ""
+"`$HOME/.sbt/nativelink_credential.txt` というファイルを作成し、API キーを記述する:"
 
 #: src/reference/reference/remote-cache-setup.md:118
 msgid "\"grpcs://something.build-faster.nativelink.net\""
