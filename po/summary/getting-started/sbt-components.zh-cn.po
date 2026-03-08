@@ -13,7 +13,7 @@ msgstr ""
 
 #: src/reference/guide/sbt-components.md:1
 msgid "sbt components"
-msgstr ""
+msgstr "sbt 组件"
 
 #: src/reference/guide/sbt-components.md:4
 msgid "sbt runner"
@@ -25,10 +25,12 @@ msgid ""
 "script\" to distinguish from other components. It's important to note is "
 "that sbt runner is designed to run **any version** of sbt."
 msgstr ""
+"sbt 构建使用 `sbt` 运行器执行，也称为 \"sbt-the-shell-script\" 以区别于其他"
+"组件。需要注意的是，sbt runner旨在运行**任意版本**的 sbt。"
 
 #: src/reference/guide/sbt-components.md:9
 msgid "Specifying sbt version with project/build.properties"
-msgstr ""
+msgstr "使用 project/build.properties 指定 sbt 版本"
 
 #: src/reference/guide/sbt-components.md:11
 msgid ""
@@ -36,26 +38,31 @@ msgid ""
 "build.properties` to determine the sbt version for the build, and downloads "
 "the artifacts if they haven't been cached:"
 msgstr ""
+"sbt runner执行名为 sbt launcher 的子组件，该组件读取 `project/"
+"build.properties` 以确定构建的 sbt 版本，并在未缓存时下载相应的构件："
 
 #: src/reference/guide/sbt-components.md:17
 msgid "This means that:"
-msgstr ""
+msgstr "这意味着："
 
 #: src/reference/guide/sbt-components.md:19
 msgid ""
 "Anyone who checkouts your build would get the same sbt version, regardless "
 "of _sbt runner_ they may have installed on their machines."
 msgstr ""
+"任何检出您构建的人都会获得相同的 sbt 版本，无论其机器上安装的 _sbt runner_ "
+"是什么。"
 
 #: src/reference/guide/sbt-components.md:20
 msgid ""
 "The change of sbt version can be tracked in a version control system, like "
 "git."
 msgstr ""
+"sbt 版本的变更可以通过版本控制系统（如 git）进行跟踪。"
 
 #: src/reference/guide/sbt-components.md:22
 msgid "sbtn (`sbt --client`)"
-msgstr ""
+msgstr "sbtn（`sbt --client`）"
 
 #: src/reference/guide/sbt-components.md:24
 msgid ""
@@ -65,10 +72,14 @@ msgid ""
 "GraalVM native-image. The protocol between sbtn and sbt server is stable "
 "enough that it should work between **most recent versions** of sbt."
 msgstr ""
+"sbtn（原生代码瘦客户端）是 sbt runner的子组件，当您向 sbt runner传递 `--client` "
+"标志时会被调用，用于向 sbt server发送命令。之所以称为 sbtn，是因为它使用 "
+"GraalVM native-image 编译为原生代码。sbtn 与 sbt server之间的协议足够稳定，"
+"应在 sbt 的**大多数最新版本**之间兼容。"
 
 #: src/reference/guide/sbt-components.md:26
 msgid "sbt server (`sbt --server`)"
-msgstr ""
+msgstr "sbt server（`sbt --server`）"
 
 #: src/reference/guide/sbt-components.md:29
 msgid ""
@@ -76,6 +87,8 @@ msgid ""
 "`project/build.properties`. sbt server acts as a cashier to take commands "
 "from sbtn and editors."
 msgstr ""
+"sbt server是实际的构建工具，其版本通过 `project/build.properties` 指定。sbt "
+"服务器充当收银员，接收来自 sbtn 和编辑器的命令。"
 
 #: src/reference/guide/sbt-components.md:31
 msgid "Coursier"
@@ -87,6 +100,8 @@ msgid ""
 "resolve Scala library, Scala compiler, and any other library dependencies "
 "your build needs."
 msgstr ""
+"sbt server将 [Coursier](https://get-coursier.io/) 作为子组件运行，用于解析 "
+"Scala 库、Scala 编译器以及您的构建所需的任何其他库依赖。"
 
 #: src/reference/guide/sbt-components.md:35
 msgid "Zinc"
@@ -100,6 +115,10 @@ msgid ""
 "fact that Coursier can resolve any Scala version, with sbt we can invoke any "
 "modern versions of Scala just by writing a single line `build.sbt`:"
 msgstr ""
+"Zinc 是 Scala 的增量编译器，由 sbt 项目开发和维护。Zinc 的一个常被忽视的方面"
+"是，它提供了稳定的 API 来调用 Scala 编译器的**任何现代版本**。结合 Coursier "
+"可以解析任何 Scala 版本这一事实，使用 sbt 我们只需在 `build.sbt` 中写一行即可"
+"调用任何现代版本的 Scala："
 
 #: src/reference/guide/sbt-components.md:41
 msgid "\"3.8.1\""
@@ -116,22 +135,25 @@ msgid ""
 "IDEs like IntelliJ and Metals to communicate with a running sbt server "
 "programmatically."
 msgstr ""
+"sbt server支持 [Build Server Protocol (BSP)](https://build-server-protocol.github.io/"
+") 来列出构建目标、构建它们等。这使得 IntelliJ 和 Metals 等 IDE 能够以编程方式"
+"与运行中的 sbt server通信。"
 
 #: src/reference/guide/sbt-components.md:49
 msgid "Connecting to sbt server"
-msgstr ""
+msgstr "连接到 sbt server"
 
 #: src/reference/guide/sbt-components.md:52
 msgid "Let's look at three ways of connecting to sbt server."
-msgstr ""
+msgstr "让我们看看连接到 sbt server的三种方式。"
 
 #: src/reference/guide/sbt-components.md:54
 msgid "sbt shell using sbtn"
-msgstr ""
+msgstr "使用 sbtn 的 sbt shell"
 
 #: src/reference/guide/sbt-components.md:56
 msgid "Run `sbt` in the working directory of your build:"
-msgstr ""
+msgstr "在您的构建工作目录中运行 `sbt`："
 
 #: src/reference/guide/sbt-components.md:62
 msgid ""
@@ -139,46 +161,52 @@ msgid ""
 "In sbt 1.x, equivalent command was `sbt --client`\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"在 sbt 1.x 中，等效命令为 `sbt --client`\n"
+"```"
 
 #: src/reference/guide/sbt-components.md:66
 msgid "This should display something like the following:"
-msgstr ""
+msgstr "这应该会显示类似以下的内容："
 
 #: src/reference/guide/sbt-components.md:82
 msgid ""
 "Running sbt with no command line arguments starts sbt shell. sbt shell has a "
 "command prompt (with tab completion and history!)."
 msgstr ""
+"不带命令行参数运行 sbt 会启动 sbt shell。sbt shell 具有命令提示符（支持 Tab "
+"补全和历史记录！）。"
 
 #: src/reference/guide/sbt-components.md:84
 msgid "For example, you could type `compile` at the sbt shell:"
-msgstr ""
+msgstr "例如，您可以在 sbt shell 中输入 `compile`："
 
 #: src/reference/guide/sbt-components.md:90
 msgid "To `compile` again, press up arrow and then enter."
-msgstr ""
+msgstr "若要再次编译，请按上箭头键然后按回车。"
 
 #: src/reference/guide/sbt-components.md:92
 msgid ""
 "To leave sbt shell, type `exit` or use `Ctrl-D` (Unix) or `Ctrl-Z` (Windows)."
 msgstr ""
+"若要退出 sbt shell，请输入 `exit` 或使用 `Ctrl-D`（Unix）或 `Ctrl-Z`（Windows）。"
 
 #: src/reference/guide/sbt-components.md:94
 msgid "Batch mode using sbtn"
-msgstr ""
+msgstr "使用 sbtn 的批处理模式"
 
 #: src/reference/guide/sbt-components.md:96
 msgid "You can also run sbt in batch mode:"
-msgstr ""
+msgstr "您也可以以批处理模式运行 sbt："
 
 #: src/reference/guide/sbt-components.md:108
 msgid "Shutting down sbt server"
-msgstr ""
+msgstr "关闭 sbt server"
 
 #: src/reference/guide/sbt-components.md:110
 msgid "Run the following to shutdown all sbt servers on your machine:"
-msgstr ""
+msgstr "运行以下命令以关闭您机器上的所有 sbt server："
 
 #: src/reference/guide/sbt-components.md:116
 msgid "Or the following to shutdown just the current one:"
-msgstr ""
+msgstr "或运行以下命令以仅关闭当前服务器："
