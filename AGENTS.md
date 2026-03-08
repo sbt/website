@@ -42,6 +42,7 @@ Tips for Japanese translation
 - Keep whitespaces before and after English words and proper nouns, such as Coursier
 - current interactive session → 現行の sbt セッション
 - transitive dependencies → 間接依存ライブラリ
+- incremental compilation → 差分コンパイル
 - (non-transitive) dependencies → ライブラリ依存性 (in library dependency context)
 
 Tips for Chinese translation
