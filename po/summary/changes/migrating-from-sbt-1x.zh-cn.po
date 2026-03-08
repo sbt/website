@@ -13,11 +13,11 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:1
 msgid "Migrating from sbt 1.x"
-msgstr ""
+msgstr "从 sbt 1.x 迁移"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:4
 msgid "Changing `build.sbt` DSL to Scala 3.x"
-msgstr ""
+msgstr "将 `build.sbt` DSL 改为 Scala 3.x"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:7
 msgid ""
@@ -26,6 +26,9 @@ msgid ""
 "DSL is determined by the sbt version. In sbt 2.0, we are migrating to Scala "
 "3.7.x."
 msgstr ""
+"提醒一下，用户可以使用 sbt 1.x 或 sbt 2.x 构建 Scala 2.x 或 Scala 3.x 程序。"
+"但 `build.sbt` DSL 所基于的 Scala 版本由 sbt 版本决定。在 sbt 2.0 中，我们正在迁移"
+"到 Scala 3.7.x。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:9
 msgid ""
@@ -35,6 +38,10 @@ msgid ""
 "table.html) and [Scala 2 with -Xsource:3](https://docs.scala-lang.org/scala3/"
 "guides/migration/tooling-scala2-xsource3.html) for details about Scala 3.x."
 msgstr ""
+"这意味着如果您为 sbt 2.x 实现自定义任务或 sbt 插件，必须使用 Scala 3.x。有关 "
+"Scala 3.x 的详细信息，请参阅 [Scala 3.x 不兼容性表](https://docs.scala-lang.org/"
+"scala3/guides/migration/incompatibility-table.html) 和 [Scala 2 with -Xsource:3]"
+"(https://docs.scala-lang.org/scala3/guides/migration/tooling-scala2-xsource3.html)。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:12
 msgid "// This works on Scala 2.12.20 under -Xsource:3"
@@ -42,7 +49,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:16
 msgid "Import given"
-msgstr ""
+msgstr "导入 given"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:18
 msgid ""
@@ -50,6 +57,8 @@ msgid ""
 "instances are imported into scope. In Scala 2.x `import FooCodec._` was used "
 "whereas Scala 3 uses `import FooCodec.given`. Writing:"
 msgstr ""
+"Scala 2.x 与 3.x 的区别之一是将类型类实例导入作用域的方式。Scala 2.x 使用 "
+"`import FooCodec._`，而 Scala 3 使用 `import FooCodec.given`。编写："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:21
 msgid "// The following works for both sbt 1.x and 2.x"
@@ -57,13 +66,14 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:25
 msgid "Avoid postfix"
-msgstr ""
+msgstr "避免后缀"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:27
 msgid ""
 "It wasn't uncommon for sbt 0.13 and 1.x examples to use postfix notations, "
 "especially with `ModuleID`:"
 msgstr ""
+"sbt 0.13 和 1.x 的示例中常见使用后缀表示法，尤其是 `ModuleID`："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:30
 msgid "// BAD"
@@ -89,11 +99,11 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:35
 msgid "The above will fail to load on sbt 2.x:"
-msgstr ""
+msgstr "以上代码在 sbt 2.x 中加载失败："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:46
 msgid "To fix this, use the normal (dotted) function call notation:"
-msgstr ""
+msgstr "要修复此问题，请使用正常的（点号）函数调用表示法："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:49
 msgid "// GOOD"
@@ -101,7 +111,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:54
 msgid "Bare settings changes"
-msgstr ""
+msgstr "裸设置变更"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:58
 msgid "\"0.1.0\""
@@ -116,6 +126,8 @@ msgid ""
 "_Bare settings_, like the example above, are settings written directly in "
 "`build.sbt` without `settings(...)`."
 msgstr ""
+"如上例所示，_Bare settings_（裸设置）是直接在 `build.sbt` 中编写且不带 "
+"`settings(...)` 的设置。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:69
 msgid "\"root\"         // all subprojects will be named root!"
@@ -130,6 +142,8 @@ msgid ""
 "To apply some settings to the root subproject only, either define it using "
 "multi-project build, or scope the setting under `LocalRootProject`:"
 msgstr ""
+"若要将某些设置仅应用于根子项目，可以使用多项目构建定义，或将设置限定在 "
+"`LocalRootProject` 下："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:76
 msgid "\"root\""
@@ -137,7 +151,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:80
 msgid "Migrating ThisBuild"
-msgstr ""
+msgstr "迁移 ThisBuild"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:82
 msgid ""
@@ -148,10 +162,14 @@ msgid ""
 "meaning they can be used to define settings like `Compile / scalacOptions`, "
 "which was not possible with `ThisBuild`."
 msgstr ""
+"在 sbt 2.x 中，裸设置不应再限定到 `ThisBuild`。新的 _common settings_（通用设置）"
+"相比 `ThisBuild` 的一个优势是它采用更可预测的委托行为。这些设置插入在插件设置与 "
+"`settings(...)` 中定义的设置之间，这意味着可以用于定义诸如 `Compile / scalacOptions` "
+"之类的设置，而 `ThisBuild` 无法做到这一点。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:84
 msgid "Changes to `exportJars`"
-msgstr ""
+msgstr "`exportJars` 的变更"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:87
 msgid ""
@@ -163,30 +181,37 @@ msgid ""
 "sbt#7464](https://github.com/sbt/sbt/pull/7464), see also [blog](https://"
 "eed3si9n.com/sbt-remote-cache/)."
 msgstr ""
+"`exportJars` 默认为 `true`，之前为 `false`。这可能会破坏 `getResource(\"/\")` 和 "
+"`resource.toURI`。如果您的构建中此逻辑被破坏并产生 `NullPointerException` 和 "
+"`FileSystemNotFoundException`，请设置 `exportJars := false`。如需保留旧行为，请在"
+"构建中设置 `exportJars := false`。此变更由 [sbt/sbt#7464](https://github.com/sbt/sbt/"
+"pull/7464) 引入，另请参阅 [blog](https://eed3si9n.com/sbt-remote-cache/)。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:89
 msgid "Migrating to cached tasks"
-msgstr ""
+msgstr "迁移到缓存任务"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:92
 msgid ""
 "See [Cached task](../reference/cached-task.md) reference for details, "
 "including the way to opt out of caching."
 msgstr ""
+"详见 [Cached task](../reference/cached-task.md) 参考，包括如何选择不缓存。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:94
 msgid "Migration away from IntegrationTest"
-msgstr ""
+msgstr "从 IntegrationTest 迁移"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:97
 msgid ""
 "To migrate away from the `IntegrationTest` configuration, create a separate "
 "subproject and implement it as normal test."
 msgstr ""
+"要从 `IntegrationTest` 配置迁移，请创建单独的子项目并作为普通测试实现。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:99
 msgid "Migrating to slash syntax"
-msgstr ""
+msgstr "迁移到斜杠语法"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:102
 msgid ""
@@ -194,6 +219,8 @@ msgid ""
 "2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for "
 "both sbt shell and in `build.sbt`:"
 msgstr ""
+"sbt 1.x 同时支持 sbt 0.13 风格语法和斜杠语法。sbt 2.x 移除了对 sbt 0.13 语法的"
+"支持，请在 sbt shell 和 `build.sbt` 中均使用斜杠语法："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:108
 msgid ""
@@ -202,16 +229,21 @@ msgid ""
 "(https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/) for "
 "semi-automated migration of `build.sbt` files."
 msgstr ""
+"例如，`test:compile` 在 shell 中不再有效。请改用 `Test/compile`。有关 `build.sbt` "
+"文件的半自动迁移，请参阅 [syntactic Scalafix rule for unified slash syntax]"
+"(https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-syntax/)。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:114
 msgid "Cross building sbt plugins"
-msgstr ""
+msgstr "交叉构建 sbt 插件"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:117
 msgid ""
 "In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it "
 "will automatically cross build against sbt 1.x and sbt 2.x:"
 msgstr ""
+"在 sbt 2.x 中，如果您使用 Scala 3.x 和 2.12.x 交叉构建 sbt 插件，它将自动针对 "
+"sbt 1.x 和 sbt 2.x 进行交叉构建："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:120
 msgid "// using sbt 2.x"
@@ -243,14 +275,16 @@ msgid ""
 "like `plugin/`. Otherwise, the synthetic root project will also pick up the "
 "`src/`."
 msgstr ""
+"如果使用 `projectMatrix`，请确保将插件移至 `plugin/` 等子目录。否则，合成根项目"
+"也会包含 `src/`。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:131
 msgid "Cross building sbt plugin with sbt 1.x"
-msgstr ""
+msgstr "使用 sbt 1.x 交叉构建 sbt 插件"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:133
 msgid "Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x."
-msgstr ""
+msgstr "如需使用 sbt 1.x 进行交叉构建，请使用 sbt 1.10.2 或更高版本。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:136
 msgid "// using sbt 1.x"
@@ -270,7 +304,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:154
 msgid "Changes to `%%`"
-msgstr ""
+msgstr "`%%` 的变更"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:157
 msgid ""
@@ -278,10 +312,12 @@ msgid ""
 "subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) "
 "on Maven repositories."
 msgstr ""
+"在 sbt 2.x 中，`ModuleID` 的 `%%` 运算符已具有平台感知能力。对于 JVM 子项目，"
+"`%%` 与之前一样工作，在 Maven 仓库中编码 Scala 后缀（例如 `_3`）。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "Migrating `%%%` operator"
-msgstr ""
+msgstr "迁移 `%%%` 运算符"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:161
 msgid ""
@@ -289,6 +325,8 @@ msgid ""
 "both the Scala version (such as `_3`) and the platform suffix (`_sjs1` etc). "
 "As a result, `%%%` can be replaced with `%%`:"
 msgstr ""
+"当 Scala.JS 或 Scala Native 在 sbt 2.x 中可用时，`%%` 将同时编码 Scala 版本"
+"（如 `_3`）和平台后缀（如 `_sjs1`）。因此，`%%%` 可替换为 `%%`："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:164
 msgid "\"org.scala-js\""
@@ -304,11 +342,11 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:167
 msgid "Use `.platform(Platform.jvm)` in case where JVM libraries are needed."
-msgstr ""
+msgstr "需要 JVM 库时请使用 `.platform(Platform.jvm)`。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:169
 msgid "Changes to `target`"
-msgstr ""
+msgstr "`target` 的变更"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:172
 msgid ""
@@ -318,6 +356,9 @@ msgid ""
 "absorb this change in scripted tests, `exists`, `absent`, and `delete` now "
 "supports glob expression `**`, as well as `||`."
 msgstr ""
+"在 sbt 2.x 中，`target` 目录统一为工作目录中的单个 `target/` 目录，每个子项目创建"
+"编码平台、Scala 版本和子项目 ID 的子目录。为在脚本化测试中适应此变更，`exists`、"
+"`absent` 和 `delete` 现已支持 glob 表达式 `**` 以及 `||`。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:175
 msgid "# before\n"
@@ -333,7 +374,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:187
 msgid "The PluginCompat technique"
-msgstr ""
+msgstr "PluginCompat 技术"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:190
 msgid ""
@@ -341,10 +382,12 @@ msgid ""
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
 "scala-2.12/` and `src/main/scala-3/`."
 msgstr ""
+"要使用相同的 `*.scala` 源但同时针对 sbt 1.x 和 2.x，我们可以创建适配层，例如在 "
+"`src/main/scala-2.12/` 和 `src/main/scala-3/` 中均创建名为 `PluginCompat` 的对象。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:192
 msgid "Migrating Classpath type"
-msgstr ""
+msgstr "迁移 Classpath 类型"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:194
 msgid ""
@@ -352,6 +395,8 @@ msgid ""
 "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a shim "
 "created to work with classpaths from both sbt 1.x and 2.x."
 msgstr ""
+"sbt 2.x 将 `Classpath` 类型改为 `Seq[Attributed[xsbti.HashedVirtualFileRef]]` 类型"
+"的别名。以下是为同时兼容 sbt 1.x 和 2.x 的 classpath 创建的适配层。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:197
 msgid "// src/main/scala-3/PluginCompat.scala"
@@ -359,7 +404,7 @@ msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:220
 msgid "and here's for sbt 1.x:"
-msgstr ""
+msgstr "以下是 sbt 1.x 的版本："
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:223
 msgid "// src/main/scala-2.12/PluginCompat.scala"
@@ -375,3 +420,6 @@ msgid ""
 "the differences between sbt 1.x and 2.x. The above demonstrates how we can "
 "absorb the classpath type change, and convert it into a vector of NIO Paths."
 msgstr ""
+"现在我们可以导入 `PluginCompat.*` 并使用 `toNioPaths(...)` 等来吸收 sbt 1.x 与 "
+"2.x 之间的差异。以上演示了如何吸收 classpath 类型变更，并将其转换为 NIO Path 的"
+"向量。"
