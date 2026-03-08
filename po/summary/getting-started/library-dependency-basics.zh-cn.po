@@ -13,12 +13,12 @@ msgstr ""
 
 #: src/reference/guide/library-dependency-basics.md:1
 msgid "Library dependency basics"
-msgstr ""
+msgstr "库依赖基础"
 
 #: src/reference/guide/library-dependency-basics.md:4
 msgid ""
 "This page explains the basics of library dependency management using sbt."
-msgstr ""
+msgstr "本页介绍使用 sbt 进行库依赖管理的基础知识。"
 
 #: src/reference/guide/library-dependency-basics.md:6
 msgid ""
@@ -26,6 +26,8 @@ msgid ""
 "dependencies, so if you're familiar with package managers like Coursier, "
 "npm, PIP, etc you won't have much trouble."
 msgstr ""
+"sbt 使用 [Coursier](https://get-coursier.io/) 实现托管依赖，因此如果您熟悉 "
+"Coursier、npm、PIP 等包管理器，不会有太大困难。"
 
 #: src/reference/guide/library-dependency-basics.md:10
 msgid ""
@@ -39,35 +41,44 @@ msgid ""
 "consistent JAR management.\n"
 "```"
 msgstr ""
+"```admonish note title=\"什么是托管依赖？\"\n"
+"与手动下载所需 JAR 文件（_unmanaged_ 依赖）不同，_managed_（托管）依赖系统可自动"
+"为子项目获取外部库。Coursier 等工具会解析声明的 `ModuleID`，执行依赖解析（展开"
+"所有传递依赖并解决版本冲突以确定确切版本），下载并缓存生成的构件，确保 JAR 管理"
+"的一致性。\n"
+"```"
 
 #: src/reference/guide/library-dependency-basics.md:14
 msgid "The `libraryDependencies` key"
-msgstr ""
+msgstr "`libraryDependencies` 键"
 
 #: src/reference/guide/library-dependency-basics.md:17
 msgid ""
 "Declaring a dependency looks like this, where `groupId`, `artifactId`, and "
 "`revision` are strings:"
 msgstr ""
+"声明依赖如下所示，其中 `groupId`、`artifactId` 和 `revision` 为字符串："
 
 #: src/reference/guide/library-dependency-basics.md:24
 msgid ""
 "or like this, where `configuration` can be a string or a `Configuration` "
 "value (such as `Test`):"
 msgstr ""
+"或如下所示，其中 `configuration` 可以是字符串或 `Configuration` 值（如 `Test`）："
 
 #: src/reference/guide/library-dependency-basics.md:30
 msgid "When you run:"
-msgstr ""
+msgstr "当您运行："
 
 #: src/reference/guide/library-dependency-basics.md:36
 msgid ""
 "sbt will automatically resolve the dependencies and download the JAR files."
 msgstr ""
+"sbt 将自动解析依赖并下载 JAR 文件。"
 
 #: src/reference/guide/library-dependency-basics.md:38
 msgid "Getting the right Scala version with `%%`"
-msgstr ""
+msgstr "使用 `%%` 获取正确的 Scala 版本"
 
 #: src/reference/guide/library-dependency-basics.md:40
 msgid ""
@@ -77,6 +88,10 @@ msgid ""
 "artifact name. This is just a shortcut. You could write this without the `%"
 "%`:"
 msgstr ""
+"如果您使用 `organization %% moduleName % version` 而非 `organization % "
+"moduleName % version`（区别在于 `organization` 后的双 `%%`），sbt 会将您项目的"
+"二进制 Scala 版本添加到构件名称中。这只是一个快捷方式。您也可以不使用 `%%` 来"
+"编写："
 
 #: src/reference/guide/library-dependency-basics.md:46
 #: src/reference/guide/library-dependency-basics.md:53
@@ -100,6 +115,8 @@ msgid ""
 "Assuming the `scalaVersion` for your build is 3.x, the following is "
 "identical (note the double `%%` after `\"org.scala-lang\"`):"
 msgstr ""
+"假设您构建的 `scalaVersion` 为 3.x，以下写法是等价的（注意 `\"org.scala-lang\"` "
+"后的双 `%%`）："
 
 #: src/reference/guide/library-dependency-basics.md:53
 #: src/reference/guide/library-dependency-basics.md:78
@@ -112,10 +129,12 @@ msgid ""
 "and you'd like to get the one that matches your project to ensure binary "
 "compatibility."
 msgstr ""
+"其思路是许多依赖针对多个 Scala 版本编译，您希望获取与您项目匹配的版本以确保二"
+"进制兼容性。"
 
 #: src/reference/guide/library-dependency-basics.md:60
 msgid "Tracking dependencies in one place"
-msgstr ""
+msgstr "在一处跟踪依赖"
 
 #: src/reference/guide/library-dependency-basics.md:63
 msgid ""
@@ -123,6 +142,8 @@ msgid ""
 "we can use to track dependencies in one place by creating a file named "
 "`project/Dependencies.scala`."
 msgstr ""
+"`project` 下的 `.scala` 文件成为构建定义的一部分，我们可以通过创建名为 "
+"`project/Dependencies.scala` 的文件在一处跟踪依赖。"
 
 #: src/reference/guide/library-dependency-basics.md:69
 msgid "// place this file at project/Dependencies.scala"
@@ -146,6 +167,8 @@ msgid ""
 "easier to use the `val`s defined in it, import `Dependencies.*` in your "
 "build.sbt file."
 msgstr ""
+"`Dependencies` 对象将在 `build.sbt` 中可用。为便于使用其中定义的 `val`，请在您"
+"的 build.sbt 文件中导入 `Dependencies.*`。"
 
 #: src/reference/guide/library-dependency-basics.md:89
 msgid "\"3.8.1\""
@@ -157,14 +180,15 @@ msgstr ""
 
 #: src/reference/guide/library-dependency-basics.md:95
 msgid "Viewing library dependencies"
-msgstr ""
+msgstr "查看库依赖"
 
 #: src/reference/guide/library-dependency-basics.md:98
 msgid ""
 "Type in `Compile/dependencyTree` in the sbt shell to show the library "
 "dependency tree, including the transitive dependencies:"
 msgstr ""
+"在 sbt shell 中输入 `Compile/dependencyTree` 可显示库依赖树，包括传递依赖："
 
 #: src/reference/guide/library-dependency-basics.md:104
 msgid "This should display something like the following:"
-msgstr ""
+msgstr "这应该会显示类似以下的内容："

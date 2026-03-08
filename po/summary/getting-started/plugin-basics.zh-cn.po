@@ -1,181 +1,219 @@
-#: src/reference/guide/plugin-basics.md:12
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-07T22:07:03-05:00\n"
+"PO-Revision-Date: 2025-08-08 01:48-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.5\n"
+
+#: src/reference/guide/plugin-basics.md:11
 msgid "Plugin basics"
-msgstr ""
+msgstr "插件基础"
 
-#: src/reference/guide/plugin-basics.md:22
+#: src/reference/guide/plugin-basics.md:14
 msgid "What is a plugin?"
-msgstr ""
+msgstr "什么是插件？"
 
-#: src/reference/guide/plugin-basics.md:25
+#: src/reference/guide/plugin-basics.md:17
 msgid ""
 "A plugin extends the build definition, most commonly by adding new settings "
 "and tasks. For example, a plugin could add `githubWorkflowGenerate` task to "
 "generate GitHub Actions YAML."
 msgstr ""
+"插件扩展构建定义，最常见的方式是添加新的设置和任务。例如，插件可以添加 "
+"`githubWorkflowGenerate` 任务来生成 GitHub Actions YAML。"
 
-#: src/reference/guide/plugin-basics.md:33
+#: src/reference/guide/plugin-basics.md:20
 msgid "Finding the plugin versions using Scaladex"
-msgstr ""
+msgstr "使用 Scaladex 查找插件版本"
 
-#: src/reference/guide/plugin-basics.md:36
+#: src/reference/guide/plugin-basics.md:23
 msgid ""
 "You can use [Scaladex](https://index.scala-lang.org/search?platform=sbt2) to "
 "search for plugins, and find out the latest version of the plugin."
 msgstr ""
+"您可以使用 [Scaladex](https://index.scala-lang.org/search?platform=sbt2) 搜索"
+"插件，并查找插件的最新版本。"
 
-#: src/reference/guide/plugin-basics.md:38
+#: src/reference/guide/plugin-basics.md:25
 msgid "Declaring a plugin"
-msgstr ""
+msgstr "声明插件"
 
-#: src/reference/guide/plugin-basics.md:41
+#: src/reference/guide/plugin-basics.md:28
 msgid ""
 "If your project is in directory `hello`, and if you are adding sbt-github-"
 "actions to the build definition, create `hello/project/plugins.sbt` and "
 "declare the plugin dependency by passing the plugin's module ID to "
 "`addSbtPlugin(...)`:"
 msgstr ""
+"如果您的项目在目录 `hello` 中，且您要向构建定义添加 sbt-github-actions，请创"
+"建 `hello/project/plugins.sbt`，并通过将插件的模块 ID 传递给 "
+"`addSbtPlugin(...)` 来声明插件依赖："
 
-#: src/reference/guide/plugin-basics.md:48
-#: src/reference/guide/plugin-basics.md:56
+#: src/reference/guide/plugin-basics.md:35
+#: src/reference/guide/plugin-basics.md:43
 msgid "// In project/plugins.sbt"
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:50
+#: src/reference/guide/plugin-basics.md:37
 msgid "\"com.github.sbt\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:50
+#: src/reference/guide/plugin-basics.md:37
 msgid "\"sbt-github-actions\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:50
+#: src/reference/guide/plugin-basics.md:37
 msgid "\"0.28.0\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:53
+#: src/reference/guide/plugin-basics.md:40
 msgid "If you're adding sbt-assembly, add the following:"
-msgstr ""
+msgstr "如果您要添加 sbt-assembly，请添加以下内容："
 
-#: src/reference/guide/plugin-basics.md:58
+#: src/reference/guide/plugin-basics.md:45
 msgid "\"com.eed3si9n\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:58
+#: src/reference/guide/plugin-basics.md:45
 msgid "\"sbt-assembly\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:58
+#: src/reference/guide/plugin-basics.md:45
 msgid "\"2.3.1\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:61
+#: src/reference/guide/plugin-basics.md:48
 msgid ""
 "See [Source dependency plugin](../recipes/source-dependency-plugin.md) "
 "recipe for an experimental technique of using plugins hosted on git repos."
 msgstr ""
+"有关使用托管在 git 仓库中的插件的实验性技术，请参阅 [Source dependency "
+"plugin](../recipes/source-dependency-plugin.md) 配方。"
 
-#: src/reference/guide/plugin-basics.md:63
+#: src/reference/guide/plugin-basics.md:50
 msgid ""
 "Plugins usually provide settings and tasks that get added to a subproject to "
 "enable the plugin's functionality. This is described in the next section."
 msgstr ""
+"插件通常提供设置和任务，这些设置和任务会添加到子项目中以启用插件的功能。下一"
+"节将对此进行说明。"
 
-#: src/reference/guide/plugin-basics.md:66
+#: src/reference/guide/plugin-basics.md:53
 msgid "Enabling and disabling auto plugins"
-msgstr ""
+msgstr "启用和禁用自动插件"
 
-#: src/reference/guide/plugin-basics.md:69
+#: src/reference/guide/plugin-basics.md:56
 msgid ""
 "A plugin can declare that its settings be automatically added to the build "
 "definition, in which case you don't have to do anything to add them."
 msgstr ""
+"插件可以声明其设置自动添加到构建定义中，在这种情况下您无需做任何操作即可添加"
+"它们。"
 
-#: src/reference/guide/plugin-basics.md:72
+#: src/reference/guide/plugin-basics.md:59
 msgid ""
 "The <!-- [auto plugins][Plugins] --> auto plugins feature enables plugins to "
 "automatically, and safely, ensure their settings and dependencies are on a "
 "project. Many auto plugins should have their default settings automatically."
 msgstr ""
+"自动插件功能使插件能够自动且安全地确保其设置和依赖位于项目上。许多自动插件应"
+"自动具有其默认设置。"
 
-#: src/reference/guide/plugin-basics.md:77
+#: src/reference/guide/plugin-basics.md:64
 msgid ""
 "If you're using an auto plugin that requires explicit enablement, then you "
 "have to add the following to your `build.sbt`:"
 msgstr ""
+"如果您使用的自动插件需要显式启用，则必须在您的 `build.sbt` 中添加以下内容："
 
-#: src/reference/guide/plugin-basics.md:81
-#: src/reference/guide/plugin-basics.md:96
+#: src/reference/guide/plugin-basics.md:68
+#: src/reference/guide/plugin-basics.md:83
 msgid "\"util\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:84
-#: src/reference/guide/plugin-basics.md:100
+#: src/reference/guide/plugin-basics.md:71
+#: src/reference/guide/plugin-basics.md:87
 msgid "\"hello-util\""
 msgstr ""
 
-#: src/reference/guide/plugin-basics.md:88
+#: src/reference/guide/plugin-basics.md:75
 msgid ""
 "The `enablePlugins` method allows projects to explicitly define the auto "
 "plugins they wish to consume."
-msgstr ""
+msgstr "`enablePlugins` 方法允许项目显式定义它们希望使用的自动插件。"
 
-#: src/reference/guide/plugin-basics.md:91
+#: src/reference/guide/plugin-basics.md:78
 msgid ""
 "Projects can also exclude plugins using the `disablePlugins` method. For "
 "example, if we wish to remove the `IvyPlugin` settings from `util`, we "
 "modify our `build.sbt` as follows:"
 msgstr ""
+"项目还可以使用 `disablePlugins` 方法排除插件。例如，如果我们希望从 `util` 中"
+"移除 `IvyPlugin` 设置，可以按如下方式修改 `build.sbt`："
 
-#: src/reference/guide/plugin-basics.md:104
+#: src/reference/guide/plugin-basics.md:91
 msgid ""
 "Auto plugins should document whether they need to be explicitly enabled. If "
 "you're curious which auto plugins are enabled for a given project, just run "
 "the `plugins` command on the sbt console."
 msgstr ""
+"自动插件应记录它们是否需要显式启用。如果您想了解给定项目启用了哪些自动插件，"
+"只需在 sbt 控制台中运行 `plugins` 命令。"
 
-#: src/reference/guide/plugin-basics.md:124
+#: src/reference/guide/plugin-basics.md:111
 msgid ""
 "Here, the `plugins` output is showing that the sbt default plugins are all "
 "enabled. sbt's default settings are provided via 7 plugins:"
 msgstr ""
+"此处，`plugins` 输出显示 sbt 的默认插件均已启用。sbt 的默认设置由 7 个插件提"
+"供："
 
-#: src/reference/guide/plugin-basics.md:127
+#: src/reference/guide/plugin-basics.md:114
 msgid "`CorePlugin`: Provides the core parallelism controls for tasks."
-msgstr ""
+msgstr "`CorePlugin`：提供任务的核心并行控制。"
 
-#: src/reference/guide/plugin-basics.md:128
+#: src/reference/guide/plugin-basics.md:115
 msgid "`DependencyTreePlugin`: Provides dependency tree tasks."
-msgstr ""
+msgstr "`DependencyTreePlugin`：提供依赖树任务。"
 
-#: src/reference/guide/plugin-basics.md:129
+#: src/reference/guide/plugin-basics.md:116
 msgid "`Giter8TemplatePlugin`: Provides `sbt new` support."
-msgstr ""
+msgstr "`Giter8TemplatePlugin`：提供 `sbt new` 支持。"
 
-#: src/reference/guide/plugin-basics.md:130
+#: src/reference/guide/plugin-basics.md:117
 msgid "`IvyPlugin`: Provides the mechanisms to publish/resolve modules."
-msgstr ""
+msgstr "`IvyPlugin`：提供发布/解析模块的机制。"
 
-#: src/reference/guide/plugin-basics.md:131
+#: src/reference/guide/plugin-basics.md:118
 msgid "`JUnitXmlReportPlugin`: Provides support for generating junit-xml."
-msgstr ""
+msgstr "`JUnitXmlReportPlugin`：提供生成 junit-xml 的支持。"
 
-#: src/reference/guide/plugin-basics.md:132
+#: src/reference/guide/plugin-basics.md:119
 msgid ""
 "`JvmPlugin`: Provides the mechanisms to compile/test/run/package Java/Scala "
 "projects."
-msgstr ""
+msgstr "`JvmPlugin`：提供编译/测试/运行/打包 Java/Scala 项目的机制。"
 
-#: src/reference/guide/plugin-basics.md:134
+#: src/reference/guide/plugin-basics.md:121
 msgid "`SemanticdbPlugin`: Provides support for generating SemanticDB."
-msgstr ""
+msgstr "`SemanticdbPlugin`：提供生成 SemanticDB 的支持。"
 
-#: src/reference/guide/plugin-basics.md:152
+#: src/reference/guide/plugin-basics.md:139
 msgid "Available plugins"
-msgstr ""
+msgstr "可用插件"
 
-#: src/reference/guide/plugin-basics.md:155
+#: src/reference/guide/plugin-basics.md:142
 msgid ""
 "In addition to [Scaladex](https://index.scala-lang.org/search?"
 "platform=sbt2), there's also [a list of available plugins](../community-"
 "plugins.md)."
 msgstr ""
+"除了 [Scaladex](https://index.scala-lang.org/search?platform=sbt2) 之外，还有"
+"[可用插件列表](../community-plugins.md)。"
