@@ -38,6 +38,7 @@ Tips for Japanese translation
 -----------------------------
 
 - Use だ/である tone.
+- Use さん suffix after a name of a person.
 - Keep whitespaces before and after English words and proper nouns, such as Coursier
 - current interactive session → 現行の sbt セッション
 - transitive dependencies → 間接依存ライブラリ

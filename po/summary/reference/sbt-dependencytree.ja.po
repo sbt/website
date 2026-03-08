@@ -1,0 +1,408 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T01:34:00-05:00\n"
+"PO-Revision-Date: 2025-10-03 01:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
+#: src/reference/reference/sbt-dependency-tree.md:1
+msgid "sbt dependencyTree"
+msgstr "sbt dependencyTree"
+
+#: src/reference/reference/sbt-dependency-tree.md:4
+msgid "Synopsis"
+msgstr "書式"
+
+#: src/reference/reference/sbt-dependency-tree.md:7
+msgid ""
+"`sbt` `dependencyTree` \\[_subcommand_\\] \\[_options_\\]<br> `sbt` "
+"`dependencyTree` `list` \\[_options_\\]<br> `sbt` `dependencyTree` `graph` \\"
+"[_options_\\]<br> `sbt` `dependencyTree` `html` \\[_options_\\]<br> `sbt` "
+"`dependencyTree` `html-graph` \\[_options_\\]<br> `sbt` `dependencyTree` "
+"`json` \\[_options_\\]<br> `sbt` `dependencyTree` `xml` \\[_options_\\]<br> "
+"`sbt` `dependencyTree` `stats` \\[_options_\\]"
+msgstr ""
+"`sbt` `dependencyTree` [_サブコマンド_] [_オプション_]<br> `sbt` "
+"`dependencyTree` `list` [_オプション_]<br> `sbt` `dependencyTree` `graph` "
+"[_オプション_]<br> `sbt` `dependencyTree` `html` [_オプション_]<br> `sbt` "
+"`dependencyTree` `html-graph` [_オプション_]<br> `sbt` `dependencyTree` "
+"`json` [_オプション_]<br> `sbt` `dependencyTree` `xml` [_オプション_]<br> "
+"`sbt` `dependencyTree` `stats` [_オプション_]"
+
+#: src/reference/reference/sbt-dependency-tree.md:16
+msgid "Description"
+msgstr "説明"
+
+#: src/reference/reference/sbt-dependency-tree.md:19
+msgid ""
+"The `dependencyTree` task displays the dependency graph of your project in "
+"various formats, helping you visualize and analyze transitive dependencies. "
+"It is provided by the `DependencyTreePlugin`, which was in-sourced from "
+"Johannes Rudolph's sbt-dependency-graph in sbt 1.4.0. The task resolves "
+"dependencies before generating output, so it may trigger downloads if needed."
+msgstr ""
+"`dependencyTree` タスクは、プロジェクトの依存関係グラフを様々な形式で表示し、"
+"間接依存ライブラリの可視化と分析を支援する。"
+"このタスクは、sbt 1.4.0 で Johannes Rudolph さん作の sbt-dependency-graph より取り込まれた"
+"`DependencyTreePlugin` により提供される。"
+"なお、グラフの生成時にライブラリ依存性が解決されるため、実行時にダウンロードが発生する場合がある。"
+
+#: src/reference/reference/sbt-dependency-tree.md:21
+msgid "Usage"
+msgstr "使用方法"
+
+#: src/reference/reference/sbt-dependency-tree.md:23
+msgid ""
+"Run this in the sbt shell. The default subcommand is `tree`, which prints an "
+"ASCII tree."
+msgstr ""
+"sbt シェルから実行する。"
+"デフォルトのサブコマンドは `tree` で、ASCII ツリーを表示する。"
+
+#: src/reference/reference/sbt-dependency-tree.md:25
+msgid "Subcommands"
+msgstr "サブコマンド"
+
+#: src/reference/reference/sbt-dependency-tree.md:27
+msgid ""
+"`tree` (default): Prints an ASCII tree of dependencies, showing hierarchical "
+"relationships. Useful for quick overviews."
+msgstr ""
+"`tree`（デフォルト）: ライブラリ依存性の ASCII ツリーを表示し、階層関係を示す。"
+"概要の把握に便利。"
+
+#: src/reference/reference/sbt-dependency-tree.md:28
+msgid ""
+"`list`: Prints a flat list of all dependencies, one per line. Ideal for "
+"scripting or grepping."
+msgstr ""
+"`list`: 全てのライブラリ依存性を1行ずつフラットなリストで表示する。スクリプト"
+"や grep に適している。"
+
+#: src/reference/reference/sbt-dependency-tree.md:29
+msgid ""
+"`graph` / `dot`: Prints a GraphViz DOT file for visualization. The `dot` "
+"alias is provided for compatibility."
+msgstr ""
+"`graph` / `dot`: 可視化用の GraphViz DOT ファイルを出力する。互換性のため "
+"`dot` エイリアスが提供されている。"
+
+#: src/reference/reference/sbt-dependency-tree.md:30
+msgid ""
+"`html`: Creates a standalone HTML page with the dependency graph rendered as "
+"text."
+msgstr ""
+"`html`: 依存関係グラフをテキストで描画したスタンドアロン HTML ページを作成する。"
+
+#: src/reference/reference/sbt-dependency-tree.md:31
+msgid ""
+"`html-graph`: Creates an HTML page with an embedded GraphViz diagram "
+"(requires GraphViz on the system)."
+msgstr ""
+"`html-graph`: GraphViz 図を埋め込んだ HTML ページを作成する（システムに "
+"GraphViz のインストールが必要）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:32
+msgid ""
+"`json`: Prints dependencies in JSON format, structured for programmatic use."
+msgstr ""
+"`json`: ライブラリ依存性を JSON 形式で出力する。プログラムでの利用に適した"
+"構造である。"
+
+#: src/reference/reference/sbt-dependency-tree.md:33
+msgid ""
+"`xml`: Prints dependencies in GraphML format, suitable for graph analysis "
+"tools."
+msgstr ""
+"`xml`: ライブラリ依存性を GraphML 形式で出力する。グラフ解析ツールに適している。"
+
+#: src/reference/reference/sbt-dependency-tree.md:34
+msgid ""
+"`stats`: Prints summary statistics, such as total dependencies and versions."
+msgstr ""
+"`stats`: ライブラリ依存性の総数やバージョン数などの要約統計を表示する。"
+
+#: src/reference/reference/sbt-dependency-tree.md:35
+msgid ""
+"`help`: Displays the usage help (same as running `dependencyTree` without "
+"arguments)."
+msgstr ""
+"`help`: 使用ヘルプを表示する（引数なしで `dependencyTree` を実行した場合と同様）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:37
+msgid "Options"
+msgstr "オプション"
+
+#: src/reference/reference/sbt-dependency-tree.md:39
+msgid ""
+"`--quiet`: Suppresses console output and returns the result as a task value "
+"(e.g., for use in other tasks)."
+msgstr ""
+"`--quiet`: コンソール出力を抑制し、タスク値として結果を返す（他タスクでの利用"
+"など）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:40
+msgid ""
+"`--out <file>`: Writes output to the specified file instead of stdout. The "
+"file extension determines the default subcommand:"
+msgstr ""
+"`--out <ファイル>`: 標準出力の代わりに指定ファイルへ出力する。ファイル拡張子"
+"でデフォルトのサブコマンドが決まる:"
+
+#: src/reference/reference/sbt-dependency-tree.md:41
+msgid "`.txt`: `tree`"
+msgstr "`.txt`: `tree`"
+
+#: src/reference/reference/sbt-dependency-tree.md:42
+msgid "`.dot`: `graph`"
+msgstr "`.dot`: `graph`"
+
+#: src/reference/reference/sbt-dependency-tree.md:43
+msgid "`.html`: `html`"
+msgstr "`.html`: `html`"
+
+#: src/reference/reference/sbt-dependency-tree.md:44
+msgid "`.json`: `json`"
+msgstr "`.json`: `json`"
+
+#: src/reference/reference/sbt-dependency-tree.md:45
+msgid "`.xml`: `xml`"
+msgstr "`.xml`: `xml`"
+
+#: src/reference/reference/sbt-dependency-tree.md:46
+msgid ""
+"`--browse`: Automatically opens the output file in your default browser "
+"(only works with `graph` or `html` subcommands)."
+msgstr ""
+"`--browse`: 出力ファイルをデフォルトブラウザで自動的に開く（`graph` または "
+"`html` サブコマンドでのみ動作）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:48
+msgid "Examples"
+msgstr "例"
+
+#: src/reference/reference/sbt-dependency-tree.md:50
+msgid "ASCII Tree (Default)"
+msgstr "ASCII ツリー（デフォルト）"
+
+#: src/reference/reference/sbt-dependency-tree.md:52
+msgid ""
+"Displays a hierarchical view of dependencies, with `[S]` indicating Scala "
+"library dependencies."
+msgstr ""
+"ライブラリ依存性の階層ビューを表示する。`[S]` は Scala ライブラリ依存性を示す。"
+
+#: src/reference/reference/sbt-dependency-tree.md:65
+msgid ""
+"Evicted dependencies (older versions replaced by newer ones) are shown in "
+"parentheses."
+msgstr ""
+"Evicted されたライブラリ依存性（新しいバージョンで置き換えられた古いバージョン）"
+"は括弧内に表示される。"
+
+#: src/reference/reference/sbt-dependency-tree.md:67
+msgid "List of Dependencies"
+msgstr "ライブラリ依存性の一覧"
+
+#: src/reference/reference/sbt-dependency-tree.md:78
+msgid "GraphViz DOT File"
+msgstr "GraphViz DOT ファイル"
+
+#: src/reference/reference/sbt-dependency-tree.md:80
+msgid "Generates a DOT file for rendering graphs (e.g., with `dot` command)."
+msgstr "グラフ描画用の DOT ファイルを生成する（例: `dot` コマンドで使用）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:86
+msgid "Contents of `dependencies.dot`:"
+msgstr "`dependencies.dot` の内容:"
+
+#: src/reference/reference/sbt-dependency-tree.md:88
+msgid ""
+"```\n"
+"digraph \"dependency-graph\" {\n"
+"    graph[rankdir=\"LR\"; splines=polyline]\n"
+"    edge [arrowtail=\"none\"]\n"
+"    \"default:example_3:0.1.0-SNAPSHOT\" -> \"org.scala-lang:scala3-"
+"library_3:3.3.1\"\n"
+"    \"default:example_3:0.1.0-SNAPSHOT\" -> \"com.example:library_3:1.0.0\"\n"
+"    \"com.example:library_3:1.0.0\" -> \"org.typelevel:cats-core_3:2.9.0\"\n"
+"    // ... more edges\n"
+"}\n"
+"```"
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:99
+msgid "Render to PNG: `dot -Tpng dependencies.dot -o dependencies.png`"
+msgstr "PNG に変換: `dot -Tpng dependencies.dot -o dependencies.png`"
+
+#: src/reference/reference/sbt-dependency-tree.md:101
+msgid "HTML Output"
+msgstr "HTML 出力"
+
+#: src/reference/reference/sbt-dependency-tree.md:107
+msgid ""
+"Creates `deps.html` with a text-based graph and opens it in the browser."
+msgstr ""
+"テキストベースのグラフを含む `deps.html` を作成し、ブラウザで開く。"
+
+#: src/reference/reference/sbt-dependency-tree.md:109
+msgid "HTML with Embedded Graph"
+msgstr "グラフ埋め込み HTML"
+
+#: src/reference/reference/sbt-dependency-tree.md:115
+msgid "Requires GraphViz installed. Embeds a visual graph in the HTML."
+msgstr "GraphViz のインストールが必要。HTML に視覚的なグラフを埋め込む。"
+
+#: src/reference/reference/sbt-dependency-tree.md:117
+msgid "JSON Output"
+msgstr "JSON 出力"
+
+#: src/reference/reference/sbt-dependency-tree.md:123
+msgid "Sample output:"
+msgstr "出力例:"
+
+#: src/reference/reference/sbt-dependency-tree.md:127
+#: src/reference/reference/sbt-dependency-tree.md:132
+msgid "\"organization\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:127
+msgid "\"default\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:128
+#: src/reference/reference/sbt-dependency-tree.md:133
+msgid "\"name\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:128
+msgid "\"example_3\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:129
+#: src/reference/reference/sbt-dependency-tree.md:134
+msgid "\"version\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:129
+msgid "\"0.1.0-SNAPSHOT\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:130
+msgid "\"dependencies\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:132
+msgid "\"org.scala-lang\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:133
+msgid "\"scala3-library_3\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:134
+msgid "\"3.3.1\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:135
+msgid "\"configurations\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:135
+msgid "\"compile\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:136
+msgid "\"evicted\""
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:138
+msgid "// ... more\n"
+msgstr ""
+
+#: src/reference/reference/sbt-dependency-tree.md:143
+msgid "XML (GraphML) Output"
+msgstr "XML (GraphML) 出力"
+
+#: src/reference/reference/sbt-dependency-tree.md:149
+msgid "Suitable for import into graph visualization tools like yEd."
+msgstr "yEd などのグラフ可視化ツールへのインポートに適している。"
+
+#: src/reference/reference/sbt-dependency-tree.md:151
+msgid "Statistics"
+msgstr "統計"
+
+#: src/reference/reference/sbt-dependency-tree.md:161
+msgid "Configuration Keys"
+msgstr "設定キー"
+
+#: src/reference/reference/sbt-dependency-tree.md:163
+msgid "Customize behavior with these settings in `build.sbt`:"
+msgstr "`build.sbt` で以下の設定により動作をカスタマイズできる:"
+
+#: src/reference/reference/sbt-dependency-tree.md:165
+msgid ""
+"`dependencyTreeIncludeScalaLibrary := true`: Include Scala library "
+"dependencies in output (default: `false`)."
+msgstr ""
+"`dependencyTreeIncludeScalaLibrary := true`: 出力に Scala ライブラリ依存性を"
+"含める（デフォルト: `false`）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:166
+msgid ""
+"`dependencyDotNodeColors := false`: Disable colors in DOT node labels "
+"(default: `true`)."
+msgstr ""
+"`dependencyDotNodeColors := false`: DOT ノードラベルの色を無効にする（デフォルト: "
+"`true`）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:167
+msgid ""
+"`dependencyDotNodeLabel := (org: String, name: String, version: String) => "
+"s\"$org:$name:$version\"`: Customize DOT node labels."
+msgstr ""
+"`dependencyDotNodeLabel := (org: String, name: String, version: String) => "
+"s\"$org:$name:$version\"`: DOT ノードラベルをカスタマイズする。"
+
+#: src/reference/reference/sbt-dependency-tree.md:168
+msgid ""
+"`dependencyDotHeader := \"\"\"digraph \"custom\" { rankdir=\"TB\"; }\"\"\"`: "
+"Set a custom DOT header."
+msgstr ""
+"`dependencyDotHeader := \"\"\"digraph \"custom\" { rankdir=\"TB\"; }\"\"\"`: "
+"カスタム DOT ヘッダーを設定する。"
+
+#: src/reference/reference/sbt-dependency-tree.md:170
+msgid "Related Tasks"
+msgstr "関連タスク"
+
+#: src/reference/reference/sbt-dependency-tree.md:172
+msgid ""
+"`whatDependsOn <module>`: Shows what depends on a specific module (e.g., "
+"`whatDependsOn org.example:lib:1.0`)."
+msgstr ""
+"`whatDependsOn <モジュール>`: 特定のモジュールに依存しているものを表示する"
+"（例: `whatDependsOn org.example:lib:1.0`）。"
+
+#: src/reference/reference/sbt-dependency-tree.md:173
+msgid "`dependencyLicenseInfo`: Displays license information for dependencies."
+msgstr "`dependencyLicenseInfo`: ライブラリ依存性のライセンス情報を表示する。"
+
+#: src/reference/reference/sbt-dependency-tree.md:175
+msgid "Scopes"
+msgstr "スコープ"
+
+#: src/reference/reference/sbt-dependency-tree.md:177
+msgid ""
+"Available in `Compile` and `Test` configurations. Use `Global/` for cross-"
+"configuration views if needed."
+msgstr ""
+"`Compile` と `Test` コンフィギュレーションで利用可能。必要に応じて `Global/` で"
+"クロスコンフィギュレーション表示を行う。"
