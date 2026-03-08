@@ -14,79 +14,90 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:1
 msgid "sbt test"
-msgstr ""
+msgstr "sbt test"
 
 #: src/reference/reference/sbt-test.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "書式"
 
 #: src/reference/reference/sbt-test.md:7
 msgid ""
 "`sbt` \\[_query_ / \\] `test` \\[_testname1_ _testname2_\\] \\[ -- _options_ "
 "\\]"
 msgstr ""
+"`sbt` [_query_ / ] `test` [_testname1_ _testname2_] [ -- _options_ ]"
 
 #: src/reference/reference/sbt-test.md:9
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-test.md:12
 msgid "The `test` task provides a means for compiling and running the tests."
-msgstr ""
+msgstr "`test` タスクはテストのコンパイルと実行の手段を提供する。"
 
 #: src/reference/reference/sbt-test.md:14
 msgid "By default, the `test` task in sbt 2.x:"
-msgstr ""
+msgstr "sbt 2.x の `test` タスクの特長:"
 
 #: src/reference/reference/sbt-test.md:16
 msgid ""
 "**Subproject parallelism**. Performs compilation of the relevant subprojects "
 "in parallel, specified by the [query](../concepts/sbt-query.md)."
 msgstr ""
+"**サブプロジェクトの並列化**。[クエリ](../concepts/sbt-query.md)で指定された"
+"関連サブプロジェクトのコンパイルを並列で実行する。"
 
 #: src/reference/reference/sbt-test.md:17
 msgid ""
 "**Test suite parallelism**. Maps discovered test suites, to tasks and "
 "executes them in parallel."
 msgstr ""
+"**テストスイートの並列化**。検出されたテストスイートをタスクにマッピングし、"
+"並列で実行する。"
 
 #: src/reference/reference/sbt-test.md:18
 msgid ""
 "**Incremental test**. Runs only the tests that either failed in the previous "
 "run, never run, or if sbt detects changes in the test or its dependencies."
 msgstr ""
+"**差分テスト**。前回失敗したテスト、未実行のテスト、または sbt がテストやその"
+"依存関係の変更を検出した場合のみ実行する。"
 
 #: src/reference/reference/sbt-test.md:19
 msgid ""
 "**Cached**. The test result is cached machine-wide, and optionally remote "
 "cached."
 msgstr ""
+"**キャッシュ**。テスト結果はマシン全体でキャッシュされ、オプションでリモート"
+"キャッシュも可能。"
 
 #: src/reference/reference/sbt-test.md:21
 msgid "The standard source locations for testing are:"
-msgstr ""
+msgstr "テスト用の標準ソース配置は以下の通り:"
 
 #: src/reference/reference/sbt-test.md:23
 msgid "Scala sources in `src/test/scala/`"
-msgstr ""
+msgstr "`src/test/scala/` 内の Scala ソース"
 
 #: src/reference/reference/sbt-test.md:24
 msgid "Java sources in `src/test/java/`"
-msgstr ""
+msgstr "`src/test/java/` 内の Java ソース"
 
 #: src/reference/reference/sbt-test.md:25
 msgid "Resources for the test classpath in `src/test/resources/`"
-msgstr ""
+msgstr "`src/test/resources/` 内のテストクラスパス用リソース"
 
 #: src/reference/reference/sbt-test.md:27
 msgid ""
 "The resources may be accessed from tests by using the `getResource` methods "
 "of `java.lang.Class` or `java.lang.ClassLoader`."
 msgstr ""
+"リソースは `java.lang.Class` または `java.lang.ClassLoader` の `getResource` "
+"メソッドでテストからアクセスできる。"
 
 #: src/reference/reference/sbt-test.md:30
 msgid "Test interfaces"
-msgstr ""
+msgstr "テストインターフェース"
 
 #: src/reference/reference/sbt-test.md:32
 msgid ""
@@ -101,6 +112,15 @@ msgid ""
 "framework to the classpath to work with sbt. For example, MUnit may be used "
 "by declaring it as a `libraryDependency`:"
 msgstr ""
+"sbt は JVM ベースのテストフレームワーク用の共通インターフェースを定義し、"
+"テストスイートの自動検出と並列実行を可能にする。デフォルトで sbt は "
+"[MUnit](https://scalameta.org/munit/)、[ScalaTest](https://www.scalatest.org/)、"
+"[Hedgehog](https://hedgehogqa.github.io/scala-hedgehog/)、[ScalaCheck](https://"
+"scalacheck.org/)、[Specs2](https://etorreborre.github.io/specs2/)、"
+"[Weaver](https://typelevel.org/weaver-test/)、[ZIO Test](https://zio.dev/"
+"reference/test/)、[JUnit 4](https://github.com/sbt/junit-interface) と連携する。"
+"テストフレームワークをクラスパスに追加するだけで sbt で利用できる。例えば "
+"MUnit は `libraryDependency` として宣言して使用する:"
 
 #: src/reference/reference/sbt-test.md:35
 msgid "\"org.scalameta\""
@@ -119,10 +139,12 @@ msgid ""
 "In the above, `Test` denotes the `Test` configuration, and means that MUnit "
 "will only be on the test classpath and it isn't needed by the main sources."
 msgstr ""
+"上記では、`Test` は `Test` コンフィギュレーションを表し、MUnit はテスト"
+"クラスパスにのみ含まれ、main ソースでは不要であることを意味する。"
 
 #: src/reference/reference/sbt-test.md:43
 msgid "JUnit"
-msgstr ""
+msgstr "JUnit"
 
 #: src/reference/reference/sbt-test.md:45
 msgid ""
@@ -131,6 +153,9 @@ msgid ""
 "your project, add the jupiter-interface dependency in your project's main "
 "build.sbt file."
 msgstr ""
+"JUnit 5 のサポートは [sbt-jupiter-interface](https://github.com/sbt/sbt-jupiter-"
+"interface) にて提供される。プロジェクトに JUnit Jupiter サポートを追加するには、"
+"プロジェクトのメイン build.sbt に jupiter-interface のライブラリ依存性を追加する。"
 
 #: src/reference/reference/sbt-test.md:51
 #: src/reference/reference/sbt-test.md:57
@@ -148,7 +173,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:54
 msgid "and the sbt-jupiter-interface plugin to your `project/plugins.sbt`:"
-msgstr ""
+msgstr "`project/plugins.sbt` に sbt-jupiter-interface プラグインを追加する:"
 
 #: src/reference/reference/sbt-test.md:57
 msgid "\"sbt-jupiter-interface\""
@@ -160,6 +185,9 @@ msgid ""
 "junit-interface). Add the junit-interface dependency in your project's main "
 "build.sbt file."
 msgstr ""
+"JUnit 4 のサポートは [junit-interface](https://github.com/sbt/junit-interface) "
+"にて提供される。プロジェクトのメイン build.sbt に junit-interface のライブラリ依存性"
+"を追加する。"
 
 #: src/reference/reference/sbt-test.md:65
 msgid "\"com.github.sbt\""
@@ -175,39 +203,43 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:68
 msgid "Test filtering"
-msgstr ""
+msgstr "テストフィルタリング"
 
 #: src/reference/reference/sbt-test.md:70
 msgid ""
 "In sbt 2.x, the `test` task accepts a whitespace separated list of test "
 "names to run. For example:"
 msgstr ""
+"sbt 2.x では、`test` タスクは実行するテスト名の空白区切りリストを受け付ける。"
+"例:"
 
 #: src/reference/reference/sbt-test.md:77
 msgid "Here's an example output:"
-msgstr ""
+msgstr "出力例:"
 
 #: src/reference/reference/sbt-test.md:91
 msgid "It supports wildcards as well:"
-msgstr ""
+msgstr "ワイルドカードもサポートする:"
 
 #: src/reference/reference/sbt-test.md:97
 msgid "Incremental testing"
-msgstr ""
+msgstr "差分テスト"
 
 #: src/reference/reference/sbt-test.md:99
 msgid ""
 "In addition to the explicit filter, the `test` task runs only the tests that "
 "satisfy one of the following conditions are run:"
 msgstr ""
+"明示的なフィルタに加え、`test` タスクは以下のいずれかの条件を満たすテストのみ"
+"を実行する:"
 
 #: src/reference/reference/sbt-test.md:102
 msgid "The tests that failed in the previous run"
-msgstr ""
+msgstr "前回失敗したテスト"
 
 #: src/reference/reference/sbt-test.md:103
 msgid "The tests that were not run before"
-msgstr ""
+msgstr "以前実行されていなかったテスト"
 
 #: src/reference/reference/sbt-test.md:104
 msgid ""
@@ -219,15 +251,16 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:107
 msgid "Full testing"
-msgstr ""
+msgstr "フルテスト"
 
 #: src/reference/reference/sbt-test.md:109
 msgid "To run, uncached full tests, like sbt 1.x, use the `testFull` task."
-msgstr ""
+msgstr "sbt 1.x のようにキャッシュなしのフルテストを実行するには、`testFull` タスクを"
+"使用する。"
 
 #: src/reference/reference/sbt-test.md:121
 msgid "Other tasks"
-msgstr ""
+msgstr "その他のタスク"
 
 #: src/reference/reference/sbt-test.md:123
 msgid ""
@@ -235,6 +268,9 @@ msgid ""
 "sources, but are prefixed with `Test /` on the command line and are "
 "referenced in Scala code with `Test /` as well. These tasks include:"
 msgstr ""
+"main ソースで利用可能なタスクは、テストソースでも利用可能である。コマンドライン"
+"では `Test /` をプレフィックスとして付け、Scala コードでも `Test /` で参照する。"
+"これらのタスクには以下が含まれる:"
 
 #: src/reference/reference/sbt-test.md:127
 msgid "`Test / compile`"
@@ -258,21 +294,23 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:133
 msgid "See [sbt run](./sbt-run.md) for details on these tasks."
-msgstr ""
+msgstr "これらのタスクの詳細は[sbt run](./sbt-run.md)を参照。"
 
 #: src/reference/reference/sbt-test.md:135
 msgid "Output"
-msgstr ""
+msgstr "出力"
 
 #: src/reference/reference/sbt-test.md:137
 msgid ""
 "By default, logging is buffered for each test source file until all tests "
 "for that file complete. This can be disabled by setting `logBuffered`:"
 msgstr ""
+"デフォルトでは、各テストソースファイルのログはそのファイルの全テストが完了する"
+"までバッファリングされる。`logBuffered` を設定することで無効にできる:"
 
 #: src/reference/reference/sbt-test.md:145
 msgid "Test Reports"
-msgstr ""
+msgstr "テストレポート"
 
 #: src/reference/reference/sbt-test.md:147
 msgid ""
@@ -280,6 +318,9 @@ msgid ""
 "build, located in the `target/test-reports` directory for a project. This "
 "can be disabled by disabling the `JUnitXmlReportPlugin`"
 msgstr ""
+"デフォルトでは、sbt はビルド内の全テストの JUnit XML テストレポートをプロジェクト"
+"の `target/test-reports` ディレクトリに生成する。`JUnitXmlReportPlugin` を無効"
+"にすることで無効にできる。"
 
 #: src/reference/reference/sbt-test.md:152
 msgid "\".\""
@@ -287,23 +328,27 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:155
 msgid "Options"
-msgstr ""
+msgstr "オプション"
 
 #: src/reference/reference/sbt-test.md:157
 msgid "Test framework arguments"
-msgstr ""
+msgstr "テストフレームワークの引数"
 
 #: src/reference/reference/sbt-test.md:159
 msgid ""
 "Arguments to the test framework may be provided on the command line to the "
 "`test` tasks following a `--` separator. For example:"
 msgstr ""
+"テストフレームワークへの引数は、`--` 区切りに続けて `test` タスクのコマンドライン"
+"で指定できる。例:"
 
 #: src/reference/reference/sbt-test.md:166
 msgid ""
 "To specify test framework arguments as part of the build, add options "
 "constructed by `Tests.Argument`:"
 msgstr ""
+"ビルドの一部としてテストフレームワークの引数を指定するには、`Tests.Argument` で"
+"構築したオプションを追加する:"
 
 #: src/reference/reference/sbt-test.md:170
 #: src/reference/reference/sbt-test.md:176
@@ -317,11 +362,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:173
 msgid "To specify them for a specific test framework only:"
-msgstr ""
+msgstr "特定のテストフレームワーク用にのみ指定する場合:"
 
 #: src/reference/reference/sbt-test.md:179
 msgid "Setup and Cleanup"
-msgstr ""
+msgstr "セットアップとクリーンアップ"
 
 #: src/reference/reference/sbt-test.md:181
 msgid ""
@@ -331,6 +376,11 @@ msgid ""
 "class loader that is (or was) used for running the tests. It provides access "
 "to the test classes as well as the test framework classes."
 msgstr ""
+"`Tests.Setup` と `Tests.Cleanup` でセットアップとクリーンアップのアクションを"
+"指定する。`() => Unit` 型と `ClassLoader => Unit` 型の両方の関数を受け付ける。"
+"ClassLoader を受け取るバリアントには、テスト実行に使用される（または使用され"
+"ていた）クラスローダーが渡される。テストクラスとテストフレームワーククラスに"
+"アクセスできる。"
 
 #: src/reference/reference/sbt-test.md:188
 msgid ""
@@ -340,10 +390,14 @@ msgid ""
 "variants in this case.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"フォーク時は、テストクラスを含む `ClassLoader` は別の JVM にあるため提供でき\n"
+"ない。この場合は `() => Unit` バリアントのみを使用すること。\n"
+"```"
 
 #: src/reference/reference/sbt-test.md:194
 msgid "Examples:"
-msgstr ""
+msgstr "例:"
 
 #: src/reference/reference/sbt-test.md:197
 msgid "\"Setup\""
@@ -355,7 +409,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:203
 msgid "Disable parallel execution of test suites"
-msgstr ""
+msgstr "テストスイートの並列実行を無効にする"
 
 #: src/reference/reference/sbt-test.md:205
 msgid ""
@@ -363,20 +417,24 @@ msgid ""
 "itself. Because each test suite is mapped to a task, tests are also run in "
 "parallel by default. To make tests within a given project execute serially:"
 msgstr ""
+"デフォルトでは、sbt は全タスクを sbt 自身と同じ JVM 内で並列実行する。各テスト"
+"スイートはタスクにマッピングされるため、テストもデフォルトで並列実行される。"
+"特定のプロジェクト内のテストを直列実行するには:"
 
 #: src/reference/reference/sbt-test.md:213
 msgid "Note that tests from different projects may still execute concurrently."
-msgstr ""
+msgstr "異なるプロジェクトのテストは依然として並行実行される場合がある。"
 
 #: src/reference/reference/sbt-test.md:216
 msgid "Filter classes"
-msgstr ""
+msgstr "クラスのフィルタ"
 
 #: src/reference/reference/sbt-test.md:218
 msgid ""
 "If you want to only run test classes whose name ends with \"Test\", use "
 "`Tests.Filter`:"
 msgstr ""
+"名前が \"Test\" で終わるテストクラスのみを実行するには、`Tests.Filter` を使用する:"
 
 #: src/reference/reference/sbt-test.md:222
 msgid "\"Test\""
@@ -384,11 +442,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-test.md:225
 msgid "Forking tests"
-msgstr ""
+msgstr "テストのフォーク"
 
 #: src/reference/reference/sbt-test.md:227
 msgid "The setting:"
-msgstr ""
+msgstr "設定:"
 
 #: src/reference/reference/sbt-test.md:233
 msgid ""
@@ -399,12 +457,15 @@ msgid ""
 "tests executed in a forked JVM are executed *sequentially*.\n"
 "-->"
 msgstr ""
+"全てのテストを単一の外部 JVM で実行することを指定する。"
 
 #: src/reference/reference/sbt-test.md:239
 msgid ""
 "More control over how tests are assigned to JVMs and what options to pass to "
 "those is available with `testGrouping` key."
 msgstr ""
+"テストを JVM に割り当てる方法や渡すオプションの詳細は、`testGrouping` キーで"
+"制御できる。"
 
 #: src/reference/reference/sbt-test.md:264
 msgid ""
@@ -413,3 +474,6 @@ msgid ""
 "`Cleanup` actions cannot be provided with the actual test class loader when "
 "a group is forked."
 msgstr ""
+"同時に実行できるフォーク JVM の最大数は、`Tags.ForkedTestGroup` タグの制限で"
+"制御する（デフォルトは 1）。グループがフォークされる場合、`Setup` と `Cleanup` "
+"アクションには実際のテストクラスローダーを渡せない。"
