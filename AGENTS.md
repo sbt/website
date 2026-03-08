@@ -39,3 +39,10 @@ Tips for Japanese translation
 
 - Use だ/である tone.
 - current interactive session → 現行の sbt セッション
+
+Tips for Chinese translation
+-----------------------------
+
+- Use 您, but otherwise keep the technical tone.
+- Leave "sbt runner" as is
+- Leave "sbt server" as is
