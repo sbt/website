@@ -13,17 +13,19 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:1
 msgid "Cross building setup"
-msgstr ""
+msgstr "クロスビルドのセットアップ"
 
 #: src/reference/reference/cross-building-setup.md:4
 msgid ""
 "This page covers cross building setup. See [Cross building](../concepts/"
 "cross-building.html) for general explanation."
 msgstr ""
+"このページではクロスビルドのセットアップを説明する。"
+"概要は[クロスビルド](../concepts/cross-building.html)を読んでほしい。"
 
 #: src/reference/reference/cross-building-setup.md:6
 msgid "Using cross-built libraries"
-msgstr ""
+msgstr "クロスビルドされたライブラリの使用"
 
 #: src/reference/reference/cross-building-setup.md:9
 msgid ""
@@ -32,6 +34,9 @@ msgid ""
 "current version of Scala being used to build the library to the dependency’s "
 "name. For example:"
 msgstr ""
+"複数の Scala バージョン向けにビルドされたライブラリを使用するには、ModuleID の"
+"最初の `%` を `%%` にする。これにより sbt はライブラリのビルドに使用中の "
+"Scala バージョンをライブラリ依存性のモジュール名に追加する。例:"
 
 #: src/reference/reference/cross-building-setup.md:12
 #: src/reference/reference/cross-building-setup.md:18
@@ -51,6 +56,7 @@ msgstr ""
 msgid ""
 "A nearly equivalent, manual alternative for a fixed version of Scala is:"
 msgstr ""
+"これをほぼ等価の ModuleID に、特定の Scala に対して手で書き換えると以下のようになる:"
 
 #: src/reference/reference/cross-building-setup.md:18
 msgid "\"cats-effect_3\""
@@ -58,13 +64,15 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:21
 msgid "Scala 3 specific cross-versions"
-msgstr ""
+msgstr "Scala 3 専用のクロスバージョン"
 
 #: src/reference/reference/cross-building-setup.md:23
 msgid ""
 "If you are developing an application in Scala 3, you can use Scala 2.13 "
 "libraries:"
 msgstr ""
+"Scala 3 でアプリケーションを開発している場合、Scala 2.13 のライブラリを使用で"
+"きる:"
 
 #: src/reference/reference/cross-building-setup.md:26
 #: src/reference/reference/cross-building-setup.md:34
@@ -109,12 +117,16 @@ msgid ""
 "This is equivalent to using `%%` except it resolves the `_2.13` variant of "
 "the library  when `scalaVersion` is 3.x.y."
 msgstr ""
+"`%%` を使用するのと等価だが、`scalaVersion` が 3.x.y のときにライブラリの "
+"`_2.13` バリアントに解決する点が異なる。"
 
 #: src/reference/reference/cross-building-setup.md:31
 msgid ""
 "Conversely we have `CrossVersion.for2_13Use3` to use the `_3` variant of the "
 "library when `scalaVersion` is 2.13.x:"
 msgstr ""
+"逆に、`scalaVersion` が 2.13.x のときにライブラリの `_3` バリアントを使用する"
+"には `CrossVersion.for2_13Use3` がある:"
 
 #: src/reference/reference/cross-building-setup.md:37
 msgid ""
@@ -125,26 +137,37 @@ msgid ""
 "xml_3` on the end users' classpath.\n"
 "```"
 msgstr ""
+"```admonish warning\n"
+"**ライブラリ作者への警告:** Scala 2.13 ライブラリに依存する Scala 3 ライブラリ、"
+"またはその逆を公開するのは一般的に安全ではない。エンドユーザーのクラスパスに "
+"`scala-xml_2.13` と `scala-xml_3` のように同じライブラリの 2 バージョンが混在する"
+"可能性がある。\n"
+"```"
 
 #: src/reference/reference/cross-building-setup.md:41
 msgid "More about using cross-built libraries"
-msgstr ""
+msgstr "クロスビルドされたライブラリの使用について（詳細）"
 
 #: src/reference/reference/cross-building-setup.md:43
 msgid ""
 "You can have fine-grained control over the behavior for different Scala "
 "versions by using the `cross` method on `ModuleID` These are equivalent:"
 msgstr ""
+"`ModuleID` の `cross` メソッドを使うと、異なる Scala バージョンに対する動作を"
+"細かく制御できる。以下は等価である:"
 
 #: src/reference/reference/cross-building-setup.md:50
 msgid "These are equivalent:"
 msgstr ""
+"以下も等価である:"
 
 #: src/reference/reference/cross-building-setup.md:57
 msgid ""
 "This overrides the defaults to always use the full Scala version instead of "
 "the binary Scala version:"
 msgstr ""
+"Scala のバイナリバージョンではなくフルバージョンを常に使用するように"
+"デフォルトをオーバーライドする:"
 
 #: src/reference/reference/cross-building-setup.md:63
 msgid ""
@@ -153,10 +176,14 @@ msgid ""
 "which is used to distinguish variant but binary compatible Scala toolchain "
 "builds."
 msgstr ""
+"`CrossVersion.patch` は `CrossVersion.binary` と `CrossVersion.full` の中間的存在で、"
+"末尾の `-bin-...` サフィックスを削除して、"
+"バイナリ互換な Scala ツールチェーンの開発版をサポートする。"
 
 #: src/reference/reference/cross-building-setup.md:69
 msgid "`CrossVersion.constant` fixes a constant value:"
 msgstr ""
+"`CrossVersion.constant` は固定値を指定する:"
 
 #: src/reference/reference/cross-building-setup.md:72
 msgid "\"2.9.1\""
@@ -165,6 +192,7 @@ msgstr ""
 #: src/reference/reference/cross-building-setup.md:75
 msgid "It is equivalent to:"
 msgstr ""
+"以下と等価である:"
 
 #: src/reference/reference/cross-building-setup.md:78
 msgid "\"b_2.9.1\""
@@ -172,13 +200,14 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:81
 msgid "Project matrix"
-msgstr ""
+msgstr "プロジェクトマトリックス"
 
 #: src/reference/reference/cross-building-setup.md:84
 msgid ""
 "sbt 2.x introduces project matrix, which enables cross building to happen in "
 "parallel."
 msgstr ""
+"sbt 2.x ではプロジェクトマトリックスが導入され、クロスビルドを並列実行できるようになった。"
 
 #: src/reference/reference/cross-building-setup.md:87
 msgid "\"com.example\""
@@ -204,7 +233,7 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:98
 msgid "Publishing convention"
-msgstr ""
+msgstr "公開規約"
 
 #: src/reference/reference/cross-building-setup.md:101
 msgid ""
@@ -216,15 +245,22 @@ msgid ""
 "prelease versions of Scala, such as 2.13.0-RC1, full version will be "
 "considered the ABI version."
 msgstr ""
+"ライブラリのコンパイルに使用した Scala のバージョンを示すため、Scala ABI（アプリ"
+"ケーションバイナリインターフェース）バージョンをサフィックスとして使用する。例え"
+"ば、アーティファクト名 `cats-effect_2.13` は Scala 2.13.x が使用されたことを意味"
+"し、`cats-effect_3` は Scala 3.x が使用されたことを意味する。このシンプルな方式で "
+"Maven、Ant などのビルドツールユーザーとの相互運用が可能である。2.13.0-RC1 のよ"
+"うなプレリリース版の Scala では、フルバージョンが ABI バージョンとして扱われる。"
 
 #: src/reference/reference/cross-building-setup.md:103
 msgid ""
 "`crossVersion` setting can be used to override the publishing convention:"
 msgstr ""
+"`crossVersion` セッティングで公開規約をオーバーライドできる:"
 
 #: src/reference/reference/cross-building-setup.md:105
 msgid "`CrossVersion.disabled` (no suffix)"
-msgstr ""
+msgstr "`CrossVersion.disabled`（サフィックスなし）"
 
 #: src/reference/reference/cross-building-setup.md:106
 msgid "`CrossVersion.binary` (`_<scala-abi-version>`)"
@@ -241,3 +277,8 @@ msgid ""
 "compiler is not forward compatible among the patch releases, compiler "
 "plugins should use `CrossVersion.full`."
 msgstr ""
+"デフォルト値は `crossPaths` に応じて `CrossVersion.binary` または "
+"`CrossVersion.disabled` に設定される。"
+"ただし、Scala 標準ライブラリと異なり Scala コンパイラはパッチ"
+"リリース間で前方互換性がないため、コンパイラプラグインは `CrossVersion.full` を"
+"採用することが推奨される。"

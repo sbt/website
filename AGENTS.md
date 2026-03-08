@@ -48,6 +48,9 @@ Tips for Japanese translation
 - recipe → レシピ
 - configuration → コンフィギュレーション (to disambiguate from settings/セッティング)
 - cached task → キャッシュ化タスク
+- equivalent → 等価
+- full Scala version → Scala のフルバージョン
+- binary Scala version → Scala のバイナリバージョン
 
 Tips for Chinese translation
 -----------------------------
