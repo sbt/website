@@ -47,6 +47,7 @@ Tips for Japanese translation
 - (non-transitive) dependencies → ライブラリ依存性 (in library dependency context)
 - recipe → レシピ
 - configuration → コンフィギュレーション (to disambiguate from settings/セッティング)
+- cached task → キャッシュ化タスク
 
 Tips for Chinese translation
 -----------------------------

@@ -14,17 +14,19 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:1
 msgid "Cached task"
-msgstr ""
+msgstr "キャッシュ化タスク"
 
 #: src/reference/reference/cached-task.md:4
 msgid ""
 "This page covers the cached task details. See [Caching](../concepts/"
 "caching.md) for a general explanation."
 msgstr ""
+"このページではキャッシュ化タスクの詳細を説明する。"
+"概要の解説は[キャッシュ化](../concepts/caching.md)を参照。"
 
 #: src/reference/reference/cached-task.md:6
 msgid "Automatic caching"
-msgstr ""
+msgstr "自動キャッシュ"
 
 #: src/reference/reference/cached-task.md:10
 #: src/reference/reference/cached-task.md:68
@@ -44,10 +46,13 @@ msgid ""
 "settings `name` and `version`. The first time we run the task it will be "
 "executed onsite, but the second time onward, it will use the disk cache:"
 msgstr ""
+"sbt 2.x では、タスク結果は `name` と `version` の 2 つのセッティングに基づいて"
+"自動的にキャッシュされる。初回実行時はオンサイトで実行されるが、2 回目以降は"
+"ディスクキャッシュが使用される:"
 
 #: src/reference/reference/cached-task.md:26
 msgid "Caching is serialization-hard"
-msgstr ""
+msgstr "キャッシュ化はシリアライズ困難である"
 
 #: src/reference/reference/cached-task.md:28
 msgid ""
@@ -57,14 +62,18 @@ msgid ""
 "(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
 "codecs."
 msgstr ""
+"自動キャッシュに参加するには、入力キー（例: `name` と `version`）が "
+"`sjsonnew.HashWriter` 型クラス用の given を提供し、戻り値の型が `sjsonnew.JsonFormat` "
+"用の given を提供する必要がある。[Contraband](https://www.scala-sbt.org/contraband/) "
+"で sjson-new のコーデックを生成できる。"
 
 #: src/reference/reference/cached-task.md:30
 msgid "Effect tracking"
-msgstr ""
+msgstr "エフェクトの追跡"
 
 #: src/reference/reference/cached-task.md:33
 msgid "The effect of file creation"
-msgstr ""
+msgstr "ファイル作成のエフェクト"
 
 #: src/reference/reference/cached-task.md:35
 msgid ""
@@ -72,20 +81,24 @@ msgid ""
 "file, we need to track the effect of file creation using "
 "`Def.declareOutput(vf)`."
 msgstr ""
+"ファイル名を返すだけでなく、ファイル作成のエフェクトをキャッシュするには、"
+"`Def.declareOutput(vf)` を使ってファイル作成のエフェクトを追跡する必要がある。"
 
 #: src/reference/reference/cached-task.md:47
 msgid "Opting out from caching"
-msgstr ""
+msgstr "キャッシュからのオプトアウト"
 
 #: src/reference/reference/cached-task.md:50
 msgid "Build-wide opt-out"
-msgstr ""
+msgstr "ビルド全体でのオプトアウト"
 
 #: src/reference/reference/cached-task.md:52
 msgid ""
 "To opt out of by-default custom task caching, add the following to `project/"
 "plugins.sbt`:"
 msgstr ""
+"デフォルトのカスタムタスクキャッシュをオプトアウトするには、`project/plugins.sbt` "
+"に以下を追加する:"
 
 #: src/reference/reference/cached-task.md:55
 msgid "\"-Xmacro-settings:sbt:no-default-task-cache\""
@@ -98,29 +111,37 @@ msgid ""
 "tasks provided by sbt or plugins will remain cached.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"これはビルドで導入したカスタムタスクにのみ適用される。sbt またはプラグインが提供"
+"するキャッシュ化タスクはキャッシュされたままである。\n"
+"```"
 
 #: src/reference/reference/cached-task.md:62
 msgid "Per-task-key opt-out"
-msgstr ""
+msgstr "タスクキー単位でのオプトアウト"
 
 #: src/reference/reference/cached-task.md:64
 msgid ""
 "Next, if you want to opt some task keys from caching, you can set the cache "
 "level as follows:"
 msgstr ""
+"次に、一部のタスクキーをキャッシュからオプトアウトしたい場合は、以下のように"
+"キャッシュレベルを設定する:"
 
 #: src/reference/reference/cached-task.md:71
 msgid "or"
-msgstr ""
+msgstr "または"
 
 #: src/reference/reference/cached-task.md:78
 msgid "Per-task opt-out"
-msgstr ""
+msgstr "タスク単位でのオプトアウト"
 
 #: src/reference/reference/cached-task.md:80
 msgid ""
 "To opt out of the cache individually, use `Def.uncached(...)` as follows:"
 msgstr ""
+"キャッシュを個別にオプトアウトするには、以下のように `Def.uncached(...)` を"
+"使用する:"
 
 #: src/reference/reference/cached-task.md:90
 msgid "Remote caching"
@@ -132,3 +153,5 @@ msgid ""
 "of backend both open source and commercial. See [Remote cache setup](./"
 "remote-cache-setup.md) for more details."
 msgstr ""
+"sbt 2.x は Bazel 互換の gRPC インターフェースを実装しており、オープンソースおよび"
+"商用の多数のバックエンドと連携する。詳細は [リモート・キャッシュのセットアップ](./remote-cache-setup.md) を参照のこと。"
