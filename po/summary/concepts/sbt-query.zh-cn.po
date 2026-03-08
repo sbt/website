@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T00:02:42-05:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/concepts/sbt-query.md:1
 msgid "sbt query"
-msgstr ""
+msgstr "sbt query"
 
 #: src/reference/concepts/sbt-query.md:4
 msgid "sbt 2.x extends the slash syntax to enable aggregation of subprojects:"
-msgstr ""
+msgstr "sbt 2.x 扩展了斜杠语法以支持子项目聚合："
 
 #: src/reference/concepts/sbt-query.md:6
 msgid ""
@@ -14,15 +27,15 @@ msgstr ""
 
 #: src/reference/concepts/sbt-query.md:8
 msgid "In other words, sbt query is a new way of writing the subproject-axis."
-msgstr ""
+msgstr "换言之，sbt query 是编写子项目轴的新方式。"
 
 #: src/reference/concepts/sbt-query.md:10
 msgid "Subproject reference"
-msgstr ""
+msgstr "子项目引用"
 
 #: src/reference/concepts/sbt-query.md:12
 msgid "A subproject reference works as a query to select the subproject:"
-msgstr ""
+msgstr "子项目引用作为查询来选择子项目："
 
 #: src/reference/concepts/sbt-query.md:14
 msgid ""
@@ -34,16 +47,25 @@ msgid ""
 "```\n"
 "````"
 msgstr ""
+"````admonish example title='build.sbt 示例 1'\n"
+"```scala\n"
+"scalaVersion := \"3.8.1\"\n"
+"\n"
+"lazy val foo = project\n"
+"```\n"
+"````"
 
 #: src/reference/concepts/sbt-query.md:22
 msgid ""
 "Given the above build, we can run tests on `foo` subproject as follows, "
 "which is the same syntax as it was in sbt 1.x:"
 msgstr ""
+"对于上述构建，我们可以按以下方式在 `foo` 子项目上运行测试，语法与 sbt 1.x 相"
+"同："
 
 #: src/reference/concepts/sbt-query.md:28
 msgid "`...` wildcard"
-msgstr ""
+msgstr "`...` 通配符"
 
 #: src/reference/concepts/sbt-query.md:30
 msgid ""
@@ -51,16 +73,33 @@ msgid ""
 "letters and numbers to filter down the root aggregate list. For example, we "
 "can run tests on all subproject that starts with `foo` as follows:"
 msgstr ""
+"`...` 通配符可匹配任意字符，并可与其他字母和数字组合以筛选根聚合列表。例如，"
+"我们可以按以下方式在所有以 `foo` 开头的子项目上运行测试："
+
+#: src/reference/concepts/sbt-query.md:36
+msgid ""
+"```admonish note title='Note: * vs ...'\n"
+"sbt query intentionally uses `...` (dot dot dot) instead of more intuitive "
+"`*` (asterisk) because `*` is often used in a shell as a wildcard to match "
+"existing files or directories. This would require quoting, and forgetting to "
+"quote `*/test` would match to something like `src/test`.\n"
+"```"
+msgstr ""
+"```admonish note title='注意：* 与 ...'\n"
+"sbt query 有意使用 `...`（省略号）而非更直观的 `*`（星号），因为 `*` 在 shell 中"
+"常被用作通配符来匹配现有文件或目录。这需要加引号，而忘记给 `*/test` 加引号会匹配"
+"到类似 `src/test` 的内容。\n"
+"```"
 
 #: src/reference/concepts/sbt-query.md:40
 msgid "`@scalaBinaryVersion` parameter"
-msgstr ""
+msgstr "`@scalaBinaryVersion` 参数"
 
 #: src/reference/concepts/sbt-query.md:42
 msgid ""
 "`@scalaBinaryVersion` parameter matches to the subproject's "
 "`scalaBinaryVersion` setting."
-msgstr ""
+msgstr "`@scalaBinaryVersion` 参数与子项目的 `scalaBinaryVersion` 设置匹配。"
 
 #: src/reference/concepts/sbt-query.md:44
 msgid ""
@@ -86,14 +125,14 @@ msgstr ""
 
 #: src/reference/concepts/sbt-query.md:63
 msgid "For example, we can run tests on all 3.x subprojects as follows:"
-msgstr ""
+msgstr "例如，我们可以按以下方式在所有 3.x 子项目上运行测试："
 
 #: src/reference/concepts/sbt-query.md:69
 msgid "This can be used from a terminal as follows:"
-msgstr ""
+msgstr "可以从终端按以下方式使用："
 
 #: src/reference/concepts/sbt-query.md:86
 msgid ""
 "This lets us filter down the aggregated subprojects, which could be a lot "
 "using `projectMatrix`."
-msgstr ""
+msgstr "这使我们能够筛选聚合的子项目，使用 `projectMatrix` 时子项目可能很多。"
