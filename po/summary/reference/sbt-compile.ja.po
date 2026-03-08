@@ -17,23 +17,27 @@ msgstr "sbt compile"
 
 #: src/reference/reference/sbt-compile.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "書式"
 
 #: src/reference/reference/sbt-compile.md:7
 msgid ""
 "`sbt` \\[_query_ / \\] `compile`<br> `sbt` \\[_query_ / \\] `Test` / "
 "`compile`<br>"
 msgstr ""
+"`sbt` [_query_ / ] `compile`<br> `sbt` [_query_ / ] `Test` / `compile`<br>"
 
 #: src/reference/reference/sbt-compile.md:10
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-compile.md:13
 msgid ""
 "The `compile` task compiles the selected subprojects and their subproject "
 "dependencies. Since sbt 2.x, the compiled artifacts are cached automatically."
 msgstr ""
+"`compile` タスクは、選択されたサブプロジェクトとそのサブプロジェクト依存関係を"
+"コンパイルする。sbt 2.x 以降、コンパイルされたアーティファクトは自動的にキャッシュ"
+"される。"
 
 #: src/reference/reference/sbt-compile.md:15
 msgid ""
@@ -41,10 +45,12 @@ msgid ""
 "significant poriton of sbt's development efforts deal with various "
 "strategies for speeding up compilation."
 msgstr ""
+"生の Scala コンパイラでの Scala コードのコンパイルは遅いため、sbt の開発努力の"
+"相当部分はコンパイル高速化の様々な戦略に費やされている。"
 
 #: src/reference/reference/sbt-compile.md:17
 msgid "Reduce the overhead of restarting the compiler"
-msgstr ""
+msgstr "コンパイラ再起動のオーバーヘッドを削減"
 
 #: src/reference/reference/sbt-compile.md:19
 msgid ""
@@ -53,10 +59,14 @@ msgid ""
 "significantly faster because it takes a long time to classload the compiler "
 "and for the Just-in-Time compiler to optimize it."
 msgstr ""
+"sbt server はバックグラウンドで稼働し続け、Scala のコンパイルが同じ Java 仮想"
+"マシン (JVM) 上で実行される。JVM を「温まった」状態に保つことでコンパイルが大幅に"
+"高速化される。コンパイラのクラスロードと Just-in-Time コンパイラによる最適化に"
+"時間がかかるためである。"
 
 #: src/reference/reference/sbt-compile.md:21
 msgid "Incremental compilation"
-msgstr ""
+msgstr "差分コンパイル"
 
 #: src/reference/reference/sbt-compile.md:23
 msgid ""
@@ -65,10 +75,14 @@ msgid ""
 "process of tracking dependencies between the language constructs and "
 "recompiling only the required sources is called _incremental compilation_."
 msgstr ""
+"任意のソース `A.scala` が変更されると、sbt は `A.scala` の変更に伴って再"
+"コンパイルされる他のソースファイルを最小限に抑えるよう努める。言語構成要素間"
+"の依存関係を追跡し、必要なソースのみを再コンパイルするこのプロセスは"
+"**差分コンパイル**と呼ばれる。"
 
 #: src/reference/reference/sbt-compile.md:26
 msgid "(Remote) caching"
-msgstr ""
+msgstr "（リモート）キャッシュ"
 
 #: src/reference/reference/sbt-compile.md:28
 msgid ""
@@ -76,28 +90,34 @@ msgid ""
 "builds, but can optionally be cached across different machines using Bazel-"
 "compatible remote cache. See [Caching](../concepts/caching.md) for details."
 msgstr ""
+"sbt 2.x では、コンパイルされたアーティファクトはセッションやビルド間でキャッシュ"
+"されるだけでなく、Bazel 互換のリモートキャッシュを使って異なるマシン間でオプション"
+"としてキャッシュすることもできる。詳細は[キャッシュ化](../concepts/caching.md)を"
+"参照。"
 
 #: src/reference/reference/sbt-compile.md:30
 msgid "Test / compile"
-msgstr ""
+msgstr "Test / compile"
 
 #: src/reference/reference/sbt-compile.md:32
 msgid ""
 "Scoping the `compile` task with a configuration, like `Test / compile` will "
 "compile the test sources and their source dependencies."
 msgstr ""
+"`Test / compile` のようにコンフィギュレーションで `compile` タスクをスコープ付け"
+"すると、テストソースとそのソース依存関係をコンパイルする。"
 
 #: src/reference/reference/sbt-compile.md:34
 msgid "Compilation settings"
-msgstr ""
+msgstr "コンパイル設定"
 
 #: src/reference/reference/sbt-compile.md:36
 msgid "scalaVersion"
-msgstr ""
+msgstr "scalaVersion"
 
 #: src/reference/reference/sbt-compile.md:38
 msgid "The version of Scala used for compilation."
-msgstr ""
+msgstr "コンパイルに使用する Scala のバージョン。"
 
 #: src/reference/reference/sbt-compile.md:41
 msgid "\"3.8.1\""
@@ -105,11 +125,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-compile.md:44
 msgid "scalacOptions"
-msgstr ""
+msgstr "scalacOptions"
 
 #: src/reference/reference/sbt-compile.md:46
 msgid "Options for the Scala compiler."
-msgstr ""
+msgstr "Scala コンパイラのオプション。"
 
 #: src/reference/reference/sbt-compile.md:49
 msgid "\"-Werror\""
@@ -117,11 +137,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-compile.md:52
 msgid "javacOptions"
-msgstr ""
+msgstr "javacOptions"
 
 #: src/reference/reference/sbt-compile.md:54
 msgid "Options for the Java compiler."
-msgstr ""
+msgstr "Java コンパイラのオプション。"
 
 #: src/reference/reference/sbt-compile.md:57
 msgid "\"-Xlint\""
