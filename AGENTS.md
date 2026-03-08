@@ -41,6 +41,7 @@ Tips for Japanese translation
 - Use さん suffix after a name of a person.
 - Keep whitespaces before and after English words and proper nouns, such as Coursier
 - current interactive session → 現行の sbt セッション
+- current project → カレント・プロジェクト
 - transitive dependencies → 間接依存ライブラリ
 - incremental compilation → 差分コンパイル
 - (non-transitive) dependencies → ライブラリ依存性 (in library dependency context)

@@ -60,7 +60,7 @@ of a key. For example,
 This shows that in addition to the requested `Compile / compile` task,
 there is also a `Test / compile` task.
 
-### Dependencies
+### Setting dependencies
 
 Forward dependencies show the other settings (or tasks) used to define a
 setting (or task). Reverse dependencies go the other direction, showing
