@@ -14,11 +14,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-publish.md:6
 msgid "sbt publish"
-msgstr ""
+msgstr "sbt publish"
 
 #: src/reference/reference/sbt-publish.md:9
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-publish.md:12
 msgid ""
@@ -29,7 +29,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-publish.md:17
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-publish.md:20
 msgid ""
@@ -39,18 +39,26 @@ msgid ""
 "file, to a repository so that other projects can specify your project as a "
 "dependency."
 msgstr ""
+"publish 系タスクはプロジェクトのコンパイルと公開の手段を提供する。"
+"この文脈での**公開**とは、Maven POM や `ivy.xml` などのディスクリプタと、JAR や `war` ファイ"
+"ルなどのアーティファクトをリポジトリにアップロードし、他のプロジェクトが"
+"ライブラリ依存性として指定できるようにすることである。"
 
 #: src/reference/reference/sbt-publish.md:26
 msgid ""
 "The `publish` task publishes your project to a remote repository, such as "
 "JFrog Artifactory or Sonatype Nexus instance."
 msgstr ""
+"`publish` タスクはプロジェクトを JFrog Artifactory や Sonatype Nexus などのリモー"
+"トリポジトリに公開する。"
 
 #: src/reference/reference/sbt-publish.md:28
 msgid ""
 "The `publishSigned` task, enabled using [sbt-pgp plugin](https://github.com/"
 "sbt/sbt-pgp), is used to publish GPG-signed artifacts."
 msgstr ""
+"`publishSigned` タスクは [sbt-pgp プラグイン](https://github.com/sbt/sbt-pgp) で"
+"有効化され、GPG 署名付きアーティファクトの公開に使用する。"
 
 #: src/reference/reference/sbt-publish.md:30
 msgid ""
@@ -58,41 +66,51 @@ msgid ""
 "repository, which is usually located at `$HOME/.ivy2/local/`. You can then "
 "use this project from other projects on the same machine."
 msgstr ""
+"`publishLocal` タスクはプロジェクトを Ivy のローカルファイルリポジトリ"
+"（通常は `$HOME/.ivy2/local/`）に公開する。同一マシン上の他のプロジェクトからこのプロ"
+"ジェクトをライブラリ依存性として利用できる。"
 
 #: src/reference/reference/sbt-publish.md:32
 msgid ""
 "The `publishM2` task publishes your project to the local Maven repository."
 msgstr ""
+"`publishM2` タスクはプロジェクトをローカル Maven リポジトリに公開する。"
 
 #: src/reference/reference/sbt-publish.md:34
 msgid ""
 "There's a specific recipe for [publishing to the Central Repo](../recipes/"
 "central.md)."
 msgstr ""
+"[Central Repo への公開](../recipes/central.md) に関してはレシピ参照。"
 
 #: src/reference/reference/sbt-publish.md:36
 msgid "Skip publishing"
-msgstr ""
+msgstr "公開のスキップ"
 
 #: src/reference/reference/sbt-publish.md:38
 msgid ""
 "To avoid publishing a project, add the following setting to the subprojects "
 "that you want to skip:"
 msgstr ""
+"公開を避けるには、スキップしたいサブプロジェクトに以下のセッティ"
+"ングを追加する:"
 
 #: src/reference/reference/sbt-publish.md:44
 msgid "Common use case is to prevent publishing of the root project."
 msgstr ""
+"一般的な用途はルートプロジェクトの公開を防ぐことである。"
 
 #: src/reference/reference/sbt-publish.md:46
 msgid "Define the repository"
-msgstr ""
+msgstr "リポジトリの定義"
 
 #: src/reference/reference/sbt-publish.md:48
 msgid ""
 "To specify the repository, assign a repository to `publishTo` and optionally "
 "set the publishing style. For example, to upload to Nexus:"
 msgstr ""
+"リポジトリを指定するには、`publishTo` にリポジトリを割り当て、必要に応じて公開"
+"スタイルを設定する。例えば Nexus にアップロードする場合:"
 
 #: src/reference/reference/sbt-publish.md:52
 msgid "\"Sonatype Snapshots Nexus\""
@@ -105,6 +123,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:55
 msgid "To publish to a local maven repository:"
 msgstr ""
+"ローカル Maven リポジトリに公開する場合:"
 
 #: src/reference/reference/sbt-publish.md:58
 msgid "\"local-maven\""
@@ -117,6 +136,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:61
 msgid "To publish to a local Ivy repository:"
 msgstr ""
+"ローカル Ivy リポジトリに公開する場合:"
 
 #: src/reference/reference/sbt-publish.md:64
 msgid "\"local-ivy\""
@@ -134,6 +154,10 @@ msgid ""
 "staging repository. Doing this selection can be done by using the value of "
 "the `version` setting:"
 msgstr ""
+"Central Repository に公開する場合、アーティファクトに応じて適切なリポジトリを選"
+"択する必要がある。SNAPSHOT バージョンは central-snapshots リポジトリへ、それ以"
+"外のバージョンはローカルのステージングリポジトリへ公開する。この選択は `version` "
+"セッティングの値を使って行える:"
 
 #: src/reference/reference/sbt-publish.md:75
 msgid "\"https://central.sonatype.com/repository/maven-snapshots/\""
@@ -149,7 +173,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-publish.md:81
 msgid "Publishing locally"
-msgstr ""
+msgstr "ローカルへの公開"
 
 #: src/reference/reference/sbt-publish.md:83
 msgid ""
@@ -158,6 +182,10 @@ msgid ""
 "can then list the project as a dependency. For example, if the project you "
 "are publishing has configuration parameters like:"
 msgstr ""
+"`publishLocal` タスクは、"
+"デフォルトでは `$HOME/.ivy2/local/` である「ローカル」の Ivy リポジトリに公開する。"
+"同一マシン上の他のビルドがこのプロジェクトをライブラリ依存性"
+"として指定できる。例えば、公開するプロジェクトに以下のような設定がある場合:"
 
 #: src/reference/reference/sbt-publish.md:89
 #: src/reference/reference/sbt-publish.md:97
@@ -177,6 +205,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:94
 msgid "Then another build on the same machine can depend on it:"
 msgstr ""
+"同一マシン上の別のビルドで以下のように依存関係として指定できる:"
 
 #: src/reference/reference/sbt-publish.md:100
 msgid ""
@@ -184,6 +213,8 @@ msgid ""
 "the version number each time you publish to indicate that it's a changing "
 "artifact."
 msgstr ""
+"選択するバージョン番号は `SNAPSHOT` で終わるか、変更されるアーティファクトであ"
+"ることを示すため公開のたびにバージョン番号を変更する必要がある。"
 
 #: src/reference/reference/sbt-publish.md:104
 msgid ""
@@ -193,6 +224,10 @@ msgid ""
 "since it makes dependency resolution slower and the build non-repeatable.\n"
 "```"
 msgstr ""
+"```admonish warning title="警告" \n"
+"SNAPSHOT ライブラリ依存性の使用は、単一マシン内でのテスト以外は避けるべきである。\n"
+"ライブラリ依存性の解決が遅くなり、ビルドの再現性が失われるためだ。\n"
+"```"
 
 #: src/reference/reference/sbt-publish.md:109
 msgid ""
@@ -201,18 +236,24 @@ msgid ""
 "settings.xml` or at `$HOME/.m2/repository/` by default. Another build would "
 "require `Resolver.mavenLocal` to resolve out of it:"
 msgstr ""
+"`publishLocal` と同様に、`publishM2` タスクはユーザーの Maven ローカルリポジトリ"
+"に公開する。場所は `$HOME/.m2/settings.xml` で指定されるか、デフォルトでは "
+"`$HOME/.m2/repository/` である。別のビルドから解決するには `Resolver.mavenLocal` "
+"が必要である:"
 
 #: src/reference/reference/sbt-publish.md:122
 msgid "Credentials"
-msgstr ""
+msgstr "認証情報"
 
 #: src/reference/reference/sbt-publish.md:124
 msgid "There are two ways to specify credentials for such a repository."
 msgstr ""
+"リポジトリの認証情報を指定する方法は2つある。"
 
 #: src/reference/reference/sbt-publish.md:126
 msgid "The first and better way is to load them from a file, for example:"
 msgstr ""
+"推奨される方法はファイルから読み込むことである。例:"
 
 #: src/reference/reference/sbt-publish.md:129
 msgid "\".sbt\""
@@ -227,10 +268,13 @@ msgid ""
 "The credentials file is a properties file with keys `realm`, `host`, `user`, "
 "and `password`. For example:"
 msgstr ""
+"認証情報ファイルは `realm`、`host`、`user`、`password` をキーとするプロパティファ"
+"イルである。例:"
 
 #: src/reference/reference/sbt-publish.md:142
 msgid "The second way is to specify them inline:"
 msgstr ""
+"2つ目の方法はインラインで指定することである:"
 
 #: src/reference/reference/sbt-publish.md:145
 msgid "\"Sonatype Nexus Repository Manager\""
@@ -265,20 +309,33 @@ msgid ""
 "```\n"
 "````"
 msgstr ""
+"````admonish note\n"
+"認証情報のマッチングは `realm` と `host` の両方のキーを使って行う。\n"
+"`realm` キーは HTTP の `WWW-Authenticate` ヘッダーの realm ディレクティブで、\n"
+"[HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication#Server_side) に対する HTTP サーバーのレスポンスの一部である。\n"
+"リポジトリごとに、受信した全ヘッダーを読むことで確認できる。\n"
+"例:\n"
+"\n"
+"```bash\n"
+"curl -D - my.artifact.repo.net\n"
+"```\n"
+"````"
 
 #: src/reference/reference/sbt-publish.md:160
 msgid "Cross-publishing"
-msgstr ""
+msgstr "クロス公開"
 
 #: src/reference/reference/sbt-publish.md:162
 msgid ""
 "To support multiple incompatible Scala versions, use projectMatrix and "
 "publish (see [Cross building setup](./cross-building-setup.md))."
 msgstr ""
+"互換性のない複数の Scala バージョンをサポートするには、projectMatrix と publish "
+"を使用する（[クロスビルドのセットアップ](./cross-building-setup.md) を参照）。"
 
 #: src/reference/reference/sbt-publish.md:165
 msgid "Overriding the publishing convention"
-msgstr ""
+msgstr "公開規約のオーバーライド"
 
 #: src/reference/reference/sbt-publish.md:167
 msgid ""
@@ -290,10 +347,16 @@ msgid ""
 "cross-building-setup.md) page for more details under the _Publishing "
 "convention_ section."
 msgstr ""
+"デフォルトでは sbt は使用中の Scala のバイナリバージョンでアーティファクトを公開"
+"する。例えばプロジェクトが Scala 2.13.x を使用している場合、example アーティファ"
+"クトは `example_2.13` として公開される。多くの場合これで十分だが、純粋な Java "
+"アーティファクトやコンパイラプラグインを公開する場合は `CrossVersion` を変更する"
+"必要がある。詳細は [クロスビルドのセットアップ](./cross-building-setup.md) の "
+"_Publishing convention_ セクションを参照のこと。"
 
 #: src/reference/reference/sbt-publish.md:175
 msgid "Published artifacts"
-msgstr ""
+msgstr "公開されるアーティファクト"
 
 #: src/reference/reference/sbt-publish.md:177
 msgid ""
@@ -302,14 +365,18 @@ msgid ""
 "disable or modify the default artifacts. See the [Artifact](./artifact.md) "
 "page for details."
 msgstr ""
+"デフォルトでは、メインのバイナリ JAR、ソース JAR、API ドキュメント JAR が公開さ"
+"れる。他の種類のアーティファクトを公開する宣言や、デフォルトのアーティファクト"
+"の無効化・変更が可能である。詳細は [Artifact](./artifact.md) を参照のこと。"
 
 #: src/reference/reference/sbt-publish.md:182
 msgid "Version scheme"
-msgstr ""
+msgstr "バージョンスキーム"
 
 #: src/reference/reference/sbt-publish.md:184
 msgid "`versionScheme` setting tracks the version scheme of the build:"
 msgstr ""
+"`versionScheme` セッティングはビルドのバージョンスキームを追跡する:"
 
 #: src/reference/reference/sbt-publish.md:187
 msgid "\"early-semver\""
@@ -321,6 +388,8 @@ msgid ""
 "and `\"strict\"`. sbt will include this information into `pom.xml` and "
 "`ivy.xml` as a property."
 msgstr ""
+"サポートされる値は `\"early-semver\"`、`\"pvp\"`、`\"semver-spec\"`、`\"strict\"` "
+"である。sbt はこの情報を `pom.xml` と `ivy.xml` にプロパティとして含める。"
 
 #: src/reference/reference/sbt-publish.md:193
 msgid ""
@@ -329,22 +398,30 @@ msgid ""
 "0.13.2). Once it goes 1.0.0, it follows the regular Semantic Versioning "
 "where 1.1.0 is bincompat with 1.0.0."
 msgstr ""
+"`Some(\"early-semver\")`: 0.Y.z 内のパッチ更新（例: 0.13.0 と 0.13.2）でバイナリ"
+"互換性を保つ Early Semantic Versioning。1.0.0 以降は通常の Semantic Versioning "
+"に従い、1.1.0 は 1.0.0 とバイナリ互換である。"
 
 #: src/reference/reference/sbt-publish.md:194
 msgid ""
 "`Some(\"semver-spec\")`: Semantic Versioning where all 0.y.z are treated as "
 "initial development (no bincompat guarantees)."
 msgstr ""
+"`Some(\"semver-spec\")`: すべての 0.y.z を初期開発として扱う Semantic Versioning "
+"（バイナリ互換性の保証なし）。"
 
 #: src/reference/reference/sbt-publish.md:195
 msgid ""
 "`Some(\"pvp\")`. Haskell Package Versioning Policy where X.Y are treated as "
 "major version."
 msgstr ""
+"`Some(\"pvp\")`: X.Y をメジャーバージョンとして扱う Haskell Package Versioning "
+"Policy。"
 
 #: src/reference/reference/sbt-publish.md:196
 msgid "`Some(\"strict\")`. Requires exact match of version."
 msgstr ""
+"`Some(\"strict\")`: バージョンの完全一致を要求する。"
 
 #: src/reference/reference/sbt-publish.md:198
 msgid ""
@@ -354,10 +431,14 @@ msgid ""
 "www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-"
 "versionscheme.html) (2021)."
 msgstr ""
+"この情報は `pom.xml` に注釈として追加され、下流プロジェクトがバージョン競合を安"
+"全に解決できるか判断するのに役立つ。[Preventing version conflicts with "
+"versionScheme](https://www.scala-lang.org/blog/2021/02/16/preventing-version-"
+"conflicts-with-versionscheme.html) (2021) を参照のこと。"
 
 #: src/reference/reference/sbt-publish.md:202
 msgid "Modifying the generated POM"
-msgstr ""
+msgstr "生成される POM の変更"
 
 #: src/reference/reference/sbt-publish.md:204
 msgid ""
@@ -366,12 +447,18 @@ msgid ""
 "may be altered by changing a few settings. Set `pomExtra` to provide XML "
 "(`scala.xml.NodeSeq`) to insert directly into the generated pom. For example:"
 msgstr ""
+"`publishMavenStyle` が `true` の場合、`makePom` アクションで POM が生成され、Ivy "
+"ファイルの代わりにリポジトリに公開される。いくつかのセッティングを変更することで "
+"POM ファイルを編集できる。`pomExtra` に XML（`scala.xml.NodeSeq`）を設定すると、"
+"生成される pom に直接挿入される。例:"
 
 #: src/reference/reference/sbt-publish.md:214
 msgid ""
 "There is also a `pomPostProcess` setting that can be used to manipulate the "
 "final XML before it is written. It's type is `Node => Node`."
 msgstr ""
+"`pomPostProcess` セッティングもあり、書き込み前に最終的な XML を操作できる。型は "
+"`Node => Node` である。"
 
 #: src/reference/reference/sbt-publish.md:223
 msgid ""
@@ -379,6 +466,9 @@ msgid ""
 "You can filter these by modifying `pomRepositoryFilter`, which by default "
 "excludes local repositories. To instead only include local repositories:"
 msgstr ""
+"`makePom` は宣言した Maven 形式のリポジトリを POM に追加する。`pomRepositoryFilter` "
+"を変更してフィルタリングでき、デフォルトではローカルリポジトリを除外する。ローカル"
+"リポジトリのみを含める場合:"
 
 #: src/reference/reference/sbt-publish.md:230
 msgid "\"file:\""
