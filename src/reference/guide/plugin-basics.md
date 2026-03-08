@@ -1,4 +1,3 @@
-
   [Basic-Def]: Basic-Def.html
   [Library-Dependencies]: Library-Dependencies.html
   [Multi-Project]: Multi-Project.html
@@ -12,23 +11,11 @@
 Plugin basics
 =============
 
-<!--
-Please read the earlier pages in the Getting Started Guide first, in
-particular you need to understand [build.sbt][Basic-Def], [task graph][Task-Graph],
-[library dependencies][Library-Dependencies], before reading this page.
--->
-
-
 What is a plugin?
 -----------------
 
 A plugin extends the build definition, most commonly by adding new settings and tasks.
 For example, a plugin could add `githubWorkflowGenerate` task to generate GitHub Actions YAML.
-
-<!--
-For example, a plugin
-could add a `codeCoverage` task which would generate a test coverage report.
--->
 
 Finding the plugin versions using Scaladex
 ------------------------------------------
