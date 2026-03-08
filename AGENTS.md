@@ -46,6 +46,7 @@ Tips for Japanese translation
 - incremental compilation → 差分コンパイル
 - (non-transitive) dependencies → ライブラリ依存性 (in library dependency context)
 - recipe → レシピ
+- configuration → コンフィギュレーション (to disambiguate from settings/セッティング)
 
 Tips for Chinese translation
 -----------------------------
