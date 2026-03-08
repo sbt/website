@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-03-06T23:51:28-05:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+
 #: src/reference/reference/sbt-inspect.md:4
 msgid "sbt inspect"
-msgstr ""
+msgstr "sbt inspect"
 
 #: src/reference/reference/sbt-inspect.md:7
 msgid "Synopsis"
-msgstr ""
+msgstr "書式"
 
 #: src/reference/reference/sbt-inspect.md:10
 msgid ""
@@ -15,7 +28,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-inspect.md:14
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/sbt-inspect.md:17
 msgid ""
@@ -23,20 +36,24 @@ msgid ""
 "graph. For instace, it can be used to determine which setting should be "
 "modified to affect another task."
 msgstr ""
+"`inspect` コマンドはタスクとセッティングのグラフを調査する手段を提供する。"
+"例えば、別のタスクに影響を与えるためにどのセッティングを変更すべきか判断する"
+"のに使える。"
 
 #: src/reference/reference/sbt-inspect.md:21
 msgid "Value, Description, and Provided By"
-msgstr ""
+msgstr "値、説明、提供元"
 
 #: src/reference/reference/sbt-inspect.md:23
 msgid ""
 "The first piece of information provided by `inspect` is the type of a task "
 "or the value and type of a setting."
 msgstr ""
+"`inspect` が提供する最初の情報は、タスクの型またはセッティングの値と型である。"
 
 #: src/reference/reference/sbt-inspect.md:26
 msgid "For example,"
-msgstr ""
+msgstr "例:"
 
 #: src/reference/reference/sbt-inspect.md:37
 msgid "\"file:/tmp/aaa/\""
@@ -51,32 +68,39 @@ msgid ""
 "The following section of output is labeled \"Provided by\". This shows the "
 "actual scope where the setting is defined."
 msgstr ""
+"出力の次のセクションは「Provided by」とラベル付けされる。セッティングが定義"
+"されている実際のスコープを示す。"
 
 #: src/reference/reference/sbt-inspect.md:45
 msgid ""
 "This shows that `libraryDependencies` has been defined on the current "
 "project (`ProjectRef(uri(\"file:/tmp/aaa/\"), \"aaa\")`)."
 msgstr ""
+"`libraryDependencies` がカレント・プロジェクト（`ProjectRef(uri(\"file:/tmp/aaa/\"), "
+"\"aaa\")`）で定義されていることを示す。"
 
 #: src/reference/reference/sbt-inspect.md:48
 msgid "Related Settings"
-msgstr ""
+msgstr "関連セッティング"
 
 #: src/reference/reference/sbt-inspect.md:50
 msgid ""
 "The _Related_ section of `inspect` output lists all of the definitions of a "
 "key. For example,"
 msgstr ""
+"`inspect` 出力の「Related」セクションは、キーの全ての定義を一覧表示する。例:"
 
 #: src/reference/reference/sbt-inspect.md:60
 msgid ""
 "This shows that in addition to the requested `Compile / compile` task, there "
 "is also a `Test / compile` task."
 msgstr ""
+"要求された `Compile / compile` タスクに加え、`Test / compile` タスクも存在する"
+"ことを示す。"
 
 #: src/reference/reference/sbt-inspect.md:63
-msgid "Dependencies"
-msgstr ""
+msgid "Setting dependencies"
+msgstr "セッティング依存性"
 
 #: src/reference/reference/sbt-inspect.md:65
 msgid ""
@@ -88,14 +112,21 @@ msgid ""
 "are what those dependencies get resolved to. This distinction is explained "
 "in more detail in the following sections."
 msgstr ""
+"順方向セッティング依存性は、セッティング（またはタスク）の定義に使用される他のセッティング"
+"（またはタスク）を示す。逆方向セッティング依存性は逆方向に、どの設定が与えられたセッティング"
+"を使用するかを示す。"
+"`inspect` は指定セッティング依存性または実効セッティング依存性に基づいて"
+"この情報を提供する。指定セッティング依存性はセッティングが直接指定するものである。"
+"実効セッティングはそれらの依存関係が解決された結果である。この区別は以下の"
+"セクションで詳しく説明する。"
 
 #: src/reference/reference/sbt-inspect.md:73
 msgid "Requested Dependencies"
-msgstr ""
+msgstr "指定セッティング依存性"
 
 #: src/reference/reference/sbt-inspect.md:75
 msgid "As an example, we'll look at `console`:"
-msgstr ""
+msgstr "例として、`console` を見てみる:"
 
 #: src/reference/reference/sbt-inspect.md:95
 msgid ""
@@ -110,6 +141,14 @@ msgid ""
 "example, we can infer from the previous example how to add code to be run "
 "when the Scala interpreter starts up:"
 msgstr ""
+"`console` タスクへの入力が表示される。クラスパスとオプションは `Compile / "
+"console / fullClasspath` と `Compile / console / scalacOptions` から取得される"
+"ことが分かる。`inspect` コマンドの情報により、変更すべきセッティングを見つける"
+"のに役立つ。`console` や `fullClasspath` などのキーの慣例では、Scala 識別子は"
+"キャメルケース、文字列表現は小文字でハイフン区切りである。コンフィギュレーション"
+"の Scala 識別子は `compile` や `test` などのタスクと区別するため大文字である。"
+"例えば、前の例から Scala インタプリタ起動時に実行するコードの追加方法を推測"
+"できる:"
 
 #: src/reference/reference/sbt-inspect.md:107
 #: src/reference/reference/sbt-inspect.md:161
@@ -129,10 +168,15 @@ msgid ""
 "`console`. Because of this, we can set the initial commands on the `console` "
 "task without affecting the `consoleQuick` task, for example."
 msgstr ""
+"`inspect` は `console` が `Compile / console / initialCommands` セッティングを"
+"使用していることを示した。`initialCommands` 文字列を Scala 識別子に変換すると "
+"`initialCommands` になる。`compile` は main ソース用であることを示す。"
+"`console /` はセッティングが `console` 専用であることを示す。このため、"
+"`consoleQuick` タスクに影響を与えずに `console` タスクの初期コマンドを設定できる。"
 
 #: src/reference/reference/sbt-inspect.md:122
 msgid "Actual Dependencies"
-msgstr ""
+msgstr "実効セッティング依存性"
 
 #: src/reference/reference/sbt-inspect.md:124
 msgid ""
@@ -143,12 +187,19 @@ msgid ""
 "plain `inspect`, we can see the range of scopes that will affect a setting. "
 "Returning to the example in Requested Dependencies,"
 msgstr ""
+"`inspect actual <スコープ付きキー>` は使用される実効セッティング依存性を表示する。"
+"委譲により依存関係が指定されたスコープ以外から来る可能性があるため有用である。"
+"`inspect actual` を使うと、どのスコープがセッティングに値を提供しているか正確に"
+"分かる。`inspect actual` と通常の `inspect` を組み合わせると、セッティングに"
+"影響するスコープの範囲が分かる。上記の例に戻ると、"
 
 #: src/reference/reference/sbt-inspect.md:147
 msgid ""
 "For `initialCommands`, we see that it comes from the global scope "
 "(`Global`). Combining this with the relevant output from `inspect console`:"
 msgstr ""
+"`initialCommands` はグローバルスコープ（`Global`）から来ていることが分かる。"
+"これを `inspect console` の関連出力と組み合わせると:"
 
 #: src/reference/reference/sbt-inspect.md:155
 msgid ""
@@ -157,6 +208,12 @@ msgid ""
 "between. This means that we can, for example, set `initialCommands` for the "
 "whole project and will affect `console`:"
 msgstr ""
+"この例から分かるのは `initialCommands` セッティングは、"
+"グローバルスコープを使って全域スコープ付けしたり、"
+"カレント・プロジェクトの `console` タスクスコープのように狭くスコープ付けしたり、"
+"またはその間の任意のスコープで設定できるということだ。"
+"例えば、プロジェクト全体で `initialCommands` を設定すると "
+"`console` に影響する:"
 
 #: src/reference/reference/sbt-inspect.md:165
 msgid ""
@@ -164,6 +221,9 @@ msgid ""
 "will use this value now. We can see which ones use our new setting by "
 "looking at the reverse dependencies output of `inspect actual`:"
 msgstr ""
+"ここで設定したい理由は、他の console 系タスクもこの値を使用するようになるため"
+"である。`inspect actual` の逆方向セッティング依存性の出力を見ると、どのタスクが新しい"
+"セッティングを使用するか分かる:"
 
 #: src/reference/reference/sbt-inspect.md:181
 msgid ""
@@ -172,20 +232,25 @@ msgid ""
 "want the initial commands to apply for `consoleProject`, which doesn't have "
 "our project's classpath available, we could use the more specific task axis:"
 msgstr ""
+"プロジェクトで `initialCommands` を設定すると、そのプロジェクトの全"
+"コンフィギュレーションの全 console 系タスクに影響する例をみた。"
+"プロジェクトのクラスパスが利用できない `consoleProject` には初期コマンドを"
+"適用したくない場合、より具体的なタスク軸を使用できる:"
 
 #: src/reference/reference/sbt-inspect.md:192
 msgid "or configuration axis:"
-msgstr ""
+msgstr "またはコンフィギュレーション軸:"
 
 #: src/reference/reference/sbt-inspect.md:199
 msgid ""
 "The next part describes the Delegates section, which shows the chain of "
 "delegation for scopes."
 msgstr ""
+"次は Delegates セクションについて説明する。スコープの委譲チェーンを示す。"
 
 #: src/reference/reference/sbt-inspect.md:202
 msgid "Delegates"
-msgstr ""
+msgstr "スコープ委譲"
 
 #: src/reference/reference/sbt-inspect.md:204
 msgid ""
@@ -195,10 +260,16 @@ msgid ""
 "of the `inspect` command. The Delegates section shows the order in which "
 "scopes are searched when a value is not defined for the requested key."
 msgstr ""
+"セッティングはキーとスコープを持つ。"
+"スコープ A の任意のキーへの要求があるが、"
+"スコープ A にて値が定義されていない場合、"
+"要求は別のスコープに委譲される。委譲チェーンは明確に定義され、"
+"`inspect` コマンドの Delegates セクションに表示される。Delegates セクションは、"
+"要求されたキーに値が定義されていない場合にスコープが検索される順序を示す。"
 
 #: src/reference/reference/sbt-inspect.md:211
 msgid "As an example, consider the initial commands for `console` again:"
-msgstr ""
+msgstr "具体例として、`console` の `initialCommands` を再び考える:"
 
 #: src/reference/reference/sbt-inspect.md:226
 msgid ""
@@ -206,10 +277,12 @@ msgid ""
 "initialCommands`, the scopes listed under Delegates will be searched in "
 "order until a defined value is found."
 msgstr ""
+"`console/initialCommands` 用に具体的な値がない場合、Delegates の下にリストされた"
+"スコープが定義された値が見つかるまで順に検索されることを意味する。"
 
 #: src/reference/reference/sbt-inspect.md:230
 msgid "Inspect tree"
-msgstr ""
+msgstr "inspect tree"
 
 #: src/reference/reference/sbt-inspect.md:232
 msgid ""
@@ -217,9 +290,13 @@ msgid ""
 "described in the previous section, the `inspect tree` command can display "
 "the full dependency tree for a task or setting. For example,"
 msgstr ""
+"前述のセクションで説明した直接の順方向・逆方向セッティング依存性の表示に加え、`inspect tree` "
+"コマンドはタスクまたはセッティングのセッティング依存性ツリーを表示できる。例:"
 
 #: src/reference/reference/sbt-inspect.md:255
 msgid ""
 "For each task, `inspect tree` show the type of the value generated by the "
 "task. For a setting, the `toString` of the setting is displayed."
 msgstr ""
+"各タスクについて、`inspect tree` はタスクが生成する値の型を表示する。セッティング"
+"の場合は、セッティングの `toString` が表示される。"
