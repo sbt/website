@@ -13,13 +13,14 @@ msgstr ""
 
 #: src/reference/concepts/command.md:1
 msgid "Command"
-msgstr ""
+msgstr "命令"
 
 #: src/reference/concepts/command.md:4
 msgid ""
 "A _command_ is a system-level building block of sbt, often used to capture "
 "user interaction or IDE interaction."
 msgstr ""
+"命令（_command_）是 sbt 的系统级构建块，常用于捕获用户交互或 IDE 交互。"
 
 #: src/reference/concepts/command.md:6
 msgid "<img src=\"../files/command.svg\" style=\"width: 50%;\"></img>"
@@ -30,14 +31,15 @@ msgid ""
 "We can think of each command as a `State => State` function. In sbt, the "
 "state represents the following:"
 msgstr ""
+"我们可以将每个命令视为 `State => State` 函数。在 sbt 中，状态表示以下内容："
 
 #: src/reference/concepts/command.md:10
 msgid "Build structure (`build.sbt` etc)"
-msgstr ""
+msgstr "构建结构（`build.sbt` 等）"
 
 #: src/reference/concepts/command.md:11
 msgid "Your disk (source code, JAR outputs, etc)"
-msgstr ""
+msgstr "您的磁盘（源代码、JAR 输出等）"
 
 #: src/reference/concepts/command.md:13
 msgid ""
@@ -45,6 +47,7 @@ msgid ""
 "disk. For example, the `set` command can apply a setting to modify the build "
 "strcuture:"
 msgstr ""
+"因此，命令通常会修改构建结构或磁盘。例如，`set` 命令可以应用设置来修改构建结构："
 
 #: src/reference/concepts/command.md:16
 msgid "\"foo\""
@@ -52,23 +55,25 @@ msgstr ""
 
 #: src/reference/concepts/command.md:19
 msgid "The `act` command can lift a task such as `compile` into a command:"
-msgstr ""
+msgstr "`act` 命令可以将 `compile` 等任务提升为命令："
 
 #: src/reference/concepts/command.md:25
 msgid ""
 "The compilation would read from the disk and write outputs, or display error "
 "messages on the screen."
 msgstr ""
+"编译会从磁盘读取并写入输出，或在屏幕上显示错误信息。"
 
 #: src/reference/concepts/command.md:27
 msgid "Commands are sequentially processed"
-msgstr ""
+msgstr "命令按顺序处理"
 
 #: src/reference/concepts/command.md:30
 msgid ""
 "Because there is only one state, a characteristic of commands is that they "
 "are executed one at a time."
 msgstr ""
+"由于只有一个状态，命令的特点是它们一次执行一个。"
 
 #: src/reference/concepts/command.md:32
 msgid "![command](../files/command2.svg)"
@@ -81,10 +86,12 @@ msgid ""
 "similar to a cashier taking an order in a cafe, and it will be processed in "
 "the sequence it was received."
 msgstr ""
+"此规则有一些例外，但通常命令按顺序运行。一个有用的比喻是，命令类似于咖啡馆收银员"
+"接单，会按接收顺序处理。"
 
 #: src/reference/concepts/command.md:36
 msgid "Tasks run in parallel"
-msgstr ""
+msgstr "任务并行运行"
 
 #: src/reference/concepts/command.md:39
 msgid ""
@@ -92,12 +99,15 @@ msgid ""
 "level. While doing so, the `act` command will broadcast the task across the "
 "aggregated subprojects and run independent tasks in parallel."
 msgstr ""
+"如上所述，`act` 命令将任务转换为命令级别。在此过程中，`act` 命令会将任务广播到聚合"
+"的子项目，并并行运行独立任务。"
 
 #: src/reference/concepts/command.md:41
 msgid ""
 "Similarly, the `reload` command that runs during the startup of a session "
 "will initialize the settings in parallel."
 msgstr ""
+"同样，在会话启动期间运行的 `reload` 命令将并行初始化设置。"
 
 #: src/reference/concepts/command.md:43
 msgid "![act](../files/act.svg)"
@@ -105,7 +115,7 @@ msgstr ""
 
 #: src/reference/concepts/command.md:45
 msgid "The role of sbt server"
-msgstr ""
+msgstr "sbt server 的角色"
 
 #: src/reference/concepts/command.md:48
 msgid ""
@@ -113,3 +123,5 @@ msgid ""
 "or a network API called Build Server Protocol. This mechanism allows both "
 "the build user and IDEs to share the same sbt session."
 msgstr ""
+"sbt server 是一项服务，可接受来自命令行或名为 Build Server Protocol 的网络 API 的"
+"命令。此机制使构建用户和 IDE 能够共享同一 sbt 会话。"

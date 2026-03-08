@@ -13,7 +13,7 @@ msgstr ""
 
 #: src/reference/concepts/cross-building.md:1
 msgid "Cross building"
-msgstr ""
+msgstr "交叉构建"
 
 #: src/reference/concepts/cross-building.md:4
 msgid ""
@@ -22,10 +22,13 @@ msgid ""
 "multiple versions of Scala releases; platform cross building, targeting JVM, "
 "Scala.JS, and Scala Native; and custom virtual axes like Spark versions."
 msgstr ""
+"交叉构建（_cross building_）指从同一组源文件构建多个目标。这包括 Scala 交叉构建（针对"
+"多个 Scala 发布版本）、平台交叉构建（针对 JVM、Scala.JS 和 Scala Native）以及 Spark "
+"版本等自定义虚拟轴。"
 
 #: src/reference/concepts/cross-building.md:6
 msgid "Using the cross-built libraries"
-msgstr ""
+msgstr "使用交叉构建的库"
 
 #: src/reference/concepts/cross-building.md:9
 msgid ""
@@ -34,6 +37,8 @@ msgid ""
 "ABI (application binary interface) suffix to the dependency's name. For "
 "example:"
 msgstr ""
+"要使用针对多个 Scala 版本构建的库，请将 ModuleID 中的第一个 `%` 改为 `%%`。这会"
+"告诉 sbt 将 Scala ABI（应用程序二进制接口）后缀附加到依赖名称。例如："
 
 #: src/reference/concepts/cross-building.md:12
 #: src/reference/concepts/cross-building.md:18
@@ -54,6 +59,7 @@ msgid ""
 "When the current Scala version is Scala 3.x, the above is equivalent to the "
 "following:"
 msgstr ""
+"当当前 Scala 版本为 Scala 3.x 时，以上写法等价于以下："
 
 #: src/reference/concepts/cross-building.md:18
 msgid "\"cats-effect_3\""
@@ -65,10 +71,11 @@ msgid ""
 "See [cross building setup](../reference/cross-building-setup.html) for more "
 "details on the setup."
 msgstr ""
+"有关设置的更多详情，请参阅 [cross building setup](../reference/cross-building-setup.html)。"
 
 #: src/reference/concepts/cross-building.md:23
 msgid "Historical context"
-msgstr ""
+msgstr "历史背景"
 
 #: src/reference/concepts/cross-building.md:26
 msgid ""
@@ -78,6 +85,9 @@ msgid ""
 "new version of Scala. This meant that a library user needed to pick a "
 "specific version that was compatible with the Scala version they were using."
 msgstr ""
+"在 Scala 早期（Scala 2.9 之前），Scala 库即使在补丁级别也不保持二进制兼容性，因此"
+"每次发布新 Scala 版本时，库都必须针对新版本重新发布。这意味着库用户需要选择与其"
+"使用的 Scala 版本兼容的特定版本。"
 
 #: src/reference/concepts/cross-building.md:28
 msgid ""
@@ -85,37 +95,44 @@ msgid ""
 "compatibility at minor version level, so the libraries compiled against "
 "Scala 2.10.x was not compatible with 2.11.x."
 msgstr ""
+"即使在 Scala 2.9.x 之后，Scala 库在次版本级别也不保持二进制兼容性，因此针对 "
+"Scala 2.10.x 编译的库与 2.11.x 不兼容。"
 
 #: src/reference/concepts/cross-building.md:30
 msgid ""
 "To workaround this problem, sbt developed cross building mechanism such that:"
 msgstr ""
+"为解决此问题，sbt 开发了交叉构建机制，使得："
 
 #: src/reference/concepts/cross-building.md:32
 msgid ""
 "Same set of source files can be compiled against multiple versions of Scala"
 msgstr ""
+"同一组源文件可以针对多个 Scala 版本编译"
 
 #: src/reference/concepts/cross-building.md:33
 msgid ""
 "Define a convention to append ABI version (e.g. `_2.12`) to the Maven "
 "artifact"
 msgstr ""
+"定义将 ABI 版本（如 `_2.12`）附加到 Maven 构件的约定"
 
 #: src/reference/concepts/cross-building.md:34
 msgid ""
 "Later this mechanism was extended to support Scala.JS and other platforms"
 msgstr ""
+"后来此机制扩展以支持 Scala.JS 和其他平台"
 
 #: src/reference/concepts/cross-building.md:36
 msgid "Project matrix"
-msgstr ""
+msgstr "项目矩阵"
 
 #: src/reference/concepts/cross-building.md:39
 msgid ""
 "sbt 2.x introduces project matrix, which enables cross building to happen in "
 "parallel."
 msgstr ""
+"sbt 2.x 引入了项目矩阵，使交叉构建可以并行进行。"
 
 #: src/reference/concepts/cross-building.md:42
 msgid "\"com.example\""

@@ -33,9 +33,9 @@ foo/test
 foo.../test
 ```
 
-~~~admonish note title='Note: * vs ...'
+```admonish note title='Note: * vs ...'
 sbt query intentionally uses `...` (dot dot dot) instead of more intuitive `*` (asterisk) because `*` is often used in a shell as a wildcard to match existing files or directories. This would require quoting, and forgetting to quote `*/test` would match to something like `src/test`.
-~~~
+```
 
 ### `@scalaBinaryVersion` parameter
 
