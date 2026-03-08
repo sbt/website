@@ -32,6 +32,8 @@ msgid ""
 "`sbt`<br> `sbt` _command_ _args_<br> `sbt --server`<br> `sbt --script-"
 "version`"
 msgstr ""
+"`sbt`<br> `sbt` _コマンド_ _引数_<br> `sbt --server`<br> `sbt --script-"
+"version`"
 
 #: src/reference/reference/sbt.md:27
 msgid "Description"
@@ -327,6 +329,8 @@ msgid ""
 "`exit` or `quit` End the current interactive session or build. Additionally, "
 "Ctrl+D (Unix) or Ctrl+Z (Windows) will exit the interactive prompt."
 msgstr ""
+"`exit` または `quit` 現行の sbt セッションまたはビルドを終了する。また、"
+"Ctrl+D (Unix) または Ctrl+Z (Windows) でもシェルを終了できる。"
 
 #: src/reference/reference/sbt.md:149
 msgid ""
@@ -336,30 +340,42 @@ msgid ""
 "expression. If no command is provided, displays brief descriptions of the "
 "main commands. Related commands are tasks and settings."
 msgstr ""
+"`help <command>` 渡されたコマンドの詳細なヘルプを表示する。コマンドが存在"
+"しない場合、引数（正規表現として解釈される）に名前または説明が一致するコマン"
+"ドの詳細ヘルプを一覧表示する。引数が指定されていない場合、主要なコマンド"
+"の簡潔な説明を表示する。関連コマンド: tasks、settings"
 
 #: src/reference/reference/sbt.md:155
 msgid ""
 "`projects [add|remove <URI>]` List all available projects if no arguments "
 "provided or adds/removes the build at the provided URI."
 msgstr ""
+"`projects [add|remove <URI>]` 引数が指定されていない場合は利用可能なプロジェク"
+"トを一覧表示し、指定された URI のビルドを追加または削除する。"
 
 #: src/reference/reference/sbt.md:166
 msgid ""
 "[Watch command](./watch.md) `~ <command>` Executes the project specified "
 "action or method whenever source files change."
 msgstr ""
+"[Watch コマンド](./watch.md) `~ <command>` ソースファイルが変更されるたびに"
+"指定されたアクションを実行する。"
 
 #: src/reference/reference/sbt.md:168
 msgid ""
 "`< filename` Executes the commands in the given file. Each command should be "
 "on its own line. Empty lines and lines beginning with '#' are ignored"
 msgstr ""
+"`< filename` 指定されたファイル内のコマンドを実行する。各コマンドは1行ずつ"
+"記述する。空行と '#' で始まる行は無視される。"
 
 #: src/reference/reference/sbt.md:171
 msgid ""
 "`A ; B` Execute A and if it succeeds, run B. Note that the leading semicolon "
 "is required."
 msgstr ""
+"`A ; B` A を実行し、成功したら B を実行する。先頭のセミコロンが必要であるこ"
+"とに注意。"
 
 #: src/reference/reference/sbt.md:173
 msgid ""
@@ -367,6 +383,9 @@ msgid ""
 "the result and inferred type. This can be used to set system properties, as "
 "a calculator, to fork processes, etc ... For example:"
 msgstr ""
+"`eval <Scala-expression>` 渡された Scala 式を評価し、結果と推論された型を返す。"
+"システムプロパティの設定、電卓としての使用、プロセスのフォークなどに使用できる。"
+"例:"
 
 #: src/reference/reference/sbt.md:177
 msgid ""
@@ -378,7 +397,7 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:194
 msgid "Commands for managing the build definition"
-msgstr ""
+msgstr "ビルド定義を管理するコマンド"
 
 #: src/reference/reference/sbt.md:196
 msgid ""
@@ -390,6 +409,12 @@ msgid ""
 "updated and the build definition to be recompiled. reload return changes "
 "back to the main project."
 msgstr ""
+"`reload [plugins|return]` 引数が指定されていない場合、ビルドをリロードし、必要"
+"に応じてビルド定義やプラグイン定義を再コンパイルする。`reload plugins` は現在"
+"のプロジェクトをメタビルドプロジェクト (`project/` 内) に切り替える。ビルド"
+"定義を直接操作するのに便利である。例えば、ビルド定義プロジェクトで clean を"
+"実行すると、スナップショットの更新とビルド定義の再コンパイルが強制される。"
+"`reload return` はメインプロジェクトに戻る。"
 
 #: src/reference/reference/sbt.md:203
 msgid ""
@@ -398,12 +423,17 @@ msgid ""
 "reloaded, or the setting is overridden by another set command or removed by "
 "the session command."
 msgstr ""
+"`set <setting-expression>` 渡されたセッティング定義を評価して適用する。セッティ"
+"ングは sbt が再起動されるか、ビルドがリロードされるか、別の set コマンドで上"
+"書きされるか、session コマンドで削除されるまで有効である。"
 
 #: src/reference/reference/sbt.md:209
 msgid ""
 "`session <command>` Manages session settings defined by the `set` command. "
 "It can persist settings configured at the prompt."
 msgstr ""
+"`session <command>` `set` コマンドで定義されたセッションセッティングを管理す"
+"る。プロンプトで設定したセッティングを永続化できる。"
 
 #: src/reference/reference/sbt.md:212
 msgid ""
@@ -411,20 +441,24 @@ msgid ""
 "value, description, defining scope, dependencies, delegation chain, and "
 "related settings."
 msgstr ""
+"`inspect <setting-key>` 値、説明、定義スコープ、依存関係、委譲チェーン、"
+"関連セッティングなど、セッティングに関する情報を表示する。"
 
 #: src/reference/reference/sbt.md:217
 msgid "sbt runner and launcher"
-msgstr ""
+msgstr "sbt runner とランチャー"
 
 #: src/reference/reference/sbt.md:220
 msgid ""
 "When launching the `sbt` runner from the system shell, various system "
 "properties or JVM extra options can be specified to influence its behaviour."
 msgstr ""
+"システムシェルから `sbt` runner を起動する際、動作に影響を与える様々なシステム"
+"プロパティや JVM の追加オプションを指定できる。"
 
 #: src/reference/reference/sbt.md:223
 msgid "sbt JVM options and system properties"
-msgstr ""
+msgstr "sbt の JVM オプションとシステムプロパティ"
 
 #: src/reference/reference/sbt.md:225
 msgid ""
@@ -432,6 +466,9 @@ msgid ""
 "`sbt` starts, their content is passed as command line arguments to the JVM "
 "running sbt server."
 msgstr ""
+"`sbt` 起動時に `JAVA_OPTS` および/または `SBT_OPTS` 環境変数が定義されている"
+"場合、その内容は sbt server を実行する JVM にコマンドライン引数として渡され"
+"る。"
 
 #: src/reference/reference/sbt.md:229
 msgid ""
@@ -440,6 +477,10 @@ msgid ""
 "etc/sbt/sbtopts` exist, their content is appended to `SBT_OPTS`. The default "
 "value of `JAVA_OPTS` is `-Dfile.encoding=UTF8`."
 msgstr ""
+"カレントディレクトリに `.jvmopts` という名前のファイルが存在する場合、sbt 起"
+"動時にその内容が `JAVA_OPTS` に追加される。同様に、`.sbtopts` および/または "
+"`/etc/sbt/sbtopts` が存在する場合、その内容が `SBT_OPTS` に追加される。"
+"`JAVA_OPTS` のデフォルト値は `-Dfile.encoding=UTF8` である。"
 
 #: src/reference/reference/sbt.md:234
 msgid ""
@@ -447,14 +488,17 @@ msgid ""
 "as `sbt` arguments: any `-Dkey=val` argument will be passed as-is to the "
 "JVM, and any `-J-Xfoo` will be passed as `-Xfoo`."
 msgstr ""
+"JVM のシステムプロパティとコマンドラインオプションは、`sbt` の引数として直接"
+"指定することもできる。`-Dkey=val` 形式の引数はそのまま JVM に渡され、`-J-"
+"Xfoo` は `-Xfoo` として渡される。"
 
 #: src/reference/reference/sbt.md:238
 msgid "See also `sbt --help` for more details."
-msgstr ""
+msgstr "詳細は `sbt --help` も参照のこと。"
 
 #: src/reference/reference/sbt.md:241
 msgid "sbt JVM heap, permgen, and stack sizes"
-msgstr ""
+msgstr "sbt の JVM ヒープ、permgen、スタックサイズ"
 
 #: src/reference/reference/sbt.md:243
 msgid ""
@@ -462,10 +506,12 @@ msgid ""
 "on memory, adjust the JVM configuration as you would for any java "
 "application."
 msgstr ""
+"permgen やメモリが不足している場合は、他の Java アプリケーションと同様に JVM"
+"の設定を調整する必要がある。"
 
 #: src/reference/reference/sbt.md:247
 msgid "For example a common set of memory-related options is:"
-msgstr ""
+msgstr "例えば、メモリ関連の一般的なオプションは以下の通り:"
 
 #: src/reference/reference/sbt.md:250
 msgid "\"-Xmx2048M -Xss2M\""
@@ -473,11 +519,11 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:254
 msgid "Or if you prefer to specify them just for this session:"
-msgstr ""
+msgstr "現行セッションのみで指定したい場合:"
 
 #: src/reference/reference/sbt.md:260
 msgid "Boot directory"
-msgstr ""
+msgstr "ブートディレクトリ"
 
 #: src/reference/reference/sbt.md:262
 msgid ""
@@ -485,6 +531,9 @@ msgid ""
 "standard library are by default downloaded to the shared directory  `\\"
 "$HOME/.sbt/boot/`."
 msgstr ""
+"`sbt` runner はただの起動スクリプトであり、実際の sbt server、Scala コンパイ"
+"ラ、標準ライブラリはデフォルトで共有ディレクトリ `$HOME/.sbt/boot/` にダウン"
+"ロードされる。"
 
 #: src/reference/reference/sbt.md:266
 msgid ""
@@ -494,10 +543,14 @@ msgid ""
 "directory between projects. For example, the following uses the pre-0.11 "
 "style of putting the boot directory in `project/boot/`:"
 msgstr ""
+"このディレクトリの場所を変更するには、`sbt.boot.directory` システムプロパティ"
+"を設定する。相対パスはカレントワーキングディレクトリに対して解決される。プロ"
+"ジェクト間でブートディレクトリを共有したくない場合に便利である。例えば、以下"
+"は 0.11 以前のスタイルで `project/boot/` にブートディレクトリを配置する:"
 
 #: src/reference/reference/sbt.md:277
 msgid "Terminal encoding"
-msgstr ""
+msgstr "ターミナルエンコーディング"
 
 #: src/reference/reference/sbt.md:279
 msgid ""
@@ -505,6 +558,9 @@ msgid ""
 "encoding for your platform. In this case, you will need to specify the "
 "`file.encoding=<encoding>` system property, which might look like:"
 msgstr ""
+"ターミナルで使用する文字エンコーディングは、プラットフォームの Java デフォル"
+"トエンコーディングと異なる場合がある。その場合、`file.encoding=<encoding>` "
+"システムプロパティを指定する必要がある。例:"
 
 #: src/reference/reference/sbt.md:284
 msgid "\"-Dfile.encoding=Cp1252\""
@@ -512,7 +568,7 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:288
 msgid "HTTP/HTTPS/FTP Proxy"
-msgstr ""
+msgstr "HTTP/HTTPS/FTP プロキシ"
 
 #: src/reference/reference/sbt.md:290
 msgid ""
@@ -523,30 +579,40 @@ msgid ""
 "(https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/doc-"
 "files/net-properties.html) for more details."
 msgstr ""
+"Unix では、sbt は標準の `http_proxy`、`https_proxy`、`ftp_proxy` 環境変数から"
+"HTTP、HTTPS、FTP のプロキシ設定を取得する。"
+"認証が必要なプロキシの内側にいる場"
+"合、sbt 起動時に追加のフラグを渡す必要がある。詳細は[JVM ネットワーキングシス"
+"テムプロパティ](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/"
+"java/net/doc-files/net-properties.html)を参照。"
 
 #: src/reference/reference/sbt.md:296
 msgid "For example:"
-msgstr ""
+msgstr "例:"
 
 #: src/reference/reference/sbt.md:302
 msgid ""
 "On Windows, your script should set properties for proxy host, port, and if "
 "applicable, username and password. For example, for HTTP:"
 msgstr ""
+"Windows では、スクリプトでプロキシホスト、ポート、必要に応じてユーザー名とパス"
+"ワードのプロパティを設定する。例えば HTTP の場合:"
 
 #: src/reference/reference/sbt.md:309
 msgid ""
 "Replace `http` with `https` or `ftp` in the above command line to configure "
 "HTTPS or FTP."
 msgstr ""
+"上記のコマンドラインで `http` を `https` または `ftp` に置き換えて HTTPS ま"
+"たは FTP を設定する。"
 
 #: src/reference/reference/sbt.md:312
 msgid "Other system properties"
-msgstr ""
+msgstr "その他のシステムプロパティ"
 
 #: src/reference/reference/sbt.md:314
 msgid "The following system properties can also be passed to `sbt` runner:"
-msgstr ""
+msgstr "以下のシステムプロパティも `sbt` runner に渡すことができる:"
 
 #: src/reference/reference/sbt.md:316
 msgid "`-Dsbt.banner=true`"
@@ -554,7 +620,7 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:318
 msgid "Show a welcome banner advertising new features."
-msgstr ""
+msgstr "新機能を宣伝するウェルカムバナーを表示する。"
 
 #: src/reference/reference/sbt.md:320
 msgid "`-Dsbt.ci=true`"
@@ -565,6 +631,8 @@ msgid ""
 "Default `false` (unless then env var `BUILD_NUMBER` is set). For continuous "
 "integration environments. Suppress supershell and color."
 msgstr ""
+"デフォルトは `false`（環境変数 `BUILD_NUMBER` が設定されている場合を除く）。"
+"CI 環境用。supershell とカラー出力を抑制する。"
 
 #: src/reference/reference/sbt.md:324
 msgid "`-Dsbt.client=true`"
@@ -572,7 +640,7 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:326
 msgid "Run the sbt client."
-msgstr ""
+msgstr "sbt クライアントを実行する。"
 
 #: src/reference/reference/sbt.md:328
 msgid "`-Dsbt.color=auto`"
@@ -580,17 +648,19 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:330
 msgid "To turn on color, use `always` or `true`."
-msgstr ""
+msgstr "カラーを有効にするには `always` または `true` を使用する。"
 
 #: src/reference/reference/sbt.md:331
 msgid "To turn off color, use `never` or `false`."
-msgstr ""
+msgstr "カラーを無効にするには `never` または `false` を使用する。"
 
 #: src/reference/reference/sbt.md:332
 msgid ""
 "To use color if the output is a terminal (not a pipe) that supports color, "
 "use `auto`."
 msgstr ""
+"出力がカラーをサポートするターミナル（パイプではない）の場合にカラーを使用する"
+"には `auto` を使用する。"
 
 #: src/reference/reference/sbt.md:334
 msgid "`-Dsbt.coursier.home=$HOME/.cache/coursier/v1`"
@@ -603,6 +673,9 @@ msgid ""
 "cache.html#default-location). You can verify the value with the command "
 "`csrCacheDirectory`."
 msgstr ""
+"Coursier アーティファクトキャッシュの場所。デフォルトは[Coursier キャッシュ解"
+"決ロジック](https://get-coursier.io/docs/cache.html#default-location)で定義され"
+"る。値は `csrCacheDirectory` コマンドで確認できる。"
 
 #: src/reference/reference/sbt.md:338
 msgid "`-Dsbt.genbuildprops=true`"
@@ -613,6 +686,8 @@ msgid ""
 "Generate `build.properties` if missing. If unset, this defers to "
 "`sbt.skip.version.write`."
 msgstr ""
+"存在しない場合に `build.properties` を生成する。未設定の場合、`sbt.skip."
+"version.write` に委譲される。"
 
 #: src/reference/reference/sbt.md:342
 msgid "`-Dsbt.global.base=$HOME/.sbt/`"
@@ -620,7 +695,7 @@ msgstr ""
 
 #: src/reference/reference/sbt.md:344
 msgid "The directory containing global settings and plugins."
-msgstr ""
+msgstr "グローバルセッティングとプラグインを含むディレクトリ。"
 
 #: src/reference/reference/sbt.md:346
 msgid "`-Dsbt.override.build.repos=true`"
@@ -631,6 +706,8 @@ msgid ""
 "If true, repositories configured in a build definition are ignored and the "
 "repositories configured for the launcher are used instead."
 msgstr ""
+"true の場合、ビルド定義で設定されたリポジトリは無視され、ランチャー用に設定さ"
+"れたリポジトリが代わりに使用される。"
 
 #: src/reference/reference/sbt.md:352
 msgid "`-Dsbt.repository.config=$HOME/.sbt/repositories`"
@@ -643,3 +720,6 @@ msgid ""
 "file. This setting is typically used in conjunction with setting "
 "`sbt.override.build.repos` to `true`."
 msgstr ""
+"ランチャーが使用するリポジトリを含むファイル。フォーマットは sbt ランチャー設"
+"定ファイルの `[repositories]` セクションと同じである。この設定は通常 `sbt."
+"override.build.repos` を `true` に設定することと併用される。"
