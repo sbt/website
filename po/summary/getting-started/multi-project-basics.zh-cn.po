@@ -13,13 +13,14 @@ msgstr ""
 
 #: src/reference/guide/multi-project-basics.md:7
 msgid "Multi project basics"
-msgstr ""
+msgstr "多项目基础"
 
 #: src/reference/guide/multi-project-basics.md:10
 msgid ""
 "While a simple program can start out as a single-project build, it's more "
 "common for a build to split into smaller, multiple subprojects."
 msgstr ""
+"虽然简单程序可以从单项目构建开始，但更常见的是将构建拆分为多个较小的子项目。"
 
 #: src/reference/guide/multi-project-basics.md:13
 msgid ""
@@ -27,12 +28,16 @@ msgid ""
 "JAR file when you run `packageBin`, and in general works like any other "
 "project."
 msgstr ""
+"构建中的每个子项目都有自己的源目录，运行 `packageBin` 时会生成自己的 JAR 文件，"
+"总体上与其他项目的工作方式相同。"
 
 #: src/reference/guide/multi-project-basics.md:17
 msgid ""
 "A **subproject** is defined by declaring a `lazy val` of type [Project]"
 "(../../api/sbt/Project.html). For example, :"
 msgstr ""
+"**子项目**通过声明类型为 [Project](../../api/sbt/Project.html) 的 "
+"`lazy val` 来定义。例如："
 
 #: src/reference/guide/multi-project-basics.md:21
 #: src/reference/guide/multi-project-basics.md:67
@@ -63,16 +68,18 @@ msgid ""
 "The name of the `val` is used as the subproject's ID, which is used to refer "
 "to the subproject in the sbt shell."
 msgstr ""
+"`val` 的名称用作子项目的 ID，用于在 sbt shell 中引用该子项目。"
 
 #: src/reference/guide/multi-project-basics.md:39
 msgid ""
 "sbt will always define a root project, so in the above build definition, we "
 "will have total of three subprojects."
 msgstr ""
+"sbt 始终会定义一个根项目，因此在上面的构建定义中，我们将共有三个子项目。"
 
 #: src/reference/guide/multi-project-basics.md:42
 msgid "Subproject dependency"
-msgstr ""
+msgstr "子项目依赖"
 
 #: src/reference/guide/multi-project-basics.md:45
 msgid ""
@@ -80,10 +87,12 @@ msgid ""
 "declaring `dependsOn(...)`. For example, if `util` needed `util` on its "
 "classpath, you would define `util` as:"
 msgstr ""
+"子项目可以依赖另一个子项目的代码。通过声明 `dependsOn(...)` 实现。例如，如果 "
+"`util` 需要在其 classpath 上使用 `core`，您可以将 `util` 定义为："
 
 #: src/reference/guide/multi-project-basics.md:53
 msgid "Root project"
-msgstr ""
+msgstr "根项目"
 
 #: src/reference/guide/multi-project-basics.md:56
 msgid ""
@@ -92,16 +101,20 @@ msgid ""
 "the root directory of the build, sbt automatically creates a default one "
 "that aggregates all other subprojects in the build."
 msgstr ""
+"构建根目录下的子项目称为 **root project**（根项目），通常在构建中扮演特殊角色。"
+"如果未在构建的根目录定义子项目，sbt 会自动创建一个默认的根项目，用于聚合构建中"
+"的所有其他子项目。"
 
 #: src/reference/guide/multi-project-basics.md:61
 msgid "Task aggregation"
-msgstr ""
+msgstr "任务聚合"
 
 #: src/reference/guide/multi-project-basics.md:64
 msgid ""
 "Task aggregation means that running a task on the aggregate subproject will "
 "also run on the aggregated subprojects."
 msgstr ""
+"任务聚合是指在聚合子项目上运行任务时，也会在被聚合的子项目上运行。"
 
 #: src/reference/guide/multi-project-basics.md:80
 msgid ""
@@ -109,16 +122,20 @@ msgid ""
 "you type `compile` in the sbt shell, all tree subprojects are compiled in "
 "parallel."
 msgstr ""
+"在上面的示例中，根子项目聚合了 `util` 和 `core`。当您在 sbt shell 中输入 "
+"`compile` 时，所有三个子项目将并行编译。"
 
 #: src/reference/guide/multi-project-basics.md:82
 msgid "Common settings"
-msgstr ""
+msgstr "通用设置"
 
 #: src/reference/guide/multi-project-basics.md:85
 msgid ""
 "In sbt 2.x, bare settings that are written directly in `build.sbt` without "
 "`settings(...)` are **common settings** that are injected to all subprojects."
 msgstr ""
+"在 sbt 2.x 中，直接在 `build.sbt` 中编写且不带 `settings(...)` 的裸设置是 "
+"**common settings**（通用设置），会注入到所有子项目中。"
 
 #: src/reference/guide/multi-project-basics.md:92
 #: src/reference/guide/multi-project-basics.md:105
@@ -131,12 +148,14 @@ msgid ""
 "In the above, the `scalaVersion` setting is applied to the default root "
 "subproject, `core`, and `util`."
 msgstr ""
+"在上面的示例中，`scalaVersion` 设置应用于默认根子项目、`core` 和 `util`。"
 
 #: src/reference/guide/multi-project-basics.md:98
 msgid ""
 "One exception to this rule is settings that are already scoped to a "
 "subproject."
 msgstr ""
+"此规则的一个例外是已经限定到子项目的设置。"
 
 #: src/reference/guide/multi-project-basics.md:107
 msgid "// This is applied only to app"
@@ -151,6 +170,7 @@ msgid ""
 "We can take advantage of this exception to add some settings that only apply "
 "to the default root project as follows:"
 msgstr ""
+"我们可以利用此例外，添加仅适用于默认根项目的设置，如下所示："
 
 #: src/reference/guide/multi-project-basics.md:121
 msgid "// These are applied only to root"
