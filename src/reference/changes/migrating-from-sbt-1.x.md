@@ -99,6 +99,8 @@ myTask := Def.uncached {
 }
 ```
 
+When considering caching for a task, watch out for side-effecting tasks. When sbt 2 restores a task result from its disk cache, it returns the cached value without re-executing the task body. Any side effect (e.g. writing files, syncing mappings) is silently skipped. If a task is meant to produce a side effect every time it runs, wrap it in `Def.uncached(...)` so sbt 2 always re-executes it.
+
 The [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin provides `Def.uncached` as a compatibility shim on sbt 1.x (where it is a no-op). See [Cached task](../reference/cached-task.md) reference for details, including build-wide and per-task opt-out options.
 
 Migration away from IntegrationTest
