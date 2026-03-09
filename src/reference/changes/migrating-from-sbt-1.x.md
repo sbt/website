@@ -89,7 +89,17 @@ Changes to `exportJars`
 Migrating to cached tasks
 -------------------------
 
-See [Cached task](../reference/cached-task.md) reference for details, including the way to opt out of caching.
+In sbt 2.x, all tasks are cached by default. To participate in caching, the task result type must provide a given for `sjsonnew.JsonFormat`. Any task whose result type lacks `JsonFormat` (e.g. complex objects like `ParadoxProcessor`, `ClassLoader`, `Seq[PathMapping]`, or function types) will fail at build load time in sbt 2.
+
+If you don't want to define the given, the easiest way to migrate is to wrap the tasks with `Def.uncached(...)` so sbt 2 skips caching and always re-executes them:
+
+```scala
+myTask := Def.uncached {
+  // task body returning a non-serializable type
+}
+```
+
+The [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin provides `Def.uncached` as a compatibility shim on sbt 1.x (where it is a no-op). See [Cached task](../reference/cached-task.md) reference for details, including build-wide and per-task opt-out options.
 
 Migration away from IntegrationTest
 -----------------------------------
