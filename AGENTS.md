@@ -46,7 +46,7 @@ Tips for Japanese translation
 - current project → カレント・プロジェクト
 - transitive dependencies → 間接依存ライブラリ
 - incremental compilation → 差分コンパイル
-- (non-transitive) dependencies → ライブラリ依存性 (in library dependency context)
+- dependencies → ライブラリ依存性 (in library dependency context)
 - recipe → レシピ
 - configuration → コンフィギュレーション (to disambiguate from settings/セッティング)
 - cached task → キャッシュ化タスク

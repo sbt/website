@@ -1,10 +1,24 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T01:34:00-05:00\n"
+"PO-Revision-Date: 2025-10-03 01:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
 #: src/reference/reference/artifact.md:4
 msgid "Artifact"
-msgstr ""
+msgstr "アーティファクト"
 
 #: src/reference/reference/artifact.md:7
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/artifact.md:10
 msgid ""
@@ -13,6 +27,10 @@ msgid ""
 "maven.apache.org/ref/3.9.11/maven-core/artifact-handlers.html) and [Ivy]"
 "(https://ant.apache.org/ivy/history/2.3.0/terminology.html#artifact)."
 msgstr ""
+"サブプロジェクトの特定バージョンを公開するためのファイルは、特別に「アーティファクト」と呼ばれる。"
+"この概念は [Apache Maven](https://maven.apache.org/ref/3.9.11/maven-core/"
+"artifact-handlers.html) と [Ivy](https://ant.apache.org/ivy/history/2.3.0/"
+"terminology.html#artifact) に由来する。"
 
 #: src/reference/reference/artifact.md:12
 msgid ""
@@ -20,12 +38,15 @@ msgid ""
 "Compressed package formats are often preferred because they are easier to "
 "manage, download, and store."
 msgstr ""
+"JVM エコシステムでは、一般的なアーティファクトは Java アーカイブ（JAR ファイル）"
+"である。管理・ダウンロード・保存が容易なため、圧縮パッケージ形式が好まれる。"
 
 #: src/reference/reference/artifact.md:15
 msgid ""
 "To illustrate, the following is a list of artifacts for a library, "
 "enumerated in an `ivy.xml` file:"
 msgstr ""
+"例として、ライブラリのアーティファクト一覧を `ivy.xml` ファイルで示す:"
 
 #: src/reference/reference/artifact.md:19
 #: src/reference/reference/artifact.md:20
@@ -73,57 +94,68 @@ msgid ""
 "This shows that an artifact has a name, a type, and an extention, and "
 "optionally a classifier."
 msgstr ""
+"ここから、アーティファクトは name、type、extension という属性を持ち、オプションで "
+"classifier があることが分かる。"
 
 #: src/reference/reference/artifact.md:28
 msgid "**name**. This is going to be the same as the subproject's module name."
 msgstr ""
+"**name**。サブプロジェクトのモジュール名と同じになる。"
 
 #: src/reference/reference/artifact.md:29
 msgid ""
 "**type**. The functional category of the artifact, such as `jar`, `src`, and "
 "`doc`."
 msgstr ""
+"**type**。アーティファクトの機能カテゴリ。`jar`、`src`、`doc` など。"
 
 #: src/reference/reference/artifact.md:30
 msgid ""
 "**extension**. The file extention, such as `jar`, `war`, `zip`, `xml` etc."
 msgstr ""
+"**extension**。`jar`、`war`、`zip`、`xml` などのファイル拡張子。"
 
 #: src/reference/reference/artifact.md:31
 msgid ""
 "**classifier**. In Maven, classifier is an arbitrary string that can be "
 "appended for an alternative or secondary artifact."
 msgstr ""
+"**classifier**。Maven では、代替または二次アーティファクト用に付加できる任意の"
+"文字列である。"
 
 #: src/reference/reference/artifact.md:33
 msgid "Selecting default artifacts"
-msgstr ""
+msgstr "デフォルト・アーティファクトの選択"
 
 #: src/reference/reference/artifact.md:35
 msgid "By default, the published artifacts are:"
 msgstr ""
+"デフォルトで公開されるアーティファクトは以下の通りである:"
 
 #: src/reference/reference/artifact.md:36
 msgid "The main binary JAR"
-msgstr ""
+msgstr "メインのバイナリ JAR"
 
 #: src/reference/reference/artifact.md:37
 msgid "The JAR containing the main sources and resources"
-msgstr ""
+msgstr "メインのソースとリソースを含む JAR"
 
 #: src/reference/reference/artifact.md:38
 msgid "The JAR containing the API documentation"
-msgstr ""
+msgstr "API ドキュメントを含む JAR"
 
 #: src/reference/reference/artifact.md:40
 msgid ""
 "You can add artifacts for the test classes, sources, or API or you can "
 "disable some of the main artifacts."
 msgstr ""
+"テストクラス、ソース、API 用のアーティファクトを追加したり、メインアーティファクト"
+"の一部を無効にしたりできる。"
 
 #: src/reference/reference/artifact.md:43
 msgid "To add all `Test` artifacts:"
 msgstr ""
+"すべての `Test` アーティファクトを追加する場合:"
 
 #: src/reference/reference/artifact.md:46
 #: src/reference/reference/artifact.md:55
@@ -136,6 +168,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:52
 msgid "To add them individually:"
 msgstr ""
+"個別に追加する場合:"
 
 #: src/reference/reference/artifact.md:57
 msgid "// enable publishing the jar produced by `Test/package`"
@@ -152,6 +185,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:68
 msgid "To disable main artifacts individually:"
 msgstr ""
+"メインアーティファクトを個別に無効にする場合:"
 
 #: src/reference/reference/artifact.md:73
 msgid "// disable publishing the main jar produced by `package`"
@@ -167,7 +201,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:84
 msgid "Modifying default artifacts"
-msgstr ""
+msgstr "デフォルト・アーティファクトの変更"
 
 #: src/reference/reference/artifact.md:86
 msgid ""
@@ -177,10 +211,15 @@ msgid ""
 "`artifactPath` (of type `SettingKey[File]`). They are scoped by `(Config / "
 "<task>)` as indicated in the previous section."
 msgstr ""
+"組み込みアーティファクトには `publishArtifact` に加え、いくつかの設定可能な"
+"セッティングがある。基本となるのは `artifact`（型 `SettingKey[Artifact]`）、"
+"`mappings`（型 `TaskKey[(File, String)]`）、`artifactPath`（型 `SettingKey[File]`）"
+"である。前セクションで示した通り、`(Config / <task>)` でスコープされる。"
 
 #: src/reference/reference/artifact.md:92
 msgid "To modify the type of the main artifact, for example:"
 msgstr ""
+"メインアーティファクトの type を変更する例:"
 
 #: src/reference/reference/artifact.md:97
 msgid "\"bundle\""
@@ -197,11 +236,18 @@ msgid ""
 "without affecting the published name, which is determined by the `artifact` "
 "definition combined with the repository pattern."
 msgstr ""
+"生成されるアーティファクト名は `artifactName` セッティングで決まる。このセッティング"
+"の型は `(ScalaVersion, ModuleID, Artifact) => String` である。ScalaVersion 引数は "
+"Scala のフルバージョン文字列とバイナリ互換部分を提供する。結果の文字列は生成する"
+"ファイル名である。デフォルト実装は `Artifact.artifactName _` である。この関数を"
+"変更すると、`artifact` 定義とリポジトリパターンで決まる公開名に影響せず、ローカル"
+"名を変えられる。"
 
 #: src/reference/reference/artifact.md:111
 msgid ""
 "For example, to produce a minimal name without a classifier or cross path:"
 msgstr ""
+"例えば、classifier や cross path なしの最小限の名前を生成する場合:"
 
 #: src/reference/reference/artifact.md:116
 msgid "\"-\""
@@ -214,6 +260,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:120
 msgid "(Note that in practice you rarely want to drop the classifier.)"
 msgstr ""
+"（実際には classifier を削除することはほとんどない。）"
 
 #: src/reference/reference/artifact.md:122
 msgid ""
@@ -224,11 +271,17 @@ msgid ""
 "the artifact is generated first and so the file is guaranteed to be up-to-"
 "date."
 msgstr ""
+"最後に、`packagedArtifact` タスクをマッピングしてアーティファクトの "
+"`(Artifact, File)` ペアを取得できる。`Artifact` が不要な場合は、パッケージタスク"
+"（`package`、`packageDoc`、`packageSrc`）から File のみ取得できる。いずれの場合も、"
+"タスクをマッピングしてファイルを取得すると、アーティファクトが先に生成され、ファイル"
+"が最新であることが保証される。"
 
 #: src/reference/reference/artifact.md:129
 #: src/reference/reference/artifact.md:157
 msgid "For example:"
 msgstr ""
+"例:"
 
 #: src/reference/reference/artifact.md:132
 msgid "\"My task.\""
@@ -244,7 +297,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:141
 msgid "Defining custom artifacts"
-msgstr ""
+msgstr "カスタムアーティファクトの定義"
 
 #: src/reference/reference/artifact.md:143
 msgid ""
@@ -253,10 +306,14 @@ msgid ""
 "metadata, but a Maven POM file only supports distinguishing artifacts based "
 "on classifiers and these are not recorded in the POM."
 msgstr ""
+"組み込みアーティファクトの設定に加え、公開する他のアーティファクトを宣言できる。"
+"Ivy メタデータでは複数アーティファクトが許可されるが、Maven POM ファイルは "
+"classifier による区別のみサポートし、これらは POM に記録されない。"
 
 #: src/reference/reference/artifact.md:148
 msgid "Basic `Artifact` construction look like:"
 msgstr ""
+"基本的な `Artifact` の構築は以下のようになる:"
 
 #: src/reference/reference/artifact.md:151
 #: src/reference/reference/artifact.md:152
@@ -329,12 +386,18 @@ msgid ""
 "API](../api/sbt/librarymanagement/Artifact$.html) for combining the "
 "parameters above and specifying \\[Configurations\\] and extra attributes."
 msgstr ""
+"アーティファクトの詳細は[Ivy ドキュメント](https://ant.apache.org/ivy/history/2.3.0/"
+"ivyfile/dependency-artifact.html)を参照。上記パラメータの組み合わせと "
+"[Configurations] および追加属性の指定は[Artifact API](../api/sbt/librarymanagement/"
+"Artifact$.html)を参照。"
 
 #: src/reference/reference/artifact.md:171
 msgid ""
 "To declare these artifacts for publishing, map them to the task that "
 "generates the artifact:"
 msgstr ""
+"これらのアーティファクトを公開用に宣言するには、アーティファクトを生成する"
+"タスクにマッピングする:"
 
 #: src/reference/reference/artifact.md:185
 msgid ""
@@ -343,16 +406,21 @@ msgid ""
 "Init$SettingsDefinition.html)). In a full build configuration, usage looks "
 "like:"
 msgstr ""
+"`addArtifact` はセッティングのシーケンスを返す（[SettingsDefinition](../api/sbt/"
+"internal/util/Init$SettingsDefinition.html) でラップされる）。完全なビルド"
+"コンフィギュレーションでは、以下のように使用する:"
 
 #: src/reference/reference/artifact.md:196
 msgid "Publishing .war files"
-msgstr ""
+msgstr ".war ファイルの公開"
 
 #: src/reference/reference/artifact.md:198
 msgid ""
 "A common use case for web applications is to publish the `.war` file instead "
 "of the `.jar` file."
 msgstr ""
+"Web アプリケーションの一般的な用途として、`.jar` ファイルの代わりに `.war` "
+"ファイルを公開する。"
 
 #: src/reference/reference/artifact.md:204
 msgid "// disable .jar publishing"
@@ -372,7 +440,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:218
 msgid "Using dependencies with artifacts"
-msgstr ""
+msgstr "アーティファクト付きライブラリ依存性の使用"
 
 #: src/reference/reference/artifact.md:220
 msgid ""
@@ -380,6 +448,8 @@ msgid ""
 "multiple artifacts, use the `artifacts` method on your dependencies. For "
 "example:"
 msgstr ""
+"カスタムまたは複数アーティファクトを持つライブラリ依存性から使用するアーティファクトを"
+"指定するには、ライブラリ依存性の `artifacts` メソッドを使用する。例:"
 
 #: src/reference/reference/artifact.md:225
 msgid "\"org\""
@@ -399,10 +469,13 @@ msgid ""
 "update.md) page) are actually convenience methods that translate to "
 "`artifacts`:"
 msgstr ""
+"`from` と `classifier` メソッド（[sbt update](./sbt-update.md) で説明）は、実際には"
+"`artifacts` に変換される便利メソッドである:"
 
 #: src/reference/reference/artifact.md:237
 msgid "That is, the following two dependency declarations are equivalent:"
 msgstr ""
+"つまり、以下の 2つのライブラリ依存性宣言は等価である:"
 
 #: src/reference/reference/artifact.md:240
 #: src/reference/reference/artifact.md:242
