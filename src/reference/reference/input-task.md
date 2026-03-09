@@ -26,7 +26,6 @@ val demo = inputKey[Unit]("A demo input task.")
 
 The definition of an input task is similar to that of a normal task, but
 it can also use the result of a
-
 [Parser][tab-completion-parser] applied to user input. Just as
 the special `value` method gets the value of a setting or task, the
 special `parsed` method gets the result of a `Parser`.

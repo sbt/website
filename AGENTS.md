@@ -54,6 +54,7 @@ Tips for Japanese translation
 - full Scala version → Scala のフルバージョン
 - binary Scala version → Scala のバイナリバージョン
 - caching → キャッシュ化
+- input task → インプットタスク
 
 Tips for Chinese translation
 -----------------------------

@@ -1,6 +1,20 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T22:18:26-04:00\n"
+"PO-Revision-Date: 2025-10-03 01:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
 #: src/reference/reference/tab-completion-parser.md:5
 msgid "Tab-completion parser"
-msgstr ""
+msgstr "タブ補完パーサー"
 
 #: src/reference/reference/tab-completion-parser.md:8
 msgid ""
@@ -8,6 +22,9 @@ msgid ""
 "parse user input and provide tab completion for [input tasks](input-task.md) "
 "and [commands](../concepts/command.md)."
 msgstr ""
+"このページでは sbt のパーサーコンビネータを解説する。これらのパーサーはユーザー"
+"入力をパースし、[インプットタスク](input-task.md)と[コマンド](../concepts/"
+"command.md)のタブ補完を提供するために使われる。"
 
 #: src/reference/reference/tab-completion-parser.md:19
 msgid ""
@@ -17,32 +34,41 @@ msgid ""
 "or `None` if it fails. Error handling and tab completion make this picture "
 "more complicated, but we'll stick with `Option` for this discussion."
 msgstr ""
+"パーサーコンビネータは、小さなパーサー組み合わせてパーサーを組み立てる。"
+"最も基本的な用法では、`Parser[A]` は `String => Option[A]` という関数だと考えることができる。"
+"パースする `String` を受け取り、パースが成功すれば `Some` に包んだ値を、失敗すれば "
+"`None` を返す。エラー処理とタブ補完により話は複雑になるが、本稿では "
+"`Option` に留める。"
 
 #: src/reference/reference/tab-completion-parser.md:26
 msgid "Basic parsers"
-msgstr ""
+msgstr "基本パーサー"
 
 #: src/reference/reference/tab-completion-parser.md:28
 msgid "The simplest parser combinators match exact inputs:"
-msgstr ""
+msgstr "最もシンプルなパーサーコンビネータは入力と完全に一致する:"
 
 #: src/reference/reference/tab-completion-parser.md:33
 msgid "// A parser that succeeds if the input is 'x', returning the Char 'x'"
 msgstr ""
+"// 入力が 'x' なら成功して Char 'x' を返し、"
 
 #: src/reference/reference/tab-completion-parser.md:34
 msgid "//  and failing otherwise"
 msgstr ""
+"//  それ以外は失敗するパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:37
 msgid ""
 "// A parser that succeeds if the input is \"blue\", returning the String "
 "\"blue\""
 msgstr ""
+"// 入力が \"blue\" なら成功して String \"blue\" を返し、"
 
 #: src/reference/reference/tab-completion-parser.md:38
 msgid "//   and failing otherwise"
 msgstr ""
+"//  それ以外は失敗するパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:40
 #: src/reference/reference/tab-completion-parser.md:91
@@ -59,18 +85,23 @@ msgid ""
 "`Char` or `String`. Other basic parser constructors are the `charClass`, "
 "`success` and `failure` methods:"
 msgstr ""
+"これらの例では、暗黙変換により `Char` または `String` からリテラル `Parser` が"
+"生成される。その他の基本パーサー構築子は `charClass`、`success`、`failure` "
+"メソッドである:"
 
 #: src/reference/reference/tab-completion-parser.md:50
 msgid ""
 "// A parser that succeeds if the character is a digit, returning the matched "
 "Char"
 msgstr ""
+"// 文字が数字なら成功し、マッチした Char を返すパーサー。"
 
 #: src/reference/reference/tab-completion-parser.md:51
 msgid ""
 "//   The second argument, \"digit\", describes the parser and is used in "
 "error messages"
 msgstr ""
+"//   第 2 引数 \"digit\" はパーサーを説明し、エラーメッセージで使われる"
 
 #: src/reference/reference/tab-completion-parser.md:53
 #: src/reference/reference/tab-completion-parser.md:106
@@ -87,14 +118,17 @@ msgid ""
 "// A parser that produces the value 3 for an empty input string, fails "
 "otherwise"
 msgstr ""
+"// 空の入力文字列なら値 3 を返し、それ以外は失敗するパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:57
 msgid "// Represents failure (always returns None for an input String)."
 msgstr ""
+"// 失敗を表す（入力 String に対して常に None を返す）。"
 
 #: src/reference/reference/tab-completion-parser.md:58
 msgid "//  The argument is the error message."
 msgstr ""
+"//  引数はエラーメッセージである。"
 
 #: src/reference/reference/tab-completion-parser.md:60
 msgid "\"Invalid input.\""
@@ -102,7 +136,7 @@ msgstr ""
 
 #: src/reference/reference/tab-completion-parser.md:63
 msgid "Built-in parsers"
-msgstr ""
+msgstr "組み込みパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:65
 msgid ""
@@ -110,43 +144,48 @@ msgid ""
 "`sbt.complete.DefaultParsers`. <!-- ../api/sbt/internal/util/complete/"
 "DefaultParsers$.html -->"
 msgstr ""
+"sbt には `sbt.complete.DefaultParsers` で定義された複数の組み込みパーサーが"
+"含まれる。"
 
 #: src/reference/reference/tab-completion-parser.md:68
 msgid "Some commonly used built-in parsers are:"
-msgstr ""
+msgstr "よく使われる組み込みパーサーは以下の通りである:"
 
 #: src/reference/reference/tab-completion-parser.md:70
 msgid ""
 "`Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing spaces or non-"
 "spaces, required or not."
 msgstr ""
+"`Space`、`NotSpace`、`OptSpace`、`OptNotSpace` はスペースまたは非スペースを"
+"パースし、必須か任意かを指定する。"
 
 #: src/reference/reference/tab-completion-parser.md:72
 msgid "`StringBasic` for parsing text that may be quoted."
-msgstr ""
+msgstr "`StringBasic` は引用符付きのテキストをパースする。"
 
 #: src/reference/reference/tab-completion-parser.md:73
 msgid "`IntBasic` for parsing a signed Int value."
-msgstr ""
+msgstr "`IntBasic` は符号付き Int 値をパースする。"
 
 #: src/reference/reference/tab-completion-parser.md:74
 msgid ""
 "`Digit` and `HexDigit` for parsing a single decimal or hexadecimal digit."
-msgstr ""
+msgstr "`Digit` と `HexDigit` は 1 桁の 10 進または 16 進数字をパースする。"
 
 #: src/reference/reference/tab-completion-parser.md:76
 msgid "`Bool` for parsing a `Boolean` value"
-msgstr ""
+msgstr "`Bool` は `Boolean` 値をパースする"
 
 #: src/reference/reference/tab-completion-parser.md:78
 msgid ""
 "See the [DefaultParsers API](../api/sbt/internal/util/complete/"
 "DefaultParsers$.html) for details."
-msgstr ""
+msgstr "詳細は [DefaultParsers API](../api/sbt/internal/util/complete/"
+"DefaultParsers$.html) を参照。"
 
 #: src/reference/reference/tab-completion-parser.md:82
 msgid "Combining parsers"
-msgstr ""
+msgstr "パーサーの組み合わせ"
 
 #: src/reference/reference/tab-completion-parser.md:84
 msgid ""
@@ -154,14 +193,18 @@ msgid ""
 "can combine parsers in a sequence, choose between parsers, or repeat a "
 "parser."
 msgstr ""
+"これらの基本パーサーを土台に、より興味深いパーサーを構築する。パーサーを順序"
+"で組み合わせたり、パーサー間で選択したり、パーサーを繰り返したりできる。"
 
 #: src/reference/reference/tab-completion-parser.md:89
 msgid "// A parser that succeeds if the input is \"blue\" or \"green\","
 msgstr ""
+"// 入力が \"blue\" または \"green\" なら成功し、"
 
 #: src/reference/reference/tab-completion-parser.md:89
 msgid "//  returning the matched input"
 msgstr ""
+"//  マッチした入力を返すパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:91
 #: src/reference/reference/tab-completion-parser.md:162
@@ -172,6 +215,7 @@ msgstr ""
 #: src/reference/reference/tab-completion-parser.md:92
 msgid "// A parser that matches either \"fg\" or \"bg\""
 msgstr ""
+"// \"fg\" または \"bg\" にマッチするパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:94
 #: src/reference/reference/tab-completion-parser.md:162
@@ -190,37 +234,44 @@ msgid ""
 "// A parser that matches \"fg\" or \"bg\", a space, and then the color, "
 "returning the matched values."
 msgstr ""
+"// \"fg\" または \"bg\"、スペース、そして色にマッチし、マッチした値を返すパーサー"
 
 #: src/reference/reference/tab-completion-parser.md:99
 msgid ""
 "// Often, we don't care about the value matched by a parser, such as the "
 "space above"
 msgstr ""
+"// 多くの場合、上記のスペースのようにパーサーがマッチした値は不要である"
 
 #: src/reference/reference/tab-completion-parser.md:100
 msgid "//  For this, we can use ~> or <~, which keep the result of"
 msgstr ""
+"//  そのため ~> または <~ を使い、"
 
 #: src/reference/reference/tab-completion-parser.md:101
 msgid "//  the parser on the right or left, respectively"
 msgstr ""
+"//  右または左のパーサーの結果をそれぞれ保持する"
 
 #: src/reference/reference/tab-completion-parser.md:104
 msgid "// Match one or more digits, returning a list of the matched characters"
 msgstr ""
+"// 1 桁以上の数字にマッチし、マッチした文字のリストを返す"
 
 #: src/reference/reference/tab-completion-parser.md:107
 msgid ""
 "// Match zero or more digits, returning a list of the matched characters"
 msgstr ""
+"// 0 桁以上の数字にマッチし、マッチした文字のリストを返す"
 
 #: src/reference/reference/tab-completion-parser.md:110
 msgid "// Optionally match a digit"
 msgstr ""
+"// オプションで 1 桁の数字にマッチする"
 
 #: src/reference/reference/tab-completion-parser.md:115
 msgid "Transforming results"
-msgstr ""
+msgstr "結果の変換"
 
 #: src/reference/reference/tab-completion-parser.md:117
 msgid ""
@@ -229,37 +280,46 @@ msgid ""
 "and `flatMap`. Here are examples of `map` and some convenience methods "
 "implemented on top of `map`."
 msgstr ""
+"パーサーコンビネータの重要な側面は、結果をより有用なデータ構造へと変換すること"
+"である。そのための基本メソッドは `map` と `flatMap` である。以下は `map` の例"
+"と、`map` の上に実装された便利メソッドである。"
 
 #: src/reference/reference/tab-completion-parser.md:123
 msgid ""
 "// Apply the `digits` parser and apply the provided function to the matched"
 msgstr ""
+"// `digits` パーサーを適用し、マッチした"
 
 #: src/reference/reference/tab-completion-parser.md:123
 msgid "//   character sequence"
 msgstr ""
+"//   文字シーケンスに提供された関数を適用する"
 
 #: src/reference/reference/tab-completion-parser.md:127
 msgid ""
 "// Match a digit character, returning the matched character or return '0' if "
 "the input is not a digit"
 msgstr ""
+"// 数字文字にマッチし、マッチした文字を返す。入力が数字でなければ '0' を返す"
 
 #: src/reference/reference/tab-completion-parser.md:130
 msgid "// The previous example is equivalent to:"
 msgstr ""
+"// 上記の例は以下と等価である:"
 
 #: src/reference/reference/tab-completion-parser.md:135
 msgid "// Succeed if the input is \"blue\" and return the value 4"
 msgstr ""
+"// 入力が \"blue\" なら成功し、値 4 を返す"
 
 #: src/reference/reference/tab-completion-parser.md:138
 msgid "// The above is equivalent to:"
 msgstr ""
+"// 上記は以下と等価である:"
 
 #: src/reference/reference/tab-completion-parser.md:143
 msgid "Controlling tab completion"
-msgstr ""
+msgstr "タブ補完の制御"
 
 #: src/reference/reference/tab-completion-parser.md:145
 msgid ""
@@ -269,6 +329,10 @@ msgid ""
 "completions for `charClass`, since it accepts an arbitrary predicate. The "
 "`examples` method defines explicit completions for such a parser:"
 msgstr ""
+"ほとんどのパーサーは妥当なデフォルトのタブ補完動作を持つ。例えば、文字列および"
+"文字リテラルパーサーは空の入力文字列に対して基となるリテラルを提案する。しかし"
+"`charClass` は任意の条件関数を受け付けるため、有効な補完を決定するのは現実的では"
+"ない。`examples(...)` はそのようなパーサーの明示的な補完を定義する:"
 
 #: src/reference/reference/tab-completion-parser.md:153
 msgid "\"0\""
@@ -288,24 +352,32 @@ msgid ""
 "controlling tab completion is `token`. The main purpose of `token` is to "
 "determine the boundaries for suggestions. For example, if your parser is:"
 msgstr ""
+"タブ補完は examples を提案として使う。タブ補完を制御するもう一つのメソッドは "
+"`token` である。`token` の主な目的は提案の境界を決めることである。例えば、"
+"パーサーが以下の場合:"
 
 #: src/reference/reference/tab-completion-parser.md:165
 msgid ""
 "then the potential completions on empty input are: `console fg green fg blue "
 "bg green bg blue`"
 msgstr ""
+"空入力時の候補補完は以下の通りである: `console fg green fg blue bg green bg "
+"blue`"
 
 #: src/reference/reference/tab-completion-parser.md:168
 msgid ""
 "Typically, you want to suggest smaller segments or the number of suggestions "
 "becomes unmanageable. A better parser is:"
 msgstr ""
+"通常、より小さなセグメントを提案したい。そうしないと提案数が扱いにくくなる。"
+"より良いパーサーは以下の通りである:"
 
 #: src/reference/reference/tab-completion-parser.md:175
 msgid ""
 "Now, the initial suggestions would be (with `_` representing a space): "
 "`console fg_ bg_`"
 msgstr ""
+"この場合、初期提案は（`_` がスペースを表す）: `console fg_ bg_` となる。"
 
 #: src/reference/reference/tab-completion-parser.md:178
 msgid ""
@@ -313,10 +385,13 @@ msgid ""
 "token(\"blue\"))`. The behavior is unspecified (and should generate an error "
 "in the future), but typically the outer most token definition will be used."
 msgstr ""
+"`token(\"green\" ~ token(\"blue\"))` のようにトークンを重ねたりネストしたり"
+"しないこと。動作は未定義であり（将来的にはエラーを生成する予定）、通常は最も"
+"外側のトークン定義が使われる。"
 
 #: src/reference/reference/tab-completion-parser.md:184
 msgid "Dependent parsers"
-msgstr ""
+msgstr "依存パーサー"
 
 #: src/reference/reference/tab-completion-parser.md:186
 msgid ""
@@ -324,6 +399,8 @@ msgid ""
 "parsed, and it is dependent on the previous one. The key for obtaining this "
 "behaviour is to use the `flatMap` function."
 msgstr ""
+"パーサーがデータを解析した後、その結果に依存してさらにデータをパースする必要が"
+"ある場合がある。この動作を得るには `flatMap` 関数を使う。"
 
 #: src/reference/reference/tab-completion-parser.md:190
 msgid ""
@@ -331,6 +408,8 @@ msgid ""
 "valid ones with completion, but no duplicates are possible.  A space is used "
 "to separate the different items."
 msgstr ""
+"例として、有効なリストから複数項目を補完付きで選択する方法を示す。重複は不可"
+"能である。項目の区切りにはスペースを使う。"
 
 #: src/reference/reference/tab-completion-parser.md:207
 msgid ""
@@ -338,9 +417,13 @@ msgid ""
 "this info, a new parser is constructed for the remaining items.  The `map` "
 "combinator is also used in order to transform the output of the parser."
 msgstr ""
+"この例から分かる通り、`flatMap` 関数は前の値を提供する。この情報で、残りの項目用に新しい"
+"パーサーが構築される。パーサーの出力を変換するために `map` コンビネータも使わ"
+"れる。"
 
 #: src/reference/reference/tab-completion-parser.md:211
 msgid ""
 "The parser is called recursively, until it is found the trivial case of no "
 "possible choices."
 msgstr ""
+"パーサーは、選択肢がなくなる自明なケースに達するまで再帰的に呼ばれる。"
