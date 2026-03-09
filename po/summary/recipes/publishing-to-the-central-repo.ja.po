@@ -1,6 +1,19 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-06T23:51:28-05:00\n"
+"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/recipes/central.md:18
 msgid "Publishing to the Central Repo"
-msgstr ""
+msgstr "Central Repo への公開"
 
 #: src/reference/recipes/central.md:21
 msgid ""
@@ -12,28 +25,37 @@ msgid ""
 "general concepts around publishing to the Central Portal.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"レシピセクションは目的に焦点を当て、説明は最小限に留める。\n"
+"\n"
+"Central Portal への公開の一般的な概念については、Sonatype の"
+" [Publish guides](https://central.sonatype.org/register/central-"
+"portal/) も参照。\n"
+"```"
 
 #: src/reference/recipes/central.md:28
 msgid "Objective"
-msgstr ""
+msgstr "目的"
 
 #: src/reference/recipes/central.md:31
 msgid "I want to publish my project to the Central Repository."
-msgstr ""
+msgstr "プロジェクトを Central Repository に公開したい。"
 
 #: src/reference/recipes/central.md:34
 msgid "Steps"
-msgstr ""
+msgstr "手順"
 
 #: src/reference/recipes/central.md:37
 msgid "Preliminary 1: Central Portal registration"
-msgstr ""
+msgstr "事前準備 1: Central Portal の登録"
 
 #: src/reference/recipes/central.md:39
 msgid ""
 "Create a Central Portal account, following Sonatype's [Publish guides]"
 "(https://central.sonatype.org/register/central-portal/)."
 msgstr ""
+"Sonatype の [Publish guides](https://central.sonatype.org/register/central-"
+"portal/) に従って Central Portal アカウントを作成する。"
 
 #: src/reference/recipes/central.md:41
 msgid ""
@@ -41,12 +63,15 @@ msgid ""
 "account to the new Central Portal, which lets you keep the previous "
 "namespace associations."
 msgstr ""
+"OSSRH アカウントを持っていた場合は、**Forgot password** フローで新しい "
+"Central Portal に移行できる。これにより以前のネームスペース関連を維持できる。"
 
 #: src/reference/recipes/central.md:42
 msgid ""
 "If you authenticate via GitHub, `io.github.<user_name>` will automatically "
 "be associated with the account."
 msgstr ""
+"GitHub で認証する場合、`io.github.<user_name>` が自動的にアカウントに紐づく。"
 
 #: src/reference/recipes/central.md:44
 msgid ""
@@ -54,37 +79,42 @@ msgid ""
 "central.sonatype.org/register/namespace/) guide to associate a domain name "
 "with your account."
 msgstr ""
+"[register a namespace](https://central.sonatype.org/register/namespace/) ガイド"
+"の手順に従い、ドメイン名をアカウントに紐づける。"
 
 #: src/reference/recipes/central.md:47
 msgid "Preliminary 2: PGP key pair"
-msgstr ""
+msgstr "事前準備 2: PGP 鍵ペア"
 
 #: src/reference/recipes/central.md:49
 msgid ""
 "Follow the Sonatype's [GPG guide](https://central.sonatype.org/publish/"
 "requirements/gpg/) to generate a PGP key pair."
 msgstr ""
+"Sonatype の [GPG guide](https://central.sonatype.org/publish/requirements/"
+"gpg/) に従って PGP 鍵ペアを生成する。"
 
 #: src/reference/recipes/central.md:51
 msgid ""
 "[Install GnuPG](https://www.gnupg.org/download/), and verify the version:"
 msgstr ""
+"[GnuPG をインストール](https://www.gnupg.org/download/)し、バージョンを確認する:"
 
 #: src/reference/recipes/central.md:61
 msgid "Next generate a key:"
-msgstr ""
+msgstr "次に鍵を生成する:"
 
 #: src/reference/recipes/central.md:67
 msgid "List the keys:"
-msgstr ""
+msgstr "鍵を一覧表示する:"
 
 #: src/reference/recipes/central.md:81
 msgid "Distribute the key:"
-msgstr ""
+msgstr "鍵を配布する:"
 
 #: src/reference/recipes/central.md:87
 msgid "Step 1: sbt-pgp"
-msgstr ""
+msgstr "手順 1: sbt-pgp"
 
 #: src/reference/recipes/central.md:89
 msgid ""
@@ -92,12 +122,16 @@ msgid ""
 "published artifacts with GPG/PGP. (Optionally [sbt-ci-release](https://"
 "github.com/sbt/sbt-ci-release) can automate the publishing process.)"
 msgstr ""
+"[sbt-pgp プラグイン](https://github.com/sbt/sbt-pgp#sbt-pgp) は公開アーティファクト"
+"を GPG/PGP で署名できる。（オプションで [sbt-ci-release](https://github.com/"
+"sbt/sbt-ci-release) により公開プロセスを自動化できる。）"
 
 #: src/reference/recipes/central.md:92
 msgid ""
 "Add the following line to your `project/plugins.sbt` file to enable it for "
 "your build:"
 msgstr ""
+"ビルドで有効にするため、`project/plugins.sbt` に次の行を追加する:"
 
 #: src/reference/recipes/central.md:96
 msgid "\"com.github.sbt\""
@@ -117,16 +151,21 @@ msgid ""
 "Make sure that the `gpg` command is in PATH available to the sbt.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"`gpg` コマンドが sbt から利用できる PATH に含まれていることを確認すること。\n"
+"```"
 
 #: src/reference/recipes/central.md:103
 msgid "Step 2: Credentials"
-msgstr ""
+msgstr "手順 2: 認証情報"
 
 #: src/reference/recipes/central.md:105
 msgid ""
 "Generate a user token from the portal to be used for the credentials. The "
 "token must be stored somewhere safe (NOT in the repository)."
 msgstr ""
+"認証情報として使うユーザートークンをポータルで生成する。トークンは安全な場所"
+"（リポジトリ内ではない）に保存すること。"
 
 #: src/reference/recipes/central.md:108
 msgid ""
@@ -135,6 +174,9 @@ msgid ""
 "out-of-box, which might be useful for automatic publishing from the CI "
 "environment, such as GitHub Actions."
 msgstr ""
+"sbt 2.x は環境変数 `SONATYPE_USERNAME` と `SONATYPE_PASSWORD` からも読み取り、"
+"`central.sonatype.com` 用の認証情報をそのまま追加できる。GitHub Actions など "
+"CI 環境からの自動公開に便利である。"
 
 #: src/reference/recipes/central.md:111
 msgid "run"
@@ -185,6 +227,8 @@ msgid ""
 "On a local machine, a common convention is a `$HOME/.sbt/2/credentials.sbt` "
 "file, with the following:"
 msgstr ""
+"ローカルマシンでは、`$HOME/.sbt/2/credentials.sbt` ファイルに次の内容を記述する"
+"のが一般的である:"
 
 #: src/reference/recipes/central.md:122
 msgid "\".sbt\""
@@ -196,23 +240,27 @@ msgstr ""
 
 #: src/reference/recipes/central.md:125
 msgid "Next create a file `$HOME/.sbt/sonatype_central_credentials`:"
-msgstr ""
+msgstr "次に `$HOME/.sbt/sonatype_central_credentials` ファイルを作成する:"
 
 #: src/reference/recipes/central.md:133
 msgid "Step 3: Configure build.sbt"
-msgstr ""
+msgstr "手順 3: build.sbt の設定"
 
 #: src/reference/recipes/central.md:135
 msgid ""
 "To publish to a Maven repository, you'll need to configure a few settings so "
 "that the correct metadata is generated."
 msgstr ""
+"Maven リポジトリに公開するには、正しいメタデータが生成されるよういくつかの"
+"セッティングを設定する必要がある。"
 
 #: src/reference/recipes/central.md:138
 msgid ""
 "**Note**: To publish to the Central Portal, `publishTo` must be set to the "
 "`localStaging` repository:"
 msgstr ""
+"**注意**: Central Portal に公開するには、`publishTo` を `localStaging` リポジトリ"
+"に設定する必要がある:"
 
 #: src/reference/recipes/central.md:142 src/reference/recipes/central.md:179
 msgid "// new setting for the Central Portal"
@@ -234,6 +282,7 @@ msgstr ""
 msgid ""
 "Add these settings at the end of `build.sbt` or a separate `publish.sbt`:"
 msgstr ""
+"これらのセッティングを `build.sbt` の末尾または別の `publish.sbt` に追加する:"
 
 #: src/reference/recipes/central.md:153
 msgid "\"com.example.project2\""
@@ -282,6 +331,7 @@ msgstr ""
 #: src/reference/recipes/central.md:175
 msgid "// Remove all additional repository other than Maven Central from POM"
 msgstr ""
+"// POM から Maven Central 以外の追加リポジトリをすべて削除する"
 
 #: src/reference/recipes/central.md:188
 msgid ""
@@ -290,18 +340,21 @@ msgid ""
 "pom.html). You can add more data to it with the `pomExtra` option in "
 "`build.sbt`."
 msgstr ""
+"`pom.xml`（Maven が使うプロジェクトコンフィギュレーションの最終成果物）の完全な"
+"形式は [POM Reference](https://maven.apache.org/pom.html) に記載されている。"
+"`build.sbt` の `pomExtra` オプションでさらにデータを追加できる。"
 
 #: src/reference/recipes/central.md:192
 msgid "Step 4: Stage the artifacts"
-msgstr ""
+msgstr "手順 4: アーティファクトのステージング"
 
 #: src/reference/recipes/central.md:194 src/reference/recipes/central.md:202
 msgid "From sbt shell run:"
-msgstr ""
+msgstr "sbt シェルから実行する:"
 
 #: src/reference/recipes/central.md:200
 msgid "Step 5: Upload or release the bundle"
-msgstr ""
+msgstr "手順 5: バンドルのアップロードまたはリリース"
 
 #: src/reference/recipes/central.md:208
 msgid ""
@@ -309,13 +362,17 @@ msgid ""
 "central.sonatype.com/). Hit the \"Publish\" button to publish to the Central "
 "Repository."
 msgstr ""
+"これでバンドルが [Central Portal](https://central.sonatype.com/) にアップロード"
+"される。「Publish」ボタンをクリックして Central Repository に公開する。"
 
 #: src/reference/recipes/central.md:211
 msgid "If you want to automate the publishing, run:"
-msgstr ""
+msgstr "公開を自動化する場合は、次を実行する:"
 
 #: src/reference/recipes/central.md:217
 msgid ""
 "It might take 10 minutes to a few hours for the published artifacts to be "
 "visible on the Central Repository <https://repo1.maven.org/maven2/>."
 msgstr ""
+"公開したアーティファクトが Central Repository <https://repo1.maven.org/maven2/> "
+"に表示されるまで、10 分から数時間かかることがある。"
