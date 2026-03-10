@@ -1,22 +1,36 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2025-10-11T04:17:27-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/sbt-run.md:1
 msgid "sbt run"
-msgstr ""
+msgstr "sbt run"
 
 #: src/reference/reference/sbt-run.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-run.md:7
 msgid "`sbt` \\[_query_ / \\] `run` \\[_args_\\]"
-msgstr ""
+msgstr "`sbt` \\[_query_ / \\] `run` \\[_args_\\]"
 
 #: src/reference/reference/sbt-run.md:9
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/sbt-run.md:12
 msgid "The `run` task provides a means for running the user program."
 msgstr ""
+"`run` 任务提供运行用户程序的方式。"
 
 #: src/reference/reference/sbt-run.md:14
 msgid ""
@@ -26,14 +40,18 @@ msgid ""
 "program, sends the information back to sbtn, and sbtn launches the user "
 "program in a fresh JVM."
 msgstr ""
+"在 sbt 1.x 及更早版本中，`run` 任务在与 sbt server 相同的 Java 虚拟机（JVM）中"
+"运行用户程序。sbt 2.x 实现了 _客户端 run_：`run` 任务创建包含程序的沙箱环境，"
+"将信息发回 sbtn，由 sbtn 在新的 JVM 中启动用户程序。"
 
 #: src/reference/reference/sbt-run.md:16
 msgid "Motivations"
-msgstr ""
+msgstr "动机"
 
 #: src/reference/reference/sbt-run.md:18
 msgid "There are several motivations for the client-side run."
 msgstr ""
+"客户端 run 有若干动机。"
 
 #: src/reference/reference/sbt-run.md:20
 msgid ""
@@ -44,6 +62,10 @@ msgid ""
 "17 deprecated SecurityManager feature. Because client-side run runs the user "
 "program in its own JVM, it can call `sys.exit`."
 msgstr ""
+"**sys.exit 支持**。用户代码可调用 `sys.exit`，通常会关闭 JVM。在 sbt 1.x 中，"
+"我们需使用 JDK SecurityManager 拦截这些 `sys.exit` 调用，以防 `run` 关闭 sbt "
+"会话；但 JDK 17 弃用 SecurityManager 后，TrapExit 在 sbt 1.6.0（2021）中被移除。"
+"由于客户端 run 在独立 JVM 中运行用户程序，因此可调用 `sys.exit`。"
 
 #: src/reference/reference/sbt-run.md:22
 msgid ""
@@ -52,6 +74,8 @@ msgid ""
 "user code in a separate JVM gives isolation between the sbt server and the "
 "user code."
 msgstr ""
+"**隔离**。用户代码也可启动线程或分配其他资源，这些可能在 main 方法返回后继续运行。"
+"在独立 JVM 中运行用户代码可在 sbt server 与用户代码之间提供隔离。"
 
 #: src/reference/reference/sbt-run.md:23
 msgid ""
@@ -59,3 +83,5 @@ msgid ""
 "server, it can become available to the more requests by other clients, for "
 "example test or IDE integration."
 msgstr ""
+"**sbt server 可用性**。由于程序在 sbt server 外运行，sbt server 可更及时响应其他"
+"客户端的请求，例如测试或 IDE 集成。"
