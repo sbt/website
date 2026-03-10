@@ -62,3 +62,5 @@ Tips for Chinese translation
 - Use 您, but otherwise keep the technical tone.
 - Leave "sbt runner" as is
 - Leave "sbt server" as is
+- setting → 设置
+- task → 任务
