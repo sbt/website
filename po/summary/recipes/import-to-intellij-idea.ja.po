@@ -13,19 +13,19 @@ msgstr ""
 
 #: src/reference/recipes/import-to-intellij.md:1
 msgid "Import to IntelliJ IDEA"
-msgstr ""
+msgstr "IntelliJ IDEA へのインポート"
 
 #: src/reference/recipes/import-to-intellij.md:9
 msgid "Objective"
-msgstr ""
+msgstr "目的"
 
 #: src/reference/recipes/import-to-intellij.md:12
 msgid "I want to import sbt build to IntelliJ IDEA."
-msgstr ""
+msgstr "sbt を使ったビルドを IntelliJ IDEA にインポートしたい。"
 
 #: src/reference/recipes/import-to-intellij.md:14
 msgid "Steps"
-msgstr ""
+msgstr "手順"
 
 #: src/reference/recipes/import-to-intellij.md:17
 msgid ""
@@ -34,28 +34,37 @@ msgid ""
 "IntelliJ integrates with many build tools, including sbt, to import the "
 "project."
 msgstr ""
+"[IntelliJ IDEA](https://www.jetbrains.com/idea/) は JetBrains社が開発した IDE で、"
+"Community Edition は Apache v2 ライセンスの元で公開されている。IntelliJ は "
+"sbt を含む多くのビルドツールと連携してプロジェクトをインポートする。"
 
 #: src/reference/recipes/import-to-intellij.md:19
 msgid "To import a build to IntelliJ IDEA:"
-msgstr ""
+msgstr "IntelliJ IDEA にビルドをインポートするには:"
 
 #: src/reference/recipes/import-to-intellij.md:21
 msgid ""
 "Install Scala plugin on the Plugins tab:<br> ![IntelliJ](../files/"
 "intellij1.png)"
 msgstr ""
+"Plugins タブから Scala プラグインをインストールする:<br> ![IntelliJ](../files/"
+"intellij1.png)"
 
 #: src/reference/recipes/import-to-intellij.md:23
 msgid ""
 "From Projects, open a directory containing a `build.sbt` file.<br> !"
 "[IntelliJ](../files/intellij2.png)"
 msgstr ""
+"Projects から `build.sbt` を含むディレクトリを開く:<br> ![IntelliJ](../files/"
+"intellij2.png)"
 
 #: src/reference/recipes/import-to-intellij.md:25
 msgid ""
 "Once the import process is complete, open a Scala file to see that code "
 "completion works."
 msgstr ""
+"インポートが完了したら、Scala ファイルを開いてコード補完が動作することを確認"
+"する。"
 
 #: src/reference/recipes/import-to-intellij.md:27
 msgid ""
@@ -65,16 +74,23 @@ msgid ""
 "plugin-2021-2/#Compiler-based_highlighting), IntelliJ can be configured to "
 "use the Scala compiler for error highlighting."
 msgstr ""
+"IntelliJ Scala プラグインは独自の軽量コンパイルエンジンでエラーを検出する。"
+"高速だが誤検出することもある。[compiler-based "
+"highlighting](https://blog.jetbrains.com/scala/2021/07/27/intellij-scala-"
+"plugin-2021-2/#Compiler-based_highlighting) に従い、IntelliJ を Scala コンパイラ"
+"でエラーハイライトするよう設定できる。"
 
 #: src/reference/recipes/import-to-intellij.md:29
 msgid "Interactive debugging with IntelliJ IDEA"
-msgstr ""
+msgstr "IntelliJ IDEA のデバッガー"
 
 #: src/reference/recipes/import-to-intellij.md:31
 msgid ""
 "IntelliJ supports interactive debugging by setting break points in the code:"
 "<br> ![IntelliJ](../files/intellij4.png)"
 msgstr ""
+"IntelliJ は、コードにブレークポイントを設置できるデバッガーを持つ:<br> "
+"![IntelliJ](../files/intellij4.png)"
 
 #: src/reference/recipes/import-to-intellij.md:33
 msgid ""
@@ -84,6 +100,10 @@ msgid ""
 "the test hits a break point, you can inspect the values of the variables:"
 "<br> ![IntelliJ](../files/intellij5.png)"
 msgstr ""
+"ユニットテストを右クリックして「Debug '\\<test name\\>'」を選択すると対話的"
+"デバッグを開始できる。または、ユニットテスト近くのエディタ左側の緑の run "
+"アイコンをクリックしてもよい。テストがブレークポイントに達すると、変数の値を"
+"確認できる:<br> ![IntelliJ](../files/intellij5.png)"
 
 #: src/reference/recipes/import-to-intellij.md:37
 msgid ""
@@ -91,14 +111,16 @@ msgid ""
 "page on IntelliJ documentation for more details on how to navigate an "
 "interactive debugging session."
 msgstr ""
+"デバッガーセッションの操作方法の詳細は、IntelliJ ドキュメントの"
+"[コードのデバッグ](https://pleiades.io/help/idea/debugging-code.html)を参照。"
 
 #: src/reference/recipes/import-to-intellij.md:39
 msgid "Alternative"
-msgstr ""
+msgstr "代替方法"
 
 #: src/reference/recipes/import-to-intellij.md:42
 msgid "Using sbt as IntelliJ IDEA build server (advanced)"
-msgstr ""
+msgstr "IntelliJ IDEA のビルドサーバーとして sbt を使う（上級者向け）"
 
 #: src/reference/recipes/import-to-intellij.md:44
 msgid ""
@@ -113,6 +135,16 @@ msgid ""
 "servers_ including sbt via the [Build Server Protocol](https://build-server-"
 "protocol.github.io/) (BSP)."
 msgstr ""
+"IntelliJ にビルドをインポートするということは、実質 IntelliJ を"
+"ビルドツール兼コンパイラとして使うことになる（[compiler-based "
+"highlighting](https://blog.jetbrains.com/scala/2021/07/27/intellij-scala-"
+"plugin-2021-2/#Compiler-based_highlighting) も参照）。"
+"多くのユーザーはその方式で満足しているが、"
+"コードベースによってはコンパイルエラーの一部が誤検出になる、ソースを"
+"生成するプラグインとうまく連携しないなど、sbt と同一のビルドセマンティクスで"
+"コーディングしたい、といった場合がある。幸い、現代の IntelliJ は "
+"[Build Server Protocol](https://build-server-protocol.github.io/) (BSP) 経由で "
+"sbt を含む代替の「ビルドサーバー」をサポートしている。"
 
 #: src/reference/recipes/import-to-intellij.md:48
 msgid ""
@@ -121,40 +153,50 @@ msgid ""
 "programmer who had sbt session up on the side, this avoids double "
 "compilation."
 msgstr ""
+"IntelliJ で Build Server Protocol (BSP) を使う利点は、実際のビルド作業に sbt を"
+"使うことである。横で sbt セッションを起動していたようなプログラマーなら、"
+"二重コンパイルを避けられる。"
 
 #: src/reference/recipes/import-to-intellij.md:83
 msgid "To use sbt as build server on IntelliJ:"
-msgstr ""
+msgstr "IntelliJ で sbt をビルドサーバーとして使うには:"
 
 #: src/reference/recipes/import-to-intellij.md:85
 msgid "Install Scala plugin on the Plugins tab."
-msgstr ""
+msgstr "Plugins タブから Scala プラグインをインストールする。"
 
 #: src/reference/recipes/import-to-intellij.md:86
 msgid ""
 "To use the BSP approach, close IntelliJ, and remove exising `.idea` "
 "directory, if any."
 msgstr ""
+"BSP 方式を使うには、IntelliJ を終了し、既存の `.idea` ディレクトリがあれば削除"
+"する。"
 
 #: src/reference/recipes/import-to-intellij.md:87
 msgid "From the terminal, run `sbt bspConfig` to generate `.bsp` directory."
-msgstr ""
+msgstr "ターミナルで `sbt bspConfig` を実行して `.bsp` ディレクトリを生成する。"
 
 #: src/reference/recipes/import-to-intellij.md:88
 msgid ""
 "Open IntelliJ, and open a `build.sbt` file. Select **BSP project** when "
 "prompted:<br> ![IntelliJ](../files/intellij_bsp.png)"
 msgstr ""
+"IntelliJ を開き、`build.sbt` ファイルを開く。プロンプトが表示されたら **BSP "
+"project** を選択する:<br> ![IntelliJ](../files/intellij_bsp.png)"
 
 #: src/reference/recipes/import-to-intellij.md:90
 msgid ""
 "Once the import process is complete, open a Scala file to see that code "
 "completion works:<br> ![IntelliJ](../files/intellij11.png)"
 msgstr ""
+"インポートが完了したら、Scala ファイルを開いてコード補完が動作することを確認"
+"する:<br> ![IntelliJ](../files/intellij11.png)"
 
 #: src/reference/recipes/import-to-intellij.md:93
 msgid "Use the following setting to opt-out some of the subprojects from BSP."
 msgstr ""
+"サブプロジェクトの一部を BSP から除外するには、次のセッティングを使う:"
 
 #: src/reference/recipes/import-to-intellij.md:99
 msgid ""
@@ -162,35 +204,47 @@ msgid ""
 "and uncheck \"export sbt projects to Bloop before import\":<br> ![IntelliJ]"
 "(../files/intellij12.png)"
 msgstr ""
+"Preferences を開き、BSP を検索して「build automatically on file save」にチェック"
+"を入れ、「export sbt projects to Bloop before import」のチェックを外す:<br> "
+"![IntelliJ](../files/intellij12.png)"
 
 #: src/reference/recipes/import-to-intellij.md:102
 msgid ""
 "When you make changes to the code and save them (`Cmd-S` on macOS), IntelliJ "
 "will invoke sbt to do the actual building work."
 msgstr ""
+"コードを変更して保存すると（macOS では `Cmd-S`）、IntelliJ が sbt を呼び出して"
+"実際のビルドを行う。"
 
 #: src/reference/recipes/import-to-intellij.md:105
 msgid ""
 "See also Igal Tabachnik's [Using BSP effectively in IntelliJ and Scala]"
 "(https://hmemcpy.com/2021/09/bsp-and-intellij/) for more details."
 msgstr ""
+"詳細は Igal Tabachnik さんの [Using BSP effectively in IntelliJ and "
+"Scala](https://hmemcpy.com/2021/09/bsp-and-intellij/) も参照。"
 
 #: src/reference/recipes/import-to-intellij.md:107
 msgid "Logging into sbt session"
-msgstr ""
+msgstr "sbt セッションへのログイン"
 
 #: src/reference/recipes/import-to-intellij.md:109
 msgid "We can also log into the existing sbt session using the thin client."
 msgstr ""
+"シンクライアントで既存の sbt セッションにログインすることもできる。"
 
 #: src/reference/recipes/import-to-intellij.md:111
 msgid ""
 "From Terminal section, type in `sbt --client` ![IntelliJ](../files/"
 "intellij6.png)"
 msgstr ""
+"Terminal セクションで `sbt --client` と入力する: ![IntelliJ](../files/"
+"intellij6.png)"
 
 #: src/reference/recipes/import-to-intellij.md:114
 msgid ""
 "This lets you log into the sbt session IntelliJ has started. In there you "
 "can call `testOnly` and other tasks with the code already compiled."
 msgstr ""
+"これで IntelliJ が起動した sbt セッションにログインできる。その中で `testOnly` "
+"や他のタスクを、すでにコンパイル済みのコードに対して呼び出せる。"
