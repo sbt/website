@@ -13,25 +13,26 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:14
 msgid "sbt update"
-msgstr ""
+msgstr "sbt update"
 
 #: src/reference/reference/sbt-update.md:17
 msgid ""
 "See [library depdency basics](../guide/library-dependency-basics.md) in the "
 "Getting Started guide to learn about the basics."
 msgstr ""
+"有关基础介绍，请参阅入门指南中的[库依赖基础](../guide/library-dependency-basics.md)。"
 
 #: src/reference/reference/sbt-update.md:19
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-update.md:22
 msgid "`sbt` \\[_query_ / \\] `update`"
-msgstr ""
+msgstr "`sbt` \\[_query_ / \\] `update`"
 
 #: src/reference/reference/sbt-update.md:24
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/sbt-update.md:27
 msgid ""
@@ -41,46 +42,49 @@ msgid ""
 "would like to use in your subprojects, and the library management system "
 "would:"
 msgstr ""
+"sbt 使用 [Coursier](https://get-coursier.io/) 实现库管理，在其他生态系统中也称为"
+"包管理器。库管理的一般思路是，您可以在子项目中指定要使用的外部库，库管理系统将："
 
 #: src/reference/reference/sbt-update.md:31
 msgid "Check if such versions exists in the listed repositories"
-msgstr ""
+msgstr "检查所列仓库中是否存在这些版本"
 
 #: src/reference/reference/sbt-update.md:32
 msgid ""
 "Look for the transitive dependencies (i.e. the libraries used by the "
 "libraries)"
-msgstr ""
+msgstr "查找传递依赖（即库所依赖的库）"
 
 #: src/reference/reference/sbt-update.md:33
 msgid "Attempt to resolve version conflicts, if any"
-msgstr ""
+msgstr "尝试解决版本冲突（如有）"
 
 #: src/reference/reference/sbt-update.md:34
 msgid "Download the artifacts, such as JAR files, from the repositories"
-msgstr ""
+msgstr "从仓库下载构件（如 JAR 文件）"
 
 #: src/reference/reference/sbt-update.md:36
 msgid "Dependencies"
-msgstr ""
+msgstr "依赖关系"
 
 #: src/reference/reference/sbt-update.md:38
 msgid "Declaring a dependency looks like:"
-msgstr ""
+msgstr "声明依赖关系看起来像："
 
 #: src/reference/reference/sbt-update.md:44
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: src/reference/reference/sbt-update.md:55
 msgid "Also, several dependencies can be declared together:"
-msgstr ""
+msgstr "此外，可以一起声明多个依赖："
 
 #: src/reference/reference/sbt-update.md:64
 msgid ""
 "If you are using a dependency that was built with sbt, double the first `%` "
 "to be `%%`:"
 msgstr ""
+"若您使用的依赖是用 sbt 构建的，请将第一个 `%` 改为 `%%`："
 
 #: src/reference/reference/sbt-update.md:71
 msgid ""
@@ -90,16 +94,19 @@ msgid ""
 "version of Scala you are using. See [Cross building](../concepts/cross-"
 "building.md) for details."
 msgstr ""
+"这将使用与您当前 Scala 版本匹配的依赖 JAR。若解析此类依赖时出错，该依赖可能未为"
+"您使用的 Scala 版本发布。详见[交叉构建](../concepts/cross-building.md)。"
 
 #: src/reference/reference/sbt-update.md:84
 msgid "`versionScheme` and eviction errors"
-msgstr ""
+msgstr "`versionScheme` 与驱逐错误"
 
 #: src/reference/reference/sbt-update.md:86
 msgid ""
 "sbt allows library authors to declare the version semantics using the "
 "`versionScheme` setting:"
 msgstr ""
+"sbt 允许库作者使用 `versionScheme` 设置声明版本语义："
 
 #: src/reference/reference/sbt-update.md:89
 msgid "// Semantic Versioning applied to 0.x, as well as 1.x, 2.x, etc"
@@ -112,6 +119,8 @@ msgid ""
 "older version from the graph. This process is colloquially called eviction, "
 "like \"Cats Effect 2.2.0 was evicted.\""
 msgstr ""
+"当 Coursier 发现库的多个版本（例如 Cats Effect 2.x 和 Cats Effect 3.0.0-M4）时，"
+"通常通过从图中移除较旧版本来解决冲突。此过程俗称驱逐，如「Cats Effect 2.2.0 被驱逐」。"
 
 #: src/reference/reference/sbt-update.md:97
 msgid ""
@@ -121,6 +130,9 @@ msgid ""
 "would cause runtime issues such as `ClassNotFoundException`. Instead "
 "Coursier should've failed to resolve."
 msgstr ""
+"若新版本与 Cats Effect 2.2.0 二进制兼容，则可行。但本例中库作者已声明其 _不_ "
+"二进制兼容，因此该驱逐实际上不安全。不安全的驱逐会导致运行时问题，如 "
+"`ClassNotFoundException`。Coursier 本应解析失败。"
 
 #: src/reference/reference/sbt-update.md:104
 msgid "\"use\""
@@ -155,14 +167,15 @@ msgid ""
 "sbt performs this secondary compatibility check after Coursier returns a "
 "candidate:"
 msgstr ""
+"sbt 在 Coursier 返回候选版本后执行此二次兼容性检查："
 
 #: src/reference/reference/sbt-update.md:129
 msgid "This mechanism is called the _eviction error_."
-msgstr ""
+msgstr "此机制称为 _驱逐错误_。"
 
 #: src/reference/reference/sbt-update.md:131
 msgid "Opting out of the the eviction error"
-msgstr ""
+msgstr "选择退出驱逐错误检查"
 
 #: src/reference/reference/sbt-update.md:133
 msgid ""
@@ -170,6 +183,8 @@ msgid ""
 "want to ignore the strict check (often for `scala-xml`), you can write this "
 "in `project/plugins.sbt` and `build.sbt`:"
 msgstr ""
+"若库作者已声明兼容性破坏，但您希望忽略严格检查（常用于 `scala-xml`），可在 "
+"`project/plugins.sbt` 和 `build.sbt` 中编写："
 
 #: src/reference/reference/sbt-update.md:137
 msgid "\"org.scala-lang.modules\""
@@ -181,21 +196,22 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:140
 msgid "To ignore all eviction errors:"
-msgstr ""
+msgstr "要忽略所有驱逐错误："
 
 #: src/reference/reference/sbt-update.md:146
 msgid "Resolvers"
-msgstr ""
+msgstr "解析器"
 
 #: src/reference/reference/sbt-update.md:148
 msgid ""
 "sbt uses the standard Maven Central repository by default. Declare "
 "additional repositories with the form:"
 msgstr ""
+"sbt 默认使用标准 Maven Central 仓库。使用以下形式声明额外仓库："
 
 #: src/reference/reference/sbt-update.md:154
 msgid "For example:"
-msgstr ""
+msgstr "例如："
 
 #: src/reference/reference/sbt-update.md:158
 msgid "\"org.apache.derby\""
@@ -235,10 +251,11 @@ msgstr ""
 msgid ""
 "sbt can search your local Maven repository if you add it as a repository:"
 msgstr ""
+"若您将本地 Maven 仓库添加为仓库，sbt 可搜索该仓库："
 
 #: src/reference/reference/sbt-update.md:176
 msgid "Override default resolvers"
-msgstr ""
+msgstr "覆盖默认解析器"
 
 #: src/reference/reference/sbt-update.md:178
 msgid ""
@@ -248,20 +265,24 @@ msgid ""
 "repositories, set `externalResolvers` directly. To only specify repositories "
 "in addition to the usual defaults, configure `resolvers`."
 msgstr ""
+"`resolvers` 配置额外的内联用户解析器。默认情况下，`sbt` 将这些解析器与默认仓库"
+"（Maven Central 和本地 Ivy 仓库）组合形成 `externalResolvers`。要更精细控制仓库，"
+"直接设置 `externalResolvers`。若仅需在常规默认之外指定仓库，则配置 `resolvers`。"
 
 #: src/reference/reference/sbt-update.md:185
 msgid ""
 "For example, to use the Sonatype OSS Snapshots repository in addition to the "
 "default repositories,"
 msgstr ""
+"例如，在默认仓库之外使用 Sonatype OSS Snapshots 仓库："
 
 #: src/reference/reference/sbt-update.md:192
 msgid "To use the local repository, but not the Maven Central repository:"
-msgstr ""
+msgstr "要使用本地仓库但不使用 Maven Central 仓库："
 
 #: src/reference/reference/sbt-update.md:198
 msgid "Override all resolvers for all builds"
-msgstr ""
+msgstr "覆盖所有构建的解析器"
 
 #: src/reference/reference/sbt-update.md:200
 msgid ""
@@ -269,15 +290,17 @@ msgid ""
 "dependencies can be configured globally and declared to override the "
 "resolvers configured in a build or plugin definition. There are two parts:"
 msgstr ""
+"用于获取 sbt、Scala、插件和应用依赖的仓库可全局配置，并声明为覆盖构建或插件定义中"
+"配置的解析器。分为两部分："
 
 #: src/reference/reference/sbt-update.md:205
 msgid "Define the repositories used by the launcher."
-msgstr ""
+msgstr "定义 launcher 使用的仓库。"
 
 #: src/reference/reference/sbt-update.md:206
 msgid ""
 "Specify that these repositories should override those in build definitions."
-msgstr ""
+msgstr "指定这些仓库应覆盖构建定义中的仓库。"
 
 #: src/reference/reference/sbt-update.md:209
 msgid ""
@@ -285,6 +308,8 @@ msgid ""
 "repositories`, which must contain a `[repositories]` section with the same "
 "format as the `Launcher` configuration file. For example:"
 msgstr ""
+"可通过定义 `~/.sbt/repositories` 覆盖 launcher 使用的仓库，该文件必须包含与 "
+"`Launcher` 配置文件格式相同的 `[repositories]` 部分。例如："
 
 #: src/reference/reference/sbt-update.md:213
 msgid ""
@@ -304,10 +329,12 @@ msgid ""
 "step is to set `sbt.override.build.repos` to true to use these repositories "
 "for dependency resolution and retrieval."
 msgstr ""
+"可通过 sbt 启动脚本中的 `sbt.repository.config` 系统属性指定仓库文件的不同位置。"
+"最后一步是将 `sbt.override.build.repos` 设为 true，以使用这些仓库进行依赖解析和获取。"
 
 #: src/reference/reference/sbt-update.md:225
 msgid "Exclude Transitive Dependencies"
-msgstr ""
+msgstr "排除传递依赖"
 
 #: src/reference/reference/sbt-update.md:227
 msgid ""
@@ -315,6 +342,8 @@ msgid ""
 "dependencies. This can be achieved by setting up `ExclusionRules` in "
 "`excludeDependencies`."
 msgstr ""
+"某些情况下需从所有依赖中排除传递依赖。可通过在 `excludeDependencies` 中设置 "
+"`ExclusionRules` 实现。"
 
 #: src/reference/reference/sbt-update.md:233
 msgid "// commons-logging is replaced by jcl-over-slf4j"
@@ -331,6 +360,8 @@ msgid ""
 "a pom will be published for the project. It requires the organization and "
 "module name to exclude. For example,"
 msgstr ""
+"要排除依赖的某些传递依赖，使用 `excludeAll` 或 `exclude` 方法。当项目将发布 pom 时"
+"应使用 `exclude` 方法。需提供要排除的组织和模块名。例如："
 
 #: src/reference/reference/sbt-update.md:245
 msgid "\"log4j\""
@@ -350,13 +381,14 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:265
 msgid "Explicit URL"
-msgstr ""
+msgstr "显式 URL"
 
 #: src/reference/reference/sbt-update.md:267
 msgid ""
 "If your project requires a dependency that is not present in a repository, a "
 "direct URL to its jar can be specified as follows:"
 msgstr ""
+"若您的项目需要仓库中不存在的依赖，可按以下方式指定其 jar 的直接 URL："
 
 #: src/reference/reference/sbt-update.md:271
 msgid "\"slinky\""
@@ -376,10 +408,12 @@ msgid ""
 "the configured repositories. Also, the explicit URL is not included in "
 "published metadata (that is, the pom or ivy.xml)."
 msgstr ""
+"仅当通过配置的仓库无法找到依赖时，才将 URL 用作后备。此外，显式 URL 不包含在"
+"发布的元数据（即 pom 或 ivy.xml）中。"
 
 #: src/reference/reference/sbt-update.md:278
 msgid "Disable Transitivity"
-msgstr ""
+msgstr "禁用传递性"
 
 #: src/reference/reference/sbt-update.md:280
 msgid ""
@@ -390,6 +424,9 @@ msgid ""
 "fetching artifact dependencies with either `intransitive()` or "
 "`notTransitive()`, as in this example:"
 msgstr ""
+"默认情况下，这些声明会传递式获取所有项目依赖。某些情况下，您可能发现项目列出的"
+"依赖对其构建并非必需。例如，使用 Felix OSGI 框架的项目仅显式需要其主 jar 来编译"
+"和运行。使用 `intransitive()` 或 `notTransitive()` 避免获取构件依赖，如下例："
 
 #: src/reference/reference/sbt-update.md:288
 #: src/reference/reference/sbt-update.md:330
@@ -408,13 +445,14 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:291
 msgid "Classifiers"
-msgstr ""
+msgstr "分类器"
 
 #: src/reference/reference/sbt-update.md:293
 msgid ""
 "You can specify the classifier for a dependency using the `classifier` "
 "method. For example, to get the jdk15 version of TestNG:"
 msgstr ""
+"您可使用 `classifier` 方法为依赖指定分类器。例如，获取 TestNG 的 jdk15 版本："
 
 #: src/reference/reference/sbt-update.md:297
 msgid "\"org.testng\""
@@ -434,7 +472,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:300
 msgid "For multiple classifiers, use multiple `classifier` calls:"
-msgstr ""
+msgstr "对于多个分类器，使用多次 `classifier` 调用："
 
 #: src/reference/reference/sbt-update.md:304
 msgid "\"org.lwjgl.lwjgl\""
@@ -464,6 +502,9 @@ msgid ""
 "configuring the `transitiveClassifiers` setting. For example, to only "
 "retrieve sources:"
 msgstr ""
+"要传递式获取所有依赖的特定分类器，运行 `updateClassifiers` 任务。默认情况下，"
+"这会解析具有 `sources` 或 `javadoc` 分类器的所有构件。通过配置 `transitiveClassifiers` "
+"设置选择要获取的分类器。例如，仅获取源码："
 
 #: src/reference/reference/sbt-update.md:314
 msgid "\"sources\""
@@ -471,7 +512,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-update.md:317
 msgid "Download Sources"
-msgstr ""
+msgstr "下载源码"
 
 #: src/reference/reference/sbt-update.md:319
 msgid ""
@@ -479,6 +520,8 @@ msgid ""
 "plugin. These plugins use the `updateClassifiers` and `updateSbtClassifiers` "
 "tasks, which produce an `Update-Report` referencing these jars."
 msgstr ""
+"下载源码和 API 文档 jar 通常由 IDE 插件处理。这些插件使用 `updateClassifiers` 和 "
+"`updateSbtClassifiers` 任务，生成引用这些 jar 的 `Update-Report`。"
 
 #: src/reference/reference/sbt-update.md:324
 msgid ""
@@ -486,9 +529,12 @@ msgid ""
 "add `withSources()` to the dependency definition. For API jars, add "
 "`withJavadoc()`. For example:"
 msgstr ""
+"要让 sbt 在不使用 IDE 插件的情况下下载依赖的源码，在依赖定义中添加 `withSources()`。"
+"对于 API jar，添加 `withJavadoc()`。例如："
 
 #: src/reference/reference/sbt-update.md:333
 msgid ""
 "Note that this is not transitive. Use the `update*Classifiers` tasks for "
 "that."
 msgstr ""
+"注意此操作不具传递性。为此请使用 `update*Classifiers` 任务。"
