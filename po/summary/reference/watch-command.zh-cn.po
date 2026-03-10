@@ -1,19 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/watch.md:1
 msgid "Watch command"
-msgstr ""
+msgstr "Watch 命令"
 
 #: src/reference/reference/watch.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/watch.md:7
 msgid ""
 "`sbt` `~` _command1_<br> `sbt` `~` _command1_ \\[ `;` _command2_ `;` ... \\]"
 msgstr ""
+"`sbt` `~` _command1_<br> `sbt` `~` _command1_ \\[ `;` _command2_ `;` ... \\]"
 
 #: src/reference/reference/watch.md:10
 msgid "Descrption"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/watch.md:13
 msgid ""
@@ -21,14 +35,17 @@ msgid ""
 "monitor the input files for particular tasks and repeat the tasks when "
 "changes to those files occur."
 msgstr ""
+"Watch 命令以 `~`（波浪号）表示，可监控特定任务的输入文件，并在这些文件发生变更时"
+"重复执行任务。"
 
 #: src/reference/reference/watch.md:17
 msgid "Some example usages are described below:"
 msgstr ""
+"以下描述了一些示例用法："
 
 #: src/reference/reference/watch.md:19
 msgid "Compile"
-msgstr ""
+msgstr "编译"
 
 #: src/reference/reference/watch.md:21
 msgid ""
@@ -36,6 +53,8 @@ msgid ""
 "make sbt watch for source changes in the Test and Compile (default) "
 "configurations respectively and re-run the compile command."
 msgstr ""
+"常见用途是持续编译。以下命令将分别让 sbt 监控 Test 和 Compile（默认）配置中的源"
+"变更，并重新运行 compile 命令。"
 
 #: src/reference/reference/watch.md:30
 msgid ""
@@ -43,10 +62,12 @@ msgid ""
 "changes in the main source directory will trigger recompilation of the test "
 "sources."
 msgstr ""
+"注意，由于 `Test / compile` 依赖 `Compile / compile`，主源目录中的源变更将触发"
+"测试源的重新编译。"
 
 #: src/reference/reference/watch.md:34
 msgid "Testing"
-msgstr ""
+msgstr "测试"
 
 #: src/reference/reference/watch.md:36
 msgid ""
@@ -55,26 +76,31 @@ msgid ""
 "the main and test source sources for the build and re-run only the tests "
 "that reference classes that have been re-compiled since the last test run."
 msgstr ""
+"触发式执行常用于测试驱动开发（TDD）风格。以下命令将监控构建的主源和测试源变更，"
+"并仅重新运行引用自上次测试运行以来已重新编译的类的测试。"
 
 #: src/reference/reference/watch.md:45
 msgid ""
 "It is also possible to re-run only a particular test if its dependencies "
 "have changed."
 msgstr ""
+"若某测试的依赖已变更，也可仅重新运行该测试。"
 
 #: src/reference/reference/watch.md:52
 msgid ""
 "It is possible to always re-run a test when source changes are detected "
 "regardless of whether the test depends on any of the updated source files."
 msgstr ""
+"可配置为在检测到源变更时始终重新运行某测试，无论该测试是否依赖任何已更新的源文件。"
 
 #: src/reference/reference/watch.md:60
 msgid "To run all of the tests in the project when any sources change, use"
 msgstr ""
+"要在任何源变更时运行项目中所有测试，请使用"
 
 #: src/reference/reference/watch.md:66
 msgid "Running Multiple Commands"
-msgstr ""
+msgstr "运行多个命令"
 
 #: src/reference/reference/watch.md:68
 msgid ""
@@ -82,10 +108,12 @@ msgid ""
 "For example, the following command will monitor for source file changes and "
 "run `clean` and `test`:"
 msgstr ""
+"Watch 命令支持监控多个以分号分隔的任务。例如，以下命令将监控源文件变更并运行 "
+"`clean` 和 `test`："
 
 #: src/reference/reference/watch.md:76
 msgid "Build sources"
-msgstr ""
+msgstr "构建源"
 
 #: src/reference/reference/watch.md:78
 msgid ""
@@ -96,10 +124,14 @@ msgid ""
 "source changes are detected, the build will be reloaded and sbt will re-"
 "enter triggered execution mode when the reload completes."
 msgstr ""
+"若通过设置 `Global / onChangedBuildSource := ReloadOnSourceChanges` 将构建配置为"
+"在构建源变更时自动重新加载，则 sbt 将监控构建源（即 `project` 目录中的 `*.sbt` 和 "
+"`*.{java,scala}` 文件）。检测到构建源变更时，构建将重新加载，重新加载完成后 sbt "
+"将重新进入触发式执行模式。"
 
 #: src/reference/reference/watch.md:105
 msgid "Clearing the screen"
-msgstr ""
+msgstr "清屏"
 
 #: src/reference/reference/watch.md:107
 msgid ""
@@ -107,24 +139,28 @@ msgid ""
 "triggers an event. To configure sbt to clear the screen after an event is "
 "triggered add"
 msgstr ""
+"sbt 可在评估任务前或触发事件后清空控制台屏幕。要配置 sbt 在事件触发后清屏，请添加"
 
 #: src/reference/reference/watch.md:115
 msgid "to the build settings. To clear the screen before running the task, add"
 msgstr ""
+"到构建设置中。要在运行任务前清屏，请添加"
 
 #: src/reference/reference/watch.md:121
 msgid "to the build settings."
 msgstr ""
+"到构建设置中。"
 
 #: src/reference/reference/watch.md:123
 msgid "Configuration"
-msgstr ""
+msgstr "配置"
 
 #: src/reference/reference/watch.md:125
 msgid ""
 "The behavior of triggered execution can be configured via a number of "
 "settings."
 msgstr ""
+"触发式执行的行为可通过若干设置进行配置。"
 
 #: src/reference/reference/watch.md:127
 msgid ""
@@ -135,6 +171,10 @@ msgid ""
 "ending with the `txt` extension will cause the `foo` command to trigger when "
 "in triggered execution mode."
 msgstr ""
+"`watchTriggers: Seq[Glob]` 为应触发任务评估但任务不直接依赖的文件添加搜索查询。"
+"例如，若项目 build.sbt 包含 `foo / watchTriggers += baseDirectory.value.toGlob / "
+"\"*.txt\"`，则对以 `txt` 扩展名结尾的文件的任何修改都会在触发式执行模式下触发 "
+"`foo` 命令。"
 
 #: src/reference/reference/watch.md:134
 msgid ""
@@ -149,6 +189,11 @@ msgid ""
 "the screen is cleared and that the message, if any is defined, will be "
 "printed after the screen clearing."
 msgstr ""
+"`watchTriggeredMessage: (Int, Path, Seq[String]) => Option[String]` 设置文件修改触发"
+"新构建时显示的消息。其输入参数为当前 watch 迭代次数、触发构建的文件以及将要运行的"
+"命令。默认打印指示哪个文件触发构建以及将运行哪些命令的消息。函数返回 `None` 时不"
+"打印消息。要在打印消息前清屏，在任务定义中添加 `Watch.clearScreen()` 即可。这将确保"
+"先清屏，再打印（若有定义的）消息。"
 
 #: src/reference/reference/watch.md:145
 msgid ""
@@ -159,6 +204,10 @@ msgid ""
 "When using the default `watchStartMessage`, this will also add the option to "
 "the list displayed by the '?' option."
 msgstr ""
+"`watchInputOptions: Seq[Watch.InputOption]` 允许构建覆盖默认 watch 选项。例如，要添加"
+"通过按 'l' 键重新加载构建的能力，在 `build.sbt` 中添加 `ThisBuild / watchInputOptions "
+"+= Watch.InputOption('l', \"reload\", Watch.Reload)`。使用默认 `watchStartMessage` 时，"
+"这也会将该选项添加到 '?' 选项显示的列表中。"
 
 #: src/reference/reference/watch.md:153
 msgid ""
@@ -167,6 +216,9 @@ msgid ""
 "`ThisBuild / watchBeforeCommand := Watch.clearScreen` to the project "
 "build.sbt file. By default it is no-op."
 msgstr ""
+"`watchBeforeCommand: () => Unit` 提供在评估任务前运行的回调。可通过在项目 build.sbt "
+"中添加 `ThisBuild / watchBeforeCommand := Watch.clearScreen` 来清空控制台屏幕。"
+"默认为空操作。"
 
 #: src/reference/reference/watch.md:158
 msgid ""
@@ -175,6 +227,8 @@ msgid ""
 "files or modified or if is unexpectedly triggering due to modifications to "
 "files that should not be monitored."
 msgstr ""
+"`watchLogLevel` 设置文件监控系统的日志级别。当源文件被修改时触发式执行未评估，或"
+"因对不应监控的文件的修改而意外触发时，此设置很有用。"
 
 #: src/reference/reference/watch.md:163
 msgid ""
@@ -184,6 +238,9 @@ msgid ""
 "will reload the build and typing a newline will return to the shell. By "
 "default this is automatically derived from the `watchInputOptions`."
 msgstr ""
+"`watchInputParser: Parser[Watch.Action]` 更改监控器处理输入事件的方式。例如，设置 "
+"`watchInputParser := 'l' ^^^ Watch.Reload | '\\r' ^^^ new Watch.Run(\"\")` 将使按 "
+"'l' 键重新加载构建，按换行键返回 shell。默认从 `watchInputOptions` 自动派生。"
 
 #: src/reference/reference/watch.md:170
 msgid ""
@@ -194,6 +251,10 @@ msgid ""
 "terminating the watch or displaying all available options. This banner is "
 "only displayed if `watchOnIteration` logs the result of `watchStartMessage`."
 msgstr ""
+"`watchStartMessage: (Int, ProjectRef, Seq[String]) => Option[String]` 设置 watch 进程"
+"等待文件或输入事件时打印的横幅。输入为迭代次数、当前项目和要运行的命令。默认消息"
+"包含终止 watch 或显示所有可用选项的说明。仅当 `watchOnIteration` 记录 `watchStartMessage` "
+"结果时才显示此横幅。"
 
 #: src/reference/reference/watch.md:178
 msgid ""
@@ -203,6 +264,9 @@ msgid ""
 "iterations have been reached. By default, it just logs the result of "
 "`watchStartMessage`."
 msgstr ""
+"`watchOnIteration: (Int, ProjectRef, Seq[String]) => Watch.Action` 在等待源或输入"
+"事件前评估的函数。例如，若达到一定迭代次数，可用于提前终止 watch。默认仅记录 "
+"`watchStartMessage` 的结果。"
 
 #: src/reference/reference/watch.md:184
 msgid ""
@@ -210,6 +274,8 @@ msgid ""
 "contents of a source file must change in order to trigger a build. The "
 "default value is false."
 msgstr ""
+"`watchForceTriggerOnAnyChange: Boolean` 配置源文件内容是否必须变更才能触发构建。"
+"默认值为 false。"
 
 #: src/reference/reference/watch.md:188
 msgid ""
@@ -220,6 +286,9 @@ msgid ""
 "read an invalid hash if many source files are being concurrently modified. "
 "The default value is false."
 msgstr ""
+"`watchPersistFileStamps: Boolean` 切换 sbt 是否在多次任务评估运行间持久化为源文件"
+"计算的文件哈希。这可提高具有大量源文件的项目的性能。由于文件哈希被缓存，若多个源"
+"文件被并发修改，评估的任务可能读取到无效哈希。默认值为 false。"
 
 #: src/reference/reference/watch.md:195
 msgid ""
@@ -228,3 +297,5 @@ msgid ""
 "build. This is intended to prevent spurious builds that can occur when a "
 "file is modified in short bursts. The default value is 500ms."
 msgstr ""
+"`watchAntiEntropy: FiniteDuration` 控制同一文件在先前触发构建后，必须经过多长时间"
+"才能再次触发构建。用于防止文件在短时间内多次修改时产生虚假构建。默认值为 500ms。"
