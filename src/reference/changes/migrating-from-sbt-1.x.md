@@ -181,9 +181,7 @@ Use `.platform(Platform.jvm)` in case where JVM libraries are needed.
 Changes to `target`
 -------------------
 
-In sbt 2.x, the `target` directory is unified to be a single `target/` directory in the working directory, and each subproject creates a subdirectory encoding platform, Scala version, and the subproject id. In sbt 1.x, `target.value` resolves to the project root `target/` directory. In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` instead, plugins should be aware of this change during migration.
-
-To absorb this change in scripted tests, `exists`, `absent`, and `delete` now supports glob expression `**`, as well as `||`.
+In sbt 2.x, the `target` directory is unified to be a single `target/` directory in the working directory, and each subproject creates a subdirectory encoding platform, Scala version, and the subproject id. To absorb this change in scripted tests, `exists`, `absent`, and `delete` now supports glob expression `**`, as well as `||`.
 
 ```bash
 # before
@@ -197,6 +195,8 @@ $ exists target/**/src_managed/bar.txt
 # either is ok
 $ exists target/**/proj/src_managed/bar.txt || proj/target/**/src_managed/bar.txt
 ```
+
+In sbt 1.x, `target.value` resolves to the project root `target/` directory. In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` instead. Plugins should be aware of this change during migration.
 
 The PluginCompat technique
 --------------------------
