@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/sbt-publish.md:6
 msgid "sbt publish"
-msgstr ""
+msgstr "sbt publish"
 
 #: src/reference/reference/sbt-publish.md:9
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-publish.md:12
 msgid ""
@@ -12,10 +25,13 @@ msgid ""
 "`publishSigned`<br> `sbt` \\[_query_ / \\] `publishLocal`<br> `sbt` \\"
 "[_query_ / \\] `publishM2`"
 msgstr ""
+"`sbt` \\[_query_ / \\] `publish`<br> `sbt` \\[_query_ / \\] "
+"`publishSigned`<br> `sbt` \\[_query_ / \\] `publishLocal`<br> `sbt` \\"
+"[_query_ / \\] `publishM2`"
 
 #: src/reference/reference/sbt-publish.md:17
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/sbt-publish.md:20
 msgid ""
@@ -25,18 +41,24 @@ msgid ""
 "file, to a repository so that other projects can specify your project as a "
 "dependency."
 msgstr ""
+"publish 系列任务提供编译和发布您项目的方式。此处的 _发布_ 包括将描述符（如 Maven "
+"POM 或 `ivy.xml`）和构件（如 JAR 或 `war` 文件）上传到仓库，以便其他项目可将您的"
+"项目指定为依赖。"
 
 #: src/reference/reference/sbt-publish.md:26
 msgid ""
 "The `publish` task publishes your project to a remote repository, such as "
 "JFrog Artifactory or Sonatype Nexus instance."
 msgstr ""
+"`publish` 任务将您的项目发布到远程仓库，如 JFrog Artifactory 或 Sonatype Nexus 实例。"
 
 #: src/reference/reference/sbt-publish.md:28
 msgid ""
 "The `publishSigned` task, enabled using [sbt-pgp plugin](https://github.com/"
 "sbt/sbt-pgp), is used to publish GPG-signed artifacts."
 msgstr ""
+"`publishSigned` 任务通过 [sbt-pgp 插件](https://github.com/sbt/sbt-pgp) 启用，用于"
+"发布 GPG 签名的构件。"
 
 #: src/reference/reference/sbt-publish.md:30
 msgid ""
@@ -44,41 +66,48 @@ msgid ""
 "repository, which is usually located at `$HOME/.ivy2/local/`. You can then "
 "use this project from other projects on the same machine."
 msgstr ""
+"`publishLocal` 任务将您的项目发布到 Ivy 本地文件仓库，通常位于 `$HOME/.ivy2/local/`。"
+"然后您可在同一机器上的其他项目中使用此项目。"
 
 #: src/reference/reference/sbt-publish.md:32
 msgid ""
 "The `publishM2` task publishes your project to the local Maven repository."
 msgstr ""
+"`publishM2` 任务将您的项目发布到本地 Maven 仓库。"
 
 #: src/reference/reference/sbt-publish.md:34
 msgid ""
 "There's a specific recipe for [publishing to the Central Repo](../recipes/"
 "central.md)."
 msgstr ""
+"有专门的配方说明如何[发布到 Central 仓库](../recipes/central.md)。"
 
 #: src/reference/reference/sbt-publish.md:36
 msgid "Skip publishing"
-msgstr ""
+msgstr "跳过发布"
 
 #: src/reference/reference/sbt-publish.md:38
 msgid ""
 "To avoid publishing a project, add the following setting to the subprojects "
 "that you want to skip:"
 msgstr ""
+"要避免发布项目，在要跳过的子项目中添加以下设置："
 
 #: src/reference/reference/sbt-publish.md:44
 msgid "Common use case is to prevent publishing of the root project."
 msgstr ""
+"常见用途是阻止根项目的发布。"
 
 #: src/reference/reference/sbt-publish.md:46
 msgid "Define the repository"
-msgstr ""
+msgstr "定义仓库"
 
 #: src/reference/reference/sbt-publish.md:48
 msgid ""
 "To specify the repository, assign a repository to `publishTo` and optionally "
 "set the publishing style. For example, to upload to Nexus:"
 msgstr ""
+"要指定仓库，将仓库赋给 `publishTo`，并可选择设置发布风格。例如，上传到 Nexus："
 
 #: src/reference/reference/sbt-publish.md:52
 msgid "\"Sonatype Snapshots Nexus\""
@@ -91,6 +120,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:55
 msgid "To publish to a local maven repository:"
 msgstr ""
+"要发布到本地 Maven 仓库："
 
 #: src/reference/reference/sbt-publish.md:58
 msgid "\"local-maven\""
@@ -103,6 +133,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:61
 msgid "To publish to a local Ivy repository:"
 msgstr ""
+"要发布到本地 Ivy 仓库："
 
 #: src/reference/reference/sbt-publish.md:64
 msgid "\"local-ivy\""
@@ -120,6 +151,9 @@ msgid ""
 "staging repository. Doing this selection can be done by using the value of "
 "the `version` setting:"
 msgstr ""
+"若您要发布到 Central 仓库，还需根据构件选择正确的仓库：SNAPSHOT 版本发布到 "
+"central-snapshots 仓库，其他版本发布到本地 staging 仓库。可使用 `version` 设置的值"
+"进行此选择："
 
 #: src/reference/reference/sbt-publish.md:75
 msgid "\"https://central.sonatype.com/repository/maven-snapshots/\""
@@ -135,7 +169,7 @@ msgstr ""
 
 #: src/reference/reference/sbt-publish.md:81
 msgid "Publishing locally"
-msgstr ""
+msgstr "本地发布"
 
 #: src/reference/reference/sbt-publish.md:83
 msgid ""
@@ -144,6 +178,8 @@ msgid ""
 "can then list the project as a dependency. For example, if the project you "
 "are publishing has configuration parameters like:"
 msgstr ""
+"`publishLocal` 任务将发布到 \"local\" Ivy 仓库。默认位于 `$HOME/.ivy2/local/`。"
+"同一机器上的其他构建可将该项目列为依赖。例如，若您发布的项目具有如下配置参数："
 
 #: src/reference/reference/sbt-publish.md:89
 #: src/reference/reference/sbt-publish.md:97
@@ -163,6 +199,7 @@ msgstr ""
 #: src/reference/reference/sbt-publish.md:94
 msgid "Then another build on the same machine can depend on it:"
 msgstr ""
+"则同一机器上的另一构建可依赖它："
 
 #: src/reference/reference/sbt-publish.md:100
 msgid ""
@@ -170,6 +207,7 @@ msgid ""
 "the version number each time you publish to indicate that it's a changing "
 "artifact."
 msgstr ""
+"您选择的版本号必须以 `SNAPSHOT` 结尾，或每次发布时更改版本号以表明其为可变构件。"
 
 #: src/reference/reference/sbt-publish.md:104
 msgid ""
@@ -179,6 +217,10 @@ msgid ""
 "since it makes dependency resolution slower and the build non-repeatable.\n"
 "```"
 msgstr ""
+"```admonish warning\n"
+"通常应避免在单机测试之外使用 SNAPSHOT 依赖，\n"
+"因其会使依赖解析变慢且构建不可重复。\n"
+"```"
 
 #: src/reference/reference/sbt-publish.md:109
 msgid ""
@@ -187,18 +229,23 @@ msgid ""
 "settings.xml` or at `$HOME/.m2/repository/` by default. Another build would "
 "require `Resolver.mavenLocal` to resolve out of it:"
 msgstr ""
+"与 `publishLocal` 类似，`publishM2` 任务将发布到用户的 Maven 本地仓库。默认位于 "
+"`$HOME/.m2/settings.xml` 指定的位置或 `$HOME/.m2/repository/`。另一构建需使用 "
+"`Resolver.mavenLocal` 从中解析："
 
 #: src/reference/reference/sbt-publish.md:122
 msgid "Credentials"
-msgstr ""
+msgstr "凭据"
 
 #: src/reference/reference/sbt-publish.md:124
 msgid "There are two ways to specify credentials for such a repository."
 msgstr ""
+"有两种方式可为此类仓库指定凭据。"
 
 #: src/reference/reference/sbt-publish.md:126
 msgid "The first and better way is to load them from a file, for example:"
 msgstr ""
+"第一种且更好的方式是从文件加载，例如："
 
 #: src/reference/reference/sbt-publish.md:129
 msgid "\".sbt\""
@@ -213,10 +260,12 @@ msgid ""
 "The credentials file is a properties file with keys `realm`, `host`, `user`, "
 "and `password`. For example:"
 msgstr ""
+"凭据文件是包含 `realm`、`host`、`user` 和 `password` 键的属性文件。例如："
 
 #: src/reference/reference/sbt-publish.md:142
 msgid "The second way is to specify them inline:"
 msgstr ""
+"第二种方式是内联指定："
 
 #: src/reference/reference/sbt-publish.md:145
 msgid "\"Sonatype Nexus Repository Manager\""
@@ -251,20 +300,34 @@ msgid ""
 "```\n"
 "````"
 msgstr ""
+"````admonish note\n"
+"凭据匹配使用 `realm` 和 `host` 两个键。\n"
+"`realm` 键是 HTTP `WWW-Authenticate` 头的 realm 指令，\n"
+"是 HTTP 服务器对 [HTTP Basic Authentication](https://en.wikipedia.org/wiki/"
+"Basic_access_authentication#Server_side) 响应的一部分。\n"
+"对于给定仓库，可通过读取收到的所有头来找到。\n"
+"例如：\n"
+"\n"
+"```bash\n"
+"curl -D - my.artifact.repo.net\n"
+"```\n"
+"````"
 
 #: src/reference/reference/sbt-publish.md:160
 msgid "Cross-publishing"
-msgstr ""
+msgstr "交叉发布"
 
 #: src/reference/reference/sbt-publish.md:162
 msgid ""
 "To support multiple incompatible Scala versions, use projectMatrix and "
 "publish (see [Cross building setup](./cross-building-setup.md))."
 msgstr ""
+"要支持多个不兼容的 Scala 版本，请使用 projectMatrix 和 publish（参见 [Cross building "
+"setup](./cross-building-setup.md)）。"
 
 #: src/reference/reference/sbt-publish.md:165
 msgid "Overriding the publishing convention"
-msgstr ""
+msgstr "覆盖发布约定"
 
 #: src/reference/reference/sbt-publish.md:167
 msgid ""
@@ -276,10 +339,14 @@ msgid ""
 "cross-building-setup.md) page for more details under the _Publishing "
 "convention_ section."
 msgstr ""
+"默认情况下，sbt 会使用您正在使用的 Scala 二进制版本发布构件。例如，若项目使用 "
+"Scala 2.13.x，示例构件将发布为 `example_2.13`。这通常是您想要的，但若发布纯 Java "
+"构件或编译器插件，您需要更改 `CrossVersion`。详见 [Cross building setup](./cross-"
+"building-setup.md) 页面的 _Publishing convention_ 部分。"
 
 #: src/reference/reference/sbt-publish.md:175
 msgid "Published artifacts"
-msgstr ""
+msgstr "已发布构件"
 
 #: src/reference/reference/sbt-publish.md:177
 msgid ""
@@ -288,14 +355,17 @@ msgid ""
 "disable or modify the default artifacts. See the [Artifact](./artifact.md) "
 "page for details."
 msgstr ""
+"默认发布主二进制 JAR、源码 JAR 和 API 文档 JAR。您可声明要发布的其他类型构件，并"
+"禁用或修改默认构件。详见 [Artifact](./artifact.md) 页面。"
 
 #: src/reference/reference/sbt-publish.md:182
 msgid "Version scheme"
-msgstr ""
+msgstr "版本方案"
 
 #: src/reference/reference/sbt-publish.md:184
 msgid "`versionScheme` setting tracks the version scheme of the build:"
 msgstr ""
+"`versionScheme` 设置跟踪构建的版本方案："
 
 #: src/reference/reference/sbt-publish.md:187
 msgid "\"early-semver\""
@@ -307,6 +377,8 @@ msgid ""
 "and `\"strict\"`. sbt will include this information into `pom.xml` and "
 "`ivy.xml` as a property."
 msgstr ""
+"支持的值有 `\"early-semver\"`、`\"pvp\"`、`\"semver-spec\"` 和 `\"strict\"`。"
+"sbt 会将此信息作为属性包含到 `pom.xml` 和 `ivy.xml` 中。"
 
 #: src/reference/reference/sbt-publish.md:193
 msgid ""
@@ -315,22 +387,27 @@ msgid ""
 "0.13.2). Once it goes 1.0.0, it follows the regular Semantic Versioning "
 "where 1.1.0 is bincompat with 1.0.0."
 msgstr ""
+"`Some(\"early-semver\")`：早期语义化版本，在 0.Y.z 内保持补丁更新间的二进制兼容（如 "
+"0.13.0 与 0.13.2）。达到 1.0.0 后遵循常规语义化版本，1.1.0 与 1.0.0 二进制兼容。"
 
 #: src/reference/reference/sbt-publish.md:194
 msgid ""
 "`Some(\"semver-spec\")`: Semantic Versioning where all 0.y.z are treated as "
 "initial development (no bincompat guarantees)."
 msgstr ""
+"`Some(\"semver-spec\")`：语义化版本，所有 0.y.z 视为初始开发（无二进制兼容保证）。"
 
 #: src/reference/reference/sbt-publish.md:195
 msgid ""
 "`Some(\"pvp\")`. Haskell Package Versioning Policy where X.Y are treated as "
 "major version."
 msgstr ""
+"`Some(\"pvp\")`：Haskell 包版本策略，X.Y 视为主版本。"
 
 #: src/reference/reference/sbt-publish.md:196
 msgid "`Some(\"strict\")`. Requires exact match of version."
 msgstr ""
+"`Some(\"strict\")`：要求版本完全匹配。"
 
 #: src/reference/reference/sbt-publish.md:198
 msgid ""
@@ -340,10 +417,13 @@ msgid ""
 "www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-"
 "versionscheme.html) (2021)."
 msgstr ""
+"此信息将标注到 `pom.xml` 文件中，便于下游项目判断版本冲突是否可安全解析。"
+"参见 [Preventing version conflicts with versionScheme](https://www.scala-lang.org/"
+"blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html) (2021)。"
 
 #: src/reference/reference/sbt-publish.md:202
 msgid "Modifying the generated POM"
-msgstr ""
+msgstr "修改生成的 POM"
 
 #: src/reference/reference/sbt-publish.md:204
 msgid ""
@@ -352,12 +432,16 @@ msgid ""
 "may be altered by changing a few settings. Set `pomExtra` to provide XML "
 "(`scala.xml.NodeSeq`) to insert directly into the generated pom. For example:"
 msgstr ""
+"当 `publishMavenStyle` 为 `true` 时，POM 由 `makePom` 操作生成并发布到仓库而非 Ivy "
+"文件。可通过修改若干设置来更改此 POM 文件。设置 `pomExtra` 提供 XML（`scala.xml."
+"NodeSeq`）以直接插入生成的 pom。例如："
 
 #: src/reference/reference/sbt-publish.md:214
 msgid ""
 "There is also a `pomPostProcess` setting that can be used to manipulate the "
 "final XML before it is written. It's type is `Node => Node`."
 msgstr ""
+"还有 `pomPostProcess` 设置可用于在写入前操作最终 XML。其类型为 `Node => Node`。"
 
 #: src/reference/reference/sbt-publish.md:223
 msgid ""
@@ -365,6 +449,8 @@ msgid ""
 "You can filter these by modifying `pomRepositoryFilter`, which by default "
 "excludes local repositories. To instead only include local repositories:"
 msgstr ""
+"`makePom` 将您声明的所有 Maven 风格仓库添加到 POM。可通过修改 `pomRepositoryFilter` "
+"过滤这些仓库，默认排除本地仓库。若要仅包含本地仓库："
 
 #: src/reference/reference/sbt-publish.md:230
 msgid "\"file:\""

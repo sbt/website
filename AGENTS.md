@@ -66,3 +66,4 @@ Tips for Chinese translation
 - task → 任务
 - requested dependencies → 指定设置依赖 (specified setting dependencies)
 - actual dependencies → 有效设置依赖 (effective setting dependencies)
+- cross building / cross-publishing → 交叉构建 / 交叉发布 (sbt crosses both Scala versions and platforms: JVM, JS, Native)
