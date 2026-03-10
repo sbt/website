@@ -117,7 +117,7 @@ configuration that can be run using a `Test/` prefix.
     details on the use of System.exit and multithreading (including
     GUIs) in code run by this action. `Test/runMain` runs the specified
     main class in the test code. -->
--   [`test <test>*`](./sbt-tes.md) Runs the tests specified as arguments (or all
+-   [`test <test>*`](./sbt-test.md) Runs the tests specified as arguments (or all
     tests if no arguments are given) that:
       1.  have not been run yet OR
       2.  failed the last time they were run OR

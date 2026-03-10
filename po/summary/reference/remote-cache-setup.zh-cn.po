@@ -13,17 +13,18 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:1
 msgid "Remote cache setup"
-msgstr ""
+msgstr "远程缓存设置"
 
 #: src/reference/reference/remote-cache-setup.md:4
 msgid ""
 "This page covers remote caching setup. See [Caching](../concepts/"
 "caching.html) for general explanation of the caching system."
 msgstr ""
+"本页介绍远程缓存设置。有关缓存系统的一般说明，请参阅[缓存](../concepts/caching.html)。"
 
 #: src/reference/reference/remote-cache-setup.md:6
 msgid "gRPC remote cache"
-msgstr ""
+msgstr "gRPC 远程缓存"
 
 #: src/reference/reference/remote-cache-setup.md:9
 msgid ""
@@ -32,6 +33,8 @@ msgid ""
 "cache backends. To configure sbt 2.x, add the following to `project/"
 "plugins.sbt`"
 msgstr ""
+"虽然未来可能有多种远程缓存存储实现，sbt 2.0 已内置与 Bazel 远程缓存后端兼容的 gRPC "
+"客户端。要配置 sbt 2.x，请将以下内容添加到 `project/plugins.sbt`："
 
 #: src/reference/reference/remote-cache-setup.md:15
 msgid ""
@@ -40,54 +43,63 @@ msgid ""
 "remote cache implementations, hopefully it shows how sbt 2.x can be set up "
 "for wide array of them."
 msgstr ""
+"Bazel 远程缓存后端众多，既有开源也有商业方案。虽然本页并非所有 Bazel 远程缓存实现的"
+"完整列表，但希望能展示如何为多种后端配置 sbt 2.x。"
 
 #: src/reference/reference/remote-cache-setup.md:17
 msgid "Authentication"
-msgstr ""
+msgstr "认证"
 
 #: src/reference/reference/remote-cache-setup.md:19
 msgid ""
 "There are a few flavors of [gRPC authentication](https://grpc.io/docs/guides/"
 "auth/), and Bazel remote cache backends use various kind of them:"
 msgstr ""
+"[gRPC 认证](https://grpc.io/docs/guides/auth/)有多种方式，Bazel 远程缓存后端使用其中"
+"不同种类："
 
 #: src/reference/reference/remote-cache-setup.md:21
 msgid "Unauthenticated. Useful for testing."
-msgstr ""
+msgstr "无认证。适用于测试。"
 
 #: src/reference/reference/remote-cache-setup.md:22
 msgid "Default TLS/SSL."
-msgstr ""
+msgstr "默认 TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:23
 msgid "TLS/SSL with custom server certificate."
-msgstr ""
+msgstr "使用自定义服务器证书的 TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:24
 msgid "TTL/SSL with custom server and client certificate, mTLS."
 msgstr ""
+"使用自定义服务器和客户端证书的 TLS/SSL，即 mTLS。"
 
 #: src/reference/reference/remote-cache-setup.md:25
 msgid "Default TLS/SSL with API token header."
-msgstr ""
+msgstr "带 API 令牌头的默认 TLS/SSL。"
 
 #: src/reference/reference/remote-cache-setup.md:27
 msgid "bazel-remote without authentication"
-msgstr ""
+msgstr "无认证的 bazel-remote"
 
 #: src/reference/reference/remote-cache-setup.md:29
 msgid ""
 "You can grab the code from [buchgr/bazel-remote](https://github.com/buchgr/"
 "bazel-remote) and run it on a laptop using Bazel:"
 msgstr ""
+"您可从 [buchgr/bazel-remote](https://github.com/buchgr/bazel-remote) 获取代码，"
+"并使用 Bazel 在笔记本上运行："
 
 #: src/reference/reference/remote-cache-setup.md:37
 msgid "To configure sbt 2.x, add the following to `project/plugins.sbt`"
 msgstr ""
+"要配置 sbt 2.x，请将以下内容添加到 `project/plugins.sbt`："
 
 #: src/reference/reference/remote-cache-setup.md:43
 msgid "and append the following to `build.sbt`:"
 msgstr ""
+"并将以下内容追加到 `build.sbt`："
 
 #: src/reference/reference/remote-cache-setup.md:46
 msgid "\"grpc://localhost:2024\""
@@ -95,7 +107,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:49
 msgid "bazel-remote with mTLS"
-msgstr ""
+msgstr "使用 mTLS 的 bazel-remote"
 
 #: src/reference/reference/remote-cache-setup.md:51
 msgid ""
@@ -103,10 +115,12 @@ msgid ""
 "mutually authenticated. bazel-remote can be started with something like the "
 "follows:"
 msgstr ""
+"在实际环境中，mTLS 可确保传输加密且双向认证。bazel-remote 可按如下方式启动："
 
 #: src/reference/reference/remote-cache-setup.md:62
 msgid "sbt 2.x setting would look like this in this scenario:"
 msgstr ""
+"在此场景下，sbt 2.x 设置如下："
 
 #: src/reference/reference/remote-cache-setup.md:65
 msgid "\"grpcs://localhost:2024\""
@@ -127,10 +141,11 @@ msgstr ""
 #: src/reference/reference/remote-cache-setup.md:71
 msgid "Note the `grpcs://`, as opposed to `grpc://`."
 msgstr ""
+"注意使用 `grpcs://`，而非 `grpc://`。"
 
 #: src/reference/reference/remote-cache-setup.md:73
 msgid "EngFlow"
-msgstr ""
+msgstr "EngFlow"
 
 #: src/reference/reference/remote-cache-setup.md:75
 msgid ""
@@ -138,6 +153,8 @@ msgid ""
 "in 2020 by core members of Bazel team, providing build analytics and remote "
 "execution backend for Bazel, which includes remote cache."
 msgstr ""
+"[EngFlow GmbH](https://www.engflow.com/) 是由 Bazel 团队核心成员于 2020 年创立的构建"
+"解决方案公司，为 Bazel 提供构建分析和远程执行后端，包括远程缓存。"
 
 #: src/reference/reference/remote-cache-setup.md:77
 msgid ""
@@ -146,6 +163,8 @@ msgid ""
 "instruction, this should start a remote cache service on port 8080. The sbt "
 "2.x configuration would look like this for the trial cluster:"
 msgstr ""
+"在 <https://my.engflow.com/> 注册试用后，页面会指导您使用 docker 启动试用集群。"
+"若按说明操作，将在端口 8080 启动远程缓存服务。试用集群的 sbt 2.x 配置如下："
 
 #: src/reference/reference/remote-cache-setup.md:80
 msgid "\"grpc://localhost:8080\""
@@ -153,7 +172,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:83
 msgid "BuildBuddy"
-msgstr ""
+msgstr "BuildBuddy"
 
 #: src/reference/reference/remote-cache-setup.md:85
 msgid ""
@@ -162,34 +181,42 @@ msgid ""
 "backend for Bazel. It's also available open source as [buildbuddy-io/"
 "buildbuddy](https://github.com/buildbuddy-io/buildbuddy)."
 msgstr ""
+"[BuildBuddy](https://www.buildbuddy.io/) 由前 Google 工程师创立的构建解决方案公司，"
+"为 Bazel 提供构建分析和远程执行后端。也以 [buildbuddy-io/buildbuddy](https://github.com/buildbuddy-io/buildbuddy) 开源提供。"
 
 #: src/reference/reference/remote-cache-setup.md:87
 msgid ""
 "After signing up, BuildBuddy Personal plan lets you use BuildBuddy across "
 "the Internet."
 msgstr ""
+"注册后，BuildBuddy Personal 计划允许您通过互联网使用 BuildBuddy。"
 
 #: src/reference/reference/remote-cache-setup.md:89
 msgid ""
 "From <https://app.buildbuddy.io/>, go to Settings, and change the "
 "Organization URL to `<something>.buildbuddy.io`."
 msgstr ""
+"在 <https://app.buildbuddy.io/> 中，进入 Settings，将 Organization URL 改为 "
+"`<something>.buildbuddy.io`。"
 
 #: src/reference/reference/remote-cache-setup.md:90
 msgid ""
 "Next, go to Quickstart and take note of the URLs and `--remote_headers`."
 msgstr ""
+"接下来，进入 Quickstart 并记录 URL 和 `--remote_headers`。"
 
 #: src/reference/reference/remote-cache-setup.md:91
 msgid ""
 "Create a file called `$HOME/.sbt/buildbuddy_credential.txt` and put in the "
 "API key:"
 msgstr ""
+"创建名为 `$HOME/.sbt/buildbuddy_credential.txt` 的文件并填入 API 密钥："
 
 #: src/reference/reference/remote-cache-setup.md:97
 #: src/reference/reference/remote-cache-setup.md:115
 msgid "The sbt 2.x configuration would look like this:"
 msgstr ""
+"sbt 2.x 配置如下："
 
 #: src/reference/reference/remote-cache-setup.md:100
 msgid "\"grpcs://something.buildbuddy.io\""
@@ -201,7 +228,7 @@ msgstr ""
 
 #: src/reference/reference/remote-cache-setup.md:104
 msgid "NativeLink"
-msgstr ""
+msgstr "NativeLink"
 
 #: src/reference/reference/remote-cache-setup.md:106
 msgid ""
@@ -209,18 +236,22 @@ msgid ""
 "execution backend implementated in Rust with emphasis on performance. As of "
 "June 2024, there's NativeLink Cloud in beta."
 msgstr ""
+"[NativeLink](https://docs.nativelink.dev/) 是用 Rust 实现的开源 Bazel 远程执行后端，"
+"注重性能。截至 2024 年 6 月，NativeLink Cloud 处于测试阶段。"
 
 #: src/reference/reference/remote-cache-setup.md:108
 msgid ""
 "From <https://app.nativelink.com/>, go to Quickstart and take note of the "
 "URLs and `--remote_header`."
 msgstr ""
+"在 <https://app.nativelink.com/> 中，进入 Quickstart 并记录 URL 和 `--remote_header`。"
 
 #: src/reference/reference/remote-cache-setup.md:109
 msgid ""
 "Create a file called `$HOME/.sbt/nativelink_credential.txt` and put in the "
 "API key:"
 msgstr ""
+"创建名为 `$HOME/.sbt/nativelink_credential.txt` 的文件并填入 API 密钥："
 
 #: src/reference/reference/remote-cache-setup.md:118
 msgid "\"grpcs://something.build-faster.nativelink.net\""

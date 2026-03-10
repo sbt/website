@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2025-08-08T03:19:26-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/artifact.md:4
 msgid "Artifact"
-msgstr ""
+msgstr "工件"
 
 #: src/reference/reference/artifact.md:7
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/artifact.md:10
 msgid ""
@@ -13,6 +26,7 @@ msgid ""
 "maven.apache.org/ref/3.9.11/maven-core/artifact-handlers.html) and [Ivy]"
 "(https://ant.apache.org/ivy/history/2.3.0/terminology.html#artifact)."
 msgstr ""
+"工件是用于发布子项目特定版本的单个文件。该概念源自 [Apache Maven](https://maven.apache.org/ref/3.9.11/maven-core/artifact-handlers.html) 和 [Ivy](https://ant.apache.org/ivy/history/2.3.0/terminology.html#artifact)。"
 
 #: src/reference/reference/artifact.md:12
 msgid ""
@@ -20,12 +34,15 @@ msgid ""
 "Compressed package formats are often preferred because they are easier to "
 "manage, download, and store."
 msgstr ""
+"在 JVM 生态中，常见工件为 Java 归档（JAR 文件）。压缩包格式通常更受青睐，因其更易管理、"
+"下载和存储。"
 
 #: src/reference/reference/artifact.md:15
 msgid ""
 "To illustrate, the following is a list of artifacts for a library, "
 "enumerated in an `ivy.xml` file:"
 msgstr ""
+"举例来说，以下是库的工件列表，在 `ivy.xml` 文件中枚举："
 
 #: src/reference/reference/artifact.md:19
 #: src/reference/reference/artifact.md:20
@@ -73,57 +90,68 @@ msgid ""
 "This shows that an artifact has a name, a type, and an extention, and "
 "optionally a classifier."
 msgstr ""
+"这表明工件具有名称、类型和扩展名，以及可选的 classifier。"
 
 #: src/reference/reference/artifact.md:28
 msgid "**name**. This is going to be the same as the subproject's module name."
 msgstr ""
+"**name**。与子项目的模块名相同。"
 
 #: src/reference/reference/artifact.md:29
 msgid ""
 "**type**. The functional category of the artifact, such as `jar`, `src`, and "
 "`doc`."
 msgstr ""
+"**type**。工件的功能类别，如 `jar`、`src` 和 `doc`。"
 
 #: src/reference/reference/artifact.md:30
 msgid ""
 "**extension**. The file extention, such as `jar`, `war`, `zip`, `xml` etc."
 msgstr ""
+"**extension**。文件扩展名，如 `jar`、`war`、`zip`、`xml` 等。"
 
 #: src/reference/reference/artifact.md:31
 msgid ""
 "**classifier**. In Maven, classifier is an arbitrary string that can be "
 "appended for an alternative or secondary artifact."
 msgstr ""
+"**classifier**。在 Maven 中，classifier 是可为替代或次要工件追加的任意字符串。"
 
 #: src/reference/reference/artifact.md:33
 msgid "Selecting default artifacts"
-msgstr ""
+msgstr "选择默认工件"
 
 #: src/reference/reference/artifact.md:35
 msgid "By default, the published artifacts are:"
 msgstr ""
+"默认发布的工件为："
 
 #: src/reference/reference/artifact.md:36
 msgid "The main binary JAR"
 msgstr ""
+"主二进制 JAR"
 
 #: src/reference/reference/artifact.md:37
 msgid "The JAR containing the main sources and resources"
 msgstr ""
+"包含主源码和资源的 JAR"
 
 #: src/reference/reference/artifact.md:38
 msgid "The JAR containing the API documentation"
 msgstr ""
+"包含 API 文档的 JAR"
 
 #: src/reference/reference/artifact.md:40
 msgid ""
 "You can add artifacts for the test classes, sources, or API or you can "
 "disable some of the main artifacts."
 msgstr ""
+"您可添加测试类、源码或 API 的工件，也可禁用部分主工件。"
 
 #: src/reference/reference/artifact.md:43
 msgid "To add all `Test` artifacts:"
 msgstr ""
+"要添加所有 `Test` 工件："
 
 #: src/reference/reference/artifact.md:46
 #: src/reference/reference/artifact.md:55
@@ -136,6 +164,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:52
 msgid "To add them individually:"
 msgstr ""
+"要单独添加："
 
 #: src/reference/reference/artifact.md:57
 msgid "// enable publishing the jar produced by `Test/package`"
@@ -152,6 +181,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:68
 msgid "To disable main artifacts individually:"
 msgstr ""
+"要单独禁用主工件："
 
 #: src/reference/reference/artifact.md:73
 msgid "// disable publishing the main jar produced by `package`"
@@ -167,7 +197,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:84
 msgid "Modifying default artifacts"
-msgstr ""
+msgstr "修改默认工件"
 
 #: src/reference/reference/artifact.md:86
 msgid ""
@@ -177,10 +207,14 @@ msgid ""
 "`artifactPath` (of type `SettingKey[File]`). They are scoped by `(Config / "
 "<task>)` as indicated in the previous section."
 msgstr ""
+"除 `publishArtifact` 外，每个内置工件还有若干可配置设置。基本包括 `artifact`（类型为 "
+"`SettingKey[Artifact]`）、`mappings`（类型为 `TaskKey[(File, String)]`）和 "
+"`artifactPath`（类型为 `SettingKey[File]`）。它们按上一节所述以 `(Config / <task>)` 限定作用域。"
 
 #: src/reference/reference/artifact.md:92
 msgid "To modify the type of the main artifact, for example:"
 msgstr ""
+"例如，要修改主工件的类型："
 
 #: src/reference/reference/artifact.md:97
 msgid "\"bundle\""
@@ -197,11 +231,16 @@ msgid ""
 "without affecting the published name, which is determined by the `artifact` "
 "definition combined with the repository pattern."
 msgstr ""
+"生成的工件名由 `artifactName` 设置决定。该设置类型为 `(ScalaVersion, ModuleID, Artifact) => String`。"
+"ScalaVersion 参数提供完整 Scala 版本字符串及版本字符串的二进制兼容部分。返回的 String 为要生成的文件名。"
+"默认实现为 `Artifact.artifactName _`。可修改该函数以生成不同的本地工件名，而不影响发布名（发布名由 "
+"`artifact` 定义与仓库模式共同决定）。"
 
 #: src/reference/reference/artifact.md:111
 msgid ""
 "For example, to produce a minimal name without a classifier or cross path:"
 msgstr ""
+"例如，要生成不含 classifier 或交叉路径的最小名称："
 
 #: src/reference/reference/artifact.md:116
 msgid "\"-\""
@@ -214,6 +253,7 @@ msgstr ""
 #: src/reference/reference/artifact.md:120
 msgid "(Note that in practice you rarely want to drop the classifier.)"
 msgstr ""
+"（注意：实践中很少会去掉 classifier。）"
 
 #: src/reference/reference/artifact.md:122
 msgid ""
@@ -224,11 +264,15 @@ msgid ""
 "the artifact is generated first and so the file is guaranteed to be up-to-"
 "date."
 msgstr ""
+"最后，您可通过映射 `packagedArtifact` 任务获取工件的 `(Artifact, File)` 对。若不需要 "
+"`Artifact`，可从打包任务（`package`、`packageDoc` 或 `packageSrc`）直接获取 File。"
+"两种情况下，映射任务以获取文件均可确保先生成工件，从而保证文件为最新。"
 
 #: src/reference/reference/artifact.md:129
 #: src/reference/reference/artifact.md:157
 msgid "For example:"
 msgstr ""
+"例如："
 
 #: src/reference/reference/artifact.md:132
 msgid "\"My task.\""
@@ -244,7 +288,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:141
 msgid "Defining custom artifacts"
-msgstr ""
+msgstr "定义自定义工件"
 
 #: src/reference/reference/artifact.md:143
 msgid ""
@@ -253,10 +297,13 @@ msgid ""
 "metadata, but a Maven POM file only supports distinguishing artifacts based "
 "on classifiers and these are not recorded in the POM."
 msgstr ""
+"除配置内置工件外，您还可声明要发布的其他工件。使用 Ivy 元数据时允许多个工件，但 Maven "
+"POM 文件仅支持基于 classifier 区分工件，且这些信息不会记录在 POM 中。"
 
 #: src/reference/reference/artifact.md:148
 msgid "Basic `Artifact` construction look like:"
 msgstr ""
+"基本 `Artifact` 构造如下："
 
 #: src/reference/reference/artifact.md:151
 #: src/reference/reference/artifact.md:152
@@ -329,12 +376,15 @@ msgid ""
 "API](../api/sbt/librarymanagement/Artifact$.html) for combining the "
 "parameters above and specifying \\[Configurations\\] and extra attributes."
 msgstr ""
+"有关工件的更多详情，请参阅 [Ivy 文档](https://ant.apache.org/ivy/history/2.3.0/ivyfile/dependency-artifact.html)。"
+"有关组合上述参数并指定 [Configurations] 和额外属性，请参阅 [Artifact API](../api/sbt/librarymanagement/Artifact$.html)。"
 
 #: src/reference/reference/artifact.md:171
 msgid ""
 "To declare these artifacts for publishing, map them to the task that "
 "generates the artifact:"
 msgstr ""
+"要将这些工件声明为发布，请将它们映射到生成工件的任务："
 
 #: src/reference/reference/artifact.md:185
 msgid ""
@@ -343,16 +393,19 @@ msgid ""
 "Init$SettingsDefinition.html)). In a full build configuration, usage looks "
 "like:"
 msgstr ""
+"`addArtifact` 返回一系列设置（包装在 [SettingsDefinition](../api/sbt/internal/util/Init$SettingsDefinition.html) 中）。"
+"在完整构建配置中的用法如下："
 
 #: src/reference/reference/artifact.md:196
 msgid "Publishing .war files"
-msgstr ""
+msgstr "发布 .war 文件"
 
 #: src/reference/reference/artifact.md:198
 msgid ""
 "A common use case for web applications is to publish the `.war` file instead "
 "of the `.jar` file."
 msgstr ""
+"Web 应用的常见做法是发布 `.war` 文件而非 `.jar` 文件。"
 
 #: src/reference/reference/artifact.md:204
 msgid "// disable .jar publishing"
@@ -372,7 +425,7 @@ msgstr ""
 
 #: src/reference/reference/artifact.md:218
 msgid "Using dependencies with artifacts"
-msgstr ""
+msgstr "使用带工件的依赖"
 
 #: src/reference/reference/artifact.md:220
 msgid ""
@@ -380,6 +433,8 @@ msgid ""
 "multiple artifacts, use the `artifacts` method on your dependencies. For "
 "example:"
 msgstr ""
+"要从具有自定义或多个工件的依赖中指定要使用的工件，请在依赖上使用 `artifacts` 方法。"
+"例如："
 
 #: src/reference/reference/artifact.md:225
 msgid "\"org\""
@@ -399,10 +454,13 @@ msgid ""
 "update.md) page) are actually convenience methods that translate to "
 "`artifacts`:"
 msgstr ""
+"`from` 和 `classifer` 方法（在 [sbt update](./sbt-update.md) 页中描述）实际上是转换为 "
+"`artifacts` 的便捷方法："
 
 #: src/reference/reference/artifact.md:237
 msgid "That is, the following two dependency declarations are equivalent:"
 msgstr ""
+"即，以下两种依赖声明等价："
 
 #: src/reference/reference/artifact.md:240
 #: src/reference/reference/artifact.md:242

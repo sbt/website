@@ -62,3 +62,8 @@ Tips for Chinese translation
 - Use 您, but otherwise keep the technical tone.
 - Leave "sbt runner" as is
 - Leave "sbt server" as is
+- setting → 设置
+- task → 任务
+- requested dependencies → 指定设置依赖 (specified setting dependencies)
+- actual dependencies → 有效设置依赖 (effective setting dependencies)
+- cross building / cross-publishing → 交叉构建 / 交叉发布 (sbt crosses both Scala versions and platforms: JVM, JS, Native)

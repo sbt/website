@@ -1,16 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/cached-task.md:1
 msgid "Cached task"
-msgstr ""
+msgstr "缓存任务"
 
 #: src/reference/reference/cached-task.md:4
 msgid ""
 "This page covers the cached task details. See [Caching](../concepts/"
 "caching.md) for a general explanation."
 msgstr ""
+"本页介绍缓存任务的细节。有关一般说明，请参阅[缓存](../concepts/caching.md)。"
 
 #: src/reference/reference/cached-task.md:6
 msgid "Automatic caching"
-msgstr ""
+msgstr "自动缓存"
 
 #: src/reference/reference/cached-task.md:10
 #: src/reference/reference/cached-task.md:68
@@ -30,10 +44,12 @@ msgid ""
 "settings `name` and `version`. The first time we run the task it will be "
 "executed onsite, but the second time onward, it will use the disk cache:"
 msgstr ""
+"在 sbt 2.x 中，任务结果将根据 `name` 和 `version` 两个设置自动缓存。首次运行任务时"
+"将在现场执行，第二次起将使用磁盘缓存："
 
 #: src/reference/reference/cached-task.md:26
 msgid "Caching is serialization-hard"
-msgstr ""
+msgstr "缓存依赖序列化"
 
 #: src/reference/reference/cached-task.md:28
 msgid ""
@@ -43,14 +59,17 @@ msgid ""
 "(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
 "codecs."
 msgstr ""
+"要参与自动缓存，输入键（如 `name` 和 `version`）必须为 `sjsonnew.HashWriter` 类型类"
+"提供 given，返回类型必须为 `sjsonnew.JsonFormat` 提供 given。[Contraband](https://"
+"www.scala-sbt.org/contraband/) 可用于生成 sjson-new 编解码器。"
 
 #: src/reference/reference/cached-task.md:30
 msgid "Effect tracking"
-msgstr ""
+msgstr "效果跟踪"
 
 #: src/reference/reference/cached-task.md:33
 msgid "The effect of file creation"
-msgstr ""
+msgstr "文件创建的效果"
 
 #: src/reference/reference/cached-task.md:35
 msgid ""
@@ -58,20 +77,23 @@ msgid ""
 "file, we need to track the effect of file creation using "
 "`Def.declareOutput(vf)`."
 msgstr ""
+"要缓存文件创建的效果（而不仅是返回文件名），需使用 `Def.declareOutput(vf)` 跟踪"
+"文件创建的效果。"
 
 #: src/reference/reference/cached-task.md:47
 msgid "Opting out from caching"
-msgstr ""
+msgstr "选择退出缓存"
 
 #: src/reference/reference/cached-task.md:50
 msgid "Build-wide opt-out"
-msgstr ""
+msgstr "构建级退出"
 
 #: src/reference/reference/cached-task.md:52
 msgid ""
 "To opt out of by-default custom task caching, add the following to `project/"
 "plugins.sbt`:"
 msgstr ""
+"要选择退出默认的自定义任务缓存，请在 `project/plugins.sbt` 中添加以下内容："
 
 #: src/reference/reference/cached-task.md:55
 msgid "\"-Xmacro-settings:sbt:no-default-task-cache\""
@@ -84,33 +106,38 @@ msgid ""
 "tasks provided by sbt or plugins will remain cached.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"此设置仅适用于构建中引入的自定义任务。sbt 或插件提供的任何缓存任务仍将保持缓存。\n"
+"```"
 
 #: src/reference/reference/cached-task.md:62
 msgid "Per-task-key opt-out"
-msgstr ""
+msgstr "按任务键退出"
 
 #: src/reference/reference/cached-task.md:64
 msgid ""
 "Next, if you want to opt some task keys from caching, you can set the cache "
 "level as follows:"
 msgstr ""
+"若您希望某些任务键退出缓存，可按以下方式设置缓存级别："
 
 #: src/reference/reference/cached-task.md:71
 msgid "or"
-msgstr ""
+msgstr "或"
 
 #: src/reference/reference/cached-task.md:78
 msgid "Per-task opt-out"
-msgstr ""
+msgstr "按任务退出"
 
 #: src/reference/reference/cached-task.md:80
 msgid ""
 "To opt out of the cache individually, use `Def.uncached(...)` as follows:"
 msgstr ""
+"要单独退出缓存，请按以下方式使用 `Def.uncached(...)`："
 
 #: src/reference/reference/cached-task.md:90
 msgid "Remote caching"
-msgstr ""
+msgstr "远程缓存"
 
 #: src/reference/reference/cached-task.md:93
 msgid ""
@@ -118,3 +145,5 @@ msgid ""
 "of backend both open source and commercial. See [Remote cache setup](./"
 "remote-cache-setup.md) for more details."
 msgstr ""
+"sbt 2.x 实现了 Bazel 兼容的 gRPC 接口，可与多种开源和商业后端配合使用。"
+"详见 [Remote cache setup](./remote-cache-setup.md)。"

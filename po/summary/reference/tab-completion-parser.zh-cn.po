@@ -1,6 +1,19 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2025-08-08T03:19:26-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/tab-completion-parser.md:5
 msgid "Tab-completion parser"
-msgstr ""
+msgstr "Tab 补全解析器"
 
 #: src/reference/reference/tab-completion-parser.md:8
 msgid ""
@@ -8,6 +21,8 @@ msgid ""
 "parse user input and provide tab completion for [input tasks](input-task.md) "
 "and [commands](../concepts/command.md)."
 msgstr ""
+"本页介绍 sbt 中的解析器组合子。这些解析器用于解析用户输入，并为[输入任务](input-task.md)和"
+"[命令](../concepts/command.md)提供 Tab 补全。"
 
 #: src/reference/reference/tab-completion-parser.md:19
 msgid ""
@@ -17,14 +32,18 @@ msgid ""
 "or `None` if it fails. Error handling and tab completion make this picture "
 "more complicated, but we'll stick with `Option` for this discussion."
 msgstr ""
+"解析器组合子由较小的解析器构建解析器。`Parser[A]` 最基本用法是函数 `String => Option[A]`。"
+"它接受要解析的 `String`，解析成功时产生包装在 `Some` 中的值，失败时产生 `None`。"
+"错误处理和 Tab 补全使情况更复杂，但本文仅讨论 `Option`。"
 
 #: src/reference/reference/tab-completion-parser.md:26
 msgid "Basic parsers"
-msgstr ""
+msgstr "基本解析器"
 
 #: src/reference/reference/tab-completion-parser.md:28
 msgid "The simplest parser combinators match exact inputs:"
 msgstr ""
+"最简单的解析器组合子匹配精确输入："
 
 #: src/reference/reference/tab-completion-parser.md:33
 msgid "// A parser that succeeds if the input is 'x', returning the Char 'x'"
@@ -59,6 +78,8 @@ msgid ""
 "`Char` or `String`. Other basic parser constructors are the `charClass`, "
 "`success` and `failure` methods:"
 msgstr ""
+"在这些示例中，隐式转换从 `Char` 或 `String` 产生字面 `Parser`。其他基本解析器构造器为 "
+"`charClass`、`success` 和 `failure` 方法："
 
 #: src/reference/reference/tab-completion-parser.md:50
 msgid ""
@@ -102,7 +123,7 @@ msgstr ""
 
 #: src/reference/reference/tab-completion-parser.md:63
 msgid "Built-in parsers"
-msgstr ""
+msgstr "内置解析器"
 
 #: src/reference/reference/tab-completion-parser.md:65
 msgid ""
@@ -110,43 +131,51 @@ msgid ""
 "`sbt.complete.DefaultParsers`. <!-- ../api/sbt/internal/util/complete/"
 "DefaultParsers$.html -->"
 msgstr ""
+"sbt 在 `sbt.complete.DefaultParsers` 中定义了若干内置解析器。"
 
 #: src/reference/reference/tab-completion-parser.md:68
 msgid "Some commonly used built-in parsers are:"
 msgstr ""
+"常用内置解析器包括："
 
 #: src/reference/reference/tab-completion-parser.md:70
 msgid ""
 "`Space`, `NotSpace`, `OptSpace`, and `OptNotSpace` for parsing spaces or non-"
 "spaces, required or not."
 msgstr ""
+"`Space`、`NotSpace`、`OptSpace` 和 `OptNotSpace` 用于解析空格或非空格，必需或可选。"
 
 #: src/reference/reference/tab-completion-parser.md:72
 msgid "`StringBasic` for parsing text that may be quoted."
 msgstr ""
+"`StringBasic` 用于解析可能带引号的文本。"
 
 #: src/reference/reference/tab-completion-parser.md:73
 msgid "`IntBasic` for parsing a signed Int value."
 msgstr ""
+"`IntBasic` 用于解析有符号 Int 值。"
 
 #: src/reference/reference/tab-completion-parser.md:74
 msgid ""
 "`Digit` and `HexDigit` for parsing a single decimal or hexadecimal digit."
 msgstr ""
+"`Digit` 和 `HexDigit` 用于解析单个十进制或十六进制数字。"
 
 #: src/reference/reference/tab-completion-parser.md:76
 msgid "`Bool` for parsing a `Boolean` value"
 msgstr ""
+"`Bool` 用于解析 `Boolean` 值"
 
 #: src/reference/reference/tab-completion-parser.md:78
 msgid ""
 "See the [DefaultParsers API](../api/sbt/internal/util/complete/"
 "DefaultParsers$.html) for details."
 msgstr ""
+"详情请参阅 [DefaultParsers API](../api/sbt/internal/util/complete/DefaultParsers$.html)。"
 
 #: src/reference/reference/tab-completion-parser.md:82
 msgid "Combining parsers"
-msgstr ""
+msgstr "组合解析器"
 
 #: src/reference/reference/tab-completion-parser.md:84
 msgid ""
@@ -154,6 +183,7 @@ msgid ""
 "can combine parsers in a sequence, choose between parsers, or repeat a "
 "parser."
 msgstr ""
+"我们在这些基本解析器基础上构建更有用的解析器。可将解析器按序组合、在解析器间选择或重复解析器。"
 
 #: src/reference/reference/tab-completion-parser.md:89
 msgid "// A parser that succeeds if the input is \"blue\" or \"green\","
@@ -220,7 +250,7 @@ msgstr ""
 
 #: src/reference/reference/tab-completion-parser.md:115
 msgid "Transforming results"
-msgstr ""
+msgstr "转换结果"
 
 #: src/reference/reference/tab-completion-parser.md:117
 msgid ""
@@ -229,6 +259,8 @@ msgid ""
 "and `flatMap`. Here are examples of `map` and some convenience methods "
 "implemented on top of `map`."
 msgstr ""
+"解析器组合子的关键是在解析过程中将结果转换为更有用的数据结构。基本方法为 `map` 和 `flatMap`。"
+"以下是 `map` 及基于 `map` 实现的便捷方法示例。"
 
 #: src/reference/reference/tab-completion-parser.md:123
 msgid ""
@@ -259,7 +291,7 @@ msgstr ""
 
 #: src/reference/reference/tab-completion-parser.md:143
 msgid "Controlling tab completion"
-msgstr ""
+msgstr "控制 Tab 补全"
 
 #: src/reference/reference/tab-completion-parser.md:145
 msgid ""
@@ -269,6 +301,8 @@ msgid ""
 "completions for `charClass`, since it accepts an arbitrary predicate. The "
 "`examples` method defines explicit completions for such a parser:"
 msgstr ""
+"大多数解析器有合理的默认 Tab 补全行为。例如，字符串和字符字面解析器会在空输入时建议底层字面。"
+"但 `charClass` 接受任意谓词，难以确定有效补全。`examples` 方法为此类解析器定义显式补全："
 
 #: src/reference/reference/tab-completion-parser.md:153
 msgid "\"0\""
@@ -288,24 +322,29 @@ msgid ""
 "controlling tab completion is `token`. The main purpose of `token` is to "
 "determine the boundaries for suggestions. For example, if your parser is:"
 msgstr ""
+"Tab 补全将使用 examples 作为建议。另一种控制 Tab 补全的方法是 `token`。`token` 的主要用途是确定建议边界。"
+"例如，若您的解析器为："
 
 #: src/reference/reference/tab-completion-parser.md:165
 msgid ""
 "then the potential completions on empty input are: `console fg green fg blue "
 "bg green bg blue`"
 msgstr ""
+"则空输入时的潜在补全为：`console fg green fg blue bg green bg blue`"
 
 #: src/reference/reference/tab-completion-parser.md:168
 msgid ""
 "Typically, you want to suggest smaller segments or the number of suggestions "
 "becomes unmanageable. A better parser is:"
 msgstr ""
+"通常您希望建议更小的片段，否则建议数量会难以管理。更好的解析器为："
 
 #: src/reference/reference/tab-completion-parser.md:175
 msgid ""
 "Now, the initial suggestions would be (with `_` representing a space): "
 "`console fg_ bg_`"
 msgstr ""
+"此时，初始建议为（`_` 表示空格）：`console fg_ bg_`"
 
 #: src/reference/reference/tab-completion-parser.md:178
 msgid ""
@@ -313,10 +352,12 @@ msgid ""
 "token(\"blue\"))`. The behavior is unspecified (and should generate an error "
 "in the future), but typically the outer most token definition will be used."
 msgstr ""
+"注意不要重叠或嵌套 token，如 `token(\"green\" ~ token(\"blue\"))`。行为未指定（未来应会报错），"
+"但通常使用最外层的 token 定义。"
 
 #: src/reference/reference/tab-completion-parser.md:184
 msgid "Dependent parsers"
-msgstr ""
+msgstr "依赖解析器"
 
 #: src/reference/reference/tab-completion-parser.md:186
 msgid ""
@@ -324,6 +365,7 @@ msgid ""
 "parsed, and it is dependent on the previous one. The key for obtaining this "
 "behaviour is to use the `flatMap` function."
 msgstr ""
+"有时解析器需先分析部分数据，再解析更多依赖前者的数据。实现此行为的关键是使用 `flatMap` 函数。"
 
 #: src/reference/reference/tab-completion-parser.md:190
 msgid ""
@@ -331,6 +373,7 @@ msgid ""
 "valid ones with completion, but no duplicates are possible.  A space is used "
 "to separate the different items."
 msgstr ""
+"例如，将展示如何从有效列表中带补全地选择多项，且不允许重复。使用空格分隔不同项。"
 
 #: src/reference/reference/tab-completion-parser.md:207
 msgid ""
@@ -338,9 +381,11 @@ msgid ""
 "this info, a new parser is constructed for the remaining items.  The `map` "
 "combinator is also used in order to transform the output of the parser."
 msgstr ""
+"如您所见，`flatMap` 函数提供前一个值。据此可为剩余项构建新解析器。`map` 组合子也用于转换解析器输出。"
 
 #: src/reference/reference/tab-completion-parser.md:211
 msgid ""
 "The parser is called recursively, until it is found the trivial case of no "
 "possible choices."
 msgstr ""
+"解析器递归调用，直至找到无可选选择的平凡情况。"
