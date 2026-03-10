@@ -1,26 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2025-10-11T04:17:27-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/sbt-compile.md:1
 msgid "sbt compile"
-msgstr ""
+msgstr "sbt compile"
 
 #: src/reference/reference/sbt-compile.md:4
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-compile.md:7
 msgid ""
 "`sbt` \\[_query_ / \\] `compile`<br> `sbt` \\[_query_ / \\] `Test` / "
 "`compile`<br>"
 msgstr ""
+"`sbt` \\[_query_ / \\] `compile`<br> `sbt` \\[_query_ / \\] `Test` / "
+"`compile`<br>"
 
 #: src/reference/reference/sbt-compile.md:10
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/sbt-compile.md:13
 msgid ""
 "The `compile` task compiles the selected subprojects and their subproject "
 "dependencies. Since sbt 2.x, the compiled artifacts are cached automatically."
 msgstr ""
+"`compile` 任务编译选定的子项目及其子项目依赖。自 sbt 2.x 起，编译后的构件会自动缓存。"
 
 #: src/reference/reference/sbt-compile.md:15
 msgid ""
@@ -28,10 +44,12 @@ msgid ""
 "significant poriton of sbt's development efforts deal with various "
 "strategies for speeding up compilation."
 msgstr ""
+"使用原始 Scala 编译器编译 Scala 代码一直较慢，因此 sbt 的相当一部分开发工作致力于"
+"各种加速编译的策略。"
 
 #: src/reference/reference/sbt-compile.md:17
 msgid "Reduce the overhead of restarting the compiler"
-msgstr ""
+msgstr "降低重启编译器的开销"
 
 #: src/reference/reference/sbt-compile.md:19
 msgid ""
@@ -40,10 +58,12 @@ msgid ""
 "significantly faster because it takes a long time to classload the compiler "
 "and for the Just-in-Time compiler to optimize it."
 msgstr ""
+"sbt server 在后台持续运行，使 Scala 编译可在同一 Java 虚拟机（JVM）中执行。保持 "
+"JVM 常驻可显著加快编译，因为加载编译器并让即时编译器优化需要较长时间。"
 
 #: src/reference/reference/sbt-compile.md:21
 msgid "Incremental compilation"
-msgstr ""
+msgstr "增量编译"
 
 #: src/reference/reference/sbt-compile.md:23
 msgid ""
@@ -52,10 +72,12 @@ msgid ""
 "process of tracking dependencies between the language constructs and "
 "recompiling only the required sources is called _incremental compilation_."
 msgstr ""
+"当源文件 `A.scala` 被修改时，sbt 会尽力减少因 `A.scala` 变更而需重新编译的其他源文件。"
+"这种跟踪语言结构间依赖并仅重新编译所需源文件的过程称为 _增量编译_。"
 
 #: src/reference/reference/sbt-compile.md:26
 msgid "(Remote) caching"
-msgstr ""
+msgstr "（远程）缓存"
 
 #: src/reference/reference/sbt-compile.md:28
 msgid ""
@@ -63,28 +85,31 @@ msgid ""
 "builds, but can optionally be cached across different machines using Bazel-"
 "compatible remote cache. See [Caching](../concepts/caching.md) for details."
 msgstr ""
+"在 sbt 2.x 中，编译后的构件可在会话和构建间缓存，还可选择使用 Bazel 兼容的远程"
+"缓存在不同机器间缓存。详见[缓存](../concepts/caching.md)。"
 
 #: src/reference/reference/sbt-compile.md:30
 msgid "Test / compile"
-msgstr ""
+msgstr "Test / compile"
 
 #: src/reference/reference/sbt-compile.md:32
 msgid ""
 "Scoping the `compile` task with a configuration, like `Test / compile` will "
 "compile the test sources and their source dependencies."
 msgstr ""
+"使用配置限定 `compile` 任务，如 `Test / compile` 将编译测试源及其源依赖。"
 
 #: src/reference/reference/sbt-compile.md:34
 msgid "Compilation settings"
-msgstr ""
+msgstr "编译设置"
 
 #: src/reference/reference/sbt-compile.md:36
 msgid "scalaVersion"
-msgstr ""
+msgstr "scalaVersion"
 
 #: src/reference/reference/sbt-compile.md:38
 msgid "The version of Scala used for compilation."
-msgstr ""
+msgstr "用于编译的 Scala 版本。"
 
 #: src/reference/reference/sbt-compile.md:41
 msgid "\"3.8.1\""
@@ -92,11 +117,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-compile.md:44
 msgid "scalacOptions"
-msgstr ""
+msgstr "scalacOptions"
 
 #: src/reference/reference/sbt-compile.md:46
 msgid "Options for the Scala compiler."
-msgstr ""
+msgstr "Scala 编译器选项。"
 
 #: src/reference/reference/sbt-compile.md:49
 msgid "\"-Werror\""
@@ -104,11 +129,11 @@ msgstr ""
 
 #: src/reference/reference/sbt-compile.md:52
 msgid "javacOptions"
-msgstr ""
+msgstr "javacOptions"
 
 #: src/reference/reference/sbt-compile.md:54
 msgid "Options for the Java compiler."
-msgstr ""
+msgstr "Java 编译器选项。"
 
 #: src/reference/reference/sbt-compile.md:57
 msgid "\"-Xlint\""
