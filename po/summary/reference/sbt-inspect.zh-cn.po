@@ -1,10 +1,23 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh-cn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
 #: src/reference/reference/sbt-inspect.md:4
 msgid "sbt inspect"
-msgstr ""
+msgstr "sbt inspect"
 
 #: src/reference/reference/sbt-inspect.md:7
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: src/reference/reference/sbt-inspect.md:10
 msgid ""
@@ -12,10 +25,13 @@ msgid ""
 "`inspect actual` \\[_subproject_ / \\] \\[ _config_ / \\] _task_<br> `sbt` "
 "`inspect tree` \\[_subproject_ / \\] \\[ _config_ / \\] _task_"
 msgstr ""
+"`sbt` `inspect` \\[_subproject_ / \\] \\[ _config_ / \\] _task_<br> `sbt` "
+"`inspect actual` \\[_subproject_ / \\] \\[ _config_ / \\] _task_<br> `sbt` "
+"`inspect tree` \\[_subproject_ / \\] \\[ _config_ / \\] _task_"
 
 #: src/reference/reference/sbt-inspect.md:14
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #: src/reference/reference/sbt-inspect.md:17
 msgid ""
@@ -23,20 +39,22 @@ msgid ""
 "graph. For instace, it can be used to determine which setting should be "
 "modified to affect another task."
 msgstr ""
+"`inspect` 命令提供检查任务和设置图的方式。例如，可用于确定应修改哪个设置以影"
+"响其他任务。"
 
 #: src/reference/reference/sbt-inspect.md:21
 msgid "Value, Description, and Provided By"
-msgstr ""
+msgstr "值、描述和提供来源"
 
 #: src/reference/reference/sbt-inspect.md:23
 msgid ""
 "The first piece of information provided by `inspect` is the type of a task "
 "or the value and type of a setting."
-msgstr ""
+msgstr "`inspect` 提供的第一条信息是任务的类型或设置的值和类型。"
 
 #: src/reference/reference/sbt-inspect.md:26
 msgid "For example,"
-msgstr ""
+msgstr "例如："
 
 #: src/reference/reference/sbt-inspect.md:37
 msgid "\"file:/tmp/aaa/\""
@@ -50,33 +68,36 @@ msgstr ""
 msgid ""
 "The following section of output is labeled \"Provided by\". This shows the "
 "actual scope where the setting is defined."
-msgstr ""
+msgstr "输出的下一部分标为 \"Provided by\"。显示定义该设置的实际作用域。"
 
 #: src/reference/reference/sbt-inspect.md:45
 msgid ""
 "This shows that `libraryDependencies` has been defined on the current "
 "project (`ProjectRef(uri(\"file:/tmp/aaa/\"), \"aaa\")`)."
 msgstr ""
+"这表明 `libraryDependencies` 已在当前项目（`ProjectRef(uri(\"file:/tmp/aaa/"
+"\"), \"aaa\")`）上定义。"
 
 #: src/reference/reference/sbt-inspect.md:48
 msgid "Related Settings"
-msgstr ""
+msgstr "相关设置"
 
 #: src/reference/reference/sbt-inspect.md:50
 msgid ""
 "The _Related_ section of `inspect` output lists all of the definitions of a "
 "key. For example,"
-msgstr ""
+msgstr "`inspect` 输出的 _Related_ 部分列出键的所有定义。例如："
 
 #: src/reference/reference/sbt-inspect.md:60
 msgid ""
 "This shows that in addition to the requested `Compile / compile` task, there "
 "is also a `Test / compile` task."
 msgstr ""
+"这表明除请求的 `Compile / compile` 任务外，还有 `Test / compile` 任务。"
 
 #: src/reference/reference/sbt-inspect.md:63
-msgid "Dependencies"
-msgstr ""
+msgid "Setting dependencies"
+msgstr "设置依赖关系"
 
 #: src/reference/reference/sbt-inspect.md:65
 msgid ""
@@ -88,14 +109,18 @@ msgid ""
 "are what those dependencies get resolved to. This distinction is explained "
 "in more detail in the following sections."
 msgstr ""
+"正向依赖显示用于定义设置（或任务）的其他设置（或任务）。反向依赖则相反，显示"
+"哪些使用了给定设置。`inspect` 根据指定依赖或有效依赖提供此信息。指定依赖"
+"是设置直接指定的；有效设置是这些依赖解析后的结果。以下各节将更详细地说明这一"
+"区别。"
 
 #: src/reference/reference/sbt-inspect.md:73
 msgid "Requested Dependencies"
-msgstr ""
+msgstr "指定设置依赖"
 
 #: src/reference/reference/sbt-inspect.md:75
 msgid "As an example, we'll look at `console`:"
-msgstr ""
+msgstr "例如，我们来看 `console`："
 
 #: src/reference/reference/sbt-inspect.md:95
 msgid ""
@@ -110,6 +135,12 @@ msgid ""
 "example, we can infer from the previous example how to add code to be run "
 "when the Scala interpreter starts up:"
 msgstr ""
+"这显示 `console` 任务的输入。可见其 classpath 和选项来自 `Compile / "
+"console / fullClasspath` 和 `Compile / console / scalacOptions`。`inspect` 命"
+"令提供的信息有助于找到要修改的正确设置。键的约定（如 `console` 和 "
+"`fullClasspath`）是：Scala 标识符为驼峰式，字符串表示为小写并用连字符分隔。配"
+"置的 Scala 标识符为大写，以区别于 `compile` 和 `test` 等任务。例如，从前例可"
+"推断如何在 Scala 解释器启动时添加要运行的代码："
 
 #: src/reference/reference/sbt-inspect.md:107
 #: src/reference/reference/sbt-inspect.md:161
@@ -129,10 +160,14 @@ msgid ""
 "`console`. Because of this, we can set the initial commands on the `console` "
 "task without affecting the `consoleQuick` task, for example."
 msgstr ""
+"`inspect` 显示 `console` 使用设置 `Compile / console / initialCommands`。将 "
+"`initialCommands` 字符串转换为 Scala 标识符即得 `initialCommands`。`compile` "
+"表示用于主源。`console /` 表示该设置专用于 `console`。因此，我们可在 "
+"`console` 任务上设置初始命令而不影响 `consoleQuick` 任务。"
 
 #: src/reference/reference/sbt-inspect.md:122
 msgid "Actual Dependencies"
-msgstr ""
+msgstr "有效设置依赖"
 
 #: src/reference/reference/sbt-inspect.md:124
 msgid ""
@@ -143,12 +178,18 @@ msgid ""
 "plain `inspect`, we can see the range of scopes that will affect a setting. "
 "Returning to the example in Requested Dependencies,"
 msgstr ""
+"`inspect actual <scoped-key>` 显示实际使用的依赖。这很有用，因为委托意味着依"
+"赖可能来自请求作用域之外。使用 `inspect actual` 可准确看到哪个作用域为设置提"
+"供值。将 `inspect actual` 与普通 `inspect` 结合，可看到影响设置的作用域范围。"
+"回到「指定设置依赖」中的示例："
 
 #: src/reference/reference/sbt-inspect.md:147
 msgid ""
 "For `initialCommands`, we see that it comes from the global scope "
 "(`Global`). Combining this with the relevant output from `inspect console`:"
 msgstr ""
+"对于 `initialCommands`，可见其来自全局作用域（`Global`）。结合 `inspect "
+"console` 的相关输出："
 
 #: src/reference/reference/sbt-inspect.md:155
 msgid ""
@@ -157,6 +198,9 @@ msgid ""
 "between. This means that we can, for example, set `initialCommands` for the "
 "whole project and will affect `console`:"
 msgstr ""
+"可知可将 `initialCommands` 设置为与全局作用域一样通用、与当前项目的 "
+"`console` 任务作用域一样具体，或介于两者之间。这意味着例如可为整个项目设置 "
+"`initialCommands`，将影响 `console`："
 
 #: src/reference/reference/sbt-inspect.md:165
 msgid ""
@@ -164,6 +208,8 @@ msgid ""
 "will use this value now. We can see which ones use our new setting by "
 "looking at the reverse dependencies output of `inspect actual`:"
 msgstr ""
+"在此设置的原因可能是其他 console 任务现在会使用该值。通过查看 `inspect "
+"actual` 的反向依赖输出，可看到哪些使用了我们的新设置："
 
 #: src/reference/reference/sbt-inspect.md:181
 msgid ""
@@ -172,20 +218,23 @@ msgid ""
 "want the initial commands to apply for `consoleProject`, which doesn't have "
 "our project's classpath available, we could use the more specific task axis:"
 msgstr ""
+"现在可知，通过在整个项目上设置 `initialCommands`，会影响该项目所有配置中的全"
+"部 console 任务。若不想让初始命令应用于 `consoleProject`（其无法使用我们项目"
+"的 classpath），可使用更具体的任务轴："
 
 #: src/reference/reference/sbt-inspect.md:192
 msgid "or configuration axis:"
-msgstr ""
+msgstr "或配置轴："
 
 #: src/reference/reference/sbt-inspect.md:199
 msgid ""
 "The next part describes the Delegates section, which shows the chain of "
 "delegation for scopes."
-msgstr ""
+msgstr "下一部分描述 Delegates 部分，显示作用域的委托链。"
 
 #: src/reference/reference/sbt-inspect.md:202
 msgid "Delegates"
-msgstr ""
+msgstr "委托"
 
 #: src/reference/reference/sbt-inspect.md:204
 msgid ""
@@ -195,10 +244,13 @@ msgid ""
 "of the `inspect` command. The Delegates section shows the order in which "
 "scopes are searched when a value is not defined for the requested key."
 msgstr ""
+"设置有键和作用域。若作用域 A 未定义键的值，对该键的请求可能委托给另一作用域。"
+"委托链是明确定义的，在 `inspect` 命令的 Delegates 部分显示。Delegates 部分显"
+"示当请求的键未定义值时搜索作用域的顺序。"
 
 #: src/reference/reference/sbt-inspect.md:211
 msgid "As an example, consider the initial commands for `console` again:"
-msgstr ""
+msgstr "例如，再次考虑 `console` 的初始命令："
 
 #: src/reference/reference/sbt-inspect.md:226
 msgid ""
@@ -206,10 +258,12 @@ msgid ""
 "initialCommands`, the scopes listed under Delegates will be searched in "
 "order until a defined value is found."
 msgstr ""
+"这意味着若没有专门针对 `console/initialCommands` 的值，将按顺序搜索 "
+"Delegates 下列出的作用域，直到找到已定义的值。"
 
 #: src/reference/reference/sbt-inspect.md:230
 msgid "Inspect tree"
-msgstr ""
+msgstr "Inspect tree"
 
 #: src/reference/reference/sbt-inspect.md:232
 msgid ""
@@ -217,9 +271,13 @@ msgid ""
 "described in the previous section, the `inspect tree` command can display "
 "the full dependency tree for a task or setting. For example,"
 msgstr ""
+"除显示上一节所述的直接正向和反向依赖外，`inspect tree` 命令还可显示任务或设置"
+"的完整依赖树。例如："
 
 #: src/reference/reference/sbt-inspect.md:255
 msgid ""
 "For each task, `inspect tree` show the type of the value generated by the "
 "task. For a setting, the `toString` of the setting is displayed."
 msgstr ""
+"对于每个任务，`inspect tree` 显示该任务生成值的类型。对于设置，显示其 "
+"`toString`。"

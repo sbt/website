@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-03-08T00:02:42-05:00\n"
+"POT-Creation-Date: 2026-03-10T01:28:50-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -82,6 +82,7 @@ msgstr ""
 #: src/reference/changes/migrating-from-sbt-1.x.md:32
 #: src/reference/changes/migrating-from-sbt-1.x.md:39
 #: src/reference/changes/migrating-from-sbt-1.x.md:51
+#: src/reference/changes/migrating-from-sbt-1.x.md:207
 msgid "\"com.github.sbt\""
 msgstr ""
 
@@ -203,27 +204,58 @@ msgstr "迁移到缓存任务"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:92
 msgid ""
-"See [Cached task](../reference/cached-task.md) reference for details, "
-"including the way to opt out of caching."
+"In sbt 2.x, all tasks are cached by default. To participate in caching, the "
+"task result type must provide a given for `sjsonnew.JsonFormat`. Any task "
+"whose result type lacks `JsonFormat` (e.g. complex objects like "
+"`ParadoxProcessor`, `ClassLoader`, `Seq[PathMapping]`, or function types) "
+"will fail at build load time in sbt 2."
 msgstr ""
-"详见 [Cached task](../reference/cached-task.md) 参考，包括如何选择不缓存。"
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:94
+msgid ""
+"If you don't want to define the given, the easiest way to migrate is to wrap "
+"the tasks with `Def.uncached(...)` so sbt 2 skips caching and always re-"
+"executes them:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:98
+msgid "// task body returning a non-serializable type"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:102
+msgid ""
+"When considering caching for a task, watch out for side-effecting tasks. "
+"When sbt 2 restores a task result from its disk cache, it returns the cached "
+"value without re-executing the task body. Any side effect (e.g. writing "
+"files, syncing mappings) is silently skipped. If a task is meant to produce "
+"a side effect every time it runs, wrap it in `Def.uncached(...)` so sbt 2 "
+"always re-executes it."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:104
+msgid ""
+"The [sbt2-compat](https://github.com/sbt/sbt2-compat) plugin provides "
+"`Def.uncached` as a compatibility shim on sbt 1.x (where it is a no-op). See "
+"[Cached task](../reference/cached-task.md) reference for details, including "
+"build-wide and per-task opt-out options."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:106
 msgid "Migration away from IntegrationTest"
 msgstr "从 IntegrationTest 迁移"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:97
+#: src/reference/changes/migrating-from-sbt-1.x.md:109
 msgid ""
 "To migrate away from the `IntegrationTest` configuration, create a separate "
 "subproject and implement it as normal test."
 msgstr ""
 "要从 `IntegrationTest` 配置迁移，请创建单独的子项目并作为普通测试实现。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:99
+#: src/reference/changes/migrating-from-sbt-1.x.md:111
 msgid "Migrating to slash syntax"
 msgstr "迁移到斜杠语法"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:102
+#: src/reference/changes/migrating-from-sbt-1.x.md:114
 msgid ""
 "sbt 1.x supported both the sbt 0.13 style syntax and the slash syntax. sbt "
 "2.x removes the support for the sbt 0.13 syntax, so use the slash syntax for "
@@ -232,7 +264,7 @@ msgstr ""
 "sbt 1.x 同时支持 sbt 0.13 风格语法和斜杠语法。sbt 2.x 移除了对 sbt 0.13 语法"
 "的支持，请在 sbt shell 和 `build.sbt` 中均使用斜杠语法："
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:108
+#: src/reference/changes/migrating-from-sbt-1.x.md:120
 msgid ""
 "For example, `test:compile` will no longer work on the shell. Use `Test/"
 "compile` instead. See [syntactic Scalafix rule for unified slash syntax]"
@@ -244,11 +276,11 @@ msgstr ""
 "slash syntax](https://eed3si9n.com/syntactic-scalafix-rule-for-unified-slash-"
 "syntax/)。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:114
+#: src/reference/changes/migrating-from-sbt-1.x.md:126
 msgid "Cross building sbt plugins"
 msgstr "交叉构建 sbt 插件"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:117
+#: src/reference/changes/migrating-from-sbt-1.x.md:129
 msgid ""
 "In sbt 2.x, if you cross build an sbt plugin with Scala 3.x and 2.12.x, it "
 "will automatically cross build against sbt 1.x and sbt 2.x:"
@@ -256,31 +288,31 @@ msgstr ""
 "在 sbt 2.x 中，如果您使用 Scala 3.x 和 2.12.x 交叉构建 sbt 插件，它将自动针"
 "对 sbt 1.x 和 sbt 2.x 进行交叉构建："
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:120
+#: src/reference/changes/migrating-from-sbt-1.x.md:132
 msgid "// using sbt 2.x"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:121
-#: src/reference/changes/migrating-from-sbt-1.x.md:141
+#: src/reference/changes/migrating-from-sbt-1.x.md:133
+#: src/reference/changes/migrating-from-sbt-1.x.md:153
 msgid "\"plugin\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:124
-#: src/reference/changes/migrating-from-sbt-1.x.md:144
+#: src/reference/changes/migrating-from-sbt-1.x.md:136
+#: src/reference/changes/migrating-from-sbt-1.x.md:156
 msgid "\"sbt-vimquit\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:126
 #: src/reference/changes/migrating-from-sbt-1.x.md:138
+#: src/reference/changes/migrating-from-sbt-1.x.md:150
 msgid "\"3.6.2\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:126
-#: src/reference/changes/migrating-from-sbt-1.x.md:137
+#: src/reference/changes/migrating-from-sbt-1.x.md:138
+#: src/reference/changes/migrating-from-sbt-1.x.md:149
 msgid "\"2.12.20\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:129
+#: src/reference/changes/migrating-from-sbt-1.x.md:141
 msgid ""
 "If you use `projectMatrix`, make sure to move the plugin to a subdirectory "
 "like `plugin/`. Otherwise, the synthetic root project will also pick up the "
@@ -289,35 +321,35 @@ msgstr ""
 "如果使用 `projectMatrix`，请确保将插件移至 `plugin/` 等子目录。否则，合成根项"
 "目也会包含 `src/`。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:131
+#: src/reference/changes/migrating-from-sbt-1.x.md:143
 msgid "Cross building sbt plugin with sbt 1.x"
 msgstr "使用 sbt 1.x 交叉构建 sbt 插件"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:133
+#: src/reference/changes/migrating-from-sbt-1.x.md:145
 msgid "Use sbt 1.10.2 or later, if you want to cross build using sbt 1.x."
 msgstr "如需使用 sbt 1.x 进行交叉构建，请使用 sbt 1.10.2 或更高版本。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:136
+#: src/reference/changes/migrating-from-sbt-1.x.md:148
 msgid "// using sbt 1.x"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:147
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"2.12\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:147
+#: src/reference/changes/migrating-from-sbt-1.x.md:159
 msgid "\"1.5.8\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:148
+#: src/reference/changes/migrating-from-sbt-1.x.md:160
 msgid "\"2.0.0-RC9\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:154
+#: src/reference/changes/migrating-from-sbt-1.x.md:166
 msgid "Changes to `%%`"
 msgstr "`%%` 的变更"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:157
+#: src/reference/changes/migrating-from-sbt-1.x.md:169
 msgid ""
 "In sbt 2.x, `ModuleID`'s `%%` operator has become platform-aware. For JVM "
 "subprojects, `%%` works as before, encoding Scala suffix (for example `_3`) "
@@ -326,11 +358,11 @@ msgstr ""
 "在 sbt 2.x 中，`ModuleID` 的 `%%` 运算符已具有平台感知能力。对于 JVM 子项目，"
 "`%%` 与之前一样工作，在 Maven 仓库中编码 Scala 后缀（例如 `_3`）。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:159
+#: src/reference/changes/migrating-from-sbt-1.x.md:171
 msgid "Migrating `%%%` operator"
 msgstr "迁移 `%%%` 运算符"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:161
+#: src/reference/changes/migrating-from-sbt-1.x.md:173
 msgid ""
 "When Scala.JS or Scala Native becomes available on sbt 2.x, `%%` will encode "
 "both the Scala version (such as `_3`) and the platform suffix (`_sjs1` etc). "
@@ -339,27 +371,27 @@ msgstr ""
 "当 Scala.JS 或 Scala Native 在 sbt 2.x 中可用时，`%%` 将同时编码 Scala 版本"
 "（如 `_3`）和平台后缀（如 `_sjs1`）。因此，`%%%` 可替换为 `%%`："
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:164
+#: src/reference/changes/migrating-from-sbt-1.x.md:176
 msgid "\"org.scala-js\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:164
+#: src/reference/changes/migrating-from-sbt-1.x.md:176
 msgid "\"scalajs-dom\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:164
+#: src/reference/changes/migrating-from-sbt-1.x.md:176
 msgid "\"2.8.0\""
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:167
+#: src/reference/changes/migrating-from-sbt-1.x.md:179
 msgid "Use `.platform(Platform.jvm)` in case where JVM libraries are needed."
 msgstr "需要 JVM 库时请使用 `.platform(Platform.jvm)`。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:169
+#: src/reference/changes/migrating-from-sbt-1.x.md:181
 msgid "Changes to `target`"
 msgstr "`target` 的变更"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:172
+#: src/reference/changes/migrating-from-sbt-1.x.md:184
 msgid ""
 "In sbt 2.x, the `target` directory is unified to be a single `target/` "
 "directory in the working directory, and each subproject creates a "
@@ -371,68 +403,152 @@ msgstr ""
 "创建编码平台、Scala 版本和子项目 ID 的子目录。为在脚本化测试中适应此变更，"
 "`exists`、`absent` 和 `delete` 现已支持 glob 表达式 `**` 以及 `||`。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:175
+#: src/reference/changes/migrating-from-sbt-1.x.md:187
 msgid "# before\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:178
+#: src/reference/changes/migrating-from-sbt-1.x.md:190
 msgid "# after\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:182
+#: src/reference/changes/migrating-from-sbt-1.x.md:194
 msgid "# either is ok\n"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:187
+#: src/reference/changes/migrating-from-sbt-1.x.md:199
+msgid ""
+"In sbt 1.x, `target.value` resolves to the project root `target/` directory. "
+"In sbt 2.x, it resolves to `target/out/jvm/scala-<ver>/<project-name>` "
+"instead. Plugins should be aware of this change during migration."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:201
 msgid "The PluginCompat technique"
 msgstr "PluginCompat 技术"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:190
+#: src/reference/changes/migrating-from-sbt-1.x.md:204
 msgid ""
 "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
 "create a shim, for example an object named `PluginCompat` in both `src/main/"
-"scala-2.12/` and `src/main/scala-3/`."
+"scala-2.12/` and `src/main/scala-3/`. APIs commonly encountered during "
+"migrations are abstracted into the [sbt2-compat](https://github.com/sbt/sbt2-"
+"compat) plugin that can be used to avoid creating the shims manually. To use "
+"it in your sbt plugin, you can add it to your sbt plugin's `build.sbt`:"
 msgstr ""
-"要使用相同的 `*.scala` 源但同时针对 sbt 1.x 和 2.x，我们可以创建适配层，例如"
-"在 `src/main/scala-2.12/` 和 `src/main/scala-3/` 中均创建名为 `PluginCompat` "
-"的对象。"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:192
-msgid "Migrating Classpath type"
-msgstr "迁移 Classpath 类型"
+#: src/reference/changes/migrating-from-sbt-1.x.md:207
+msgid "\"sbt2-compat\""
+msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:194
+#: src/reference/changes/migrating-from-sbt-1.x.md:207
+msgid "\"<version>\""
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:210
+msgid "And import and use the conversion methods in your shared source:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:214
+msgid "// Use the conversion methods here"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:218
 msgid ""
-"sbt 2.x changed the `Classpath` type to be an alias of the "
-"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a shim "
-"created to work with classpaths from both sbt 1.x and 2.x."
-msgstr ""
-"sbt 2.x 将 `Classpath` 类型改为 "
-"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` 类型的别名。以下是为同时兼容 "
-"sbt 1.x 和 2.x 的 classpath 创建的适配层。"
-
-#: src/reference/changes/migrating-from-sbt-1.x.md:197
-msgid "// src/main/scala-3/PluginCompat.scala"
+"You can read more about `sbt2-compat`, the `PluginCompat` pattern and how to "
+"use them the following blog article: [Migrating sbt plugins to sbt 2 with "
+"sbt2-compat plugin](https://www.scala-lang.org/blog/2026/03/02/sbt2-"
+"compat.html)."
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:220
-msgid "and here's for sbt 1.x:"
-msgstr "以下是 sbt 1.x 的版本："
+msgid "Migrating Classpath type"
+msgstr "迁移 Classpath 类型"
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:223
-msgid "// src/main/scala-2.12/PluginCompat.scala"
+#: src/reference/changes/migrating-from-sbt-1.x.md:222
+msgid ""
+"sbt 2.x changed the `Classpath` type to be an alias of "
+"`Seq[Attributed[xsbti.HashedVirtualFileRef]]` instead of "
+"`Seq[Attributed[File]]`. Any plugin that needs `File` or `Path` for I/O "
+"(classpath URLs, mappings, sync, validation) must convert these references. "
+"With `sbt2-compat` added and imported as above, use `toNioPaths` and "
+"`toFiles`, for example:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:231
+msgid "// ..."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:235
+msgid ""
+"`sbt2-compat` also provides `toNioPath`, `toFile`, `toFileRefsMapping`, "
+"`Def.uncached` and other convenience methods to be used in the shared "
+"sources. See the [sbt2-compat README](https://github.com/sbt/sbt2-compat) "
+"for the up-to-date documentation on the API provided by the plugin."
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:237
+msgid "Defining your own PluginCompat shims"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:239
+msgid ""
+"For the APIs broken between sbt 1.x and 2.x that are not covered by `sbt2-"
+"compat`, you can define your own `PluginCompat` shims by creating separate "
+"source files under `src/main/scala-2.12/PluginCompat.scala` and `src/main/"
+"scala-3/PluginCompat.scala`. For example:"
 msgstr ""
 
 #: src/reference/changes/migrating-from-sbt-1.x.md:242
-msgid "// This adds `Def.uncached(...)`"
+msgid "// src/main/scala-2.12/PluginCompat.scala"
 msgstr ""
 
-#: src/reference/changes/migrating-from-sbt-1.x.md:249
-msgid ""
-"Now we can import `PluginCompat.*` and use `toNioPaths(...)` etc to absorb "
-"the differences between sbt 1.x and 2.x. The above demonstrates how we can "
-"absorb the classpath type change, and convert it into a vector of NIO Paths."
+#: src/reference/changes/migrating-from-sbt-1.x.md:255
+msgid "// src/main/scala-3/PluginCompat.scala"
 msgstr ""
-"现在我们可以导入 `PluginCompat.*` 并使用 `toNioPaths(...)` 等来吸收 sbt 1.x "
-"与 2.x 之间的差异。以上演示了如何吸收 classpath 类型变更，并将其转换为 NIO "
-"Path 的向量。"
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:267
+msgid "Then use your own `PluginCompat` shims in your sbt plugin:"
+msgstr ""
+
+#: src/reference/changes/migrating-from-sbt-1.x.md:277
+msgid ""
+"This pattern is compatible with `sbt2-compat` and can be used alongside it "
+"to absorb the differences between sbt 1.x and 2.x."
+msgstr ""
+
+#~ msgid ""
+#~ "See [Cached task](../reference/cached-task.md) reference for details, "
+#~ "including the way to opt out of caching."
+#~ msgstr ""
+#~ "详见 [Cached task](../reference/cached-task.md) 参考，包括如何选择不缓存。"
+
+#~ msgid ""
+#~ "To use the same `*.scala` source but target both sbt 1.x and 2.x, we can "
+#~ "create a shim, for example an object named `PluginCompat` in both `src/"
+#~ "main/scala-2.12/` and `src/main/scala-3/`."
+#~ msgstr ""
+#~ "要使用相同的 `*.scala` 源但同时针对 sbt 1.x 和 2.x，我们可以创建适配层，例"
+#~ "如在 `src/main/scala-2.12/` 和 `src/main/scala-3/` 中均创建名为 "
+#~ "`PluginCompat` 的对象。"
+
+#~ msgid ""
+#~ "sbt 2.x changed the `Classpath` type to be an alias of the "
+#~ "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` type. The following is a "
+#~ "shim created to work with classpaths from both sbt 1.x and 2.x."
+#~ msgstr ""
+#~ "sbt 2.x 将 `Classpath` 类型改为 "
+#~ "`Seq[Attributed[xsbti.HashedVirtualFileRef]]` 类型的别名。以下是为同时兼"
+#~ "容 sbt 1.x 和 2.x 的 classpath 创建的适配层。"
+
+#~ msgid "and here's for sbt 1.x:"
+#~ msgstr "以下是 sbt 1.x 的版本："
+
+#~ msgid ""
+#~ "Now we can import `PluginCompat.*` and use `toNioPaths(...)` etc to "
+#~ "absorb the differences between sbt 1.x and 2.x. The above demonstrates "
+#~ "how we can absorb the classpath type change, and convert it into a vector "
+#~ "of NIO Paths."
+#~ msgstr ""
+#~ "现在我们可以导入 `PluginCompat.*` 并使用 `toNioPaths(...)` 等来吸收 sbt "
+#~ "1.x 与 2.x 之间的差异。以上演示了如何吸收 classpath 类型变更，并将其转换"
+#~ "为 NIO Path 的向量。"

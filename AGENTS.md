@@ -64,3 +64,5 @@ Tips for Chinese translation
 - Leave "sbt server" as is
 - setting → 设置
 - task → 任务
+- requested dependencies → 指定设置依赖 (specified setting dependencies)
+- actual dependencies → 有效设置依赖 (effective setting dependencies)

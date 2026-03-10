@@ -37,21 +37,16 @@ msgstr ""
 #: src/reference/reference/input-task.md:27
 msgid ""
 "The definition of an input task is similar to that of a normal task, but it "
-"can also use the result of a"
+"can also use the result of a [Parser](tab-completion-parser.md) applied to "
+"user input. Just as the special `value` method gets the value of a setting "
+"or task, the special `parsed` method gets the result of a `Parser`."
 msgstr ""
 
-#: src/reference/reference/input-task.md:30
-msgid ""
-"[Parser](tab-completion-parser.md) applied to user input. Just as the "
-"special `value` method gets the value of a setting or task, the special "
-"`parsed` method gets the result of a `Parser`."
-msgstr ""
-
-#: src/reference/reference/input-task.md:34
+#: src/reference/reference/input-task.md:33
 msgid "Basic input task definition"
 msgstr ""
 
-#: src/reference/reference/input-task.md:37
+#: src/reference/reference/input-task.md:36
 msgid ""
 "The simplest input task accepts a space-delimited sequence of arguments. It "
 "does not provide useful tab completion and parsing is basic. The built-in "
@@ -60,37 +55,37 @@ msgid ""
 "during tab completion."
 msgstr ""
 
-#: src/reference/reference/input-task.md:43
+#: src/reference/reference/input-task.md:42
 msgid ""
 "For example, the following task prints the current Scala version and then "
 "echoes the arguments passed to it on their own line."
 msgstr ""
 
-#: src/reference/reference/input-task.md:50
+#: src/reference/reference/input-task.md:49
 msgid "// get the result of parsing"
 msgstr ""
 
-#: src/reference/reference/input-task.md:51
+#: src/reference/reference/input-task.md:50
 msgid "\"<arg>\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:52
+#: src/reference/reference/input-task.md:51
 msgid "// Here, we also use the value of the `scalaVersion` setting"
 msgstr ""
 
-#: src/reference/reference/input-task.md:53
+#: src/reference/reference/input-task.md:52
 msgid "\"The current Scala version is \""
 msgstr ""
 
-#: src/reference/reference/input-task.md:54
+#: src/reference/reference/input-task.md:53
 msgid "\"The arguments to demo were:\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:59
+#: src/reference/reference/input-task.md:58
 msgid "Input task using Parsers"
 msgstr ""
 
-#: src/reference/reference/input-task.md:62
+#: src/reference/reference/input-task.md:61
 msgid ""
 "The Parser provided by the `spaceDelimited` method does not provide any "
 "flexibility in defining the input syntax. Using a custom parser is just a "
@@ -98,33 +93,33 @@ msgid ""
 "completion-parser.md) page."
 msgstr ""
 
-#: src/reference/reference/input-task.md:67
+#: src/reference/reference/input-task.md:66
 msgid "Constructing the Parser"
 msgstr ""
 
-#: src/reference/reference/input-task.md:69
+#: src/reference/reference/input-task.md:68
 msgid ""
 "The first step is to construct the actual `Parser` by defining a value of "
 "one of the following types:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:72
+#: src/reference/reference/input-task.md:71
 msgid "`Parser[I]`: a basic parser that does not use any settings"
 msgstr ""
 
-#: src/reference/reference/input-task.md:73
+#: src/reference/reference/input-task.md:72
 msgid ""
 "`Initialize[Parser[I]]`: a parser whose definition depends on one or more "
 "settings"
 msgstr ""
 
-#: src/reference/reference/input-task.md:75
+#: src/reference/reference/input-task.md:74
 msgid ""
 "`Initialize[State => Parser[I]]`: a parser that is defined using both "
 "settings and the current [state](Build-State.html)"
 msgstr ""
 
-#: src/reference/reference/input-task.md:78
+#: src/reference/reference/input-task.md:77
 msgid ""
 "We already saw an example of the first case with `spaceDelimited`, which "
 "doesn't use any settings in its definition. As an example of the third case, "
@@ -134,19 +129,19 @@ msgid ""
 "with the special `value` method:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:92
+#: src/reference/reference/input-task.md:91
 msgid "\"scala\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:93
+#: src/reference/reference/input-task.md:92
 msgid "\"sbt\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:94
+#: src/reference/reference/input-task.md:93
 msgid "\"commands\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:99
+#: src/reference/reference/input-task.md:98
 msgid ""
 "This Parser definition will produce a value of type `(String,String)`. The "
 "input syntax defined isn't very flexible; it is just a demonstration. It "
@@ -155,91 +150,91 @@ msgid ""
 "and there are 3 commands left to run):"
 msgstr ""
 
-#: src/reference/reference/input-task.md:106
+#: src/reference/reference/input-task.md:105
 msgid "(scala,3.8.1)"
 msgstr ""
 
-#: src/reference/reference/input-task.md:107
+#: src/reference/reference/input-task.md:106
 msgid "(sbt,2.0.0-RC9)"
 msgstr ""
 
-#: src/reference/reference/input-task.md:108
+#: src/reference/reference/input-task.md:107
 msgid "(commands,3)"
 msgstr ""
 
-#: src/reference/reference/input-task.md:110
+#: src/reference/reference/input-task.md:109
 msgid ""
 "Again, we were able to access the current Scala and sbt version for the "
 "project because they are settings. Tasks cannot be used to define the parser."
 msgstr ""
 
-#: src/reference/reference/input-task.md:114
+#: src/reference/reference/input-task.md:113
 msgid "Constructing the Task"
 msgstr ""
 
-#: src/reference/reference/input-task.md:116
+#: src/reference/reference/input-task.md:115
 msgid ""
 "Next, we construct the actual task to execute from the result of the "
 "`Parser`. For this, we define a task as usual, but we can access the result "
 "of parsing via the special `parsed` method on `Parser`."
 msgstr ""
 
-#: src/reference/reference/input-task.md:120
+#: src/reference/reference/input-task.md:119
 msgid ""
 "The following contrived example uses the previous example's output (of type "
 "`(String,String)`) and the result of the `package` task to print some "
 "information to the screen."
 msgstr ""
 
-#: src/reference/reference/input-task.md:127
+#: src/reference/reference/input-task.md:126
 msgid "\"Type: \""
 msgstr ""
 
-#: src/reference/reference/input-task.md:128
+#: src/reference/reference/input-task.md:127
 msgid "\"Value: \""
 msgstr ""
 
-#: src/reference/reference/input-task.md:129
+#: src/reference/reference/input-task.md:128
 msgid "\"Packaged: \""
 msgstr ""
 
-#: src/reference/reference/input-task.md:133
+#: src/reference/reference/input-task.md:132
 msgid "The InputTask type"
 msgstr ""
 
-#: src/reference/reference/input-task.md:136
+#: src/reference/reference/input-task.md:135
 msgid ""
 "It helps to look at the `InputTask` type to understand more advanced usage "
 "of input tasks. The core input task type is:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:143
+#: src/reference/reference/input-task.md:142
 msgid ""
 "Normally, an input task is assigned to a setting and you work with "
 "`Initialize[InputTask[A1]]`."
 msgstr ""
 
-#: src/reference/reference/input-task.md:146
+#: src/reference/reference/input-task.md:145
 msgid "Breaking this down,"
 msgstr ""
 
-#: src/reference/reference/input-task.md:148
+#: src/reference/reference/input-task.md:147
 msgid "You can use other settings (via Initialize) to construct an input task."
 msgstr ""
 
-#: src/reference/reference/input-task.md:150
+#: src/reference/reference/input-task.md:149
 msgid "You can use the current State to construct the parser."
 msgstr ""
 
-#: src/reference/reference/input-task.md:151
+#: src/reference/reference/input-task.md:150
 msgid "The parser accepts user input and provides tab completion."
 msgstr ""
 
-#: src/reference/reference/input-task.md:152
+#: src/reference/reference/input-task.md:151
 msgid "The parser produces the task to run."
 msgstr ""
 
-#: src/reference/reference/input-task.md:154
+#: src/reference/reference/input-task.md:153
 msgid ""
 "So, you can use settings or `State` to construct the parser that defines an "
 "input task's command line syntax. This was described in the previous "
@@ -247,37 +242,37 @@ msgid ""
 "task to run. This is implicit in the input task syntax."
 msgstr ""
 
-#: src/reference/reference/input-task.md:159
+#: src/reference/reference/input-task.md:158
 msgid "Using other input tasks"
 msgstr ""
 
-#: src/reference/reference/input-task.md:162
+#: src/reference/reference/input-task.md:161
 msgid ""
 "The types involved in an input task are composable, so it is possible to "
 "reuse input tasks. The `.parsed` and `.evaluated` methods are defined on "
 "InputTasks to make this more convenient in common situations:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:166
+#: src/reference/reference/input-task.md:165
 msgid ""
 "Call `.parsed` on an `InputTask[A1]` or `Initialize[InputTask[A1]]` to get "
 "the `Task[A1]` created after parsing the command line"
 msgstr ""
 
-#: src/reference/reference/input-task.md:168
+#: src/reference/reference/input-task.md:167
 msgid ""
 "Call `.evaluated` on an `InputTask[A1]` or `Initialize[InputTask[A1]]` to "
 "get the value of type `A1` from evaluating that task"
 msgstr ""
 
-#: src/reference/reference/input-task.md:172
+#: src/reference/reference/input-task.md:171
 msgid ""
 "In both situations, the underlying `Parser` is sequenced with other parsers "
 "in the input task definition. In the case of `.evaluated`, the generated "
 "task is evaluated."
 msgstr ""
 
-#: src/reference/reference/input-task.md:176
+#: src/reference/reference/input-task.md:175
 msgid ""
 "The following example applies the `run` input task, a literal separator "
 "parser `--`, and `run` again. The parsers are sequenced in order of "
@@ -285,25 +280,25 @@ msgid ""
 "first `run` and the ones after are passed to the second."
 msgstr ""
 
-#: src/reference/reference/input-task.md:183
+#: src/reference/reference/input-task.md:182
 msgid ""
 "\"Runs the main class twice with different argument lists separated by --\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:185
+#: src/reference/reference/input-task.md:184
 msgid "\"--\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:194
-#: src/reference/reference/input-task.md:257
+#: src/reference/reference/input-task.md:193
+#: src/reference/reference/input-task.md:256
 msgid "For a main class Demo that echoes its arguments, this looks like:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:207
+#: src/reference/reference/input-task.md:206
 msgid "Preapplying input"
 msgstr ""
 
-#: src/reference/reference/input-task.md:210
+#: src/reference/reference/input-task.md:209
 msgid ""
 "Because `InputTasks` are built from `Parsers`, it is possible to generate a "
 "new `InputTask` by applying some input programmatically. (It is also "
@@ -312,43 +307,43 @@ msgid ""
 "`Initialize[InputTask[T]]` that accept the String to apply."
 msgstr ""
 
-#: src/reference/reference/input-task.md:216
+#: src/reference/reference/input-task.md:215
 msgid ""
 "`partialInput` applies the input and allows further input, such as from the "
 "command line"
 msgstr ""
 
-#: src/reference/reference/input-task.md:218
+#: src/reference/reference/input-task.md:217
 msgid ""
 "`fullInput` applies the input and terminates parsing, so that further input "
 "is not accepted"
 msgstr ""
 
-#: src/reference/reference/input-task.md:221
+#: src/reference/reference/input-task.md:220
 msgid ""
 "In each case, the input is applied to the input task's parser. Because input "
 "tasks handle all input after the task name, they usually require initial "
 "whitespace to be provided in the input."
 msgstr ""
 
-#: src/reference/reference/input-task.md:225
+#: src/reference/reference/input-task.md:224
 msgid ""
 "Consider the example in the previous section. We can modify it so that we:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:228
+#: src/reference/reference/input-task.md:227
 msgid ""
 "Explicitly specify all of the arguments to the first `run`. We use `name` "
 "and `version` to show that settings can be used to define and modify parsers."
 msgstr ""
 
-#: src/reference/reference/input-task.md:231
+#: src/reference/reference/input-task.md:230
 msgid ""
 "Define the initial arguments passed to the second `run`, but allow further "
 "input on the command line."
 msgstr ""
 
-#: src/reference/reference/input-task.md:234
+#: src/reference/reference/input-task.md:233
 msgid ""
 "```admonish note\n"
 "If the input derives from settings you need to use, for\n"
@@ -356,47 +351,47 @@ msgid ""
 "```"
 msgstr ""
 
-#: src/reference/reference/input-task.md:240
+#: src/reference/reference/input-task.md:239
 msgid "\"Runs the main class twice: \""
 msgstr ""
 
-#: src/reference/reference/input-task.md:241
+#: src/reference/reference/input-task.md:240
 msgid "\"once with the project name and version as arguments\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:242
+#: src/reference/reference/input-task.md:241
 msgid "\"and once with command line arguments preceded by hard coded values.\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:243
+#: src/reference/reference/input-task.md:242
 msgid "// The argument string for the first run task is ' <name> <version>'"
 msgstr ""
 
-#: src/reference/reference/input-task.md:246
+#: src/reference/reference/input-task.md:245
 msgid "s\" ${"
 msgstr ""
 
-#: src/reference/reference/input-task.md:246
+#: src/reference/reference/input-task.md:245
 msgid "} ${"
 msgstr ""
 
-#: src/reference/reference/input-task.md:246
+#: src/reference/reference/input-task.md:245
 msgid "}\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:247
+#: src/reference/reference/input-task.md:246
 msgid "// Make the first arguments to the second run task ' red blue'"
 msgstr ""
 
-#: src/reference/reference/input-task.md:249
+#: src/reference/reference/input-task.md:248
 msgid "\" red blue\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:271
+#: src/reference/reference/input-task.md:270
 msgid "Get a Task from an InputTask"
 msgstr ""
 
-#: src/reference/reference/input-task.md:274
+#: src/reference/reference/input-task.md:273
 msgid ""
 "The previous section showed how to derive a new `InputTask` by applying "
 "input. In this section, applying input produces a `Task`. The `toTask` "
@@ -406,39 +401,39 @@ msgid ""
 "directly without providing any input:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:282
-#: src/reference/reference/input-task.md:307
+#: src/reference/reference/input-task.md:281
+#: src/reference/reference/input-task.md:306
 msgid "\"A task that hard codes the values to `run`\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:285
-#: src/reference/reference/input-task.md:312
+#: src/reference/reference/input-task.md:284
+#: src/reference/reference/input-task.md:311
 msgid "\" blue green\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:286
-#: src/reference/reference/input-task.md:314
+#: src/reference/reference/input-task.md:285
+#: src/reference/reference/input-task.md:313
 msgid "\"Done!\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:290
+#: src/reference/reference/input-task.md:289
 msgid ""
 "For a main class Demo that echoes its arguments, running `runFixed` looks "
 "like:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:302
+#: src/reference/reference/input-task.md:301
 msgid ""
 "Each call to `toTask` generates a new task, but each task is configured the "
 "same as the original `InputTask` (in this case, `run`) but with different "
 "input applied. For example:"
 msgstr ""
 
-#: src/reference/reference/input-task.md:313
+#: src/reference/reference/input-task.md:312
 msgid "\" red orange\""
 msgstr ""
 
-#: src/reference/reference/input-task.md:318
+#: src/reference/reference/input-task.md:317
 msgid ""
 "The different `toTask` calls define different tasks that each run the "
 "project's main class in a new jvm. That is, the `fork` setting configures "
