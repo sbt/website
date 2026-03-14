@@ -62,6 +62,11 @@ Homebrew maintainers have added a dependency to JDK 13 because they want to use 
   <TabItem value="linux" label="Linux">
   <div class="distro_debian">
     <h3>Linux (deb)</h3>
+
+:::note
+Please redownload the PGP key if you have not after February 2026, or if you see the "SHA1 is not considered secure" error.
+:::
+
 ```bash
 curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo gpg --dearmor -o /etc/apt/keyrings/scalasbt.gpg
 echo "deb [signed-by=/etc/apt/keyrings/scalasbt.gpg] https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
@@ -83,18 +88,6 @@ sudo yum install sbt
   </div>
   </TabItem>
 </Tabs>
-
-Coursier (cs setup)
--------------------
-
-:::warning
-Install the latest Coursier before attempting the following steps.
-There are multiple bug reports on `cs setup`. See [coursier#2953](https://github.com/coursier/coursier/issues/2953), [#7278](https://github.com/sbt/sbt/issues/7278) etc.
-:::
-
-```bash
-cs setup
-```
 
 ### Previous releases
 
