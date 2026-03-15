@@ -27,8 +27,8 @@ $(document).ready(function() {
       $.ajax({
         type: 'HEAD',
         url: primary,
-        success: function() { document.location.href = primary },
-        error: function() { document.location.href = fallback },
+        success: function() { window.top.location.href = primary },
+        error: function() { window.top.location.href = fallback },
       });
    };
 
@@ -49,6 +49,11 @@ $(document).ready(function() {
 
       var changeVersion = function(oldPathname) {
          var changed = oldPathname.replace(selected + '/', newPath).replace(snapshotPath, newPath).replace(releasePath, newPath);
+         if (selected != '2.x' && newV == '2.x') {
+            if (oldLoc.indexOf('/docs/ja/') === -1 && oldLoc.indexOf('/docs/zh-cn/') === -1) {
+               changed = changed.replace('/docs/', '/docs/en/');
+            }
+         }
          // This occurs for the unversioned /index.html. Redirect to the versioned path in this case.
          if (changed == oldPathname)
              changed = newPath + docsPath + 'home.html';
