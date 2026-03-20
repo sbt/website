@@ -248,6 +248,8 @@ generate dependency lockfiles and check for changes at build time.
 
 - [flyway-sbt](https://github.com/sbt/flyway-sbt) Flyway database migration. <!-- 131 stars -->
 - [sbt-dao-generator](https://github.com/sbt-dao-generator/sbt-dao-generator) generate code for O/R Mapper Free <!-- 14 stars -->
+- [sbt-sliquibase](https://codeberg.org/PerformantData/sbt-sliquibase): generate
+  code for Slick API types from a Liquibase changelog.
 
 <div style="display: none;">
 
