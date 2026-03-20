@@ -306,6 +306,8 @@ generate dependency lockfiles and check for changes at build time.
   Amazon DynamoDB test instance from sbt. <!-- 41 stars -->
 - [sbt-migrations](https://github.com/LeonhardtDavid/migrations): database
   migrations manager.
+- [sbt-sliquibase](https://codeberg.org/PerformantData/sbt-sliquibase): generate
+  code for Slick API types from a Liquibase changelog.
 
 #### Framework-specific plugins
 
