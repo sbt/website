@@ -1,24 +1,21 @@
----
-out: Commands.html
----
 
-  [Parsing-Input]: Parsing-Input.html
+  [tab-completion-parser]: ./tab-completion-parser.md
   [Build-State]: Build-State.html
+  [command-basics]: ../concepts/command-basics.md
 
-Commands
---------
+Command
+=======
 
-### What is a "command"?
+This page covers commands in detail. See [Command basics][command-basics] for a general explanation.
 
-A "command" looks similar to a task: it's a named operation that can be
-executed from the sbt console.
+## Description
 
-However, a command's implementation takes as its parameter the entire
-state of the build (represented by [State][Build-State]) and
-computes a new [State][Build-State]. This means that a command can
-look at or modify other sbt settings, for example. Typically, you would
-resort to a command when you need to do something that's impossible in a
-regular task.
+A _command_ is a system-level building block of sbt, often used to capture user interactions. At the command level, there is little support for subprojects and parallel processing since those are implemented in the `act` command.
+
+Plugin authors should try to solve their problem using settings, tasks, and input tasks first. Several notable exceptions are:
+
+- Extending the user experience of sbt itself
+- Providing sequential processing, for example for `release` command
 
 ### Introduction
 
@@ -27,28 +24,30 @@ There are three main aspects to commands:
 1.  The syntax used by the user to invoke the command, including:
     -   Tab completion for the syntax
     -   The parser to turn input into an appropriate data structure
-
 2.  The action to perform using the parsed data structure. This action
-    transforms the build [State](../api/sbt/State.html).
+    transforms the build `State`.
 3.  Help provided to the user
 
 In sbt, the syntax part, including tab completion, is specified with
 parser combinators. If you are familiar with the parser combinators in
-Scala's standard library, these are very similar. The action part is a
-function `(State, T) => State`, where `T` is the data structure produced
-by the parser. See the
-[Parsing Input][Parsing-Input] page for how to
+Scala's standard library, these are very similar.
+See the
+[Tab-completion parser][tab-completion-parser] page for how to
 use the parser combinators.
 
-[State](../api/sbt/State.html) provides access to the build state,
-such as all registered `Command`s, the remaining commands to execute,
-and all project-related information. See [States and Actions][Build-State] for details on
+State provides access to the build state,
+such as all registered commands, the remaining commands to execute,
+and all project-related information.
+
+<!--
+See [States and Actions][Build-State] for details on
 State.
+-->
 
 Finally, basic help information may be provided that is used by the
 `help` command to display command help.
 
-### Defining a Command
+## Defining a Command
 
 A command combines a function `State => Parser[T]` with an action
 `(State, T) => State`. The reason for `State => Parser[T]` and not
@@ -60,17 +59,17 @@ for the general and specific cases are shown in the following sections.
 See [Command.scala](https://github.com/sbt/sbt/blob/develop/main-command/src/main/scala/sbt/Command.scala) for the source
 API details for constructing commands.
 
-#### General commands
+### General commands
 
 General command construction looks like:
 
 ```scala
-val action: (State, T) => State = ...
-val parser: State => Parser[T] = ...
+val action: (State, A) => State = ...
+val parser: State => Parser[A] = ...
 val command: Command = Command("name")(parser)(action)
 ```
 
-#### No-argument commands
+### No-argument commands
 
 There is a convenience method for constructing commands that do not
 accept any arguments.
@@ -80,7 +79,7 @@ val action: State => State = ...
 val command: Command = Command.command("name")(action)
 ```
 
-#### Single-argument command
+### Single-argument command
 
 There is a convenience method for constructing commands that accept a
 single argument with arbitrary content.
@@ -91,7 +90,7 @@ val action: (State, String) => State = ...
 val command: Command = Command.single("name")(action)
 ```
 
-#### Multi-argument command
+### Multi-argument command
 
 There is a convenience method for constructing commands that accept
 multiple arguments separated by spaces.
@@ -103,7 +102,7 @@ val action: (State, Seq[String]) => State = ...
 val command: Command = Command.args("name", "<arg>")(action)
 ```
 
-### Full Example
+## Full Example
 
 The following example is a sample build that adds
 commands to a project. To try it out:
@@ -117,13 +116,13 @@ commands to a project. To try it out:
 Here's `build.sbt`:
 
 ```scala
-import CommandExample._
+import CommandExample.*
 
-ThisBuild / organization := "com.example"
-ThisBuild / scalaVersion := "$example_scala_version$"
-ThisBuild / version      := "0.1.0-SNAPSHOT"
+organization := "com.example"
+scalaVersion := "{{scala3_example_version}}"
+version      := "0.1.0-SNAPSHOT"
 
-lazy val root = (project in file("."))
+lazy val root = rootProject
   .settings(
     commands ++= Seq(hello, helloAll, failIfTrue, changeColor, printState)
   )
@@ -132,11 +131,11 @@ lazy val root = (project in file("."))
 Here's `project/CommandExample.scala`:
 
 ```scala
-import sbt._
-import Keys._
+import sbt.*
+import Keys.*
 
 // imports standard command parsing functionality
-import complete.DefaultParsers._
+import complete.DefaultParsers.*
 
 object CommandExample {
   // A simple, no-argument command that prints "Hi",
