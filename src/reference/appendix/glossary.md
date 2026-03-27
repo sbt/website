@@ -44,7 +44,7 @@ C
 
 ### Command
 
-A system-level building block of sbt, often used to capture user interaction or IDE interaction. See [Command](../concepts/command.html).
+A system-level building block of sbt, often used to capture user interaction or IDE interaction. See [Command basics](../concepts/command-basics.md).
 
 ### Cross building
 

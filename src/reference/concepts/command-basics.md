@@ -1,5 +1,5 @@
-Command
-=======
+Command basics
+==============
 
 A _command_ is a system-level building block of sbt, often used to capture user interaction or IDE interaction.
 

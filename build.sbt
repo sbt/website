@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
   )
   .settings(
     name := "website",
+    scalaVersion := "3.8.2",
     siteEmail := "eed3si9n" + "@gmail.com",
     // Reference
     MdBook / siteSubdirName := s"""$targetSbtBinaryVersion/docs/""",
@@ -34,6 +35,7 @@ lazy val root = (project in file("."))
         case x       => sys.error(s"Unexpected encoding $x")
       }
     },
+    pluginCrossBuild / sbtVersion := referenceSbtVersion,
     scriptedLaunchOpts := {
       scriptedLaunchOpts.value ++
         Seq("-Xmx1024M", "-Dplugin.version=" + version.value)

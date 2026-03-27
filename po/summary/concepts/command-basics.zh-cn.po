@@ -1,27 +1,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2024-10-30T03:08:34-04:00\n"
-"PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
+"POT-Creation-Date: 2025-08-08T01:31:50-04:00\n"
+"PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: ja\n"
+"Language: zh-cn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: src/reference/concepts/command.md:1
-msgid "Command"
-msgstr "コマンド"
+msgid "Command basics"
+msgstr "命令基础"
 
 #: src/reference/concepts/command.md:4
 msgid ""
 "A _command_ is a system-level building block of sbt, often used to capture "
 "user interaction or IDE interaction."
 msgstr ""
-"**コマンド**は、システム・レベルでの sbt の構成要素で、"
-"ユーザや IDE とのやり取りを捕捉する。"
+"命令（_command_）是 sbt 的系统级构建块，常用于捕获用户交互或 IDE 交互。"
 
 #: src/reference/concepts/command.md:6
 msgid "<img src=\"../files/command.svg\" style=\"width: 50%;\"></img>"
@@ -32,16 +31,15 @@ msgid ""
 "We can think of each command as a `State => State` function. In sbt, the "
 "state represents the following:"
 msgstr ""
-"便宜的に、各コマンドは `State => State` への関数だと考えることができる。 "
-"sbt において状態 (state) は以下を表す。"
+"我们可以将每个命令视为 `State => State` 函数。在 sbt 中，状态表示以下内容："
 
 #: src/reference/concepts/command.md:10
 msgid "Build structure (`build.sbt` etc)"
-msgstr "ビルド構造 (`build.sbt` など)"
+msgstr "构建结构（`build.sbt` 等）"
 
 #: src/reference/concepts/command.md:11
 msgid "Your disk (source code, JAR outputs, etc)"
-msgstr "ディスク (ソースコード、JAR 成果物など)"
+msgstr "您的磁盘（源代码、JAR 输出等）"
 
 #: src/reference/concepts/command.md:13
 msgid ""
@@ -49,8 +47,7 @@ msgid ""
 "disk. For example, the `set` command can apply a setting to modify the build "
 "strcuture:"
 msgstr ""
-"そのため、コマンドは通常ビルド構造もしくはディスクを変更する。"
-"例えば、`set` コマンドはセッティングを適用してビルド構造を変更する。"
+"因此，命令通常会修改构建结构或磁盘。例如，`set` 命令可以应用设置来修改构建结构："
 
 #: src/reference/concepts/command.md:16
 msgid "\"foo\""
@@ -58,27 +55,25 @@ msgstr ""
 
 #: src/reference/concepts/command.md:19
 msgid "The `act` command can lift a task such as `compile` into a command:"
-msgstr ""
-"`act` コマンドは、`compile` のようなタスクをコマンドに持ち上げる:"
+msgstr "`act` 命令可以将 `compile` 等任务提升为命令："
 
 #: src/reference/concepts/command.md:25
 msgid ""
 "The compilation would read from the disk and write outputs, or display error "
 "messages on the screen."
 msgstr ""
-"コンパイルはディスクからの読み込みを行い、"
-"アウトプットをディスクに書き込むか画面にエラーメッセージを表示する。"
+"编译会从磁盘读取并写入输出，或在屏幕上显示错误信息。"
 
 #: src/reference/concepts/command.md:27
 msgid "Commands are sequentially processed"
-msgstr "コマンドは逐次処理される"
+msgstr "命令按顺序处理"
 
 #: src/reference/concepts/command.md:30
 msgid ""
 "Because there is only one state, a characteristic of commands is that they "
 "are executed one at a time."
 msgstr ""
-"状態は 1つしか存在しないものなので、コマンドは 1つづつ実行されるという特徴がある。"
+"由于只有一个状态，命令的特点是它们一次执行一个。"
 
 #: src/reference/concepts/command.md:32
 msgid "![command](../files/command2.svg)"
@@ -91,12 +86,12 @@ msgid ""
 "similar to a cashier taking an order in a cafe, and it will be processed in "
 "the sequence it was received."
 msgstr ""
-"一部例外もあるが、基本的にコマンドは逐次実行される。"
-"メンタルモデルとしては、コマンドはカフェで注文を受け取るレジ係で、注文の順番に処理が行われると考えることができる。"
+"此规则有一些例外，但通常命令按顺序运行。一个有用的比喻是，命令类似于咖啡馆收银员"
+"接单，会按接收顺序处理。"
 
 #: src/reference/concepts/command.md:36
 msgid "Tasks run in parallel"
-msgstr "タスクは並列実行される"
+msgstr "任务并行运行"
 
 #: src/reference/concepts/command.md:39
 msgid ""
@@ -104,17 +99,15 @@ msgid ""
 "level. While doing so, the `act` command will broadcast the task across the "
 "aggregated subprojects and run independent tasks in parallel."
 msgstr ""
-"前述の通り、`act` コマンドはタスクをコマンドのレベルに持ち上げる。"
-"その際に `act` コマンドは、集約されたサブプロジェクトにタスクを"
-"転送して、独立したタスクを並列実装する。"
+"如上所述，`act` 命令将任务转换为命令级别。在此过程中，`act` 命令会将任务广播到聚合"
+"的子项目，并并行运行独立任务。"
 
 #: src/reference/concepts/command.md:41
 msgid ""
 "Similarly, the `reload` command that runs during the startup of a session "
 "will initialize the settings in parallel."
 msgstr ""
-"同様に、セッション起動時に実行される `reload` コマンドは"
-"セッティングを並列に初期化する。"
+"同样，在会话启动期间运行的 `reload` 命令将并行初始化设置。"
 
 #: src/reference/concepts/command.md:43
 msgid "![act](../files/act.svg)"
@@ -122,7 +115,7 @@ msgstr ""
 
 #: src/reference/concepts/command.md:45
 msgid "The role of sbt server"
-msgstr "sbt server の役割"
+msgstr "sbt server 的角色"
 
 #: src/reference/concepts/command.md:48
 msgid ""
@@ -130,6 +123,5 @@ msgid ""
 "or a network API called Build Server Protocol. This mechanism allows both "
 "the build user and IDEs to share the same sbt session."
 msgstr ""
-"sbt server は、コマンドラインもしくは Build Server Protocol "
-"と呼ばれるネットワーク API 経由からコマンドを受け取ることができるサービスだ。"
-"この機構によって、ビルドユーザと IDE が同一の sbt セッションを共有することができる。"
+"sbt server 是一项服务，可接受来自命令行或名为 Build Server Protocol 的网络 API 的"
+"命令。此机制使构建用户和 IDE 能够共享同一 sbt 会话。"
