@@ -15,8 +15,8 @@ jobs:
     - name: Setup
       uses: actions/setup-java@v5
       with:
-        distribution: 'adopt'
-        java-version: '11'
+        distribution: 'temurin'
+        java-version: '17'
         cache: 'sbt'
     - name: Setup sbt
       uses: sbt/setup-sbt@v1
@@ -43,7 +43,9 @@ jobs:
 
     - name: Build and test
       run: |
-        sbt -v scalafmtSbtCheck scalafmtCheckAll makeSite
+        sbt -v scalafmtSbtCheck scalafmtCheckAll
+        sbt -v scripted
+        sbt -v makeSite
 
     # https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets
     - name: Deploy to GH Pages

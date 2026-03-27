@@ -4,8 +4,7 @@ ThisBuild / organization := "com.example"
 
 val toolkitTest = "org.scala-lang" %% "toolkit-test" % "0.1.7"
 
-lazy val hello = project
-  .in(file("."))
+lazy val hello = rootProject
   .aggregate(helloCore)
   .dependsOn(helloCore)
   .enablePlugins(JavaAppPackaging)
@@ -15,8 +14,7 @@ lazy val hello = project
     maintainer := "A Scala Dev!"
   )
 
-lazy val helloCore = project
-  .in(file("core"))
+lazy val helloCore = (project in file("core"))
   .settings(
     name := "Hello Core",
     libraryDependencies += "org.scala-lang" %% "toolkit" % "0.1.7",

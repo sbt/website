@@ -12,6 +12,7 @@ import com.typesafe.sbt.site.SitePlugin
 import SitePlugin.autoImport._
 
 object Docs {
+  lazy val referenceSbtVersion = "2.0.0-RC10"
   lazy val targetSbtFullVersion = "1.12.8"
   lazy val sbtVersionForScalaDoc = "1.12.0"
   lazy val sbtWindowsBuild = targetSbtFullVersion

@@ -39,6 +39,7 @@
   - [Artifact](reference/artifact.md)
   - [Input task](reference/input-task.md)
   - [Tab-completion parser](reference/tab-completion-parser.md)
+  - [Command](reference/command.md)
 - [Community plugins](community-plugins.md)
 - [Recipes](recipes/index.md)
   - [Write hello world](recipes/hello-world.md)
