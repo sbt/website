@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-08-08T03:19:26-04:00\n"
+"POT-Creation-Date: 2026-03-27T00:18:32-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -21,14 +21,14 @@ msgid ""
 "and offer tab completion. The details of the parser will be covered in [tab-"
 "completion parser](tab-completion-parser.md) later."
 msgstr ""
-"sbt 支持定义可解析用户输入并提供 Tab 补全的自定义任务。解析器详情将在后续的 [Tab 补全解析器](tab-completion-parser.md)中介绍。"
+"sbt 支持定义可解析用户输入并提供 Tab 补全的自定义任务。解析器详情将在后续的 "
+"[Tab 补全解析器](tab-completion-parser.md)中介绍。"
 
 #: src/reference/reference/input-task.md:11
 msgid ""
 "This page describes how to hook those parser combinators into the input task "
 "system."
-msgstr ""
-"本页介绍如何将这些解析器组合子接入输入任务系统。"
+msgstr "本页介绍如何将这些解析器组合子接入输入任务系统。"
 
 #: src/reference/reference/input-task.md:14
 msgid "Input keys"
@@ -40,8 +40,8 @@ msgid ""
 "like a `SettingKey` represents a setting or a `TaskKey` represents a task. "
 "Define a new input task key using the `inputKey.apply` factory method:"
 msgstr ""
-"输入任务的键类型为 `InputKey`，表示输入任务，如同 `SettingKey` 表示设置、`TaskKey` 表示任务。"
-"使用 `inputKey.apply` 工厂方法定义新的输入任务键："
+"输入任务的键类型为 `InputKey`，表示输入任务，如同 `SettingKey` 表示设置、"
+"`TaskKey` 表示任务。使用 `inputKey.apply` 工厂方法定义新的输入任务键："
 
 #: src/reference/reference/input-task.md:23
 msgid "// goes in project/Build.scala or in build.sbt"
@@ -58,8 +58,9 @@ msgid ""
 "user input. Just as the special `value` method gets the value of a setting "
 "or task, the special `parsed` method gets the result of a `Parser`."
 msgstr ""
-"输入任务的定义与普通任务类似，但还可使用应用于用户输入的 [Parser](tab-completion-parser.md) 的结果。"
-"正如特殊的 `value` 方法获取设置或任务的值，特殊的 `parsed` 方法获取 `Parser` 的结果。"
+"输入任务的定义与普通任务类似，但还可使用应用于用户输入的 [Parser](tab-"
+"completion-parser.md) 的结果。正如特殊的 `value` 方法获取设置或任务的值，特殊"
+"的 `parsed` 方法获取 `Parser` 的结果。"
 
 #: src/reference/reference/input-task.md:33
 msgid "Basic input task definition"
@@ -73,15 +74,15 @@ msgid ""
 "method, which accepts as its only argument the label to present to the user "
 "during tab completion."
 msgstr ""
-"最简单的输入任务接受空格分隔的参数序列。它不提供有用的 Tab 补全，解析也较基础。"
-"空格分隔参数的内置解析器通过 `spaceDelimited` 方法构建，其唯一参数为 Tab 补全时向用户展示的标签。"
+"最简单的输入任务接受空格分隔的参数序列。它不提供有用的 Tab 补全，解析也较基"
+"础。空格分隔参数的内置解析器通过 `spaceDelimited` 方法构建，其唯一参数为 Tab "
+"补全时向用户展示的标签。"
 
 #: src/reference/reference/input-task.md:42
 msgid ""
 "For example, the following task prints the current Scala version and then "
 "echoes the arguments passed to it on their own line."
-msgstr ""
-"例如，以下任务打印当前 Scala 版本，然后将传入的参数逐行回显。"
+msgstr "例如，以下任务打印当前 Scala 版本，然后将传入的参数逐行回显。"
 
 #: src/reference/reference/input-task.md:49
 msgid "// get the result of parsing"
@@ -114,8 +115,9 @@ msgid ""
 "matter of defining your own `Parser` as described on the [Parsing Input](tab-"
 "completion-parser.md) page."
 msgstr ""
-"`spaceDelimited` 方法提供的 Parser 在定义输入语法时缺乏灵活性。使用自定义解析器只需按 "
-"[Parsing Input](tab-completion-parser.md) 页所述定义您自己的 `Parser`。"
+"`spaceDelimited` 方法提供的 Parser 在定义输入语法时缺乏灵活性。使用自定义解析"
+"器只需按 [Parsing Input](tab-completion-parser.md) 页所述定义您自己的 "
+"`Parser`。"
 
 #: src/reference/reference/input-task.md:66
 msgid "Constructing the Parser"
@@ -125,27 +127,25 @@ msgstr "构建解析器"
 msgid ""
 "The first step is to construct the actual `Parser` by defining a value of "
 "one of the following types:"
-msgstr ""
-"第一步是通过定义以下类型之一的值来构建实际的 `Parser`："
+msgstr "第一步是通过定义以下类型之一的值来构建实际的 `Parser`："
 
 #: src/reference/reference/input-task.md:71
 msgid "`Parser[I]`: a basic parser that does not use any settings"
-msgstr ""
-"`Parser[I]`：不使用任何设置的基本解析器"
+msgstr "`Parser[I]`：不使用任何设置的基本解析器"
 
 #: src/reference/reference/input-task.md:72
 msgid ""
 "`Initialize[Parser[I]]`: a parser whose definition depends on one or more "
 "settings"
-msgstr ""
-"`Initialize[Parser[I]]`：定义依赖一个或多个设置的解析器"
+msgstr "`Initialize[Parser[I]]`：定义依赖一个或多个设置的解析器"
 
 #: src/reference/reference/input-task.md:74
 msgid ""
 "`Initialize[State => Parser[I]]`: a parser that is defined using both "
 "settings and the current [state](Build-State.html)"
 msgstr ""
-"`Initialize[State => Parser[I]]`：使用设置和当前 [state](Build-State.html) 定义的解析器"
+"`Initialize[State => Parser[I]]`：使用设置和当前 [state](Build-State.html) 定"
+"义的解析器"
 
 #: src/reference/reference/input-task.md:77
 msgid ""
@@ -156,9 +156,10 @@ msgid ""
 "wrap the Parser construction in `Def.setting` and get the setting values "
 "with the special `value` method:"
 msgstr ""
-"我们已在 `spaceDelimited` 中见过第一种情况的示例，其定义不使用任何设置。作为第三种情况的示例，"
-"以下定义了一个使用项目 Scala 和 sbt 版本设置以及 state 的示例 `Parser`。要使用这些设置，"
-"需将 Parser 构建包装在 `Def.setting` 中，并用特殊的 `value` 方法获取设置值："
+"我们已在 `spaceDelimited` 中见过第一种情况的示例，其定义不使用任何设置。作为"
+"第三种情况的示例，以下定义了一个使用项目 Scala 和 sbt 版本设置以及 state 的示"
+"例 `Parser`。要使用这些设置，需将 Parser 构建包装在 `Def.setting` 中，并用特"
+"殊的 `value` 方法获取设置值："
 
 #: src/reference/reference/input-task.md:91
 msgid "\"scala\""
@@ -173,22 +174,24 @@ msgid "\"commands\""
 msgstr ""
 
 #: src/reference/reference/input-task.md:98
+#, fuzzy
 msgid ""
 "This Parser definition will produce a value of type `(String,String)`. The "
 "input syntax defined isn't very flexible; it is just a demonstration. It "
 "will produce one of the following values for a successful parse (assuming "
-"the current Scala version is 3.8.1, the current sbt version is 2.0.0-RC9, "
+"the current Scala version is 3.8.2, the current sbt version is 2.0.0-RC10, "
 "and there are 3 commands left to run):"
 msgstr ""
-"该 Parser 定义将产生类型为 `(String,String)` 的值。定义的输入语法不够灵活，仅为演示。"
-"解析成功时将产生以下值之一（假设当前 Scala 版本为 3.8.1、sbt 版本为 2.0.0-RC9，且还有 3 个命令待运行）："
+"该 Parser 定义将产生类型为 `(String,String)` 的值。定义的输入语法不够灵活，仅"
+"为演示。解析成功时将产生以下值之一（假设当前 Scala 版本为 3.8.1、sbt 版本为 "
+"2.0.0-RC9，且还有 3 个命令待运行）："
 
 #: src/reference/reference/input-task.md:105
-msgid "(scala,3.8.1)"
+msgid "(scala,3.8.2)"
 msgstr ""
 
 #: src/reference/reference/input-task.md:106
-msgid "(sbt,2.0.0-RC9)"
+msgid "(sbt,2.0.0-RC10)"
 msgstr ""
 
 #: src/reference/reference/input-task.md:107
@@ -200,7 +203,8 @@ msgid ""
 "Again, we were able to access the current Scala and sbt version for the "
 "project because they are settings. Tasks cannot be used to define the parser."
 msgstr ""
-"同样，我们能访问项目当前 Scala 和 sbt 版本是因为它们是设置。任务不能用于定义解析器。"
+"同样，我们能访问项目当前 Scala 和 sbt 版本是因为它们是设置。任务不能用于定义"
+"解析器。"
 
 #: src/reference/reference/input-task.md:113
 msgid "Constructing the Task"
@@ -212,8 +216,8 @@ msgid ""
 "`Parser`. For this, we define a task as usual, but we can access the result "
 "of parsing via the special `parsed` method on `Parser`."
 msgstr ""
-"接下来，我们根据 `Parser` 的结果构建要执行的实际任务。为此，我们按常规定义任务，但可通过 "
-"`Parser` 上的特殊 `parsed` 方法访问解析结果。"
+"接下来，我们根据 `Parser` 的结果构建要执行的实际任务。为此，我们按常规定义任"
+"务，但可通过 `Parser` 上的特殊 `parsed` 方法访问解析结果。"
 
 #: src/reference/reference/input-task.md:119
 msgid ""
@@ -221,7 +225,8 @@ msgid ""
 "`(String,String)`) and the result of the `package` task to print some "
 "information to the screen."
 msgstr ""
-"以下示例使用前一示例的输出（类型为 `(String,String)`）和 `package` 任务的结果，在屏幕上打印一些信息。"
+"以下示例使用前一示例的输出（类型为 `(String,String)`）和 `package` 任务的结"
+"果，在屏幕上打印一些信息。"
 
 #: src/reference/reference/input-task.md:126
 msgid "\"Type: \""
@@ -250,33 +255,27 @@ msgstr ""
 msgid ""
 "Normally, an input task is assigned to a setting and you work with "
 "`Initialize[InputTask[A1]]`."
-msgstr ""
-"通常，输入任务会赋给设置，您会使用 `Initialize[InputTask[A1]]`。"
+msgstr "通常，输入任务会赋给设置，您会使用 `Initialize[InputTask[A1]]`。"
 
 #: src/reference/reference/input-task.md:145
 msgid "Breaking this down,"
-msgstr ""
-"分解如下："
+msgstr "分解如下："
 
 #: src/reference/reference/input-task.md:147
 msgid "You can use other settings (via Initialize) to construct an input task."
-msgstr ""
-"您可使用其他设置（通过 Initialize）构建输入任务。"
+msgstr "您可使用其他设置（通过 Initialize）构建输入任务。"
 
 #: src/reference/reference/input-task.md:149
 msgid "You can use the current State to construct the parser."
-msgstr ""
-"您可使用当前 State 构建解析器。"
+msgstr "您可使用当前 State 构建解析器。"
 
 #: src/reference/reference/input-task.md:150
 msgid "The parser accepts user input and provides tab completion."
-msgstr ""
-"解析器接受用户输入并提供 Tab 补全。"
+msgstr "解析器接受用户输入并提供 Tab 补全。"
 
 #: src/reference/reference/input-task.md:151
 msgid "The parser produces the task to run."
-msgstr ""
-"解析器产生要运行的任务。"
+msgstr "解析器产生要运行的任务。"
 
 #: src/reference/reference/input-task.md:153
 msgid ""
@@ -285,8 +284,9 @@ msgid ""
 "section. You can then use settings, `State`, or user input to construct the "
 "task to run. This is implicit in the input task syntax."
 msgstr ""
-"因此，您可使用设置或 `State` 构建定义输入任务命令行语法的解析器。上一节已说明。"
-"然后可使用设置、`State` 或用户输入构建要运行的任务。这在输入任务语法中是隐式的。"
+"因此，您可使用设置或 `State` 构建定义输入任务命令行语法的解析器。上一节已说"
+"明。然后可使用设置、`State` 或用户输入构建要运行的任务。这在输入任务语法中是"
+"隐式的。"
 
 #: src/reference/reference/input-task.md:158
 msgid "Using other input tasks"
@@ -298,22 +298,24 @@ msgid ""
 "reuse input tasks. The `.parsed` and `.evaluated` methods are defined on "
 "InputTasks to make this more convenient in common situations:"
 msgstr ""
-"输入任务涉及的类型可组合，因此可复用输入任务。`InputTasks` 上定义了 `.parsed` 和 `.evaluated` "
-"方法，便于常见场景："
+"输入任务涉及的类型可组合，因此可复用输入任务。`InputTasks` 上定义了 "
+"`.parsed` 和 `.evaluated` 方法，便于常见场景："
 
 #: src/reference/reference/input-task.md:165
 msgid ""
 "Call `.parsed` on an `InputTask[A1]` or `Initialize[InputTask[A1]]` to get "
 "the `Task[A1]` created after parsing the command line"
 msgstr ""
-"在 `InputTask[A1]` 或 `Initialize[InputTask[A1]]` 上调用 `.parsed`，获取解析命令行后创建的 `Task[A1]`"
+"在 `InputTask[A1]` 或 `Initialize[InputTask[A1]]` 上调用 `.parsed`，获取解析"
+"命令行后创建的 `Task[A1]`"
 
 #: src/reference/reference/input-task.md:167
 msgid ""
 "Call `.evaluated` on an `InputTask[A1]` or `Initialize[InputTask[A1]]` to "
 "get the value of type `A1` from evaluating that task"
 msgstr ""
-"在 `InputTask[A1]` 或 `Initialize[InputTask[A1]]` 上调用 `.evaluated`，从执行该任务获取类型为 `A1` 的值"
+"在 `InputTask[A1]` 或 `Initialize[InputTask[A1]]` 上调用 `.evaluated`，从执行"
+"该任务获取类型为 `A1` 的值"
 
 #: src/reference/reference/input-task.md:171
 msgid ""
@@ -321,7 +323,8 @@ msgid ""
 "in the input task definition. In the case of `.evaluated`, the generated "
 "task is evaluated."
 msgstr ""
-"两种情况下，底层 `Parser` 都会与输入任务定义中的其他解析器按序组合。对于 `.evaluated`，会执行生成的任务。"
+"两种情况下，底层 `Parser` 都会与输入任务定义中的其他解析器按序组合。对于 "
+"`.evaluated`，会执行生成的任务。"
 
 #: src/reference/reference/input-task.md:175
 msgid ""
@@ -330,8 +333,8 @@ msgid ""
 "syntactic appearance, so that the arguments before `--` are passed to the "
 "first `run` and the ones after are passed to the second."
 msgstr ""
-"以下示例依次应用 `run` 输入任务、字面分隔符解析器 `--` 和再次的 `run`。解析器按语法出现顺序组合，"
-"因此 `--` 前的参数传给第一个 `run`，之后的传给第二个。"
+"以下示例依次应用 `run` 输入任务、字面分隔符解析器 `--` 和再次的 `run`。解析器"
+"按语法出现顺序组合，因此 `--` 前的参数传给第一个 `run`，之后的传给第二个。"
 
 #: src/reference/reference/input-task.md:182
 msgid ""
@@ -345,8 +348,7 @@ msgstr ""
 #: src/reference/reference/input-task.md:193
 #: src/reference/reference/input-task.md:256
 msgid "For a main class Demo that echoes its arguments, this looks like:"
-msgstr ""
-"对于回显其参数的主类 Demo，输出如下："
+msgstr "对于回显其参数的主类 Demo，输出如下："
 
 #: src/reference/reference/input-task.md:206
 msgid "Preapplying input"
@@ -360,22 +362,21 @@ msgid ""
 "convenience methods are provided on `InputTask[T]` and "
 "`Initialize[InputTask[T]]` that accept the String to apply."
 msgstr ""
-"由于 `InputTasks` 由 `Parsers` 构建，可通过编程方式应用输入来生成新的 `InputTask`。"
-"（也可生成 `Task`，下一节将介绍。）`InputTask[T]` 和 `Initialize[InputTask[T]]` 上提供了两个接受要应用的 String 的便捷方法。"
+"由于 `InputTasks` 由 `Parsers` 构建，可通过编程方式应用输入来生成新的 "
+"`InputTask`。（也可生成 `Task`，下一节将介绍。）`InputTask[T]` 和 "
+"`Initialize[InputTask[T]]` 上提供了两个接受要应用的 String 的便捷方法。"
 
 #: src/reference/reference/input-task.md:215
 msgid ""
 "`partialInput` applies the input and allows further input, such as from the "
 "command line"
-msgstr ""
-"`partialInput` 应用输入并允许进一步输入，如来自命令行"
+msgstr "`partialInput` 应用输入并允许进一步输入，如来自命令行"
 
 #: src/reference/reference/input-task.md:217
 msgid ""
 "`fullInput` applies the input and terminates parsing, so that further input "
 "is not accepted"
-msgstr ""
-"`fullInput` 应用输入并终止解析，不再接受进一步输入"
+msgstr "`fullInput` 应用输入并终止解析，不再接受进一步输入"
 
 #: src/reference/reference/input-task.md:220
 msgid ""
@@ -383,27 +384,27 @@ msgid ""
 "tasks handle all input after the task name, they usually require initial "
 "whitespace to be provided in the input."
 msgstr ""
-"每种情况下，输入都会应用于输入任务的解析器。由于输入任务处理任务名后的所有输入，通常需要在输入中提供起始空白。"
+"每种情况下，输入都会应用于输入任务的解析器。由于输入任务处理任务名后的所有输"
+"入，通常需要在输入中提供起始空白。"
 
 #: src/reference/reference/input-task.md:224
 msgid ""
 "Consider the example in the previous section. We can modify it so that we:"
-msgstr ""
-"考虑上一节的示例。我们可以修改为："
+msgstr "考虑上一节的示例。我们可以修改为："
 
 #: src/reference/reference/input-task.md:227
 msgid ""
 "Explicitly specify all of the arguments to the first `run`. We use `name` "
 "and `version` to show that settings can be used to define and modify parsers."
 msgstr ""
-"显式指定第一个 `run` 的全部参数。我们使用 `name` 和 `version` 展示设置可用于定义和修改解析器。"
+"显式指定第一个 `run` 的全部参数。我们使用 `name` 和 `version` 展示设置可用于"
+"定义和修改解析器。"
 
 #: src/reference/reference/input-task.md:230
 msgid ""
 "Define the initial arguments passed to the second `run`, but allow further "
 "input on the command line."
-msgstr ""
-"定义传给第二个 `run` 的初始参数，但允许命令行上的进一步输入。"
+msgstr "定义传给第二个 `run` 的初始参数，但允许命令行上的进一步输入。"
 
 #: src/reference/reference/input-task.md:233
 msgid ""
@@ -462,9 +463,10 @@ msgid ""
 "defines a plain task `runFixed` that can be used by other tasks or run "
 "directly without providing any input:"
 msgstr ""
-"上一节展示了如何通过应用输入派生新的 `InputTask`。本节中，应用输入会产生 `Task`。"
-"`Initialize[InputTask[A1]]` 上的 `toTask` 方法接受要应用的 `String` 输入，并产生可正常使用的任务。"
-"例如，以下定义了一个普通任务 `runFixed`，可被其他任务使用或直接运行而无需提供任何输入："
+"上一节展示了如何通过应用输入派生新的 `InputTask`。本节中，应用输入会产生 "
+"`Task`。`Initialize[InputTask[A1]]` 上的 `toTask` 方法接受要应用的 `String` "
+"输入，并产生可正常使用的任务。例如，以下定义了一个普通任务 `runFixed`，可被其"
+"他任务使用或直接运行而无需提供任何输入："
 
 #: src/reference/reference/input-task.md:281
 #: src/reference/reference/input-task.md:306
@@ -493,8 +495,8 @@ msgid ""
 "same as the original `InputTask` (in this case, `run`) but with different "
 "input applied. For example:"
 msgstr ""
-"每次调用 `toTask` 都会生成新任务，但每个任务的配置与原始 `InputTask`（本例为 `run`）相同，"
-"只是应用的输入不同。例如："
+"每次调用 `toTask` 都会生成新任务，但每个任务的配置与原始 `InputTask`（本例为 "
+"`run`）相同，只是应用的输入不同。例如："
 
 #: src/reference/reference/input-task.md:312
 msgid "\" red orange\""
@@ -509,6 +511,7 @@ msgid ""
 "class Demo that echoes its arguments, the output of running `runFixed2` "
 "might look like:"
 msgstr ""
-"不同的 `toTask` 调用定义不同的任务，每个任务都在新的 jvm 中运行项目主类。即，`fork` 设置同时配置两者，"
-"每个都有相同的 classpath，都运行相同的主类。但每个任务向主类传递不同的参数。"
-"对于回显其参数的主类 Demo，运行 `runFixed2` 的输出可能如下："
+"不同的 `toTask` 调用定义不同的任务，每个任务都在新的 jvm 中运行项目主类。即，"
+"`fork` 设置同时配置两者，每个都有相同的 classpath，都运行相同的主类。但每个任"
+"务向主类传递不同的参数。对于回显其参数的主类 Demo，运行 `runFixed2` 的输出可"
+"能如下："

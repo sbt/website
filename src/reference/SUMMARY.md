@@ -19,7 +19,7 @@
   - [sbt 2.0 changes](changes/sbt-2.0-change-summary.md)
   - [Migrating from sbt 1.x](changes/migrating-from-sbt-1.x.md)
 - [Concepts](concepts/index.md)
-  - [Command](concepts/command.md)
+  - [Command basics](concepts/command-basics.md)
   - [Cross building](concepts/cross-building.md)
   - [sbt query](concepts/sbt-query.md)
   - [Caching](concepts/caching.md)
