@@ -1,0 +1,102 @@
+#: src/reference/concepts/command.md:1
+msgid "Command"
+msgstr ""
+
+#: src/reference/concepts/command.md:4
+msgid ""
+"A _command_ is a system-level building block of sbt, often used to capture "
+"user interaction or IDE interaction."
+msgstr ""
+
+#: src/reference/concepts/command.md:6
+msgid "<img src=\"../files/command.svg\" style=\"width: 50%;\"></img>"
+msgstr ""
+
+#: src/reference/concepts/command.md:8
+msgid ""
+"We can think of each command as a `State => State` function. In sbt, the "
+"state represents the following:"
+msgstr ""
+
+#: src/reference/concepts/command.md:10
+msgid "Build structure (`build.sbt` etc)"
+msgstr ""
+
+#: src/reference/concepts/command.md:11
+msgid "Your disk (source code, JAR outputs, etc)"
+msgstr ""
+
+#: src/reference/concepts/command.md:13
+msgid ""
+"Thus, a command would typically modify either the build structure or the "
+"disk. For example, the `set` command can apply a setting to modify the build "
+"strcuture:"
+msgstr ""
+
+#: src/reference/concepts/command.md:16
+msgid "\"foo\""
+msgstr ""
+
+#: src/reference/concepts/command.md:19
+msgid "The `act` command can lift a task such as `compile` into a command:"
+msgstr ""
+
+#: src/reference/concepts/command.md:25
+msgid ""
+"The compilation would read from the disk and write outputs, or display error "
+"messages on the screen."
+msgstr ""
+
+#: src/reference/concepts/command.md:27
+msgid "Commands are sequentially processed"
+msgstr ""
+
+#: src/reference/concepts/command.md:30
+msgid ""
+"Because there is only one state, a characteristic of commands is that they "
+"are executed one at a time."
+msgstr ""
+
+#: src/reference/concepts/command.md:32
+msgid "![command](../files/command2.svg)"
+msgstr ""
+
+#: src/reference/concepts/command.md:34
+msgid ""
+"There are some execptions to this rule, but generally commands run "
+"sequentially. One mental image that might be useful is that a command is "
+"similar to a cashier taking an order in a cafe, and it will be processed in "
+"the sequence it was received."
+msgstr ""
+
+#: src/reference/concepts/command.md:36
+msgid "Tasks run in parallel"
+msgstr ""
+
+#: src/reference/concepts/command.md:39
+msgid ""
+"As mentioned above, the `act` command translates tasks into the command "
+"level. While doing so, the `act` command will broadcast the task across the "
+"aggregated subprojects and run independent tasks in parallel."
+msgstr ""
+
+#: src/reference/concepts/command.md:41
+msgid ""
+"Similarly, the `reload` command that runs during the startup of a session "
+"will initialize the settings in parallel."
+msgstr ""
+
+#: src/reference/concepts/command.md:43
+msgid "![act](../files/act.svg)"
+msgstr ""
+
+#: src/reference/concepts/command.md:45
+msgid "The role of sbt server"
+msgstr ""
+
+#: src/reference/concepts/command.md:48
+msgid ""
+"sbt server is a service that accepts commands from either the command line "
+"or a network API called Build Server Protocol. This mechanism allows both "
+"the build user and IDEs to share the same sbt session."
+msgstr ""

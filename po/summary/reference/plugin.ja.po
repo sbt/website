@@ -1,0 +1,564 @@
+#: src/reference/reference/plugin.md:11
+msgid "Plugin"
+msgstr ""
+
+#: src/reference/reference/plugin.md:14
+msgid ""
+"```admonish note\n"
+"This page covers plugin details for intermediate users.\n"
+"See [Plugin basics][plugin-basics] for the general introduction of the "
+"plugin system.\n"
+"```"
+msgstr ""
+
+#: src/reference/reference/plugin.md:19
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/plugin.md:21
+msgid ""
+"A _plugin_ is a way to extend the build definition, often to add "
+"capabilities beyond the built-in settings and tasks. Some of the example "
+"usages includes building Docker containers, supporting to Scala.JS, and "
+"generate GitHub Actions YAML."
+msgstr ""
+
+#: src/reference/reference/plugin.md:23
+msgid ""
+"A plugin defines a sequence of sbt settings that are automatically added to "
+"all projects or that are explicitly declared for selected projects. A plugin "
+"can also define new commands. The plugins in sbt 1.x and 2.x extend the "
+"`sbt.AutoPlugin` trait, which automates the setting orders between dependent "
+"plugins."
+msgstr ""
+
+#: src/reference/reference/plugin.md:29
+msgid "Creating a plugin"
+msgstr ""
+
+#: src/reference/reference/plugin.md:31
+msgid ""
+"Conceptually we can think of the sbt plugins to be _any other libraries on "
+"the metabuild_, which is currently on Scala 3.8.2. However, in practice "
+"modern sbt plugins are built around auto plugin (`sbt.AutoPlugin`), which "
+"provides tasks and settings in the correct order. See the Plugin "
+"dependencies section for more details."
+msgstr ""
+
+#: src/reference/reference/plugin.md:33
+msgid "build.sbt setup"
+msgstr ""
+
+#: src/reference/reference/plugin.md:35
+msgid "To make an auto plugin, create a project and enable `SbtPlugin`."
+msgstr ""
+
+#: src/reference/reference/plugin.md:37
+msgid ""
+"````admonish example title=\"build.sbt\"\n"
+"```scala\n"
+"version := \"0.1.0-SNAPSHOT\"\n"
+"organization := \"com.example\"\n"
+"homepage := Some(url(\"https://github.com/sbt/sbt-hello\"))\n"
+"\n"
+"lazy val root = rootProject\n"
+"  .enablePlugins(SbtPlugin)\n"
+"  .settings(\n"
+"    name := \"sbt-hello\",\n"
+"    pluginCrossBuild / sbtVersion := {\n"
+"      scalaBinaryVersion.value match\n"
+"        case \"3\"    => \"2.0.0-RC10\" // set minimum sbt version\n"
+"    }\n"
+"  )\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/plugin.md:55
+msgid ""
+"```admonish note\n"
+"- sbt 2.x plugins must be compiled with Scala 3.x. By not specifying "
+"`scalaVersion`, sbt will default to the Scala version suited for a plugin.\n"
+"- `pluginCrossBuild / sbtVersion` is a setting to compile your plugin "
+"against an _older_ version of sbt, which allows the plugin users to choose "
+"from a range of sbt versions.\n"
+"```"
+msgstr ""
+
+#: src/reference/reference/plugin.md:60
+msgid "projectSettings"
+msgstr ""
+
+#: src/reference/reference/plugin.md:62
+msgid ""
+"In an appropriate namespace, define your auto plugin object by extending "
+"`sbt.AutoPlugin`. With auto plugins, all provided settings are provided by "
+"the plugin directly via the `projectSettings` method. Here's an example "
+"plugin that adds a task named `hello` to the subprojects:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:65
+msgid ""
+"````admonish example title=\"src/main/sbthello/HelloPlugin.scala\"\n"
+"```scala\n"
+"package sbthello\n"
+"\n"
+"import sbt.*\n"
+"import Keys.*\n"
+"\n"
+"object HelloPlugin extends AutoPlugin:\n"
+"  override def trigger = allRequirements\n"
+"\n"
+"  object autoImport:\n"
+"    val helloGreeting = settingKey[String](\"greeting\")\n"
+"    val hello = taskKey[Unit](\"say hello\")\n"
+"  end autoImport\n"
+"\n"
+"  import autoImport.*\n"
+"  override lazy val globalSettings: Seq[Setting[?]] = Seq(\n"
+"    helloGreeting := \"hi\",\n"
+"  )\n"
+"\n"
+"  override lazy val projectSettings: Seq[Setting[?]] = Seq(\n"
+"    hello := {\n"
+"      val s = streams.value\n"
+"      val g = helloGreeting.value\n"
+"      s.log.info(g)\n"
+"    }\n"
+"  )\n"
+"end HelloPlugin\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/plugin.md:96
+msgid ""
+"```admonish note title=\"def vs lazy val\"\n"
+"In Scala, a `def` method can be overridden using a `lazy val`, using a "
+"mechanism called _universal access principle_.\n"
+"We recommending using `lazy val` for `projectSettings` since the setting "
+"definitions tend to be immutable.\n"
+"```"
+msgstr ""
+
+#: src/reference/reference/plugin.md:112
+msgid "globalSettings"
+msgstr ""
+
+#: src/reference/reference/plugin.md:114
+msgid ""
+"The `globalSettings` is appended once to the global settings (for example, "
+"`Global / helloGreeting`). These allow a plugin to provide new functionality "
+"or new defaults. One main use of this feature is to globally add commands, "
+"such as for IDE plugins."
+msgstr ""
+
+#: src/reference/reference/plugin.md:122
+msgid ""
+"Where possible, your plugin should define the default value using "
+"`globalSettings`. Providing the value in the widest scope and using the "
+"value in narrowest scope give the user the maximum flexibility to change the "
+"settings."
+msgstr ""
+
+#: src/reference/reference/plugin.md:124
+msgid "Implementing plugin dependencies"
+msgstr ""
+
+#: src/reference/reference/plugin.md:126
+msgid "Next step is to define the plugin dependencies."
+msgstr ""
+
+#: src/reference/reference/plugin.md:139
+msgid ""
+"The `requires` method returns a value of type `Plugins`, which is a DSL for "
+"constructing the dependency list. The requires method typically contains one "
+"of the following values:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:141
+msgid "`empty` (No plugins)"
+msgstr ""
+
+#: src/reference/reference/plugin.md:142
+msgid "Other auto plugins"
+msgstr ""
+
+#: src/reference/reference/plugin.md:143
+msgid "`&&` operator (for defining multiple dependencies)"
+msgstr ""
+
+#: src/reference/reference/plugin.md:145
+msgid "Root plugins and triggered plugins"
+msgstr ""
+
+#: src/reference/reference/plugin.md:147
+msgid ""
+"Some plugins should always be explicitly enabled on subprojects. We call "
+"these root plugins, i.e. plugins that are _root_ nodes in the plugin "
+"dependency graph."
+msgstr ""
+
+#: src/reference/reference/plugin.md:151
+msgid ""
+"Auto plugins also provide a way for plugins to automatically attach "
+"themselves to projects if their dependencies are met. We call these "
+"triggered plugins, and they are created by overriding the `trigger` method."
+msgstr ""
+
+#: src/reference/reference/plugin.md:155
+msgid ""
+"For example, we might want to create a triggered plugin that can append "
+"commands automatically to the build. To do this, set the `requires` method "
+"to return `empty`, and override the `trigger` method with `allRequirements`."
+msgstr ""
+
+#: src/reference/reference/plugin.md:170
+msgid ""
+"The build user still needs to include this plugin in `project/plugins.sbt`, "
+"but it is no longer needed to be included in `build.sbt`. This becomes more "
+"interesting when you do specify a plugin with requirements. Let's modify the "
+"`SbtLessPlugin` so that it depends on another plugin:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:185
+msgid ""
+"As it turns out, `PlayScala` plugin (in case you didn't know, the Play "
+"framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of its required "
+"plugins. So, if we define a `build.sbt` with:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:192
+msgid ""
+"then the setting sequence from `SbtLessPlugin` will be automatically "
+"appended somewhere after the settings from `PlayScala`."
+msgstr ""
+
+#: src/reference/reference/plugin.md:194
+msgid ""
+"This allows plugins to silently, and correctly, extend existing plugins with "
+"more features.  It also can help remove the burden of ordering from the "
+"user, allowing the plugin authors greater freedom and power when providing "
+"feature for their users."
+msgstr ""
+
+#: src/reference/reference/plugin.md:196
+msgid "Controlling the import with autoImport"
+msgstr ""
+
+#: src/reference/reference/plugin.md:198
+msgid ""
+"When an auto plugin provides a `val`, `lazy val`, or `object` named "
+"`autoImport`, the contents of the field are wildcard imported in `set`, "
+"`eval`, and `*.sbt` files."
+msgstr ""
+
+#: src/reference/reference/plugin.md:210
+msgid "\"greeting\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:211
+msgid "\"say hello\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:220
+msgid ""
+"Typically, `autoImport` is used to provide new keys - `SettingKey`s, "
+"`TaskKey`s, or `InputKey`s - or core methods without requiring an import or "
+"qualification."
+msgstr ""
+
+#: src/reference/reference/plugin.md:223
+msgid "Example Plugin"
+msgstr ""
+
+#: src/reference/reference/plugin.md:225
+msgid "An example of a typical plugin:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:227
+msgid ""
+"````admonish example title=\"Plugin build.sbt\"\n"
+"```scala\n"
+"version := \"0.1.0-SNAPSHOT\"\n"
+"organization := \"com.example\"\n"
+"homepage := Some(url(\"https://github.com/sbt/sbt-obfuscate\"))\n"
+"\n"
+"lazy val root = rootProject\n"
+"  .enablePlugins(SbtPlugin)\n"
+"  .settings(\n"
+"    name := \"sbt-obfuscate\",\n"
+"    pluginCrossBuild / sbtVersion := {\n"
+"      scalaBinaryVersion.value match\n"
+"        case \"3\" => \"2.0.0-RC10\" // set minimum sbt version\n"
+"    }\n"
+"  )\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/plugin.md:245
+msgid ""
+"````admonish example title=\"src/main/scala/sbtobfuscate/"
+"ObfuscatePlugin.scala\"\n"
+"```scala\n"
+"package sbtobfuscate\n"
+"\n"
+"import sbt.*\n"
+"import sbt.Keys.*\n"
+"import sbt.CacheImplicits.given\n"
+"import xsbti.HashedVirtualFileRef\n"
+"\n"
+"object ObfuscatePlugin extends AutoPlugin:\n"
+"  // by defining autoImport, the settings are automatically\n"
+"  // imported into user's `*.sbt`\n"
+"  object autoImport:\n"
+"    val obfuscate = taskKey[Seq[HashedVirtualFileRef]](\"Obfuscates files."
+"\")\n"
+"\n"
+"    // configuration points, like built-in `version` and "
+"`libraryDependencies`\n"
+"    val obfuscateLiterals = settingKey[Boolean](\"Obfuscate literals.\")\n"
+"  end autoImport\n"
+"\n"
+"  import autoImport.*\n"
+"\n"
+"  // This plugin is automatically enabled for projects which are JvmPlugin.\n"
+"  override def trigger = allRequirements\n"
+"\n"
+"  // default values for the settings\n"
+"  override lazy val globalSettings: Seq[Def.Setting[?]] = Seq(\n"
+"    obfuscateLiterals := false,\n"
+"  )\n"
+"\n"
+"  // default implementations for the tasks\n"
+"  val baseObfuscateSettings: Seq[Def.Setting[?]] = Seq(\n"
+"    obfuscate := {\n"
+"      Obfuscate(sourcesVF.value, (obfuscate / obfuscateLiterals).value)\n"
+"    },\n"
+"  )\n"
+"\n"
+"  // a group of settings that are automatically added to projects.\n"
+"  override lazy val projectSettings: Seq[Def.Setting[?]] =\n"
+"    inConfig(Compile)(baseObfuscateSettings) ++\n"
+"    inConfig(Test)(baseObfuscateSettings)\n"
+"end ObfuscatePlugin\n"
+"\n"
+"object Obfuscate:\n"
+"  def apply(\n"
+"    sources: Seq[HashedVirtualFileRef],\n"
+"    obfuscateLiterals: Boolean\n"
+"  ): Seq[HashedVirtualFileRef] =\n"
+"    // TODO obfuscate stuff!\n"
+"    sources\n"
+"end Obfuscate\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/plugin.md:298
+msgid "Usage example"
+msgstr ""
+
+#: src/reference/reference/plugin.md:300
+msgid "A build definition that uses the plugin might look like `build.sbt`:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:306
+msgid "Using an auto plugin"
+msgstr ""
+
+#: src/reference/reference/plugin.md:308
+msgid ""
+"A common situation is when using a binary plugin published to a repository. "
+"You can create `project/plugins.sbt` with all of the desired sbt plugins, "
+"any general dependencies, and any necessary repositories:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:312 src/reference/reference/plugin.md:313
+#: src/reference/reference/plugin.md:316
+msgid "\"org.example\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:312
+msgid "\"plugin\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:312
+msgid "\"1.0\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:313
+msgid "\"another-plugin\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:313
+msgid "\"2.0\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:314
+msgid "// plain library (not an sbt plugin) for use in the build definition"
+msgstr ""
+
+#: src/reference/reference/plugin.md:316
+msgid "\"utilities\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:316
+msgid "\"1.3\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:318
+msgid "\"Example Plugin Repository\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:318
+msgid "\"https://example.org/repo/\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:321
+msgid ""
+"Many of the auto plugins automatically add settings into projects, however, "
+"some may require explicit enablement. Here's an example:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:325
+msgid "\"util\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:329
+msgid "\"hello-util\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:333
+msgid "Metabuild"
+msgstr ""
+
+#: src/reference/reference/plugin.md:335
+msgid ""
+"A metabuild is a project under `project/` folder. This project's classpath "
+"is the classpath used for build definitions in `project/` and any `.sbt` "
+"files in the project's base directory. It is also used for the `eval` and "
+"`set` commands."
+msgstr ""
+
+#: src/reference/reference/plugin.md:340
+msgid "Specifically,"
+msgstr ""
+
+#: src/reference/reference/plugin.md:342
+msgid ""
+"Managed dependencies declared by the metabuild are retrieved and are "
+"available on the build definition classpath, just like for a normal project."
+msgstr ""
+
+#: src/reference/reference/plugin.md:345
+msgid ""
+"Unmanaged dependencies in `project/lib/` are available to the build "
+"definition, just like for a normal project."
+msgstr ""
+
+#: src/reference/reference/plugin.md:347
+msgid ""
+"Sources in the `project/` project are the build definition files and are "
+"compiled using the classpath built from the managed and unmanaged "
+"dependencies."
+msgstr ""
+
+#: src/reference/reference/plugin.md:350
+msgid ""
+"Project dependencies can be declared in `project/plugins.sbt` (similarly to "
+"`build.sbt` file in a normal project) and will be available to the build "
+"definitions."
+msgstr ""
+
+#: src/reference/reference/plugin.md:354
+msgid ""
+"The build definition classpath is searched for `sbt/sbt.autoplugins` "
+"descriptor files containing the names of `sbt.AutoPlugin` implementations."
+msgstr ""
+
+#: src/reference/reference/plugin.md:358
+msgid ""
+"The `reload plugins` command changes the current build to the (root) "
+"project's metabuild definition. This allows manipulating the metabuild "
+"project like a normal subproject. `reload return` changes back to the "
+"original build. Any session settings for the metabuild project that have not "
+"been saved are dropped."
+msgstr ""
+
+#: src/reference/reference/plugin.md:364
+msgid ""
+"An auto plugin is a module that defines settings to automatically inject "
+"into subprojects. Additionally, an auto plugin provides the following "
+"feature:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:367
+msgid ""
+"Automatically import selective names to `.sbt` files and the `eval` and "
+"`set` commands."
+msgstr ""
+
+#: src/reference/reference/plugin.md:368
+msgid "Specify plugin dependencies to other auto plugins."
+msgstr ""
+
+#: src/reference/reference/plugin.md:369
+msgid "Automatically activate itself when all dependencies are present."
+msgstr ""
+
+#: src/reference/reference/plugin.md:370
+msgid ""
+"Specify `projectSettings`, `buildSettings`, and `globalSettings` as "
+"appropriate."
+msgstr ""
+
+#: src/reference/reference/plugin.md:372
+msgid "Plugin dependencies"
+msgstr ""
+
+#: src/reference/reference/plugin.md:374
+msgid ""
+"Prior to the introduction of the `AutoPlugin` system in sbt 0.13.5, if a "
+"plugin depended on the settings and tasks from another plugin, the build "
+"users had to include the plugins in the right order. This became complicated "
+"and error-prone as the number of plugins increased within an application."
+msgstr ""
+
+#: src/reference/reference/plugin.md:376
+msgid ""
+"An auto plugin can depend on other auto plugins and ensure these dependency "
+"settings are loaded first."
+msgstr ""
+
+#: src/reference/reference/plugin.md:378
+msgid ""
+"Suppose we have the `SbtLessPlugin` and the `SbtCoffeeScriptPlugin`, which "
+"in turn depends on the `SbtJsTaskPlugin`, `SbtWebPlugin`, and `JvmPlugin`. "
+"Instead of manually activating all of these plugins, a project can just "
+"activate the `SbtLessPlugin` and `SbtCoffeeScriptPlugin` like this:"
+msgstr ""
+
+#: src/reference/reference/plugin.md:381
+msgid "\".\""
+msgstr ""
+
+#: src/reference/reference/plugin.md:385
+msgid ""
+"This will pull in the right setting sequence from the plugins in the right "
+"order."
+msgstr ""
+
+#: src/reference/reference/plugin.md:387
+msgid "Maven publishing convention"
+msgstr ""
+
+#: src/reference/reference/plugin.md:389
+msgid ""
+"sbt 2.x plugins are published to Maven layout repositories with `_sbt2_3` "
+"suffix in its artifact name. For example, sbt-ci-release 1.11.2 is published "
+"to the Central Repo as <https://repo1.maven.org/maven2/com/github/sbt/sbt-ci-"
+"release_sbt2_3/1.11.2/>. This suffix is appended automatically by sbt, so "
+"the `name` should just be called `sbt-ci-release` etc in `build.sbt`."
+msgstr ""

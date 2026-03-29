@@ -1,0 +1,291 @@
+#: src/reference/reference/command.md:6
+msgid "Command"
+msgstr ""
+
+#: src/reference/reference/command.md:9
+msgid ""
+"This page covers commands in detail. See [Command basics](../concepts/"
+"command-basics.md) for a general explanation."
+msgstr ""
+
+#: src/reference/reference/command.md:11
+msgid "Description"
+msgstr ""
+
+#: src/reference/reference/command.md:13
+msgid ""
+"A _command_ is a system-level building block of sbt, often used to capture "
+"user interactions. At the command level, there is little support for "
+"subprojects and parallel processing since those are implemented in the `act` "
+"command."
+msgstr ""
+
+#: src/reference/reference/command.md:15
+msgid ""
+"Plugin authors should try to solve their problem using settings, tasks, and "
+"input tasks first. Several notable exceptions are:"
+msgstr ""
+
+#: src/reference/reference/command.md:17
+msgid "Extending the user experience of sbt itself"
+msgstr ""
+
+#: src/reference/reference/command.md:18
+msgid "Providing sequential processing, for example for `release` command"
+msgstr ""
+
+#: src/reference/reference/command.md:20
+msgid "Introduction"
+msgstr ""
+
+#: src/reference/reference/command.md:22
+msgid "There are three main aspects to commands:"
+msgstr ""
+
+#: src/reference/reference/command.md:24
+msgid "The syntax used by the user to invoke the command, including:"
+msgstr ""
+
+#: src/reference/reference/command.md:25
+msgid "Tab completion for the syntax"
+msgstr ""
+
+#: src/reference/reference/command.md:26
+msgid "The parser to turn input into an appropriate data structure"
+msgstr ""
+
+#: src/reference/reference/command.md:27
+msgid ""
+"The action to perform using the parsed data structure. This action "
+"transforms the build `State`."
+msgstr ""
+
+#: src/reference/reference/command.md:29
+msgid "Help provided to the user"
+msgstr ""
+
+#: src/reference/reference/command.md:31
+msgid ""
+"In sbt, the syntax part, including tab completion, is specified with parser "
+"combinators. If you are familiar with the parser combinators in Scala's "
+"standard library, these are very similar. See the [Tab-completion parser](./"
+"tab-completion-parser.md) page for how to use the parser combinators."
+msgstr ""
+
+#: src/reference/reference/command.md:38
+msgid ""
+"State provides access to the build state, such as all registered commands, "
+"the remaining commands to execute, and all project-related information."
+msgstr ""
+
+#: src/reference/reference/command.md:47
+msgid ""
+"Finally, basic help information may be provided that is used by the `help` "
+"command to display command help."
+msgstr ""
+
+#: src/reference/reference/command.md:50
+msgid "Defining a Command"
+msgstr ""
+
+#: src/reference/reference/command.md:52
+msgid ""
+"A command combines a function `State => Parser[T]` with an action `(State, "
+"T) => State`. The reason for `State => Parser[T]` and not simply `Parser[T]` "
+"is that often the current `State` is used to build the parser. For example, "
+"the currently loaded projects (provided by `State`) determine valid "
+"completions for the `project` command. Examples for the general and specific "
+"cases are shown in the following sections."
+msgstr ""
+
+#: src/reference/reference/command.md:59
+msgid ""
+"See [Command.scala](https://github.com/sbt/sbt/blob/develop/main-command/src/"
+"main/scala/sbt/Command.scala) for the source API details for constructing "
+"commands."
+msgstr ""
+
+#: src/reference/reference/command.md:62
+msgid "General commands"
+msgstr ""
+
+#: src/reference/reference/command.md:64
+msgid "General command construction looks like:"
+msgstr ""
+
+#: src/reference/reference/command.md:69 src/reference/reference/command.md:79
+#: src/reference/reference/command.md:90 src/reference/reference/command.md:102
+msgid "\"name\""
+msgstr ""
+
+#: src/reference/reference/command.md:72
+msgid "No-argument commands"
+msgstr ""
+
+#: src/reference/reference/command.md:74
+msgid ""
+"There is a convenience method for constructing commands that do not accept "
+"any arguments."
+msgstr ""
+
+#: src/reference/reference/command.md:82
+msgid "Single-argument command"
+msgstr ""
+
+#: src/reference/reference/command.md:84
+msgid ""
+"There is a convenience method for constructing commands that accept a single "
+"argument with arbitrary content."
+msgstr ""
+
+#: src/reference/reference/command.md:88
+msgid "// accepts the state and the single argument"
+msgstr ""
+
+#: src/reference/reference/command.md:93
+msgid "Multi-argument command"
+msgstr ""
+
+#: src/reference/reference/command.md:95
+msgid ""
+"There is a convenience method for constructing commands that accept multiple "
+"arguments separated by spaces."
+msgstr ""
+
+#: src/reference/reference/command.md:100
+msgid "// <arg> is the suggestion printed for tab completion on an argument"
+msgstr ""
+
+#: src/reference/reference/command.md:102
+msgid "\"<arg>\""
+msgstr ""
+
+#: src/reference/reference/command.md:105
+msgid "Full Example"
+msgstr ""
+
+#: src/reference/reference/command.md:107
+msgid ""
+"The following example is a sample build that adds commands to a project. To "
+"try it out:"
+msgstr ""
+
+#: src/reference/reference/command.md:110
+msgid "Create `build.sbt` and `project/CommandExample.scala`."
+msgstr ""
+
+#: src/reference/reference/command.md:111
+msgid "Run sbt on the project."
+msgstr ""
+
+#: src/reference/reference/command.md:112
+msgid ""
+"Try out the `hello`, `helloAll`, `failIfTrue`, `color`, and printState "
+"commands."
+msgstr ""
+
+#: src/reference/reference/command.md:114
+msgid "Use tab-completion and the code below as guidance."
+msgstr ""
+
+#: src/reference/reference/command.md:116
+msgid "Here's `build.sbt`:"
+msgstr ""
+
+#: src/reference/reference/command.md:118
+msgid ""
+"````admonish example title=\"build.sbt\"\n"
+"\n"
+"```scala\n"
+"import CommandExample.*\n"
+"\n"
+"scalaVersion := \"3.8.2\"\n"
+"LocalRootProject / commands ++= Seq(hello, helloAll, failIfTrue, "
+"changeColor, printState)\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/command.md:128
+msgid "Here's `project/CommandExample.scala`:"
+msgstr ""
+
+#: src/reference/reference/command.md:130
+msgid ""
+"````admonish example title=\"project/CommandExample.scala\"\n"
+"\n"
+"```scala\n"
+"import sbt.*\n"
+"import Keys.*\n"
+"import scala.Console\n"
+"\n"
+"// imports standard command parsing functionality\n"
+"import complete.DefaultParsers.*\n"
+"\n"
+"object CommandExample:\n"
+"  // A simple, no-argument command that prints \"Hi\",\n"
+"  //  leaving the current state unchanged.\n"
+"  def hello = Command.command(\"hello\"): s0 =>\n"
+"    Console.out.println(\"Hi!\")\n"
+"    s0\n"
+"\n"
+"  // A simple, multiple-argument command that prints \"Hi\" followed by the "
+"arguments.\n"
+"  //   Again, it leaves the current state unchanged.\n"
+"  def helloAll = Command.args(\"helloAll\", \"<name>\"): (s0, args) =>\n"
+"    println(\"Hi \" + args.mkString(\" \"))\n"
+"    s0\n"
+"\n"
+"  // A command that demonstrates failing or succeeding based on the input\n"
+"  def failIfTrue = Command.single(\"failIfTrue\"):\n"
+"    case (s0, \"true\") => s0.fail\n"
+"    case (s0, _)      => s0\n"
+"\n"
+"  // Demonstration of a custom parser.\n"
+"  // The command changes the foreground or background terminal color\n"
+"  //  according to the input.\n"
+"  lazy val change = Space ~> (reset | setColor)\n"
+"  lazy val reset = token(\"reset\" ^^^ Console.RESET)\n"
+"  lazy val color = token( Space ~> (\"blue\" ^^^ \"4\" | \"green\" ^^^ "
+"\"2\") )\n"
+"  lazy val select = token( \"fg\" ^^^ \"3\" | \"bg\" ^^^ \"4\" )\n"
+"  lazy val setColor = (select ~ color).map: (g, c) =>\n"
+"    s\"\\u001B[${g}${c}m\"\n"
+"\n"
+"  def changeColor = Command(\"color\")(_ => change): (s0, ansicode) =>\n"
+"    Console.out.print(ansicode)\n"
+"    Console.out.println(\"Hi\")\n"
+"    s0\n"
+"\n"
+"  // A command that demonstrates getting information out of State.\n"
+"  def printState = Command.command(\"printState\"): s0 =>\n"
+"    import s0.*\n"
+"    println(s\"definedCommands.size registered commands\")\n"
+"    println(s\"commands to run: ${show(remainingCommands)}\")\n"
+"    println()\n"
+"\n"
+"    println(s\"original arguments: ${show(configuration.arguments.toSeq)}"
+"\")\n"
+"    println(s\"base directory: ${configuration.baseDirectory}\")\n"
+"    println()\n"
+"\n"
+"    println(s\"sbt version: ${configuration.provider.id.version}\")\n"
+"    println(s\"Scala version (for sbt): $"
+"{configuration.provider.scalaProvider.version}\")\n"
+"    println()\n"
+"\n"
+"    val extracted = Project.extract(s0)\n"
+"    import extracted.*\n"
+"    println(s\"Current build: ${currentRef.build}\")\n"
+"    println(s\"Current project: ${currentRef.project}\")\n"
+"    println(s\"Original setting count: ${session.original.size}\")\n"
+"    println(s\"Session setting count: ${session.append.size}\")\n"
+"    s0\n"
+"\n"
+"  def show[A1](s: Seq[A1]) =\n"
+"    s.map(\"'\" + _ + \"'\").mkString(\"[\", \", \", \"]\")\n"
+"\n"
+"end CommandExample\n"
+"```\n"
+"````"
+msgstr ""
