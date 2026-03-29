@@ -1,16 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T01:34:00-05:00\n"
+"PO-Revision-Date: 2025-10-03 01:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
 #: src/reference/reference/command.md:6
 msgid "Command"
-msgstr ""
+msgstr "コマンド"
 
 #: src/reference/reference/command.md:9
 msgid ""
 "This page covers commands in detail. See [Command basics](../concepts/"
 "command-basics.md) for a general explanation."
 msgstr ""
+"このページではコマンドの詳細を解説する。概要は[コマンドの基本](../concepts/"
+"command-basics.md)を参照。"
 
 #: src/reference/reference/command.md:11
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/command.md:13
 msgid ""
@@ -19,50 +35,57 @@ msgid ""
 "subprojects and parallel processing since those are implemented in the `act` "
 "command."
 msgstr ""
+"**コマンド**は、システムレベルの構成要素であり、ユーザとのやり取りを捕捉するのに"
+"よく使われる。コマンドレベルではサブプロジェクトや並列処理のサポートはほとんど"
+"なく、それらは `act` コマンドで実装されている。"
 
 #: src/reference/reference/command.md:15
 msgid ""
 "Plugin authors should try to solve their problem using settings, tasks, and "
 "input tasks first. Several notable exceptions are:"
 msgstr ""
+"プラグイン作者は、まずセッティング、タスク、インプットタスクで問題を解決する"
+"ことを試みるべきである。主な例外は次の通りである:"
 
 #: src/reference/reference/command.md:17
 msgid "Extending the user experience of sbt itself"
-msgstr ""
+msgstr "sbt 自体の UX を拡張する場合"
 
 #: src/reference/reference/command.md:18
 msgid "Providing sequential processing, for example for `release` command"
-msgstr ""
+msgstr "順次処理を必要とする場合（例: `release` コマンド）"
 
 #: src/reference/reference/command.md:20
 msgid "Introduction"
-msgstr ""
+msgstr "はじめに"
 
 #: src/reference/reference/command.md:22
 msgid "There are three main aspects to commands:"
-msgstr ""
+msgstr "コマンドには主に 3つの側面がある:"
 
 #: src/reference/reference/command.md:24
 msgid "The syntax used by the user to invoke the command, including:"
-msgstr ""
+msgstr "ユーザーがコマンドを呼び出すために使う構文。これには次が含まれる:"
 
 #: src/reference/reference/command.md:25
 msgid "Tab completion for the syntax"
-msgstr ""
+msgstr "構文のタブ補完"
 
 #: src/reference/reference/command.md:26
 msgid "The parser to turn input into an appropriate data structure"
-msgstr ""
+msgstr "入力を適切なデータ構造に変換するパーサー"
 
 #: src/reference/reference/command.md:27
 msgid ""
 "The action to perform using the parsed data structure. This action "
 "transforms the build `State`."
 msgstr ""
+"パースしたデータ構造を使って実行するアクション。このアクションはビルドの "
+"`State` を変換する。"
 
 #: src/reference/reference/command.md:29
 msgid "Help provided to the user"
-msgstr ""
+msgstr "ユーザー向けのヘルプ"
 
 #: src/reference/reference/command.md:31
 msgid ""
@@ -71,22 +94,30 @@ msgid ""
 "standard library, these are very similar. See the [Tab-completion parser](./"
 "tab-completion-parser.md) page for how to use the parser combinators."
 msgstr ""
+"sbt では、タブ補完を含む構文部分はパーサーコンビネータで指定する。Scala 標準"
+"ライブラリのパーサーコンビネータに慣れていれば、似たようなものだと思って構わない。"
+"具体的なパーサーコンビネータの使い方は[タブ補完パーサー](./tab-completion-parser.md)を"
+"参照。"
 
 #: src/reference/reference/command.md:38
 msgid ""
 "State provides access to the build state, such as all registered commands, "
 "the remaining commands to execute, and all project-related information."
 msgstr ""
+"`State` はビルド状態へのアクセスを提供する。登録済みのすべてのコマンド、実行"
+"残りのコマンド、プロジェクト関連の情報などである。"
 
 #: src/reference/reference/command.md:47
 msgid ""
 "Finally, basic help information may be provided that is used by the `help` "
 "command to display command help."
 msgstr ""
+"最後に、`help` コマンドがコマンドヘルプを表示するために使う基本的なヘルプ情報"
+"を提供できる。"
 
 #: src/reference/reference/command.md:50
 msgid "Defining a Command"
-msgstr ""
+msgstr "コマンドの定義"
 
 #: src/reference/reference/command.md:52
 msgid ""
@@ -97,6 +128,11 @@ msgid ""
 "completions for the `project` command. Examples for the general and specific "
 "cases are shown in the following sections."
 msgstr ""
+"コマンドは関数 `State => Parser[T]` とアクション `(State, T) => State` を"
+"組み合わせる。単に `Parser[T]` ではなく `State => Parser[T]` とするのは、"
+"現在の `State` をパーサー構築に使うことが多いためである。例えば、"
+"（`State` が提供する）現在ロード済みのサブプロジェクトが `project` コマンドの有効な補完を"
+"決定する。一般的なケースと個別のケースの例は次の節に示す。"
 
 #: src/reference/reference/command.md:59
 msgid ""
@@ -104,14 +140,16 @@ msgid ""
 "main/scala/sbt/Command.scala) for the source API details for constructing "
 "commands."
 msgstr ""
+"コマンド構築のソース API の詳細は [Command.scala](https://github.com/sbt/sbt/"
+"blob/develop/main-command/src/main/scala/sbt/Command.scala) を参照。"
 
 #: src/reference/reference/command.md:62
 msgid "General commands"
-msgstr ""
+msgstr "一般的なコマンド"
 
 #: src/reference/reference/command.md:64
 msgid "General command construction looks like:"
-msgstr ""
+msgstr "一般的なコマンドの構築は次のようになる:"
 
 #: src/reference/reference/command.md:69 src/reference/reference/command.md:79
 #: src/reference/reference/command.md:90 src/reference/reference/command.md:102
@@ -120,41 +158,46 @@ msgstr ""
 
 #: src/reference/reference/command.md:72
 msgid "No-argument commands"
-msgstr ""
+msgstr "引数なしコマンド"
 
 #: src/reference/reference/command.md:74
 msgid ""
 "There is a convenience method for constructing commands that do not accept "
 "any arguments."
 msgstr ""
+"引数を受け付けないコマンドを構築するための便利メソッド:"
 
 #: src/reference/reference/command.md:82
 msgid "Single-argument command"
-msgstr ""
+msgstr "単一引数コマンド"
 
 #: src/reference/reference/command.md:84
 msgid ""
 "There is a convenience method for constructing commands that accept a single "
 "argument with arbitrary content."
 msgstr ""
+"任意の内容の単一引数を受け付けるコマンドを構築するための便利メソッド:"
 
 #: src/reference/reference/command.md:88
 msgid "// accepts the state and the single argument"
 msgstr ""
+"// State と単一の引数を受け取る"
 
 #: src/reference/reference/command.md:93
 msgid "Multi-argument command"
-msgstr ""
+msgstr "複数引数コマンド"
 
 #: src/reference/reference/command.md:95
 msgid ""
 "There is a convenience method for constructing commands that accept multiple "
 "arguments separated by spaces."
 msgstr ""
+"スペースで区切られた複数の引数を受け付けるコマンドを構築するための便利メソッド:"
 
 #: src/reference/reference/command.md:100
 msgid "// <arg> is the suggestion printed for tab completion on an argument"
 msgstr ""
+"// <arg> は引数のタブ補完時に表示されるヒントである"
 
 #: src/reference/reference/command.md:102
 msgid "\"<arg>\""
@@ -162,35 +205,37 @@ msgstr ""
 
 #: src/reference/reference/command.md:105
 msgid "Full Example"
-msgstr ""
+msgstr "例"
 
 #: src/reference/reference/command.md:107
 msgid ""
 "The following example is a sample build that adds commands to a project. To "
 "try it out:"
 msgstr ""
+"次の例は、プロジェクトにコマンドを追加するサンプルビルドである。試すには:"
 
 #: src/reference/reference/command.md:110
 msgid "Create `build.sbt` and `project/CommandExample.scala`."
-msgstr ""
+msgstr "`build.sbt` と `project/CommandExample.scala` を作成する。"
 
 #: src/reference/reference/command.md:111
 msgid "Run sbt on the project."
-msgstr ""
+msgstr "プロジェクトで sbt を実行する。"
 
 #: src/reference/reference/command.md:112
 msgid ""
 "Try out the `hello`, `helloAll`, `failIfTrue`, `color`, and printState "
 "commands."
 msgstr ""
+"`hello`、`helloAll`、`failIfTrue`、`color`、`printState` コマンドを試す。"
 
 #: src/reference/reference/command.md:114
 msgid "Use tab-completion and the code below as guidance."
-msgstr ""
+msgstr "タブ補完と以下のコードを参考にする。"
 
 #: src/reference/reference/command.md:116
 msgid "Here's `build.sbt`:"
-msgstr ""
+msgstr "`build.sbt` は次の通りである:"
 
 #: src/reference/reference/command.md:118
 msgid ""
@@ -208,7 +253,7 @@ msgstr ""
 
 #: src/reference/reference/command.md:128
 msgid "Here's `project/CommandExample.scala`:"
-msgstr ""
+msgstr "`project/CommandExample.scala` は次の通りである:"
 
 #: src/reference/reference/command.md:130
 msgid ""
