@@ -60,7 +60,7 @@ lazy val root = rootProject
 ### projectSettings
 
 In an appropriate namespace, define your auto plugin object
-by extending `sbt.AutoPlugin`. With auto plugins, all provided settings are provided by the plugin directly via the `projectSettings` method. Here's an example plugin that adds a task named `hello` to the subprojects:
+by extending `sbt.AutoPlugin`. With auto plugins, settings are provided by the plugin directly via the `projectSettings` method. Here's an example plugin that adds a task named `hello` to the subprojects:
 
 ~~~admonish example title="src/main/sbthello/HelloPlugin.scala"
 ```scala
@@ -69,7 +69,7 @@ by extending `sbt.AutoPlugin`. With auto plugins, all provided settings are prov
 ~~~
 
 ~~~admonish note title="def vs lazy val"
-In Scala, a `def` method can be overridden using a `lazy val`, using a mechanism called _universal access principle_.
+In Scala, a `def` method can be overridden using a `lazy val`, using a mechanism called _uniform access principle_.
 We recommending using `lazy val` for `projectSettings` since the setting definitions tend to be immutable.
 ~~~
 

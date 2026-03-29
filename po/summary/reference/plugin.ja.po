@@ -1,6 +1,20 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Book of sbt\n"
+"POT-Creation-Date: 2026-03-08T01:34:00-05:00\n"
+"PO-Revision-Date: 2025-10-03 01:34-0400\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.7\n"
+
 #: src/reference/reference/plugin.md:11
 msgid "Plugin"
-msgstr ""
+msgstr "プラグイン"
 
 #: src/reference/reference/plugin.md:14
 msgid ""
@@ -10,10 +24,14 @@ msgid ""
 "plugin system.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"このページでは中級者向けにプラグインの詳細を解説する。\n"
+"プラグインシステムの概要は[プラグインの基本](../guide/plugin-basics.md)を参照。\n"
+"```"
 
 #: src/reference/reference/plugin.md:19
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: src/reference/reference/plugin.md:21
 msgid ""
@@ -22,6 +40,9 @@ msgid ""
 "usages includes building Docker containers, supporting to Scala.JS, and "
 "generate GitHub Actions YAML."
 msgstr ""
+"**プラグイン**はビルド定義を拡張する手段であり、組み込みのセッティングやタスク"
+"ではできない機能を追加するのに使われる。例としては Docker コンテナの構築、Scala."
+"JS のサポート、GitHub Actions の YAML 生成などがある。"
 
 #: src/reference/reference/plugin.md:23
 msgid ""
@@ -31,10 +52,14 @@ msgid ""
 "`sbt.AutoPlugin` trait, which automates the setting orders between dependent "
 "plugins."
 msgstr ""
+"プラグインは sbt のセッティングの列を定義し、すべてのプロジェクトに自動的に"
+"追加するか、選択したプロジェクトに明示的に宣言する。プラグインは新しいコマンド"
+"も定義できる。sbt 1.x および 2.x のプラグインは `sbt.AutoPlugin` トレイトを"
+"継承し、依存プラグイン間のセッティングの順序を自動化する。"
 
 #: src/reference/reference/plugin.md:29
 msgid "Creating a plugin"
-msgstr ""
+msgstr "プラグインの作成"
 
 #: src/reference/reference/plugin.md:31
 msgid ""
@@ -44,14 +69,18 @@ msgid ""
 "provides tasks and settings in the correct order. See the Plugin "
 "dependencies section for more details."
 msgstr ""
+"概念的には、sbt プラグインは「メタビルド (現在は Scala 3.8.2) 上にある何の変哲もないライブラリ」と考えられる。"
+"しかし実際には、現代の sbt プラグインは auto "
+"plugin（`sbt.AutoPlugin`）を中心に構築され、正しい順序でタスクとセッティングを"
+"提供する。詳細はプラグイン依存性の節を参照。"
 
 #: src/reference/reference/plugin.md:33
 msgid "build.sbt setup"
-msgstr ""
+msgstr "build.sbt の設定"
 
 #: src/reference/reference/plugin.md:35
 msgid "To make an auto plugin, create a project and enable `SbtPlugin`."
-msgstr ""
+msgstr "auto plugin を作るには、プロジェクトを作成し `SbtPlugin` を有効にする。"
 
 #: src/reference/reference/plugin.md:37
 msgid ""
@@ -84,18 +113,29 @@ msgid ""
 "from a range of sbt versions.\n"
 "```"
 msgstr ""
+"```admonish note\n"
+"- sbt 2.x のプラグインは Scala 3.x でコンパイルする必要がある。`scalaVersion` "
+"を指定しない場合、sbt はプラグインに適した Scala バージョンをデフォルトとする。\n"
+"- `pluginCrossBuild / sbtVersion` は、プラグインを _より古い_ sbt バージョン向けに"
+"コンパイルするためのセッティングであり、プラグイン利用者が sbt のバージョン"
+"範囲から選べるようにする。\n"
+"```"
 
 #: src/reference/reference/plugin.md:60
 msgid "projectSettings"
-msgstr ""
+msgstr "projectSettings"
 
 #: src/reference/reference/plugin.md:62
 msgid ""
 "In an appropriate namespace, define your auto plugin object by extending "
-"`sbt.AutoPlugin`. With auto plugins, all provided settings are provided by "
+"`sbt.AutoPlugin`. With auto plugins, settings are provided by "
 "the plugin directly via the `projectSettings` method. Here's an example "
 "plugin that adds a task named `hello` to the subprojects:"
 msgstr ""
+"適切な名前空間で、`sbt.AutoPlugin` を継承して auto plugin オブジェクトを定義"
+"する。auto plugin では、セッティングはプラグインが "
+"`projectSettings` メソッドを通じて直接提供する。サブプロジェクトに `hello` "
+"という名前のタスクを追加する例を示す:"
 
 #: src/reference/reference/plugin.md:65
 msgid ""
@@ -135,15 +175,21 @@ msgstr ""
 msgid ""
 "```admonish note title=\"def vs lazy val\"\n"
 "In Scala, a `def` method can be overridden using a `lazy val`, using a "
-"mechanism called _universal access principle_.\n"
+"mechanism called _uniform access principle_.\n"
 "We recommending using `lazy val` for `projectSettings` since the setting "
 "definitions tend to be immutable.\n"
 "```"
 msgstr ""
+"```admonish note title=\"def vs lazy val\"\n"
+"Scala では、`def` メソッドは統一アクセス原理と呼ばれる仕組みで "
+"`lazy val` によりオーバーライドできる。\n"
+"`projectSettings` には `lazy val` を使うことを推奨する。セッティング定義は"
+"不変であることが多いためである。\n"
+"```"
 
 #: src/reference/reference/plugin.md:112
 msgid "globalSettings"
-msgstr ""
+msgstr "globalSettings"
 
 #: src/reference/reference/plugin.md:114
 msgid ""
@@ -152,6 +198,10 @@ msgid ""
 "or new defaults. One main use of this feature is to globally add commands, "
 "such as for IDE plugins."
 msgstr ""
+"`globalSettings` はグローバルなセッティングに一度だけ追加される（例: "
+"`Global / helloGreeting`）。これによりプラグインは新しい機能や新しいデフォルトを"
+"提供できる。主な用途の一つは、IDE プラグインのようにコマンドをグローバルに"
+"追加することである。"
 
 #: src/reference/reference/plugin.md:122
 msgid ""
@@ -160,14 +210,17 @@ msgid ""
 "value in narrowest scope give the user the maximum flexibility to change the "
 "settings."
 msgstr ""
+"可能な限り、プラグインは `globalSettings` でデフォルト値を定義すべきである。"
+"値を最も広いスコープで提供し、最も狭いスコープで使用すると、ユーザーがセッティング"
+"を変更できる自由度が最大になる。"
 
 #: src/reference/reference/plugin.md:124
 msgid "Implementing plugin dependencies"
-msgstr ""
+msgstr "プラグイン依存性の実装"
 
 #: src/reference/reference/plugin.md:126
 msgid "Next step is to define the plugin dependencies."
-msgstr ""
+msgstr "次にプラグイン依存性を定義する。"
 
 #: src/reference/reference/plugin.md:139
 msgid ""
@@ -175,22 +228,24 @@ msgid ""
 "constructing the dependency list. The requires method typically contains one "
 "of the following values:"
 msgstr ""
+"`requires` メソッドは `Plugins` 型の値を返し、依存リストを構築する DSL である。"
+"`requires` メソッドには通常、次のいずれかが含まれる:"
 
 #: src/reference/reference/plugin.md:141
 msgid "`empty` (No plugins)"
-msgstr ""
+msgstr "`empty`（プラグインなし）"
 
 #: src/reference/reference/plugin.md:142
 msgid "Other auto plugins"
-msgstr ""
+msgstr "他の auto plugin"
 
 #: src/reference/reference/plugin.md:143
 msgid "`&&` operator (for defining multiple dependencies)"
-msgstr ""
+msgstr "`&&` 演算子（複数の依存を定義する）"
 
 #: src/reference/reference/plugin.md:145
 msgid "Root plugins and triggered plugins"
-msgstr ""
+msgstr "ルートプラグインとトリガー付きプラグイン"
 
 #: src/reference/reference/plugin.md:147
 msgid ""
@@ -198,6 +253,9 @@ msgid ""
 "these root plugins, i.e. plugins that are _root_ nodes in the plugin "
 "dependency graph."
 msgstr ""
+"一部のプラグインは常にサブプロジェクトで明示的に有効化される必要がある。これらを"
+"ルートプラグインと呼ぶ。プラグイン依存グラフの「ルート」ノード"
+"となるからだ。"
 
 #: src/reference/reference/plugin.md:151
 msgid ""
@@ -205,6 +263,9 @@ msgid ""
 "themselves to projects if their dependencies are met. We call these "
 "triggered plugins, and they are created by overriding the `trigger` method."
 msgstr ""
+"auto plugin は、依存が満たされるサブプロジェクトに自動的に発動される方法も"
+"提供する。これらをトリガー付きプラグインと呼び、`trigger` メソッドを"
+"オーバーライドして作成する。"
 
 #: src/reference/reference/plugin.md:155
 msgid ""
@@ -212,6 +273,9 @@ msgid ""
 "commands automatically to the build. To do this, set the `requires` method "
 "to return `empty`, and override the `trigger` method with `allRequirements`."
 msgstr ""
+"例えば、ビルドにコマンドを自動的に追加できるトリガー付きプラグインを作りたい"
+"場合がある。そうするには、`requires` メソッドが `empty` を返すようにし、"
+"`trigger` メソッドを `allRequirements` でオーバーライドする。"
 
 #: src/reference/reference/plugin.md:170
 msgid ""
@@ -220,6 +284,10 @@ msgid ""
 "interesting when you do specify a plugin with requirements. Let's modify the "
 "`SbtLessPlugin` so that it depends on another plugin:"
 msgstr ""
+"ビルドユーザーは、このプラグインを `project/plugins.sbt` に含める必要が"
+"あるが、`build.sbt` に含める必要はなくなる。"
+"この機能はプラグイン依存性と組み合わせると真価を発揮する。"
+"`SbtLessPlugin` を別のプラグインに依存するよう修正してみる:"
 
 #: src/reference/reference/plugin.md:185
 msgid ""
@@ -227,12 +295,17 @@ msgid ""
 "framework is an sbt plugin) lists `SbtJsTaskPlugin` as one of its required "
 "plugins. So, if we define a `build.sbt` with:"
 msgstr ""
+"実際、`PlayScala` プラグイン（Play フレームワークは sbt プラグインである）"
+"は `SbtJsTaskPlugin` をプラグイン依存性の 1つとして列挙している。したがって、"
+"次のような `build.sbt` を定義すると:"
 
 #: src/reference/reference/plugin.md:192
 msgid ""
 "then the setting sequence from `SbtLessPlugin` will be automatically "
 "appended somewhere after the settings from `PlayScala`."
 msgstr ""
+"`SbtLessPlugin` からのセッティング列が、`PlayScala` のセッティングの後の"
+"どこかに自動的に追加される。"
 
 #: src/reference/reference/plugin.md:194
 msgid ""
@@ -241,10 +314,13 @@ msgid ""
 "user, allowing the plugin authors greater freedom and power when providing "
 "feature for their users."
 msgstr ""
+"これによりプラグインは、既存のプラグインを透過的に、かつ正しく、機能拡張する"
+"ことができる。またユーザーから手動でセッティング列の順序付けをする負担を取り除くことで、"
+"プラグイン作者は安心して機能拡張を提供することができる。"
 
 #: src/reference/reference/plugin.md:196
 msgid "Controlling the import with autoImport"
-msgstr ""
+msgstr "autoImport によるインポートの制御"
 
 #: src/reference/reference/plugin.md:198
 msgid ""
@@ -252,6 +328,9 @@ msgid ""
 "`autoImport`, the contents of the field are wildcard imported in `set`, "
 "`eval`, and `*.sbt` files."
 msgstr ""
+"auto plugin が `autoImport` という名前の `val`、`lazy val`、または `object` を"
+"提供すると、そのフィールドの内容は `set`、`eval`、および `*.sbt` ファイルで"
+"ワイルドカードインポートされる。"
 
 #: src/reference/reference/plugin.md:210
 msgid "\"greeting\""
@@ -267,14 +346,16 @@ msgid ""
 "`TaskKey`s, or `InputKey`s - or core methods without requiring an import or "
 "qualification."
 msgstr ""
+"通常、`autoImport` は新しいキー（`SettingKey`、`TaskKey`、または `InputKey`）"
+"や、インポートや修飾なしで使えるコアメソッドを提供するために使われる。"
 
 #: src/reference/reference/plugin.md:223
 msgid "Example Plugin"
-msgstr ""
+msgstr "プラグインの例"
 
 #: src/reference/reference/plugin.md:225
 msgid "An example of a typical plugin:"
-msgstr ""
+msgstr "典型的なプラグインの例:"
 
 #: src/reference/reference/plugin.md:227
 msgid ""
@@ -358,15 +439,15 @@ msgstr ""
 
 #: src/reference/reference/plugin.md:298
 msgid "Usage example"
-msgstr ""
+msgstr "使用例"
 
 #: src/reference/reference/plugin.md:300
 msgid "A build definition that uses the plugin might look like `build.sbt`:"
-msgstr ""
+msgstr "プラグインを使うビルド定義は、例えば次のような `build.sbt` になる:"
 
 #: src/reference/reference/plugin.md:306
 msgid "Using an auto plugin"
-msgstr ""
+msgstr "auto plugin の利用"
 
 #: src/reference/reference/plugin.md:308
 msgid ""
@@ -374,6 +455,9 @@ msgid ""
 "You can create `project/plugins.sbt` with all of the desired sbt plugins, "
 "any general dependencies, and any necessary repositories:"
 msgstr ""
+"よくあるのは、リポジトリに公開されたバイナリプラグインを使う場合である。"
+"必要な sbt プラグイン、一般的な依存、必要なリポジトリをすべて含む "
+"`project/plugins.sbt` を作成できる:"
 
 #: src/reference/reference/plugin.md:312 src/reference/reference/plugin.md:313
 #: src/reference/reference/plugin.md:316
@@ -399,6 +483,7 @@ msgstr ""
 #: src/reference/reference/plugin.md:314
 msgid "// plain library (not an sbt plugin) for use in the build definition"
 msgstr ""
+"// ビルド定義で使う通常のライブラリ（sbt プラグインではない）"
 
 #: src/reference/reference/plugin.md:316
 msgid "\"utilities\""
@@ -421,6 +506,8 @@ msgid ""
 "Many of the auto plugins automatically add settings into projects, however, "
 "some may require explicit enablement. Here's an example:"
 msgstr ""
+"多くの auto plugin はプロジェクトにセッティングを自動追加するが、明示的な"
+"有効化が必要なものもある。例を示す:"
 
 #: src/reference/reference/plugin.md:325
 msgid "\"util\""
@@ -432,7 +519,7 @@ msgstr ""
 
 #: src/reference/reference/plugin.md:333
 msgid "Metabuild"
-msgstr ""
+msgstr "メタビルド"
 
 #: src/reference/reference/plugin.md:335
 msgid ""
@@ -441,22 +528,28 @@ msgid ""
 "files in the project's base directory. It is also used for the `eval` and "
 "`set` commands."
 msgstr ""
+"メタビルドは `project/` フォルダ下のプロジェクトである。このプロジェクトの"
+"クラスパスは、`project/` 内のビルド定義およびプロジェクトのベースディレクトリ"
+"にある `.sbt` ファイルに使われる。`eval` および `set` コマンドにも使われる。"
 
 #: src/reference/reference/plugin.md:340
 msgid "Specifically,"
-msgstr ""
+msgstr "具体的には、"
 
 #: src/reference/reference/plugin.md:342
 msgid ""
 "Managed dependencies declared by the metabuild are retrieved and are "
 "available on the build definition classpath, just like for a normal project."
 msgstr ""
+"メタビルドが宣言したマネージ依存性は取得され、通常のプロジェクトと同様にビルド定義"
+"のクラスパスで利用できる。"
 
 #: src/reference/reference/plugin.md:345
 msgid ""
 "Unmanaged dependencies in `project/lib/` are available to the build "
 "definition, just like for a normal project."
 msgstr ""
+"`project/lib/` のアンマネージ依存性は、通常のプロジェクトと同様にビルド定義で利用できる。"
 
 #: src/reference/reference/plugin.md:347
 msgid ""
@@ -464,6 +557,8 @@ msgid ""
 "compiled using the classpath built from the managed and unmanaged "
 "dependencies."
 msgstr ""
+"`project/` プロジェクト内のソースはビルド定義ファイルであり、マネージ依存性と"
+"アンマネージ依存性から構築したクラスパスでコンパイルされる。"
 
 #: src/reference/reference/plugin.md:350
 msgid ""
@@ -471,12 +566,16 @@ msgid ""
 "`build.sbt` file in a normal project) and will be available to the build "
 "definitions."
 msgstr ""
+"サブプロジェクト依存は `project/plugins.sbt` に宣言できる（通常プロジェクトの "
+"`build.sbt` と同様）し、ビルド定義から利用できる。"
 
 #: src/reference/reference/plugin.md:354
 msgid ""
 "The build definition classpath is searched for `sbt/sbt.autoplugins` "
 "descriptor files containing the names of `sbt.AutoPlugin` implementations."
 msgstr ""
+"ビルド定義のクラスパスから `sbt/sbt.autoplugins` 記述子ファイルが検索され、"
+"`sbt.AutoPlugin` 実装の名前が含まれる。"
 
 #: src/reference/reference/plugin.md:358
 msgid ""
@@ -486,6 +585,10 @@ msgid ""
 "original build. Any session settings for the metabuild project that have not "
 "been saved are dropped."
 msgstr ""
+"`reload plugins` コマンドは現在のビルドを（ルート）プロジェクトのメタビルド"
+"定義に切り替える。これによりメタビルドプロジェクトを通常のサブプロジェクトの"
+"ように操作できる。`reload return` は元のビルドに戻る。メタビルドプロジェクトの"
+"セッションで保存されていないセッティングは破棄される。"
 
 #: src/reference/reference/plugin.md:364
 msgid ""
@@ -493,30 +596,35 @@ msgid ""
 "into subprojects. Additionally, an auto plugin provides the following "
 "feature:"
 msgstr ""
+"auto plugin は、サブプロジェクトに自動注入するセッティングを定義するモジュール"
+"である。さらに auto plugin は次の機能を提供する:"
 
 #: src/reference/reference/plugin.md:367
 msgid ""
 "Automatically import selective names to `.sbt` files and the `eval` and "
 "`set` commands."
 msgstr ""
+"選択した名前を `.sbt` ファイルおよび `eval` と `set` コマンドに自動インポート"
+"する。"
 
 #: src/reference/reference/plugin.md:368
 msgid "Specify plugin dependencies to other auto plugins."
-msgstr ""
+msgstr "他の auto plugin へのプラグイン依存を指定する。"
 
 #: src/reference/reference/plugin.md:369
 msgid "Automatically activate itself when all dependencies are present."
-msgstr ""
+msgstr "すべての依存が揃うと自動的に自身を有効化する。"
 
 #: src/reference/reference/plugin.md:370
 msgid ""
 "Specify `projectSettings`, `buildSettings`, and `globalSettings` as "
 "appropriate."
 msgstr ""
+"必要に応じて `projectSettings`、`buildSettings`、`globalSettings` を指定する。"
 
 #: src/reference/reference/plugin.md:372
 msgid "Plugin dependencies"
-msgstr ""
+msgstr "プラグイン依存性"
 
 #: src/reference/reference/plugin.md:374
 msgid ""
@@ -525,12 +633,18 @@ msgid ""
 "users had to include the plugins in the right order. This became complicated "
 "and error-prone as the number of plugins increased within an application."
 msgstr ""
+"sbt 0.13.5 で `AutoPlugin` システムが導入される前は、あるプラグインが別の"
+"プラグインのセッティングやタスクに依存する場合、ビルド利用者が正しい順序で"
+"プラグインを含める必要があった。アプリケーション内のプラグイン数が増えると"
+"複雑でエラーが起きやすくなった。"
 
 #: src/reference/reference/plugin.md:376
 msgid ""
 "An auto plugin can depend on other auto plugins and ensure these dependency "
 "settings are loaded first."
 msgstr ""
+"auto plugin は他の auto plugin に依存でき、これらの依存セッティングが先に"
+"ロードされるようにできる。"
 
 #: src/reference/reference/plugin.md:378
 msgid ""
@@ -539,6 +653,10 @@ msgid ""
 "Instead of manually activating all of these plugins, a project can just "
 "activate the `SbtLessPlugin` and `SbtCoffeeScriptPlugin` like this:"
 msgstr ""
+"`SbtLessPlugin` と、さらに `SbtJsTaskPlugin`、`SbtWebPlugin`、`JvmPlugin` に"
+"依存する `SbtCoffeeScriptPlugin` があるとする。これらすべてを手動で有効化する"
+"代わりに、プロジェクトは次のように `SbtLessPlugin` と `SbtCoffeeScriptPlugin` "
+"だけを有効化すればよい:"
 
 #: src/reference/reference/plugin.md:381
 msgid "\".\""
@@ -549,10 +667,11 @@ msgid ""
 "This will pull in the right setting sequence from the plugins in the right "
 "order."
 msgstr ""
+"これにより、正しい順序でプラグインから適切なセッティング列が引き込まれる。"
 
 #: src/reference/reference/plugin.md:387
 msgid "Maven publishing convention"
-msgstr ""
+msgstr "Maven 公開の慣例"
 
 #: src/reference/reference/plugin.md:389
 msgid ""
@@ -562,3 +681,8 @@ msgid ""
 "release_sbt2_3/1.11.2/>. This suffix is appended automatically by sbt, so "
 "the `name` should just be called `sbt-ci-release` etc in `build.sbt`."
 msgstr ""
+"sbt 2.x のプラグインは、成果物名に `_sbt2_3` サフィックスを付けて Maven レイアウト"
+"のリポジトリに公開される。例えば sbt-ci-release 1.11.2 は Central Repo に "
+"<https://repo1.maven.org/maven2/com/github/sbt/sbt-ci-release_sbt2_3/1.11.2/> "
+"として公開される。このサフィックスは sbt が自動的に付加するため、`build.sbt` "
+"の `name` は `sbt-ci-release` などとだけ書けばよい。"
