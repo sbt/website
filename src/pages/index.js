@@ -27,7 +27,7 @@ function HomepageHeader() {
             </Link>
             <Link
               className="button button--secondary button--lg"
-              to="https://www.scala-sbt.org/1.x/docs/">
+              to="https://www.scala-sbt.org/2.x/docs/en/">
               Documentation
             </Link>
           </div>
