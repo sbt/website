@@ -58,7 +58,7 @@
                 </span><br><br>
                 <a href="download.html" class="btn" role="button" style="margin-right: 2em">Get sbt $sbtVersion$ (latest stable)</a>
 
-                <a href="/1.x/docs/" class="btn" role="button" style="margin-left: 2em">Documentation</a>
+                <a href="/2.x/docs/en/" class="btn" role="button" style="margin-left: 2em">Documentation</a>
               </div>
             </div>
           </div>

@@ -76,8 +76,13 @@ const config = {
             position: 'left',
           },
           {
+            href: 'https://www.scala-sbt.org/1.x/docs/',
+            label: '1.x docs',
+            position: 'right',
+          },
+          {
             href: 'https://www.scala-sbt.org/2.x/docs/en/',
-            label: 'sbt 2.x docs',
+            label: '2.x docs',
             position: 'right',
           },
           {
