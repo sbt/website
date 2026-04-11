@@ -384,7 +384,7 @@ The sbt ecosystem would not be the same without so many awesome plugins. Here ar
 - [sbt-release](https://github.com/sbt/sbt-release) by Gerolf Seitz
 - [sbt-jmh](https://github.com/ktoso/sbt-jmh) by Konrad Malawski (ktoso)
 - [sbt-updates](https://github.com/rtimush/sbt-updates) by Roman Timushev
-- [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin) by James Earl Douglas and Artyom Olshevskiy
+- [sbt-war](https://github.com/earldouglas/sbt-war) by James Earl Douglas and Artyom Olshevskiy
 - [sbt-scoverage](https://github.com/scoverage/sbt-scoverage) by Stephen Samuel and Mikko Koponen
 - [sbt-web](https://github.com/sbt/sbt-web) by Lightbend (Christopher Hunt, Peter Vlugter, et al)
 - [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo) by Eugene Yokota (eed3si9n)

@@ -3,9 +3,9 @@ out: Testing-sbt-plugins.html
 ---
 
   [sbtScriptedTests]: https://github.com/sbt/sbt/tree/develop/sbt-app/src/sbt-test
-  [xsbt-web-plugin]: https://github.com/earldouglas/xsbt-web-plugin/tree/master/src/sbt-test
+  [sbt-war]: https://github.com/earldouglas/sbt-war/tree/master/src/sbt-test
   [sbt-assembly]: https://github.com/sbt/sbt-assembly/tree/master/src/sbt-test/sbt-assembly
-  [feabb2]: https://github.com/earldouglas/xsbt-web-plugin/commit/feabb2eb554940d9b28049bd0618b6a790d9e141
+  [feabb2]: https://github.com/earldouglas/sbt-war/commit/feabb2eb554940d9b28049bd0618b6a790d9e141
 
 Testing sbt plugins
 -------------------
@@ -80,7 +80,7 @@ sys.props.get("plugin.version") match {
 }
 ```
 
-This a trick I picked up from [earldouglas/xsbt-web-plugin@feabb2][feabb2], which allows us to pass version number into the test.
+This a trick I picked up from [earldouglas/sbt-war@feabb2][feabb2], which allows us to pass version number into the test.
 
 I also have `src/main/scala/hello.scala`:
 
@@ -233,6 +233,6 @@ For example, here's the one called by-name.
 -> compile
 ```
 
-[xsbt-web-plugin][xsbt-web-plugin] and [sbt-assembly][sbt-assembly] have some scripted tests too.
+[sbt-war][sbt-war] and [sbt-assembly][sbt-assembly] have some scripted tests too.
 
 That's it! Let me know about your experience in testing plugins!

@@ -150,7 +150,7 @@ lazy val core = (project in file("core"))
 特に人気のプラグインは:
 
  - IDE のためのプラグイン（sbt プロジェクトを好みの IDE にインポートするためのもの）
- - [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin) のような Web フレームワークをサポートするプラグイン
+ - [sbt-war](https://github.com/earldouglas/sbt-war) のような Web フレームワークをサポートするプラグイン
 
 プラグイン開発の方法など、プラグインに関する詳細は [Plugins][Plugins] を参照。
 ベストプラクティスを知りたいなら、[ベスト・プラクティス][Plugins-Best-Practices] を見てほしい。
