@@ -234,7 +234,7 @@ generate dependency lockfiles and check for changes at build time.
   Scala and Java. <!-- 9727 stars -->
 - [Scala.js](https://www.scala-js.org): Scala to JavaScript compiler.
   <!-- 3113 stars -->
-- [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin): Servlet
+- [sbt-war](https://github.com/earldouglas/sbt-war): Servlet
   support. <!-- 379 stars -->
 - [sbt-web-scalajs](https://github.com/vmunier/sbt-web-scalajs): use Scala.js
   with any web server. <!-- 148 stars -->

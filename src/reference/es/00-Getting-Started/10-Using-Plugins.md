@@ -125,7 +125,7 @@ Existe [una lista de plugins disponibles][Community-Plugins].
 Algunos plugins especialmente famosos son:
 
 - aquellos para los IDEs (para importar un proyecto sbt en tu IDE)
-- aquellos que soportan frameworks web, tales como [xsbt-web-plugin](https://github.com/earldouglas/xsbt-web-plugin)
+- aquellos que soportan frameworks web, tales como [sbt-war](https://github.com/earldouglas/sbt-war)
 
 Para más información, incluyendo cómo desarrollar plugins, ver [Plugins][Plugins].
 Para saber más acerca de las mejores prácticas ver [Plugins - Mejores prácticas][Plugins-Best-Practices].

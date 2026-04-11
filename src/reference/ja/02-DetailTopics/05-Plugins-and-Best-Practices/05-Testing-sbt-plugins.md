@@ -3,9 +3,9 @@ out: Testing-sbt-plugins.html
 ---
 
   [sbtScriptedTests]: https://github.com/sbt/sbt/tree/1.x/sbt/src/sbt-test
-  [xsbt-web-plugin]: https://github.com/earldouglas/xsbt-web-plugin/tree/master/src/sbt-test
+  [sbt-war]: https://github.com/earldouglas/sbt-war/tree/master/src/sbt-test
   [sbt-assembly]: https://github.com/sbt/sbt-assembly/tree/master/src/sbt-test/sbt-assembly
-  [feabb2]: https://github.com/earldouglas/xsbt-web-plugin/commit/feabb2eb554940d9b28049bd0618b6a790d9e141
+  [feabb2]: https://github.com/earldouglas/sbt-war/commit/feabb2eb554940d9b28049bd0618b6a790d9e141
 
 sbt プラグインをテストする
 -----------------------
@@ -81,7 +81,7 @@ sys.props.get("plugin.version") match {
 }
 ```
 
-これは [earldouglas/xsbt-web-plugin@feabb2][feabb2] から拝借してきた技で、これで scripted テストに version を渡すことができる。
+これは [earldouglas/sbt-war@feabb2][feabb2] から拝借してきた技で、これで scripted テストに version を渡すことができる。
 
 他に、`src/main/scala/hello.scala` も用意した:
 
@@ -231,6 +231,6 @@ sbt プロジェクト下には文字通り [100+ の scripted テストがあ�
 -> compile
 ```
 
-[xsbt-web-plugin][xsbt-web-plugin] や [sbt-assembly][sbt-assembly] にも scripted テストがある。
+[sbt-war][sbt-war] や [sbt-assembly][sbt-assembly] にも scripted テストがある。
 
 これでおしまい！プラグインをテストしてみた経験などを聞かせて下さい！
