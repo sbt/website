@@ -23,6 +23,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
 - In sbt 2.x `target` defaults to `target/out/jvm/scala-{{scala3_metabuild_version}}/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
+- sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 
 ### Dropped dreprecations
 
@@ -37,6 +38,7 @@ Features
 - **Local/remote cache system**. Details below
 - **Client-side run**. Details below.
 - **rootProject and autoAggregate**. Details below
+- **Maven BOM (Bill of Materials) usage**. Details below
 
 ### Common settings
 
@@ -149,6 +151,22 @@ lazy val root = rootProject
 
 sbt 2.0 also adds `autoAggregate` method, which at the loading time expands to local subprojects.
 
+### Maven BOM (Bill of Materials) usage
+
+sbt 2.0 adds Maven BOM (Bill of Materials) usage support. Subprojects can depend on published BOM artifacts using `.pomOnly()`:
+
+```scala
+libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.21.0").pomOnly()
+```
+
+These bill of materials are forwarded to Coursier via via Resolve.addBom(), which should introduce version constraints for specific libraries (such as Jackson). You can use `"*"` to declare versionless dependency:
+
+```scala
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "*"
+```
+
+This will let Coursier automatically fill in the version based on the bill of material constraints (in this case `"2.21.0"`). Contributed by [@bitloi][@bitloi] in [#8675](https://github.com/sbt/sbt/pull/8675).
+
 ### Performance improvements
 
 Adrien Piquerez contributed a series of changes to improve performance while he was at Scala Center.
@@ -177,5 +195,7 @@ See also:
   [8184]: https://github.com/sbt/sbt/pull/8184
   [8211]: https://github.com/sbt/sbt/pull/8211
   [8290]: https://github.com/sbt/sbt/pull/8290
+  [8539]: https://github.com/sbt/sbt/pull/8539
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2
+  [@bitloi]: https://github.com/bitloi
