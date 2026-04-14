@@ -9,7 +9,7 @@ Changes with compatibility implications
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
-- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **{{scala3_metabuild_version}}**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **3.8.2**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
 - **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
@@ -21,9 +21,9 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross build on JVM as well as JS and Native, as opposed to `%%%` operator that was created in a plugin to workaround this issue, by [@eed3si9n][@eed3si9n] in [#6746][6746]
 - Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n][@eed3si9n] in [#7712][7712]
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
-- In sbt 2.x `target` defaults to `target/out/jvm/scala-{{scala3_metabuild_version}}/<subproject>/`, as opposed to `<subproject>/target/`.
+- In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.2/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
-- `Project#autoAggregate` is added for automatic aggregation, by [@eed3si9n][@eed3si9n] in [#8290][8290]
+- sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 
 ### Dropped dreprecations
 
@@ -37,6 +37,8 @@ Features
 - **sbt query**. sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
 - **Local/remote cache system**. Details below
 - **Client-side run**. Details below.
+- **rootProject and autoAggregate**. Details below
+- **Maven BOM (Bill of Materials) usage**. Details below
 
 ### Common settings
 
@@ -132,6 +134,39 @@ sbt run
 
 This avoids blocking the sbt server, and you can have multiple runs. Contributed by [@eed3si9n][@eed3si9n] in [#8060](https://github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) documentation.
 
+### rootProject and autoAggregate
+
+sbt 2.0 adds `rootProject` macro:
+
+```scala
+lazy val root = rootProject
+```
+
+This is a shortcut for `(project in file("."))`, which tends to be a boilerplate in `build.sbt`.
+
+```scala
+lazy val root = rootProject
+  .autoAggregate
+```
+
+sbt 2.0 also adds `autoAggregate` method, which at the loading time expands to local subprojects.
+
+### Maven BOM (Bill of Materials) usage
+
+sbt 2.0 adds Maven BOM (Bill of Materials) usage support. Subprojects can depend on published BOM artifacts using `.pomOnly()`:
+
+```scala
+libraryDependencies += ("com.fasterxml.jackson" % "jackson-bom" % "2.21.0").pomOnly()
+```
+
+These bill of materials are forwarded to Coursier via via Resolve.addBom(), which should introduce version constraints for specific libraries (such as Jackson). You can use `"*"` to declare versionless dependency:
+
+```scala
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "*"
+```
+
+This will let Coursier automatically fill in the version based on the bill of material constraints (in this case `"2.21.0"`). Contributed by [@bitloi][@bitloi] in [#8675](https://github.com/sbt/sbt/pull/8675).
+
 ### Performance improvements
 
 Adrien Piquerez contributed a series of changes to improve performance while he was at Scala Center.
@@ -160,5 +195,7 @@ See also:
   [8184]: https://github.com/sbt/sbt/pull/8184
   [8211]: https://github.com/sbt/sbt/pull/8211
   [8290]: https://github.com/sbt/sbt/pull/8290
+  [8539]: https://github.com/sbt/sbt/pull/8539
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2
+  [@bitloi]: https://github.com/bitloi
