@@ -9,7 +9,7 @@ Changes with compatibility implications
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
-- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **{{scala3_metabuild_version}}**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **3.8.2**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
 - **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
@@ -21,7 +21,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - sbt 2.x adds `platform` setting so `ModuleID`'s `%%` operator can cross build on JVM as well as JS and Native, as opposed to `%%%` operator that was created in a plugin to workaround this issue, by [@eed3si9n][@eed3si9n] in [#6746][6746]
 - Dropped `useCoursier` setting so Coursier cannot be opted out, by [@eed3si9n][@eed3si9n] in [#7712][7712]
 - `Key.Classpath` is changed to be an alias of the `Seq[Attributed[xsbti.HashedVirtualFileRef]]` type, instead of `Seq[Attributed[File]]`. Similarly, some task keys that used to return `File` have changed to return `HashedVirtualFileRef` instead. See [Caching Files].
-- In sbt 2.x `target` defaults to `target/out/jvm/scala-{{scala3_metabuild_version}}/<subproject>/`, as opposed to `<subproject>/target/`.
+- In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.2/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
 - sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
 
@@ -142,7 +142,7 @@ sbt 2.0 adds `rootProject` macro:
 lazy val root = rootProject
 ```
 
-This is a shortcut for `(project in file("."))``, which tends to be a boilerplate in `build.sbt`.
+This is a shortcut for `(project in file("."))`, which tends to be a boilerplate in `build.sbt`.
 
 ```scala
 lazy val root = rootProject
