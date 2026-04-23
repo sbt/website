@@ -47,7 +47,7 @@ definition uses Scala only for tests:
 ```scala
 autoScalaLibrary := false
 
-libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % "test"
+libraryDependencies += "org.scala-lang" % "scala-library" % scalaVersion.value % Test
 ```
 
 #### Configuring additional Scala dependencies
@@ -80,29 +80,31 @@ This will also disable the automatic dependency on `scala-library`. If
 you do not need the Scala compiler for anything (compiling, the REPL,
 scaladoc, etc...), you can stop here. sbt does not need an instance of
 Scala for your project in that case. Otherwise, sbt will still need
-access to the jars for the Scala compiler for compilation and other
-tasks. You can provide them by either declaring a dependency in the
-`scala-tool` configuration or by explicitly defining `scalaInstance`.
+access to the JARs for the Scala toochain for compilation and other
+tasks. You can provide them by either declaring a dependency in the toolchain configurations or by explicitly defining `scalaInstance`.
 
-In the first case, add the `scala-tool` configuration and add a
-dependency on `scala-compiler` in this configuration. The organization
-is not important, but sbt needs the module name to be `scala-compiler`
-and `scala-library` in order to handle those jars appropriately. For
+In the first case, add the toolchain configurations and add an appropriate toochain dependency on the configurations. For
 example,
 
 ```scala
+import Configurations.{ ScalaDocTool, ScalaReplTool, ScalaTool, ZincTool }
+
 managedScalaInstance := false
 
 // Add the configuration for the dependencies on Scala tool jars
-// You can also use a manually constructed configuration like:
-//   config("scala-tool").hide
-ivyConfigurations += Configurations.ScalaTool
+ivyConfigurations ++= Seq(ScalaDocTool, ScalaReplTool, ScalaTool, ZincTool)
 
-// Add the usual dependency on the library as well on the compiler in the
-//  'scala-tool' configuration
 libraryDependencies ++= Seq(
-   "org.scala-lang" % "scala-library" % scalaVersion.value,
-   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "scala-tool"
+  // 1. Add the standard library (scala-library for 2.x, scala3-library_3 for 3.x)
+  "org.scala-lang" % "scala-library" % scalaVersion.value,
+  // 2. Add the compiler
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % ScalaTool,
+  // 3. Add the pre-compiled compiler bridge, if any
+  "org.scala-lang" % "scala2-sbt-bridge" % scalaVersion.value % ZincTool,
+  // 4. Add the scala-doc
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % ScalaDocTool,
+  // 5. Add the repl
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % ScalaReplTool,
 )
 ```
 
