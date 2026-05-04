@@ -133,18 +133,6 @@ sbt:caching> show someInt
 Opting out from caching
 -----------------------
 
-### Build-wide opt-out
-
-To opt out of by-default custom task caching, add the following to `project/plugins.sbt`:
-
-```scala
-Compile / scalacOptions += "-Xmacro-settings:sbt:no-default-task-cache"
-```
-
-```admonish note
-This applies only to the custom tasks introduced in the build. Any cached tasks provided by sbt or plugins will remain cached.
-```
-
 ### Per-task-key opt-out
 
 Next, if you want to opt some task keys from caching, you can set the cache level as follows:
@@ -171,6 +159,18 @@ val someKey = taskKey[String]("something")
 someKey := Def.uncached {
   name.value + somethingUncachable.value + "!"
 }
+```
+
+### Build-wide opt-out
+
+To opt out of by-default custom task caching, add the following to `project/plugins.sbt`:
+
+```scala
+Compile / scalacOptions += "-Xmacro-settings:sbt:no-default-task-cache"
+```
+
+```admonish note
+This applies only to the custom tasks introduced in the build. Any cached tasks provided by sbt or plugins will remain cached.
 ```
 
 Remote caching

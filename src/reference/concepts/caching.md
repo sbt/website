@@ -52,6 +52,15 @@ the input keys (e.g. `name` and `version`) must provide a given　for
 `sjsonnew.JsonFormat`.
 [Contraband](https://www.scala-sbt.org/contraband/) can be used to generate sjson-new codecs.
 
+### Underbaking
+
+It's useful to have words to describe the failure states of cached tasks.
+
+- **Overbaking**: When a cached task is invalidated more than necessary because of excess input `(A1, A2, A3, ...)`, leading to unnecessary work, we can say that the task is _overbaked_.
+- **Underbaking**: When a cached task fails to invalidate because of insufficient inputs, leading to invalid result, we can say that the task is _underbaked_. In the context of incremental compilation, we call it _under-compilation_.
+
+For example, we can say that mixing `@trainsient` keys into a cached task could potentially lead to underbaking.
+
 Caching files
 -------------
 
