@@ -72,6 +72,64 @@ someKey := {
 }
 ```
 
+### The effect of system properties
+
+Capturing a system property or an environment variable in a cached task can break the cache stability.
+Consider the following cached task:
+
+~~~admonish example title='build.sbt bad example'
+```scala
+lazy val someInt = taskKey[Int]("")
+
+// BAD
+someInt := {
+  sys.props("release").toInt + 1
+}
+```
+~~~
+
+Suppose we run it first with `-Drelease=0`:
+
+```bash
+$ sbt --server -Drelease=0
+....
+sbt:caching> show someInt
+[info] 1
+[success] elapsed time: 0 s, cache 0%, 1 onsite task
+```
+
+However, even if we run with `-Drelease=1` the value does not change:
+
+```bash
+$ sbt --server -Drelease=1
+....
+sbt:caching> show someInt
+[info] 1
+[success] elapsed time: 0 s, cache 100%, 1 disk cache hit
+```
+
+This is because `someInt` only looks at the shape of its task definition and the input settings and tasks as cache key.
+To correctly cache `someInt`, wrap the system property as a setting as follows:
+
+~~~admonish example title='build.sbt'
+```scala
+lazy val someInt = taskKey[Int]("")
+lazy val releaseVer = settingKey[Int]("")
+
+releaseVer := sys.props("release").toInt
+someInt := releaseVer.value + 1
+```
+~~~
+
+This will reevaluate the system property each time the build loads:
+
+```bash
+$ sbt --server -Drelease=1
+sbt:caching> show someInt
+[info] 2
+[success] elapsed time: 0 s, cache 0%, 1 onsite tas
+```
+
 Opting out from caching
 -----------------------
 
