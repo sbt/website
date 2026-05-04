@@ -25,7 +25,35 @@ sbt:demo> show someKey
 
 ### Caching is serialization-hard
 
-To participate in the automatic caching, the input keys (e.g. `name` and `version`) must provide a given for `sjsonnew.HashWriter` typeclass and return type must provide a given for `sjsonnew.JsonFormat`. [Contraband](https://www.scala-sbt.org/contraband/) can be used to generate sjson-new codecs.
+To participate in the automatic caching, the input keys (e.g. `name` and `version`) must provide a given instance for `sjsonnew.HashWriter` typeclass and return type must provide a given instance for `sjsonnew.JsonFormat`.
+
+```bash
+[error] -- Error: /Users/xxx/caching/project/FooPlugin.scala:17:4 -
+[error]  17 |    foo := {
+[error]     |    ^
+[error]     |given evidence sjsonnew.JsonFormat[sbt.HashedVirtualFileRef] is not found; opt out of caching by annotating the key with @transient, or as foo := Def.uncached(...), or provide a given value
+[error]     |
+[error]  18 |      val b = baseDirectory.value
+```
+
+Codecs for some of the built-in types like `HashedVirtualFileRef` can be made available using `CacheImplicits.given`:
+
+```scala
+import CacheImplicits.given
+
+....
+
+  override lazy val projectSettings: Seq[Setting[?]] = Seq(
+    foo := {
+      val b = baseDirectory.value
+      val conv = fileConverter.value
+      conv.toVirtualFile((b / "build.sbt").toPath)
+    },
+    bar := foo.value,
+  )
+```
+
+[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate sjson-new codecs.
 
 Effect tracking
 ---------------
