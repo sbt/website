@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-03-08T01:34:00-05:00\n"
+"POT-Creation-Date: 2026-05-04T01:41:15-04:00\n"
 "PO-Revision-Date: 2025-10-03 01:34-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -21,22 +21,22 @@ msgid ""
 "This page covers the cached task details. See [Caching](../concepts/"
 "caching.md) for a general explanation."
 msgstr ""
-"このページではキャッシュ化タスクの詳細を説明する。"
-"概要の解説は[キャッシュ化](../concepts/caching.md)を参照。"
+"このページではキャッシュ化タスクの詳細を説明する。概要の解説は[キャッシュ化]"
+"(../concepts/caching.md)を参照。"
 
 #: src/reference/reference/cached-task.md:6
 msgid "Automatic caching"
 msgstr "自動キャッシュ"
 
 #: src/reference/reference/cached-task.md:10
-#: src/reference/reference/cached-task.md:68
-#: src/reference/reference/cached-task.md:75
-#: src/reference/reference/cached-task.md:83
+#: src/reference/reference/cached-task.md:142
+#: src/reference/reference/cached-task.md:149
+#: src/reference/reference/cached-task.md:157
 msgid "\"something\""
 msgstr ""
 
 #: src/reference/reference/cached-task.md:12
-#: src/reference/reference/cached-task.md:86
+#: src/reference/reference/cached-task.md:160
 msgid "\"!\""
 msgstr ""
 
@@ -46,9 +46,9 @@ msgid ""
 "settings `name` and `version`. The first time we run the task it will be "
 "executed onsite, but the second time onward, it will use the disk cache:"
 msgstr ""
-"sbt 2.x では、タスク結果は `name` と `version` の 2 つのセッティングに基づいて"
-"自動的にキャッシュされる。初回実行時はオンサイトで実行されるが、2 回目以降は"
-"ディスクキャッシュが使用される:"
+"sbt 2.x では、タスク結果は `name` と `version` の 2 つのセッティングに基づい"
+"て自動的にキャッシュされる。初回実行時はオンサイトで実行されるが、2 回目以降"
+"はディスクキャッシュが使用される:"
 
 #: src/reference/reference/cached-task.md:26
 msgid "Caching is serialization-hard"
@@ -57,70 +57,119 @@ msgstr "キャッシュ化はシリアライズ困難である"
 #: src/reference/reference/cached-task.md:28
 msgid ""
 "To participate in the automatic caching, the input keys (e.g. `name` and "
-"`version`) must provide a given for `sjsonnew.HashWriter` typeclass and "
-"return type must provide a given for `sjsonnew.JsonFormat`. [Contraband]"
-"(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
-"codecs."
+"`version`) must provide a given instance for `sjsonnew.HashWriter` typeclass "
+"and return type must provide a given instance for `sjsonnew.JsonFormat`."
 msgstr ""
 "自動キャッシュに参加するには、入力キー（例: `name` と `version`）が "
-"`sjsonnew.HashWriter` 型クラス用の given を提供し、戻り値の型が `sjsonnew.JsonFormat` "
-"用の given を提供する必要がある。[Contraband](https://www.scala-sbt.org/contraband/) "
-"で sjson-new のコーデックを生成できる。"
+"`sjsonnew.HashWriter` 型クラス用の given インスタンスを提供し、戻り値の型が "
+"`sjsonnew.JsonFormat` 用の given インスタンスを提供する必要がある。"
 
-#: src/reference/reference/cached-task.md:30
+#: src/reference/reference/cached-task.md:39
+msgid ""
+"Codecs for some of the built-in types like `HashedVirtualFileRef` can be "
+"made available using `CacheImplicits.given`:"
+msgstr ""
+"`HashedVirtualFileRef` のような組み込み型のコーデックは `CacheImplicits.given` "
+"にて提供される:"
+
+#: src/reference/reference/cached-task.md:50
+msgid "\"build.sbt\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:56
+msgid ""
+"[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate "
+"sjson-new codecs."
+msgstr ""
+"[Contraband](https://www.scala-sbt.org/contraband/) で sjson-new のコーデックを生成することもできる。"
+
+#: src/reference/reference/cached-task.md:58
 msgid "Effect tracking"
 msgstr "エフェクトの追跡"
 
-#: src/reference/reference/cached-task.md:33
+#: src/reference/reference/cached-task.md:61
 msgid "The effect of file creation"
 msgstr "ファイル作成のエフェクト"
 
-#: src/reference/reference/cached-task.md:35
+#: src/reference/reference/cached-task.md:63
 msgid ""
 "To cache the effect of file creation, not just returning the name of the "
 "file, we need to track the effect of file creation using "
 "`Def.declareOutput(vf)`."
 msgstr ""
 "ファイル名を返すだけでなく、ファイル作成のエフェクトをキャッシュするには、"
-"`Def.declareOutput(vf)` を使ってファイル作成のエフェクトを追跡する必要がある。"
+"`Def.declareOutput(vf)` を使ってファイル作成のエフェクトを追跡する必要があ"
+"る。"
 
-#: src/reference/reference/cached-task.md:47
+#: src/reference/reference/cached-task.md:75
+msgid "The effect of system properties"
+msgstr "システム・プロパティーのエフェクト"
+
+#: src/reference/reference/cached-task.md:77
+msgid ""
+"Capturing a system property or an environment variable in a cached task can "
+"break the cache stability. Consider the following cached task:"
+msgstr ""
+"キャッシュ化タスクからシステム・プロパティーや環境変数の捕獲するとキャッシュの安定性を破壊することがある。"
+"以下に具体例を用いて説明する:"
+
+#: src/reference/reference/cached-task.md:80
+msgid ""
+"````admonish example title='build.sbt bad example'\n"
+"```scala\n"
+"lazy val someInt = taskKey[Int](\"\")\n"
+"\n"
+"// BAD\n"
+"someInt := {\n"
+"  sys.props(\"release\").toInt + 1\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:91
+msgid "Suppose we run it first with `-Drelease=0`:"
+msgstr "まずは `-Drelease=0` とともに実行したとする:"
+
+#: src/reference/reference/cached-task.md:101
+msgid "However, even if we run with `-Drelease=1` the value does not change:"
+msgstr "しかし、次に `-Drelease=1` とともに実行したとしても、値は変化しない:"
+
+#: src/reference/reference/cached-task.md:111
+msgid ""
+"This is because `someInt` only looks at the shape of its task definition and "
+"the input settings and tasks as cache key. To correctly cache `someInt`, "
+"wrap the system property as a setting as follows:"
+msgstr ""
+"これは、`someInt` がタスク定義のコードの形と入力となるセッティングとタスクのみをキャッシュ・キーとして"
+"見ているためだ。`someInt` を正しくキャッシュ化するには、システム・プロパティーをセッティングで包む必要がある:"
+
+#: src/reference/reference/cached-task.md:114
+msgid ""
+"````admonish example title='build.sbt'\n"
+"```scala\n"
+"lazy val someInt = taskKey[Int](\"\")\n"
+"lazy val releaseVer = settingKey[Int](\"\")\n"
+"\n"
+"releaseVer := sys.props(\"release\").toInt\n"
+"someInt := releaseVer.value + 1\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:124
+msgid "This will reevaluate the system property each time the build loads:"
+msgstr "これでビルドが読み込まれるたびにシステム・プロパティーが再評価されるようになった:"
+
+#: src/reference/reference/cached-task.md:133
 msgid "Opting out from caching"
 msgstr "キャッシュからのオプトアウト"
 
-#: src/reference/reference/cached-task.md:50
-msgid "Build-wide opt-out"
-msgstr "ビルド全体でのオプトアウト"
-
-#: src/reference/reference/cached-task.md:52
-msgid ""
-"To opt out of by-default custom task caching, add the following to `project/"
-"plugins.sbt`:"
-msgstr ""
-"デフォルトのカスタムタスクキャッシュをオプトアウトするには、`project/plugins.sbt` "
-"に以下を追加する:"
-
-#: src/reference/reference/cached-task.md:55
-msgid "\"-Xmacro-settings:sbt:no-default-task-cache\""
-msgstr ""
-
-#: src/reference/reference/cached-task.md:58
-msgid ""
-"```admonish note\n"
-"This applies only to the custom tasks introduced in the build. Any cached "
-"tasks provided by sbt or plugins will remain cached.\n"
-"```"
-msgstr ""
-"```admonish note\n"
-"これはビルドで導入したカスタムタスクにのみ適用される。sbt またはプラグインが提供"
-"するキャッシュ化タスクはキャッシュされたままである。\n"
-"```"
-
-#: src/reference/reference/cached-task.md:62
+#: src/reference/reference/cached-task.md:136
 msgid "Per-task-key opt-out"
 msgstr "タスクキー単位でのオプトアウト"
 
-#: src/reference/reference/cached-task.md:64
+#: src/reference/reference/cached-task.md:138
 msgid ""
 "Next, if you want to opt some task keys from caching, you can set the cache "
 "level as follows:"
@@ -128,30 +177,59 @@ msgstr ""
 "次に、一部のタスクキーをキャッシュからオプトアウトしたい場合は、以下のように"
 "キャッシュレベルを設定する:"
 
-#: src/reference/reference/cached-task.md:71
+#: src/reference/reference/cached-task.md:145
 msgid "or"
 msgstr "または"
 
-#: src/reference/reference/cached-task.md:78
+#: src/reference/reference/cached-task.md:152
 msgid "Per-task opt-out"
 msgstr "タスク単位でのオプトアウト"
 
-#: src/reference/reference/cached-task.md:80
+#: src/reference/reference/cached-task.md:154
 msgid ""
 "To opt out of the cache individually, use `Def.uncached(...)` as follows:"
 msgstr ""
-"キャッシュを個別にオプトアウトするには、以下のように `Def.uncached(...)` を"
-"使用する:"
+"キャッシュを個別にオプトアウトするには、以下のように `Def.uncached(...)` を使"
+"用する:"
 
-#: src/reference/reference/cached-task.md:90
+#: src/reference/reference/cached-task.md:164
+msgid "Build-wide opt-out"
+msgstr "ビルド全体でのオプトアウト"
+
+#: src/reference/reference/cached-task.md:166
+msgid ""
+"To opt out of by-default custom task caching, add the following to `project/"
+"plugins.sbt`:"
+msgstr ""
+"デフォルトのカスタムタスクキャッシュをオプトアウトするには、`project/"
+"plugins.sbt` に以下を追加する:"
+
+#: src/reference/reference/cached-task.md:169
+msgid "\"-Xmacro-settings:sbt:no-default-task-cache\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:172
+msgid ""
+"```admonish note\n"
+"This applies only to the custom tasks introduced in the build. Any cached "
+"tasks provided by sbt or plugins will remain cached.\n"
+"```"
+msgstr ""
+"```admonish note\n"
+"これはビルドで導入したカスタムタスクにのみ適用される。sbt またはプラグインが"
+"提供するキャッシュ化タスクはキャッシュされたままである。\n"
+"```"
+
+#: src/reference/reference/cached-task.md:176
 msgid "Remote caching"
 msgstr "リモート・キャッシュ"
 
-#: src/reference/reference/cached-task.md:93
+#: src/reference/reference/cached-task.md:179
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](./"
 "remote-cache-setup.md) for more details."
 msgstr ""
-"sbt 2.x は Bazel 互換の gRPC インターフェースを実装しており、オープンソースおよび"
-"商用の多数のバックエンドと連携する。詳細は[リモート・キャッシュの設定](./remote-cache-setup.md)を参照。"
+"sbt 2.x は Bazel 互換の gRPC インターフェースを実装しており、オープンソースお"
+"よび商用の多数のバックエンドと連携する。詳細は[リモート・キャッシュの設定](./"
+"remote-cache-setup.md)を参照。"
