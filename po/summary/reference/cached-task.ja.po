@@ -55,22 +55,22 @@ msgid "Caching is serialization-hard"
 msgstr "キャッシュ化はシリアライズ困難である"
 
 #: src/reference/reference/cached-task.md:28
-#, fuzzy
 msgid ""
 "To participate in the automatic caching, the input keys (e.g. `name` and "
 "`version`) must provide a given instance for `sjsonnew.HashWriter` typeclass "
 "and return type must provide a given instance for `sjsonnew.JsonFormat`."
 msgstr ""
 "自動キャッシュに参加するには、入力キー（例: `name` と `version`）が "
-"`sjsonnew.HashWriter` 型クラス用の given を提供し、戻り値の型が "
-"`sjsonnew.JsonFormat` 用の given を提供する必要がある。[Contraband](https://"
-"www.scala-sbt.org/contraband/) で sjson-new のコーデックを生成できる。"
+"`sjsonnew.HashWriter` 型クラス用の given インスタンスを提供し、戻り値の型が "
+"`sjsonnew.JsonFormat` 用の given インスタンスを提供する必要がある。"
 
 #: src/reference/reference/cached-task.md:39
 msgid ""
 "Codecs for some of the built-in types like `HashedVirtualFileRef` can be "
 "made available using `CacheImplicits.given`:"
 msgstr ""
+"`HashedVirtualFileRef` のような組み込み型のコーデックは `CacheImplicits.given` "
+"にて提供される:"
 
 #: src/reference/reference/cached-task.md:50
 msgid "\"build.sbt\""
@@ -81,6 +81,7 @@ msgid ""
 "[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate "
 "sjson-new codecs."
 msgstr ""
+"[Contraband](https://www.scala-sbt.org/contraband/) で sjson-new のコーデックを生成することもできる。"
 
 #: src/reference/reference/cached-task.md:58
 msgid "Effect tracking"
@@ -101,15 +102,16 @@ msgstr ""
 "る。"
 
 #: src/reference/reference/cached-task.md:75
-#, fuzzy
 msgid "The effect of system properties"
-msgstr "ファイル作成のエフェクト"
+msgstr "システム・プロパティーのエフェクト"
 
 #: src/reference/reference/cached-task.md:77
 msgid ""
 "Capturing a system property or an environment variable in a cached task can "
 "break the cache stability. Consider the following cached task:"
 msgstr ""
+"キャッシュ化タスクからシステム・プロパティーや環境変数の捕獲するとキャッシュの安定性を破壊することがある。"
+"以下に具体例を用いて説明する:"
 
 #: src/reference/reference/cached-task.md:80
 msgid ""
@@ -127,11 +129,11 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:91
 msgid "Suppose we run it first with `-Drelease=0`:"
-msgstr ""
+msgstr "まずは `-Drelease=0` とともに実行したとする:"
 
 #: src/reference/reference/cached-task.md:101
 msgid "However, even if we run with `-Drelease=1` the value does not change:"
-msgstr ""
+msgstr "しかし、次に `-Drelease=1` とともに実行したとしても、値は変化しない:"
 
 #: src/reference/reference/cached-task.md:111
 msgid ""
@@ -139,6 +141,8 @@ msgid ""
 "the input settings and tasks as cache key. To correctly cache `someInt`, "
 "wrap the system property as a setting as follows:"
 msgstr ""
+"これは、`someInt` がタスク定義のコードの形と入力となるセッティングとタスクのみをキャッシュ・キーとして"
+"見ているためだ。`someInt` を正しくキャッシュ化するには、システム・プロパティーをセッティングで包む必要がある:"
 
 #: src/reference/reference/cached-task.md:114
 msgid ""
@@ -155,7 +159,7 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:124
 msgid "This will reevaluate the system property each time the build loads:"
-msgstr ""
+msgstr "これでビルドが読み込まれるたびにシステム・プロパティーが再評価されるようになった:"
 
 #: src/reference/reference/cached-task.md:133
 msgid "Opting out from caching"
