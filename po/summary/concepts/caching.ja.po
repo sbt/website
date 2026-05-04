@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-09T05:09:49-04:00\n"
+"POT-Creation-Date: 2026-05-04T01:41:15-04:00\n"
 "PO-Revision-Date: 2024-10-30T01:14:09-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -172,10 +172,40 @@ msgstr ""
 "することができる。"
 
 #: src/reference/concepts/caching.md:55
+msgid "Underbaking"
+msgstr ""
+
+#: src/reference/concepts/caching.md:57
+msgid ""
+"It's useful to have words to describe the failure states of cached tasks."
+msgstr ""
+
+#: src/reference/concepts/caching.md:59
+msgid ""
+"**Overbaking**: When a cached task is invalidated more than necessary "
+"because of excess input `(A1, A2, A3, ...)`, leading to unnecessary work, we "
+"can say that the task is _overbaked_."
+msgstr ""
+
+#: src/reference/concepts/caching.md:60
+msgid ""
+"**Underbaking**: When a cached task fails to invalidate because of "
+"insufficient inputs, leading to invalid result, we can say that the task is "
+"_underbaked_. In the context of incremental compilation, we call it _under-"
+"compilation_."
+msgstr ""
+
+#: src/reference/concepts/caching.md:62
+msgid ""
+"For example, we can say that mixing `@trainsient` keys into a cached task "
+"could potentially lead to underbaking."
+msgstr ""
+
+#: src/reference/concepts/caching.md:64
 msgid "Caching files"
 msgstr "ファイルのキャッシュ化"
 
-#: src/reference/concepts/caching.md:58
+#: src/reference/concepts/caching.md:67
 msgid ""
 "Caching files (e.g. `java.io.File`) requires its own consideration, not "
 "because it's technically difficult, but mostly because of the ambiguity and "
@@ -187,19 +217,19 @@ msgstr ""
 "い込みによる所が大きい。一言に「ファイル」といっても、実は様々なことを意味す"
 "る:"
 
-#: src/reference/concepts/caching.md:60
+#: src/reference/concepts/caching.md:69
 msgid "Relative path from a well-known location"
 msgstr "取り決められた場所からの相対パス"
 
-#: src/reference/concepts/caching.md:61
+#: src/reference/concepts/caching.md:70
 msgid "Materialized actual file"
 msgstr "現物化された実際のファイル"
 
-#: src/reference/concepts/caching.md:62
+#: src/reference/concepts/caching.md:71
 msgid "A unique proof of a file, or a content hash"
 msgstr "コンテンツ・ハッシュ値などの一意的なファイルの証明"
 
-#: src/reference/concepts/caching.md:64
+#: src/reference/concepts/caching.md:73
 msgid ""
 "Technically speaking, a `File` just means the file path, so we can "
 "deserialize just the filename such as `target/a/b.jar`. This will fail the "
@@ -213,7 +243,7 @@ msgstr ""
 "これを明瞭化しつつ、絶対パスを回避するために、sbt 2.x は 3つのそれぞれの場合"
 "に対して別々の型を提供する。"
 
-#: src/reference/concepts/caching.md:66
+#: src/reference/concepts/caching.md:75
 msgid ""
 "`xsbti.VirtualFileRef` is used to mean just the relative path, which is "
 "equivalent to passing a string"
@@ -221,7 +251,7 @@ msgstr ""
 "`xsbti.VirtualFileRef` は、ただの相対パスのみを表すのに用いられ、これは文字列"
 "を渡すのと等価だ"
 
-#: src/reference/concepts/caching.md:67
+#: src/reference/concepts/caching.md:76
 msgid ""
 "`xsbti.VirtualFile` represents a materialized file with contents, which "
 "could be a virtual file or a file in your disk"
@@ -229,7 +259,7 @@ msgstr ""
 "`xsbti.VirtualFile` は、コンテンツを持つ現物化されたファイルを表し、仮想ファ"
 "イルもしくはディスク上のファイルであってもいい"
 
-#: src/reference/concepts/caching.md:69
+#: src/reference/concepts/caching.md:78
 msgid ""
 "However, for the purpose of hermetic build, neither is great to represent a "
 "list of files. Having just the filename alone doesn't guarantee that the "
@@ -240,7 +270,7 @@ msgstr ""
 "らも優れていない。ファイル名のみを持っていてもファイルが同一性を保証できない"
 "し、ファイルの全コンテンツを持ち回すのは JSON などに使うには非効率的だ。"
 
-#: src/reference/concepts/caching.md:71
+#: src/reference/concepts/caching.md:80
 msgid ""
 "This is where the mysterious third option, a unique proof of file comes in "
 "handy. In addition to the relative path, `HashedVirtualFileRef` tracks the "
@@ -252,11 +282,11 @@ msgstr ""
 "ファイル・サイズを追跡する。これは、JSON に簡単にシリアライズできるが、特定の"
 "ファイルを参照することもできる。"
 
-#: src/reference/concepts/caching.md:73
+#: src/reference/concepts/caching.md:82
 msgid "The effect of file"
 msgstr "ファイル作成の作用"
 
-#: src/reference/concepts/caching.md:75
+#: src/reference/concepts/caching.md:84
 msgid ""
 "There are many tasks that generate file that do not use `VirtualFile` as the "
 "return type. For example, `compile` returns `Analysis` instead, and "
@@ -266,28 +296,29 @@ msgstr ""
 "んある。例えば、sbt 1.x では `compile` は `Analysis` を返し、`*.class` ファイ"
 "ルの生成は「副作用」として行われる。"
 
-#: src/reference/concepts/caching.md:77
+#: src/reference/concepts/caching.md:86
 msgid ""
 "To participate in caching, we need to declare these effects as something we "
 "care about."
 msgstr ""
-"キャッシュ化に参加するためには、これらの作用も後に残しておきたいものとして宣言する必要がある。"
+"キャッシュ化に参加するためには、これらの作用も後に残しておきたいものとして宣"
+"言する必要がある。"
 
-#: src/reference/concepts/caching.md:89
+#: src/reference/concepts/caching.md:98
 msgid "Remote caching"
 msgstr "リモート・キャッシュ化"
 
-#: src/reference/concepts/caching.md:92
+#: src/reference/concepts/caching.md:101
 msgid ""
 "You can optionally extend the build to use remote cache in addition to the "
 "local disk cache. Remote caching could improve build performance by allowing "
 "multiple machines to share build artifacts and outputs."
 msgstr ""
-"オプションとして、ビルドを拡張してローカルでのディスク・キャッシュの他に"
-"リモート・キャッシュも使うことができる。"
-"リモート・キャッシュは、複数のマシンがビルドの成果物やアウトプットを共有することでビルドの性能を向上できる。"
+"オプションとして、ビルドを拡張してローカルでのディスク・キャッシュの他にリ"
+"モート・キャッシュも使うことができる。リモート・キャッシュは、複数のマシンが"
+"ビルドの成果物やアウトプットを共有することでビルドの性能を向上できる。"
 
-#: src/reference/concepts/caching.md:94
+#: src/reference/concepts/caching.md:103
 msgid ""
 "Imagine you have a dozen people in your project or a company. Each morning, "
 "you will `git pull` the changes the dozen people made, and you need to build "
@@ -298,28 +329,28 @@ msgid ""
 "and you can download the artifacts and task outputs."
 msgstr ""
 "自分のプロジェクトもしくは会社に 10名ぐらいのメンバーがいると想像してほしい。"
-"毎朝、その 10名の書いた変更を `git pull` で取り込んで、書かれたコードをビルドする必要がある。"
-"プロジェクトが順調にいけば、コード量は時間とともに増加していき、"
-"一日のうち他人のコードをビルドする時間の割合も増えていく。"
-"これは、いずれチーム規模とコード量の制限要因となる。"
-"リモート・キャッシュは、CI システムにキャッシュを補給させ"
-"自分たちは成果物やタスクのアウトプットをダウンロードできるようにすることで"
-"この傾向を逆転させる。"
+"毎朝、その 10名の書いた変更を `git pull` で取り込んで、書かれたコードをビルド"
+"する必要がある。プロジェクトが順調にいけば、コード量は時間とともに増加してい"
+"き、一日のうち他人のコードをビルドする時間の割合も増えていく。これは、いずれ"
+"チーム規模とコード量の制限要因となる。リモート・キャッシュは、CI システムに"
+"キャッシュを補給させ自分たちは成果物やタスクのアウトプットをダウンロードでき"
+"るようにすることでこの傾向を逆転させる。"
 
-#: src/reference/concepts/caching.md:96
+#: src/reference/concepts/caching.md:105
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](../"
 "reference/remote-cache-setup.md) for more details."
 msgstr ""
-"sbt 2.x は、Bazel 互換の gRPC インターフェイスを実装するため、"
-"オープンソース及び商用の複数のバックエンド・システムと統合する。"
-"詳細は[リモート・キャッシュの設定](../reference/remote-cache-setup.md)を参照。"
+"sbt 2.x は、Bazel 互換の gRPC インターフェイスを実装するため、オープンソース"
+"及び商用の複数のバックエンド・システムと統合する。詳細は[リモート・キャッシュ"
+"の設定](../reference/remote-cache-setup.md)を参照。"
 
-#: src/reference/concepts/caching.md:98
+#: src/reference/concepts/caching.md:107
 msgid "Reference"
 msgstr "参照リンク"
 
-#: src/reference/concepts/caching.md:101
+#: src/reference/concepts/caching.md:110
 msgid "See also [Cached task](../reference/cached-task.md) reference guide."
-msgstr "[キャッシュ・タスク](../reference/cached-task.md)のレファレンスガイドも参照。"
+msgstr ""
+"[キャッシュ・タスク](../reference/cached-task.md)のレファレンスガイドも参照。"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2025-10-09T05:09:47-04:00\n"
+"POT-Creation-Date: 2026-05-04T01:41:23-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -23,9 +23,9 @@ msgid ""
 "compilation, but sbt 2.x's cache is a significant step change for a few "
 "reasons:"
 msgstr ""
-"sbt 2.0 引入了混合本地/远程缓存系统，可将任务结果缓存到本地磁盘和与 Bazel 兼容的"
-"远程缓存。sbt 历史上已实现多种缓存，如 `update` 缓存、增量编译等，但 sbt 2.x 的"
-"缓存在以下方面具有显著变革："
+"sbt 2.0 引入了混合本地/远程缓存系统，可将任务结果缓存到本地磁盘和与 Bazel 兼"
+"容的远程缓存。sbt 历史上已实现多种缓存，如 `update` 缓存、增量编译等，但 sbt "
+"2.x 的缓存在以下方面具有显著变革："
 
 #: src/reference/concepts/caching.md:6
 msgid ""
@@ -33,21 +33,21 @@ msgid ""
 "the task macro unlike sbt 1.x wherein the plugin author called the cache "
 "functions manually in the task implementation."
 msgstr ""
-"**自动**。sbt 2.x 缓存通过将自身嵌入任务宏实现自动化，而 sbt 1.x 中插件作者需在"
-"任务实现中手动调用缓存函数。"
+"**自动**。sbt 2.x 缓存通过将自身嵌入任务宏实现自动化，而 sbt 1.x 中插件作者需"
+"在任务实现中手动调用缓存函数。"
 
 #: src/reference/concepts/caching.md:7
 msgid ""
 "**Machine-wide**. sbt 2.x disk cache is shared among all builds on a machine."
-msgstr ""
-"**机器级**。sbt 2.x 的磁盘缓存在机器上的所有构建之间共享。"
+msgstr "**机器级**。sbt 2.x 的磁盘缓存在机器上的所有构建之间共享。"
 
 #: src/reference/concepts/caching.md:8
 msgid ""
 "**Remote-ready**. In sbt 2.x, the cache storage is configured separately "
 "such that all cacheable tasks are automatically remote-cache-ready."
 msgstr ""
-"**支持远程**。在 sbt 2.x 中，缓存存储单独配置，使所有可缓存任务自动支持远程缓存。"
+"**支持远程**。在 sbt 2.x 中，缓存存储单独配置，使所有可缓存任务自动支持远程缓"
+"存。"
 
 #: src/reference/concepts/caching.md:10
 msgid ""
@@ -56,9 +56,9 @@ msgid ""
 "reason, speedup ratio would depend on the code size etc, but aiming for 5x "
 "to 20x is achievable for builds that currently takes 10+ minutes to test."
 msgstr ""
-"缓存的总体目标是随着代码规模的增长，使构建和测试时间的增长趋于平缓，而非像现状"
-"那样线性增长。因此，加速比取决于代码规模等因素，但对于当前测试需要 10 分钟以上的"
-"构建，实现 5 倍到 20 倍加速是可达到的。"
+"缓存的总体目标是随着代码规模的增长，使构建和测试时间的增长趋于平缓，而非像现"
+"状那样线性增长。因此，加速比取决于代码规模等因素，但对于当前测试需要 10 分钟"
+"以上的构建，实现 5 倍到 20 倍加速是可达到的。"
 
 #: src/reference/concepts/caching.md:13
 msgid "Basics of caching"
@@ -76,8 +76,9 @@ msgid ""
 msgstr ""
 "基本思路是将构建过程视为纯函数，接受输入 `(A1, A2, A3, ...)` 并返回输出 "
 "`(R1, List(O1, O2, O3, ...))`。例如，我们可以接受源文件列表、Scala 版本，最终"
-"产生 `*.jar` 文件。若此假设成立，则对于相同输入，我们可以为所有人记忆输出 JAR。"
-"我们关注此技术，是因为使用记忆的输出 JAR 比执行 Scala 编译等实际任务更快。"
+"产生 `*.jar` 文件。若此假设成立，则对于相同输入，我们可以为所有人记忆输出 "
+"JAR。我们关注此技术，是因为使用记忆的输出 JAR 比执行 Scala 编译等实际任务更"
+"快。"
 
 #: src/reference/concepts/caching.md:18
 msgid "Hermetic build"
@@ -94,11 +95,11 @@ msgid ""
 "each time. To avoid this, hermetic build tools overwrite the timestamp to a "
 "fixed date 2010-01-01 regardless of when the build took place."
 msgstr ""
-"作为构建即纯函数的心智模型，构建工程师有时使用"
-"密闭构建（_hermetic build_）一词，指在沙漠中无钟表、无网络的集装箱内进行的构建。"
-"若能从该状态产生 JAR 文件，则该 JAR 应可安全地被任何机器共享。为何提到钟表？因为"
-"JAR 可能包含时间戳，因此每次产生略有不同的 JAR。为避免此问题，密闭构建工具会"
-"将时间戳覆盖为固定日期 2010-01-01，无论构建何时进行。"
+"作为构建即纯函数的心智模型，构建工程师有时使用密闭构建（_hermetic build_）一"
+"词，指在沙漠中无钟表、无网络的集装箱内进行的构建。若能从该状态产生 JAR 文件，"
+"则该 JAR 应可安全地被任何机器共享。为何提到钟表？因为JAR 可能包含时间戳，因此"
+"每次产生略有不同的 JAR。为避免此问题，密闭构建工具会将时间戳覆盖为固定日期 "
+"2010-01-01，无论构建何时进行。"
 
 #: src/reference/concepts/caching.md:22
 msgid ""
@@ -108,9 +109,9 @@ msgid ""
 "gets embedded into the JAR via a macro, you might not know until you inspect "
 "the bytecode."
 msgstr ""
-"最终捕获临时输入的构建被称为破坏密闭性或"
-"非密闭。另一种常见的破坏密闭性的方式是将绝对路径作为输入或输出捕获。有时路径"
-"通过宏嵌入 JAR，您可能直到检查字节码才知道。"
+"最终捕获临时输入的构建被称为破坏密闭性或非密闭。另一种常见的破坏密闭性的方式"
+"是将绝对路径作为输入或输出捕获。有时路径通过宏嵌入 JAR，您可能直到检查字节码"
+"才知道。"
 
 #: src/reference/concepts/caching.md:24
 msgid "Automatic caching"
@@ -134,8 +135,8 @@ msgid ""
 "settings `name` and `version`. The first time we run the task, it will be "
 "executed onsite, but it will use the disk cache from the second time onwards:"
 msgstr ""
-"在 sbt 2.x 中，任务结果将根据 `name` 和 `version` 两个设置的值进行缓存。首次运行"
-"任务时将在现场执行，但自第二次起将使用磁盘缓存："
+"在 sbt 2.x 中，任务结果将根据 `name` 和 `version` 两个设置的值进行缓存。首次"
+"运行任务时将在现场执行，但自第二次起将使用磁盘缓存："
 
 #: src/reference/concepts/caching.md:47
 msgid "Caching is just as hard as serialization"
@@ -149,37 +150,68 @@ msgid ""
 "(https://www.scala-sbt.org/contraband/) can be used to generate sjson-new "
 "codecs."
 msgstr ""
-"要参与自动缓存，输入键（如 `name` 和 `version`）必须为 `sjsonnew.HashWriter` typeclass "
-"提供 given，返回类型必须为 `sjsonnew.JsonFormat` 提供 given。[Contraband](https://"
-"www.scala-sbt.org/contraband/) 可用于生成 sjson-new 编解码器。"
+"要参与自动缓存，输入键（如 `name` 和 `version`）必须为 `sjsonnew.HashWriter` "
+"typeclass 提供 given，返回类型必须为 `sjsonnew.JsonFormat` 提供 given。"
+"[Contraband](https://www.scala-sbt.org/contraband/) 可用于生成 sjson-new 编解"
+"码器。"
 
 #: src/reference/concepts/caching.md:55
+msgid "Underbaking"
+msgstr ""
+
+#: src/reference/concepts/caching.md:57
+msgid ""
+"It's useful to have words to describe the failure states of cached tasks."
+msgstr ""
+
+#: src/reference/concepts/caching.md:59
+msgid ""
+"**Overbaking**: When a cached task is invalidated more than necessary "
+"because of excess input `(A1, A2, A3, ...)`, leading to unnecessary work, we "
+"can say that the task is _overbaked_."
+msgstr ""
+
+#: src/reference/concepts/caching.md:60
+msgid ""
+"**Underbaking**: When a cached task fails to invalidate because of "
+"insufficient inputs, leading to invalid result, we can say that the task is "
+"_underbaked_. In the context of incremental compilation, we call it _under-"
+"compilation_."
+msgstr ""
+
+#: src/reference/concepts/caching.md:62
+msgid ""
+"For example, we can say that mixing `@trainsient` keys into a cached task "
+"could potentially lead to underbaking."
+msgstr ""
+
+#: src/reference/concepts/caching.md:64
 msgid "Caching files"
 msgstr "缓存文件"
 
-#: src/reference/concepts/caching.md:58
+#: src/reference/concepts/caching.md:67
 msgid ""
 "Caching files (e.g. `java.io.File`) requires its own consideration, not "
 "because it's technically difficult, but mostly because of the ambiguity and "
 "assumptions when files are involved. When we say a \"file\" it could "
 "actually mean:"
 msgstr ""
-"缓存文件（如 `java.io.File`）需要单独考虑，不是因为技术难度，而主要是因为涉及文件"
-"时的歧义和假设。当我们说「文件」时，它可能实际指："
+"缓存文件（如 `java.io.File`）需要单独考虑，不是因为技术难度，而主要是因为涉及"
+"文件时的歧义和假设。当我们说「文件」时，它可能实际指："
 
-#: src/reference/concepts/caching.md:60
+#: src/reference/concepts/caching.md:69
 msgid "Relative path from a well-known location"
 msgstr "从已知位置的相对路径"
 
-#: src/reference/concepts/caching.md:61
+#: src/reference/concepts/caching.md:70
 msgid "Materialized actual file"
 msgstr "物化的实际文件"
 
-#: src/reference/concepts/caching.md:62
+#: src/reference/concepts/caching.md:71
 msgid "A unique proof of a file, or a content hash"
 msgstr "文件的唯一证明或内容哈希"
 
-#: src/reference/concepts/caching.md:64
+#: src/reference/concepts/caching.md:73
 msgid ""
 "Technically speaking, a `File` just means the file path, so we can "
 "deserialize just the filename such as `target/a/b.jar`. This will fail the "
@@ -187,25 +219,24 @@ msgid ""
 "file system. For clarity, and also for avoiding to capture absolute paths, "
 "sbt 2.x provides three separate types for the three cases."
 msgstr ""
-"从技术上讲，`File` 仅表示文件路径，因此我们只能反序列化文件名如 `target/a/b.jar`。"
-"若下游任务假设 `target/a/b.jar` 存在于文件系统中，这将失败。为清晰起见，也为避免"
-"捕获绝对路径，sbt 2.x 为这三种情况提供了三种独立的类型。"
+"从技术上讲，`File` 仅表示文件路径，因此我们只能反序列化文件名如 `target/a/"
+"b.jar`。若下游任务假设 `target/a/b.jar` 存在于文件系统中，这将失败。为清晰起"
+"见，也为避免捕获绝对路径，sbt 2.x 为这三种情况提供了三种独立的类型。"
 
-#: src/reference/concepts/caching.md:66
+#: src/reference/concepts/caching.md:75
 msgid ""
 "`xsbti.VirtualFileRef` is used to mean just the relative path, which is "
 "equivalent to passing a string"
-msgstr ""
-"`xsbti.VirtualFileRef` 用于表示仅相对路径，相当于传递字符串"
+msgstr "`xsbti.VirtualFileRef` 用于表示仅相对路径，相当于传递字符串"
 
-#: src/reference/concepts/caching.md:67
+#: src/reference/concepts/caching.md:76
 msgid ""
 "`xsbti.VirtualFile` represents a materialized file with contents, which "
 "could be a virtual file or a file in your disk"
 msgstr ""
 "`xsbti.VirtualFile` 表示带内容的物化文件，可以是虚拟文件或您磁盘上的文件"
 
-#: src/reference/concepts/caching.md:69
+#: src/reference/concepts/caching.md:78
 msgid ""
 "However, for the purpose of hermetic build, neither is great to represent a "
 "list of files. Having just the filename alone doesn't guarantee that the "
@@ -215,41 +246,42 @@ msgstr ""
 "然而，对于密闭构建而言，两者都不适合表示文件列表。仅文件名无法保证文件相同，"
 "而在 JSON 等中携带完整文件内容效率太低。"
 
-#: src/reference/concepts/caching.md:71
+#: src/reference/concepts/caching.md:80
 msgid ""
 "This is where the mysterious third option, a unique proof of file comes in "
 "handy. In addition to the relative path, `HashedVirtualFileRef` tracks the "
 "SHA-256 content hash and the file size. This can easily be serialized to "
 "JSON yet we can reference the exact file."
 msgstr ""
-"神秘的第三个选项——文件的唯一证明——在此发挥作用。除相对路径外，`HashedVirtualFileRef` "
-"还跟踪 SHA-256 内容哈希和文件大小。这可轻松序列化为 JSON，同时我们仍能引用确切文件。"
+"神秘的第三个选项——文件的唯一证明——在此发挥作用。除相对路径外，"
+"`HashedVirtualFileRef` 还跟踪 SHA-256 内容哈希和文件大小。这可轻松序列化为 "
+"JSON，同时我们仍能引用确切文件。"
 
-#: src/reference/concepts/caching.md:73
+#: src/reference/concepts/caching.md:82
 msgid "The effect of file"
 msgstr "文件的效果"
 
-#: src/reference/concepts/caching.md:75
+#: src/reference/concepts/caching.md:84
 msgid ""
 "There are many tasks that generate file that do not use `VirtualFile` as the "
 "return type. For example, `compile` returns `Analysis` instead, and "
 "`*.class` file generation happens as a _side effect_ in sbt 1.x."
 msgstr ""
-"有许多生成文件的任务不以 `VirtualFile` 为返回类型。例如，`compile` 返回 `Analysis`，"
-"而 `*.class` 文件的生成在 sbt 1.x 中作为 _side effect_（副作用）发生。"
+"有许多生成文件的任务不以 `VirtualFile` 为返回类型。例如，`compile` 返回 "
+"`Analysis`，而 `*.class` 文件的生成在 sbt 1.x 中作为 _side effect_（副作用）"
+"发生。"
 
-#: src/reference/concepts/caching.md:77
+#: src/reference/concepts/caching.md:86
 msgid ""
 "To participate in caching, we need to declare these effects as something we "
 "care about."
-msgstr ""
-"要参与缓存，我们需要将这些效果声明为我们关心的事物。"
+msgstr "要参与缓存，我们需要将这些效果声明为我们关心的事物。"
 
-#: src/reference/concepts/caching.md:89
+#: src/reference/concepts/caching.md:98
 msgid "Remote caching"
 msgstr "远程缓存"
 
-#: src/reference/concepts/caching.md:92
+#: src/reference/concepts/caching.md:101
 msgid ""
 "You can optionally extend the build to use remote cache in addition to the "
 "local disk cache. Remote caching could improve build performance by allowing "
@@ -258,7 +290,7 @@ msgstr ""
 "您可以选择性地扩展构建，除本地磁盘缓存外还使用远程缓存。远程缓存允许多台机器"
 "共享构建构件和输出，从而提升构建性能。"
 
-#: src/reference/concepts/caching.md:94
+#: src/reference/concepts/caching.md:103
 msgid ""
 "Imagine you have a dozen people in your project or a company. Each morning, "
 "you will `git pull` the changes the dozen people made, and you need to build "
@@ -268,24 +300,24 @@ msgid ""
 "code size. Remote caching reverses this tide by CI systems hydrate the cache "
 "and you can download the artifacts and task outputs."
 msgstr ""
-"假设您的项目或公司有十几个人。每天早晨，您会 `git pull` 这些人所做的更改，并需要"
-"构建他们的代码。若项目成功，代码规模会随时间增长，您花在构建他人代码上的时间占比"
-"会增加。这成为团队规模和代码规模的限制因素。远程缓存通过 CI 系统填充缓存、您可"
-"下载构件和任务输出来扭转这一趋势。"
+"假设您的项目或公司有十几个人。每天早晨，您会 `git pull` 这些人所做的更改，并"
+"需要构建他们的代码。若项目成功，代码规模会随时间增长，您花在构建他人代码上的"
+"时间占比会增加。这成为团队规模和代码规模的限制因素。远程缓存通过 CI 系统填充"
+"缓存、您可下载构件和任务输出来扭转这一趋势。"
 
-#: src/reference/concepts/caching.md:96
+#: src/reference/concepts/caching.md:105
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](../"
 "reference/remote-cache-setup.md) for more details."
 msgstr ""
-"sbt 2.x 实现了与 Bazel 兼容的 gRPC 接口，可与多种开源和商业后端配合使用。详见 "
-"[Remote cache setup](../reference/remote-cache-setup.md)。"
+"sbt 2.x 实现了与 Bazel 兼容的 gRPC 接口，可与多种开源和商业后端配合使用。详"
+"见 [Remote cache setup](../reference/remote-cache-setup.md)。"
 
-#: src/reference/concepts/caching.md:98
+#: src/reference/concepts/caching.md:107
 msgid "Reference"
 msgstr "参考"
 
-#: src/reference/concepts/caching.md:101
+#: src/reference/concepts/caching.md:110
 msgid "See also [Cached task](../reference/cached-task.md) reference guide."
 msgstr "另请参阅 [Cached task](../reference/cached-task.md) 参考指南。"
