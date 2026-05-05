@@ -198,15 +198,14 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:83
 msgid "Project matrix"
-msgstr "プロジェクトマトリックス"
+msgstr "Project matrix"
 
 #: src/reference/reference/cross-building-setup.md:86
-#, fuzzy
 msgid ""
 "sbt 2.x introduces project matrix, which enables cross building to happen in "
 "parallel by representing cross build using subprojects."
 msgstr ""
-"sbt 2.x ではプロジェクトマトリックスが導入され、クロスビルドを並列実行できる"
+"sbt 2.x では project matrix が導入され、クロスビルドをサブプロジェクトとして表すことで、並列実行できる"
 "ようになった。"
 
 #: src/reference/reference/cross-building-setup.md:88
@@ -246,25 +245,30 @@ msgstr ""
 
 #: src/reference/reference/cross-building-setup.md:117
 msgid "Generated subprojects"
-msgstr ""
+msgstr "サプブロジェクトの生成"
 
 #: src/reference/reference/cross-building-setup.md:119
 msgid ""
 "At the loading time, project matrices expand into subproject by combining "
 "the platform and Scala versions:"
 msgstr ""
+"読み込み時に project matrix は、プラットフォームと Scala バージョンの組み合わせをサブプロジェクトへと展開する。"
 
 #: src/reference/reference/cross-building-setup.md:130
 msgid ""
 "By convention, the JVM Scala 3 variant of the matrix is given the name "
 "without any suffix, for example `core`."
 msgstr ""
+"規約により、マトリックス中の JVM Scala 3 バリアントは、`core`"
+"のように接尾辞を持たない名前が与えられる。"
 
 #: src/reference/reference/cross-building-setup.md:139
 msgid ""
 "To reference the subprojects inside `build.sbt`, you can call `jvm(...)`, "
 "`js(...)`, or `native(...)`:"
 msgstr ""
+"`build.sbt` 内で、サブプロジェクトを参照するには、`jvm(...)`、"
+"`js(...)`, もしくは `native(...)` を呼ぶことができる:"
 
 #: src/reference/reference/cross-building-setup.md:142
 msgid "// For Scala"
@@ -283,6 +287,8 @@ msgid ""
 "Each combination in a matrix is called a `ProjectRow`; and a ProjectRow is "
 "represented as a sequence of `VirtualAxis`."
 msgstr ""
+"マトリックスの各組み合わせは `ProjectRow` と呼ばれ、"
+"ProjectRow は、`VirtualAxis` の列によって構成されている。"
 
 #: src/reference/reference/cross-building-setup.md:162
 msgid ""
@@ -306,10 +312,14 @@ msgid ""
 "strong axis where a row can depend on another only if the platform matches "
 "exactly."
 msgstr ""
+"VirtualAxis はさらに、`WeakAxis` と `StrongAxis` に分岐する。"
+"Scala バージョンは、弱い軸の例で、ある Scala バージョンを持つ列は、"
+"Scala バージョンを持たない Java の列に依存することができる。"
+"一方、同一のプラットフォーム間でしか依存することができないため、プラットフォームは強い軸として定義される。"
 
 #: src/reference/reference/cross-building-setup.md:175
 msgid "For example, we can define SparkAxis as follows:"
-msgstr ""
+msgstr "例えば、SparkAxis は以下のように定義できる:"
 
 #: src/reference/reference/cross-building-setup.md:177
 msgid ""
@@ -328,6 +338,8 @@ msgid ""
 "See [Cross building on a virtual axis](../recipes/virtual-axis.md) recipe "
 "for the details on how to use `SparkAxis`."
 msgstr ""
+"具体的な `SparkAxis` の使用方法に関しては "
+"[VirtualAxis に対するクロスビルド](../recipes/virtual-axis.md)のレシピ参照。"
 
 #: src/reference/reference/cross-building-setup.md:188
 msgid "Publishing convention"
