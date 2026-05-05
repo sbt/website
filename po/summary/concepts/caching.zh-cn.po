@@ -96,8 +96,8 @@ msgid ""
 "fixed date 2010-01-01 regardless of when the build took place."
 msgstr ""
 "作为构建即纯函数的心智模型，构建工程师有时使用密闭构建（_hermetic build_）一"
-"词，指在沙漠中无钟表、无网络的集装箱内进行的构建。若能从该状态产生 JAR 文件，"
-"则该 JAR 应可安全地被任何机器共享。为何提到钟表？因为JAR 可能包含时间戳，因此"
+"词，指在沙漠中、于货运集装箱内进行、无钟表、无网络的构建。若能从该状态产生 JAR 文件，"
+"则该 JAR 应可安全地在任意机器间共享。为何提到钟表？因为 JAR 可能包含时间戳，因此"
 "每次产生略有不同的 JAR。为避免此问题，密闭构建工具会将时间戳覆盖为固定日期 "
 "2010-01-01，无论构建何时进行。"
 
@@ -158,11 +158,13 @@ msgstr ""
 #: src/reference/concepts/caching.md:55
 msgid "Underbaking"
 msgstr ""
+"欠烤与过烤"
 
 #: src/reference/concepts/caching.md:57
 msgid ""
 "It's useful to have words to describe the failure states of cached tasks."
 msgstr ""
+"为描述缓存任务的失败状态，事先约定一些用语会很有帮助。"
 
 #: src/reference/concepts/caching.md:59
 msgid ""
@@ -170,6 +172,8 @@ msgid ""
 "because of excess input `(A1, A2, A3, ...)`, leading to unnecessary work, we "
 "can say that the task is _overbaked_."
 msgstr ""
+"**过烤（Overbaking）**：当缓存任务因输入 `(A1, A2, A3, ...)` 过多而不必要地失效，"
+"产生多余工作时，称该任务过烤。"
 
 #: src/reference/concepts/caching.md:60
 msgid ""
@@ -178,12 +182,15 @@ msgid ""
 "_underbaked_. In the context of incremental compilation, we call it _under-"
 "compilation_."
 msgstr ""
+"**欠烤（Underbaking）**：当缓存任务因输入不足而未能失效，导致结果无效时，称该任务"
+"欠烤。在增量编译语境下，称之为 _under-compilation_（欠编译）。"
 
 #: src/reference/concepts/caching.md:62
 msgid ""
 "For example, we can say that mixing `@transient` keys into a cached task "
 "could potentially lead to underbaking."
 msgstr ""
+"例如，在缓存任务中混入 `@transient` 键可能导致欠烤。"
 
 #: src/reference/concepts/caching.md:64
 msgid "Caching files"
