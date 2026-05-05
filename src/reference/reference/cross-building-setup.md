@@ -1,3 +1,5 @@
+  [virtual-axis]: ../recipes/virtual-axis.md
+
 Cross building setup
 ====================
 
@@ -81,19 +83,107 @@ It is equivalent to:
 Project matrix
 --------------
 
-sbt 2.x introduces project matrix, which enables cross building to happen in parallel.
+sbt 2.x introduces project matrix, which enables cross building to happen in parallel by representing cross build using subprojects.
 
+~~~admonish example title="build.sbt"
 ```scala
+lazy val scala3 = "{{scala3_example_version}}"
+lazy val scala2_13 = "{{scala2_13_example_version}}"
+
 organization := "com.example"
-scalaVersion := "{{scala3_example_version}}"
+scalaVersion := scala3
 version      := "0.1.0-SNAPSHOT"
 
 lazy val core = (projectMatrix in file("core"))
   .settings(
-    name := "core"
+    name := "core",
   )
-  .jvmPlatform(scalaVersions = Seq("{{scala3_example_version}}", "{{scala2_13_example_version}}"))
+  .jvmPlatform(scalaVersions = Seq(scala3, scala2_13))
+  .nativePlatform(scalaVersions = Seq(scala3, scala2_13))
+  // .jsPlatform(scalaVersions = Seq(scala3))
+
+// optional
+lazy val core3 = core.jvm(scala3)
+lazy val coreNative3 = core.native(scala3)
 ```
+~~~
+
+~~~admonish example title="project/plugins.sbt"
+```scala
+addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.11")
+```
+~~~
+
+### Generated subprojects
+
+At the loading time, project matrices expand into subproject by combining the platform and Scala versions:
+
+```bash
+sbt:cross-root> projects
+[info]     core
+[info]     core2_13
+[info]     coreNative
+[info]     coreNative2_13
+[info]   * cross-root
+```
+
+By convention, the JVM Scala 3 variant of the matrix is given the name without any suffix, for example `core`.
+
+```bash
+sbt:cross-root> core/run
+[info] running (fork) example.main
+Hello
+[success] ok
+```
+
+To reference the subprojects inside `build.sbt`, you can call `jvm(...)`, `js(...)`, or `native(...)`:
+
+```scala
+// For Scala
+lazy val core3 = core.jvm(scalaVersion = scala3)
+
+// For Java
+lazy val intf0 = intf.jvm(autoScalaLibrary = false)
+```
+
+### Virtual axis
+
+Each combination in a matrix is called a `ProjectRow`; and a ProjectRow is represented as a sequence of `VirtualAxis`.
+
+```scala
+final class ProjectRow(
+    val autoScalaLibrary: Boolean,
+    val axisValues: Seq[VirtualAxis],
+    val process: Project => Project
+)
+
+object VirtualAxis:
+
+  /**
+   * WeakAxis allows a row to depend on another row with Zero value.
+   * For example, Scala version can be Zero for Java project, and it's ok.
+   */
+  abstract class WeakAxis extends VirtualAxis
+
+  /** StrongAxis requires a row to depend on another row with the same selected value. */
+  abstract class StrongAxis extends VirtualAxis
+end VirtualAxis
+```
+
+VirtualAxis splits into `WeakAxis` and `StrongAxis`. Scala version is an example of a weak axis where a row with a Scala version can depend on another Java row without a Scala version. Meanwhile, the platform is a strong axis where a row can depend on another only if the platform matches exactly.
+
+For example, we can define SparkAxis as follows:
+
+~~~admonish example title="project/Axis.scala"
+```scala
+import sbt.*
+
+case class SparkAxis(idSuffix: String, directorySuffix: String)
+  extends VirtualAxis.WeakAxis
+```
+~~~
+
+See [Cross building on a virtual axis][virtual-axis] recipe for the details on how to use `SparkAxis`.
 
 Publishing convention
 ---------------------

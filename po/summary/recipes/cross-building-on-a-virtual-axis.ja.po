@@ -1,0 +1,124 @@
+#: src/reference/recipes/virtual-axis.md:1
+msgid "Cross building on a virtual axis"
+msgstr "VirtualAxis に対するクロスビルド"
+
+#: src/reference/recipes/virtual-axis.md:4
+msgid ""
+"```admonish note\n"
+"The recipe section of the documentation focuses on the objectives\n"
+"with minimal explanations.\n"
+"```"
+msgstr ""
+
+#: src/reference/recipes/virtual-axis.md:9
+msgid "Objective"
+msgstr ""
+
+#: src/reference/recipes/virtual-axis.md:12
+msgid ""
+"I want to cross build on a virtual axis that represents Apache Spark version."
+msgstr ""
+"Apache Spark バージョンを表す VirtualAxis に対してクロスビルドしたい。"
+
+#: src/reference/recipes/virtual-axis.md:14
+msgid "Steps"
+msgstr "手順"
+
+#: src/reference/recipes/virtual-axis.md:17
+msgid "Define a weak axis locally:"
+msgstr "ローカルで弱い軸を定義する:"
+
+#: src/reference/recipes/virtual-axis.md:19
+msgid ""
+"````admonish example title=\"project/Axis.scala\"\n"
+"```scala\n"
+"import sbt.*\n"
+"\n"
+"case class SparkAxis(idSuffix: String, directorySuffix: String)\n"
+"  extends VirtualAxis.WeakAxis\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/recipes/virtual-axis.md:28
+msgid ""
+"Define a project matrix with custom rows. The following builds Scala 2.12 "
+"and 2.13 for Spark 3, and Scala 2.13 and 3 for Spark 4:"
+msgstr ""
+"カスタム列を持つ project matrix を定義する。"
+"以下の例では、Spark 3 に対しては Scala 2.12 と 2.13、"
+"Spark 4 に対しては Scala 2.13 と 3 をビルドする。"
+
+#: src/reference/recipes/virtual-axis.md:30
+msgid ""
+"````admonish example title=\"build.sbt\"\n"
+"```scala\n"
+"lazy val scala212 = \"2.12.21\"\n"
+"lazy val scala213 = \"2.13.18\"\n"
+"lazy val scala3 = \"3.8.3\"\n"
+"lazy val spark3 = SparkAxis(idSuffix = \"Spark3\", directorySuffix = "
+"\"spark3\")\n"
+"lazy val spark4 = SparkAxis(idSuffix = \"Spark4\", directorySuffix = "
+"\"spark4\")\n"
+"\n"
+"organization := \"com.example\"\n"
+"version := \"0.1.0-SNAPSHOT\"\n"
+"\n"
+"lazy val app = (projectMatrix in file(\"app\"))\n"
+"  .settings(\n"
+"    name := \"app\"\n"
+"  )\n"
+"  .customRow(\n"
+"    scalaVersions = Seq(scala212, scala213),\n"
+"    axisValues = Seq(spark3, VirtualAxis.jvm),\n"
+"    settings = Seq(\n"
+"      moduleName := name.value + \"_spark3\",\n"
+"      libraryDependencies += \"org.apache.spark\" %% \"spark-core\" % "
+"\"3.5.8\",\n"
+"    )\n"
+"  )\n"
+"  .customRow(\n"
+"    scalaVersions = Seq(scala213, scala3),\n"
+"    axisValues = Seq(spark4, VirtualAxis.jvm),\n"
+"    settings = Seq(\n"
+"      moduleName := name.value + \"_spark4\",\n"
+"      libraryDependencies += (\"org.apache.spark\" %% \"spark-core\" % "
+"\"4.1.0\")\n"
+"        .cross(CrossVersion.for3Use2_13),\n"
+"    )\n"
+"  )\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/recipes/virtual-axis.md:65
+msgid "Place the source code under `app/src/main/scala`:"
+msgstr "`app/src/main/scala` 以下にソースを置く:"
+
+#: src/reference/recipes/virtual-axis.md:68
+msgid ""
+"````admonish example title=\"app/src/main/scala/example/A.scala\"\n"
+"```scala\n"
+"package example\n"
+"\n"
+"import org.apache.spark.SparkContext\n"
+"\n"
+"object A {\n"
+"  def main(args: Array[String]): Unit = {\n"
+"    val sc = new SparkContext(\"local\", \"test\")\n"
+"    sc.stop()\n"
+"  }\n"
+"}\n"
+"```\n"
+"````"
+msgstr ""
+
+#: src/reference/recipes/virtual-axis.md:83
+msgid "Confirm that this runs:"
+msgstr "実行を確認する:"
+
+#: src/reference/recipes/virtual-axis.md:88
+msgid ""
+"'s default log4j profile: org/apache/spark/log4j2-defaults.properties\n"
+"26/05/05 00:00:00 INFO SparkContext: Running Spark version 4.1.0\n"
+msgstr ""
