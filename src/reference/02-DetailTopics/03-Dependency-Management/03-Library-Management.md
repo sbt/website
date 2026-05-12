@@ -185,7 +185,7 @@ To use the local repository, but not the Maven Central repository
 externalResolvers := Resolver.combineDefaultResolvers(resolvers.value.toVector, mavenCentral = false)
 ```
 
-**NB:** Setting `mavenCentral` to false will not stop SBT using Maven Central for some dependencies. To prevent it using Maven Central completely) (e.g. to use an Organisational Cache as [recommended](https://www.sonatype.com/blog/beyond-ips-addressing-organizational-overconsumption-in-maven-central)) you'll need to override the repositories as per below.
+**NB:** Setting `mavenCentral` to false will not stop SBT using Maven Central for some dependencies. To prevent it using Maven Central completely (e.g. to use an Organisational Cache to resolve artifacts stored on Maven Central as [recommended](https://www.sonatype.com/blog/beyond-ips-addressing-organizational-overconsumption-in-maven-central)) you'll need to override the repositories as per below.
 
 ##### Override all resolvers for all builds
 
