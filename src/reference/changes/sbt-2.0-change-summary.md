@@ -9,7 +9,7 @@ Changes with compatibility implications
 
 See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 
-- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **3.8.2**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
+- **Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions and plugins, is based on Scala 3.x (currently **3.8.3**)  (Both sbt 1.x and 2.x are capable of building Scala 2.x and 3.x) by [@eed3si9n][@eed3si9n], [@adpi2][@adpi2], and others.
 - **Common settings**. Bare settings are added to all subprojects, as opposed to just the root subproject, and thus replacing the role that `ThisBuild` has played.
 - **Incremental test**. `test` task is changed to be incremental test that can cache test results. Use `testFull` for full test by [@eed3si9n][@eed3si9n] in [#7686][7686]
 - **Cached task**. All tasks are cached by default. Details in [Caching](../concepts/caching.md).
@@ -24,6 +24,7 @@ See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md).
 - In sbt 2.x `target` defaults to `target/out/jvm/scala-3.8.2/<subproject>/`, as opposed to `<subproject>/target/`.
 - sbt 2.x auto reloads by default on `build.sbt` changes, by [@eed3si9n][@eed3si9n] in [#8211][8211]
 - sbt 2.x disables the delegation of scoped tasks in the sbt shell by [@eed3si9n][@eed3si9n] in [#8539][8539]
+- sbt 2.x enforces eviction error in `Test` configuration by [@calm329][@calm329] and [@zainab-ali][@zainab-ali] in [#8451](https://github.com/sbt/sbt/pull/8451) + [#9102](https://github.com/sbt/sbt/pull/9102)
 
 ### Dropped dreprecations
 
@@ -37,6 +38,7 @@ Features
 - **sbt query**. sbt 2.x extends the unified slash syntax to support query of subprojects. Details below.
 - **Local/remote cache system**. Details below
 - **Client-side run**. Details below.
+- **Client-side console**. Details below.
 - **rootProject and autoAggregate**. Details below
 - **Maven BOM (Bill of Materials) usage**. Details below
 
@@ -91,7 +93,7 @@ The above runs all subprojects whose `scalaBinaryVersion` is `3`. Contributed by
 In sbt 2.x, `test` task became an input task that accept arguments that can filter the test suites to run:
 
 ```bash
-> test *Example*
+> test ...ExampleTest
 ```
 
 In addition, `test` is incremental and cached. This means, the test will not run unless it previously failed or something changed since the last run.
@@ -126,13 +128,23 @@ See [Caching](../concepts/caching.md) for details. Contributed by [@eed3si9n][@e
 
 ### Client-side run
 
-The sbt runner 1.10.10 and later script defaults to using sbtn (GraalVM native-image client) for sbt 2.x. In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a fresh JVM. All you have to do is:
+In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a fresh JVM. All you have to do is:
 
 ```bash
 sbt run
 ```
 
 This avoids blocking the sbt server, and you can have multiple runs. Contributed by [@eed3si9n][@eed3si9n] in [#8060](https://github.com/sbt/sbt/pull/8060). See also [run](../reference/sbt-run.md) documentation.
+
+### Client-side console
+
+Similar to the client-side run, sbt server sends `console` (Scala REPL) back to the sbtn, which forks a fresh JVM to run the REPL. All you have to do is:
+
+```bash
+sbt console
+```
+
+This avoids blocking the sbt server. This was contributed by [@eed3si9n][@eed3si9n] and [@calm329][@calm329] in [#8018](https://github.com/sbt/sbt/pull/8018), [#8604](https://github.com/sbt/sbt/pull/8604), [#8677](https://github.com/sbt/sbt/pull/8677), [#8705](https://github.com/sbt/sbt/pull/8705), [#8722](https://github.com/sbt/sbt/pull/8722).
 
 ### rootProject and autoAggregate
 
@@ -199,3 +211,5 @@ See also:
   [@eed3si9n]: https://github.com/eed3si9n
   [@adpi2]: https://github.com/adpi2
   [@bitloi]: https://github.com/bitloi
+  [@calm329]: https://github.com/calm329
+  [@zainab-ali]: https://github.com/zainab-ali
