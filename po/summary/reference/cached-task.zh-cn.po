@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-05-04T01:41:23-04:00\n"
+"POT-Creation-Date: 2026-05-18T01:45:13-04:00\n"
 "PO-Revision-Date: 2024-10-30T03:50:36-04:00\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -49,8 +49,7 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:26
 msgid "Caching is serialization-hard"
-msgstr ""
-"缓存与序列化同样困难"
+msgstr "缓存与序列化同样困难"
 
 #: src/reference/reference/cached-task.md:28
 msgid ""
@@ -59,14 +58,16 @@ msgid ""
 "and return type must provide a given instance for `sjsonnew.JsonFormat`."
 msgstr ""
 "要参与自动缓存，输入键（如 `name` 和 `version`）必须为 `sjsonnew.HashWriter` "
-"typeclass 提供 given 实例，返回类型必须为 `sjsonnew.JsonFormat` 提供 given 实例。"
+"typeclass 提供 given 实例，返回类型必须为 `sjsonnew.JsonFormat` 提供 given 实"
+"例。"
 
 #: src/reference/reference/cached-task.md:39
 msgid ""
 "Codecs for some of the built-in types like `HashedVirtualFileRef` can be "
 "made available using `CacheImplicits.given`:"
 msgstr ""
-"部分内置类型（如 `HashedVirtualFileRef`）的编解码器可通过 `CacheImplicits.given` 提供："
+"部分内置类型（如 `HashedVirtualFileRef`）的编解码器可通过 "
+"`CacheImplicits.given` 提供："
 
 #: src/reference/reference/cached-task.md:50
 msgid "\"build.sbt\""
@@ -77,7 +78,8 @@ msgid ""
 "[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate "
 "sjson-new codecs."
 msgstr ""
-"[Contraband](https://www.scala-sbt.org/contraband/) 可用于生成 sjson-new 编解码器。"
+"[Contraband](https://www.scala-sbt.org/contraband/) 可用于生成 sjson-new 编解"
+"码器。"
 
 #: src/reference/reference/cached-task.md:58
 msgid "Effect tracking"
@@ -98,15 +100,13 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:75
 msgid "The effect of system properties"
-msgstr ""
-"系统属性的影响"
+msgstr "系统属性的影响"
 
 #: src/reference/reference/cached-task.md:77
 msgid ""
 "Capturing a system property or an environment variable in a cached task can "
 "break the cache stability. Consider the following cached task:"
-msgstr ""
-"在缓存任务中捕获系统属性或环境变量会破坏缓存稳定性。考虑以下缓存任务："
+msgstr "在缓存任务中捕获系统属性或环境变量会破坏缓存稳定性。考虑以下缓存任务："
 
 #: src/reference/reference/cached-task.md:80
 msgid ""
@@ -124,13 +124,11 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:91
 msgid "Suppose we run it first with `-Drelease=0`:"
-msgstr ""
-"首先假设我们使用 `-Drelease=0` 运行："
+msgstr "首先假设我们使用 `-Drelease=0` 运行："
 
 #: src/reference/reference/cached-task.md:101
 msgid "However, even if we run with `-Drelease=1` the value does not change:"
-msgstr ""
-"然而，即使我们使用 `-Drelease=1` 运行，数值也不会改变："
+msgstr "然而，即使我们使用 `-Drelease=1` 运行，数值也不会改变："
 
 #: src/reference/reference/cached-task.md:111
 msgid ""
@@ -138,8 +136,8 @@ msgid ""
 "the input settings and tasks as cache key. To correctly cache `someInt`, "
 "wrap the system property as a setting as follows:"
 msgstr ""
-"这是因为在使用缓存键时，`someInt` 只考察任务定义的形态以及输入设置与任务。"
-"要正确缓存 `someInt`，请将系统属性包装为设置，如下所示："
+"这是因为在使用缓存键时，`someInt` 只考察任务定义的形态以及输入设置与任务。要"
+"正确缓存 `someInt`，请将系统属性包装为设置，如下所示："
 
 #: src/reference/reference/cached-task.md:114
 msgid ""
@@ -156,8 +154,7 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:124
 msgid "This will reevaluate the system property each time the build loads:"
-msgstr ""
-"这将在每次加载构建时重新求值系统属性："
+msgstr "这将在每次加载构建时重新求值系统属性："
 
 #: src/reference/reference/cached-task.md:133
 msgid "Opting out from caching"
@@ -214,14 +211,100 @@ msgstr ""
 "```"
 
 #: src/reference/reference/cached-task.md:176
+msgid "Execution log"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:179
+msgid ""
+"To debug caching issues, sbt ships with execution log feature. The execution "
+"log can be enabled with `sbt.experimental_execution_log` system property set "
+"to either `true` or a file path:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:185
+msgid ""
+"When set to `true`, an execution log will be created `target/global-logging`:"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:190
+msgid "\"input\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:191
+msgid "\"digest\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:191
+msgid ""
+"\"sha256-"
+"a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:192
+msgid "\"codeContentHash\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:192
+msgid "\"murmur3-0000000000000000ffffffffce70de5a/0\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:193
+msgid "\"extraHash\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:193
+msgid "\"murmur3-00000000000000000000000000000000/0\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:194
+msgid "\"str\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:194
+msgid "\"(CompileInputs2(Vector(\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:195
+msgid "\"\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:197
+msgid "\"cacheHit\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:198
+msgid "\"exitCode\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:199
+msgid "\"outputs\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:200
+msgid ""
+"\"${OUT}/value/sha256-"
+"a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48.json>\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:201
+msgid "\",\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:206
+msgid ""
+"This feature is under an experimental flag since the JSON format is subject "
+"to change."
+msgstr ""
+
+#: src/reference/reference/cached-task.md:208
 msgid "Remote caching"
 msgstr "远程缓存"
 
-#: src/reference/reference/cached-task.md:179
+#: src/reference/reference/cached-task.md:211
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](./"
 "remote-cache-setup.md) for more details."
 msgstr ""
-"sbt 2.x 实现了与 Bazel 兼容的 gRPC 接口，可与多种开源和商业后端配合使用。详见 "
-"[远程缓存设置](./remote-cache-setup.md)。"
+"sbt 2.x 实现了与 Bazel 兼容的 gRPC 接口，可与多种开源和商业后端配合使用。详"
+"见 [远程缓存设置](./remote-cache-setup.md)。"
