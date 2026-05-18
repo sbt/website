@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Book of sbt\n"
-"POT-Creation-Date: 2026-05-04T01:41:15-04:00\n"
+"POT-Creation-Date: 2026-05-18T01:45:20-04:00\n"
 "PO-Revision-Date: 2025-10-03 01:34-0400\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -69,8 +69,8 @@ msgid ""
 "Codecs for some of the built-in types like `HashedVirtualFileRef` can be "
 "made available using `CacheImplicits.given`:"
 msgstr ""
-"`HashedVirtualFileRef` のような組み込み型のコーデックは `CacheImplicits.given` "
-"にて提供される:"
+"`HashedVirtualFileRef` のような組み込み型のコーデックは "
+"`CacheImplicits.given` にて提供される:"
 
 #: src/reference/reference/cached-task.md:50
 msgid "\"build.sbt\""
@@ -81,7 +81,8 @@ msgid ""
 "[Contraband](https://www.scala-sbt.org/contraband/) can be used to generate "
 "sjson-new codecs."
 msgstr ""
-"[Contraband](https://www.scala-sbt.org/contraband/) で sjson-new のコーデックを生成することもできる。"
+"[Contraband](https://www.scala-sbt.org/contraband/) で sjson-new のコーデック"
+"を生成することもできる。"
 
 #: src/reference/reference/cached-task.md:58
 msgid "Effect tracking"
@@ -110,8 +111,8 @@ msgid ""
 "Capturing a system property or an environment variable in a cached task can "
 "break the cache stability. Consider the following cached task:"
 msgstr ""
-"キャッシュ化タスクからシステム・プロパティーや環境変数の捕獲するとキャッシュの安定性を破壊することがある。"
-"以下に具体例を用いて説明する:"
+"キャッシュ化タスクからシステム・プロパティーや環境変数の捕獲するとキャッシュ"
+"の安定性を破壊することがある。以下に具体例を用いて説明する:"
 
 #: src/reference/reference/cached-task.md:80
 msgid ""
@@ -141,8 +142,9 @@ msgid ""
 "the input settings and tasks as cache key. To correctly cache `someInt`, "
 "wrap the system property as a setting as follows:"
 msgstr ""
-"これは、`someInt` がタスク定義のコードの形と入力となるセッティングとタスクのみをキャッシュ・キーとして"
-"見ているためだ。`someInt` を正しくキャッシュ化するには、システム・プロパティーをセッティングで包む必要がある:"
+"これは、`someInt` がタスク定義のコードの形と入力となるセッティングとタスクの"
+"みをキャッシュ・キーとして見ているためだ。`someInt` を正しくキャッシュ化する"
+"には、システム・プロパティーをセッティングで包む必要がある:"
 
 #: src/reference/reference/cached-task.md:114
 msgid ""
@@ -159,7 +161,9 @@ msgstr ""
 
 #: src/reference/reference/cached-task.md:124
 msgid "This will reevaluate the system property each time the build loads:"
-msgstr "これでビルドが読み込まれるたびにシステム・プロパティーが再評価されるようになった:"
+msgstr ""
+"これでビルドが読み込まれるたびにシステム・プロパティーが再評価されるように"
+"なった:"
 
 #: src/reference/reference/cached-task.md:133
 msgid "Opting out from caching"
@@ -221,10 +225,101 @@ msgstr ""
 "```"
 
 #: src/reference/reference/cached-task.md:176
+msgid "Execution log"
+msgstr "実行ログ"
+
+#: src/reference/reference/cached-task.md:179
+msgid ""
+"To debug caching issues, sbt ships with execution log feature. The execution "
+"log can be enabled with `sbt.experimental_execution_log` system property set "
+"to either `true` or a file path:"
+msgstr ""
+"キャッシュ化に関連する問題をデバッグするために、sbt は実行ログ機能を持つ。"
+"実行ログ機能は、`sbt.experimental_execution_log` システム・プロパティを "
+"`true` もしくはファイル名に設定することで、有効化される:"
+
+#: src/reference/reference/cached-task.md:185
+msgid ""
+"When set to `true`, an execution log will be created `target/global-logging`:"
+msgstr ""
+"`true` に設定した場合、実行ログは `target/global-logging` 以下に生成される:"
+
+#: src/reference/reference/cached-task.md:190
+msgid "\"input\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:191
+msgid "\"digest\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:191
+msgid ""
+"\"sha256-"
+"a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:192
+msgid "\"codeContentHash\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:192
+msgid "\"murmur3-0000000000000000ffffffffce70de5a/0\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:193
+msgid "\"extraHash\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:193
+msgid "\"murmur3-00000000000000000000000000000000/0\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:194
+msgid "\"str\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:194
+msgid "\"(CompileInputs2(Vector(\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:195
+msgid "\"\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:197
+msgid "\"cacheHit\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:198
+msgid "\"exitCode\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:199
+msgid "\"outputs\""
+msgstr ""
+
+#: src/reference/reference/cached-task.md:200
+msgid ""
+"\"${OUT}/value/sha256-"
+"a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48.json>\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:201
+msgid "\",\n"
+msgstr ""
+
+#: src/reference/reference/cached-task.md:206
+msgid ""
+"This feature is under an experimental flag since the JSON format is subject "
+"to change."
+msgstr ""
+"JSON の形式は将来的に変更される可能性があるので、この機能は実験的 (experimental) フラグを使っている。"
+
+#: src/reference/reference/cached-task.md:208
 msgid "Remote caching"
 msgstr "リモート・キャッシュ"
 
-#: src/reference/reference/cached-task.md:179
+#: src/reference/reference/cached-task.md:211
 msgid ""
 "sbt 2.x implements Bazel-compatible gRPC interface, which works with number "
 "of backend both open source and commercial. See [Remote cache setup](./"

@@ -173,6 +173,38 @@ Compile / scalacOptions += "-Xmacro-settings:sbt:no-default-task-cache"
 This applies only to the custom tasks introduced in the build. Any cached tasks provided by sbt or plugins will remain cached.
 ```
 
+Execution log
+-------------
+
+To debug caching issues, sbt ships with execution log feature. The execution log can be enabled with `sbt.experimental_execution_log` system property set to either `true` or a file path:
+
+```bash
+$ sbt --server -Dsbt.experimental_execution_log=true compile
+```
+
+When set to `true`, an execution log will be created `target/global-logging`:
+
+
+```json
+{
+  "input": {
+    "digest": "sha256-a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48",
+    "codeContentHash": "murmur3-0000000000000000ffffffffce70de5a/0",
+    "extraHash": "murmur3-00000000000000000000000000000000/0",
+    "str": "(CompileInputs2(Vector(
+${CSR_CACHE}/https/repo1.maven.org/maven2/org/scala-lang/scala3-library_3/3.7.4/scala3-library_3-3.7.4.jar, ...))))"
+  },
+  "cacheHit": true,
+  "exitCode": 0,
+  "outputs": [
+    "${OUT}/value/sha256-a50da1cd086987bc273861a815da4e90ba4735d4a21b965e861e583382a985d6/48.json>
+    sha256-f222bfd59f319bb6a2d4d58003b2131c0c42a10cdb4da9df971480ca8d044f7b/179",
+  ]
+}
+```
+
+This feature is under an experimental flag since the JSON format is subject to change.
+
 Remote caching
 --------------
 
