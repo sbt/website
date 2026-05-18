@@ -24,7 +24,6 @@ msgid "See also [Migrating from sbt 1.x](./migrating-from-sbt-1.x.md)."
 msgstr "[sbt 1.x からのマイグレーション](./migrating-from-sbt-1.x.md)も参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:12
-#, fuzzy
 msgid ""
 "**Scala 3 in metabuild**. sbt 2.x build.sbt DSL, used for build definitions "
 "and plugins, is based on Scala 3.x (currently **3.8.3**)  (Both sbt 1.x and "
@@ -32,7 +31,7 @@ msgid ""
 "github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and others."
 msgstr ""
 "**Scala 3 を用いたメタビルド**。ビルド定義やプラグインに使われる sbt 2.x "
-"build.sbt DSL は Scala 3.x ベースとなった (現行では **3.8.2**)  (sbt 1.x 並び"
+"build.sbt DSL は Scala 3.x ベースとなった (現行では **3.8.3**)  (sbt 1.x 並び"
 "に 2.x は、Scala 2.x と 3.x の両方をビルドすることが可能) by [@eed3si9n]"
 "(https://github.com/eed3si9n), [@adpi2](https://github.com/adpi2), and "
 "others."
@@ -178,17 +177,17 @@ msgstr ""
 "8539)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:27
-#, fuzzy
 msgid ""
 "sbt 2.x enforces eviction error in `Test` configuration by [@calm329]"
 "(https://github.com/calm329) and [@zainab-ali](https://github.com/zainab-"
 "ali) in [\\#8451](https://github.com/sbt/sbt/pull/8451) + [\\#9102](https://"
 "github.com/sbt/sbt/pull/9102)"
 msgstr ""
-"詳細は[キャッシュ化](../concepts/caching.md)を参照。これは [@eed3si9n]"
-"(https://github.com/eed3si9n) によって [\\#7464](https://github.com/sbt/sbt/"
-"pull/7464) / [\\#7525](https://github.com/sbt/sbt/pull/7525) としてコントリさ"
-"れた。"
+"sbt 2.x は、エヴィクション・エラー規制を `Test` コンフィギュレーションでも施行する "
+"by [@calm329]"
+"(https://github.com/calm329) and [@zainab-ali](https://github.com/zainab-"
+"ali) in [\\#8451](https://github.com/sbt/sbt/pull/8451) + [\\#9102](https://"
+"github.com/sbt/sbt/pull/9102)"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:29
 msgid "Dropped dreprecations"
@@ -239,9 +238,8 @@ msgid "**Client-side run**. Details below."
 msgstr "**クライアントサイド・ラン**。詳細は下記参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:41
-#, fuzzy
 msgid "**Client-side console**. Details below."
-msgstr "**クライアントサイド・ラン**。詳細は下記参照。"
+msgstr "**クライアントサイド REPL**。詳細は下記参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:42
 msgid "**rootProject and autoAggregate**. Details below"
@@ -393,13 +391,11 @@ msgid "Client-side run"
 msgstr "クライアントサイド・ラン"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:131
-#, fuzzy
 msgid ""
 "In sbt 2.0, sbt server sends the `run` task back to sbtn, which will fork a "
 "fresh JVM. All you have to do is:"
 msgstr ""
-"sbt runner 1.10.10 以降は sbt 2.x を起動するのに、デフォルトで sbtn (GraalVM "
-"native-image のクライアント) を使う。sbt 2.0 は `run` タスクを sbtn に送り返"
+"sbt 2.0 では、sbt server は `run` タスクを sbtn に送り返"
 "して、sbtn 側で新しい JVM にフォークさせる。以下のように実行するだけでいい:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:137
@@ -415,15 +411,18 @@ msgstr ""
 "reference/sbt-run.md) ドキュメンテーション参照。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:139
-#, fuzzy
 msgid "Client-side console"
-msgstr "クライアントサイド・ラン"
+msgstr "クライアントサイド REPL"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:141
 msgid ""
 "Similar to the client-side run, sbt server sends `console` (Scala REPL) back "
 "to the sbtn, which forks a fresh JVM to run the REPL. All you have to do is:"
 msgstr ""
+"クライアントサイド・ラン同様に、sbt server は "
+"`console` (Scala REPL) を sbtn に送り返して、"
+"sbtn 側で新しい JVM をフォークして REPL を実行する。"
+"以下のように実行するだけでいい:"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:147
 msgid ""
@@ -434,6 +433,13 @@ msgid ""
 "8677), [\\#8705](https://github.com/sbt/sbt/pull/8705), [\\#8722](https://"
 "github.com/sbt/sbt/pull/8722)."
 msgstr ""
+"これは、sbt server をブロックしてしまうことを回避する。"
+"これは [@eed3si9n]"
+"(https://github.com/eed3si9n) と [@calm329](https://github.com/calm329) によって"
+"[\\#8018](https://github.com/sbt/sbt/pull/8018), [\\#8604](https://"
+"github.com/sbt/sbt/pull/8604), [\\#8677](https://github.com/sbt/sbt/pull/"
+"8677), [\\#8705](https://github.com/sbt/sbt/pull/8705), [\\#8722](https://"
+"github.com/sbt/sbt/pull/8722) としてコントリされた。"
 
 #: src/reference/changes/sbt-2.0-change-summary.md:149
 msgid "rootProject and autoAggregate"
