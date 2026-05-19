@@ -8,7 +8,7 @@ const FeatureList = [
     description: (
       <>
         sbt is built for Scala and Java projects. It is the build tool of choice
-        for <a href="https://scalasurvey2023.virtuslab.com/">84.7%</a> of the Scala developers (2023).
+        for <a href="https://scalasurvey2026.virtuslab.com/#diagramq14">85.7%</a> of the Scala developers (2026).
         One of the examples of Scala-specific feature is the ability to <i>cross build</i> your
         project against multiple Scala versions.
       </>
