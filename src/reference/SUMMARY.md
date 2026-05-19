@@ -47,6 +47,7 @@
   - [Publishing to the Central Repo](recipes/central.md)
   - [Use sbt as Metals build server](recipes/use-sbt-as-metals-build-server.md)
   - [Import to IntelliJ IDEA](recipes/import-to-intellij.md)
+  - [GitHub Actions setup](recipes/github-actions-setup.md)
   - [Source dependency plugin](recipes/source-dependency-plugin.md)
   - [Cross building on a virtual axis](recipes/virtual-axis.md)
 - [Appendix: Glossary](appendix/glossary.md)
